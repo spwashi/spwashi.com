@@ -1,0 +1,68 @@
+:root {
+    --header-height: 4rem;
+}
+html, body {
+    background-color: wheat;
+    margin: 0;
+    height: 100%;
+    font-family: 'JetBrains Mono', monospace;
+}
+body > header {
+    color: white;
+    font-weight: bold;
+    position: fixed;
+    height: var(--header-height);
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background-color: teal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+body > header ul {
+    display: inline-flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+}
+body > header ul li {
+    margin: 0 1rem;
+}
+body > header ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+}
+body > header ul li a[aria-current="page"] {
+    background-color: hsl(180, 100%, 15%);
+}
+body > header ul li a:hover {
+    background-color: hsl(180, 100%, 10%);
+}
+main {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+main > ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+body > footer {
+    color: white;
+    margin: 0;
+    font-weight: bold;
+    position: fixed;
+    height: var(--header-height);
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: teal;
+}
