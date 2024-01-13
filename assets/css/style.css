@@ -55,6 +55,29 @@ main > ul {
     padding: 0;
     text-align: center;
 }
+main > ul > li {
+    padding: .5rem 0;
+}
+main > figure {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main > figure img {
+    width: 100%;
+}
+main > figure .overlay img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+main > figure .overlay img:nth-child(1) { animation: oscillateVisibility 1.5s 0s infinite; }
+main > figure .overlay img:nth-child(2) { animation: oscillateVisibility 1.5s .3s infinite; }
+main > figure .overlay img:nth-child(3) { animation: oscillateVisibility 1.5s .6s infinite; }
+main > figure .overlay img:nth-child(4) { animation: oscillateVisibility 1.5s 1.2s infinite; }
+main > figure .overlay img:nth-child(5) { animation: oscillateVisibility 1.5s 1.5s infinite; }
 body > footer {
     color: white;
     margin: 0;
@@ -65,4 +88,17 @@ body > footer {
     width: 100%;
     text-align: center;
     background-color: teal;
+}
+
+/* keyframe oscillate between opacity periodic */
+@keyframes oscillateVisibility {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
