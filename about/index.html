@@ -4,6 +4,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        h2 {
+            margin-bottom: 2rem;
+        }
+        main {
+            max-width: 70ch;
+        }
+        main > section, section > section {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-top: thin solid #555;
+        }
+        p + details {
+            margin-left: 3rem;
+        }
+        li {
+            max-width: 50ch;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,23 +36,64 @@
         </nav>
     </header>
     <main>
+        <h1>About Me</h1>
         <section>
-            <p>You can contact me for help with:</p>
-            <ul>
-                <li>Getting a website built and hosted</li>
-                <li>Search Engine Optimization</li>
-            </ul>
+            <h2>I'm a Software Engineer</h2>
+            <section>
+                <h3>I have experience</h3>
+                <p>13 years ago, I began my dev career.</p>
+                <details>
+                    <summary>You can hire me</summary>
+                    <ul>
+                        <li>Web services</li>
+                    </ul>
+                </details>
+            </section>
+            <section>
+                <h3>My specialties are accessible</h3>
+                <p>I connect to Art and Engineering.</p>
+                <details>
+                    <summary>Specialties</summary>
+                    <ul>
+                        <li>User Experience Design</li>
+                        <li>Software Architecture</li>
+                        <li>User Interface Design</li>
+                        <li>Web Content Accessibility</li>
+                    </ul>
+                </details>
+            </section>
+            <section>
+                <h3>I've been fired before</h3>
+                    <p>Doing my job is faster than convincing people I can do my job.</p>
+                <details>
+                    <summary>Quotes I've received from employers</summary>
+                    <ul>
+                        <li>
+                            <blockquote>
+                                we really don't care about your side project
+                            </blockquote>
+                        </li>
+                        <li>
+                            <blockquote>
+                                you need to practice speaking to lower IQ audiences
+                            </blockquote>
+                        </li>
+                        <li>
+                            <blockquote>
+                                evidence shows the claimant was discharged from [...]
+                                because of deliberate poor work performance
+                            </blockquote>
+                        </li>
+                    </ul>
+                </details>
+            </section>
         </section>
         <section>
-            <p>I specialize in:</p>
-            <ul>
-                <li>User Experience Design</li>
-                <li>Software Architecture</li>
-                <li>User Interface Design</li>
-                <li>Web Content Accessibility</li>
-            </ul>
+            <h2>I'm an Artist</h2>
+            <p>[refuses to elaborate]</p>
         </section>
         <section>
+            <h2>I use social media</h2>
             <p>You can find me on these platforms:</p>
             <ul>
                 <li><a target="_blank" href="https://www.tiktok.com/@spwashi/">TikTok</a></li>
