@@ -4,13 +4,17 @@
 html, body {
     background-color: wheat;
     margin: 0;
-    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
     font-family: 'JetBrains Mono', monospace;
+}
+body {
+    margin-bottom: var(--header-height);
 }
 body > header {
     color: white;
     font-weight: bold;
-    position: fixed;
     height: var(--header-height);
     top: 0;
     width: 100%;
@@ -41,14 +45,17 @@ body > header ul li a[aria-current="page"] {
 body > header ul li a:hover {
     background-color: hsl(180, 100%, 10%);
 }
+h1 {
+    text-align: center;
+}
 main {
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
     width: 100%;
+    max-width: 90vw;
+    margin: 0 auto;
 }
 main > ul {
     list-style: none;
