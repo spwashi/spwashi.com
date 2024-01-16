@@ -98,6 +98,14 @@ body > footer {
     background-color: teal;
 }
 
+summary {
+    padding: 1rem 0;
+}
+summary:hover {
+    background-color: rgba(30,30,30, .3);
+    cursor: pointer;
+}
+
 /* keyframe oscillate between opacity periodic */
 @keyframes oscillateVisibility {
     0% {
