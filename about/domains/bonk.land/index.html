@@ -1,10 +1,56 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Bonk.Land</title>
+    <title>Spwashi &bull; About | Bonk.Land</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        h2 {
+            margin-bottom: 2rem;
+        }
+        main > * {
+            max-width: 70ch;
+        }
+        main > section, section > section {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-top: thin solid #555555;
+        }
+        section:last-of-type {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        p + details {
+            margin-left: 3rem;
+        }
+        li {
+            max-width: 50ch;
+        }
+    </style>
 </head>
 <body>
-
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a aria-current="page" href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>About <a href="https://bonk.land">Bonk.Land</a></h1>
+        <section>
+            <h2>Bonk.Land</h2>
+            <section>
+                <a href="https://bonk.land">Bonk.Land</a> is the result of a years-long exploration
+                into how storytelling serves as a vehicle for shared meaning.
+            </section>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
 </body>
 </html>
