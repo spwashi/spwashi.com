@@ -1,43 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Spwashi &bull; About</title>
+    <title>Spwashi • About</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
-    <style>
-        h2 {
-            margin-bottom: 2rem;
-        }
-        main > * {
-            max-width: 70ch;
-        }
-        main > section, section > section {
-            width: 100%;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-top: thin solid #555555;
-        }
-        section:last-of-type {
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        li {
-            max-width: 50ch;
-        }
-        .about-list-block {
-            margin-top: 1rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(0,0,0,0.12);
-        }
-        .about-list-block h4 {
-            margin: 0 0 0.75rem;
-            color: teal;
-            font-size: 0.95rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-    </style>
+    <script defer src="/public/js/site.js"></script>
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
     <header>
@@ -45,110 +14,119 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a aria-current="page" href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>About Me</h1>
-        <section>
-            <h2>I'm a Software Engineer</h2>
-            <section>
-                <h3>I build systems</h3>
-                <p>I have spent more than a decade building software across frontend systems, developer tooling, content platforms, and product architecture.</p>
-                <div class="about-list-block">
-                    <h4>What I work on</h4>
-                    <ul>
+        <section class="site-frame site-hero" id="about-frame">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#about-frame">#&gt;about_frame</a>
+                <div class="spec-strip">
+                    <span class="spec-pill">systems</span>
+                    <span class="spec-pill">design</span>
+                    <span class="spec-pill">local-first</span>
+                    <span class="spec-pill">Obsidian fit</span>
+                </div>
+            </div>
+            <h1>About</h1>
+            <p>I do my best work where engineering, interaction design, information design, and system clarity meet.</p>
+            <p>The current public direction is deliberately practical: local-first software, symbolic systems, editor/tooling thinking, and public surfaces that make the underlying structure visible.</p>
+        </section>
+
+        <section class="site-frame" id="systems-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#systems-register">^"systems_register"{</a>
+                <h2>Systems Register</h2>
+            </div>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>I build systems</h3>
+                    <p>I have spent more than a decade building software across frontend systems, developer tooling, content platforms, and product architecture.</p>
+                    <ul class="frame-list">
                         <li>Language tooling and parser-driven systems</li>
                         <li>Interface architecture and design systems</li>
                         <li>Developer experience and workflow design</li>
                         <li>Accessible web applications and content surfaces</li>
                     </ul>
                 </div>
-            </section>
-            <section>
-                <h3>My work connects structure and expression</h3>
-                <p>I tend to do my best work where engineering, interaction design, information design, and system clarity meet.</p>
-                <div class="about-list-block">
-                    <h4>Specialties</h4>
-                    <ul>
-                        <li>User Experience Design</li>
-                        <li>Software Architecture</li>
-                        <li>User Interface Design</li>
-                        <li>Web Content Accessibility</li>
+                <div class="frame-panel">
+                    <h3>What I optimize for</h3>
+                    <p>I care about stable structure, readable files, coherent interfaces, and systems that stay understandable as they deepen.</p>
+                    <ul class="frame-list">
+                        <li>User experience design</li>
+                        <li>Software architecture</li>
+                        <li>User interface design</li>
+                        <li>Web content accessibility</li>
                     </ul>
                 </div>
-            </section>
-            <section>
-                <h3>Current direction</h3>
-                <p>I am currently aligning my public work toward local-first software, symbolic systems, and thoughtful technical products.</p>
-                <div class="about-list-block">
-                    <h4>Why Obsidian is relevant</h4>
-                    <ul>
-                        <li>
-                            Local-first architecture matches how I think about software ownership and user trust.
-                        </li>
-                        <li>
-                            Editor, plugin, and metadata-heavy systems map closely to the work I already enjoy.
-                        </li>
-                        <li>
-                            Small teams with strong product taste are where I can contribute most effectively.
-                        </li>
+                <div class="frame-panel">
+                    <h3>Why Obsidian is relevant</h3>
+                    <p>Obsidian sits close to the problems I already care about: local-first trust, metadata-rich surfaces, extensible tooling, and the relationship between structure and interaction.</p>
+                    <ul class="frame-list">
+                        <li>Local-first architecture matches how I think about ownership and user trust.</li>
+                        <li>Editor, plugin, and metadata-heavy systems are exactly where I like to work.</li>
+                        <li>Small teams with strong product taste are where I can contribute most effectively.</li>
                     </ul>
                 </div>
-            </section>
+                <div class="frame-panel">
+                    <h3>Art as product sensibility</h3>
+                    <p>My art practice informs how I think about rhythm, symbols, pacing, surface coherence, and the feeling of a tool.</p>
+                    <p class="frame-note">I do not separate design from systems work. The structure is part of the interaction.</p>
+                </div>
+            </div>
         </section>
-        <section>
-            <h2>I'm an Artist</h2>
-            <p>My art practice informs how I think about structure, symbols, rhythm, and the feeling of a product surface.</p>
-        </section>
-        <section>
-            <h2>I do web stuff</h2>
-            <ul>
-                <li>
-                    <p>long-form storytelling</p>
-                    <ul>
-                        <li><a href="/about/domains/lore.land/">lore.Land</a></li>
-                        <li><a href="https://www.spwashi.ai/">spwashi.ai</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <p>snippets & haiku</p>
-                    <ul>
-                        <li><a href="/about/domains/tealstripesvibes.com/">tealstripesvibes.com</a></li>
-                        <li><a href="/about/domains/factshift.com/">factshift.com</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <p>portals</p>
-                    <ul>
-                        <li><a href="/about/domains/boon.land/">boon.Land</a></li>
-                        <li><a href="/about/domains/bane.land/">bane.Land</a></li>
-                        <li><a href="/about/domains/bone.land/">bone.Land</a></li>
-                        <li><a href="/about/domains/bonk.land/">bonk.Land</a></li>
-                        <li><a href="/about/domains/honk.land/">honk.Land</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <p>current engineering presence</p>
-                    <ul>
+
+        <section class="site-frame" id="surface-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#surface-register">?["surface_register"]</a>
+                <h2>Surface Register</h2>
+            </div>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Current engineering presence</h3>
+                    <ul class="frame-list">
                         <li><a href="https://spw.quest">spw.quest</a></li>
                         <li><a href="https://github.com/spwashi">GitHub</a></li>
                         <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></li>
-                        <li><a href="https://www.youtube.com/@spwashi/">YouTube</a></li>
-                        <li><a href="/topics/software/">Software philosophy</a></li>
+                        <li><a href="/topics/software/">Software surface</a></li>
                     </ul>
-                </li>
-            </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Long-form storytelling</h3>
+                    <ul class="frame-list">
+                        <li><a href="/about/domains/lore.land/">lore.land</a></li>
+                        <li><a href="https://www.spwashi.ai/">spwashi.ai</a></li>
+                    </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Compressed surfaces</h3>
+                    <ul class="frame-list">
+                        <li><a href="/about/domains/tealstripesvibes.com/">tealstripesvibes.com</a></li>
+                        <li><a href="/about/domains/factshift.com/">factshift.com</a></li>
+                    </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Portals</h3>
+                    <ul class="frame-list">
+                        <li><a href="/about/domains/boon.land/">boon.land</a></li>
+                        <li><a href="/about/domains/bane.land/">bane.land</a></li>
+                        <li><a href="/about/domains/bone.land/">bone.land</a></li>
+                        <li><a href="/about/domains/bonk.land/">bonk.land</a></li>
+                        <li><a href="/about/domains/honk.land/">honk.land</a></li>
+                    </ul>
+                </div>
+            </div>
         </section>
-        <section>
-            <h2>I use social media</h2>
-            <p>You can find me on these platforms:</p>
-            <ul>
-                <li><a target="_blank" href="https://www.tiktok.com/@spwashi/">TikTok</a></li>
-                <li><a target="_blank" href="https://www.instagram.com/spwashi/">Instagram</a></li>
-                <li><a target="_blank" href="https://www.youtube.com/@spwashi/">YouTube</a></li>
-            </ul>
+
+        <section class="site-frame" id="direction-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#direction-register">~"current_direction"</a>
+                <h2>Current Direction</h2>
+            </div>
+            <p>I am aligning my public work toward a durable throughline: plain-text systems, richer syntax, interactive codeblocks, projection surfaces, and software that stays legible to the people who use it.</p>
+            <p class="frame-note">That is the connective tissue between Spw, the site overhaul, and my interest in Obsidian.</p>
         </section>
     </main>
     <footer>

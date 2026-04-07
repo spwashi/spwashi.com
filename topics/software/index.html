@@ -4,79 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Spwashi • Software</title>
-    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/style.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
-    <script defer>
-        window.addEventListener('DOMContentLoaded', () => {
-            const controls = Array.from(document.querySelectorAll('.demo-controls [data-demo-target]'));
-            const syntaxTriggers = Array.from(document.querySelectorAll('.syntax-list [data-demo-target]'));
-            const panels = Array.from(document.querySelectorAll('.demo-panel'));
-            const frames = Array.from(document.querySelectorAll('.site-frame'));
-            const sigils = Array.from(document.querySelectorAll('.frame-sigil[href^="#"]'));
-
-            const activate = (targetId) => {
-                controls.forEach((button) => {
-                    const active = button.dataset.demoTarget === targetId;
-                    button.setAttribute('aria-pressed', active ? 'true' : 'false');
-                    button.setAttribute('tabindex', active ? '0' : '-1');
-                    button.classList.toggle('is-selected', active);
-                });
-
-                panels.forEach((panel) => {
-                    panel.classList.toggle('is-active', panel.id === targetId);
-                });
-
-                syntaxTriggers.forEach((button) => {
-                    button.classList.toggle('is-selected', button.dataset.demoTarget === targetId);
-                });
-            };
-
-            const activateFrame = (frame) => {
-                frames.forEach((item) => item.classList.toggle('is-active-frame', item === frame));
-            };
-
-            controls.forEach((button) => {
-                button.addEventListener('click', () => activate(button.dataset.demoTarget));
-                button.addEventListener('keydown', (event) => {
-                    const currentIndex = controls.indexOf(button);
-                    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
-                        return;
-                    }
-
-                    event.preventDefault();
-                    const direction = event.key === 'ArrowRight' ? 1 : -1;
-                    const nextIndex = (currentIndex + direction + controls.length) % controls.length;
-                    const nextButton = controls[nextIndex];
-                    activate(nextButton.dataset.demoTarget);
-                    nextButton.focus();
-                });
-            });
-
-            syntaxTriggers.forEach((button) => {
-                button.addEventListener('click', () => {
-                    activate(button.dataset.demoTarget);
-                    const frame = button.closest('.site-frame');
-                    if (frame) activateFrame(frame);
-                });
-            });
-
-            sigils.forEach((sigil) => {
-                sigil.addEventListener('click', () => {
-                    const target = document.querySelector(sigil.getAttribute('href'));
-                    if (target) activateFrame(target);
-                });
-            });
-
-            frames.forEach((frame) => {
-                frame.addEventListener('mouseenter', () => activateFrame(frame));
-                frame.addEventListener('focusin', () => activateFrame(frame));
-            });
-
-            activate('demo-markdown');
-            if (frames[0]) activateFrame(frames[0]);
-        });
-    </script>
+    <script defer src="/public/js/site.js"></script>
 </head>
 <body>
     <header>
@@ -91,15 +22,46 @@
     </header>
     <main>
         <article>
-            <section class="lede spec-header site-frame" id="spw-syntax-surface">
+            <section class="site-frame site-hero" id="spw-syntax-surface">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#spw-syntax-surface">#&gt;spw_syntax_surface</a>
+                    <div class="mode-switch" role="group" aria-label="Syntax lens">
+                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="source" aria-pressed="true">.source</button>
+                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="syntax" aria-pressed="false">^syntax</button>
+                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="surface" aria-pressed="false">&gt;surface</button>
+                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="obsidian" aria-pressed="false">@obsidian</button>
+                    </div>
+                </div>
                 <p class="spec-kicker">Public Reference Surface</p>
-                <a class="frame-sigil" href="#spw-syntax-surface">#&gt;spw_syntax_surface</a>
                 <h1>Spw Syntax</h1>
-                <p>Plain text, but frame-aware. Readable by humans, structured for tooling, and projectable into interactive surfaces.</p>
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source">
+                        <p>Spw pushes plain text toward addressable structure without giving up legibility. The file remains the substrate; the syntax simply gives tools more to work with.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="syntax" hidden>
+                        <pre><code>#>note
+#:layer #!pragmatics
+
+^"summary"{
+ claim: "Files should remain legible."
+ tags: ["durable", "portable", "inspectable"]
+}
+</code></pre>
+                    </section>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="surface" hidden>
+                        <p>The interesting part is projection: one authored source can be read as source, syntax, metadata, or interactive surface without severing the relationship between them.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="obsidian" hidden>
+                        <p>This is the homage: if Obsidian had used Spw from the start, Markdown could still be the file format, but sections, properties, and codeblocks would be more frame-aware, queryable, and interactive by default.</p>
+                    </section>
+                </div>
             </section>
 
             <section class="site-frame" id="orientation-frame">
-                <h2>Orientation</h2>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#orientation-frame">.orientation</a>
+                    <h2>Orientation</h2>
+                </div>
                 <div class="spec-strip">
                     <span class="spec-pill">plain-text first</span>
                     <span class="spec-pill">frame-based</span>
@@ -109,9 +71,9 @@
                 </div>
             </section>
 
-            <section class="spec-grid">
+            <section class="site-frame spec-grid" id="base-comparison-frame">
                 <div class="software-card">
-                    <p class="frame-sigil">.markdown_base</p>
+                    <a class="frame-sigil" href="#base-comparison-frame">.markdown_base</a>
                     <h2>Markdown base</h2>
                     <pre><code>## Note
 
@@ -122,8 +84,8 @@ Files should remain legible.
 - inspectable
 </code></pre>
                 </div>
-                <div class="software-card callout">
-                    <p class="frame-sigil">^"spw_frame"{</p>
+                <div class="software-card">
+                    <a class="frame-sigil" href="#base-comparison-frame">^"spw_frame"{</a>
                     <h2>Spw frame</h2>
                     <pre><code>#>note
 #:layer #!pragmatics
@@ -133,38 +95,44 @@ Files should remain legible.
  tags: ["durable", "portable", "inspectable"]
 }
 </code></pre>
-                    <p class="inline-note">The source stays readable while becoming addressable to parsers, metadata systems, and UI surfaces.</p>
+                    <p class="inline-note">Readable text, but now addressable to parsers, metadata systems, interactive codeblocks, and projection layers.</p>
                 </div>
             </section>
 
             <section class="site-frame" id="core-forms-frame">
-                <h2>Core forms</h2>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#core-forms-frame">?[core_forms]</a>
+                    <h2>Core Forms</h2>
+                </div>
                 <ul class="syntax-list">
                     <li>
-                        <button class="syntax-token" type="button" data-demo-target="demo-spw">#&gt;frame</button>
+                        <button class="syntax-token" type="button" data-mode-group="syntax-demo" data-set-mode="spw">#&gt;frame</button>
                         <span>Name a frame so it can be linked, queried, and projected.</span>
                     </li>
                     <li>
-                        <button class="syntax-token" type="button" data-demo-target="demo-spw">#:layer</button>
-                        <span>Mark the interpretive layer or role of the frame.</span>
+                        <button class="syntax-token" type="button" data-mode-group="syntax-demo" data-set-mode="spw">#:layer</button>
+                        <span>Mark the interpretive layer or role of a frame.</span>
                     </li>
                     <li>
-                        <button class="syntax-token" type="button" data-demo-target="demo-spw">^"object"{ }</button>
+                        <button class="syntax-token" type="button" data-mode-group="syntax-demo" data-set-mode="spw">^"object"{ }</button>
                         <span>Hold structured content in a stable, inspectable body.</span>
                     </li>
                     <li>
-                        <button class="syntax-token" type="button" data-demo-target="demo-spw">~"..."</button>
+                        <button class="syntax-token" type="button" data-mode-group="syntax-demo" data-set-mode="spw">~"..."</button>
                         <span>Carry references, paths, or literal anchors.</span>
                     </li>
                     <li>
-                        <button class="syntax-token" type="button" data-demo-target="demo-spw">?[...]{...}</button>
+                        <button class="syntax-token" type="button" data-mode-group="syntax-demo" data-set-mode="spw">?[...]{...}</button>
                         <span>Store questions, probes, or interactive interpretive units.</span>
                     </li>
                 </ul>
             </section>
 
             <section class="site-frame" id="composite-example-frame">
-                <h2>Composite example</h2>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#composite-example-frame">^"composite_example"{</a>
+                    <h2>Composite Example</h2>
+                </div>
                 <pre><code>#>frame_name
 #:layer #!meaning_time
 
@@ -180,17 +148,19 @@ Files should remain legible.
 </code></pre>
             </section>
 
-            <section class="software-card interactive-demo site-frame" id="interactive-codeblocks">
-                <a class="frame-sigil" href="#interactive-codeblocks">@rotate(surface)</a>
-                <h2>Interactive codeblocks</h2>
+            <section class="site-frame" id="interactive-codeblocks">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#interactive-codeblocks">@rotate(surface)</a>
+                    <h2>Interactive Codeblocks</h2>
+                </div>
                 <p class="inline-note">One authored unit, three views: source, syntax, and surface.</p>
-                <div class="demo-controls" role="tablist" aria-label="Interactive codeblock views">
-                    <button class="frame-sigil" type="button" data-demo-target="demo-markdown" aria-pressed="true" tabindex="0">.source</button>
-                    <button class="frame-sigil" type="button" data-demo-target="demo-spw" aria-pressed="false" tabindex="-1">^syntax</button>
-                    <button class="frame-sigil" type="button" data-demo-target="demo-render" aria-pressed="false" tabindex="-1">&gt;surface</button>
+                <div class="demo-controls mode-switch" role="group" aria-label="Interactive codeblock views">
+                    <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="markdown" aria-pressed="true">.source</button>
+                    <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="spw" aria-pressed="false">^syntax</button>
+                    <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="surface" aria-pressed="false">&gt;surface</button>
                 </div>
                 <div class="demo-panels">
-                    <section class="demo-panel is-active" id="demo-markdown">
+                    <section class="demo-panel" data-mode-group="syntax-demo" data-mode-panel="markdown">
                         <pre><code># Local-first note
 
 Files should remain legible.
@@ -202,7 +172,7 @@ Files should remain legible.
 [[Tooling]]
 </code></pre>
                     </section>
-                    <section class="demo-panel" id="demo-spw">
+                    <section class="demo-panel" data-mode-group="syntax-demo" data-mode-panel="spw" hidden>
                         <pre><code>#>local_first_note
 #:layer #!pragmatics
 
@@ -214,7 +184,7 @@ Files should remain legible.
 }
 </code></pre>
                     </section>
-                    <section class="demo-panel demo-render" id="demo-render">
+                    <section class="demo-panel demo-render" data-mode-group="syntax-demo" data-mode-panel="surface" hidden>
                         <h3>Local-first note</h3>
                         <p>Files should remain legible.</p>
                         <ul>
@@ -228,43 +198,58 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="obsidian-fit-frame">
-                <h2>Obsidian fit</h2>
-                <div class="spec-grid">
-                    <div class="software-card">
-                        <h3>Shared values</h3>
-                        <ul>
-                            <li>durable files</li>
-                            <li>syntax-aware tools</li>
-                            <li>metadata-rich interaction</li>
-                            <li>extensions over opacity</li>
-                        </ul>
+            <section class="site-frame" id="obsidian-homage-frame">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#obsidian-homage-frame">@obsidian_homage</a>
+                    <h2>What if Obsidian used Spw from the start?</h2>
+                </div>
+                <div class="domain-grid">
+                    <div class="frame-panel">
+                        <h3>Markdown stays</h3>
+                        <p>Files remain portable and human-readable. Spw does not replace Markdown’s trust model; it deepens the structural layer.</p>
                     </div>
-                    <div class="software-card">
-                        <h3>What I care about</h3>
-                        <ul>
-                            <li>parser and editor tooling</li>
-                            <li>interactive codeblocks</li>
-                            <li>projection from source to UI</li>
-                            <li>design that teaches structure</li>
-                        </ul>
+                    <div class="frame-panel">
+                        <h3>Frames over anonymous blocks</h3>
+                        <p>Sections become named units with stable references, better projection, and more explicit relationships.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Properties with stronger semantics</h3>
+                        <p>Metadata can stay plain text while becoming more aware of role, layer, and interaction.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Interactive codeblocks</h3>
+                        <p>Codeblocks can move between source, syntax, and rendered surfaces without becoming detached widgets.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Plugins as projections</h3>
+                        <p>Plugins gain a richer substrate, not merely more UI state to manage.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Design teaches grammar</h3>
+                        <p>The interface becomes part of the reading model: interaction reveals structure instead of hiding it.</p>
                     </div>
                 </div>
             </section>
 
             <section class="site-frame" id="design-influences-frame">
-                <h2>Design influences</h2>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#design-influences-frame">~"design_influences"</a>
+                    <h2>Design Influences</h2>
+                </div>
                 <ul class="source-list">
                     <li><span class="source-name">Literate UI</span> operator gestures as navigation primitives, so syntax teaches interaction.</li>
                     <li><span class="source-name">Symmetry UI Design</span> spatial behavior follows symmetry while interaction follows operator physics.</li>
                     <li><span class="source-name">Ocean UX</span> expert reward comes from stable placement, reference-driven navigation, and repeated familiarity.</li>
                     <li><span class="source-name">Style Currents</span> style should be recognizable and reproducible, not ornamental drift.</li>
                 </ul>
-                <p class="inline-note">These are adapted from the `spw-workbench` design surfaces and translated here into a public-facing site context.</p>
+                <p class="inline-note">These ideas are adapted from the `spw-workbench` design surfaces and translated here into a public-facing site context.</p>
             </section>
 
             <section class="site-frame" id="pipeline-frame">
-                <h2>Pipeline</h2>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pipeline-frame">*pipeline</a>
+                    <h2>Pipeline</h2>
+                </div>
                 <pre><code>Markdown -> Spw frame -> parser -> metadata -> interactive surface
 </code></pre>
                 <p class="inline-note">Not less plain text. More usable structure.</p>

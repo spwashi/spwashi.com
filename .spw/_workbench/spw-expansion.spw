@@ -29,3 +29,10 @@
  philosophy: "Include a short statement about why software should remain legible to its users."
  interaction: "Use scannable sections that reward curiosity without requiring long scrolling before value appears."
 }
+
+^"obsidian_homage"{
+ thesis: "The strongest public framing is not 'Spw replaces Obsidian' but 'what if Obsidian had a Spw-like grammar from the start?'"
+ markdown: "Keep Markdown as the trusted file substrate."
+ frames: "Make sections and codeblocks feel frame-aware and projectable."
+ plugins: "Position plugins as richer projections on top of a clearer syntax substrate."
+}

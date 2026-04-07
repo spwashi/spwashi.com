@@ -35,3 +35,9 @@
  principle_2: "Spatial variation should feel governed and mirrored, not arbitrary."
  principle_3: "Restraint, stable placement, and navigable references are part of product depth."
 }
+
+^"homage_bridge"{
+ question: "What if Obsidian used Spw from the start?"
+ answer_shape: "Markdown remains the file substrate; Spw changes the structural and interactive layer."
+ site_translation: "Use the site as a small working homage to that possibility."
+}

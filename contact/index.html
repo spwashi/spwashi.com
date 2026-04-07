@@ -1,9 +1,11 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Spwashi &bull; Contact</title>
+    <title>Spwashi • Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script defer src="/public/js/site.js"></script>
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
@@ -12,17 +14,53 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
                 <li><a aria-current="page" href="/contact">Contact</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Contact</h1>
-        <p>Send me a DM on TikTok or Instagram.</p>
-        <ul>
-            <li><a target="_blank" href="https://www.tiktok.com/@spwashi/">TikTok</a></li>
-            <li><a target="_blank" href="https://www.instagram.com/spwashi/">Instagram</a></li>
-        </ul>
+        <section class="site-frame site-hero" id="contact-frame">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#contact-frame">#&gt;contact_frame</a>
+                <div class="spec-strip">
+                    <span class="spec-pill">direct</span>
+                    <span class="spec-pill">public</span>
+                    <span class="spec-pill">current</span>
+                </div>
+            </div>
+            <h1>Contact</h1>
+            <p>Direct message is the best route right now. Social channels are the fastest path; public code and video also give a good sense of what I am doing.</p>
+        </section>
+
+        <section class="site-frame" id="contact-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#contact-register">^"contact_register"{</a>
+                <h2>Contact Register</h2>
+            </div>
+            <div class="contact-grid">
+                <a class="frame-card" target="_blank" href="https://www.instagram.com/spwashi/">
+                    <span class="frame-card-sigil">#&gt;instagram_dm</span>
+                    <strong>Instagram</strong>
+                    <span>direct message for the fastest reply path</span>
+                </a>
+                <a class="frame-card" target="_blank" href="https://www.tiktok.com/@spwashi/">
+                    <span class="frame-card-sigil">#&gt;tiktok_dm</span>
+                    <strong>TikTok</strong>
+                    <span>direct message and public surface</span>
+                </a>
+                <a class="frame-card" target="_blank" href="https://github.com/spwashi">
+                    <span class="frame-card-sigil">#&gt;github_surface</span>
+                    <strong>GitHub</strong>
+                    <span>current code, repositories, and implementation depth</span>
+                </a>
+                <a class="frame-card" target="_blank" href="https://www.youtube.com/@spwashi/">
+                    <span class="frame-card-sigil">#&gt;youtube_surface</span>
+                    <strong>YouTube</strong>
+                    <span>public iteration around engineering, design, and application work</span>
+                </a>
+            </div>
+        </section>
     </main>
     <footer>
         <p>© 2024 spwashi</p>

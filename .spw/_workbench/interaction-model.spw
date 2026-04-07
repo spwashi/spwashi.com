@@ -34,6 +34,13 @@
  reproducible_style: "From biome/ocean/style: recognizable style should be reproducible and constrained, not decorative drift."
 }
 
+^"interaction_overhaul"{
+ frame_activation: "Frames should visibly activate when their sigils, cards, or related controls are used."
+ inline_modes: "Mode switches should behave like inline Notion-style state changes, but with Spw operator semantics."
+ sigil_role: "Sigils should act as anchors, lenses, and controls rather than decorative labels."
+ motion: "Motion should read as state transition and projection, not ornamental animation."
+}
+
 ^"obsidian_fit"{
  product_signal: "The site should feel like someone who can design tools for thinking, not just talk about them."
  reading_experience: "Information density should remain high without becoming chaotic."

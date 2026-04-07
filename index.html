@@ -1,193 +1,240 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Spwashi &bull; Home</title>
-	<script type="application/ld+json">
-		{
-			"@context" : "https://schema.org",
-			"@type" : "WebSite",
-			"name" : "Spwashi",
-			"alternateName" : ["spwashi", "spwashi homepage"],
-			"url" : "https://spwashi.com/"
-		}
-	</script>
-	<script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
-	<link rel="stylesheet" href="/public/css/style.css">
-	<script defer>
-		window.addEventListener('DOMContentLoaded', () => {
-			const frames = Array.from(document.querySelectorAll('.site-frame'));
-			const sigils = Array.from(document.querySelectorAll('.frame-sigil[href^="#"]'));
-			const cards = Array.from(document.querySelectorAll('.frame-card'));
-
-			const activateFrame = (frame) => {
-				frames.forEach((item) => item.classList.toggle('is-active-frame', item === frame));
-			};
-
-			sigils.forEach((sigil) => {
-				sigil.addEventListener('click', () => {
-					const target = document.querySelector(sigil.getAttribute('href'));
-					if (target) activateFrame(target);
-				});
-			});
-
-			cards.forEach((card) => {
-				card.addEventListener('mouseenter', () => {
-					const frame = card.closest('.site-frame');
-					if (frame) activateFrame(frame);
-				});
-				card.addEventListener('focus', () => {
-					const frame = card.closest('.site-frame');
-					if (frame) activateFrame(frame);
-				});
-			});
-
-			if (frames[0]) activateFrame(frames[0]);
-		});
-	</script>
-	<style>
-		ul {
-			list-style: none;
-			padding: 0;
-		}
-	</style>
+    <title>Spwashi • Home</title>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Spwashi",
+            "alternateName": ["spwashi", "spwashi homepage"],
+            "url": "https://spwashi.com/"
+        }
+    </script>
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script defer src="/public/js/site.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
-	<header>
-		<nav>
-			<ul>
-				<li><a aria-current="page" href="/">Home</a></li>
-				<li><a href="/about">About</a></li>
-				<li><a href="/contact">Contact</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
-		<section class="site-frame site-hero" id="home-frame">
-			<a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
-			<h1>I design and build local-first software systems.</h1>
-			<p>I am a staff-level software engineer working across language tooling, developer experience, interface systems, and knowledge surfaces.</p>
-			<p>I am currently applying to join Obsidian as its fourth engineer, with a focus on local-first architecture, editor tooling, plugin ecosystems, and maintainable product systems.</p>
-			<div class="frame-operators" aria-label="Frame operators">
-				<a class="operator-chip" href="/topics/software/#interactive-codeblocks">? probe</a>
-				<a class="operator-chip" href="/topics/software/#pipeline-frame">~ reference</a>
-				<a class="operator-chip" href="/topics/software/#interactive-codeblocks">@ rotate</a>
-				<a class="operator-chip" href="/topics/software/#spw-syntax-surface">^ frame</a>
-			</div>
-		</section>
+    <header>
+        <nav>
+            <ul>
+                <li><a aria-current="page" href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="site-frame site-hero" id="home-frame">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
+                <div class="mode-switch" role="group" aria-label="Home lens">
+                    <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="surface" aria-pressed="true">.surface</button>
+                    <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="syntax" aria-pressed="false">^syntax</button>
+                    <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="artifacts" aria-pressed="false">*artifacts</button>
+                    <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="obsidian" aria-pressed="false">@obsidian</button>
+                </div>
+            </div>
+            <h1>I build local-first systems for language, tooling, and knowledge.</h1>
+            <div class="mode-panels">
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface">
+                    <p>I am a staff-level software engineer working across parser-driven systems, interface architecture, developer experience, and knowledge surfaces.</p>
+                    <p>The site is becoming a small homage to a question I care about: what if Obsidian had used Spw from the start?</p>
+                </section>
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden>
+                    <pre><code>#>home_frame
+#:layer #!pragmatics
 
-		<section class="site-frame" id="current-focus">
-			<div class="frame-heading">
-				<a class="frame-sigil" href="#current-focus">^"current_focus"{</a>
-				<h2>Current Focus</h2>
-			</div>
-			<div class="frame-grid">
-				<a class="frame-card" href="https://github.com/spwashi/spw-workbench">
-					<span class="frame-card-sigil">#&gt;spw_workbench</span>
-					<strong>spw-workbench</strong>
-					<span>language, runtime, and tooling systems in TypeScript</span>
-				</a>
-				<a class="frame-card" href="https://spw.quest">
-					<span class="frame-card-sigil">#&gt;spw_quest</span>
-					<strong>spw.quest</strong>
-					<span>public documentation for the Spw symbolic grammar system</span>
-				</a>
-				<a class="frame-card" href="https://www.spwashi.ai/">
-					<span class="frame-card-sigil">#&gt;spwashi_ai</span>
-					<strong>spwashi.ai</strong>
-					<span>writing about surface, structure, and ecosystem design</span>
-				</a>
-				<a class="frame-card" href="/topics/software/">
-					<span class="frame-card-sigil">#&gt;software_surface</span>
-					<strong>Spw syntax</strong>
-					<span>Markdown, Spw, local-first tools, and interactive codeblocks</span>
-				</a>
-			</div>
-		</section>
+^"focus"{
+ claim: "Build local-first systems for language, tooling, and knowledge."
+ targets: ["Obsidian", "interactive codeblocks", "projection surfaces"]
+}
+</code></pre>
+                </section>
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden>
+                    <div class="frame-grid">
+                        <a class="frame-card" href="https://github.com/spwashi/spw-workbench">
+                            <span class="frame-card-sigil">#&gt;spw_workbench</span>
+                            <strong>spw-workbench</strong>
+                            <span>language, runtime, and tooling systems in TypeScript</span>
+                        </a>
+                        <a class="frame-card" href="https://spw.quest">
+                            <span class="frame-card-sigil">#&gt;spw_quest</span>
+                            <strong>spw.quest</strong>
+                            <span>public documentation for Spw as a symbolic grammar system</span>
+                        </a>
+                        <a class="frame-card" href="/topics/software/#spw-syntax-surface">
+                            <span class="frame-card-sigil">#&gt;syntax_surface</span>
+                            <strong>Spw syntax</strong>
+                            <span>a public reference surface for frames, projections, and interactive codeblocks</span>
+                        </a>
+                        <a class="frame-card" href="https://github.com/spwashi">
+                            <span class="frame-card-sigil">#&gt;github_surface</span>
+                            <strong>GitHub</strong>
+                            <span>repositories, experiments, and technical artifacts</span>
+                        </a>
+                    </div>
+                </section>
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="obsidian" hidden>
+                    <p>If Obsidian had used Spw from the start, Markdown would still be the substrate. Notes would remain plain text, but blocks could become frame-aware, codeblocks could project into richer surfaces, and interactivity could teach structure instead of hiding it.</p>
+                    <p class="frame-note">This site is an homage to that idea, not a literal product proposal.</p>
+                </section>
+            </div>
+            <div class="frame-operators" aria-label="Operator routes">
+                <a class="operator-chip" href="/topics/software/#interactive-codeblocks">? probe</a>
+                <a class="operator-chip" href="#artifact-register">~ reference</a>
+                <a class="operator-chip" href="/topics/software/#obsidian-homage-frame">@ rotate</a>
+                <a class="operator-chip" href="#surface-register">^ frame</a>
+            </div>
+        </section>
 
-		<section class="site-frame" id="public-presence">
-			<div class="frame-heading">
-				<a class="frame-sigil" href="#public-presence">?["public_presence"]</a>
-				<h2>Public Presence</h2>
-			</div>
-			<div class="frame-grid frame-grid--narrow">
-				<div class="frame-panel">
-					<h3>Recent Work</h3>
-					<ul class="frame-list">
-						<li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></li>
-						<li><a href="https://spw.quest">spw.quest</a></li>
-						<li><a href="https://lore.land">lore.land</a></li>
-						<li><a href="https://factshift.com">factshift.com</a></li>
-					</ul>
-				</div>
-				<div class="frame-panel">
-					<h3>Social and Video</h3>
-					<ul class="frame-list">
-						<li><a target="_blank" href="https://www.youtube.com/@spwashi/">YouTube</a></li>
-						<li><a target="_blank" href="https://www.instagram.com/spwashi/">Instagram</a></li>
-						<li><a target="_blank" href="https://www.tiktok.com/@spwashi/">TikTok</a></li>
-					</ul>
-				</div>
-				<div class="frame-panel">
-					<h3>Related Surfaces</h3>
-					<ul class="frame-list">
-						<li><a href="https://www.etsy.com/shop/tealstripesvibes">Etsy</a></li>
-						<li><a href="https://www.tiktok.com/@tealstripesvibes">TikTok</a></li>
-						<li><a href="https://www.instagram.com/tealstripesvibes">Instagram</a></li>
-					</ul>
-				</div>
-				<div class="frame-panel">
-					<h3>Flow and Portals</h3>
-					<ul class="frame-list">
-						<li><a href="https://www.instagram.com/from.bane.land">[ - ]</a></li>
-						<li><a href="https://www.instagram.com/in.boon.land">[ . ]</a></li>
-						<li><a href="https://www.instagram.com/to.boon.land">[ + ]</a></li>
-						<li><a href="https://boon.land">boon.land</a></li>
-						<li><a href="https://bane.land">bane.land</a></li>
-						<li><a href="https://bone.land">bone.land</a></li>
-						<li><a href="https://bonk.land">bonk.land</a></li>
-						<li><a href="https://honk.land">honk.land</a></li>
-					</ul>
-				</div>
-			</div>
-		</section>
+        <section class="site-frame" id="artifact-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#artifact-register">^"artifact_register"{</a>
+                <h2>Artifact Register</h2>
+            </div>
+            <div class="frame-grid frame-grid--dense">
+                <a class="frame-card" href="https://github.com/spwashi/spw-workbench">
+                    <span class="frame-card-sigil">#&gt;parser_runtime_tooling</span>
+                    <strong>spw-workbench</strong>
+                    <span>parser, runtime, LSP framing, and toolchain thinking</span>
+                </a>
+                <a class="frame-card" href="https://spw.quest">
+                    <span class="frame-card-sigil">#&gt;language_docs</span>
+                    <strong>spw.quest</strong>
+                    <span>documentation surface for the language, grammar, and projection model</span>
+                </a>
+                <a class="frame-card" href="https://www.spwashi.ai/">
+                    <span class="frame-card-sigil">#&gt;surface_writing</span>
+                    <strong>spwashi.ai</strong>
+                    <span>writing about surface, structure, registry posture, and ecosystem design</span>
+                </a>
+                <a class="frame-card" href="/topics/software/">
+                    <span class="frame-card-sigil">#&gt;public_spec</span>
+                    <strong>Software surface</strong>
+                    <span>syntax-first view of Spw, interactive codeblocks, and the Obsidian homage</span>
+                </a>
+                <a class="frame-card" href="https://github.com/spwashi">
+                    <span class="frame-card-sigil">#&gt;public_code</span>
+                    <strong>GitHub</strong>
+                    <span>working repositories, active experiments, and implementation depth</span>
+                </a>
+                <a class="frame-card" href="https://www.youtube.com/@spwashi/">
+                    <span class="frame-card-sigil">#&gt;video_surface</span>
+                    <strong>YouTube</strong>
+                    <span>public iteration around engineering, design, and current application work</span>
+                </a>
+            </div>
+        </section>
 
-		<section class="site-frame" id="projects">
-			<div class="frame-heading">
-				<a class="frame-sigil" href="#projects">~"projects"</a>
-				<h2>Projects</h2>
-			</div>
-			<ul class="frame-list frame-list--inline">
-				<li><a href="/about/domains/lore.land/">Lore.Land</a></li>
-			</ul>
-		</section>
-		<figure style="position:relative;">
-			<img src="/public/images/2024-13-01.0.jpg" alt="An image of interaction" />
-			<div class="overlay dots">
-				<img src="/public/images/2024-13-01/dot-1.png" />
-				<img src="/public/images/2024-13-01/dot-2.png" />
-				<img src="/public/images/2024-13-01/dot-3.png" />
-				<img src="/public/images/2024-13-01/dot-4.png" />
-				<img src="/public/images/2024-13-01/dot-5.png" />
-			</div>
-			<div class="overlay lore">
-				<img src="/public/images/2024-13-01/boon.png" />
-				<img src="/public/images/2024-13-01/bane.png" />
-				<img src="/public/images/2024-13-01/bone.png" />
-				<img src="/public/images/2024-13-01/bonk.png" />
-				<img src="/public/images/2024-13-01/honk.png" />
-			</div>
-			<div class="overlay book">
-				<img src="/public/images/2024-13-01/book.png" />
-			</div>
-			<div class="overlay spwashi">
-				<img src="/public/images/2024-13-01/spwashi.png" />
-			</div>
-			<figcaption>An image of interaction</figcaption>
-		</figure>
-	</main>
-	<footer>
-		<p>© 2024 spwashi</p>
-	</footer>
+        <section class="site-frame" id="obsidian-homage">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#obsidian-homage">@obsidian_spw_homage</a>
+                <h2>What if Obsidian used Spw from the start?</h2>
+            </div>
+            <div class="spec-grid">
+                <div class="frame-panel">
+                    <h3>Notes as frames</h3>
+                    <p>Markdown remains the file format, but sections become named, queryable frames instead of anonymous blocks.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Properties as layers</h3>
+                    <p>Metadata stays human-readable while becoming more explicit about role, meaning, and projection.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Codeblocks as surfaces</h3>
+                    <p>Source, syntax, and render stay linked so codeblocks can behave like miniature tools for thought.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Plugins as projections</h3>
+                    <p>Extensibility would still matter, but richer structure would give plugins a stronger shared substrate.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="site-frame" id="surface-register">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#surface-register">?["surface_register"]</a>
+                <h2>Surface Register</h2>
+            </div>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Current work</h3>
+                    <ul class="frame-list">
+                        <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></li>
+                        <li><a href="https://spw.quest">spw.quest</a></li>
+                        <li><a href="https://lore.land">lore.land</a></li>
+                        <li><a href="https://factshift.com">factshift.com</a></li>
+                    </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Public channels</h3>
+                    <ul class="frame-list">
+                        <li><a target="_blank" href="https://www.youtube.com/@spwashi/">YouTube</a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/spwashi/">Instagram</a></li>
+                        <li><a target="_blank" href="https://www.tiktok.com/@spwashi/">TikTok</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Portals and adjacent surfaces</h3>
+                    <ul class="frame-list">
+                        <li><a href="https://boon.land">boon.land</a></li>
+                        <li><a href="https://bane.land">bane.land</a></li>
+                        <li><a href="https://bone.land">bone.land</a></li>
+                        <li><a href="https://bonk.land">bonk.land</a></li>
+                        <li><a href="https://honk.land">honk.land</a></li>
+                    </ul>
+                </div>
+                <div class="frame-panel">
+                    <h3>Flow surfaces</h3>
+                    <ul class="frame-list">
+                        <li><a href="https://www.instagram.com/from.bane.land">[ - ]</a></li>
+                        <li><a href="https://www.instagram.com/in.boon.land">[ . ]</a></li>
+                        <li><a href="https://www.instagram.com/to.boon.land">[ + ]</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="site-frame site-figure" id="constellation-frame">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#constellation-frame">~"constellation"</a>
+                <h2>Constellation</h2>
+            </div>
+            <p class="frame-note">The visual system stays in conversation with the software system: layered, relational, and slightly alive.</p>
+            <figure style="position:relative;">
+                <img src="/public/images/2024-13-01.0.jpg" alt="An image of interaction" />
+                <div class="overlay dots">
+                    <img src="/public/images/2024-13-01/dot-1.png" alt="" />
+                    <img src="/public/images/2024-13-01/dot-2.png" alt="" />
+                    <img src="/public/images/2024-13-01/dot-3.png" alt="" />
+                    <img src="/public/images/2024-13-01/dot-4.png" alt="" />
+                    <img src="/public/images/2024-13-01/dot-5.png" alt="" />
+                </div>
+                <div class="overlay lore">
+                    <img src="/public/images/2024-13-01/boon.png" alt="" />
+                    <img src="/public/images/2024-13-01/bane.png" alt="" />
+                    <img src="/public/images/2024-13-01/bone.png" alt="" />
+                    <img src="/public/images/2024-13-01/bonk.png" alt="" />
+                    <img src="/public/images/2024-13-01/honk.png" alt="" />
+                </div>
+                <div class="overlay book">
+                    <img src="/public/images/2024-13-01/book.png" alt="" />
+                </div>
+                <div class="overlay spwashi">
+                    <img src="/public/images/2024-13-01/spwashi.png" alt="" />
+                </div>
+                <figcaption>An image of interaction.</figcaption>
+            </figure>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
 </body>
 </html>

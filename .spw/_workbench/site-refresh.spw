@@ -31,3 +31,10 @@
  medium_form: "My work spans parsers, runtimes, interface systems, and publishable surfaces, with a focus on clarity, ownership, and extensibility."
  long_form: "I care about software that stays legible to the people who use it: durable files, thoughtful interfaces, humane tooling, and ecosystems that scale through strong foundations rather than opaque complexity."
 }
+
+^"experience_overhaul"{
+ homepage: "Treat the homepage as a frame system with inline mode switches for surface, syntax, artifacts, and Obsidian homage."
+ software: "Treat the software page as a public reference surface, not an essay."
+ about: "Treat the about page as a register of systems, surfaces, and direction."
+ domains: "Treat domain subpages as a coherent surface registry instead of thin isolated shells."
+}
