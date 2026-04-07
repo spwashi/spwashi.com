@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Spwashi • Pretext Field Lab</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script defer src="/public/js/site.js"></script>
+    <script type="module" src="/public/js/pretext-lab.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="pretext-field-lab">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#pretext-field-lab">#&gt;pretext_field_lab</a>
+                    <div class="mode-switch" role="group" aria-label="Pretext Field Lab views">
+                        <button class="frame-sigil" type="button" data-mode-group="pretext-lens" data-set-mode="orientation" aria-pressed="true">.orientation</button>
+                        <button class="frame-sigil" type="button" data-mode-group="pretext-lens" data-set-mode="api" aria-pressed="false">^api</button>
+                        <button class="frame-sigil" type="button" data-mode-group="pretext-lens" data-set-mode="surface" aria-pressed="false">&gt;surface</button>
+                    </div>
+                </div>
+                <p class="spec-kicker">External Probe / Text Layout Engine</p>
+                <h1>Pretext Field Lab</h1>
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation">
+                        <p>This is a small observatory for Pretext.js: one prepared text handle, several widths, and a live view of how lines reflow without touching DOM measurement APIs.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" hidden>
+                        <pre><code>import { prepare, layout } from '@chenglou/pretext'
+
+const prepared = prepare(
+  'Hello, pretext.js — no reflow needed.',
+  '16px system-ui'
+)
+
+const { height, lineCount } = layout(prepared, 400, 24)
+</code></pre>
+                    </section>
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="surface" hidden>
+                        <p>The lab below uses the line-producing path so the resulting wraps can be rendered directly into visible surfaces. The essential idea stays the same: prepare once, reuse the handle as widths change.</p>
+                    </section>
+                </div>
+                <div class="frame-operators" aria-label="Pretext routes">
+                    <a class="operator-chip" href="/topics/software/">software surface</a>
+                    <a class="operator-chip" aria-current="page" href="/topics/software/pretext/">pretext field lab</a>
+                    <a class="operator-chip" href="#pretext-observatory">? observe</a>
+                    <a class="operator-chip" href="#pretext-recipes">~ recipes</a>
+                    <a class="operator-chip" href="https://pretextjs.dev/playground" target="_blank" rel="noreferrer">official playground</a>
+                    <a class="operator-chip" href="https://github.com/chenglou/pretext" target="_blank" rel="noreferrer">github</a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="pretext-observatory">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pretext-observatory">?["line_break_observatory"]</a>
+                    <h2>Line Break Observatory</h2>
+                </div>
+                <p class="inline-note">Edit the text, change the width, and watch the same prepared handle fan out across phone, tablet, and poster surfaces.</p>
+                <div class="pretext-lab-grid">
+                    <div class="frame-panel pretext-controls-panel">
+                        <label class="pretext-field">
+                            <span>Probe text</span>
+                            <textarea id="pretext-input" class="pretext-textarea" rows="8">AGI 春天到了. بدأت الرحلة — layout without reflow.
+
+Files can stay legible while surfaces become more deliberate.
+Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
+                        </label>
+                        <div class="pretext-preset-row" aria-label="Preset text probes">
+                            <button class="syntax-token" type="button" data-pretext-sample="mixed">mixed scripts</button>
+                            <button class="syntax-token" type="button" data-pretext-sample="chat">chat bubble</button>
+                            <button class="syntax-token" type="button" data-pretext-sample="notes">notes</button>
+                        </div>
+                        <div class="pretext-control-grid">
+                            <label class="pretext-field">
+                                <span>Base width <output id="pretext-width-output" for="pretext-width">320px</output></span>
+                                <input id="pretext-width" type="range" min="180" max="520" step="10" value="320">
+                            </label>
+                            <label class="pretext-field">
+                                <span>Line height <output id="pretext-line-height-output" for="pretext-line-height">26px</output></span>
+                                <input id="pretext-line-height" type="range" min="18" max="40" step="1" value="26">
+                            </label>
+                        </div>
+                        <label class="pretext-toggle">
+                            <input id="pretext-prewrap" type="checkbox" checked>
+                            <span>preserve tabs and hard breaks with <strong>pre-wrap</strong></span>
+                        </label>
+                        <p id="pretext-status" class="frame-note">Loading Pretext.js and waiting for fonts…</p>
+                    </div>
+
+                    <div class="frame-panel pretext-summary-panel">
+                        <h3>Probe Telemetry</h3>
+                        <div class="pretext-metric-grid">
+                            <div class="pretext-metric">
+                                <span class="frame-card-sigil">handle</span>
+                                <strong id="pretext-handle-state">warming up</strong>
+                            </div>
+                            <div class="pretext-metric">
+                                <span class="frame-card-sigil">mode</span>
+                                <strong id="pretext-mode-state">pre-wrap</strong>
+                            </div>
+                            <div class="pretext-metric">
+                                <span class="frame-card-sigil">characters</span>
+                                <strong id="pretext-character-count">0</strong>
+                            </div>
+                            <div class="pretext-metric">
+                                <span class="frame-card-sigil">widest wrap</span>
+                                <strong id="pretext-widest-width">0px</strong>
+                            </div>
+                        </div>
+                        <ul class="source-list">
+                            <li><span class="source-name">Prepare phase</span> runs when text or whitespace mode changes.</li>
+                            <li><span class="source-name">Layout phase</span> reruns as widths change.</li>
+                            <li><span class="source-name">Rendering</span> shows the actual lines returned by the library.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pretext-surface-grid" id="pretext-surfaces" aria-live="polite">
+                    <section class="software-card pretext-surface">
+                        <div class="frame-heading">
+                            <a class="frame-sigil" href="#pretext-observatory">.phone</a>
+                            <h3>Phone width</h3>
+                        </div>
+                        <p class="frame-note" id="pretext-phone-meta">Waiting for layout…</p>
+                        <div class="pretext-preview" id="pretext-phone-lines"></div>
+                    </section>
+                    <section class="software-card pretext-surface">
+                        <div class="frame-heading">
+                            <a class="frame-sigil" href="#pretext-observatory">.tablet</a>
+                            <h3>Tablet width</h3>
+                        </div>
+                        <p class="frame-note" id="pretext-tablet-meta">Waiting for layout…</p>
+                        <div class="pretext-preview" id="pretext-tablet-lines"></div>
+                    </section>
+                    <section class="software-card pretext-surface">
+                        <div class="frame-heading">
+                            <a class="frame-sigil" href="#pretext-observatory">.poster</a>
+                            <h3>Poster width</h3>
+                        </div>
+                        <p class="frame-note" id="pretext-poster-meta">Waiting for layout…</p>
+                        <div class="pretext-preview" id="pretext-poster-lines"></div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="site-frame" id="pretext-recipes">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pretext-recipes">~"integration_recipes"</a>
+                    <h2>Why Explore It</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Chat and stream surfaces</h3>
+                        <p>Predict bubble heights before text lands so scrolling and anchoring feel intentional instead of reactive.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Virtualized knowledge lists</h3>
+                        <p>Estimate paragraph heights without creating hidden DOM mirrors for every item in the list.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Multilingual interfaces</h3>
+                        <p>Use the same API for Latin, CJK, Arabic, Hebrew, Korean, and mixed-script surfaces.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Responsive probes</h3>
+                        <p>Prepare once, then ask what the same text would do at phone, tablet, or desktop widths.</p>
+                    </div>
+                </div>
+                <p class="inline-note">This page keeps the demo close to the software surface of the site, while the official playground remains the best place for exhaustive API exploration.</p>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>
