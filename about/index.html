@@ -22,11 +22,20 @@
             margin-bottom: 0;
             padding-bottom: 0;
         }
-        p + details {
-            margin-left: 3rem;
-        }
         li {
             max-width: 50ch;
+        }
+        .about-list-block {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0,0,0,0.12);
+        }
+        .about-list-block h4 {
+            margin: 0 0 0.75rem;
+            color: teal;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -47,34 +56,34 @@
             <section>
                 <h3>I build systems</h3>
                 <p>I have spent more than a decade building software across frontend systems, developer tooling, content platforms, and product architecture.</p>
-                <details>
-                    <summary>What I work on</summary>
+                <div class="about-list-block">
+                    <h4>What I work on</h4>
                     <ul>
                         <li>Language tooling and parser-driven systems</li>
                         <li>Interface architecture and design systems</li>
                         <li>Developer experience and workflow design</li>
                         <li>Accessible web applications and content surfaces</li>
                     </ul>
-                </details>
+                </div>
             </section>
             <section>
                 <h3>My work connects structure and expression</h3>
                 <p>I tend to do my best work where engineering, interaction design, information design, and system clarity meet.</p>
-                <details>
-                    <summary>Specialties</summary>
+                <div class="about-list-block">
+                    <h4>Specialties</h4>
                     <ul>
                         <li>User Experience Design</li>
                         <li>Software Architecture</li>
                         <li>User Interface Design</li>
                         <li>Web Content Accessibility</li>
                     </ul>
-                </details>
+                </div>
             </section>
             <section>
                 <h3>Current direction</h3>
                 <p>I am currently aligning my public work toward local-first software, symbolic systems, and thoughtful technical products.</p>
-                <details>
-                    <summary>Why Obsidian is relevant</summary>
+                <div class="about-list-block">
+                    <h4>Why Obsidian is relevant</h4>
                     <ul>
                         <li>
                             Local-first architecture matches how I think about software ownership and user trust.
@@ -86,7 +95,7 @@
                             Small teams with strong product taste are where I can contribute most effectively.
                         </li>
                     </ul>
-                </details>
+                </div>
             </section>
         </section>
         <section>

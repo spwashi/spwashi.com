@@ -9,19 +9,31 @@
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script defer>
         window.addEventListener('DOMContentLoaded', () => {
-            const controls = Array.from(document.querySelectorAll('[data-demo-target]'));
+            const controls = Array.from(document.querySelectorAll('.demo-controls [data-demo-target]'));
+            const syntaxTriggers = Array.from(document.querySelectorAll('.syntax-list [data-demo-target]'));
             const panels = Array.from(document.querySelectorAll('.demo-panel'));
+            const frames = Array.from(document.querySelectorAll('.site-frame'));
+            const sigils = Array.from(document.querySelectorAll('.frame-sigil[href^="#"]'));
 
             const activate = (targetId) => {
                 controls.forEach((button) => {
                     const active = button.dataset.demoTarget === targetId;
                     button.setAttribute('aria-pressed', active ? 'true' : 'false');
                     button.setAttribute('tabindex', active ? '0' : '-1');
+                    button.classList.toggle('is-selected', active);
                 });
 
                 panels.forEach((panel) => {
                     panel.classList.toggle('is-active', panel.id === targetId);
                 });
+
+                syntaxTriggers.forEach((button) => {
+                    button.classList.toggle('is-selected', button.dataset.demoTarget === targetId);
+                });
+            };
+
+            const activateFrame = (frame) => {
+                frames.forEach((item) => item.classList.toggle('is-active-frame', item === frame));
             };
 
             controls.forEach((button) => {
@@ -41,7 +53,28 @@
                 });
             });
 
+            syntaxTriggers.forEach((button) => {
+                button.addEventListener('click', () => {
+                    activate(button.dataset.demoTarget);
+                    const frame = button.closest('.site-frame');
+                    if (frame) activateFrame(frame);
+                });
+            });
+
+            sigils.forEach((sigil) => {
+                sigil.addEventListener('click', () => {
+                    const target = document.querySelector(sigil.getAttribute('href'));
+                    if (target) activateFrame(target);
+                });
+            });
+
+            frames.forEach((frame) => {
+                frame.addEventListener('mouseenter', () => activateFrame(frame));
+                frame.addEventListener('focusin', () => activateFrame(frame));
+            });
+
             activate('demo-markdown');
+            if (frames[0]) activateFrame(frames[0]);
         });
     </script>
 </head>
@@ -58,14 +91,14 @@
     </header>
     <main>
         <article>
-            <section class="lede spec-header site-frame">
+            <section class="lede spec-header site-frame" id="spw-syntax-surface">
                 <p class="spec-kicker">Public Reference Surface</p>
-                <p class="frame-sigil">#&gt;spw_syntax_surface</p>
+                <a class="frame-sigil" href="#spw-syntax-surface">#&gt;spw_syntax_surface</a>
                 <h1>Spw Syntax</h1>
                 <p>Plain text, but frame-aware. Readable by humans, structured for tooling, and projectable into interactive surfaces.</p>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="orientation-frame">
                 <h2>Orientation</h2>
                 <div class="spec-strip">
                     <span class="spec-pill">plain-text first</span>
@@ -104,33 +137,33 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="core-forms-frame">
                 <h2>Core forms</h2>
                 <ul class="syntax-list">
                     <li>
-                        <span class="syntax-token">#&gt;frame</span>
+                        <button class="syntax-token" type="button" data-demo-target="demo-spw">#&gt;frame</button>
                         <span>Name a frame so it can be linked, queried, and projected.</span>
                     </li>
                     <li>
-                        <span class="syntax-token">#:layer</span>
+                        <button class="syntax-token" type="button" data-demo-target="demo-spw">#:layer</button>
                         <span>Mark the interpretive layer or role of the frame.</span>
                     </li>
                     <li>
-                        <span class="syntax-token">^"object"{ }</span>
+                        <button class="syntax-token" type="button" data-demo-target="demo-spw">^"object"{ }</button>
                         <span>Hold structured content in a stable, inspectable body.</span>
                     </li>
                     <li>
-                        <span class="syntax-token">~"..."</span>
+                        <button class="syntax-token" type="button" data-demo-target="demo-spw">~"..."</button>
                         <span>Carry references, paths, or literal anchors.</span>
                     </li>
                     <li>
-                        <span class="syntax-token">?[...]{...}</span>
+                        <button class="syntax-token" type="button" data-demo-target="demo-spw">?[...]{...}</button>
                         <span>Store questions, probes, or interactive interpretive units.</span>
                     </li>
                 </ul>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="composite-example-frame">
                 <h2>Composite example</h2>
                 <pre><code>#>frame_name
 #:layer #!meaning_time
@@ -147,14 +180,14 @@ Files should remain legible.
 </code></pre>
             </section>
 
-            <section class="software-card interactive-demo site-frame">
-                <p class="frame-sigil">@rotate(surface)</p>
+            <section class="software-card interactive-demo site-frame" id="interactive-codeblocks">
+                <a class="frame-sigil" href="#interactive-codeblocks">@rotate(surface)</a>
                 <h2>Interactive codeblocks</h2>
                 <p class="inline-note">One authored unit, three views: source, syntax, and surface.</p>
                 <div class="demo-controls" role="tablist" aria-label="Interactive codeblock views">
-                    <button type="button" data-demo-target="demo-markdown" aria-pressed="true" tabindex="0">Markdown Source</button>
-                    <button type="button" data-demo-target="demo-spw" aria-pressed="false" tabindex="-1">Spw Syntax</button>
-                    <button type="button" data-demo-target="demo-render" aria-pressed="false" tabindex="-1">Interactive Surface</button>
+                    <button class="frame-sigil" type="button" data-demo-target="demo-markdown" aria-pressed="true" tabindex="0">.source</button>
+                    <button class="frame-sigil" type="button" data-demo-target="demo-spw" aria-pressed="false" tabindex="-1">^syntax</button>
+                    <button class="frame-sigil" type="button" data-demo-target="demo-render" aria-pressed="false" tabindex="-1">&gt;surface</button>
                 </div>
                 <div class="demo-panels">
                     <section class="demo-panel is-active" id="demo-markdown">
@@ -195,7 +228,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="obsidian-fit-frame">
                 <h2>Obsidian fit</h2>
                 <div class="spec-grid">
                     <div class="software-card">
@@ -219,7 +252,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="design-influences-frame">
                 <h2>Design influences</h2>
                 <ul class="source-list">
                     <li><span class="source-name">Literate UI</span> operator gestures as navigation primitives, so syntax teaches interaction.</li>
@@ -230,7 +263,7 @@ Files should remain legible.
                 <p class="inline-note">These are adapted from the `spw-workbench` design surfaces and translated here into a public-facing site context.</p>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="pipeline-frame">
                 <h2>Pipeline</h2>
                 <pre><code>Markdown -> Spw frame -> parser -> metadata -> interactive surface
 </code></pre>

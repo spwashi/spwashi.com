@@ -14,6 +14,37 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
 	<link rel="stylesheet" href="/public/css/style.css">
+	<script defer>
+		window.addEventListener('DOMContentLoaded', () => {
+			const frames = Array.from(document.querySelectorAll('.site-frame'));
+			const sigils = Array.from(document.querySelectorAll('.frame-sigil[href^="#"]'));
+			const cards = Array.from(document.querySelectorAll('.frame-card'));
+
+			const activateFrame = (frame) => {
+				frames.forEach((item) => item.classList.toggle('is-active-frame', item === frame));
+			};
+
+			sigils.forEach((sigil) => {
+				sigil.addEventListener('click', () => {
+					const target = document.querySelector(sigil.getAttribute('href'));
+					if (target) activateFrame(target);
+				});
+			});
+
+			cards.forEach((card) => {
+				card.addEventListener('mouseenter', () => {
+					const frame = card.closest('.site-frame');
+					if (frame) activateFrame(frame);
+				});
+				card.addEventListener('focus', () => {
+					const frame = card.closest('.site-frame');
+					if (frame) activateFrame(frame);
+				});
+			});
+
+			if (frames[0]) activateFrame(frames[0]);
+		});
+	</script>
 	<style>
 		ul {
 			list-style: none;
@@ -32,22 +63,22 @@
 		</nav>
 	</header>
 	<main>
-		<section class="site-frame site-hero">
-			<p class="frame-sigil">#&gt;home_frame</p>
+		<section class="site-frame site-hero" id="home-frame">
+			<a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
 			<h1>I design and build local-first software systems.</h1>
 			<p>I am a staff-level software engineer working across language tooling, developer experience, interface systems, and knowledge surfaces.</p>
 			<p>I am currently applying to join Obsidian as its fourth engineer, with a focus on local-first architecture, editor tooling, plugin ecosystems, and maintainable product systems.</p>
 			<div class="frame-operators" aria-label="Frame operators">
-				<span class="operator-chip">? probe</span>
-				<span class="operator-chip">~ reference</span>
-				<span class="operator-chip">@ rotate</span>
-				<span class="operator-chip">^ frame</span>
+				<a class="operator-chip" href="/topics/software/#interactive-codeblocks">? probe</a>
+				<a class="operator-chip" href="/topics/software/#pipeline-frame">~ reference</a>
+				<a class="operator-chip" href="/topics/software/#interactive-codeblocks">@ rotate</a>
+				<a class="operator-chip" href="/topics/software/#spw-syntax-surface">^ frame</a>
 			</div>
 		</section>
 
-		<section class="site-frame">
+		<section class="site-frame" id="current-focus">
 			<div class="frame-heading">
-				<p class="frame-sigil">^"current_focus"{</p>
+				<a class="frame-sigil" href="#current-focus">^"current_focus"{</a>
 				<h2>Current Focus</h2>
 			</div>
 			<div class="frame-grid">
@@ -74,9 +105,9 @@
 			</div>
 		</section>
 
-		<section class="site-frame">
+		<section class="site-frame" id="public-presence">
 			<div class="frame-heading">
-				<p class="frame-sigil">?["public_presence"]</p>
+				<a class="frame-sigil" href="#public-presence">?["public_presence"]</a>
 				<h2>Public Presence</h2>
 			</div>
 			<div class="frame-grid frame-grid--narrow">
@@ -121,9 +152,9 @@
 			</div>
 		</section>
 
-		<section class="site-frame">
+		<section class="site-frame" id="projects">
 			<div class="frame-heading">
-				<p class="frame-sigil">~"projects"</p>
+				<a class="frame-sigil" href="#projects">~"projects"</a>
 				<h2>Projects</h2>
 			</div>
 			<ul class="frame-list frame-list--inline">
