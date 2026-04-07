@@ -1,0 +1,29 @@
+# Site Workspace Manifest
+#
+# Minimal control-plane manifest for the spwashi.com refresh work.
+
+#>site_workspace
+#:manifest
+#:layer #!pragmatics
+
+^"roots"{
+ @repo: ~"../.."
+ @spw: ~".."
+ @index: ~"./index.spw"
+ @home: ~"../../index.html"
+ @about: ~"../../about/index.html"
+ @style: ~"../../public/css/style.css"
+}
+
+^"focus"{
+ primary_surface: @home
+ secondary_surface: @about
+ support_surface: @style
+ invariant: "The homepage and about page carry the main narrative burden for the Obsidian application."
+}
+
+^"constraints"{
+ platform: "static site with hand-authored HTML and shared CSS"
+ tone: "practical, precise, thoughtful, and design-aware"
+ product_goal: "Demonstrate fitness for Obsidian through concrete thinking, not only aspiration"
+}

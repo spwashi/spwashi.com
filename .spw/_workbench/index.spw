@@ -1,0 +1,33 @@
+# Site Refresh Workbench
+#
+# Curated control surface for the Obsidian application refresh.
+
+#>site_refresh_workbench
+#:index #!workbench
+#:layer #!pragmatics
+
+^"intent"{
+ ~#goal: "Hold the practical reasoning for refreshing spwashi.com toward depth, fit, and product clarity."
+ ~#bias: "Prefer implementable narrative and interaction choices over vague personal branding."
+}
+
+^"roots"{
+ @workspace: ~"./workspace.spw"
+ @obsidian: ~"./obsidian-philosophy.spw"
+ @spw: ~"./spw-expansion.spw"
+ @site_refresh: ~"./site-refresh.spw"
+ @interactions: ~"./interaction-model.spw"
+}
+
+^"dispatch"{
+ workspace: @workspace
+ obsidian_philosophy: @obsidian
+ spw_expansion: @spw
+ site_refresh: @site_refresh
+ interactions: @interactions
+}
+
+^"invariant"{
+ "Every surface in this workbench should help produce stronger public-facing copy or design decisions.",
+ "The workbench is a planning instrument, not a decorative transplant from the main spw-workbench repo.",
+}

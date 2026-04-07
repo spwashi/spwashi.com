@@ -1,0 +1,28 @@
+# Obsidian Philosophy Surface
+#
+# Working notes on what should be reflected in the site refresh.
+
+#>obsidian_philosophy
+#:surface #!positioning
+#:layer #!meaning_time
+
+^"product_philosophy"{
+ local_first: "User data should remain legible, durable, and primarily owned by the user."
+ plain_files: "Plain-text files are not just storage; they shape trust, portability, and workflow."
+ extensibility: "A strong substrate plus a healthy plugin ecosystem can outperform monolithic feature accretion."
+ privacy: "Good product decisions should not depend on surveillance."
+ taste: "Depth shows up in restraint, coherence, and consistency across edge cases."
+}
+
+^"implications_for_site_copy"{
+ narrative: "Explain why Spwashi cares about local-first systems, metadata-rich tools, and extensible interfaces."
+ evidence: "Point to work that demonstrates parser/tooling depth, interface design, and system thinking."
+ credibility: "Use concrete language about architecture, interaction, and tradeoffs."
+ avoidance: "Do not overstate alignment through slogans alone."
+}
+
+^"interview_bridge"{
+ system_design: "Link Spw and workbench thinking to editors, plugins, parsing, surfaces, and maintainability."
+ design: "Show product taste through information hierarchy, interaction pacing, and clear affordances."
+ practicality: "Frame ideas in terms of implementation, UX consequences, and long-term stewardship."
+}

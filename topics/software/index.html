@@ -2,8 +2,229 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Software</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Spwashi • Software</title>
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link rel="stylesheet" href="/public/css/style.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script defer>
+        window.addEventListener('DOMContentLoaded', () => {
+            const controls = Array.from(document.querySelectorAll('[data-demo-target]'));
+            const panels = Array.from(document.querySelectorAll('.demo-panel'));
+
+            const activate = (targetId) => {
+                controls.forEach((button) => {
+                    const active = button.dataset.demoTarget === targetId;
+                    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    button.setAttribute('tabindex', active ? '0' : '-1');
+                });
+
+                panels.forEach((panel) => {
+                    panel.classList.toggle('is-active', panel.id === targetId);
+                });
+            };
+
+            controls.forEach((button) => {
+                button.addEventListener('click', () => activate(button.dataset.demoTarget));
+                button.addEventListener('keydown', (event) => {
+                    const currentIndex = controls.indexOf(button);
+                    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    const direction = event.key === 'ArrowRight' ? 1 : -1;
+                    const nextIndex = (currentIndex + direction + controls.length) % controls.length;
+                    const nextButton = controls[nextIndex];
+                    activate(nextButton.dataset.demoTarget);
+                    nextButton.focus();
+                });
+            });
+
+            activate('demo-markdown');
+        });
+    </script>
 </head>
-<body></body>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="lede spec-header">
+                <p class="spec-kicker">Public Reference Surface</p>
+                <h1>Spw Syntax</h1>
+                <p>Plain text, but frame-aware. Readable by humans, structured for tooling, and projectable into interactive surfaces.</p>
+            </section>
+
+            <section>
+                <h2>Orientation</h2>
+                <div class="spec-strip">
+                    <span class="spec-pill">plain-text first</span>
+                    <span class="spec-pill">frame-based</span>
+                    <span class="spec-pill">queryable</span>
+                    <span class="spec-pill">projection-ready</span>
+                    <span class="spec-pill">interactive codeblocks</span>
+                </div>
+            </section>
+
+            <section class="spec-grid">
+                <div class="software-card">
+                    <h2>Markdown base</h2>
+                    <pre><code>## Note
+
+Files should remain legible.
+
+- durable
+- portable
+- inspectable
+</code></pre>
+                </div>
+                <div class="software-card callout">
+                    <h2>Spw frame</h2>
+                    <pre><code>#>note
+#:layer #!pragmatics
+
+^"summary"{
+ claim: "Files should remain legible."
+ tags: ["durable", "portable", "inspectable"]
+}
+</code></pre>
+                    <p class="inline-note">The source stays readable while becoming addressable to parsers, metadata systems, and UI surfaces.</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Core forms</h2>
+                <ul class="syntax-list">
+                    <li>
+                        <span class="syntax-token">#&gt;frame</span>
+                        <span>Name a frame so it can be linked, queried, and projected.</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">#:layer</span>
+                        <span>Mark the interpretive layer or role of the frame.</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">^"object"{ }</span>
+                        <span>Hold structured content in a stable, inspectable body.</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">~"..."</span>
+                        <span>Carry references, paths, or literal anchors.</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">?[...]{...}</span>
+                        <span>Store questions, probes, or interactive interpretive units.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Composite example</h2>
+                <pre><code>#>frame_name
+#:layer #!meaning_time
+
+^"object"{
+ key: "value"
+ list: ["one", "two"]
+ ref: ~"./other-surface.spw"
+}
+
+?["What changes when a note becomes queryable?"]{
+ !probe{ "project this frame into outline, graph, and editable card views" }
+}
+</code></pre>
+            </section>
+
+            <section class="software-card interactive-demo">
+                <h2>Interactive codeblocks</h2>
+                <p class="inline-note">One authored unit, three views: source, syntax, and surface.</p>
+                <div class="demo-controls" role="tablist" aria-label="Interactive codeblock views">
+                    <button type="button" data-demo-target="demo-markdown" aria-pressed="true">Markdown Source</button>
+                    <button type="button" data-demo-target="demo-spw" aria-pressed="false">Spw Syntax</button>
+                    <button type="button" data-demo-target="demo-render" aria-pressed="false">Interactive Surface</button>
+                </div>
+                <div class="demo-panels">
+                    <section class="demo-panel is-active" id="demo-markdown">
+                        <pre><code># Local-first note
+
+Files should remain legible.
+
+- durable
+- portable
+- inspectable
+
+[[Tooling]]
+</code></pre>
+                    </section>
+                    <section class="demo-panel" id="demo-spw">
+                        <pre><code>#>local_first_note
+#:layer #!pragmatics
+
+^"note"{
+ title: "Local-first note"
+ claim: "Files should remain legible."
+ tags: ["durable", "portable", "inspectable"]
+ links: ["Tooling"]
+}
+</code></pre>
+                    </section>
+                    <section class="demo-panel demo-render" id="demo-render">
+                        <h3>Local-first note</h3>
+                        <p>Files should remain legible.</p>
+                        <ul>
+                            <li>durable</li>
+                            <li>portable</li>
+                            <li>inspectable</li>
+                        </ul>
+                        <p><strong>link:</strong> <a href="/">Tooling</a></p>
+                        <p><strong>view:</strong> rendered card from a structured source unit</p>
+                    </section>
+                </div>
+            </section>
+
+            <section>
+                <h2>Obsidian fit</h2>
+                <div class="spec-grid">
+                    <div class="software-card">
+                        <h3>Shared values</h3>
+                        <ul>
+                            <li>durable files</li>
+                            <li>syntax-aware tools</li>
+                            <li>metadata-rich interaction</li>
+                            <li>extensions over opacity</li>
+                        </ul>
+                    </div>
+                    <div class="software-card">
+                        <h3>What I care about</h3>
+                        <ul>
+                            <li>parser and editor tooling</li>
+                            <li>interactive codeblocks</li>
+                            <li>projection from source to UI</li>
+                            <li>design that teaches structure</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Pipeline</h2>
+                <pre><code>Markdown -> Spw frame -> parser -> metadata -> interactive surface
+</code></pre>
+                <p class="inline-note">Not less plain text. More usable structure.</p>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
 </html>

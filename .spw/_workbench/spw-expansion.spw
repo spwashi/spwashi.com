@@ -1,0 +1,31 @@
+# Spw Expansion Surface
+#
+# Grounds the refresh in the depth of current Spw work rather than generic portfolio language.
+
+#>spw_expansion
+#:surface #!portfolio
+#:layer #!meaning_time
+
+^"spw_claims"{
+ language_system: "Spw is not only branding; it is a grammar, tooling, runtime, and documentation effort."
+ practical_value: "The project demonstrates parser design, developer tooling, interface thinking, and system curation."
+ public_artifacts: [
+  "spw-workbench for implementation depth",
+  "spw.quest for documentation and concept framing",
+  "spwashi.ai for design-language and surface thinking"
+ ]
+}
+
+^"what_to_expand_on_site"{
+ implementation: "Explain that Spw includes parser, runtime, and tooling work, not just abstract concepts."
+ architecture: "Name the layers: language, runtime, interface, projection, and documentation."
+ relevance: "Connect those layers to Obsidian concerns like editor extensions, metadata models, plugins, and durable files."
+ restraint: "Use one or two strong examples instead of an exhaustive taxonomy."
+}
+
+^"recommended_homepage_shape"{
+ hero: "Lead with local-first systems and practical tooling."
+ proof: "Show 3-4 concrete artifacts with one-line descriptions."
+ philosophy: "Include a short statement about why software should remain legible to its users."
+ interaction: "Use scannable sections that reward curiosity without requiring long scrolling before value appears."
+}

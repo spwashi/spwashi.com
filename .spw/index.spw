@@ -1,0 +1,25 @@
+# Spw Site Index
+#
+# Root entrypoint for this site's local Spw workbench surfaces.
+
+#>spw_site_index
+#:index #!canon
+#:layer #!pragmatics
+
+^"intent"{
+ ~#goal: "Provide a stable entrypoint for site-refresh planning, Obsidian application framing, and design interaction surfaces."
+}
+
+^"roots"{
+ @spw: ~"."
+ @workbench: ~"./_workbench/index.spw"
+}
+
+^"dispatch"{
+ workbench: @workbench
+}
+
+^"invariant"{
+ "This .spw surface supports practical publishing decisions for spwashi.com.",
+ "It should remain lighter than spw-workbench and oriented toward concrete narrative and interaction outcomes.",
+}

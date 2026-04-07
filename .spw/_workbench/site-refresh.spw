@@ -1,0 +1,33 @@
+# Site Refresh Surface
+#
+# Concrete recommendations for evolving the site toward an Obsidian-ready application narrative.
+
+#>site_refresh
+#:surface #!planning
+#:layer #!pragmatics
+
+^"refresh_objectives"{
+ objective_1: "Make the homepage immediately signal practical systems depth."
+ objective_2: "Use the About page to connect engineering, design, and artistic practice without sounding diffuse."
+ objective_3: "Create a coherent path from public artifacts to Obsidian relevance."
+ objective_4: "Reduce the sense of domain sprawl by organizing related surfaces around a clear hierarchy."
+}
+
+^"content_recommendations"{
+ homepage: [
+  "State the core engineering focus in the first screen.",
+  "Surface Spw as a real technical system with implementation depth.",
+  "Mention Obsidian as a current application target, but keep the page durable beyond this single job cycle."
+ ]
+ about: [
+  "Emphasize systems thinking, interface design, and local-first values.",
+  "Replace defensive or polarizing biographical material with high-signal professional framing.",
+  "Treat art as a source of product sensibility, not a separate identity track."
+ ]
+}
+
+^"durable_positioning"{
+ short_form: "I build local-first systems for language, tooling, and knowledge."
+ medium_form: "My work spans parsers, runtimes, interface systems, and publishable surfaces, with a focus on clarity, ownership, and extensibility."
+ long_form: "I care about software that stays legible to the people who use it: durable files, thoughtful interfaces, humane tooling, and ecosystems that scale through strong foundations rather than opaque complexity."
+}

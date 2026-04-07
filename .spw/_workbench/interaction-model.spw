@@ -1,0 +1,27 @@
+# Interaction Model Surface
+#
+# Notes on how the refreshed site should feel, not just what it should say.
+
+#>interaction_model
+#:surface #!ux
+#:layer #!pragmatics
+
+^"interaction_principles"{
+ first_impression: "Calm, legible, and technically grounded."
+ pacing: "Reveal depth progressively: headline -> proof points -> linked artifacts -> deeper context."
+ affordance: "Links should read like intentional paths, not a directory dump."
+ cohesion: "Typography, spacing, and section naming should reinforce a sense of order."
+}
+
+^"design_implications"{
+ hierarchy: "Prioritize Current Focus before broader link collections."
+ grouping: "Separate current engineering work from adjacent creative and ecosystem surfaces."
+ microcopy: "Prefer concise descriptive labels over clever but ambiguous headings."
+ visuals: "Existing imagery can stay, but it should feel in conversation with the systems narrative rather than detached from it."
+}
+
+^"obsidian_fit"{
+ product_signal: "The site should feel like someone who can design tools for thinking, not just talk about them."
+ reading_experience: "Information density should remain high without becoming chaotic."
+ implementation_signal: "Interaction choices should imply careful authorship and restraint."
+}
