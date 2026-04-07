@@ -33,6 +33,8 @@ const detect = (text) => {
     return null;
 };
 
+let initialized = false;
+
 // Attach data-spw-operator and a descriptive title to each matching sigil.
 const annotateSignals = () => {
     const sigils = Array.from(
@@ -75,8 +77,23 @@ const wireProbeSigils = () => {
         if (target && target.hidden) {
             sigil.addEventListener('click', (e) => {
                 if (sigil.tagName === 'A') e.preventDefault();
-                target.hidden = false;
-                target.classList.add('is-active-panel');
+
+                if (target.dataset.modeGroup && target.dataset.modePanel && window.spwInterface?.setGroupMode) {
+                    window.spwInterface.setGroupMode(target.dataset.modeGroup, target.dataset.modePanel, {
+                        source: 'probe',
+                        force: true
+                    });
+                } else {
+                    target.hidden = false;
+                    target.classList.add('is-active-panel');
+                }
+
+                if (window.spwInterface?.activateFrame) {
+                    window.spwInterface.activateFrame(frame, {
+                        source: 'probe',
+                        force: true
+                    });
+                }
             });
         }
     }
@@ -99,7 +116,10 @@ const annotateRefs = () => {
     }
 };
 
-const onReady = () => {
+const initSpwOperators = () => {
+    if (initialized) return;
+    initialized = true;
+
     annotateSignals();
     wireProbeSigils();
     annotateRefs();
@@ -109,8 +129,4 @@ const onReady = () => {
     observer.observe(document.body, { childList: true, subtree: true });
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-} else {
-    onReady();
-}
+export { initSpwOperators };

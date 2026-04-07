@@ -3,6 +3,7 @@ import { loadPretext } from '/public/js/pretext-utils.js';
 const METRICS_FONT = '16px JetBrains Mono, monospace';
 const LINE_HEIGHT = 26;
 const PADDING = 40;
+let initialized = false;
 
 const getFramePrimaryText = (frame) => {
     const h1 = frame.querySelector('h1');
@@ -66,9 +67,12 @@ const updateAll = (tracked, pretext, handleCache) => {
     }
 };
 
-const onReady = async () => {
+const initFrameMetrics = async () => {
+    if (initialized) return;
+
     const frames = Array.from(document.querySelectorAll('.site-frame'));
     if (!frames.length) return;
+    initialized = true;
 
     let pretext;
     try {
@@ -98,8 +102,4 @@ const onReady = async () => {
     scheduleUpdate();
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-} else {
-    onReady();
-}
+export { initFrameMetrics };

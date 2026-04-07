@@ -1,3 +1,5 @@
+let initialized = false;
+
 const createConsole = () => {
     const root = document.createElement('aside');
     root.className = 'spw-console';
@@ -161,9 +163,12 @@ const describeModeAction = (detail) => {
     }
 };
 
-const onReady = () => {
+const initSpwConsole = () => {
+    if (initialized) return;
+
     const api = window.spwInterface;
     if (!api) return;
+    initialized = true;
 
     const nodes = createConsole();
     document.body.appendChild(nodes.root);
@@ -195,8 +200,4 @@ const onReady = () => {
     });
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-} else {
-    onReady();
-}
+export { initSpwConsole };

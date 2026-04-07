@@ -16,10 +16,14 @@ The layout learns to breathe.`
 import { loadPretext } from '/public/js/pretext-utils.js';
 
 const DEMO_FONT = '16px system-ui';
+let initialized = false;
 
-const onReady = async () => {
+const initPretextLab = async () => {
+    if (initialized) return;
+
     const input = document.querySelector('#pretext-input');
     if (!input) return;
+    initialized = true;
 
     const widthInput = document.querySelector('#pretext-width');
     const lineHeightInput = document.querySelector('#pretext-line-height');
@@ -191,8 +195,4 @@ const onReady = async () => {
     }
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-} else {
-    onReady();
-}
+export { initPretextLab };

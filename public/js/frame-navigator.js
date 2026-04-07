@@ -9,6 +9,7 @@
 //   Escape     →  close / deactivate
 
 // ─── Frame metadata ───────────────────────────────────────────────────────────
+let initialized = false;
 
 const emitAction = (token, description) => {
     document.dispatchEvent(new CustomEvent('spw:action', {
@@ -17,6 +18,28 @@ const emitAction = (token, description) => {
 };
 
 const getFrameMeta = (frame) => {
+    if (window.spwInterface?.getFrameMeta) {
+        const shared = window.spwInterface.getFrameMeta(frame);
+        const opType = frame.querySelector('.frame-sigil')?.dataset.spwOperator ?? null;
+        const PREFIX_MAP = {
+            frame: '#>',
+            object: '^"',
+            ref: '~"',
+            probe: '?[',
+            action: '@',
+            layer: '#:',
+            surface: '>',
+            stream: '*',
+            pragma: '!'
+        };
+
+        return {
+            ...shared,
+            opType,
+            prefix: opType ? (PREFIX_MAP[opType] ?? opType) : null
+        };
+    }
+
     // Prefer the first frame-sigil for operator context.
     // Prefer h1 > h2 as the readable label.
     const sigil   = frame.querySelector('.frame-sigil');
@@ -220,9 +243,12 @@ const navigateFrames = (dir) => {
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 
-const onReady = () => {
+const initFrameNavigator = () => {
+    if (initialized) return;
+
     const siteFrameEls = Array.from(document.querySelectorAll('.site-frame'));
     if (!siteFrameEls.length) return;
+    initialized = true;
 
     const frames = siteFrameEls.map((frame) => ({ frame, meta: getFrameMeta(frame) }));
 
@@ -362,8 +388,4 @@ const onReady = () => {
     refresh();
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onReady);
-} else {
-    onReady();
-}
+export { initFrameNavigator };
