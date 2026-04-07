@@ -9,60 +9,13 @@
 //   Escape     →  close / deactivate
 
 // ─── Frame metadata ───────────────────────────────────────────────────────────
+import {
+    emitSpwAction,
+    getFrameMeta,
+    isInputFocused
+} from './spw-shared.js';
+
 let initialized = false;
-
-const emitAction = (token, description) => {
-    document.dispatchEvent(new CustomEvent('spw:action', {
-        detail: { token, description }
-    }));
-};
-
-const getFrameMeta = (frame) => {
-    if (window.spwInterface?.getFrameMeta) {
-        const shared = window.spwInterface.getFrameMeta(frame);
-        const opType = frame.querySelector('.frame-sigil')?.dataset.spwOperator ?? null;
-        const PREFIX_MAP = {
-            frame: '#>',
-            object: '^"',
-            ref: '~"',
-            probe: '?[',
-            action: '@',
-            layer: '#:',
-            surface: '>',
-            stream: '*',
-            pragma: '!'
-        };
-
-        return {
-            ...shared,
-            opType,
-            prefix: opType ? (PREFIX_MAP[opType] ?? opType) : null
-        };
-    }
-
-    // Prefer the first frame-sigil for operator context.
-    // Prefer h1 > h2 as the readable label.
-    const sigil   = frame.querySelector('.frame-sigil');
-    const heading = frame.querySelector('h1, h2');
-    const opType  = sigil?.dataset.spwOperator ?? null;
-    const sigilTx = sigil?.textContent.trim() ?? '';
-
-    // Derive a short operator prefix for the chip.
-    const PREFIX_MAP = {
-        frame:   '#>',  object: '^"',  ref:    '~"',
-        probe:   '?[',  action: '@',   layer:  '#:',
-        surface: '>',   stream: '*',   pragma: '!',
-    };
-    const prefix = opType ? (PREFIX_MAP[opType] ?? opType) : null;
-
-    return {
-        id:          frame.id,
-        opType,
-        prefix,
-        sigilText:   sigilTx,
-        headingText: heading?.textContent.trim() ?? frame.id ?? '(frame)',
-    };
-};
 
 // ─── Frame activation (mirrors site.js logic without coupling) ───────────────
 
@@ -224,11 +177,6 @@ const syncActiveItem = (list, frames) => {
 
 // ─── Keyboard spells ──────────────────────────────────────────────────────────
 
-const isInputFocused = () => {
-    const el = document.activeElement;
-    return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
-};
-
 const navigateFrames = (dir) => {
     const all = Array.from(document.querySelectorAll('.site-frame'));
     const active = getActiveFrame();
@@ -237,7 +185,7 @@ const navigateFrames = (dir) => {
     if (next) {
         activateFrame(next);
         next.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        emitAction(dir > 0 ? '@sequence.next' : '@sequence.prev', getFrameMeta(next).headingText);
+        emitSpwAction(dir > 0 ? '@sequence.next' : '@sequence.prev', getFrameMeta(next).headingText);
     }
 };
 
@@ -261,7 +209,7 @@ const initFrameNavigator = () => {
         renderList(list, frames, filterText, (frame) => {
             activateFrame(frame);
             frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            emitAction('@navigator.select', getFrameMeta(frame).headingText);
+            emitSpwAction('@navigator.select', getFrameMeta(frame).headingText);
             close();
         });
         syncActiveItem(list, frames);
@@ -275,7 +223,7 @@ const initFrameNavigator = () => {
         filterText = '';
         refresh();
         requestAnimationFrame(() => searchInput.focus());
-        emitAction('#>frames.open', 'frame navigator');
+        emitSpwAction('#>frames.open', 'frame navigator');
     };
 
     const close = (options = {}) => {
@@ -283,7 +231,7 @@ const initFrameNavigator = () => {
         root.classList.remove('is-open');
         triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) triggerBtn.focus();
-        emitAction('!frames.close', 'frame navigator');
+        emitSpwAction('!frames.close', 'frame navigator');
     };
 
     const toggle = () => (panel.hidden ? open() : close());

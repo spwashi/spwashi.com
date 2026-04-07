@@ -14,6 +14,19 @@
     --line-strong: rgba(0, 128, 128, 0.34);
     --teal: hsl(180 100% 28%);
     --teal-deep: hsl(180 100% 18%);
+    --token-bg: rgba(255, 255, 255, 0.74);
+    --token-bg-hover: rgba(255, 255, 255, 0.96);
+    --token-border: rgba(0, 128, 128, 0.2);
+    --token-border-strong: rgba(0, 128, 128, 0.4);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-bg-hover: rgba(255, 255, 255, 0.84);
+    --card-border-hover: rgba(0, 128, 128, 0.28);
+    --card-shadow: 0 6px 18px rgba(14, 18, 20, 0.035);
+    --card-shadow-hover: 0 12px 28px rgba(14, 18, 20, 0.06);
+    --floating-bg: var(--surface-strong);
+    --floating-bg-warm: rgba(255, 251, 242, 0.92);
+    --floating-shadow: 0 16px 40px rgba(14, 18, 20, 0.12);
+    --floating-shadow-side: 4px 0 28px rgba(14, 18, 20, 0.1);
     --shadow: 0 10px 24px rgba(14, 18, 20, 0.06);
     --shadow-active: 0 16px 38px rgba(0, 128, 128, 0.1);
     --radius: 0.8rem;
@@ -207,9 +220,9 @@ main > article {
     gap: 0.35rem;
     width: fit-content;
     padding: 0.32rem 0.62rem;
-    border: 1px solid rgba(0, 128, 128, 0.2);
+    border: 1px solid var(--token-border);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.74);
+    background: var(--token-bg);
     color: var(--teal);
     text-decoration: none;
     font-size: 0.82rem;
@@ -223,8 +236,8 @@ main > article {
 .frame-sigil:focus-visible,
 .operator-chip:hover,
 .operator-chip:focus-visible {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(0, 128, 128, 0.4);
+    background: var(--token-bg-hover);
+    border-color: var(--token-border-strong);
     transform: translateY(-1px);
 }
 
@@ -295,10 +308,10 @@ main > article {
     padding: 1rem 1.05rem;
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--card-bg);
     color: inherit;
     box-sizing: border-box;
-    box-shadow: 0 6px 18px rgba(14, 18, 20, 0.035);
+    box-shadow: var(--card-shadow);
     transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease, transform 120ms ease;
 }
 
@@ -312,9 +325,9 @@ a.frame-card {
 .frame-panel:focus-within,
 .software-card:hover,
 .software-card:focus-within {
-    border-color: rgba(0, 128, 128, 0.28);
-    background: rgba(255, 255, 255, 0.84);
-    box-shadow: 0 12px 28px rgba(14, 18, 20, 0.06);
+    border-color: var(--card-border-hover);
+    background: var(--card-bg-hover);
+    box-shadow: var(--card-shadow-hover);
     transform: translateY(-2px);
 }
 
@@ -608,68 +621,91 @@ figcaption {
 
 /*
  * Each operator prefix has a distinct semantic role in the Spw grammar.
- * Visual identity maps to role: declaration, structure, reference, inquiry, action.
- * Colors stay within a narrow, restrained palette to avoid visual noise.
+ * The palette is defined once as custom properties so frame sigils, the
+ * navigator, and any future textual surfaces can reuse it without copying
+ * per-operator colors.
  */
 
-[data-spw-features~="operators"] [data-spw-operator="frame"] {
+[data-spw-operator="frame"] {
     /* #>name — canonical frame declaration, the primary structural anchor */
-    color: var(--teal);
-    border-color: rgba(0, 128, 128, 0.32);
+    --spw-operator-color: var(--teal);
+    --spw-operator-border: rgba(0, 128, 128, 0.32);
+    --spw-operator-bg-soft: rgba(0, 128, 128, 0.06);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="object"] {
+[data-spw-operator="object"] {
     /* ^"name"{ } — structured content body, warm-shifted */
-    color: hsl(36 80% 36%);
-    border-color: hsla(36, 80%, 36%, 0.22);
-    background: rgba(255, 248, 235, 0.72);
+    --spw-operator-color: hsl(36 80% 36%);
+    --spw-operator-border: hsla(36, 80%, 36%, 0.22);
+    --spw-operator-bg-soft: rgba(255, 248, 235, 0.72);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="ref"] {
+[data-spw-operator="ref"] {
     /* ~"path" or ~#name — reference, points outward, cooler hue */
-    color: hsl(210 70% 38%);
-    border-color: hsla(210, 70%, 38%, 0.2);
-    background: rgba(235, 244, 255, 0.72);
+    --spw-operator-color: hsl(210 70% 38%);
+    --spw-operator-border: hsla(210, 70%, 38%, 0.2);
+    --spw-operator-bg-soft: rgba(235, 244, 255, 0.72);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="probe"] {
+[data-spw-operator="probe"] {
     /* ?[...] — question or interactive probe, violet-adjacent */
-    color: hsl(268 55% 42%);
-    border-color: hsla(268, 55%, 42%, 0.2);
-    background: rgba(245, 238, 255, 0.72);
+    --spw-operator-color: hsl(268 55% 42%);
+    --spw-operator-border: hsla(268, 55%, 42%, 0.2);
+    --spw-operator-bg-soft: rgba(245, 238, 255, 0.72);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="action"] {
+[data-spw-operator="action"] {
     /* @action — imperative, deeper teal */
-    color: hsl(180 100% 22%);
-    border-color: rgba(0, 100, 100, 0.35);
-    background: rgba(230, 248, 248, 0.72);
+    --spw-operator-color: hsl(180 100% 22%);
+    --spw-operator-border: rgba(0, 100, 100, 0.35);
+    --spw-operator-bg-soft: rgba(230, 248, 248, 0.72);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="layer"] {
+[data-spw-operator="layer"] {
     /* #:layer — meta, interpretive role, muted */
-    color: var(--ink-soft);
-    border-color: rgba(14, 18, 20, 0.14);
-    background: rgba(255, 255, 255, 0.5);
+    --spw-operator-color: var(--ink-soft);
+    --spw-operator-border: rgba(14, 18, 20, 0.14);
+    --spw-operator-bg-soft: rgba(255, 255, 255, 0.5);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="pragma"] {
+[data-spw-operator="pragma"] {
     /* !pragma — runtime constraint, also muted but slightly stronger */
-    color: hsl(0 40% 38%);
-    border-color: hsla(0, 40%, 38%, 0.18);
-    background: rgba(255, 240, 240, 0.65);
+    --spw-operator-color: hsl(0 40% 38%);
+    --spw-operator-border: hsla(0, 40%, 38%, 0.18);
+    --spw-operator-bg-soft: rgba(255, 240, 240, 0.65);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="stream"] {
+[data-spw-operator="stream"] {
     /* *stream — dynamic / event-driven */
-    color: hsl(160 60% 32%);
-    border-color: hsla(160, 60%, 32%, 0.22);
+    --spw-operator-color: hsl(160 60% 32%);
+    --spw-operator-border: hsla(160, 60%, 32%, 0.22);
 }
 
-[data-spw-features~="operators"] [data-spw-operator="surface"] {
+[data-spw-operator="surface"] {
     /* >surface — projection, rendered view */
-    color: hsl(180 70% 30%);
-    border-color: rgba(0, 128, 128, 0.24);
+    --spw-operator-color: hsl(180 70% 30%);
+    --spw-operator-border: rgba(0, 128, 128, 0.24);
+}
+
+[data-spw-features~="operators"] [data-spw-operator],
+[data-spw-features~="console"] .spw-console [data-spw-operator] {
+    color: var(--spw-operator-color, currentColor);
+    border-color: var(--spw-operator-border, currentColor);
+}
+
+[data-spw-features~="operators"] [data-spw-operator="object"],
+[data-spw-features~="operators"] [data-spw-operator="ref"],
+[data-spw-features~="operators"] [data-spw-operator="probe"],
+[data-spw-features~="operators"] [data-spw-operator="action"],
+[data-spw-features~="operators"] [data-spw-operator="layer"],
+[data-spw-features~="operators"] [data-spw-operator="pragma"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="object"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="ref"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="probe"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="action"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="layer"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="pragma"] {
+    background: var(--spw-operator-bg-soft);
 }
 
 /* Hover/focus states respect the operator family color */
@@ -863,9 +899,9 @@ body > footer {
 [data-spw-features~="navigator"] .spw-nav-panel {
     width: clamp(220px, 24vw, 280px);
     height: 100%;
-    background: var(--surface-strong);
+    background: var(--floating-bg);
     border-right: 1px solid var(--line-strong);
-    box-shadow: 4px 0 28px rgba(14, 18, 20, 0.1);
+    box-shadow: var(--floating-shadow-side);
     display: flex;
     flex-direction: column;
     pointer-events: all;
@@ -1017,20 +1053,10 @@ body > footer {
     white-space: nowrap;
 
     /* Default — unstyled operators fall back to ink */
-    color: var(--ink-soft);
-    border-color: var(--line);
-    background: rgba(255, 255, 255, 0.5);
+    color: var(--spw-operator-color, var(--ink-soft));
+    border-color: var(--spw-operator-border, var(--line));
+    background: var(--spw-operator-bg-soft, rgba(255, 255, 255, 0.5));
 }
-
-/* operator-chip inherits [data-spw-operator] colors */
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="frame"]   { color: var(--teal); border-color: rgba(0,128,128,0.3); background: rgba(0,128,128,0.06); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="object"]  { color: hsl(36 80% 36%); border-color: hsla(36,80%,36%,0.22); background: rgba(255,248,235,0.7); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="ref"]     { color: hsl(210 70% 38%); border-color: hsla(210,70%,38%,0.2); background: rgba(235,244,255,0.7); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="probe"]   { color: hsl(268 55% 42%); border-color: hsla(268,55%,42%,0.2); background: rgba(245,238,255,0.7); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="action"]  { color: hsl(180 100% 22%); border-color: rgba(0,100,100,0.3); background: rgba(230,248,248,0.7); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="layer"]   { color: var(--ink-soft); border-color: rgba(14,18,20,0.12); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="surface"] { color: hsl(180 70% 30%); border-color: rgba(0,128,128,0.2); }
-[data-spw-features~="navigator"] .spw-nav-op-chip[data-spw-operator="stream"]  { color: hsl(160 60% 32%); border-color: hsla(160,60%,32%,0.2); }
 
 [data-spw-features~="navigator"] .spw-nav-item-label {
     overflow: hidden;
@@ -1085,8 +1111,8 @@ body > footer {
     padding: 0.85rem 0.95rem;
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
-    background: rgba(255, 251, 242, 0.92);
-    box-shadow: 0 16px 40px rgba(14, 18, 20, 0.12);
+    background: var(--floating-bg-warm);
+    box-shadow: var(--floating-shadow);
     backdrop-filter: blur(10px);
 }
 
@@ -1164,9 +1190,9 @@ body > footer {
         width: auto;
         min-height: 2.65rem;
         padding: 0.55rem 0.82rem;
-        border: 1px solid rgba(0, 128, 128, 0.2);
+        border: 1px solid var(--token-border);
         border-radius: 999px;
-        background: rgba(255, 251, 242, 0.94);
+        background: var(--floating-bg-warm);
         box-shadow: 0 10px 28px rgba(14, 18, 20, 0.12);
     }
 

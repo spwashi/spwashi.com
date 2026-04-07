@@ -1,27 +1,10 @@
-const onDomReady = (callback) => {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', callback, { once: true });
-        return;
-    }
-
-    callback();
-};
-
-const getRequestedFeatures = () => new Set(
-    (document.body?.dataset.spwFeatures || '')
-        .split(/\s+/)
-        .map((feature) => feature.trim())
-        .filter(Boolean)
-);
-
-const loadFeature = async (specifier, exportName) => {
-    const module = await import(specifier);
-    const init = module[exportName];
-    if (typeof init === 'function') {
-        return init();
-    }
-    return null;
-};
+import {
+    emitSpwEvent,
+    getFrameMeta,
+    getRequestedFeatures,
+    loadFeature,
+    onDomReady
+} from './spw-shared.js';
 
 const initSiteCore = () => {
     const frames = Array.from(document.querySelectorAll('.site-frame'));
@@ -29,29 +12,6 @@ const initSiteCore = () => {
         activeFrame: null,
         activeFrameId: null,
         groupModes: new Map()
-    };
-
-    const emit = (name, detail) => {
-        document.dispatchEvent(new CustomEvent(`spw:${name}`, { detail }));
-    };
-
-    const getFrameMeta = (frame) => {
-        if (!frame) {
-            return {
-                id: '',
-                sigilText: '#>frame',
-                headingText: 'Frame'
-            };
-        }
-
-        const sigil = frame.querySelector('.frame-sigil');
-        const heading = frame.querySelector('h1, h2, h3');
-
-        return {
-            id: frame.id || '',
-            sigilText: sigil?.textContent.trim() || (frame.id ? `#>${frame.id}` : '#>frame'),
-            headingText: heading?.textContent.trim() || frame.id || 'Frame'
-        };
     };
 
     const activateFrame = (frame, options = {}) => {
@@ -65,7 +25,7 @@ const initSiteCore = () => {
         state.activeFrameId = meta.id;
 
         if (changed || options.force) {
-            emit('frame-change', {
+            emitSpwEvent('frame-change', {
                 ...meta,
                 frame,
                 source: options.source || 'direct'
@@ -132,7 +92,7 @@ const initSiteCore = () => {
         }
 
         if (changed || options.force) {
-            emit('mode-change', {
+            emitSpwEvent('mode-change', {
                 groupName,
                 modeValue: nextMode,
                 label: activeButton?.textContent.trim() || nextMode,
@@ -152,7 +112,7 @@ const initSiteCore = () => {
 
     window.spwInterface = {
         activateFrame,
-        emit,
+        emit: emitSpwEvent,
         getActiveFrame,
         getFrameMeta,
         getState: () => ({
@@ -164,28 +124,39 @@ const initSiteCore = () => {
         setGroupMode
     };
 
-    const interactiveAnchors = Array.from(
-        document.querySelectorAll('.frame-sigil[href^="#"], .operator-chip[href^="#"]')
+    const anchorSelector = '.frame-sigil[href^="#"], .operator-chip[href^="#"]';
+    const frameContextSelector = '.frame-card, .frame-panel, .mode-panel, .site-figure, .syntax-token, .frame-list a';
+
+    const getClosestMatch = (target, selector) => (
+        target instanceof Element ? target.closest(selector) : null
     );
 
-    interactiveAnchors.forEach((anchor) => {
-        anchor.addEventListener('click', () => {
-            const targetFrame = resolveTargetFrame(anchor.getAttribute('href'));
-            if (targetFrame) {
-                activateFrame(targetFrame, { source: 'anchor', force: true });
-            }
-        });
+    const activateFrameFromNode = (node, source) => {
+        const frame = node?.closest('.site-frame');
+        if (!frame) return;
+        activateFrame(frame, { source });
+    };
+
+    document.addEventListener('click', (event) => {
+        const anchor = getClosestMatch(event.target, anchorSelector);
+        if (!anchor) return;
+
+        const targetFrame = resolveTargetFrame(anchor.getAttribute('href'));
+        if (targetFrame) {
+            activateFrame(targetFrame, { source: 'anchor', force: true });
+        }
     });
 
-    const frameSensitiveNodes = Array.from(
-        document.querySelectorAll('.frame-card, .frame-panel, .mode-panel, .site-figure, .syntax-token, .frame-list a')
-    );
+    document.addEventListener('pointerover', (event) => {
+        const node = getClosestMatch(event.target, frameContextSelector);
+        if (!node) return;
+        if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) return;
+        activateFrameFromNode(node, 'hover');
+    });
 
-    frameSensitiveNodes.forEach((node) => {
-        const frame = node.closest('.site-frame');
-        if (!frame) return;
-        node.addEventListener('pointerenter', () => activateFrame(frame, { source: 'hover' }));
-        node.addEventListener('focusin', () => activateFrame(frame, { source: 'focus' }));
+    document.addEventListener('focusin', (event) => {
+        const node = getClosestMatch(event.target, frameContextSelector);
+        if (node) activateFrameFromNode(node, 'focus');
     });
 
     const groupedNodes = Array.from(document.querySelectorAll('[data-mode-group]'));

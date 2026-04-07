@@ -14,24 +14,7 @@
 //   !pragma    pragma — encodes a runtime constraint or hint
 //   >surface   surface — a projected or rendered view
 
-const OPERATORS = [
-    { pattern: /^#>/, type: 'frame',   label: 'frame declaration' },
-    { pattern: /^#:/, type: 'layer',   label: 'layer marker' },
-    { pattern: /^\^/, type: 'object',  label: 'object' },
-    { pattern: /^~/,  type: 'ref',     label: 'reference' },
-    { pattern: /^\?/, type: 'probe',   label: 'probe' },
-    { pattern: /^@/,  type: 'action',  label: 'action' },
-    { pattern: /^\*/, type: 'stream',  label: 'stream' },
-    { pattern: /^!/,  type: 'pragma',  label: 'pragma' },
-    { pattern: /^>/,  type: 'surface', label: 'surface' },
-];
-
-const detect = (text) => {
-    for (const op of OPERATORS) {
-        if (op.pattern.test(text)) return op;
-    }
-    return null;
-};
+import { detectOperator } from './spw-shared.js';
 
 let initialized = false;
 
@@ -43,7 +26,7 @@ const annotateSignals = () => {
 
     for (const sigil of sigils) {
         const text = sigil.textContent.trim();
-        const op = detect(text);
+        const op = detectOperator(text);
         if (op && !sigil.dataset.spwOperator) {
             sigil.dataset.spwOperator = op.type;
             if (!sigil.title) sigil.title = op.label;
@@ -60,6 +43,8 @@ const wireProbeSigils = () => {
     );
 
     for (const sigil of probeSigils) {
+        if (sigil.dataset.spwProbeWired === 'true') continue;
+
         const frame = sigil.closest('.site-frame');
         if (!frame) continue;
 
@@ -75,6 +60,7 @@ const wireProbeSigils = () => {
             : panels[0];
 
         if (target && target.hidden) {
+            sigil.dataset.spwProbeWired = 'true';
             sigil.addEventListener('click', (e) => {
                 if (sigil.tagName === 'A') e.preventDefault();
 
@@ -125,7 +111,11 @@ const initSpwOperators = () => {
     annotateRefs();
 
     // Re-run when mode panels swap in new sigils (dynamic content).
-    const observer = new MutationObserver(() => annotateSignals());
+    const observer = new MutationObserver(() => {
+        annotateSignals();
+        wireProbeSigils();
+        annotateRefs();
+    });
     observer.observe(document.body, { childList: true, subtree: true });
 };
 
