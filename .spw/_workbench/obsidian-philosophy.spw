@@ -26,3 +26,12 @@
  design: "Show product taste through information hierarchy, interaction pacing, and clear affordances."
  practicality: "Frame ideas in terms of implementation, UX consequences, and long-term stewardship."
 }
+
+^"design_bridge"{
+ source_literate_ui: ~"/Users/spwashi/Development/active/spw-workbench/.spw/patterns/literate-ui.spw"
+ source_symmetry_ui: ~"/Users/spwashi/Development/active/spw-workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+ source_ux_contract: ~"/Users/spwashi/Development/active/spw-workbench/.spw/biome/ocean/ux.spw"
+ principle_1: "Syntax can act as interaction grammar: a tool for thought should let structure teach behavior."
+ principle_2: "Spatial variation should feel governed and mirrored, not arbitrary."
+ principle_3: "Restraint, stable placement, and navigable references are part of product depth."
+}

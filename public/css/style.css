@@ -5,6 +5,8 @@
     --card-border: rgba(0, 0, 0, 0.15);
     --accent-bg: rgba(0, 128, 128, 0.12);
     --ink-soft: rgba(0, 0, 0, 0.75);
+    --frame-bg: rgba(255, 255, 255, 0.35);
+    --frame-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 html, body {
     background-color: wheat;
@@ -66,6 +68,88 @@ main {
 main article,
 main section.software-panel {
     width: min(100%, var(--panel-width));
+}
+main .site-frame {
+    width: min(100%, var(--panel-width));
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid var(--card-border);
+    background: var(--frame-bg);
+    box-sizing: border-box;
+    box-shadow: var(--frame-shadow);
+}
+main .site-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+main .frame-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+main .frame-sigil {
+    margin: 0;
+    color: teal;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+}
+main .frame-operators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+main .operator-chip {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.75);
+}
+main .frame-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+main .frame-grid--narrow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+main .frame-card,
+main .frame-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1rem;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.68);
+    color: inherit;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+main .frame-card:hover,
+main .frame-card:focus-visible,
+main .frame-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    background: rgba(255,255,255,0.82);
+}
+main .frame-card-sigil {
+    color: teal;
+    font-size: 0.86rem;
+}
+main .frame-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+main .frame-list li + li {
+    margin-top: 0.5rem;
+}
+main .frame-list--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 main article {
     line-height: 1.6;
@@ -147,6 +231,24 @@ main article .spec-pill {
     padding: 0.45rem 0.7rem;
     border: 1px solid var(--card-border);
     background: rgba(255, 255, 255, 0.7);
+}
+main article .source-list {
+    list-style: none;
+    padding-left: 0;
+}
+main article .source-list li {
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--card-border);
+}
+main article .source-list li:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+main article .source-name {
+    display: inline-block;
+    min-width: 13rem;
+    font-weight: bold;
+    color: teal;
 }
 main .interactive-demo {
     display: flex;
@@ -254,10 +356,13 @@ summary:hover {
 }
 
 @media (max-width: 700px) {
+    main .site-frame,
     main article section,
     main .software-card {
         padding: 0.85rem;
     }
+    main .frame-grid,
+    main .frame-grid--narrow,
     main article .spec-grid {
         grid-template-columns: 1fr;
     }

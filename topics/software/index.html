@@ -58,13 +58,14 @@
     </header>
     <main>
         <article>
-            <section class="lede spec-header">
+            <section class="lede spec-header site-frame">
                 <p class="spec-kicker">Public Reference Surface</p>
+                <p class="frame-sigil">#&gt;spw_syntax_surface</p>
                 <h1>Spw Syntax</h1>
                 <p>Plain text, but frame-aware. Readable by humans, structured for tooling, and projectable into interactive surfaces.</p>
             </section>
 
-            <section>
+            <section class="site-frame">
                 <h2>Orientation</h2>
                 <div class="spec-strip">
                     <span class="spec-pill">plain-text first</span>
@@ -77,6 +78,7 @@
 
             <section class="spec-grid">
                 <div class="software-card">
+                    <p class="frame-sigil">.markdown_base</p>
                     <h2>Markdown base</h2>
                     <pre><code>## Note
 
@@ -88,6 +90,7 @@ Files should remain legible.
 </code></pre>
                 </div>
                 <div class="software-card callout">
+                    <p class="frame-sigil">^"spw_frame"{</p>
                     <h2>Spw frame</h2>
                     <pre><code>#>note
 #:layer #!pragmatics
@@ -101,7 +104,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section>
+            <section class="site-frame">
                 <h2>Core forms</h2>
                 <ul class="syntax-list">
                     <li>
@@ -127,7 +130,7 @@ Files should remain legible.
                 </ul>
             </section>
 
-            <section>
+            <section class="site-frame">
                 <h2>Composite example</h2>
                 <pre><code>#>frame_name
 #:layer #!meaning_time
@@ -144,7 +147,8 @@ Files should remain legible.
 </code></pre>
             </section>
 
-            <section class="software-card interactive-demo">
+            <section class="software-card interactive-demo site-frame">
+                <p class="frame-sigil">@rotate(surface)</p>
                 <h2>Interactive codeblocks</h2>
                 <p class="inline-note">One authored unit, three views: source, syntax, and surface.</p>
                 <div class="demo-controls" role="tablist" aria-label="Interactive codeblock views">
@@ -191,7 +195,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section>
+            <section class="site-frame">
                 <h2>Obsidian fit</h2>
                 <div class="spec-grid">
                     <div class="software-card">
@@ -215,7 +219,18 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section>
+            <section class="site-frame">
+                <h2>Design influences</h2>
+                <ul class="source-list">
+                    <li><span class="source-name">Literate UI</span> operator gestures as navigation primitives, so syntax teaches interaction.</li>
+                    <li><span class="source-name">Symmetry UI Design</span> spatial behavior follows symmetry while interaction follows operator physics.</li>
+                    <li><span class="source-name">Ocean UX</span> expert reward comes from stable placement, reference-driven navigation, and repeated familiarity.</li>
+                    <li><span class="source-name">Style Currents</span> style should be recognizable and reproducible, not ornamental drift.</li>
+                </ul>
+                <p class="inline-note">These are adapted from the `spw-workbench` design surfaces and translated here into a public-facing site context.</p>
+            </section>
+
+            <section class="site-frame">
                 <h2>Pipeline</h2>
                 <pre><code>Markdown -> Spw frame -> parser -> metadata -> interactive surface
 </code></pre>

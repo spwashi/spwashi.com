@@ -13,11 +13,25 @@
  cohesion: "Typography, spacing, and section naming should reinforce a sense of order."
 }
 
+^"source_inspirations"{
+ literate_ui_pattern: ~"/Users/spwashi/Development/active/spw-workbench/.spw/patterns/literate-ui.spw"
+ symmetry_ui_design: ~"/Users/spwashi/Development/active/spw-workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+ biome_ux_contract: ~"/Users/spwashi/Development/active/spw-workbench/.spw/biome/ocean/ux.spw"
+ style_currents: ~"/Users/spwashi/Development/active/spw-workbench/.spw/biome/ocean/style.spw"
+}
+
 ^"design_implications"{
  hierarchy: "Prioritize Current Focus before broader link collections."
  grouping: "Separate current engineering work from adjacent creative and ecosystem surfaces."
  microcopy: "Prefer concise descriptive labels over clever but ambiguous headings."
  visuals: "Existing imagery can stay, but it should feel in conversation with the systems narrative rather than detached from it."
+}
+
+^"translated_cues"{
+ operator_gestures: "From literate-ui: interface controls should map to navigational gestures rather than anonymous widget behavior."
+ symmetry_physics: "From symmetry-ui-design: spatial behavior can feel mirrored or rotational while interactive behavior follows operator physics."
+ expert_reward: "From biome/ocean/ux: repeated use should become easier through stable placement, navigable references, and familiar patterns."
+ reproducible_style: "From biome/ocean/style: recognizable style should be reproducible and constrained, not decorative drift."
 }
 
 ^"obsidian_fit"{
