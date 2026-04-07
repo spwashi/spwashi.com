@@ -602,6 +602,150 @@ figcaption {
     color: #7a1515;
 }
 
+/* ─── Spw operator family visual identity ─────────────────────────────────── */
+
+/*
+ * Each operator prefix has a distinct semantic role in the Spw grammar.
+ * Visual identity maps to role: declaration, structure, reference, inquiry, action.
+ * Colors stay within a narrow, restrained palette to avoid visual noise.
+ */
+
+[data-spw-operator="frame"] {
+    /* #>name — canonical frame declaration, the primary structural anchor */
+    color: var(--teal);
+    border-color: rgba(0, 128, 128, 0.32);
+}
+
+[data-spw-operator="object"] {
+    /* ^"name"{ } — structured content body, warm-shifted */
+    color: hsl(36 80% 36%);
+    border-color: hsla(36, 80%, 36%, 0.22);
+    background: rgba(255, 248, 235, 0.72);
+}
+
+[data-spw-operator="ref"] {
+    /* ~"path" or ~#name — reference, points outward, cooler hue */
+    color: hsl(210 70% 38%);
+    border-color: hsla(210, 70%, 38%, 0.2);
+    background: rgba(235, 244, 255, 0.72);
+}
+
+[data-spw-operator="probe"] {
+    /* ?[...] — question or interactive probe, violet-adjacent */
+    color: hsl(268 55% 42%);
+    border-color: hsla(268, 55%, 42%, 0.2);
+    background: rgba(245, 238, 255, 0.72);
+}
+
+[data-spw-operator="action"] {
+    /* @action — imperative, deeper teal */
+    color: hsl(180 100% 22%);
+    border-color: rgba(0, 100, 100, 0.35);
+    background: rgba(230, 248, 248, 0.72);
+}
+
+[data-spw-operator="layer"] {
+    /* #:layer — meta, interpretive role, muted */
+    color: var(--ink-soft);
+    border-color: rgba(14, 18, 20, 0.14);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+[data-spw-operator="pragma"] {
+    /* !pragma — runtime constraint, also muted but slightly stronger */
+    color: hsl(0 40% 38%);
+    border-color: hsla(0, 40%, 38%, 0.18);
+    background: rgba(255, 240, 240, 0.65);
+}
+
+[data-spw-operator="stream"] {
+    /* *stream — dynamic / event-driven */
+    color: hsl(160 60% 32%);
+    border-color: hsla(160, 60%, 32%, 0.22);
+}
+
+[data-spw-operator="surface"] {
+    /* >surface — projection, rendered view */
+    color: hsl(180 70% 30%);
+    border-color: rgba(0, 128, 128, 0.24);
+}
+
+/* Hover/focus states respect the operator family color */
+[data-spw-operator]:hover,
+[data-spw-operator]:focus-visible {
+    filter: brightness(1.08);
+    background: rgba(255, 255, 255, 0.96);
+}
+
+[data-spw-operator].is-selected,
+[data-spw-operator][aria-pressed="true"] {
+    background: currentColor;
+    color: white;
+    border-color: currentColor;
+    filter: none;
+}
+
+/* Operator reference table used in the grammar surface */
+.spw-operator-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+.spw-operator-table tr {
+    border-top: 1px solid var(--line);
+}
+
+.spw-operator-table tr:first-child {
+    border-top: 0;
+}
+
+.spw-operator-table td {
+    padding: 0.65rem 0.5rem;
+    vertical-align: top;
+}
+
+.spw-operator-table td:first-child {
+    padding-left: 0;
+    white-space: nowrap;
+    width: 9rem;
+}
+
+.spw-operator-table td:last-child {
+    color: var(--ink-soft);
+}
+
+/* ─── Frame metrics bar ───────────────────────────────────────────────────── */
+
+.frame-metrics-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--line);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    transition: opacity 160ms ease;
+}
+
+.site-frame.is-active-frame .frame-metrics-bar,
+.frame-metrics-bar:hover {
+    opacity: 1;
+}
+
+.frame-metrics-label {
+    color: var(--teal);
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.frame-metrics-items {
+    font-variant-numeric: tabular-nums;
+}
+
 .domain-kicker {
     color: var(--ink-soft);
     text-transform: uppercase;
@@ -621,6 +765,454 @@ body > footer {
     padding: 0.4rem 1rem;
     box-sizing: border-box;
 }
+
+/* ─── Frame Navigator (JetBrains tool window pattern) ────────────────────── */
+
+/*
+ * .spw-nav        — fixed container, left edge, full height below header
+ * .spw-nav-strip  — the JetBrains tool stripe: thin, always present, shows #> label
+ * .spw-nav-panel  — the navigator panel, slides in from the left
+ *
+ * Keyboard spells:
+ *   g      →  toggle navigator
+ *   [ / ]  →  prev / next frame
+ *   /      →  open with search focused
+ *   Escape →  close
+ */
+
+.spw-nav {
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: row;
+    pointer-events: none;
+}
+
+/* Backdrop — closes the panel when clicked outside */
+.spw-nav.is-open {
+    right: 0;
+    pointer-events: all;
+}
+
+/* ── Strip — the persistent left-edge trigger ─── */
+
+.spw-nav-strip {
+    position: relative;
+    width: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+}
+
+.spw-nav-trigger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-right: 1px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 140ms ease, border-color 140ms ease;
+    color: var(--ink-soft);
+}
+
+.spw-nav-trigger:hover,
+.spw-nav.is-open .spw-nav-trigger {
+    background: rgba(0, 128, 128, 0.06);
+    border-right-color: rgba(0, 128, 128, 0.22);
+    color: var(--teal);
+}
+
+.spw-nav-trigger:focus-visible {
+    outline: 2px solid black;
+    outline-offset: -2px;
+}
+
+.spw-nav-strip-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.45;
+    transition: opacity 140ms ease;
+}
+
+.spw-nav-trigger:hover .spw-nav-strip-label,
+.spw-nav.is-open .spw-nav-strip-label {
+    opacity: 1;
+}
+
+/* ── Panel ─── */
+
+.spw-nav-panel {
+    width: clamp(220px, 24vw, 280px);
+    height: 100%;
+    background: var(--surface-strong);
+    border-right: 1px solid var(--line-strong);
+    box-shadow: 4px 0 28px rgba(14, 18, 20, 0.1);
+    display: flex;
+    flex-direction: column;
+    pointer-events: all;
+    transform: translateX(calc(-100% - 28px));
+    transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.spw-nav-panel[hidden] {
+    display: flex !important;
+    visibility: hidden;
+    transform: translateX(calc(-100% - 28px));
+}
+
+.spw-nav.is-open .spw-nav-panel {
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.spw-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 0.9rem 0.65rem;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+}
+
+.spw-nav-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.spw-nav-title [data-spw-operator] {
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-size: 0.76rem;
+}
+
+.spw-nav-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+    transition: color 120ms, background 120ms;
+}
+
+.spw-nav-close:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Search / probe slot ─── */
+
+.spw-nav-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+}
+
+.spw-nav-search-op {
+    color: var(--teal);
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.spw-nav-search {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--ink);
+    outline: none;
+    min-width: 0;
+}
+
+.spw-nav-search::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.6;
+}
+
+/* ── Frame list ─── */
+
+.spw-nav-list {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0.4rem 0;
+    margin: 0;
+}
+
+.spw-nav-item {
+    display: block;
+}
+
+.spw-nav-item-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.9rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.86rem;
+    color: var(--ink);
+    transition: background 100ms ease;
+}
+
+.spw-nav-item-btn:hover {
+    background: rgba(0, 128, 128, 0.06);
+}
+
+.spw-nav-item-btn:focus-visible {
+    outline: 2px solid black;
+    outline-offset: -2px;
+}
+
+.spw-nav-item-btn.is-active {
+    background: rgba(0, 128, 128, 0.1);
+    color: var(--teal);
+}
+
+.spw-nav-item-btn.is-active .spw-nav-item-label {
+    font-weight: bold;
+}
+
+.spw-nav-op-chip {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    border: 1px solid;
+    white-space: nowrap;
+
+    /* Default — unstyled operators fall back to ink */
+    color: var(--ink-soft);
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* operator-chip inherits [data-spw-operator] colors */
+.spw-nav-op-chip[data-spw-operator="frame"]   { color: var(--teal); border-color: rgba(0,128,128,0.3); background: rgba(0,128,128,0.06); }
+.spw-nav-op-chip[data-spw-operator="object"]  { color: hsl(36 80% 36%); border-color: hsla(36,80%,36%,0.22); background: rgba(255,248,235,0.7); }
+.spw-nav-op-chip[data-spw-operator="ref"]     { color: hsl(210 70% 38%); border-color: hsla(210,70%,38%,0.2); background: rgba(235,244,255,0.7); }
+.spw-nav-op-chip[data-spw-operator="probe"]   { color: hsl(268 55% 42%); border-color: hsla(268,55%,42%,0.2); background: rgba(245,238,255,0.7); }
+.spw-nav-op-chip[data-spw-operator="action"]  { color: hsl(180 100% 22%); border-color: rgba(0,100,100,0.3); background: rgba(230,248,248,0.7); }
+.spw-nav-op-chip[data-spw-operator="layer"]   { color: var(--ink-soft); border-color: rgba(14,18,20,0.12); }
+.spw-nav-op-chip[data-spw-operator="surface"] { color: hsl(180 70% 30%); border-color: rgba(0,128,128,0.2); }
+.spw-nav-op-chip[data-spw-operator="stream"]  { color: hsl(160 60% 32%); border-color: hsla(160,60%,32%,0.2); }
+
+.spw-nav-item-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.spw-nav-empty {
+    padding: 0.75rem 0.9rem;
+    color: var(--ink-soft);
+    font-size: 0.86rem;
+    font-style: italic;
+}
+
+/* ── Spell hint footer ─── */
+
+.spw-nav-spells {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.9rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+}
+
+.spw-spell {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--teal);
+}
+
+/* ─── Spw Console ─────────────────────────────────────────────────────────── */
+
+.spw-console {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 190;
+    width: min(30rem, calc(100vw - 3rem));
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: rgba(255, 251, 242, 0.92);
+    box-shadow: 0 16px 40px rgba(14, 18, 20, 0.12);
+    backdrop-filter: blur(10px);
+}
+
+.spw-console-line {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.spw-console-copy {
+    min-width: 0;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+}
+
+.spw-console-frame-link {
+    max-width: 100%;
+}
+
+.spw-console-frame-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spw-console-mode-line {
+    align-items: flex-start;
+}
+
+.spw-console-mode-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    min-width: 0;
+}
+
+.spw-console-token {
+    padding: 0.22rem 0.52rem;
+    font-size: 0.76rem;
+}
+
+.spw-console-empty {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+.spw-console-action-token {
+    flex-shrink: 0;
+}
+
+.spw-console-spells {
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+}
+
+/* ── Mobile — hide strip, promote to a floating trigger ─── */
+
+@media (max-width: 700px) {
+    .spw-nav-strip {
+        position: fixed;
+        left: 0.75rem;
+        bottom: 0.75rem;
+        width: auto;
+        height: auto;
+        z-index: 205;
+    }
+
+    .spw-nav-trigger {
+        position: static;
+        width: auto;
+        min-height: 2.65rem;
+        padding: 0.55rem 0.82rem;
+        border: 1px solid rgba(0, 128, 128, 0.2);
+        border-radius: 999px;
+        background: rgba(255, 251, 242, 0.94);
+        box-shadow: 0 10px 28px rgba(14, 18, 20, 0.12);
+    }
+
+    .spw-nav-strip-label {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: 0.76rem;
+        opacity: 1;
+    }
+
+    .spw-nav-panel {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        width: 100%;
+        max-height: 65vh;
+        height: auto;
+        border-right: none;
+        border-top: 1px solid var(--line-strong);
+        box-shadow: 0 -8px 32px rgba(14, 18, 20, 0.12);
+        transform: translateY(100%);
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .spw-console {
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 4.25rem;
+        width: auto;
+    }
+
+    .spw-nav-panel[hidden],
+    .spw-nav.is-open .spw-nav-panel {
+        transform: none;
+    }
+
+    .spw-nav-panel[hidden] {
+        transform: translateY(100%);
+    }
+
+    .spw-nav.is-open .spw-nav-panel {
+        transform: translateY(0);
+    }
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────────── */
 
 @keyframes oscillateVisibility {
     0% { opacity: 0; }
@@ -690,6 +1282,10 @@ body > footer {
         min-width: 0;
         display: block;
         margin-bottom: 0.2rem;
+    }
+
+    .spw-console {
+        width: auto;
     }
 
     p,

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/public/css/style.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script defer src="/public/js/site.js"></script>
+    <script type="module" src="/public/js/frame-metrics.js"></script>
+    <script type="module" src="/public/js/spw-operators.js"></script>
+    <script type="module" src="/public/js/frame-navigator.js"></script>
+    <script type="module" src="/public/js/spw-console.js"></script>
 </head>
 <body>
     <header>
@@ -150,6 +154,116 @@ Files should remain legible.
  !probe{ "project this frame into outline, graph, and editable card views" }
 }
 </code></pre>
+            </section>
+
+            <section class="site-frame" id="spw-grammar-surface">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#spw-grammar-surface">#&gt;spw_grammar_surface</a>
+                    <div class="mode-switch" role="group" aria-label="Grammar lens">
+                        <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="operators" aria-pressed="true">.operators</button>
+                        <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="principles" aria-pressed="false">^principles</button>
+                        <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="workbench" aria-pressed="false">~workbench</button>
+                    </div>
+                </div>
+                <h2>Grammar as Interface</h2>
+                <p class="inline-note">Spw operator prefixes are not decoration. Each carries a distinct semantic role that maps directly to interaction behavior. The syntax is the behavior.</p>
+
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators">
+                        <table class="spw-operator-table" aria-label="Spw operator reference">
+                            <tbody>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="frame">#&gt;name</span></td>
+                                    <td><strong>frame declaration</strong> — names a unit, makes it linkable, queryable, and addressable by tooling</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="layer">#:layer</span></td>
+                                    <td><strong>layer marker</strong> — marks the interpretive role of a frame (<code>!pragmatics</code>, <code>!meaning_time</code>, <code>!ux</code>)</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="object">^"name"{ }</span></td>
+                                    <td><strong>object</strong> — holds structured, inspectable content; the body remains legible plain text</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="ref">~"path"</span></td>
+                                    <td><strong>reference</strong> — carries a path, named anchor, or literal; points outward without breaking the file</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="probe">?[probe]{ }</span></td>
+                                    <td><strong>probe</strong> — stores a question, query, or interactive unit; signals inquiry at the structural level</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="action">@action(...)</span></td>
+                                    <td><strong>action</strong> — triggers a behavior, projection, or rotation; the imperative operator</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="stream">*stream</span></td>
+                                    <td><strong>stream</strong> — connects to dynamic or event-driven content; marks where data flows in</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="pragma">!pragma</span></td>
+                                    <td><strong>pragma</strong> — encodes a runtime constraint or interpretive hint; metadata about the frame itself</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="frame-sigil" data-spw-operator="surface">&gt;surface</span></td>
+                                    <td><strong>surface</strong> — a projected or rendered view; the output end of a frame pipeline</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="principles" hidden>
+                        <p class="frame-note">From <code>.spw/_workbench/interaction-model.spw</code> and <code>obsidian-philosophy.spw</code>.</p>
+                        <ul class="source-list">
+                            <li>
+                                <span class="source-name">Syntax as grammar</span>
+                                A tool for thought should let structure teach behavior. Operator gestures map to navigational intent rather than anonymous widget behavior.
+                            </li>
+                            <li>
+                                <span class="source-name">Sigil roles</span>
+                                Sigils act as anchors, lenses, and controls — not decorative labels. Clicking a <code>#&gt;</code> sigil navigates to and activates a frame; clicking a <code>?[probe]</code> opens an inquiry surface.
+                            </li>
+                            <li>
+                                <span class="source-name">Motion as transition</span>
+                                Motion reads as state transition and projection, not ornamental animation. Frames activate; panels swap; modes project.
+                            </li>
+                            <li>
+                                <span class="source-name">Spatial restraint</span>
+                                Spatial variation feels governed and mirrored, not arbitrary. Stable placement and navigable references are part of product depth.
+                            </li>
+                            <li>
+                                <span class="source-name">Expert reward</span>
+                                Repeated use becomes easier through stable placement, reference-driven navigation, and repeated familiarity. The grammar rewards fluency.
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="workbench" hidden>
+                        <p class="frame-note">The <code>.spw/</code> workbench backs this site's design decisions. This is what the grammar looks like in a real planning document.</p>
+                        <pre><code>#&gt;interaction_model
+#:surface #!ux
+#:layer #!pragmatics
+
+^"interaction_principles"{
+ first_impression: "Calm, legible, and technically grounded."
+ pacing: "Reveal depth progressively: headline -&gt; proof -&gt; artifact -&gt; context."
+ affordance: "Links should read like intentional paths, not a directory dump."
+ cohesion: "Typography, spacing, and section naming reinforce a sense of order."
+}
+
+^"interaction_overhaul"{
+ frame_activation: "Frames visibly activate when sigils or cards are used."
+ sigil_role: "Sigils act as anchors, lenses, and controls — not decorative labels."
+ motion: "Motion reads as state transition and projection, not ornamental animation."
+}
+
+^"design_bridge"{
+ principle_1: "Syntax can act as interaction grammar: structure should teach behavior."
+ principle_2: "Spatial variation feels governed and mirrored, not arbitrary."
+ principle_3: "Restraint, stable placement, and navigable references are product depth."
+}</code></pre>
+                    </section>
+                </div>
             </section>
 
             <section class="site-frame" id="interactive-codeblocks">

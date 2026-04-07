@@ -17,6 +17,8 @@
  @spw: ~"./spw-expansion.spw"
  @site_refresh: ~"./site-refresh.spw"
  @interactions: ~"./interaction-model.spw"
+ @page_concepts: ~"./page-concepts.spw"
+ @boonhonk: ~"./boonhonk.spw"
 }
 
 ^"dispatch"{
@@ -25,6 +27,8 @@
  spw_expansion: @spw
  site_refresh: @site_refresh
  interactions: @interactions
+ page_concepts: @page_concepts
+ boonhonk: @boonhonk
 }
 
 ^"invariant"{

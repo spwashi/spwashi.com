@@ -13,7 +13,8 @@ The surface becomes measurable.
 The layout learns to breathe.`
 };
 
-const CDN_URL = 'https://esm.sh/@chenglou/pretext?bundle';
+import { loadPretext } from '/public/js/pretext-utils.js';
+
 const DEMO_FONT = '16px system-ui';
 
 const onReady = async () => {
@@ -180,7 +181,7 @@ const onReady = async () => {
             await document.fonts.ready;
         }
 
-        pretext = await import(CDN_URL);
+        pretext = await loadPretext();
         handleState.textContent = 'ready';
         update();
     } catch (error) {

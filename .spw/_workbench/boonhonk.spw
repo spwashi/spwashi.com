@@ -1,0 +1,110 @@
+# Boonhonk System
+#
+# Plain-text model for the boon / bane / bone / bonk / honk land cluster.
+#
+# These are not five arbitrary domains. They are five operators in a
+# shared polarity-and-physics system. Their meaning is relational.
+# Each is underspecified in isolation; together they form a complete grammar.
+
+#>boonhonk_system
+#:layer #!lore
+#:surface #!model
+
+^"members"{
+ boon: ~"boon.land"
+ bane: ~"bane.land"
+ bone: ~"bone.land"
+ bonk: ~"bonk.land"
+ honk: ~"honk.land"
+}
+
+^"operational_roles"{
+ boon: {
+  valence:  "+1"
+  role:     "arrival, benefit, growth, welcome"
+  physics:  "Attractive force. Boon pulls inward. It is what you move toward."
+  operator: ">"       # surface: a projected positive field
+ }
+
+ bane: {
+  valence:  "-1"
+  role:     "departure, cost, constraint, resistance"
+  physics:  "Repulsive force. Bane pushes outward. It is what defines the edge."
+  operator: "!"       # pragma: a constraint that bounds the possible
+ }
+
+ bone: {
+  valence:  "0"
+  role:     "structural substrate, persistent carrier, the thing that holds"
+  physics:  "Neutral carrier. Bone neither attracts nor repels — it conducts.
+             Without bone, boon and bane have nowhere to act."
+  operator: "^"       # object: structural content body
+ }
+
+ bonk: {
+  valence:  "event"
+  role:     "unexpected contact, collision, state change, humor as physics"
+  physics:  "Impulse event. Bonk changes the trajectory of whatever it touches.
+             It is the crossing of fields — the moment boon and bane collide."
+  operator: "@"       # action: triggers a behavior or projection
+ }
+
+ honk: {
+  valence:  "signal"
+  role:     "outward relay, coordination, transmission, announcement"
+  physics:  "Wave emission. Honk propagates outward from the event.
+             It is how the system notices itself and makes contact with the outside."
+  operator: "~"       # reference: carries a path, points outward
+ }
+}
+
+^"physics_model"{
+ fields:    [boon, bane]
+ medium:    bone
+ events:    [bonk, honk]
+
+ statement:
+  "Boon and bane are fields — the +/- poles of a polarity space.
+   Bone is the medium through which the field acts.
+   Bonk is a collision — the moment the field is discharged.
+   Honk is the wave — what travels outward after contact."
+
+ analogy:
+  "Magnet poles (boon/bane) around a conductor (bone),
+   producing a spark (bonk) that emits a sound (honk)."
+}
+
+^"spw_mapping"{
+ note: "Each member maps to a Spw operator because their roles are isomorphic."
+ table: [
+  ["boon", ">surface",   "rendered positive field; arrives as projection"],
+  ["bane", "!pragma",    "constraint that bounds; defines what cannot be"],
+  ["bone", "^object",    "structured carrier; holds the medium steady"],
+  ["bonk", "@action",    "event operator; triggers transformation"],
+  ["honk", "~reference", "relay operator; transmits outward from event"]
+ ]
+}
+
+?["What holds this system together?"]{
+ answer:
+  "Not hierarchy — polarity.
+   Boon and bane need each other to be meaningful.
+   Bone holds both without taking a side.
+   Bonk names the moment they interact.
+   Honk names what gets transmitted from that moment.
+
+   The system is complete because each role is irreducible.
+   Remove any one and the model loses a dimension."
+}
+
+^"site_translation"{
+ note:
+  "On the site, each domain page is thin by design — not because there is
+   nothing to say, but because the substance lives in the relationship.
+   The page for boon.land matters because bane.land exists.
+   Reading one page and then the other is the content."
+
+ implication:
+  "Domain pages should surface the cluster register, not expand in isolation.
+   Their depth is lateral, not vertical."
+}
