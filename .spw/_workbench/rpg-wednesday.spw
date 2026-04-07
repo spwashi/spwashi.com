@@ -1,0 +1,174 @@
+# RPG Wednesday Surface
+#
+# Plain-text operating note for the recurring Wednesday RPG session surface.
+# This should help maintain the actual site pages, not only explain the route grammar.
+
+#>rpg_wednesday
+#:layer #!play
+#:surface #!event_log
+
+^"concept"{
+ what:   "A recurring Wednesday tabletop RPG session, made public as an ongoing narrative surface."
+ why:    "The session log, world, and cast are relational — they mean more together than separately."
+ model:  "Sessions are events (@). World is a stable object (^). Cast are references (~). The game itself is a probe (?[)."
+}
+
+^"surface_targets"{
+ play_index:     ~"../../play/index.html"
+ game_home:      ~"../../play/rpg-wednesday/index.html"
+ sessions_index: ~"../../play/rpg-wednesday/sessions/index.html"
+ world_index:    ~"../../play/rpg-wednesday/world/index.html"
+ cast_index:     ~"../../play/rpg-wednesday/cast/index.html"
+ arcs_index:     ~"../../play/rpg-wednesday/arcs/index.html"
+}
+
+^"url_structure"{
+
+ #>play_surface
+  path:    "/play/"
+  role:    "top-level surface for play, games, and creative sessions"
+  op:      ">"   # projected output — things made rather than built
+  extends: ["future game surfaces", "other recurring events"]
+
+ #>rpg_wednesday_surface
+  path:    "/play/rpg-wednesday/"
+  role:    "main frame: orientation, current arc, cast, and session index"
+  op:      "#>"  # named, addressable unit
+  extends: ["/play/[other-game]/"]
+
+ ^"sessions_object"
+  path:    "/play/rpg-wednesday/sessions/"
+  role:    "session log index — ordered by date, filterable"
+  op:      "^"   # structured body, queryable
+  extends: ["/play/rpg-wednesday/sessions/[YYYY-MM-DD]/"]
+
+ @session_event
+  path:    "/play/rpg-wednesday/sessions/[YYYY-MM-DD]/"
+  role:    "a single session — recap, events, turning points"
+  op:      "@"   # event that happened at a specific moment
+  example: "/play/rpg-wednesday/sessions/2026-04-09/"
+  extends: ["arc groupings", "cross-session references"]
+
+ ^"world_object"
+  path:    "/play/rpg-wednesday/world/"
+  role:    "stable setting — regions, factions, history, rules"
+  op:      "^"   # persistent structured content
+  extends: ["/play/rpg-wednesday/world/[region]/", "/play/rpg-wednesday/world/[faction]/"]
+
+ ~"cast_refs"
+  path:    "/play/rpg-wednesday/cast/"
+  role:    "character index — PCs and notable NPCs"
+  op:      "~"   # reference nodes; characters point outward to session appearances
+  extends: ["/play/rpg-wednesday/cast/[character-slug]/"]
+
+ ?["arc_probe"]
+  path:    "/play/rpg-wednesday/arcs/"
+  role:    "narrative arcs — groupings of sessions by story thread"
+  op:      "?["  # probe: a question carried across sessions
+  extends: ["/play/rpg-wednesday/arcs/[arc-slug]/"]
+}
+
+^"current_state"{
+ implemented: [
+  "/play/",
+  "/play/rpg-wednesday/",
+  "/play/rpg-wednesday/sessions/"
+ ]
+
+ placeholders: [
+  "/play/rpg-wednesday/world/",
+  "/play/rpg-wednesday/cast/",
+  "/play/rpg-wednesday/arcs/"
+ ]
+
+ note:
+  "The surface is live enough to teach the grammar, but it still needs the
+   maintenance loop to stay useful after real sessions happen."
+}
+
+^"extensibility_rules"{
+ sibling_games:
+  "New game surfaces follow /play/[game-slug]/ and inherit the same sub-structure.
+   sessions/, world/, cast/, arcs/ are the canonical sub-frames.
+   Not every game needs all of them."
+
+ session_ids:
+  "Sessions are dated /YYYY-MM-DD/ — stable, sortable, human-readable.
+   No sequential IDs that break if a session is cancelled or reordered."
+
+ world_depth:
+  "/play/rpg-wednesday/world/ is flat by default.
+   Depth is added only when a region or faction has enough content to warrant its own frame."
+
+ cross_references:
+  "Characters reference sessions via ?[ probes on their page.
+   Sessions reference characters via ~ chips in the recap.
+   The structure is a graph, not a tree."
+
+ operator_discipline:
+  "Each URL segment should be nameable by a Spw operator.
+   If you cannot say what operator role a segment plays, the segment does not belong."
+}
+
+^"session_contract"{
+ identity:
+  "Each session lives at /play/rpg-wednesday/sessions/YYYY-MM-DD/.
+   Date is the primary key. No sequential episode numbers."
+
+ required_sections: [
+  "@date hero line with one-sentence recap",
+  "^recap block with what actually happened",
+  "~cast links for who appeared",
+  "?[turning_point] with the session pivot",
+  "~arc if a story thread is already named"
+ ]
+
+ tone:
+  "Write plainly. Enough detail to be memorable, not enough to become homework.
+   The log should reward return visits without demanding full continuity."
+}
+
+^"maintenance_loop"{
+ after_each_session: [
+  "Create /play/rpg-wednesday/sessions/YYYY-MM-DD/index.html.",
+  "Add the new session card to /play/rpg-wednesday/sessions/index.html in reverse chronological order.",
+  "Update the RPG Wednesday home page with the latest session and active arc if either changed.",
+  "Only create or expand world/cast/arcs pages when the session introduces genuinely reusable information."
+ ]
+
+ lazy_growth:
+  "World, cast, and arcs are downstream of sessions.
+   Do not invent lore pages before the log has earned them."
+}
+
+^"page_jobs"{
+ play_surface:
+  "Advertise the structure and list active game surfaces."
+
+ game_home:
+  "Orient a new reader in one screen: what this is, where to start, and what is currently active."
+
+ sessions_index:
+  "Be the trustworthy spine of the project. If nothing else is updated, this page still has to stay current."
+
+ world_cast_arcs:
+  "Act as secondary registers. They should reduce repeated recap work once the log has enough density."
+}
+
+^"next_improvements"{
+ priority_1:
+  "Add the first real session entry so the structure stops reading like a scaffold."
+
+ priority_2:
+  "Create stub pages for world/, cast/, and arcs/ with explicit 'not enough material yet' framing rather than broken future routes."
+
+ priority_3:
+  "When two or more sessions share the same thread, name the first arc and backfill links."
+}
+
+?["What comes first?"]{
+ answer:
+  "The main page (/play/rpg-wednesday/) and the session index (/play/rpg-wednesday/sessions/).
+   World and cast are written lazily — only when sessions reference them enough to warrant it.
+   Arcs emerge from sessions; they are never planned in advance."
+}

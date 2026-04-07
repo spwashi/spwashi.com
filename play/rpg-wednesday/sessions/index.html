@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Spwashi • RPG Wednesday · Sessions</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-features="operators navigator console">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="session-log">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#session-log">^"session_log"{</a>
+                    <span class="domain-kicker">event log · dated</span>
+                </div>
+                <h1>Sessions</h1>
+                <p>Each Wednesday session is logged at <code>/play/rpg-wednesday/sessions/YYYY-MM-DD/</code>. Newest first.</p>
+                <nav class="frame-operators" aria-label="RPG Wednesday routes">
+                    <a class="operator-chip" href="/play/">play</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">#&gt; rpg wednesday</a>
+                    <a class="operator-chip" aria-current="page" href="/play/rpg-wednesday/sessions/">^ sessions</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/world/">^ world</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/cast/">~ cast</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="session-entries">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#session-entries">@sessions</a>
+                    <h2>Log</h2>
+                </div>
+                <p class="inline-note">No sessions logged yet. When a session happens, add a folder at <code>sessions/YYYY-MM-DD/index.html</code> and link it here.</p>
+                <div class="frame-grid" id="session-list">
+                    <!-- Session entries go here in reverse chronological order.
+                         Each entry is a .frame-card with:
+                           - .frame-card-sigil showing @YYYY-MM-DD
+                           - <strong> with the session title or arc marker
+                           - <span> with a one-line recap
+                         Example:
+                    <a class="frame-card" href="/play/rpg-wednesday/sessions/2026-04-09/">
+                        <span class="frame-card-sigil">@2026-04-09</span>
+                        <strong>Session title or arc label</strong>
+                        <span>One-line recap of what happened.</span>
+                    </a>
+                    -->
+                </div>
+            </section>
+
+            <section class="site-frame" id="session-format">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#session-format">?["session_format"]</a>
+                    <h2>Session Format</h2>
+                </div>
+                <p class="inline-note">What a session page at <code>/YYYY-MM-DD/</code> should contain.</p>
+                <ul class="syntax-list">
+                    <li>
+                        <span class="syntax-token">@date</span>
+                        <span>the session date as the frame sigil — stable, sortable identity</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">^"recap"</span>
+                        <span>what happened — 2–5 sentences, plain prose, no spoiler protection needed</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">~cast</span>
+                        <span>which characters appeared — links to cast pages when those exist</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">?[turning_point]</span>
+                        <span>the moment the session pivoted — one line, added after the fact</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token">~arc</span>
+                        <span>which arc this session belongs to, if one has been named</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="site-frame" id="session-routes">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#session-routes">~"related_surfaces"</a>
+                    <h2>Related Surfaces</h2>
+                </div>
+                <div class="frame-grid">
+                    <a class="frame-card" href="/play/rpg-wednesday/">
+                        <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
+                        <strong>RPG Wednesday</strong>
+                        <span>orientation, current arc, and the top-level game surface</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/world/">
+                        <span class="frame-card-sigil">^world_register</span>
+                        <strong>World</strong>
+                        <span>stable setting notes, places, factions, and reusable lore as they accumulate</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/cast/">
+                        <span class="frame-card-sigil">~cast_register</span>
+                        <strong>Cast</strong>
+                        <span>recurring PCs and NPCs once they become useful reference nodes</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/arcs/">
+                        <span class="frame-card-sigil">?[arc_register]</span>
+                        <strong>Arcs</strong>
+                        <span>story threads grouped across multiple sessions after patterns actually emerge</span>
+                    </a>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer><p>© 2024 spwashi</p></footer>
+</body>
+</html>

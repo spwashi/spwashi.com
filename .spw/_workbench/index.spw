@@ -19,6 +19,7 @@
  @interactions: ~"./interaction-model.spw"
  @page_concepts: ~"./page-concepts.spw"
  @boonhonk: ~"./boonhonk.spw"
+ @rpg_wednesday: ~"./rpg-wednesday.spw"
 }
 
 ^"dispatch"{
@@ -29,6 +30,7 @@
  interactions: @interactions
  page_concepts: @page_concepts
  boonhonk: @boonhonk
+ rpg_wednesday: @rpg_wednesday
 }
 
 ^"invariant"{

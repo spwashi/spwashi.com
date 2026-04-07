@@ -75,11 +75,16 @@ const buildNavigator = () => {
     title.className = 'spw-nav-title';
     title.innerHTML = '<span data-spw-operator="frame">#&gt;</span>&thinsp;frames';
 
+    const counter = document.createElement('span');
+    counter.className = 'spw-nav-counter';
+    counter.setAttribute('aria-live', 'polite');
+    counter.setAttribute('aria-label', 'Frame position');
+
     const closeBtn = document.createElement('button');
     closeBtn.className = 'spw-nav-close';
     closeBtn.setAttribute('aria-label', 'Close navigator');
     closeBtn.textContent = '×';
-    header.append(title, closeBtn);
+    header.append(title, counter, closeBtn);
 
     // Search field — the ?[ probe slot.
     const searchWrap = document.createElement('div');
@@ -115,7 +120,7 @@ const buildNavigator = () => {
     panel.append(header, searchWrap, list, spells);
     root.append(strip, panel);
 
-    return { root, triggerBtn, panel, closeBtn, searchInput, list };
+    return { root, triggerBtn, panel, closeBtn, counter, searchInput, list };
 };
 
 // ─── List rendering ───────────────────────────────────────────────────────────
@@ -165,14 +170,29 @@ const renderList = (list, frames, filterText, onActivate) => {
 
 // ─── Active-frame tracker ────────────────────────────────────────────────────
 
-const syncActiveItem = (list, frames) => {
+const syncActiveItem = (list, frames, counter) => {
     const active = getActiveFrame();
+    let activeIndex = -1;
+
     list.querySelectorAll('.spw-nav-item-btn').forEach((btn) => {
         const idx  = Number(btn.dataset.navIndex);
         const isActive = frames[idx]?.frame === active;
         btn.classList.toggle('is-active', isActive);
         btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+        if (isActive) activeIndex = idx;
     });
+
+    // Update position counter.
+    if (counter) {
+        const total = frames.length;
+        counter.textContent = activeIndex >= 0 ? `${activeIndex + 1} / ${total}` : `${total}`;
+    }
+
+    // Scroll the active item into view within the list (non-intrusive).
+    if (activeIndex >= 0) {
+        const activeBtn = list.querySelector(`[data-nav-index="${activeIndex}"]`);
+        activeBtn?.scrollIntoView({ block: 'nearest' });
+    }
 };
 
 // ─── Keyboard spells ──────────────────────────────────────────────────────────
@@ -200,7 +220,7 @@ const initFrameNavigator = () => {
 
     const frames = siteFrameEls.map((frame) => ({ frame, meta: getFrameMeta(frame) }));
 
-    const { root, triggerBtn, panel, closeBtn, searchInput, list } = buildNavigator();
+    const { root, triggerBtn, panel, closeBtn, counter, searchInput, list } = buildNavigator();
     document.body.appendChild(root);
 
     let filterText = '';
@@ -212,7 +232,7 @@ const initFrameNavigator = () => {
             emitSpwAction('@navigator.select', getFrameMeta(frame).headingText);
             close();
         });
-        syncActiveItem(list, frames);
+        syncActiveItem(list, frames, counter);
     };
 
     const open = () => {
@@ -330,7 +350,7 @@ const initFrameNavigator = () => {
     });
 
     // Sync active indicator when site.js activates frames.
-    const frameObserver = new MutationObserver(() => syncActiveItem(list, frames));
+    const frameObserver = new MutationObserver(() => syncActiveItem(list, frames, counter));
     siteFrameEls.forEach((f) => frameObserver.observe(f, { attributes: true, attributeFilter: ['class'] }));
 
     refresh();

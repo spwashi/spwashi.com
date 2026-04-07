@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Spwashi • Play</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-features="operators">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="play-surface">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#play-surface">&gt;play_surface</a>
+                    <span class="domain-kicker">creative · games · sessions</span>
+                </div>
+                <h1>Play</h1>
+                <p>Surfaces for games, sessions, and ongoing creative work. Each game gets its own frame; each session is a dated event in the log.</p>
+                <nav class="frame-operators" aria-label="Play routes">
+                    <a class="operator-chip" aria-current="page" href="/play/">play surface</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/sessions/">@ sessions</a>
+                    <a class="operator-chip" href="/about/#surface-register">about surfaces</a>
+                    <a class="operator-chip" href="/topics/software/">software surface</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="play-register">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#play-register">^"play_register"{</a>
+                    <h2>Active Games</h2>
+                </div>
+                <div class="frame-grid">
+                    <a class="frame-card" href="/play/rpg-wednesday/">
+                        <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
+                        <strong>RPG Wednesday</strong>
+                        <span>a recurring tabletop session — session log, world, and cast</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/sessions/">
+                        <span class="frame-card-sigil">@session_log</span>
+                        <strong>Session Log</strong>
+                        <span>reverse-chronological register for dated session events and future arc links</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="play-structure">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#play-structure">~"url_structure"</a>
+                    <h2>URL Structure</h2>
+                </div>
+                <ul class="syntax-list">
+                    <li>
+                        <a class="syntax-token" href="/play/">&gt; /play/</a>
+                        <span>top-level surface for games and creative sessions</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/">#&gt; /play/[game]/</a>
+                        <span>a named game surface — orientation, arc, cast, and session index</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/sessions/">^ /play/[game]/sessions/</a>
+                        <span>session log — ordered by date, each session at <code>/YYYY-MM-DD/</code></span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/world/">^ /play/[game]/world/</a>
+                        <span>stable setting — regions, factions, persistent lore</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/cast/">~ /play/[game]/cast/</a>
+                        <span>character index — PCs and notable NPCs as reference nodes</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/arcs/">?[ /play/[game]/arcs/</a>
+                        <span>narrative arcs — session groupings by story thread</span>
+                    </li>
+                </ul>
+                <p class="frame-note">Each URL segment maps to a Spw operator role. Sessions use <code>/YYYY-MM-DD/</code> dates — stable, sortable, and human-readable without sequential IDs.</p>
+            </section>
+        </article>
+    </main>
+    <footer><p>© 2024 spwashi</p></footer>
+</body>
+</html>

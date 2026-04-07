@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Spwashi • RPG Wednesday</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-features="operators navigator console">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="rpg-wednesday">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#rpg-wednesday">#&gt;rpg_wednesday</a>
+                    <div class="mode-switch" role="group" aria-label="RPG Wednesday lens">
+                        <button class="frame-sigil" type="button" data-mode-group="rpgw-lens" data-set-mode="orientation" aria-pressed="true">.orientation</button>
+                        <button class="frame-sigil" type="button" data-mode-group="rpgw-lens" data-set-mode="system" aria-pressed="false">^system</button>
+                        <button class="frame-sigil" type="button" data-mode-group="rpgw-lens" data-set-mode="structure" aria-pressed="false">~structure</button>
+                    </div>
+                </div>
+                <p class="spec-kicker">Play Surface · Recurring Session</p>
+                <h1>RPG Wednesday</h1>
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="orientation">
+                        <p>A recurring Wednesday tabletop RPG session. This surface holds the session log, world, and cast — each session is a dated event; the world and characters are the persistent frame beneath them.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="system" hidden>
+                        <pre><code>#&gt;rpg_wednesday
+#:layer #!play
+#:surface #!event_log
+
+^"structure"{
+ sessions: ~"./sessions/"   @event  session log, dated /YYYY-MM-DD/
+ world:    ~"./world/"      ^object  stable setting and lore
+ cast:     ~"./cast/"       ~refs    character reference nodes
+ arcs:     ~"./arcs/"       ?[probe  narrative thread groupings
+}</code></pre>
+                    </section>
+                    <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="structure" hidden>
+                        <p>Sessions are events at a specific moment in time. The world is a stable object that sessions act inside. Cast members are reference nodes — they point outward to the sessions where they appeared. Arcs are probes: open questions carried across multiple sessions.</p>
+                        <p class="frame-note">The URL structure here was derived directly from the Spw operator model. <a href="/topics/software/#spw-grammar-surface">See the grammar surface.</a></p>
+                    </section>
+                </div>
+                <nav class="frame-operators" aria-label="RPG Wednesday routes">
+                    <a class="operator-chip" href="/play/">play surface</a>
+                    <a class="operator-chip" aria-current="page" href="/play/rpg-wednesday/">rpg wednesday</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/sessions/">@ sessions</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/world/">^ world</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/cast/">~ cast</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="rpgw-current">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#rpgw-current">@"current_arc"</a>
+                    <h2>Current Arc</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Arc</h3>
+                        <p class="frame-note">No arc recorded yet. Add one when a thread emerges across sessions, then surface it on the <a href="/play/rpg-wednesday/arcs/">arc register</a>.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Last Session</h3>
+                        <p class="frame-note">No sessions logged yet. <a href="/play/rpg-wednesday/sessions/">Start the log.</a></p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Next Session</h3>
+                        <p class="frame-note">Wednesday. Details belong in the <a href="/play/rpg-wednesday/sessions/">session log</a> once the event is written.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Active Cast</h3>
+                        <p class="frame-note">No cast recorded yet. <a href="/play/rpg-wednesday/cast/">Add characters</a> when they recur enough to become useful reference nodes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="rpgw-surface-register">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#rpgw-surface-register">~"rpgw_surfaces"</a>
+                    <h2>Surface Register</h2>
+                </div>
+                <ul class="syntax-list">
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/sessions/">@ sessions</a>
+                        <span>dated event log — each session at <code>/YYYY-MM-DD/</code>, ordered newest first</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/world/">^ world</a>
+                        <span class="frame-note">setting register — currently a placeholder until sessions create enough stable lore to warrant it</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/cast/">~ cast</a>
+                        <span class="frame-note">character register — currently a placeholder until characters recur enough to become reference nodes</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
+                        <span class="frame-note">story-thread register — currently a placeholder because arcs emerge from sessions, never planned in advance</span>
+                    </li>
+                </ul>
+            </section>
+        </article>
+    </main>
+    <footer><p>© 2024 spwashi</p></footer>
+</body>
+</html>

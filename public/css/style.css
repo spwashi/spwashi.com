@@ -1072,6 +1072,35 @@ body > footer {
     font-style: italic;
 }
 
+/* ── Active item — JetBrains left-border indicator ─── */
+
+[data-spw-features~="navigator"] .spw-nav-item-btn.is-active {
+    position: relative;
+}
+
+[data-spw-features~="navigator"] .spw-nav-item-btn.is-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--teal);
+    border-radius: 0 2px 2px 0;
+}
+
+/* ── Position counter ─── */
+
+[data-spw-features~="navigator"] .spw-nav-counter {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
 /* ── Spell hint footer ─── */
 
 [data-spw-features~="navigator"] .spw-nav-spells {
@@ -1171,6 +1200,86 @@ body > footer {
     border-top: 1px solid var(--line);
     font-size: 0.78rem;
     color: var(--ink-soft);
+}
+
+/* ── Console collapse / expand ─── */
+
+[data-spw-features~="console"] .spw-console-collapsed-bar {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+[data-spw-features~="console"] .spw-console.is-collapsed .spw-console-collapsed-bar {
+    display: flex;
+}
+
+[data-spw-features~="console"] .spw-console.is-collapsed .spw-console-body {
+    display: none;
+}
+
+[data-spw-features~="console"] .spw-console-expand-btn,
+[data-spw-features~="console"] .spw-console-collapse-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    line-height: 1;
+    padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+    transition: color 120ms, background 120ms;
+    flex-shrink: 0;
+}
+
+[data-spw-features~="console"] .spw-console-expand-btn:hover,
+[data-spw-features~="console"] .spw-console-collapse-btn:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-spw-features~="console"] .spw-console-header-line {
+    justify-content: space-between;
+}
+
+/* Action history */
+
+[data-spw-features~="console"] .spw-console-history {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    border-top: 1px dashed var(--line);
+    padding-top: 0.45rem;
+    margin-top: 0.1rem;
+}
+
+[data-spw-features~="console"] .spw-console-history:empty {
+    display: none;
+}
+
+[data-spw-features~="console"] .spw-console-history-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: calc(0.55 - var(--history-age, 0) * 0.09);
+    font-size: 0.78rem;
+}
+
+[data-spw-features~="console"] .spw-console-history-token {
+    color: var(--teal);
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+[data-spw-features~="console"] .spw-console-history-copy {
+    color: var(--ink-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ── Mobile — hide strip, promote to a floating trigger ─── */
