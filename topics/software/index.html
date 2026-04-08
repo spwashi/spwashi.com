@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • Software</title>
     <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
 </head>
 <body data-spw-surface="software" data-spw-features="operators metrics navigator console">
     <header>
