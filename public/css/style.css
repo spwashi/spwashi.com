@@ -109,8 +109,14 @@ code, pre {
 }
 
 pre {
+    display: block;
     margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
     padding: 1rem 1.1rem;
     border-radius: var(--radius-sm);
     background: var(--surface-code);
@@ -1422,15 +1428,18 @@ body > footer {
     bottom: 1rem;
     z-index: 190;
     width: min(30rem, calc(100vw - 3rem));
+    max-width: calc(100vw - 2rem);
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
     padding: 0.85rem 0.95rem;
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
+    box-sizing: border-box;
     background: var(--floating-bg-warm);
     box-shadow: var(--floating-shadow);
     backdrop-filter: blur(10px);
+    overflow-x: clip;
     transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -1444,21 +1453,31 @@ body > footer {
     opacity: 0.64;
 }
 
+[data-spw-features~="console"] .spw-console-body,
+[data-spw-features~="console"] .spw-console-collapsed-bar {
+    min-width: 0;
+    max-width: 100%;
+}
+
 [data-spw-features~="console"] .spw-console-line {
     display: flex;
     align-items: center;
     gap: 0.55rem;
     flex-wrap: wrap;
     min-width: 0;
+    max-width: 100%;
 }
 
 [data-spw-features~="console"] .spw-console-copy {
     min-width: 0;
+    max-width: 100%;
     font-size: 0.84rem;
     color: var(--ink-soft);
 }
 
+[data-spw-features~="console"] .spw-console .frame-sigil,
 [data-spw-features~="console"] .spw-console-frame-link {
+    min-width: 0;
     max-width: 100%;
 }
 
@@ -1477,6 +1496,7 @@ body > footer {
     flex-wrap: wrap;
     gap: 0.45rem;
     min-width: 0;
+    max-width: 100%;
 }
 
 [data-spw-features~="console"] .spw-console-token {
@@ -1507,6 +1527,7 @@ body > footer {
     display: none;
     align-items: center;
     gap: 0.6rem;
+    flex-wrap: wrap;
 }
 
 [data-spw-features~="console"] .spw-console.is-collapsed .spw-console-collapsed-bar {
@@ -1563,6 +1584,7 @@ body > footer {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-width: 0;
     opacity: calc(0.55 - var(--history-age, 0) * 0.09);
     font-size: 0.78rem;
 }
@@ -1575,6 +1597,7 @@ body > footer {
 }
 
 [data-spw-features~="console"] .spw-console-history-copy {
+    min-width: 0;
     color: var(--ink-soft);
     overflow: hidden;
     text-overflow: ellipsis;
