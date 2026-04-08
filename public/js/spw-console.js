@@ -236,7 +236,14 @@ const initSpwConsole = () => {
 
     // ── Collapse / expand ──
     const STORAGE_KEY = 'spw-console-collapsed';
-    let collapsed = localStorage.getItem(STORAGE_KEY) === 'true';
+    const storedCollapsed = localStorage.getItem(STORAGE_KEY);
+    const prefersCompactConsole = window.matchMedia('(max-width: 700px)').matches;
+    const forceCompactConsole = prefersCompactConsole && document.body.dataset.spwSurface === 'software';
+    let collapsed = forceCompactConsole
+        ? true
+        : storedCollapsed === null
+            ? prefersCompactConsole
+            : storedCollapsed === 'true';
 
     const applyCollapsed = (value, animate = false) => {
         collapsed = value;

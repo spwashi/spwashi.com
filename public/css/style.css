@@ -1713,13 +1713,37 @@ body > footer {
 
 /* ── 700px: compact nav, tighter layout spacing ── */
 @media (max-width: 700px) {
+    body > header {
+        justify-content: flex-start;
+    }
+
+    body > header nav {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 0 0.75rem;
+        box-sizing: border-box;
+    }
+
+    body > header nav::-webkit-scrollbar {
+        display: none;
+    }
+
     body > header ul {
+        width: max-content;
+        min-width: 100%;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
         gap: 0.25rem 0.5rem;
+        padding: 0.45rem 0;
     }
 
     body > header a {
         min-height: 2.35rem;
         padding: 0.45rem 0.75rem;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
     main {
@@ -1790,6 +1814,13 @@ body > footer {
         max-width: 100%;
     }
 
+    body[data-spw-surface="software"] .frame-topline > .frame-sigil,
+    body[data-spw-surface="software"] .frame-operators .operator-chip,
+    body[data-spw-surface="software"] .spec-strip .spec-pill {
+        min-width: 0;
+        max-width: 100%;
+    }
+
     .source-name {
         min-width: 0;
         display: block;
@@ -1799,6 +1830,21 @@ body > footer {
 
     [data-spw-features~="console"] .spw-console {
         width: auto;
+    }
+
+    body[data-spw-surface="software"][data-spw-features~="console"] .spw-console {
+        padding: 0.72rem 0.78rem;
+        max-height: min(42vh, 16.5rem);
+        overflow-y: auto;
+    }
+
+    body[data-spw-surface="software"][data-spw-features~="console"] .spw-console.is-collapsed {
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    body[data-spw-surface="software"][data-spw-features~="console"] .spw-console-spells {
+        display: none;
     }
 
     p,
