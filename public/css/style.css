@@ -238,6 +238,7 @@ main > article {
     background: var(--surface);
     box-shadow: var(--shadow);
     transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    overflow: hidden;
 }
 
 .site-frame.is-active-frame {
@@ -610,6 +611,7 @@ main > article {
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.58);
     animation: panelFade 180ms ease;
+    overflow: hidden;
 }
 
 .mode-panel[hidden] {
@@ -653,6 +655,7 @@ main > article {
     box-sizing: border-box;
     box-shadow: var(--card-shadow);
     transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+    overflow: hidden;
 }
 
 a.frame-card {
