@@ -291,9 +291,17 @@ main > article {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
-    user-select: none;
     pointer-events: none;
     backdrop-filter: blur(6px);
+}
+
+.spw-component-tag,
+.frame-sigil,
+.operator-chip,
+.frame-card-sigil,
+.spec-kicker,
+.syntax-token {
+    user-select: none;
 }
 
 /*
@@ -314,52 +322,67 @@ main > article {
     z-index: 0;
 }
 
+[data-spw-form="brace"] {
+    --brace-corner-offset: 0.55rem;
+    --brace-corner-width: 1.6rem;
+    --brace-corner-height: 1.2rem;
+    --brace-corner-radius: 0.9rem;
+    --brace-corner-stroke: 1.5px;
+    --brace-open-color: rgba(0, 128, 128, 0.30);
+    --brace-close-color: rgba(0, 128, 128, 0.18);
+}
+
+[data-spw-form="block"] {
+    --block-inset: 0.42rem;
+    --block-border-width: 1px;
+    --block-border-color: rgba(14, 18, 20, 0.06);
+    --block-radius: calc(var(--radius-sm) - 0.1rem);
+    --block-highlight-offset: 1px;
+    --block-highlight-color: rgba(255, 255, 255, 0.44);
+    --block-depth-size: 0.38rem;
+    --block-depth-color: rgba(14, 18, 20, 0.025);
+    --block-hover-border-color: rgba(14, 18, 20, 0.08);
+    --block-hover-highlight-color: rgba(255, 255, 255, 0.50);
+    --block-hover-depth-color: rgba(14, 18, 20, 0.04);
+}
+
 /* Opening brace corner { — top-left */
 [data-spw-form="brace"]::before {
-    top: 0.55rem;
-    left: 0.55rem;
-    width: 1.6rem;
-    height: 1.2rem;
-    border-top: 1.5px solid rgba(0, 128, 128, 0.30);
-    border-left: 1.5px solid rgba(0, 128, 128, 0.30);
-    border-top-left-radius: 0.9rem;
+    top: var(--brace-corner-offset);
+    left: var(--brace-corner-offset);
+    width: var(--brace-corner-width);
+    height: var(--brace-corner-height);
+    border-top: var(--brace-corner-stroke) solid var(--brace-open-color);
+    border-left: var(--brace-corner-stroke) solid var(--brace-open-color);
+    border-top-left-radius: var(--brace-corner-radius);
     transition: border-color 200ms ease;
 }
 
 /* Closing brace corner } — bottom-right */
 [data-spw-form="brace"]::after {
-    right: 0.55rem;
-    bottom: 0.55rem;
-    width: 1.6rem;
-    height: 1.2rem;
-    border-right: 1.5px solid rgba(0, 128, 128, 0.18);
-    border-bottom: 1.5px solid rgba(0, 128, 128, 0.18);
-    border-bottom-right-radius: 0.9rem;
+    right: var(--brace-corner-offset);
+    bottom: var(--brace-corner-offset);
+    width: var(--brace-corner-width);
+    height: var(--brace-corner-height);
+    border-right: var(--brace-corner-stroke) solid var(--brace-close-color);
+    border-bottom: var(--brace-corner-stroke) solid var(--brace-close-color);
+    border-bottom-right-radius: var(--brace-corner-radius);
     transition: border-color 200ms ease;
 }
 
 /* site-frame is the outermost brace level — larger corners */
-.site-frame[data-spw-form="brace"]::before {
-    width: 2.2rem;
-    height: 1.6rem;
-    border-top-width: 2px;
-    border-left-width: 2px;
-    border-color: rgba(0, 128, 128, 0.22);
-}
-.site-frame[data-spw-form="brace"]::after {
-    width: 2.2rem;
-    height: 1.6rem;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-color: rgba(0, 128, 128, 0.12);
+.site-frame[data-spw-form="brace"] {
+    --brace-corner-width: 2.2rem;
+    --brace-corner-height: 1.6rem;
+    --brace-corner-stroke: 2px;
+    --brace-open-color: rgba(0, 128, 128, 0.22);
+    --brace-close-color: rgba(0, 128, 128, 0.12);
 }
 
 /* Active frame: brace corners sharpen */
-.site-frame.is-active-frame[data-spw-form="brace"]::before {
-    border-color: rgba(0, 128, 128, 0.40);
-}
-.site-frame.is-active-frame[data-spw-form="brace"]::after {
-    border-color: rgba(0, 128, 128, 0.24);
+.site-frame.is-active-frame[data-spw-form="brace"] {
+    --brace-open-color: rgba(0, 128, 128, 0.40);
+    --brace-close-color: rgba(0, 128, 128, 0.24);
 }
 
 /*
@@ -370,104 +393,75 @@ main > article {
  * grammar, just at different zoom levels.
  */
 
-/* Frame cards: ~70% of site-frame scale */
-.frame-card[data-spw-form="brace"]::before {
-    width: 1.55rem;
-    height: 1.1rem;
-    border-top-width: 1.5px;
-    border-left-width: 1.5px;
-    top: 0.4rem;
-    left: 0.4rem;
-}
-.frame-card[data-spw-form="brace"]::after {
-    width: 1.55rem;
-    height: 1.1rem;
-    border-right-width: 1.5px;
-    border-bottom-width: 1.5px;
-    right: 0.4rem;
-    bottom: 0.4rem;
+.frame-card[data-spw-form="brace"] {
+    --brace-corner-offset: 0.4rem;
+    --brace-corner-width: 1.55rem;
+    --brace-corner-height: 1.1rem;
 }
 
 /* Frame panels: even smaller */
-.frame-panel[data-spw-form="brace"]::before {
-    width: 1.2rem;
-    height: 0.85rem;
-    border-top-width: 1.2px;
-    border-left-width: 1.2px;
-    top: 0.3rem;
-    left: 0.3rem;
-}
-.frame-panel[data-spw-form="brace"]::after {
-    width: 1.2rem;
-    height: 0.85rem;
-    border-right-width: 1.2px;
-    border-bottom-width: 1.2px;
-    right: 0.3rem;
-    bottom: 0.3rem;
+.frame-panel[data-spw-form="brace"] {
+    --brace-corner-offset: 0.3rem;
+    --brace-corner-width: 1.2rem;
+    --brace-corner-height: 0.85rem;
+    --brace-corner-stroke: 1.2px;
 }
 
 /* Mode panels: smallest scale */
-.mode-panel[data-spw-form="brace"]::before {
-    width: 0.95rem;
-    height: 0.7rem;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-top-left-radius: 0.5rem;
-    top: 0.25rem;
-    left: 0.25rem;
-}
-.mode-panel[data-spw-form="brace"]::after {
-    width: 0.95rem;
-    height: 0.7rem;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-bottom-right-radius: 0.5rem;
-    right: 0.25rem;
-    bottom: 0.25rem;
+.mode-panel[data-spw-form="brace"] {
+    --brace-corner-offset: 0.25rem;
+    --brace-corner-width: 0.95rem;
+    --brace-corner-height: 0.7rem;
+    --brace-corner-radius: 0.5rem;
+    --brace-corner-stroke: 1px;
 }
 
 /* Block form: layered inner depth — nested insets suggest hidden N-D content */
 [data-spw-form="block"]::before {
-    inset: 0.42rem;
-    border: 1px solid rgba(14, 18, 20, 0.06);
-    border-radius: calc(var(--radius-sm) - 0.1rem);
+    inset: var(--block-inset);
+    border: var(--block-border-width) solid var(--block-border-color);
+    border-radius: var(--block-radius);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.44),
-        inset 0 0 0 0.38rem rgba(14, 18, 20, 0.025);
-    transition: all 200ms ease;
+        inset 0 var(--block-highlight-offset) 0 var(--block-highlight-color),
+        inset 0 0 0 var(--block-depth-size) var(--block-depth-color);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 [data-spw-form="block"]:hover::before {
+    border-color: var(--block-hover-border-color);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.50),
-        inset 0 0 0 0.38rem rgba(14, 18, 20, 0.04);
-    border-color: rgba(14, 18, 20, 0.08);
+        inset 0 var(--block-highlight-offset) 0 var(--block-hover-highlight-color),
+        inset 0 0 0 var(--block-depth-size) var(--block-hover-depth-color);
 }
 
 /* Fractal block scaling — nested levels */
-.frame-card[data-spw-form="block"]::before {
-    inset: 0.32rem;
-    border-radius: calc(var(--radius-sm) - 0.08rem);
-    box-shadow:
-        inset 0 0.8px 0 rgba(255, 255, 255, 0.42),
-        inset 0 0 0 0.28rem rgba(14, 18, 20, 0.02);
+.frame-card[data-spw-form="block"] {
+    --block-inset: 0.32rem;
+    --block-radius: calc(var(--radius-sm) - 0.08rem);
+    --block-highlight-offset: 0.8px;
+    --block-highlight-color: rgba(255, 255, 255, 0.42);
+    --block-depth-size: 0.28rem;
+    --block-depth-color: rgba(14, 18, 20, 0.02);
 }
 
-.frame-panel[data-spw-form="block"]::before {
-    inset: 0.25rem;
-    border-radius: calc(var(--radius-sm) - 0.06rem);
-    box-shadow:
-        inset 0 0.6px 0 rgba(255, 255, 255, 0.40),
-        inset 0 0 0 0.22rem rgba(14, 18, 20, 0.015);
+.frame-panel[data-spw-form="block"] {
+    --block-inset: 0.25rem;
+    --block-radius: calc(var(--radius-sm) - 0.06rem);
+    --block-highlight-offset: 0.6px;
+    --block-highlight-color: rgba(255, 255, 255, 0.40);
+    --block-depth-size: 0.22rem;
+    --block-depth-color: rgba(14, 18, 20, 0.015);
 }
 
-.mode-panel[data-spw-form="block"]::before {
-    inset: 0.2rem;
-    border-radius: calc(var(--radius-sm) - 0.05rem);
-    border: 0.8px solid rgba(14, 18, 20, 0.05);
-    box-shadow:
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.38),
-        inset 0 0 0 0.18rem rgba(14, 18, 20, 0.01);
+.mode-panel[data-spw-form="block"] {
+    --block-inset: 0.2rem;
+    --block-border-width: 0.8px;
+    --block-border-color: rgba(14, 18, 20, 0.05);
+    --block-radius: calc(var(--radius-sm) - 0.05rem);
+    --block-highlight-offset: 0.5px;
+    --block-highlight-color: rgba(255, 255, 255, 0.38);
+    --block-depth-size: 0.18rem;
+    --block-depth-color: rgba(14, 18, 20, 0.01);
 }
 
 .site-frame > .spw-component-tag,
@@ -569,7 +563,6 @@ main > article {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    user-select: none;
     transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
 
@@ -595,11 +588,6 @@ main > article {
 .inline-note {
     color: var(--ink-soft);
     max-width: var(--reading-width);
-}
-
-/* Decorative/semantic labels — not selectable content */
-.frame-card-sigil {
-    user-select: none;
 }
 
 .frame-operators,
@@ -718,7 +706,6 @@ a.frame-card {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    user-select: none;
 }
 
 .spec-pill {
@@ -760,7 +747,6 @@ a.frame-card {
     border-radius: 999px;
     padding: 0.22rem 0.58rem;
     cursor: pointer;
-    user-select: none;
     transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
 

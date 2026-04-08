@@ -1,10 +1,30 @@
 import {
     emitSpwEvent,
     getFrameMeta,
+    getNavigationType,
+    getPageSurface,
     getRequestedFeatures,
     loadFeature,
     onDomReady
 } from './spw-shared.js';
+
+const resetSoftwareEntryScroll = () => {
+    if (getPageSurface() !== 'software') return;
+    if (window.location.hash) return;
+    if (getNavigationType() === 'back_forward') return;
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        if (document.scrollingElement) {
+            document.scrollingElement.scrollTop = 0;
+            document.scrollingElement.scrollLeft = 0;
+        }
+    };
+
+    scrollToTop();
+    requestAnimationFrame(scrollToTop);
+    window.addEventListener('load', scrollToTop, { once: true });
+};
 
 const initSiteCore = () => {
     const frames = Array.from(document.querySelectorAll('.site-frame'));
@@ -310,6 +330,7 @@ const initOptionalFeatures = async () => {
 };
 
 onDomReady(() => {
+    resetSoftwareEntryScroll();
     initSiteCore();
 
     initOptionalFeatures().catch((error) => {

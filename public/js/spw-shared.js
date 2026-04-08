@@ -23,11 +23,21 @@ const onDomReady = (callback) => {
     callback();
 };
 
+const getPageSurface = () => document.body?.dataset.spwSurface || '';
+
 const getRequestedFeatures = () => new Set(
     (document.body?.dataset.spwFeatures || '')
         .split(/\s+/)
         .map((feature) => feature.trim())
         .filter(Boolean)
+);
+
+const getNavigationType = () => (
+    performance.getEntriesByType?.('navigation')?.[0]?.type || 'navigate'
+);
+
+const matchesMaxWidth = (maxWidth) => (
+    window.matchMedia(`(max-width: ${maxWidth}px)`).matches
 );
 
 const loadFeature = async (specifier, exportName) => {
@@ -97,8 +107,11 @@ export {
     emitSpwAction,
     emitSpwEvent,
     getFrameMeta,
+    getNavigationType,
+    getPageSurface,
     getRequestedFeatures,
     isInputFocused,
     loadFeature,
+    matchesMaxWidth,
     onDomReady
 };

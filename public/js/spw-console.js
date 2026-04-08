@@ -1,3 +1,8 @@
+import {
+    getPageSurface,
+    matchesMaxWidth
+} from './spw-shared.js';
+
 let initialized = false;
 
 // ─── Ring buffer for action history ──────────────────────────────────────────
@@ -206,6 +211,16 @@ const describeModeAction = (detail) => {
     }
 };
 
+const getDefaultCollapsedState = (storageKey) => {
+    const storedCollapsed = localStorage.getItem(storageKey);
+    const prefersCompactConsole = matchesMaxWidth(700);
+    const forceCompactConsole = prefersCompactConsole && getPageSurface() === 'software';
+
+    if (forceCompactConsole) return true;
+    if (storedCollapsed === null) return prefersCompactConsole;
+    return storedCollapsed === 'true';
+};
+
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 
 const initSpwConsole = () => {
@@ -236,14 +251,7 @@ const initSpwConsole = () => {
 
     // ── Collapse / expand ──
     const STORAGE_KEY = 'spw-console-collapsed';
-    const storedCollapsed = localStorage.getItem(STORAGE_KEY);
-    const prefersCompactConsole = window.matchMedia('(max-width: 700px)').matches;
-    const forceCompactConsole = prefersCompactConsole && document.body.dataset.spwSurface === 'software';
-    let collapsed = forceCompactConsole
-        ? true
-        : storedCollapsed === null
-            ? prefersCompactConsole
-            : storedCollapsed === 'true';
+    let collapsed = getDefaultCollapsedState(STORAGE_KEY);
 
     const applyCollapsed = (value, animate = false) => {
         collapsed = value;
