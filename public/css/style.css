@@ -111,6 +111,7 @@ code, pre {
 pre {
     margin: 0;
     overflow-x: auto;
+    overflow-y: hidden;
     padding: 1rem 1.1rem;
     border-radius: var(--radius-sm);
     background: var(--surface-code);
@@ -1877,6 +1878,12 @@ body > footer {
         word-break: break-word;
     }
 
+    pre {
+        overflow-x: hidden;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
     body[data-spw-surface="software"] .spw-operator-table,
     body[data-spw-surface="software"] .spw-operator-table tbody,
     body[data-spw-surface="software"] .spw-operator-table tr,
@@ -2019,6 +2026,12 @@ body > footer {
     body > header::after {
         width: 1rem;
         height: 0.7rem;
+    }
+
+    /* Prevent code block overflow on smallest screens */
+    pre {
+        overflow-x: hidden;
+        font-size: 0.75rem;
     }
 }
 
