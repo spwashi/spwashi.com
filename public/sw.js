@@ -1,10 +1,10 @@
 /*
  * Service Worker for spwashi.com
  * Cache-first strategy with periodic update checking
- * Version: 0.0.1
+ * Version: 0.0.2
  */
 
-const CACHE_VERSION = 'v0.0.1';
+const CACHE_VERSION = 'v0.0.2';
 const CACHE_NAME = `spw-cache-${CACHE_VERSION}`;
 
 // Assets to precache on install

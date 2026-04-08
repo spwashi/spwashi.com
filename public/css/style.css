@@ -121,11 +121,30 @@ pre {
 
 body[data-spw-surface="software"] pre {
     display: block;
+    inline-size: 100%;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
+}
+
+body[data-spw-surface="software"] pre > code {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+}
+
+body[data-spw-surface="software"] main,
+body[data-spw-surface="software"] main > article,
+body[data-spw-surface="software"] .site-frame,
+body[data-spw-surface="software"] .spec-grid,
+body[data-spw-surface="software"] .software-card,
+body[data-spw-surface="software"] .mode-panels,
+body[data-spw-surface="software"] .mode-panel,
+body[data-spw-surface="software"] .demo-panels,
+body[data-spw-surface="software"] .demo-panel {
+    min-width: 0;
 }
 
 body > header {
@@ -1879,7 +1898,7 @@ body > footer {
     }
 
     pre {
-        overflow-x: hidden;
+        overflow-x: auto;
         max-width: 100%;
         box-sizing: border-box;
     }
@@ -2028,9 +2047,9 @@ body > footer {
         height: 0.7rem;
     }
 
-    /* Prevent code block overflow on smallest screens */
+    /* Keep code block overflow internal on smallest screens */
     pre {
-        overflow-x: hidden;
+        overflow-x: auto;
         font-size: 0.75rem;
     }
 }

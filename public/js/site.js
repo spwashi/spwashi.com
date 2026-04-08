@@ -1,17 +1,20 @@
 import {
     emitSpwEvent,
     getFrameMeta,
-    getNavigationType,
-    getPageSurface,
     getRequestedFeatures,
     loadFeature,
     onDomReady
 } from './spw-shared.js';
 
+const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
+
 const resetSoftwareEntryScroll = () => {
-    if (getPageSurface() !== 'software') return;
+    if (!isSoftwareRoute()) return;
     if (window.location.hash) return;
-    if (getNavigationType() === 'back_forward') return;
+
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -23,6 +26,7 @@ const resetSoftwareEntryScroll = () => {
 
     scrollToTop();
     requestAnimationFrame(scrollToTop);
+    window.addEventListener('pageshow', scrollToTop, { once: true });
     window.addEventListener('load', scrollToTop, { once: true });
 };
 
