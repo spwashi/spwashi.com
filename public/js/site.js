@@ -306,6 +306,7 @@ const initOptionalFeatures = async () => {
     }
 
     await Promise.all(loads);
+    await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
 };
 
 onDomReady(() => {

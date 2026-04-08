@@ -22,7 +22,7 @@ const createMetricsBar = () => {
 
     const label = document.createElement('span');
     label.className = 'frame-metrics-label';
-    label.textContent = '>pretext';
+    label.textContent = '>metrics';
 
     const items = document.createElement('span');
     items.className = 'frame-metrics-items';

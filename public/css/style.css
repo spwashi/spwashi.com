@@ -200,6 +200,25 @@ main > article {
     box-shadow: var(--shadow-active);
 }
 
+[data-spw-component-kind="frame"],
+[data-spw-component-kind="panel"],
+[data-spw-component-kind="card"],
+[data-spw-component-kind="surface"],
+[data-spw-component-kind="lens"],
+[data-spw-component-kind="metric"] {
+    position: relative;
+}
+
+[data-spw-component-kind="frame"] > *,
+[data-spw-component-kind="panel"] > *,
+[data-spw-component-kind="card"] > *,
+[data-spw-component-kind="surface"] > *,
+[data-spw-component-kind="lens"] > *,
+[data-spw-component-kind="metric"] > * {
+    position: relative;
+    z-index: 1;
+}
+
 .site-hero {
     gap: 1.1rem;
 }
@@ -211,6 +230,118 @@ main > article {
     justify-content: space-between;
     gap: 0.9rem;
     flex-wrap: wrap;
+}
+
+.spw-component-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.24rem 0.5rem;
+    border: 1px solid rgba(14, 18, 20, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.68);
+    color: var(--ink-soft);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+}
+
+[data-spw-form="brace"]::before,
+[data-spw-form="brace"]::after,
+[data-spw-form="block"]::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+[data-spw-form="brace"]::before {
+    top: 0.6rem;
+    left: 0.6rem;
+    width: 1.15rem;
+    height: 0.9rem;
+    border-top: 1.5px solid rgba(0, 128, 128, 0.24);
+    border-left: 1.5px solid rgba(0, 128, 128, 0.24);
+    border-top-left-radius: 0.85rem;
+}
+
+[data-spw-form="brace"]::after {
+    right: 0.6rem;
+    bottom: 0.6rem;
+    width: 1.15rem;
+    height: 0.9rem;
+    border-right: 1.5px solid rgba(0, 128, 128, 0.16);
+    border-bottom: 1.5px solid rgba(0, 128, 128, 0.16);
+    border-bottom-right-radius: 0.85rem;
+}
+
+[data-spw-form="block"]::before {
+    inset: 0.45rem;
+    border: 1px solid rgba(14, 18, 20, 0.07);
+    border-radius: calc(var(--radius-sm) - 0.12rem);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.site-frame > .spw-component-tag,
+.frame-panel > .spw-component-tag,
+.frame-card > .spw-component-tag,
+.software-card > .spw-component-tag,
+.mode-panel > .spw-component-tag,
+[data-spw-features~="pretext-lab"] .pretext-metric > .spw-component-tag {
+    align-self: flex-end;
+    margin-bottom: -0.2rem;
+}
+
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    margin-left: auto;
+}
+
+[data-spw-form="brace"] > .spw-component-tag,
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    border-radius: 999px;
+}
+
+[data-spw-form="block"] > .spw-component-tag {
+    border-radius: 0.45rem;
+}
+
+[data-spw-component-kind="frame"] > .spw-component-tag,
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    color: var(--teal-deep);
+    border-color: rgba(0, 128, 128, 0.18);
+    background: rgba(230, 248, 248, 0.74);
+}
+
+[data-spw-component-kind="card"] > .spw-component-tag {
+    color: hsl(210 70% 34%);
+    border-color: hsla(210, 70%, 34%, 0.16);
+    background: rgba(235, 244, 255, 0.72);
+}
+
+[data-spw-component-kind="panel"] > .spw-component-tag,
+[data-spw-component-kind="surface"] > .spw-component-tag {
+    color: hsl(36 80% 32%);
+    border-color: hsla(36, 80%, 32%, 0.16);
+    background: rgba(255, 248, 235, 0.76);
+}
+
+[data-spw-component-kind="lens"] > .spw-component-tag {
+    color: hsl(268 55% 38%);
+    border-color: hsla(268, 55%, 38%, 0.16);
+    background: rgba(245, 238, 255, 0.78);
+}
+
+[data-spw-component-kind="metric"] > .spw-component-tag {
+    color: hsl(180 100% 22%);
+    border-color: rgba(0, 100, 100, 0.18);
+    background: rgba(230, 248, 248, 0.78);
 }
 
 .frame-sigil,
@@ -1503,6 +1634,11 @@ body > footer {
     .frame-note,
     .inline-note {
         max-width: none;
+    }
+
+    .spw-component-tag {
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
     }
 }
 
