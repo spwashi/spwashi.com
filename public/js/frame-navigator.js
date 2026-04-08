@@ -1,21 +1,95 @@
 // frame-navigator.js
 //
-// JetBrains-inspired tool window panel for navigating site frames.
+// JetBrains-inspired tool window panel for navigating site frames and routes.
 //
 // Spw spell sequences (operator-to-keyboard mapping):
-//   g          →  #> go spell     — toggle frame navigator
+//   g          →  #> map spell    — toggle surface map
 //   [ / ]      →  sequence spell  — traverse prev / next frame
-//   / (chord)  →  ?[ probe spell  — filter frames by text
+//   / (chord)  →  ?[ probe spell  — filter frames and routes
 //   Escape     →  close / deactivate
 
-// ─── Frame metadata ───────────────────────────────────────────────────────────
 import {
+    detectOperator,
     emitSpwAction,
     getFrameMeta,
     isInputFocused
 } from './spw-shared.js';
 
 let initialized = false;
+
+const NAV_ROUTE_SELECTOR = [
+    'main .frame-operators a[href]',
+    'main .frame-card[href]',
+    'main .syntax-token[href]',
+    'main .frame-list a[href]',
+    'main p a[href]'
+].join(', ');
+
+const normalizePathname = (pathname = '') => {
+    if (!pathname || pathname === '/') return '/';
+    return pathname.replace(/\/+$/, '');
+};
+
+const normalizeText = (value = '') => value.replace(/\s+/g, ' ').trim();
+
+const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.hash}`;
+
+const getRouteLabel = (link) => {
+    if (link.classList.contains('frame-card')) {
+        return normalizeText(link.querySelector('strong')?.textContent || link.textContent);
+    }
+
+    return normalizeText(link.textContent);
+};
+
+const collectRouteEntries = () => {
+    const currentPath = normalizePathname(window.location.pathname);
+    const seen = new Set();
+
+    return Array.from(document.querySelectorAll(NAV_ROUTE_SELECTOR)).reduce((routes, link) => {
+        if (link.closest('[hidden]')) return routes;
+
+        const href = link.getAttribute('href');
+        if (!href) return routes;
+
+        let url;
+        try {
+            url = new URL(href, window.location.href);
+        } catch {
+            return routes;
+        }
+
+        if (url.origin !== window.location.origin) return routes;
+
+        const nextPath = normalizePathname(url.pathname);
+        if (nextPath === currentPath) return routes;
+
+        const normalizedHref = `${nextPath}${url.hash}`;
+        if (seen.has(normalizedHref)) return routes;
+        seen.add(normalizedHref);
+
+        const label = getRouteLabel(link);
+        if (!label) return routes;
+
+        const sourceFrame = link.closest('.site-frame');
+        const sourceHeading = sourceFrame ? getFrameMeta(sourceFrame).headingText : '';
+        const sigilText = normalizeText(link.querySelector('.frame-card-sigil')?.textContent || label);
+        const detected = detectOperator(sigilText) || detectOperator(label);
+        const compactHref = getCompactInternalHref(url);
+
+        routes.push({
+            key: normalizedHref,
+            href: compactHref,
+            label,
+            metaText: compactHref,
+            opType: detected?.type || null,
+            prefix: detected?.prefix || null,
+            searchText: `${label} ${sourceHeading} ${compactHref} ${sigilText}`.toLowerCase()
+        });
+
+        return routes;
+    }, []);
+};
 
 // ─── Frame activation (mirrors site.js logic without coupling) ───────────────
 
@@ -41,12 +115,10 @@ const getActiveFrame = () => (
 // ─── Navigator construction ───────────────────────────────────────────────────
 
 const buildNavigator = () => {
-    // Root container — sits at the left edge.
     const root = document.createElement('div');
     root.className = 'spw-nav';
-    root.setAttribute('aria-label', 'Frame navigator');
+    root.setAttribute('aria-label', 'Surface map');
 
-    // Trigger strip — the JetBrains tool window stripe.
     const strip = document.createElement('div');
     strip.className = 'spw-nav-strip';
 
@@ -54,39 +126,36 @@ const buildNavigator = () => {
     triggerBtn.className = 'spw-nav-trigger';
     triggerBtn.setAttribute('aria-controls', 'spw-nav-panel');
     triggerBtn.setAttribute('aria-expanded', 'false');
-    triggerBtn.setAttribute('aria-label', 'Toggle frame navigator (g)');
-    triggerBtn.innerHTML = '<span class="spw-nav-strip-label">#&gt;&nbsp;frames</span>';
+    triggerBtn.setAttribute('aria-label', 'Toggle surface map (g)');
+    triggerBtn.innerHTML = '<span class="spw-nav-strip-label">#&gt;&nbsp;map</span>';
     strip.appendChild(triggerBtn);
 
-    // Panel.
     const panel = document.createElement('div');
     panel.className = 'spw-nav-panel';
     panel.id = 'spw-nav-panel';
     panel.setAttribute('role', 'dialog');
     panel.setAttribute('aria-modal', 'false');
-    panel.setAttribute('aria-label', 'Frame navigator');
+    panel.setAttribute('aria-label', 'Surface map');
     panel.hidden = true;
 
-    // Panel header.
     const header = document.createElement('div');
     header.className = 'spw-nav-header';
 
     const title = document.createElement('span');
     title.className = 'spw-nav-title';
-    title.innerHTML = '<span data-spw-operator="frame">#&gt;</span>&thinsp;frames';
+    title.innerHTML = '<span data-spw-operator="frame">#&gt;</span>&thinsp;surface map';
 
     const counter = document.createElement('span');
     counter.className = 'spw-nav-counter';
     counter.setAttribute('aria-live', 'polite');
-    counter.setAttribute('aria-label', 'Frame position');
+    counter.setAttribute('aria-label', 'Surface map counts');
 
     const closeBtn = document.createElement('button');
     closeBtn.className = 'spw-nav-close';
-    closeBtn.setAttribute('aria-label', 'Close navigator');
+    closeBtn.setAttribute('aria-label', 'Close surface map');
     closeBtn.textContent = '×';
     header.append(title, counter, closeBtn);
 
-    // Search field — the ?[ probe slot.
     const searchWrap = document.createElement('div');
     searchWrap.className = 'spw-nav-search-wrap';
 
@@ -98,22 +167,20 @@ const buildNavigator = () => {
     const searchInput = document.createElement('input');
     searchInput.className = 'spw-nav-search';
     searchInput.type = 'search';
-    searchInput.placeholder = 'filter frames';
-    searchInput.setAttribute('aria-label', 'Filter frames');
+    searchInput.placeholder = 'filter frames + routes';
+    searchInput.setAttribute('aria-label', 'Filter frames and routes');
     searchInput.autocomplete = 'off';
     searchWrap.append(searchLabel, searchInput);
 
-    // Frame list.
     const list = document.createElement('ul');
     list.className = 'spw-nav-list';
     list.setAttribute('role', 'list');
 
-    // Spell hint footer.
     const spells = document.createElement('div');
     spells.className = 'spw-nav-spells';
     spells.setAttribute('aria-hidden', 'true');
     spells.innerHTML =
-        '<span class="spw-spell">g</span> toggle &nbsp;' +
+        '<span class="spw-spell">g</span> map &nbsp;' +
         '<span class="spw-spell">[ ]</span> traverse &nbsp;' +
         '<span class="spw-spell">esc</span> close';
 
@@ -125,74 +192,145 @@ const buildNavigator = () => {
 
 // ─── List rendering ───────────────────────────────────────────────────────────
 
-const renderList = (list, frames, filterText, onActivate) => {
+const appendSectionLabel = (list, label, count) => {
+    const section = document.createElement('li');
+    section.className = 'spw-nav-section-label';
+    section.textContent = `${label} (${count})`;
+    list.appendChild(section);
+};
+
+const appendEntry = (list, entry, onActivate) => {
+    const item = document.createElement('li');
+    item.className = 'spw-nav-item';
+
+    const control = document.createElement(entry.kind === 'route' ? 'a' : 'button');
+    control.className = 'spw-nav-item-btn';
+    control.dataset.navKind = entry.kind;
+
+    if (entry.kind === 'frame') {
+        control.type = 'button';
+        control.setAttribute('data-nav-index', String(entry.index));
+    } else {
+        control.href = entry.href;
+        control.setAttribute('data-route-key', entry.key);
+    }
+
+    if (entry.prefix) {
+        const chip = document.createElement('span');
+        chip.className = 'spw-nav-op-chip';
+        if (entry.opType) chip.dataset.spwOperator = entry.opType;
+        chip.textContent = entry.prefix;
+        chip.setAttribute('aria-hidden', 'true');
+        control.appendChild(chip);
+    }
+
+    const body = document.createElement('span');
+    body.className = 'spw-nav-item-body';
+
+    const label = document.createElement('span');
+    label.className = 'spw-nav-item-label';
+    label.textContent = entry.label;
+    body.appendChild(label);
+
+    if (entry.metaText) {
+        const meta = document.createElement('span');
+        meta.className = 'spw-nav-item-meta';
+        meta.textContent = entry.metaText;
+        body.appendChild(meta);
+    }
+
+    control.appendChild(body);
+    control.addEventListener('click', () => onActivate(entry));
+
+    item.appendChild(control);
+    list.appendChild(item);
+};
+
+const renderList = (list, frames, routes, filterText, onActivate) => {
     const query = filterText.toLowerCase();
     list.replaceChildren();
 
-    frames.forEach(({ frame, meta }, index) => {
-        const matchesSigil   = meta.sigilText.toLowerCase().includes(query);
-        const matchesHeading = meta.headingText.toLowerCase().includes(query);
-        if (query && !matchesSigil && !matchesHeading) return;
+    const filteredFrames = frames
+        .filter(({ meta }) => {
+            if (!query) return true;
 
-        const item = document.createElement('li');
-        item.className = 'spw-nav-item';
+            const matchesSigil = meta.sigilText.toLowerCase().includes(query);
+            const matchesHeading = meta.headingText.toLowerCase().includes(query);
+            return matchesSigil || matchesHeading;
+        })
+        .map((entry) => ({
+            ...entry,
+            kind: 'frame',
+            label: entry.meta.headingText,
+            metaText: entry.meta.sigilText
+        }));
 
-        const btn = document.createElement('button');
-        btn.className = 'spw-nav-item-btn';
-        btn.setAttribute('data-nav-index', String(index));
+    const filteredRoutes = routes
+        .filter((entry) => !query || entry.searchText.includes(query))
+        .map((entry) => ({ ...entry, kind: 'route' }));
 
-        if (meta.prefix) {
-            const chip = document.createElement('span');
-            chip.className = 'spw-nav-op-chip';
-            if (meta.opType) chip.dataset.spwOperator = meta.opType;
-            chip.textContent = meta.prefix;
-            chip.setAttribute('aria-hidden', 'true');
-            btn.appendChild(chip);
-        }
+    if (filteredFrames.length) {
+        appendSectionLabel(list, 'frames', filteredFrames.length);
+        filteredFrames.forEach((entry) => appendEntry(list, entry, onActivate));
+    }
 
-        const label = document.createElement('span');
-        label.className = 'spw-nav-item-label';
-        label.textContent = meta.headingText;
-        btn.appendChild(label);
-
-        btn.addEventListener('click', () => onActivate(frame));
-        item.appendChild(btn);
-        list.appendChild(item);
-    });
+    if (filteredRoutes.length) {
+        appendSectionLabel(list, 'routes', filteredRoutes.length);
+        filteredRoutes.forEach((entry) => appendEntry(list, entry, onActivate));
+    }
 
     if (!list.children.length) {
         const empty = document.createElement('li');
         empty.className = 'spw-nav-empty';
-        empty.textContent = 'no frames match';
+        empty.textContent = 'no frames or routes match';
         list.appendChild(empty);
     }
+
+    return {
+        visibleFrames: filteredFrames.length,
+        visibleRoutes: filteredRoutes.length
+    };
 };
 
 // ─── Active-frame tracker ────────────────────────────────────────────────────
 
-const syncActiveItem = (list, frames, counter) => {
+const syncActiveItem = (list, frames, counter, counts = {}) => {
     const active = getActiveFrame();
-    let activeIndex = -1;
+    let activeButton = null;
+    let activeVisibleIndex = -1;
+    let visibleFrameIndex = 0;
 
     list.querySelectorAll('.spw-nav-item-btn').forEach((btn) => {
-        const idx  = Number(btn.dataset.navIndex);
+        if (btn.dataset.navKind !== 'frame') {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-current', 'false');
+            return;
+        }
+
+        const idx = Number(btn.dataset.navIndex);
         const isActive = frames[idx]?.frame === active;
         btn.classList.toggle('is-active', isActive);
         btn.setAttribute('aria-current', isActive ? 'true' : 'false');
-        if (isActive) activeIndex = idx;
+
+        if (isActive) {
+            activeVisibleIndex = visibleFrameIndex;
+            activeButton = btn;
+        }
+
+        visibleFrameIndex += 1;
     });
 
-    // Update position counter.
     if (counter) {
-        const total = frames.length;
-        counter.textContent = activeIndex >= 0 ? `${activeIndex + 1} / ${total}` : `${total}`;
+        const frameCount = counts.visibleFrames ?? visibleFrameIndex;
+        const routeCount = counts.visibleRoutes ?? 0;
+        const frameCopy = activeVisibleIndex >= 0
+            ? `${activeVisibleIndex + 1} / ${frameCount} frames`
+            : `${frameCount} frames`;
+
+        counter.textContent = routeCount ? `${frameCopy} | ${routeCount} routes` : frameCopy;
     }
 
-    // Scroll the active item into view within the list (non-intrusive).
-    if (activeIndex >= 0) {
-        const activeBtn = list.querySelector(`[data-nav-index="${activeIndex}"]`);
-        activeBtn?.scrollIntoView({ block: 'nearest' });
-    }
+    activeButton?.scrollIntoView({ block: 'nearest' });
 };
 
 // ─── Keyboard spells ──────────────────────────────────────────────────────────
@@ -200,7 +338,7 @@ const syncActiveItem = (list, frames, counter) => {
 const navigateFrames = (dir) => {
     const all = Array.from(document.querySelectorAll('.site-frame'));
     const active = getActiveFrame();
-    const idx  = active ? all.indexOf(active) : -1;
+    const idx = active ? all.indexOf(active) : -1;
     const next = all.at((idx + dir + all.length) % all.length);
     if (next) {
         activateFrame(next);
@@ -218,21 +356,32 @@ const initFrameNavigator = () => {
     if (!siteFrameEls.length) return;
     initialized = true;
 
-    const frames = siteFrameEls.map((frame) => ({ frame, meta: getFrameMeta(frame) }));
+    const frames = siteFrameEls.map((frame, index) => ({ frame, index, meta: getFrameMeta(frame) }));
 
     const { root, triggerBtn, panel, closeBtn, counter, searchInput, list } = buildNavigator();
     document.body.appendChild(root);
 
     let filterText = '';
+    let counts = {
+        visibleFrames: frames.length,
+        visibleRoutes: 0
+    };
 
     const refresh = () => {
-        renderList(list, frames, filterText, (frame) => {
-            activateFrame(frame);
-            frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            emitSpwAction('@navigator.select', getFrameMeta(frame).headingText);
+        const routes = collectRouteEntries();
+        counts = renderList(list, frames, routes, filterText, (entry) => {
+            if (entry.kind === 'frame') {
+                activateFrame(entry.frame);
+                entry.frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                emitSpwAction('@navigator.select', entry.meta.headingText);
+                close();
+                return;
+            }
+
+            emitSpwAction('@navigator.route', entry.label);
             close();
         });
-        syncActiveItem(list, frames, counter);
+        syncActiveItem(list, frames, counter, counts);
     };
 
     const open = () => {
@@ -243,7 +392,7 @@ const initFrameNavigator = () => {
         filterText = '';
         refresh();
         requestAnimationFrame(() => searchInput.focus());
-        emitSpwAction('#>frames.open', 'frame navigator');
+        emitSpwAction('#>map.open', 'surface map');
     };
 
     const close = (options = {}) => {
@@ -251,12 +400,11 @@ const initFrameNavigator = () => {
         root.classList.remove('is-open');
         triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) triggerBtn.focus();
-        emitSpwAction('!frames.close', 'frame navigator');
+        emitSpwAction('!map.close', 'surface map');
     };
 
     const toggle = () => (panel.hidden ? open() : close());
 
-    // Controls.
     triggerBtn.addEventListener('click', toggle);
     closeBtn.addEventListener('click', close);
 
@@ -308,50 +456,47 @@ const initFrameNavigator = () => {
         }
     });
 
-    // Close on backdrop click (clicking root outside the panel).
-    root.addEventListener('click', (e) => {
-        if (e.target === root) close();
+    root.addEventListener('click', (event) => {
+        if (event.target === root) close();
     });
 
-    // ── Keyboard spells ──
-    window.addEventListener('keydown', (e) => {
-        // g spell: #> go — toggle navigator.
-        if (e.key === 'g' && !e.ctrlKey && !e.metaKey && !isInputFocused()) {
-            e.preventDefault();
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'g' && !event.ctrlKey && !event.metaKey && !isInputFocused()) {
+            event.preventDefault();
             toggle();
             return;
         }
 
-        // ] spell: next frame in sequence.
-        if (e.key === ']' && !isInputFocused()) {
-            e.preventDefault();
+        if (event.key === ']' && !isInputFocused()) {
+            event.preventDefault();
             navigateFrames(1);
             return;
         }
 
-        // [ spell: previous frame in sequence.
-        if (e.key === '[' && !isInputFocused()) {
-            e.preventDefault();
+        if (event.key === '[' && !isInputFocused()) {
+            event.preventDefault();
             navigateFrames(-1);
             return;
         }
 
-        // / spell: ?[ probe — open navigator with focus on search.
-        if (e.key === '/' && !isInputFocused()) {
-            e.preventDefault();
+        if (event.key === '/' && !isInputFocused()) {
+            event.preventDefault();
             if (panel.hidden) open();
             else searchInput.focus();
             return;
         }
 
-        if (e.key === 'Escape') {
+        if (event.key === 'Escape') {
             close({ restoreFocus: !panel.hidden });
         }
     });
 
-    // Sync active indicator when site.js activates frames.
-    const frameObserver = new MutationObserver(() => syncActiveItem(list, frames, counter));
-    siteFrameEls.forEach((f) => frameObserver.observe(f, { attributes: true, attributeFilter: ['class'] }));
+    const frameObserver = new MutationObserver(() => syncActiveItem(list, frames, counter, counts));
+    siteFrameEls.forEach((frame) => {
+        frameObserver.observe(frame, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    document.addEventListener('spw:mode-change', refresh);
 
     refresh();
 };

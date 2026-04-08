@@ -79,7 +79,7 @@ const createConsole = () => {
     // Spell footer
     const spellsLine = el('div', 'spw-console-line spw-console-spells');
     spellsLine.innerHTML =
-        '<span class="spw-spell">g</span> navigator' +
+        '<span class="spw-spell">g</span> map' +
         '<span class="spw-spell">/</span> probe' +
         '<span class="spw-spell">[ ]</span> traverse';
 
@@ -218,6 +218,21 @@ const initSpwConsole = () => {
     const history = makeRingBuffer(HISTORY_SIZE);
     const nodes = createConsole();
     document.body.appendChild(nodes.root);
+    const IDLE_DELAY = 2600;
+    let idleTimer = 0;
+
+    const scheduleIdle = () => {
+        window.clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(() => {
+            if (nodes.root.matches(':hover') || nodes.root.matches(':focus-within')) return;
+            nodes.root.classList.add('is-idle');
+        }, IDLE_DELAY);
+    };
+
+    const wake = () => {
+        nodes.root.classList.remove('is-idle');
+        scheduleIdle();
+    };
 
     // ── Collapse / expand ──
     const STORAGE_KEY = 'spw-console-collapsed';
@@ -231,6 +246,7 @@ const initSpwConsole = () => {
         nodes.expandBtn.setAttribute('aria-label', value ? 'Expand Spw console' : 'Collapse Spw console');
         nodes.expandBtn.textContent = value ? '▲' : '▲';
         nodes.collapseBtn.textContent = value ? '▲' : '▼';
+        wake();
     };
 
     nodes.collapseBtn.addEventListener('click', () => applyCollapsed(true, true));
@@ -238,6 +254,14 @@ const initSpwConsole = () => {
 
     nodes.root.addEventListener('animationend', () => nodes.root.classList.remove('is-animating'));
     nodes.root.addEventListener('transitionend', () => nodes.root.classList.remove('is-animating'));
+    nodes.root.addEventListener('pointerenter', () => nodes.root.classList.remove('is-idle'));
+    nodes.root.addEventListener('pointerleave', scheduleIdle);
+    nodes.root.addEventListener('focusin', () => nodes.root.classList.remove('is-idle'));
+    nodes.root.addEventListener('focusout', () => {
+        requestAnimationFrame(() => {
+            if (!nodes.root.matches(':focus-within')) scheduleIdle();
+        });
+    });
 
     applyCollapsed(collapsed);
 
@@ -251,11 +275,13 @@ const initSpwConsole = () => {
 
     const initial = api.getActiveFrame();
     sync(initial ? api.getFrameMeta(initial) : null);
+    wake();
 
     // ── Event subscriptions ──
     document.addEventListener('spw:frame-change', (event) => {
         sync(event.detail);
         setAction(nodes, history, ...describeFrameAction(event.detail));
+        wake();
     });
 
     document.addEventListener('spw:mode-change', (event) => {
@@ -264,12 +290,14 @@ const initSpwConsole = () => {
             : null;
         sync(frameMeta);
         setAction(nodes, history, ...describeModeAction(event.detail));
+        wake();
     });
 
     document.addEventListener('spw:action', (event) => {
         const detail = event.detail || {};
         if (!detail.token || !detail.description) return;
         setAction(nodes, history, detail.token, detail.description);
+        wake();
     });
 };
 
