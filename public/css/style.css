@@ -109,19 +109,22 @@ code, pre {
 }
 
 pre {
-    display: block;
     margin: 0;
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
     overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
     padding: 1rem 1.1rem;
     border-radius: var(--radius-sm);
     background: var(--surface-code);
     color: #f9e8bf;
     line-height: 1.55;
+}
+
+body[data-spw-surface="software"] pre {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 body > header {
@@ -1751,6 +1754,40 @@ body > footer {
     .syntax-token {
         max-width: 100%;
         word-break: break-word;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table,
+    body[data-spw-surface="software"] .spw-operator-table tbody,
+    body[data-spw-surface="software"] .spw-operator-table tr,
+    body[data-spw-surface="software"] .spw-operator-table td {
+        display: block;
+        width: auto;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table tr {
+        padding: 0.65rem 0;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table tr:first-child {
+        padding-top: 0;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table td {
+        padding: 0.18rem 0;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table td:first-child {
+        width: auto;
+        white-space: normal;
+        padding-left: 0;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table td:last-child {
+        overflow-wrap: anywhere;
+    }
+
+    body[data-spw-surface="software"] .spw-operator-table .frame-sigil {
+        max-width: 100%;
     }
 
     .source-name {

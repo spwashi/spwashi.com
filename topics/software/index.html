@@ -9,7 +9,7 @@
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
 </head>
-<body data-spw-features="operators metrics navigator console">
+<body data-spw-surface="software" data-spw-features="operators metrics navigator console">
     <header>
         <nav>
             <ul>
@@ -23,7 +23,29 @@
     </header>
     <main>
         <article>
-            <section class="site-frame site-hero" id="spw-syntax-surface" data-spw-meaning="reference surface">
+            <section class="site-frame site-hero" id="software-surface" data-spw-meaning="surface overview">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#software-surface">#&gt;software_surface</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">plain-text systems</span>
+                        <span class="spec-pill">interaction grammar</span>
+                        <span class="spec-pill">projection surfaces</span>
+                        <span class="spec-pill">tool probes</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software Surface</p>
+                <h1>Software</h1>
+                <p>Spw is the throughline here: plain text that stays readable while becoming more addressable, queryable, and projectable. This page is the public landing surface for the syntax, the interaction grammar, and the small probes that make the model legible.</p>
+                <nav class="frame-operators" aria-label="Software overview routes">
+                    <a class="operator-chip" href="#spw-syntax-surface">syntax reference</a>
+                    <a class="operator-chip" href="#spw-grammar-surface">grammar surface</a>
+                    <a class="operator-chip" href="#interactive-codeblocks">interactive codeblocks</a>
+                    <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
+                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench">spw-workbench</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="spw-syntax-surface" data-spw-meaning="reference surface">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#spw-syntax-surface">#&gt;spw_syntax_surface</a>
                     <div class="mode-switch" role="group" aria-label="Syntax lens">
@@ -34,7 +56,7 @@
                     </div>
                 </div>
                 <p class="spec-kicker">Public Reference Surface</p>
-                <h1>Spw Syntax</h1>
+                <h2>Spw Syntax</h2>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source">
                         <p>Spw pushes plain text toward addressable structure without giving up legibility. The file remains the substrate; the syntax simply gives tools more to work with. This public surface is the readable edge of the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> runtime and design work.</p>
