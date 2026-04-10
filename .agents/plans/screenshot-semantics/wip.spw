@@ -1,0 +1,94 @@
+# wip - screenshot-semantics
+# Branch: feature/screenshot-semantics
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/screenshot-semantics/PLAN.md"
+ @artifact: ~".agents/plans/screenshot-semantics/screenshot-semantics.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
+ @css_plan: ~".agents/plans/css-progressive-ornaments/wip.spw"
+ @nav_plan: ~".agents/plans/cognitive-navigation/wip.spw"
+ @components: ~"public/js/spw-component-semantics.js"
+ @shared: ~"public/js/spw-shared.js"
+ @css: ~"public/css/style.css"
+ @home: ~"index.html"
+ @software: ~"topics/software/index.html"
+ @spw_atlas: ~"topics/software/spw/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Make the site a useful cognitive capture tool for artists by ensuring screenshots preserve meaningful state — address, liminality, priming, and journey context — without requiring runtime interaction or network access at capture time."
+ ~#taste: "legible capture, journey memory, and quiet marks that emerge under attention rather than cluttering the default surface"
+}
+
+^["development"]{
+ lane: #craft_refactor
+ ladder: #static_to_enhanced
+ develops: [#screenshot_semantics, #priming_state, #selection_persistence, #journey_tokens, #artist_use_case]
+ review_surfaces: [@plan, @artifact, @semantics, @runtime_plan]
+}
+
+^["concept_index"]{
+ primary: [#priming, #selection_persistence, #screenshottable_state, #journey_token, #address_legibility, #liminality_capture]
+ surfaces: [#static, #interactive, #screenshot, #mobile, #keyboard, #touch]
+ tensions: [#default_noise, #state_sprawl, #hover_dependency, #color_channel_dependence]
+ transfers: [#frame, #operator, #liminality, #address, #route]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify which states are worth capturing and which are ephemeral",
+  "< make those states survive without hover/focus/JavaScript",
+  "$ encode them in data attributes so CSS can read them without runtime",
+  "^ verify each state is reachable through all input modes equally",
+  "% keep journey tokens sparse — earned marks, not labels on every element",
+  "& ensure artist captures feel rich enough to share and revisit"
+ ]
+ gates: [#static_legibility, #mobile_truth, #input_parity, #default_calm]
+}
+
+^["stream"]{
+ >>[2026-04-09] observe - Screenshots currently capture layout and ambient state but not address, liminality, or operator engagement. A screenshot of the software page at rest tells nothing about which frame was active or what was being examined.
+ >>[2026-04-09] observe - The artist use case is a strong product direction: someone who develops ideas through the site, screenshots to mark moments of insight, and values the visual record of their journey. This person is different from a reader or a developer — they want evidence of cognitive progress, not documentation.
+ >>[2026-04-09] decide - Priming semantics (the state just before full selection — where attention is moving but hasn't committed) is the most underrepresented axis. Address and liminality are tracked in some places; priming is the missing signal.
+ >>[2026-04-09] taste - Journey tokens should feel like earned marks on a surface — a signature of where the user has been — not breadcrumbs or browser history. The right register is closer to underlining in a notebook than to a navigation trail.
+ >>[2026-04-09] style - Screenshot-legible states are a personal style question: what does this site look like when it has been used? Does it develop visual character through engagement, or reset to the same ambient surface every time? The answer shapes how priming and selection are implemented.
+ >>[2026-04-09] observe - The operator atlas pages are the strongest existing example of screenshot-worthy state: they're designed to be legible in a still image. The rest of the site should approach that quality in its addressed/primed states.
+}
+
+^["open"]{
+ ?[priming_persistence]: "How should priming state persist visually beyond the interaction moment — data attribute, CSS class, subtle color shift, or something tied to the liminality phase or spirit cycle?"
+ ?[journey_token_form]: "What visual form should a journey token take — an underline, a sigil activation mark, a liminality depth indicator, or something new to this site?"
+ ?[screenshottable_states]: "Which states are worth capturing? Address, liminality phase, active operator, route, priming depth — what else?"
+ ?[artist_grammar]: "What does an artist's grammar of this site look like — what states do they care about capturing, and what makes those states legible to a viewer who wasn't there?"
+ ?[default_noise]: "How do you mark screenshottable states without adding visual noise to the default (un-addressed) surface?"
+ ?[input_parity]: "Can every screenshottable state be reached through touch, keyboard, and pointer with equal legibility in the result?"
+ ?[journey_persistence]: "Should journey tokens persist across sessions (data-spw-visited, localStorage) or stay session-local — and which feels more like a cognitive notebook?"
+ ?[sharing]: "Is a screenshotted state shareable in a way that suggests the path even without reconstructing it — e.g., hash-encoded active frame and liminality?"
+}
+
+^["commits"]{
+ ~[1]: "#[screenshot] — capture screenshot semantics plan and priming/selection vocabulary"
+ ~[2]: ".[semantics] — formalize screenshottable state taxonomy, priming rules, and journey token grammar"
+ ~[3]: "&[css] — ensure selection and liminality states persist visually without JavaScript"
+ ~[4]: "&[runtime] — write priming and address state into data attributes at interaction time"
+ ~[5]: "![screenshot] — verify screenshottable states across routes, interactions, and static load"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/css/style.css, public/js/spw-component-semantics.js, public/js/spw-shared.js, .spw/conventions/site-semantics.spw"
+ ~#next_commit: "1"
+ ~#open_count: "8"
+ ~#last_stream: "2026-04-09"
+ ~#taste_debt: "Priming is the underrepresented axis — make it legible without making it loud. Journey tokens should feel earned and sparse, not tracked and comprehensive. Log the visual form decision as a taste choice at commit 2."
+}
+
+^["done"]{
+}

@@ -1,0 +1,99 @@
+# wip - cognitive-navigation
+# Branch: feature/cognitive-navigation
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/cognitive-navigation/PLAN.md"
+ @artifact: ~".agents/plans/cognitive-navigation/cognitive-navigation.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
+ @screenshot_plan: ~".agents/plans/screenshot-semantics/wip.spw"
+ @circuits_plan: ~".agents/plans/interaction-grammar/wip.spw"
+ @cinematic_plan: ~".agents/plans/cinematic-handles/wip.spw"
+ @navigator: ~"public/js/frame-navigator.js"
+ @shared: ~"public/js/spw-shared.js"
+ @components: ~"public/js/spw-component-semantics.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+ @home: ~"index.html"
+ @about: ~"about/index.html"
+ @software: ~"topics/software/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Make the site navigable as a cognitive space by developing liminality as a traversable depth axis, Spw breadcrumbs as cognitive path projection, spells as learnable named sequences, and accessibility as the canonical cognitive map — creating a tool for artists and practitioners who want to deepen into a surface over time."
+ ~#taste: "cognitive cartography, earned fluency, and a site that feels like a place you can get better at inhabiting"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#liminality_navigation, #breadcrumbs, #spell_foundation, #state_components, #filetype_taxonomy, #accessibility_as_map]
+ review_surfaces: [@plan, @artifact, @semantics, @runtime_plan, @screenshot_plan]
+}
+
+^["concept_index"]{
+ primary: [#liminality_navigation, #cognitive_breadcrumb, #spell, #filetype_component, #state_component, #accessibility_map, #depth_traversal]
+ surfaces: [#entry, #threshold, #settled, #nested, #projected, #deep, #navigator, #console, #landmark]
+ tensions: [#breadcrumb_vs_url_history, #spell_discoverability, #liminality_reversibility, #a11y_as_afterthought, #filetype_complexity]
+ transfers: [#liminality, #address, #path, #spell, #register, #landmark, #phase]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? map current liminality states to the traversal model — which are navigable, which are only visual?",
+  "< define what a cognitive breadcrumb captures that URL history does not",
+  "$ design spell grammar so that spells are inferable from observation, not just documentation",
+  "^ ensure every liminality transition has a clear return path",
+  "% establish accessibility landmarks as the canonical cognitive map, not a parallel layer",
+  "& filetype/state components should communicate quickly — dense, not complex"
+ ]
+ gates: [#liminality_reversibility, #breadcrumb_cognitive_value, #spell_discoverability, #a11y_as_canon, #entry_accessibility]
+}
+
+^["stream"]{
+ >>[2026-04-09] observe - Liminality currently functions as a visual/semantic decoration axis; it is not yet a traversal axis. You cannot deliberately move from settled to nested liminality as a navigation act — it happens incidentally through interaction, not intentionally through a named path.
+ >>[2026-04-09] observe - Breadcrumbs on most sites are URL lists. Cognitive breadcrumbs should capture something else: the liminality depth you've been at, the operators you've addressed, the frames you've activated. That trail has meaning independent of the URL.
+ >>[2026-04-09] decide - Spells are the fluency tier of the interaction grammar. The design constraint that makes spells work is discoverability: you should be able to watch a skilled user and infer the shape of a spell before you know its name. The name arrives from inspection, not from documentation.
+ >>[2026-04-09] observe - The accessibility landmark structure of the existing pages is already good in places but is not treated as the canonical cognitive map. It should be: if a region can be named in the ARIA tree, it should be the same region you'd describe to a new user explaining the page.
+ >>[2026-04-09] taste - Spells should feel like reflexes, not incantations — the goal is muscle memory and cognitive fluency, not ritual. The right register is the way a developer reaches for a keyboard shortcut without looking — the hand knows before the mind decides.
+ >>[2026-04-09] style - Filetype/state components are a visual vocabulary decision: what does a "register frame" look like vs. a "probe frame" vs. a "reference"? Each should be immediately distinguishable without requiring a legend — visual grammar, not labeling.
+ >>[2026-04-09] observe - The cognitive tool for artists angle is most visible in breadcrumbs: an artist wants to retrace a path of insight, not a path of URLs. The breadcrumb trail should capture the cognitive arc — what was deepened, what was resolved, what was left open.
+}
+
+^["open"]{
+ ?[liminality_traversal]: "Which liminality states are currently traversable via interaction and which are only assigned by the system? What would need to change for entry→deep to be a deliberate navigation path?"
+ ?[breadcrumb_content]: "What does a cognitive breadcrumb contain — liminality phase, active frame address, operator engaged, spirit phase, or some combination that captures 'what kind of thinking was happening here'?"
+ ?[breadcrumb_form]: "How should the breadcrumb trail be visualized — a horizontal path, a depth indicator, a console projection, or something embedded in the frame itself?"
+ ?[spell_grammar]: "What is the minimal grammar for a spell — an operator sequence, a key path, a spatial gesture, or a named combination? What makes it feel like a reflex rather than a command?"
+ ?[spell_discovery]: "How does a first-time visitor discover that spells exist at all — through observation, through a surface hint, through the console, or through reaching a liminality depth where spells become available?"
+ ?[filetype_taxonomy]: "What are the distinct content kinds on this site that need their own visual handle — register, probe, reference, projection, surface, metric, and what else? What distinguishes each at a glance?"
+ ?[a11y_as_canon]: "What would it mean to treat the ARIA landmark tree as the canonical cognitive map — does it require changes to the existing landmark structure, or just a commitment to keeping it consistent with the visual map?"
+ ?[accessibility_scope]: "Beyond landmarks and ARIA roles, what accessibility affordances are missing from the site that would make it more legible to cognitive-diversity users, not just screen reader users?"
+ ?[cognitive_tool_persona]: "Who is the artist-practitioner this plan serves — what are they building, what do they value in the site, and what would make them return to it repeatedly?"
+}
+
+^["commits"]{
+ ~[1]: "#[nav] — capture cognitive navigation plan and liminality/breadcrumb/spell foundations"
+ ~[2]: ".[semantics] — formalize liminality as navigation, breadcrumb trail rules, spell recognition grammar, and filetype taxonomy"
+ ~[3]: "&[nav] — add liminality-aware navigation and breadcrumb trail to the frame navigator"
+ ~[4]: "&[spells] — implement spell recognition, naming, and trigger foundation"
+ ~[5]: "![nav] — verify liminality reversibility, breadcrumb legibility, spell discoverability, and accessibility map alignment"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/js/frame-navigator.js, public/js/spw-shared.js, public/js/spw-component-semantics.js, public/js/spw-console.js, public/css/style.css, .spw/conventions/site-semantics.spw"
+ ~#next_commit: "1"
+ ~#open_count: "9"
+ ~#last_stream: "2026-04-09"
+ ~#taste_debt: "Breadcrumbs should capture cognitive path, not URL history — that distinction is the entire value of the feature. Spells must be discoverable from observation; documentation-first spells are a design failure. Log the filetype visual grammar as a taste decision at commit 2."
+}
+
+^["done"]{
+}

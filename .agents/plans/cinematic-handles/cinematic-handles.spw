@@ -1,0 +1,64 @@
+# cinematic-handles
+# Distilled semantic note for naming timing and motion with the site's own
+# vocabulary and giving transitions, layers, and lighting semantic depth.
+
+#>cinematic_handles
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "Every transition on this site should have a name derived from the Spw grammar that describes what is semantically changing — not just how fast it changes. Named timing tokens make motion decisions auditable, allow reduced-motion contracts to live at the token level, and give the site a consistent temporal personality."
+ why: "Anonymous milliseconds accumulate without discipline. Semantic timing names create pressure: if a named token doesn't match the state it describes, the mismatch is visible. That pressure improves both values and semantics."
+}
+
+^["transition_shape_taxonomy"]{
+ ~#note: "Named transition shapes with semantic justification. Values are decisions to be logged, not defaults to be guessed."
+ brace_settle: "The settling of a brace after it opens — gravitational, generous, slightly slower than expected. A brace opening a face is not in a hurry."
+ threshold_cross: "The crossing from one liminality state to the next — a step rather than a glide. Crisp direction change."
+ pivot_arc: "A local pivot into deeper structure — directional and relatively quick, like turning to face something directly. Should feel decisive."
+ charge_release: "The visual release of stored charge into a projection — should feel like relief, slightly elastic."
+ discharge: "An explicit charge discharge into an action or state change — more committed than charge_release, less graceful."
+ return: "The path back from depth to ambient — deliberate, slightly longer than the inward path, a cognitive exhale."
+ project: "The surfacing of a projected view or region — should feel like revealing something that was always there."
+ inspect_reveal: "The reveal of address detail at inspection time — quiet, not surprising, just becoming legible."
+}
+
+^["layer_depth_model"]{
+ definition: "Layers describe where a surface sits in the attentional hierarchy — not just its z-index position, but its ambient luminosity and salience relative to the current address."
+ states: {
+  ambient: "Default background register — present but not addressed. Low luminosity, low salience."
+  settled: "An active region that is the current primary surface. Standard luminosity."
+  elevated: "A temporarily foregrounded element — a hovering control, an inspect surface, an active lens. Lifted shadow and light."
+  projected: "A deeply nested or projected view — feels like it is illuminated from within rather than from above."
+  dormant: "A region that is present but intentionally de-emphasized — not hidden, but receding."
+ }
+ rule: "Layer depth should be distinguishable without color alone — shadow, luminosity, and surface texture should all contribute."
+ counterexample: "A z-index: 100 element that is visually indistinguishable from a z-index: 1 element except in stacking order."
+}
+
+^["lighting_model"]{
+ definition: "Lighting tokens express the idea that attention creates its own illumination — a surface that is being examined should feel differently lit than its ambient neighbors."
+ model: "The light source follows attention, not the viewport. As liminality deepens, the lighting model shifts from overhead ambient to inner luminosity."
+ token_candidates: [
+  "--ambient-glow: the background luminosity of non-addressed surfaces",
+  "--addressed-glow: the glow of a surface under active examination",
+  "--depth-luminosity: how inner luminosity increases with liminality depth",
+  "--operator-halo: the glow that follows operator color tokens at activation"
+ ]
+ rule: "Lighting should use existing operator color tokens as its source — don't introduce a parallel lighting palette. Glow is operator color at reduced opacity and expanded spread."
+}
+
+^["reduced_motion_contract"]{
+ rule: "Every named timing token must have a reduced-motion override at the token level, expressed in the token definition, not scattered across individual rules."
+ strategy: "Under `prefers-reduced-motion: reduce`, all `*-duration` tokens should collapse to near-zero values rather than suppressing transitions entirely. This preserves semantic state changes as instant events rather than removing them as information."
+ counterexample: "A `@media (prefers-reduced-motion: reduce)` block that only catches some transitions because the rest use anonymous durations."
+}
+
+^["invariant"]{
+ "Every named timing token comes from the Spw vocabulary first; generic names (fast, slow) are last resort.",
+ "Reduced-motion overrides live at the token level, not at the rule level.",
+ "Layer depth must be distinguishable without color — shadow, luminosity, and texture all contribute.",
+ "Lighting tokens reuse operator color tokens rather than introducing a parallel palette.",
+ "No motion is required for navigation, legibility, or content access.",
+ "The first set of timing values must be logged as taste decisions in the stream, not left as implementation defaults."
+}

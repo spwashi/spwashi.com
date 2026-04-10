@@ -1,0 +1,89 @@
+# wip - cinematic-handles
+# Branch: feature/cinematic-handles
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/cinematic-handles/PLAN.md"
+ @artifact: ~".agents/plans/cinematic-handles/cinematic-handles.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @css_plan: ~".agents/plans/css-progressive-ornaments/wip.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
+ @svg_plan: ~".agents/plans/svg-surface-integration/wip.spw"
+ @screenshot_plan: ~".agents/plans/screenshot-semantics/wip.spw"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Build a named, finite vocabulary of timing and motion handles — transition shapes, layer depth tokens, and lighting/attention tokens — that gives the site's reveals and pivots cinematic quality grounded in Spw semantics."
+ ~#taste: "earned motion, semantic depth, authored transitions — every animation is the right one for that semantic state, not decoration borrowed from another design system"
+}
+
+^["development"]{
+ lane: #craft_refactor
+ ladder: #static_to_enhanced
+ develops: [#timing_tokens, #transition_shapes, #layer_depth, #lighting_tokens, #reduced_motion_contracts]
+ review_surfaces: [@plan, @artifact, @css_plan, @semantics]
+}
+
+^["concept_index"]{
+ primary: [#timing_token, #transition_shape, #layer_depth, #lighting_token, #reduced_motion_contract, #semantic_motion, #attentional_depth]
+ surfaces: [#tokens, #motion, #layers, #lighting, #enhancements]
+ tensions: [#generic_naming, #per_rule_overrides, #decorative_motion, #depth_vs_zindex]
+ transfers: [#brace_settle, #pivot_arc, #threshold_cross, #charge_release, #discharge, #return, #project]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify every anonymous duration or bezier curve in style.css",
+  "< name each one from the semantic state it serves",
+  "$ define its reduced-motion override at the token level",
+  "^ verify it makes the semantic transition more legible, not just more impressive",
+  "% keep the set finite — each new animation should earn its name from the vocabulary",
+  "& verify layer depth states are distinguishable without color alone"
+ ]
+ gates: [#semantic_alignment, #reduced_motion_completeness, #finite_vocabulary, #depth_legibility]
+}
+
+^["stream"]{
+ >>[2026-04-09] observe - The current stylesheet has anonymous durations scattered across transition rules — no consistent naming, no token-level reduced-motion overrides, and no depth or lighting vocabulary. Motion is incidental, not authored.
+ >>[2026-04-09] observe - The Spw vocabulary already has physical analogues available: settle, pivot, threshold, charge, discharge, return, project — these map naturally to transition shapes and would make motion decisions auditable.
+ >>[2026-04-09] decide - Timing tokens should be named first, then values assigned — the name constrains the value. `--brace-settle-duration` implies something slower and gravitational; `--pivot-arc-duration` implies something quicker and directional. That naming pressure improves the values.
+ >>[2026-04-09] taste - Layers and lighting should follow the attention and liminality model: a deeper liminality state should feel differently lit — not just more opaque or further back, but as if the light source follows attention rather than being fixed.
+ >>[2026-04-09] style - Cinematic handles are a personal style commitment. The first time a named timing token is introduced, the value chosen is not just an engineering constant — it defines the tempo of the site's personality. Log it as a taste choice.
+ >>[2026-04-09] observe - The operator color system already creates semantic depth through color; lighting and depth tokens should extend that system rather than creating a parallel aesthetic register.
+}
+
+^["open"]{
+ ?[vocabulary_seed]: "Which Spw concepts should seed the first timing tokens — settle, pivot, threshold-cross, charge-release, return, project, or something implied by the existing transition patterns?"
+ ?[layer_model]: "How many distinct depth layers does the site need — ambient, active, elevated, projected, and what else? What visual qualities distinguish them beyond z-index?"
+ ?[lighting_model]: "How should lighting follow attention — is it a glow on the active region, a shadow depth shift, a brightness gradient, or something tied to operator color tokens?"
+ ?[reduced_motion_strategy]: "Should reduced-motion overrides suppress motion entirely or substitute instant-equivalent transitions that preserve semantic state changes?"
+ ?[token_naming_convention]: "Should tokens follow `--<spw-concept>-<property>` (e.g., `--brace-settle-duration`, `--pivot-arc-easing`) or a different pattern?"
+ ?[finite_set]: "What is the complete enumerable set of named transition shapes? What would make adding a new one require justification?"
+ ?[first_value_log]: "When should the first set of timing values be logged as a taste decision in this stream — at commit 2 (semantics) or commit 3 (tokens)?"
+}
+
+^["commits"]{
+ ~[1]: "#[motion] — capture cinematic handles plan and timing/layer/lighting vocabulary"
+ ~[2]: ".[semantics] — formalize timing token vocabulary, transition taxonomy, and layer/lighting semantics"
+ ~[3]: "&[tokens] — introduce named timing and depth tokens into the CSS token layer"
+ ~[4]: "&[motion] — replace anonymous durations with named tokens across existing transitions"
+ ~[5]: "![motion] — verify reduced-motion safety, token completeness, and semantic alignment"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/css/style.css, public/css/tokens.css (planned), public/css/motion.css (new), public/css/layers.css (new)"
+ ~#next_commit: "1"
+ ~#open_count: "7"
+ ~#last_stream: "2026-04-09"
+ ~#taste_debt: "Timing tokens are style decisions — the first values define the site's tempo. Log them as taste choices at commit 3. Generic naming (fast/slow) is a fallback, not a default; Spw vocabulary is the first source."
+}
+
+^["done"]{
+}

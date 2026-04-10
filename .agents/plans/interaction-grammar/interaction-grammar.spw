@@ -1,0 +1,76 @@
+# interaction-grammar
+# Distilled semantic note for interactive circuits, brace physics vocabulary,
+# and Spw as a substrate for spatial cognition and multi-language surfaces.
+
+#>interaction_grammar
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "Interactions on this site should reward familiarity the way a musical instrument rewards practice — depth available from the start, but not required; fluency earned through repeated engagement; wonder arriving through the physics of the grammar rather than through decoration. Spw should serve as a host that makes other languages and spatial relationships more legible, not a replacement for them."
+ why: "A site that only serves first-time visitors has no arc. A cognitive tool for practitioners needs a progression ladder, a vocabulary that can be discussed, and enough spatial honesty that the physics feels learnable rather than arbitrary."
+}
+
+^["circuit_taxonomy"]{
+ definition: "An interactive circuit is a pattern of interaction that can be entered at a basic level and developed toward fluency without changing its fundamental structure."
+ levels: {
+  entry: "Accessible to a first-time visitor with no prior knowledge. Content complete. Nothing hidden behind this level."
+  practiced: "Available after a small number of successful completions. Reveals additional address or depth. Still self-explanatory."
+  fluent: "A pattern that has become habitual — the cognitive load is reduced and the pattern feels like a reflex."
+  habitual: "The pattern no longer requires conscious attention — it has become part of the user's cognitive model of the space."
+ }
+ example_circuits: [
+  "frame traversal: [ and ] keys (entry: visible nav), practiced: operator sigil address, fluent: spatial memory of frame positions",
+  "operator inspect: hover/focus reveals name and intent (entry), practiced: held-focus reveals metaphysics, fluent: sigil-to-intent is instant recall",
+  "mode switch: g-key toggles surface map (entry: hint in interface), practiced: predict mode before switching, fluent: mode switching is ambient"
+ ]
+ rule: "A circuit's entry level must be self-explaining — the visitor should be able to discover and complete it without documentation."
+}
+
+^["brace_physics_vocabulary"]{
+ thesis: "Boon and bane are meaningful inside Spw doctrine but may require bridging vocabulary for practitioners encountering brace physics before they have read the operator atlas."
+ physical_intuition_layer: {
+  attract: "The boon force — drawing toward an anchor, concentrating, gathering. Feels like gravity or magnetism."
+  disperse: "The bane force — pushing outward from an overloaded center, distributing, releasing pressure. Feels like pressure or repulsion."
+  anchor: "A charged brace position that creates an attract field for nearby content."
+  release: "A discharge point that converts stored attract/disperse tension into a visible structural change."
+ }
+ spw_doctrine_layer: {
+  boon: "The deeper Spw name for the attract field — carries metaphysical connotation of generosity, gift, forward movement."
+  bane: "The deeper Spw name for the disperse force — carries metaphysical connotation of adversity, pressure, productive resistance."
+ }
+ bridge_rule: "Expose physical-intuition vocabulary first. Boon/bane should be available as the Spw-specific deepening of that vocabulary for practitioners who want it, not the entry-level explanation."
+ decision: "Log the specific vocabulary bridging strategy as an explicit taste decision in the stream at commit 2."
+}
+
+^["spatial_cognition"]{
+ claim: "Spw is useful as an exercise for spatial cognition — the grammar makes visible spatial relationships between concepts that are usually left implicit: containment, adjacency, depth, reference, and projection."
+ mechanisms: [
+  "Brace physics makes containment feel physical and inspectable — not just a box around content.",
+  "Operator sequences trace spatial paths: from ambient to focused to active to selected.",
+  "Liminality models depth as a traversable dimension rather than a flat layout property.",
+  "The spirit cycle models phase as a temporal-spatial arc, not just a metadata label."
+ ]
+ multi_language_rule: "When Spw frames another language (mathematical notation, code, music, natural language), the framing should illuminate that language's own spatial relationships — not translate the language into Spw terms or subordinate it to Spw syntax."
+ counterexample: "A multi-language surface where the guest language is presented only as a `#` frame title and a `~` reference, stripped of its own structural signals."
+}
+
+^["wonder_about_physics"]{
+ claim: "The site should create wonder about physics — not decorative physics, but the feeling that the interaction grammar has weight, tension, orbit, and settling that arise from real measurements."
+ sites_of_wonder: [
+  "Pretext lab: line metrics as physical bodies under Spw-derived force profiles.",
+  "Brace settle: the temporal texture of a brace opening feels like weight finding equilibrium.",
+  "Charge accumulation: the progressive offset of charged content shows physics becoming visible.",
+  "Pivot: the sudden structural reorientation of a pivot feels like discovering a new axis of the space."
+ ]
+ rule: "Wonder about physics should arrive from honest measurement, not from canned animation. If the physics can be removed without losing information, it was decoration."
+}
+
+^["invariant"]{
+ "Every circuit must be self-explaining at its entry level — no prior vocabulary required.",
+ "Brace physics vocabulary must be layered: physical intuition first, Spw doctrine as depth.",
+ "No circuit may trap focus, require specific timing, or penalize error states.",
+ "Multi-language surfaces must let the guest language demonstrate its own expressive power.",
+ "Wonder about physics must arise from real data, not from arbitrary animation choices.",
+ "Familiarity feedback must feel reflective, not gamified — earned ease, not earned points."
+}

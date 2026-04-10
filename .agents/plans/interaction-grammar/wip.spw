@@ -1,0 +1,92 @@
+# wip - interaction-grammar
+# Branch: feature/interaction-grammar
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/interaction-grammar/PLAN.md"
+ @artifact: ~".agents/plans/interaction-grammar/interaction-grammar.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
+ @css_plan: ~".agents/plans/css-progressive-ornaments/wip.spw"
+ @screenshot_plan: ~".agents/plans/screenshot-semantics/wip.spw"
+ @pretext_plan: ~".agents/plans/pretext-whimsy-lab/wip.spw"
+ @cinematic_plan: ~".agents/plans/cinematic-handles/wip.spw"
+ @components: ~"public/js/spw-component-semantics.js"
+ @software: ~"topics/software/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Design interactive circuits that reward familiarity over time; audit and develop the brace physics vocabulary toward cognitive accessibility; and establish Spw as a substrate for exercising spatial cognition and letting other languages demonstrate their own expressive power."
+ ~#taste: "practiced grammar, honest physics, spatial wonder — interactions learnable like a musical instrument, physics legible at ordinary physical intuition before Spw doctrine"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#circuit_design, #brace_physics_vocabulary, #familiarity_ladder, #multi_language_surfaces, #cognitive_exercise]
+ review_surfaces: [@plan, @artifact, @semantics, @runtime_plan, @pretext_plan]
+}
+
+^["concept_index"]{
+ primary: [#interactive_circuit, #familiarity_ladder, #brace_physics_vocabulary, #boon_bane, #cognitive_exercise, #spatial_relationship, #multi_language_surface]
+ surfaces: [#entry_level, #practiced, #fluent, #habitual, #operator_atlas, #pretext_lab, #software_surface]
+ tensions: [#vocabulary_consistency, #gamification_risk, #entry_barrier, #multi_language_subordination, #physics_legibility]
+ transfers: [#circuit, #spell, #brace, #charge, #pivot, #settle, #spatial_address]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify which existing interactions already form circuits vs. which are isolated gestures",
+  "< characterize the entry level of each circuit — what does a first-time user naturally do?",
+  "$ map the practice ladder from entry to fluency — what new affordances appear at each step?",
+  "^ audit boon/bane: test them against first-time users, look for more accessible alternatives",
+  "% ensure multi-language surfaces make those languages more legible, not subordinate",
+  "& require every circuit to be complete at its entry level, with depth as optional depth"
+ ]
+ gates: [#entry_accessibility, #vocabulary_bridge, #multi_language_legibility, #familiarity_not_gamification]
+}
+
+^["stream"]{
+ >>[2026-04-09] observe - The existing interactions (frame navigation, operator inspection, keyboard shortcuts, mode switches) are isolated gestures without a progression ladder. There is no designed path from first-visit to fluency — that arc happens by accident if at all.
+ >>[2026-04-09] observe - Boon and bane are semantically rich inside the Spw metaphysics but potentially opaque to someone who encounters them without context. The question is whether they should be explained, supplemented with more physical vocabulary, or kept for practitioners who have read the operator atlas.
+ >>[2026-04-09] decide - Treat brace physics vocabulary as a layered problem: the physical intuition level (attract/release, gather/disperse, anchor/float) should come first; boon/bane should be available as the deeper Spw-specific layer for practitioners who want it.
+ >>[2026-04-09] observe - Spw's potential as a spatial cognition exercise is most visible in the Pretext lab: line metrics become spatial relationships, constraints become visible forces, and the grammar of the measurement becomes something you can feel before you can name it.
+ >>[2026-04-09] taste - Multi-language surfaces should feel like a generous host showing off a guest: the guest language teaches something about itself, the Spw framing provides the stage and the vocabulary for reflection, neither dominates.
+ >>[2026-04-09] style - The brace physics vocabulary decision is a significant taste choice — it affects the operator atlas, the Pretext lab, the site-semantics, and every future description of how brace surfaces behave. Log it explicitly at commit 2.
+}
+
+^["open"]{
+ ?[circuit_inventory]: "What circuits already exist implicitly — frame traversal, operator inspect, mode switch, keyboard path? What is the entry and fluency form of each?"
+ ?[boon_bane_test]: "How should the legibility of boon/bane be tested — user observation, think-aloud session, or something else? What would make them clearly work or clearly need bridging?"
+ ?[bridge_vocabulary]: "What physical-intuition vocabulary could bridge toward boon/bane — attract/release, gather/disperse, anchor/float, weight/lift, or something more specifically tied to the brace geometry?"
+ ?[familiarity_signals]: "What signals does the site give when a circuit is being practiced — and how can those signals be subtle enough to feel reflective rather than gamified?"
+ ?[multi_language_surfaces]: "Which other languages or notations have the most to teach about spatial relationship when framed by Spw — mathematical notation, musical notation, programming languages, natural language structure?"
+ ?[cognitive_exercise]: "What does it mean to exercise spatial cognition through this site — what spatial relationships does the site's grammar make legible, and which are still hidden?"
+ ?[wonder_physics]: "How should the site create wonder about physics specifically — through the Pretext lab, through brace animation, through a dedicated physics surface, or through the texture of every interaction?"
+ ?[circuit_completion_moment]: "What marks the transition from practiced to fluent in a circuit — a subjective feeling of ease, a new affordance becoming available, or a piece of vocabulary suddenly making sense?"
+}
+
+^["commits"]{
+ ~[1]: "#[circuits] — capture interaction grammar plan, circuit taxonomy, and brace physics vocabulary audit"
+ ~[2]: ".[semantics] — formalize circuit levels, familiarity model, brace physics vocabulary decision, and multi-language framing rules"
+ ~[3]: "&[runtime] — implement circuit recognition and practice-level feedback in the interaction runtime"
+ ~[4]: "&[circuits] — add familiarity-keyed enhancement rules and multi-language surface patterns"
+ ~[5]: "![circuits] — verify entry-level accessibility, practice feedback, brace physics legibility, and spatial address"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/js/spw-component-semantics.js, public/js/spw-interaction-runtime.js (planned), .spw/conventions/site-semantics.spw, public/css/style.css"
+ ~#next_commit: "1"
+ ~#open_count: "8"
+ ~#last_stream: "2026-04-09"
+ ~#taste_debt: "Brace physics vocabulary is a significant commitment — test legibility before deciding, then log the decision explicitly. Multi-language surfaces must remain honest: the guest language teaches itself; Spw provides the frame without subordinating the guest."
+}
+
+^["done"]{
+}

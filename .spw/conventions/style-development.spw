@@ -70,6 +70,37 @@
   "Coherence: a seasonal ornament, a physics experiment, and an SVG illustration should be recognizable as belonging to the same sensibility.",
 }
 
+^"choice_points_extended"{
+  ~#note: "Additional deliberate style decisions opened by new plans."
+  screenshot_journey_tokens: {
+    plan: ".agents/plans/screenshot-semantics"
+    commit: "2 — screenshottable state taxonomy"
+    question: "What visual form should a journey token take — and what does it say about how this site treats the record of engagement?"
+  }
+  cinematic_timing_vocabulary: {
+    plan: ".agents/plans/cinematic-handles"
+    commit: "3 — named timing tokens introduced"
+    question: "What tempo do the first timing values define — and does that tempo match the site's written voice?"
+  }
+  brace_physics_vocabulary: {
+    plan: ".agents/plans/interaction-grammar"
+    commit: "2 — semantics formalization"
+    question: "Does boon/bane stay as the primary vocabulary, or does physical-intuition bridging become the default entry layer? Log the decision and the reasoning."
+  }
+  filetype_visual_grammar: {
+    plan: ".agents/plans/cognitive-navigation"
+    commit: "2 — filetype taxonomy"
+    question: "What visual signatures distinguish register, probe, reference, projection, surface, and metric — and do those signatures feel coherent with the existing operator color vocabulary?"
+  }
+}
+
+^"spw_vision"{
+ ~#note: "The unifying direction behind the new plans, from the user's note on 2026-04-10."
+ cognitive_exercise: "Spw should be useful for exercising cognition and spatial relationship — the grammar makes visible spatial structure that is usually implicit."
+ wonder_about_physics: "The site should create wonder about physics — not decorative physics, but the feeling that interaction has weight, tension, orbit, and settling from real measurement."
+ other_languages_shine: "Spw should allow other languages and notations to demonstrate their own expressive power. Spw provides the host and the reflective grammar; the guest language teaches itself."
+}
+
 ^"dispatch"{
   @site: ~"../site.spw"
   @semantics: ~"./site-semantics.spw"
@@ -77,4 +108,8 @@
   @svg_plan: ~"../../.agents/plans/svg-surface-integration/wip.spw"
   @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/wip.spw"
   @runtime_plan: ~"../../.agents/plans/mobile-runtime-foundation/wip.spw"
+  @screenshot_plan: ~"../../.agents/plans/screenshot-semantics/wip.spw"
+  @cinematic_plan: ~"../../.agents/plans/cinematic-handles/wip.spw"
+  @circuits_plan: ~"../../.agents/plans/interaction-grammar/wip.spw"
+  @nav_plan: ~"../../.agents/plans/cognitive-navigation/wip.spw"
 }

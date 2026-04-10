@@ -1,0 +1,64 @@
+# screenshot-semantics
+# Distilled semantic note for making site states legible in still captures
+# and developing the site as a cognitive tool for artists.
+
+#>screenshot_semantics
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "A screenshot of this site at any meaningfully addressed state should communicate: what kind of surface this is, what is being examined, how deeply the visit has gone, and a trace of the path that brought it here — without requiring runtime context or explanatory text."
+ why: "The site is a cognitive tool for practitioners and artists who value the visual record of a developed idea. Screenshots are tokens of that development, not bug reports."
+}
+
+^["screenshottable_state_taxonomy"]{
+ ambient: "Default rest state. Calm, legible, uninflected. Communicates the surface kind, not the address."
+ primed: "Attention is moving toward a target but has not committed. The most underrepresented axis — needs a subtle visual signal that survives without hover context."
+ addressed: "A named frame, operator, or region is actively being examined. Should communicate the address legibly in a still image."
+ activated: "An invoke has changed visible local state. The state should persist visually beyond the interaction moment."
+ deep: "A nested or projected liminality has been reached. The depth level should be legible from the visual structure alone."
+ journey_marked: "The visit has left a mark — a journey token that signals this surface has been engaged and developed. Sparse, earned, not tracked."
+}
+
+^["priming_semantics"]{
+ definition: "Priming is the state just before selection — where attention is moving but hasn't committed. It is the cognitive equivalent of a held breath."
+ signal_candidates: [
+  "a subtle color shift on the operator token under examination",
+  "a liminality indicator ticking toward the next phase",
+  "a sigil softly activating at the primed frame boundary",
+  "a data-spw-primed attribute written at hover/focus dwell time"
+ ]
+ rule: "Priming signals must survive without JavaScript active and without hover state — they should be written into data attributes at interaction time so CSS can express them statically."
+ counterexample: "A priming state that only exists as a :hover pseudo-class leaves no trace in a screenshot."
+}
+
+^["journey_token_grammar"]{
+ definition: "A journey token is a mark left on the surface after meaningful engagement — an earned visual residue of cognitive work done here."
+ qualities: [
+  "sparse: not every interaction leaves a mark",
+  "earned: marks appear after sustained engagement, not on first hover",
+  "legible: the mark communicates something about the kind of engagement (addressed, activated, deep)",
+  "quiet: marks do not add noise to the default state — they emerge under examination"
+ ]
+ form_candidates: [
+  "a subtle activation mark at a sigil boundary",
+  "a liminality depth indicator showing the deepest phase reached",
+  "an operator color shift that persists after engage",
+  "a data-spw-visited attribute that CSS can use for a 'been here' register"
+ ]
+ counterexample: "A visited-link underline on every interactive element is not a journey token — it is visual noise from an unearned state."
+}
+
+^["screenshot_as_artifact"]{
+ rule: "Screenshots should be shareable as cognitive artifacts. A person who receives a screenshot should be able to infer: what surface this is, what operator or frame was being examined, and approximately what phase the visit was in."
+ artist_use_case: "An artist capturing a moment of developed thinking needs the capture to be information-rich enough to revisit without being present at the original interaction."
+ sharing_consideration: "A URL-encoded hash state (e.g., #frame=operators&liminality=nested) can supplement a screenshot with enough context to reconstruct the address, if not the full path."
+}
+
+^["invariant"]{
+ "Every screenshottable state must be reachable through touch, keyboard, and pointer equally.",
+ "Priming signals must survive in data attributes, not just in CSS interaction pseudo-classes.",
+ "Journey tokens must not appear in the default ambient state — they require earned engagement.",
+ "Screenshot legibility must not depend on color alone — structure, label, and attribute should all carry signal.",
+ "The calm default state must remain undisturbed when screenshottable state infrastructure is added."
+}

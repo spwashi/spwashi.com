@@ -1,0 +1,91 @@
+# cognitive-navigation
+# Distilled semantic note for liminality as navigation, Spw breadcrumbs,
+# spells, filetype components, and accessibility as cognitive map.
+
+#>cognitive_navigation
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "The site should be navigable as a cognitive space — you know where you are in the depth sequence, you can trace the path that brought you here, the tools you've learned can be named and repeated, and the semantic HTML is the canonical map of each page. Navigation should feel like inhabiting a place that deepens with familiarity, not like moving through a document."
+ why: "A cognitive tool for practitioners and artists has a different navigation model than a document site. The relevant questions are not 'where am I in the URL tree?' but 'how deep am I in this idea, what path did I take to get here, and what have I learned to do in this space?'"
+}
+
+^["liminality_as_navigation"]{
+ definition: "Liminality is not a decoration axis. It is a depth dimension that the visitor can deliberately traverse and return from."
+ phases: {
+  entry: "Arrival. The surface is visible but not yet engaged. Default state for all first-visit frames."
+  threshold: "First engagement. The visitor has touched or focused the surface — they are at the boundary."
+  settled: "Active examination. The visitor is working with the surface, not just looking at it."
+  nested: "Depth reached. A sub-surface or operator detail has been opened within the primary frame."
+  projected: "A projection view is active — a derived or computed surface within the current frame."
+  deep: "Maximum local depth — the visitor is in a specialized examination mode or has activated a spell."
+ }
+ traversal_rule: "Every liminality transition must be reversible. The return path should be clearly marked and consistently available at every depth."
+ navigation_surface: "Liminality depth should be visible in the breadcrumb trail and legible in the accessibility landmark state — not just in visual CSS classes."
+}
+
+^["cognitive_breadcrumb"]{
+ definition: "A Spw breadcrumb is a record of cognitive path through liminality space, not a list of visited URLs."
+ captures: [
+  "the current liminality phase and the sequence of phases traversed",
+  "the active frame address and any sub-addresses reached during the visit",
+  "operators engaged and any notes or activations made",
+  "the current spirit phase if visible in the runtime"
+ ]
+ does_not_capture: [
+  "the full URL history",
+  "timestamps or durations",
+  "data about other users or sessions"
+ ]
+ form_rule: "The breadcrumb trail should be readable as a description of intellectual activity, not as a navigation menu. 'Explored operator #, reached nested liminality, activated probe ?' describes a path; '/topics/software/?#operator-hash' does not."
+ projection: "The breadcrumb trail should be projectible into the console surface and optionally into a visible breadcrumb component within the frame."
+}
+
+^["spell_grammar"]{
+ definition: "A spell is a named sequence of operator-mediated interactions that produces a reliable cognitive outcome when triggered — a learned reflex in the site's grammar."
+ discovery_rule: "A spell must be discoverable from observation before it is typed or documented. Watching a skilled user should give enough information to infer what the spell does and roughly how to trigger it."
+ name_rule: "Spells are named from the console or inspect surface, not from documentation first. The name emerges from practice."
+ entry_rule: "Entry-level spells should be achievable after a small number of interactions — like reaching settled liminality on the operator atlas and running an inspect-to-activate sequence."
+ taxonomy: {
+  inspect_spell: "A sequence that reveals a deep address without invoking its default action."
+  activate_spell: "A sequence that commits to a local action and stores its result in a register."
+  traverse_spell: "A sequence that moves through a set of frames or operators in a specified order."
+  compose_spell: "A combination of two simpler spells that produces a new register state not achievable by either alone."
+ }
+ counterexample: "A spell that only works if you know its name before you try it — that is documentation-gated expert mode, not learnable grammar."
+}
+
+^["filetype_state_taxonomy"]{
+ definition: "Content kinds on this site have distinct spatial handles — each should be visually distinguishable at a glance without requiring a legend."
+ kinds: {
+  register: "A named container for state or accumulated attention. Looks like it can hold something."
+  probe: "An exploratory or questioning surface. Looks like it is asking or reaching."
+  reference: "A link into a different address space. Looks like it points outward."
+  projection: "A computed or derived view. Looks like it is being generated rather than stored."
+  surface: "A primary route or rendering area. Looks like a stage."
+  metric: "A measurement or telemetry display. Looks like a reading, not an action."
+ }
+ visual_rule: "Each kind should have a consistent visual signature using existing operator colors and brace/block semantics — not new visual primitives."
+}
+
+^["accessibility_as_cognitive_map"]{
+ thesis: "The ARIA landmark tree and semantic HTML structure should be the canonical cognitive map of each page — not a parallel layer added for compliance. If a region cannot be described in semantic HTML, its cognitive identity is not yet clear."
+ practical_rules: [
+  "Every named page region should map to a landmark role or section with an accessible name.",
+  "Liminality depth transitions should be reflected in aria-expanded, aria-current, or custom state attributes.",
+  "The breadcrumb trail should be expressible as an aria-label on the current context.",
+  "Spell affordances should have discoverable accessible names even before they are triggered.",
+  "Focus management must follow cognitive depth — when entering a nested liminality state, focus should move to the appropriate entry point in that state."
+ ]
+ counterexample: "A deeply nested liminality state that is visually legible but whose ARIA tree is flat, with no indication that depth has been reached."
+}
+
+^["invariant"]{
+ "Liminality traversal must be reversible at every phase — no depth state should trap the visitor.",
+ "Breadcrumbs capture cognitive path, not URL history — if it reads like browser history, it is not a breadcrumb.",
+ "Spells must be discoverable from observation before they are documented — documentation-first is a design failure.",
+ "Filetype visual handles must use existing operator tokens and brace/block semantics, not new visual primitives.",
+ "The accessibility landmark tree is the canonical cognitive map — if a region cannot be named there, it does not yet have a cognitive identity.",
+ "The site must remain fully navigable and content-complete without breadcrumbs, spells, or deep liminality knowledge."
+}
