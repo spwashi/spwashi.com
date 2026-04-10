@@ -1,0 +1,118 @@
+# wip — spw-css-architecture
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/spw-css-architecture/PLAN.md"
+ @style: ~"public/css/style.css"
+ @svg: ~"public/css/svg-surfaces.css"
+ @whimsy: ~"public/css/spw-whimsy.css"
+ @blog: ~"public/css/blog-surface.css"
+ @craft: ~"public/css/craft-surface.css"
+ @brace_physics: ~".spw/_workbench/.spw/registries/brace-physics.spw"
+ @phases: ~"public/css/spirit-phases.css"
+ @phase_controls: ~"public/css/phase-controls.css"
+}
+
+^["intent"]{
+ ~#goal: "Separate semantic grammar from ornamental projection so braces and operators can function as meaningful design handles for selection, emphasis, timing, and resonance instead of being redefined ad hoc across oversized CSS surfaces."
+ ~#taste: "Improve layering, containment, and expressiveness while keeping the site calm, readable, and truthful in static HTML."
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#css_architecture, #semantic_design, #visual_grammar]
+ review_surfaces: [@cluster, @plan, @style, @svg, @whimsy, @blog, @craft, @brace_physics, @phases, @phase_controls]
+ snippet_routes: [#brace_handles, #operator_selection, #resonance_timing]
+}
+
+^["concept_index"]{
+ primary: [#spw_css_architecture]
+ surfaces: [#style_css, #blog_surface, #craft_surface, #svg_surface, #operator_surface]
+ tensions: [#semantics_vs_ornament, #shared_grammar_vs_surface_override, #selection_vs_noise]
+ transfers: [#brace_physics, #operator_palette, #timing_axis, #resonance, #fractal_design]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the semantic grammar before extracting any selectors or tokens",
+  "< move one responsibility at a time out of style.css into a named module",
+  "$ check whether a handle is semantic, ornamental, or surface-specific before assigning ownership",
+  "^ reconnect pages to the shared grammar using explicit hooks rather than local decoration",
+  "% keep HTML legible and calm even when the decorative layer is absent"
+ ]
+ gates: [#ownership_clarity, #preview_truth, #reduced_motion_integrity]
+}
+
+^["parallel_work"]{
+ critical_path: [#style_ownership, #semantic_hooks, #surface_rewire]
+ parallelizable: [#svg_alignment, #surface_audits]
+ shared_hot_files: ["public/css/style.css", "public/css/blog-surface.css", "public/css/craft-surface.css"]
+ merge_risks: [#gemini_style_refactor, #surface_override_drift]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@brace_physics]
+ carries: [#ownership_map, #token_inventory, #experiment_gates, #surface_contracts]
+}
+
+^["interaction_depth"]{
+ subjects: [#selection, #emphasis, #timing, #resonance, #legibility]
+ questions: [#what_is_semantic, #what_is_projection, #what_should_remain_static]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["Responsibilities are renamed but not truly separated.", "Surface files continue to own semantic operator behavior after extraction."]
+ soft_failures: ["Brace and operator handles become louder without becoming more useful.", "Timing and resonance semantics are rewritten ad hoc instead of consuming phase primitives."]
+ recoveries: ["Keep the root stylesheet small and explicit.", "Gate ornamental experiments behind data attributes or imports that can be removed in one commit.", "Use existing phase primitives before introducing new timing constants."]
+ non_negotiables: ["HTML remains the semantic source of truth.", "Reduced-motion remains valid.", "Decoration never becomes required to understand navigation or content."]
+}
+
+^["validation"]{
+ hypotheses: ["A contributor can locate grammar, ornament, and surface override ownership in one pass.", "Brace/operator handles can be made more meaningful without increasing noise."]
+ negative_controls: ["Home/blog/craft/lore remain readable without motion.", "Palette and type choices do not leak accidentally between surfaces."]
+ demo_path: ["/", "/blog/", "/topics/craft/", "/about/domains/lore.land/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 16:48] observe — public/css/style.css is 3276 lines and currently mixes tokens, base, layout, brace physics, operator semantics, feature surfaces, and responsive policy.
+ >>[2026-04-10 16:49] observe — svg-surfaces, whimsy, blog-surface, and craft-surface each carry partial semantic ownership, so meaning and decoration are not cleanly separated.
+ >>[2026-04-10 16:50] observe — brace-physics registry already defines charge, selection, and temporal/operator flow; the CSS architecture should consume that model rather than invent new metaphors in selectors.
+ >>[2026-04-10 16:51] hygiene — worktree is already dirty with staged lore/blog/image work plus an unstaged Gemini-owned style.css layering refactor; do not treat current index state as a clean baseline.
+ >>[2026-04-10 16:52] taste — the right split is semantic grammar first, ornamental projection second, and page-surface overrides last; layering alone is not an architecture.
+}
+
+^["open"]{
+ ?[gating]: "Should ornamental handle experiments be gated by one site-wide data attribute or by per-surface feature flags?"
+ ?[selection_model]: "Which selections are purely CSS addressable, and which need a minimal DOM/data-attr runtime to become meaningful handles?"
+}
+
+^["commits"]{
+ ~[1]: "#[spw-css] — carve shared tokens and semantic grammar out of style.css"
+ ~[2]: "&[spw-css] — extract ornamental and selection/resonance layers behind explicit gates"
+ ~[3]: "&[spw-css] — rewire blog, craft, svg, and core surfaces onto the shared grammar substrate"
+ ~[4]: "![spw-css] — verify selector coverage, preview truth, and reduced-motion behavior"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@3296ac01bb2dccb94b42938ef2517038fd2c4482"
+ ~#rebased_at: ""
+ ~#hygiene_split: "current staged lore/blog/image work plus Gemini-owned style.css drift must be resolved before commit 1"
+ ~#files_hot: "public/css/style.css public/css/svg-surfaces.css public/css/spw-whimsy.css public/css/blog-surface.css public/css/craft-surface.css"
+ ~#next_commit: "1"
+ ~#open_count: "2"
+ ~#last_stream: "taste"
+ ~#taste_debt: "Need an explicit answer on what remains semantic when decoration is turned off."
+ ~#verification: "layer-verification.webp - visual integrity holds with the 8-layer ontology."
+}
+
+^["done"]{
+}

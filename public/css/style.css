@@ -1,15 +1,18 @@
-@import url('/public/css/enhancements.css');
-@import url('/public/css/svg-surfaces.css');
-@import url('/public/css/grain-texture.css');
-@import url('/public/css/spirit-phases.css');
-@import url('/public/css/phase-controls.css');
-@import url('/public/css/containers-electromagnetic.css');
-@import url('/public/css/craft-surface.css');
-@import url('/public/css/blog-surface.css');
-@import url('/public/css/spw-whimsy.css');
-@import url('/public/css/whimsy-enhancements.css');
-@import url('/public/css/cognitive-handles.css');
+@layer reset, tokens, shell, grammar, components, surfaces, handles, ornament;
 
+@import url('/public/css/enhancements.css') layer(ornament);
+@import url('/public/css/svg-surfaces.css') layer(surfaces);
+@import url('/public/css/grain-texture.css') layer(ornament);
+@import url('/public/css/spirit-phases.css') layer(handles);
+@import url('/public/css/phase-controls.css') layer(handles);
+@import url('/public/css/containers-electromagnetic.css') layer(shell);
+@import url('/public/css/craft-surface.css') layer(surfaces);
+@import url('/public/css/blog-surface.css') layer(surfaces);
+@import url('/public/css/spw-whimsy.css') layer(ornament);
+@import url('/public/css/whimsy-enhancements.css') layer(ornament);
+@import url('/public/css/cognitive-handles.css') layer(handles);
+
+@layer tokens {
 @property --active-op-color {
     syntax: '<color>';
     inherits: true;
@@ -105,7 +108,10 @@
     --op-surface-border: rgba(0, 128, 128, 0.24);
     --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
 }
+}
 
+
+@layer reset {
 html {
     scroll-behavior: smooth;
     scroll-padding-top: var(--header-height);
@@ -243,7 +249,10 @@ body[data-spw-surface="software"] .demo-panels,
 body[data-spw-surface="software"] .demo-panel {
     min-width: 0;
 }
+}
 
+
+@layer shell {
 body > header {
     min-height: var(--header-height);
     background-color: var(--teal);
@@ -449,7 +458,10 @@ main > article {
     flex-direction: column;
     gap: 1.5rem;
 }
+}
 
+
+@layer grammar {
 .site-frame {
     position: relative;
     display: flex;
@@ -528,7 +540,10 @@ main > article {
 .syntax-token {
     user-select: none;
 }
+}
 
+
+@layer grammar {
 /*
  * Brace form: 1D grammar (the { } character pair) projected into 2D space.
  * The opening brace materializes as a top-left corner; the closing brace as
@@ -688,7 +703,10 @@ main > article {
     --block-depth-size: 0.18rem;
     --block-depth-color: rgba(14, 18, 20, 0.01);
 }
+}
 
+
+@layer grammar {
 .site-frame > .spw-component-tag,
 .frame-panel > .spw-component-tag,
 .frame-card > .spw-component-tag,
@@ -812,7 +830,10 @@ main > article {
     border-color: var(--op-pragma-border);
     background: var(--op-pragma-bg-soft);
 }
+}
 
+
+@layer handles {
 [data-spw-form="brace"][data-spw-liminality="entry"] {
     --brace-open-color: rgba(0, 128, 128, 0.34);
     --brace-close-color: rgba(0, 128, 128, 0.18);
@@ -884,7 +905,10 @@ main > article {
 [data-spw-selection="selected"] > .spw-component-tag {
     background: rgba(230, 248, 248, 0.84);
 }
+}
 
+
+@layer components {
 .frame-sigil,
 .operator-chip {
     display: inline-flex;
@@ -1144,13 +1168,47 @@ a.frame-card {
     gap: 1rem;
 }
 
-.site-figure figure {
+.site-figure > figure {
     margin: 0;
     width: min(100%, 34rem);
 }
 
-.site-figure img {
+.site-figure > figure > picture {
+    display: block;
+}
+
+.site-figure > figure img {
+    display: block;
     width: 100%;
+    height: auto;
+}
+
+.constellation-figure {
+    position: relative;
+}
+
+.constellation-panels {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+.image-study {
+    margin: 0;
+    gap: 0.85rem;
+}
+
+.image-study picture {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.image-study img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .site-figure .overlay img {
@@ -1167,7 +1225,10 @@ figcaption {
     color: var(--ink-soft);
     font-size: 0.92rem;
 }
+}
 
+
+@layer surfaces {
 /* ─── Opt-in Feature Surfaces ─────────────────────────────────────────────── */
 
 [data-spw-features~="media-publishing"] .media-publishing-frame {
@@ -1556,7 +1617,10 @@ figcaption {
     outline: 2px solid var(--active-op-color);
     outline-offset: 2px;
 }
+}
 
+
+@layer grammar {
 /* ─── Spw operator family visual identity ─────────────────────────────────── */
 
 /*
@@ -1663,7 +1727,10 @@ figcaption {
     --spw-operator-border: var(--op-surface-border);
     --spw-operator-bg-soft: var(--op-surface-bg-soft);
 }
+}
 
+
+@layer handles {
 [data-spw-features~="operators"] [data-spw-operator],
 [data-spw-features~="console"] .spw-console [data-spw-operator] {
     color: var(--spw-operator-color, currentColor);
@@ -1713,7 +1780,9 @@ figcaption {
     border-color: currentColor;
     filter: none;
 }
+}
 
+@layer components {
 /* Operator reference table used in the grammar surface */
 [data-spw-features~="operators"] .spw-operator-table {
     width: 100%;
@@ -1838,7 +1907,9 @@ figcaption {
     border-color: var(--teal);
     color: white;
 }
+}
 
+@layer handles {
 /* ─── Frame metrics bar ───────────────────────────────────────────────────── */
 
 [data-spw-features~="metrics"] .frame-metrics-bar {
@@ -1882,7 +1953,9 @@ figcaption {
     max-width: 14rem;
     opacity: 1;
 }
+}
 
+@layer components {
 .domain-kicker {
     color: var(--ink-soft);
     text-transform: uppercase;
@@ -1890,6 +1963,57 @@ figcaption {
     font-size: 0.8rem;
 }
 
+.domain-visual-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.domain-visual-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.domain-visual {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid rgba(255, 187, 94, 0.18);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(165deg, rgba(17, 18, 20, 0.96), rgba(43, 35, 29, 0.93));
+    color: rgba(255, 244, 225, 0.94);
+    box-sizing: border-box;
+}
+
+.domain-visual picture {
+    display: block;
+}
+
+.domain-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius-sm) - 1px);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.domain-visual figcaption {
+    color: rgba(255, 236, 208, 0.78);
+}
+
+.domain-visual--poster {
+    min-height: 100%;
+}
+
+.domain-visual--token {
+    align-self: start;
+}
+}
+
+@layer shell {
 body > footer {
     margin-top: auto;
     min-height: var(--header-height);
@@ -1905,7 +2029,9 @@ body > footer {
     letter-spacing: 0.04em;
     opacity: 0.9;
 }
+}
 
+@layer surfaces {
 /* ─── Runtime Settings Surface ───────────────────────────────────────────── */
 
 /* ─── Settings: Presets ─── */
@@ -2111,7 +2237,9 @@ body > footer {
 .pwa-status-value[data-status="active"] { color: var(--teal); }
 .pwa-status-value[data-status="inactive"] { color: var(--ink-soft); }
 .pwa-status-value[data-status="error"] { color: hsl(0 60% 50%); }
+}
 
+@layer surfaces {
 /* ─── Frame Navigator (JetBrains tool window pattern) ────────────────────── */
 
 /*
@@ -2701,6 +2829,7 @@ html[data-spw-navigator="hidden"] [data-spw-features~="navigator"] .spw-nav {
 html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     display: none;
 }
+}
 
 /* ── Mobile — hide strip, promote to a floating trigger ─── */
 
@@ -2780,6 +2909,14 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
 @media (max-width: 860px) {
     .frame-grid--dense,
     .domain-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .domain-visual-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .constellation-panels {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -2987,6 +3124,7 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     .contact-grid,
     .frame-grid--dense,
     .domain-grid,
+    .constellation-panels,
     [data-spw-features~="media-publishing"] .media-focus-layout,
     [data-spw-features~="media-publishing"] .media-card-grid,
     .operator-atlas-grid,
@@ -3068,6 +3206,7 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     }
 }
 
+@layer ornament {
 /* ─── Spirit Sequence Display ──────────────────────────────── */
 
 .spw-spirit-sequence {
@@ -3119,7 +3258,9 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
+}
 
+@layer reset {
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -3133,4 +3274,5 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
 }
