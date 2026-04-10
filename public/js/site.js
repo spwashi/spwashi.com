@@ -10,6 +10,8 @@ import {
     initSiteSettingsPage,
     shouldUseViewportActivation
 } from './site-settings.js';
+import './spirit-phase-dynamics.js';
+import './electromagnetic-containers.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -416,6 +418,10 @@ const initOptionalFeatures = async () => {
 
     if (features.has('media-publishing') || document.querySelector('[data-media-focus], [data-media-collection]')) {
         loads.push(loadFeature('./media-publishing.js', 'initMediaPublishing'));
+    }
+
+    if (features.has('blog-interpreter') || document.querySelector('[data-blog-interpreter]')) {
+        loads.push(loadFeature('./blog-interpreter.js', 'initBlogInterpreter'));
     }
 
     await Promise.all(loads);
