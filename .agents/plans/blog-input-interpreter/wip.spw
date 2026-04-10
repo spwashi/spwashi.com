@@ -1,0 +1,115 @@
+# wip - blog-input-interpreter
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/blog-input-interpreter/PLAN.md"
+ @artifact: ~".agents/plans/blog-input-interpreter/blog-input-interpreter.spw"
+ @route: ~"blog/index.html"
+ @module: ~"public/js/blog-interpreter.js"
+ @site: ~"public/js/site.js"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Add a framework-free blog route that can interpret pasted draft input, Spw fragments, and wonder notes locally."
+ ~#taste: "A reason to synthesize Spw and wonder into readable language sometimes, with an explicit privacy boundary and no remote AI."
+}
+
+^["development"]{
+ lane: #blog_surface
+ ladder: #local_interpreter
+ develops: [#draft_summary, #tags, #questions, #outline, #spw_seed]
+ review_surfaces: [@route, @module, @css, @site]
+}
+
+^["product_shape"]{
+ first_screen: "tool, not landing page"
+ sequence: [#input, #interpretation, #wonder_or_spw_lens, #language_move, #publish_path]
+ promise: "Read what a note, fragment, or draft is trying to become."
+ no_js: "Explain local interpretation contract and keep route useful."
+}
+
+^["interpretation_model"]{
+ inputs: [#plain_paragraphs, #rough_notes, #markdown_headings, #question_lists, #spw_fragments, #wonder_fragments]
+ outputs: [#title, #summary, #tags, #questions, #outline, #metrics, #lens, #spw_seed]
+ method: #deterministic_local_heuristics
+ non_goals: [#remote_ai, #automatic_publish, #hidden_persistence, #correctness_claims]
+}
+
+^["north_star"]{
+ wonder: "sustained attention to something unresolved"
+ spw: "temporary scaffold for naming shape, relation, operator, and frame"
+ language: "public prose a reader can follow"
+ translation: [#wonder_to_language, #spw_to_language, #draft_to_post]
+ cadence: #occasional
+ counterexamples: [#generic_dashboard, #mystic_vagueness, #syntax_demo_without_translation]
+}
+
+^["publishing_lifecycle"]{
+ draft_flow: [
+  "paste raw input",
+  "interpret locally",
+  "review suggested structure",
+  "copy Spw seed",
+  "manually create post route when ready"
+ ]
+ future_routes: ["blog/YYYY-MM-DD-slug/index.html", "blog/YYYY-MM-DD-slug/post.spw"]
+ source_of_truth: #manual_authoring
+}
+
+^["privacy_boundary"]{
+ draft_content_network: #never
+ draft_content_storage: #none_in_v1
+ analytics_content: #never
+ future_storage: #local_opt_in_only
+}
+
+^["interaction_depth"]{
+ subjects: [#pasted_text, #draft_signal, #reader_questions, #wonder_signal, #spw_scaffold]
+ questions: [#what_is_this_about, #what_wonder_remains, #which_operator_gives_shape, #what_sentence_would_help, #what_sections_exist]
+ qualities: [#clarity, #privacy, #incremental_value, #translation]
+}
+
+^["risk_model"]{
+ hard_failures: ["module syntax error", "missing textarea target"]
+ soft_failures: ["empty generic output", "copy feels like AI promise instead of local heuristics"]
+ recoveries: ["no-JS fallback explains local-only behavior", "empty input shows explicit prompt"]
+ non_negotiables: ["no network request", "do not touch unrelated .spw convention edits"]
+}
+
+^["validation"]{
+ hypotheses: ["Pasted text can become a local blog interpretation.", "The route remains readable without JavaScript."]
+ negative_controls: ["Existing optional features still initialize.", "Header navigation remains balanced."]
+ demo_path: ["/blog/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 07:15] hygiene - base main@a2a9da074f4fa8437e422ef5174e3fbb07855b94; unrelated .spw convention edits already dirty and will not be touched.
+ >>[2026-04-10 07:15] taste - interpret input as deterministic editorial structure, not remote AI or opaque magic.
+ >>[2026-04-10 07:22] revise - expanded plan from simple route into blog/publishing system: content model, privacy boundary, lifecycle, UX contract, PWA cache, and future post shape.
+ >>[2026-04-10 07:28] implement - added blog route, local interpreter module, feature loader, scoped styles, PWA cache entries, manifest shortcut, Blog nav, and 2026 footers.
+ >>[2026-04-10 07:38] refine - reframed the blog as an occasional synthesis surface where Spw and wonder become readable language.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: ".[plan] - detail blog interpreter publishing plan"
+ ~[2]: "#[blog] - add local input interpreter route"
+}
+
+^["cache"]{
+ ~#status: "implemented"
+ ~#base_ref: "main@a2a9da074f4fa8437e422ef5174e3fbb07855b94"
+ ~#hygiene_split: "pre-existing .spw/conventions edits"
+ ~#files_hot: "blog/index.html public/js/blog-interpreter.js public/js/site.js public/css/style.css route footers/nav"
+ ~#next_commit: "1"
+ ~#taste_debt: "future posts should prove the wonder-to-language promise with real essays, not only the tool"
+}
+
+^["done"]{
+}

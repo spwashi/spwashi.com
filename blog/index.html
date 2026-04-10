@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spwashi • Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <meta name="description" content="A local blog interpreter for turning Spw fragments, wonder notes, and rough drafts into readable language.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="blog" data-spw-features="operators navigator console blog-interpreter">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/blog/">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>blog</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame blog-interpreter-frame" id="blog-input-interpreter" data-spw-role="tool" data-spw-liminality="entry" data-spw-meaning="local blog input interpretation for Spw, wonder, and language">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#blog-input-interpreter">#&gt;blog_input_interpreter</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">local-only</span>
+                        <span class="spec-pill">wonder reader</span>
+                        <span class="spec-pill">no network AI</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Blog Surface</p>
+                <h1>Paste a Spw fragment, a wonder note, or a rough draft.</h1>
+                <p class="frame-note">Use this when something feels alive but not article-shaped yet. The interpreter gives the note a title, questions, outline, and Spw seed so it can move toward readable language.</p>
+
+                <div class="blog-interpreter-layout" data-blog-interpreter>
+                    <form class="blog-input-panel" data-blog-input-form>
+                        <label class="blog-input-field" for="blog-draft-input">
+                            <span>Draft, fragment, or wonder input</span>
+                            <textarea id="blog-draft-input" class="blog-input-textarea" rows="14" data-blog-input placeholder="Paste a paragraph, Spw fragment, rough note, question, metaphor, or post draft here."></textarea>
+                        </label>
+                        <div class="blog-input-actions">
+                            <button class="operator-chip" type="submit">@ interpret input</button>
+                            <button class="operator-chip" type="button" data-blog-sample>~ load sample</button>
+                            <button class="operator-chip" type="button" data-blog-clear>! clear</button>
+                            <span class="blog-input-status" data-blog-status role="status" aria-live="polite">Waiting for input.</span>
+                        </div>
+                    </form>
+
+                    <div class="blog-output-panel" aria-live="polite">
+                        <div class="blog-output-header">
+                            <span class="frame-card-sigil">$interpretation</span>
+                            <h2 data-blog-title>Untitled draft</h2>
+                        </div>
+                        <p class="blog-output-summary" data-blog-summary>Paste text and run the interpreter to turn a note toward language.</p>
+
+                        <div class="blog-metric-grid" aria-label="Draft metrics">
+                            <div class="blog-metric">
+                                <span>words</span>
+                                <strong data-blog-words>0</strong>
+                            </div>
+                            <div class="blog-metric">
+                                <span>reading</span>
+                                <strong data-blog-reading-time>0 min</strong>
+                            </div>
+                            <div class="blog-metric">
+                                <span>tone</span>
+                                <strong data-blog-tone>quiet</strong>
+                            </div>
+                            <div class="blog-metric">
+                                <span>lens</span>
+                                <strong data-blog-lens>wonder</strong>
+                            </div>
+                        </div>
+
+                        <div class="blog-output-grid">
+                            <section class="blog-output-card">
+                                <h3>Tags</h3>
+                                <ul class="blog-chip-list" data-blog-tags>
+                                    <li>draft</li>
+                                </ul>
+                            </section>
+                            <section class="blog-output-card">
+                                <h3>Questions</h3>
+                                <ol class="blog-output-list" data-blog-questions>
+                                    <li>What should this piece help a reader understand next?</li>
+                                </ol>
+                            </section>
+                            <section class="blog-output-card blog-output-card--wide">
+                                <h3>Outline</h3>
+                                <ol class="blog-output-list" data-blog-outline>
+                                    <li>Paste a draft to reveal likely sections.</li>
+                                </ol>
+                            </section>
+                        </div>
+
+                        <section class="blog-seed-card">
+                            <div class="frame-heading">
+                                <span class="frame-card-sigil">^"draft_seed"{</span>
+                                <h3>Spw Seed</h3>
+                            </div>
+                            <pre><code data-blog-seed>#&gt;blog_note
+#:layer #!draft
+
+^"summary"{
+ title: "Untitled draft"
+ lens: "wonder_to_language"
+ claim: "Paste text to generate a local seed."
+}</code></pre>
+                        </section>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="blog-method">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#blog-method">?["how_it_reads"]</a>
+                    <h2>How It Reads</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Wonder first</h3>
+                        <p>A post can start as attention, not a conclusion. A strange phrase, question, or Spw shape is enough input.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Spw as scaffold</h3>
+                        <p>Operators and frames can hold a thought still long enough to ask what it wants to become in ordinary prose.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Local first</h3>
+                        <p>The interpreter uses text heuristics in the browser. It never calls an external model or stores the draft.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Language next</h3>
+                        <p>The output is not the post. It is a portable title, claim, questions, outline, and seed for the next human sentence.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Occasional posts</h3>
+                        <p>Some seeds can stay notes. Some can become static posts when the language is ready.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

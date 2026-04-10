@@ -1,0 +1,104 @@
+# wip - author-craft-ramps
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/author-craft-ramps/PLAN.md"
+ @artifact: ~".agents/plans/author-craft-ramps/author-craft-ramps.spw"
+ @topics: ~"topics/index.html"
+ @craft: ~"topics/craft/index.html"
+ @fragments: ~"topics/craft/fragments/index.html"
+ @svg: ~"topics/craft/svg/index.html"
+ @files: ~"topics/craft/files/index.html"
+ @css: ~"public/css/craft-surface.css"
+ @site_css: ~"public/css/style.css"
+ @home: ~"index.html"
+ @software: ~"topics/software/index.html"
+ @guide: ~"about/website/index.html"
+ @media_focus: ~"public/data/media-focus.json"
+ @sw: ~"sw.js"
+ @manifest: ~"manifest.webmanifest"
+}
+
+^["intent"]{
+ ~#goal: "Create author-facing topic ramps for HTML/CSS fragments, SVG storytelling, book sensory motifs, and files as creative substrate."
+ ~#taste: "bookish wonder without beige nostalgia; usable first screens, screenshot-ready prompt cards, and internal links that reward visitors"
+}
+
+^["development"]{
+ lane: #craft_surface
+ ladder: #author_onboarding
+ develops: [#topic_routes, #fragments, #svg_storytelling, #file_traditions, #pwa_discovery]
+ review_surfaces: [@plan, @artifact, @craft, @fragments, @svg, @files, @css]
+}
+
+^["audience_model"]{
+ primary: #booktok_author_friend
+ secondary: #developer_friend_between_jobs
+ needs: [#low_friction_start, #visual_wonder, #hireable_art_direction, #file_play, #screenshottable_prompts]
+ avoids: [#developer_gatekeeping, #blank_editor_fear, #generic_productivity, #ornamental_noise]
+}
+
+^["routes"]{
+ topics: "topic register with craft + software paths"
+ craft: "orientation and first prompt card"
+ fragments: "small HTML/CSS fragments with visible result"
+ svg: "storytelling motifs and illustrator handoff"
+ files: "folder traditions, file types, and local play"
+}
+
+^["css_dom_lab"]{
+ hypothesis: "A localized craft surface can make static HTML routes feel like a tactile author workbench without needing runtime JavaScript."
+ probe: "route-gated CSS under body[data-spw-surface='craft'] with stable prompt cards, motif strips, and SVG storyboards"
+ gate: "data-spw-surface='craft'"
+ instrumentation: "manual screenshot and static route checks"
+ reversible: #yes
+}
+
+^["risk_model"]{
+ hard_failures: [#no_concrete_ramp, #developer_tutorial_voice, #broken_route]
+ soft_failures: [#beige_nostalgia, #svg_as_decoration, #too_many_links]
+ recoveries: [#usable_prompt_cards, #crosslinks_with_purpose, #stable_svg_hosts]
+ non_negotiables: [#static_html, #no_build_step, #accessible_labels, #pwa_cache]
+}
+
+^["validation"]{
+ hypotheses: [#author_can_choose_next_step, #developer_can_see_service_path, #screenshot_cards_hold_context]
+ negative_controls: [#software_routes_unchanged, #blog_route_unchanged, #manifest_valid]
+ demo_path: ["/topics/", "/topics/craft/", "/topics/craft/fragments/", "/topics/craft/svg/", "/topics/craft/files/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 10:22] observe - Handoff reframes topic expansion around author onboarding, BookTok-adjacent sensory books, SVG storytelling, illustrator collaboration, and files as a substrate for play.
+ >>[2026-04-10 10:24] hygiene - Current base and origin/main are both 18c89c4f998c52b60d0b91e7ec88e2b8e59ae146; untracked blog files remain present and should not be overwritten.
+ >>[2026-04-10 10:25] taste - The existing untracked craft stylesheet has the right intent but needs less beige dominance, stable type sizing, and lower-radius components before adoption.
+ >>[2026-04-10 10:31] observe - Craft route files are already tracked on HEAD from the prior handoff; implementation should focus on topic register, internal discovery, PWA/focus data, and CSS hardening.
+ >>[2026-04-10 10:39] implement - Added /topics/ register, connected Craft from home/software/website guide/media focus, bumped PWA cache+manifest, and corrected craft CSS background/radius guardrails.
+}
+
+^["open"]{
+ ?[post_mvp]: "Should the craft cluster eventually include a tiny editor or stay as static fragments and prompts?"
+ ?[illustrator_handoff]: "Which motif package would be strongest as paid illustrator work: cover sigils, marginalia creatures, chapter glyphs, or map ornaments?"
+}
+
+^["commits"]{
+ ~[1]: "#[craft] — capture author craft ramp plan and synthesis contract"
+ ~[2]: "&[topics] — add author-facing craft topic routes"
+ ~[3]: ".[craft] — add localized craft surface styling and screenshot-ready motif cards"
+ ~[4]: "&[pwa] — register craft routes in navigation, focus data, manifest, and service worker"
+ ~[5]: "![craft] — verify static routes, JSON, JS, CSS hygiene, and Spw review"
+}
+
+^["cache"]{
+ ~#status: "implemented"
+ ~#base_ref: "main@18c89c4f998c52b60d0b91e7ec88e2b8e59ae146"
+ ~#hygiene_split: "preserve untracked blog-input-interpreter files"
+ ~#files_hot: "topics/index.html topics/craft/** public/css/craft-surface.css public/css/style.css index.html topics/software/index.html about/website/index.html public/data/media-focus.json sw.js manifest.webmanifest"
+ ~#next_commit: "1"
+ ~#taste_debt: "Future work should prove the ramp with one real author page or motif package, not only explanation."
+}
+
+^["done"]{
+}

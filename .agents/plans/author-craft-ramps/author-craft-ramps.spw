@@ -1,0 +1,25 @@
+#>author_craft_ramps
+#:layer #!ux
+
+^"contract"{
+ audience: "author friend willing to explore web fragments"
+ bridge: "creative writing, sensory books, illustrator motifs, files, and local web pages"
+ first_screen: "usable prompt, fragment, or map; not marketing"
+ output: ["topic routes", "fragment examples", "svg motifs", "file tradition map", "pwa discovery"]
+}
+
+^"translation"{
+ from: ["book feeling", "motif", "scene", "reader ritual", "folder tradition"]
+ through: ["html fragment", "css surface", "svg illustration", "local file"]
+ toward: ["screenshottable prompt", "collaboration brief", "small static page", "community semantic"]
+}
+
+?["What makes this valuable?"]{
+ answer: "It gives creative people a small enough web surface to touch, while giving developer friends concrete collaboration work that is not just generic app labor."
+}
+
+^"motif_economy"{
+ illustrator_work: ["cover glyphs", "chapter marks", "marginal creatures", "map ornaments", "prompt cards"]
+ developer_work: ["static routes", "PWA shell", "fragment library", "local style packs", "semantic link map"]
+ visitor_reward: ["internal paths", "screenshot cards", "source fragments", "localized styles", "memeable motifs"]
+}

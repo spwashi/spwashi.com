@@ -1,0 +1,36 @@
+#>blog_input_interpreter
+#:layer #!ux
+
+^"contract"{
+ source: "pasted text, Spw fragments, or wonder notes"
+ privacy: "local browser only; no network interpretation"
+ output: ["title", "summary", "tags", "questions", "outline", "stats", "lens", "spw seed"]
+ fallback: "readable static route with explanation when JavaScript is unavailable"
+}
+
+?["What should the interpreter optimize for?"]{
+ answer: "Give the writer a next editorial move: preserve the wonder, name the Spw shape when useful, and turn the material toward readable language."
+}
+
+^"translation_contract"{
+ wonder: "sustained attention to something unresolved"
+ spw: "scaffold for shape, relation, operator, and frame"
+ language: "public prose that can be followed without the private spark"
+ lenses: [#wonder_to_language, #spw_to_language, #draft_to_post]
+ counterexample: "tag extraction without a reason to write"
+}
+
+^"lifecycle"{
+ raw_input: "@paste"
+ interpretation: "@local_heuristics"
+ editorial_review: "?wonder + ?questions + ^outline"
+ portable_seed: "^draft_seed"
+ publication: ">manual_static_post_when_ready"
+}
+
+^"future_post_shape"{
+ route: "blog/YYYY-MM-DD-slug/index.html"
+ source: "optional post.spw"
+ anchors: ["#>post_frame", "^summary", "~related_surfaces", "?open_questions"]
+ rule: "manual authoring remains canonical until a generator is explicitly designed"
+}

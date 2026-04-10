@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Topics</title>
+    <meta name="description" content="Topic routes for Spwashi: software, author craft, play, blog, and website field guides.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/topics/craft/">Craft</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>topics</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="topics-register" data-spw-role="orientation" data-spw-meaning="topic register">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#topics-register">#&gt;topics_register</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">software</span>
+                        <span class="spec-pill">craft</span>
+                        <span class="spec-pill">play</span>
+                        <span class="spec-pill">writing</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Topic Register</p>
+                <h1>Choose the surface that matches the kind of attention you have.</h1>
+                <p class="frame-note">Some routes are for systems and syntax. Some are for authors, motifs, and files as creative material. The links below keep those paths close enough to cross.</p>
+                <nav class="frame-operators" aria-label="Topic routes">
+                    <a class="operator-chip" href="/topics/craft/">author craft</a>
+                    <a class="operator-chip" href="/topics/software/">software</a>
+                    <a class="operator-chip" href="/blog/">blog</a>
+                    <a class="operator-chip" href="/play/">play</a>
+                    <a class="operator-chip" href="/about/website/">site guide</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="topic-cards" data-spw-role="directory">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#topic-cards">^"topic_cards"{</a>
+                    <h2>Topic Cards</h2>
+                </div>
+                <div class="frame-grid">
+                    <a class="frame-card" href="/topics/craft/">
+                        <span class="frame-card-sigil">#&gt;author_craft</span>
+                        <strong>Author craft</strong>
+                        <span>HTML, CSS, SVG, motifs, and file traditions for writers who want a small web surface to touch.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/software/">
+                        <span class="frame-card-sigil">#&gt;software_surface</span>
+                        <strong>Software</strong>
+                        <span>Spw syntax, operator grammar, interactive codeblocks, and the local-first tooling path.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/software/spw/">
+                        <span class="frame-card-sigil">?[operators]</span>
+                        <strong>Operator atlas</strong>
+                        <span>A symbol-by-symbol atlas for reading Spw as syntax, interaction, and design behavior.</span>
+                    </a>
+                    <a class="frame-card" href="/blog/">
+                        <span class="frame-card-sigil">#&gt;blog_input_interpreter</span>
+                        <strong>Blog interpreter</strong>
+                        <span>Turn Spw fragments, wonder notes, and rough drafts into questions, outlines, and seeds.</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/">
+                        <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
+                        <strong>RPG Wednesday</strong>
+                        <span>Session logs, cast references, world notes, and local tools for a recurring table.</span>
+                    </a>
+                    <a class="frame-card" href="/about/website/">
+                        <span class="frame-card-sigil">#&gt;website_field_guide</span>
+                        <strong>Website guide</strong>
+                        <span>The PWA shell, frame navigation, screenshot-friendly surfaces, and exploration motifs.</span>
+                    </a>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>
