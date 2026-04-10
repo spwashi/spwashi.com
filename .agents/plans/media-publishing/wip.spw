@@ -80,6 +80,8 @@
  >>[2026-04-10 03:54] hygiene - base origin/main@e54abe1a9001e23b01da0051eeaf038804daaa21; unrelated image moves/deletions are already dirty and will not be touched.
  >>[2026-04-10 03:54] taste - use marketable feature copy as navigational framing, not empty promotion; JSON should be easy to edit by hand.
  >>[2026-04-10 03:54] implement - added media-focus JSON, progressive renderer, home focus frame, website publishing register, CSS components, and PWA cache entries.
+ >>[2026-04-10 03:54] verify - JS syntax checks, JSON parse, diff whitespace check, and changed-file poll-review passed; poll also covered unrelated dirty image metadata surfaces.
+ >>[2026-04-10 04:07] revise - rewrote the focus/register copy away from literal implementation language toward signal, threshold, handle, and room metaphors.
 }
 
 ^["open"]{
@@ -90,14 +92,14 @@
 }
 
 ^["cache"]{
- ~#status: "implementation"
- ~#base_ref: "main@e54abe1a9001e23b01da0051eeaf038804daaa21"
+ ~#status: "review"
+ ~#base_ref: "main@fda44c00c40300ab062bc110205569bc3ff19b83"
  ~#rebased_at: ""
  ~#hygiene_split: "unrelated image asset moves/deletions already dirty"
  ~#files_hot: "public/data/media-focus.json public/js/media-publishing.js public/js/site.js index.html about/website/index.html public/css/style.css sw.js manifest.webmanifest"
  ~#next_commit: "1"
  ~#open_count: "0"
- ~#last_stream: "implement"
+ ~#last_stream: "revise"
  ~#taste_debt: ""
 }
 
