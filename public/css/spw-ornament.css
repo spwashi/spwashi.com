@@ -1,0 +1,51 @@
+/* ─── Spirit Sequence Display ──────────────────────────────── */
+
+.spw-spirit-sequence {
+    display: flex;
+    gap: 0.3em;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    opacity: 0.28;
+    user-select: none;
+    transition: opacity 0.4s ease;
+}
+
+.spw-spirit-sequence:hover {
+    opacity: 0.62;
+}
+
+.spw-spirit-sequence [data-op="probe"]  { color: var(--op-probe-color); }
+.spw-spirit-sequence [data-op="ref"]    { color: var(--op-ref-color); }
+.spw-spirit-sequence [data-op="action"] { color: var(--op-action-color); }
+.spw-spirit-sequence [data-op="stream"] { color: var(--op-stream-color); }
+.spw-spirit-sequence [data-op="object"] { color: var(--op-object-color); }
+.spw-spirit-sequence [data-op="frame"]  { color: var(--op-frame-color); }
+
+/* ─── Spirit Sequence Toast ──────────────────────────────── */
+
+.spw-spirit-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(0.5rem);
+    background: var(--surface-code);
+    color: var(--active-op-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--active-op-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+}
+
+.spw-spirit-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

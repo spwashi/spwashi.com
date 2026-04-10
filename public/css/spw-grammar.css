@@ -1,0 +1,466 @@
+.site-frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    transition: background 160ms ease, border-color 160ms ease;
+    overflow: hidden;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+.site-frame.is-active-frame {
+    border-color: var(--line-strong);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow-active);
+}
+
+[data-spw-component-kind="frame"],
+[data-spw-component-kind="panel"],
+[data-spw-component-kind="card"],
+[data-spw-component-kind="surface"],
+[data-spw-component-kind="lens"],
+[data-spw-component-kind="metric"] {
+    position: relative;
+}
+
+[data-spw-component-kind="frame"] > *,
+[data-spw-component-kind="panel"] > *,
+[data-spw-component-kind="card"] > *,
+[data-spw-component-kind="surface"] > *,
+[data-spw-component-kind="lens"] > *,
+[data-spw-component-kind="metric"] > * {
+    position: relative;
+    z-index: 1;
+}
+
+.site-hero {
+    gap: 1.1rem;
+}
+
+.frame-topline,
+.frame-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.spw-component-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.24rem 0.5rem;
+    border: 1px solid rgba(14, 18, 20, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.68);
+    color: var(--ink-soft);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+}
+
+.spw-component-tag,
+.frame-sigil,
+.operator-chip,
+.frame-card-sigil,
+.spec-kicker,
+.syntax-token {
+    user-select: none;
+}
+/*
+ * Brace form: 1D grammar (the { } character pair) projected into 2D space.
+ * The opening brace materializes as a top-left corner; the closing brace as
+ * bottom-right. Arm length and opacity scale with containment depth.
+ *
+ * Block form: a 2D surface that hints at N-D depth — nested inner layers
+ * suggest the content extends beyond what is immediately visible.
+ */
+
+[data-spw-form="brace"]::before,
+[data-spw-form="brace"]::after,
+[data-spw-form="block"]::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+[data-spw-form="brace"] {
+    --brace-corner-offset: 0.55rem;
+    --brace-corner-width: 1.6rem;
+    --brace-corner-height: 1.2rem;
+    --brace-corner-radius: 0.9rem;
+    --brace-corner-stroke: 1.5px;
+    --brace-open-color: rgba(0, 128, 128, 0.30);
+    --brace-close-color: rgba(0, 128, 128, 0.18);
+}
+
+[data-spw-form="block"] {
+    --block-inset: 0.42rem;
+    --block-border-width: 1px;
+    --block-border-color: rgba(14, 18, 20, 0.06);
+    --block-radius: calc(var(--radius-sm) - 0.1rem);
+    --block-highlight-offset: 1px;
+    --block-highlight-color: rgba(255, 255, 255, 0.44);
+    --block-depth-size: 0.38rem;
+    --block-depth-color: rgba(14, 18, 20, 0.025);
+    --block-hover-border-color: rgba(14, 18, 20, 0.08);
+    --block-hover-highlight-color: rgba(255, 255, 255, 0.50);
+    --block-hover-depth-color: rgba(14, 18, 20, 0.04);
+}
+
+/* Opening brace corner { — top-left */
+[data-spw-form="brace"]::before {
+    top: var(--brace-corner-offset);
+    left: var(--brace-corner-offset);
+    width: var(--brace-corner-width);
+    height: var(--brace-corner-height);
+    border-top: var(--brace-corner-stroke) solid var(--brace-open-color);
+    border-left: var(--brace-corner-stroke) solid var(--brace-open-color);
+    border-top-left-radius: var(--brace-corner-radius);
+    transition: border-color 200ms ease;
+}
+
+/* Closing brace corner } — bottom-right */
+[data-spw-form="brace"]::after {
+    right: var(--brace-corner-offset);
+    bottom: var(--brace-corner-offset);
+    width: var(--brace-corner-width);
+    height: var(--brace-corner-height);
+    border-right: var(--brace-corner-stroke) solid var(--brace-close-color);
+    border-bottom: var(--brace-corner-stroke) solid var(--brace-close-color);
+    border-bottom-right-radius: var(--brace-corner-radius);
+    transition: border-color 200ms ease;
+}
+
+/* site-frame is the outermost brace level — larger corners */
+.site-frame[data-spw-form="brace"] {
+    --brace-corner-width: 2.2rem;
+    --brace-corner-height: 1.6rem;
+    --brace-corner-stroke: 2px;
+    --brace-open-color: rgba(0, 128, 128, 0.22);
+    --brace-close-color: rgba(0, 128, 128, 0.12);
+}
+
+/* Active frame: brace corners sharpen */
+.site-frame.is-active-frame[data-spw-form="brace"] {
+    --brace-open-color: rgba(0, 128, 128, 0.40);
+    --brace-close-color: rgba(0, 128, 128, 0.24);
+}
+
+/*
+ * Fractal universe: recursive corner scaling at each nesting level.
+ * Each contained brace element (card, panel) scales down proportionally,
+ * creating self-similar visual structure at different magnifications.
+ * This gives the sense that every component is made from the same
+ * grammar, just at different zoom levels.
+ */
+
+.frame-card[data-spw-form="brace"] {
+    --brace-corner-offset: 0.4rem;
+    --brace-corner-width: 1.55rem;
+    --brace-corner-height: 1.1rem;
+}
+
+/* Frame panels: even smaller */
+.frame-panel[data-spw-form="brace"] {
+    --brace-corner-offset: 0.3rem;
+    --brace-corner-width: 1.2rem;
+    --brace-corner-height: 0.85rem;
+    --brace-corner-stroke: 1.2px;
+}
+
+/* Mode panels: smallest scale */
+.mode-panel[data-spw-form="brace"] {
+    --brace-corner-offset: 0.25rem;
+    --brace-corner-width: 0.95rem;
+    --brace-corner-height: 0.7rem;
+    --brace-corner-radius: 0.5rem;
+    --brace-corner-stroke: 1px;
+}
+
+/* Block form: layered inner depth — nested insets suggest hidden N-D content */
+[data-spw-form="block"]::before {
+    inset: var(--block-inset);
+    border: var(--block-border-width) solid var(--block-border-color);
+    border-radius: var(--block-radius);
+    box-shadow:
+        inset 0 var(--block-highlight-offset) 0 var(--block-highlight-color),
+        inset 0 0 0 var(--block-depth-size) var(--block-depth-color);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+[data-spw-form="block"]:hover::before {
+    border-color: var(--block-hover-border-color);
+    box-shadow:
+        inset 0 var(--block-highlight-offset) 0 var(--block-hover-highlight-color),
+        inset 0 0 0 var(--block-depth-size) var(--block-hover-depth-color);
+}
+
+/* Fractal block scaling — nested levels */
+.frame-card[data-spw-form="block"] {
+    --block-inset: 0.32rem;
+    --block-radius: calc(var(--radius-sm) - 0.08rem);
+    --block-highlight-offset: 0.8px;
+    --block-highlight-color: rgba(255, 255, 255, 0.42);
+    --block-depth-size: 0.28rem;
+    --block-depth-color: rgba(14, 18, 20, 0.02);
+}
+
+.frame-panel[data-spw-form="block"] {
+    --block-inset: 0.25rem;
+    --block-radius: calc(var(--radius-sm) - 0.06rem);
+    --block-highlight-offset: 0.6px;
+    --block-highlight-color: rgba(255, 255, 255, 0.40);
+    --block-depth-size: 0.22rem;
+    --block-depth-color: rgba(14, 18, 20, 0.015);
+}
+
+.mode-panel[data-spw-form="block"] {
+    --block-inset: 0.2rem;
+    --block-border-width: 0.8px;
+    --block-border-color: rgba(14, 18, 20, 0.05);
+    --block-radius: calc(var(--radius-sm) - 0.05rem);
+    --block-highlight-offset: 0.5px;
+    --block-highlight-color: rgba(255, 255, 255, 0.38);
+    --block-depth-size: 0.18rem;
+    --block-depth-color: rgba(14, 18, 20, 0.01);
+}
+.site-frame > .spw-component-tag,
+.frame-panel > .spw-component-tag,
+.frame-card > .spw-component-tag,
+.software-card > .spw-component-tag,
+.mode-panel > .spw-component-tag,
+[data-spw-features~="pretext-lab"] .pretext-metric > .spw-component-tag {
+    align-self: flex-end;
+    margin-bottom: -0.2rem;
+}
+
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    margin-left: auto;
+}
+
+[data-spw-form="brace"] > .spw-component-tag,
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    border-radius: 999px;
+}
+
+/* Brace-form tags: pill shape + { } bracket decoration */
+[data-spw-form="brace"] > .spw-component-tag::before {
+    content: '{';
+    margin-right: 0.25em;
+    opacity: 0.5;
+    font-weight: bold;
+}
+[data-spw-form="brace"] > .spw-component-tag::after {
+    content: '}';
+    margin-left: 0.25em;
+    opacity: 0.28;
+    font-weight: bold;
+}
+
+/* Block-form tags: square-ish shape + [ ] bracket decoration */
+[data-spw-form="block"] > .spw-component-tag {
+    border-radius: 0.38rem;
+}
+[data-spw-form="block"] > .spw-component-tag::before {
+    content: '[';
+    margin-right: 0.22em;
+    opacity: 0.45;
+}
+[data-spw-form="block"] > .spw-component-tag::after {
+    content: ']';
+    margin-left: 0.22em;
+    opacity: 0.28;
+}
+
+[data-spw-component-kind="frame"] > .spw-component-tag,
+.frame-topline > .spw-component-tag,
+.frame-heading > .spw-component-tag {
+    color: var(--teal-deep);
+    border-color: rgba(0, 128, 128, 0.18);
+    background: rgba(230, 248, 248, 0.74);
+}
+
+[data-spw-component-kind="card"] > .spw-component-tag {
+    color: hsl(210 70% 34%);
+    border-color: hsla(210, 70%, 34%, 0.16);
+    background: rgba(235, 244, 255, 0.72);
+}
+
+[data-spw-component-kind="panel"] > .spw-component-tag,
+[data-spw-component-kind="surface"] > .spw-component-tag {
+    color: hsl(36 80% 32%);
+    border-color: hsla(36, 80%, 32%, 0.16);
+    background: rgba(255, 248, 235, 0.76);
+}
+
+[data-spw-component-kind="lens"] > .spw-component-tag {
+    color: hsl(268 55% 38%);
+    border-color: hsla(268, 55%, 38%, 0.16);
+    background: rgba(245, 238, 255, 0.78);
+}
+
+[data-spw-component-kind="metric"] > .spw-component-tag {
+    color: hsl(180 100% 22%);
+    border-color: rgba(0, 100, 100, 0.18);
+    background: rgba(230, 248, 248, 0.78);
+}
+
+[data-spw-role="routing"] > .spw-component-tag,
+[data-spw-role="register"] > .spw-component-tag,
+[data-spw-role="route"] > .spw-component-tag,
+[data-spw-role="artifact"] > .spw-component-tag,
+[data-spw-role="reference"] > .spw-component-tag {
+    color: var(--op-ref-color);
+    border-color: var(--op-ref-border);
+    background: var(--op-ref-bg-soft);
+}
+
+[data-spw-role="schema"] > .spw-component-tag,
+[data-spw-role="comparison"] > .spw-component-tag,
+[data-spw-role="pipeline"] > .spw-component-tag {
+    color: var(--op-object-color);
+    border-color: var(--op-object-border);
+    background: var(--op-object-bg-soft);
+}
+
+[data-spw-role="probe"] > .spw-component-tag,
+[data-spw-role="telemetry"] > .spw-component-tag,
+[data-spw-role="lens"] > .spw-component-tag {
+    color: var(--op-probe-color);
+    border-color: var(--op-probe-border);
+    background: var(--op-probe-bg-soft);
+}
+
+[data-spw-role="projection"] > .spw-component-tag,
+[data-spw-role="surface"] > .spw-component-tag,
+[data-spw-role="control"] > .spw-component-tag {
+    color: var(--op-surface-color);
+    border-color: var(--op-surface-border);
+    background: var(--op-surface-bg-soft);
+}
+
+[data-spw-role="scenario"] > .spw-component-tag,
+[data-spw-role="rationale"] > .spw-component-tag {
+    color: var(--op-pragma-color);
+    border-color: var(--op-pragma-border);
+    background: var(--op-pragma-bg-soft);
+}
+/* ─── Spw operator family visual identity ─────────────────────────────────── */
+
+/*
+ * Each operator prefix has a distinct semantic role in the Spw grammar.
+ * The palette is defined once as custom properties so frame sigils, the
+ * navigator, and any future textual surfaces can reuse it without copying
+ * per-operator colors.
+ */
+
+[data-spw-operator="frame"] {
+    /* #>name — canonical frame declaration, the primary structural anchor */
+    --spw-operator-color: var(--op-frame-color);
+    --spw-operator-border: var(--op-frame-border);
+    --spw-operator-bg-soft: var(--op-frame-bg-soft);
+}
+
+[data-spw-operator="object"] {
+    /* ^"name"{ } — structured content body, warm-shifted */
+    --spw-operator-color: var(--op-object-color);
+    --spw-operator-border: var(--op-object-border);
+    --spw-operator-bg-soft: var(--op-object-bg-soft);
+}
+
+[data-spw-operator="ref"] {
+    /* ~"path" or ~#name — reference, points outward, cooler hue */
+    --spw-operator-color: var(--op-ref-color);
+    --spw-operator-border: var(--op-ref-border);
+    --spw-operator-bg-soft: var(--op-ref-bg-soft);
+}
+
+[data-spw-operator="probe"] {
+    /* ?[...] — question or interactive probe, violet-adjacent */
+    --spw-operator-color: var(--op-probe-color);
+    --spw-operator-border: var(--op-probe-border);
+    --spw-operator-bg-soft: var(--op-probe-bg-soft);
+}
+
+[data-spw-operator="action"] {
+    /* @action — imperative, deeper teal */
+    --spw-operator-color: var(--op-action-color);
+    --spw-operator-border: var(--op-action-border);
+    --spw-operator-bg-soft: var(--op-action-bg-soft);
+}
+
+[data-spw-operator="layer"] {
+    /* #:layer — meta, interpretive role, muted */
+    --spw-operator-color: var(--op-layer-color);
+    --spw-operator-border: var(--op-layer-border);
+    --spw-operator-bg-soft: var(--op-layer-bg-soft);
+}
+
+[data-spw-operator="baseline"] {
+    /* .member - local baseline, default lens, or grounded percept */
+    --spw-operator-color: var(--op-baseline-color);
+    --spw-operator-border: var(--op-baseline-border);
+    --spw-operator-bg-soft: var(--op-baseline-bg-soft);
+}
+
+[data-spw-operator="pragma"] {
+    /* !pragma — runtime constraint, also muted but slightly stronger */
+    --spw-operator-color: var(--op-pragma-color);
+    --spw-operator-border: var(--op-pragma-border);
+    --spw-operator-bg-soft: var(--op-pragma-bg-soft);
+}
+
+[data-spw-operator="stream"] {
+    /* *stream — dynamic / event-driven */
+    --spw-operator-color: var(--op-stream-color);
+    --spw-operator-border: var(--op-stream-border);
+    --spw-operator-bg-soft: var(--op-stream-bg-soft);
+}
+
+[data-spw-operator="merge"] {
+    /* &merge - overlay or integration of fields */
+    --spw-operator-color: var(--op-merge-color);
+    --spw-operator-border: var(--op-merge-border);
+    --spw-operator-bg-soft: var(--op-merge-bg-soft);
+}
+
+[data-spw-operator="binding"] {
+    /* =binding - naming, pinning, or categorization */
+    --spw-operator-color: var(--op-binding-color);
+    --spw-operator-border: var(--op-binding-border);
+    --spw-operator-bg-soft: var(--op-binding-bg-soft);
+}
+
+[data-spw-operator="meta"] {
+    /* $meta - metacognitive reflection on the medium */
+    --spw-operator-color: var(--op-meta-color);
+    --spw-operator-border: var(--op-meta-border);
+    --spw-operator-bg-soft: var(--op-meta-bg-soft);
+}
+
+[data-spw-operator="normalize"] {
+    /* %normalize - comparable scale or salience */
+    --spw-operator-color: var(--op-normalize-color);
+    --spw-operator-border: var(--op-normalize-border);
+    --spw-operator-bg-soft: var(--op-normalize-bg-soft);
+}
+
+[data-spw-operator="surface"] {
+    /* >surface — projection, rendered view */
+    --spw-operator-color: var(--op-surface-color);
+    --spw-operator-border: var(--op-surface-border);
+    --spw-operator-bg-soft: var(--op-surface-bg-soft);
+}

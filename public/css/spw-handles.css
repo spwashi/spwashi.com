@@ -1,0 +1,163 @@
+[data-spw-form="brace"][data-spw-liminality="entry"] {
+    --brace-open-color: rgba(0, 128, 128, 0.34);
+    --brace-close-color: rgba(0, 128, 128, 0.18);
+}
+
+[data-spw-form="brace"][data-spw-liminality="threshold"] {
+    --brace-open-color: rgba(0, 128, 128, 0.28);
+    --brace-close-color: rgba(0, 128, 128, 0.14);
+}
+
+[data-spw-form="block"][data-spw-liminality="projected"] {
+    --block-depth-size: 0.44rem;
+    --block-depth-color: rgba(0, 128, 128, 0.035);
+}
+
+[data-spw-form="block"][data-spw-liminality="deep"] {
+    --block-border-color: rgba(14, 18, 20, 0.08);
+    --block-depth-size: 0.2rem;
+    --block-depth-color: rgba(14, 18, 20, 0.03);
+}
+
+[data-spw-liminality="entry"] > .spw-component-tag {
+    letter-spacing: 0.1em;
+}
+
+[data-spw-liminality="threshold"] > .spw-component-tag {
+    backdrop-filter: blur(8px);
+}
+
+[data-spw-liminality="projected"] > .spw-component-tag {
+    border-style: solid;
+}
+
+[data-spw-selection="ambient"] > .spw-component-tag {
+    opacity: 0.72;
+}
+
+[data-spw-selection="addressable"] > .spw-component-tag {
+    opacity: 0.86;
+}
+
+[data-spw-selection="focused"] {
+    --brace-open-color: rgba(0, 128, 128, 0.34);
+    --brace-close-color: rgba(0, 128, 128, 0.2);
+    --block-border-color: rgba(0, 128, 128, 0.14);
+    --block-depth-color: rgba(0, 128, 128, 0.03);
+}
+
+[data-spw-selection="focused"] > .spw-component-tag {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+[data-spw-selection="active"],
+[data-spw-selection="selected"] {
+    --brace-open-color: rgba(0, 128, 128, 0.42);
+    --brace-close-color: rgba(0, 128, 128, 0.24);
+    --block-border-color: rgba(0, 128, 128, 0.18);
+    --block-depth-color: rgba(0, 128, 128, 0.045);
+}
+
+[data-spw-selection="active"] > .spw-component-tag,
+[data-spw-selection="selected"] > .spw-component-tag {
+    opacity: 1;
+    border-color: rgba(0, 128, 128, 0.24);
+    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.08);
+}
+
+[data-spw-selection="selected"] > .spw-component-tag {
+    background: rgba(230, 248, 248, 0.84);
+}
+[data-spw-features~="operators"] [data-spw-operator],
+[data-spw-features~="console"] .spw-console [data-spw-operator] {
+    color: var(--spw-operator-color, currentColor);
+    border-color: var(--spw-operator-border, currentColor);
+}
+
+[data-spw-features~="operators"] [data-spw-operator="object"],
+[data-spw-features~="operators"] [data-spw-operator="ref"],
+[data-spw-features~="operators"] [data-spw-operator="probe"],
+[data-spw-features~="operators"] [data-spw-operator="action"],
+[data-spw-features~="operators"] [data-spw-operator="layer"],
+[data-spw-features~="operators"] [data-spw-operator="baseline"],
+[data-spw-features~="operators"] [data-spw-operator="pragma"],
+[data-spw-features~="operators"] [data-spw-operator="stream"],
+[data-spw-features~="operators"] [data-spw-operator="merge"],
+[data-spw-features~="operators"] [data-spw-operator="binding"],
+[data-spw-features~="operators"] [data-spw-operator="meta"],
+[data-spw-features~="operators"] [data-spw-operator="normalize"],
+[data-spw-features~="operators"] [data-spw-operator="surface"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="object"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="ref"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="probe"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="action"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="layer"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="baseline"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="pragma"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="stream"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="merge"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="binding"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="meta"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="normalize"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="surface"] {
+    background: var(--spw-operator-bg-soft);
+}
+
+/* Hover/focus states respect the operator family color */
+[data-spw-features~="operators"] [data-spw-operator]:hover,
+[data-spw-features~="operators"] [data-spw-operator]:focus-visible {
+    filter: brightness(1.08);
+    background: rgba(255, 255, 255, 0.96);
+}
+
+[data-spw-features~="operators"] [data-spw-operator].is-selected,
+[data-spw-features~="operators"] [data-spw-operator][aria-pressed="true"] {
+    background: currentColor;
+    color: white;
+    border-color: currentColor;
+    filter: none;
+}
+/* ─── Frame metrics bar ───────────────────────────────────────────────────── */
+
+[data-spw-features~="metrics"] .frame-metrics-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--line);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    transform: translateY(0.12rem);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+[data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
+[data-spw-features~="metrics"] .frame-metrics-bar:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-spw-features~="metrics"] .frame-metrics-label {
+    color: var(--teal);
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+[data-spw-features~="metrics"] .frame-metrics-items {
+    font-variant-numeric: tabular-nums;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 180ms ease, opacity 180ms ease;
+}
+
+[data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-items,
+[data-spw-features~="metrics"] .frame-metrics-bar:hover .frame-metrics-items {
+    max-width: 14rem;
+    opacity: 1;
+}
