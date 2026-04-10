@@ -23,6 +23,8 @@
   @conventions: ~"./conventions/index.spw"
   @site_semantics: ~"./conventions/site-semantics.spw"
   @style_development: ~"./conventions/style-development.spw"
+  @asset_management: ~"./conventions/asset-management.spw"
+  @assets: ~"./assets.spw"
   @philosophy: ~"./philosophy/index.spw"
   @graph: ~"./graph.spw"
   @surfaces: ~"./surfaces.spw"
