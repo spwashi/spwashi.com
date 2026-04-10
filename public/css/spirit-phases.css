@@ -9,29 +9,29 @@
     --phase-initiation-sat: 70%;
     --phase-initiation-light: 48%;
 
-    --phase-resistance-hue: 260;
-    --phase-resistance-sat: 65%;
-    --phase-resistance-light: 35%;
+    --phase-resistance-hue: 342;
+    --phase-resistance-sat: 48%;
+    --phase-resistance-light: 36%;
 
-    --phase-transformation-hue: 45;
-    --phase-transformation-sat: 85%;
-    --phase-transformation-light: 42%;
+    --phase-transformation-hue: 150;
+    --phase-transformation-sat: 46%;
+    --phase-transformation-light: 30%;
 
     --phase-expression-hue: 180;
     --phase-expression-sat: 100%;
     --phase-expression-light: 28%;
 
-    --phase-return-hue: 20;
-    --phase-return-sat: 70%;
-    --phase-return-light: 38%;
+    --phase-return-hue: 105;
+    --phase-return-sat: 34%;
+    --phase-return-light: 34%;
 
     /* Default to expression (most vibrant/open) */
     --current-phase-hue: var(--phase-expression-hue);
     --current-phase-sat: var(--phase-expression-sat);
     --current-phase-light: var(--phase-expression-light);
 
-    --phase-transition-duration: 1.2s;
-    --phase-transition-timing: ease-in-out;
+    --phase-transition-duration: 160ms;
+    --phase-transition-timing: ease;
 }
 
 /* INITIATION PHASE: Fresh start, blue, entry-level energy
@@ -63,8 +63,8 @@
     color: var(--badge-text);
 }
 
-/* RESISTANCE PHASE: Challenge, deeper colors, stronger presence
- * Colors: Deep purples and dark blues, more visual weight
+/* RESISTANCE PHASE: Challenge, sharper rose edge, stronger presence
+ * Colors: rose-red edge, more visual weight without decorative motion
  */
 [data-spw-spirit-phase="resistance"] {
     --current-phase-hue: var(--phase-resistance-hue);
@@ -72,20 +72,19 @@
     --current-phase-light: var(--phase-resistance-light);
 
     --active-op-color: hsl(var(--current-phase-hue) var(--current-phase-sat) var(--current-phase-light));
-    --badge-bg: rgba(220, 210, 245, 0.9);
-    --badge-text: hsl(260 50% 25%);
-    --card-border-emphasis: hsla(260, 65%, 35%, 0.28);
+    --badge-bg: rgba(160, 42, 77, 0.11);
+    --badge-text: hsl(342 48% 28%);
+    --card-border-emphasis: hsla(342, 48%, 36%, 0.28);
 }
 
 [data-spw-spirit-phase="resistance"] .site-frame {
-    background-color: rgba(230, 220, 250, 0.3);
+    background-color: rgba(160, 42, 77, 0.04);
 }
 
 [data-spw-spirit-phase="resistance"] .frame-card,
 [data-spw-spirit-phase="resistance"] .media-card,
 [data-spw-spirit-phase="resistance"] .spec-pill {
     border-color: var(--card-border-emphasis);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 [data-spw-spirit-phase="resistance"] .spec-pill {
@@ -93,8 +92,8 @@
     color: var(--badge-text);
 }
 
-/* TRANSFORMATION PHASE: Dynamic, warm/golden, in flux
- * Colors: Warm golds and ambers, high contrast, energetic
+/* TRANSFORMATION PHASE: Folding, green, in flux
+ * Colors: plantlike green, readable edge, restrained movement
  */
 [data-spw-spirit-phase="transformation"] {
     --current-phase-hue: var(--phase-transformation-hue);
@@ -102,21 +101,19 @@
     --current-phase-light: var(--phase-transformation-light);
 
     --active-op-color: hsl(var(--current-phase-hue) var(--current-phase-sat) var(--current-phase-light));
-    --badge-bg: rgba(255, 242, 210, 0.95);
-    --badge-text: hsl(36 70% 30%);
-    --card-border-emphasis: hsla(36, 80%, 36%, 0.3);
+    --badge-bg: rgba(35, 118, 82, 0.11);
+    --badge-text: hsl(150 46% 24%);
+    --card-border-emphasis: hsla(150, 46%, 30%, 0.3);
 }
 
 [data-spw-spirit-phase="transformation"] .site-frame {
-    background-color: rgba(255, 250, 230, 0.5);
-    animation: phase-shimmer 4s var(--phase-transition-timing) infinite;
+    background-color: rgba(35, 118, 82, 0.04);
 }
 
 [data-spw-spirit-phase="transformation"] .frame-card,
 [data-spw-spirit-phase="transformation"] .media-card,
 [data-spw-spirit-phase="transformation"] .spec-pill {
     border-color: var(--card-border-emphasis);
-    box-shadow: 0 6px 16px rgba(36, 30, 0, 0.08);
 }
 
 [data-spw-spirit-phase="transformation"] .spec-pill {
@@ -153,8 +150,8 @@
     color: var(--badge-text);
 }
 
-/* RETURN PHASE: Integration, warm, settled and complete
- * Colors: Warm earth tones, soft browns/oranges, integrative feel
+/* RETURN PHASE: Integration, settled and complete
+ * Colors: quiet leaf edge, low visual pressure, integrative feel
  */
 [data-spw-spirit-phase="return"] {
     --current-phase-hue: var(--phase-return-hue);
@@ -162,20 +159,19 @@
     --current-phase-light: var(--phase-return-light);
 
     --active-op-color: hsl(var(--current-phase-hue) var(--current-phase-sat) var(--current-phase-light));
-    --badge-bg: rgba(255, 240, 225, 0.9);
-    --badge-text: hsl(20 60% 30%);
-    --card-border-emphasis: hsla(20, 70%, 38%, 0.24);
+    --badge-bg: rgba(92, 116, 66, 0.11);
+    --badge-text: hsl(105 34% 24%);
+    --card-border-emphasis: hsla(105, 34%, 34%, 0.24);
 }
 
 [data-spw-spirit-phase="return"] .site-frame {
-    background-color: rgba(255, 240, 230, 0.3);
+    background-color: rgba(92, 116, 66, 0.04);
 }
 
 [data-spw-spirit-phase="return"] .frame-card,
 [data-spw-spirit-phase="return"] .media-card,
 [data-spw-spirit-phase="return"] .spec-pill {
     border-color: var(--card-border-emphasis);
-    box-shadow: 0 4px 10px rgba(20, 10, 0, 0.06);
 }
 
 [data-spw-spirit-phase="return"] .spec-pill {
@@ -205,57 +201,7 @@ body {
 
 .frame-card,
 .media-card {
-    transition: border-color var(--phase-transition-duration) var(--phase-transition-timing),
-                box-shadow var(--phase-transition-duration) var(--phase-transition-timing);
-}
-
-/* Transformation phase shimmer animation */
-@keyframes phase-shimmer {
-    0%, 100% {
-        background-color: rgba(255, 250, 230, 0.5);
-    }
-    50% {
-        background-color: rgba(255, 245, 220, 0.6);
-    }
-}
-
-/* Auto-cycle animation (when enabled) */
-@keyframes phase-cycle {
-    0% {
-        --current-phase-hue: var(--phase-initiation-hue);
-        --current-phase-sat: var(--phase-initiation-sat);
-        --current-phase-light: var(--phase-initiation-light);
-    }
-    20% {
-        --current-phase-hue: var(--phase-resistance-hue);
-        --current-phase-sat: var(--phase-resistance-sat);
-        --current-phase-light: var(--phase-resistance-light);
-    }
-    40% {
-        --current-phase-hue: var(--phase-transformation-hue);
-        --current-phase-sat: var(--phase-transformation-sat);
-        --current-phase-light: var(--phase-transformation-light);
-    }
-    60% {
-        --current-phase-hue: var(--phase-expression-hue);
-        --current-phase-sat: var(--phase-expression-sat);
-        --current-phase-light: var(--phase-expression-light);
-    }
-    80% {
-        --current-phase-hue: var(--phase-return-hue);
-        --current-phase-sat: var(--phase-return-sat);
-        --current-phase-light: var(--phase-return-light);
-    }
-    100% {
-        --current-phase-hue: var(--phase-initiation-hue);
-        --current-phase-sat: var(--phase-initiation-sat);
-        --current-phase-light: var(--phase-initiation-light);
-    }
-}
-
-/* Apply auto-cycle animation when enabled */
-[data-spw-phase-auto-cycle="on"] {
-    animation: phase-cycle 45s linear infinite;
+    transition: border-color var(--phase-transition-duration) var(--phase-transition-timing);
 }
 
 /* Dark mode adjustments for contrast */
@@ -268,14 +214,14 @@ body {
 
     /* Resistance phase - dark mode */
     [data-spw-spirit-phase="resistance"] .spec-pill {
-        background-color: rgba(110, 80, 160, 0.8);
-        color: hsl(260 60% 85%);
+        background-color: rgba(160, 42, 77, 0.45);
+        color: hsl(342 54% 86%);
     }
 
     /* Transformation phase - dark mode */
     [data-spw-spirit-phase="transformation"] .spec-pill {
-        background-color: rgba(200, 120, 40, 0.8);
-        color: hsl(36 80% 90%);
+        background-color: rgba(35, 118, 82, 0.5);
+        color: hsl(150 48% 86%);
     }
 
     /* Expression phase - dark mode */
@@ -286,8 +232,8 @@ body {
 
     /* Return phase - dark mode */
     [data-spw-spirit-phase="return"] .spec-pill {
-        background-color: rgba(160, 90, 50, 0.8);
-        color: hsl(20 70% 90%);
+        background-color: rgba(92, 116, 66, 0.5);
+        color: hsl(105 38% 86%);
     }
 }
 

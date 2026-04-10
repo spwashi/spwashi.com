@@ -1,7 +1,7 @@
-/* Electromagnetic-Cognitive Container System
- * Containers as computational fields with charge states and resonance
+/* Charged Paper Container System
+ * Containers expose charge states through data attributes and quiet crease cues.
  * Progression: conception → potential → kinetic → manifest
- * Metaphor: electromagnetic charge as cognitive potential
+ * Metaphor: charge as cognitive potential, rendered as paper-machine state.
  */
 
 /**
@@ -31,8 +31,6 @@ class ElectromagneticContainer {
         this.slice = element.dataset.containerSlice || 'potential';
         this.fieldIntensity = 0.5;
         this.coherence = 0.8;
-        this.interactionX = 50;
-        this.interactionY = 50;
         this.resonanceTimer = null;
 
         this.initEventListeners();
@@ -42,7 +40,6 @@ class ElectromagneticContainer {
     initEventListeners() {
         this.element.addEventListener('mouseenter', () => this.onEnter());
         this.element.addEventListener('mouseleave', () => this.onLeave());
-        this.element.addEventListener('mousemove', (e) => this.onMouseMove(e));
         this.element.addEventListener('focusin', () => this.onFocus());
         this.element.addEventListener('focusout', () => this.onBlur());
         this.element.addEventListener('click', () => this.advanceCharge());
@@ -68,6 +65,8 @@ class ElectromagneticContainer {
         const oldCharge = this.charge;
         this.charge = newCharge;
         this.element.dataset.charge = newCharge;
+        this.element.dataset.chargeIndex = String(CHARGE_STATE_MAP[newCharge]);
+        this.element.dataset.chargeLabel = `#{${newCharge}}`;
 
         // Show transition effect
         if (oldCharge !== newCharge) {
@@ -130,11 +129,9 @@ class ElectromagneticContainer {
         // Coherence increases with charge
         this.coherence = 0.6 + (chargeIndex * 0.08);
 
-        // Apply CSS variables
+        // Apply CSS variables used by the crease/fold surface.
         this.element.style.setProperty('--field-intensity', this.fieldIntensity);
         this.element.style.setProperty('--coherence', this.coherence);
-        this.element.style.setProperty('--interaction-x', `${this.interactionX}%`);
-        this.element.style.setProperty('--interaction-y', `${this.interactionY}%`);
     }
 
     /**
@@ -151,16 +148,6 @@ class ElectromagneticContainer {
     onLeave() {
         const chargeIndex = CHARGE_STATE_MAP[this.charge];
         this.fieldIntensity = 0.3 + (chargeIndex * 0.2);
-        this.updateFieldDisplay();
-    }
-
-    /**
-     * Track mouse position for field gradient center
-     */
-    onMouseMove(event) {
-        const rect = this.element.getBoundingClientRect();
-        this.interactionX = ((event.clientX - rect.left) / rect.width) * 100;
-        this.interactionY = ((event.clientY - rect.top) / rect.height) * 100;
         this.updateFieldDisplay();
     }
 
@@ -275,17 +262,18 @@ const initElectromagneticContainers = () => {
         resonance.register(container);
     });
 
-    // Keyboard navigation for charge cycling
+    // Keyboard navigation for charge cycling. Arrows are reserved for native
+    // controls; charge state uses explicit + / - keys when focus is inside.
     document.addEventListener('keydown', (event) => {
         if (!event.target.closest('[data-container-type]')) return;
 
         const activeContainer = containers.get(event.target.closest('[data-container-type]'));
         if (!activeContainer) return;
 
-        if (event.key === 'ArrowUp' || event.key === '+') {
+        if (event.key === '+' || event.key === '=') {
             event.preventDefault();
             activeContainer.advanceCharge();
-        } else if (event.key === 'ArrowDown' || event.key === '-') {
+        } else if (event.key === '-') {
             event.preventDefault();
             activeContainer.retreatCharge();
         }

@@ -18,9 +18,7 @@
     height: auto;
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
-    background:
-        radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.74), transparent 30%),
-        linear-gradient(145deg, rgba(230, 248, 248, 0.58), rgba(255, 255, 255, 0.48));
+    background: var(--surface);
     box-shadow: var(--card-shadow);
     color: var(--ink);
 }
@@ -55,7 +53,6 @@
     stroke-linecap: round;
     stroke-dasharray: 6 8;
     opacity: 0.48;
-    animation: spwSvgFlow 8s linear infinite;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-label {
@@ -68,12 +65,6 @@
     fill: var(--ink-soft);
     font-size: 0.68rem;
     letter-spacing: 0.03em;
-}
-
-@keyframes spwSvgFlow {
-    to {
-        stroke-dashoffset: -28;
-    }
 }
 
 @media (max-width: 700px) {

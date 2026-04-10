@@ -1,65 +1,58 @@
-/* Spw Whimsy: Playful, Measured Details */
-/* Enhancements that add delight while maintaining calm defaults */
+/* Spw Material Surface
+ * Quiet interaction grammar for sigils, folds, and paper-like layers.
+ * This file avoids decorative motion; state changes should read as
+ * alignment, focus, or revealed structure.
+ */
 
 :root {
-    /* Whimsy timing tokens (cinematic-handles) */
-    --practice-settle: 100ms;
-    --threshold-reveal: 300ms;
-    --full-express: 600ms;
-
-    /* Spirit phase colors (for accents and highlights) */
-    --phase-initiation: hsl(210 70% 38%);  /* entry, blue */
-    --phase-resistance: hsl(0 40% 38%);    /* friction, red */
-    --phase-transformation: hsl(268 55% 42%); /* pivot, purple */
-    --phase-expression: hsl(36 80% 36%);   /* manifestation, gold */
-    --phase-return: hsl(160 60% 32%);      /* settling, green */
-
-    /* Whimsy glows */
-    --wonder-glow: hsla(268, 55%, 42%, 0.08);
-    --delight-glow: hsla(36, 80%, 36%, 0.06);
+    --spw-fold-duration: 140ms;
+    --spw-fold-ease: ease;
+    --spw-paper-corner: 6px;
+    --spw-paper-focus: var(--active-op-border);
+    --spw-paper-wash: var(--active-op-bg-soft);
+    --phase-initiation: hsl(210 70% 38%);
+    --phase-resistance: hsl(0 40% 38%);
+    --phase-transformation: hsl(150 46% 30%);
+    --phase-expression: hsl(180 100% 28%);
+    --phase-return: hsl(160 52% 30%);
 }
 
-/* === TYPOGRAPHY WHIMSY === */
+/* === Sigils === */
 
-/* Operator sigils get playful breath */
 .frame-sigil,
 [data-spw-operator],
 .operator-chip {
     position: relative;
-    transition: all var(--threshold-reveal) cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition:
+        color var(--spw-fold-duration) var(--spw-fold-ease),
+        background-color var(--spw-fold-duration) var(--spw-fold-ease),
+        border-color var(--spw-fold-duration) var(--spw-fold-ease);
+}
+
+.frame-sigil:hover,
+.frame-sigil:focus-visible,
+[data-spw-operator]:hover,
+[data-spw-operator]:focus-visible {
+    background: var(--spw-paper-wash);
+    color: var(--active-op-color);
 }
 
 .frame-sigil::before,
 .frame-sigil::after {
-    content: '';
-    position: absolute;
-    background: currentColor;
-    opacity: 0;
-    transition: opacity var(--threshold-reveal) ease-out;
-    pointer-events: none;
+    content: none;
 }
 
-/* Subtle breathing animation on focus/hover */
-@keyframes operator-breath {
-    0%, 100% { transform: scale(1); letter-spacing: normal; }
-    50% { transform: scale(1.02); letter-spacing: 0.05em; }
-}
-
-.frame-sigil:hover,
-[data-spw-operator]:hover {
-    animation: operator-breath var(--full-express) ease-in-out infinite;
-}
-
-/* === FRAME & PANEL WHIMSY === */
+/* === Frames === */
 
 .site-frame {
     position: relative;
-    transition: all var(--threshold-reveal) ease-out;
+    transition:
+        border-color var(--spw-fold-duration) var(--spw-fold-ease),
+        background-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-/* Subtle perspective shift on hover */
 .site-frame:hover {
-    transform: translateY(-1px);
+    border-color: var(--spw-paper-focus);
 }
 
 .frame-heading {
@@ -70,274 +63,137 @@
     position: relative;
 }
 
-/* Frame heading accent line that responds to spirit phase */
 .frame-heading::after {
     content: '';
     flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg,
-        var(--active-op-color) 0%,
-        var(--active-op-color) 40%,
-        transparent 100%);
-    opacity: 0.3;
-    transition: opacity var(--threshold-reveal);
+    border-top: 1px solid var(--line);
+    opacity: 0.75;
 }
 
 .site-frame:hover .frame-heading::after {
-    opacity: 0.6;
+    border-color: var(--active-op-border);
 }
 
-/* === CARD WHIMSY === */
+/* === Cards === */
 
-.plan-card {
+.plan-card,
+.frame-card,
+.media-focus-card {
     position: relative;
-    overflow: hidden;
 }
 
-/* Whimsical corner accent that appears on hover */
-.plan-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 2rem 2rem 0;
-    border-color: transparent var(--phase-expression) transparent transparent;
-    opacity: 0;
-    transition: opacity var(--threshold-reveal);
-    pointer-events: none;
+.plan-card::before,
+.frame-card::after,
+.media-focus-card::before {
+    content: none;
 }
 
-.plan-card:hover::before {
-    opacity: 0.12;
-}
-
-/* Thesis text gets subtle emphasis shift */
-.plan-thesis {
-    position: relative;
-    transition: all var(--threshold-reveal);
-}
-
-.plan-card:hover .plan-thesis {
+.plan-card:hover .plan-thesis,
+.plan-card:hover .plan-wonder,
+.frame-card:hover .frame-card-sigil,
+.media-focus-card:hover {
     color: var(--ink);
-    font-weight: 600;
 }
 
-/* Wonder hook gets a soft glow on interaction */
-.plan-wonder {
-    position: relative;
-    transition: all var(--threshold-reveal);
+.frame-card,
+.media-focus-card {
+    transition:
+        border-color var(--spw-fold-duration) var(--spw-fold-ease),
+        background-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.plan-wonder::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: radial-gradient(circle at top right, var(--wonder-glow) 0%, transparent 70%);
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity var(--threshold-reveal);
-    pointer-events: none;
-    z-index: -1;
+.frame-card:hover,
+.media-focus-card:hover {
+    border-color: var(--active-op-border);
 }
 
-.plan-card:hover .plan-wonder::before {
-    opacity: 1;
-}
+/* === Buttons and Chips === */
 
-/* === OPERATOR CHIP WHIMSY === */
-
-.operator-chip {
-    position: relative;
-    display: inline-block;
-    transition: all var(--threshold-reveal) cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.operator-chip::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: radial-gradient(circle at 50% 0%,
-        rgba(255, 255, 255, 0.4) 0%,
-        transparent 70%);
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity var(--threshold-reveal);
-    pointer-events: none;
-    z-index: -1;
-}
-
-.operator-chip:hover::before {
-    opacity: 1;
-}
-
-/* Chip text shifts slightly on interaction */
-.operator-chip:hover {
-    letter-spacing: 0.05em;
-    transform: translateY(-1px);
-}
-
-/* === NAVIGATION WHIMSY === */
-
-nav a {
-    position: relative;
-    transition: all var(--practice-settle) ease-out;
-}
-
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--active-op-color);
-    opacity: 0;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: all var(--threshold-reveal) ease-out;
-}
-
-nav a:hover::after,
-nav a[aria-current="page"]::after {
-    opacity: 0.6;
-    transform: scaleX(1);
-}
-
-/* === HEADER INDICATOR WHIMSY === */
-
-.header-op-indicator {
-    font-size: 0.75rem;
-    opacity: 0.6;
-    transition: all var(--threshold-reveal);
-    position: relative;
-}
-
-@keyframes indicator-pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-header:hover .header-op-indicator {
-    animation: indicator-pulse var(--full-express) ease-in-out;
-}
-
-/* === BUTTON & INTERACTIVE WHIMSY === */
-
+.operator-chip,
 button,
 input[type="button"],
 input[type="submit"] {
-    position: relative;
-    transition: all var(--threshold-reveal) cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: hidden;
+    border-radius: var(--spw-paper-corner);
+    transition:
+        background-color var(--spw-fold-duration) var(--spw-fold-ease),
+        border-color var(--spw-fold-duration) var(--spw-fold-ease),
+        color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
+.operator-chip::before,
 button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
-        rgba(255, 255, 255, 0.3) 0%,
-        transparent 70%);
-    opacity: 0;
-    transition: opacity var(--practice-settle);
-    pointer-events: none;
+    content: none;
 }
 
-button:hover::before {
-    opacity: 1;
+.operator-chip:hover,
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    border-color: var(--active-op-border);
+    background: var(--spw-paper-wash);
 }
 
-button:active {
-    transform: scale(0.98);
+button:active,
+.operator-chip:active {
+    border-color: var(--active-op-color);
 }
 
-/* === SPEC PILLS WHIMSY === */
+/* === Spec Tokens === */
 
 .spec-pill {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: var(--token-bg);
+    padding: 0.25rem 0.65rem;
     border: 1px solid var(--token-border);
-    border-radius: 999px;
+    border-radius: var(--spw-paper-corner);
+    background: var(--token-bg);
     font-size: 0.8rem;
     font-weight: 600;
-    transition: all var(--threshold-reveal);
-    position: relative;
+    transition:
+        background-color var(--spw-fold-duration) var(--spw-fold-ease),
+        border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
 .spec-pill::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(45deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        transparent 50%);
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity var(--threshold-reveal);
-    pointer-events: none;
+    content: none;
 }
 
 .spec-strip:hover .spec-pill {
-    background: var(--token-bg-hover);
     border-color: var(--token-border-strong);
+    background: var(--token-bg-hover);
 }
 
-.spec-strip:hover .spec-pill::before {
-    opacity: 1;
-}
-
-/* === INPUT & FORM WHIMSY === */
+/* === Forms === */
 
 input[type="radio"],
-input[type="checkbox"] {
+input[type="checkbox"],
+label.settings-option,
+.settings-option {
     cursor: pointer;
-    transition: all var(--threshold-reveal);
+    transition:
+        background-color var(--spw-fold-duration) var(--spw-fold-ease),
+        border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
 input[type="radio"]:hover,
 input[type="checkbox"]:hover {
-    transform: scale(1.1);
+    outline: 1px solid var(--active-op-border);
+    outline-offset: 2px;
 }
 
-input[type="radio"]:checked,
-input[type="checkbox"]:checked {
-    animation: settings-pulse var(--practice-settle) ease-out;
+label.settings-option:hover,
+.settings-option:hover {
+    background: var(--op-frame-bg-soft);
 }
 
-@keyframes settings-pulse {
-    0% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-}
+/* === Text and Links === */
 
-label.settings-option {
-    transition: all var(--threshold-reveal);
-    cursor: pointer;
-}
-
-label.settings-option:hover {
-    padding-left: 0.5rem;
-}
-
-/* === TEXT DECORATION WHIMSY === */
-
-strong {
-    font-weight: 700;
-    position: relative;
-}
-
-/* Code blocks get slight styling */
 code {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9em;
     background: var(--surface-code);
     color: hsl(42 77% 82%);
     padding: 0.15em 0.35em;
-    border-radius: 0.25rem;
-    transition: all var(--practice-settle);
+    border-radius: 4px;
 }
 
 pre code {
@@ -346,45 +202,30 @@ pre code {
     color: inherit;
 }
 
-code:hover {
-    background: var(--op-baseline-color);
-    color: var(--bg);
-}
-
-/* === LIST WHIMSY === */
-
-ul, ol {
-    transition: all var(--threshold-reveal);
-}
-
-li {
-    transition: all var(--practice-settle);
-}
-
-li:hover {
-    padding-left: 0.5rem;
-    color: var(--active-op-color);
-}
-
-/* === LINK WHIMSY === */
-
-a[href^="#"] {
-    position: relative;
-}
-
 a[href^="#"]::after {
-    content: ' #';
+    content: none;
+}
+
+nav a::after,
+.breadcrumb a::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
     opacity: 0;
-    transition: opacity var(--practice-settle);
-    font-weight: 600;
-    color: var(--op-object-color);
+    transition: opacity var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-a[href^="#"]:hover::after {
-    opacity: 1;
+nav a:hover::after,
+nav a[aria-current="page"]::after,
+.breadcrumb a:hover::before {
+    opacity: 0.7;
 }
 
-/* === SPIRIT PHASE VISUAL HINTS === */
+/* === Role Edges === */
 
 [data-spw-role="hub"],
 [data-spw-role="orientation"] {
@@ -406,63 +247,38 @@ a[href^="#"]:hover::after {
     --phase-color: var(--phase-resistance);
 }
 
-/* Subtle phase indicator accent */
 [data-spw-role]::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    height: 3px;
     width: 100%;
-    background: linear-gradient(90deg, var(--phase-color) 0%, transparent 100%);
-    opacity: 0.3;
-    transition: opacity var(--threshold-reveal);
+    border-top: 2px solid var(--phase-color, var(--active-op-border));
+    opacity: 0.35;
 }
 
 [data-spw-role]:hover::before {
-    opacity: 0.6;
+    opacity: 0.65;
 }
 
-/* === FOOTER WHIMSY === */
+/* === Footer === */
 
 footer {
     position: relative;
     margin-top: 4rem;
     padding: 2rem 0;
     border-top: 1px solid var(--line);
-    transition: all var(--threshold-reveal);
 }
 
 footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        var(--active-op-color) 20%,
-        var(--active-op-color) 80%,
-        transparent 100%);
-    opacity: 0.3;
-    transition: opacity var(--threshold-reveal);
-}
-
-footer:hover::before {
-    opacity: 0.6;
+    content: none;
 }
 
 footer p {
-    opacity: 0.7;
-    transition: opacity var(--threshold-reveal);
+    opacity: 0.75;
 }
 
-footer:hover p {
-    opacity: 0.9;
-}
-
-/* === ACCESSIBILITY: REDUCE MOTION === */
+/* === Motion Policy === */
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -474,56 +290,12 @@ footer:hover p {
     }
 }
 
-/* === DARK MODE ADJUSTMENTS === */
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: hsl(42 20% 18%);
-        --bg-deep: hsl(44 20% 24%);
-        --surface: rgba(255, 255, 255, 0.08);
-        --surface-strong: rgba(255, 255, 255, 0.12);
-        --ink: rgba(240, 240, 240, 0.92);
-        --ink-soft: rgba(240, 240, 240, 0.62);
-    }
-
-    /* Whimsy glows are more visible in dark mode */
-    .plan-wonder::before {
-        opacity: 0;
-    }
-
-    .plan-card:hover .plan-wonder::before {
-        opacity: 0.8;
-    }
-
-    code {
-        background: var(--surface-strong);
-        color: hsl(42 77% 70%);
-    }
-}
-
-/* === MOBILE WHIMSY === */
-
 @media (max-width: 768px) {
-    /* Reduce animations on mobile for performance */
-    .operator-breath {
-        animation: none;
-    }
-
-    /* Bigger touch targets */
     button,
     .operator-chip,
     label {
         min-height: 2.5rem;
         display: flex;
         align-items: center;
-    }
-
-    /* Tap feedback instead of hover */
-    .plan-card:active {
-        transform: scale(0.98);
-    }
-
-    li:active {
-        background: var(--op-frame-bg-soft);
     }
 }

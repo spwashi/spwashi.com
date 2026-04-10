@@ -14,7 +14,7 @@
   nesting_depth: {
     axis: "vertical (entry → nested → deep)"
     meaning: "How many levels of structure you're inside"
-    visual: "left-edge striping, bracket indicators, depth-based coloring"
+    visual: "left-edge creases, bracket indicators, depth-based coloring"
     interaction: "expand/collapse, drill-down, pop-back-up"
     example: "frame → section → subsection → detail"
   }
@@ -22,7 +22,7 @@
   abstraction_level: {
     axis: "conceptual (abstract → concrete)"
     meaning: "Are you looking at the idea, the design, the implementation, or an instance?"
-    visual: "color coding (blue → purple → gold → green)"
+    visual: "color coding (blue -> violet -> rose -> green)"
     interaction: "zoom in/out, view at different levels of detail"
     example: "operator (concept) → operator page (specification) → interaction pattern (implementation) → button in UI (instance)"
   }
@@ -30,8 +30,8 @@
   spirit_phase: {
     axis: "temporal (initiation → resistance → transformation → expression → return)"
     meaning: "What phase of the spirit cycle is this content in?"
-    visual: "phase indicators, color rings, progression markers"
-    interaction: "navigate forward/backward through phases, see phase transformations"
+    visual: "braced phase labels, stateful menu indicators, progression markers"
+    interaction: "open a phase menu, choose a specific layer, see phase transformations"
     example: "new idea (initiation) → challenge (resistance) → breakthrough (transformation) → published (expression) → integrated (return)"
   }
 
@@ -57,7 +57,7 @@
 
   primary_handle: {
     element: "[data-cognitive-handle]"
-    appearance: "left-edge bar that grows on hover, color-coded by depth/abstraction"
+    appearance: "left-edge crease that strengthens on hover or focus, color-coded by depth/abstraction"
     feel: "something you can grab and pull to navigate"
     interaction: "hover reveals handle strength, click-drag could navigate (future)"
     accessibility: "labeled with data-depth, data-abstraction-level"
@@ -73,7 +73,7 @@
 
   dimensional_indicator: {
     element: "[data-dimension]"
-    appearance: "left-edge stripes, more stripes = deeper/more complex"
+    appearance: "left-edge creases, more crease weight = deeper/more complex"
     feel: "visual representation of how nested this structure is"
     meaning: "depth 0 = single line, depth 1 = double line, depth 2 = triple, etc."
     interaction: "hover makes indicator stronger, could click to collapse/expand level"
@@ -88,23 +88,23 @@
 
   cognitive_anchor: {
     element: "[data-cognitive-anchor]"
-    appearance: "anchor emoji on hover, swings when engaged"
-    feel: "something you can anchor to for understanding"
+    appearance: "braced '#{...}' marker on hover or focus"
+    feel: "something you can hold as a named anchor"
     meaning: "this is a key concept worth holding onto"
     interaction: "hover shows the anchor, click could bookmark/pin for return"
   }
 
   dimensional_portal: {
     element: "[data-dimensional-link]"
-    appearance: "◄► symbols that pulse on hover"
-    feel: "a passage between dimensions"
+    appearance: "quiet '~{}' marker on hover or focus"
+    feel: "a reference passage between dimensions"
     meaning: "this link navigates to a different dimension of the same concept"
     interaction: "follow link to see the concept from another angle (abstraction, depth, phase)"
   }
 
   foldable_indicator: {
     element: "[data-foldable]"
-    appearance: "left-edge bracket that breathes on hover"
+    appearance: "left-edge brace marker that flips by data-folded state"
     feel: "content that can fold/unfold along a dimension"
     meaning: "this content is collapsible; you can hide details or reveal complexity"
     interaction: "click to fold/unfold, state tracked in data-folded attribute"
@@ -122,7 +122,7 @@
       "breadcrumb shows path, click any level to jump"
     ]
     visual_feedback: [
-      "nesting depth increases (more left-edge striping)",
+      "nesting depth increases (more left-edge crease weight)",
       "header/title changes to show current context",
       "handles brighten as you go deeper"
     ]
@@ -136,7 +136,7 @@
       "click abstraction-level label to jump to specific level"
     ]
     visual_feedback: [
-      "color shifts through abstraction spectrum (blue→purple→gold→green)",
+      "color shifts through abstraction spectrum (blue -> violet -> rose -> green)",
       "detail level increases or decreases",
       "scale markers show current zoom level"
     ]
@@ -145,12 +145,12 @@
   phase_navigation: {
     pattern: "Following the spirit cycle forward and backward"
     entry_points: [
-      "next phase indicator (>) to advance through cycle",
-      "previous phase indicator (<) to go backward",
+      "braced phase menu to choose a specific phase",
+      "current phase sigil to show the active layer",
       "phase breadcrumb to jump to specific phase"
     ]
     visual_feedback: [
-      "phase indicator circle changes color and fills",
+      "phase label and crease color change",
       "content transforms to show phase-specific views",
       "related phase content is highlighted"
     ]
@@ -166,7 +166,7 @@
     visual_feedback: [
       "related items are highlighted together",
       "connection lines become visible on interaction",
-      "symmetry pairs glow when one is hovered"
+      "symmetry pairs outline when one is hovered"
     ]
   }
 
@@ -189,25 +189,25 @@
   ~#note: "Colors indicate abstraction level and help you understand where you are."
 
   entry_blue: {
-    hex: "hsl(210 70% 38%)"
+    hex: "hsl(210 64% 34%)"
     meaning: "surface level, first appearance, entry point"
     use_cases: ["TL corner", "initiating context", "broad overview"]
   }
 
-  concept_purple: {
-    hex: "hsl(268 55% 42%)"
+  concept_violet: {
+    hex: "hsl(258 34% 39%)"
     meaning: "conceptual level, abstract idea, design"
     use_cases: ["TR corner", "theoretical frameworks", "pattern definitions"]
   }
 
-  instance_gold: {
-    hex: "hsl(36 80% 36%)"
+  instance_rose: {
+    hex: "hsl(342 48% 36%)"
     meaning: "concrete instance, actual implementation, specific example"
     use_cases: ["BL corner", "actual components", "live code"]
   }
 
   relation_green: {
-    hex: "hsl(160 60% 32%)"
+    hex: "hsl(160 52% 30%)"
     meaning: "relational, integrative, return to wholeness"
     use_cases: ["BR corner", "symmetry pairs", "complete understanding"]
   }
@@ -235,7 +235,7 @@
 ^"accessibility_of_handles"{
   ~#note: "Cognitive handles must remain accessible to all users."
 
-  keyboard_navigation: "All handle interactions must work via keyboard (Tab, Enter, Arrow keys)"
+  keyboard_navigation: "All handle interactions must work via keyboard (Tab, Enter, Space where appropriate); arrow keys are reserved for native list/menu traversal patterns"
   touch_interaction: "Handles must be larger on touch; swipe could navigate dimensions"
   reduced_motion: "Handles simplify under prefers-reduced-motion; no animations"
   color_contrast: "Handle colors meet WCAG AA contrast ratios"
@@ -246,29 +246,31 @@
 ^"cognitive_handle_data_attributes"{
   ~#note: "The semantic structure that enables cognitive navigation."
 
-  "data-cognitive-handle" -> mark this element as having a handle"
-  "data-depth='0|1|2|3|4'" -> nesting depth (0=surface, 4=very deep)"
-  "data-dimension='0|1|2|3'" -> dimensional complexity (stripe count)"
-  "data-abstraction-level='entry|concept|instance|relation'" -> what level of abstraction"
-  "data-abstraction-label='text'" -> label for abstraction level"
-  "data-handle-corner='tl|tr|bl|br'" -> which corner this handle is in"
-  "data-nested-container" -> mark container with nesting structure"
-  "data-nesting-level='1|2|3'" -> nesting depth for visualization"
-  "data-nested-bracket" -> mark elements that can show nesting brackets"
-  "data-relation-pair" -> mark related/paired elements"
-  "data-paired='true|false'" -> whether this element is currently paired"
-  "data-relation-line" -> SVG element showing connection between pairs"
-  "data-phase-dimension" -> element that shows spirit phase"
-  "data-phase='initiation|resistance|transformation|expression|return'" -> current phase"
-  "data-scale-handle" -> element whose scale can be adjusted"
-  "data-scale='1|2|3'" -> current scale level"
-  "data-zoomed='true|false'" -> whether currently zoomed in"
-  "data-foldable" -> mark content that can fold/unfold"
-  "data-folded='true|false'" -> whether currently folded"
-  "data-cognitive-anchor" -> mark anchor points for understanding"
-  "data-dimensional-link" -> mark links that navigate dimensions"
-  "data-dimensional-breadcrumb" -> mark breadcrumb showing position"
-  "data-dimensional-label='path'" -> text representation of dimensional position"
+  attributes: [
+    { name: "data-cognitive-handle", meaning: "mark this element as having a handle" },
+    { name: "data-depth='0|1|2|3|4'", meaning: "nesting depth (0=surface, 4=very deep)" },
+    { name: "data-dimension='0|1|2|3'", meaning: "dimensional complexity (crease count)" },
+    { name: "data-abstraction-level='entry|concept|instance|relation'", meaning: "what level of abstraction" },
+    { name: "data-abstraction-label='text'", meaning: "label for abstraction level" },
+    { name: "data-handle-corner='tl|tr|bl|br'", meaning: "which corner this handle is in" },
+    { name: "data-nested-container", meaning: "mark container with nesting structure" },
+    { name: "data-nesting-level='1|2|3'", meaning: "nesting depth for visualization" },
+    { name: "data-nested-bracket", meaning: "mark elements that can show nesting brackets" },
+    { name: "data-relation-pair", meaning: "mark related or paired elements" },
+    { name: "data-paired='true|false'", meaning: "whether this element is currently paired" },
+    { name: "data-relation-line", meaning: "SVG element showing connection between pairs" },
+    { name: "data-phase-dimension", meaning: "element that shows spirit phase" },
+    { name: "data-phase='initiation|resistance|transformation|expression|return'", meaning: "current phase" },
+    { name: "data-scale-handle", meaning: "element whose scale can be adjusted" },
+    { name: "data-scale='1|2|3'", meaning: "current scale level" },
+    { name: "data-zoomed='true|false'", meaning: "whether currently zoomed in" },
+    { name: "data-foldable", meaning: "mark content that can fold or unfold" },
+    { name: "data-folded='true|false'", meaning: "whether currently folded" },
+    { name: "data-cognitive-anchor", meaning: "mark anchor points for understanding" },
+    { name: "data-dimensional-link", meaning: "mark links that navigate dimensions" },
+    { name: "data-dimensional-breadcrumb", meaning: "mark breadcrumb showing position" },
+    { name: "data-dimensional-label='path'", meaning: "text representation of dimensional position" }
+  ]
 }
 
 ^"implementation_guidelines"{
@@ -308,7 +310,7 @@
 ^"cognitive_principles"{
   "Every visual handle should answer: 'What dimension does this grip let me navigate?'"
   "Dimensional navigation reveals structure without requiring memorization."
-  "Color coding should be consistent across all dimensions (blue=entry, purple=concept, etc.)"
+  "Color coding should be consistent across all dimensions (blue=entry, violet=concept, rose=instance, green=relation)"
   "Handles should feel like they're part of the content, not overlaid on it."
   "Navigation should be reversible: you should always be able to go back."
   "The breadcrumb should always show where you are in multidimensional space."

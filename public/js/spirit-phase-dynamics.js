@@ -7,6 +7,13 @@ import { getSiteSettings, saveSiteSettings } from './site-settings.js';
 
 const PHASES = ['initiation', 'resistance', 'transformation', 'expression', 'return'];
 const PHASE_DURATION = 9000; // 9 seconds per phase when auto-cycling
+const PHASE_SIGILS = Object.freeze({
+    initiation: '?{initiation}',
+    resistance: '!{resistance}',
+    transformation: '*{transformation}',
+    expression: '@{expression}',
+    return: '~{return}'
+});
 
 let phaseAutoCycleTimer = null;
 
@@ -22,6 +29,8 @@ const applySpiritPhase = (phase) => {
         detail: { phase, index: PHASES.indexOf(phase) }
     }));
 };
+
+const phaseSigil = (phase) => PHASE_SIGILS[phase] || `~{${phase}}`;
 
 /**
  * Get the next phase in the cycle
@@ -130,7 +139,10 @@ const setupSettingsListener = () => {
  * Add phase indicators and interactive affordances
  */
 const makeStructuresInteractive = () => {
-    // Add phase cycle buttons to frame headings
+    // Add braced phase menus to frame headings. The control is explicit:
+    // it opens a layer choice instead of making the whole frame react to arrows.
+    const phaseMenuUpdaters = [];
+
     document.querySelectorAll('.frame-heading, .site-frame > div:first-child').forEach((heading) => {
         const frame = heading.closest('.site-frame');
         if (!frame) return;
@@ -138,31 +150,65 @@ const makeStructuresInteractive = () => {
         // Check if phase controls already exist
         if (heading.querySelector('[data-phase-cycle]')) return;
 
-        // Create phase cycle controls
-        const phaseControls = document.createElement('div');
-        phaseControls.className = 'phase-controls';
+        const phaseControls = document.createElement('details');
+        phaseControls.className = 'phase-controls phase-menu';
         phaseControls.setAttribute('data-phase-cycle', 'true');
-        phaseControls.setAttribute('aria-label', 'Spirit phase controls');
+        phaseControls.dataset.phaseMenuState = 'closed';
+        phaseControls.setAttribute('aria-label', 'Spirit phase layer menu');
 
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'phase-btn phase-btn-prev';
-        prevBtn.setAttribute('data-op', 'probe');
-        prevBtn.textContent = '◀';
-        prevBtn.title = 'Previous phase';
-        prevBtn.addEventListener('click', cycleToPreviousPhase);
+        const trigger = document.createElement('summary');
+        trigger.className = 'phase-menu-trigger';
+        trigger.setAttribute('data-op', 'ref');
+        trigger.setAttribute('aria-label', 'Open spirit phase layer menu');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.textContent = phaseSigil(getSiteSettings().currentSpiritPhase);
 
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'phase-btn phase-btn-next';
-        nextBtn.setAttribute('data-op', 'probe');
-        nextBtn.textContent = '▶';
-        nextBtn.title = 'Next phase';
-        nextBtn.addEventListener('click', cycleToNextPhase);
+        const menu = document.createElement('div');
+        menu.className = 'phase-menu-options';
+        menu.setAttribute('role', 'group');
+        menu.setAttribute('aria-label', 'Choose spirit phase');
 
-        phaseControls.appendChild(prevBtn);
-        phaseControls.appendChild(nextBtn);
+        PHASES.forEach((phase) => {
+            const choice = document.createElement('button');
+            choice.className = 'phase-menu-choice';
+            choice.type = 'button';
+            choice.dataset.phaseChoice = phase;
+            choice.dataset.op = 'probe';
+            choice.textContent = phaseSigil(phase);
+            choice.setAttribute('aria-label', `Set spirit phase to ${phase}`);
+            choice.addEventListener('click', () => {
+                jumpToPhase(phase);
+                phaseControls.removeAttribute('open');
+            });
+            menu.appendChild(choice);
+        });
 
+        const updatePhaseMenu = (phase) => {
+            trigger.textContent = phaseSigil(phase);
+            menu.querySelectorAll('[data-phase-choice]').forEach((choice) => {
+                choice.setAttribute('aria-pressed', String(choice.dataset.phaseChoice === phase));
+            });
+        };
+
+        phaseControls.addEventListener('toggle', () => {
+            const open = phaseControls.open;
+            phaseControls.dataset.phaseMenuState = open ? 'open' : 'closed';
+            trigger.setAttribute('aria-expanded', String(open));
+        });
+
+        updatePhaseMenu(getSiteSettings().currentSpiritPhase);
+        phaseMenuUpdaters.push(updatePhaseMenu);
+
+        phaseControls.appendChild(trigger);
+        phaseControls.appendChild(menu);
         heading.appendChild(phaseControls);
     });
+
+    if (phaseMenuUpdaters.length) {
+        document.addEventListener('spw:phase-change', (event) => {
+            phaseMenuUpdaters.forEach((updatePhaseMenu) => updatePhaseMenu(event.detail.phase));
+        });
+    }
 
     // Add interactive affordances to frames
     document.querySelectorAll('.site-frame').forEach((frame) => {
@@ -171,16 +217,7 @@ const makeStructuresInteractive = () => {
         frame.setAttribute('data-interactive', 'frame');
         frame.setAttribute('role', 'region');
 
-        // Add keyboard navigation for phase cycling
-        frame.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight') {
-                event.preventDefault();
-                cycleToNextPhase();
-            } else if (event.key === 'ArrowLeft') {
-                event.preventDefault();
-                cycleToPreviousPhase();
-            }
-        });
+        frame.dataset.layerAffordance = 'phase-menu';
     });
 
     // Make frame cards interactive with drill-down potential

@@ -1,100 +1,98 @@
-/* Cognitive Handles: Dimensional Navigation Affordances */
-/* Visual and interaction grips for understanding complex nested structures */
+/* Cognitive Handles
+ * Semantic affordances for depth, phase, relation, and foldable layers.
+ * Handles should read as paper creases and Spw braces, not decoration.
+ */
 
 :root {
-    /* Depth/dimension indicators */
-    --depth-0: 0px;      /* entry level, surface */
-    --depth-1: 4px;      /* first nested level */
-    --depth-2: 8px;      /* second nested level */
-    --depth-3: 12px;     /* third nested level */
-    --depth-4: 16px;     /* deeper structure */
-
-    /* Cognitive handle colors by abstraction level */
-    --handle-entry: hsl(210 70% 38%);      /* blue - initiation */
-    --handle-concept: hsl(268 55% 42%);    /* purple - transformation */
-    --handle-instance: hsl(36 80% 36%);    /* gold - expression */
-    --handle-relation: hsl(160 60% 32%);   /* green - return/integration */
-
-    /* Dimensional indicators */
-    --dimension-color: rgba(0, 128, 128, 0.3);
-    --dimension-color-active: rgba(0, 128, 128, 0.6);
+    --depth-0: 0px;
+    --depth-1: 4px;
+    --depth-2: 8px;
+    --depth-3: 12px;
+    --depth-4: 16px;
+    --handle-entry: hsl(210 64% 34%);
+    --handle-concept: hsl(258 34% 39%);
+    --handle-instance: hsl(44 68% 34%);
+    --handle-relation: hsl(160 52% 30%);
+    --handle-phase: hsl(188 58% 32%);
+    --handle-line: rgba(0, 128, 128, 0.28);
+    --handle-line-active: rgba(0, 128, 128, 0.62);
+    --handle-step: 140ms;
 }
 
-/* === HANDLE VISUAL SYSTEM === */
-
-/* Main cognitive handle — appears at frame corners/edges */
-[data-cognitive-handle] {
+[data-cognitive-handle],
+[data-handle-corner],
+[data-dimension],
+[data-nested-container],
+[data-nested-bracket],
+[data-abstraction-level],
+[data-relation-pair],
+[data-phase-dimension],
+[data-scale-handle],
+[data-cognitive-anchor],
+[data-dimensional-link],
+[data-foldable] {
     position: relative;
-    cursor: grab;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-cognitive-handle]:active {
-    cursor: grabbing;
+[data-cognitive-handle],
+[data-scale-handle],
+[data-foldable],
+[data-cognitive-anchor] {
+    cursor: pointer;
 }
 
-/* Handle indicator bar — shows nesting depth */
+/* === Primary Handle: Left Crease === */
+
+[data-cognitive-handle] {
+    transition:
+        border-color var(--handle-step) ease,
+        background-color var(--handle-step) ease;
+}
+
 [data-cognitive-handle]::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 0;
-    width: 3px;
-    height: 100%;
-    background: linear-gradient(180deg,
-        var(--handle-entry) 0%,
-        var(--handle-concept) 25%,
-        var(--handle-instance) 50%,
-        var(--handle-relation) 100%);
-    opacity: 0.5;
-    transition: all 300ms;
-    border-radius: 2px;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    border-left: 2px solid var(--handle-line);
+    opacity: 0.58;
+    pointer-events: none;
+    transition:
+        border-color var(--handle-step) ease,
+        opacity var(--handle-step) ease,
+        width var(--handle-step) ease;
 }
 
-[data-cognitive-handle]:hover::before {
-    opacity: 1;
-    width: 6px;
+[data-cognitive-handle]:hover::before,
+[data-cognitive-handle]:focus-within::before {
+    width: 5px;
+    border-color: var(--handle-line-active);
+    opacity: 0.92;
 }
 
-/* Handle depth marker — visual representation of nesting level */
-[data-cognitive-handle][data-depth="0"]::before {
-    background: var(--handle-entry);
-    height: 20%;
-}
+[data-cognitive-handle][data-depth="0"]::before { height: 22%; }
+[data-cognitive-handle][data-depth="1"]::before { height: 42%; }
+[data-cognitive-handle][data-depth="2"]::before { height: 62%; }
+[data-cognitive-handle][data-depth="3"]::before { height: 82%; }
+[data-cognitive-handle][data-depth="4"]::before { height: 100%; }
 
-[data-cognitive-handle][data-depth="1"]::before {
-    background: var(--handle-concept);
-    height: 40%;
-}
-
-[data-cognitive-handle][data-depth="2"]::before {
-    background: var(--handle-instance);
-    height: 60%;
-}
-
-[data-cognitive-handle][data-depth="3"]::before {
-    background: var(--handle-relation);
-    height: 80%;
-}
-
-/* Corner handles for grid/nested layouts */
-[data-handle-corner] {
-    position: relative;
-    transition: all 300ms;
-}
+/* === Corner Braces === */
 
 [data-handle-corner]::after {
     content: '';
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border: 2px solid transparent;
     opacity: 0;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
+    transition:
+        opacity var(--handle-step) ease,
+        border-color var(--handle-step) ease;
 }
 
-/* Top-left corner (entry) */
 [data-handle-corner="tl"]::after {
     top: 0;
     left: 0;
@@ -102,7 +100,6 @@
     border-left-color: var(--handle-entry);
 }
 
-/* Top-right corner (concept) */
 [data-handle-corner="tr"]::after {
     top: 0;
     right: 0;
@@ -110,7 +107,6 @@
     border-right-color: var(--handle-concept);
 }
 
-/* Bottom-left corner (instance) */
 [data-handle-corner="bl"]::after {
     bottom: 0;
     left: 0;
@@ -118,111 +114,74 @@
     border-left-color: var(--handle-instance);
 }
 
-/* Bottom-right corner (relation) */
 [data-handle-corner="br"]::after {
-    bottom: 0;
     right: 0;
-    border-bottom-color: var(--handle-relation);
+    bottom: 0;
     border-right-color: var(--handle-relation);
+    border-bottom-color: var(--handle-relation);
 }
 
-[data-handle-corner]:hover::after {
-    opacity: 0.8;
-    width: 12px;
-    height: 12px;
+[data-handle-corner]:hover::after,
+[data-handle-corner]:focus-within::after {
+    opacity: 0.82;
 }
 
-/* === DIMENSIONAL INDICATORS === */
+/* === Dimensional Creases === */
 
-/* Shows nesting/abstraction levels */
-[data-dimension] {
-    position: relative;
-}
-
-/* Depth indicator stripes on left edge */
 [data-dimension]::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 0;
     bottom: 0;
+    left: 0;
     width: var(--depth-indicator-width, 2px);
-    background: repeating-linear-gradient(
-        180deg,
-        var(--dimension-color) 0px,
-        var(--dimension-color) 2px,
-        transparent 2px,
-        transparent 4px
-    );
+    border-left: var(--depth-indicator-width, 2px) double var(--handle-line);
     opacity: 0;
-    transition: all 300ms;
     pointer-events: none;
+    transition:
+        border-color var(--handle-step) ease,
+        opacity var(--handle-step) ease;
 }
 
-[data-dimension]:hover::before {
+[data-dimension]:hover::before,
+[data-dimension]:focus-within::before {
+    border-color: var(--handle-line-active);
     opacity: 1;
-    width: 4px;
 }
 
-/* Dimension depth levels shown via stripe pattern */
-[data-dimension="0"]::before {
-    --depth-indicator-width: 1px;
-}
+[data-dimension="0"]::before { --depth-indicator-width: 1px; }
+[data-dimension="1"]::before { --depth-indicator-width: 2px; }
+[data-dimension="2"]::before { --depth-indicator-width: 3px; }
+[data-dimension="3"]::before { --depth-indicator-width: 4px; }
 
-[data-dimension="1"]::before {
-    --depth-indicator-width: 2px;
-}
-
-[data-dimension="2"]::before {
-    --depth-indicator-width: 3px;
-}
-
-[data-dimension="3"]::before {
-    --depth-indicator-width: 4px;
-}
-
-/* === NESTING VISUALIZATION === */
-
-/* Container showing nesting structure */
 [data-nested-container] {
-    position: relative;
-    padding-left: calc(var(--nesting-level, 0) * 16px);
-    transition: all 300ms;
+    padding-left: calc(var(--nesting-level, 0) * 14px);
+    border-left: 1px solid transparent;
+    transition:
+        border-color var(--handle-step) ease,
+        padding-left var(--handle-step) ease;
 }
 
-/* Visual nesting lines connecting parent-child relationships */
-[data-nested-container][data-nesting-level="1"] {
-    border-left: 2px solid rgba(0, 128, 128, 0.2);
+[data-nested-container][data-nesting-level="1"] { border-left-color: rgba(0, 128, 128, 0.22); }
+[data-nested-container][data-nesting-level="2"] { border-left-color: rgba(0, 128, 128, 0.30); }
+[data-nested-container][data-nesting-level="3"] { border-left-color: rgba(0, 128, 128, 0.38); }
+
+[data-nested-container]:hover,
+[data-nested-container]:focus-within {
+    border-left-color: var(--handle-line-active);
 }
 
-[data-nested-container][data-nesting-level="2"] {
-    border-left: 4px solid rgba(0, 128, 128, 0.15);
-}
-
-[data-nested-container][data-nesting-level="3"] {
-    border-left: 6px solid rgba(0, 128, 128, 0.1);
-}
-
-[data-nested-container]:hover {
-    border-left-color: rgba(0, 128, 128, 0.5);
-    padding-left: calc(var(--nesting-level, 0) * 20px);
-}
-
-/* Nesting bracket indicators */
 [data-nested-bracket] {
-    position: relative;
     display: inline-block;
-    transition: all 300ms;
 }
 
 [data-nested-bracket]::before,
 [data-nested-bracket]::after {
     position: absolute;
-    opacity: 0;
-    transition: opacity 300ms;
-    font-weight: 700;
     color: var(--handle-concept);
-    transition: all 300ms;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-step) ease;
 }
 
 [data-nested-bracket]::before {
@@ -236,384 +195,221 @@
 }
 
 [data-nested-bracket]:hover::before,
-[data-nested-bracket]:hover::after {
-    opacity: 0.6;
+[data-nested-bracket]:hover::after,
+[data-nested-bracket]:focus-within::before,
+[data-nested-bracket]:focus-within::after {
+    opacity: 0.66;
 }
 
-/* === ABSTRACTION LEVEL INDICATORS === */
-
-/* Shows what level of abstraction you're at */
-[data-abstraction-level] {
-    position: relative;
-}
+/* === Abstraction Labels === */
 
 [data-abstraction-level]::after {
     content: attr(data-abstraction-label);
     position: absolute;
-    right: 0;
     top: -1.5em;
-    font-size: 0.75rem;
-    opacity: 0;
-    transition: opacity 300ms;
+    right: 0;
     color: var(--ink-soft);
+    font-size: 0.75rem;
     font-weight: 600;
+    opacity: 0;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     white-space: nowrap;
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-abstraction-level]:hover::after {
+[data-abstraction-level]:hover::after,
+[data-abstraction-level]:focus-within::after {
     opacity: 1;
 }
 
-/* Color coding by abstraction level */
-[data-abstraction-level="entry"]::after {
-    color: var(--handle-entry);
-}
+[data-abstraction-level="entry"]::after { color: var(--handle-entry); }
+[data-abstraction-level="concept"]::after { color: var(--handle-concept); }
+[data-abstraction-level="instance"]::after { color: var(--handle-instance); }
+[data-abstraction-level="relation"]::after { color: var(--handle-relation); }
 
-[data-abstraction-level="concept"]::after {
-    color: var(--handle-concept);
-}
+/* === Relation and Phase === */
 
-[data-abstraction-level="instance"]::after {
-    color: var(--handle-instance);
-}
-
-[data-abstraction-level="relation"]::after {
-    color: var(--handle-relation);
-}
-
-/* === RELATIONAL DIMENSION NAVIGATION === */
-
-/* Shows relationships between elements across dimensions */
-[data-relation-pair] {
-    position: relative;
-    transition: all 300ms;
-}
-
-/* Highlight symmetry/relational pairs */
 [data-relation-pair][data-paired="true"] {
-    border-radius: 0.4rem;
+    border-radius: 6px;
     background: rgba(0, 128, 128, 0.05);
-    transition: all 300ms;
 }
 
-[data-relation-pair][data-paired="true"]:hover {
-    background: rgba(0, 128, 128, 0.12);
-    box-shadow: inset 0 0 0 2px rgba(0, 128, 128, 0.3);
+[data-relation-pair][data-paired="true"]:hover,
+[data-relation-pair][data-paired="true"]:focus-within {
+    outline: 1px solid var(--handle-line-active);
+    outline-offset: 2px;
 }
 
-/* Relational handle indicator */
 [data-relation-pair]::before {
-    content: '';
+    content: '&';
     position: absolute;
-    left: -12px;
     top: 50%;
-    width: 8px;
-    height: 2px;
-    background: var(--handle-relation);
+    left: -1.1em;
+    color: var(--handle-relation);
+    font-weight: 700;
     opacity: 0;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     transform: translateY(-50%);
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-relation-pair]:hover::before {
-    opacity: 0.7;
-    width: 12px;
+[data-relation-pair]:hover::before,
+[data-relation-pair]:focus-within::before {
+    opacity: 0.72;
 }
 
-/* Connecting lines between related pairs */
 [data-relation-line] {
     position: absolute;
     opacity: 0;
-    transition: opacity 300ms;
     pointer-events: none;
     stroke: var(--handle-relation);
     stroke-width: 2;
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-relation-pair]:hover ~ [data-relation-line] {
-    opacity: 0.4;
+[data-relation-pair]:hover ~ [data-relation-line],
+[data-relation-pair]:focus-within ~ [data-relation-line] {
+    opacity: 0.42;
 }
 
-/* === SPIRIT PHASE DIMENSION === */
-
-/* Navigate through spirit cycle phases */
-[data-phase-dimension] {
-    position: relative;
-    transition: all 300ms;
-}
-
-/* Phase progress indicator */
 [data-phase-dimension]::before {
-    content: '';
+    content: attr(data-phase);
     position: absolute;
-    right: -24px;
     top: 50%;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        rgba(0, 128, 128, 0.3));
+    right: -1rem;
+    color: var(--handle-phase);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
     opacity: 0;
-    transition: all 300ms;
-    transform: translateY(-50%);
-    border: 2px solid rgba(0, 128, 128, 0.3);
+    transform: translate(100%, -50%);
+    white-space: nowrap;
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-phase-dimension]:hover::before {
-    opacity: 1;
-    border-color: rgba(0, 128, 128, 0.7);
+[data-phase-dimension]:hover::before,
+[data-phase-dimension]:focus-within::before {
+    opacity: 0.8;
 }
 
-/* Phase indicator colors */
-[data-phase="initiation"]::before {
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        var(--phase-initiation));
-}
+[data-phase="initiation"]::before { color: var(--phase-initiation); }
+[data-phase="resistance"]::before { color: var(--phase-resistance); }
+[data-phase="transformation"]::before { color: var(--phase-transformation); }
+[data-phase="expression"]::before { color: var(--phase-expression); }
+[data-phase="return"]::before { color: var(--phase-return); }
 
-[data-phase="resistance"]::before {
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        var(--phase-resistance));
-}
+/* === Scale, Anchors, Portals, Folds === */
 
-[data-phase="transformation"]::before {
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        var(--phase-transformation));
-}
-
-[data-phase="expression"]::before {
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        var(--phase-expression));
-}
-
-[data-phase="return"]::before {
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.6),
-        var(--phase-return));
-}
-
-/* === SCALE DIMENSION NAVIGATION === */
-
-/* Navigate between different scales/zoom levels */
-[data-scale-handle] {
-    position: relative;
-    cursor: zoom-in;
-    transition: all 300ms;
-}
-
-[data-scale-handle][data-zoomed="true"] {
-    cursor: zoom-out;
-}
-
-/* Scale indicator markers */
 [data-scale-handle]::after {
-    content: '';
+    content: '#';
     position: absolute;
-    right: -16px;
     top: 50%;
-    width: 12px;
-    height: 12px;
-    border: 2px solid rgba(0, 128, 128, 0.3);
-    border-radius: 2px;
+    right: -1em;
+    color: var(--handle-line-active);
+    font-weight: 700;
     opacity: 0;
-    transition: all 300ms;
     transform: translateY(-50%);
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-scale-handle]:hover::after {
-    opacity: 1;
-    border-color: rgba(0, 128, 128, 0.8);
+[data-scale-handle]:hover::after,
+[data-scale-handle]:focus-visible::after {
+    opacity: 0.75;
 }
 
-/* Zoom scale indicated by square size */
-[data-scale-handle][data-scale="1"]::after {
-    width: 8px;
-    height: 8px;
-}
-
-[data-scale-handle][data-scale="2"]::after {
-    width: 12px;
-    height: 12px;
-}
-
-[data-scale-handle][data-scale="3"]::after {
-    width: 16px;
-    height: 16px;
-}
-
-/* === DIMENSIONALITY BREADCRUMB === */
-
-/* Shows current position in dimensional space */
 [data-dimensional-breadcrumb] {
     display: flex;
     gap: 0.5rem;
     align-items: center;
     margin-bottom: 1rem;
-    opacity: 0.7;
-    transition: opacity 300ms;
+    color: var(--ink-soft);
     font-size: 0.85rem;
 }
 
-[data-dimensional-breadcrumb]:hover {
-    opacity: 1;
-}
-
 [data-dimensional-breadcrumb] > span {
+    position: relative;
     padding: 0.25rem 0.5rem;
-    background: rgba(0, 128, 128, 0.08);
-    border-radius: 0.25rem;
-    transition: all 300ms;
-    position: relative;
+    border: 1px solid var(--handle-line);
+    border-radius: 6px;
+    background: rgba(0, 128, 128, 0.06);
 }
 
-[data-dimensional-breadcrumb] > span:hover {
-    background: rgba(0, 128, 128, 0.15);
-    padding-left: 1rem;
-}
-
-[data-dimensional-breadcrumb] > span::before {
-    content: '•';
-    position: absolute;
-    left: 0.25rem;
-    opacity: 0;
-    transition: opacity 300ms;
-}
-
-[data-dimensional-breadcrumb] > span:hover::before {
-    opacity: 1;
-}
-
-/* === COGNITIVE ANCHOR POINTS === */
-
-/* Anchors that help you grab onto complex concepts */
-[data-cognitive-anchor] {
-    position: relative;
-    display: inline-block;
-    transition: all 300ms;
-    cursor: pointer;
+[data-dimensional-breadcrumb] > span:hover,
+[data-dimensional-breadcrumb] > span:focus-visible {
+    border-color: var(--handle-line-active);
+    color: var(--ink);
 }
 
 [data-cognitive-anchor]::before {
-    content: '⚓';
+    content: '#{';
     position: absolute;
-    left: -1.2em;
-    opacity: 0;
-    transition: opacity 300ms;
+    left: -1.55em;
     color: var(--handle-relation);
-    font-size: 0.8em;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-cognitive-anchor]:hover::before {
+[data-cognitive-anchor]::after {
+    content: '}';
+    color: var(--handle-relation);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-step) ease;
+}
+
+[data-cognitive-anchor]:hover::before,
+[data-cognitive-anchor]:hover::after,
+[data-cognitive-anchor]:focus-visible::before,
+[data-cognitive-anchor]:focus-visible::after {
     opacity: 0.8;
-    animation: anchor-swing 600ms ease-in-out;
-}
-
-@keyframes anchor-swing {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
-}
-
-/* === DIMENSIONAL PORTAL INDICATORS === */
-
-/* Links that navigate between dimensions */
-[data-dimensional-link] {
-    position: relative;
-    transition: all 300ms;
 }
 
 [data-dimensional-link]::after {
-    content: '◄►';
-    position: absolute;
-    right: -1.2em;
-    opacity: 0;
-    transition: all 300ms;
+    content: ' ~{}';
     color: var(--handle-concept);
-    font-size: 0.8em;
-    animation: none;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-step) ease;
 }
 
-[data-dimensional-link]:hover::after {
-    opacity: 1;
-    animation: portal-pulse 600ms ease-in-out infinite;
-}
-
-@keyframes portal-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-/* === FOLDING DIMENSION AFFORDANCES === */
-
-/* Show that content can fold/unfold along dimensions */
-[data-foldable] {
-    position: relative;
-    cursor: pointer;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+[data-dimensional-link]:hover::after,
+[data-dimensional-link]:focus-visible::after {
+    opacity: 0.72;
 }
 
 [data-foldable]::before {
-    content: '';
+    content: '{';
     position: absolute;
-    left: -8px;
     top: 50%;
-    width: 6px;
-    height: 10px;
-    border: 2px solid rgba(0, 128, 128, 0.3);
-    border-left: none;
-    border-radius: 0 4px 4px 0;
+    left: -0.75rem;
+    color: var(--handle-line-active);
+    font-weight: 700;
     opacity: 0;
-    transition: all 300ms;
     transform: translateY(-50%);
-}
-
-[data-foldable]:hover::before {
-    opacity: 1;
-    border-color: rgba(0, 128, 128, 0.8);
-    animation: fold-breathe 600ms ease-in-out infinite;
-}
-
-@keyframes fold-breathe {
-    0%, 100% { width: 6px; }
-    50% { width: 8px; }
+    transition: opacity var(--handle-step) ease;
 }
 
 [data-foldable][data-folded="true"]::before {
-    content: '';
-    border: 2px solid rgba(0, 128, 128, 0.5);
-    border-right: none;
-    border-radius: 4px 0 0 4px;
+    content: '}';
 }
 
-/* === RESPONSIVE COGNITIVE HANDLES === */
+[data-foldable]:hover::before,
+[data-foldable]:focus-visible::before {
+    opacity: 0.85;
+}
 
 @media (max-width: 768px) {
-    /* Show handles more prominently on mobile */
     [data-cognitive-handle]::before {
-        opacity: 0.7;
+        opacity: 0.72;
         width: 4px;
     }
 
     [data-handle-corner]::after {
-        opacity: 0.5;
+        opacity: 0.48;
     }
 
-    /* Increase touch targets */
-    [data-foldable]::before {
-        width: 8px;
-        height: 12px;
-    }
-
-    /* Simplify breadcrumb on mobile */
     [data-dimensional-breadcrumb] {
-        font-size: 0.75rem;
         gap: 0.25rem;
+        font-size: 0.75rem;
     }
 
     [data-dimensional-breadcrumb] > span {
@@ -621,23 +417,33 @@
     }
 }
 
-/* === ACCESSIBILITY === */
-
 @media (prefers-reduced-motion: reduce) {
+    [data-cognitive-handle],
     [data-cognitive-handle]::before,
     [data-handle-corner]::after,
+    [data-nested-container],
+    [data-nested-bracket]::before,
+    [data-nested-bracket]::after,
+    [data-abstraction-level]::after,
+    [data-relation-pair],
+    [data-relation-pair]::before,
+    [data-relation-line],
+    [data-phase-dimension]::before,
+    [data-scale-handle]::after,
     [data-cognitive-anchor]::before,
+    [data-cognitive-anchor]::after,
     [data-dimensional-link]::after,
     [data-foldable]::before {
+        transition: none !important;
         animation: none !important;
     }
 }
 
-/* === FOCUS STATES === */
-
 [data-cognitive-handle]:focus-visible,
 [data-scale-handle]:focus-visible,
-[data-foldable]:focus-visible {
-    outline: 2px solid rgba(0, 128, 128, 0.6);
+[data-foldable]:focus-visible,
+[data-cognitive-anchor]:focus-visible,
+[data-dimensional-link]:focus-visible {
+    outline: 2px solid var(--handle-line-active);
     outline-offset: 2px;
 }

@@ -175,8 +175,8 @@ const initCanvasWeaveDemo = () => {
 
     const nodes = [];
     const nodeColors = [
-        { fill: 'hsl(192, 62%, 44%)', glow: 'rgba(24, 123, 135, 0.42)' },
-        { fill: 'hsl(344, 58%, 44%)', glow: 'rgba(160, 42, 77, 0.36)' }
+        { fill: 'hsl(192, 62%, 36%)', wash: 'rgba(24, 123, 135, 0.12)' },
+        { fill: 'hsl(344, 58%, 36%)', wash: 'rgba(160, 42, 77, 0.10)' }
     ];
 
     const drawBase = () => {
@@ -202,19 +202,18 @@ const initCanvasWeaveDemo = () => {
     const drawNodes = () => {
         nodes.forEach((node, index) => {
             const color = nodeColors[index % nodeColors.length];
-            const gradient = context.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.r * 2.5);
-            gradient.addColorStop(0, color.glow);
-            gradient.addColorStop(1, 'transparent');
-
-            context.fillStyle = gradient;
+            context.fillStyle = color.wash;
             context.beginPath();
-            context.arc(node.x, node.y, node.r * 2.5, 0, Math.PI * 2);
+            context.arc(node.x, node.y, node.r * 1.85, 0, Math.PI * 2);
             context.fill();
 
             context.fillStyle = color.fill;
+            context.strokeStyle = color.fill;
+            context.lineWidth = 1;
             context.beginPath();
             context.arc(node.x, node.y, node.r, 0, Math.PI * 2);
             context.fill();
+            context.stroke();
         });
     };
 

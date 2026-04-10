@@ -39,20 +39,6 @@
                 <feTurbulence type="turbulence" baseFrequency="0.02 0.08" numOctaves="2" seed="3" result="warp"/>
                 <feDisplacementMap in="SourceGraphic" in2="warp" scale="6" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
-            <!-- f-node-glow: teal radial glow for charged nodes -->
-            <filter id="f-node-glow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-                <feFlood flood-color="hsla(192,66%,50%,0.7)" result="color"/>
-                <feComposite in="color" in2="blur" operator="in" result="glow"/>
-                <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <!-- f-warm-glow: rose glow for accent nodes -->
-            <filter id="f-warm-glow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
-                <feFlood flood-color="hsla(344,58%,48%,0.5)" result="color"/>
-                <feComposite in="color" in2="blur" operator="in" result="glow"/>
-                <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
             <!-- f-svg-demo: live-manipulable filter for SVG filter playground -->
             <filter id="f-svg-demo" x="-10%" y="-10%" width="120%" height="120%">
                 <feTurbulence id="demo-turbulence" type="turbulence" baseFrequency="0.04" numOctaves="2" seed="1" result="turb"/>
@@ -91,18 +77,7 @@
                     </div>
                 </div>
                 <svg class="blog-hero-svg" viewBox="0 0 800 220" aria-label="Fiber weave diagram: self/world plates, charged nodes, signal path" role="img" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="hero-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="hsla(192,62%,34%,0.08)"/>
-                            <stop offset="100%" stop-color="hsla(344,58%,38%,0.06)"/>
-                        </linearGradient>
-                        <linearGradient id="signal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="hsl(192,66%,50%)" stop-opacity="0.3"/>
-                            <stop offset="50%" stop-color="hsl(192,66%,50%)" stop-opacity="0.9"/>
-                            <stop offset="100%" stop-color="hsl(344,58%,48%)" stop-opacity="0.6"/>
-                        </linearGradient>
-                    </defs>
-                    <rect width="800" height="220" fill="url(#hero-bg)" rx="6"/>
+                    <rect width="800" height="220" fill="rgba(24, 123, 135, 0.04)" stroke="rgba(24, 123, 135, 0.18)" rx="6"/>
                     <!-- warp threads (vertical self-axis) -->
                     <g filter="url(#f-weave-warp)" opacity="0.35" stroke="hsl(192,40%,55%)" stroke-width="0.8" fill="none">
                         <line x1="80" y1="0" x2="80" y2="220"/>
@@ -123,13 +98,13 @@
                         <line x1="0" y1="176" x2="800" y2="176"/>
                     </g>
                     <!-- signal path -->
-                    <path d="M 60,110 C 160,60 240,160 360,100 S 560,140 740,110" stroke="url(#signal-grad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <path d="M 60,110 C 160,60 240,160 360,100 S 560,140 740,110" stroke="hsl(188,64%,32%)" stroke-width="2" fill="none" stroke-linecap="round"/>
                     <!-- charged nodes -->
-                    <circle cx="160" cy="80" r="6" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
-                    <circle cx="320" cy="130" r="5" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
-                    <circle cx="480" cy="95" r="7" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
-                    <circle cx="620" cy="140" r="5" fill="hsl(344,58%,44%)" filter="url(#f-warm-glow)"/>
-                    <circle cx="740" cy="110" r="6" fill="hsl(344,58%,44%)" filter="url(#f-warm-glow)"/>
+                    <circle cx="160" cy="80" r="6" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
+                    <circle cx="320" cy="130" r="5" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
+                    <circle cx="480" cy="95" r="7" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
+                    <circle cx="620" cy="140" r="5" fill="rgba(160, 42, 77, 0.14)" stroke="hsl(344,58%,36%)" stroke-width="1.5"/>
+                    <circle cx="740" cy="110" r="6" fill="rgba(160, 42, 77, 0.14)" stroke="hsl(344,58%,36%)" stroke-width="1.5"/>
                     <!-- axis labels -->
                     <text x="12" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(192,40%,55%)" opacity="0.7">self</text>
                     <text x="752" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(344,40%,55%)" opacity="0.7">world</text>
@@ -190,7 +165,7 @@
                 <p class="frame-note">The architecture this page embodies. Each section below is a node in the kernel running.</p>
                 <pre class="specimen-kernel-code"><code><span class="sk-comment">// premise → medium → dielectric → channels → ac_drift → anchor_loop → output → return</span>
 
-<span class="sk-key">cumulation</span>     = { micro = <span class="sk-op">!</span>[act_small], stack = <span class="sk-op">*</span>[micro..containment], gradient = stack -&gt; charge }
+<span class="sk-key">cumulation</span>     = { micro = <span class="sk-op">!</span>[act_small], stack = <span class="sk-op">*</span>[micro..containment], bias = stack -&gt; charge }
 <span class="sk-key">prime_components</span> = { p1=<span class="sk-op">?</span>[what_is_here], p2=<span class="sk-op">?</span>[what_is_missing], p3=<span class="sk-op">?</span>[what_repeats], p5=<span class="sk-op">?</span>[what_resonates], basis = p1&amp;p2&amp;p3&amp;p5 }
 <span class="sk-key">wonder_blocks</span>   = { w0={}, w1={p1}, w2={p1..p2}, w3={basis..gap}, w5={basis..gap..signal_path}, unfold=<span class="sk-op">*</span>[w1..w2..w3..w5] }
 <span class="sk-key">dimensional</span>     = { d1=[time], d2=[attention], d3=[relationship], d5=[meaning], projection = unfold -&gt; &lt;d1&lt;&gt;d2&lt;&gt;d3&lt;&gt;d5&gt; }

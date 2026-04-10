@@ -18,16 +18,13 @@
     --craft-teal: hsl(176 70% 30%);
     --craft-leaf: hsl(132 36% 36%);
     --craft-ink-blue: hsl(205 42% 30%);
-    --craft-gold: hsl(50 76% 46%);
+    --craft-fold-edge: hsl(105 34% 34%);
     --craft-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
     --craft-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 body[data-spw-surface="craft"] {
-    background:
-        radial-gradient(circle at 12% 12%, hsla(344, 62%, 42%, 0.10), transparent 28rem),
-        radial-gradient(circle at 88% 18%, hsla(176, 70%, 30%, 0.12), transparent 30rem),
-        linear-gradient(180deg, var(--bg), var(--bg-deep));
+    background: var(--bg);
 }
 
 [data-spw-surface="craft"] main {
@@ -60,9 +57,7 @@ body[data-spw-surface="craft"] {
 [data-spw-surface="craft"] .site-frame {
     border-radius: 8px;
     border-color: rgba(16, 132, 123, 0.20);
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(244, 252, 249, 0.78)),
-        linear-gradient(90deg, rgba(16, 132, 123, 0.06), rgba(194, 43, 82, 0.06));
+    background: var(--surface);
 }
 
 [data-spw-surface="craft"] .frame-card,
@@ -111,7 +106,7 @@ body[data-spw-surface="craft"] {
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--surface-strong);
-    box-shadow: 0 14px 32px rgba(19, 28, 33, 0.07);
+    box-shadow: none;
 }
 
 .craft-prompt-card {
@@ -129,7 +124,7 @@ body[data-spw-surface="craft"] {
     position: absolute;
     inset: 0 auto 0 0;
     inline-size: 0.45rem;
-    background: linear-gradient(180deg, var(--craft-accent), var(--craft-teal), var(--craft-gold));
+    background: var(--craft-accent);
 }
 
 .craft-prompt-card > * {
@@ -190,9 +185,7 @@ body[data-spw-surface="craft"] {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(235, 250, 246, 0.74)),
-        radial-gradient(circle at 20% 20%, hsla(344, 62%, 42%, 0.12), transparent 18rem);
+    background: var(--surface-strong);
     border: 1px solid var(--line);
 }
 
@@ -285,8 +278,7 @@ body[data-spw-surface="craft"] {
 .craft-callout {
     padding: 1.25rem;
     border-inline-start: 0.35rem solid var(--craft-accent);
-    background:
-        linear-gradient(90deg, var(--craft-accent-soft), rgba(255, 255, 255, 0.86));
+    background: var(--surface-strong);
     font-family: var(--craft-sans);
 }
 
@@ -312,7 +304,7 @@ body[data-spw-surface="craft"] {
 
 .craft-file-card:hover {
     border-color: var(--line-strong);
-    box-shadow: 0 12px 28px rgba(19, 28, 33, 0.08);
+    box-shadow: none;
 }
 
 .craft-file-card .file-ext {
@@ -355,9 +347,7 @@ body[data-spw-surface="craft"] {
     gap: 0.75rem;
     min-height: 17rem;
     padding: 1.2rem;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(239, 250, 248, 0.84)),
-        radial-gradient(circle at 100% 0%, hsla(50, 76%, 46%, 0.15), transparent 14rem);
+    background: var(--surface-strong);
 }
 
 .craft-page-mark {

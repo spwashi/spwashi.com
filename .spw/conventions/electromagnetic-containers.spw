@@ -5,7 +5,7 @@
 ^"thesis"{
   claim: "Containers are computational fields, not passive boxes. They embody electromagnetic metaphors (charge, potential, resonance) to enable cognitive computation across conceptions of a single idea."
   grounding: "From conception (abstract idea) through potential (designed, brewing) to kinetic (moving, active) to manifest (realized, expressed). Each container holds relational fields and responds to interaction as an electromagnetic system would."
-  visual: "Containers glow and pulse with charge, emit field gradients at interaction points, transition smoothly between states, and influence nearby containers through resonance."
+  visual: "Containers show charge through crease weight, folded-corner bias, braced labels, and bounded outline state. No visual effect should imply energy unless the state is inspectable through data attributes."
 }
 
 ^"charge_states"{
@@ -13,26 +13,26 @@
 
   conception: {
     meaning: "Pure potential, abstract, questioning phase"
-    color: "hsl(268 55% 42%) — probe purple"
-    energy: "Latent, minimal coherence, diffuse field"
+    color: "hsl(258 34% 39%) — quiet probe violet"
+    energy: "Latent, minimal coherence, low crease weight"
     interaction: "Click to advance to potential"
-    visual: "Subtle radial gradient, reduced opacity, soft presence"
+    visual: "Thin crease, low folded-corner opacity, soft presence"
   }
 
   potential: {
     meaning: "Energy accumulating, brewing, designing"
-    color: "hsl(45 85% 42%) — transformation gold"
-    energy: "Gathering, pulsing field, growing coherence"
+    color: "hsl(150 46% 30%) — transformation green"
+    energy: "Gathering, growing coherence"
     interaction: "Hover shows resonance, click advances to kinetic"
-    visual: "Animated field pulse, breathing glow, moderate opacity"
+    visual: "Stronger crease and paper wash, moderate opacity"
   }
 
   kinetic: {
     meaning: "Energy in motion, implementation active, flowing"
-    color: "hsl(36 80% 36%) — object gold"
-    energy: "Moving, shimmer effect, high coherence"
+    color: "hsl(342 48% 36%) — kinetic rose"
+    energy: "Moving, high coherence"
     interaction: "Field intensifies with focus, click manifests"
-    visual: "Field shimmer animation, elevated intensity, grown opacity"
+    visual: "High-contrast crease, explicit state label if present"
   }
 
   manifest: {
@@ -40,7 +40,7 @@
     color: "hsl(180 100% 28%) — expression teal"
     energy: "Established, stable field, maximum coherence"
     interaction: "Stable state, interaction shows field resonance"
-    visual: "Bright presence, stable field, full opacity"
+    visual: "Stable teal crease, clear folded-corner marker, full opacity"
   }
 }
 
@@ -51,25 +51,25 @@
 
   conception_slice: {
     frame: "Idea—abstract, questioning, exploring"
-    visual: "Left border in probe purple, light background"
+    visual: "Left crease in probe violet, light background"
     meaning: "What is the question? What are we imagining?"
   }
 
   potential_slice: {
     frame: "Design—planned, structured, architected"
-    visual: "Left border in transformation gold, subtle gradient"
+    visual: "Left crease in transformation green, plain paper wash"
     meaning: "How would this be built? What are the constraints?"
   }
 
   kinetic_slice: {
     frame: "Implementation—code, systems, active mechanics"
-    visual: "Left border in object gold, stronger presence"
+    visual: "Left crease in kinetic rose, stronger presence"
     meaning: "What does this actually do? How does it move?"
   }
 
   manifest_slice: {
     frame: "Instance—concrete, expressed, in use"
-    visual: "Left border in expression teal, clear presence"
+    visual: "Left crease in expression teal, clear presence"
     meaning: "What has been created? What is real?"
   }
 }
@@ -77,31 +77,31 @@
 ^"field_effects"{
   ~#note: "Electromagnetic metaphors made visible in interaction"
 
-  radial_field: {
-    metaphor: "Electromagnetic field from a charge"
-    visual: "Radial gradient centered on mouse position"
-    behavior: "Moves with interaction, shows field strength"
-    meaning: "Where is attention focused? What is activated?"
+  charged_crease: {
+    metaphor: "Stored charge visible as crease weight"
+    visual: "Left edge and folded corner derive from data-charge and coherence"
+    behavior: "Changes only when explicit state changes"
+    meaning: "What phase of manifestation is the container carrying?"
   }
 
   field_intensity: {
     range: "0.3 (conception) to 0.9 (manifest)"
     responds_to: ["charge state", "hover", "focus", "semantic density setting"]
-    visual: "Gradient opacity and glow strength"
+    visual: "Crease opacity and folded-corner visibility"
     meaning: "How much cognitive load is available? How active is this container?"
   }
 
   coherence: {
     range: "0.6 (conception) to 0.95 (manifest)"
     responds_to: ["charge state", "focus", "internal alignment"]
-    visual: "Box-shadow border strength and glow"
+    visual: "Outline strength and edge clarity"
     meaning: "How internally aligned are the elements? How complete is the thought?"
   }
 
   resonance: {
     metaphor: "Containers influence each other across semantic distance"
     mechanism: "When one container advances charge, nearby related containers can respond"
-    visual: "Cascade of field brightening through related elements"
+    visual: "Related containers may update their data-charge and crease state"
     meaning: "How do ideas resonate and amplify through the space?"
   }
 }
@@ -118,7 +118,7 @@
 
   visual_properties: {
     opacity: "Increases from conception (0.7) to manifest (1.0)"
-    scale: "Grows from conception (0.95) to manifest (1.0)"
+    scale: "No scale change; manifestation is shown by opacity, color, and edge weight"
     weight: "Lightens from idea → design → implementation → instance"
     style: "italic → normal → monospace → bold"
   }
@@ -132,8 +132,8 @@
 
   interaction: {
     click: "Advance from conception → potential → kinetic → manifest"
-    arrow_keys: "Up/+ to advance, Down/- to retreat through states"
-    hover: "Field intensifies, shows where focus is"
+    keyboard: "+ or = to advance, - to retreat through states when focus is inside"
+    hover: "Crease strengthens, shows where attention is"
     focus: "Coherence increases, internal alignment strengthens"
   }
 }
@@ -163,7 +163,7 @@
 
   with_field_coherence: {
     markup: "<article data-container-type='frame' data-field-coherence>",
-    meaning: "Display coherence level as box-shadow strength"
+    meaning: "Display coherence level as outline strength"
   }
 
   conception_level_content: {
@@ -198,18 +198,18 @@
 }
 
 ^"accessibility"{
-  keyboard_navigation: "Arrow Up/+ to advance, Arrow Down/- to retreat through charge states"
-  reduced_motion: "Field animations disabled under prefers-reduced-motion"
+  keyboard_navigation: "+ or = advances, - retreats; arrow keys remain reserved for native controls and roving tabindex widgets"
+  reduced_motion: "No decorative motion; transitions disabled under prefers-reduced-motion"
   contrast: "High contrast mode increases border widths for visibility"
   semantics: "data-charge, data-container-slice attributes provide semantic meaning"
-  aria: "Future: add aria-labels describing current charge and slice"
+  aria: "Controls that change charge should expose current state through aria-pressed, aria-expanded, or adjacent visible text; passive surfaces expose state through data-charge and data-charge-label"
 }
 
 ^"dark_mode_and_contrast"{
   ~#note: "Field colors adjusted for visibility in dark mode and high contrast"
 
-  light_mode: "Subtle field gradients, opacity-based effects"
-  dark_mode: "Brighter field colors for contrast, same behavior"
+  light_mode: "Plain paper wash and readable creases"
+  dark_mode: "Higher-contrast creases and the same state model"
   high_contrast: "Thicker borders, stronger color differentiation"
   all_phases: "Works correctly across all spirit phases"
 }
@@ -221,8 +221,8 @@
   "Slices allow the same idea to be understood from multiple angles."
   "Resonance makes relationships between ideas tangible."
   "Conception → Realization progression is always visible."
-  "Interaction is continuous—containers respond to every gesture."
-  "Field effects make the invisible (relationships, potential, energy) visible."
+  "Interaction is explicit: state should not change through hidden arrow shortcuts or decorative motion."
+  "Crease effects make the invisible (relationships, potential, energy) inspectable."
   "Electromagnetic metaphor is not decorative—it's semantic."
 }
 

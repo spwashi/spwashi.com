@@ -1,382 +1,286 @@
-/* Whimsy Enhancements: Surface-Specific Delights */
-/* Additional playful details for specific site surfaces and components */
+/* Surface Grammar Enhancements
+ * Quiet, route-agnostic refinements for Spw surfaces.
+ * The visible language is crease, brace, selection, and state.
+ */
 
-/* === HOME CONSTELLATION WHIMSY === */
+:root {
+    --spw-surface-step: 140ms;
+    --spw-surface-corner: 6px;
+    --spw-surface-line: var(--line);
+    --spw-surface-line-active: var(--active-op-border);
+    --spw-surface-wash: var(--active-op-bg-soft);
+}
 
-.constellation-wrapper {
-    position: relative;
-    transition: all 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+/* === Diagram Surfaces === */
+
+.constellation-wrapper,
+svg [data-constellation-point],
+svg [data-constellation-line] {
+    transition:
+        opacity var(--spw-surface-step) ease,
+        stroke var(--spw-surface-step) ease,
+        stroke-width var(--spw-surface-step) ease,
+        fill var(--spw-surface-step) ease;
 }
 
 .constellation-wrapper:hover {
-    filter: brightness(1.05) drop-shadow(0 0 12px rgba(0, 128, 128, 0.15));
+    opacity: 0.94;
 }
 
-/* Constellation points get a subtle glow on hover */
-svg [data-constellation-point] {
-    transition: all 300ms ease-out;
-    filter: drop-shadow(0 0 0px rgba(0, 128, 128, 0));
+svg [data-constellation-point]:hover,
+svg [data-constellation-point]:focus-visible {
+    stroke: currentColor;
+    stroke-width: 1.5;
 }
 
-svg [data-constellation-point]:hover {
-    filter: drop-shadow(0 0 4px rgba(0, 128, 128, 0.5));
-    r: 1.3;
-}
-
-/* Constellation lines respond to surrounding point hovering */
 svg [data-constellation-line] {
-    transition: stroke-width 300ms ease-out, stroke 300ms ease-out;
-    stroke: rgba(0, 128, 128, 0.4);
+    stroke: rgba(0, 128, 128, 0.38);
     stroke-width: 0.5;
 }
 
-svg [data-constellation-line]:hover {
-    stroke: rgba(0, 128, 128, 0.7);
+svg [data-constellation-line]:hover,
+svg [data-constellation-line]:focus-visible {
+    stroke: rgba(0, 128, 128, 0.68);
     stroke-width: 1;
 }
 
-/* === ARTIFACT CARD WHIMSY === */
+/* === Cards and Framed Surfaces === */
 
-.frame-card {
+.frame-card,
+.media-focus-card,
+.plan-card {
     position: relative;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition:
+        border-color var(--spw-surface-step) ease,
+        background-color var(--spw-surface-step) ease,
+        color var(--spw-surface-step) ease;
 }
 
-.frame-card::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: radial-gradient(circle at 50% 0%,
-        rgba(255, 255, 255, 0.3) 0%,
-        transparent 70%);
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity 300ms ease-out;
-    pointer-events: none;
-    z-index: -1;
+.frame-card::after,
+.media-focus-card::before,
+.plan-card::before {
+    content: none;
 }
 
-.frame-card:hover {
-    transform: translateY(-3px);
+.frame-card:hover,
+.frame-card:focus-within,
+.media-focus-card:hover,
+.media-focus-card:focus-within,
+.plan-card:hover,
+.plan-card:focus-within {
+    border-color: var(--spw-surface-line-active);
+    background: var(--spw-surface-wash);
 }
 
-.frame-card:hover::after {
-    opacity: 1;
-}
-
-.frame-card-sigil {
+.frame-card-sigil,
+.operator-symbol {
     display: inline-block;
-    font-size: 0.8rem;
     font-weight: 700;
-    opacity: 0.8;
-    transition: all 300ms;
+    transition: color var(--spw-surface-step) ease;
 }
 
-.frame-card:hover .frame-card-sigil {
-    opacity: 1;
-    letter-spacing: 0.05em;
-    animation: sigil-glow 600ms ease-in-out infinite;
+.frame-card:hover .frame-card-sigil,
+.frame-card:focus-within .frame-card-sigil,
+.operator-symbol:hover,
+.operator-symbol:focus-visible {
+    color: var(--active-op-color);
 }
 
-@keyframes sigil-glow {
-    0%, 100% { text-shadow: none; }
-    50% { text-shadow: 0 0 8px rgba(0, 128, 128, 0.4); }
-}
-
-/* === MEDIA FOCUS CARDS WHIMSY === */
+/* === Media Focus === */
 
 .media-focus-card {
-    position: relative;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-top: 2px solid var(--op-frame-border);
 }
 
-.media-focus-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg,
-        var(--op-frame-color) 0%,
-        var(--op-action-color) 50%,
-        var(--op-stream-color) 100%);
-    opacity: 0.4;
-    transition: opacity 300ms;
+.media-focus-card:hover,
+.media-focus-card:focus-within {
+    border-top-color: var(--active-op-color);
 }
 
-.media-focus-card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 4px 16px rgba(0, 128, 128, 0.1);
-}
-
-.media-focus-card:hover::before {
-    opacity: 0.8;
-}
-
-/* === INTERACTIVE CODEBLOCK WHIMSY === */
+/* === Interactive Code and Settings === */
 
 code[data-interactive] {
-    position: relative;
     cursor: pointer;
-    transition: all 300ms;
+    transition:
+        background-color var(--spw-surface-step) ease,
+        color var(--spw-surface-step) ease,
+        outline-color var(--spw-surface-step) ease;
 }
 
 code[data-interactive]::after {
-    content: ' ✓';
-    opacity: 0;
-    transition: opacity 300ms;
+    content: ' ={ready}';
     color: var(--op-stream-color);
     font-weight: 700;
+    opacity: 0;
 }
 
-code[data-interactive]:hover {
-    background: var(--op-action-color);
-    color: var(--bg);
+code[data-interactive]:hover,
+code[data-interactive]:focus-visible {
+    outline: 1px solid var(--spw-surface-line-active);
+    outline-offset: 2px;
 }
 
-code[data-interactive]:hover::after {
+code[data-interactive]:hover::after,
+code[data-interactive]:focus-visible::after {
     opacity: 1;
 }
 
-/* === SETTINGS FIELDSET WHIMSY === */
-
 .settings-fieldset {
     position: relative;
-    transition: all 300ms;
+    transition: border-color var(--spw-surface-step) ease;
 }
 
 .settings-fieldset legend {
     font-weight: 700;
     color: var(--ink);
-    transition: all 300ms;
-    position: relative;
-    padding-left: 0.5rem;
+    transition: color var(--spw-surface-step) ease;
 }
 
-.settings-fieldset:hover legend {
+.settings-fieldset:hover legend,
+.settings-fieldset:focus-within legend {
     color: var(--op-frame-color);
-    padding-left: 1rem;
 }
 
 .settings-option {
     display: flex;
     gap: 0.75rem;
     padding: 0.75rem;
-    border-radius: 0.4rem;
-    transition: all 300ms;
+    border-radius: var(--spw-surface-corner);
     cursor: pointer;
+    transition:
+        background-color var(--spw-surface-step) ease,
+        border-color var(--spw-surface-step) ease;
 }
 
-.settings-option:hover {
+.settings-option:hover,
+.settings-option:focus-within {
     background: var(--op-frame-bg-soft);
 }
 
-/* Input radio/checkbox get a surrounding glow on focus */
-.settings-option input[type="radio"]:focus,
-.settings-option input[type="checkbox"]:focus {
-    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+.settings-option input[type="radio"]:focus-visible,
+.settings-option input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--active-op-border);
+    outline-offset: 3px;
 }
 
-/* === OPERATOR ATLAS PAGE WHIMSY === */
+/* === Operator and Status Surfaces === */
 
 [data-operator-page] {
-    animation: operator-page-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-color: var(--spw-surface-line);
 }
-
-@keyframes operator-page-enter {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Operator symbol in atlas gets a subtle rotation on hover */
-.operator-symbol {
-    display: inline-block;
-    transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    font-weight: 700;
-    font-size: 1.2em;
-}
-
-.operator-symbol:hover {
-    transform: rotate(15deg) scale(1.1);
-    filter: drop-shadow(0 0 6px currentColor);
-}
-
-/* === PROGRESS & STATUS INDICATORS === */
 
 [data-status-indicator] {
     position: relative;
     display: inline-block;
-    transition: all 300ms;
 }
 
 [data-status-indicator]::after {
-    content: '';
-    position: absolute;
-    right: -6px;
-    top: -6px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: currentColor;
+    content: ' #';
+    color: currentColor;
     opacity: 0;
-    transition: all 300ms;
+    transition: opacity var(--spw-surface-step) ease;
 }
 
-[data-status-indicator]:hover::after {
-    opacity: 0.6;
-    animation: pulse-status 600ms ease-in-out infinite;
+[data-status-indicator]:hover::after,
+[data-status-indicator]:focus-visible::after,
+[data-status-indicator][aria-current="true"]::after {
+    opacity: 0.7;
 }
 
-@keyframes pulse-status {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-}
-
-/* === BREADCRUMB & NAVIGATION WHIMSY === */
+/* === Breadcrumb and Inline Notes === */
 
 .breadcrumb {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    transition: all 300ms;
 }
 
 .breadcrumb a {
     position: relative;
-    transition: all 300ms;
 }
 
 .breadcrumb a::before {
     content: '';
     position: absolute;
+    right: 0;
     bottom: -2px;
     left: 0;
-    right: 0;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 300ms ease-out;
+    border-bottom: 1px solid currentColor;
+    opacity: 0;
+    transition: opacity var(--spw-surface-step) ease;
 }
 
-.breadcrumb a:hover::before {
-    transform: scaleX(1);
+.breadcrumb a:hover::before,
+.breadcrumb a:focus-visible::before,
+.breadcrumb a[aria-current="page"]::before {
+    opacity: 0.75;
 }
 
 .breadcrumb > span {
-    opacity: 0.5;
-    transition: all 300ms;
+    opacity: 0.55;
 }
-
-.breadcrumb:hover > span {
-    opacity: 0.8;
-}
-
-/* === EMPTY STATE WHIMSY === */
 
 .empty-state {
-    text-align: center;
     padding: 3rem 1rem;
-    opacity: 0.7;
-    transition: all 300ms;
-}
-
-.empty-state:hover {
-    opacity: 0.9;
+    text-align: center;
+    opacity: 0.78;
 }
 
 .empty-state::before {
-    content: '(ヘ╯°□°)ヘ彡┻━┻';
+    content: '{}';
     display: block;
-    font-family: monospace;
     margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 2rem;
-    transition: all 300ms;
 }
-
-.empty-state:hover::before {
-    animation: flip-table 600ms ease-in-out;
-}
-
-@keyframes flip-table {
-    0% { transform: translateY(0) rotateZ(0deg); }
-    50% { transform: translateY(-10px) rotateZ(45deg); }
-    100% { transform: translateY(0) rotateZ(0deg); }
-}
-
-/* === COMMENT & NOTE WHIMSY === */
 
 .inline-note {
     position: relative;
-    padding-left: 1.5rem;
-    transition: all 300ms;
+    padding-left: 1.35rem;
 }
 
 .inline-note::before {
-    content: '~';
+    content: '~{';
     position: absolute;
     left: 0;
-    font-weight: 700;
     color: var(--op-ref-color);
-    transition: all 300ms;
+    font-weight: 700;
 }
 
-.inline-note:hover {
-    padding-left: 2rem;
+.inline-note::after {
+    content: '}';
+    color: var(--op-ref-color);
+    font-weight: 700;
 }
-
-.inline-note:hover::before {
-    left: -0.5rem;
-    font-size: 1.2em;
-}
-
-/* === RESPONSIVE WHIMSY ADJUSTMENTS === */
 
 @media (max-width: 768px) {
-    /* Reduce float/lift on mobile */
-    .plan-card:hover,
-    .frame-card:hover,
-    .media-focus-card:hover {
-        transform: none;
-    }
-
-    .media-focus-card:hover {
-        transform: scale(1);
-    }
-
-    /* Tap animation instead of hover */
-    .plan-card:active,
-    .frame-card:active {
-        transform: scale(0.98);
-    }
-
-    /* Bigger touch targets */
     .settings-option {
-        padding: 1rem;
         min-height: 3rem;
+        padding: 1rem;
     }
 }
 
-/* === PRINT STYLES === */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
 
 @media print {
-    /* Reduce animations in print */
-    * {
-        animation: none !important;
+    *,
+    *::before,
+    *::after {
         transition: none !important;
+        animation: none !important;
     }
 
-    /* Ensure visibility of all content when printed */
     [data-status-indicator]::after,
-    .plan-card::before,
-    .frame-card::after {
+    .empty-state::before {
         display: none;
     }
 }
