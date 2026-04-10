@@ -1,0 +1,107 @@
+# wip - runtime-settings
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/runtime-settings/PLAN.md"
+ @settings: ~"public/js/site-settings.js"
+ @site: ~"public/js/site.js"
+ @navigator: ~"public/js/frame-navigator.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+ @page: ~"settings/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Make intrusive Spw runtime surfaces configurable with a local-only settings page."
+ ~#taste: "Containment, calm defaults, inspectability, and reversible runtime disclosure."
+}
+
+^["development"]{
+ lane: #runtime_preferences
+ ladder: #progressive_enhancement
+ develops: [#settings_surface, #local_storage, #runtime_chrome]
+ review_surfaces: [@plan, @settings, @site, @navigator, @console, @css]
+}
+
+^["concept_index"]{
+ primary: [#runtime_settings]
+ surfaces: [#settings_page, #navigator, #console, #viewport_activation]
+ tensions: [#discoverability_vs_intrusion, #ambient_machine_vs_calm_page, #defaults_vs_agency]
+ transfers: [#pwa, #localstorage, #spw_runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify the intrusive runtime affordance",
+  "< move the affordance behind local user preference",
+  "$ preserve inspectability with a settings surface",
+  "^ register the route and module in the PWA cache",
+  "% keep no-JS pages readable and navigable"
+ ]
+ gates: [#preference_truth, #no_crash_fallback, #pwa_cache]
+}
+
+^["parallel_work"]{
+ critical_path: [#settings_module, #site_core_gate, #css_states]
+ parallelizable: []
+ shared_hot_files: ["public/css/style.css", "sw.js", "manifest.webmanifest"]
+ merge_risks: [#rpg_wednesday_uncommitted_overlap, #style_growth]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: []
+ carries: [#preference_contract, #local_only_note]
+}
+
+^["interaction_depth"]{
+ subjects: [#map_trigger, #console_history, #viewport_activation, #settings_form]
+ questions: [#what_should_be_default, #what_is_reversible, #what_remains_discoverable]
+ qualities: [#clarity, #containment, #calm]
+}
+
+^["risk_model"]{
+ hard_failures: ["localStorage unavailable", "settings module import failure"]
+ soft_failures: ["map trigger becomes undiscoverable", "console hidden removes useful inspection", "viewport off changes active-frame color rhythm"]
+ recoveries: ["fallback defaults", "settings links in transient chrome", "manual frame activation remains available"]
+ non_negotiables: ["settings remain local-only", "no build pipeline", "no dependency additions"]
+}
+
+^["validation"]{
+ hypotheses: ["The map and console can be quieted or hidden after one settings change.", "Viewport activation can be disabled without breaking hash, click, focus, navigator, or console activation."]
+ negative_controls: ["Existing optional feature loading remains data-spw-features driven.", "RPG Wednesday local gameplay still passes syntax checks."]
+ demo_path: ["/settings/", "/", "/topics/software/", "/play/rpg-wednesday/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 01:15] hygiene - base origin/main@dff3c956f4bc5dcf2aa9fa231f4af04d873464ce; RPG Wednesday UX changes are already uncommitted in shared files.
+ >>[2026-04-10 01:15] taste - prefer local preferences over removing runtime chrome; quiet defaults should reduce visual pressure without destroying inspectability.
+ >>[2026-04-10 01:15] implement - added local settings module, /settings/ page, quiet navigator mode, collapsed console default, and viewport activation opt-in.
+ >>[2026-04-10 01:15] implement - linked settings from the persistent site nav and runtime footers so hidden chrome remains recoverable.
+ >>[2026-04-10 01:27] verify - JS syntax checks, manifest JSON parse, diff whitespace check, and commit-review poll passed.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[settings] - add local runtime preferences"
+}
+
+^["cache"]{
+ ~#status: "review"
+ ~#base_ref: "main@dff3c956f4bc5dcf2aa9fa231f4af04d873464ce"
+ ~#rebased_at: ""
+ ~#hygiene_split: "RPG Wednesday UX changes already uncommitted in public/css/style.css sw.js manifest.webmanifest"
+ ~#files_hot: "public/js/site-settings.js settings/index.html public/js/site.js public/js/frame-navigator.js public/js/spw-console.js public/css/style.css sw.js manifest.webmanifest"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "verify"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

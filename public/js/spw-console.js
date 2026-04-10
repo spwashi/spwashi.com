@@ -2,6 +2,7 @@ import {
     getPageSurface,
     matchesMaxWidth
 } from './spw-shared.js';
+import { getSiteSettings } from './site-settings.js';
 
 let initialized = false;
 
@@ -86,7 +87,8 @@ const createConsole = () => {
     spellsLine.innerHTML =
         '<span class="spw-spell">g</span> map' +
         '<span class="spw-spell">/</span> probe' +
-        '<span class="spw-spell">[ ]</span> traverse';
+        '<span class="spw-spell">[ ]</span> traverse' +
+        '<a class="spw-runtime-settings-link" href="/settings/">settings</a>';
 
     body.append(headerLine, frameLine, modeLine, actionLine, historyList, spellsLine);
     root.append(collapsedBar, body);
@@ -211,8 +213,17 @@ const describeModeAction = (detail) => {
     }
 };
 
-const getDefaultCollapsedState = (storageKey) => {
-    const storedCollapsed = localStorage.getItem(storageKey);
+const getDefaultCollapsedState = (storageKey, settings = getSiteSettings()) => {
+    if (settings.consoleDisplay === 'expanded') return false;
+    if (settings.consoleDisplay === 'collapsed' || settings.consoleDisplay === 'hidden') return true;
+
+    let storedCollapsed = null;
+    try {
+        storedCollapsed = localStorage.getItem(storageKey);
+    } catch {
+        storedCollapsed = null;
+    }
+
     const prefersCompactConsole = matchesMaxWidth(700);
     const forceCompactConsole = prefersCompactConsole && getPageSurface() === 'software';
 
@@ -255,7 +266,11 @@ const initSpwConsole = () => {
 
     const applyCollapsed = (value, animate = false) => {
         collapsed = value;
-        localStorage.setItem(STORAGE_KEY, String(value));
+        try {
+            localStorage.setItem(STORAGE_KEY, String(value));
+        } catch {
+            // The console can still respond for the current page.
+        }
         nodes.root.classList.toggle('is-collapsed', value);
         if (animate) nodes.root.classList.add('is-animating');
         nodes.expandBtn.setAttribute('aria-label', value ? 'Expand Spw console' : 'Collapse Spw console');
@@ -313,6 +328,12 @@ const initSpwConsole = () => {
         if (!detail.token || !detail.description) return;
         setAction(nodes, history, detail.token, detail.description);
         wake();
+    });
+
+    document.addEventListener('spw:settings-change', (event) => {
+        const display = event.detail?.consoleDisplay;
+        if (display === 'expanded') applyCollapsed(false, true);
+        if (display === 'collapsed' || display === 'hidden') applyCollapsed(true, true);
     });
 };
 

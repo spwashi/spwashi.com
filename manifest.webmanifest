@@ -9,7 +9,7 @@
   "display_override": ["standalone", "browser"],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "orientation": "any",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
@@ -53,6 +53,11 @@
       "name": "About",
       "short_name": "About",
       "url": "/about"
+    },
+    {
+      "name": "Settings",
+      "short_name": "Settings",
+      "url": "/settings/"
     }
   ]
 }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spwashi • Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <meta name="description" content="Local browser settings for Spwashi runtime surfaces, including the surface map, console, and viewport activation.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="settings" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a aria-current="page" href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>settings</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="settings-surface" data-spw-role="control" data-spw-liminality="entry" data-spw-meaning="local runtime preferences">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#settings-surface">#&gt;settings_surface</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">local-only</span>
+                        <span class="spec-pill">runtime chrome</span>
+                        <span class="spec-pill">calm defaults</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Local Configuration</p>
+                <h1>Settings</h1>
+                <p class="settings-note">Use this page to tune the site as a cognitive machine. These preferences are stored only in this browser with localStorage. They do not create an account, sync across devices, or change the published HTML.</p>
+                <nav class="frame-operators" aria-label="Settings routes">
+                    <a class="operator-chip" href="#runtime-preferences">^ runtime preferences</a>
+                    <a class="operator-chip" href="/about/website/#machine-register">$ machine register</a>
+                    <a class="operator-chip" href="/">home</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-meaning="runtime preference controls">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
+                    <h2>Runtime Preferences</h2>
+                </div>
+
+                <form class="settings-form" data-site-settings-form>
+                    <div class="settings-grid">
+                        <fieldset class="settings-fieldset">
+                            <legend>Surface map</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="navigatorDisplay" value="quiet" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Quiet</strong>
+                                    <span>Keep the map available, but remove the persistent #&gt; map label until hover, focus, or open.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="navigatorDisplay" value="full">
+                                <span class="settings-option-copy">
+                                    <strong>Full</strong>
+                                    <span>Show the original left-edge surface map trigger.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="navigatorDisplay" value="hidden">
+                                <span class="settings-option-copy">
+                                    <strong>Hidden</strong>
+                                    <span>Hide the map chrome and disable its map/probe shortcuts for this browser.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Console</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="consoleDisplay" value="collapsed" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Collapsed</strong>
+                                    <span>Keep the textual interface compact unless opened.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="consoleDisplay" value="expanded">
+                                <span class="settings-option-copy">
+                                    <strong>Expanded</strong>
+                                    <span>Start with the console open for active inspection.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="consoleDisplay" value="hidden">
+                                <span class="settings-option-copy">
+                                    <strong>Hidden</strong>
+                                    <span>Remove the console from the visual surface.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Viewport activation</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="viewportActivation" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Do not activate frames just because they pass through the viewport.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="viewportActivation" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Let scrolling update the active frame and console with @viewport.activate.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button class="operator-chip" type="submit">@ save settings</button>
+                        <button class="operator-chip" type="button" data-site-settings-reset>! reset calm defaults</button>
+                        <span class="settings-status" data-site-settings-status role="status" aria-live="polite"></span>
+                    </div>
+                </form>
+            </section>
+
+            <section class="site-frame" id="settings-notes" data-spw-role="reference" data-spw-meaning="settings behavior notes">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#settings-notes">~"settings_notes"</a>
+                    <h2>Notes</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Why quiet by default?</h3>
+                        <p>The map and console are useful inspection tools, but they should not compete with the page. Quiet settings keep the instrument available without making every route feel like a dashboard.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What still activates frames?</h3>
+                        <p>Hash links, clicks, focus, hover, map selection, console controls, and mode switches still activate frames. The viewport setting only controls scroll-driven activation.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>How do I recover hidden chrome?</h3>
+                        <p>Return to <a href="/settings/">/settings/</a> from the header or direct URL and choose quiet or full display again.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

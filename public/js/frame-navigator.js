@@ -14,6 +14,7 @@ import {
     getFrameMeta,
     isInputFocused
 } from './spw-shared.js';
+import { getSiteSettings } from './site-settings.js';
 
 let initialized = false;
 
@@ -35,6 +36,8 @@ const normalizePathname = (pathname = '') => {
 const normalizeText = (value = '') => value.replace(/\s+/g, ' ').trim();
 
 const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.hash}`;
+
+const isNavigatorHidden = () => getSiteSettings().navigatorDisplay === 'hidden';
 
 const getRouteLabel = (link) => {
     if (link.classList.contains('frame-card')) {
@@ -187,7 +190,8 @@ const buildNavigator = () => {
     spells.innerHTML =
         '<span class="spw-spell">g</span> map &nbsp;' +
         '<span class="spw-spell">[ ]</span> traverse &nbsp;' +
-        '<span class="spw-spell">esc</span> close';
+        '<span class="spw-spell">esc</span> close &nbsp;' +
+        '<a class="spw-runtime-settings-link" href="/settings/">settings</a>';
 
     panel.append(header, searchWrap, list, spells);
     root.append(strip, panel);
@@ -390,6 +394,7 @@ const initFrameNavigator = () => {
     };
 
     const open = () => {
+        if (isNavigatorHidden()) return;
         panel.hidden = false;
         root.classList.add('is-open');
         triggerBtn.setAttribute('aria-expanded', 'true');
@@ -401,14 +406,19 @@ const initFrameNavigator = () => {
     };
 
     const close = (options = {}) => {
+        const wasOpen = !panel.hidden;
         panel.hidden = true;
         root.classList.remove('is-open');
         triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) triggerBtn.focus();
-        emitSpwAction('!map.close', 'surface map');
+        if (wasOpen) emitSpwAction('!map.close', 'surface map');
     };
 
-    const toggle = () => (panel.hidden ? open() : close());
+    const toggle = () => {
+        if (isNavigatorHidden()) return;
+        if (panel.hidden) open();
+        else close();
+    };
 
     triggerBtn.addEventListener('click', toggle);
     closeBtn.addEventListener('click', close);
@@ -466,7 +476,7 @@ const initFrameNavigator = () => {
     });
 
     window.addEventListener('keydown', (event) => {
-        if (event.key === 'g' && !event.ctrlKey && !event.metaKey && !isInputFocused()) {
+        if (event.key === 'g' && !event.ctrlKey && !event.metaKey && !isInputFocused() && !isNavigatorHidden()) {
             event.preventDefault();
             toggle();
             return;
@@ -484,7 +494,7 @@ const initFrameNavigator = () => {
             return;
         }
 
-        if (event.key === '/' && !isInputFocused()) {
+        if (event.key === '/' && !isInputFocused() && !isNavigatorHidden()) {
             event.preventDefault();
             if (panel.hidden) open();
             else searchInput.focus();
@@ -502,6 +512,11 @@ const initFrameNavigator = () => {
     });
 
     document.addEventListener('spw:mode-change', refresh);
+    document.addEventListener('spw:settings-change', (event) => {
+        if (event.detail?.navigatorDisplay === 'hidden') {
+            close();
+        }
+    });
 
     refresh();
 };

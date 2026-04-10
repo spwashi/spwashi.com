@@ -5,6 +5,11 @@ import {
     loadFeature,
     onDomReady
 } from './spw-shared.js';
+import {
+    applySiteSettings,
+    initSiteSettingsPage,
+    shouldUseViewportActivation
+} from './site-settings.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -248,12 +253,13 @@ const initSiteCore = () => {
         }
     });
 
-    if ('IntersectionObserver' in window && frames.length > 1) {
+    if (shouldUseViewportActivation() && 'IntersectionObserver' in window && frames.length > 1) {
         const visibleFrames = new Map();
         let viewportSyncId = 0;
 
         const syncViewportFrame = () => {
             viewportSyncId = 0;
+            if (!shouldUseViewportActivation()) return;
 
             const candidates = frames
                 .map((frame) => ({
@@ -496,10 +502,12 @@ const initSpiritSequenceEasterEgg = () => {
 };
 
 onDomReady(() => {
+    applySiteSettings();
     resetSoftwareEntryScroll();
     initSiteCore();
     initBraceWalls();
     initSpiritSequenceEasterEgg();
+    initSiteSettingsPage();
 
     initOptionalFeatures().catch((error) => {
         console.error('Failed to initialize optional site features.', error);
