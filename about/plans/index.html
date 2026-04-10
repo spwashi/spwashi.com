@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spwashi • Plans & Horizons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <meta name="description" content="Strategic plans for spwashi.com: interactive patterns, operator semantics, asset management, and platform horizons.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="plans" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/about/plans/">Plans</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>plans</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="plans-surface" data-spw-role="hub" data-spw-liminality="entry" data-spw-meaning="strategic site plans and feature horizons">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#plans-surface">#&gt;plans_surface</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">strategic direction</span>
+                        <span class="spec-pill">feature horizons</span>
+                        <span class="spec-pill">wonder hooks</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Strategic Landscape</p>
+                <h1>Plans & Horizons</h1>
+                <p class="settings-note">This page maps the active and future plans for spwashi.com. Each plan explores a feature consideration or brand horizon, grounded in interactive semantics, operator physics, and the spatial grammar of the site. Plans are elaborated as they develop; some are complete foundations, others are active explorations.</p>
+                <nav class="frame-operators" aria-label="Plans routes">
+                    <a class="operator-chip" href="#operator-semantics">^ operator semantics</a>
+                    <a class="operator-chip" href="#interaction-patterns">@ interaction patterns</a>
+                    <a class="operator-chip" href="#platform-horizons">* platform horizons</a>
+                </nav>
+            </section>
+
+            <!-- === OPERATOR SEMANTICS === -->
+            <section class="site-frame" id="operator-semantics" data-spw-role="category" data-spw-meaning="plans rooted in operator lore and physics">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-semantics">^"operator_semantics_plans"{</a>
+                    <h2>Operator Semantics & Lore</h2>
+                </div>
+                <p class="inline-note">Plans that refine how operators work, what they mean, and how they create meaning through composition, symmetry, and priming.</p>
+
+                <div class="plans-grid">
+                    <!-- operator-semantics-refinement -->
+                    <div class="plan-card" data-plan-id="operator-semantics-refinement">
+                        <div class="plan-header">
+                            <h3>Operator Semantics Refinement</h3>
+                            <span class="plan-status" data-status="foundation">foundation</span>
+                        </div>
+                        <p class="plan-thesis">Refine Spw operators to be true to the established lore and original set, with room for interpretation based on the physics of the language and traditions that emerge through symmetry and priming.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Operator lineage documentation: original meanings → current implementation</li>
+                                <li>Physics explanations: spatial acts, priming properties, interaction semantics</li>
+                                <li>Symmetry mappings: 9 operator pairs that create coherent dynamics</li>
+                                <li>Priming rules: why sequences like ~(#frame) ?! feel inevitable</li>
+                                <li>Interpretation emergence: how traditions arise from physics, not imposition</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>The deeper insight: operators are not arbitrary symbols, but spatial and attentional relationships that can be felt, discovered, and built upon. Understanding operator physics makes everything else on the site feel less like a collection of features and more like a coherent language.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/operator-semantics-refinement/PLAN.md" class="operator-chip">~ full plan</a>
+                            <a href="../../.spw/conventions/operator-semantics.spw" class="operator-chip">^ semantics document</a>
+                        </div>
+                    </div>
+
+                    <!-- spw-operator-pages -->
+                    <div class="plan-card" data-plan-id="spw-operator-pages">
+                        <div class="plan-header">
+                            <h3>Spw Operator Pages</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Create a public atlas where each operator gets a stable, beautiful page before it gets richer runtime behavior. Pages explain interaction semantics, metaphysics, brace physics, and prefix/postfix symmetry.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>One page per operator: ~, #, ., ?, !, *, &, @, ^, &lt;&gt;, [], {}</li>
+                                <li>Sections: interaction (invoke/inspect/unavailable/pass-through), metaphysics, brace physics, symmetry</li>
+                                <li>Symmetry visualization: show which operators pair with this one</li>
+                                <li>Public discovery: accessible from home, software surface, route navigator</li>
+                                <li>Operator-aware CSS: each page demonstrates its own operator through styling</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>Documentation as experience: reading about the reference operator (~) on the reference operator page should teach through spatial demonstration, not just explanation. The medium is the message.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/spw-operator-pages/PLAN.md" class="operator-chip">~ full plan</a>
+                            <a href="../../topics/software/spw/" class="operator-chip">^ atlas</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === INTERACTION PATTERNS === -->
+            <section class="site-frame" id="interaction-patterns" data-spw-role="category" data-spw-meaning="plans for interactive circuits and familiarity building">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#interaction-patterns">@"interaction_patterns"{</a>
+                    <h2>Interaction Patterns & Circuits</h2>
+                </div>
+                <p class="inline-note">Plans that build interactive patterns that reward familiarity, feel natural through operator priming, and progress from entry-level to fluent mastery.</p>
+
+                <div class="plans-grid">
+                    <!-- interaction-grammar -->
+                    <div class="plan-card" data-plan-id="interaction-grammar">
+                        <div class="plan-header">
+                            <h3>Interaction Grammar</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Develop practical interactive circuits that become satisfying and familiar over time. Rethink brace physics toward vocabulary that is cognitively accessible while using Spw to exercise spatial relationship.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Interactive circuit ladder: entry → practiced → fluent → habitual progression</li>
+                                <li>Brace physics vocabulary audit: accessibility of boon/bane and candidate alternatives</li>
+                                <li>Familiarity feedback: subtle signals that don't feel gamified</li>
+                                <li>Circuit recognition: the runtime learns what patterns the user gravitates toward</li>
+                                <li>Mobile-first circuits: touch gestures that honor operator priming</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>The site becomes an instrument to learn: just as a musician builds fluency through practice, a visitor builds fluency with Spw operators and spatial grammar through repeated, rewarding interaction. Depth emerges from familiarity, not from required upfront knowledge.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/interaction-grammar/PLAN.md" class="operator-chip">~ full plan</a>
+                            <a href="../../.agents/plans/interaction-grammar/interaction-grammar.spw" class="operator-chip">^ semantics</a>
+                        </div>
+                    </div>
+
+                    <!-- cinematic-handles -->
+                    <div class="plan-card" data-plan-id="cinematic-handles">
+                        <div class="plan-header">
+                            <h3>Cinematic Handles</h3>
+                            <span class="plan-status" data-status="planning">planning</span>
+                        </div>
+                        <p class="plan-thesis">Give page components semantic handles — named timing tokens, transition phases, and attention curves — so that interactions can be composed with cinematic intention, not just mechanical timing.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Named timing tokens: practice-settle (100ms), threshold-reveal (300ms), full-express (600ms)</li>
+                                <li>Attention curves: how components become more legible when addressed vs. ambient</li>
+                                <li>Transition composition: sequences that feel coordinated across multiple elements</li>
+                                <li>Screenshot capture: pause moments where semantic intent is visible</li>
+                                <li>Customizable pacing: settings that let users adjust timing sensitivity</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>Interaction timing as storytelling: every transition, fade, and reveal becomes a moment of intention rather than accident. The site learns to whisper and shout, to pause and accelerate, with semantic purpose.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/cinematic-handles/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <!-- cognitive-navigation -->
+                    <div class="plan-card" data-plan-id="cognitive-navigation">
+                        <div class="plan-header">
+                            <h3>Cognitive Navigation</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Design spatial navigation that builds cognitive maps. Users should feel they understand where they are, how they got there, and how to return — not through breadcrumbs, but through spatial fluency.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Spatial address: frame hierarchy and path legibility</li>
+                                <li>Local ground (.): always accessible return point within any depth</li>
+                                <li>Surface map: visual representation of the site's spatial layout</li>
+                                <li>Wayfinding affordances: how to discover routes without external maps</li>
+                                <li>Cognitive load: minimum needed to build a spatial model</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>The site itself becomes a space you can learn to navigate like a building: familiar rooms, recognizable landmarks, and the confidence that you can find your way around without a GPS. Spatial fluency transfers to spatial thinking.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/cognitive-navigation/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === PLATFORM HORIZONS === -->
+            <section class="site-frame" id="platform-horizons" data-spw-role="category" data-spw-meaning="plans for platform capabilities and feature expansion">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#platform-horizons">*"platform_horizons"{</a>
+                    <h2>Platform Horizons & Features</h2>
+                </div>
+                <p class="inline-note">Plans that expand what the site can do: asset management, responsive design, advanced settings, gameplay, and multi-language surfaces.</p>
+
+                <div class="plans-grid">
+                    <!-- asset management (media-feature-brief, rpg-asset-capture-frames, etc.) -->
+                    <div class="plan-card" data-plan-id="asset-management">
+                        <div class="plan-header">
+                            <h3>Semantic Asset Management</h3>
+                            <span class="plan-status" data-status="foundation">foundation</span>
+                        </div>
+                        <p class="plan-thesis">Organize images and assets by purpose/surface with sidecar .spw metadata. Each asset gets a spirit name, thematic mapping, and optimization record. Assets become discoverable participants in the site's semantic system.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Surface-specific organization: rpg-wednesday, pretext-lab, illustrations, motifs, home</li>
+                                <li>Sidecar .spw metadata: spirit name, thematic mapping, optimization metadata</li>
+                                <li>Image optimization pipeline: multi-format variants (AVIF/WebP/PNG) at surface-specific tiers</li>
+                                <li>Whimsical naming skill: /image-naming-magic for spirit-based image naming</li>
+                                <li>Asset discovery index: .spw/assets.spw as navigable registry</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>Images stop being anonymous assets and become named, semantically classified participants in the site's lore. A Midjourney render becomes "threshold-poise" with its own spirit mapping and discovery tags, turning static images into discoverable content.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.spw/conventions/asset-management.spw" class="operator-chip">^ conventions</a>
+                            <a href="../../.agents/skills/image-naming-magic/SKILL.md" class="operator-chip">@ naming-magic skill</a>
+                        </div>
+                    </div>
+
+                    <!-- mobile & responsive -->
+                    <div class="plan-card" data-plan-id="mobile-runtime-foundation">
+                        <div class="plan-header">
+                            <h3>Mobile Runtime Foundation</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Build a mobile-first runtime that keeps interaction semantics intact on small screens. Touch gestures honor operator priming and symmetry; layouts adapt without losing spatial coherence.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Touch gesture semantics: tap, swipe, long-press mapped to operator interactions</li>
+                                <li>Viewport management: how much UI chrome, how much content space</li>
+                                <li>Progressive disclosure: what's always visible vs. revealed on interaction</li>
+                                <li>Spatial address on mobile: how to maintain navigation fluency on smaller screens</li>
+                                <li>Performance optimization: connection and battery awareness</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>The site doesn't shrink on mobile; it transforms. Interactions that feel natural on a large screen find touch-native equivalents that feel equally intentional. Spatial thinking scales to any screen size.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/mobile-runtime-foundation/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <!-- RPG gameplay -->
+                    <div class="plan-card" data-plan-id="rpg-gameplay">
+                        <div class="plan-header">
+                            <h3>RPG Local Gameplay</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Build a local-first RPG table tool: session state, character sheets, dice, encounter runners. Everything stored in browser; shareable by copying session code. No server required.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Session management: local-only state, shareable URLs, no authentication</li>
+                                <li>Character & creature tools: sheets, quick-ref, portrait storage</li>
+                                <li>Encounter runner: turn order, initiative, condition tracking</li>
+                                <li>Dice & randomness: multiple dice types, roll history, grouped rolls</li>
+                                <li>Screenshot-ready: clean UI for capturing session moments</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>A table companion that never goes down, never asks for data, never locks you out. Your campaign lives in your browser and in your shared links. The tool disappears; only the play remains.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../play/rpg-wednesday/" class="operator-chip">^ gameplay surface</a>
+                            <a href="../../.agents/plans/rpg-local-gameplay/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <!-- pretext lab -->
+                    <div class="plan-card" data-plan-id="pretext-whimsy-lab">
+                        <div class="plan-header">
+                            <h3>Pretext & Whimsy Lab</h3>
+                            <span class="plan-status" data-status="planning">planning</span>
+                        </div>
+                        <p class="plan-thesis">Create a space for exploring mathematics, physics, notation, and code through the lens of Spw's spatial grammar. Let other languages shine by framing them, not replacing them.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Multi-language surfaces: mathematics, musical notation, code snippets framed with Spw operators</li>
+                                <li>Discovery exercises: interactive explorations that teach through spatial play</li>
+                                <li>Notation comparison: same concept shown in multiple notations to reveal structures</li>
+                                <li>Whimsy affordances: typos, puns, playful examples alongside serious content</li>
+                                <li>Physics visualization: animated diagrams that make abstract concepts tangible</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>Mathematics becomes a language you can see and feel, not just read. Code exposes its own spatial structure when framed through Spw. The lab is where playfulness and rigor meet — where you can wonder and compute simultaneously.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/pretext-whimsy-lab/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <!-- settings & customization -->
+                    <div class="plan-card" data-plan-id="runtime-settings">
+                        <div class="plan-header">
+                            <h3>Runtime Settings & Customization</h3>
+                            <span class="plan-status" data-status="foundation">foundation</span>
+                        </div>
+                        <p class="plan-thesis">Give users granular control over their experience without forcing choices. Settings for accessibility, appearance, developer tools, typography, visibility, and performance.</p>
+
+                        <div class="plan-considerations">
+                            <strong>Feature Considerations:</strong>
+                            <ul>
+                                <li>Accessibility: reduce motion, high contrast, font size presets</li>
+                                <li>Appearance: color mode, operator saturation, animation intensity</li>
+                                <li>Developer: debug mode, frame metadata, verbose logging</li>
+                                <li>Typography: font scale (80-120%), line spacing, monospace variant</li>
+                                <li>Visibility: footer toggle, header opacity, spec pills display</li>
+                                <li>Performance: animation throttling, lazy loading preference</li>
+                            </ul>
+                        </div>
+
+                        <div class="plan-wonder">
+                            <strong>Wonder Hook:</strong>
+                            <p>The site adapts to you, not the other way around. Whether you need a quiet interface, bold colors, fast feedback, or semantic metadata, there's a lever for it. The defaults are calm; the possibilities are rich.</p>
+                        </div>
+
+                        <div class="plan-links">
+                            <a href="../../settings/" class="operator-chip">@ settings</a>
+                            <a href="../../.agents/plans/runtime-settings/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === SUPPORTING PLANS === -->
+            <section class="site-frame" id="supporting-plans" data-spw-role="reference" data-spw-meaning="plans that support and enhance core systems">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#supporting-plans">~"supporting_plans"{</a>
+                    <h2>Supporting Plans & Infrastructure</h2>
+                </div>
+                <p class="inline-note">Foundational and supporting plans that strengthen other systems: media publishing, screenshot semantics, visual design, and SVG integration.</p>
+
+                <div class="plans-grid">
+                    <div class="plan-card" data-plan-id="media-publishing">
+                        <div class="plan-header">
+                            <h3>Media Publishing Register</h3>
+                            <span class="plan-status" data-status="foundation">foundation</span>
+                        </div>
+                        <p class="plan-thesis">A small publishing register that makes the site easier to discuss: current focus, featured components, and reusable topic handles are configured in JSON.</p>
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/media-publishing/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <div class="plan-card" data-plan-id="screenshot-semantics">
+                        <div class="plan-header">
+                            <h3>Screenshot Semantics</h3>
+                            <span class="plan-status" data-status="planning">planning</span>
+                        </div>
+                        <p class="plan-thesis">Make semantic relationships visible in screenshots. Operator pairings, spatial relationships, and attention states should be visible to inspection without needing the live site.</p>
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/screenshot-semantics/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <div class="plan-card" data-plan-id="css-progressive-ornaments">
+                        <div class="plan-header">
+                            <h3>CSS Progressive Ornaments</h3>
+                            <span class="plan-status" data-status="active">active</span>
+                        </div>
+                        <p class="plan-thesis">Visual enhancement layer that adorns and emphasizes without breaking core functionality. Ornaments reveal themselves through interaction, attention, or animation.</p>
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/css-progressive-ornaments/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <div class="plan-card" data-plan-id="svg-surface-integration">
+                        <div class="plan-header">
+                            <h3>SVG Surface Integration</h3>
+                            <span class="plan-status" data-status="planning">planning</span>
+                        </div>
+                        <p class="plan-thesis">Integrate SVG as a first-class surface for interactive diagrams, operator visualization, and spatial demonstrations.</p>
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/svg-surface-integration/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+
+                    <div class="plan-card" data-plan-id="pwa-experience">
+                        <div class="plan-header">
+                            <h3>PWA Experience</h3>
+                            <span class="plan-status" data-status="foundation">foundation</span>
+                        </div>
+                        <p class="plan-thesis">Progressive Web App capabilities: offline access, installability, shared links, and native-like performance.</p>
+                        <div class="plan-links">
+                            <a href="../../.agents/plans/pwa-experience/PLAN.md" class="operator-chip">~ full plan</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === DISCOVERY SECTION === -->
+            <section class="site-frame" id="plan-discovery" data-spw-role="reference" data-spw-meaning="how plans relate to each other and to the site">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#plan-discovery">?"plan_discovery"{</a>
+                    <h2>Plan Discovery & Relationships</h2>
+                </div>
+
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>What's a plan?</h3>
+                        <p>A plan documents a feature consideration or brand horizon for spwashi.com. It includes the goal, scope, feature considerations, key files, dependencies, and validation approach. Plans are living documents that evolve as work happens.</p>
+                    </div>
+
+                    <div class="frame-panel">
+                        <h3>What are statuses?</h3>
+                        <ul>
+                            <li><strong>Foundation:</strong> Complete conceptual work; ready to guide implementation</li>
+                            <li><strong>Active:</strong> Currently being developed or refined</li>
+                            <li><strong>Planning:</strong> Strategy is set; implementation has not started</li>
+                        </ul>
+                    </div>
+
+                    <div class="frame-panel">
+                        <h3>How do I read a plan?</h3>
+                        <p>Each plan card shows the thesis, feature considerations, and wonder hooks. Links point to the full plan document and related surfaces. Start with the thesis, explore the considerations, and follow links for deeper dives.</p>
+                    </div>
+
+                    <div class="frame-panel">
+                        <h3>How are plans related?</h3>
+                        <p>Plans support each other: operator-semantics-refinement provides the conceptual foundation for interaction-grammar and spw-operator-pages. Dependencies are documented in each plan's full document. The integration guide shows the full relationship map.</p>
+                    </div>
+
+                    <div class="frame-panel">
+                        <h3>Can I suggest a plan?</h3>
+                        <p>Plans emerge from doing. If you notice something missing or something that could be better, that's the beginning of a plan. Reach out through <a href="/contact">contact</a>, or start a plan document in the .agents/plans/ folder on GitHub.</p>
+                    </div>
+
+                    <div class="frame-panel">
+                        <h3>Where are the full plans?</h3>
+                        <p>Full plans live in <code>.agents/plans/{plan-name}/</code>. Each plan has a PLAN.md with complete documentation, often supplemented with .spw files that capture semantics and integration points.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+
+    <style>
+        .plans-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .plan-card {
+            border: 1px solid var(--color-border, #e0e0e0);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            background: var(--color-surface, #fafafa);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .plan-card:hover {
+            border-color: var(--op-frame-color, #1a9999);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            flex: 1;
+        }
+
+        .plan-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            text-transform: capitalize;
+        }
+
+        .plan-status[data-status="foundation"] {
+            background: var(--color-success, #d4edda);
+            color: var(--color-success-dark, #155724);
+        }
+
+        .plan-status[data-status="active"] {
+            background: var(--color-info, #d1ecf1);
+            color: var(--color-info-dark, #0c5460);
+        }
+
+        .plan-status[data-status="planning"] {
+            background: var(--color-warning, #fff3cd);
+            color: var(--color-warning-dark, #856404);
+        }
+
+        .plan-thesis {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--color-text-secondary, #555);
+        }
+
+        .plan-considerations,
+        .plan-wonder {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--color-bg-alt, #f5f5f5);
+            border-left: 3px solid var(--op-frame-color, #1a9999);
+            border-radius: 0.25rem;
+        }
+
+        .plan-considerations strong,
+        .plan-wonder strong {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--color-text-primary, #000);
+        }
+
+        .plan-considerations ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .plan-considerations li {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .plan-wonder p {
+            margin: 0;
+            font-style: italic;
+            color: var(--color-text-secondary, #555);
+        }
+
+        .plan-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .plans-grid {
+                gap: 1rem;
+            }
+
+            .plan-card {
+                padding: 1rem;
+            }
+
+            .plan-header {
+                flex-direction: column;
+            }
+
+            .plan-status {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</body>
+</html>
