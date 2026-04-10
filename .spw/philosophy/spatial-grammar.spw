@@ -1,0 +1,107 @@
+# Spatial Grammar
+#
+# How Spw encodes spatial relationships as cognitive exercise —
+# and how that grammar can host other languages and let them shine.
+
+#>spw_spatial_grammar
+#:philosophy #!spatial
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "Spw's operators encode spatial relationships between concepts — containment, adjacency, depth, reference, projection, selection — that are usually left implicit in other languages. Working with the grammar exercises the capacity to perceive and name these relationships. The site is not just content about Spw; it is an arena for this spatial exercise."
+  corollary: "Because the grammar is about spatial relationship rather than execution, it can host any language or notation and illuminate that language's own spatial structure without replacing or subordinating it."
+}
+
+^"spatial_operators"{
+  ~#note: "Each operator encodes a spatial relationship that can be felt before it is named."
+  containment: {
+    ~#operators: "curly braces and parens — the primary containment forms"
+    spatial_act: "Placing something inside a bounded region. The region has an inside and an outside."
+    cognitive_exercise: "Distinguishing what belongs together from what does not. Every containment decision is a hypothesis about category."
+    feel: "The contents of a brace feel like they belong to the same space. The brace opens a face; everything inside is colocated."
+  }
+  selection: {
+    ~#operators: "square brackets"
+    spatial_act: "Pinning a coordinate in possibility space. Choosing one from many without closing off the others."
+    cognitive_exercise: "Selecting without consuming — the selection operator does not destroy what it did not choose."
+    feel: "Square brackets feel like a laser pointer. They illuminate one thing in a continuum without claiming the continuum."
+  }
+  projection: {
+    ~#operators: "angle brackets and the surface operator"
+    spatial_act: "Directing something into a specific conduit, or surfacing an internal state outward."
+    cognitive_exercise: "Understanding what shape a thing takes when rendered into a different medium or address space."
+    feel: "Angle brackets feel like a directed tunnel. The surface operator feels like bringing something up from underneath."
+  }
+  reference: {
+    ~#operators: "tilde"
+    spatial_act: "Pointing to a location without moving there. The reference preserves distance and direction."
+    cognitive_exercise: "Maintaining awareness of something without consuming attention. The map of where things are."
+    feel: "Tilde feels like a thread connecting this place to another. The thread is real but not the same as being at the other end."
+  }
+  membership: {
+    ~#operators: "dot"
+    spatial_act: "Returning to or addressing the local baseline or default member."
+    cognitive_exercise: "Finding the center of gravity within a field. The dot is always here relative to whatever contains it."
+    feel: "Gravitational. The dot settles attention to the nearest stable address."
+  }
+  elevation: {
+    ~#operators: "caret"
+    spatial_act: "Lifting a structured unit into address space — making something that was implicit into something nameable and inspectable."
+    cognitive_exercise: "The act of naming as a spatial act. Caret asks: what shape does this thing have? What is its address?"
+    feel: "Architectural. Caret gives something a location it did not have before."
+  }
+  inquiry: {
+    ~#operators: "question mark"
+    spatial_act: "Opening an exploratory aperture — a question as a spatial gesture toward uncertainty."
+    cognitive_exercise: "Holding a question open rather than collapsing it prematurely. The question mark locates a space that is not yet settled."
+    feel: "An open window in a wall. The question creates a view without requiring it to be answered immediately."
+  }
+}
+
+^"grammar_as_exercise"{
+  ~#note: "The act of writing or reading Spw is a spatial cognition exercise."
+  ~#exercise_1: "The capacity to perceive containment relationships — what belongs together vs. what is adjacent."
+  ~#exercise_2: "The capacity to hold multiple frames of reference simultaneously — the inside and outside of a brace, the reference and its target."
+  ~#exercise_3: "The capacity to understand depth — the difference between being inside something and pointing to it."
+  ~#exercise_4: "The capacity to distinguish selection from consumption — choosing without excluding."
+  ~#exercise_5: "The capacity to name structure without flattening it — elevation gives something a location without reducing it."
+  progression: "Entry-level Spw reading exercises basic containment and reference. Deep Spw authoring exercises the full spatial vocabulary simultaneously — a form of cognitive polyphony."
+  physical_analogy: "Learning Spw's spatial grammar is similar to learning to read architectural drawings: the symbols are arbitrary, but they encode spatial relationships that have real consequences when built."
+}
+
+^"multi_language_hosting"{
+  thesis: "When Spw frames another language or notation, it does not translate that language — it provides a spatial context that makes the language's own structural relationships visible."
+  how: "The guest language's elements are placed inside Spw's spatial grammar: its categories become containment domains, its references become ~ threads, its projections become > surfaces, its selections become [ ] coordinates."
+  result: "The guest language appears in a new spatial register — its implicit structure becomes explicit. The reader can see the spatial relationships that the language itself takes for granted."
+  ~#example_math: "Mathematical notation: containment and precedence become explicit as brace structure rather than convention."
+  ~#example_music: "Musical notation: voice, measure, and harmony become spatial domains rather than positional conventions."
+  ~#example_code: "Programming languages: scope, reference, and projection become explicit spatial operators rather than syntactic rules."
+  ~#example_language: "Natural language: clause structure, reference, and modality become visible as brace and operator relationships."
+  rule: "The guest language must remain legible on its own terms. Spw framing is an augmentation, not a translation. The reader should be able to remove the Spw frame and still understand the guest language — but the frame should have revealed something they could not have seen without it."
+  counterexample: "A multi-language surface that strips the guest language of its own notation and replaces it with Spw operators. The guest is no longer visible — only Spw remains. That is not hosting; that is erasure."
+}
+
+^"wonder_and_spatial_grammar"{
+  ~#note: "The spatial grammar is a primary source of wonder on this site."
+  mechanism: "When a visitor first perceives that the operators encode spatial relationships rather than just syntactic tokens, the site becomes legible in a new way. That shift — from syntax to space — is a structural revelation that earns the name wonder."
+  physics_connection: "The wonder about physics that the site aims to create is a consequence of the spatial grammar: brace physics becomes physically intuitive when the operator encoding of containment, tension, charge, and discharge is spatially felt."
+  exercise_reward: "The reward for the spatial cognition exercise is that the world looks different afterward — more structured, more legible, more full of relationships that were always there but unnamed."
+}
+
+^"open_questions"{
+  ?["Which spatial relationship is hardest to perceive for first-time Spw readers, and how should the site address that?"]{ #:open }
+  ?["Is the spatial grammar teachable through the site alone, or does it require direct instruction?"]{ #:open }
+  ?["What does it mean to 'get fluent' at Spw spatially — what new perceptions become available?"]{ #:open }
+  ?["How should multi-language surfaces be annotated so the visitor knows which parts are guest and which are Spw frame?"]{ #:open }
+  ?["What languages or notations on this site have the most to teach about their own spatial structure when hosted by Spw?"]{ #:open }
+}
+
+^"cross_references"{
+  @wonder_doctrine: ~"./wonder-doctrine.spw"
+  @cognitive_surface: ~"./cognitive-surface.spw"
+  @spirit_cycle: ~"./spirit-cycle.spw"
+  @site_semantics: ~"../conventions/site-semantics.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @circuits_plan: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
+  @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+}

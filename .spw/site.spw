@@ -23,6 +23,8 @@
   @conventions: ~"./conventions/index.spw"
   @site_semantics: ~"./conventions/site-semantics.spw"
   @style_development: ~"./conventions/style-development.spw"
+  @philosophy: ~"./philosophy/index.spw"
+  @graph: ~"./graph.spw"
   @surfaces: ~"./surfaces.spw"
   @canon: ~"./_workbench/.spw/index.spw"
   @mount: ~"./_workbench/.spw/mount.spw"
@@ -55,6 +57,7 @@
   installation: [@submodule, @mount]
   site_semantics: [@conventions, @site_semantics]
   style_development: [@style_development, @site_semantics]
+  philosophy: [@philosophy, @graph]
   public_routes: [@surfaces, @surface_registry]
 }
 
@@ -69,6 +72,8 @@
   conventions: @conventions
   site_semantics: @site_semantics
   style_development: @style_development
+  philosophy: @philosophy
+  graph: @graph
   public_surfaces: @surfaces
   workbench: @canon
   selection: @selection
@@ -82,8 +87,8 @@
 
 ^"open_questions"{
   ?["Which operator semantics feel right in the nav vs. forced?"]{ #:open }
-  ?["Where does the spirit cycle map onto the navigation patterns that already exist?"]{ #:open }
-  ?["What would it mean for a page visit to trace a phase of the spirit cycle?"]{ #:open }
-  ?["When should the brace walls (boon/bane) carry more visual weight?"]{ #:open }
-  ?["What is the right moment to introduce the valence pentad to a first-time visitor?"]{ #:open }
+  ?["Where does the spirit cycle map onto the navigation patterns that already exist?"]{ #:open ~#see: @philosophy }
+  ?["What would it mean for a page visit to trace a phase of the spirit cycle?"]{ #:open ~#see: @philosophy }
+  ?["When should the brace walls (boon/bane) carry more visual weight?"]{ #:open ~#see: @graph }
+  ?["What is the right moment to introduce the valence pentad to a first-time visitor?"]{ #:open ~#see: @graph }
 }

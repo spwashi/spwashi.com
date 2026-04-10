@@ -1,0 +1,97 @@
+# Spirit Cycle
+#
+# The five-phase arc that a meaningful visit, interaction, or creative
+# session traces — and how the site's grammar makes each phase legible.
+
+#>spw_spirit_cycle
+#:philosophy #!cycle
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "A meaningful passage through any cognitive surface follows a recurring arc. The arc is not a prescription — it describes what happens when attention moves honestly through difficulty toward expression and return. The site's grammar should make each phase recognizable, navigable, and revisitable."
+  why: "Without a phase model, the site treats all visits identically. With it, a first arrival, a resistance moment, a transformation, and a return are distinct states — each deserving its own legibility, affordance, and visual register."
+}
+
+^"phases"{
+  initiation: {
+    ~#description: "First contact. Fresh attention has arrived at a threshold. The visitor is at entry liminality, the surface is ambient, nothing has been committed yet."
+    ~#quality: "Openness, orientation, the charged breath before engagement."
+    ~#site_form: "The visitor has loaded a page or navigated to a named frame for the first time. The default calm state is in full effect."
+    ~#interaction: "Inspection without commitment. The priming state is beginning to form."
+    ~#operator_resonance: "layer — qualifying the context before entering it; probe — the first exploratory gesture."
+  }
+  resistance: {
+    ~#description: "The productive difficulty that follows first contact. The visitor is engaging something that does not immediately yield — a complex operator, an unfamiliar brace structure, a deep liminality state that requires sustained attention."
+    ~#quality: "Friction that teaches. The bane-quality of the surface is present but not hostile. Resistance is where fluency is earned."
+    ~#site_form: "The visitor is in threshold or settled liminality, working with a surface that requires effort. The circuit is at the practiced level, not yet fluent."
+    ~#interaction: "Repeated inspection, held focus, incremental address. Charge is accumulating."
+    ~#operator_resonance: "pragma — the constraint that must be satisfied; normalize — the scaling and comparison required to make sense of the data."
+  }
+  transformation: {
+    ~#description: "The pivot. Something reorients: a new frame becomes active, a spell fires, a brace charges and discharges into a new projection, a liminality phase crosses. The visitor has crossed a conceptual threshold."
+    ~#quality: "Surprise that arrives from structure rather than decoration. The feeling that a new axis of the space has become visible."
+    ~#site_form: "A local pivot has occurred — a mode switch, a spell trigger, a liminality depth change, or an operator sequence that produces a new address. The cinematic handle for this moment is the pivot-arc timing."
+    ~#interaction: "The invoke moment. A committed action that changes visible local state. The circuit has advanced one level."
+    ~#operator_resonance: "merge — the integration of two fields; object — the elevation of accumulated attention into a named structure."
+  }
+  expression: {
+    ~#description: "The outward discharge. The visitor is now projecting — sharing what was accumulated, rendering a derived view, producing something inspectable. The surface is in projected or deep liminality."
+    ~#quality: "Generativity. The charge that accumulated in resistance has been released into a form that can be shared, inspected, or screenshotted."
+    ~#site_form: "An operator projection is active, a deep address has been reached, a journey token has been earned. This is the screenshot moment."
+    ~#interaction: "Projection, telemetry, inspect-surface legibility. The result of the circuit's highest level."
+    ~#operator_resonance: "surface — projection into a rendered form; action — the committed discharge."
+  }
+  return: {
+    ~#description: "The settling back. Attention conserves and returns to ambient or settled liminality. The charge has discharged; the pivot has completed; the visitor is orienting again rather than projecting."
+    ~#quality: "Earned rest. Not the same as the initial ambient state — the surface now carries the mark of engagement. The journey token has been placed."
+    ~#site_form: "The visitor has dismissed an overlay, exited a deep liminality state, or the frame has returned to its settled default. The brace-settle timing is in effect."
+    ~#interaction: "Dismiss, traverse-out, or naturally settle. The registers have been updated. The breadcrumb trail now includes this arc."
+    ~#operator_resonance: "baseline — return to the local member or default lens; reference — the visit now references back to what was discovered."
+  }
+}
+
+^"phase_questions"{
+  ~#note: "Questions that belong specifically to individual phases."
+  ?["What makes initiation legible on a page that tries to be calm at rest?"]{ #:open }
+  ?["How should the site signal that resistance is productive rather than broken?"]{ #:open }
+  ?["What is the minimum structural change that earns the name transformation rather than just navigation?"]{ #:open }
+  ?["How does expression differ from just reaching a deep page — what makes it feel like discharge rather than arrival?"]{ #:open }
+  ?["How does return differ from abandonment? What does the surface retain that marks the difference?"]{ #:open }
+}
+
+^"navigation_mapping"{
+  ~#note: "How the spirit cycle phases map to site navigation acts and liminality states."
+  initiation: "entry liminality — first frame load, first address gesture"
+  resistance: "threshold to settled — sustained inspection, practiced circuit"
+  transformation: "settled to nested or projected — local pivot, spell trigger, mode switch"
+  expression: "projected to deep — active projection, journey token moment"
+  return: "any depth to settled or ambient — dismiss, traverse-out, brace-settle"
+  phase_legibility: "each transition should be recognizable in the liminality indicator, the breadcrumb trail, and the cinematic timing of the transition itself"
+}
+
+^"interaction_arc"{
+  ~#note: "How an interactive circuit maps to the spirit cycle."
+  entry_circuit: "initiation → resistance"
+  practiced_circuit: "resistance → transformation"
+  fluent_circuit: "transformation → expression"
+  habitual_circuit: "expression → return (and immediately back to initiation on the next cycle)"
+  spell_arc: "a mastered spell completes all five phases in one fluid gesture"
+}
+
+^"open_questions"{
+  ?["Which operator semantics most naturally embody each phase?"]{ #:open }
+  ?["Should the spirit cycle be legible to visitors who have not read about it, or only to practitioners?"]{ #:open }
+  ?["How does the cycle relate to the valence pentad — are boon, bane, bone, bonk, honk phase qualities or phase outcomes?"]{ #:open }
+  ?["Can a single interaction (a tap, a keypress) trace a full cycle, or does the cycle always require time?"]{ #:open }
+  ?["What is the relationship between the spirit cycle and a screenshot's meaning — which phases produce screenshot-worthy states?"]{ #:open }
+}
+
+^"cross_references"{
+  @site_semantics: ~"../conventions/site-semantics.spw"
+  @cognitive_surface: ~"./cognitive-surface.spw"
+  @wonder_doctrine: ~"./wonder-doctrine.spw"
+  @cinematic_plan: ~"../../.agents/plans/cinematic-handles/cinematic-handles.spw"
+  @circuits_plan: ~"../../.agents/plans/interaction-grammar/interaction-grammar.spw"
+  @nav_plan: ~"../../.agents/plans/cognitive-navigation/cognitive-navigation.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+}

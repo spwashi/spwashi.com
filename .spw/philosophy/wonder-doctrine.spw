@@ -1,0 +1,103 @@
+# Wonder Doctrine
+#
+# What earns the name "wonder" in this system — and what disqualifies it.
+# The distinction between structural revelation and decorative surprise.
+
+#>spw_wonder_doctrine
+#:philosophy #!wonder
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "Wonder is a state of attention, not a property of a surface. A surface earns wonder by becoming more legible under examination — by revealing structure that the visitor could not have predicted but can verify after the fact. Decoration produces surprise; structure produces wonder. The difference is whether the revelation could have been derived."
+  why: "Without this distinction, wonder becomes a license for arbitrary visual complexity. With it, wonder becomes a testable design criterion: if the revelation can be removed without changing what the visitor learns, it was not wonder — it was spectacle."
+}
+
+^"what_earns_wonder"{
+  structural_revelation: {
+    ~#definition: "A moment when the grammar underlying a surface becomes visible as a consequence of engagement."
+    ~#example_1: "An operator sigil that seemed decorative turns out to carry interaction intent that the visitor can now invoke."
+    ~#example_2: "A brace structure whose tension was felt but unnamed becomes nameable through inspection."
+    ~#example_3: "A liminality depth that seemed inaccessible resolves into a navigable path when attention is held."
+    ~#example_4: "A physics profile in the Pretext lab whose force was felt before its source (line metrics) was understood."
+    ~#test: "Can the visitor derive why this revelation happened? If yes, it is structural wonder. If the surprise cannot be explained after the fact, it is spectacle."
+  }
+  honest_complexity: {
+    ~#definition: "Complexity that arrives from the genuine properties of the material, not from styling choices imposed on it."
+    ~#example_1: "The tension gradient of a 50-line brace block feeling heavier than a 3-line one — because charge accumulates over distance."
+    ~#example_2: "A physics experiment whose forces are seeded by measured line widths, so the behavior changes meaningfully when the text changes."
+    ~#example_3: "The operator color system revealing a visual hierarchy that is semantic, not aesthetic."
+    ~#test: "Does the complexity disappear when the material is simplified? If yes, it was honest. If it persists regardless of the material, it was imposed."
+  }
+  earned_depth: {
+    ~#definition: "The discovery that a surface rewards continued engagement — that there is always a next level of legibility available."
+    ~#example_1: "A frame that is calm at rest but becomes richer with each addressing gesture."
+    ~#example_2: "A spell that was not visible until practiced circuits had been completed."
+    ~#example_3: "A liminality depth that becomes available only after the previous phase has been inhabited."
+    ~#test: "Does the depth require prior engagement to access? If yes, it is earned. If the full depth is visible on first load, it may be overwhelming rather than wonderful."
+  }
+}
+
+^"what_disqualifies_wonder"{
+  spectacle: {
+    ~#definition: "Surprise that cannot be derived. Motion or visual complexity that exists for its own sake."
+    ~#marker_1: "the animation is the same regardless of the content it operates on"
+    ~#marker_2: "the surprise does not repeat on second encounter"
+    ~#marker_3: "the effect cannot be inspected or named"
+    ~#test: "If the visitor's reaction is 'that's cool' rather than 'I see — of course it works that way', it was spectacle."
+  }
+  hidden_mechanics: {
+    ~#definition: "Behavior that cannot be understood even after the fact. Black-box motion, unexplained state changes."
+    ~#marker_1: "no inspect surface explains what happened"
+    ~#marker_2: "no register records the event"
+    ~#marker_3: "the behavior cannot be reproduced deliberately"
+    ~#test: "Can the visitor cause this to happen again by understanding what they did? If not, it is hidden mechanics, not wonder."
+  }
+  borrowed_vocabulary: {
+    ~#definition: "Aesthetic choices imported from other design systems that do not connect to the site's own grammar."
+    ~#marker_1: "the motion feels like it belongs to a different site"
+    ~#marker_2: "the metaphor does not resolve into operator or brace terminology"
+    ~#marker_3: "the wonder could be lifted wholesale into an unrelated site without changing"
+    ~#test: "Does removing this effect make the site feel less like itself, or just less visually busy? If the latter, it was borrowed."
+  }
+  ambient_decoration: {
+    ~#definition: "Motion or visual complexity that is always present, never earned, and does not respond to engagement depth."
+    ~#marker_1: "present on page load without any interaction"
+    ~#marker_2: "does not change with liminality or circuit level"
+    ~#marker_3: "adds motion without adding legibility"
+    ~#test: "Is this more present at entry liminality than at deep liminality? If yes, it is backwards — decoration rather than depth signal."
+  }
+}
+
+^"wonder_as_design_criterion"{
+  rule: "Every wonder claim can be falsified. If a visual or interactive effect passes the following tests, it earns the name; if it fails any, it does not."
+  ~#test_structural: "The visitor can explain why the revelation happened after experiencing it."
+  ~#test_honest: "The complexity changes meaningfully when the underlying material changes."
+  ~#test_earned: "Access to the wonder requires or is improved by prior engagement."
+  ~#test_inspectable: "The wonder can be traced to a named state, register, or interaction."
+  ~#test_vocabulary: "The wonder connects to the site's grammar, not to imported aesthetics."
+  counterexample: "An animated background that plays on page load regardless of content, cannot be explained by operator semantics, looks the same whether the visitor is at entry or deep liminality, and would be identical on any other site."
+}
+
+^"wonder_and_the_spirit_cycle"{
+  ~#note: "Wonder tends to arrive at the transformation phase — the pivot, the threshold-cross, the spell trigger. But it can appear at any phase if the grammar reveals something the visitor could not have predicted."
+  initiation_wonder: "The surface is more interesting than it looked from outside."
+  resistance_wonder: "The difficulty is revealing something about the structure of what is being learned."
+  transformation_wonder: "The pivot exposed a new axis that the visitor could not have imagined before the circuit was practiced."
+  expression_wonder: "The projection shows something about the visitor's own attention that was not visible until it was rendered."
+  return_wonder: "The settled state is different now — the journey token is evidence that something real happened here."
+}
+
+^"open_questions"{
+  ?["Can wonder be designed, or only enabled? What is the designer's role in a wonder-enabling surface?"]{ #:open }
+  ?["How does wonder relate to confusion — is productive confusion a phase of wonder, or its opposite?"]{ #:open }
+  ?["What is the minimum amount of prior knowledge required for the structural revelation test to be passable?"]{ #:open }
+  ?["Is there a wonder that arrives only from language — from the quality of the written word — independent of interaction?"]{ #:open }
+}
+
+^"cross_references"{
+  @spirit_cycle: ~"./spirit-cycle.spw"
+  @cognitive_surface: ~"./cognitive-surface.spw"
+  @site_semantics: ~"../conventions/site-semantics.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @style_development: ~"../conventions/style-development.spw"
+}

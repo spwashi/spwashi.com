@@ -1,0 +1,60 @@
+# Philosophy Index
+#
+# Site-local philosophical development — documents that ground the site's
+# design decisions in a coherent model of attention, wonder, and cognition.
+# These are not policy documents; they are working philosophical notes.
+
+#>spw_philosophy_index
+#:index #!philosophy
+#:layer #!pragmatics
+
+^"roots"{
+  @spirit_cycle: ~"./spirit-cycle.spw"
+  @wonder_doctrine: ~"./wonder-doctrine.spw"
+  @cognitive_surface: ~"./cognitive-surface.spw"
+  @spatial_grammar: ~"./spatial-grammar.spw"
+  @site_semantics: ~"../conventions/site-semantics.spw"
+  @style_development: ~"../conventions/style-development.spw"
+  @valence_kb: ~"../_workbench/.agents/kb/valence.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
+}
+
+^"dispatch"{
+  spirit_cycle: @spirit_cycle
+  wonder: @wonder_doctrine
+  cognition: @cognitive_surface
+  spatial: @spatial_grammar
+  semantics: @site_semantics
+  style: @style_development
+  valence: @valence_kb
+  physics: @brace_physics
+  runtime: @precipitates
+}
+
+^"reading_order"{
+  ~#note: "Suggested reading order for someone building a coherent model from scratch."
+  "1 — spatial_grammar: grounds everything else in something perceptible"
+  "2 — brace_physics: makes the spatial grammar physically intuitive"
+  "3 — wonder_doctrine: clarifies what this system is for"
+  "4 — spirit_cycle: shows how engagement arcs over time"
+  "5 — cognitive_surface: integrates the prior four into a design model"
+  "6 — site_semantics: applies the model to concrete component decisions"
+  "7 — style_development: tracks where aesthetic choices emerge from the work"
+}
+
+^"open_across_documents"{
+  ~#note: "Philosophical questions that span multiple documents and have not yet been resolved."
+  ?["How does the valence pentad (boon, bane, bone, bonk, honk) map onto the spirit cycle phases?"]{ #:open }
+  ?["Is wonder a property of the surface, the visitor, or the relationship between them?"]{ #:open }
+  ?["What is the relationship between spatial grammar and accessibility — does the spatial model make the site more or less accessible?"]{ #:open }
+  ?["How does the cognitive surface model change when the visitor is the author rather than the reader?"]{ #:open }
+  ?["When the site hosts another language through Spw, is the resulting surface more or less cognitively demanding?"]{ #:open }
+}
+
+^"invariant"{
+  "These documents are working notes, not settled doctrine — open questions are more valuable than premature answers.",
+  "Philosophical claims should be falsifiable: every philosophical document should include at least one counterexample or test.",
+  "The philosophy should remain grounded in the site's actual design decisions, not in abstract theory divorced from the work.",
+  "New philosophical documents should be added to this index and linked from the graph."
+}

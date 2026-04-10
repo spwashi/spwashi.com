@@ -1,0 +1,89 @@
+# Cognitive Surface
+#
+# What makes a surface cognitive rather than informational or interactive —
+# and what the practitioner-artist model implies for the site's design.
+
+#>spw_cognitive_surface
+#:philosophy #!cognition
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "A cognitive surface is one that changes as you engage with it — not in appearance, but in legibility. It models the visitor's attention rather than just their navigation. It has depth that is traversable in both directions. It preserves the record of engagement so that past attention remains visible in the current state. It can be mistaken, revisited, and developed over time."
+  distinction: {
+    informational_surface: "Delivers content to a passive reader. The surface does not change when read. Reading it twice produces the same result."
+    interactive_surface: "Responds to user events. The surface changes based on actions but does not model the quality of attention — a tap is a tap, regardless of what led to it."
+    cognitive_surface: "Models the visitor's attentional arc. The surface becomes more legible as engagement deepens. Past states remain visible. The visitor can be wrong about what they're seeing and then correct themselves."
+  }
+}
+
+^"properties"{
+  attentional_modeling: {
+    definition: "The surface responds to the quality of attention, not just the occurrence of events."
+    site_form: "Priming state, liminality depth, and charge accumulation all reflect how deeply the visitor has been attending, not just whether they have tapped or hovered."
+    test: "Does the surface behave differently after sustained inspection versus a casual glance, even if the same gesture is used?"
+  }
+  depth_traversability: {
+    definition: "There is always a next level of legibility available, and the visitor can deliberately move toward it or return from it."
+    site_form: "The liminality sequence (entry → threshold → settled → nested → projected → deep) is traversable and reversible, not a decoration axis."
+    test: "Can the visitor navigate deliberately to a deeper liminality state, and return deliberately from it, at any point in the visit?"
+  }
+  engagement_memory: {
+    definition: "Past attention leaves a legible trace on the surface — not a database record but a visual and semantic residue."
+    site_form: "Journey tokens, priming state persistence in data attributes, breadcrumb trail, liminality depth indicator."
+    test: "Does a screenshot of the surface after engagement carry more information than a screenshot of the default state?"
+  }
+  revisitability: {
+    definition: "The surface can be engaged multiple times with increasing return. Second visits are different from first visits in a productive way."
+    site_form: "Practiced circuits reveal affordances unavailable at entry level. Fluent circuits feel like reflexes. The same content becomes richer with accumulated context."
+    test: "Is a second visit to this surface qualitatively different from the first? Does the difference feel earned rather than just familiar?"
+  }
+  correctability: {
+    definition: "The visitor can be wrong about what they are seeing, discover the error, and revise their understanding. The surface supports this without punishing mistakes."
+    site_form: "Exploration safety: every interaction either invokes, inspects, signals unavailability, or passes through without trapping state. No interaction leaves the surface in a state that prevents correction."
+    test: "If the visitor makes a wrong assumption and follows it for several interactions, can they return to a coherent state without having to reload?"
+  }
+}
+
+^"practitioner_artist_model"{
+  definition: "The primary user of a cognitive surface is a practitioner-artist: someone who uses the surface to develop their own thinking, captures moments of insight, values the record of a developing journey, and returns to the surface as to a place, not a document."
+  contrast_with_reader: "A reader extracts content and leaves. A practitioner-artist inhabits the surface, marks it with their attention, and returns to find their marks still there."
+  contrast_with_developer: "A developer inspects the implementation. A practitioner-artist inspects the meaning — what the surface reveals about their own attention and the ideas they are working with."
+  ~#implication_1: "Screenshots are cognitive artifacts, not bug reports. The screenshot state should communicate what kind of thinking was happening."
+  ~#implication_2: "Breadcrumbs are cognitive trails, not URL history. They should capture the arc of attention, not just the sequence of pages."
+  ~#implication_3: "Spells are learned reflexes that encode practiced understanding. They are owned by the practitioner, not by the site."
+  ~#implication_4: "The return visit should feel like returning to a place where you left things — and finding them still there, with the marks of your prior engagement still legible."
+  ~#implication_5: "The site should feel like it can grow with the practitioner — deeper over time, not just more familiar."
+}
+
+^"cognitive_tool_criteria"{
+  ~#note: "Tests for whether a surface is functioning as a cognitive tool rather than just a display."
+  test_1: "After a twenty-minute visit, does the visitor know something about their own attention that they did not know before?"
+  test_2: "If the visitor returns three days later, is the surface in a different state from when they left — and does that difference carry information?"
+  test_3: "Can the visitor use the site to develop an idea — not just read about an idea, but work through one?"
+  test_4: "Is the surface useful to a skilled practitioner in a way that is qualitatively different from its usefulness to a first-time visitor?"
+  test_5: "Does the surface support the visitor in being wrong and revising their understanding — or does it only support being right?"
+}
+
+^"the_site_as_cognitive_instrument"{
+  ~#note: "This site's particular cognitive work: attention directed at a grammar of attention."
+  meta_quality: "The site's content is about Spw — a grammar of attention, relation, and transformation. A visitor who learns to navigate the site is also learning a model of their own cognition. This is the recursive quality that makes the site unusual."
+  spatial_relationship: "The grammar encodes spatial relationships — containment, adjacency, reference, depth, projection. Working with the grammar exercises the capacity to perceive and navigate conceptual space, not just syntactic space."
+  multi_language_hosting: "When the site frames another language through Spw, it is exercising this spatial capacity: seeing the structural relationships in that language that are usually left implicit."
+}
+
+^"open_questions"{
+  ?["What is the minimum surface design that qualifies as cognitive rather than interactive?"]{ #:open }
+  ?["How does the cognitive surface model relate to constructivist pedagogy — is the site a learning environment?"]{ #:open }
+  ?["Can a static page (no JavaScript) function as a cognitive surface, or does attentional modeling require a live runtime?"]{ #:open }
+  ?["What would it mean for the site to be 'wrong' — and how should the visitor discover and correct that?"]{ #:open }
+  ?["How does the practitioner-artist model relate to the spirit cycle — does each user session trace a full cycle, or fragments of one?"]{ #:open }
+}
+
+^"cross_references"{
+  @spirit_cycle: ~"./spirit-cycle.spw"
+  @wonder_doctrine: ~"./wonder-doctrine.spw"
+  @spatial_grammar: ~"./spatial-grammar.spw"
+  @site_semantics: ~"../conventions/site-semantics.spw"
+  @screenshot_plan: ~"../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
+  @nav_plan: ~"../../.agents/plans/cognitive-navigation/cognitive-navigation.spw"
+}

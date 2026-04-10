@@ -1,0 +1,201 @@
+# Concept Graph
+#
+# A map of how the site's key concepts relate to each other and where
+# each is developed. Not an index — an account of the relationships.
+
+#>spw_concept_graph
+#:graph #!concepts
+#:layer #!pragmatics
+
+^"roots"{
+  @philosophy: ~"./philosophy/index.spw"
+  @semantics: ~"./conventions/site-semantics.spw"
+  @style: ~"./conventions/style-development.spw"
+  @surfaces: ~"./surfaces.spw"
+  @site: ~"./site.spw"
+  @brace_physics: ~"./_workbench/.spw/registries/brace-physics.spw"
+  @valence: ~"./_workbench/.agents/kb/valence.spw"
+  @precipitates: ~"./_workbench/.spw/runtime/precipitates.spw"
+}
+
+^"concept_nodes"{
+  ~#note: "The major vocabulary items in play across the site. Each entry names where the concept is developed and how it connects to others."
+
+  brace_physics: {
+    ~#developed_in: "workbench registries/brace-physics.spw"
+    ~#enables: "wonder, cognitive_surface, cinematic_handles, interaction_circuits"
+    ~#site_form: "The physical intuition behind containment, tension, and discharge in the site's visual and interaction grammar."
+  }
+
+  spirit_cycle: {
+    ~#developed_in: "philosophy/spirit-cycle.spw"
+    ~#depends_on: "liminality, brace_physics, charge_bias"
+    ~#enables: "navigation_semantics, screenshot_semantics, cognitive_navigation"
+    ~#site_form: "The five-phase arc (initiation, resistance, transformation, expression, return) that meaningful engagement traces."
+  }
+
+  liminality: {
+    ~#developed_in: "conventions/site-semantics.spw"
+    ~#enables: "spirit_cycle, cognitive_navigation, screenshot_semantics, cinematic_handles"
+    ~#site_form: "The depth axis (entry → threshold → settled → nested → projected → deep) that tracks how far engagement has progressed."
+  }
+
+  wonder: {
+    ~#developed_in: "philosophy/wonder-doctrine.spw"
+    ~#depends_on: "structural_revelation, brace_physics, spatial_grammar"
+    ~#enables: "cognitive_surface, pretext_physics, svg_illustrations"
+    ~#site_form: "Structural revelation through engagement — the moment when the grammar underlying a surface becomes visible."
+  }
+
+  cognitive_surface: {
+    ~#developed_in: "philosophy/cognitive-surface.spw"
+    ~#depends_on: "liminality, wonder, spirit_cycle, spatial_grammar"
+    ~#enables: "screenshot_semantics, cognitive_navigation, practitioner_artist_model"
+    ~#site_form: "A surface that changes in legibility (not just appearance) as engagement deepens, models the visitor's attention, and preserves the record of engagement."
+  }
+
+  spatial_grammar: {
+    ~#developed_in: "philosophy/spatial-grammar.spw"
+    ~#depends_on: "brace_physics, operator_semantics"
+    ~#enables: "wonder, cognitive_surface, multi_language_surfaces, pretext_lab"
+    ~#site_form: "The spatial relationships encoded in Spw's operators: containment, selection, projection, reference, membership, elevation, inquiry."
+  }
+
+  operator_semantics: {
+    ~#developed_in: "conventions/site-semantics.spw"
+    ~#depends_on: "spatial_grammar, valence_pentad"
+    ~#enables: "wonder, interaction_circuits, screenshot_semantics, operator_atlas"
+    ~#site_form: "Every operator token carries an interaction intent before it carries a runtime behavior."
+  }
+
+  valence_pentad: {
+    ~#developed_in: "workbench .agents/kb/valence.spw"
+    ~#depends_on: "brace_physics"
+    ~#enables: "operator_semantics, spirit_cycle, brace_physics_vocabulary"
+    ~#site_form: "The five qualities that characterize any change: boon (growth), bane (friction), bone (stability), bonk (collision), honk (signal)."
+  }
+
+  charge_bias: {
+    ~#developed_in: "conventions/site-semantics.spw"
+    ~#depends_on: "brace_physics, spatial_grammar"
+    ~#enables: "interaction_circuits, cinematic_handles, pretext_physics"
+    ~#site_form: "Charge is stored tendency in a brace; bias is directional preference that changes which projection is salient. Both must be inspectable."
+  }
+
+  alchemistry: {
+    ~#developed_in: "conventions/site-semantics.spw"
+    ~#depends_on: "operator_semantics, spatial_grammar, wonder"
+    ~#enables: "cognitive_surface, practitioner_artist_model"
+    ~#site_form: "Operator-level transformation of attentional material. Wonder belongs where transformation becomes clearer through interaction."
+  }
+
+  screenshot_semantics: {
+    ~#developed_in: ".agents/plans/screenshot-semantics/screenshot-semantics.spw"
+    ~#depends_on: "liminality, priming, journey_tokens, cognitive_surface"
+    ~#enables: "practitioner_artist_model, cognitive_navigation"
+    ~#site_form: "Priming state, selection persistence, and journey tokens that make a screenshot of an addressed state meaningful without runtime context."
+  }
+
+  cognitive_navigation: {
+    ~#developed_in: ".agents/plans/cognitive-navigation/cognitive-navigation.spw"
+    ~#depends_on: "liminality, spirit_cycle, breadcrumbs, spells"
+    ~#enables: "practitioner_artist_model, screenshot_semantics"
+    ~#site_form: "Liminality as a traversable depth axis, Spw breadcrumbs as cognitive path, spells as learnable named sequences, accessibility as canonical cognitive map."
+  }
+
+  interaction_circuits: {
+    ~#developed_in: ".agents/plans/interaction-grammar/interaction-grammar.spw"
+    ~#depends_on: "brace_physics, spatial_grammar, spirit_cycle"
+    ~#enables: "spells, practitioner_artist_model, multi_language_surfaces"
+    ~#site_form: "Progressive familiarity ladder — entry, practiced, fluent, habitual — where depth is available without being required."
+  }
+
+  cinematic_handles: {
+    ~#developed_in: ".agents/plans/cinematic-handles/cinematic-handles.spw"
+    ~#depends_on: "brace_physics, liminality, charge_bias, operator_semantics"
+    ~#enables: "wonder, screenshot_semantics, cognitive_navigation"
+    ~#site_form: "Named timing tokens from Spw vocabulary (brace-settle, pivot-arc, threshold-cross, charge-release, return, project) and layer/lighting depth vocabulary."
+  }
+
+  pretext_physics: {
+    ~#developed_in: ".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+    ~#depends_on: "brace_physics, spatial_grammar, charge_bias, wonder"
+    ~#enables: "wonder, multi_language_surfaces, cognitive_surface"
+    ~#site_form: "Layout-driven physical projections seeded by real line metrics — boon/gravity, bane/pressure, charge/offset, pivot/reorientation."
+  }
+
+  multi_language_surfaces: {
+    ~#developed_in: "philosophy/spatial-grammar.spw"
+    ~#depends_on: "spatial_grammar, wonder, interaction_circuits"
+    ~#enables: "practitioner_artist_model, cognitive_surface"
+    ~#site_form: "Surfaces where Spw provides the spatial frame and the guest language demonstrates its own expressive structure."
+  }
+}
+
+^"relationship_edges"{
+  ~#note: "Key cross-concept relationships worth stating explicitly."
+  physics_to_grammar: {
+    ~#from: "brace_physics"
+    ~#to: "spatial_grammar"
+    ~#type: "instantiates"
+    ~#note: "Brace physics gives the spatial grammar a physical intuition — the grammar becomes feelable, not just readable."
+  }
+  liminality_tracks_cycle: {
+    ~#from: "liminality"
+    ~#to: "spirit_cycle"
+    ~#type: "tracks"
+    ~#note: "Liminality is the runtime form of the cycle's phases — it tracks where in the arc the current engagement is."
+  }
+  wonder_criterion: {
+    ~#from: "wonder"
+    ~#to: "cognitive_surface"
+    ~#type: "criterion"
+    ~#note: "Wonder is one of the primary criteria for a functioning cognitive surface. Without it, the surface is informational, not cognitive."
+  }
+  grammar_enables_hosting: {
+    ~#from: "spatial_grammar"
+    ~#to: "multi_language_surfaces"
+    ~#type: "enables"
+    ~#note: "The spatial grammar makes it possible to host other languages by providing a neutral spatial register."
+  }
+  charge_names_motion: {
+    ~#from: "charge_bias"
+    ~#to: "cinematic_handles"
+    ~#type: "vocabulary_source"
+    ~#note: "The timing vocabulary for cinematic handles should come from the charge/bias model: charge-decay, brace-settle, pivot-arc are semantic names, not arbitrary labels."
+  }
+  circuits_become_spells: {
+    ~#from: "interaction_circuits"
+    ~#to: "cognitive_navigation"
+    ~#type: "progression"
+    ~#note: "Spells are the fluency tier of interaction circuits — a mastered circuit at habitual level becomes a spell when it can be named and triggered in one gesture."
+  }
+  screenshot_serves_artist: {
+    ~#from: "screenshot_semantics"
+    ~#to: "cognitive_surface"
+    ~#type: "serves"
+    ~#note: "Screenshot semantics exists to serve the practitioner-artist: captures should be cognitive artifacts that communicate the state of developing thinking."
+  }
+  valence_cycle_open: {
+    ~#from: "valence_pentad"
+    ~#to: "spirit_cycle"
+    ~#type: "open_question"
+    ~#note: "The relationship between the five valence qualities and the five spirit cycle phases is not yet resolved — it may be 1:1, many:1, or orthogonal."
+  }
+}
+
+^"concept_clusters"{
+  ~#note: "Groupings that tend to be developed and applied together."
+  physics_cluster: "brace_physics, charge_bias, spatial_grammar, pretext_physics"
+  cycle_cluster: "spirit_cycle, liminality, cinematic_handles, screenshot_semantics"
+  cognition_cluster: "cognitive_surface, wonder, alchemistry, practitioner_artist_model"
+  grammar_cluster: "operator_semantics, spatial_grammar, multi_language_surfaces, valence_pentad"
+  navigation_cluster: "cognitive_navigation, interaction_circuits, spells, breadcrumbs"
+}
+
+^"open_graph_questions"{
+  ?["Are there concept nodes missing from this graph that are already developed in the workbench?"]{ #:open }
+  ?["Which relationship edges are the most load-bearing for the site's overall coherence?"]{ #:open }
+  ?["How does the valence pentad fit into the concept graph — is it a foundation or a derived vocabulary?"]{ #:open }
+  ?["What concept, if removed, would cause the most cascading loss of coherence across the other documents?"]{ #:open }
+}
