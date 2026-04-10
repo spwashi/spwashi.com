@@ -1,0 +1,211 @@
+#>operator_lineage_discovery
+#:notebook #!operators
+#:layer #!pragmatics
+
+^"discovery_journey"{
+  ~#note: "How a user discovers and internalizes operator lineage through interaction and documentation."
+
+  naive_entry: {
+    state: "First visit to spwashi.com"
+    observation: "The user sees frames, links, buttons, and various interactive elements but doesn't think about operators at all."
+    touchpoint: "The page just works. Links feel natural (reference), buttons commit actions, and navigation reveals structure."
+    operator_awareness: "Zero — but the operators are already shaping their experience."
+  }
+
+  curious_discovery: {
+    state: "Second or third visit, or after clicking on 'Spw syntax' or 'Operator atlas'"
+    observation: "User notices there are sigils like #>, ~, ?, @, *, ^, etc. scattered through the interface."
+    touchpoint: "An operator atlas page or a tooltip explains what one operator means. E.g., '~ means reference — pointing to something without moving there.'"
+    operator_awareness: "One or two operators are now explicit. The user starts noticing them elsewhere on the page."
+  }
+
+  pattern_recognition: {
+    state: "After 5-10 minutes of interaction or reading"
+    observation: "User starts seeing operator combinations: ~(#frame), ?[choice], @perspective."
+    touchpoint: "As they click around, they realize these combinations feel natural. ~(#frame) feels like 'reference to a named thing,' and they intuitively click it as a link."
+    operator_awareness: "Operators are now visible, and the user is developing intuitions about what they do."
+  }
+
+  symmetry_discovery: {
+    state: "After exploring for 15-30 minutes or reading symmetry documentation"
+    observation: "User notices that operators seem to come in pairs. When they see ~, they expect @. When they see ?, they expect to do something after (!)."
+    touchpoint: "Symmetry pairs are documented in operator-semantics or in the operator atlas. Or the user discovers them inductively by noticing that certain combinations feel natural and others feel odd."
+    operator_awareness: "Operators are now understood relationally. The user can predict what feels natural based on what came before."
+  }
+
+  physics_comprehension: {
+    state: "After reading physics explanations or experimenting with diverse operator sequences"
+    observation: "User understands **why** operators feel the way they do. ~ feels like a thread because reference preserves distance and direction. # feels like a name because it creates a resonant structure."
+    touchpoint: "Operator-semantics.spw explains the spatial acts and priming properties. The user reads the physics section and has 'aha' moments recognizing patterns they've already felt."
+    operator_awareness: "Operators are now understood as spatial and attentional principles, not arbitrary symbols."
+  }
+
+  tradition_generation: {
+    state: "After weeks of engagement or after deliberately exploring operator combinations"
+    observation: "User has discovered patterns that aren't documented. E.g., 'When I use &(~frame), it feels like I'm relating something to a reference,' or 'Nested ?[?[?]] creates a sense of drilling deeper into uncertainty.'"
+    touchpoint: "The user shares these patterns with others, or documents them in their own notes. The site provides affordances for capturing and sharing operator sequences."
+    operator_awareness: "Operators are now a personal language. The user has a voice and style in how they compose sequences."
+  }
+
+  lore_acknowledgment: {
+    state: "When patterns become shared and recognized as traditions"
+    observation: "Multiple users discover similar patterns independently, or one user's innovation is recognized and adopted by the community."
+    touchpoint: "Patterns are documented in the operator atlas or in public notebooks. They become part of the acknowledged lore."
+    operator_awareness: "Operators are now a cultural language. The user is both learning from tradition and contributing to it."
+  }
+}
+
+^"touchpoint_design"{
+  ~#note: "Where and how the user encounters information about operators at each stage of discovery."
+
+  entry_level: {
+    description: "First-time visitors should experience operators implicitly, through natural interaction, without jargon."
+    touchpoints: [
+      "Links feel like references (~ behavior) without saying '~'",
+      "Buttons feel like actions (@ or ! behavior) without explanation",
+      "Frame navigation feels like activating named structures (# behavior) through direct hash link or map"
+    ]
+    documentation_presence: "Minimal. A tooltip might say 'Reference: link to this without committing' on hover, but only if the user explicitly asks for help."
+  }
+
+  curious_level: {
+    description: "Users who click on 'Operator Atlas' or 'Learn about Spw' should find clear, non-intimidating introductions."
+    touchpoints: [
+      "Operator atlas landing page with short descriptions: '~ (potential) — a thread pointing to another place without moving there'",
+      "Sigil tooltips on the page itself explaining what each operator does in context",
+      "Sidebar or collapsible section showing 'Operator you just used' with explanation"
+    ]
+    documentation_presence: "Moderate. Explanations are visible but not overwhelming. Links to deeper documentation are available."
+  }
+
+  practiced_level: {
+    description: "Users who are returning or who have read the initial documentation are ready for symmetry and physics."
+    touchpoints: [
+      "Operator atlas pages now show symmetry pairings: '~ (potential) pairs with @ (perspective)'",
+      "Physics section explains spatial acts: '~(#frame) feels like a thread pointing to a named structure because reference preserves distance'",
+      "Priming examples show natural sequences: '~(#frame) ? ! — reference a frame, wonder about it, act'"
+    ]
+    documentation_presence: "High. Operators are now explained through their relationships and physics."
+  }
+
+  fluent_level: {
+    description: "Users who understand operator physics and symmetry are ready to discover traditions and invent new patterns."
+    touchpoints: [
+      "Operator-semantics.spw is now directly accessible and written for someone who already understands the basics",
+      "Examples of operator sequences that users have discovered and that become traditions",
+      "Affordances for documenting and sharing new operator patterns"
+    ]
+    documentation_presence: "Contextual. Deep documentation is available for reference; most communication is through shared patterns."
+  }
+}
+
+^"discoverability_strategy"{
+  ~#note: "How operator semantics documentation is made discoverable at each stage of learning."
+
+  from_home_page: {
+    path: "home → 'Spw syntax' card → syntax surface"
+    describes: "Basic operator meanings and visual representation"
+    audience: "First-time curious visitors"
+  }
+
+  from_operator_atlas: {
+    path: "home → 'Operator atlas' card → atlas landing page → individual operator page"
+    describes: "Detailed physics, priming, symmetry for each operator"
+    audience: "Users actively learning operators"
+  }
+
+  from_interaction: {
+    path: "While clicking around the site → encounter operator sigil → click for tooltip → link to operator page"
+    describes: "In-context explanation of what the operator does in this specific situation"
+    audience: "Users learning by doing"
+  }
+
+  from_software_surface: {
+    path: "topics/software → references to operator-semantics.spw and spatial-grammar.spw"
+    describes: "Theoretical foundation: why operators exist, what they encode, how they relate to cognition"
+    audience: "Users interested in the philosophy and design"
+  }
+
+  from_settings: {
+    path: "settings → operator preference options (future enhancement)"
+    describes: "How to customize operator display or choose between different operator vocabularies"
+    audience: "Advanced users who want to adapt the system to their preferences"
+  }
+
+  from_console: {
+    path: "Spw console shows which operators are active on the current page"
+    describes: "Real-time visibility into operator composition and interaction"
+    audience: "Users in developer/inspector mode"
+  }
+}
+
+^"challenge_points"{
+  ~#note: "Where users commonly get stuck or confused about operators, and how to address it."
+
+  confusion_reference_vs_action: {
+    problem: "User sees both ~ (reference) and @ (action/perspective) but doesn't understand the difference."
+    why_it_happens: "Both create links or interactive elements; the distinction is conceptual."
+    resolution: "The operator-semantics document explains: 'Reference (~) preserves distance; perspective (@) anchors a viewpoint. Following a reference shows you where it points. Invoking a perspective changes how you see things.'"
+    touched_by: [
+      "operator-semantics.spw → operator_physics section",
+      "operator atlas pages for ~ and @",
+      "inline tooltips distinguishing reference links from action buttons"
+    ]
+  }
+
+  confusion_priming_vs_semantics: {
+    problem: "User understands what each operator means but doesn't see why ~(#frame) feels natural while ^~(#frame) feels awkward."
+    why_it_happens: "Priming is felt through use, not through definition."
+    resolution: "The operator-semantics document explains priming: '~ opens a view; # announces structure. Together, ~(#frame) is 'look at the structure of this reference,' which is natural. But ^~(#frame) is 'elevate the act of referring to a frame,' which feels like it's doing something weird to the reference itself.'"
+    touched_by: [
+      "operator-semantics.spw → operator_priming section",
+      "interaction examples showing natural vs. unusual sequences",
+      "practice exercises that strengthen intuition about what sequences feel natural"
+    ]
+  }
+
+  confusion_original_vs_current: {
+    problem: "User reads that the original set was ~ # . ? ! * & @ ^ but the site uses different names like 'ref' and 'frame'."
+    why_it_happens: "The site adapted operator names for legibility and implementation, but the original meanings are still important."
+    resolution: "The operator-semantics document clearly maps current names to original meanings: '# is called 'frame' on the site and 'vibration' in the original set. Both are right; the current name describes how it's used (named frame), while the original name describes how it feels (resonance).'"
+    touched_by: [
+      "operator-semantics.spw → lineage section",
+      "Operator atlas pages showing 'also known as' or 'originally called'",
+      "a decision document explaining why names changed"
+    ]
+  }
+}
+
+^"learning_feedback_loops"{
+  ~#note: "How the system helps the user feel progress and understanding."
+
+  implicit_feedback: {
+    signal: "An operator sequence you try actually works (a link you expect to be a reference clicks as a reference, a button behaves like you expected)."
+    message: "Your intuition about operators is getting more accurate. You're learning."
+    implementation: "Every interaction should work predictably. Violations are bugs."
+  }
+
+  recognition_feedback: {
+    signal: "You notice an operator on a page and remember what it does without looking it up."
+    message: "You're starting to develop fluency."
+    implementation: "Operator pages should track which operators you've visited; the console should highlight operators on the current page; tooltips should fade in/out based on whether you're likely to need them."
+  }
+
+  pattern_feedback: {
+    signal: "You realize you've been using a particular operator sequence repeatedly, and it's becoming your habit."
+    message: "You're developing a personal style."
+    implementation: "The interaction runtime could note frequently-used patterns and surface them for reflection, without being intrusive."
+  }
+
+  symmetry_feedback: {
+    signal: "You predict what operator pair will feel natural, and it does."
+    message: "You understand operator physics, not just names."
+    implementation: "When the user encounters an operator page, highlight its symmetry partner and show examples of their interaction."
+  }
+
+  tradition_feedback: {
+    signal: "You discover a pattern, document it, and later see another user discovering the same pattern independently."
+    message: "You're part of a community of practice."
+    implementation: "Create affordances for documenting patterns; surface discovered patterns to other users; highlight when patterns are independently discovered by multiple users."
+  }
+}
