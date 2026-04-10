@@ -1,0 +1,277 @@
+#>operator_semantics_refined
+#:convention #!operators
+#:layer #!pragmatics
+
+^"lineage"{
+  ~#note: "Spw operators are rooted in an original set with deep meanings. This document bridges original intent, workbench canon, and site-specific interpretation through the physics and symmetry of the language."
+
+  original_set: [
+    "~ potential — reference, threading, maintaining awareness across distance",
+    "# vibration — resonance, resonant naming, tonal orientation",
+    ". ground — settlement, baseline, return to default or center of gravity",
+    "? wonder — inquiry, opening exploratory apertures, holding uncertainty",
+    "! action — imperative, constraint, forcing a commitment or projection",
+    "* value — substance, materiality, concrete content or flow",
+    "& subject — binding, integration, subject of relation or frame",
+    "@ perspective — point of view, context, anchoring an observation",
+    "^ ascension — elevation, structuring, making the implicit inspectable",
+    "< > concept/scene — angle brackets for projection and conduit",
+    "[ ] mode — selection, choosing without consuming",
+    "{} definition — containment, brace, bounded region with inside/outside"
+  ]
+
+  current_site_alignment: {
+    ~: "ref — refer, resolve reference without forcing commitment"
+    #: "frame — orient, activate or inspect a named frame or schema"
+    .: "baseline — settle, return to local baseline or default"
+    "?": "probe — inquire, ask or reveal exploratory lens"
+    "!": "pragma — constrain, apply or inspect runtime force"
+    "*": "stream — flow, connect to dynamic or event-like content"
+    "&": "merge — integrate, overlay or combine fields"
+    "@": "action — act, commit a local action or projection"
+    "^": "object — elevate, open or inspect structured content"
+    "<>": "conduit — project, move into or inspect rendered projection"
+    "[]": "selection — select, pin coordinate in possibility space"
+    "{}": "brace — contain, place in bounded region with inside/outside"
+  }
+
+  physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."
+}
+
+^"operator_physics"{
+  ~#thesis: "Operators are not arbitrary symbols. They encode spatial and attentional relationships that can be felt, observed, and built upon. The physics of operators emerges through priming, symmetry, and relational patterning."
+
+  potential_physics: {
+    operator: "~"
+    original_meaning: "potential — something that could be but is not yet actualized; the space of possibility"
+    spatial_act: "pointing across distance without moving; threading attention without consuming it"
+    priming_property: "~ prepares the reader to expect reference or direction without commitment. It opens a view into another location."
+    interaction_semantics: "A ~ reference can be followed by inspection (to see what it points to), traversal (to move to the target), or deferral (to keep the reference as a note)."
+    symmetry_partner: "~ pairs with @ (perspective). A reference must have a viewpoint; a perspective must reference something."
+    physical_rule: "A potential is stored as a thread, not as a collapse. When actualized, it should retain the thread relationship — the path should remain visible."
+  }
+
+  vibration_physics: {
+    operator: "#"
+    original_meaning: "vibration — resonance, tonal quality, the ability to activate aligned structures"
+    spatial_act: "naming something so it can be recognized by resonance; calling something into focus"
+    priming_property: "# announces structure. It sets up the expectation that what follows is a name, category, or anchoring label."
+    interaction_semantics: "A frame (#name) can be activated by direct address (hash link), traversed by navigation, or inspected for its schema."
+    symmetry_partner: "# pairs with . (ground). A frame vibrates; a ground settles. Both are stable, but frame projects while ground contains."
+    physical_rule: "Resonance should be recoverable. The vibration of a frame should set up a field where related operations can find it through harmonic matching."
+  }
+
+  ground_physics: {
+    operator: "."
+    original_meaning: "ground — the baseline, the default, the center of gravity within a bounded region"
+    spatial_act: "settling attention to the nearest stable address; returning to local equilibrium"
+    priming_property: ". signals locality and return. After exploration, it re-anchors attention to what is here."
+    interaction_semantics: "A ground point can be treated as a default lens, a reset point, or the primary member of a containing structure."
+    symmetry_partner: ". pairs with # (vibration). Frame gives name and structure; ground gives location and return."
+    physical_rule: "Ground must be reachable from any depth. No matter how deep you explore, the local ground should bring you back to the current context."
+  }
+
+  wonder_physics: {
+    operator: "?"
+    original_meaning: "wonder — inquiry, curiosity, the capacity to hold open a question without collapsing it"
+    spatial_act: "opening an exploratory aperture; creating a view without requiring immediate resolution"
+    priming_property: "? invites uncertainty and exploration. It sets up the reader to expect multiple possible paths rather than a single answer."
+    interaction_semantics: "A probe (?) can open a filter lens, reveal alternative framings, or expose latent structure without choosing one path."
+    symmetry_partner: "? pairs with ! (action). Wonder opens; action commits. Together they create the dynamic between exploration and commitment."
+    physical_rule: "A question should remain open even after interaction. Closing it (committing to an answer) should be visible and reversible."
+  }
+
+  action_physics: {
+    operator: "!"
+    original_meaning: "action — imperative force, the capacity to commit and change state"
+    spatial_act: "forcing a commitment, projecting intent into the world, making something happen"
+    priming_property: "! announces that something will be done. It sets up the expectation of state change and consequence."
+    interaction_semantics: "An action (!) can invoke a side effect, commit a form, trigger a projection, or apply a constraint."
+    symmetry_partner: "! pairs with ? (wonder). Action commits what wonder opens. Together they create narrative momentum."
+    physical_rule: "Every action should be inspectable before and after. The intent should be clear before commitment; the consequence should be observable after."
+  }
+
+  value_physics: {
+    operator: "*"
+    original_meaning: "value — substance, materiality, the concrete content that flows through the system"
+    spatial_act: "rendering the substantial; making abstract relationships tangible through concrete content"
+    priming_property: "* signals that something is here, now, materially present. It draws attention to what is real rather than what is merely possible."
+    interaction_semantics: "A stream (*) carries content (image, text, data) and can be followed, consumed, or referenced without consuming it."
+    symmetry_partner: "* pairs with ~ (potential). Potential is what could be; value is what is. The two together create the dynamic between possibility and actuality."
+    physical_rule: "Value should be legible. If something is marked as a stream, the viewer should be able to see what flows through it without unnecessary scrolling or hidden content."
+  }
+
+  subject_physics: {
+    operator: "&"
+    original_meaning: "subject — the binding force, the subject of relation, the integration of multiple fields"
+    spatial_act: "binding multiple structures together; creating a relation where previously there was just adjacency"
+    priming_property: "& announces relationship. It sets up the expectation that what follows is a synthesis or comparison rather than a list."
+    interaction_semantics: "A merge (&) can overlay views, compare structures, or bind fields so that a change in one affects others."
+    symmetry_partner: "& pairs with @ (perspective). A subject (what is being related) requires a perspective (how it is being viewed). The two create the relational act."
+    physical_rule: "A binding should be visible. When two structures are merged, the user should see where they agree and where they diverge."
+  }
+
+  perspective_physics: {
+    operator: "@"
+    original_meaning: "perspective — point of view, context, the position from which observation happens"
+    spatial_act: "anchoring an observation to a location or frame; establishing the viewpoint from which everything else is seen"
+    priming_property: "@ grounds a viewpoint. It sets up the expectation that what follows is shaped by a particular context or position."
+    interaction_semantics: "A perspective (@) can be changed by choosing a different context, zooming in/out, or shifting the coordinate system."
+    symmetry_partner: "@ pairs with ~ (potential). A perspective is a location; a potential is what can be seen from that location. Together they create the observer-observed relationship."
+    physical_rule: "Perspective should be legible. The user should be able to see what viewpoint they are currently in and how changing it would change what they see."
+  }
+
+  ascension_physics: {
+    operator: "^"
+    original_meaning: "ascension — elevation, lifting the implicit into the explicit, making something nameable and inspectable"
+    spatial_act: "giving structure a location in address space; the act of naming as a spatial act"
+    priming_property: "^ announces structuring. It sets up the expectation that what follows is a unit that can be navigated, addressed, and operated upon."
+    interaction_semantics: "An object (^) can be opened, inspected for its schema, traversed, or composed into larger structures."
+    symmetry_partner: "^ pairs with . (ground). Ascension gives structure address and name; ground gives it location and containment. Together they create the field of navigable space."
+    physical_rule: "Structure should be addressable. Everything elevated with ^ should have a stable path that can be referenced and returned to."
+  }
+
+  conduit_physics: {
+    operator: "<>"
+    original_meaning: "concept/scene — projection, tunneling content into a specific medium or conduit"
+    spatial_act: "directing something into a specific channel; surfacing internal state into external presentation"
+    priming_property: "<> announces transformation. It sets up the expectation that what follows is the same concept rendered in a different form or medium."
+    interaction_semantics: "A conduit can filter content, apply formatting, or create a projection into a new space."
+    symmetry_partner: "<> pairs with [] (mode). Conduit shapes what comes through; mode selects which conduit to use."
+    physical_rule: "Projection should be traceable. The user should be able to see what is being projected and how it relates to the original structure."
+  }
+
+  mode_physics: {
+    operator: "[]"
+    original_meaning: "mode — selection, choosing one from many without closing off the others"
+    spatial_act: "pinning a coordinate in possibility space; illuminating one alternative without claiming all others are unavailable"
+    priming_property: "[] announces selection. It sets up the expectation that what is shown is one choice among multiple available alternatives."
+    interaction_semantics: "A mode can be switched without destroying the previous choice, can be combined with other modes, or can be queried for what else is available."
+    symmetry_partner: "[] pairs with <> (conduit). Mode selects which conduit or presentation; conduit delivers the selected content."
+    physical_rule: "Alternatives should be discoverable. When a mode is active, the viewer should be able to see what other modes exist without fully committing to them."
+  }
+
+  brace_physics: {
+    operator: "{}"
+    original_meaning: "definition — containment, the bounded region that defines what belongs together"
+    spatial_act: "placing something inside a region; creating an inside and an outside; establishing category and belonging"
+    priming_property: "{} announces containment. It sets up the expectation that what is inside shares a category or context that what is outside does not."
+    interaction_semantics: "A brace can be opened and closed, can be navigated to see what is contained, or can be composed with other braces."
+    symmetry_partner: "{} pairs with () (scene). Brace defines structure; scene renders it. Together they create the architectural and performative aspects of the system."
+    physical_rule: "Containment should be visible. The boundary of a brace should be clear so the user can see what belongs together and what is adjacent but separate."
+  }
+
+  scene_physics: {
+    operator: "()"
+    original_meaning: "scene — context, the stage on which the action happens, the performative rendering of structure"
+    spatial_act: "rendering a scene where structure becomes active and observable; creating the context where relational acts happen"
+    priming_property: "() announces context. It sets up the expectation that what is inside is a unit of action or observation, a coherent scene."
+    interaction_semantics: "A scene can be entered and exited, can be observed from different perspectives, or can be composed with other scenes."
+    symmetry_partner: "() pairs with {} (brace). Brace defines structure; scene performs it. Together they create the full architectonic and dramatic aspects."
+    physical_rule: "A scene should be coherent. When you enter a scene, you should see a unified context; when you exit, you should have a clear way to return or transition to another scene."
+  }
+}
+
+^"operator_priming"{
+  ~#thesis: "Operators do not just mean things in isolation. They set up expectations and create interpretive fields for what comes after. This is operator priming."
+
+  priming_examples: {
+    potential_reference: "~(#frame) — A potential (thread) points to a frame (stable structure). This primes expectation: clicking the thread should show you the frame or at least explain where it leads."
+    reference_ground: "~. — A potential (thread) that grounds to the local baseline. This primes: the reference should be relative to the current context, not absolute."
+    frame_action: "#name @ context — A frame is given an action in a perspective. This primes: the frame is not just a location; it is a site where something can happen."
+    wonder_action: "?(choice) ! execute — A question opens choices; an action commits to one. This priming creates narrative: the reader is invited to wonder, then allowed to act."
+    value_binding: "* & reference — Content (value) is bound to another structure. This priming suggests: the content is not standalone; it is part of a relationship."
+  }
+
+  priming_rule: "When operators appear in sequence, each one should prime the interpretation of the next. A sequence like ~(#frame) ? ! should feel natural: reference a frame, wonder about it, act on your choice."
+
+  anti_priming: "When operators appear in unexpected sequences, they create cognitive dissonance. This can be used intentionally to force re-evaluation, but it should not happen accidentally. The user should either see why the unusual sequence makes sense or have a way to resolve the dissonance."
+}
+
+^"operator_symmetry"{
+  ~#thesis: "Operators have symmetry partners. These pairs create dynamics that generate meaning through relationship rather than isolation."
+
+  primary_symmetries: [
+    "~ (potential) & @ (perspective) — observation, the observer and the observed",
+    "# (vibration) & . (ground) — structure and location, name and place",
+    "? (wonder) & ! (action) — exploration and commitment, question and answer",
+    "* (value) & ~ (potential) — substance and possibility, what is and what could be",
+    "& (subject) & @ (perspective) — relation and viewpoint, what is related and how it is seen",
+    "^ (ascension) & . (ground) — structure and containment, naming and placement",
+    "<> (conduit) & [] (mode) — projection and selection, how and which",
+    "{} (brace) & () (scene) — structure and performance, definition and enactment"
+  ]
+
+  symmetry_physics: "Symmetry partners create a tension that is resolved through interaction. Where there is potential without perspective, the system feels incomplete. Where there is action without wonder, the system feels mechanical. Symmetry guides the user toward interaction that feels natural rather than forced."
+
+  higher_order_symmetries: "Three or four operators can create more complex symmetries: ~#. (reference to a named ground), ?!@* (wonder about value in perspective, then act), ^{}() (structure contained and performed). These are still discoverable through the physics of the base pairs."
+}
+
+^"interpretation_emergence"{
+  ~#thesis: "Through interaction with the physics and symmetry of operators, new interpretations emerge. These are not coded into the system; they arise through the user's engagement with the language."
+
+  emergence_pathway: [
+    "1. The user encounters an operator sequence: ^(#frame)",
+    "2. The physics suggests: this structure is being named and made addressable",
+    "3. The symmetry with . (ground) suggests: this name should be locatable, returnable",
+    "4. The user tries clicking it or linking to it, which works",
+    "5. The user builds an internal model: ^ with # creates addressable structure",
+    "6. Later, the user uses ^ with other operators and discovers new patterns",
+    "7. Over time, a tradition emerges: this is how you make things navigable"
+  ]
+
+  role_of_acknowledgment: "Tradition solidifies through acknowledgment. When the user sees their model reflected in documentation, in other people's work, or in the system's interaction patterns, it becomes a shared understanding. The language grows through this feedback loop."
+
+  design_responsibility: "The system should make these emergences visible. When a tradition arises from operator physics and symmetry, it should be documented so new users can see the pattern rather than discovering it by accident."
+}
+
+^"interaction_mapping"{
+  ~#note: "How operator physics and priming translate into concrete interaction patterns on the site."
+
+  reference_interaction: {
+    operator: "~"
+    html_pattern: "<a href=\"#target\" class=\"ref-link\">link text</a>"
+    css_selector: "[data-spw-operator='~']"
+    behavior: "Click shows target (hash navigation), hover shows reference relationship, inspect shows what the reference points to"
+    priming_consequence: "After following a reference, the local ground (.) should be accessible so the user can return"
+  }
+
+  frame_interaction: {
+    operator: "#"
+    html_pattern: "<section id=\"frame-name\" data-spw-operator=\"#\">content</section>"
+    css_selector: "[data-spw-operator='#']"
+    behavior: "Frame can be navigated to via hash, opened for inspection, or highlighted by map or search"
+    priming_consequence: "A frame should have a stable address that works from anywhere; it should vibrate distinctly so it can be found by resonance (search, navigation)"
+  }
+
+  ground_interaction: {
+    operator: "."
+    html_pattern: "<button data-spw-operator=\".\" class=\"return-ground\">return</button>"
+    css_selector: "[data-spw-operator='.']"
+    behavior: "Clicking ground returns to the current context's baseline; keyboard shortcut (e.g., 'j') goes to the ground of the current frame"
+    priming_consequence: "From any depth, the ground should be one action away"
+  }
+
+  probe_interaction: {
+    operator: "?"
+    html_pattern: "<details><summary>explore</summary>content</details>"
+    css_selector: "[data-spw-operator='?']"
+    behavior: "Opens/closes exploratory lens, reveals alternative framings, filters content without committing"
+    priming_consequence: "Closing a probe should leave other exploration paths open"
+  }
+
+  action_interaction: {
+    operator: "!"
+    html_pattern: "<button data-spw-operator=\"!\" class=\"action-button\">do something</button>"
+    css_selector: "[data-spw-operator='!']"
+    behavior: "Commits an action, shows consequence, offers undo or reversal if the action is destructive"
+    priming_consequence: "After an action, the system state should be clearly changed so the user sees the consequence"
+  }
+}
+
+^"documentation_references"{
+  @site_semantics: ~"./site-semantics.spw"
+  @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @operator_atlas: ~"../../topics/software/spw/"
+}
