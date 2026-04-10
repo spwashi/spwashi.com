@@ -29,6 +29,7 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/topics/software/">Software</a></li>
                 <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a aria-current="page" href="/settings/">Settings</a></li>
             </ul>
@@ -508,6 +509,201 @@
                                 </span>
                             </label>
                         </fieldset>
+
+                        <!-- === Spirit Cycle & Dynamics === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Current spirit phase</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="currentSpiritPhase" value="initiation">
+                                <span class="settings-option-copy">
+                                    <strong>Initiation</strong>
+                                    <span>Fresh start, cool blues, entry-level energy.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="currentSpiritPhase" value="resistance">
+                                <span class="settings-option-copy">
+                                    <strong>Resistance</strong>
+                                    <span>Challenge, deeper colors, stronger presence.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="currentSpiritPhase" value="transformation">
+                                <span class="settings-option-copy">
+                                    <strong>Transformation</strong>
+                                    <span>Dynamic, warm golds, in flux.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="currentSpiritPhase" value="expression" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Expression</strong>
+                                    <span>Fully open, vibrant teal, maximum clarity.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="currentSpiritPhase" value="return">
+                                <span class="settings-option-copy">
+                                    <strong>Return</strong>
+                                    <span>Integration, warm earth tones, settled.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Spirit phase auto-cycle</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="spiritPhaseAutoCycle" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Keep phase fixed at the selected value.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="spiritPhaseAutoCycle" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Automatically cycle through phases every 9 seconds.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Grain intensity</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="grainIntensity" value="none">
+                                <span class="settings-option-copy">
+                                    <strong>None</strong>
+                                    <span>No texture grain.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="grainIntensity" value="subtle" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Subtle</strong>
+                                    <span>Very light film grain texture.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="grainIntensity" value="moderate">
+                                <span class="settings-option-copy">
+                                    <strong>Moderate</strong>
+                                    <span>More visible texture.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="grainIntensity" value="rich">
+                                <span class="settings-option-copy">
+                                    <strong>Rich</strong>
+                                    <span>Strong tactile texture.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Progressive Enhancement === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Enhancement level</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="enhancementLevel" value="minimal">
+                                <span class="settings-option-copy">
+                                    <strong>Minimal</strong>
+                                    <span>Basic interaction, reduced visual richness.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="enhancementLevel" value="balanced" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Balanced</strong>
+                                    <span>Standard interaction and visual polish.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="enhancementLevel" value="rich">
+                                <span class="settings-option-copy">
+                                    <strong>Rich</strong>
+                                    <span>Enhanced interactions and visual effects.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Semantic density</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="semanticDensity" value="minimal">
+                                <span class="settings-option-copy">
+                                    <strong>Minimal</strong>
+                                    <span>Hide relational and contextual information.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="semanticDensity" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Show essential relationships and context.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="semanticDensity" value="rich">
+                                <span class="settings-option-copy">
+                                    <strong>Rich</strong>
+                                    <span>Show all relational and dimensional information.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Cognitive handles</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="cognitiveHandles" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide dimensional navigation affordances.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="cognitiveHandles" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Show handles for navigating structure and dimensions.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Dimensional breadcrumbs</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="dimensionalBreadcrumbs" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide position indicators.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="dimensionalBreadcrumbs" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Show position across dimensions.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Operator highlighting</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="operatorHighlighting" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>No visual emphasis on operators.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="operatorHighlighting" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Highlight operators with color and emphasis.</span>
+                                </span>
+                            </label>
+                        </fieldset>
                     </div>
 
                     <div class="settings-actions">
@@ -541,7 +737,7 @@
         </article>
     </main>
     <footer>
-        <p>© 2024 spwashi</p>
+        <p>© 2026 spwashi</p>
     </footer>
 </body>
 </html>

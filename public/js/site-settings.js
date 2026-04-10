@@ -33,7 +33,28 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
 
     // Performance
     animationThrottling: 'off',
-    imageLazyLoading: 'on'
+    imageLazyLoading: 'on',
+
+    // Progressive Enhancement
+    enhancementLevel: 'balanced',
+    semanticDensity: 'normal',
+    operatorPresentation: 'symbolic',
+    infospaceComplexity: 'adaptive',
+    cognitiveHandles: 'on',
+    dimensionalBreadcrumbs: 'on',
+    fractalNesting: 'on',
+
+    // Semantic & Markup
+    showSemanticMetadata: 'off',
+    operatorHighlighting: 'on',
+    relationalVisualization: 'on',
+    phaseIndicators: 'on',
+    depthIndicators: 'on',
+
+    // Spirit Cycle & Dynamics
+    currentSpiritPhase: 'expression',
+    spiritPhaseAutoCycle: 'off',
+    grainIntensity: 'subtle'
 });
 
 const SETTING_OPTIONS = Object.freeze({
@@ -62,7 +83,25 @@ const SETTING_OPTIONS = Object.freeze({
     showSpecPills: new Set(['on', 'off']),
 
     animationThrottling: new Set(['off', 'light', 'heavy']),
-    imageLazyLoading: new Set(['on', 'off'])
+    imageLazyLoading: new Set(['on', 'off']),
+
+    currentSpiritPhase: new Set(['initiation', 'resistance', 'transformation', 'expression', 'return']),
+    spiritPhaseAutoCycle: new Set(['off', 'on']),
+    grainIntensity: new Set(['none', 'subtle', 'moderate', 'rich']),
+
+    enhancementLevel: new Set(['minimal', 'balanced', 'rich']),
+    semanticDensity: new Set(['minimal', 'normal', 'rich']),
+    operatorPresentation: new Set(['symbolic', 'full', 'text']),
+    infospaceComplexity: new Set(['simple', 'adaptive', 'complex']),
+    cognitiveHandles: new Set(['off', 'on']),
+    dimensionalBreadcrumbs: new Set(['off', 'on']),
+    fractalNesting: new Set(['off', 'on']),
+
+    showSemanticMetadata: new Set(['off', 'on']),
+    operatorHighlighting: new Set(['off', 'on']),
+    relationalVisualization: new Set(['off', 'on']),
+    phaseIndicators: new Set(['off', 'on']),
+    depthIndicators: new Set(['off', 'on'])
 });
 
 const readStoredSettings = () => {
@@ -126,6 +165,28 @@ const applySiteSettings = (settings = getSiteSettings()) => {
     // Performance
     root.dataset.spwAnimationThrottling = normalized.animationThrottling;
     root.dataset.spwImageLazyLoading = normalized.imageLazyLoading;
+
+    // Spirit Cycle & Dynamics
+    root.dataset.spwSpiritPhase = normalized.currentSpiritPhase;
+    root.dataset.spwPhaseAutoCycle = normalized.spiritPhaseAutoCycle;
+    root.dataset.spwGrainIntensity = normalized.grainIntensity;
+    root.style.setProperty('--grain-opacity', `${0.01 + (normalized.grainIntensity === 'subtle' ? 0.02 : normalized.grainIntensity === 'moderate' ? 0.04 : normalized.grainIntensity === 'rich' ? 0.06 : 0)}`);
+
+    // Progressive Enhancement
+    root.dataset.spwEnhancementLevel = normalized.enhancementLevel;
+    root.dataset.spwSemanticDensity = normalized.semanticDensity;
+    root.dataset.spwOperatorPresentation = normalized.operatorPresentation;
+    root.dataset.spwInfospaceComplexity = normalized.infospaceComplexity;
+    root.dataset.spwCognitiveHandles = normalized.cognitiveHandles;
+    root.dataset.spwDimensionalBreadcrumbs = normalized.dimensionalBreadcrumbs;
+    root.dataset.spwFractalNesting = normalized.fractalNesting;
+
+    // Semantic & Markup
+    root.dataset.spwShowSemanticMetadata = normalized.showSemanticMetadata;
+    root.dataset.spwOperatorHighlighting = normalized.operatorHighlighting;
+    root.dataset.spwRelationalVisualization = normalized.relationalVisualization;
+    root.dataset.spwPhaseIndicators = normalized.phaseIndicators;
+    root.dataset.spwDepthIndicators = normalized.depthIndicators;
 
     return normalized;
 };
