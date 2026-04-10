@@ -1,0 +1,337 @@
+#>cognitive_navigation_and_handles
+#:conventions #!cognition
+#:layer #!pragmatics
+
+^"thesis"{
+  ~#note: "Cognitive navigation makes complex nested structures graspable through visual and interactive affordances."
+  claim: "Users should be able to navigate complex, multidimensional information spaces by understanding where they are in multiple dimensions simultaneously: depth (nesting), abstraction (concept→instance), phase (spirit cycle), scale (zoom), and relation (symmetry pairs). Visual handles provide grips for understanding these dimensions."
+  grounding: "Handles are inspired by brace physics and spatial grammar: they let you 'grab' a concept and navigate through it. Dimensional navigation recognizes that meaning often exists across multiple simultaneous axes."
+}
+
+^"dimensions_of_understanding"{
+  ~#note: "The primary axes along which the site's content is organized. Navigation happens along these dimensions."
+
+  nesting_depth: {
+    axis: "vertical (entry → nested → deep)"
+    meaning: "How many levels of structure you're inside"
+    visual: "left-edge striping, bracket indicators, depth-based coloring"
+    interaction: "expand/collapse, drill-down, pop-back-up"
+    example: "frame → section → subsection → detail"
+  }
+
+  abstraction_level: {
+    axis: "conceptual (abstract → concrete)"
+    meaning: "Are you looking at the idea, the design, the implementation, or an instance?"
+    visual: "color coding (blue → purple → gold → green)"
+    interaction: "zoom in/out, view at different levels of detail"
+    example: "operator (concept) → operator page (specification) → interaction pattern (implementation) → button in UI (instance)"
+  }
+
+  spirit_phase: {
+    axis: "temporal (initiation → resistance → transformation → expression → return)"
+    meaning: "What phase of the spirit cycle is this content in?"
+    visual: "phase indicators, color rings, progression markers"
+    interaction: "navigate forward/backward through phases, see phase transformations"
+    example: "new idea (initiation) → challenge (resistance) → breakthrough (transformation) → published (expression) → integrated (return)"
+  }
+
+  relational_dimension: {
+    axis: "symmetric pairs (~ pairs with @, # pairs with ., ? pairs with !)"
+    meaning: "What is this thing's complementary opposite or partner?"
+    visual: "relational highlights, connection indicators, pair grouping"
+    interaction: "jump to related element, see related in context"
+    example: "reference (~) highlights perspective (@), question (?) reveals action (!)"
+  }
+
+  scale_dimension: {
+    axis: "zoom/detail level (overview → detail)"
+    meaning: "How much detail do you want to see?"
+    visual: "zoom indicators, scale markers, detail toggles"
+    interaction: "zoom in, zoom out, jump to specific scale"
+    example: "home (all topics) → plans (specific plan) → plan details (implementation) → code (full detail)"
+  }
+}
+
+^"cognitive_handles_system"{
+  ~#note: "Visual affordances that let you 'grab' concepts and navigate through dimensions."
+
+  primary_handle: {
+    element: "[data-cognitive-handle]"
+    appearance: "left-edge bar that grows on hover, color-coded by depth/abstraction"
+    feel: "something you can grab and pull to navigate"
+    interaction: "hover reveals handle strength, click-drag could navigate (future)"
+    accessibility: "labeled with data-depth, data-abstraction-level"
+  }
+
+  corner_handles: {
+    element: "[data-handle-corner]"
+    appearance: "small corner brackets at frame corners"
+    feel: "structural anchors showing the extent of a contained space"
+    meaning: "TL=entry, TR=concept, BL=instance, BR=relation (rotates through abstraction levels)"
+    interaction: "hover reveals/highlights the corner, click could drill into that corner's dimension"
+  }
+
+  dimensional_indicator: {
+    element: "[data-dimension]"
+    appearance: "left-edge stripes, more stripes = deeper/more complex"
+    feel: "visual representation of how nested this structure is"
+    meaning: "depth 0 = single line, depth 1 = double line, depth 2 = triple, etc."
+    interaction: "hover makes indicator stronger, could click to collapse/expand level"
+  }
+
+  relational_handle: {
+    element: "[data-relation-pair]"
+    appearance: "subtle corner accent on related items, connection indicator"
+    feel: "these things belong together; they're pairs"
+    interaction: "hover highlights the pair, shows the connection line"
+  }
+
+  cognitive_anchor: {
+    element: "[data-cognitive-anchor]"
+    appearance: "anchor emoji on hover, swings when engaged"
+    feel: "something you can anchor to for understanding"
+    meaning: "this is a key concept worth holding onto"
+    interaction: "hover shows the anchor, click could bookmark/pin for return"
+  }
+
+  dimensional_portal: {
+    element: "[data-dimensional-link]"
+    appearance: "◄► symbols that pulse on hover"
+    feel: "a passage between dimensions"
+    meaning: "this link navigates to a different dimension of the same concept"
+    interaction: "follow link to see the concept from another angle (abstraction, depth, phase)"
+  }
+
+  foldable_indicator: {
+    element: "[data-foldable]"
+    appearance: "left-edge bracket that breathes on hover"
+    feel: "content that can fold/unfold along a dimension"
+    meaning: "this content is collapsible; you can hide details or reveal complexity"
+    interaction: "click to fold/unfold, state tracked in data-folded attribute"
+  }
+}
+
+^"dimensional_navigation_patterns"{
+  ~#note: "How users move through each dimension."
+
+  depth_navigation: {
+    pattern: "Drilling down and popping back up"
+    entry_points: [
+      "click on nested element to drill deeper",
+      "click on parent element to pop back up",
+      "breadcrumb shows path, click any level to jump"
+    ]
+    visual_feedback: [
+      "nesting depth increases (more left-edge striping)",
+      "header/title changes to show current context",
+      "handles brighten as you go deeper"
+    ]
+  }
+
+  abstraction_navigation: {
+    pattern: "Zooming between levels of understanding"
+    entry_points: [
+      "zoom-in handle to see implementation details",
+      "zoom-out handle to see bigger picture",
+      "click abstraction-level label to jump to specific level"
+    ]
+    visual_feedback: [
+      "color shifts through abstraction spectrum (blue→purple→gold→green)",
+      "detail level increases or decreases",
+      "scale markers show current zoom level"
+    ]
+  }
+
+  phase_navigation: {
+    pattern: "Following the spirit cycle forward and backward"
+    entry_points: [
+      "next phase indicator (>) to advance through cycle",
+      "previous phase indicator (<) to go backward",
+      "phase breadcrumb to jump to specific phase"
+    ]
+    visual_feedback: [
+      "phase indicator circle changes color and fills",
+      "content transforms to show phase-specific views",
+      "related phase content is highlighted"
+    ]
+  }
+
+  relational_navigation: {
+    pattern: "Jumping between symmetry pairs and related concepts"
+    entry_points: [
+      "relational handle shows connected element",
+      "click connection line to jump to related item",
+      "hover shows all related items in current context"
+    ]
+    visual_feedback: [
+      "related items are highlighted together",
+      "connection lines become visible on interaction",
+      "symmetry pairs glow when one is hovered"
+    ]
+  }
+
+  scale_navigation: {
+    pattern: "Zooming in/out of detail and overview"
+    entry_points: [
+      "zoom-in square icon to expand view",
+      "zoom-out square icon to contract view",
+      "scale slider (future) to adjust detail level"
+    ]
+    visual_feedback: [
+      "scale indicator grows/shrinks",
+      "content reorganizes to match scale",
+      "details appear/disappear based on zoom level"
+    ]
+  }
+}
+
+^"cognitive_handle_color_system"{
+  ~#note: "Colors indicate abstraction level and help you understand where you are."
+
+  entry_blue: {
+    hex: "hsl(210 70% 38%)"
+    meaning: "surface level, first appearance, entry point"
+    use_cases: ["TL corner", "initiating context", "broad overview"]
+  }
+
+  concept_purple: {
+    hex: "hsl(268 55% 42%)"
+    meaning: "conceptual level, abstract idea, design"
+    use_cases: ["TR corner", "theoretical frameworks", "pattern definitions"]
+  }
+
+  instance_gold: {
+    hex: "hsl(36 80% 36%)"
+    meaning: "concrete instance, actual implementation, specific example"
+    use_cases: ["BL corner", "actual components", "live code"]
+  }
+
+  relation_green: {
+    hex: "hsl(160 60% 32%)"
+    meaning: "relational, integrative, return to wholeness"
+    use_cases: ["BR corner", "symmetry pairs", "complete understanding"]
+  }
+}
+
+^"dimensional_breadcrumb_system"{
+  ~#note: "Shows your current position in multidimensional space."
+
+  structure: "depth:level / abstraction:level / phase:phase / scale:level"
+  rendering: "inline breadcrumb with clickable segments"
+  example_paths: [
+    "home / concept / initiation / full",
+    "plans / plan-card / expression / detailed",
+    "operator-atlas / operator-page / instance / overview",
+    "settings / fieldset / return / compact"
+  ]
+
+  interaction: {
+    click_segment: "jump to that position in that dimension"
+    hover_segment: "preview what that position contains"
+    context_menu: "show alternative paths through dimensions"
+  }
+}
+
+^"accessibility_of_handles"{
+  ~#note: "Cognitive handles must remain accessible to all users."
+
+  keyboard_navigation: "All handle interactions must work via keyboard (Tab, Enter, Arrow keys)"
+  touch_interaction: "Handles must be larger on touch; swipe could navigate dimensions"
+  reduced_motion: "Handles simplify under prefers-reduced-motion; no animations"
+  color_contrast: "Handle colors meet WCAG AA contrast ratios"
+  screen_reader: "data- attributes and ARIA labels describe handle purpose"
+  labels: "Each handle can be labeled with data-abstraction-label, data-dimension-label, etc."
+}
+
+^"cognitive_handle_data_attributes"{
+  ~#note: "The semantic structure that enables cognitive navigation."
+
+  "data-cognitive-handle" -> mark this element as having a handle"
+  "data-depth='0|1|2|3|4'" -> nesting depth (0=surface, 4=very deep)"
+  "data-dimension='0|1|2|3'" -> dimensional complexity (stripe count)"
+  "data-abstraction-level='entry|concept|instance|relation'" -> what level of abstraction"
+  "data-abstraction-label='text'" -> label for abstraction level"
+  "data-handle-corner='tl|tr|bl|br'" -> which corner this handle is in"
+  "data-nested-container" -> mark container with nesting structure"
+  "data-nesting-level='1|2|3'" -> nesting depth for visualization"
+  "data-nested-bracket" -> mark elements that can show nesting brackets"
+  "data-relation-pair" -> mark related/paired elements"
+  "data-paired='true|false'" -> whether this element is currently paired"
+  "data-relation-line" -> SVG element showing connection between pairs"
+  "data-phase-dimension" -> element that shows spirit phase"
+  "data-phase='initiation|resistance|transformation|expression|return'" -> current phase"
+  "data-scale-handle" -> element whose scale can be adjusted"
+  "data-scale='1|2|3'" -> current scale level"
+  "data-zoomed='true|false'" -> whether currently zoomed in"
+  "data-foldable" -> mark content that can fold/unfold"
+  "data-folded='true|false'" -> whether currently folded"
+  "data-cognitive-anchor" -> mark anchor points for understanding"
+  "data-dimensional-link" -> mark links that navigate dimensions"
+  "data-dimensional-breadcrumb" -> mark breadcrumb showing position"
+  "data-dimensional-label='path'" -> text representation of dimensional position"
+}
+
+^"implementation_guidelines"{
+  ~#note: "How to use cognitive handles in markup."
+
+  basic_frame: {
+    markup: "<section data-cognitive-handle data-depth='1' data-abstraction-level='concept'>",
+    meaning: "This is a nested frame at abstraction concept level"
+  }
+
+  nested_structure: {
+    markup: "<div data-nested-container data-nesting-level='2'>",
+    meaning: "This container is 2 levels deep; visual nesting indicators should appear"
+  }
+
+  paired_elements: {
+    markup: "<div data-relation-pair data-paired='true'>paired content</div>",
+    meaning: "This element is part of a symmetry pair; highlight when related element is hovered"
+  }
+
+  dimensional_navigation: {
+    markup: "<a data-dimensional-link href='#different-abstraction-level'>",
+    meaning: "This link navigates between different dimensions of the same concept"
+  }
+
+  foldable_content: {
+    markup: "<details data-foldable data-folded='false'><summary>Expand</summary>hidden content</details>",
+    meaning: "Content can fold/unfold; handle appears on hover"
+  }
+
+  dimensional_position: {
+    markup: "<nav data-dimensional-breadcrumb data-dimensional-label='home/concept/initiation/full'>",
+    meaning: "Show user their position across all dimensions"
+  }
+}
+
+^"cognitive_principles"{
+  "Every visual handle should answer: 'What dimension does this grip let me navigate?'"
+  "Dimensional navigation reveals structure without requiring memorization."
+  "Color coding should be consistent across all dimensions (blue=entry, purple=concept, etc.)"
+  "Handles should feel like they're part of the content, not overlaid on it."
+  "Navigation should be reversible: you should always be able to go back."
+  "The breadcrumb should always show where you are in multidimensional space."
+  "Cognitive anchors should mark important concepts you might want to return to."
+  "Foldable content should respect cognitive load: show entry level by default, detail on demand."
+  "Relational dimensions should make symmetry visible without explanation."
+  "Phase navigation should make the spirit cycle tangible through interaction."
+}
+
+^"future_enhancements"{
+  "Drag-based navigation: grab a handle and drag to navigate smoothly through dimensions"
+  "3D visualization: visualize multidimensional space using perspective/parallax (for advanced users)"
+  "Cognitive maps: show the entire dimensional space and highlight current position"
+  "History traces: show the path you took through dimensions, enable backtracking"
+  "Dimension filtering: show only content from certain abstraction levels or phases"
+  "Personalized navigation: remember which dimensions user prefers and emphasize those"
+  "Collaborative marks: show where other users are in dimensional space (for shared documents)"
+  "Hyperbolic projection: render the dimensional space using hyperbolic geometry for more natural folding"
+}
+
+^"documentation_references"{
+  @whimsy: ~"./design-whimsy.spw"
+  @operator_semantics: ~"./operator-semantics.spw"
+  @site_semantics: ~"./site-semantics.spw"
+  @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+}
