@@ -41,7 +41,7 @@
 
 .phase-menu-options {
     position: absolute;
-    z-index: 20;
+    z-index: 999;
     top: calc(100% + 0.35rem);
     right: 0;
     display: grid;

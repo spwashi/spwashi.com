@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Parsers: The Mechanics of Meaning</title>
+    <meta name="description" content="A staff-level survey of parsing techniques, AST construction, and formal grammars. Part of the Spw-oriented curriculum on computational linguistics.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/software/parsers/">Parsers</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>parser</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="parsers-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#parsers-hero">#&gt;parser_mechanics</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">AST</span>
+                        <span class="spec-pill">formal grammar</span>
+                        <span class="spec-pill">linguistics</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Linguistic Depth</p>
+                <h1>The Mechanics of Meaning</h1>
+                <p>How do we transform a linear sequence of characters into a navigable tree of intent? <strong>Parsing</strong> is the foundational act of <span class="spw-delimiter spw-delimiter--angle">&lt;</span>translation<span class="spw-delimiter spw-delimiter--angle">&gt;</span> in computing. This stub explores the transition from raw text to the <span class="spw-delimiter spw-delimiter--square">[</span>Abstract Syntax Tree (AST)<span class="spw-delimiter spw-delimiter--square">]</span>, serving as a bridge to <span class="spw-delimiter spw-delimiter--circle">(</span>formal linguistics<span class="spw-delimiter spw-delimiter--circle">)</span> and language design.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench">spw-workbench</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="parser-stubs" data-spw-role="directory" data-spw-form="circle">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#parser-stubs">^[syntax_links]{</a>
+                    <h2>Linguistic References</h2>
+                </div>
+                <div class="ref-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1rem;">
+                    <div class="ref-card" data-spw-form="square" style="padding: 1rem; border: 1px solid var(--line); border-radius: 8px;">
+                        <h3>Recursive Descent</h3>
+                        <p>A top-down parsing technique built from a set of mutually recursive procedures. The primary mechanism for the Spw parser.</p>
+                        <a href="https://en.wikipedia.org/wiki/Recursive_descent_parser" target="_blank" style="font-size: 0.8rem; color: var(--teal);">wiki: Recursive Descent</a>
+                    </div>
+                    <div class="ref-card" data-spw-form="square" style="padding: 1rem; border: 1px solid var(--line); border-radius: 8px;">
+                        <h3>Abstract Syntax Tree</h3>
+                        <p>The structural representation of source code. In Spw, the AST is the "projection surface" for all tooling.</p>
+                        <a href="https://developer.mozilla.org/en-US/docs/Glossary/Abstract_Syntax_Tree" target="_blank" style="font-size: 0.8rem; color: var(--teal);">mdn: AST</a>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

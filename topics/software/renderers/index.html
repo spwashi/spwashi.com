@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Renderers: The Geometry of Light and Type</title>
+    <meta name="description" content="A staff-level exploration of rendering engines, text-shaping, and the mathematics of the visual buffer. Connecting MDN documentation with Spw-oriented wonder.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <link rel="stylesheet" href="/public/css/spw-enrichment.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .ref-card-sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+        .ref-terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.28rem;
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+        .ref-terms li {
+            padding: 0.1rem 0.38rem;
+            border: 1px solid var(--line-strong);
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--teal);
+        }
+        .ref-links {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .ref-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+        }
+        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
+    </style>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>renderer</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="renderers-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#renderers-hero">#&gt;rendering_engines</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">geometry</span>
+                        <span class="spec-pill">rasterization</span>
+                        <span class="spec-pill">text shaping</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Engineering Depth</p>
+                <h1>The Geometry of Light and Type</h1>
+                <p>Graphics rendering is the transformation of <span class="spw-delimiter spw-delimiter--angle">&lt;</span>abstract signals<span class="spw-delimiter spw-delimiter--angle">&gt;</span> into <span class="spw-delimiter spw-delimiter--circle">(</span>perceptual photons<span class="spw-delimiter spw-delimiter--circle">)</span>. This hub explores the math behind rasterization, the <span class="spw-delimiter spw-delimiter--square">[</span>registry of GPU pipelines<span class="spw-delimiter spw-delimiter--square">]</span>, and the complex linguistics of text shaping.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="#gpu-pipeline">gpu pipeline</a>
+                    <a class="operator-chip" href="#text-shaping">text shaping</a>
+                    <a class="operator-chip" href="#rasterization">rasterization</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="canvas-math" data-spw-role="reference" data-spw-meaning="2d coordinate systems">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#canvas-math">^"canvas_coordinate_systems"{</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">affine transforms</span>
+                        <span class="spec-pill">matrices</span>
+                        <span class="spec-pill">bezier curves</span>
+                    </div>
+                </div>
+                <h2>2D Primitives and Matrix Math</h2>
+                <p class="inline-note">Every visual mark on the web starts with coordinates. Understanding how the browser transforms point <code>(x, y)</code> into a screen position requires a descent into matrix multiplication and the geometry of vector paths.</p>
+                
+                <svg class="spw-svg-surface cinematic-host" viewBox="0 0 640 180" role="img" aria-labelledby="matrix-title" xmlns="http://www.w3.org/2000/svg">
+                    <title id="matrix-title">Matrix Transformation Pipeline</title>
+                    <defs>
+                        <filter id="cinematic-glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Coordinate Space Nodes -->
+                    <g class="spw-svg-node" transform="translate(40, 70)">
+                        <rect width="90" height="40" rx="4" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
+                        <text x="45" y="25" text-anchor="middle" font-size="8" fill="var(--teal)">Object Space</text>
+                    </g>
+                    
+                    <g class="spw-svg-node" transform="translate(240, 70)">
+                        <rect width="110" height="40" rx="4" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.5"/>
+                        <text x="55" y="25" text-anchor="middle" font-size="8" fill="var(--ink)">World Transform</text>
+                    </g>
+                    
+                    <g class="spw-svg-node" transform="translate(480, 70)">
+                        <rect width="90" height="40" rx="4" fill="var(--surface)" stroke="var(--op-surface-color)" stroke-width="2"/>
+                        <text x="45" y="25" text-anchor="middle" font-size="8" font-weight="bold" fill="var(--ink)">Viewport</text>
+                    </g>
+
+                    <!-- Flow lines -->
+                    <path class="spw-svg-flow spw-svg-flow--animated" d="M 130 90 L 240 90" stroke="var(--teal)" fill="none" stroke-width="1.5" stroke-dasharray="5 5"/>
+                    <path class="spw-svg-flow spw-svg-flow--animated" d="M 350 90 L 480 90" stroke="var(--teal)" fill="none" stroke-width="1.5" stroke-dasharray="5 5"/>
+                    
+                    <!-- Matrix Math Floating Note -->
+                    <text x="185" y="80" text-anchor="middle" font-size="7" fill="var(--teal)" opacity="0.6">[x, y, 1] × [M]</text>
+                    <text x="415" y="80" text-anchor="middle" font-size="7" fill="var(--teal)" opacity="0.6">Clip + Rasterize</text>
+                    
+                    <text x="10" y="165" font-size="6.5" fill="var(--ink-soft)" font-style="italic">The matrix is the spell: shared state that rotates the world around the observer.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">matrix</span>
+                        <h3>Transformations</h3>
+                        <p>The <code>DOMMatrix</code> interface represents 4x4 matrices, enabling translation, rotation, and scaling in a single operation. This is the underlying math of CSS <code>transform</code> and Canvas <code>setTransform</code>.</p>
+                        <ul class="ref-terms"><li>Affine Transform</li><li>DOMMatrix</li><li>Shear</li><li>Interpolation</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMMatrix" target="_blank">mdn: DOMMatrix</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations" target="_blank">mdn: Canvas Transforms</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">curve</span>
+                        <h3>Bézier and Paths</h3>
+                        <p>Vector rendering relies on cubic and quadratic Bézier curves. The algorithm recursively interpolates between control points to create smooth, scalable arcs—the foundation of all modern typography.</p>
+                        <ul class="ref-terms"><li>Path2D</li><li>Control Points</li><li>Curve Fitting</li><li>Rasterization</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo" target="_blank">mdn: bezierCurveTo</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d" target="_blank">mdn: SVG Path 'd'</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame-code-enrichment" data-spw-form="block" style="margin-top:1.5rem">
+                    <pre><code>#>affine_transform
+#!physics/geometry
+
+^"matrix_set"{
+  translate: [100, 200]
+  rotate: deg(45)
+  scale: 1.25
+  
+  [m] = matrix.identity()
+      .translate(translate)
+      .rotate(rotate)
+      .scale(scale)
+}
+</code></pre>
+                </div>
+            </section>
+
+            <section class="site-frame" id="text-shaping" data-spw-role="reference" data-spw-meaning="font rendering logic">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#text-shaping">*"text_shaping_engine"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">harfbuzz</span>
+                        <span class="spec-pill">kerning</span>
+                        <span class="spec-pill">ligatures</span>
+                    </div>
+                </div>
+                <h2>Text Shaping and Type Systems</h2>
+                <p class="inline-note">Type is more than a list of glyphs. Text shaping converts a sequence of characters into a sequence of glyphs with precise optical positions, handling ligatures, kerning, and script-specific reordering.</p>
+                
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">shaping</span>
+                        <h3>The Shaping Pipeline</h3>
+                        <p>Browsers use engines like HarfBuzz to resolve complex scripts. Understanding <code>font-variant</code> and <code>text-rendering</code> allows engineers to balance legibility with performance on high-density displays.</p>
+                        <ul class="ref-terms"><li>Kerning</li><li>Ligatures</li><li>OpenType features</li><li>Subpixel rendering</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering" target="_blank">mdn: text-rendering</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFace_API" target="_blank">mdn: FontFace API</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="structural-forms" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#structural-forms">~[structural_forms]</a>
+                    <h2>Semantic Delimiters</h2>
+                </div>
+                <p class="inline-note">Beyond the brace, Spw uses circles, angles, and squares to differentiate between relationships, projections, and collections.</p>
+                <div class="spec-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem;">
+                    <div class="frame-panel" data-spw-form="angle" data-spw-selection="navigation">
+                        <h3>Angle &lt;&gt;</h3>
+                        <p>Used for priming and navigation. It represents a directed projection or a "pointing" toward a future state.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-form="circle" data-spw-selection="relational">
+                        <h3>Circle ()</h3>
+                        <p>Used for grouping and relationships. It suggests a soft, inclusive boundary around related concepts or bindings.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-form="square" data-spw-selection="collection">
+                        <h3>Square []</h3>
+                        <p>Used for registries and collections. It represents a formal, indexed set of data or metadata.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="gpu-pipeline" data-spw-role="schema" data-spw-meaning="hardware rendering abstraction">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#gpu-pipeline">@[gpu_raster_pipeline]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">webgpu</span>
+                        <span class="spec-pill">shaders</span>
+                        <span class="spec-pill">msaa</span>
+                    </div>
+                </div>
+                <h2>GPU Accelerated Pipelines</h2>
+                <p class="inline-note">Modern renderers offload rasterization to the GPU. This is a leap from CPU-bound scan-line algorithms to massively parallel fragment shaders. The "cinematic" feel of the modern web is often a function of how effectively we use the graphics pipeline without clogging the memory bus.</p>
+                
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">shader</span>
+                        <h3>Vertex and Fragment Shaders</h3>
+                        <p>Shaders are small programs run on every vertex or pixel. They represent the "atmospheric" layer of rendering—controlling lighting, grain, and displacement with physical accuracy.</p>
+                        <ul class="ref-terms"><li>WGSL</li><li>GLSL</li><li>Rasterization</li><li>Buffer</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API" target="_blank">mdn: WebGPU API</a>
+                            <a href="https://www.w3.org/TR/webgpu/" target="_blank">spec: WebGPU</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

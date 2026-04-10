@@ -54,11 +54,22 @@
     border-style: solid;
 }
 
-/* ─── Charging / Discharging (Hover & Focus) ─── */
+/* ─── Gesture Physics ─── */
+/*
+ * Four semantic gesture states, set by brace-gestures.js:
+ *   charging   → hover: glow builds, corners brighten
+ *   active     → click: snap pulse, corners flare
+ *   sustained  → hold (>420ms): deep charge accumulation, pulse animation
+ *   projecting → drag: lift, elongate shadow, follow drag vector
+ */
+
+/* ── Charging (hover) ──────────────────────────────────────────────── */
 
 [data-spw-form="brace"] {
     transition: filter var(--charge-release-duration) var(--charge-release-ease);
 }
+
+[data-spw-gesture="charging"][data-spw-form="brace"],
 [data-spw-form="brace"]:hover,
 [data-spw-form="brace"]:focus-within {
     --brace-open-color: rgba(0, 128, 128, 0.44);
@@ -71,11 +82,156 @@
                 box-shadow var(--charge-release-duration) var(--charge-release-ease),
                 transform var(--charge-release-duration) var(--charge-release-ease);
 }
+
+[data-spw-gesture="charging"][data-spw-form="block"],
 [data-spw-form="block"]:hover,
 [data-spw-form="block"]:focus-within {
     --block-border-color: rgba(0, 128, 128, 0.28);
     box-shadow: var(--shadow);
     transform: translateY(-1px);
+}
+
+[data-spw-gesture="charging"][data-spw-form="angle"],
+[data-spw-form="angle"]:hover {
+    --angle-open-color: rgba(0, 100, 100, 0.5);
+    --angle-close-color: rgba(0, 100, 100, 0.5);
+    filter: drop-shadow(0 0 6px rgba(0, 100, 100, 0.15));
+}
+
+[data-spw-gesture="charging"][data-spw-form="circle"],
+[data-spw-form="circle"]:hover {
+    --circle-open-color: rgba(60, 40, 120, 0.4);
+    --circle-close-color: rgba(60, 40, 120, 0.4);
+    filter: drop-shadow(0 0 6px rgba(60, 40, 120, 0.12));
+}
+
+[data-spw-gesture="charging"][data-spw-form="square"],
+[data-spw-form="square"]:hover {
+    --square-open-color: rgba(40, 80, 140, 0.45);
+    --square-close-color: rgba(40, 80, 140, 0.45);
+    filter: drop-shadow(0 0 6px rgba(40, 80, 140, 0.15));
+}
+
+/* ── Active (click) ────────────────────────────────────────────────── */
+
+[data-spw-gesture="active"][data-spw-form="brace"] {
+    --brace-open-color: rgba(0, 128, 128, 0.70);
+    --brace-close-color: rgba(0, 128, 128, 0.55);
+    --brace-corner-width: 2.2rem;
+    --brace-corner-height: 1.6rem;
+    filter: drop-shadow(0 0 14px rgba(0, 128, 128, 0.25));
+    transition: filter 80ms ease-out;
+}
+
+[data-spw-gesture="active"][data-spw-form="block"] {
+    --block-border-color: rgba(0, 128, 128, 0.40);
+    box-shadow: var(--shadow-active);
+    transform: scale(0.985);
+    transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+
+[data-spw-gesture="active"][data-spw-form="angle"] {
+    --angle-open-color: rgba(0, 100, 100, 0.8);
+    --angle-close-color: rgba(0, 100, 100, 0.8);
+    --angle-width: 1.1rem;
+    filter: drop-shadow(0 0 10px rgba(0, 100, 100, 0.3));
+}
+
+[data-spw-gesture="active"][data-spw-form="circle"] {
+    --circle-open-color: rgba(60, 40, 120, 0.7);
+    --circle-close-color: rgba(60, 40, 120, 0.7);
+    --circle-width: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(60, 40, 120, 0.25));
+}
+
+[data-spw-gesture="active"][data-spw-form="square"] {
+    --square-open-color: rgba(40, 80, 140, 0.75);
+    --square-close-color: rgba(40, 80, 140, 0.75);
+    --square-height: 2.4rem;
+    filter: drop-shadow(0 0 10px rgba(40, 80, 140, 0.3));
+}
+
+/* ── Sustained (hold) ──────────────────────────────────────────────── */
+
+@keyframes brace-sustain-pulse {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(0, 128, 128, 0.20)); }
+    50%      { filter: drop-shadow(0 0 22px rgba(0, 128, 128, 0.35)); }
+}
+
+@keyframes block-sustain-pulse {
+    0%, 100% { box-shadow: 0 2px 12px rgba(0, 128, 128, 0.10); }
+    50%      { box-shadow: 0 4px 24px rgba(0, 128, 128, 0.22); }
+}
+
+[data-spw-gesture="sustained"][data-spw-form="brace"] {
+    --brace-open-color: rgba(0, 128, 128, 0.80);
+    --brace-close-color: rgba(0, 128, 128, 0.65);
+    --brace-corner-width: 2.8rem;
+    --brace-corner-height: 2rem;
+    --brace-corner-stroke: 2.5px;
+    animation: brace-sustain-pulse 1.6s ease-in-out infinite;
+}
+
+[data-spw-gesture="sustained"][data-spw-form="block"] {
+    --block-border-color: rgba(0, 128, 128, 0.45);
+    transform: scale(0.98);
+    animation: block-sustain-pulse 1.6s ease-in-out infinite;
+}
+
+/* ── Projecting (drag) ─────────────────────────────────────────────── */
+
+[data-spw-gesture="projecting"][data-spw-form="brace"] {
+    --brace-open-color: rgba(0, 128, 128, 0.60);
+    --brace-close-color: rgba(0, 128, 128, 0.45);
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+    transform: translate(
+        calc(var(--drag-dx, 0px) * 0.06),
+        calc(var(--drag-dy, 0px) * 0.06)
+    );
+    z-index: 100;
+    transition: none;
+}
+
+[data-spw-gesture="projecting"][data-spw-form="block"] {
+    --block-border-color: rgba(0, 128, 128, 0.35);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transform: translate(
+        calc(var(--drag-dx, 0px) * 0.04),
+        calc(var(--drag-dy, 0px) * 0.04)
+    ) scale(1.02);
+    z-index: 100;
+    transition: none;
+}
+
+[data-spw-gesture="projecting"][data-spw-form="angle"] {
+    --angle-open-color: rgba(0, 100, 100, 0.6);
+    --angle-close-color: rgba(0, 100, 100, 0.6);
+    transform: translate(calc(var(--drag-dx, 0px) * 0.1), calc(var(--drag-dy, 0px) * 0.1));
+}
+
+[data-spw-gesture="projecting"][data-spw-form="circle"] {
+    --circle-open-color: rgba(60, 40, 120, 0.5);
+    --circle-close-color: rgba(60, 40, 120, 0.5);
+    transform: translate(calc(var(--drag-dx, 0px) * 0.08), calc(var(--drag-dy, 0px) * 0.08));
+}
+
+[data-spw-gesture="projecting"][data-spw-form="square"] {
+    --square-open-color: rgba(40, 80, 140, 0.55);
+    --square-close-color: rgba(40, 80, 140, 0.55);
+    transform: translate(calc(var(--drag-dx, 0px) * 0.07), calc(var(--drag-dy, 0px) * 0.07));
+}
+
+/* ── Reduced Motion Override ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    [data-spw-gesture="sustained"][data-spw-form="brace"],
+    [data-spw-gesture="sustained"][data-spw-form="block"] {
+        animation: none;
+    }
+    [data-spw-gesture="projecting"][data-spw-form="brace"],
+    [data-spw-gesture="projecting"][data-spw-form="block"] {
+        transform: none;
+    }
 }
 
 /* ─── Selection ─── */
@@ -210,4 +366,102 @@
 [data-spw-features~="metrics"] .frame-metrics-bar:hover .frame-metrics-items {
     max-width: 14rem;
     opacity: 1;
+}
+
+/* ─── Pinned State (Bookmarked) ─────────────────────────────────────────── */
+
+[data-spw-pinned="true"] {
+    position: relative;
+    --pinned-glow: rgba(255, 170, 0, 0.15);
+    filter: drop-shadow(0 0 10px var(--pinned-glow));
+}
+
+[data-spw-pinned="true"]::after {
+    content: "!";
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: var(--surface);
+    border: 1px solid rgba(255, 170, 0, 0.6);
+    border-radius: 50%;
+    color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    pointer-events: none;
+    animation: pin-flare 0.3s ease-out;
+}
+
+@keyframes pin-flare {
+    0% { transform: scale(0.5); opacity: 0; }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+[data-spw-gesture="charging"][data-spw-pinned="true"] {
+    --pinned-glow: rgba(255, 170, 0, 0.3);
+}
+
+/* ─── Swappable Affordance ──────────────────────────────────────────────── */
+
+[data-spw-swappable] .frame-sigil,
+[data-spw-swappable] .frame-card-sigil {
+    cursor: pointer;
+    position: relative;
+}
+
+[data-spw-swappable] .frame-sigil::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed var(--teal-soft);
+    opacity: 0.5;
+}
+
+[data-spw-gesture="charging"][data-spw-swappable] .frame-sigil::before {
+    opacity: 1;
+    border-color: var(--teal);
+}
+
+/* ─── Spell Breadcrumbs ─────────────────────────────────────────────────── */
+
+.spw-spell-path {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    padding: 0.4rem 0.8rem;
+    background: rgba(0, 128, 128, 0.03);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.spw-spell-path .spell-op {
+    color: var(--teal);
+    font-weight: bold;
+}
+
+.spw-spell-path .spell-node {
+    color: var(--ink);
+}
+
+.spw-spell-path .spell-sep {
+    color: var(--line-strong);
+}
+
+.spw-spell-path .spell-current {
+    color: var(--pink);
+    border-bottom: 1px solid currentColor;
 }

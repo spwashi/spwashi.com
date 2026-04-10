@@ -87,6 +87,12 @@
 
 [data-spw-form="brace"]::before,
 [data-spw-form="brace"]::after,
+[data-spw-form="angle"]::before,
+[data-spw-form="angle"]::after,
+[data-spw-form="circle"]::before,
+[data-spw-form="circle"]::after,
+[data-spw-form="square"]::before,
+[data-spw-form="square"]::after,
 [data-spw-form="block"]::before {
     content: '';
     position: absolute;
@@ -140,6 +146,100 @@
     border-bottom: var(--brace-corner-stroke) solid var(--brace-close-color);
     border-bottom-right-radius: var(--brace-corner-radius);
     transition: border-color 200ms ease;
+}
+
+/* ─── Angle Form < > ─────────────────────────────────────────────────── */
+[data-spw-form="angle"] {
+    --angle-offset: 0.45rem;
+    --angle-width: 0.85rem;
+    --angle-height: 1.4rem;
+    --angle-stroke: 1.2px;
+    --angle-open-color: rgba(0, 100, 100, 0.25);
+    --angle-close-color: rgba(0, 100, 100, 0.25);
+}
+
+[data-spw-form="angle"]::before {
+    left: var(--angle-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--angle-width);
+    height: var(--angle-height);
+    border-left: var(--angle-stroke) solid var(--angle-open-color);
+    clip-path: polygon(100% 0%, 0% 50%, 100% 100%, 85% 100%, -15% 50%, 85% 0%);
+}
+
+[data-spw-form="angle"]::after {
+    right: var(--angle-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--angle-width);
+    height: var(--angle-height);
+    border-right: var(--angle-stroke) solid var(--angle-close-color);
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%, 15% 100%, 115% 50%, 15% 0%);
+}
+
+/* ─── Circle Form ( ) ────────────────────────────────────────────────── */
+[data-spw-form="circle"] {
+    --circle-offset: 0.5rem;
+    --circle-width: 1.2rem;
+    --circle-height: 2.2rem;
+    --circle-stroke: 1.5px;
+    --circle-open-color: rgba(60, 40, 120, 0.2);
+    --circle-close-color: rgba(60, 40, 120, 0.2);
+}
+
+[data-spw-form="circle"]::before {
+    left: var(--circle-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--circle-width);
+    height: var(--circle-height);
+    border-left: var(--circle-stroke) solid var(--circle-open-color);
+    border-top-left-radius: 100%;
+    border-bottom-left-radius: 100%;
+}
+
+[data-spw-form="circle"]::after {
+    right: var(--circle-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--circle-width);
+    height: var(--circle-height);
+    border-right: var(--circle-stroke) solid var(--circle-close-color);
+    border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
+}
+
+/* ─── Square Form [ ] ────────────────────────────────────────────────── */
+[data-spw-form="square"] {
+    --square-offset: 0.6rem;
+    --square-width: 0.6rem;
+    --square-height: 2rem;
+    --square-stroke: 2px;
+    --square-open-color: rgba(40, 80, 140, 0.22);
+    --square-close-color: rgba(40, 80, 140, 0.22);
+}
+
+[data-spw-form="square"]::before {
+    left: var(--square-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--square-width);
+    height: var(--square-height);
+    border-left: var(--square-stroke) solid var(--square-open-color);
+    border-top: var(--square-stroke) solid var(--square-open-color);
+    border-bottom: var(--square-stroke) solid var(--square-open-color);
+}
+
+[data-spw-form="square"]::after {
+    right: var(--square-offset);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--square-width);
+    height: var(--square-height);
+    border-right: var(--square-stroke) solid var(--square-close-color);
+    border-top: var(--square-stroke) solid var(--square-close-color);
+    border-bottom: var(--square-stroke) solid var(--square-close-color);
 }
 
 /* site-frame is the outermost brace level — larger corners */
@@ -464,3 +564,27 @@
     --spw-operator-border: var(--op-surface-border);
     --spw-operator-bg-soft: var(--op-surface-bg-soft);
 }
+
+/* ─── Inline Delimiters for Copy Markup ────────────────────────────────── */
+
+.spw-delimiter {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    padding: 0 0.1rem;
+    color: var(--teal);
+    transition: filter 160ms ease;
+    cursor: help;
+}
+
+.spw-delimiter:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 128, 128, 0.4));
+}
+
+.spw-delimiter--angle { color: var(--op-surface-color); }
+.spw-delimiter--circle { color: var(--op-ref-color); }
+.spw-delimiter--square { color: var(--op-probe-color); }
+
+/* Selection states for larger forms */
+[data-spw-selection="navigation"] { --angle-open-color: var(--op-surface-color); }
+[data-spw-selection="relational"] { --circle-open-color: var(--op-ref-color); }
+[data-spw-selection="collection"] { --square-open-color: var(--op-probe-color); }

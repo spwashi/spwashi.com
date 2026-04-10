@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Hyperbolic Geometry: The Curvature of Space</title>
+    <meta name="description" content="An exploration of non-Euclidean geometry, hyperbolic space, and the Poincaré disk. Staff-level depth for rendering curved manifolds and semantic maps.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <link rel="stylesheet" href="/public/css/spw-enrichment.css">
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/software/geometry/">Geometry</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>curvature</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="geometry-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#geometry-hero">#&gt;hyperbolic_manifolds</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">non-euclidean</span>
+                        <span class="spec-pill">poincaré disk</span>
+                        <span class="spec-pill">manifolds</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Mathematical Depth</p>
+                <h1>The Curvature of Space</h1>
+                <p>What happens when the parallel postulate fails? In <strong>Hyperbolic Geometry</strong>, the sum of a triangle's angles is always less than 180 degrees, and space effectively "expands" as you move outward. This surface explores how we project these infinite manifolds into finite pixels using the Poincaré disk model.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
+                    <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="poincare-model" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#poincare-model">^"poincare_disk"{</a>
+                    <h2>The Poincaré Disk Model</h2>
+                </div>
+                <p class="inline-note">A projection of the hyperbolic plane where the entire infinite space is contained within a unit circle. Lines are represented as circular arcs perpendicular to the boundary.</p>
+                
+                <svg class="spw-svg-surface cinematic-host" viewBox="0 0 400 400" role="img" aria-labelledby="geom-title" xmlns="http://www.w3.org/2000/svg" style="max-width:320px; margin: 1rem auto; display: block;">
+                    <title id="geom-title">Hyperbolic Disk Projection</title>
+                    <defs>
+                        <filter id="disk-glow">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Main Disk -->
+                    <circle cx="200" cy="200" r="180" fill="var(--surface)" stroke="var(--teal)" stroke-width="2" filter="url(#disk-glow)"/>
+                    
+                    <!-- Hyperbolic Lines (Circular Arcs) -->
+                    <path d="M 200 20 A 180 180 0 0 1 200 380" fill="none" stroke="var(--ink-soft)" stroke-width="0.8" opacity="0.4"/>
+                    <path d="M 20 200 A 180 180 0 0 0 380 200" fill="none" stroke="var(--ink-soft)" stroke-width="0.8" opacity="0.4"/>
+                    
+                    <!-- Tiling elements -->
+                    <g opacity="0.6">
+                        <path d="M 200 200 L 260 250 A 120 120 0 0 0 320 200 Z" fill="var(--token-bg)" stroke="var(--teal)" stroke-width="1"/>
+                        <path d="M 200 200 L 140 250 A 120 120 0 0 1 80 200 Z" fill="var(--token-bg)" stroke="var(--teal)" stroke-width="1"/>
+                        <path d="M 200 200 L 200 80 A 120 120 0 0 1 320 200 Z" fill="var(--token-bg)" stroke="var(--teal)" stroke-width="1"/>
+                    </g>
+                    
+                    <circle cx="200" cy="200" r="4" fill="var(--teal)"/>
+                    <text x="200" y="215" text-anchor="middle" font-size="8" fill="var(--ink)">Origin</text>
+                    
+                    <text x="50" y="380" font-size="7.5" fill="var(--ink-soft)" font-style="italic">Infinite space, finite projection.</text>
+                </svg>
+
+                <div class="ref-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1rem;">
+                    <div class="ref-card" style="padding: 1rem; border: 1px solid var(--line); border-radius: 8px;">
+                        <h3>Möbius Transformations</h3>
+                        <p>The automorphisms of the Poincaré disk. In rendering, these allow for smooth "panning" through hyperbolic space while preserving angles.</p>
+                        <a href="https://en.wikipedia.org/wiki/M%C3%B6bius_transformation" target="_blank" style="font-size: 0.8rem; color: var(--teal);">wiki: Möbius</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="code-enrichment" data-spw-role="enrichment">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#code-enrichment">#>code_block_lab</a>
+                    <h2>Matrix Enrichment</h2>
+                </div>
+                <p class="inline-note">How it looks in Spw: representing a hyperbolic transform as a complex matrix projection.</p>
+                <div class="frame-code-enrichment" data-spw-form="block">
+                    <pre><code>#>hyperbolic_transform
+#!physics/non-euclidean
+
+^"mobius"{
+  z: point(x, y)
+  transform: (a*z + b) / (c*z + d)
+  [a, b; c, d]: matrix2x2(1, 0.5, 0.5, 1)
+}
+</code></pre>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

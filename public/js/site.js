@@ -12,6 +12,8 @@ import {
 } from './site-settings.js';
 import './spirit-phase-dynamics.js';
 import './electromagnetic-containers.js';
+import { initBraceGestures } from './brace-gestures.js';
+import { initSpwExperiential } from './spw-experiential.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -518,6 +520,8 @@ onDomReady(() => {
     resetSoftwareEntryScroll();
     initSiteCore();
     initBraceWalls();
+    initBraceGestures();
+    initSpwExperiential();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

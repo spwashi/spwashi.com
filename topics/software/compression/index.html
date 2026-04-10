@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Compression: The Efficiency of Meaning</title>
+    <meta name="description" content="A staff-level reference for text compression, Huffman coding/LZ77, and syntax-tree efficiency. Connecting MDN documentation with Spw-oriented wonder.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <link rel="stylesheet" href="/public/css/spw-enrichment.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+    </style>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>compressor</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="compression-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#compression-hero">#&gt;compression_algorithms</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">entropy</span>
+                        <span class="spec-pill">lz77</span>
+                        <span class="spec-pill">huffman</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Engineering Depth</p>
+                <h1>The Efficiency of Meaning</h1>
+                <p>How do we represent high-density information in limited space? This surface investigates the mechanics of <strong>Compression</strong>: from <span class="spw-delimiter spw-delimiter--circle">(</span>entropy-based Huffman coding<span class="spw-delimiter spw-delimiter--circle">)</span> to the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>dictionary-based LZ77<span class="spw-delimiter spw-delimiter--angle">&gt;</span>. In the context of Spw, we ask how <span class="spw-delimiter spw-delimiter--square">[</span>syntax trees<span class="spw-delimiter spw-delimiter--square">]</span> can be serialized with minimal footprint while remaining fast to query.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="#entropy-coding">entropy coding</a>
+                    <a class="operator-chip" href="#dictionary-methods">dictionary methods</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="entropy-coding" data-spw-role="reference" data-spw-meaning="entropy based compression" data-spw-form="circle">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#entropy-coding">^"entropy_and_wonder"{</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">shannon entropy</span>
+                        <span class="spec-pill">huffman</span>
+                    </div>
+                </div>
+                <h2>Entropy and Coding</h2>
+                <p class="inline-note">Information theory defines entropy as the average amount of information produced by a source. Huffman coding turns this into a practical spell: shorter bit-codes for the most common symbols.</p>
+                
+                <svg class="spw-svg-surface cinematic-host" viewBox="0 0 640 180" role="img" aria-labelledby="comp-title" xmlns="http://www.w3.org/2000/svg">
+                    <title id="comp-title">Huffman Tree Projection</title>
+                    <defs>
+                        <filter id="node-glow">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Huffman Tree Structure -->
+                    <g transform="translate(320, 20)">
+                        <!-- Root -->
+                        <circle cx="0" cy="15" r="10" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.2"/>
+                        
+                        <!-- Level 1 -->
+                        <path class="spw-svg-flow" d="M -7 22 L -60 55" stroke="var(--line)" stroke-width="1"/>
+                        <path class="spw-svg-flow" d="M 7 22 L 60 55" stroke="var(--line)" stroke-width="1"/>
+                        
+                        <!-- Level 2 nodes -->
+                        <circle cx="-60" cy="65" r="10" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.2"/>
+                        <circle cx="60" cy="65" r="18" fill="var(--surface)" stroke="var(--teal)" stroke-width="2" filter="url(#node-glow)"/>
+                        <text x="60" y="68" text-anchor="middle" font-size="9" font-weight="bold" fill="var(--ink)">"e"</text>
+                        <text x="85" y="65" font-size="6.5" fill="var(--teal)">0.42 (fixed code: 1)</text>
+
+                        <!-- Level 3 -->
+                        <path class="spw-svg-flow" d="M -67 72 L -100 105" stroke="var(--line)" stroke-width="1"/>
+                        <path class="spw-svg-flow" d="M -53 72 L -20 105" stroke="var(--line)" stroke-width="1"/>
+                        
+                        <circle cx="-100" cy="115" r="14" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
+                        <text x="-100" y="118" text-anchor="middle" font-size="8" fill="var(--ink)">"t"</text>
+                        
+                        <circle cx="-20" cy="115" r="14" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
+                        <text x="-20" y="118" text-anchor="middle" font-size="8" fill="var(--ink)">"a"</text>
+                        
+                        <!-- Labels -->
+                        <text x="-35" y="45" font-size="7" fill="var(--ink-soft)">0</text>
+                        <text x="35" y="45" font-size="7" fill="var(--ink-soft)">1</text>
+                    </g>
+                    
+                    <text x="10" y="165" font-size="6.5" fill="var(--ink-soft)" font-style="italic">Compression is the art of predicting the crowd. The more frequent the character, the less bit-surface it deserves.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">huffman</span>
+                        <h3>Huffman Coding</h3>
+                        <p>A greedy algorithm that builds an optimal prefix tree based on symbol frequency. It ensures that the file remains decodable without ambiguity while reducing the total bit footprint.</p>
+                        <div class="ref-links">
+                            <a href="https://en.wikipedia.org/wiki/Huffman_coding" target="_blank">wiki: Huffman Coding</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API" target="_blank">mdn: Compression Streams API</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame-code-enrichment" data-spw-form="block" style="margin-top:1.5rem">
+                    <pre><code>#>compression_stream
+#!runtime/streams
+
+^"compress"{
+  source: fetch("/data.spw")
+  compressor: new CompressionStream("gzip")
+  
+  // project the stream into a readable sink
+  [sink] = source.body.pipeThrough(compressor)
+}
+</code></pre>
+                </div>
+            </section>
+
+            <section class="site-frame" id="dictionary-methods" data-spw-role="reference" data-spw-meaning="dictionary based compression" data-spw-form="angle">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#dictionary-methods">~[dictionary_compression]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">lz77</span>
+                        <span class="spec-pill">deflate</span>
+                        <span class="spec-pill">brotli</span>
+                    </div>
+                </div>
+                <h2>Dictionary Methods and LZ77</h2>
+                <p class="inline-note">If entropy coding is about predicting symbols, dictionary methods are about predicting patterns. LZ77 replaces repetitive strings with pointers to earlier occurrences in the sliding window.</p>
+                
+                <div class="ref-grid">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">lz77</span>
+                        <h3>Sliding Windows</h3>
+                        <p>The core of GZIP and DEFLATE. It maintains a buffer of recently seen data and replaces new copies with <code>(distance, length)</code> pairs, a spatial "curriculum" for data.</p>
+                        <ul class="ref-terms"><li>Sliding Window</li><li>Backlink</li><li>DEFLATE</li></ul>
+                        <div class="ref-links">
+                            <a href="https://en.wikipedia.org/wiki/LZ77_and_LZ78" target="_blank">wiki: LZ77</a>
+                        </div>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">brotli</span>
+                        <h3>Static Dictionaries</h3>
+                        <p>Brotli improves on GZIP by using a static dictionary of common HTML/CSS strings. This allows for massive gains in web-specific contexts—compressing the "scaffolding" of our digital buildings.</p>
+                        <ul class="ref-terms"><li>Brotli</li><li>Static Dictionary</li><li>HTTP Content-Encoding</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding" target="_blank">mdn: Content-Encoding</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

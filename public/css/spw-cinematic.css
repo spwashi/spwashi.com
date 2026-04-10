@@ -1,0 +1,47 @@
+/* Cinematic and Thematic Transitions
+ * Used for high-depth engineering surfaces and learning labs.
+ */
+
+:root {
+    --cinematic-ease: cubic-bezier(0.23, 1, 0.32, 1);
+    --cinematic-duration: 0.6s;
+    --glow-color: rgba(24, 123, 135, 0.2);
+}
+
+/* Cinematic Filter Host
+ * Attach this to an SVG or a container to enable internal thematic filters.
+ */
+.cinematic-host {
+    filter: drop-shadow(0 0 0 transparent);
+    transition: filter var(--cinematic-duration) var(--cinematic-ease);
+}
+
+.cinematic-host:hover {
+    filter: drop-shadow(0 0 12px var(--glow-color));
+}
+
+/* Internal SVG semantic connections */
+.spw-svg-surface {
+    --svg-charge: 1;
+    transition: transform var(--charge-release-duration) var(--charge-release-ease);
+}
+
+.spw-svg-surface:hover {
+    transform: scale(1.005);
+}
+
+/* Animated Flow Lines */
+@keyframes flow-dash {
+    to {
+        stroke-dashoffset: -40;
+    }
+}
+
+.spw-svg-flow--animated {
+    animation: flow-dash 3s linear infinite;
+}
+
+/* Chromatic aberration filter (mental model for depth) */
+.filter-aberration {
+    filter: url('#cinematic-aberration');
+}

@@ -50,7 +50,7 @@
                 </div>
                 <p class="spec-kicker">Software Surface</p>
                 <h1>Software</h1>
-                <p>Spw is the throughline: a readable plain-text format that can also be addressed, queried, and projected by tools. This page introduces the syntax, the operator grammar, and the small demos that make the idea concrete.</p>
+                <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                 <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
                     <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
@@ -60,7 +60,11 @@
                     <a class="operator-chip" href="#spw-component-surface">component surface</a>
                     <a class="operator-chip" href="#interactive-codeblocks">interactive codeblocks</a>
                     <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
-                    <a class="operator-chip" href="/about/website/">website field guide</a>
+                    <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
+                    <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
+                    <a class="operator-chip" href="/topics/software/compression/">compression</a>
+                    <a class="operator-chip" href="/topics/software/parsers/">parsers</a>
+                    <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
                     <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript reference</a>
                     <a class="operator-chip" href="https://github.com/spwashi/spw-workbench">spw-workbench</a>
                 </nav>
@@ -102,6 +106,11 @@
                 <nav class="frame-operators" aria-label="Software routes">
                     <a class="operator-chip" aria-current="page" href="/topics/software/">software surface</a>
                     <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
+                    <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
+                    <a class="operator-chip" href="/topics/software/compression/">compression</a>
+                    <a class="operator-chip" href="/topics/software/parsers/">parsers</a>
+                    <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
                     <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
                     <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript</a>
                 </nav>
@@ -151,7 +160,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="core-forms-frame" data-spw-role="schema" data-spw-meaning="operator index">
+            <section class="site-frame" id="core-forms-frame" data-spw-role="schema" data-spw-meaning="operator index" data-spw-form="square">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#core-forms-frame">?[core_forms]</a>
                     <h2>Core Forms</h2>
@@ -269,7 +278,7 @@ Files should remain legible.
                                     <td><strong>pragma</strong> — encodes a runtime constraint or interpretive hint; metadata about the frame itself</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="surface">&gt;surface</a></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="surface" data-spw-form="angle">&gt;surface</a></td>
                                     <td><strong>surface</strong> — a projected or rendered view; the output end of a frame pipeline</td>
                                 </tr>
                             </tbody>
@@ -387,23 +396,23 @@ Files should remain legible.
                 </div>
                 <p class="inline-note">The target is not a parser bolted onto every page. It is a progressive component system where authored Spw blocks, semantic HTML, shared registers, and small scripts agree about structure.</p>
                 <div class="feature-ladder">
-                    <div class="frame-panel">
+                    <div class="frame-panel" data-spw-form="circle">
                         <h3>Semantic host</h3>
                         <p>HTML landmarks, headings, lists, controls, and figures remain the accessibility baseline. Components enrich that host instead of replacing it.</p>
                     </div>
-                    <div class="frame-panel">
+                    <div class="frame-panel" data-spw-form="circle">
                         <h3>Register behavior</h3>
                         <p>Navigator, console, future mirrors, and Spw widgets should read shared route, focus, projection, and region state instead of inventing private state.</p>
                     </div>
-                    <div class="frame-panel">
+                    <div class="frame-panel" data-spw-form="circle">
                         <h3>Prefix / postfix symmetry</h3>
                         <p>Keyboard flows can choose intent first; touch inspection can choose target first. Equivalent outcomes should leave the same semantic trace.</p>
                     </div>
-                    <div class="frame-panel">
+                    <div class="frame-panel" data-spw-form="circle">
                         <h3>Graceful no-op</h3>
                         <p>If a token has no action yet, the interface should explain the missing target or show the contract instead of making exploration feel broken.</p>
                     </div>
-                    <div class="frame-panel">
+                    <div class="frame-panel" data-spw-form="circle">
                         <h3>Blocks and scripts</h3>
                         <p>Future Spw blocks can become widgets, inspect panels, capture frames, spell boards, or LSP-backed navigation when their contracts are stable.</p>
                     </div>
