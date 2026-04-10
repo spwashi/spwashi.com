@@ -1,0 +1,124 @@
+# wip - mobile-runtime-foundation
+# Branch: feature/mobile-runtime-foundation
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
+ @artifact: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @site: ~".spw/site.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @surfaces: ~".spw/surfaces.spw"
+ @shared: ~"public/js/spw-shared.js"
+ @core: ~"public/js/site.js"
+ @components: ~"public/js/spw-component-semantics.js"
+ @navigator: ~"public/js/frame-navigator.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Define a mobile-first runtime model for page regions, portable interaction semantics, inspectable registers, and future block/script UI so implementation can stay calm and coherent."
+ ~#taste: "clarity, containment, and mobile-first learnability"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#semantics, #runtime, #interaction_design]
+ review_surfaces: [@plan, @artifact, @semantics]
+ snippet_routes: [#example, #query, #spec]
+}
+
+^["concept_index"]{
+ primary: [#page_regions, #portable_interaction, #register_runtime, #block_ui, #script_ui]
+ surfaces: [#mobile, #navigator, #console, #inspection]
+ tensions: [#hover_bias, #state_duplication, #metaphor_drift, #scope]
+ transfers: [#page, #region, #component, #runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the local semantic grammar before inventing new metaphors",
+  "< name one runtime boundary at a time",
+  "$ record the invariant and the counterexample together",
+  "^ make each surface inspectable before making it magical",
+  "% preserve calm defaults while deepening the implementation surface"
+ ]
+ gates: [#claim_discipline, #mobile_truth, #inspectability]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_runtime_boundary]
+ parallelizable: [#semantics_note, #region_inventory]
+ shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js", "public/js/spw-component-semantics.js", "public/css/style.css"]
+ merge_risks: [#state_duplication, #naming_drift, #interaction_collision]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@site, @semantics, @surfaces]
+ carries: [#review_notes, #glossary, #implementation_order]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #inspection, #portable_input, #containment, #mobile_regions]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #containment, #learnability]
+}
+
+^["risk_model"]{
+ hard_failures: [#hover_only_affordance, #private_state_silos]
+ soft_failures: [#mobile_overlay_conflict, #script_host_leakage]
+ recoveries: [#shared_registers, #region_ownership, #portable_intent]
+ non_negotiables: [#coarse_pointer_first, #keyboard_path, #inspectability]
+}
+
+^["validation"]{
+ hypotheses: [#shared_register_projection_reduces_duplication, #portable_inspect_is_teachable, #block_host_can_precede_parser_runtime]
+ negative_controls: [#route_structure_unchanged, #visual_voice_preserved]
+ demo_path: ["/", "/topics/software/", "/topics/software/pretext/"]
+}
+
+^["stream"]{
+ >>[2026-04-09 20:09] observe - The current site already has semantic tagging, frame activation, and lightweight eventing, but it still treats hover and page-local modules as stronger organizing surfaces than mobile-first regions and shared runtime state.
+ >>[2026-04-09 20:09] observe - `site.js` owns global frame/mode activation and the spirit easter egg, while `frame-navigator.js` separately owns `g`, `[ ]`, `/`, and `Escape`; this is enough machinery to prove the next gap is arbitration and shared runtime, not lack of metaphoric vocabulary.
+ >>[2026-04-09 20:09] observe - `spw-component-semantics.js` already derives kind, form, role, liminality, and selection, which makes it the natural bridge from authored semantics into portable runtime intent.
+ >>[2026-04-09 20:09] observe - CSS is already rich in hover states and floating surfaces, but the governing model is not yet explicitly mobile-first; region ownership and coarse-pointer behavior remain implicit.
+ >>[2026-04-09 20:09] decide - Plan around four foundations: named page regions, portable inspect/invoke semantics, shared inspectable registers, and block/script host contracts.
+ >>[2026-04-09 20:09] taste - Keep magic summonable and inspectable; the calm default should survive even as the runtime surface deepens.
+ >>[2026-04-09 20:12] decide - Wrote a distilled semantics note so future implementation can test counterexamples instead of letting metaphor drift across modules.
+ >>[2026-04-09 20:12] verify - `poll-review.sh --scope=changed` passed cleanly for the new plan surfaces and `.spw` artifacts.
+}
+
+^["open"]{
+ ?[regions]: "Which page regions should be universal across routes versus optional per-surface?"
+ ?[intent]: "What is the smallest portable interaction vocabulary that cleanly spans touch, pointer, and keyboard?"
+ ?[registers]: "Which runtime registers must be first-class before navigator and console can become honest projections?"
+ ?[blocks]: "What host contract should exist before Spw blocks and scripts are allowed to shape UI?"
+}
+
+^["commits"]{
+ ~[1]: "#[mobile-runtime] - capture the planning artifacts and distilled semantics note"
+ ~[2]: ".[semantics] - formalize page regions, portable interaction intent, and register invariants"
+ ~[3]: "&[runtime] - extract shared interaction and register runtime foundations from page-local behavior"
+ ~[4]: "&[blocks] - add host contracts for declarative blocks, scripts, and inspect surfaces"
+ ~[5]: "![mobile-runtime] - verify coarse-pointer behavior, inspectability, and region containment"
+}
+
+^["cache"]{
+ ~#status: "planned"
+ ~#base_ref: "main@2e5af2bfc1af373583f2a846dcd36445b826f7d7"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css"
+ ~#next_commit: "1"
+ ~#open_count: "4"
+ ~#last_stream: "2026-04-09 20:12"
+ ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise."
+}
+
+^["done"]{
+}

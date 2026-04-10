@@ -1,0 +1,122 @@
+# mobile-runtime-foundation
+# Distilled semantics note for mobile-first regions, portable interaction intent,
+# shared registers, and future block/script UI.
+
+#>mobile_runtime_foundation
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["roots"]{
+ @site: ~".spw/site.spw"
+ @site_semantics: ~".spw/conventions/site-semantics.spw"
+ @surfaces: ~".spw/surfaces.spw"
+ @shared: ~"public/js/spw-shared.js"
+ @core: ~"public/js/site.js"
+ @components: ~"public/js/spw-component-semantics.js"
+ @navigator: ~"public/js/frame-navigator.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+}
+
+^["thesis"]{
+ claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, and visible tools become projections of shared registers."
+ why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable machine if its runtime surfaces are named, queryable, and portable across input modes."
+}
+
+^["page_regions"]{
+ definition: "A page region is a named containment zone with one interaction owner, one visibility policy, and one inspect path."
+ universal: [
+  "masthead - global route and status region",
+  "frame-stack - primary reading and traversal region",
+  "rail - secondary navigator or inspect region",
+  "overlay - temporary summoned region",
+  "footer - terminal low-salience region"
+ ]
+ optional: [
+  "local-panel - a mode switch or frame-local lens region",
+  "lab-surface - higher-voltage experimental region such as pretext"
+ ]
+ invariants: [
+  "On mobile, exactly one primary region should dominate at a time.",
+  "A secondary region must collapse into an overlay or sheet before it steals width from the frame stack.",
+  "Every persistent region must have a stable name and an inspect path."
+ ]
+ counterexample: "A permanently visible side panel that remains interactive on narrow screens without a named region contract."
+ falsify: "If a route cannot answer which region currently owns primary attention, the model is too vague."
+}
+
+^["portable_interaction_intent"]{
+ definition: "Portable interaction semantics describe what the user is trying to do, not which hardware event happened first."
+ intents: {
+  inspect: "Reversible address without commitment. May begin via focus, hover, long-press, or explicit inspect action."
+  invoke: "Commit to the target's default action. May begin via tap, click, Enter, or scripted route activation."
+  hold: "Persist inspection or summon auxiliary affordances without invoking the default action."
+  traverse: "Move among peer items or regions without activating them."
+  dismiss: "Release overlay, cast state, or inspection depth."
+ }
+ rules: [
+  "Hover may enrich inspect, but it must never be the only route to inspect.",
+  "Click is not a semantic primitive. It is one possible transport for invoke.",
+  "Touch-first paths must reveal the same structural address that desktop hover reveals."
+ ]
+ mapping: {
+  ambient: "not yet addressed"
+  addressable: "available for inspect or invoke"
+  focused: "inspect in progress"
+  active: "invoke changed visible local state"
+  selected: "invoke changed canonical route or anchor state"
+ }
+ counterexample: "A component tag or control label that appears only on pointer hover and has no tap, focus, or inspect path."
+ falsify: "If a coarse-pointer user cannot reveal the same address information as a fine-pointer user, the semantics are not portable."
+}
+
+^["register_runtime"]{
+ definition: "A register is a named runtime surface that records state as queryable structure rather than ad hoc module-local memory."
+ required: [
+  "region register - which region owns primary attention, which are secondary, which are latent",
+  "focus register - which component is being inspected, invoked, or held",
+  "route register - current page, frame, and hash selection",
+  "projection register - what navigator, console, and future mirrors are currently projecting"
+ ]
+ rules: [
+  "Navigator and console should read shared registers rather than synthesize incompatible private state.",
+  "Any visible inspect surface should be derivable from registers already present in the runtime.",
+  "A register may be projected in multiple surfaces, but it should have one runtime owner."
+ ]
+ inspectability: [
+  "A human should be able to answer what the active frame is, what region owns attention, and why a surface is visible without reading multiple modules.",
+  "A future spell or mirror should subscribe to registers, not patch page-local DOM assumptions."
+ ]
+ counterexample: "Navigator route state and console action history drifting apart because each module infers its own model from DOM events."
+ falsify: "If two inspect surfaces disagree about current active state, the register boundary is wrong or missing."
+}
+
+^["blocks_and_scripts"]{
+ definition: "A block is a declarative UI object with named inputs, stable identity, and inspectable state. A script is an explicitly hosted behavior bound to a block or region with a visible lifecycle."
+ preparation: [
+  "Give blocks stable ids, roles, and host regions before giving them a richer language surface.",
+  "Treat scripts as hosted behaviors with mount, update, and dispose boundaries, not arbitrary inline mutation.",
+  "Keep the browser runtime separate from the full Spw parser. The near-term goal is a host contract, not language execution."
+ ]
+ host_contract: {
+  block: "stable identity, semantic kind, inspect label, mount target, data inputs"
+  script: "declared owner, lifecycle hooks, allowed effects, register writes"
+ }
+ counterexample: "An inline script mutates a frame subtree without a named owner, inspect path, or cleanup boundary."
+ falsify: "If a future UI script cannot state which block or region it belongs to, the host contract is incomplete."
+}
+
+^["implementation_order"]{
+ 1: "Name regions in markup and expose region reads from shared runtime helpers."
+ 2: "Introduce portable interaction intent as a thin translation layer above raw DOM events."
+ 3: "Refactor navigator and console into projections over shared registers."
+ 4: "Prepare block and script host contracts once region and register ownership are stable."
+}
+
+^["non_goals"]{
+ items: [
+  "Do not ship a full in-browser Spw parser to prove this model.",
+  "Do not add persistent chrome just to make the runtime feel deeper.",
+  "Do not let desktop hover semantics define the primary abstraction."
+ ]
+}
