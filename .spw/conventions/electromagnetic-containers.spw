@@ -1,0 +1,247 @@
+#>electromagnetic_containers
+#:layer #!pragmatics
+#:conventions #!cognition
+
+^"thesis"{
+  claim: "Containers are computational fields, not passive boxes. They embody electromagnetic metaphors (charge, potential, resonance) to enable cognitive computation across conceptions of a single idea."
+  grounding: "From conception (abstract idea) through potential (designed, brewing) to kinetic (moving, active) to manifest (realized, expressed). Each container holds relational fields and responds to interaction as an electromagnetic system would."
+  visual: "Containers glow and pulse with charge, emit field gradients at interaction points, transition smoothly between states, and influence nearby containers through resonance."
+}
+
+^"charge_states"{
+  ~#note: "Four states along the conception→realization continuum, mapped to electromagnetic charge"
+
+  conception: {
+    meaning: "Pure potential, abstract, questioning phase"
+    color: "hsl(268 55% 42%) — probe purple"
+    energy: "Latent, minimal coherence, diffuse field"
+    interaction: "Click to advance to potential"
+    visual: "Subtle radial gradient, reduced opacity, soft presence"
+  }
+
+  potential: {
+    meaning: "Energy accumulating, brewing, designing"
+    color: "hsl(45 85% 42%) — transformation gold"
+    energy: "Gathering, pulsing field, growing coherence"
+    interaction: "Hover shows resonance, click advances to kinetic"
+    visual: "Animated field pulse, breathing glow, moderate opacity"
+  }
+
+  kinetic: {
+    meaning: "Energy in motion, implementation active, flowing"
+    color: "hsl(36 80% 36%) — object gold"
+    energy: "Moving, shimmer effect, high coherence"
+    interaction: "Field intensifies with focus, click manifests"
+    visual: "Field shimmer animation, elevated intensity, grown opacity"
+  }
+
+  manifest: {
+    meaning: "Energy expressed, realized, complete"
+    color: "hsl(180 100% 28%) — expression teal"
+    energy: "Established, stable field, maximum coherence"
+    interaction: "Stable state, interaction shows field resonance"
+    visual: "Bright presence, stable field, full opacity"
+  }
+}
+
+^"subjective_slices"{
+  ~#note: "The same concept viewed from four perspectives, each slice a frame of understanding"
+
+  frame_structure: "data-container-slice = 'conception' | 'potential' | 'kinetic' | 'manifest'"
+
+  conception_slice: {
+    frame: "Idea—abstract, questioning, exploring"
+    visual: "Left border in probe purple, light background"
+    meaning: "What is the question? What are we imagining?"
+  }
+
+  potential_slice: {
+    frame: "Design—planned, structured, architected"
+    visual: "Left border in transformation gold, subtle gradient"
+    meaning: "How would this be built? What are the constraints?"
+  }
+
+  kinetic_slice: {
+    frame: "Implementation—code, systems, active mechanics"
+    visual: "Left border in object gold, stronger presence"
+    meaning: "What does this actually do? How does it move?"
+  }
+
+  manifest_slice: {
+    frame: "Instance—concrete, expressed, in use"
+    visual: "Left border in expression teal, clear presence"
+    meaning: "What has been created? What is real?"
+  }
+}
+
+^"field_effects"{
+  ~#note: "Electromagnetic metaphors made visible in interaction"
+
+  radial_field: {
+    metaphor: "Electromagnetic field from a charge"
+    visual: "Radial gradient centered on mouse position"
+    behavior: "Moves with interaction, shows field strength"
+    meaning: "Where is attention focused? What is activated?"
+  }
+
+  field_intensity: {
+    range: "0.3 (conception) to 0.9 (manifest)"
+    responds_to: ["charge state", "hover", "focus", "semantic density setting"]
+    visual: "Gradient opacity and glow strength"
+    meaning: "How much cognitive load is available? How active is this container?"
+  }
+
+  coherence: {
+    range: "0.6 (conception) to 0.95 (manifest)"
+    responds_to: ["charge state", "focus", "internal alignment"]
+    visual: "Box-shadow border strength and glow"
+    meaning: "How internally aligned are the elements? How complete is the thought?"
+  }
+
+  resonance: {
+    metaphor: "Containers influence each other across semantic distance"
+    mechanism: "When one container advances charge, nearby related containers can respond"
+    visual: "Cascade of field brightening through related elements"
+    meaning: "How do ideas resonate and amplify through the space?"
+  }
+}
+
+^"conception_to_realization_progression"{
+  ~#note: "Visual and semantic path from abstract thought to realized form"
+
+  mechanism: {
+    abstraction: "Idea level is most abstract (lighter, italic)"
+    structure: "Design level is structured (bold, clear)"
+    concreteness: "Implementation is most concrete (monospace)"
+    manifestation: "Instance level is fully expressed (heaviest weight)"
+  }
+
+  visual_properties: {
+    opacity: "Increases from conception (0.7) to manifest (1.0)"
+    scale: "Grows from conception (0.95) to manifest (1.0)"
+    weight: "Lightens from idea → design → implementation → instance"
+    style: "italic → normal → monospace → bold"
+  }
+
+  semantic_mapping: {
+    idea: "Abstract concept, question, possibility"
+    design: "Structured plan, architecture, constraints"
+    implementation: "Active code, mechanics, behavior"
+    instance: "Concrete thing, realized form, visible result"
+  }
+
+  interaction: {
+    click: "Advance from conception → potential → kinetic → manifest"
+    arrow_keys: "Up/+ to advance, Down/- to retreat through states"
+    hover: "Field intensifies, shows where focus is"
+    focus: "Coherence increases, internal alignment strengthens"
+  }
+}
+
+^"computational_field_properties"{
+  ~#note: "What makes a container a computational space, not just a display"
+
+  holds_relations: "Container doesn't just show content, it holds relational fields"
+  responds_to_attention: "Charge and coherence respond to interaction and focus"
+  influences_neighbors: "Field resonance propagates to related containers"
+  tracks_state: "Current charge state persists across navigation"
+  emits_events: "Changes trigger events for other systems to respond"
+  exposes_perspective: "Multiple slices show different framings of the same idea"
+  manifests_potential: "Progressive states show idea becoming real"
+}
+
+^"usage_in_markup"{
+  basic_container: {
+    markup: "<div data-container-type='frame-card' data-charge='potential' data-container-slice='design'>",
+    meaning: "This container starts in potential state (brewing), shows the design perspective"
+  }
+
+  with_charge_indicator: {
+    markup: "<div data-container-type='section' data-charge='kinetic' data-charge-indicator='kinetic'>",
+    meaning: "Shows current charge state as a label"
+  }
+
+  with_field_coherence: {
+    markup: "<article data-container-type='frame' data-field-coherence>",
+    meaning: "Display coherence level as box-shadow strength"
+  }
+
+  conception_level_content: {
+    markup: "<h3 data-conception-level='idea'>What if we could think about frames as fields?</h3>",
+    meaning: "This heading represents the abstract idea level, styled lightly and italicized"
+  }
+
+  automatic_upgrade: {
+    markup: "<div class='frame-card'> ... </div>",
+    description: "JavaScript automatically adds data-container-type to all .frame-card elements and initializes electromagnetic behavior"
+  }
+}
+
+^"api_and_control"{
+  global_access: "window.ElectromagneticField.containers, .setCharge(), .advanceCharge(), .getContainer()"
+
+  setCharge: {
+    usage: "window.ElectromagneticField.setCharge(element, 'manifest')"
+    effect: "Jump container directly to specified charge state"
+  }
+
+  advanceCharge: {
+    usage: "window.ElectromagneticField.advanceCharge(element)"
+    effect: "Move from current state to next (conception → potential → kinetic → manifest)"
+  }
+
+  events: [
+    "electromagnetic:charge-change — fired when container charge changes",
+    "electromagnetic:slice-change — fired when perspective slice changes",
+    "electromagnetic:initialized — fired when system initializes"
+  ]
+}
+
+^"accessibility"{
+  keyboard_navigation: "Arrow Up/+ to advance, Arrow Down/- to retreat through charge states"
+  reduced_motion: "Field animations disabled under prefers-reduced-motion"
+  contrast: "High contrast mode increases border widths for visibility"
+  semantics: "data-charge, data-container-slice attributes provide semantic meaning"
+  aria: "Future: add aria-labels describing current charge and slice"
+}
+
+^"dark_mode_and_contrast"{
+  ~#note: "Field colors adjusted for visibility in dark mode and high contrast"
+
+  light_mode: "Subtle field gradients, opacity-based effects"
+  dark_mode: "Brighter field colors for contrast, same behavior"
+  high_contrast: "Thicker borders, stronger color differentiation"
+  all_phases: "Works correctly across all spirit phases"
+}
+
+^"cognitive_principles"{
+  "Containers are not just visual—they're computational spaces."
+  "Charge represents cognitive potential energy."
+  "Coherence shows internal alignment and clarity."
+  "Slices allow the same idea to be understood from multiple angles."
+  "Resonance makes relationships between ideas tangible."
+  "Conception → Realization progression is always visible."
+  "Interaction is continuous—containers respond to every gesture."
+  "Field effects make the invisible (relationships, potential, energy) visible."
+  "Electromagnetic metaphor is not decorative—it's semantic."
+}
+
+^"future_extensions"{
+  "Field entanglement: linked containers that maintain synchronized state"
+  "Coherence harmonics: containers emit observable 'frequencies' when in harmony"
+  "Charge cascading: advancing one container cascades through dependent containers"
+  "Field opacity: semantic distance affects field strength visibility"
+  "Dimensional coupling: containers in different phases emit different field colors"
+  "Resonance visualization: draw lines showing field coupling between containers"
+  "Conception maps: visualize entire idea space as an electromagnetic field"
+}
+
+^"technical_implementation"{
+  @system: ~"../../../public/js/electromagnetic-containers.js"
+  @styles: ~"../../../public/css/containers-electromagnetic.css"
+
+  init: "initElectromagneticContainers() runs on DOMContentLoaded"
+  class: "ElectromagneticContainer manages individual container state"
+  resonance: "FieldResonance manages relationships between containers"
+  integration: "Hooks to spw:settings-change for semantic-density aware field intensity"
+}

@@ -1,0 +1,344 @@
+/* Containers as Electromagnetic-Cognitive Spaces
+ * Containers hold computational fields, not just content
+ * Metaphor: charge (potential energy), field (influence), resonance (coherence)
+ * Frame progression: conception → potential → realization
+ */
+
+:root {
+    /* Electromagnetic charge states */
+    --charge-none: 0%;
+    --charge-potential: 33%;
+    --charge-kinetic: 66%;
+    --charge-manifest: 100%;
+
+    /* Field intensity (cognitive load / semantic density) */
+    --field-intensity: 0.5;
+
+    /* Resonance frequency (how much a container responds to changes) */
+    --resonance-freq: 1s;
+
+    /* Coherence (alignment of internal elements) */
+    --coherence: 0.8;
+
+    /* Conception to realization gradient stops */
+    --conception-color: hsl(268 55% 42%);    /* probe: abstract, questioning */
+    --potential-color: hsl(45 85% 42%);      /* transformation: brewing, energizing */
+    --kinetic-color: hsl(36 80% 36%);        /* object: active, moving */
+    --manifest-color: hsl(180 100% 28%);     /* expression: realized, expressed */
+}
+
+/* Base container computational space */
+[data-container-type] {
+    position: relative;
+    --charge-state: var(--charge-potential);
+}
+
+/* === CHARGE STATES: Potential to Manifest ===
+ * conception (idea, abstract) → potential (brewing) → kinetic (moving) → manifest (realized)
+ */
+
+/* CONCEPTION STATE: Pure potential, abstract, questioning
+ * Color: probe purple, energy: latent
+ */
+[data-charge="conception"] {
+    --charge-state: var(--charge-none);
+    --field-intensity: 0.3;
+    --coherence: 0.6;
+}
+
+[data-charge="conception"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                rgba(268, 55%, 42%, 0.08) 0%,
+                                rgba(268, 55%, 42%, 0.02) 40%,
+                                transparent 70%);
+    pointer-events: none;
+    opacity: 0.6;
+    border-radius: inherit;
+}
+
+/* POTENTIAL STATE: Energy accumulating, transformation brewing
+ * Color: transformation gold, energy: gathering
+ */
+[data-charge="potential"] {
+    --charge-state: var(--charge-potential);
+    --field-intensity: 0.6;
+    --coherence: 0.7;
+}
+
+[data-charge="potential"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                rgba(45, 85%, 42%, 0.12) 0%,
+                                rgba(45, 85%, 42%, 0.04) 40%,
+                                transparent 70%);
+    pointer-events: none;
+    opacity: 0.7;
+    border-radius: inherit;
+    animation: field-pulse 3s ease-in-out infinite;
+}
+
+/* KINETIC STATE: Energy in motion, actively processing
+ * Color: object gold, energy: flowing
+ */
+[data-charge="kinetic"] {
+    --charge-state: var(--charge-kinetic);
+    --field-intensity: 0.8;
+    --coherence: 0.85;
+}
+
+[data-charge="kinetic"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                rgba(36, 80%, 36%, 0.15) 0%,
+                                rgba(36, 80%, 36%, 0.05) 40%,
+                                transparent 70%);
+    pointer-events: none;
+    opacity: 0.8;
+    border-radius: inherit;
+    animation: field-shimmer 2s ease-in-out infinite;
+}
+
+/* MANIFEST STATE: Energy expressed, realized, complete
+ * Color: expression teal, energy: established
+ */
+[data-charge="manifest"] {
+    --charge-state: var(--charge-manifest);
+    --field-intensity: 0.9;
+    --coherence: 0.95;
+}
+
+[data-charge="manifest"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                rgba(180, 100%, 28%, 0.1) 0%,
+                                rgba(180, 100%, 28%, 0.02) 40%,
+                                transparent 70%);
+    pointer-events: none;
+    opacity: 0.9;
+    border-radius: inherit;
+}
+
+/* === SUBJECTIVE SLICES: Multiple Frames of Perspective ===
+ * Show the same concept from different angles:
+ * idea → design → implementation → instance
+ */
+
+[data-container-slice] {
+    position: relative;
+    border-left: 3px solid transparent;
+    border-left-color: var(--conception-color);
+    transition: border-left-color var(--resonance-freq) ease;
+}
+
+/* Conception frame: abstract idea */
+[data-container-slice="conception"] {
+    border-left-color: var(--conception-color);
+    background: linear-gradient(90deg,
+                               rgba(268, 55%, 42%, 0.04) 0%,
+                               transparent 20%);
+}
+
+/* Potential frame: designed, planned */
+[data-container-slice="potential"] {
+    border-left-color: var(--potential-color);
+    background: linear-gradient(90deg,
+                               rgba(45, 85%, 42%, 0.06) 0%,
+                               transparent 20%);
+}
+
+/* Kinetic frame: implementation, active */
+[data-container-slice="kinetic"] {
+    border-left-color: var(--kinetic-color);
+    background: linear-gradient(90deg,
+                               rgba(36, 80%, 36%, 0.06) 0%,
+                               transparent 20%);
+}
+
+/* Manifest frame: realized, expressed */
+[data-container-slice="manifest"] {
+    border-left-color: var(--manifest-color);
+    background: linear-gradient(90deg,
+                               rgba(180, 100%, 28%, 0.05) 0%,
+                               transparent 20%);
+}
+
+/* === FIELD EFFECTS: Electromagnetic Resonance ===
+ * Show how containers influence each other across semantic space
+ */
+
+/* Charge indicator: shows current potential state */
+[data-charge-indicator]::before {
+    content: attr(data-charge-indicator);
+    position: absolute;
+    right: 0.8rem;
+    top: 0.6rem;
+    font-size: 0.75rem;
+    opacity: calc(var(--field-intensity) * 0.7);
+    font-weight: 600;
+    color: currentColor;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Field coherence: visual representation of internal alignment */
+[data-field-coherence] {
+    --coherence-color: hsl(180 80% calc(40% + (var(--coherence) * 20%)));
+    box-shadow: inset 0 0 0 1px var(--coherence-color);
+}
+
+/* === INTERACTIVE FIELD RESPONSES ===
+ * Containers respond to interaction with charge state changes
+ */
+
+[data-container-type]:hover {
+    --field-intensity: min(1, calc(var(--field-intensity) + 0.15));
+}
+
+[data-container-type]:focus-within {
+    --field-intensity: min(1, calc(var(--field-intensity) + 0.2));
+    --coherence: min(1, calc(var(--coherence) + 0.05));
+}
+
+/* === RESONANCE ANIMATIONS ===
+ * Field pulsing and shimmer based on charge state
+ */
+
+@keyframes field-pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes field-shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Charge transition glow */
+@keyframes charge-transition {
+    0% {
+        box-shadow: 0 0 0 0 rgba(180, 100%, 28%, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 12px 4px rgba(180, 100%, 28%, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(180, 100%, 28%, 0);
+    }
+}
+
+[data-charge-transitioning] {
+    animation: charge-transition 0.8s ease-out;
+}
+
+/* === CONCEPTION → REALIZATION PROGRESSION ===
+ * Visual path showing evolution from abstract to concrete
+ */
+
+[data-conception-level] {
+    position: relative;
+    /* Use opacity to show abstractness (idea is lighter) */
+    opacity: calc(0.7 + (var(--charge-state) * 0.3));
+    /* Scale suggests manifestation */
+    transform: scale(calc(0.95 + (var(--charge-state) * 0.05)));
+    transition: opacity var(--resonance-freq) ease, transform var(--resonance-freq) ease;
+}
+
+/* Idea level: most abstract */
+[data-conception-level="idea"] {
+    color: var(--conception-color);
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Design level: structured potential */
+[data-conception-level="design"] {
+    color: var(--potential-color);
+    font-weight: 500;
+}
+
+/* Implementation level: active code */
+[data-conception-level="implementation"] {
+    color: var(--kinetic-color);
+    font-weight: 600;
+    font-family: monospace;
+}
+
+/* Instance level: concrete, manifest */
+[data-conception-level="instance"] {
+    color: var(--manifest-color);
+    font-weight: 700;
+}
+
+/* === ACCESSIBILITY & MOTION ===
+ */
+
+@media (prefers-reduced-motion: reduce) {
+    [data-charge="potential"]::before,
+    [data-charge="kinetic"]::before,
+    [data-charge-transitioning],
+    [data-conception-level] {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+    [data-charge="conception"]::before {
+        background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                    rgba(268, 55%, 60%, 0.1) 0%,
+                                    rgba(268, 55%, 60%, 0.02) 40%,
+                                    transparent 70%);
+    }
+
+    [data-charge="potential"]::before {
+        background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                    rgba(45, 85%, 55%, 0.12) 0%,
+                                    rgba(45, 85%, 55%, 0.04) 40%,
+                                    transparent 70%);
+    }
+
+    [data-charge="kinetic"]::before {
+        background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                    rgba(36, 80%, 50%, 0.15) 0%,
+                                    rgba(36, 80%, 50%, 0.05) 40%,
+                                    transparent 70%);
+    }
+
+    [data-charge="manifest"]::before {
+        background: radial-gradient(circle at var(--interaction-x, 50%) var(--interaction-y, 50%),
+                                    rgba(180, 100%, 45%, 0.1) 0%,
+                                    rgba(180, 100%, 45%, 0.02) 40%,
+                                    transparent 70%);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: more) {
+    [data-container-slice] {
+        border-left-width: 4px;
+    }
+
+    [data-field-coherence] {
+        box-shadow: inset 0 0 0 2px var(--coherence-color);
+    }
+}
