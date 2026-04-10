@@ -22,6 +22,7 @@
 </head>
 <body data-spw-surface="software" data-spw-features="operators metrics navigator console">
     <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -31,10 +32,11 @@
                 <li><a href="/contact">Contact</a></li>
             </ul>
         </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
     </header>
     <main>
         <article>
-            <section class="site-frame site-hero" id="software-surface" data-spw-meaning="surface overview">
+            <section class="site-frame site-hero" id="software-surface" data-spw-role="orientation" data-spw-liminality="entry" data-spw-meaning="surface overview">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#software-surface">#&gt;software_surface</a>
                     <div class="spec-strip">
@@ -56,7 +58,7 @@
                 </nav>
             </section>
 
-            <section class="site-frame" id="spw-syntax-surface" data-spw-meaning="reference surface">
+            <section class="site-frame" id="spw-syntax-surface" data-spw-role="schema" data-spw-meaning="reference surface">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#spw-syntax-surface">#&gt;spw_syntax_surface</a>
                     <div class="mode-switch" role="group" aria-label="Syntax lens">
@@ -69,10 +71,10 @@
                 <p class="spec-kicker">Public Reference Surface</p>
                 <h2>Spw Syntax</h2>
                 <div class="mode-panels">
-                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source">
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source" data-spw-role="orientation">
                         <p>Spw pushes plain text toward addressable structure without giving up legibility. The file remains the substrate; the syntax simply gives tools more to work with. This public surface is the readable edge of the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> runtime and design work.</p>
                     </section>
-                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="syntax" hidden>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="syntax" data-spw-role="schema" hidden>
                         <pre><code>#>note
 #:layer #!pragmatics
 
@@ -82,10 +84,10 @@
 }
 </code></pre>
                     </section>
-                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="surface" hidden>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="surface" data-spw-role="projection" hidden>
                         <p>The interesting part is projection: one authored source can be read as source, syntax, metadata, or interactive surface without severing the relationship between them.</p>
                     </section>
-                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="obsidian" hidden>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="obsidian" data-spw-role="scenario" hidden>
                         <p>This is the homage: if Obsidian had used Spw from the start, Markdown could still be the file format, but sections, properties, and codeblocks would be more frame-aware, queryable, and interactive by default.</p>
                     </section>
                 </div>
@@ -95,7 +97,7 @@
                 </nav>
             </section>
 
-            <section class="site-frame" id="orientation-frame" data-spw-meaning="thesis">
+            <section class="site-frame" id="orientation-frame" data-spw-role="orientation" data-spw-meaning="thesis">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#orientation-frame">.orientation</a>
                     <h2>Orientation</h2>
@@ -109,8 +111,8 @@
                 </div>
             </section>
 
-            <section class="site-frame spec-grid" id="base-comparison-frame" data-spw-meaning="source comparison">
-                <div class="software-card" data-spw-meaning="markdown baseline">
+            <section class="site-frame spec-grid" id="base-comparison-frame" data-spw-role="comparison" data-spw-meaning="source comparison">
+                <div class="software-card" data-spw-role="reference" data-spw-liminality="projected" data-spw-meaning="markdown baseline">
                     <a class="frame-sigil" href="#base-comparison-frame">.markdown_base</a>
                     <h2>Markdown base</h2>
                     <pre><code>## Note
@@ -122,7 +124,7 @@ Files should remain legible.
 - inspectable
 </code></pre>
                 </div>
-                <div class="software-card" data-spw-meaning="spw projection">
+                <div class="software-card" data-spw-role="projection" data-spw-liminality="projected" data-spw-meaning="spw projection">
                     <a class="frame-sigil" href="#base-comparison-frame">^"spw_frame"{</a>
                     <h2>Spw frame</h2>
                     <pre><code>#>note
@@ -137,7 +139,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="core-forms-frame" data-spw-meaning="operator index">
+            <section class="site-frame" id="core-forms-frame" data-spw-role="schema" data-spw-meaning="operator index">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#core-forms-frame">?[core_forms]</a>
                     <h2>Core Forms</h2>
@@ -166,7 +168,7 @@ Files should remain legible.
                 </ul>
             </section>
 
-            <section class="site-frame" id="composite-example-frame" data-spw-meaning="composite example">
+            <section class="site-frame" id="composite-example-frame" data-spw-role="example" data-spw-meaning="composite example">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#composite-example-frame">^"composite_example"{</a>
                     <h2>Composite Example</h2>
@@ -186,7 +188,7 @@ Files should remain legible.
 </code></pre>
             </section>
 
-            <section class="site-frame" id="spw-grammar-surface" data-spw-meaning="interaction grammar">
+            <section class="site-frame" id="spw-grammar-surface" data-spw-role="schema" data-spw-meaning="interaction grammar">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#spw-grammar-surface">#&gt;spw_grammar_surface</a>
                     <div class="mode-switch" role="group" aria-label="Grammar lens">
@@ -199,7 +201,7 @@ Files should remain legible.
                 <p class="inline-note">Spw operator prefixes are not decoration. Each carries a distinct semantic role that maps directly to interaction behavior. The syntax is the behavior.</p>
 
                 <div class="mode-panels">
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators">
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators" data-spw-role="schema">
                         <table class="spw-operator-table" aria-label="Spw operator reference">
                             <tbody>
                                 <tr>
@@ -242,8 +244,8 @@ Files should remain legible.
                         </table>
                     </section>
 
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="principles" hidden>
-                        <p class="frame-note">From <code>.spw/_workbench/interaction-model.spw</code> and <code>obsidian-philosophy.spw</code>.</p>
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="principles" data-spw-role="reference" hidden>
+                        <p class="frame-note">Adapted through <code>.spw/site.spw</code> from installed canon surfaces such as <code>.spw/_workbench/.spw/patterns/literate-ui.spw</code>, <code>.spw/_workbench/.spw/applications/symmetry/symmetry-ui-design.spw</code>, and <code>.spw/_workbench/.spw/biome/ocean/ux.spw</code>.</p>
                         <ul class="source-list">
                             <li>
                                 <span class="source-name">Syntax as grammar</span>
@@ -268,8 +270,8 @@ Files should remain legible.
                         </ul>
                     </section>
 
-                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="workbench" hidden>
-                        <p class="frame-note">The <code>.spw/</code> workbench backs this site's design decisions. The same operator map governs the URL structure at <a href="/play/rpg-wednesday/">/play/rpg-wednesday/</a> — <code>^sessions</code>, <code>~cast</code>, <code>?[arcs</code> — so the grammar is the route plan, not a metaphor for it.</p>
+                    <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="workbench" data-spw-role="reference" hidden>
+                        <p class="frame-note">The local <code>.spw/</code> bridge now routes through <code>.spw/surfaces.spw</code> and <code>.spw/conventions/site-semantics.spw</code> before it reaches the installed workbench canon, so the same operator map that shapes this page also informs <a href="/play/rpg-wednesday/">/play/rpg-wednesday/</a> through shared naming, selection, liminality, and interface-pattern surfaces.</p>
                         <pre><code>#&gt;interaction_model
 #:surface #!ux
 #:layer #!pragmatics
@@ -296,7 +298,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="interactive-codeblocks" data-spw-meaning="projection demo">
+            <section class="site-frame" id="interactive-codeblocks" data-spw-role="projection" data-spw-meaning="projection demo">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#interactive-codeblocks">@rotate(surface)</a>
                     <h2>Interactive Codeblocks</h2>
@@ -346,18 +348,18 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="pretext-probe-frame" data-spw-meaning="external probe">
+            <section class="site-frame" id="pretext-probe-frame" data-spw-role="probe" data-spw-meaning="external probe">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#pretext-probe-frame">&gt;pretext_probe</a>
                     <h2>External Probe: Pretext.js</h2>
                 </div>
                 <div class="frame-grid">
-                    <a class="frame-card" href="/topics/software/pretext/" data-spw-meaning="lab route">
+                    <a class="frame-card" href="/topics/software/pretext/" data-spw-role="route" data-spw-meaning="lab route">
                         <span class="frame-card-sigil">#&gt;pretext_field_lab</span>
                         <strong>Pretext Field Lab</strong>
                         <span>a playful route for exploring text measurement, line breaking, and responsive layout without DOM reflow</span>
                     </a>
-                    <div class="frame-panel" data-spw-meaning="fit rationale">
+                    <div class="frame-panel" data-spw-role="rationale" data-spw-meaning="fit rationale">
                         <h3>Why it fits here</h3>
                         <p>Pretext.js is interesting for the same reason interactive codeblocks are interesting: authored text can stay legible while its projected surface becomes more measurable, responsive, and deliberate.</p>
                     </div>
@@ -365,7 +367,7 @@ Files should remain legible.
                 <p class="inline-note">A small external-library probe, shaped to the same frame language as the rest of this software surface.</p>
             </section>
 
-            <section class="site-frame" id="obsidian-homage-frame" data-spw-meaning="product scenario">
+            <section class="site-frame" id="obsidian-homage-frame" data-spw-role="scenario" data-spw-meaning="product scenario">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#obsidian-homage-frame">@obsidian_homage</a>
                     <h2>What if Obsidian used Spw from the start?</h2>
@@ -398,7 +400,7 @@ Files should remain legible.
                 </div>
             </section>
 
-            <section class="site-frame" id="design-influences-frame" data-spw-meaning="design sources">
+            <section class="site-frame" id="design-influences-frame" data-spw-role="reference" data-spw-meaning="design sources">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#design-influences-frame">~"design_influences"</a>
                     <h2>Design Influences</h2>
@@ -412,7 +414,7 @@ Files should remain legible.
                 <p class="inline-note">These ideas are adapted from the `spw-workbench` design surfaces and translated here into a public-facing site context.</p>
             </section>
 
-            <section class="site-frame" id="pipeline-frame" data-spw-meaning="transform chain">
+            <section class="site-frame" id="pipeline-frame" data-spw-role="pipeline" data-spw-meaning="transform chain">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#pipeline-frame">*pipeline</a>
                     <h2>Pipeline</h2>

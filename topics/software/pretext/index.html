@@ -22,6 +22,7 @@
 </head>
 <body data-spw-features="operators metrics navigator console pretext-lab">
     <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -31,10 +32,11 @@
                 <li><a href="/contact">Contact</a></li>
             </ul>
         </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
     </header>
     <main>
         <article>
-            <section class="site-frame site-hero" id="pretext-field-lab" data-spw-meaning="tool observatory">
+            <section class="site-frame site-hero" id="pretext-field-lab" data-spw-role="probe" data-spw-liminality="entry" data-spw-meaning="tool observatory">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#pretext-field-lab">#&gt;pretext_field_lab</a>
                     <div class="mode-switch" role="group" aria-label="Pretext Field Lab views">
@@ -46,10 +48,10 @@
                 <p class="spec-kicker">External Probe / Text Layout Engine</p>
                 <h1>Pretext Field Lab</h1>
                 <div class="mode-panels">
-                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation">
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation" data-spw-role="orientation">
                         <p>This is a small observatory for Pretext.js: one prepared text handle, several widths, and a live view of how lines reflow without touching DOM measurement APIs.</p>
                     </section>
-                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" hidden>
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" data-spw-role="schema" hidden>
                         <pre><code>import { prepare, layout } from '@chenglou/pretext'
 
 const prepared = prepare(
@@ -60,7 +62,7 @@ const prepared = prepare(
 const { height, lineCount } = layout(prepared, 400, 24)
 </code></pre>
                     </section>
-                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="surface" hidden>
+                    <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="surface" data-spw-role="projection" hidden>
                         <p>The lab below uses the line-producing path so the resulting wraps can be rendered directly into visible surfaces. The essential idea stays the same: prepare once, reuse the handle as widths change.</p>
                     </section>
                 </div>
@@ -74,14 +76,14 @@ const { height, lineCount } = layout(prepared, 400, 24)
                 </div>
             </section>
 
-            <section class="site-frame" id="pretext-observatory" data-spw-meaning="live lab">
+            <section class="site-frame" id="pretext-observatory" data-spw-role="probe" data-spw-meaning="live lab">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#pretext-observatory">?["line_break_observatory"]</a>
                     <h2>Line Break Observatory</h2>
                 </div>
                 <p class="inline-note">Edit the text, change the width, and watch the same prepared handle fan out across phone, tablet, and poster surfaces.</p>
                 <div class="pretext-lab-grid">
-                    <div class="frame-panel pretext-controls-panel" data-spw-meaning="control surface">
+                    <div class="frame-panel pretext-controls-panel" data-spw-role="control" data-spw-meaning="control surface">
                         <label class="pretext-field">
                             <span>Probe text</span>
                             <textarea id="pretext-input" class="pretext-textarea" rows="8">AGI 春天到了. بدأت الرحلة — layout without reflow.
@@ -111,22 +113,22 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                         <p id="pretext-status" class="frame-note">Loading Pretext.js and waiting for fonts…</p>
                     </div>
 
-                    <div class="frame-panel pretext-summary-panel" data-spw-meaning="telemetry panel">
+                    <div class="frame-panel pretext-summary-panel" data-spw-role="telemetry" data-spw-meaning="telemetry panel">
                         <h3>Probe Telemetry</h3>
                         <div class="pretext-metric-grid">
-                            <div class="pretext-metric" data-spw-kind="metric" data-spw-meaning="handle state">
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="handle state">
                                 <span class="frame-card-sigil">handle</span>
                                 <strong id="pretext-handle-state">warming up</strong>
                             </div>
-                            <div class="pretext-metric" data-spw-kind="metric" data-spw-meaning="wrap mode">
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="wrap mode">
                                 <span class="frame-card-sigil">mode</span>
                                 <strong id="pretext-mode-state">pre-wrap</strong>
                             </div>
-                            <div class="pretext-metric" data-spw-kind="metric" data-spw-meaning="character count">
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="character count">
                                 <span class="frame-card-sigil">characters</span>
                                 <strong id="pretext-character-count">0</strong>
                             </div>
-                            <div class="pretext-metric" data-spw-kind="metric" data-spw-meaning="widest wrap">
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="widest wrap">
                                 <span class="frame-card-sigil">widest wrap</span>
                                 <strong id="pretext-widest-width">0px</strong>
                             </div>
@@ -140,7 +142,7 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                 </div>
 
                 <div class="pretext-surface-grid" id="pretext-surfaces" aria-live="polite">
-                    <section class="software-card pretext-surface" data-spw-meaning="phone projection">
+                    <section class="software-card pretext-surface" data-spw-role="projection" data-spw-liminality="projected" data-spw-meaning="phone projection">
                         <div class="frame-heading">
                             <a class="frame-sigil" href="#pretext-observatory">.phone</a>
                             <h3>Phone width</h3>
@@ -148,7 +150,7 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                         <p class="frame-note" id="pretext-phone-meta">Waiting for layout…</p>
                         <div class="pretext-preview" id="pretext-phone-lines"></div>
                     </section>
-                    <section class="software-card pretext-surface" data-spw-meaning="tablet projection">
+                    <section class="software-card pretext-surface" data-spw-role="projection" data-spw-liminality="projected" data-spw-meaning="tablet projection">
                         <div class="frame-heading">
                             <a class="frame-sigil" href="#pretext-observatory">.tablet</a>
                             <h3>Tablet width</h3>
@@ -156,7 +158,7 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                         <p class="frame-note" id="pretext-tablet-meta">Waiting for layout…</p>
                         <div class="pretext-preview" id="pretext-tablet-lines"></div>
                     </section>
-                    <section class="software-card pretext-surface" data-spw-meaning="poster projection">
+                    <section class="software-card pretext-surface" data-spw-role="projection" data-spw-liminality="projected" data-spw-meaning="poster projection">
                         <div class="frame-heading">
                             <a class="frame-sigil" href="#pretext-observatory">.poster</a>
                             <h3>Poster width</h3>
@@ -167,7 +169,7 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                 </div>
             </section>
 
-            <section class="site-frame" id="pretext-recipes" data-spw-meaning="use cases">
+            <section class="site-frame" id="pretext-recipes" data-spw-role="reference" data-spw-meaning="use cases">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#pretext-recipes">~"integration_recipes"</a>
                     <h2>Why Explore It</h2>

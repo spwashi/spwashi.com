@@ -1,0 +1,85 @@
+# Site Semantics
+#
+# Local semantic grammar for how spwashi.com translates Spw into frames,
+# routes, and screenshot-legible interface surfaces.
+
+#>spw_site_semantics
+#:semantics #!surface
+#:layer #!pragmatics
+
+^"roots"{
+  @selection: ~"../_workbench/.spw/conventions/selection.spw"
+  @naming: ~"../_workbench/.spw/conventions/naming.spw"
+  @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @literate_ui: ~"../_workbench/.spw/patterns/literate-ui.spw"
+  @symmetry_ui: ~"../_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+}
+
+^"axes"{
+  kind: "What a component is structurally: frame, panel, card, lens, surface, or metric."
+  form: "How a component occupies space: brace opens a plane; block condenses a field."
+  role: "What a component does in the interaction grammar: orientation, schema, route, probe, projection, reference, telemetry, or control."
+  liminality: "How far materialization has progressed: entry, threshold, settled, nested, projected, or deep."
+  selection: "How strongly the page is addressing the component: ambient, addressable, focused, active, or selected."
+}
+
+^"linguistic_physics"{
+  brace: "1D into 2D. A brace opens a face, exposes a boundary, and invites traversal."
+  block: "2D into N-D. A block condenses detail, stores consequence, and suggests depth beyond the visible plane."
+  liminality_rule: "Liminality tracks phase change; selection tracks attention. They should vary independently."
+  interface_rule: "Public pages stay calm at rest, but every component should become more legible when addressed."
+}
+
+^"component_grammar"{
+  frame: {
+    default_form: "brace"
+    default_liminality: "settled"
+    selection_base: "addressable"
+  }
+  panel: {
+    default_form: "brace"
+    default_liminality: "threshold"
+    selection_base: "addressable"
+  }
+  lens: {
+    default_form: "brace"
+    default_liminality: "threshold"
+    selection_base: "addressable"
+  }
+  card: {
+    default_form: "block"
+    default_liminality: "nested"
+    selection_base: "addressable"
+  }
+  surface: {
+    default_form: "block"
+    default_liminality: "projected"
+    selection_base: "ambient"
+  }
+  metric: {
+    default_form: "block"
+    default_liminality: "deep"
+    selection_base: "ambient"
+  }
+}
+
+^"interaction_states"{
+  ambient: "Present but not yet being addressed."
+  addressable: "Available through route, hover, focus, sigil, or keypath."
+  focused: "Attention has contacted the component without fully committing to it."
+  active: "The component currently shapes visible page state."
+  selected: "The component is the current route, hash target, or canonical anchor."
+}
+
+^"translation_contract"{
+  sources: [@selection, @naming, @brace_physics, @literate_ui, @symmetry_ui]
+  ui_binding: "public/js/spw-component-semantics.js and public/css/style.css should express these axes declaratively."
+  authoring_binding: "HTML may override kind, form, role, liminality, and selection explicitly through data-spw-* attributes."
+  screenshot_rule: "A screenshot should still reveal what kind of component is present, what phase it occupies, and how deeply it is being addressed."
+}
+
+^"invariant"{
+  "Kind, form, role, liminality, and selection are orthogonal axes, not one collapsed label.",
+  "Brace and block should grow more familiar across pages before they grow more ornamental.",
+  "Selection should reveal address, not merely click state."
+}

@@ -1,0 +1,29 @@
+# Site Conventions
+#
+# Local conventions that translate installed workbench canon into
+# spwashi.com authoring rules.
+
+#>spw_site_conventions
+#:index #!conventions
+#:layer #!pragmatics
+
+^"roots"{
+  @spw: ~".."
+  @site_semantics: ~"./site-semantics.spw"
+  @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
+  @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
+  @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
+}
+
+^"dispatch"{
+  semantics: @site_semantics
+  selection: @workbench_selection
+  naming: @workbench_naming
+  submodule: @workbench_submodule
+}
+
+^"invariant"{
+  "Local conventions translate installed canon into site-facing authoring rules.",
+  "Site-specific semantics belong here; imported conventions stay cited rather than copied.",
+  "The local bridge should stay small enough to read in one sitting."
+}

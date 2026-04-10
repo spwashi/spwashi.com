@@ -1,0 +1,82 @@
+# Site
+#
+# Local bridge between spwashi.com publishing surfaces and the installed
+# spw-workbench canon. This stays notebook-like, but it now resolves against
+# real canon paths rather than dead local sketches.
+
+#>spw_site_observations
+#:notebook #!open
+#:layer #!pragmatics
+
+^"surfaces"{
+  ~#note: "Four main surfaces. Each follows the same frame architecture."
+  index:    { ~#path: "../index.html",                      ~#role: "hub, orientation, entry" }
+  about:    { ~#path: "../about/index.html",                ~#role: "identity, register, land cluster" }
+  software: { ~#path: "../topics/software/index.html",      ~#role: "grammar, operators, interactive codeblocks" }
+  play:     { ~#path: "../play/index.html",                  ~#role: "games, sessions, creative work" }
+}
+
+^"workbench_roots"{
+  @conventions: ~"./conventions/index.spw"
+  @site_semantics: ~"./conventions/site-semantics.spw"
+  @surfaces: ~"./surfaces.spw"
+  @canon: ~"./_workbench/.spw/index.spw"
+  @mount: ~"./_workbench/.spw/mount.spw"
+  @workspace: ~"./_workbench/.spw/workspace.spw"
+  @selection: ~"./_workbench/.spw/conventions/selection.spw"
+  @naming: ~"./_workbench/.spw/conventions/naming.spw"
+  @submodule: ~"./_workbench/.spw/conventions/submodule.spw"
+  @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
+  @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+  @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
+  @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
+}
+
+^"frame_patterns"{
+  ~#note: "Patterns that recur across surfaces."
+  [
+    "Every section is a .site-frame with a sigil (#>name) and metadata.",
+    "Mode switching via data-mode-group — .source / ^syntax / >surface / @obsidian.",
+    "Operator color tokens (--op-*-color) drive semantic visual hierarchy.",
+    "The 'g' key toggles the surface map; [ ] traverses frames.",
+    "data-spw-role, data-spw-liminality, data-spw-meaning carry semantic metadata on frames.",
+  ]
+}
+
+^"translations"{
+  software_surface: [@literate_ui, @symmetry_ui, @ocean_ux]
+  pretext_surface: [@surface_registry, @selection]
+  labels_and_tokens: [@naming, @selection]
+  installation: [@submodule, @mount]
+  site_semantics: [@conventions, @site_semantics]
+  public_routes: [@surfaces, @surface_registry]
+}
+
+^"integration_contract"{
+  local_role: "The site's .spw layer stays thin and speaks in terms of publishing decisions, copy, routes, and UI."
+  imported_role: "The installed spw-workbench supplies canon semantics, naming, selection, and interface patterns."
+  semantic_rule: "Local site semantics translate canon into kind, form, role, liminality, and selection for public components."
+  citation_rule: "When the site cites workbench sources, prefer installed paths under .spw/_workbench/.spw/ that actually exist."
+}
+
+^"dispatch"{
+  conventions: @conventions
+  site_semantics: @site_semantics
+  public_surfaces: @surfaces
+  workbench: @canon
+  selection: @selection
+  naming: @naming
+  submodule: @submodule
+  literate_ui: @literate_ui
+  symmetry_ui: @symmetry_ui
+  ocean_ux: @ocean_ux
+  surfaces: @surface_registry
+}
+
+^"open_questions"{
+  ?["Which operator semantics feel right in the nav vs. forced?"]{ #:open }
+  ?["Where does the spirit cycle map onto the navigation patterns that already exist?"]{ #:open }
+  ?["What would it mean for a page visit to trace a phase of the spirit cycle?"]{ #:open }
+  ?["When should the brace walls (boon/bane) carry more visual weight?"]{ #:open }
+  ?["What is the right moment to introduce the valence pentad to a first-time visitor?"]{ #:open }
+}

@@ -1,25 +1,48 @@
 # Spw Site Index
 #
-# Root entrypoint for this site's local Spw workbench surfaces.
+# Root entrypoint for this site local bridge into the installed Spw workbench.
 
 #>spw_site_index
 #:index #!canon
 #:layer #!pragmatics
 
 ^"intent"{
- ~#goal: "Provide a stable entrypoint for site-refresh planning, Obsidian application framing, and design interaction surfaces."
+ ~#goal: "Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon."
 }
 
 ^"roots"{
  @spw: ~"."
- @workbench: ~"./_workbench/index.spw"
+ @mount: ~"./mount.spw"
+ @workspace: ~"./workspace.spw"
+ @conventions: ~"./conventions/index.spw"
+ @site_semantics: ~"./conventions/site-semantics.spw"
+ @site: ~"./site.spw"
+ @domains: ~"./domains.spw"
+ @surfaces: ~"./surfaces.spw"
+ @workbench: ~"./_workbench/.spw/index.spw"
+ @workbench_mount: ~"./_workbench/.spw/mount.spw"
+ @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
 }
 
 ^"dispatch"{
+ mount: @mount
+ workspace: @workspace
+ conventions: @conventions
+ semantics: @site_semantics
  workbench: @workbench
+ workbench_mount: @workbench_mount
+ workbench_workspace: @workbench_workspace
+ about: ~"../about/index.html"
+ play: ~"../play/index.html"
+ software: ~"../topics/software/index.html"
+ domains: @domains
+ surfaces: @surfaces
+ site: @site
 }
 
 ^"invariant"{
- "This .spw surface supports practical publishing decisions for spwashi.com.",
- "It should remain lighter than spw-workbench and oriented toward concrete narrative and interaction outcomes.",
+  "The local .spw directory stays thin and site-oriented.",
+  "Local conventions and surfaces describe the site's own canon boundary.",
+  "Imported canon lives under ./_workbench/.spw and remains the deeper source of truth.",
+  "Site surfaces should cite installed workbench paths that actually exist.",
 }

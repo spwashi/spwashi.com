@@ -304,6 +304,81 @@ const initSiteCore = () => {
     window.addEventListener('hashchange', activateFromHash);
 };
 
+const initBraceWalls = () => {
+    const humanizeToken = (value = '') => value.replace(/-/g, ' ');
+
+    const readOperatorVar = (opType, suffix, fallback) => {
+        const styles = getComputedStyle(document.documentElement);
+        return (
+            styles.getPropertyValue(`--op-${opType}-${suffix}`).trim()
+            || styles.getPropertyValue(`--op-frame-${suffix}`).trim()
+            || fallback
+        );
+    };
+
+    const getIndicatorText = (frame, opType = 'frame') => {
+        const parts = [opType];
+        const role = frame?.dataset.spwRole;
+        const liminality = frame?.dataset.spwLiminality;
+        const selection = frame?.dataset.spwSelection;
+
+        if (role && role !== 'context') {
+            parts.push(humanizeToken(role));
+        } else if (liminality && liminality !== 'settled' && liminality !== 'ambient') {
+            parts.push(humanizeToken(liminality));
+        }
+
+        if (selection && !['ambient', 'addressable'].includes(selection)) {
+            parts.push(humanizeToken(selection));
+        }
+
+        return parts.join(' · ');
+    };
+
+    const applyOpColor = (opType = 'frame', frame = null) => {
+        const root = document.documentElement;
+        root.style.setProperty('--active-op-color', readOperatorVar(opType, 'color', 'hsl(180 100% 28%)'));
+        root.style.setProperty('--active-op-border', readOperatorVar(opType, 'border', 'rgba(0,128,128,0.34)'));
+        const slot = document.querySelector('[data-header-op-slot]');
+        if (slot) slot.textContent = getIndicatorText(frame, opType);
+    };
+
+    document.addEventListener('spw:frame-change', (e) => applyOpColor(e.detail?.opType, e.detail?.frame));
+
+    // Inject BOON wall (left)
+    const boon = document.createElement('div');
+    boon.className = 'spw-boon-wall';
+    boon.setAttribute('aria-hidden', 'true');
+    boon.innerHTML = '<span class="spw-boon-wall-char">{</span>';
+    document.body.appendChild(boon);
+
+    // Inject BANE wall (right)
+    const bane = document.createElement('div');
+    bane.className = 'spw-bane-wall';
+    bane.setAttribute('aria-hidden', 'true');
+    bane.innerHTML = `
+        <span class="spw-bane-wall-char">}</span>
+        <span class="spw-bane-label">bane</span>
+        <div class="spw-bane-scroll-track">
+            <div class="spw-bane-scroll-thumb" data-spw-scroll-thumb></div>
+        </div>
+    `;
+    document.body.appendChild(bane);
+
+    // Scroll tracking
+    const thumb = bane.querySelector('[data-spw-scroll-thumb]');
+    const track = bane.querySelector('.spw-bane-scroll-track');
+    const updateScroll = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max <= 0) { track.style.display = 'none'; return; }
+        track.style.display = '';
+        thumb.style.height = `${Math.min(100, (window.scrollY / max) * 100)}%`;
+    };
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    applyOpColor(window.spwInterface?.getActiveFrame?.() ? getFrameMeta(window.spwInterface.getActiveFrame()).opType : 'frame', window.spwInterface?.getActiveFrame?.() || null);
+    updateScroll();
+};
+
 const initOptionalFeatures = async () => {
     const features = getRequestedFeatures();
 
@@ -331,11 +406,96 @@ const initOptionalFeatures = async () => {
 
     await Promise.all(loads);
     await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
+
+    const activeFrame = window.spwInterface?.getActiveFrame?.();
+    if (activeFrame) {
+        emitSpwEvent('frame-change', {
+            ...getFrameMeta(activeFrame),
+            frame: activeFrame,
+            source: 'semantics'
+        });
+    }
+};
+
+const initSpiritSequenceEasterEgg = () => {
+    const SPIRIT_SEQUENCE = ['?', '~', '@', '&', '*', '^'];
+    const SPIRIT_COLORS = [
+        'hsl(268 55% 42%)',  // ? probe
+        'hsl(210 70% 38%)',  // ~ ref
+        'hsl(180 100% 22%)', // @ action
+        'hsl(160 60% 32%)',  // & stream
+        'hsl(36 80% 36%)',   // * object
+        'hsl(180 100% 28%)', // ^ frame
+    ];
+
+    let buffer = [];
+    let resetTimeout = null;
+
+    const isInputFocused = () => {
+        const tag = document.activeElement?.tagName;
+        return tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
+    };
+
+    const triggerSpiritCycle = () => {
+        const boon = document.querySelector('.spw-boon-wall');
+        const bane = document.querySelector('.spw-bane-wall');
+
+        // Pulse the walls through operator colors
+        let step = 0;
+        const pulse = setInterval(() => {
+            const color = SPIRIT_COLORS[step % SPIRIT_COLORS.length];
+            document.documentElement.style.setProperty('--active-op-color', color);
+            if (boon) boon.style.color = color;
+            if (bane) bane.style.color = color;
+            step++;
+            if (step >= SPIRIT_COLORS.length * 2) {
+                clearInterval(pulse);
+                if (boon) boon.style.color = '';
+                if (bane) bane.style.color = '';
+            }
+        }, 140);
+
+        // Toast message
+        const toast = document.createElement('div');
+        toast.className = 'spw-spirit-toast';
+        toast.setAttribute('aria-live', 'polite');
+        toast.textContent = "You've traced the spirit cycle.";
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('is-visible'));
+        setTimeout(() => {
+            toast.classList.remove('is-visible');
+            toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+        }, 2800);
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (isInputFocused()) { buffer = []; return; }
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+        const key = e.key;
+        const expected = SPIRIT_SEQUENCE[buffer.length];
+        if (key === expected) {
+            buffer.push(key);
+            clearTimeout(resetTimeout);
+            if (buffer.length === SPIRIT_SEQUENCE.length) {
+                buffer = [];
+                triggerSpiritCycle();
+            } else {
+                resetTimeout = setTimeout(() => { buffer = []; }, 3000);
+            }
+        } else {
+            buffer = key === SPIRIT_SEQUENCE[0] ? [key] : [];
+            clearTimeout(resetTimeout);
+            if (buffer.length) resetTimeout = setTimeout(() => { buffer = []; }, 3000);
+        }
+    });
 };
 
 onDomReady(() => {
     resetSoftwareEntryScroll();
     initSiteCore();
+    initBraceWalls();
+    initSpiritSequenceEasterEgg();
 
     initOptionalFeatures().catch((error) => {
         console.error('Failed to initialize optional site features.', error);

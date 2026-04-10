@@ -1,0 +1,81 @@
+# Site Surfaces
+#
+# Local registry of public spwashi.com surfaces that engage the installed
+# workbench canon without collapsing into it.
+
+#>spw_site_surfaces
+#:registry #!surfaces
+#:layer #!pragmatics
+
+^"roots"{
+  @site: ~"./site.spw"
+  @domains: ~"./domains.spw"
+  @conventions: ~"./conventions/index.spw"
+  @site_semantics: ~"./conventions/site-semantics.spw"
+  @canon_surfaces: ~"./_workbench/.spw/surfaces/index.spw"
+  @canon_domains: ~"./_workbench/.spw/surfaces/domains.spw"
+  @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
+  @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+  @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
+}
+
+^"public_routes"{
+  index: {
+    ~#path: "../index.html"
+    ~#role: "hub"
+    ~#bridge: "entry surface into the wider grammar"
+  }
+  about: {
+    ~#path: "../about/index.html"
+    ~#role: "identity register"
+    ~#bridge: "public register of domains, trajectory, and adjacent surfaces"
+  }
+  contact: {
+    ~#path: "../contact/index.html"
+    ~#role: "contact route"
+    ~#bridge: "direct path for conversation and collaboration"
+  }
+  software: {
+    ~#path: "../topics/software/index.html"
+    ~#role: "grammar surface"
+    ~#bridge: "public syntax, interaction grammar, and workbench-facing translation layer"
+  }
+  pretext: {
+    ~#path: "../topics/software/pretext/index.html"
+    ~#role: "probe surface"
+    ~#bridge: "live lab that projects grammar into a concrete device-oriented interface"
+  }
+  play: {
+    ~#path: "../play/index.html"
+    ~#role: "world surface"
+    ~#bridge: "creative and game-facing routes shaped by the same operator logic"
+  }
+}
+
+^"canon_alignment"{
+  software: [@literate_ui, @symmetry_ui, @ocean_ux]
+  pretext: [@literate_ui, @ocean_ux]
+  domains: [@canon_domains]
+  site_contract: [@site, @domains, @conventions, @site_semantics]
+}
+
+^"integration_contract"{
+  local_role: "This registry names what the public site actually publishes."
+  canon_role: "Installed workbench surfaces remain deeper references and reusable machinery."
+  routing_rule: "Public routes belong here first, then cite canon surfaces that inform them."
+}
+
+^"dispatch"{
+  site: @site
+  domains: @domains
+  conventions: @conventions
+  semantics: @site_semantics
+  canon_surfaces: @canon_surfaces
+  canon_domains: @canon_domains
+}
+
+^"invariant"{
+  "The site publishes routes; the workbench publishes canon and machinery.",
+  "Every public surface should have a readable local description before deeper canon references.",
+  "Surface naming should stay stable enough to support query, selection, and screenshot reuse."
+}

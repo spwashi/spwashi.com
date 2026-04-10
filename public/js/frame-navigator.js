@@ -127,7 +127,10 @@ const buildNavigator = () => {
     triggerBtn.setAttribute('aria-controls', 'spw-nav-panel');
     triggerBtn.setAttribute('aria-expanded', 'false');
     triggerBtn.setAttribute('aria-label', 'Toggle surface map (g)');
-    triggerBtn.innerHTML = '<span class="spw-nav-strip-label">#&gt;&nbsp;map</span>';
+    triggerBtn.innerHTML = `
+        <span class="spw-nav-strip-label">#&gt;&nbsp;map</span>
+        <span class="spw-nav-strip-sublabel">boon</span>
+    `;
     strip.appendChild(triggerBtn);
 
     const panel = document.createElement('div');
