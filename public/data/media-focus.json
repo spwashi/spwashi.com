@@ -3,66 +3,66 @@
   "weekly": {
     "label": "Weekly focus",
     "operator": "$",
-    "title": "Runtime settings as cognitive-machine UX",
-    "summary": "The newest surface makes intrusive runtime chrome configurable: quiet map, collapsed console, and viewport activation as an explicit opt-in.",
+    "title": "Quiet controls, open doors",
+    "summary": "The map and console can now recede until summoned. The machine keeps its handles, but the page gets its air back.",
     "href": "/settings/",
-    "cta": "Tune the machine",
-    "why": "Good media infrastructure should be inspectable without forcing inspection on every visitor."
+    "cta": "Set the threshold",
+    "why": "A useful instrument should know when to speak and when to wait."
   },
   "daily": {
     "monday": {
       "label": "Monday focus",
       "operator": "^",
-      "title": "Spw operator atlas",
-      "summary": "A reference path for turning symbolic operators into page, component, and interaction semantics.",
+      "title": "A ring of handles",
+      "summary": "Each operator is a small door: a way to enter, bind, probe, act, reflect, or surface.",
       "href": "/topics/software/spw/",
-      "cta": "Open the atlas"
+      "cta": "Walk the ring"
     },
     "tuesday": {
       "label": "Tuesday focus",
       "operator": "?",
-      "title": "Pretext field lab",
-      "summary": "A live typography observatory for measuring text surfaces before they become playful components.",
+      "title": "Line-break weather",
+      "summary": "Text gathers pressure, spills across widths, and reveals the small climate inside a paragraph.",
       "href": "/topics/software/pretext/",
-      "cta": "Probe the lab"
+      "cta": "Watch the lines"
     },
     "wednesday": {
       "label": "Wednesday focus",
       "operator": "@",
-      "title": "RPG Wednesday table kit",
-      "summary": "Local gameplay state, clocks, table briefs, and planned screenshot frames for game-media workflows.",
+      "title": "Wednesday table",
+      "summary": "Clocks tick, notes gather, and a table brief keeps the scene warm between turns.",
       "href": "/play/rpg-wednesday/",
-      "cta": "Run the table"
+      "cta": "Open the table"
     },
     "thursday": {
       "label": "Thursday focus",
       "operator": "~",
-      "title": "Website field guide",
-      "summary": "A media-reader path through the PWA shell, frames, motifs, SVG surfaces, and current interaction features.",
+      "title": "Field guide",
+      "summary": "A path for noticing the frame, the shell, the motifs, and the hidden machinery without breaking the spell.",
       "href": "/about/website/",
-      "cta": "Read the guide"
+      "cta": "Read the signs"
     },
     "friday": {
       "label": "Friday focus",
       "operator": "*",
-      "title": "Media publishing register",
-      "summary": "Featured pages, topics, and components now come from a JSON focus file that can shift daily or weekly.",
+      "title": "Signal register",
+      "summary": "A few warm routes gather near the surface: one for the week, one for the day, and a handful of useful handles.",
       "href": "/about/website/#publishing-register",
-      "cta": "Inspect the register"
+      "cta": "Follow the signal"
     },
     "saturday": {
       "label": "Saturday focus",
       "operator": ">",
-      "title": "Play surface",
-      "summary": "The creative route frames games, sessions, and media captures as navigable public surfaces.",
+      "title": "Play as doorway",
+      "summary": "Games, sessions, cast, and captures become rooms you can return to instead of notes that disappear.",
       "href": "/play/",
-      "cta": "Open play"
+      "cta": "Enter play"
     },
     "sunday": {
       "label": "Sunday focus",
       "operator": ".",
-      "title": "Home surface",
-      "summary": "The calm default route gathers current work into one readable orientation frame.",
+      "title": "Return to the hearth",
+      "summary": "The first room keeps the current threads close enough to find again.",
       "href": "/",
       "cta": "Return home"
     }
@@ -70,22 +70,22 @@
   "featuredPages": [
     {
       "operator": "#>",
-      "title": "Website field guide",
-      "summary": "A marketable explanation of the site as an installable, inspectable media instrument.",
+      "title": "Field guide",
+      "summary": "Read the site as a pocket instrument: frames, signals, motifs, and small doors into deeper rooms.",
       "href": "/about/website/",
-      "tag": "media readers"
+      "tag": "guide"
     },
     {
       "operator": "^",
-      "title": "Spw operator atlas",
-      "summary": "Every operator gets a page: syntax, interaction semantics, brace physics, and alchemistry notes.",
+      "title": "Operator atlas",
+      "summary": "A ring of symbols with grammar, gesture, brace behavior, and metaphysical weather.",
       "href": "/topics/software/spw/",
-      "tag": "reference"
+      "tag": "symbols"
     },
     {
       "operator": "@",
       "title": "RPG Wednesday",
-      "summary": "A local-first gameplay surface with table state, clocks, briefs, and capture-frame planning.",
+      "summary": "A table room with clocks, scene memory, cast paths, and future image frames.",
       "href": "/play/rpg-wednesday/",
       "tag": "play"
     }
@@ -93,47 +93,47 @@
   "featuredTopics": [
     {
       "operator": "$",
-      "title": "Cognitive-machine UX",
-      "summary": "Settings, maps, consoles, and frame semantics should make attention inspectable without overwhelming the page.",
+      "title": "Attention has handles",
+      "summary": "A frame can invite inspection without grabbing the whole room by the collar.",
       "href": "/about/website/#machine-register",
-      "tag": "metacognition"
+      "tag": "attention"
     },
     {
       "operator": "?",
-      "title": "Pretext whimsy physics",
-      "summary": "Text measurement can become a playful material system for layout, rhythm, and responsive experiments.",
+      "title": "Text has weather",
+      "summary": "Lines can be measured like pressure, rhythm, drift, and spill.",
       "href": "/topics/software/pretext/",
-      "tag": "lab"
+      "tag": "typography"
     },
     {
       "operator": "~",
-      "title": "Plain-text semantics",
-      "summary": "Spw sketches how local files can stay readable while gaining navigable, LSP-aware structure.",
+      "title": "Files with doors",
+      "summary": "Plain text can stay legible while opening reference paths for tools and readers.",
       "href": "/topics/software/#spw-syntax-surface",
-      "tag": "tooling"
+      "tag": "plain text"
     }
   ],
   "featuredComponents": [
     {
       "operator": "!",
-      "title": "Runtime settings",
-      "summary": "Local configuration for map, console, and viewport activation behavior.",
+      "title": "Quiet switchboard",
+      "summary": "Choose how loudly the map, console, and viewport speak.",
       "href": "/settings/",
-      "tag": "configuration"
+      "tag": "threshold"
     },
     {
       "operator": "$",
       "title": "Table brief",
-      "summary": "A copyable RPG Wednesday summary designed for gameplay flow without exposing private scratch notes.",
+      "summary": "A compact dispatch from the table: scene, turn, pressure, and useful seeds.",
       "href": "/play/rpg-wednesday/#local-gameplay-kit",
-      "tag": "local-first"
+      "tag": "dispatch"
     },
     {
       "operator": "#>",
-      "title": "Frame navigator",
-      "summary": "A route and frame map that turns page regions into addressable media units.",
+      "title": "Surface map",
+      "summary": "A folded map of rooms, routes, and named frames.",
       "href": "/settings/",
-      "tag": "navigation"
+      "tag": "map"
     }
   ]
 }
