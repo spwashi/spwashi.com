@@ -1464,59 +1464,31 @@ body[data-spw-surface="blog"] .atelier-theme-toggle {
  *            .spw/_workbench/.spw/registries/brace-physics.spw
  */
 
-/* Operator prism — spectral color assignments per sigil */
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="frame"]
-    { --card-op: var(--op-frame-color);    --card-op-bg: var(--op-frame-bg-soft);    }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="label"]
-    { --card-op: var(--op-baseline-color); --card-op-bg: var(--op-baseline-bg-soft); }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="layer"]
-    { --card-op: var(--op-layer-color);    --card-op-bg: var(--op-layer-bg-soft);    }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="baseline"]
-    { --card-op: var(--op-baseline-color); --card-op-bg: var(--op-baseline-bg-soft); }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="substrate"]
-    { --card-op: var(--op-meta-color);     --card-op-bg: var(--op-meta-bg-soft);     }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="ref"]
-    { --card-op: var(--op-ref-color);      --card-op-bg: var(--op-ref-bg-soft);      }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="probe"]
-    { --card-op: var(--op-probe-color);    --card-op-bg: var(--op-probe-bg-soft);    }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="action"]
-    { --card-op: var(--op-action-color);   --card-op-bg: var(--op-action-bg-soft);   }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="stream"]
-    { --card-op: var(--op-stream-color);   --card-op-bg: var(--op-stream-bg-soft);   }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="merge"]
-    { --card-op: var(--op-merge-color);    --card-op-bg: var(--op-merge-bg-soft);    }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="binding"]
-    { --card-op: var(--op-object-color);   --card-op-bg: var(--op-object-bg-soft);   }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="meta"]
-    { --card-op: var(--op-meta-color);     --card-op-bg: var(--op-meta-bg-soft);     }
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="normalize"]
-    { --card-op: var(--op-normalize-color);--card-op-bg: var(--op-normalize-bg-soft);}
-body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="surface"]
-    { --card-op: var(--op-surface-color);  --card-op-bg: var(--op-surface-bg-soft);  }
-
 /* Spw.b block geometry — charge accumulates on the left edge */
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] {
-    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--card-op, var(--blog-accent)) 44%, transparent);
-    background: color-mix(in srgb, var(--card-op-bg, var(--blog-bg-card)) 68%, var(--blog-bg-card));
-    transition: border-color 0.12s, box-shadow 0.15s, background 0.18s;
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-operator-color, var(--blog-accent)) 44%, transparent);
+    background: color-mix(in srgb, var(--spw-operator-bg-soft, var(--blog-bg-card)) 68%, var(--blog-bg-card));
+    transition: border-color var(--charge-release-duration) var(--charge-release-ease), 
+                box-shadow var(--charge-release-duration) var(--charge-release-ease), 
+                background var(--charge-release-duration) var(--charge-release-ease);
 }
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]:hover,
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator][data-panel-open] {
     box-shadow:
-        inset 3px 0 0 var(--card-op, var(--blog-accent)),
-        0 0 0 1px color-mix(in srgb, var(--card-op, var(--blog-accent)) 22%, transparent);
+        inset 3px 0 0 var(--spw-operator-color, var(--blog-accent)),
+        0 0 0 1px color-mix(in srgb, var(--spw-operator-border, var(--blog-accent)) 22%, transparent);
 }
 
 /* Sigil inherits operator color; drop-shadow filter on hover is the semantic glow */
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] .operator-snippet-sigil {
-    color: var(--card-op, var(--blog-accent));
-    transition: filter 0.22s, color 0.15s;
+    color: var(--spw-operator-color, var(--blog-accent));
+    transition: filter var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease);
 }
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]:hover .operator-snippet-sigil {
-    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--card-op, var(--blog-accent)) 50%, transparent));
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--blog-accent)) 50%, transparent));
 }
 body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] .operator-snippet-example {
-    color: color-mix(in srgb, var(--card-op, var(--blog-accent)) 90%, var(--blog-ink));
+    color: color-mix(in srgb, var(--spw-operator-color, var(--blog-accent)) 90%, var(--blog-ink));
 }
 
 /* { brace mark — charge accumulator indicator, bottom-left, low-opacity */
