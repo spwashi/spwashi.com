@@ -115,7 +115,7 @@ main() {
     local filename="${basename%.*}"
     local ext="${basename##*.}"
     local dir=$(dirname "$IMAGE_PATH")
-    local original_size=$(du -h "$IMAGE_PATH" | cut -f1)
+    local original_size=$(du -h "$IMAGE_PATH" | awk '{print $1}')
 
     # Detect surface if needed
     if [ "$SURFACE" = "auto" ]; then
@@ -145,9 +145,9 @@ main() {
         # Generate JPEG for conversion base
         local temp_jpg="/tmp/${filename}-${tier_name}.jpg"
         if [ "$DRY_RUN" = "true" ]; then
-            echo "    [DRY] convert \"$IMAGE_PATH\" -resize ${size}x${size} -quality $quality \"$temp_jpg\""
+            echo "    [DRY] magick convert \"$IMAGE_PATH\" -resize ${size}x${size} -quality $quality \"$temp_jpg\""
         else
-            convert "$IMAGE_PATH" -resize ${size}x${size} -quality $quality "$temp_jpg"
+            magick convert "$IMAGE_PATH" -resize ${size}x${size} -quality $quality "$temp_jpg"
         fi
 
         # Generate PNG (fallback)
@@ -155,11 +155,11 @@ main() {
         if [ "$DRY_RUN" = "true" ]; then
             echo "    [DRY] convert \"$temp_jpg\" \"$png_file\""
         else
-            convert "$temp_jpg" "$png_file"
+            magick convert "$temp_jpg" "$png_file"
             generated_count=$((generated_count + 1))
             local png_size=$(du -h "$png_file" | cut -f1)
             echo "      ✓ PNG: $png_size"
-            total_variant_size=$((total_variant_size + $(du -b "$png_file" | cut -f1)))
+            total_variant_size=$((total_variant_size + $(stat -f%z "$png_file")))
         fi
 
         # Generate WebP
@@ -172,7 +172,7 @@ main() {
                 generated_count=$((generated_count + 1))
                 local webp_size=$(du -h "$webp_file" | cut -f1)
                 echo "      ✓ WebP: $webp_size"
-                total_variant_size=$((total_variant_size + $(du -b "$webp_file" | cut -f1)))
+                total_variant_size=$((total_variant_size + $(stat -f%z "$webp_file")))
             fi
         fi
 
@@ -186,7 +186,7 @@ main() {
                 generated_count=$((generated_count + 1))
                 local avif_size=$(du -h "$avif_file" | cut -f1)
                 echo "      ✓ AVIF: $avif_size"
-                total_variant_size=$((total_variant_size + $(du -b "$avif_file" | cut -f1)))
+                total_variant_size=$((total_variant_size + $(stat -f%z "$avif_file")))
             fi
         fi
 
@@ -201,8 +201,8 @@ main() {
 
         if [ $total_variant_size -gt 0 ]; then
             local human_variant_size=$(echo "scale=1; $total_variant_size / 1024 / 1024" | bc)
-            local original_bytes=$(du -b "$IMAGE_PATH" | cut -f1)
-            local ratio=$(echo "scale=1; $total_variant_size * 100 / $original_bytes" | cut -d. -f1)
+            local original_bytes=$(stat -f%z "$IMAGE_PATH")
+            local ratio=$((total_variant_size * 100 / original_bytes))
             echo "✓ Total variant size: ${human_variant_size}M (${ratio}% of original)"
         fi
 
@@ -210,13 +210,22 @@ main() {
         echo ""
         echo "📋 Copy this srcset snippet:"
         echo ""
+
+        # Compute the public path
+        local pub_path
+        if [[ "$dir" == public/* ]]; then
+            pub_path="/$dir/${filename}"
+        else
+            pub_path="/public/images/assets/${filename}"
+        fi
+
         echo '  <img'
-        echo "    src=\"${IMAGE_PATH/$dir\//\/public\/images\/}${filename}-display.avif\""
+        echo "    src=\"${pub_path}-display.avif\""
         echo "    srcset=\""
         for tier_spec in $tiers; do
             local size="${tier_spec%%:*}"
             local tier_name="${tier_spec##*:}"
-            echo "      ${IMAGE_PATH/$dir\//\/public\/images\/}${filename}-${tier_name}.avif ${size}w,"
+            echo "      ${pub_path}-${tier_name}.avif ${size}w,"
         done
         echo "    \""
         echo "    sizes=\"(max-width: 512px) 100vw, 512px\""
