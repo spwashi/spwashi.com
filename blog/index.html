@@ -14,9 +14,9 @@
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/blog-surface.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
+    <script type="module" src="/public/js/blog-specimens.js"></script>
     <script type="module">
         import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
         window.addEventListener('load', () => {
@@ -25,7 +25,7 @@
     </script>
 </head>
 <body data-spw-surface="blog" data-spw-features="operators navigator console blog-interpreter" data-theme="atelier-light">
-    <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <svg class="blog-svg-defs" aria-hidden="true" focusable="false">
         <defs>
             <!-- f-grain: subtle surface texture -->
             <filter id="f-grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
@@ -155,36 +155,26 @@
                     <button class="theme-swatch theme-swatch--light" type="button" data-theme-set="atelier-light" aria-pressed="true">
                         <span class="theme-swatch-label">atelier-light</span>
                         <span class="theme-swatch-palette" aria-hidden="true">
-                            <span style="background:hsl(42,40%,96%)"></span>
-                            <span style="background:hsl(192,62%,34%)"></span>
-                            <span style="background:hsl(344,58%,38%)"></span>
-                            <span style="background:hsl(32,12%,16%)"></span>
-                            <span style="background:hsl(158,52%,30%)"></span>
-                            <span style="background:hsl(1,62%,48%)"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-bg"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-accent"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-wonder"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-ink"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-draft"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--light-warn"></span>
                         </span>
                     </button>
                     <button class="theme-swatch theme-swatch--dark" type="button" data-theme-set="atelier-dark" aria-pressed="false">
                         <span class="theme-swatch-label">atelier-dark</span>
                         <span class="theme-swatch-palette" aria-hidden="true">
-                            <span style="background:hsl(244,22%,10%)"></span>
-                            <span style="background:hsl(192,66%,58%)"></span>
-                            <span style="background:hsl(344,62%,64%)"></span>
-                            <span style="background:hsl(42,22%,86%)"></span>
-                            <span style="background:hsl(158,56%,54%)"></span>
-                            <span style="background:hsl(1,66%,66%)"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-bg"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-accent"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-wonder"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-ink"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-draft"></span>
+                            <span class="theme-swatch-chip theme-swatch-chip--dark-warn"></span>
                         </span>
                     </button>
                 </div>
-                <script type="module">
-                    const btns = document.querySelectorAll('[data-theme-set]');
-                    btns.forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            const theme = btn.dataset.themeSet;
-                            document.body.dataset.theme = theme;
-                            btns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-                        });
-                    });
-                </script>
             </section>
 
             <!-- w1: kernel specimen — what is here -->
@@ -350,7 +340,7 @@
                     </div>
                 </div>
                 <p class="specimen-material">material: <strong>dielectric</strong> — stores field bias without discharging</p>
-                <div class="specimen-index-grid" style="margin-bottom:1rem">
+                <div class="specimen-index-grid specimen-axis-grid">
                     <div class="specimen-index-card">
                         <span class="specimen-index-sigil">=[bias]</span>
                         <span class="specimen-index-name">Spw</span>
@@ -385,27 +375,9 @@
                             <output for="sl-light" class="demo-slider-out" id="sl-light-out">44%</output>
                         </div>
                     </div>
-                    <div class="demo-color-preview" id="css-color-preview" aria-label="Color preview swatch" role="img" style="background:hsl(192 62% 44%)"></div>
+                    <div class="demo-color-preview" id="css-color-preview" aria-label="Color preview swatch" role="img"></div>
                     <pre class="demo-code-output" id="css-code-out" aria-live="polite">--color: hsl(192 62% 44%);</pre>
                 </div>
-                <script type="module">
-                    const demo = document.getElementById('css-vars-demo');
-                    const preview = document.getElementById('css-color-preview');
-                    const codeOut = document.getElementById('css-code-out');
-                    const slHue = document.getElementById('sl-hue');
-                    const slSat = document.getElementById('sl-sat');
-                    const slLight = document.getElementById('sl-light');
-                    const update = () => {
-                        const h = slHue.value, s = slSat.value, l = slLight.value;
-                        const color = `hsl(${h} ${s}% ${l}%)`;
-                        preview.style.background = color;
-                        codeOut.textContent = `--color: ${color};`;
-                        document.getElementById('sl-hue-out').value = h;
-                        document.getElementById('sl-sat-out').value = s + '%';
-                        document.getElementById('sl-light-out').value = l + '%';
-                    };
-                    [slHue, slSat, slLight].forEach(s => s.addEventListener('input', update));
-                </script>
             </section>
 
             <section class="site-frame specimen-card" id="api-intersection-observer" data-wonder-level="w3">
@@ -418,33 +390,16 @@
                 </div>
                 <p class="specimen-material">material: <strong>phase boundary</strong> — detects crossing, not content</p>
                 <div class="specimen-demo demo-io" id="io-demo" aria-label="Intersection Observer demo">
-                    <p class="frame-note" style="margin-bottom:0.6rem">Scroll the stripe below across the threshold line.</p>
+                    <p class="frame-note demo-note">Scroll the stripe below across the threshold line.</p>
                     <div class="demo-io-scroll-area" id="io-scroll-area" role="region" aria-label="Scrollable fiber stripes">
-                        <div class="demo-io-fiber" style="--io-ratio:0.1" aria-hidden="true"></div>
-                        <div class="demo-io-fiber" style="--io-ratio:0.3" aria-hidden="true"></div>
-                        <div class="demo-io-fiber demo-io-target" id="io-target" style="--io-ratio:0.5" aria-label="Observed element">observed</div>
-                        <div class="demo-io-fiber" style="--io-ratio:0.7" aria-hidden="true"></div>
-                        <div class="demo-io-fiber" style="--io-ratio:0.9" aria-hidden="true"></div>
+                        <div class="demo-io-fiber demo-io-fiber--10" aria-hidden="true"></div>
+                        <div class="demo-io-fiber demo-io-fiber--30" aria-hidden="true"></div>
+                        <div class="demo-io-fiber demo-io-fiber--50 demo-io-target" id="io-target" aria-label="Observed element">observed</div>
+                        <div class="demo-io-fiber demo-io-fiber--70" aria-hidden="true"></div>
+                        <div class="demo-io-fiber demo-io-fiber--90" aria-hidden="true"></div>
                     </div>
                     <div class="demo-io-threshold-indicator" id="io-status" role="status" aria-live="polite">threshold: not crossed</div>
                 </div>
-                <script type="module">
-                    const target = document.getElementById('io-target');
-                    const status = document.getElementById('io-status');
-                    const scrollArea = document.getElementById('io-scroll-area');
-                    if (target && status && scrollArea) {
-                        const observer = new IntersectionObserver((entries) => {
-                            entries.forEach(e => {
-                                const ratio = Math.round(e.intersectionRatio * 100);
-                                status.textContent = e.isIntersecting
-                                    ? `threshold: crossed — ${ratio}% visible`
-                                    : `threshold: not crossed — ${ratio}% visible`;
-                                target.style.setProperty('--io-ratio', e.intersectionRatio.toFixed(2));
-                            });
-                        }, { root: scrollArea, threshold: Array.from({length: 11}, (_, i) => i / 10) });
-                        observer.observe(target);
-                    }
-                </script>
             </section>
 
             <section class="site-frame specimen-card" id="api-web-audio" data-wonder-level="w3">
@@ -459,10 +414,10 @@
                 <div class="specimen-demo" id="audio-demo" aria-label="Web Audio oscillator demo">
                     <div class="demo-audio-controls">
                         <label for="audio-freq">frequency (Hz)</label>
-                        <input id="audio-freq" type="range" min="80" max="880" value="220" step="1" style="width:12rem">
+                        <input id="audio-freq" class="demo-audio-frequency" type="range" min="80" max="880" value="220" step="1">
                         <output for="audio-freq" id="audio-freq-out">220 Hz</output>
                     </div>
-                    <div class="demo-audio-controls" style="margin-top:0.5rem">
+                    <div class="demo-audio-controls demo-audio-controls--spaced">
                         <label for="audio-wave">waveform</label>
                         <select id="audio-wave">
                             <option value="sine">sine</option>
@@ -471,64 +426,11 @@
                             <option value="square">square</option>
                         </select>
                     </div>
-                    <button class="operator-chip demo-audio-btn" id="audio-toggle" type="button" data-active="false" style="margin-top:0.8rem">~ emit tone</button>
+                    <button class="operator-chip demo-audio-btn" id="audio-toggle" type="button" aria-pressed="false">~ emit tone</button>
                     <svg class="demo-audio-waveform" id="audio-waveform" viewBox="0 0 300 60" aria-hidden="true" preserveAspectRatio="none">
                         <path id="audio-wave-path" d="" stroke="var(--blog-accent,hsl(192,62%,44%))" stroke-width="2" fill="none"/>
                     </svg>
                 </div>
-                <script type="module">
-                    let ctx = null, osc = null, gain = null;
-                    const toggle = document.getElementById('audio-toggle');
-                    const freqSlider = document.getElementById('audio-freq');
-                    const freqOut = document.getElementById('audio-freq-out');
-                    const waveSelect = document.getElementById('audio-wave');
-                    const wavePath = document.getElementById('audio-wave-path');
-                    const drawWave = (type, freq) => {
-                        const pts = [];
-                        const cycles = Math.max(1, Math.min(6, freq / 80));
-                        for (let i = 0; i <= 300; i++) {
-                            const t = (i / 300) * cycles * 2 * Math.PI;
-                            let y;
-                            if (type === 'sine') y = Math.sin(t);
-                            else if (type === 'triangle') y = (2 / Math.PI) * Math.asin(Math.sin(t));
-                            else if (type === 'sawtooth') y = (t % (2 * Math.PI)) / Math.PI - 1;
-                            else y = Math.sign(Math.sin(t));
-                            pts.push(`${i === 0 ? 'M' : 'L'}${i},${30 - y * 22}`);
-                        }
-                        wavePath.setAttribute('d', pts.join(' '));
-                    };
-                    drawWave('sine', 220);
-                    freqSlider.addEventListener('input', () => {
-                        freqOut.value = freqSlider.value + ' Hz';
-                        drawWave(waveSelect.value, Number(freqSlider.value));
-                        if (osc) osc.frequency.setTargetAtTime(Number(freqSlider.value), ctx.currentTime, 0.01);
-                    });
-                    waveSelect.addEventListener('change', () => {
-                        drawWave(waveSelect.value, Number(freqSlider.value));
-                        if (osc) osc.type = waveSelect.value;
-                    });
-                    toggle.addEventListener('click', () => {
-                        const active = toggle.dataset.active === 'true';
-                        if (active) {
-                            gain.gain.setTargetAtTime(0, ctx.currentTime, 0.05);
-                            setTimeout(() => { osc.stop(); osc = null; }, 200);
-                            toggle.dataset.active = 'false';
-                            toggle.textContent = '~ emit tone';
-                        } else {
-                            ctx = ctx || new AudioContext();
-                            osc = ctx.createOscillator();
-                            gain = ctx.createGain();
-                            osc.type = waveSelect.value;
-                            osc.frequency.value = Number(freqSlider.value);
-                            gain.gain.value = 0.18;
-                            osc.connect(gain);
-                            gain.connect(ctx.destination);
-                            osc.start();
-                            toggle.dataset.active = 'true';
-                            toggle.textContent = '! stop';
-                        }
-                    });
-                </script>
             </section>
 
             <section class="site-frame specimen-card" id="api-canvas-weave" data-wonder-level="w3">
@@ -541,54 +443,10 @@
                 </div>
                 <p class="specimen-material">material: <strong>lattice</strong> — micro-acts accumulate into woven structure</p>
                 <div class="specimen-demo demo-canvas-wrap" id="canvas-demo">
-                    <canvas id="weave-canvas" width="520" height="200" aria-label="Woven field canvas — click to add charge nodes" role="img" tabindex="0" style="cursor:crosshair;max-width:100%;border-radius:6px"></canvas>
-                    <p class="frame-note" style="margin-top:0.5rem;font-size:0.8rem">Click canvas to drop a node. Nodes accumulate.</p>
-                    <button class="operator-chip" type="button" id="canvas-clear" style="margin-top:0.4rem">! clear</button>
+                    <canvas id="weave-canvas" width="520" height="200" aria-label="Woven field canvas. Click or press Enter to add charge nodes." aria-describedby="canvas-note" role="button" tabindex="0"></canvas>
+                    <p class="frame-note demo-canvas-note" id="canvas-note">Click canvas or press Enter to drop a node. Nodes accumulate.</p>
+                    <button class="operator-chip demo-canvas-clear" type="button" id="canvas-clear">! clear</button>
                 </div>
-                <script type="module">
-                    const canvas = document.getElementById('weave-canvas');
-                    const ctx = canvas.getContext('2d');
-                    const nodes = [];
-                    const TEAL = 'hsl(192,62%,44%)';
-                    const ROSE = 'hsl(344,58%,44%)';
-                    const drawBase = () => {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.strokeStyle = 'rgba(120,180,180,0.18)';
-                        ctx.lineWidth = 0.7;
-                        for (let x = 20; x < canvas.width; x += 20) {
-                            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-                        }
-                        for (let y = 20; y < canvas.height; y += 20) {
-                            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-                        }
-                    };
-                    const drawNodes = () => {
-                        nodes.forEach((n, i) => {
-                            const color = i % 2 === 0 ? TEAL : ROSE;
-                            const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.5);
-                            grad.addColorStop(0, color.replace('hsl', 'hsla').replace(')', ',0.5)'));
-                            grad.addColorStop(1, 'transparent');
-                            ctx.fillStyle = grad;
-                            ctx.beginPath();
-                            ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
-                            ctx.fill();
-                            ctx.fillStyle = color;
-                            ctx.beginPath();
-                            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                            ctx.fill();
-                        });
-                    };
-                    const render = () => { drawBase(); drawNodes(); };
-                    render();
-                    canvas.addEventListener('click', (e) => {
-                        const rect = canvas.getBoundingClientRect();
-                        const scaleX = canvas.width / rect.width;
-                        const scaleY = canvas.height / rect.height;
-                        nodes.push({ x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY, r: 4 + Math.random() * 4 });
-                        render();
-                    });
-                    document.getElementById('canvas-clear').addEventListener('click', () => { nodes.length = 0; render(); });
-                </script>
             </section>
 
             <section class="site-frame specimen-card" id="api-svg-filters" data-wonder-level="w3">
@@ -613,30 +471,12 @@
                             <output for="displace-scale" id="displace-scale-out">12</output>
                         </div>
                     </div>
-                    <p id="filter-target-text" style="font-size:2.2rem;font-weight:bold;filter:url(#f-svg-demo);margin:1rem 0;line-height:1.2;color:var(--blog-accent,hsl(192,62%,44%))">
+                    <p class="demo-filter-target" id="filter-target-text">
                         ^"bind"{<br>dielectric
                     </p>
                     <pre class="demo-code-output" id="filter-code-out" aria-live="polite">&lt;feTurbulence baseFrequency="0.04"/&gt;
 &lt;feDisplacementMap scale="12"/&gt;</pre>
                 </div>
-                <script type="module">
-                    const freqIn = document.getElementById('turb-freq');
-                    const scaleIn = document.getElementById('displace-scale');
-                    const codeOut = document.getElementById('filter-code-out');
-                    const turbEl = document.getElementById('demo-turbulence');
-                    const displaceEl = document.getElementById('demo-displace');
-                    const update = () => {
-                        const freq = freqIn.value;
-                        const scale = scaleIn.value;
-                        if (turbEl) turbEl.setAttribute('baseFrequency', freq);
-                        if (displaceEl) displaceEl.setAttribute('scale', scale);
-                        document.getElementById('turb-freq-out').value = freq;
-                        document.getElementById('displace-scale-out').value = scale;
-                        codeOut.textContent = `<feTurbulence baseFrequency="${freq}"/>\n<feDisplacementMap scale="${scale}"/>`;
-                    };
-                    freqIn.addEventListener('input', update);
-                    scaleIn.addEventListener('input', update);
-                </script>
             </section>
 
             <!-- w5: fiber-linguistics — basis..gap..signal_path -->

@@ -95,6 +95,13 @@ body[data-spw-surface="blog"] .site-frame {
         linear-gradient(90deg, rgba(24, 123, 135, 0.05), rgba(160, 42, 77, 0.05));
 }
 
+body[data-spw-surface="blog"] .blog-svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"] .blog-interpreter-frame {
     gap: var(--blog-gap);
 }
@@ -433,8 +440,21 @@ body[data-spw-surface="blog"] .theme-swatch-palette span {
     width: 16px;
     height: 16px;
     border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+body[data-spw-surface="blog"] .theme-swatch-chip--light-bg { background: hsl(188 32% 97%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--light-accent { background: hsl(188 64% 32%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--light-wonder { background: hsl(342 58% 38%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--light-ink { background: hsl(178 16% 15%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--light-draft { background: hsl(150 54% 30%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--light-warn { background: hsl(1 62% 46%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-bg { background: hsl(178 14% 11%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-accent { background: hsl(188 68% 62%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-wonder { background: hsl(342 66% 66%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-ink { background: hsl(172 24% 88%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-draft { background: hsl(150 58% 58%); }
+body[data-spw-surface="blog"] .theme-swatch-chip--dark-warn { background: hsl(1 70% 68%); }
 
 /* ── Kernel code block ── */
 body[data-spw-surface="blog"] .specimen-kernel-code {
@@ -468,6 +488,11 @@ body[data-spw-surface="blog"] .specimen-index-grid {
     padding: 0;
     margin: 0;
 }
+
+body[data-spw-surface="blog"] .specimen-axis-grid {
+    margin-bottom: 1rem;
+}
+
 body[data-spw-surface="blog"] a.specimen-index-card,
 body[data-spw-surface="blog"] div.specimen-index-card {
     display: flex;
@@ -549,6 +574,11 @@ body[data-spw-surface="blog"] .demo-slider-row input[type="range"] {
     flex: 1;
     accent-color: var(--blog-accent);
 }
+
+body[data-spw-surface="blog"] .demo-note {
+    margin-bottom: 0.6rem;
+}
+
 body[data-spw-surface="blog"] .demo-slider-out {
     min-width: 3.5rem;
     text-align: right;
@@ -562,12 +592,13 @@ body[data-spw-surface="blog"] .demo-color-preview {
     border-radius: 5px;
     margin-top: 0.7rem;
     border: 1px solid var(--blog-line);
+    background: var(--demo-color, hsl(192 62% 44%));
     transition: background 0.1s;
 }
 body[data-spw-surface="blog"] .demo-code-output {
     margin: 0.65rem 0 0;
     padding: 0.5rem 0.8rem;
-    background: color-mix(in srgb, var(--blog-bg) 80%, var(--blog-bg-card));
+    background: var(--blog-bg-card-strong);
     border: 1px solid var(--blog-line);
     border-radius: 4px;
     font-size: 0.78rem;
@@ -594,10 +625,17 @@ body[data-spw-surface="blog"] .demo-io-fiber {
     align-items: center;
     font-size: 0.78rem;
     color: var(--blog-ink-soft);
-    background: color-mix(in srgb, var(--blog-accent) calc(var(--io-ratio, 0) * 18%), var(--blog-bg-card));
+    background: rgba(24, 123, 135, var(--io-ratio, 0.08));
     border-bottom: 1px solid var(--blog-line);
     transition: background 0.15s;
 }
+
+body[data-spw-surface="blog"] .demo-io-fiber--10 { --io-ratio: 0.10; }
+body[data-spw-surface="blog"] .demo-io-fiber--30 { --io-ratio: 0.14; }
+body[data-spw-surface="blog"] .demo-io-fiber--50 { --io-ratio: 0.18; }
+body[data-spw-surface="blog"] .demo-io-fiber--70 { --io-ratio: 0.22; }
+body[data-spw-surface="blog"] .demo-io-fiber--90 { --io-ratio: 0.26; }
+
 body[data-spw-surface="blog"] .demo-io-target {
     font-weight: 600;
     color: var(--blog-accent);
@@ -626,6 +664,15 @@ body[data-spw-surface="blog"] .demo-audio-controls label {
 body[data-spw-surface="blog"] .demo-audio-controls input[type="range"] {
     accent-color: var(--blog-accent);
 }
+
+body[data-spw-surface="blog"] .demo-audio-controls--spaced {
+    margin-top: 0.5rem;
+}
+
+body[data-spw-surface="blog"] .demo-audio-frequency {
+    width: 12rem;
+}
+
 body[data-spw-surface="blog"] .demo-audio-controls select {
     background: var(--blog-bg-card);
     border: 1px solid var(--blog-line);
@@ -634,7 +681,11 @@ body[data-spw-surface="blog"] .demo-audio-controls select {
     padding: 0.2rem 0.4rem;
     font-family: inherit;
 }
-body[data-spw-surface="blog"] .demo-audio-btn[data-active="true"] {
+body[data-spw-surface="blog"] .demo-audio-btn {
+    margin-top: 0.8rem;
+}
+
+body[data-spw-surface="blog"] .demo-audio-btn[aria-pressed="true"] {
     background: var(--blog-warn);
     border-color: var(--blog-warn);
     color: #fff;
@@ -652,12 +703,38 @@ body[data-spw-surface="blog"] .demo-audio-waveform {
 /* ── Canvas demo ── */
 body[data-spw-surface="blog"] .demo-canvas-wrap canvas {
     display: block;
+    max-width: 100%;
     border: 1px solid var(--blog-line);
+    border-radius: 6px;
+    cursor: crosshair;
+}
+
+body[data-spw-surface="blog"] .demo-canvas-wrap canvas:focus-visible {
+    outline: 2px solid var(--blog-accent);
+    outline-offset: 3px;
+}
+
+body[data-spw-surface="blog"] .demo-canvas-note {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+body[data-spw-surface="blog"] .demo-canvas-clear {
+    margin-top: 0.4rem;
 }
 
 /* ── Filter demo ── */
 body[data-spw-surface="blog"] .demo-filter-text-wrap {
     overflow: hidden;
+}
+
+body[data-spw-surface="blog"] .demo-filter-target {
+    margin: 1rem 0;
+    color: var(--blog-accent);
+    filter: url(#f-svg-demo);
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 1.2;
 }
 
 /* ── Fiber-linguistics ── */
@@ -768,7 +845,7 @@ body[data-spw-surface="blog"] .field-note-tags {
 }
 body[data-spw-surface="blog"] .field-note-tag {
     padding: 0.15rem 0.45rem;
-    border: 1px solid color-mix(in srgb, var(--blog-accent) 35%, transparent);
+    border: 1px solid rgba(24, 123, 135, 0.35);
     border-radius: 3px;
     font-size: 0.68rem;
     color: var(--blog-accent);
