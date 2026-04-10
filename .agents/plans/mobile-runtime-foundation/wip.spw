@@ -19,8 +19,8 @@
 }
 
 ^["intent"]{
- ~#goal: "Define a mobile-first runtime model for page regions, portable interaction semantics, inspectable registers, and future block/script UI so implementation can stay calm and coherent."
- ~#taste: "clarity, containment, and mobile-first learnability"
+ ~#goal: "Define a mobile-first runtime model for page regions, portable interaction semantics, inspectable registers, and future block/script UI so implementation can stay calm, coherent, and capable of producing structural wonder."
+ ~#taste: "clarity, containment, mobile-first learnability, and earned wonder"
 }
 
 ^["development"]{
@@ -32,10 +32,10 @@
 }
 
 ^["concept_index"]{
- primary: [#page_regions, #portable_interaction, #register_runtime, #block_ui, #script_ui]
- surfaces: [#mobile, #navigator, #console, #inspection]
- tensions: [#hover_bias, #state_duplication, #metaphor_drift, #scope]
- transfers: [#page, #region, #component, #runtime]
+ primary: [#page_regions, #portable_interaction, #register_runtime, #block_ui, #script_ui, #prefix_postfix_symmetry, #brace_physics, #pivots]
+ surfaces: [#mobile, #navigator, #console, #inspection, #wonder]
+ tensions: [#hover_bias, #state_duplication, #metaphor_drift, #scope, #ornament]
+ transfers: [#page, #region, #component, #runtime, #authoring]
 }
 
 ^["recursive_improvement"]{
@@ -44,42 +44,43 @@
   "< name one runtime boundary at a time",
   "$ record the invariant and the counterexample together",
   "^ make each surface inspectable before making it magical",
-  "% preserve calm defaults while deepening the implementation surface"
+  "% preserve calm defaults while deepening the implementation surface",
+  "& require prefix and postfix paths to collapse into one semantic account"
  ]
- gates: [#claim_discipline, #mobile_truth, #inspectability]
+ gates: [#claim_discipline, #mobile_truth, #inspectability, #symmetry_truth]
 }
 
 ^["parallel_work"]{
  critical_path: [#shared_runtime_boundary]
- parallelizable: [#semantics_note, #region_inventory]
- shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js", "public/js/spw-component-semantics.js", "public/css/style.css"]
- merge_risks: [#state_duplication, #naming_drift, #interaction_collision]
+ parallelizable: [#semantics_note, #region_inventory, #ux_criteria]
+ shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js", "public/js/spw-component-semantics.js", "public/css/style.css", "public/js/spw-shared.js"]
+ merge_risks: [#state_duplication, #naming_drift, #interaction_collision, #symmetry_drift]
  handoff_artifacts: [@plan, @artifact]
 }
 
 ^["supporting_documents"]{
  must_ship: [@plan, @artifact]
  helpful: [@site, @semantics, @surfaces]
- carries: [#review_notes, #glossary, #implementation_order]
+ carries: [#review_notes, #glossary, #implementation_order, #ux_constraints, #authoring_contract]
 }
 
 ^["interaction_depth"]{
- subjects: [#navigation, #inspection, #portable_input, #containment, #mobile_regions]
+ subjects: [#navigation, #inspection, #portable_input, #containment, #mobile_regions, #pivots, #wonder]
  questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
- qualities: [#clarity, #containment, #learnability]
+ qualities: [#clarity, #containment, #learnability, #wonder]
 }
 
 ^["risk_model"]{
- hard_failures: [#hover_only_affordance, #private_state_silos]
- soft_failures: [#mobile_overlay_conflict, #script_host_leakage]
- recoveries: [#shared_registers, #region_ownership, #portable_intent]
+ hard_failures: [#hover_only_affordance, #private_state_silos, #prefix_postfix_divergence]
+ soft_failures: [#mobile_overlay_conflict, #script_host_leakage, #ornamental_wonder]
+ recoveries: [#shared_registers, #region_ownership, #portable_intent, #pivot_contract]
  non_negotiables: [#coarse_pointer_first, #keyboard_path, #inspectability]
 }
 
 ^["validation"]{
- hypotheses: [#shared_register_projection_reduces_duplication, #portable_inspect_is_teachable, #block_host_can_precede_parser_runtime]
+ hypotheses: [#shared_register_projection_reduces_duplication, #portable_inspect_is_teachable, #block_host_can_precede_parser_runtime, #prefix_postfix_paths_can_normalize]
  negative_controls: [#route_structure_unchanged, #visual_voice_preserved]
- demo_path: ["/", "/topics/software/", "/topics/software/pretext/"]
+ demo_path: ["/", "/topics/software/", "/topics/software/pretext/", "#local_pivot"]
 }
 
 ^["stream"]{
@@ -91,6 +92,10 @@
  >>[2026-04-09 20:09] taste - Keep magic summonable and inspectable; the calm default should survive even as the runtime surface deepens.
  >>[2026-04-09 20:12] decide - Wrote a distilled semantics note so future implementation can test counterexamples instead of letting metaphor drift across modules.
  >>[2026-04-09 20:12] verify - `poll-review.sh --scope=changed` passed cleanly for the new plan surfaces and `.spw` artifacts.
+ >>[2026-04-09 20:20] decide - The user is not attached to current keybindings, which means the runtime can center semantic symmetry rather than preserving arbitrary legacy keys.
+ >>[2026-04-09 20:20] revise - The plan now treats prefix/postfix symmetry, brace pivots, and structural wonder as first-class UX constraints instead of secondary aesthetic concerns.
+ >>[2026-04-09 20:20] taste - Wonder should arrive as a pivot into clearer structure while preserving orientation, not as decorative motion layered onto already-legible surfaces.
+ >>[2026-04-09 20:20] rebase - Refreshed `base_ref` to the current `main` commit after the plan artifact landed so the maintenance surface matches the active lineage.
 }
 
 ^["open"]{
@@ -98,26 +103,30 @@
  ?[intent]: "What is the smallest portable interaction vocabulary that cleanly spans touch, pointer, and keyboard?"
  ?[registers]: "Which runtime registers must be first-class before navigator and console can become honest projections?"
  ?[blocks]: "What host contract should exist before Spw blocks and scripts are allowed to shape UI?"
+ ?[symmetry]: "What is the canonical normalization from prefix and postfix interaction paths into one semantic register trace?"
+ ?[pivots]: "Which structure changes count as local pivots rather than route changes or overlays?"
+ ?[wonder]: "Which moments of structural revelation are strong enough to feel magical without violating calm defaults?"
+ ?[authoring]: "What is the smallest authoring contract that lets a page become Spw-backed without requiring a full in-browser parser?"
 }
 
 ^["commits"]{
  ~[1]: "#[mobile-runtime] - capture the planning artifacts and distilled semantics note"
- ~[2]: ".[semantics] - formalize page regions, portable interaction intent, and register invariants"
- ~[3]: "&[runtime] - extract shared interaction and register runtime foundations from page-local behavior"
- ~[4]: "&[blocks] - add host contracts for declarative blocks, scripts, and inspect surfaces"
+ ~[2]: ".[semantics] - formalize UX invariants, prefix/postfix symmetry, brace physics, pivots, and register invariants"
+ ~[3]: "&[runtime] - extract shared keyboard, interaction, and register runtime foundations from page-local behavior"
+ ~[4]: "&[blocks] - add region/page hosts plus contracts for declarative blocks, scripts, and inspect surfaces"
  ~[5]: "![mobile-runtime] - verify coarse-pointer behavior, inspectability, and region containment"
 }
 
 ^["cache"]{
  ~#status: "planned"
- ~#base_ref: "main@2e5af2bfc1af373583f2a846dcd36445b826f7d7"
+ ~#base_ref: "main@659af4e7ad79b4d9c4641520fc2fbbae79fca0d5"
  ~#rebased_at: ""
  ~#hygiene_split: "none"
- ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css"
+ ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-shared.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css"
  ~#next_commit: "1"
- ~#open_count: "4"
- ~#last_stream: "2026-04-09 20:12"
- ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise."
+ ~#open_count: "8"
+ ~#last_stream: "2026-04-09 20:20"
+ ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise or let wonder collapse into ornamental motion."
 }
 
 ^["done"]{

@@ -19,8 +19,8 @@
 }
 
 ^["thesis"]{
- claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, and visible tools become projections of shared registers."
- why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable machine if its runtime surfaces are named, queryable, and portable across input modes."
+ claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, visible tools become projections of shared registers, and wonder arrives through pivots into clearer structure."
+ why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable cognitive machine if its runtime surfaces are named, queryable, reversible, and portable across input modes."
 }
 
 ^["page_regions"]{
@@ -39,7 +39,8 @@
  invariants: [
   "On mobile, exactly one primary region should dominate at a time.",
   "A secondary region must collapse into an overlay or sheet before it steals width from the frame stack.",
-  "Every persistent region must have a stable name and an inspect path."
+  "Every persistent region must have a stable name and an inspect path.",
+  "A region is a brace host first: it opens a face, it does not silently sprawl."
  ]
  counterexample: "A permanently visible side panel that remains interactive on narrow screens without a named region contract."
  falsify: "If a route cannot answer which region currently owns primary attention, the model is too vague."
@@ -57,7 +58,8 @@
  rules: [
   "Hover may enrich inspect, but it must never be the only route to inspect.",
   "Click is not a semantic primitive. It is one possible transport for invoke.",
-  "Touch-first paths must reveal the same structural address that desktop hover reveals."
+  "Touch-first paths must reveal the same structural address that desktop hover reveals.",
+  "Portable interaction should normalize into intent traces, not branch permanently on device class."
  ]
  mapping: {
   ambient: "not yet addressed"
@@ -68,6 +70,37 @@
  }
  counterexample: "A component tag or control label that appears only on pointer hover and has no tap, focus, or inspect path."
  falsify: "If a coarse-pointer user cannot reveal the same address information as a fine-pointer user, the semantics are not portable."
+}
+
+^["ux_machine"]{
+ definition: "An effective cognitive machine is a surface that helps a user notice structure, form a reversible hypothesis, act on it, and see the consequence in an inspectable way."
+ stages: [
+  "orientation - know where attention currently lives",
+  "inspection - reveal latent structure without commitment",
+  "invocation - commit to a structural move",
+  "reflection - project the consequence into a visible register",
+  "pivot - enter a deeper structure without losing the prior frame"
+ ]
+ invariants: [
+  "The default state should be calm enough that inspection feels intentional.",
+  "Every deep move should have a reversible path and a visible consequence.",
+  "Reflection surfaces should tell the truth about runtime state rather than reenacting it approximately."
+ ]
+ counterexample: "A UI that offers many animated moves but gives no inspectable account of what changed or how to undo it."
+ falsify: "If a user can trigger depth but cannot answer what moved, what opened, or how to dismiss it, the machine is not cognitively effective."
+}
+
+^["prefix_postfix_symmetry"]{
+ definition: "Prefix/postfix symmetry means the grammar can be entered from either direction: intent then target (prefix) or target then available intent (postfix), with both paths reducing to the same semantic trace."
+ prefix_path: "Keyboard-friendly cast or primer model: select operator family first, then choose target."
+ postfix_path: "Touch- and inspection-friendly path: address a target first, then reveal the transforms or operators that apply to it."
+ invariants: [
+  "Prefix and postfix paths should write the same register facts for equivalent outcomes.",
+  "A target that exposes postfix affordances should also be reachable through a prefix cast when the grammar supports it.",
+  "Symmetry does not require identical gestures; it requires semantic equivalence."
+ ]
+ counterexample: "A long-press sheet exposes actions that cannot be reached through the keyboard grammar, or a keyboard cast can target structures that touch users can never inspect."
+ falsify: "If replaying a prefix and postfix path yields different register histories for the same user-visible result, the symmetry is false."
 }
 
 ^["register_runtime"]{
@@ -85,10 +118,27 @@
  ]
  inspectability: [
   "A human should be able to answer what the active frame is, what region owns attention, and why a surface is visible without reading multiple modules.",
-  "A future spell or mirror should subscribe to registers, not patch page-local DOM assumptions."
+  "A future spell or mirror should subscribe to registers, not patch page-local DOM assumptions.",
+  "Registers should be rich enough to normalize both prefix and postfix interaction traces."
  ]
  counterexample: "Navigator route state and console action history drifting apart because each module infers its own model from DOM events."
  falsify: "If two inspect surfaces disagree about current active state, the register boundary is wrong or missing."
+}
+
+^["brace_physics_and_pivots"]{
+ definition: "Brace physics governs how a surface opens a face to attention; a pivot is a reversible reorganization into a new local structure while preserving the originating address."
+ rules: [
+  "On mobile, one opened brace face should dominate per region stack.",
+  "A pivot should preserve origin, current target, and dismissal path.",
+  "Nested structure should feel like entering a local chamber, not teleporting into an unrelated page."
+ ]
+ examples: [
+  "frame -> local panel sheet",
+  "component -> inspect lens",
+  "page -> deeper block-backed surface without losing parent route identity"
+ ]
+ counterexample: "Tapping a component silently replaces the whole page or opens a floating panel with no visible relation to the originating structure."
+ falsify: "If a user cannot name what opened from what, or if dismissal cannot restore the prior brace stack, the pivot contract is broken."
 }
 
 ^["blocks_and_scripts"]{
@@ -102,15 +152,34 @@
   block: "stable identity, semantic kind, inspect label, mount target, data inputs"
   script: "declared owner, lifecycle hooks, allowed effects, register writes"
  }
+ authoring_ladder: [
+  "static route with semantic annotations",
+  "region-aware route with shared registers",
+  "block-hosted component with inspect surface",
+  "script-backed component writing through registers",
+  "page assembled from Spw-backed blocks and region pivots"
+ ]
  counterexample: "An inline script mutates a frame subtree without a named owner, inspect path, or cleanup boundary."
  falsify: "If a future UI script cannot state which block or region it belongs to, the host contract is incomplete."
 }
 
+^["wonder"]{
+ definition: "Wonder is the felt surplus that appears when a user discovers a deeper structure while remaining oriented within the current one."
+ rules: [
+  "Wonder should be rare, structural, and inspectable.",
+  "A wonder moment should reveal a new relation, not merely a new effect.",
+  "Calm defaults make wonder legible; constant stimulation erases it."
+ ]
+ counterexample: "Permanent animated chrome or ornamental motion that draws attention without teaching a deeper grammar."
+ falsify: "If removing a visual flourish leaves the user with the same structural insight, the flourish was decoration, not wonder."
+}
+
 ^["implementation_order"]{
  1: "Name regions in markup and expose region reads from shared runtime helpers."
- 2: "Introduce portable interaction intent as a thin translation layer above raw DOM events."
- 3: "Refactor navigator and console into projections over shared registers."
- 4: "Prepare block and script host contracts once region and register ownership are stable."
+ 2: "Introduce a semantic keyboard dispatcher and portable interaction intent as a thin translation layer above raw DOM events."
+ 3: "Normalize prefix and postfix paths into shared registers, then refactor navigator and console into honest projections."
+ 4: "Prepare page, block, and script host contracts once region and register ownership are stable."
+ 5: "Add wonder surfaces only when pivots and inspectability already tell the truth."
 }
 
 ^["non_goals"]{
