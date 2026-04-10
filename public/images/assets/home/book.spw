@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "book-archive"
+  description: "Collected knowledge and written record"
+  visual_qualities: "stacked, archival, layered"
+}
+
+^"thematic_mapping"{
+  operator: "ref"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 256, height: 256 }
+  formats_available: ["png"]
+  alt_text: "Book archive marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["constellation", "archive", "knowledge", "reference", "layered"]
+  part_of: "home-constellation"
+}

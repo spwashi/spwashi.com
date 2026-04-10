@@ -1,0 +1,105 @@
+# wip - media-publishing
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/media-publishing/PLAN.md"
+ @config: ~"public/data/media-focus.json"
+ @module: ~"public/js/media-publishing.js"
+ @site: ~"public/js/site.js"
+ @home: ~"index.html"
+ @guide: ~"about/website/index.html"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Prepare a framework-free media publishing substrate for featured pages, featured topics, featured components, and daily or weekly editorial focus."
+ ~#taste: "Editorial clarity, marketable navigation, static-site trust, and no dashboard takeover."
+}
+
+^["development"]{
+ lane: #publishing_surface
+ ladder: #static_config
+ develops: [#daily_focus, #weekly_focus, #featured_components, #topic_register]
+ review_surfaces: [@plan, @config, @module, @home, @guide]
+}
+
+^["concept_index"]{
+ primary: [#media_publishing]
+ surfaces: [#home, #website_field_guide, #json_config, #pwa_cache]
+ tensions: [#marketing_vs_truth, #dynamic_focus_vs_static_html, #feature_density_vs_calm]
+ transfers: [#pages, #components, #topics, #campaigns]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify the page or component worth featuring",
+  "< add it to JSON with a marketable but truthful handle",
+  "$ render it into semantic hosts with no-JS fallback",
+  "^ cache the config so the PWA shell can reopen it",
+  "% keep the card useful as navigation, not just promotion"
+ ]
+ gates: [#json_truth, #fallback_truth, #navigation_value]
+}
+
+^["parallel_work"]{
+ critical_path: [#config_contract, #renderer, #hosts, #cache]
+ parallelizable: []
+ shared_hot_files: ["public/css/style.css", "public/js/site.js", "sw.js", "manifest.webmanifest"]
+ merge_risks: [#dirty_asset_moves, #style_growth]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: []
+ carries: [#config_contract, #editorial_rhythm]
+}
+
+^["interaction_depth"]{
+ subjects: [#featured_pages, #featured_topics, #featured_components, #daily_focus, #weekly_focus]
+ questions: [#what_is_market_worthy, #what_is_current, #what_is_configured]
+ qualities: [#clarity, #discoverability, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["malformed JSON", "fetch failure"]
+ soft_failures: ["cards read as hollow marketing", "weekly focus becomes stale", "too many links compete with primary page content"]
+ recoveries: ["no-JS fallback remains visible", "renderer shows existing host content on failure", "JSON keeps updated date explicit"]
+ non_negotiables: ["no external API", "no build pipeline", "do not touch unrelated image moves"]
+}
+
+^["validation"]{
+ hypotheses: ["Home can surface weekly and daily focus from JSON.", "The website field guide can reuse the same config for featured pages and topics."]
+ negative_controls: ["Existing optional features still initialize.", "Settings and RPG modules still parse."]
+ demo_path: ["/", "/about/website/", "/public/data/media-focus.json"]
+}
+
+^["stream"]{
+ >>[2026-04-10 03:54] hygiene - base origin/main@e54abe1a9001e23b01da0051eeaf038804daaa21; unrelated image moves/deletions are already dirty and will not be touched.
+ >>[2026-04-10 03:54] taste - use marketable feature copy as navigational framing, not empty promotion; JSON should be easy to edit by hand.
+ >>[2026-04-10 03:54] implement - added media-focus JSON, progressive renderer, home focus frame, website publishing register, CSS components, and PWA cache entries.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[media] - add configurable publishing focus layer"
+}
+
+^["cache"]{
+ ~#status: "implementation"
+ ~#base_ref: "main@e54abe1a9001e23b01da0051eeaf038804daaa21"
+ ~#rebased_at: ""
+ ~#hygiene_split: "unrelated image asset moves/deletions already dirty"
+ ~#files_hot: "public/data/media-focus.json public/js/media-publishing.js public/js/site.js index.html about/website/index.html public/css/style.css sw.js manifest.webmanifest"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "implement"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

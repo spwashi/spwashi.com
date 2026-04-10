@@ -1,0 +1,32 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "awaiting-spirit-name"
+  description: "Midjourney render: exploring teal presence and digital identity for site favicon/branding"
+  visual_qualities: "geometric, teal-tinted, modern, symmetrical"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  valence: "boon"
+  spirit_phase: "threshold"
+  source: "Midjourney"
+  status: "awaiting-naming"
+}
+
+^"usage"{
+  surfaces: [
+    { surface: "icons", role: "favicon-candidate", context: "site-branding" }
+  ]
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["png"]
+  alt_text: "Digital presence exploration in teal, Midjourney render"
+}
+
+^"discovery"{
+  tags: ["midjourney", "favicon", "teal", "branding", "digital-identity"]
+  status: "render-archive"
+  previous_names: ["spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d"]
+  notes: "Ready for naming-magic skill interaction or direct use"
+}

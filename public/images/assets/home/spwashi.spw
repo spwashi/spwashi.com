@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "spwashi-mark"
+  description: "Personal signature and presence marker"
+  visual_qualities: "distinctive, centered, personal"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 256, height: 256 }
+  formats_available: ["png"]
+  alt_text: "Spwashi presence mark in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["constellation", "identity", "signature", "presence"]
+  part_of: "home-constellation"
+}

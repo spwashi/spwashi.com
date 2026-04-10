@@ -21,7 +21,7 @@
         });
     </script>
 </head>
-<body data-spw-surface="website" data-spw-features="operators navigator console svg-surfaces">
+<body data-spw-surface="website" data-spw-features="operators navigator console svg-surfaces media-publishing">
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -54,6 +54,7 @@
                 <p>Read it like a web zine with handles, a notebook with an interface, or a calm cognitive machine for noticing how attention moves across surfaces.</p>
                 <nav class="frame-operators" aria-label="Website field guide routes">
                     <a class="operator-chip" href="#feature-register">^ features</a>
+                    <a class="operator-chip" href="#publishing-register">* publishing</a>
                     <a class="operator-chip" href="#machine-register">$ machine</a>
                     <a class="operator-chip" href="#exploration-motifs">* motifs</a>
                     <a class="operator-chip" href="#what-to-try">? what to try</a>
@@ -98,6 +99,64 @@
                         <strong>Exploration motifs</strong>
                         <span>A design direction for color and frame customizations that reward curiosity without hiding content.</span>
                     </a>
+                </div>
+            </section>
+
+            <section class="site-frame media-publishing-frame" id="publishing-register" data-spw-role="broadcast" data-spw-meaning="configured media publishing register">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#publishing-register">*"publishing_register"</a>
+                    <h2>Publishing Register</h2>
+                </div>
+                <p class="inline-note">Featured pages, topics, and components are configured in <code>/public/data/media-focus.json</code>. The goal is practical: make the site easier to reference, pitch, and revisit without turning the static site into a CMS.</p>
+                <div class="media-focus-layout">
+                    <div data-media-focus="weekly" aria-live="polite">
+                        <article class="media-focus-card">
+                            <p class="spec-kicker">Weekly focus</p>
+                            <div class="media-focus-title">
+                                <span class="frame-card-sigil media-focus-operator">$</span>
+                                <h3>Current publishing focus</h3>
+                            </div>
+                            <p>The current focus loads from the JSON publishing config when JavaScript is available.</p>
+                            <a class="operator-chip" href="/settings/">Open settings</a>
+                        </article>
+                    </div>
+                    <div data-media-focus="daily" aria-live="polite">
+                        <article class="media-focus-card media-focus-card--daily">
+                            <p class="spec-kicker">Daily focus</p>
+                            <div class="media-focus-title">
+                                <span class="frame-card-sigil media-focus-operator">?</span>
+                                <h3>Daily route prompt</h3>
+                            </div>
+                            <p>A different route can be emphasized each day while preserving readable fallback content.</p>
+                            <a class="operator-chip" href="/topics/software/spw/">Open operator atlas</a>
+                        </article>
+                    </div>
+                </div>
+                <div class="media-collection-stack">
+                    <div>
+                        <h3>Featured pages</h3>
+                        <div data-media-collection="featuredPages" aria-label="Featured pages">
+                            <div class="media-card-grid">
+                                <a class="media-card" href="/topics/software/spw/">
+                                    <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">^</span><span class="media-card-tag">reference</span></span>
+                                    <strong class="media-card-title">Spw operator atlas</strong>
+                                    <span class="media-card-summary">Operator pages for syntax, interaction semantics, and brace physics.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Featured topics</h3>
+                        <div data-media-collection="featuredTopics" aria-label="Featured topics">
+                            <div class="media-card-grid">
+                                <a class="media-card" href="#machine-register">
+                                    <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">$</span><span class="media-card-tag">metacognition</span></span>
+                                    <strong class="media-card-title">Cognitive-machine UX</strong>
+                                    <span class="media-card-summary">A topic handle for runtime surfaces that help attention inspect itself.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

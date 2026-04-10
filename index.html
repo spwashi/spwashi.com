@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
-<body data-spw-features="operators navigator console">
+<body data-spw-features="operators navigator console media-publishing">
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -122,6 +122,7 @@
                 <a class="operator-chip" href="/topics/software/#obsidian-homage-frame">@ apply</a>
                 <a class="operator-chip" href="#surface-register">^ frame</a>
                 <a class="operator-chip" href="#cognitive-machine-map">$ inspect</a>
+                <a class="operator-chip" href="#media-focus">* focus</a>
             </div>
         </section>
 
@@ -157,6 +158,52 @@
                     <strong>Exploration rewards</strong>
                     <span>Color and motif customizations should reward curiosity without blocking core reading or navigation.</span>
                 </a>
+            </div>
+        </section>
+
+        <section class="site-frame media-publishing-frame" id="media-focus" data-spw-role="broadcast" data-spw-meaning="configured media publishing focus">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#media-focus">*"media_focus"</a>
+                <h2>Media Focus</h2>
+            </div>
+            <p class="inline-note">A small publishing register makes the site easier to talk about: current focus, featured components, and reusable topic handles are configured in JSON so the static site can shift editorial emphasis without a rebuild.</p>
+            <div class="media-focus-layout">
+                <div data-media-focus="weekly" aria-live="polite">
+                    <article class="media-focus-card">
+                        <p class="spec-kicker">Weekly focus</p>
+                        <div class="media-focus-title">
+                            <span class="frame-card-sigil media-focus-operator">$</span>
+                            <h3>Current site systems</h3>
+                        </div>
+                        <p>Feature focus loads from <code>/public/data/media-focus.json</code> when JavaScript is available.</p>
+                        <a class="operator-chip" href="/about/website/">Open the guide</a>
+                    </article>
+                </div>
+                <div data-media-focus="daily" aria-live="polite">
+                    <article class="media-focus-card media-focus-card--daily">
+                        <p class="spec-kicker">Daily focus</p>
+                        <div class="media-focus-title">
+                            <span class="frame-card-sigil media-focus-operator">?</span>
+                            <h3>Explore a route</h3>
+                        </div>
+                        <p>Daily focus falls back to this static prompt until the JSON renderer hydrates.</p>
+                        <a class="operator-chip" href="/topics/software/spw/">Open Spw</a>
+                    </article>
+                </div>
+            </div>
+            <div data-media-collection="featuredComponents" aria-label="Featured site components">
+                <div class="media-card-grid">
+                    <a class="media-card" href="/settings/">
+                        <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">!</span><span class="media-card-tag">configuration</span></span>
+                        <strong class="media-card-title">Runtime settings</strong>
+                        <span class="media-card-summary">Local controls for how much runtime chrome the site shows.</span>
+                    </a>
+                    <a class="media-card" href="/play/rpg-wednesday/#local-gameplay-kit">
+                        <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">$</span><span class="media-card-tag">local-first</span></span>
+                        <strong class="media-card-title">Table brief</strong>
+                        <span class="media-card-summary">A copyable gameplay summary for the RPG Wednesday table.</span>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -295,24 +342,24 @@
             <figure style="position:relative;">
                 <img src="/public/images/2024-13-01.0.jpg" alt="An image of interaction" />
                 <div class="overlay dots">
-                    <img src="/public/images/2024-13-01/dot-1.png" alt="" />
-                    <img src="/public/images/2024-13-01/dot-2.png" alt="" />
-                    <img src="/public/images/2024-13-01/dot-3.png" alt="" />
-                    <img src="/public/images/2024-13-01/dot-4.png" alt="" />
-                    <img src="/public/images/2024-13-01/dot-5.png" alt="" />
+                    <img src="/public/images/assets/home/dot-1.png" alt="" />
+                    <img src="/public/images/assets/home/dot-2.png" alt="" />
+                    <img src="/public/images/assets/home/dot-3.png" alt="" />
+                    <img src="/public/images/assets/home/dot-4.png" alt="" />
+                    <img src="/public/images/assets/home/dot-5.png" alt="" />
                 </div>
                 <div class="overlay lore">
-                    <img src="/public/images/2024-13-01/boon.png" alt="" />
-                    <img src="/public/images/2024-13-01/bane.png" alt="" />
-                    <img src="/public/images/2024-13-01/bone.png" alt="" />
-                    <img src="/public/images/2024-13-01/bonk.png" alt="" />
-                    <img src="/public/images/2024-13-01/honk.png" alt="" />
+                    <img src="/public/images/assets/home/boon.png" alt="" />
+                    <img src="/public/images/assets/home/bane.png" alt="" />
+                    <img src="/public/images/assets/home/bone.png" alt="" />
+                    <img src="/public/images/assets/home/bonk.png" alt="" />
+                    <img src="/public/images/assets/home/honk.png" alt="" />
                 </div>
                 <div class="overlay book">
-                    <img src="/public/images/2024-13-01/book.png" alt="" />
+                    <img src="/public/images/assets/home/book.png" alt="" />
                 </div>
                 <div class="overlay spwashi">
-                    <img src="/public/images/2024-13-01/spwashi.png" alt="" />
+                    <img src="/public/images/assets/home/spwashi.png" alt="" />
                 </div>
                 <figcaption>An image of interaction.</figcaption>
             </figure>

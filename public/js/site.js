@@ -414,6 +414,10 @@ const initOptionalFeatures = async () => {
         loads.push(loadFeature('./rpg-wednesday.js', 'initRpgWednesday'));
     }
 
+    if (features.has('media-publishing') || document.querySelector('[data-media-focus], [data-media-collection]')) {
+        loads.push(loadFeature('./media-publishing.js', 'initMediaPublishing'));
+    }
+
     await Promise.all(loads);
     await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
 

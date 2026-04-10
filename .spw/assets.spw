@@ -1,0 +1,105 @@
+#>asset_index
+#:index #!assets
+
+^"asset_discovery"{
+  ~#note: "Semantic asset register — images organized by purpose/surface with sidecar .spw metadata. Each image has a paired .spw sidecar documenting spirit name, thematic mapping, usage, and optimization metadata."
+
+  surfaces: {
+    home: {
+      path: ~"../public/images/assets/home/"
+      purpose: "Site hero constellation overlays — valence markers, reference elements, rhythm and identity markers"
+      images: [
+        { name: "boon.png", spirit: "boon-force", valence: "boon" },
+        { name: "bane.png", spirit: "bane-pressure", valence: "bane" },
+        { name: "bone.png", spirit: "bone-structure", valence: "bone" },
+        { name: "bonk.png", spirit: "bonk-collision", valence: "bonk" },
+        { name: "honk.png", spirit: "honk-signal", valence: "honk" },
+        { name: "book.png", spirit: "book-archive", role: "reference" },
+        { name: "spwashi.png", spirit: "spwashi-mark", role: "identity" },
+        { name: "rhythm.png", spirit: "rhythm-pulse", role: "temporal" },
+        { name: "dot-1.png", spirit: "constellation-dot-1", role: "point" },
+        { name: "dot-2.png", spirit: "constellation-dot-2", role: "point" },
+        { name: "dot-3.png", spirit: "constellation-dot-3", role: "point" },
+        { name: "dot-4.png", spirit: "constellation-dot-4", role: "point" },
+        { name: "dot-5.png", spirit: "constellation-dot-5", role: "point" }
+      ]
+    }
+
+    rpg_wednesday: {
+      path: ~"../public/images/assets/rpg-wednesday/"
+      purpose: "RPG Wednesday scene, character, and UI renders"
+      status: "ready-for-populating"
+      images: []
+    }
+
+    pretext_lab: {
+      path: ~"../public/images/assets/pretext-lab/"
+      purpose: "Physics visualization, typography, layout studies"
+      status: "ready-for-populating"
+      images: []
+    }
+
+    illustrations: {
+      path: ~"../public/images/assets/illustrations/"
+      purpose: "Site illustrations, backgrounds, decorative elements"
+      status: "ready-for-populating"
+      images: []
+    }
+
+    motifs: {
+      path: ~"../public/images/assets/motifs/"
+      purpose: "Reusable design motifs — operator palettes, constellation patterns, UI elements"
+      status: "ready-for-populating"
+      images: []
+    }
+  }
+
+  renders: {
+    path: ~"../public/images/renders/"
+    purpose: "Archived full-resolution AI renders (Midjourney, etc.) — source material for potential asset extraction"
+    studies: [
+      { date: "2026-03-10", name: "favicon-study", status: "awaiting-naming", images: 1 }
+    ]
+  }
+}
+
+^"workflow"{
+  naming: {
+    approach: "Whimsical spirit-based naming grounded in Spw semantics"
+    phases: [
+      "visual-analysis — extract color, composition, contrast characteristics",
+      "interactive-refinement — user provides context; skill suggests names",
+      "lexicon-building — track patterns for reuse across images"
+    ]
+    tool: ~"image-naming-magic"
+    skill: ~"/image-naming-magic [path]"
+  }
+
+  optimization: {
+    approach: "Surface-specific size tiers with multi-format generation"
+    surfaces_custom_tiers: {
+      rpg_wednesday: { thumb: "320x320", display: "640x640", hero: "1024x1024" },
+      pretext_lab: { thumb: "400x400", display: "800x800", hero: "1200x1200" },
+      illustrations: { thumb: "256x256", display: "512x512", hero: "1024x1024" },
+      motifs: { icon: "64x64", display: "256x256", large: "512x512" }
+    }
+    formats: ["avif", "webp", "png"]
+    quality: { thumb: 40, display: 60, hero: 75 }
+    tool: "ImageMagick CLI (convert, magick)"
+    skill: ~"/image-optimize [path]"
+  }
+}
+
+^"open_questions"{
+  ?["Which images from the Midjourney render study are candidates for extraction to asset/illustrations?"]{ #:open }
+  ?["What thematic motifs should be generated or commissioned for the motifs/ directory?"]{ #:open }
+  ?["Should the naming-magic skill analyze image pixels, or primarily work from user description?"]{ #:open }
+}
+
+^"cross_references"{
+  @style_development: ~"./conventions/style-development.spw"
+  @asset_management: ~"./conventions/asset-management.spw"
+  @rpg_asset_capture: ~"../.agents/plans/rpg-asset-capture-frames/artifact.spw"
+  @naming_skill: ~"../.agents/skills/image-naming-magic/SKILL.md"
+  @optimize_skill: ~"../.agents/skills/image-optimize/SKILL.md"
+}

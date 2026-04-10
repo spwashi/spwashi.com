@@ -1,0 +1,100 @@
+#>size_tier_reference
+#:layer #!design
+
+^"size_tiers_by_surface"{
+  ~#note: "Surface-specific image breakpoints and quality targets for responsive optimization"
+
+  rpg_wednesday: {
+    context: "RPG Wednesday kit — scene renders, character portraits, UI elements"
+    tiers: {
+      thumb: { size: "320x320", quality: 40, use_case: "mobile list view, card thumbnail" },
+      display: { size: "640x640", quality: 60, use_case: "tablet / desktop detail view" },
+      hero: { size: "1024x1024", quality: 75, use_case: "full-screen render, modal" }
+    }
+    aspect_ratio: "preserve-source"
+  }
+
+  pretext_lab: {
+    context: "Pretext physics lab — typography, layout, measurement studies"
+    tiers: {
+      thumb: { size: "400x400", quality: 40, use_case: "grid preview" },
+      display: { size: "800x800", quality: 60, use_case: "article embed" },
+      hero: { size: "1200x1200", quality: 75, use_case: "study reference, large viewport" }
+    }
+    aspect_ratio: "preserve-source"
+  }
+
+  illustrations: {
+    context: "Site illustrations, backgrounds, decorative elements"
+    tiers: {
+      thumb: { size: "256x256", quality: 40, use_case: "small card, icon scale" },
+      display: { size: "512x512", quality: 60, use_case: "article illustration" },
+      hero: { size: "1024x1024", quality: 75, use_case: "full illustration, hero section" }
+    }
+    aspect_ratio: "preserve-source"
+  }
+
+  motifs: {
+    context: "Reusable design motifs — operator palettes, constellation elements, UI components"
+    tiers: {
+      icon: { size: "64x64", quality: 40, use_case: "favicon, icon toolbar" },
+      display: { size: "256x256", quality: 60, use_case: "motif panel, preview" },
+      large: { size: "512x512", quality: 75, use_case: "large asset, compositing source" }
+    }
+    aspect_ratio: "preserve-source"
+  }
+}
+
+^"quality_justification"{
+  thumb: {
+    value: 40
+    rationale: "Small viewport, thumbnail context — viewers not expecting high fidelity. Aggressive compression acceptable."
+  }
+  display: {
+    value: 60
+    rationale: "Main viewing context — balance quality and file size. Typical web image benchmark."
+  }
+  hero: {
+    value: 75
+    rationale: "Large scale, prominent display — preserve detail without going lossless. PNG fallback available."
+  }
+}
+
+^"format_strategy"{
+  primary: "AVIF"
+  fallback_1: "WebP"
+  fallback_2: "PNG"
+  rationale: "AVIF offers best compression; WebP for older browsers; PNG for maximum compatibility and lossless edge cases"
+}
+
+^"naming_convention"{
+  pattern: "{filename}-{tier}.{format}"
+  example: "teal-reflection-display.avif"
+  breakdown: {
+    filename: "spirit-name from .spw sidecar"
+    tier: "thumb | icon | display | large | hero (surface-specific)"
+    format: "avif | webp | png"
+  }
+}
+
+^"responsive_sizing_guidance"{
+  html_pattern: "Use srcset with size labels in pixels (256w, 512w, 1024w)"
+  css_pattern: "Define max-width in CSS; sizes attribute helps browser choose optimal variant"
+  example_html: ~"../references/srcset-example.html"
+  example_css: ~"../references/responsive-image.css"
+}
+
+^"compression_targets"{
+  ~#goal: "Achieve 50-75% compression (file size reduction) from original while maintaining visual quality"
+  thumb: "60-80% reduction expected (aggressive compression OK for small scale)"
+  display: "40-60% reduction typical (balance point)"
+  hero: "20-40% reduction (quality prioritized)"
+}
+
+^"future_considerations"{
+  blur_up_lqip: "Ultra-low-res placeholder for progressive loading (optional enhancement)"
+  metadata_preservation: "Option to preserve EXIF or strip for privacy"
+  animated_optimization: "Approach for GIF/animated WebP (future)"
+  batch_processing: "Optimize entire directory in one command (future)"
+  cache_busting: "Content-hash suffixes for cache invalidation (future)"
+}

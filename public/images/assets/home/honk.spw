@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "honk-signal"
+  description: "Alert and resonant marker, signal in the field"
+  visual_qualities: "bright, calling, resonant"
+}
+
+^"thematic_mapping"{
+  valence: "honk"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 512, height: 512 }
+  formats_available: ["png"]
+  alt_text: "Honk signal marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["valence", "honk", "constellation", "signal", "resonance"]
+  part_of: "home-constellation"
+}

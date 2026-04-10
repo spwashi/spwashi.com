@@ -1182,6 +1182,103 @@ figcaption {
 
 /* ─── Opt-in Feature Surfaces ─────────────────────────────────────────────── */
 
+[data-spw-features~="media-publishing"] .media-publishing-frame {
+    gap: 1rem;
+}
+
+[data-spw-features~="media-publishing"] .media-focus-layout,
+[data-spw-features~="media-publishing"] .media-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+[data-spw-features~="media-publishing"] .media-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-spw-features~="media-publishing"] .media-collection-stack {
+    display: grid;
+    gap: 1.1rem;
+}
+
+[data-spw-features~="media-publishing"] .media-focus-card,
+[data-spw-features~="media-publishing"] .media-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.62rem;
+    min-height: 100%;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(245, 252, 250, 0.66)),
+        var(--card-bg);
+    color: inherit;
+    box-sizing: border-box;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+[data-spw-features~="media-publishing"] a.media-card {
+    text-decoration: none;
+    transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+[data-spw-features~="media-publishing"] a.media-card:hover,
+[data-spw-features~="media-publishing"] a.media-card:focus-visible {
+    border-color: var(--card-border-hover);
+    background: var(--card-bg-hover);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+}
+
+[data-spw-features~="media-publishing"] .media-focus-card--daily {
+    background:
+        radial-gradient(circle at top right, rgba(0, 128, 128, 0.12), transparent 42%),
+        rgba(255, 255, 255, 0.72);
+}
+
+[data-spw-features~="media-publishing"] .media-focus-title,
+[data-spw-features~="media-publishing"] .media-card-topline {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+
+[data-spw-features~="media-publishing"] .media-focus-title h3,
+[data-spw-features~="media-publishing"] .media-card-title {
+    margin: 0;
+}
+
+[data-spw-features~="media-publishing"] .media-focus-operator,
+[data-spw-features~="media-publishing"] .media-card-operator {
+    flex-shrink: 0;
+}
+
+[data-spw-features~="media-publishing"] .media-card-tag {
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+[data-spw-features~="media-publishing"] .media-card-summary {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+[data-spw-features~="media-publishing"] .media-card-cta {
+    margin-top: auto;
+    color: var(--teal);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
 [data-spw-features~="pretext-lab"] .pretext-lab-grid,
 [data-spw-features~="pretext-lab"] .pretext-surface-grid {
     display: grid;
@@ -2811,6 +2908,8 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     .contact-grid,
     .frame-grid--dense,
     .domain-grid,
+    [data-spw-features~="media-publishing"] .media-focus-layout,
+    [data-spw-features~="media-publishing"] .media-card-grid,
     .operator-atlas-grid,
     .operator-detail-grid,
     [data-spw-features~="rpg-gameplay"] .rpg-gameplay-grid,

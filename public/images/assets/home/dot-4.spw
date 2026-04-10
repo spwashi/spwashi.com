@@ -1,0 +1,28 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "constellation-dot-4"
+  description: "Point in the spatial field, position 4 in the arc"
+  visual_qualities: "punctate, positional, sparse"
+}
+
+^"thematic_mapping"{
+  operator: "probe"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 64, height: 64 }
+  formats_available: ["png"]
+  alt_text: "Constellation point 4"
+}
+
+^"discovery"{
+  tags: ["constellation", "dot", "positional", "arc", "point"]
+  part_of: "home-constellation"
+  sequence: 4
+}

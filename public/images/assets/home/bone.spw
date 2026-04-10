@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "bone-structure"
+  description: "Stable foundation and underlying architecture"
+  visual_qualities: "neutral, centered, foundational"
+}
+
+^"thematic_mapping"{
+  valence: "bone"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 512, height: 512 }
+  formats_available: ["png"]
+  alt_text: "Bone structure marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["valence", "bone", "constellation", "structure", "stability"]
+  part_of: "home-constellation"
+}

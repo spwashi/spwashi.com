@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "bonk-collision"
+  description: "Moment of impact and interaction, sudden encounter"
+  visual_qualities: "bright, striking, immediate"
+}
+
+^"thematic_mapping"{
+  valence: "bonk"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 512, height: 512 }
+  formats_available: ["png"]
+  alt_text: "Bonk collision marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["valence", "bonk", "constellation", "collision", "impact"]
+  part_of: "home-constellation"
+}

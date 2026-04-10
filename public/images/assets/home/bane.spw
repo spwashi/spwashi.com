@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "bane-pressure"
+  description: "Counterforce and friction, right-side resistant motion"
+  visual_qualities: "cool, gradient-right, resistant"
+}
+
+^"thematic_mapping"{
+  valence: "bane"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 512, height: 512 }
+  formats_available: ["png"]
+  alt_text: "Bane energy marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["valence", "bane", "constellation", "friction", "right-side"]
+  part_of: "home-constellation"
+}

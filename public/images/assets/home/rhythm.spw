@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "rhythm-pulse"
+  description: "Temporal pattern and periodic recurrence"
+  visual_qualities: "rhythmic, patterned, temporal"
+}
+
+^"thematic_mapping"{
+  operator: "stream"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 256, height: 256 }
+  formats_available: ["png"]
+  alt_text: "Rhythm pulse marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["constellation", "rhythm", "temporal", "pattern", "pulse"]
+  part_of: "home-constellation"
+}

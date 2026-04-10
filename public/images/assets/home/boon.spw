@@ -1,0 +1,27 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "boon-force"
+  description: "Positive force and growth energy, left-side generative motion"
+  visual_qualities: "warm, gradient-left, expansive"
+}
+
+^"thematic_mapping"{
+  valence: "boon"
+  role: "constellation-marker"
+  context: "home-frame overlay"
+}
+
+^"usage"{
+  surface: "home"
+  role: "constellation-overlay"
+  dimensions: { width: 512, height: 512 }
+  formats_available: ["png"]
+  alt_text: "Boon energy marker in constellation overlay"
+}
+
+^"discovery"{
+  tags: ["valence", "boon", "constellation", "growth", "left-side"]
+  part_of: "home-constellation"
+}
