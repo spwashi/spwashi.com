@@ -1,0 +1,47 @@
+# rpg-local-gameplay
+# Distilled model for making RPG Wednesday useful during play with local-only
+# browser state.
+
+#>rpg_local_gameplay
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "A public campaign page can become useful at the table if it adds a local, private gameplay register without pretending local notes are published canon."
+ why: "The static route remains the shared source of orientation. localStorage becomes the personal table layer for scene state, initiative, clocks, notes, and seeds."
+}
+
+^["storage_contract"]{
+ owner: "current browser profile"
+ key: "spwashi:rpg-wednesday:v1"
+ sync: "none"
+ privacy: "Data stays local unless the visitor explicitly exports and shares it."
+ recoverability: "Export/import provides the only portable path."
+}
+
+^["registers"]{
+ scene: "current scene, objective, and immediate table focus"
+ party: "quick roster of active PCs or participants"
+ initiative: "ordered actor list with active cursor"
+ clocks: "small progress counters for tension, danger, projects, or countdowns"
+ notes: "scratch notes for private table use"
+ seeds: "session-log prompts that may later become published recap material"
+}
+
+^["ui_contract"]{
+ progressive: "Static RPG pages remain complete without JavaScript."
+ discoverable: "Every RPG Wednesday route exposes the same local gameplay kit."
+ reversible: "Clear requires confirmation; export is available before clear."
+ mobile_first: "Controls stack, textarea fields stay large enough for touch, and the kit never depends on hover."
+}
+
+^["non_goals"]{
+ [
+  "cloud sync",
+  "published session generation",
+  "rules automation",
+  "combat simulator",
+  "account identity",
+  "analytics on private gameplay data"
+ ]
+}

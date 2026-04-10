@@ -93,6 +93,10 @@
  >>[2026-04-09 21:06] decide - Plan around a four-part split: SVG surface taxonomy, inline-versus-external asset rules, host/runtime contracts, and an authoring ladder for future Spw-backed components and pages.
  >>[2026-04-09 21:06] decide - Keep the runtime dependency explicit: mobile runtime doctrine, prefix/postfix symmetry, and brace pivots come first; SVG should intensify the surface model, not fork it.
  >>[2026-04-09 21:06] taste - Wonder should come from layers becoming structurally legible on inspection, not from perpetual animated SVG decoration.
+ >>[2026-04-09] style - The constellation frame is the only place the site has made a visual vocabulary commitment: sparse points, relational arcs, depth through proximity and layering rather than perspective. New SVG should acknowledge that grammar before departing from it — or explicitly name the departure as a deliberate choice.
+ >>[2026-04-09] observe - The site's primary relational content is already named: operator families, surface-to-surface bridges, domain adjacencies, spirit phase sequences. Illustrations that make those visible would feel native. Illustrations that don't reference that material would feel borrowed.
+ >>[2026-04-09] style - Diagrammatic warmth on this site likely means: legible relation over decorative form, operator color tokens carrying semantic hierarchy, whitespace proportioned for inspection, and enough label residue that a diagram could become an inspectable surface rather than a static image.
+ >>[2026-04-09] observe - SVG is a style development moment: the first authored illustration will establish whether this site's visual language is sparse, relational, annotated, geometric, or something else — log that choice explicitly when it is made.
 }
 
 ^["open"]{
@@ -104,6 +108,11 @@
  ?[authoring]: "What is the smallest host contract that future Spw-backed components can target without requiring a build step?"
  ?[fallback]: "How should a scripted SVG widget degrade when JavaScript or motion features are unavailable?"
  ?[wonder]: "Which layers of revelation feel magical because they expose relation, not because they add motion?"
+ ?[visual_vocabulary]: "What does the site's diagram language look like fully developed — sparse and relational, geometric and formal, annotated, or something the constellation frame implies but hasn't proven?"
+ ?[relation_priority]: "Which relationships should be made visually legible first — operator family trees, surface-to-surface bridges, domain adjacencies, or spirit phase sequences?"
+ ?[warmth_definition]: "Define diagrammatic warmth specifically for this site: is it label generosity, color tenderness, proportional whitespace, or the feeling of a mind mapping its own territory?"
+ ?[illustration_voice]: "What quality distinguishes an illustration that belongs to this sensibility — what does it share with the written copy and the operator atlas pages?"
+ ?[first_illustration_log]: "When the first authored SVG illustration is committed, what style decision should be explicitly logged in this stream?"
 }
 
 ^["commits"]{
@@ -123,7 +132,7 @@
  ~#next_commit: "1"
  ~#open_count: "8"
  ~#last_stream: "2026-04-09 21:06"
- ~#taste_debt: "Do not let SVG become a novelty channel or a framework-shaped escape hatch around the site's hand-authored semantics."
+ ~#taste_debt: "Do not let SVG become a novelty channel or a framework-shaped escape hatch around the site's hand-authored semantics. The first authored illustration establishes the site's visual vocabulary — log that choice explicitly. Diagrammatic warmth should be defined from the site's own relational material, not borrowed from external design idioms."
 }
 
 ^["done"]{

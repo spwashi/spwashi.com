@@ -1,0 +1,65 @@
+# media-feature-brief
+# Distilled communication model for explaining the developed website to media
+# enthusiasts without requiring implementation context.
+
+#>media_feature_brief
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "The website is becoming an installable, inspectable media surface: static pages at rest, but with a visible grammar for navigation, reflection, and cognitive structure."
+ audience: "media enthusiasts, interaction designers, toolmakers, writers, and readers curious about web-native publishing systems"
+ posture: "show what exists, name what it lets a visitor try, and keep future runtime ambitions clearly marked as direction"
+}
+
+^["reader_translation"]{
+ from_internal: [
+  "Spw operators",
+  "frame navigation",
+  "console and navigator",
+  "PWA shell",
+  "Pretext lab",
+  "brace physics and cognitive-surface plans"
+ ]
+ to_public: [
+  "symbolic handles for moving through the page",
+  "sections that act like named media frames",
+  "an inspectable map and status readout",
+  "an installable site that keeps core routes available offline",
+  "a typography and layout experiment for responsive text",
+  "a developing design language for attention, reflection, and wonder"
+ ]
+}
+
+^["proof_points"]{
+ current: [
+  "/topics/software/spw/ publishes one route per operator",
+  "/topics/software/pretext/ exposes the Pretext field lab",
+  "public/js/frame-navigator.js and public/js/spw-console.js make page structure inspectable",
+  "sw.js and manifest.webmanifest provide PWA installation and offline core routes",
+  ".spw/surfaces.spw names the public surface registry"
+ ]
+ rule: "Each public claim should link to a visible route or shipped asset."
+}
+
+^["message_shape"]{
+ start: "What is this site becoming?"
+ middle: "What can a visitor actually try?"
+ depth: "Why does this matter for media, publishing, and cognition?"
+ finish: "Where should a curious reader go next?"
+}
+
+^["boundaries"]{
+ avoid: [
+  "claiming planned spell systems already ship",
+  "burying the reader in internal plan names",
+  "turning the route into a resume page",
+  "requiring JavaScript for comprehension"
+ ]
+ preserve: [
+  "plain HTML readability",
+  "clear links to existing surfaces",
+  "enough poetry to keep wonder present",
+  "enough specificity to keep claims falsifiable"
+ ]
+}

@@ -20,7 +20,7 @@
         });
     </script>
 </head>
-<body data-spw-features="operators navigator console">
+<body data-spw-surface="rpg-wednesday" data-spw-features="operators navigator console rpg-gameplay">
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -49,7 +49,7 @@
                 <h1>RPG Wednesday</h1>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="orientation">
-                        <p>A recurring Wednesday tabletop RPG session. This surface holds the <a href="/play/rpg-wednesday/sessions/">session log</a>, <a href="/play/rpg-wednesday/world/">world</a>, and <a href="/play/rpg-wednesday/cast/">cast</a> — each session is a dated event; the world and characters are the persistent frame beneath them.</p>
+                        <p>A recurring Wednesday tabletop RPG session. This surface holds the <a href="/play/rpg-wednesday/sessions/">session log</a>, <a href="/play/rpg-wednesday/world/">world</a>, and <a href="/play/rpg-wednesday/cast/">cast</a> — each session is a dated event; the world and characters are the persistent frame beneath them. The local gameplay kit below stores private table state in this browser for use during play.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="system" hidden>
                         <pre><code>#&gt;rpg_wednesday
@@ -75,7 +75,16 @@
                     <a class="operator-chip" href="/play/rpg-wednesday/world/">^ world</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/cast/">~ cast</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
+                    <a class="operator-chip" href="#local-gameplay-kit">@ local kit</a>
                 </nav>
+            </section>
+
+            <section class="site-frame rpg-gameplay-kit" id="local-gameplay-kit" data-rpg-gameplay-kit data-spw-role="local-register" data-spw-meaning="private gameplay state">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#local-gameplay-kit">@local_gameplay_kit</a>
+                    <h2>Local Gameplay Kit</h2>
+                </div>
+                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, and session-log seeds. Static campaign routes remain available either way.</p>
             </section>
 
             <section class="site-frame" id="rpgw-current">

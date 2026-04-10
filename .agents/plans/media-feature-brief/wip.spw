@@ -1,0 +1,107 @@
+# wip — media-feature-brief
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/media-feature-brief/PLAN.md"
+ @artifact: ~".agents/plans/media-feature-brief/media-feature-brief.spw"
+ @site: ~".spw/site.spw"
+ @surfaces: ~".spw/surfaces.spw"
+ @home: ~"index.html"
+ @about: ~"about/index.html"
+ @software: ~"topics/software/index.html"
+ @guide: ~"about/website/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Publish an approachable field-guide surface that helps media enthusiasts appreciate what has developed on the site: PWA behavior, Spw grammar, frame navigation, Pretext, and the broader cognitive-surface direction."
+ ~#taste: "Clarity and expressiveness without turning the site into a press kit or overexplaining the magic."
+}
+
+^["development"]{
+ lane: #communication_surface
+ ladder: #public_story
+ develops: [#media_literacy, #interaction_literacy, #spw_surface_translation]
+ review_surfaces: [@plan, @artifact, @site, @surfaces]
+}
+
+^["concept_index"]{
+ primary: [#website_field_guide]
+ surfaces: [#home, #about, #software, #pwa, #operator_atlas, #pretext]
+ tensions: [#wonder_vs_accuracy, #media_reader_vs_technical_reader, #published_vs_planned]
+ transfers: [#plain_text, #interactive_publishing, #cognitive_surfaces]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? read the public routes as a non-implementer",
+  "< publish one route that explains the current feature constellation",
+  "$ register the route as a surface and PWA cache entry",
+  "^ link the route from existing reader paths",
+  "% keep future plans separate from shipped capabilities",
+ ]
+ gates: [#static_truth, #link_truth, #copy_truth]
+}
+
+^["parallel_work"]{
+ critical_path: [#new_route, #links, #surface_registry]
+ parallelizable: []
+ shared_hot_files: ["index.html", "about/index.html", "topics/software/index.html", ".spw/site.spw", ".spw/surfaces.spw", "sw.js", "manifest.webmanifest"]
+ merge_risks: [#public_copy_drift, #pwa_cache_drift]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@site, @surfaces]
+ carries: [#message_frame, #audience, #proof_points, #current_constraints]
+}
+
+^["interaction_depth"]{
+ subjects: [#discoverability, #learnability, #media_context, #inspectability]
+ questions: [#what_should_a_visitor_notice, #where_should_they_go_next, #what_is_currently_real]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["The route claims planned features are already implemented."]
+ soft_failures: ["The copy becomes too internal for media enthusiasts.", "The page duplicates the software route instead of translating it."]
+ recoveries: ["Name future work as direction, not capability.", "Use existing feature routes as proof links."]
+ non_negotiables: ["Static HTML remains complete without JavaScript.", "No new build step.", "No new persistent chrome."]
+}
+
+^["validation"]{
+ hypotheses: ["A curious media reader can identify five things to try without reading source files."]
+ negative_controls: ["Existing routes, shortcuts, and runtime behavior remain unchanged."]
+ demo_path: ["/about/website/", "/", "/about", "/topics/software/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 00:00] hygiene — worktree clean; base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22.
+ >>[2026-04-10 00:00] taste — field guide should describe the website as an inspectable media surface while avoiding press-kit voice and unfinished-feature overclaiming.
+ >>[2026-04-10 00:00] implement — added /about/website/ as a static field guide and linked it from home, about, and software.
+ >>[2026-04-10 00:00] revise — registered the route in .spw/site.spw and .spw/surfaces.spw, then included it in the PWA core route cache.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: ".[media] — publish website field guide for media enthusiasts"
+}
+
+^["cache"]{
+ ~#status: "review"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "about/website/index.html index.html about/index.html topics/software/index.html .spw/site.spw .spw/surfaces.spw sw.js manifest.webmanifest"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "revise"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

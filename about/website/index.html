@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Website Field Guide</title>
+    <meta name="description" content="A field guide to the Spwashi website as an installable, inspectable media surface for Spw grammar, frame navigation, Pretext experiments, and cognitive-surface design.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="website" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a aria-current="page" href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="website-field-guide">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#website-field-guide">#&gt;website_field_guide</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">media surface</span>
+                        <span class="spec-pill">PWA shell</span>
+                        <span class="spec-pill">Spw grammar</span>
+                        <span class="spec-pill">inspectable web</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">For Media Enthusiasts</p>
+                <h1>A field guide to this website as a media instrument.</h1>
+                <p>This site is not only a portfolio. It is a small static website becoming an installable, inspectable publishing surface: pages remain readable HTML, while Spw grammar, frame navigation, operator routes, and experimental text tools make the structure visible.</p>
+                <p>Read it like a web zine with handles, a notebook with an interface, or a calm machine for noticing how attention moves across surfaces.</p>
+                <nav class="frame-operators" aria-label="Website field guide routes">
+                    <a class="operator-chip" href="#feature-register">^ features</a>
+                    <a class="operator-chip" href="#what-to-try">? what to try</a>
+                    <a class="operator-chip" href="#media-thesis">~ media thesis</a>
+                    <a class="operator-chip" href="#current-boundaries">@ current boundaries</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="feature-register" data-spw-role="surface" data-spw-meaning="public feature summary">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#feature-register">^"feature_register"{</a>
+                    <h2>What Has Developed</h2>
+                </div>
+                <div class="frame-grid">
+                    <a class="frame-card" href="/topics/software/spw/">
+                        <span class="frame-card-sigil">#&gt;operator_atlas</span>
+                        <strong>Spw operator atlas</strong>
+                        <span>Each operator has a page that frames it as syntax, interaction primitive, brace behavior, and metaphysical model.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/software/pretext/">
+                        <span class="frame-card-sigil">&gt;pretext_field_lab</span>
+                        <strong>Pretext field lab</strong>
+                        <span>A live typography and layout experiment for preparing text once, then projecting it responsively across widths.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/software/">
+                        <span class="frame-card-sigil">#&gt;software_surface</span>
+                        <strong>Software surface</strong>
+                        <span>The public explanation of Spw as plain text with richer semantics for LSP-aware tools and literate curricula.</span>
+                    </a>
+                    <a class="frame-card" href="/play/rpg-wednesday/">
+                        <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
+                        <strong>RPG Wednesday</strong>
+                        <span>A creative route that treats sessions, cast, world, and time as relational media frames.</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="interaction-register" data-spw-role="schema" data-spw-meaning="interaction features">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#interaction-register">?["interaction_register"]</a>
+                    <h2>Interaction You Can Inspect</h2>
+                </div>
+                <div class="spec-grid">
+                    <div class="frame-panel">
+                        <h3>Frames as media units</h3>
+                        <p>Sections are named frames with sigils. A frame can be linked, selected, traversed, and explained without severing it from the surrounding page.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Operators as handles</h3>
+                        <p>Tokens like <code>#&gt;</code>, <code>?</code>, <code>~</code>, <code>@</code>, and <code>^</code> are not just decoration. They describe how a surface should be read, queried, referenced, acted on, or structured.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Navigator and console</h3>
+                        <p>The site exposes a frame map and a small status console when the route enables them. They make the page feel less like a flat document and more like a readable instrument.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Installable shell</h3>
+                        <p>The PWA manifest and service worker let the site behave like a lightweight app, with core routes prepared for offline reading and update handling.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="what-to-try" data-spw-role="probe" data-spw-meaning="guided visitor path">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#what-to-try">?["what_to_try"]{</a>
+                    <h2>What To Try First</h2>
+                </div>
+                <ol class="frame-list">
+                    <li>Open the <a href="/topics/software/spw/">Spw operator atlas</a> and skim the operators as a set of interaction verbs.</li>
+                    <li>Visit the <a href="/topics/software/pretext/">Pretext field lab</a>, change the text settings, and watch layout become measurable instead of mysterious.</li>
+                    <li>Use the visible navigator strip or keyboard hints where available to move between named frames instead of only scrolling.</li>
+                    <li>Install the site from a supported browser and revisit the core routes as a small personal media app.</li>
+                    <li>Compare <a href="/topics/software/">Software</a>, <a href="/play/rpg-wednesday/">RPG Wednesday</a>, and <a href="/about">About</a> as different uses of the same frame grammar.</li>
+                </ol>
+                <p class="inline-note">The best reading mode is exploratory: tap, focus, follow anchors, and notice which parts reveal structure when addressed.</p>
+            </section>
+
+            <section class="site-frame" id="media-thesis" data-spw-role="reference" data-spw-meaning="media interpretation">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#media-thesis">~"media_thesis"</a>
+                    <h2>Why Media Enthusiasts Might Care</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Plain text as score</h3>
+                        <p>Spw treats plain text as something that can still be performed by tools. The source stays legible, but the symbols give software more semantic hooks.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Pages as instruments</h3>
+                        <p>A page can be more than a container for content. It can expose its regions, frames, controls, and reflective surfaces so the reader learns how to operate it.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Responsive publishing</h3>
+                        <p>The site treats mobile, desktop, installable app mode, and offline reading as one publishing environment rather than separate editions.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Cognitive surfaces</h3>
+                        <p>The developing design language asks how interfaces can model attention, reflection, memory, and wonder without becoming visually noisy.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="current-boundaries" data-spw-role="pragma" data-spw-meaning="current truth and next direction">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#current-boundaries">!current_boundaries</a>
+                    <h2>Current Boundaries</h2>
+                </div>
+                <p>This is still a framework-free, GitHub Pages site. That is part of the point: the media system begins as HTML, CSS, JavaScript, a manifest, a service worker, and plain-text planning surfaces.</p>
+                <p>The deeper work now being prepared includes mobile-first region semantics, portable hover and click behavior, SVG widgets and illustrations, seasonal ornaments, Spw-backed components, and richer inspectable registers. Those are directions, not requirements for appreciating what already ships.</p>
+                <nav class="frame-operators" aria-label="Next reading routes">
+                    <a class="operator-chip" href="/">home</a>
+                    <a class="operator-chip" href="/about">about</a>
+                    <a class="operator-chip" href="/topics/software/">software</a>
+                    <a class="operator-chip" href="/topics/software/pretext/">pretext</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operators</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

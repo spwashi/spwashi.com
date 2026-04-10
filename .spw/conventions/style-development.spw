@@ -1,0 +1,80 @@
+# Style Development
+#
+# Cross-plan observations and invariants for how personal aesthetic
+# decisions should emerge from this site work rather than be imported
+# from outside it. This is a discovery document, not a style guide.
+
+#>spw_style_development
+#:conventions #!style
+#:layer #!pragmatics
+
+^"vocabulary"{
+  ~#note: "Terms the site already uses to talk about its own aesthetic direction. These are starting points, not definitions."
+  calm_at_rest: "The site's default register: legible, unhurried, structurally honest. Enhancements must not break this."
+  summoned_delight: "Wonder that arrives through structural revelation or deliberate interaction, not through ambient decoration."
+  inspectable_restraint: "The quality of a surface that is interesting because you can see how it works, not despite that."
+  diagrammatic_warmth: "A visual quality to be defined from the site's own relational material — not borrowed from external design idioms."
+  measured_delight: "Playfulness grounded in real measured data, not decorative caprice."
+  legible_force: "Physical or metaphysical effects that remain readable and inspectable rather than opaque."
+  earned_wonder: "Moments of structural revelation strong enough to feel magical without violating calm defaults."
+}
+
+^"emerging_observations"{
+  ~#note: "What has already been observed about the emerging aesthetic. Update as the work surfaces new evidence."
+  [
+    "The constellation frame on the home page is the site's only committed visual vocabulary: sparse points, relational arcs, depth through layering.",
+    "The operator atlas pages are the site's clearest voice: exact, relational, unhurried, with each sigil carrying both technical and metaphysical weight.",
+    "Operator color tokens already form a visual hierarchy that is semantic, not decorative.",
+    "The site's own metaphysics vocabulary (boon/bane, charge, pivot, spirit phase, brace topology) is a richer source for motifs and names than external design calendars or trends.",
+    "The spirit cycle's five phases (initiation, resistance, transformation, expression, return) are available as an interaction arc — none of the plans have yet claimed them.",
+  ]
+}
+
+^"choice_points"{
+  ~#note: "Where deliberate aesthetic decisions are needed and should be explicitly logged in the relevant plan's stream."
+  css_ornament_motif: {
+    plan: ".agents/plans/css-progressive-ornaments"
+    commit: "4 — first seasonal proof"
+    question: "What visual grammar does the first ornament belong to — and why this one?"
+  }
+  svg_visual_vocabulary: {
+    plan: ".agents/plans/svg-surface-integration"
+    commit: "4 — first authored illustration"
+    question: "What does the site's diagram language commit to with this first illustration?"
+  }
+  pretext_physics_seed: {
+    plan: ".agents/plans/pretext-whimsy-lab"
+    commit: "4 — first physical projection"
+    question: "Which Spw metaphysical concept seeds the first physics profile — and how?"
+  }
+  interaction_timing_vocabulary: {
+    plan: ".agents/plans/mobile-runtime-foundation"
+    commit: "2 — semantics formalization"
+    question: "What naming and value choices characterize timing and transition constants on this site?"
+  }
+}
+
+^"cross_plan_invariants"{
+  "Style decisions should be logged in the relevant plan's stream at the commit they are first made.",
+  "The site's own vocabulary (operators, metaphysics, brace topology, spirit phases) is the preferred source for names, motifs, and interaction analogues.",
+  "Personal aesthetic choices should be identifiable in retrospect — each taste entry in a stream should explain what grammar the choice belongs to.",
+  "Do not prescribe visual identity in advance of the work that earns it — but do mark the moments when choices are made.",
+  "When departing from an established vocabulary (e.g., the constellation grammar), name the departure explicitly rather than leaving it implicit.",
+}
+
+^"protected_qualities"{
+  ~#note: "Qualities to protect regardless of what style direction emerges."
+  "Calm at rest: the default state of every page before interaction begins.",
+  "Inspectability: any visual or interactive element that can be interrogated should be.",
+  "Reversibility: aesthetic choices that trap or strand the visitor are style failures, not style preferences.",
+  "Coherence: a seasonal ornament, a physics experiment, and an SVG illustration should be recognizable as belonging to the same sensibility.",
+}
+
+^"dispatch"{
+  @site: ~"../site.spw"
+  @semantics: ~"./site-semantics.spw"
+  @css_plan: ~"../../.agents/plans/css-progressive-ornaments/wip.spw"
+  @svg_plan: ~"../../.agents/plans/svg-surface-integration/wip.spw"
+  @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/wip.spw"
+  @runtime_plan: ~"../../.agents/plans/mobile-runtime-foundation/wip.spw"
+}

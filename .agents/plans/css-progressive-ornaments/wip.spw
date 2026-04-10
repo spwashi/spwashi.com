@@ -40,6 +40,9 @@
  >>[2026-04-09 23:40] decide - Keep `/public/css/style.css` as the linked GitHub Pages entrypoint and split behind it first, rather than changing every HTML page or adding a build pipeline.
  >>[2026-04-09 23:40] decide - Treat seasonal features as progressive ornaments: opt-in, cacheable, reduced-motion safe, and unable to own core layout or navigation.
  >>[2026-04-09 23:40] taste - The refactor should make future SVG/Pretext/operator CSS easier to place without increasing visible noise. Ornament layers should feel like a removable glaze, not a second design system.
+ >>[2026-04-09] style - The first seasonal proof is a character test, not a feature test. If the ornament could belong to any minimalist site's seasonal palette, it has not yet earned this one. The site's own grammar — operator geometry, brace topology, sigil forms, spirit arc sequences — is the source to draw from first.
+ >>[2026-04-09] observe - Token names are style decisions. `--ornament-spring-accent` is a calendar entry. `--ornament-boon-field` or `--ornament-threshold-glow` arrive from the site's metaphysical vocabulary and carry different authoring residue — they connect the ornament to an already-live semantic web rather than importing a disconnected seasonal idiom.
+ >>[2026-04-09] style - Personal ornament style should emerge under constraint: what does a motif look like when it can only use named tokens, respects reduced motion, and limits itself to a small surface footprint? That constraint is a creative filter as much as a safety rule.
 }
 
 ^["open"]{
@@ -47,6 +50,10 @@
  ?[season_loading]: "Should seasonal CSS be imported by style.css, linked per page, or lazy-loaded after core CSS?"
  ?[cache_policy]: "Should every seasonal file be precached, or should only the current season be cached?"
  ?[snapshot_baseline]: "What screenshot set is enough to prove the no-behavior CSS split?"
+ ?[motif_vocabulary]: "What visual grammar should the first ornament come from — operator geometry, brace topology, spirit arc sequence, or a form the site implies but hasn't yet named?"
+ ?[token_naming]: "Should seasonal token names derive from calendar seasons or from the site's own metaphysical vocabulary — charge, boon, bane, phase, threshold, discharge?"
+ ?[signature_test]: "What makes a seasonal ornament feel native to this site — what would a reader who knows the operator atlas recognize as the same sensibility?"
+ ?[personal_emergence]: "At what commit should the first ornament's motif source be logged as a deliberate taste decision rather than left as an implementation detail?"
 }
 
 ^["commits"]{
@@ -65,7 +72,7 @@
  ~#next_commit: "1"
  ~#open_count: "4"
  ~#last_stream: "2026-04-09 23:40"
- ~#taste_debt: "The first split must not become a design-change commit. Seasonal motifs need enforceable safety rules before visual proofs."
+ ~#taste_debt: "The first split must not become a design-change commit. Seasonal motifs need enforceable safety rules before visual proofs. Token naming is a style commitment — avoid calendar names where metaphysical names are available. Log motif source as a deliberate taste decision at commit 4."
 }
 
 ^["done"]{

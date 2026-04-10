@@ -3,7 +3,7 @@
  * Improves offline navigation, installability, and update activation.
  */
 
-const APP_VERSION = '0.1.1';
+const APP_VERSION = '0.1.3';
 const CORE_CACHE_NAME = `spw-core-${APP_VERSION}`;
 const PAGE_CACHE_NAME = `spw-pages-${APP_VERSION}`;
 const ASSET_CACHE_NAME = `spw-assets-${APP_VERSION}`;
@@ -12,8 +12,14 @@ const OFFLINE_URL = '/offline/';
 const CORE_ROUTES = [
   '/',
   '/about',
+  '/about/website/',
   '/contact',
   '/play/',
+  '/play/rpg-wednesday/',
+  '/play/rpg-wednesday/sessions/',
+  '/play/rpg-wednesday/world/',
+  '/play/rpg-wednesday/cast/',
+  '/play/rpg-wednesday/arcs/',
   '/topics/software/',
   '/topics/software/spw/',
   '/topics/software/spw/operators/frame/',
@@ -44,6 +50,7 @@ const CORE_ASSETS = [
   '/public/js/frame-metrics.js',
   '/public/js/pretext-utils.js',
   '/public/js/pretext-lab.js',
+  '/public/js/rpg-wednesday.js',
   '/public/js/pwa-update-handler.js',
   '/public/js/spw-component-semantics.js',
   '/public/images/apple-touch-icon.png',

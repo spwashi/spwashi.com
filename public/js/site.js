@@ -404,6 +404,10 @@ const initOptionalFeatures = async () => {
         loads.push(loadFeature('./pretext-lab.js', 'initPretextLab'));
     }
 
+    if (features.has('rpg-gameplay')) {
+        loads.push(loadFeature('./rpg-wednesday.js', 'initRpgWednesday'));
+    }
+
     await Promise.all(loads);
     await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
 

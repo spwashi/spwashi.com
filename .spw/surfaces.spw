@@ -30,6 +30,11 @@
     ~#role: "identity register"
     ~#bridge: "public register of domains, trajectory, and adjacent surfaces"
   }
+  website_field_guide: {
+    ~#path: "../about/website/index.html"
+    ~#role: "media field guide"
+    ~#bridge: "public translation layer for the site's PWA shell, frame navigation, Spw surfaces, Pretext lab, and cognitive-surface direction"
+  }
   contact: {
     ~#path: "../contact/index.html"
     ~#role: "contact route"
@@ -54,6 +59,11 @@
     ~#path: "../play/index.html"
     ~#role: "world surface"
     ~#bridge: "creative and game-facing routes shaped by the same operator logic"
+  }
+  rpg_wednesday: {
+    ~#path: "../play/rpg-wednesday/index.html"
+    ~#role: "local gameplay surface"
+    ~#bridge: "table-facing RPG route with private localStorage registers for scene, initiative, clocks, notes, and session seeds"
   }
 }
 

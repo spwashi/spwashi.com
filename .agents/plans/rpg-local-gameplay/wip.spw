@@ -1,0 +1,111 @@
+# wip — rpg-local-gameplay
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/rpg-local-gameplay/PLAN.md"
+ @artifact: ~".agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
+ @site: ~"public/js/site.js"
+ @module: ~"public/js/rpg-wednesday.js"
+ @css: ~"public/css/style.css"
+ @rpg: ~"play/rpg-wednesday/index.html"
+ @sessions: ~"play/rpg-wednesday/sessions/index.html"
+ @world: ~"play/rpg-wednesday/world/index.html"
+ @cast: ~"play/rpg-wednesday/cast/index.html"
+ @arcs: ~"play/rpg-wednesday/arcs/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Make RPG Wednesday useful at the table by adding local-only campaign state: scene, party, initiative, clocks, quick notes, and seed material that persists in the current browser."
+ ~#taste: "Quiet utility, local trust, progressive enhancement, and no app takeover."
+}
+
+^["development"]{
+ lane: #gameplay_surface
+ ladder: #local_first
+ develops: [#table_utility, #campaign_memory, #local_storage_trust]
+ review_surfaces: [@plan, @artifact, @module, @rpg]
+}
+
+^["concept_index"]{
+ primary: [#local_gameplay_kit]
+ surfaces: [#rpg_wednesday, #sessions, #world, #cast, #arcs]
+ tensions: [#public_page_vs_private_notes, #simple_tool_vs_campaign_manager, #local_persistence_vs_data_loss]
+ transfers: [#pwa, #localstorage, #spw_registers, #play_surface]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify what a table needs during play",
+  "< ship one local state panel that works across RPG Wednesday routes",
+  "$ expose export/import/clear so local state remains trustworthy",
+  "^ register the route feature in body data and PWA cache",
+  "% keep the published campaign page readable without the kit",
+ ]
+ gates: [#storage_truth, #mobile_utility, #no_network_state]
+}
+
+^["parallel_work"]{
+ critical_path: [#module, #route_wiring, #css, #pwa_cache]
+ parallelizable: []
+ shared_hot_files: ["public/css/style.css", "public/js/site.js", "sw.js", "manifest.webmanifest"]
+ merge_risks: [#pwa_version_overlap, #style_growth]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: []
+ carries: [#storage_contract, #privacy_note, #table_workflow]
+}
+
+^["interaction_depth"]{
+ subjects: [#touch_entry, #keyboard_entry, #autosave_feedback, #export_import, #clear_data]
+ questions: [#what_is_private, #what_is_publishable, #what_must_be_fast_during_play]
+ qualities: [#clarity, #trust, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["localStorage unavailable", "invalid imported JSON corrupts state"]
+ soft_failures: ["players think notes are public", "textarea autosave feels unreliable", "initiative editing is too slow on mobile"]
+ recoveries: ["show storage unavailable status", "validate imports before writing", "autosave on input and update visible saved time"]
+ non_negotiables: ["no network sync", "export before destructive clear", "page remains readable without JS"]
+}
+
+^["validation"]{
+ hypotheses: ["A GM can open any RPG Wednesday page and resume table state from localStorage.", "The kit is usable on mobile without hiding the campaign content."]
+ negative_controls: ["Existing route navigation, navigator, console, and static content continue to work."]
+ demo_path: ["/play/rpg-wednesday/", "/play/rpg-wednesday/sessions/", "/play/rpg-wednesday/world/", "export", "clear", "import"]
+}
+
+^["stream"]{
+ >>[2026-04-10 00:00] hygiene — base main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22; media-feature-brief is already uncommitted and shares PWA files.
+ >>[2026-04-10 00:00] decide — implement as route-specific progressive enhancement using localStorage, not as published campaign content.
+ >>[2026-04-10 00:00] implement — added static local-gameplay-kit hosts to every RPG Wednesday route so the frame is navigable before hydration.
+ >>[2026-04-10 00:00] implement — added public/js/rpg-wednesday.js with scene, objective, party, initiative, clocks, notes, seeds, export, import, and clear controls.
+ >>[2026-04-10 00:00] revise — added the RPG routes and module to the PWA cache list and bumped the manifest/service-worker version.
+ >>[2026-04-10 00:00] verify — node syntax checks, manifest JSON validation, diff whitespace check, and workbench Spw lint passed.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "^seed[rpg] — add local gameplay kit to RPG Wednesday"
+}
+
+^["cache"]{
+ ~#status: "review"
+ ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
+ ~#rebased_at: ""
+ ~#hygiene_split: "media-feature-brief uncommitted in same worktree"
+ ~#files_hot: "public/js/rpg-wednesday.js public/css/style.css public/js/site.js play/rpg-wednesday/index.html play/rpg-wednesday/sessions/index.html play/rpg-wednesday/world/index.html play/rpg-wednesday/cast/index.html play/rpg-wednesday/arcs/index.html sw.js manifest.webmanifest"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "verify"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

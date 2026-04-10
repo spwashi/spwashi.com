@@ -109,6 +109,9 @@
  >>[2026-04-09 22:36] decide - No-response interaction paths are valid only when they preserve exploration: invoke, inspect, explain unavailable state, or pass through without trapping focus/register state.
  >>[2026-04-09 22:36] verify - Expanded the executable operator registry so visible sigils can carry operator type, intent, and interaction metadata across the full operator family.
  >>[2026-04-09 22:36] rebase - Refreshed `base_ref` to current `main` after the SVG/Pretext/reflection plan commit.
+ >>[2026-04-09] style - Interaction semantics is personal style. The timing quality of a brace pivot, the texture of an inspect reveal, the decay rate of charge — these are aesthetic decisions, not just engineering constants. They should be made deliberately and logged as taste choices in the stream, not derived from whatever browser defaults happen to provide.
+ >>[2026-04-09] observe - The spirit cycle already exists as a site-level metaphor with five phases (initiation, resistance, transformation, expression, return). If any interaction sequence can trace a phase, that tracing should be legible enough to inspect and reversible enough to not trap the visitor in a phase they cannot identify.
+ >>[2026-04-09] style - Interaction style on this site will become recognizable through three qualities: timing texture (not speed, but quality of pace — does it feel deliberate or snappy?), reversibility depth (how far back can the visitor return without losing address?), and inspect legibility (does revealing a node feel more like reading or like touching?). Each of those is a taste decision to be made and logged.
 }
 
 ^["open"]{
@@ -126,6 +129,11 @@
  ?[pivots]: "Which structure changes count as local pivots rather than route changes or overlays?"
  ?[wonder]: "Which moments of structural revelation are strong enough to feel magical without violating calm defaults?"
  ?[authoring]: "What is the smallest authoring contract that lets a page become Spw-backed without requiring a full in-browser parser?"
+ ?[interaction_personality]: "What is the signature quality of interaction on this site — handwriting, grammar, physics, something else? What does that imply for timing constants and transition behavior?"
+ ?[spirit_phase_interaction]: "Should interaction sequences trace spirit phases? Which input mode most naturally embodies initiation, resistance, transformation, expression, or return — and should that tracing be legible or ambient?"
+ ?[timing_vocabulary]: "Should timing tokens be named after Spw concepts (charge-decay, pivot-arc, boon-settle) rather than generic design-system durations — and would that naming change how implementers choose values?"
+ ?[inspect_texture]: "What does inspecting a node on this site feel like — revealing language or revealing physical state? What does that imply for inspect animation and label placement?"
+ ?[style_log_moment]: "At which commit should the first set of timing/transition constants be logged as explicit taste decisions in this stream rather than left as implementation details?"
 }
 
 ^["commits"]{
@@ -145,7 +153,7 @@
  ~#next_commit: "1"
  ~#open_count: "14"
  ~#last_stream: "2026-04-09 22:36"
- ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise, let semantic reflection drift away from visible state, let charge/bias become hidden state, or let fractal language collapse into metaphor."
+ ~#taste_debt: "Do not let mobile-first runtime work become a desktop spell system in disguise, let semantic reflection drift away from visible state, let charge/bias become hidden state, or let fractal language collapse into metaphor. Timing and transition constants are aesthetic decisions — name them from the site's own vocabulary and log them as taste choices at commit 2."
 }
 
 ^["done"]{
