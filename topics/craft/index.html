@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Author Craft</title>
+    <meta name="description" content="Author-facing ramps into HTML, CSS, SVG storytelling, motifs, and files as creative material.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="craft" data-spw-features="operators navigator console svg-surfaces">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/craft/">Craft</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>craft</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="author-craft" data-spw-role="orientation" data-spw-meaning="author craft onboarding">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#author-craft">#&gt;author_craft</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">fragments first</span>
+                        <span class="spec-pill">motif systems</span>
+                        <span class="spec-pill">illustrator-ready</span>
+                        <span class="spec-pill">local files</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">For Authors</p>
+                <h1>Make a page feel like a book someone can touch.</h1>
+                <p class="craft-lede">Start with one fragment: a chapter card, a motif, a file tree, a tiny SVG. You do not need to become a developer before the web can become part of the story.</p>
+                <div class="craft-prompt-card" aria-label="Screenshot prompt for author craft">
+                    <span class="craft-page-mark">screenshot prompt</span>
+                    <h2>Pick one recurring object.</h2>
+                    <ol>
+                        <li>Name the object: key, moth, ribbon, thorn, lake, mirror.</li>
+                        <li>Choose where it returns: cover, chapter break, margin, map, prompt card.</li>
+                        <li>Ask what it means when it changes color, scale, or position.</li>
+                    </ol>
+                    <div class="craft-link-run">
+                        <a class="operator-chip" href="/topics/craft/fragments/">try fragments</a>
+                        <a class="operator-chip" href="/topics/craft/svg/">shape motifs</a>
+                        <a class="operator-chip" href="/topics/craft/files/">map files</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="craft-map" data-spw-role="directory">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#craft-map">^"craft_map"{</a>
+                    <h2>Three Ramps</h2>
+                </div>
+                <div class="craft-route-grid">
+                    <a class="frame-card" href="/topics/craft/fragments/">
+                        <span class="frame-card-sigil">#&gt;html_css_fragments</span>
+                        <strong>Fragments</strong>
+                        <span>Small HTML and CSS pieces you can read, copy, screenshot, and change one line at a time.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/craft/svg/">
+                        <span class="frame-card-sigil">^"svg_storytelling"{</span>
+                        <strong>SVG storytelling</strong>
+                        <span>Motifs, marks, maps, and illustrator handoff ideas that can live inside a static page.</span>
+                    </a>
+                    <a class="frame-card" href="/topics/craft/files/">
+                        <span class="frame-card-sigil">~"file_traditions"</span>
+                        <strong>File traditions</strong>
+                        <span>Folders, extensions, and source files as a playful substrate for books, prompts, and community lore.</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="collaboration-loop" data-spw-role="scenario">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#collaboration-loop">&amp;author_developer_loop</a>
+                    <h2>A Friend Could Help Here</h2>
+                </div>
+                <div class="craft-note-grid">
+                    <div class="craft-callout">
+                        <strong>Hire an illustrator for motifs.</strong>
+                        Ask for a small family of marks: cover symbol, chapter divider, margin icon, map marker, prompt-card badge. Those can become SVG, stickers, overlays, and local style packs.
+                    </div>
+                    <div class="craft-callout">
+                        <strong>Hire a developer for the surface.</strong>
+                        Ask for static routes, PWA caching, fragment cleanup, motif placement, accessibility checks, and screenshot-friendly prompt cards.
+                    </div>
+                </div>
+                <p class="frame-note">The useful path is not "make an app." It is: make one page, make one motif repeat, make one file tradition legible, then decide what deserves more craft.</p>
+                <nav class="frame-operators" aria-label="Related routes">
+                    <a class="operator-chip" href="/blog/">turn notes into language</a>
+                    <a class="operator-chip" href="/topics/software/">see the systems path</a>
+                    <a class="operator-chip" href="/about/website/">read the site guide</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">see play surfaces</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

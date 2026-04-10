@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • File Traditions</title>
+    <meta name="description" content="Files, folders, and extensions as a creative substrate for authors, motifs, prompts, and static web pages.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="craft" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/craft/">Craft</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>files</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="file-traditions" data-spw-role="orientation" data-spw-meaning="files as creative substrate">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#file-traditions">~"file_traditions"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">folders</span>
+                        <span class="spec-pill">extensions</span>
+                        <span class="spec-pill">local play</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">File Traditions</p>
+                <h1>A folder can be a tiny publishing ritual.</h1>
+                <p class="craft-lede">Files are not only storage. They are traditions: names, versions, margins, drafts, source, images, and small agreements a creative team can share.</p>
+                <pre class="craft-file-tree"><code>my-book-site/
+  index.html
+  style.css
+  motifs/
+    key.svg
+    moon.svg
+  drafts/
+    scene-note.md
+    blog-seed.spw
+  screenshots/
+    chapter-card.png</code></pre>
+            </section>
+
+            <section class="site-frame" id="extension-map" data-spw-role="map">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#extension-map">#["extensions"]</a>
+                    <h2>Extensions As Roles</h2>
+                </div>
+                <div class="craft-route-grid">
+                    <a class="craft-file-card" href="/topics/craft/fragments/">
+                        <span class="file-ext">.html</span>
+                        <span class="file-desc"><strong>The page</strong><span>Structure, sections, links, captions, forms, and the words a browser can read.</span></span>
+                    </a>
+                    <a class="craft-file-card" href="/topics/craft/fragments/">
+                        <span class="file-ext">.css</span>
+                        <span class="file-desc"><strong>The feeling</strong><span>Spacing, color, type, motifs, card shapes, and screenshot rhythm.</span></span>
+                    </a>
+                    <a class="craft-file-card" href="/topics/craft/svg/">
+                        <span class="file-ext">.svg</span>
+                        <span class="file-desc"><strong>The mark</strong><span>Cover glyphs, chapter symbols, margin creatures, and map tokens that stay crisp.</span></span>
+                    </a>
+                    <a class="craft-file-card" href="/blog/">
+                        <span class="file-ext">.md</span>
+                        <span class="file-desc"><strong>The note</strong><span>Plain writing, drafts, questions, outlines, and text that can become a post.</span></span>
+                    </a>
+                    <a class="craft-file-card" href="/topics/software/">
+                        <span class="file-ext">.spw</span>
+                        <span class="file-desc"><strong>The seed</strong><span>Structured notes for frames, claims, tags, questions, and future projections.</span></span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="file-play" data-spw-role="scenario">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#file-play">?["what_to_play_with"]</a>
+                    <h2>What To Play With First</h2>
+                </div>
+                <div class="craft-note-grid">
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">ritual 1</span>
+                        <h3>Name the folder like a place.</h3>
+                        <p>`lake-letters/` or `moth-house/` already tells the team what kind of room they are entering.</p>
+                    </div>
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">ritual 2</span>
+                        <h3>Keep motifs separate.</h3>
+                        <p>A `motifs/` folder lets an illustrator, developer, and author talk about the same marks without hunting through a giant file.</p>
+                    </div>
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">ritual 3</span>
+                        <h3>Save screenshots as prompts.</h3>
+                        <p>A screenshot can be a memory object: enough design, enough words, enough direction for the next conversation.</p>
+                    </div>
+                </div>
+                <nav class="frame-operators" aria-label="Related routes">
+                    <a class="operator-chip" href="/topics/craft/">craft overview</a>
+                    <a class="operator-chip" href="/topics/craft/svg/">motif files</a>
+                    <a class="operator-chip" href="/blog/">interpret a note</a>
+                    <a class="operator-chip" href="/topics/software/spw/">learn Spw frames</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

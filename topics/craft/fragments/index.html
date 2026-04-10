@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Craft Fragments</title>
+    <meta name="description" content="Small HTML and CSS fragments for authors exploring web pages as story surfaces.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="craft" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/craft/">Craft</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>fragment</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="fragments-start" data-spw-role="tool" data-spw-meaning="html css fragment ramp">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#fragments-start">#&gt;html_css_fragments</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">copyable</span>
+                        <span class="spec-pill">visible result</span>
+                        <span class="spec-pill">one-line edits</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Fragment Ramp</p>
+                <h1>Start with a piece small enough to understand.</h1>
+                <p class="craft-lede">A fragment is not a whole website. It is one reusable feeling: a chapter card, a margin note, a prompt, a repeating mark.</p>
+                <article class="craft-fragment" data-fragment-label="fragment 001">
+                    <h2>Chapter Card</h2>
+                    <div class="craft-code-grid">
+                        <pre><code>&lt;aside class="chapter-card"&gt;
+  &lt;span&gt;chapter 7&lt;/span&gt;
+  &lt;h3&gt;The Lake Keeps Receipts&lt;/h3&gt;
+  &lt;p&gt;Every reflection remembers who looked first.&lt;/p&gt;
+&lt;/aside&gt;</code></pre>
+                        <div class="craft-fragment-result">
+                            <span class="craft-page-mark">chapter 7</span>
+                            <h3>The Lake Keeps Receipts</h3>
+                            <p>Every reflection remembers who looked first.</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="site-frame" id="fragment-types" data-spw-role="list">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#fragment-types">?["what_can_be_a_fragment"]</a>
+                    <h2>What Can Be A Fragment?</h2>
+                </div>
+                <div class="craft-note-grid">
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">drop cap</span>
+                        <p class="craft-drop-cap">Readers know a threshold when the first letter changes the room. A drop cap is just CSS, but it can feel like an invitation.</p>
+                        <a href="/topics/craft/svg/">Pair it with a chapter glyph.</a>
+                    </div>
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">prompt card</span>
+                        <h3>Screenshot this before drafting.</h3>
+                        <p>What object returns three times? What does it mean the third time? What should the margin whisper?</p>
+                        <a href="/blog/">Send the rough answer to the blog interpreter.</a>
+                    </div>
+                    <div class="craft-screenshot-frame">
+                        <span class="craft-page-mark">motif strip</span>
+                        <div class="craft-motif-strip" aria-label="Simple motif strip">
+                            <svg viewBox="0 0 48 48" role="img" aria-label="Key motif"><path fill="currentColor" d="M19 28a9 9 0 1 1 5-8l17 17-4 4-5-5-3 3-4-4-3 3-5-5a9 9 0 0 1-3 1Zm-4-8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>
+                            <svg viewBox="0 0 48 48" role="img" aria-label="Ribbon motif"><path fill="currentColor" d="M14 6h20v36l-10-7-10 7V6Zm5 6v20l5-3.5 5 3.5V12H19Z"/></svg>
+                            <svg viewBox="0 0 48 48" role="img" aria-label="Moon motif"><path fill="currentColor" d="M31 42C20 42 11 33 11 22c0-7 4-13 10-17-1 3-1 6 0 9 3 10 13 16 23 13-2 9-8 15-13 15Z"/></svg>
+                        </div>
+                        <a href="/topics/craft/files/">Save motifs as files, not just vibes.</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="fragment-next" data-spw-role="next-step">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#fragment-next">&gt;next_fragment</a>
+                    <h2>Next Move</h2>
+                </div>
+                <p class="frame-note">Change one noun, one color, or one repeated mark. That is enough to learn what HTML and CSS are doing.</p>
+                <nav class="frame-operators" aria-label="Craft routes">
+                    <a class="operator-chip" href="/topics/craft/">craft overview</a>
+                    <a class="operator-chip" href="/topics/craft/svg/">SVG storytelling</a>
+                    <a class="operator-chip" href="/topics/craft/files/">file traditions</a>
+                    <a class="operator-chip" href="/topics/software/pretext/">text layout lab</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

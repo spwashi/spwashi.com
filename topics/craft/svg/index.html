@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • SVG Storytelling</title>
+    <meta name="description" content="SVG storytelling motifs, illustrator handoff ideas, and book-site marks for author craft.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="craft" data-spw-features="operators navigator console svg-surfaces">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/craft/">Craft</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>svg</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="svg-storytelling" data-spw-role="illustration" data-spw-meaning="svg storytelling ramp">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#svg-storytelling">^"svg_storytelling"{</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">motifs</span>
+                        <span class="spec-pill">illustrator handoff</span>
+                        <span class="spec-pill">inspectable marks</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">SVG Storytelling</p>
+                <h1>A motif can be a tiny machine for memory.</h1>
+                <p class="craft-lede">SVG is useful because a mark can stay crisp, reusable, and editable. The goal is not to replace an illustrator. The goal is to give an illustrator a small system to inhabit.</p>
+                <figure class="craft-illustration">
+                    <svg class="craft-story-svg" viewBox="0 0 720 360" role="img" aria-labelledby="story-svg-title story-svg-desc">
+                        <title id="story-svg-title">A motif kit arranged around an open book</title>
+                        <desc id="story-svg-desc">An open book shape with connected motif marks for cover, chapter, margin, and map uses.</desc>
+                        <rect x="58" y="56" width="604" height="248" rx="8" fill="rgba(255,255,255,.72)" stroke="currentColor" opacity=".28"/>
+                        <path d="M360 86c-62-34-131-38-218-12v198c88-27 156-21 218 14 62-35 130-41 218-14V74c-87-26-156-22-218 12Z" fill="rgba(255,255,255,.78)" stroke="currentColor" stroke-width="3"/>
+                        <path d="M360 86v200" stroke="currentColor" stroke-width="2" opacity=".36"/>
+                        <g fill="none" stroke="currentColor" stroke-width="2" opacity=".42">
+                            <path d="M180 118c48 12 92 14 132 6"/>
+                            <path d="M180 160c38 9 78 10 120 3"/>
+                            <path d="M418 118c45-10 88-9 128 5"/>
+                            <path d="M418 162c46-8 88-4 128 12"/>
+                        </g>
+                        <g fill="var(--craft-accent)">
+                            <path d="M188 226a34 34 0 1 1 18-30l68 68-15 15-18-18-11 11-15-15-11 11-20-20a34 34 0 0 1-16 4Zm-16-30a13 13 0 1 0 0-26 13 13 0 0 0 0 26Z"/>
+                        </g>
+                        <g fill="var(--craft-teal)">
+                            <path d="M490 220c-35 0-63-28-63-63 0-23 13-44 32-55-5 15-4 31 3 46 16 33 53 50 88 41-9 20-28 31-60 31Z"/>
+                        </g>
+                        <g fill="var(--craft-leaf)">
+                            <path d="M338 146c20-40 56-45 84-34-8 34-34 58-77 51l-20 36-12-7 25-46Z"/>
+                        </g>
+                        <g fill="var(--craft-gold)">
+                            <circle cx="354" cy="224" r="9"/>
+                            <circle cx="390" cy="236" r="6"/>
+                            <circle cx="324" cy="244" r="5"/>
+                        </g>
+                    </svg>
+                    <figcaption>One motif kit can become cover art, chapter marks, margin signs, map tokens, and screenshot prompts.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="motif-handoff" data-spw-role="handoff">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#motif-handoff">@illustrator_handoff</a>
+                    <h2>What To Ask An Illustrator For</h2>
+                </div>
+                <div class="craft-svg-showcase">
+                    <figure class="craft-svg-card">
+                        <svg viewBox="0 0 120 120" role="img" aria-label="Cover glyph sample"><path fill="var(--craft-accent)" d="M60 10 88 62 60 110 32 62 60 10Zm0 28L47 62l13 24 13-24-13-24Z"/></svg>
+                        <figcaption>Cover glyph: the mark readers remember before the title.</figcaption>
+                    </figure>
+                    <figure class="craft-svg-card">
+                        <svg viewBox="0 0 120 120" role="img" aria-label="Chapter divider sample"><path fill="var(--craft-teal)" d="M15 60c20-24 40-24 60 0 10 12 20 12 30 0-20 30-45 32-70 6-7-7-14-9-20-6Z"/></svg>
+                        <figcaption>Chapter divider: a rhythm mark between emotional rooms.</figcaption>
+                    </figure>
+                    <figure class="craft-svg-card">
+                        <svg viewBox="0 0 120 120" role="img" aria-label="Margin creature sample"><path fill="var(--craft-leaf)" d="M60 20c20 0 36 16 36 36 0 26-36 44-36 44S24 82 24 56c0-20 16-36 36-36Zm0 18a18 18 0 0 0-18 18c0 10 8 21 18 29 10-8 18-19 18-29a18 18 0 0 0-18-18Z"/></svg>
+                        <figcaption>Margin creature: a small guide that can recur beside clues.</figcaption>
+                    </figure>
+                </div>
+                <div class="craft-callout">
+                    <strong>Good handoff brief</strong>
+                    "Give me five marks that belong to the same story world: one cover glyph, two chapter dividers, one margin creature, and one map token. They should work as black silhouettes first, then accept site colors later."
+                </div>
+            </section>
+
+            <section class="site-frame" id="svg-next" data-spw-role="next-step">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#svg-next">&gt;motif_next</a>
+                    <h2>Next Move</h2>
+                </div>
+                <p class="frame-note">Choose one motif and decide where it repeats. Then let the page teach the pattern by placing that mark near related sections.</p>
+                <nav class="frame-operators" aria-label="Craft routes">
+                    <a class="operator-chip" href="/topics/craft/">craft overview</a>
+                    <a class="operator-chip" href="/topics/craft/fragments/">HTML/CSS fragments</a>
+                    <a class="operator-chip" href="/topics/craft/files/">file traditions</a>
+                    <a class="operator-chip" href="/about/website/#exploration-motifs">site motifs</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>
