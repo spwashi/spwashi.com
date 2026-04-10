@@ -1,0 +1,114 @@
+# wip — pwa-experience
+# Branch: feature/pwa-experience
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/pwa-experience/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+ @manifest: ~"manifest.webmanifest"
+ @client: ~"public/js/pwa-update-handler.js"
+ @worker: ~"sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Make the static site feel like a real lightweight app by fixing service worker scope, aligning install assets, and making offline/update behavior trustworthy."
+ ~#taste: "trust, correctness, and containment"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#taste, #design_transfer, #service_worker]
+ review_surfaces: [@cluster, @plan, @pattern]
+ snippet_routes: [#example, #query, #snippet]
+}
+
+^["concept_index"]{
+ primary: [#pwa, #installability, #offline_navigation]
+ surfaces: [#manifest, #service_worker, #static_site]
+ tensions: [#scope, #cache_coherence, #annoyance]
+ transfers: [#page, #service, #assets]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the current worker, manifest, and client shell before widening claims",
+  "< ship one small PWA shell improvement at a time",
+  "$ record which failures became impossible or more legible",
+  "^ fold the result back into plan and artifact truth",
+  "% keep page structure stable while improving the shell"
+ ]
+ gates: [#preview_truth, #claim_discipline, #route_integrity]
+}
+
+^["parallel_work"]{
+ critical_path: [#root_scope]
+ parallelizable: [#asset_generation, #offline_shell]
+ shared_hot_files: ["manifest.webmanifest", "public/js/pwa-update-handler.js", "sw.js"]
+ merge_risks: [#hot_file, #pwa_version_drift]
+ handoff_artifacts: [@plan, @manifest, @client, @worker]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@manifest]
+ carries: [#review_notes, #source_map, #external_contracts]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #install, #trust, #latency]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #containment, #rhythm]
+}
+
+^["risk_model"]{
+ hard_failures: [#wrong_scope, #broken_installability]
+ soft_failures: [#dismissed_install_prompt, #stale_cached_asset]
+ recoveries: [#offline_fallback, #update_prompt]
+ non_negotiables: [#route_integrity, #no_content_churn]
+}
+
+^["validation"]{
+ hypotheses: [#root_worker_controls_pages, #update_prompt_is_real, #install_ui_is_contextual]
+ negative_controls: [#html_structure_unchanged, #shared_css_unchanged]
+ demo_path: ["/", "/about", "/offline"]
+}
+
+^["stream"]{
+ >>[2026-04-09 19:37] observe — Existing PWA wiring is present across the site, but the worker is registered from `/public/sw.js`, which limits scope to `/public/*` on static hosting.
+ >>[2026-04-09 19:37] observe — The current precache list uses route forms like `/about/index.html`, while the site navigates with mixed `/about` and `/topics/software/` URLs.
+ >>[2026-04-09 19:37] observe — `manifest.webmanifest` references icon and screenshot assets that are not present under `public/images`.
+ >>[2026-04-09 19:37] decide — Improve the PWA shell with a root-scoped worker, real install assets, contextual install/update prompts, and a dedicated offline page.
+ >>[2026-04-09 19:37] taste — Favor trust and containment: only promise install/offline/update behavior the static shell can actually honor.
+ >>[2026-04-09 19:44] implement — Added a canonical root `sw.js`, kept `/public/sw.js` as a compatibility wrapper, and switched the shell logic to navigation-aware caching with an explicit offline route.
+ >>[2026-04-09 19:45] implement — Replaced manifest version polling with service-worker lifecycle handling, contextual install prompts, and generated install icon assets from existing site artwork.
+ >>[2026-04-09 19:51] verify — `node --check` passed for `sw.js` and `public/js/pwa-update-handler.js`; `python3 -m json.tool manifest.webmanifest` passed; generated icons match declared sizes; local static-server HEAD checks returned `200` for `/sw.js`, `/manifest.webmanifest`, `/offline/`, `/public/images/icon-192.png`, `/about/`, and `301` for `/about`.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[pwa] — capture the feature plan and branch memory for the PWA pass"
+ ~[2]: "&[pwa] — move service worker control to the site root and normalize offline navigation handling"
+ ~[3]: "#[pwa] — align manifest metadata with real install assets and install UX"
+ ~[4]: "![pwa] — verify registration, offline fallback, and update/install behavior"
+}
+
+^["cache"]{
+ ~#status: "verified"
+ ~#base_ref: "main@2bb6d4f1bc39126af15f5c705f591a86e5f33cbe"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "manifest.webmanifest, public/js/pwa-update-handler.js, sw.js, offline/index.html"
+ ~#next_commit: "4"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-09 19:51"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

@@ -1,29 +1,18 @@
 {
+  "id": "/",
   "name": "Spwashi",
   "short_name": "Spw",
   "description": "Local-first systems for language, tooling, and knowledge. Built on Spw grammar.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "browser"],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.0.2",
-  "orientation": "portrait-primary",
-  "categories": ["productivity", "developer"],
-  "screenshots": [
-    {
-      "src": "/public/images/screenshot-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/public/images/screenshot-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide"
-    }
-  ],
+  "version": "0.1.0",
+  "orientation": "any",
+  "lang": "en-US",
+  "categories": ["productivity", "education", "developer"],
   "icons": [
     {
       "src": "/public/images/icon-192.png",
@@ -36,6 +25,29 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/public/images/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Software",
+      "short_name": "Software",
+      "url": "/topics/software/"
+    },
+    {
+      "name": "Play",
+      "short_name": "Play",
+      "url": "/play/"
+    },
+    {
+      "name": "About",
+      "short_name": "About",
+      "url": "/about"
     }
   ]
 }
