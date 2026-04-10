@@ -409,9 +409,179 @@ const initBraceCharge = () => {
     });
 };
 
+const SWIPE_THRESHOLD_PX = 44;
+
+/* ── Operator reductions ── minimal Spw notation for each operator */
+const OPERATOR_REDUCTIONS = {
+    '#': '#>scope { .. }',
+    '_': '?_name   {_A }_A',
+    ':': '#:layer',
+    '=': '=[bias] ~ 0',
+    '$': '$[material]',
+    '@': '@node',
+    '?': '?[threshold]',
+    '!': '![act]',
+    '~': '~[wave]',
+    '*': '*[a..b]',
+    '^': '^"label"{ .. }',
+    '%': '%[ratio]',
+    '+': '+[form]',
+    '|': '|[blog]',
+};
+
+/* ── Parallel operators ── structural counterparts */
+const OPERATOR_PARALLELS = {
+    '#': '|', '|': '#',     // frame ↔ surface
+    '=': '$', '$': '=',     // baseline ↔ substrate
+    '?': '!', '!': '?',     // probe ↔ action
+    '~': '*', '*': '~',     // stream ↔ merge
+    '@': '^', '^': '@',     // ref ↔ binding
+    '%': '+', '+': '%',     // reduce ↔ normalize
+    ':': '_', '_': ':',     // layer ↔ label
+};
+
+const initCardSwipe = () => {
+    const grid = document.querySelector('.operator-snippet-grid');
+    if (!grid) return;
+
+    let activePanel = null;
+    let activeCard = null;
+
+    const closePanel = () => {
+        activePanel?.remove();
+        activeCard?.removeAttribute('data-panel-open');
+        activePanel = null;
+        activeCard = null;
+    };
+
+    const openPanel = (card) => {
+        if (activeCard === card) { closePanel(); return; }
+        closePanel();
+
+        const sigilEl = card.querySelector('.operator-snippet-sigil');
+        const exampleEl = card.querySelector('.operator-snippet-example');
+        const sigil = sigilEl?.textContent.trim();
+        if (!sigil) return;
+
+        card.setAttribute('data-panel-open', '');
+        activeCard = card;
+
+        const panel = document.createElement('div');
+        panel.className = 'operator-card-panel';
+        panel.setAttribute('role', 'group');
+        panel.setAttribute('aria-label', `${sigil} options`);
+        activePanel = panel;
+
+        // Reduction display
+        const red = document.createElement('code');
+        red.className = 'operator-card-panel-reduction';
+        red.textContent = OPERATOR_REDUCTIONS[sigil] || sigil;
+        panel.appendChild(red);
+
+        const actions = document.createElement('div');
+        actions.className = 'operator-card-panel-actions';
+
+        // Copy example
+        if (exampleEl && navigator.clipboard) {
+            const copyBtn = document.createElement('button');
+            copyBtn.type = 'button';
+            copyBtn.className = 'operator-card-panel-btn';
+            copyBtn.textContent = '! copy';
+            copyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const text = exampleEl.textContent.replace(/\s+/g, ' ').trim();
+                navigator.clipboard.writeText(text).then(() => {
+                    copyBtn.textContent = '~ copied';
+                    window.setTimeout(() => { copyBtn.textContent = '! copy'; }, 1200);
+                });
+            });
+            actions.appendChild(copyBtn);
+        }
+
+        // Pivot to parallel operator
+        const parallelSigil = OPERATOR_PARALLELS[sigil];
+        if (parallelSigil) {
+            const parallelCard = [...grid.querySelectorAll('.operator-snippet')].find((c) =>
+                c.querySelector('.operator-snippet-sigil')?.textContent.trim() === parallelSigil
+            );
+            if (parallelCard) {
+                const pivotBtn = document.createElement('button');
+                pivotBtn.type = 'button';
+                pivotBtn.className = 'operator-card-panel-btn operator-card-panel-parallel';
+                pivotBtn.textContent = `~ ${parallelSigil}`;
+                pivotBtn.title = `Pivot to parallel: ${parallelSigil}`;
+                pivotBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closePanel();
+                    parallelCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    window.setTimeout(() => openPanel(parallelCard), 120);
+                });
+                actions.appendChild(pivotBtn);
+            }
+        }
+
+        // Close button
+        const closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'operator-card-panel-btn operator-card-panel-close';
+        closeBtn.textContent = '×';
+        closeBtn.setAttribute('aria-label', 'Close panel');
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closePanel(); });
+        actions.appendChild(closeBtn);
+
+        panel.appendChild(actions);
+        card.appendChild(panel);
+        actions.querySelector('button')?.focus();
+    };
+
+    // Inject ⋯ toggle buttons
+    grid.querySelectorAll('.operator-snippet').forEach((card) => {
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'operator-card-toggle';
+        toggle.setAttribute('aria-label', 'Open operator options');
+        toggle.textContent = '⋯';
+        toggle.addEventListener('click', (e) => { e.stopPropagation(); openPanel(card); });
+        card.appendChild(toggle);
+    });
+
+    // Touch swipe
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let swipeCard = null;
+
+    grid.addEventListener('touchstart', (e) => {
+        swipeCard = e.target.closest('.operator-snippet');
+        if (!swipeCard) return;
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    grid.addEventListener('touchend', (e) => {
+        if (!swipeCard) return;
+        const dx = e.changedTouches[0].clientX - swipeStartX;
+        const dy = e.changedTouches[0].clientY - swipeStartY;
+        if (Math.abs(dx) >= SWIPE_THRESHOLD_PX && Math.abs(dy) < Math.abs(dx)) {
+            openPanel(swipeCard);
+        }
+        swipeCard = null;
+    }, { passive: true });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!activePanel) return;
+        if (!e.target.closest('.operator-snippet[data-panel-open]')) closePanel();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && activePanel) closePanel();
+    });
+};
+
 export const initBlogSpecimens = () => {
     initAtelierTheme();
     initBraceCharge();
+    initCardSwipe();
     initCssVarsDemo();
     initIntersectionObserverDemo();
     initAudioDemo();

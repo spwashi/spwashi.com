@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Browser Fundamentals + TypeScript</title>
+    <meta name="description" content="Staff-level reference for browser internals and TypeScript: event loop, render pipeline, Web Platform APIs, type system, advanced patterns. Links to MDN and W3C.">
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => { initPwaUpdateHandler(); });
+    </script>
+    <style>
+        /* ── Browser reference surface ── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-grid > * { min-width: 0; }
+
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 0.9rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .ref-card-sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+        }
+        .ref-card h3 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin: 0;
+        }
+        .ref-card p {
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            line-height: 1.55;
+            margin: 0;
+        }
+        .ref-terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.28rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ref-terms li {
+            padding: 0.1rem 0.38rem;
+            border: 1px solid var(--line-strong);
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--teal);
+        }
+        .ref-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.8rem;
+            font-size: 0.7rem;
+        }
+        .ref-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 1px;
+            transition: color 0.12s, border-color 0.12s;
+        }
+        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
+        .ref-links a[data-pfx]::before {
+            content: attr(data-pfx) " ";
+            opacity: 0.55;
+            font-size: 0.62rem;
+        }
+
+        /* diagram SVGs */
+        .diagram {
+            display: block;
+            width: 100%;
+            max-height: 210px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: rgba(24,123,135,0.025);
+        }
+
+        /* topic nav grid in hero */
+        .topic-index {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+            gap: 0.5rem;
+            list-style: none;
+            padding: 0;
+            margin: 0.8rem 0 0;
+        }
+        .topic-index > * { min-width: 0; }
+        .topic-index a {
+            display: flex;
+            flex-direction: column;
+            gap: 0.12rem;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: var(--surface);
+            text-decoration: none;
+            color: var(--ink);
+            transition: border-color 0.12s;
+        }
+        .topic-index a:hover { border-color: var(--teal); }
+        .topic-index .sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--teal);
+        }
+        .topic-index .name { font-size: 0.82rem; font-weight: 600; }
+        .topic-index .hint { font-size: 0.7rem; color: var(--ink-soft); }
+
+        @media (max-width: 600px) {
+            .ref-grid, .topic-index { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+
+            <!-- ── Hero ── -->
+            <section class="site-frame site-hero" id="browser-ts-ref"
+                     data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#browser-ts-ref">#&gt;browser_ts_reference</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">browser internals</span>
+                        <span class="spec-pill">TypeScript</span>
+                        <span class="spec-pill">staff-level survey</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software Surface</p>
+                <h1>Browser Fundamentals + TypeScript</h1>
+                <p>Conceptual breadth at staff depth. Event loop priority, render pipeline cost, Web Platform APIs, the TypeScript type lattice, and advanced type patterns. SVG diagrams for memory; MDN and W3C links for precision.</p>
+                <nav class="frame-operators" aria-label="Section quick-nav">
+                    <a class="operator-chip" href="#event-loop">event loop</a>
+                    <a class="operator-chip" href="#render-pipeline">render pipeline</a>
+                    <a class="operator-chip" href="#web-platform-apis">platform APIs</a>
+                    <a class="operator-chip" href="#browser-security">security model</a>
+                    <a class="operator-chip" href="#typescript-types">TS type system</a>
+                    <a class="operator-chip" href="#typescript-advanced">advanced patterns</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+                <ul class="topic-index" aria-label="Topic index">
+                    <li><a href="#event-loop">
+                        <span class="sigil">~[loop]</span>
+                        <span class="name">Event Loop</span>
+                        <span class="hint">stack · µtasks · tasks · rAF</span>
+                    </a></li>
+                    <li><a href="#render-pipeline">
+                        <span class="sigil">*[paint]</span>
+                        <span class="name">Render Pipeline</span>
+                        <span class="hint">DOM · CSSOM · layout · composite</span>
+                    </a></li>
+                    <li><a href="#web-platform-apis">
+                        <span class="sigil">@[platform]</span>
+                        <span class="name">Web Platform APIs</span>
+                        <span class="hint">Fetch · Observers · Workers · Storage</span>
+                    </a></li>
+                    <li><a href="#browser-security">
+                        <span class="sigil">![security]</span>
+                        <span class="name">Security Model</span>
+                        <span class="hint">SOP · CORS · CSP · cookies</span>
+                    </a></li>
+                    <li><a href="#typescript-types">
+                        <span class="sigil">$[types]</span>
+                        <span class="name">TypeScript Type System</span>
+                        <span class="hint">lattice · unknown · never · any</span>
+                    </a></li>
+                    <li><a href="#typescript-advanced">
+                        <span class="sigil">^[patterns]</span>
+                        <span class="name">Advanced TS Patterns</span>
+                        <span class="hint">conditional · mapped · template literal</span>
+                    </a></li>
+                </ul>
+            </section>
+
+            <!-- ── Event Loop ── -->
+            <section class="site-frame" id="event-loop"
+                     data-spw-role="reference" data-spw-meaning="js event loop">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#event-loop">~[event_loop]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">single-threaded</span>
+                        <span class="spec-pill">cooperative concurrency</span>
+                        <span class="spec-pill">non-blocking I/O</span>
+                    </div>
+                </div>
+                <h2>JavaScript Event Loop</h2>
+                <p class="inline-note">JS is single-threaded with a host-managed concurrency model. I/O and timers are offloaded to Web APIs; callbacks are enqueued when ready. The loop's priority ordering is what makes async code predictable.</p>
+
+                <!--
+                    Execution order:
+                    ① Synchronous code runs on call stack
+                    ② Drain ALL microtasks (no I/O, no paint until empty)
+                    ③ Take ONE macrotask from the task queue
+                    ④ Drain ALL microtasks again
+                    ⑤ requestAnimationFrame callbacks (if paint frame)
+                    ⑥ Browser paints
+                    ↺ repeat
+                -->
+                <svg class="diagram" viewBox="0 0 640 196"
+                     role="img" aria-labelledby="el-title" aria-describedby="el-desc"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <title id="el-title">JavaScript Event Loop — execution priority diagram</title>
+                    <desc id="el-desc">
+                        Execution order: ① synchronous code on call stack;
+                        ② drain all microtasks (Promise.then, queueMicrotask, MutationObserver);
+                        ③ dequeue one macrotask (setTimeout, I/O, MessageChannel);
+                        ④ drain all microtasks again;
+                        ⑤ requestAnimationFrame callbacks before paint;
+                        ⑥ browser paints. Then repeat.
+                    </desc>
+
+                    <defs>
+                        <marker id="el-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.55)"/>
+                        </marker>
+                        <marker id="el-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(160,42,77,0.45)"/>
+                        </marker>
+                        <marker id="el-c" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(120,80,0,0.45)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Step pipeline row -->
+                    <!-- ① Sync -->
+                    <g aria-label="Step 1: synchronous code">
+                        <rect x="8" y="14" width="80" height="36" rx="4"
+                              fill="rgba(24,123,135,0.10)" stroke="rgba(24,123,135,0.40)" stroke-width="1.2"/>
+                        <text x="48" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.6)">① sync</text>
+                        <text x="48" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.9)" font-weight="600">call stack</text>
+                    </g>
+                    <path d="M 88 32 L 104 32" stroke="rgba(24,123,135,0.45)" stroke-width="1.2" fill="none" marker-end="url(#el-a)"/>
+
+                    <!-- ② Microtask drain -->
+                    <g aria-label="Step 2: drain all microtasks">
+                        <rect x="104" y="14" width="112" height="36" rx="4"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.38)" stroke-width="1.2"/>
+                        <text x="160" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.55)">② microtasks</text>
+                        <text x="160" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(24,123,135,0.75)">drain ALL</text>
+                    </g>
+                    <path d="M 216 32 L 232 32" stroke="rgba(160,42,77,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-b)"/>
+
+                    <!-- ③ One task -->
+                    <g aria-label="Step 3: dequeue one macrotask">
+                        <rect x="232" y="14" width="100" height="36" rx="4"
+                              fill="rgba(160,42,77,0.07)" stroke="rgba(160,42,77,0.32)" stroke-width="1.2"/>
+                        <text x="282" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(160,42,77,0.55)">③ one task</text>
+                        <text x="282" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(160,42,77,0.8)">task queue</text>
+                    </g>
+                    <path d="M 332 32 L 348 32" stroke="rgba(24,123,135,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-a)"/>
+
+                    <!-- ④ Microtask drain again -->
+                    <g aria-label="Step 4: drain all microtasks again">
+                        <rect x="348" y="14" width="100" height="36" rx="4"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="398" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(24,123,135,0.5)">④ microtasks</text>
+                        <text x="398" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(24,123,135,0.7)">drain ALL</text>
+                    </g>
+                    <path d="M 448 32 L 464 32" stroke="rgba(120,80,0,0.4)" stroke-width="1.2" fill="none" marker-end="url(#el-c)"/>
+
+                    <!-- ⑤ rAF + paint -->
+                    <g aria-label="Step 5: requestAnimationFrame, then browser paint">
+                        <rect x="464" y="14" width="90" height="36" rx="4"
+                              fill="rgba(120,80,0,0.07)" stroke="rgba(120,80,0,0.28)" stroke-width="1"/>
+                        <text x="509" y="28" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8.5"
+                              fill="rgba(120,80,0,0.55)">⑤ rAF</text>
+                        <text x="509" y="42" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="8"
+                              fill="rgba(120,80,0,0.8)">→ paint</text>
+                    </g>
+
+                    <!-- ↺ repeat arrow -->
+                    <path d="M 554 32 Q 610 32 610 80 Q 610 150 48 150 Q 8 150 8 50"
+                          stroke="rgba(24,123,135,0.2)" stroke-width="1" fill="none"
+                          stroke-dasharray="4,3" marker-end="url(#el-a)"/>
+                    <text x="580" y="95" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(24,123,135,0.35)">↺</text>
+
+                    <!-- Queue detail boxes -->
+                    <!-- Microtask queue contents -->
+                    <g aria-label="Microtask queue contents: Promise.then, queueMicrotask, MutationObserver">
+                        <rect x="104" y="72" width="112" height="56" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.18)" stroke-width="0.8"/>
+                        <text x="112" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.75)">Promise .then/.catch</text>
+                        <text x="112" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.7)">queueMicrotask()</text>
+                        <text x="112" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.65)">MutationObserver cbs</text>
+                        <text x="112" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(24,123,135,0.4)">async/await desugars to .then</text>
+                    </g>
+
+                    <!-- Task queue contents -->
+                    <g aria-label="Task queue (macrotask) contents: setTimeout, I/O events, MessageChannel">
+                        <rect x="232" y="72" width="100" height="56" rx="3"
+                              fill="rgba(160,42,77,0.04)" stroke="rgba(160,42,77,0.15)" stroke-width="0.8"/>
+                        <text x="240" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.75)">setTimeout / setInterval</text>
+                        <text x="240" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.7)">MessageChannel</text>
+                        <text x="240" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.65)">I/O · UI events</text>
+                        <text x="240" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(160,42,77,0.4)">one task per loop tick</text>
+                    </g>
+
+                    <!-- rAF contents -->
+                    <g aria-label="requestAnimationFrame contents">
+                        <rect x="464" y="72" width="90" height="56" rx="3"
+                              fill="rgba(120,80,0,0.04)" stroke="rgba(120,80,0,0.15)" stroke-width="0.8"/>
+                        <text x="472" y="87" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.75)">requestAnimationFrame</text>
+                        <text x="472" y="100" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.65)">ResizeObserver cbs</text>
+                        <text x="472" y="113" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.6)">IntersectionObserver cbs</text>
+                        <text x="472" y="124" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(120,80,0,0.4)">if browser decides to paint</text>
+                    </g>
+
+                    <!-- Key insight annotation -->
+                    <text x="10" y="186" font-family="'JetBrains Mono',monospace" font-size="7" fill="rgba(14,18,20,0.35)">Key: microtasks starve the loop if infinite — no paint until the µ-queue empties. MessageChannel beats setTimeout(0) for high-priority tasks.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">µ queue</span>
+                        <h3>Microtask Queue</h3>
+                        <p>Drained <em>completely</em> after every task and after the initial script. No rAF or paint occurs until the microtask queue is empty. Starvation risk: a microtask that enqueues itself loops forever, blocking all I/O and rendering.</p>
+                        <ul class="ref-terms"><li>Promise.then</li><li>queueMicrotask</li><li>MutationObserver</li><li>async/await</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide" data-pfx="mdn:" target="_blank" rel="noopener">Microtask guide</a>
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#microtask-queue" data-pfx="spec:" target="_blank" rel="noopener">WHATWG §microtask-queue</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">task queue</span>
+                        <h3>Task Queue (Macrotasks)</h3>
+                        <p>One task dequeued per loop iteration. Multiple distinct task sources exist (timer, I/O, UI events); the UA may interleave them. <code>MessageChannel</code> yields a macrotask without the 4 ms minimum clamp of <code>setTimeout</code>.</p>
+                        <ul class="ref-terms"><li>setTimeout</li><li>setInterval</li><li>MessageChannel</li><li>I/O callbacks</li></ul>
+                        <div class="ref-links">
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model" data-pfx="spec:" target="_blank" rel="noopener">WHATWG event loop model</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">rAF</span>
+                        <h3>requestAnimationFrame</h3>
+                        <p>Fires immediately before the browser paints — ideal for all visual mutations. Batched per frame (~16 ms at 60 fps). Pauses when the tab is hidden. Use to batch DOM reads before writes and avoid layout thrashing.</p>
+                        <ul class="ref-terms"><li>requestAnimationFrame</li><li>requestIdleCallback</li><li>frame budget</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" data-pfx="mdn:" target="_blank" rel="noopener">requestAnimationFrame</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">scheduler</span>
+                        <h3>Scheduler API</h3>
+                        <p><code>scheduler.postTask()</code> gives explicit priority control: <code>user-blocking</code>, <code>user-visible</code>, <code>background</code>. <code>scheduler.yield()</code> cooperatively yields a long task back to the event loop without relinquishing priority.</p>
+                        <ul class="ref-terms"><li>scheduler.postTask</li><li>scheduler.yield</li><li>TaskController</li><li>Long Tasks API</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Scheduler/postTask" data-pfx="mdn:" target="_blank" rel="noopener">scheduler.postTask</a>
+                            <a href="https://www.w3.org/TR/longtasks/" data-pfx="w3c:" target="_blank" rel="noopener">Long Tasks spec</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Render Pipeline ── -->
+            <section class="site-frame" id="render-pipeline"
+                     data-spw-role="reference" data-spw-meaning="browser render pipeline">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#render-pipeline">*[render_pipeline]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">layout</span>
+                        <span class="spec-pill">paint</span>
+                        <span class="spec-pill">composite</span>
+                        <span class="spec-pill">CRP</span>
+                    </div>
+                </div>
+                <h2>Browser Render Pipeline</h2>
+                <p class="inline-note">Which pipeline stages a CSS property triggers determines its cost. Properties like <code>transform</code> and <code>opacity</code> on composited layers skip layout and paint entirely — the GPU reassembles pre-rasterized layers. Properties like <code>width</code> invalidate all stages.</p>
+
+                <svg class="diagram" viewBox="0 0 640 140"
+                     role="img" aria-labelledby="rp-title" aria-describedby="rp-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:160px">
+                    <title id="rp-title">Browser Render Pipeline</title>
+                    <desc id="rp-desc">
+                        Stages: HTML + CSS are parsed into DOM and CSSOM; merged into the Render Tree;
+                        Layout computes geometry (reflow); Paint rasterizes pixels per layer;
+                        Composite assembles layers on the GPU and outputs to screen.
+                        transform/opacity trigger composite only (cheap fast path).
+                        width/height/top trigger layout + paint + composite (expensive).
+                    </desc>
+
+                    <defs>
+                        <marker id="rp-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.45)"/>
+                        </marker>
+                        <marker id="rp-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(120,80,0,0.5)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- HTML+CSS input -->
+                    <g aria-label="HTML and CSS source">
+                        <rect x="8" y="22" width="58" height="40" rx="3"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="37" y="38" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.85)">HTML</text>
+                        <text x="37" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.8)">+ CSS</text>
+                    </g>
+
+                    <!-- Fork arrows to DOM and CSSOM -->
+                    <path d="M 66 35 Q 80 22 94 25" stroke="rgba(24,123,135,0.35)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+                    <path d="M 66 49 Q 80 60 94 57" stroke="rgba(24,123,135,0.3)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- DOM -->
+                    <g aria-label="DOM: Document Object Model tree">
+                        <rect x="94" y="14" width="56" height="24" rx="3"
+                              fill="rgba(24,123,135,0.08)" stroke="rgba(24,123,135,0.3)" stroke-width="1"/>
+                        <text x="122" y="29" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">DOM</text>
+                    </g>
+
+                    <!-- CSSOM -->
+                    <g aria-label="CSSOM: CSS Object Model">
+                        <rect x="94" y="46" width="56" height="24" rx="3"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.22)" stroke-width="1"/>
+                        <text x="122" y="61" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.78)">CSSOM</text>
+                    </g>
+
+                    <!-- Merge arrows to render tree -->
+                    <path d="M 150 26 Q 164 26 170 38" stroke="rgba(24,123,135,0.32)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+                    <path d="M 150 58 Q 164 58 170 50" stroke="rgba(24,123,135,0.28)" stroke-width="1" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Render Tree -->
+                    <g aria-label="Render Tree: merged DOM and resolved styles, excludes display:none">
+                        <rect x="170" y="22" width="76" height="40" rx="3"
+                              fill="rgba(24,123,135,0.09)" stroke="rgba(24,123,135,0.32)" stroke-width="1.2"/>
+                        <text x="208" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">Render</text>
+                        <text x="208" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.9)">Tree</text>
+                        <text x="208" y="8" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="rgba(24,123,135,0.45)">excludes display:none</text>
+                    </g>
+                    <path d="M 246 42 L 264 42" stroke="rgba(24,123,135,0.4)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Layout (reflow) -->
+                    <g aria-label="Layout (reflow): compute geometry, position, size of each box">
+                        <rect x="264" y="22" width="72" height="40" rx="3"
+                              fill="rgba(160,42,77,0.07)" stroke="rgba(160,42,77,0.28)" stroke-width="1.2"/>
+                        <text x="300" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(160,42,77,0.9)">Layout</text>
+                        <text x="300" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.6)">(reflow)</text>
+                    </g>
+                    <path d="M 336 42 L 354 42" stroke="rgba(160,42,77,0.38)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Paint -->
+                    <g aria-label="Paint (rasterize): draw pixels per layer into bitmaps">
+                        <rect x="354" y="22" width="66" height="40" rx="3"
+                              fill="rgba(160,42,77,0.06)" stroke="rgba(160,42,77,0.22)" stroke-width="1.2"/>
+                        <text x="387" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(160,42,77,0.85)">Paint</text>
+                        <text x="387" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(160,42,77,0.55)">(rasterize)</text>
+                    </g>
+                    <path d="M 420 42 L 438 42" stroke="rgba(160,42,77,0.32)" stroke-width="1.2" fill="none" marker-end="url(#rp-a)"/>
+
+                    <!-- Composite -->
+                    <g aria-label="Composite: GPU assembles layers, handles transform and opacity cheaply">
+                        <rect x="438" y="22" width="78" height="40" rx="3"
+                              fill="rgba(120,80,0,0.07)" stroke="rgba(120,80,0,0.25)" stroke-width="1.2"/>
+                        <text x="477" y="37" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(120,80,0,0.85)">Composite</text>
+                        <text x="477" y="52" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(120,80,0,0.55)">(GPU layers)</text>
+                    </g>
+                    <path d="M 516 42 L 534 42" stroke="rgba(120,80,0,0.38)" stroke-width="1.2" fill="none" marker-end="url(#rp-b)"/>
+
+                    <!-- Screen -->
+                    <g aria-label="Screen: final rendered output">
+                        <rect x="534" y="22" width="62" height="40" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.2)" stroke-width="1"/>
+                        <text x="565" y="44" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.7)">Screen</text>
+                    </g>
+
+                    <!-- Cheap composite-only path annotation -->
+                    <path d="M 462 62 Q 462 90 477 90 Q 492 90 516 90 Q 565 90 565 62"
+                          stroke="rgba(120,80,0,0.28)" stroke-width="0.9" fill="none"
+                          stroke-dasharray="4,2.5" marker-end="url(#rp-b)"/>
+                    <text x="477" y="105" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(120,80,0,0.6)">transform / opacity → composite only (fast path)</text>
+
+                    <!-- Expensive path annotation -->
+                    <text x="300" y="105" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(160,42,77,0.5)">width / top / font-size → layout + paint + composite (expensive)</text>
+
+                    <text x="8" y="128" font-family="'JetBrains Mono',monospace" font-size="6.5"
+                          fill="rgba(14,18,20,0.3)">Forced sync layout: reading offsetWidth after a write flushes the pipeline. Batch reads before writes in rAF.</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">DOM</span>
+                        <h3>Document Object Model</h3>
+                        <p>Live tree of nodes. Script mutations trigger style recalc. <code>documentFragment</code> batches insertions off-tree. <code>TreeWalker</code> traverses efficiently. <code>Range</code> works across arbitrary node boundaries. <code>MutationObserver</code> callbacks fire as microtasks.</p>
+                        <ul class="ref-terms"><li>Node</li><li>Element</li><li>DocumentFragment</li><li>TreeWalker</li><li>Range</li><li>MutationObserver</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" data-pfx="mdn:" target="_blank" rel="noopener">DOM reference</a>
+                            <a href="https://dom.spec.whatwg.org/" data-pfx="spec:" target="_blank" rel="noopener">WHATWG DOM Living Standard</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">CSSOM</span>
+                        <h3>CSSOM + Cascade</h3>
+                        <p>Style resolution order: origin → cascade layers → specificity → source order. <code>getComputedStyle</code> returns resolved values (forces style flush). <code>@layer</code> adds an explicit origin tier. <code>@property</code> enables typed custom properties with registered syntax.</p>
+                        <ul class="ref-terms"><li>@layer</li><li>specificity</li><li>@property</li><li>:is() :where()</li><li>custom properties</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model" data-pfx="mdn:" target="_blank" rel="noopener">CSSOM</a>
+                            <a href="https://www.w3.org/TR/css-cascade-5/" data-pfx="w3c:" target="_blank" rel="noopener">Cascade Level 5</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">layout</span>
+                        <h3>Layout (Reflow)</h3>
+                        <p>Computes box geometry. Reading layout properties (<code>offsetWidth</code>, <code>getBoundingClientRect</code>) after mutations forces a synchronous reflow. <code>contain: layout</code> limits reflow scope. <code>ResizeObserver</code> fires before paint after each reflow.</p>
+                        <ul class="ref-terms"><li>contain: layout</li><li>will-change</li><li>ResizeObserver</li><li>intrinsic sizing</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Glossary/Reflow" data-pfx="mdn:" target="_blank" rel="noopener">Reflow</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment" data-pfx="mdn:" target="_blank" rel="noopener">CSS Containment</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">composite</span>
+                        <h3>Compositing Layers</h3>
+                        <p><code>transform</code>, <code>opacity</code>, and <code>filter</code> on a promoted layer skip layout and paint — the GPU reassembles pre-rasterized bitmaps. <code>will-change: transform</code> promotes eagerly (memory cost). <code>content-visibility: auto</code> skips layout/paint for off-screen content.</p>
+                        <ul class="ref-terms"><li>will-change</li><li>GPU layer</li><li>content-visibility</li><li>isolation: isolate</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Performance/CSS_JavaScript_animation_performance" data-pfx="mdn:" target="_blank" rel="noopener">Animation performance</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility" data-pfx="mdn:" target="_blank" rel="noopener">content-visibility</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Web Platform APIs ── -->
+            <section class="site-frame" id="web-platform-apis"
+                     data-spw-role="reference" data-spw-meaning="web platform API survey">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#web-platform-apis">@[web_platform]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">network</span>
+                        <span class="spec-pill">observers</span>
+                        <span class="spec-pill">workers</span>
+                        <span class="spec-pill">storage</span>
+                        <span class="spec-pill">modules</span>
+                    </div>
+                </div>
+                <h2>Web Platform APIs</h2>
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">~[fetch]</span>
+                        <h3>Fetch API + Streams</h3>
+                        <p>Promise-based network I/O. <code>Response.body</code> is a <code>ReadableStream</code> enabling progressive processing. <code>AbortController</code> cancels in-flight requests. <code>Request</code>/<code>Response</code> are structured-cloneable and composable in Service Workers.</p>
+                        <ul class="ref-terms"><li>AbortController</li><li>ReadableStream</li><li>TransformStream</li><li>WritableStream</li><li>Response.body</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" data-pfx="mdn:" target="_blank" rel="noopener">Fetch API</a>
+                            <a href="https://streams.spec.whatwg.org/" data-pfx="spec:" target="_blank" rel="noopener">Streams Living Standard</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">?[observe]</span>
+                        <h3>Observer APIs</h3>
+                        <p>Four observer types: <code>IntersectionObserver</code> (viewport crossing), <code>MutationObserver</code> (DOM changes — microtask delivery), <code>ResizeObserver</code> (element size changes — before paint), <code>PerformanceObserver</code> (metric entries). All avoid polling.</p>
+                        <ul class="ref-terms"><li>IntersectionObserver</li><li>MutationObserver</li><li>ResizeObserver</li><li>PerformanceObserver</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" data-pfx="mdn:" target="_blank" rel="noopener">Intersection Observer</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver" data-pfx="mdn:" target="_blank" rel="noopener">MutationObserver</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">*[worker]</span>
+                        <h3>Web Workers</h3>
+                        <p>True OS-thread parallelism; workers cannot access the DOM. Communication via <code>postMessage</code> (structured clone) or <code>Transferable</code> (zero-copy). <code>SharedWorker</code> shared across browsing contexts. <code>SharedArrayBuffer</code> + <code>Atomics</code> enable wait-free shared memory.</p>
+                        <ul class="ref-terms"><li>postMessage</li><li>Transferable</li><li>SharedArrayBuffer</li><li>Atomics</li><li>SharedWorker</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" data-pfx="mdn:" target="_blank" rel="noopener">Web Workers API</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer" data-pfx="mdn:" target="_blank" rel="noopener">SharedArrayBuffer</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">![sw]</span>
+                        <h3>Service Workers</h3>
+                        <p>Network proxy off the main thread. Lifecycle: <code>install</code> → <code>activate</code> → <code>fetch</code> interception. <code>skipWaiting()</code> + <code>clients.claim()</code> for immediate takeover. <code>Cache API</code> stores <code>Request/Response</code> pairs. Enables offline-first and background sync.</p>
+                        <ul class="ref-terms"><li>Cache API</li><li>Background Sync</li><li>Push API</li><li>skipWaiting</li><li>clients.claim</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API" data-pfx="mdn:" target="_blank" rel="noopener">Service Worker API</a>
+                            <a href="https://w3c.github.io/ServiceWorker/" data-pfx="spec:" target="_blank" rel="noopener">W3C Service Workers</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">$[storage]</span>
+                        <h3>Storage APIs</h3>
+                        <p><code>localStorage</code> / <code>sessionStorage</code>: synchronous, string-only, ~5 MB. <code>IndexedDB</code>: async, structured data, large capacity, transactions, indices, available in workers. <code>StorageManager.estimate()</code> queries available quota. <code>Cache API</code> keyed on <code>Request</code> objects.</p>
+                        <ul class="ref-terms"><li>IndexedDB</li><li>localStorage</li><li>StorageManager</li><li>Cache API</li><li>Cookie Store API</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API" data-pfx="mdn:" target="_blank" rel="noopener">IndexedDB</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/StorageManager" data-pfx="mdn:" target="_blank" rel="noopener">StorageManager</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">~[ws]</span>
+                        <h3>WebSocket + SSE</h3>
+                        <p><code>WebSocket</code>: full-duplex binary-capable TCP channel. <code>EventSource</code>: server-push over HTTP, text-only, auto-reconnect, simpler auth model. Use SSE when only server→client streaming is needed; WS for bidirectional. <code>WebTransport</code> over QUIC is the emerging successor.</p>
+                        <ul class="ref-terms"><li>WebSocket</li><li>EventSource</li><li>WebTransport</li><li>binary frames</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" data-pfx="mdn:" target="_blank" rel="noopener">WebSocket</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource" data-pfx="mdn:" target="_blank" rel="noopener">EventSource</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">%[perf]</span>
+                        <h3>Performance APIs</h3>
+                        <p>Core Web Vitals: <code>LCP</code> (Largest Contentful Paint), <code>INP</code> (Interaction to Next Paint, replaces FID), <code>CLS</code> (Cumulative Layout Shift). <code>performance.mark</code> / <code>measure</code> for custom spans. <code>PerformanceObserver</code> streams entries asynchronously.</p>
+                        <ul class="ref-terms"><li>LCP</li><li>INP</li><li>CLS</li><li>TTFB</li><li>Long Tasks</li><li>User Timing</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance_API" data-pfx="mdn:" target="_blank" rel="noopener">Performance API</a>
+                            <a href="https://www.w3.org/TR/navigation-timing-2/" data-pfx="w3c:" target="_blank" rel="noopener">Navigation Timing Level 2</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">#[esm]</span>
+                        <h3>ES Modules + Import</h3>
+                        <p><code>type="module"</code> scripts defer by default, run in strict mode, and have lexical scope. <code>import()</code> dynamic import returns a Promise. <code>import.meta.url</code> is the module's own URL. <code>importmap</code> remaps bare specifiers to URLs at HTML level. Module map prevents double-evaluation.</p>
+                        <ul class="ref-terms"><li>import.meta</li><li>dynamic import()</li><li>importmap</li><li>modulepreload</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" data-pfx="mdn:" target="_blank" rel="noopener">JS Modules</a>
+                            <a href="https://html.spec.whatwg.org/multipage/webappapis.html#module-specifier-resolution" data-pfx="spec:" target="_blank" rel="noopener">Module resolution spec</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Security Model ── -->
+            <section class="site-frame" id="browser-security"
+                     data-spw-role="reference" data-spw-meaning="browser security model">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#browser-security">![browser_security]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">SOP</span>
+                        <span class="spec-pill">CORS</span>
+                        <span class="spec-pill">CSP</span>
+                        <span class="spec-pill">SameSite</span>
+                        <span class="spec-pill">SRI</span>
+                    </div>
+                </div>
+                <h2>Browser Security Model</h2>
+
+                <!-- Concentric security layers diagram -->
+                <svg class="diagram" viewBox="0 0 540 170"
+                     role="img" aria-labelledby="sec-title" aria-describedby="sec-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:190px">
+                    <title id="sec-title">Browser Security Model — concentric layers</title>
+                    <desc id="sec-desc">
+                        Security layers from innermost to outermost:
+                        Execution context at center.
+                        Same-Origin Policy (origin = scheme + host + port).
+                        CORS headers for cross-origin resource access.
+                        Content-Security-Policy allowlisting resource origins.
+                        HTTPS/TLS at the outermost transport layer.
+                    </desc>
+
+                    <!-- HTTPS outermost -->
+                    <ellipse cx="270" cy="85" rx="250" ry="75"
+                             fill="rgba(24,123,135,0.03)" stroke="rgba(24,123,135,0.15)"
+                             stroke-width="1" stroke-dasharray="5,3"/>
+                    <text x="32" y="30" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(24,123,135,0.65)">HTTPS / TLS</text>
+
+                    <!-- CSP -->
+                    <ellipse cx="270" cy="85" rx="205" ry="60"
+                             fill="rgba(24,123,135,0.03)" stroke="rgba(24,123,135,0.2)"
+                             stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="75" y="38" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(24,123,135,0.72)">Content-Security-Policy</text>
+
+                    <!-- CORS -->
+                    <ellipse cx="270" cy="85" rx="158" ry="46"
+                             fill="rgba(160,42,77,0.04)" stroke="rgba(160,42,77,0.22)"
+                             stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="120" y="52" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(160,42,77,0.75)">CORS headers</text>
+
+                    <!-- SOP -->
+                    <ellipse cx="270" cy="85" rx="110" ry="32"
+                             fill="rgba(160,42,77,0.05)" stroke="rgba(160,42,77,0.30)"
+                             stroke-width="1.2"/>
+                    <text x="170" y="65" font-family="'JetBrains Mono',monospace"
+                          font-size="7.5" fill="rgba(160,42,77,0.85)">Same-Origin Policy</text>
+
+                    <!-- Execution context center -->
+                    <ellipse cx="270" cy="85" rx="62" ry="20"
+                             fill="rgba(160,42,77,0.09)" stroke="rgba(160,42,77,0.42)"
+                             stroke-width="1.5"/>
+                    <text x="270" y="82" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7.5"
+                          fill="rgba(160,42,77,0.9)" font-weight="600">execution</text>
+                    <text x="270" y="93" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="7"
+                          fill="rgba(160,42,77,0.7)">context</text>
+
+                    <text x="270" y="158" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6.5"
+                          fill="rgba(14,18,20,0.35)">origin = scheme + host + port · SameSite controls cookie dispatch · SRI validates subresource integrity</text>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">=[origin]</span>
+                        <h3>Same-Origin Policy</h3>
+                        <p>Origin = scheme + host + port. Scripts from origin A cannot read responses or DOM of origin B. Applies to fetch, XHR, <code>window.opener</code>, iframe content access, Web Storage, and cookies. The invariant all other mechanisms build on.</p>
+                        <ul class="ref-terms"><li>origin</li><li>site</li><li>schemelessly same-site</li><li>opaque origin</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" data-pfx="mdn:" target="_blank" rel="noopener">Same-origin policy</a>
+                            <a href="https://html.spec.whatwg.org/multipage/origin.html#origin" data-pfx="spec:" target="_blank" rel="noopener">WHATWG Origin</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">@[cors]</span>
+                        <h3>CORS</h3>
+                        <p>Credentialed or non-simple requests trigger a preflight (<code>OPTIONS</code>). Key headers: <code>Access-Control-Allow-Origin</code>, <code>ACAO-Credentials</code>. Credentials require non-wildcard ACAO. <code>COEP</code>/<code>COOP</code>/<code>CORP</code> enable <code>SharedArrayBuffer</code> and cross-origin isolation.</p>
+                        <ul class="ref-terms"><li>preflight</li><li>ACAO</li><li>credentials</li><li>COEP</li><li>COOP</li><li>CORP</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" data-pfx="mdn:" target="_blank" rel="noopener">CORS</a>
+                            <a href="https://fetch.spec.whatwg.org/#cors-protocol" data-pfx="spec:" target="_blank" rel="noopener">Fetch § CORS</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">![csp]</span>
+                        <h3>Content Security Policy</h3>
+                        <p>Allowlist for script, style, connect, img, media, and other resource sources. <code>script-src 'nonce-{x}'</code> is best practice for inline scripts. <code>strict-dynamic</code> propagates trust to dynamically-created scripts. Report-only mode enables incremental rollout via <code>Reporting API</code>.</p>
+                        <ul class="ref-terms"><li>nonce</li><li>strict-dynamic</li><li>report-to</li><li>Trusted Types</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" data-pfx="mdn:" target="_blank" rel="noopener">CSP</a>
+                            <a href="https://www.w3.org/TR/CSP3/" data-pfx="w3c:" target="_blank" rel="noopener">CSP Level 3</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">$[cookies]</span>
+                        <h3>Cookies + SameSite</h3>
+                        <p><code>SameSite=Strict</code>: no cross-site dispatch. <code>Lax</code>: top-level navigations only (default since Chrome 80). <code>None</code> requires <code>Secure</code>. <code>HttpOnly</code> prevents JS access. The <code>__Host-</code> prefix requires Secure, no Domain attribute, and path=<code>/</code>. CHIPS partitions third-party cookies by top-level site.</p>
+                        <ul class="ref-terms"><li>SameSite</li><li>HttpOnly</li><li>__Host-</li><li>CHIPS</li><li>partitioned</li></ul>
+                        <div class="ref-links">
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" data-pfx="mdn:" target="_blank" rel="noopener">HTTP Cookies</a>
+                            <a href="https://httpwg.org/specs/rfc6265bis.html" data-pfx="spec:" target="_blank" rel="noopener">RFC 6265bis</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── TypeScript Type System ── -->
+            <section class="site-frame" id="typescript-types"
+                     data-spw-role="reference" data-spw-meaning="typescript type system">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#typescript-types">$[ts_type_system]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">structural typing</span>
+                        <span class="spec-pill">type lattice</span>
+                        <span class="spec-pill">inference</span>
+                        <span class="spec-pill">narrowing</span>
+                    </div>
+                </div>
+                <h2>TypeScript Type System</h2>
+                <p class="inline-note">TypeScript uses <em>structural</em> (duck) typing — compatibility is determined by shape, not identity. The type system forms a lattice: <code>unknown</code> is the top type (all values are assignable to it); <code>never</code> is the bottom type (no value inhabits it). <code>any</code> escapes the lattice entirely.</p>
+
+                <!-- Type Lattice SVG -->
+                <svg class="diagram" viewBox="0 0 560 200"
+                     role="img" aria-labelledby="tl-title" aria-describedby="tl-desc"
+                     xmlns="http://www.w3.org/2000/svg" style="max-height:220px">
+                    <title id="tl-title">TypeScript Type Lattice</title>
+                    <desc id="tl-desc">
+                        Type hierarchy: unknown at top (all types assignable to it).
+                        Below: primitive types (string, number, boolean, symbol, bigint, object).
+                        Below primitives: literal types (string literals, numeric literals, true/false).
+                        never at bottom (assignable to everything, inhabited by nothing).
+                        any shown separately as a bypass that escapes the lattice bidirectionally.
+                        Arrows point from supertype to subtype (assignment direction).
+                    </desc>
+
+                    <defs>
+                        <marker id="tl-a" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(24,123,135,0.35)"/>
+                        </marker>
+                        <marker id="tl-b" viewBox="0 0 8 8" refX="7" refY="4"
+                                markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M0,1 L7,4 L0,7 Z" fill="rgba(160,42,77,0.35)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- unknown (top type) -->
+                    <g aria-label="unknown: top type — all values assignable to it, must narrow before use">
+                        <rect x="200" y="8" width="120" height="28" rx="4"
+                              fill="rgba(24,123,135,0.12)" stroke="rgba(24,123,135,0.55)" stroke-width="1.8"/>
+                        <text x="260" y="26" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(24,123,135,0.95)" font-weight="700">unknown</text>
+                    </g>
+                    <text x="260" y="6" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6"
+                          fill="rgba(24,123,135,0.45)">top type — require narrowing before use</text>
+
+                    <!-- Arrows: unknown → primitives -->
+                    <path d="M 235 36 L 55 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 245 36 L 145 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 255 36 L 225 68" stroke="rgba(24,123,135,0.25)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 268 36 L 315 68" stroke="rgba(24,123,135,0.22)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 278 36 L 390 68" stroke="rgba(24,123,135,0.2)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 285 36 L 458 68" stroke="rgba(24,123,135,0.18)" stroke-width="0.8" fill="none" marker-end="url(#tl-a)"/>
+
+                    <!-- Primitive types row -->
+                    <g aria-label="string primitive">
+                        <rect x="8" y="68" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.28)" stroke-width="1"/>
+                        <text x="38" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.88)">string</text>
+                    </g>
+                    <g aria-label="number primitive">
+                        <rect x="78" y="68" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.28)" stroke-width="1"/>
+                        <text x="108" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.88)">number</text>
+                    </g>
+                    <g aria-label="boolean primitive">
+                        <rect x="148" y="68" width="66" height="22" rx="3"
+                              fill="rgba(24,123,135,0.07)" stroke="rgba(24,123,135,0.25)" stroke-width="1"/>
+                        <text x="181" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.85)">boolean</text>
+                    </g>
+                    <g aria-label="bigint primitive">
+                        <rect x="224" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.06)" stroke="rgba(24,123,135,0.22)" stroke-width="1"/>
+                        <text x="252" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.78)">bigint</text>
+                    </g>
+                    <g aria-label="object type">
+                        <rect x="290" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.2)" stroke-width="1"/>
+                        <text x="318" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.75)">object</text>
+                    </g>
+                    <g aria-label="symbol type">
+                        <rect x="356" y="68" width="56" height="22" rx="3"
+                              fill="rgba(24,123,135,0.05)" stroke="rgba(24,123,135,0.18)" stroke-width="1"/>
+                        <text x="384" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(24,123,135,0.72)">symbol</text>
+                    </g>
+                    <g aria-label="undefined and null types">
+                        <rect x="422" y="68" width="80" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.15)" stroke-width="1"/>
+                        <text x="462" y="82" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(24,123,135,0.65)">undef | null</text>
+                    </g>
+
+                    <!-- Arrows: primitives → literals -->
+                    <path d="M 38 90 L 38 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 108 90 L 108 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+                    <path d="M 181 90 L 181 114" stroke="rgba(24,123,135,0.2)" stroke-width="0.7" fill="none" marker-end="url(#tl-a)"/>
+
+                    <!-- Literal types row -->
+                    <g aria-label="string literal types">
+                        <rect x="8" y="114" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.14)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="38" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.7)">"hello"…</text>
+                    </g>
+                    <g aria-label="numeric literal types">
+                        <rect x="78" y="114" width="60" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.12)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="108" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.65)">0|1|42…</text>
+                    </g>
+                    <g aria-label="boolean literal types: true, false">
+                        <rect x="148" y="114" width="66" height="22" rx="3"
+                              fill="rgba(24,123,135,0.04)" stroke="rgba(24,123,135,0.12)"
+                              stroke-width="0.8" stroke-dasharray="3,2"/>
+                        <text x="181" y="128" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="rgba(24,123,135,0.62)">true|false</text>
+                    </g>
+                    <text x="230" y="128" font-family="'JetBrains Mono',monospace" font-size="7" fill="rgba(14,18,20,0.3)">← literal types are subtypes of their primitive</text>
+
+                    <!-- Arrows to never -->
+                    <path d="M 38 136 L 230 162" stroke="rgba(160,42,77,0.18)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 108 136 L 242 162" stroke="rgba(160,42,77,0.16)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 181 136 L 254 162" stroke="rgba(160,42,77,0.15)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 252 90 L 260 162" stroke="rgba(160,42,77,0.14)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+                    <path d="M 318 90 L 268 162" stroke="rgba(160,42,77,0.12)" stroke-width="0.7" fill="none" marker-end="url(#tl-b)"/>
+
+                    <!-- never (bottom type) -->
+                    <g aria-label="never: bottom type — no values inhabit it; assignable to every type">
+                        <rect x="210" y="162" width="110" height="28" rx="4"
+                              fill="rgba(160,42,77,0.10)" stroke="rgba(160,42,77,0.48)" stroke-width="1.8"/>
+                        <text x="265" y="180" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(160,42,77,0.92)" font-weight="700">never</text>
+                    </g>
+                    <text x="265" y="198" text-anchor="middle"
+                          font-family="'JetBrains Mono',monospace" font-size="6"
+                          fill="rgba(160,42,77,0.45)">bottom type — assignable to everything, inhabited by nothing</text>
+
+                    <!-- any (lattice bypass) -->
+                    <g aria-label="any: escapes the type lattice bidirectionally, bypasses type checking">
+                        <rect x="475" y="88" width="72" height="28" rx="4"
+                              fill="rgba(120,80,0,0.10)" stroke="rgba(120,80,0,0.38)"
+                              stroke-width="1.4" stroke-dasharray="5,2.5"/>
+                        <text x="511" y="106" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="10"
+                              fill="rgba(120,80,0,0.85)" font-weight="600">any</text>
+                        <text x="511" y="128" text-anchor="middle"
+                              font-family="'JetBrains Mono',monospace" font-size="6.5"
+                              fill="rgba(120,80,0,0.6)">⚠ lattice bypass</text>
+                        <!-- Bypass arrows: any ↔ unknown, any ↔ never -->
+                        <path d="M 490 88 Q 460 55 330 36" stroke="rgba(120,80,0,0.28)" stroke-width="0.8" fill="none" stroke-dasharray="3,2" marker-end="url(#tl-a)"/>
+                        <path d="M 490 116 Q 470 155 325 170" stroke="rgba(120,80,0,0.28)" stroke-width="0.8" fill="none" stroke-dasharray="3,2" marker-end="url(#tl-b)"/>
+                    </g>
+                </svg>
+
+                <div class="ref-grid" style="margin-top:1rem">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">unknown vs any</span>
+                        <h3>unknown — safe top type</h3>
+                        <p><code>unknown</code> requires narrowing before use (type-safe). <code>any</code> escapes the type system entirely — bidirectional assignability. Prefer <code>unknown</code> for external data (JSON, API responses, user input). <code>noImplicitAny</code> bans accidental widening to <code>any</code>.</p>
+                        <ul class="ref-terms"><li>unknown</li><li>any</li><li>noImplicitAny</li><li>type assertion</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/types-from-types.html" data-pfx="ts:" target="_blank" rel="noopener">Types from types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">never</span>
+                        <h3>never — bottom type</h3>
+                        <p>Inhabited by nothing. Appears at exhaustive checks (all union members handled), in return types of functions that always throw, and as the intersection of contradictory types (<code>string &amp; number</code>). <code>never</code> is assignable to every type — use it to detect missing branches.</p>
+                        <ul class="ref-terms"><li>exhaustive check</li><li>assertion function</li><li>unreachable code</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking" data-pfx="ts:" target="_blank" rel="noopener">Exhaustiveness checking</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">structural</span>
+                        <h3>Structural Typing</h3>
+                        <p>Compatibility is shape-based: <code>T</code> is assignable to <code>U</code> if <code>T</code> has at least all required properties of <code>U</code> with compatible types. Excess property checking applies only at <em>fresh object literal</em> assignment, not at variable assignment — a common source of confusion.</p>
+                        <ul class="ref-terms"><li>excess property check</li><li>freshness</li><li>index signatures</li><li>covariance</li><li>contravariance</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/type-compatibility.html" data-pfx="ts:" target="_blank" rel="noopener">Type Compatibility</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">is / asserts</span>
+                        <h3>Type Narrowing</h3>
+                        <p>Built-in: <code>typeof</code>, <code>instanceof</code>, <code>in</code>, truthiness, equality. User-defined: <code>x is T</code> type predicate returns a boolean; <code>asserts x is T</code> asserts or throws. Discriminated unions: a shared literal property identifies each variant — TS narrows based on the literal.</p>
+                        <ul class="ref-terms"><li>type predicate</li><li>discriminated union</li><li>control flow analysis</li><li>asserts</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" data-pfx="ts:" target="_blank" rel="noopener">Narrowing handbook</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">Utility&lt;T&gt;</span>
+                        <h3>Utility Types</h3>
+                        <p>Standard type transforms: <code>Partial</code>, <code>Required</code>, <code>Readonly</code>, <code>Pick&lt;T,K&gt;</code>, <code>Omit&lt;T,K&gt;</code>, <code>Record&lt;K,V&gt;</code>, <code>Exclude</code>, <code>Extract</code>, <code>NonNullable</code>, <code>ReturnType&lt;F&gt;</code>, <code>InstanceType&lt;C&gt;</code>, <code>Awaited&lt;T&gt;</code>, <code>NoInfer&lt;T&gt;</code>.</p>
+                        <ul class="ref-terms"><li>Partial</li><li>Omit</li><li>ReturnType</li><li>Awaited</li><li>NoInfer</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" data-pfx="ts:" target="_blank" rel="noopener">Utility Types reference</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">satisfies</span>
+                        <h3>satisfies + as const</h3>
+                        <p><code>satisfies T</code> checks a value against a type without widening the inferred type. <code>as const</code> produces readonly literal types. Combined: <code>const p = {...} as const satisfies Record&lt;...&gt;</code> — constraint checking with precise inference preserved. Available since TypeScript 4.9.</p>
+                        <ul class="ref-terms"><li>satisfies</li><li>as const</li><li>const type parameters</li><li>const assertions</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator" data-pfx="ts:" target="_blank" rel="noopener">satisfies operator</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── TypeScript Advanced Patterns ── -->
+            <section class="site-frame" id="typescript-advanced"
+                     data-spw-role="reference" data-spw-meaning="typescript advanced type patterns">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#typescript-advanced">^[ts_advanced]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">generics</span>
+                        <span class="spec-pill">conditional types</span>
+                        <span class="spec-pill">mapped types</span>
+                        <span class="spec-pill">template literals</span>
+                        <span class="spec-pill">declaration merging</span>
+                    </div>
+                </div>
+                <h2>TypeScript Advanced Patterns</h2>
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">T extends U</span>
+                        <h3>Generics + Inference</h3>
+                        <p>Constraints: <code>T extends K</code> restricts <code>T</code> to subtypes of <code>K</code>. Inference sites: TS infers from call sites, conditional clauses, <code>infer</code>. <code>NoInfer&lt;T&gt;</code> blocks inference at a site without removing the constraint. Variance: function params are contravariant; return types covariant.</p>
+                        <ul class="ref-terms"><li>constraints</li><li>infer</li><li>NoInfer</li><li>variance</li><li>covariance</li><li>const type param</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" data-pfx="ts:" target="_blank" rel="noopener">Generics handbook</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">T extends U ? X : Y</span>
+                        <h3>Conditional Types</h3>
+                        <p><code>infer R</code> captures a type within a conditional branch. Distributivity: over a naked union type parameter, the conditional distributes member-by-member. To prevent distribution, wrap in a tuple: <code>[T] extends [U]</code>. Basis for <code>ReturnType</code>, <code>Awaited</code>, <code>Parameters</code>.</p>
+                        <ul class="ref-terms"><li>infer</li><li>distributive</li><li>[T] extends [U]</li><li>deferred</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/conditional-types.html" data-pfx="ts:" target="_blank" rel="noopener">Conditional Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">&#123; [K in T]: … &#125;</span>
+                        <h3>Mapped Types</h3>
+                        <p>Iterate over a union of keys. Modifiers: <code>+readonly</code>, <code>-readonly</code>, <code>+?</code>, <code>-?</code>. Key remapping with <code>as</code>: <code>[K in keyof T as Capitalize&lt;string &amp; K&gt;]</code>. Filter keys by returning <code>never</code> from the <code>as</code> clause. Homomorphic mapped types preserve optionality and readonly.</p>
+                        <ul class="ref-terms"><li>keyof</li><li>in keyof</li><li>as clause</li><li>modifiers</li><li>homomorphic</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/mapped-types.html" data-pfx="ts:" target="_blank" rel="noopener">Mapped Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">`${A}${B}`</span>
+                        <h3>Template Literal Types</h3>
+                        <p>Construct string types from literal unions. Combine with mapped types to derive event names, accessor keys, CSS property strings. Built-in string intrinsics: <code>Uppercase</code>, <code>Lowercase</code>, <code>Capitalize</code>, <code>Uncapitalize</code>. <code>infer</code> inside template literals matches string patterns.</p>
+                        <ul class="ref-terms"><li>Capitalize</li><li>template literal infer</li><li>string union</li><li>intrinsic string types</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html" data-pfx="ts:" target="_blank" rel="noopener">Template Literal Types</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">declare module</span>
+                        <h3>Declaration Merging</h3>
+                        <p>Interfaces merge across declarations; type aliases do not. Module augmentation: <code>declare module 'x' { ... }</code> extends an existing module's types. Global augmentation: <code>declare global { ... }</code>. Commonly used for Express <code>Request</code>, Jest matchers, Vite <code>ImportMeta</code>, and environment variables.</p>
+                        <ul class="ref-terms"><li>interface merging</li><li>module augmentation</li><li>ambient declaration</li><li>declare global</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html" data-pfx="ts:" target="_blank" rel="noopener">Declaration Merging</a>
+                        </div>
+                    </div>
+                    <div class="ref-card">
+                        <span class="ref-card-sigil">tsconfig</span>
+                        <h3>tsconfig + Project References</h3>
+                        <p>Key flags: <code>strict</code> enables noImplicitAny + strictNullChecks + more. <code>moduleResolution: "bundler"</code> for Vite/esbuild. <code>verbatimModuleSyntax</code> enforces explicit type-only imports. Project references (<code>composite: true</code> + <code>references</code>) enable incremental builds and type-check boundaries across monorepo packages.</p>
+                        <ul class="ref-terms"><li>strict</li><li>composite</li><li>references</li><li>verbatimModuleSyntax</li><li>isolatedModules</li></ul>
+                        <div class="ref-links">
+                            <a href="https://www.typescriptlang.org/tsconfig" data-pfx="ts:" target="_blank" rel="noopener">tsconfig reference</a>
+                            <a href="https://www.typescriptlang.org/docs/handbook/project-references.html" data-pfx="ts:" target="_blank" rel="noopener">Project References</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Route footer ── -->
+            <section class="site-frame" id="ref-routes"
+                     data-spw-role="route" data-spw-liminality="return">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ref-routes">@"routes"</a>
+                </div>
+                <nav class="frame-operators" aria-label="Reference surface routes">
+                    <a class="operator-chip" href="#browser-ts-ref">↑ top</a>
+                    <a class="operator-chip" href="#event-loop">event loop</a>
+                    <a class="operator-chip" href="#render-pipeline">render pipeline</a>
+                    <a class="operator-chip" href="#web-platform-apis">platform APIs</a>
+                    <a class="operator-chip" href="#browser-security">security model</a>
+                    <a class="operator-chip" href="#typescript-types">TS type system</a>
+                    <a class="operator-chip" href="#typescript-advanced">advanced patterns</a>
+                    <a class="operator-chip" href="/topics/software/">← software surface</a>
+                    <a class="operator-chip" href="/blog/">← blog</a>
+                </nav>
+            </section>
+
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>
