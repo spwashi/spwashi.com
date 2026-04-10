@@ -26,6 +26,13 @@ export async function initPretextPhysics() {
         
         // Listen for pointer moves on the whole body to handle 'approach' physics
         document.body.addEventListener('pointermove', onGlobalPointerMove, { passive: true });
+
+        // Tie into the custom gesture events from brace-gestures.js
+        document.addEventListener('spw:brace:charge-start', onBraceGesture);
+        document.addEventListener('spw:brace:discharge', onBraceGesture);
+        document.addEventListener('spw:brace:activate', onBraceActivate);
+        document.addEventListener('spw:brace:project-move', onBraceProject);
+        document.addEventListener('spw:brace:project-end', onBraceGesture);
     } catch (e) {
         console.warn('Pretext physics failed to initialize:', e);
     }
@@ -102,6 +109,48 @@ function onGlobalPointerMove(e) {
     });
 }
 
+function onBraceGesture(e) {
+    const flow = e.target.querySelector('[data-spw-flow="pretext"]');
+    if (!flow) return;
+    const state = flowStates.get(flow);
+    if (!state) return;
+
+    if (e.type === 'spw:brace:discharge' || e.type === 'spw:brace:project-end') {
+        renderFlow(flow, state.baseWidth);
+        state.currentWidth = state.baseWidth;
+    }
+}
+
+function onBraceActivate(e) {
+    const flow = e.target.querySelector('[data-spw-flow="pretext"]');
+    if (!flow) return;
+    const state = flowStates.get(flow);
+    if (!state) return;
+
+    // "Snap pulse" on click: momentarily widen or narrow
+    const pulseWidth = state.baseWidth * 1.25;
+    renderFlow(flow, pulseWidth);
+    setTimeout(() => renderFlow(flow, state.baseWidth), 180);
+}
+
+function onBraceProject(e) {
+    const flow = e.target.querySelector('[data-spw-flow="pretext"]');
+    if (!flow) return;
+    const state = flowStates.get(flow);
+    if (!state) return;
+
+    // Use drag distance to modulate width
+    const { distance, dx } = e.detail;
+    // Map drag to width variance: wider if dragging right, narrower if left
+    const variance = dx * 1.5; 
+    const targetWidth = Math.max(120, state.baseWidth + variance);
+    
+    if (Math.abs(targetWidth - state.currentWidth) > 5) {
+        renderFlow(flow, targetWidth);
+        state.currentWidth = targetWidth;
+    }
+}
+
 function renderFlow(el, width) {
     const state = flowStates.get(el);
     if (!state || !pretext) return;
@@ -112,8 +161,13 @@ function renderFlow(el, width) {
     // Build the HTML once and update. 
     // For high performance in a 'magic' interaction, we just join strings.
     let html = '';
-    result.lines.forEach(line => {
-        html += `<div class="pretext-flow-line" style="width: ${width}px">${line.text}</div>`;
+    const op = el.closest('.site-frame')?.dataset.spwOperator || '?';
+    
+    result.lines.forEach((line, i) => {
+        // Decorate line with operators as 'noise' or 'staging' if influence is high
+        const showDecor = Math.random() < (el.style.getPropertyValue('--flow-influence') || 0);
+        const decor = showDecor ? `<span class="line-decor">${op}</span>` : '';
+        html += `<div class="pretext-flow-line" style="width: ${width}px; --line-index: ${i}">${decor}${line.text}${decor}</div>`;
     });
     
     state.linesRoot.innerHTML = html;

@@ -490,12 +490,31 @@
 .pretext-flow-line {
     white-space: pre;
     text-align: center; /* Default to symmetrical centers */
-    transition: transform 0.2s var(--brace-settle-ease), opacity 0.2s ease;
+    transition: transform 0.2s var(--brace-settle-ease), 
+                opacity 0.2s ease,
+                color 0.2s ease;
     opacity: calc(0.8 + (var(--flow-influence, 0) * 0.2));
     
     /* Subtle lean based on direction */
-    transform: translateX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * 12px))
-               skewX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * -2deg));
+    transform: translateX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * 16px))
+               skewX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * -4deg));
+               
+    /* Staggered entry/motion */
+    transition-delay: calc(var(--line-index, 0) * 10ms);
+}
+
+.line-decor {
+    font-size: 0.7rem;
+    color: var(--pink);
+    opacity: 0.5;
+    margin: 0 0.4rem;
+    vertical-align: middle;
+    animation: decor-flicker 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes decor-flicker {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 0.6; transform: scale(1.1); }
 }
 
 /* Highlight the 'current' influence */
@@ -503,6 +522,18 @@
     --ink: var(--teal);
 }
 
-[data-spw-flow="pretext"][data-spw-gesture="charging"] .pretext-flow-line {
+[data-spw-gesture="charging"] .pretext-flow-line {
     opacity: 1;
+    color: var(--ink);
+}
+
+[data-spw-gesture="active"] .pretext-flow-line {
+    color: var(--pink);
+    transform: scale(1.02);
+}
+
+[data-spw-gesture="projecting"] .pretext-flow-line {
+    border-left: 1px dotted var(--teal-soft);
+    border-right: 1px dotted var(--teal-soft);
+    background: rgba(0, 128, 128, 0.02);
 }
