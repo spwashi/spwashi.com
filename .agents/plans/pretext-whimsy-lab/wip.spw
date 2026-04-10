@@ -1,0 +1,132 @@
+# wip - pretext-whimsy-lab
+# Branch: feature/pretext-whimsy-lab
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/pretext-whimsy-lab/PLAN.md"
+ @artifact: ~".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
+ @svg_plan: ~".agents/plans/svg-surface-integration/PLAN.md"
+ @pretext_page: ~"topics/software/pretext/index.html"
+ @software_page: ~"topics/software/index.html"
+ @lab: ~"public/js/pretext-lab.js"
+ @utils: ~"public/js/pretext-utils.js"
+ @shared: ~"public/js/spw-shared.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Define a bounded Pretext whimsy lab that turns honest layout data into playful, inspectable mobile-first physics surfaces and seeds later SVG widgets or Spw-backed pages."
+ ~#taste: "measured delight, legible force, and structural wonder grounded in real line metrics"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#experiment_design, #runtime, #projection_design, #semantics]
+ review_surfaces: [@plan, @artifact, @runtime_plan, @svg_plan]
+ snippet_routes: [#example, #query, #spec]
+}
+
+^["concept_index"]{
+ primary: [#pretext_capabilities, #whimsy_ladder, #line_projection, #physics_profiles, #force_fields, #telemetry, #mobile_lab, #svg_bridge, #truthful_delight]
+ surfaces: [#observatory, #experiment, #preset, #projection, #inspectability, #wonder]
+ tensions: [#capability_inflation, #noise, #desktop_bias, #teaching, #cdn_reliance]
+ transfers: [#line, #surface, #widget, #page, #runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? derive every force or whimsical move from a real Pretext output",
+  "< keep observatory and experiment surfaces conceptually separate",
+  "$ let telemetry explain the whimsy rather than compete with it",
+  "^ make the active force profile and constraint set inspectable",
+  "^ preserve one dominant lab face on mobile at a time",
+  "% keep delight sparse enough that the measurement substrate stays legible",
+  "& require touch and keyboard paths to agree with the same projection state"
+ ]
+ gates: [#truthfulness, #mobile_truth, #inspectability, #containment, #teachability]
+}
+
+^["parallel_work"]{
+ critical_path: [#capability_lattice, #physics_profile_taxonomy]
+ parallelizable: [#experiment_family_inventory, #svg_bridge_note, #telemetry_contract]
+ shared_hot_files: ["topics/software/pretext/index.html", "public/js/pretext-lab.js", "public/js/pretext-utils.js", "public/css/style.css", "public/js/spw-shared.js", "public/js/spw-console.js"]
+ merge_risks: [#runtime_bloat, #mode_collision, #rendering_divergence, #naming_drift]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@runtime_plan, @svg_plan]
+ carries: [#capabilities, #physics_profiles, #experiment_families, #telemetry_rules, #implementation_order, #validation]
+}
+
+^["interaction_depth"]{
+ subjects: [#experiment_switching, #surface_stack, #touch_controls, #inspect_labels, #local_pivots, #playful_projection, #physics_controls, #force_inspection]
+ questions: [#what_is_measured, #what_is_embellished, #what_is_reusable]
+ qualities: [#clarity, #teachability, #surprise, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: [#dishonest_capability_claims, #decorative_physics, #observatory_loss, #visual_only_state]
+ soft_failures: [#hover_bias, #multi_panel_sprawl, #toy_isolation]
+ recoveries: [#telemetry_truth, #physics_profiles, #feature_gating, #observatory_baseline, #svg_host_alignment]
+ non_negotiables: [#mobile_path, #offline_path, #inspectability, #same_handle_truth]
+}
+
+^["validation"]{
+ hypotheses: [#line_metrics_support_bounded_whimsy, #line_metrics_support_bounded_physics, #runtime_split_preserves_clarity, #mobile_first_lab_stays_teachable]
+ negative_controls: [#observatory_remains_intact, #site_wide_whimsy_does_not_leak, #library_bridge_stays_thin]
+ demo_path: ["/topics/software/pretext/#pretext-observatory", "/topics/software/pretext/#pretext-recipes"]
+}
+
+^["stream"]{
+ >>[2026-04-09 21:06] observe - The current Pretext page is an observatory, not yet a whimsy lab: one prepared handle, three width projections, and a small telemetry panel grounded in `prepareWithSegments` plus `layoutWithLines`.
+ >>[2026-04-09 21:06] observe - The bridge in `pretext-utils.js` is intentionally thin and CDN-backed, which means any whimsy plan has to preserve explicit offline/error states instead of assuming the engine is always present.
+ >>[2026-04-09 21:06] observe - What Pretext truthfully exposes here is line text, per-line width, total line count, total height, and multilingual wrapping behavior; it does not expose glyph outlines or arbitrary motion primitives.
+ >>[2026-04-09 21:06] decide - Keep whimsy in a bounded experimental lane on the Pretext page rather than dissolving it across the whole site.
+ >>[2026-04-09 21:06] decide - Treat SVG as a likely rendering partner, but keep the capability note honest enough that experiments could also render in HTML where that is simpler.
+ >>[2026-04-09 21:06] taste - The delight here should feel like text unexpectedly learning new postures while still telling the truth about its own layout.
+ >>[2026-04-09 21:29] decide - The whimsy lab should lean further into physics: line boxes become inspectable bodies under explicit constraints rather than just playful projections.
+ >>[2026-04-09 21:29] revise - Physics here means deterministic force profiles seeded by width, line count, height, order, and anchors; it does not mean a generic particle engine detached from the text.
+ >>[2026-04-09 21:29] taste - The right feeling is weight, tension, settling, orbit, or compression made legible enough to inspect, not decorative chaos.
+}
+
+^["open"]{
+ ?[capabilities]: "Which experiment families are honest consequences of line widths, line count, height, order, anchors, and mixed-script handling rather than generic animation?"
+ ?[physics]: "Which force families are honest enough to feel physical while still being inspectable from the line metrics Pretext actually returns?"
+ ?[teaching]: "What is the right ladder from observatory to whimsy so the page stays explanatory before it becomes playful?"
+ ?[rendering]: "Which whimsical projections should be SVG-backed, which should remain HTML, and where is that distinction worth the complexity?"
+ ?[mobile]: "How should experiment selection and projection switching collapse on phones without turning the lab into a panel maze?"
+ ?[telemetry]: "What metrics or labels must stay visible so a user can tell what the experiment is actually measuring?"
+ ?[symmetry]: "How should keyboard and touch choose experiments and local pivots while writing the same projection state?"
+ ?[fallback]: "What is the graceful degradation path when the CDN import fails or a whimsical projection is disabled?"
+ ?[reuse]: "Which whimsy patterns are likely to generalize into later widgets or Spw-backed pages?"
+}
+
+^["commits"]{
+ ~[1]: "#[pretext] - capture the whimsy lab plan and distilled capability lattice"
+ ~[2]: ".[pretext] - formalize whimsy doctrine, physics profiles, experiment boundaries, and truthful telemetry rules"
+ ~[3]: "&[pretext] - split the observatory runtime from the whimsy experiment runtime"
+ ~[4]: "&[physics] - add first layout-driven physical projections and inspect surfaces"
+ ~[5]: "![pretext] - verify touch, responsiveness, offline degradation, and telemetry honesty"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@d4e504661006b947d6f60591814b8f21020bed96"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "topics/software/pretext/index.html, topics/software/index.html, public/js/pretext-lab.js, public/js/pretext-utils.js, public/js/spw-shared.js, public/js/spw-console.js, public/css/style.css"
+ ~#next_commit: "1"
+ ~#open_count: "9"
+ ~#last_stream: "2026-04-09 21:29"
+ ~#taste_debt: "Do not let physics drift into canned particle spectacle or drown the observatory in novelty."
+}
+
+^["done"]{
+}

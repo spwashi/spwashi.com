@@ -1,0 +1,129 @@
+# pretext-whimsy-lab
+# Distilled capability note for using Pretext as a bounded engine for playful,
+# inspectable typographic physics surfaces.
+
+#>pretext_whimsy_lab
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["roots"]{
+ @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @svg_plan: ~"../svg-surface-integration/svg-surface-integration.spw"
+ @pretext_page: ~"topics/software/pretext/index.html"
+ @lab: ~"public/js/pretext-lab.js"
+ @utils: ~"public/js/pretext-utils.js"
+ @css: ~"public/css/style.css"
+}
+
+^["thesis"]{
+ claim: "Whimsy on the Pretext surface should emerge from truthful layout prediction and simplified, inspectable physics rather than from generic animation layered on top of text."
+ why: "That keeps the lab pedagogical and reusable. A playful surface is worth keeping only if a user can still see what the prepared handle, width, line count, height, and active force profile are doing."
+}
+
+^["honest_capabilities"]{
+ provides: [
+  "prepared text handles keyed by content and whitespace mode",
+  "per-line text and width from layout at a chosen width and line height",
+  "total line count and total height",
+  "mixed-script and hard-break handling"
+ ]
+ does_not_provide: [
+  "glyph outlines",
+  "arbitrary animation physics",
+  "vector path generation for letters",
+  "semantic understanding beyond the input text and resulting lines"
+ ]
+ rule: "Every whimsical projection or physical model should be explainable as a transform, constraint mapping, or arrangement of these real outputs."
+}
+
+^["physics_model"]{
+ definition: "The lab may treat line boxes as simplified bodies moving under explicit constraints, as long as every force is derived from inspectable layout facts."
+ mappings: [
+  "line width -> span, leverage, or weight proxy",
+  "line order -> phase, stack order, or anchor sequence",
+  "line count -> pile depth, crowding, or compression pressure",
+  "total height -> chamber depth or travel budget",
+  "chosen anchors -> orbit centers, hinges, rails, or tension points"
+ ]
+ invariants: [
+  "The active force profile must be nameable and inspectable.",
+  "Changing text or width should change the physical outcome in a legible way.",
+  "No force should rely on hidden randomness to feel alive."
+ ]
+ counterexample: "A particle burst or wobble that could be attached to any text regardless of its measured lines."
+ falsify: "If materially different line structures produce indistinguishable 'physics' under the same profile, the profile is decorative rather than structural."
+}
+
+^["whimsy_ladder"]{
+ 1: "observatory - show the raw line results and baseline telemetry"
+ 2: "parallel projections - show the same prepared handle across phone, tablet, poster, or other constrained surfaces"
+ 3: "constrained physics projection - turn line boxes into bodies, ribbons, tethers, or stacks under explicit force profiles"
+ 4: "inspectable experiment - add local pivots, labels, anchors, or SVG-backed structure while keeping telemetry honest"
+ 5: "reusable pattern - extract the successful projection into a widget or page primitive"
+}
+
+^["experiment_families"]{
+ compression_chamber: "Treat lines as rigid bars or ribbons that compress, extend, or buckle as width and chamber constraints change."
+ tension_rig: "Anchor line bodies to rails or points so longer lines pull farther and visibly alter the rig geometry."
+ buoyancy_stack: "Map shorter or lighter lines upward and longer or heavier lines downward using width-derived weight proxies inside a bounded column."
+ orbit_constellation: "Anchor lines or line groups to fixed points so measured width and order determine orbital distance, sweep, or label placement."
+ collision_shelves: "Let line bodies settle into shelves or lanes without overlap so crowding pressure becomes visible as text changes."
+ hinge_fold: "Use line count and total height to fold the same prepared text into notes, tickets, or panels with explicit hinges and chambers."
+ honesty_rule: "If an experiment depends on per-glyph geometry, unconstrained particles, or continuous physics not seeded by the measured line structure, it belongs outside this lab."
+}
+
+^["rendering_bridge"]{
+ html: "Use plain HTML when list, card, or panel structure already communicates the projection clearly."
+ svg: "Use inline SVG when the projection needs diagrams, anchored labels, or inspectable spatial relations."
+ alignment: "SVG-backed experiments should reuse the host and inspect rules from the SVG surface plan rather than inventing their own semantics."
+}
+
+^["mobile_truth"]{
+ rules: [
+  "One dominant projection face or physics chamber at a time on narrow screens.",
+  "Experiment selection should collapse into simple controls or a local sheet rather than many simultaneous panels.",
+  "Touch inspect and keyboard inspect should land on the same experiment state and telemetry."
+ ]
+ falsify: "If whimsy requires hovering multiple panels or comparing three wide surfaces side by side to make sense, it is not mobile-first."
+}
+
+^["telemetry"]{
+ definition: "Telemetry is the visible account of what Pretext actually returned and what the experiment did with it."
+ required: [
+  "handle state",
+  "wrap mode",
+  "line count",
+  "height",
+  "active force profile",
+  "active anchor or constraint set",
+  "projection mode",
+  "width context"
+ ]
+ rule: "Telemetry should explain the play, not sit in a disconnected dashboard."
+}
+
+^["wonder"]{
+ definition: "Wonder appears when the same prepared text reveals a new posture of weight, tension, orbit, or settling while the user can still recognize the underlying line logic."
+ rules: [
+  "Surprise should come from force profiles and constraints, not hidden randomness.",
+  "A user should be able to move from whimsy back to observatory and recognize the same data.",
+  "The best whimsical surfaces will suggest later widgets or page components, not remain isolated tricks."
+ ]
+}
+
+^["implementation_order"]{
+ 1: "Write the capability lattice, force profile taxonomy, and experiment boundaries."
+ 2: "Split observatory and whimsy runtime ownership."
+ 3: "Add one physics profile that can be explained directly from line metrics."
+ 4: "Introduce SVG-backed structure only where spatial relation matters."
+ 5: "Promote durable patterns into reusable widgets or later Spw-backed surfaces."
+}
+
+^["non_goals"]{
+ items: [
+  "Do not claim glyph-level precision or typographic shaping beyond what Pretext exposes here.",
+  "Do not build a generic particle or game-physics engine and call it Pretext whimsy.",
+  "Do not let whimsy become the default surface of the page.",
+  "Do not couple every experiment to SVG if HTML already communicates the result cleanly."
+ ]
+}

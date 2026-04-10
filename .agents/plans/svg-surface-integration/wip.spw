@@ -1,0 +1,130 @@
+# wip - svg-surface-integration
+# Branch: feature/svg-surface-integration
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/svg-surface-integration/PLAN.md"
+ @artifact: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"
+ @runtime_plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
+ @site: ~".spw/site.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @home: ~"index.html"
+ @about: ~"about/index.html"
+ @software: ~"topics/software/index.html"
+ @pretext: ~"topics/software/pretext/index.html"
+ @shared: ~"public/js/spw-shared.js"
+ @core: ~"public/js/site.js"
+ @components: ~"public/js/spw-component-semantics.js"
+ @console: ~"public/js/spw-console.js"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Define how SVG widgets, illustrations, and interactive components should enter the site as mobile-first, inspectable, brace-aware surfaces that can later support Spw-backed components and pages."
+ ~#taste: "diagrammatic warmth, inspectable restraint, and structural wonder without ornamental noise"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#semantics, #runtime, #illustration_design, #interaction_design]
+ review_surfaces: [@plan, @artifact, @semantics, @runtime_plan]
+ snippet_routes: [#example, #query, #spec]
+}
+
+^["concept_index"]{
+ primary: [#svg_host, #illustration, #widget, #interactive_component, #asset_strategy, #inline_vs_external, #brace_pivot, #authoring_ladder]
+ surfaces: [#mobile, #touch, #keyboard, #inspectability, #wonder, #spw_backed_pages]
+ tensions: [#ornament, #pointer_bias, #dom_weight, #a11y, #host_sprawl]
+ transfers: [#page, #region, #component, #asset, #runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? keep SVG honest about whether it is art, a widget, or a region-owning component",
+  "< choose the simplest host that preserves inspectability",
+  "$ record inline versus external rules before adding surfaces",
+  "^ make node identity and region ownership explicit",
+  "% preserve calm defaults while allowing a deeper diagrammatic register",
+  "& require touch, keyboard, and pointer paths to collapse into one semantic account"
+ ]
+ gates: [#host_truth, #mobile_truth, #inspectability, #containment, #wonder_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#svg_host_contract]
+ parallelizable: [#asset_strategy_note, #surface_inventory, #pretext_bridge]
+ shared_hot_files: ["public/css/style.css", "public/js/spw-shared.js", "public/js/spw-component-semantics.js", "index.html", "about/index.html", "topics/software/index.html", "topics/software/pretext/index.html"]
+ merge_risks: [#id_collision, #naming_drift, #runtime_sprawl, #interaction_collision]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@site, @semantics, @runtime_plan]
+ carries: [#taxonomy, #host_contract, #asset_rules, #implementation_order, #validation]
+}
+
+^["interaction_depth"]{
+ subjects: [#illustration_layers, #widget_controls, #subtarget_focus, #local_pivots, #mobile_containment, #spw_projection]
+ questions: [#what_is_static, #what_is_addressable, #what_is_local_state]
+ qualities: [#clarity, #containment, #legibility, #wonder]
+}
+
+^["risk_model"]{
+ hard_failures: [#dead_svg_semantics, #pointer_only_targets, #private_runtime_state]
+ soft_failures: [#overdraw, #host_overengineering, #decorative_motion]
+ recoveries: [#shared_hosts, #stable_ids, #inline_external_split, #register_projection]
+ non_negotiables: [#touch_path, #keyboard_path, #reduced_motion, #fallback_legibility]
+}
+
+^["validation"]{
+ hypotheses: [#shared_svg_host_prevents_surface_splintering, #inline_external_rules_reduce_authoring_drag, #mobile_first_svg_is_teachable]
+ negative_controls: [#route_structure_unchanged, #hand_authored_html_preserved, #calm_defaults_preserved]
+ demo_path: ["/#constellation-frame", "/topics/software/#interactive-codeblocks", "/topics/software/pretext/"]
+}
+
+^["stream"]{
+ >>[2026-04-09 21:06] observe - The site currently has no committed SVG assets; the most illustration-like surface on the home page is still a raster image with layered PNG overlays in `#constellation-frame`.
+ >>[2026-04-09 21:06] observe - Existing interactive surfaces already point toward the need for SVG hosts: interactive codeblocks on the software page, the Pretext lab's projection surfaces, and the land-cluster / constellation material all want diagrams that can stay linked to semantics.
+ >>[2026-04-09 21:06] observe - `spw-component-semantics.js` and `style.css` already provide orthogonal kind/form/role/liminality/selection axes, which means SVG should enter as another host surface in the same grammar rather than as a separate mini-framework.
+ >>[2026-04-09 21:06] decide - Plan around a four-part split: SVG surface taxonomy, inline-versus-external asset rules, host/runtime contracts, and an authoring ladder for future Spw-backed components and pages.
+ >>[2026-04-09 21:06] decide - Keep the runtime dependency explicit: mobile runtime doctrine, prefix/postfix symmetry, and brace pivots come first; SVG should intensify the surface model, not fork it.
+ >>[2026-04-09 21:06] taste - Wonder should come from layers becoming structurally legible on inspection, not from perpetual animated SVG decoration.
+}
+
+^["open"]{
+ ?[taxonomy]: "What is the cleanest boundary between a static illustration, an addressable illustration, a widget, and a region-owning interactive component?"
+ ?[hosting]: "Which SVG surfaces should stay external files and which should be inlined into HTML for inspectability and local pivots?"
+ ?[semantics]: "How should SVG subtargets inherit or declare kind, form, role, liminality, and selection without becoming verbose markup noise?"
+ ?[touch]: "What is the mobile-first inspect gesture or focus path for subtargets inside a bounded SVG host?"
+ ?[pivots]: "Which SVG interactions should count as local pivots into deeper structure rather than navigations or generic overlays?"
+ ?[authoring]: "What is the smallest host contract that future Spw-backed components can target without requiring a build step?"
+ ?[fallback]: "How should a scripted SVG widget degrade when JavaScript or motion features are unavailable?"
+ ?[wonder]: "Which layers of revelation feel magical because they expose relation, not because they add motion?"
+}
+
+^["commits"]{
+ ~[1]: "#[svg] - capture the SVG surface integration plan and distilled taxonomy"
+ ~[2]: ".[svg] - formalize SVG host semantics, authoring rules, and brace-aware interaction contracts"
+ ~[3]: "&[svg] - add shared SVG host runtime and containment primitives"
+ ~[4]: "&[widgets] - integrate first SVG widgets and inspectable illustrations into site surfaces"
+ ~[5]: "![svg] - verify touch, keyboard, reduced-motion, and fallback behavior"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@d4e504661006b947d6f60591814b8f21020bed96"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "index.html, about/index.html, topics/software/index.html, topics/software/pretext/index.html, public/css/style.css, public/js/spw-shared.js, public/js/site.js, public/js/spw-component-semantics.js, public/js/spw-console.js"
+ ~#next_commit: "1"
+ ~#open_count: "8"
+ ~#last_stream: "2026-04-09 21:06"
+ ~#taste_debt: "Do not let SVG become a novelty channel or a framework-shaped escape hatch around the site's hand-authored semantics."
+}
+
+^["done"]{
+}

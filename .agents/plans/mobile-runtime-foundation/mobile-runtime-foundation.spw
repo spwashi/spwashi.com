@@ -1,6 +1,6 @@
 # mobile-runtime-foundation
 # Distilled semantics note for mobile-first regions, portable interaction intent,
-# shared registers, and future block/script UI.
+# shared registers, semantic reflection, and future block/script UI.
 
 #>mobile_runtime_foundation
 #:semantics #!surface
@@ -19,8 +19,8 @@
 }
 
 ^["thesis"]{
- claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, visible tools become projections of shared registers, and wonder arrives through pivots into clearer structure."
- why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable cognitive machine if its runtime surfaces are named, queryable, reversible, and portable across input modes."
+ claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, visible tools become projections of shared registers, semantic HTML acts as the canonical reflection surface, and wonder arrives through symmetric pivots into clearer structure."
+ why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable cognitive machine if its runtime surfaces are named, queryable, reversible, portable across input modes, and mirrored truthfully in the accessibility tree."
 }
 
 ^["page_regions"]{
@@ -91,9 +91,9 @@
 }
 
 ^["prefix_postfix_symmetry"]{
- definition: "Prefix/postfix symmetry means the grammar can be entered from either direction: intent then target (prefix) or target then available intent (postfix), with both paths reducing to the same semantic trace."
- prefix_path: "Keyboard-friendly cast or primer model: select operator family first, then choose target."
- postfix_path: "Touch- and inspection-friendly path: address a target first, then reveal the transforms or operators that apply to it."
+definition: "Prefix/postfix symmetry means the grammar can be entered from either direction: intent then target (prefix) or target then available intent (postfix), with both paths reducing to the same semantic trace."
+prefix_path: "Keyboard-friendly cast or primer model: select operator family first, then choose target."
+postfix_path: "Touch- and inspection-friendly path: address a target first, then reveal the transforms or operators that apply to it."
  invariants: [
   "Prefix and postfix paths should write the same register facts for equivalent outcomes.",
   "A target that exposes postfix affordances should also be reachable through a prefix cast when the grammar supports it.",
@@ -103,9 +103,49 @@
  falsify: "If replaying a prefix and postfix path yields different register histories for the same user-visible result, the symmetry is false."
 }
 
+^["reflection_symmetry"]{
+ definition: "Reflection symmetry means the visible runtime, the interaction grammar, and the semantic HTML/accessibility tree tell the same story about what is present, open, focused, active, or selected."
+ forms: [
+  "interaction symmetry - prefix and postfix paths reduce to the same semantic trace",
+  "spatial symmetry - mirrored or rotated layouts preserve the same interaction meaning where symmetry is claimed",
+  "semantic reflection - landmarks, headings, labels, and state-bearing controls mirror runtime truth"
+ ]
+ invariants: [
+  "A visible pivot should have an equally truthful semantic reflection in HTML state.",
+  "A surface claimed as mirrored should preserve parity for touch, keyboard, and assistive technology paths.",
+  "Reflection is not decorative duplication; it is the same fact projected into another semantic medium."
+ ]
+ counterexample: "A panel appears open visually, but the owning control does not expose the right expanded state, label, or relationship in the accessibility tree."
+ falsify: "If a screen-reader user and a visual user would derive different active structure from the same state, reflection symmetry is broken."
+}
+
+^["html_accessibility_structures"]{
+ definition: "Native HTML accessibility structures are the primary semantic hosts of cognitive surfaces on the web. They are not fallback markup; they are the canonical reflection surface."
+ landmarks: [
+  "header/nav/main/article/section/aside/footer for region identity and hierarchy",
+  "h1-h6 for local naming and recursive orientation",
+  "figure/figcaption for framed illustrations and diagrams",
+  "ul/ol/li and table/caption/th for enumerable or matrix-like knowledge surfaces"
+ ]
+ controls: [
+  "a and button as primary invoke hosts",
+  "details/summary for inline expansion when it remains local",
+  "dialog or popover-backed structures for summoned pivots with explicit ownership and dismissal",
+  "fieldset/legend, label/input/output for inspectable control surfaces"
+ ]
+ rules: [
+  "Prefer native semantics first; use ARIA to clarify, not to re-author what HTML already knows.",
+  "Every region should have a landmark or an accessible naming path.",
+  "Every pivot should expose owner, title, state, and dismissal in semantic HTML.",
+  "If a visual projection introduces information not present in the DOM tree, provide a truthful semantic mirror."
+ ]
+ counterexample: "A visually rich lens or widget whose state is only discoverable by hovering or by reading generated SVG nodes with no semantic host in the page structure."
+ falsify: "If removing CSS leaves the page structurally incoherent or if assistive technology cannot recover the same hierarchy and state, the semantic host contract is too weak."
+}
+
 ^["register_runtime"]{
- definition: "A register is a named runtime surface that records state as queryable structure rather than ad hoc module-local memory."
- required: [
+definition: "A register is a named runtime surface that records state as queryable structure rather than ad hoc module-local memory."
+required: [
   "region register - which region owns primary attention, which are secondary, which are latent",
   "focus register - which component is being inspected, invoked, or held",
   "route register - current page, frame, and hash selection",
@@ -125,9 +165,28 @@
  falsify: "If two inspect surfaces disagree about current active state, the register boundary is wrong or missing."
 }
 
+^["fractal_surface_geometry"]{
+ definition: "Fractal surface geometry means the site's cognitive surfaces repeat the same structural logic across scales: page, region, frame, panel, widget, and node each behave like locally bounded chambers with names, boundaries, inspect paths, pivots, and returns."
+ scale_ladder: [
+  "page -> named route-scale chamber",
+  "region -> major containment and ownership zone",
+  "frame -> primary addressable unit",
+  "panel or lens -> local sub-chamber or reflective face",
+  "widget -> bounded instrument or projection host",
+  "node -> smallest inspectable target"
+ ]
+ invariants: [
+  "Each scale should have a boundary, a name, an inspect path, an action path, and a return path.",
+  "Learning the grammar at one scale should help predict the next smaller or larger scale.",
+  "Fractal here means recursive structure, not visual ornament or literal fractal rendering."
+ ]
+ counterexample: "A widget whose interaction model, naming, and escape path bear no relation to the frame or region that contains it."
+ falsify: "If users must relearn a different grammar at each depth level, the recursive model is metaphor only and not doing cognitive work."
+}
+
 ^["brace_physics_and_pivots"]{
- definition: "Brace physics governs how a surface opens a face to attention; a pivot is a reversible reorganization into a new local structure while preserving the originating address."
- rules: [
+definition: "Brace physics governs how a surface opens a face to attention; a pivot is a reversible reorganization into a new local structure while preserving the originating address."
+rules: [
   "On mobile, one opened brace face should dominate per region stack.",
   "A pivot should preserve origin, current target, and dismissal path.",
   "Nested structure should feel like entering a local chamber, not teleporting into an unrelated page."
@@ -142,12 +201,13 @@
 }
 
 ^["blocks_and_scripts"]{
- definition: "A block is a declarative UI object with named inputs, stable identity, and inspectable state. A script is an explicitly hosted behavior bound to a block or region with a visible lifecycle."
- preparation: [
+definition: "A block is a declarative UI object with named inputs, stable identity, and inspectable state. A script is an explicitly hosted behavior bound to a block or region with a visible lifecycle."
+preparation: [
   "Give blocks stable ids, roles, and host regions before giving them a richer language surface.",
+  "Ensure the semantic HTML mirror exists before richer visual or scripted projections are layered on.",
   "Treat scripts as hosted behaviors with mount, update, and dispose boundaries, not arbitrary inline mutation.",
   "Keep the browser runtime separate from the full Spw parser. The near-term goal is a host contract, not language execution."
- ]
+]
  host_contract: {
   block: "stable identity, semantic kind, inspect label, mount target, data inputs"
   script: "declared owner, lifecycle hooks, allowed effects, register writes"
@@ -175,11 +235,11 @@
 }
 
 ^["implementation_order"]{
- 1: "Name regions in markup and expose region reads from shared runtime helpers."
+ 1: "Name regions in markup, give them native landmark or naming reflection, and expose region reads from shared runtime helpers."
  2: "Introduce a semantic keyboard dispatcher and portable interaction intent as a thin translation layer above raw DOM events."
- 3: "Normalize prefix and postfix paths into shared registers, then refactor navigator and console into honest projections."
- 4: "Prepare page, block, and script host contracts once region and register ownership are stable."
- 5: "Add wonder surfaces only when pivots and inspectability already tell the truth."
+ 3: "Normalize prefix/postfix and visual/semantic reflection paths into shared registers, then refactor navigator and console into honest projections."
+ 4: "Prepare page, block, and script host contracts once region, register, and semantic reflection ownership are stable."
+ 5: "Add wonder surfaces only when pivots, inspectability, and semantic reflection already tell the truth."
 }
 
 ^["non_goals"]{

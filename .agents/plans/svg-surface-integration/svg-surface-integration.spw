@@ -1,0 +1,125 @@
+# svg-surface-integration
+# Distilled semantics note for SVG illustrations, widgets, and interactive
+# components in the site's mobile-first design ecosystem.
+
+#>svg_surface_integration
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["roots"]{
+ @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @site: ~".spw/site.spw"
+ @site_semantics: ~".spw/conventions/site-semantics.spw"
+ @shared: ~"public/js/spw-shared.js"
+ @components: ~"public/js/spw-component-semantics.js"
+ @css: ~"public/css/style.css"
+}
+
+^["thesis"]{
+ claim: "SVG should enter the site as a first-class host surface for diagrams, illustrations, widgets, and interactive components, but only when it strengthens inspectability, local pivots, or structural legibility."
+ why: "This keeps SVG from becoming either dead ornament or an ad hoc app framework. The same surface can stay mobile-first, brace-aware, and authorable by future Spw-backed components if the host contract is explicit."
+}
+
+^["surface_taxonomy"]{
+ static_illustration: "External SVG or raster-backed art with no local state. It may be framed and captioned, but it does not expose subtargets."
+ addressable_illustration: "Usually inline SVG. The whole illustration is a block surface, but selected nodes or layers can be inspected as local structure."
+ widget: "A compact bounded instrument with one primary question or transformation. It may expose a few controls or highlights, but it should not own the whole region."
+ interactive_component: "A larger host-backed surface with local registers, reversible pivots, and explicit inspect/invoke paths."
+ invariants: [
+  "Every SVG surface should answer whether it is illustration, widget, or component before runtime behavior is added.",
+  "A widget should remain bounded and teachable in one glance.",
+  "An interactive component should name its host region, owner, and dismissal path."
+ ]
+}
+
+^["asset_strategy"]{
+ external: [
+  "Use external SVG or image files for static art, large illustrations, or surfaces that do not need node-level semantics.",
+  "Keep authored source files in `public/images/illustrations/` when the art should be reusable outside page markup."
+ ]
+ inline: [
+  "Inline SVG when nodes must be inspectable, keyboard-addressable, styleable through CSS variables, or bound to runtime state.",
+  "Keep inline markup small enough to remain hand-auditable in page source."
+ ]
+ reuse: [
+  "Use `symbol` / `use` for repeated motifs only when the resulting DOM still preserves stable inspect labels and node ids.",
+  "Prefer CSS custom properties for palette and state rather than hard-coded fills spread through markup."
+ ]
+ geometry: [
+  "Every SVG host needs a stable `viewBox`, predictable aspect ratio behavior, and a width strategy that survives narrow screens.",
+  "Avoid absolute pixel assumptions for hit areas; touch affordances should be sized semantically, not artistically."
+ ]
+}
+
+^["host_contract"]{
+ host_fields: [
+  "stable host id",
+  "region owner",
+  "semantic kind/form/role defaults",
+  "accessible label or title/desc path",
+  "data inputs",
+  "fallback text or static rendering path",
+  "optional script owner"
+ ]
+ node_fields: [
+  "stable node id",
+  "inspect label",
+  "hit region semantics",
+  "optional role override",
+  "pivot target if local structure opens"
+ ]
+ rule: "A host can project many nodes, but one runtime owner should normalize inspect, invoke, hold, traverse, and dismiss semantics for them."
+}
+
+^["interaction_semantics"]{
+ inspect: "Touch focus, keyboard focus, long-press, or hover may all reveal node address, but hover is never the only path."
+ invoke: "A node may toggle a layer, change a local register, or open a local pivot if that consequence stays inspectable."
+ hold: "Used to keep a layer or node explanation visible without committing a deeper pivot."
+ traverse: "Keyboard or assistive traversal should move among inspectable nodes without requiring arbitrary pointer precision."
+ dismiss: "Closes the pivot, layer sheet, or node detail and restores the prior brace stack."
+ symmetry: "Prefix paths such as cast-then-target and postfix paths such as inspect-target-then-choose-action should reduce to the same register facts."
+}
+
+^["brace_physics"]{
+ illustration: "Usually a block surface. The image condenses relation; inspection may open small brace faces within it."
+ widget: "Usually a block host with brace-like controls or local reveal planes."
+ component: "A component may pivot from a surface block into a local chamber, sheet, or deeper region while preserving origin."
+ mobile_rule: "On narrow screens, one opened face per SVG host at a time. Additional depth collapses into a local sheet or explicit pivot."
+ falsify: "If an SVG interaction opens structure with no visible origin or dismissal path, the brace contract has failed."
+}
+
+^["authoring_ladder"]{
+ items: [
+  "static external illustration",
+  "captioned illustration with explicit host semantics",
+  "inline addressable illustration with stable node ids",
+  "host-backed widget reading or writing shared registers",
+  "interactive component with explicit pivots and inspect surfaces",
+  "Spw-backed page assembled from SVG-capable blocks and scripts"
+ ]
+}
+
+^["wonder"]{
+ definition: "Wonder appears when a user sees a relation become legible inside a surface they were already oriented within."
+ rules: [
+  "Reveal layers, correspondences, or transforms; do not rely on perpetual animation.",
+  "A quiet surface should become richer when addressed, then settle again when dismissed.",
+  "If the same insight survives without the flourish, keep the structure and discard the flourish."
+ ]
+}
+
+^["implementation_order"]{
+ 1: "Choose the taxonomy and inline-versus-external rules."
+ 2: "Define the host contract and register boundary."
+ 3: "Add shared SVG runtime helpers and CSS containment primitives."
+ 4: "Integrate a first illustration and a first widget on existing pages."
+ 5: "Only then add deeper interactive components or Spw-backed SVG blocks."
+}
+
+^["non_goals"]{
+ items: [
+  "Do not turn SVG into a replacement for ordinary semantic HTML.",
+  "Do not add a build step just to compile or hydrate simple illustrations.",
+  "Do not let node-level interactivity outrun mobile inspectability or accessible naming."
+ ]
+}
