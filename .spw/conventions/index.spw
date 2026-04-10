@@ -13,6 +13,8 @@
   @style_development: ~"./style-development.spw"
   @design_whimsy: ~"./design-whimsy.spw"
   @cognitive_navigation: ~"./cognitive-navigation.spw"
+  @electromagnetic_containers: ~"./electromagnetic-containers.spw"
+  @precipitates_projections: ~"./precipitates-and-projections.spw"
   @asset_management: ~"./asset-management.spw"
   @operator_semantics: ~"./operator-semantics.spw"
   @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
@@ -25,6 +27,9 @@
   style: @style_development
   assets: @asset_management
   operators: @operator_semantics
+  cognition: @cognitive_navigation
+  containers: @electromagnetic_containers
+  versioning: @precipitates_projections
   selection: @workbench_selection
   naming: @workbench_naming
   submodule: @workbench_submodule
