@@ -71,6 +71,59 @@
   selected: "The component is the current route, hash target, or canonical anchor."
 }
 
+^"operator_interaction_semantics"{
+  rule: "Every visible operator must carry an interaction meaning, even if that meaning is inspect-only or unavailable in the current context."
+  baseline: { token: ".", intent: "settle", interaction: "return to a local baseline, member, or default lens" }
+  frame: { token: "#", intent: "orient", interaction: "activate or inspect a named frame or schema" }
+  layer: { token: "#:", intent: "qualify", interaction: "inspect interpretive role, layer, or runtime constraint" }
+  object: { token: "^", intent: "elevate", interaction: "open or inspect structured content" }
+  ref: { token: "~", intent: "refer", interaction: "resolve reference without forcing commitment" }
+  probe: { token: "?", intent: "inquire", interaction: "ask, filter, or reveal an exploratory lens" }
+  action: { token: "@", intent: "act", interaction: "commit a local action or projection" }
+  stream: { token: "*", intent: "flow", interaction: "connect to dynamic or event-like content" }
+  merge: { token: "&", intent: "integrate", interaction: "overlay, compare, or combine fields" }
+  binding: { token: "=", intent: "bind", interaction: "name, pin, or categorize a local value" }
+  meta: { token: "$", intent: "reflect", interaction: "inspect the medium, trace, or register itself" }
+  normalize: { token: "%", intent: "scale", interaction: "compare, normalize, or adjust salience" }
+  pragma: { token: "!", intent: "constrain", interaction: "apply or inspect a runtime force or constraint" }
+  surface: { token: ">", intent: "project", interaction: "move into or inspect a rendered projection" }
+  counterexample: "A sigil receives an operator color but clicking, focusing, or inspecting it gives no semantic account of what the operator could do."
+}
+
+^"metaphysics_model"{
+  rule: "Metaphysics is a modeling layer for attention and projection, not permission for vague effects."
+  charge: "Stored tendency in a brace or component that can bias a later projection, inspection, or pivot."
+  bias: "A directional preference that changes which projection becomes salient without erasing alternative paths."
+  discharge: "A visible or semantic release of stored charge into a projection, action, or reflected register state."
+  conservation: "Charge may decay, transfer, or bias a projection, but it should not silently mutate unrelated surfaces."
+  falsify: "If the same visual effect can be removed without changing interaction, inspectability, or projection choice, it is not metaphysics in the model; it is decoration."
+}
+
+^"brace_charge_and_bias"{
+  rule: "Some braces may store charge, but a charged brace must be inspectable, bounded, and reversible."
+  storage_hosts: ["frame", "panel", "lens", "widget"]
+  charge_sources: ["focus dwell", "held inspection", "explicit binding", "operator sequence", "recent projection"]
+  projection_bias: "Charge may prefer a lens, surface, or pivot when the user asks for depth, but it must not hide other available interactions."
+  decay_rule: "Charge should either decay, transfer through registers, or be discharged by an explicit action; it should not become permanent hidden state."
+  counterexample: "A frame remembers a hidden mode forever after a hover and later sends the user into a surprising projection with no inspectable cause."
+}
+
+^"exploration_safety"{
+  rule: "Clicking or tapping an addressable thing and getting no visible response must not make the rest of the interaction field feel inert."
+  outcomes: [
+    "invoke - something committed",
+    "inspect - structure or address became clearer",
+    "unavailable - the surface explains that the operator has no current target",
+    "pass-through - the event does nothing locally and does not trap focus, state, or future exploration"
+  ]
+  invariants: [
+    "No interaction may leave the runtime in a blocked cast, trapped focus, or half-open pivot state.",
+    "A no-op should preserve all other exploration paths.",
+    "Unavailable behavior should be diagnosable through title, label, console, register, or local inspect surface before it becomes frustrating."
+  ]
+  counterexample: "A visitor taps a sigil, nothing happens, focus disappears, and subsequent operator chips or frame traversal no longer feel discoverable."
+}
+
 ^"translation_contract"{
   sources: [@selection, @naming, @brace_physics, @literate_ui, @symmetry_ui]
   ui_binding: "public/js/spw-component-semantics.js and public/css/style.css should express these axes declaratively."
@@ -81,5 +134,8 @@
 ^"invariant"{
   "Kind, form, role, liminality, and selection are orthogonal axes, not one collapsed label.",
   "Brace and block should grow more familiar across pages before they grow more ornamental.",
-  "Selection should reveal address, not merely click state."
+  "Selection should reveal address, not merely click state.",
+  "Every operator should be inspectable as intent before it is used as action.",
+  "Metaphysical charge and projection bias must be visible to inspection or treated as nonexistent.",
+  "A failed or unavailable interaction should keep the rest of the interaction field explorable."
 }

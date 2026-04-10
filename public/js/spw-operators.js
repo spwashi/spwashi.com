@@ -6,11 +6,16 @@
 // Operator family reference (from .spw workbench):
 //   #>name     frame declaration — names and anchors a unit
 //   #:layer    layer marker — marks the interpretive role of a frame
+//   .member    baseline/member — settles into the local baseline or lens
 //   ^"name"    object — holds structured, inspectable content
 //   ~"path"    reference — carries a path or literal anchor
 //   ?[...]     probe — stores a question or interactive unit
 //   @action    action — triggers a behavior or projection
 //   *stream    stream — connects to dynamic or event-driven content
+//   &merge      merge — overlays or integrates fields
+//   =binding    binding — names, pins, or categorizes values
+//   $meta       meta — reflects on the medium or register
+//   %normalize  normalize — adjusts comparable salience or scale
 //   !pragma    pragma — encodes a runtime constraint or hint
 //   >surface   surface — a projected or rendered view
 
@@ -29,7 +34,9 @@ const annotateSignals = () => {
         const op = detectOperator(text);
         if (op && !sigil.dataset.spwOperator) {
             sigil.dataset.spwOperator = op.type;
-            if (!sigil.title) sigil.title = op.label;
+            sigil.dataset.spwOperatorIntent = op.intent;
+            sigil.dataset.spwOperatorInteraction = op.interaction;
+            if (!sigil.title) sigil.title = `${op.label}: ${op.interaction}`;
         }
     }
 };

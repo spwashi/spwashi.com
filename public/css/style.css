@@ -62,12 +62,27 @@
     --op-layer-color: var(--ink-soft);
     --op-layer-border: rgba(14, 18, 20, 0.14);
     --op-layer-bg-soft: rgba(255, 255, 255, 0.5);
+    --op-baseline-color: hsl(42 18% 30%);
+    --op-baseline-border: rgba(14, 18, 20, 0.16);
+    --op-baseline-bg-soft: rgba(255, 255, 255, 0.58);
     --op-pragma-color: hsl(0 40% 38%);
     --op-pragma-border: hsla(0, 40%, 38%, 0.18);
     --op-pragma-bg-soft: rgba(255, 240, 240, 0.65);
     --op-stream-color: hsl(160 60% 32%);
     --op-stream-border: hsla(160, 60%, 32%, 0.22);
     --op-stream-bg-soft: rgba(231, 249, 242, 0.68);
+    --op-merge-color: hsl(188 55% 34%);
+    --op-merge-border: hsla(188, 55%, 34%, 0.22);
+    --op-merge-bg-soft: rgba(232, 247, 250, 0.68);
+    --op-binding-color: hsl(24 65% 34%);
+    --op-binding-border: hsla(24, 65%, 34%, 0.22);
+    --op-binding-bg-soft: rgba(255, 242, 232, 0.68);
+    --op-meta-color: hsl(220 45% 36%);
+    --op-meta-border: hsla(220, 45%, 36%, 0.2);
+    --op-meta-bg-soft: rgba(236, 241, 255, 0.68);
+    --op-normalize-color: hsl(95 34% 34%);
+    --op-normalize-border: hsla(95, 34%, 34%, 0.2);
+    --op-normalize-bg-soft: rgba(239, 248, 230, 0.68);
     --op-surface-color: hsl(180 70% 30%);
     --op-surface-border: rgba(0, 128, 128, 0.24);
     --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
@@ -1300,6 +1315,13 @@ figcaption {
     --spw-operator-bg-soft: var(--op-layer-bg-soft);
 }
 
+[data-spw-operator="baseline"] {
+    /* .member - local baseline, default lens, or grounded percept */
+    --spw-operator-color: var(--op-baseline-color);
+    --spw-operator-border: var(--op-baseline-border);
+    --spw-operator-bg-soft: var(--op-baseline-bg-soft);
+}
+
 [data-spw-operator="pragma"] {
     /* !pragma — runtime constraint, also muted but slightly stronger */
     --spw-operator-color: var(--op-pragma-color);
@@ -1312,6 +1334,34 @@ figcaption {
     --spw-operator-color: var(--op-stream-color);
     --spw-operator-border: var(--op-stream-border);
     --spw-operator-bg-soft: var(--op-stream-bg-soft);
+}
+
+[data-spw-operator="merge"] {
+    /* &merge - overlay or integration of fields */
+    --spw-operator-color: var(--op-merge-color);
+    --spw-operator-border: var(--op-merge-border);
+    --spw-operator-bg-soft: var(--op-merge-bg-soft);
+}
+
+[data-spw-operator="binding"] {
+    /* =binding - naming, pinning, or categorization */
+    --spw-operator-color: var(--op-binding-color);
+    --spw-operator-border: var(--op-binding-border);
+    --spw-operator-bg-soft: var(--op-binding-bg-soft);
+}
+
+[data-spw-operator="meta"] {
+    /* $meta - metacognitive reflection on the medium */
+    --spw-operator-color: var(--op-meta-color);
+    --spw-operator-border: var(--op-meta-border);
+    --spw-operator-bg-soft: var(--op-meta-bg-soft);
+}
+
+[data-spw-operator="normalize"] {
+    /* %normalize - comparable scale or salience */
+    --spw-operator-color: var(--op-normalize-color);
+    --spw-operator-border: var(--op-normalize-border);
+    --spw-operator-bg-soft: var(--op-normalize-bg-soft);
 }
 
 [data-spw-operator="surface"] {
@@ -1332,13 +1382,27 @@ figcaption {
 [data-spw-features~="operators"] [data-spw-operator="probe"],
 [data-spw-features~="operators"] [data-spw-operator="action"],
 [data-spw-features~="operators"] [data-spw-operator="layer"],
+[data-spw-features~="operators"] [data-spw-operator="baseline"],
 [data-spw-features~="operators"] [data-spw-operator="pragma"],
+[data-spw-features~="operators"] [data-spw-operator="stream"],
+[data-spw-features~="operators"] [data-spw-operator="merge"],
+[data-spw-features~="operators"] [data-spw-operator="binding"],
+[data-spw-features~="operators"] [data-spw-operator="meta"],
+[data-spw-features~="operators"] [data-spw-operator="normalize"],
+[data-spw-features~="operators"] [data-spw-operator="surface"],
 [data-spw-features~="console"] .spw-console [data-spw-operator="object"],
 [data-spw-features~="console"] .spw-console [data-spw-operator="ref"],
 [data-spw-features~="console"] .spw-console [data-spw-operator="probe"],
 [data-spw-features~="console"] .spw-console [data-spw-operator="action"],
 [data-spw-features~="console"] .spw-console [data-spw-operator="layer"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="pragma"] {
+[data-spw-features~="console"] .spw-console [data-spw-operator="baseline"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="pragma"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="stream"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="merge"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="binding"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="meta"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="normalize"],
+[data-spw-features~="console"] .spw-console [data-spw-operator="surface"] {
     background: var(--spw-operator-bg-soft);
 }
 

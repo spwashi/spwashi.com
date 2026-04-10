@@ -19,8 +19,8 @@
 }
 
 ^["thesis"]{
- claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, interaction semantics describe intent rather than device events, visible tools become projections of shared registers, semantic HTML acts as the canonical reflection surface, and wonder arrives through symmetric pivots into clearer structure."
- why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable cognitive machine if its runtime surfaces are named, queryable, reversible, portable across input modes, and mirrored truthfully in the accessibility tree."
+ claim: "The next useful runtime abstraction is not page-phase identity. It is a mobile-first surface model in which regions own containment, every operator carries interaction semantics, interaction describes intent rather than device events, visible tools become projections of shared registers, semantic HTML acts as the canonical reflection surface, and wonder arrives through symmetric pivots into clearer structure."
+ why: "This keeps metaphor aligned to implementation. A calm public site can still behave like an inspectable cognitive machine if its runtime surfaces are named, queryable, reversible, portable across input modes, truthfully mirrored in the accessibility tree, and safe to keep exploring after a no-op or unavailable interaction."
 }
 
 ^["page_regions"]{
@@ -70,6 +70,33 @@
  }
  counterexample: "A component tag or control label that appears only on pointer hover and has no tap, focus, or inspect path."
  falsify: "If a coarse-pointer user cannot reveal the same address information as a fine-pointer user, the semantics are not portable."
+}
+
+^["operator_interaction_semantics"]{
+ definition: "Every operator token should map to an interaction intent before it maps to a concrete gesture. Some operators act, some inspect, some qualify, some bias projection, and some only become available in specific contexts."
+ table: [
+  ". baseline -> settle the local member or default lens",
+  "# frame -> orient to or inspect a named frame/schema",
+  "#: layer -> qualify the interpretive layer or runtime role",
+  "^ object -> open or inspect structured content",
+  "~ ref -> resolve reference without forced commitment",
+  "? probe -> inquire, filter, or reveal exploratory affordances",
+  "@ action -> commit a local action or projection",
+  "* stream -> connect dynamic/event-like content",
+  "& merge -> overlay, compare, or integrate fields",
+  "= binding -> name, pin, or categorize a local value",
+  "$ meta -> reflect on the medium, trace, or register",
+  "% normalize -> compare or adjust salience/scale",
+  "! pragma -> apply or inspect runtime force or constraint",
+  "> surface -> project into rendered view or surface"
+ ]
+ invariants: [
+  "Operator annotation should expose type, intent, and interaction text.",
+  "An operator may be inspect-only in a given context, but it should never be meaning-free.",
+  "Unavailable operator behavior should explain absence of target rather than feel like a broken click."
+ ]
+ counterexample: "An operator chip is visually colored, receives focus, and can be clicked, but no title, label, register, or local response can explain what it means."
+ falsify: "If a scan of visible operator tokens finds any token without interaction semantics, the operator contract is incomplete."
 }
 
 ^["ux_machine"]{
@@ -198,6 +225,42 @@ rules: [
  ]
  counterexample: "Tapping a component silently replaces the whole page or opens a floating panel with no visible relation to the originating structure."
  falsify: "If a user cannot name what opened from what, or if dismissal cannot restore the prior brace stack, the pivot contract is broken."
+}
+
+^["charge_and_bias_projection"]{
+ definition: "A charged brace stores an inspectable tendency that can bias later projection, attention, or pivot choice without removing alternative paths."
+ charge_sources: [
+  "focus dwell",
+  "held inspection",
+  "explicit binding",
+  "operator sequence",
+  "recent projection"
+ ]
+ bias_rules: [
+  "Charge may prefer a lens, surface, or pivot when depth is requested.",
+  "Bias should be visible through inspect state, register trace, or local explanation.",
+  "Charge should decay, transfer, or discharge; hidden permanent preference is not allowed.",
+  "Projection bias may reorder salience but should not make other valid interactions unreachable."
+ ]
+ counterexample: "A user unknowingly accumulates hidden charge on a frame and later clicks a neutral control that opens an unexpected projection with no inspectable cause."
+ falsify: "If projection choice changes because of stored state that cannot be inspected or reset, the charge model is too magical and must be removed or exposed."
+}
+
+^["exploration_safety"]{
+ definition: "An unavailable or no-op interaction must preserve the user's ability to continue exploring the rest of the field."
+ allowed_outcomes: [
+  "invoke - visible or semantic state commits",
+  "inspect - address or structure becomes clearer",
+  "unavailable - absence of target is explained",
+  "pass-through - no local effect, no trapped state"
+ ]
+ invariants: [
+  "A click or tap should not leave the runtime in a blocked cast, trapped focus, or half-open pivot.",
+  "A no-op should keep neighboring operator paths and frame traversal intact.",
+  "Repeated no-response interactions should be diagnosable, not demoralizing."
+ ]
+ counterexample: "The visitor taps a sigil, nothing happens, focus is lost, and the surrounding operator grammar now feels inert or unsafe to explore."
+ falsify: "If a no-response path suppresses later exploration or leaves state inconsistent, it is a bug even when no feature was meant to fire."
 }
 
 ^["blocks_and_scripts"]{
