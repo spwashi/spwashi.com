@@ -14,7 +14,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease), box-shadow var(--charge-release-duration) var(--charge-release-ease);
 }
 
 .frame-sigil:hover,
@@ -24,7 +24,7 @@
     background: var(--token-bg-hover);
     border-color: var(--token-border-strong);
     transform: translateY(-1.5px);
-    box-shadow: 0 3px 8px rgba(0, 128, 128, 0.12);
+    box-shadow: var(--shadow);
 }
 
 .frame-sigil.is-selected,
@@ -103,7 +103,7 @@
     color: inherit;
     box-sizing: border-box;
     box-shadow: var(--card-shadow);
-    transition: border-color 120ms ease, background 120ms ease;
+    transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
     overflow: hidden;
 }
 
@@ -198,7 +198,7 @@ a.frame-card {
     border-radius: 999px;
     padding: 0.22rem 0.58rem;
     cursor: pointer;
-    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease), box-shadow var(--charge-release-duration) var(--charge-release-ease);
 }
 
 .syntax-token:hover,
@@ -207,7 +207,7 @@ a.frame-card {
     background: rgba(0, 128, 128, 0.1);
     border-color: rgba(0, 128, 128, 0.42);
     transform: translateY(-1.5px);
-    box-shadow: 0 2px 6px rgba(0, 128, 128, 0.1);
+    box-shadow: var(--shadow);
 }
 
 .source-list li {
@@ -367,7 +367,7 @@ figcaption {
     color: inherit;
     text-decoration: none;
     box-shadow: var(--card-shadow);
-    transition: border-color 120ms ease, background 120ms ease;
+    transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
 }
 
 .operator-card:hover,
@@ -423,7 +423,7 @@ figcaption {
     text-decoration: none;
     font-size: 0.9rem;
     line-height: 1;
-    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease);
 }
 
 .operator-ring-nav a:hover,

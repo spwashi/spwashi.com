@@ -37,10 +37,36 @@
     --floating-bg-warm: rgba(255, 251, 242, 0.92);
     --floating-shadow: none;
     --floating-shadow-side: none;
-    --shadow: none;
-    --shadow-active: none;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-active: 0 8px 24px rgba(0, 0, 0, 0.08);
     --radius: 8px;
     --radius-sm: 6px;
+
+    /* ─── Cinematic Timing Handles ─── */
+    --duration-instant: 50ms;
+    --duration-fast: 120ms;
+    --duration-base: 200ms;
+    --duration-slow: 400ms;
+
+    --ease-settle: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-reveal: cubic-bezier(0, 0, 0, 1);
+    --ease-pivot: cubic-bezier(0.4, 0, 0.2, 1);
+
+    --brace-settle-duration: var(--duration-base);
+    --brace-settle-ease: var(--ease-settle);
+    --pivot-arc-duration: var(--duration-slow);
+    --pivot-arc-ease: var(--ease-pivot);
+    --threshold-cross-duration: var(--duration-base);
+    --threshold-cross-ease: var(--ease-reveal);
+    --charge-release-duration: var(--duration-fast);
+    --charge-release-ease: var(--ease-reveal);
+
+    /* ─── Depth and Layering ─── */
+    --depth-ambient: 1;
+    --depth-settled: 10;
+    --depth-active: 50;
+    --depth-projected: 100;
+
     --active-op-color: hsl(180 100% 28%);
     --active-op-border: rgba(0, 128, 128, 0.34);
     --active-op-bg-soft: rgba(0, 128, 128, 0.06);

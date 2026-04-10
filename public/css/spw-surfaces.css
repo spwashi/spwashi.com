@@ -1019,7 +1019,7 @@ html[data-spw-navigator="hidden"] [data-spw-features~="navigator"] .spw-nav {
 [data-spw-features~="console"] .spw-console.is-idle:not(:hover):not(:focus-within) {
     opacity: 0.76;
     transform: translateY(0.22rem);
-    box-shadow: 0 10px 24px rgba(14, 18, 20, 0.1);
+    box-shadow: var(--shadow-active);
 }
 
 [data-spw-features~="console"] .spw-console.is-collapsed.is-idle:not(:hover):not(:focus-within) {

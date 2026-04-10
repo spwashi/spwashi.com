@@ -63,7 +63,7 @@
 [data-spw-selection="selected"] > .spw-component-tag {
     opacity: 1;
     border-color: rgba(0, 128, 128, 0.24);
-    box-shadow: 0 4px 10px rgba(0, 128, 128, 0.08);
+    box-shadow: var(--shadow-active);
 }
 
 [data-spw-selection="selected"] > .spw-component-tag {
@@ -130,7 +130,7 @@
     color: var(--ink-soft);
     opacity: 0.55;
     transform: translateY(0.12rem);
-    transition: opacity 160ms ease, transform 160ms ease;
+    transition: opacity var(--brace-settle-duration) var(--brace-settle-ease), transform var(--brace-settle-duration) var(--brace-settle-ease);
 }
 
 [data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
@@ -153,7 +153,7 @@
     overflow: hidden;
     white-space: nowrap;
     opacity: 0;
-    transition: max-width 180ms ease, opacity 180ms ease;
+    transition: max-width var(--brace-settle-duration) var(--brace-settle-ease), opacity var(--brace-settle-duration) var(--brace-settle-ease);
 }
 
 [data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-items,
