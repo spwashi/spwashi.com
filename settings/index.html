@@ -64,6 +64,7 @@
 
                 <form class="settings-form" data-site-settings-form>
                     <div class="settings-grid">
+                        <!-- === Navigation & Interface === -->
                         <fieldset class="settings-fieldset">
                             <legend>Surface map</legend>
                             <label class="settings-option">
@@ -128,6 +129,382 @@
                                 <span class="settings-option-copy">
                                     <strong>On</strong>
                                     <span>Let scrolling update the active frame and console with @viewport.activate.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Accessibility === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Reduce motion</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="reduceMotion" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Allow smooth transitions and animations.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="reduceMotion" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Minimize motion and use instant transitions.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>High contrast</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="highContrast" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Use standard color contrast.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="highContrast" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Increase color contrast for better readability.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Font size preset</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="fontSize" value="small">
+                                <span class="settings-option-copy">
+                                    <strong>Small</strong>
+                                    <span>Compact text layout.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="fontSize" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Standard readable size.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="fontSize" value="large">
+                                <span class="settings-option-copy">
+                                    <strong>Large</strong>
+                                    <span>Larger, more accessible text.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Appearance === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Color mode</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="colorMode" value="auto" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Auto</strong>
+                                    <span>Follow system preference (light/dark).</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="colorMode" value="light">
+                                <span class="settings-option-copy">
+                                    <strong>Light</strong>
+                                    <span>Force light theme.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="colorMode" value="dark">
+                                <span class="settings-option-copy">
+                                    <strong>Dark</strong>
+                                    <span>Force dark theme.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Operator saturation</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="operatorSaturation" value="muted">
+                                <span class="settings-option-copy">
+                                    <strong>Muted</strong>
+                                    <span>Softer operator colors.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="operatorSaturation" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Standard vibrance.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="operatorSaturation" value="vibrant">
+                                <span class="settings-option-copy">
+                                    <strong>Vibrant</strong>
+                                    <span>More saturated operator colors.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Animation intensity</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="animationIntensity" value="reduced">
+                                <span class="settings-option-copy">
+                                    <strong>Reduced</strong>
+                                    <span>Subtle, minimal animations.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="animationIntensity" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Standard animation speed and feel.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="animationIntensity" value="enhanced">
+                                <span class="settings-option-copy">
+                                    <strong>Enhanced</strong>
+                                    <span>More pronounced transitions.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Developer === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Debug mode</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="debugMode" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide debug information.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="debugMode" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Show debug overlays and frame boundaries.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Show frame metadata</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="showFrameMetadata" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide frame role and liminality data.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="showFrameMetadata" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Display semantic metadata on frames.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Verbose logging</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="verboseLogging" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Minimal console output.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="verboseLogging" value="on">
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Detailed runtime logs in browser console.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Typography === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Font size scale</legend>
+                            <div class="settings-scale-group">
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSizeScale" value="80">
+                                    <span class="settings-option-copy"><strong>80%</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSizeScale" value="90">
+                                    <span class="settings-option-copy"><strong>90%</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSizeScale" value="100" checked>
+                                    <span class="settings-option-copy"><strong>100%</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSizeScale" value="110">
+                                    <span class="settings-option-copy"><strong>110%</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSizeScale" value="120">
+                                    <span class="settings-option-copy"><strong>120%</strong></span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Line spacing</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="lineSpacing" value="compact">
+                                <span class="settings-option-copy">
+                                    <strong>Compact</strong>
+                                    <span>Tighter line height.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="lineSpacing" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Standard line height.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="lineSpacing" value="loose">
+                                <span class="settings-option-copy">
+                                    <strong>Loose</strong>
+                                    <span>More space between lines.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Monospace font</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="monospaceVariant" value="system">
+                                <span class="settings-option-copy">
+                                    <strong>System</strong>
+                                    <span>Default system monospace.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="monospaceVariant" value="jetbrains" checked>
+                                <span class="settings-option-copy">
+                                    <strong>JetBrains Mono</strong>
+                                    <span>Optimized for code and terminals.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="monospaceVariant" value="courier">
+                                <span class="settings-option-copy">
+                                    <strong>Courier</strong>
+                                    <span>Classic typewriter style.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Component Visibility === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Show footer</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="showFooter" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Display footer on all pages.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="showFooter" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide footer to maximize content space.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Header opacity</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="headerOpacity" value="low">
+                                <span class="settings-option-copy">
+                                    <strong>Low</strong>
+                                    <span>Subtle, transparent header.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="headerOpacity" value="normal" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Normal</strong>
+                                    <span>Standard header visibility.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="headerOpacity" value="high">
+                                <span class="settings-option-copy">
+                                    <strong>High</strong>
+                                    <span>Solid, prominent header.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Show spec pills</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="showSpecPills" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Display metadata badges on frames.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="showSpecPills" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Hide specification badges.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <!-- === Performance === -->
+                        <fieldset class="settings-fieldset">
+                            <legend>Animation throttling</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="animationThrottling" value="off" checked>
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Full animation fidelity.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="animationThrottling" value="light">
+                                <span class="settings-option-copy">
+                                    <strong>Light</strong>
+                                    <span>Reduce frame rate slightly.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="animationThrottling" value="heavy">
+                                <span class="settings-option-copy">
+                                    <strong>Heavy</strong>
+                                    <span>Significantly reduce animations for performance.</span>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Image lazy loading</legend>
+                            <label class="settings-option">
+                                <input type="radio" name="imageLazyLoading" value="on" checked>
+                                <span class="settings-option-copy">
+                                    <strong>On</strong>
+                                    <span>Load images only when they enter viewport.</span>
+                                </span>
+                            </label>
+                            <label class="settings-option">
+                                <input type="radio" name="imageLazyLoading" value="off">
+                                <span class="settings-option-copy">
+                                    <strong>Off</strong>
+                                    <span>Load all images immediately.</span>
                                 </span>
                             </label>
                         </fieldset>
