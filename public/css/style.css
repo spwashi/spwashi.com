@@ -1,6 +1,7 @@
 @import url('/public/css/enhancements.css');
 @import url('/public/css/svg-surfaces.css');
 @import url('/public/css/spw-whimsy.css');
+@import url('/public/css/whimsy-enhancements.css');
 
 @property --active-op-color {
     syntax: '<color>';
