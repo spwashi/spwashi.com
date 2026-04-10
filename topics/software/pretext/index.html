@@ -50,7 +50,7 @@
                 <h1>Pretext Field Lab</h1>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation" data-spw-role="orientation">
-                        <p>This is a small observatory for Pretext.js: one prepared text handle, several widths, and a live view of how lines reflow without touching DOM measurement APIs.</p>
+                        <p>This is a small observatory for Pretext.js: edit one text sample, project it at several widths, and watch line breaks update without DOM measurement APIs.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" data-spw-role="schema" hidden>
                         <pre><code>import { prepare, layout } from '@chenglou/pretext'
@@ -64,7 +64,7 @@ const { height, lineCount } = layout(prepared, 400, 24)
 </code></pre>
                     </section>
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="surface" data-spw-role="projection" hidden>
-                        <p>The lab below uses the line-producing path so the resulting wraps can be rendered directly into visible surfaces. The essential idea stays the same: prepare once, reuse the handle as widths change.</p>
+                        <p>The lab below renders the lines returned by the library directly into visible surfaces. The useful idea is simple: prepare once, then reuse the handle as widths change.</p>
                     </section>
                 </div>
                 <div class="frame-operators" aria-label="Pretext routes">
@@ -82,7 +82,7 @@ const { height, lineCount } = layout(prepared, 400, 24)
                     <a class="frame-sigil" href="#pretext-observatory">?["line_break_observatory"]</a>
                     <h2>Line Break Observatory</h2>
                 </div>
-                <p class="inline-note">Edit the text, change the width, and watch the same prepared handle fan out across phone, tablet, and poster surfaces.</p>
+                <p class="inline-note">Edit the text, change the width, and watch the same prepared handle fan out across phone, tablet, and poster views.</p>
                 <div class="pretext-lab-grid">
                     <div class="frame-panel pretext-controls-panel" data-spw-role="control" data-spw-meaning="control surface">
                         <label class="pretext-field">
@@ -136,7 +136,7 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                         </div>
                         <ul class="source-list">
                             <li><span class="source-name">Prepare phase</span> runs when text or whitespace mode changes.</li>
-                            <li><span class="source-name">Layout phase</span> reruns as widths change.</li>
+                            <li><span class="source-name">Layout phase</span> reruns when widths change.</li>
                             <li><span class="source-name">Rendering</span> shows the actual lines returned by the library.</li>
                         </ul>
                     </div>
@@ -175,25 +175,26 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                     <a class="frame-sigil" href="#pretext-recipes">~"integration_recipes"</a>
                     <h2>Why Explore It</h2>
                 </div>
+                <p class="inline-note">The demo is small, but the pattern applies to places where layout stability matters before text is on screen.</p>
                 <div class="frame-grid">
                     <div class="frame-panel">
                         <h3>Chat and stream surfaces</h3>
-                        <p>Predict bubble heights before text lands so scrolling and anchoring feel intentional instead of reactive.</p>
+                        <p>Predict bubble heights before text lands so scrolling and anchoring feel intentional.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Virtualized knowledge lists</h3>
-                        <p>Estimate paragraph heights without creating hidden DOM mirrors for every item in the list.</p>
+                        <p>Estimate paragraph heights without creating hidden DOM mirrors for every list item.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Multilingual interfaces</h3>
-                        <p>Use the same API for Latin, CJK, Arabic, Hebrew, Korean, and mixed-script surfaces.</p>
+                        <p>Use the same API for Latin, CJK, Arabic, Hebrew, Korean, and mixed-script text.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Responsive probes</h3>
                         <p>Prepare once, then ask what the same text would do at phone, tablet, or desktop widths.</p>
                     </div>
                 </div>
-                <p class="inline-note">This page keeps the demo close to the software surface of the site, while the official playground remains the best place for exhaustive API exploration.</p>
+                <p class="inline-note">This page keeps the demo close to the site's software thread. The official playground remains the best place for exhaustive API exploration.</p>
             </section>
         </article>
     </main>

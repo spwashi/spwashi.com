@@ -2,31 +2,50 @@
 #:layer #!design
 
 ^"spirit"{
-  whimsy_name: "awaiting-spirit-name"
-  description: "Midjourney render: exploring teal presence and digital identity for site favicon/branding"
-  visual_qualities: "geometric, teal-tinted, modern, symmetrical"
+  whimsy_name: "threshold-poise"
+  description: "Teal presence at the edge of symmetry—contained, calm, poised at the boundary. Ready for crossing."
+  visual_qualities: "teal-gradient, centered, calm, boundary-like, architectural"
 }
 
 ^"thematic_mapping"{
   operator: "frame"
   valence: "boon"
   spirit_phase: "threshold"
+  liminality: "threshold"
   source: "Midjourney"
-  status: "awaiting-naming"
+  status: "named-and-optimized"
 }
 
 ^"usage"{
   surfaces: [
-    { surface: "icons", role: "favicon-candidate", context: "site-branding" }
+    { surface: "motifs", role: "icon-candidate", context: "site-favicon-brand" }
   ]
   dimensions: { width: 1024, height: 1024 }
-  formats_available: ["png"]
-  alt_text: "Digital presence exploration in teal, Midjourney render"
+  formats_available: ["avif", "webp", "png"]
+  alt_text: "Threshold poise: teal presence at the boundary, calm and contained"
+}
+
+^"optimization"{
+  optimized_on: "2026-04-10T13:45:00Z"
+  original_size_bytes: 1645807
+  original_size_human: "1.6M"
+  compression_ratio: 0.40
+  variants: [
+    { tier: "icon", size: "64x64", quality: 40 }
+    { tier: "display", size: "256x256", quality: 60 }
+    { tier: "large", size: "512x512", quality: 75 }
+  ]
+  formats_generated: ["avif", "webp", "png"]
+  total_variant_size_bytes: 658460
+  total_variant_size_human: ".6M"
+  compression_notes: "Excellent compression on all tiers; AVIF particularly efficient at display and large sizes"
 }
 
 ^"discovery"{
-  tags: ["midjourney", "favicon", "teal", "branding", "digital-identity"]
-  status: "render-archive"
+  tags: ["midjourney", "favicon", "teal", "branding", "threshold", "frame"]
+  spirit_name: "threshold-poise"
+  status: "optimized-ready-for-deployment"
   previous_names: ["spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d"]
-  notes: "Ready for naming-magic skill interaction or direct use"
+  related_images: []
+  notes: "9 variants generated (3 tiers × 3 formats); ready for use in UI or as site icon"
 }

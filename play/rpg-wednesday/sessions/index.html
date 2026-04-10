@@ -43,7 +43,7 @@
                     <span class="domain-kicker">event log · dated</span>
                 </div>
                 <h1>Sessions</h1>
-                <p>Each Wednesday session is logged at <code>/play/rpg-wednesday/sessions/YYYY-MM-DD/</code>. Newest first, following the same operator grammar described on the <a href="/topics/software/#spw-grammar-surface">software surface</a>.</p>
+                <p>This is the dated source of truth for RPG Wednesday. Each session belongs at <code>/play/rpg-wednesday/sessions/YYYY-MM-DD/</code>, newest first, so arcs, world notes, and cast references can grow from actual play.</p>
                 <nav class="frame-operators" aria-label="RPG Wednesday routes">
                     <a class="operator-chip" href="/play/">play</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">#&gt; rpg wednesday</a>
@@ -60,7 +60,7 @@
                     <a class="frame-sigil" href="#local-gameplay-kit">@local_gameplay_kit</a>
                     <h2>Local Gameplay Kit</h2>
                 </div>
-                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, and session-log seeds. Static campaign routes remain available either way.</p>
+                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, and session-log seeds. The static campaign routes remain available either way.</p>
             </section>
 
             <section class="site-frame" id="session-entries">
@@ -68,7 +68,7 @@
                     <a class="frame-sigil" href="#session-entries">@sessions</a>
                     <h2>Log</h2>
                 </div>
-                <p class="inline-note">No sessions logged yet. When a session happens, add a folder at <code>sessions/YYYY-MM-DD/index.html</code> and link it here. The route logic behind that shape is documented more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
+                <p class="inline-note">No sessions logged yet. When a session happens, add a folder at <code>sessions/YYYY-MM-DD/index.html</code> and link it here. The route shape is documented more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
                 <div class="frame-grid" id="session-list">
                     <!-- Session entries go here in reverse chronological order.
                          Each entry is a .frame-card with:
@@ -90,27 +90,27 @@
                     <a class="frame-sigil" href="#session-format">?["session_format"]</a>
                     <h2>Session Format</h2>
                 </div>
-                <p class="inline-note">What a session page at <code>/YYYY-MM-DD/</code> should contain.</p>
+                <p class="inline-note">A session page should be short enough to write after play, but structured enough to feed the rest of the campaign record.</p>
                 <ul class="syntax-list">
                     <li>
                         <span class="syntax-token">@date</span>
-                        <span>the session date as the frame sigil — stable, sortable identity</span>
+                        <span>The session date as the frame sigil: stable, sortable identity.</span>
                     </li>
                     <li>
                         <span class="syntax-token">^"recap"</span>
-                        <span>what happened — 2–5 sentences, plain prose, no spoiler protection needed</span>
+                        <span>What happened: 2-5 sentences in plain prose.</span>
                     </li>
                     <li>
                         <span class="syntax-token">~cast</span>
-                        <span>which characters appeared — links to cast pages when those exist</span>
+                        <span>Which characters appeared, with links to cast pages when those exist.</span>
                     </li>
                     <li>
                         <span class="syntax-token">?[turning_point]</span>
-                        <span>the moment the session pivoted — one line, added after the fact</span>
+                        <span>The moment the session pivoted, added after the fact.</span>
                     </li>
                     <li>
                         <span class="syntax-token">~arc</span>
-                        <span>which arc this session belongs to, if one has been named</span>
+                        <span>Which arc this session belongs to, if one has been named.</span>
                     </li>
                 </ul>
             </section>
@@ -124,22 +124,22 @@
                     <a class="frame-card" href="/play/rpg-wednesday/">
                         <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
                         <strong>RPG Wednesday</strong>
-                        <span>orientation, current arc, and the top-level game surface</span>
+                        <span>Orientation, current status, and the top-level game surface.</span>
                     </a>
                     <a class="frame-card" href="/play/rpg-wednesday/world/">
                         <span class="frame-card-sigil">^world_register</span>
                         <strong>World</strong>
-                        <span>stable setting notes, places, factions, and reusable lore as they accumulate</span>
+                        <span>Stable setting notes, places, factions, and reusable lore as they accumulate.</span>
                     </a>
                     <a class="frame-card" href="/play/rpg-wednesday/cast/">
                         <span class="frame-card-sigil">~cast_register</span>
                         <strong>Cast</strong>
-                        <span>recurring PCs and NPCs once they become useful reference nodes</span>
+                        <span>Recurring PCs and NPCs once they become useful references.</span>
                     </a>
                     <a class="frame-card" href="/play/rpg-wednesday/arcs/">
                         <span class="frame-card-sigil">?[arc_register]</span>
                         <strong>Arcs</strong>
-                        <span>story threads grouped across multiple sessions after patterns actually emerge</span>
+                        <span>Story threads grouped across multiple sessions after patterns emerge.</span>
                     </a>
                 </div>
             </section>

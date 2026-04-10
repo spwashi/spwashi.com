@@ -50,8 +50,8 @@
                 <h1>RPG Wednesday</h1>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="orientation">
-                        <p>A recurring Wednesday tabletop RPG session. This surface holds the <a href="/play/rpg-wednesday/sessions/">session log</a>, <a href="/play/rpg-wednesday/world/">world</a>, and <a href="/play/rpg-wednesday/cast/">cast</a> — each session is a dated event; the world and characters are the persistent frame beneath them. The local gameplay kit below stores private table state in this browser for use during play.</p>
-                        <p class="frame-note">The next design layer is a local media staging table: players upload their own character, item, place, and artifact images, frame them in screenshot-ready cards, then manually capture those cards for external image or animation tools.</p>
+                        <p>A recurring Wednesday tabletop RPG session. This page starts with the table tools, then points to the <a href="/play/rpg-wednesday/sessions/">session log</a>, <a href="/play/rpg-wednesday/world/">world</a>, and <a href="/play/rpg-wednesday/cast/">cast</a>.</p>
+                        <p class="frame-note">Sessions are dated events. The world and cast are persistent references that become useful after details recur. The local gameplay kit stores private table state in this browser for use during play.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="system" hidden>
                         <pre><code>#&gt;rpg_wednesday
@@ -66,8 +66,8 @@
 }</code></pre>
                     </section>
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="structure" hidden>
-                        <p>Sessions are events at a specific moment in time. The world is a stable object that sessions act inside. Cast members are reference nodes — they point outward to the sessions where they appeared. Arcs are probes: open questions carried across multiple sessions.</p>
-                        <p class="frame-note">The URL structure here was derived directly from the Spw operator model. See the <a href="/topics/software/#spw-grammar-surface">grammar surface</a> and the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> notes.</p>
+                        <p>Sessions are events at specific moments in time. The world is the stable setting those events happen inside. Cast members are references back into sessions. Arcs are open questions carried across multiple sessions.</p>
+                        <p class="frame-note">The URL structure follows the Spw operator model. See the <a href="/topics/software/#spw-grammar-surface">grammar surface</a> and the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> notes.</p>
                     </section>
                 </div>
                 <nav class="frame-operators" aria-label="RPG Wednesday routes">
@@ -87,7 +87,7 @@
                     <a class="frame-sigil" href="#local-gameplay-kit">@local_gameplay_kit</a>
                     <h2>Local Gameplay Kit</h2>
                 </div>
-                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, a table dashboard, and copyable session-log seeds. Static campaign routes remain available either way.</p>
+                <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, a table dashboard, and copyable session-log seeds. The campaign pages remain readable without it.</p>
             </section>
 
             <section class="site-frame rpg-capture-roadmap" id="asset-capture-roadmap" data-spw-role="projection" data-spw-meaning="planned local asset capture frames">
@@ -95,12 +95,12 @@
                     <a class="frame-sigil" href="#asset-capture-roadmap">@asset_capture_frames</a>
                     <h2>Asset Capture Frames</h2>
                 </div>
-                <p class="inline-note">Planned next: a private, browser-local asset register for images players provide themselves. The site will stage the image and text; the player takes the screenshot and chooses what to do with it outside the site.</p>
+                <p class="inline-note">Planned next: a private browser-local asset register for player-provided images. The site stages the image and text; the player captures the card and decides what to do with it outside the site.</p>
                 <div class="capture-preset-grid" aria-label="Planned capture frame presets">
                     <div class="capture-preset capture-preset--portrait">
                         <span class="frame-card-sigil">4:5</span>
                         <strong>Character portrait</strong>
-                        <span>Name, role, faction, palette, and mood in a clean vertical frame.</span>
+                        <span>Name, role, faction, palette, and mood in a clean vertical format.</span>
                     </div>
                     <div class="capture-preset capture-preset--square">
                         <span class="frame-card-sigil">1:1</span>
@@ -110,26 +110,26 @@
                     <div class="capture-preset capture-preset--wide">
                         <span class="frame-card-sigil">16:9</span>
                         <strong>Place card</strong>
-                        <span>Location, scene context, weather, threat level, and wide screenshot composition.</span>
+                        <span>Location, scene context, weather, threat level, and a wide composition.</span>
                     </div>
                     <div class="capture-preset capture-preset--tall">
                         <span class="frame-card-sigil">9:16</span>
                         <strong>Threat reveal</strong>
-                        <span>A mobile-first vertical frame for foes, omens, clocks, and dramatic reveals.</span>
+                        <span>A vertical format for foes, omens, clocks, and dramatic reveals.</span>
                     </div>
                 </div>
                 <div class="frame-grid">
                     <div class="frame-panel">
                         <h3>Storage boundary</h3>
-                        <p>Images should live in IndexedDB; localStorage should keep only metadata such as ids, labels, tags, selected motif, and active capture preset.</p>
+                        <p>Images should live in IndexedDB. localStorage should keep only metadata such as ids, labels, tags, selected motif, and active capture preset.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Prompt companion</h3>
-                        <p>Prompt text should describe subject, role, mood, palette, scene context, style constraints, and negative notes without hard-coding any external service workflow.</p>
+                        <p>Prompt text should describe subject, role, mood, palette, scene context, style constraints, and negative notes without assuming a specific external service.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Screenshot mode</h3>
-                        <p>Controls recede, contrast increases, the frame locks to an aspect ratio, and an exit path remains visible. No automatic capture is required.</p>
+                        <p>Controls recede, contrast increases, the frame locks to an aspect ratio, and an exit path remains visible. The screenshot stays manual.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Exploration motifs</h3>
@@ -146,7 +146,7 @@
                 <div class="frame-grid">
                     <div class="frame-panel">
                         <h3>Arc</h3>
-                        <p class="frame-note">No arc recorded yet. Add one when a thread emerges across sessions, then surface it on the <a href="/play/rpg-wednesday/arcs/">arc register</a>.</p>
+                        <p class="frame-note">No arc recorded yet. Add one only after a thread emerges across sessions, then list it on the <a href="/play/rpg-wednesday/arcs/">arc register</a>.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Last Session</h3>
@@ -158,7 +158,7 @@
                     </div>
                     <div class="frame-panel">
                         <h3>Active Cast</h3>
-                        <p class="frame-note">No cast recorded yet. <a href="/play/rpg-wednesday/cast/">Add characters</a> when they recur enough to become useful reference nodes.</p>
+                        <p class="frame-note">No cast recorded yet. <a href="/play/rpg-wednesday/cast/">Add characters</a> when they recur enough to become useful references.</p>
                     </div>
                 </div>
             </section>
@@ -171,19 +171,19 @@
                 <ul class="syntax-list">
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/sessions/">@ sessions</a>
-                        <span>dated event log — each session at <code>/YYYY-MM-DD/</code>, ordered newest first</span>
+                        <span>Dated event log, ordered newest first, with each session at <code>/YYYY-MM-DD/</code>.</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/world/">^ world</a>
-                        <span class="frame-note">setting register — currently a placeholder until sessions create enough stable lore to warrant it</span>
+                        <span class="frame-note">Setting notes, currently a placeholder until sessions create enough stable lore to warrant it.</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/cast/">~ cast</a>
-                        <span class="frame-note">character register — currently a placeholder until characters recur enough to become reference nodes</span>
+                        <span class="frame-note">Character references, currently a placeholder until characters recur enough to be useful.</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
-                        <span class="frame-note">story-thread register — currently a placeholder because arcs emerge from sessions, never planned in advance</span>
+                        <span class="frame-note">Story threads, currently a placeholder because arcs should emerge from sessions instead of being forced in advance.</span>
                     </li>
                 </ul>
             </section>

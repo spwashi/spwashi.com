@@ -43,7 +43,7 @@
                     <span class="domain-kicker">creative · games · sessions</span>
                 </div>
                 <h1>Play</h1>
-                <p>Surfaces for games, sessions, and ongoing creative work. Each game gets its own frame; each session is a dated event in the log. <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the first full example.</p>
+                <p>This is the route for games, sessions, and creative tools. Each game gets a home page, each session gets a dated log entry, and <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the first full example.</p>
                 <nav class="frame-operators" aria-label="Play routes">
                     <a class="operator-chip" aria-current="page" href="/play/">play surface</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
@@ -58,16 +58,17 @@
                     <a class="frame-sigil" href="#play-register">^"play_register"{</a>
                     <h2>Active Games</h2>
                 </div>
+                <p class="inline-note">Start with the game surface for context, then use the session log when you want the dated record.</p>
                 <div class="frame-grid">
                     <a class="frame-card" href="/play/rpg-wednesday/">
                         <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
                         <strong>RPG Wednesday</strong>
-                        <span>a recurring tabletop session — session log, world, and cast</span>
+                        <span>A recurring tabletop session with a session log, world notes, cast references, and local tools.</span>
                     </a>
                     <a class="frame-card" href="/play/rpg-wednesday/sessions/">
                         <span class="frame-card-sigil">@session_log</span>
                         <strong>Session Log</strong>
-                        <span>reverse-chronological register for dated session events and future arc links</span>
+                        <span>The dated log where play becomes source material for arcs, world notes, and cast references.</span>
                     </a>
                 </div>
             </section>
@@ -80,30 +81,30 @@
                 <ul class="syntax-list">
                     <li>
                         <a class="syntax-token" href="/play/">&gt; /play/</a>
-                        <span>top-level surface for games and creative sessions</span>
+                        <span>Top-level surface for games and creative sessions</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/">#&gt; /play/[game]/</a>
-                        <span>a named game surface — orientation, arc, cast, and session index</span>
+                        <span>A named game surface with orientation, current status, and links to the campaign records</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/sessions/">^ /play/[game]/sessions/</a>
-                        <span>session log — ordered by date, each session at <code>/YYYY-MM-DD/</code></span>
+                        <span>Session log, ordered by date, with each session at <code>/YYYY-MM-DD/</code></span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/world/">^ /play/[game]/world/</a>
-                        <span>stable setting — regions, factions, persistent lore</span>
+                        <span>Stable setting notes: regions, factions, rules, and persistent lore</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/cast/">~ /play/[game]/cast/</a>
-                        <span>character index — PCs and notable NPCs as reference nodes</span>
+                        <span>Character index for PCs and notable NPCs once they become useful references</span>
                     </li>
                     <li>
                         <a class="syntax-token" href="/play/rpg-wednesday/arcs/">?[ /play/[game]/arcs/</a>
-                        <span>narrative arcs — session groupings by story thread</span>
+                        <span>Narrative arcs grouped by story thread after patterns emerge</span>
                     </li>
                 </ul>
-                <p class="frame-note">Each URL segment maps to a Spw operator role. Sessions use <code>/YYYY-MM-DD/</code> dates — stable, sortable, and human-readable without sequential IDs. The route grammar is documented on the <a href="/topics/software/#spw-grammar-surface">software surface</a> and developed more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
+                <p class="frame-note">The route structure follows the Spw operator model. Sessions use <code>/YYYY-MM-DD/</code> dates because they are stable, sortable, and readable without sequential IDs. The grammar is introduced on the <a href="/topics/software/#spw-grammar-surface">software surface</a> and developed more deeply in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
             </section>
         </article>
     </main>
