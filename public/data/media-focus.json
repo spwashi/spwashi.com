@@ -92,6 +92,13 @@
   ],
   "featuredTopics": [
     {
+      "operator": "~",
+      "title": "Author craft ramps",
+      "summary": "Fragments, motifs, files, and screenshot prompts give writers a small web surface to touch.",
+      "href": "/topics/craft/",
+      "tag": "craft"
+    },
+    {
       "operator": "$",
       "title": "Attention has handles",
       "summary": "A frame can invite inspection without grabbing the whole room by the collar.",

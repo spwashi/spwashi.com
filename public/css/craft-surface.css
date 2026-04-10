@@ -23,7 +23,7 @@
     --craft-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
-[data-spw-surface="craft"] body {
+body[data-spw-surface="craft"] {
     background:
         radial-gradient(circle at 12% 12%, hsla(344, 62%, 42%, 0.10), transparent 28rem),
         radial-gradient(circle at 88% 18%, hsla(176, 70%, 30%, 0.12), transparent 30rem),
@@ -58,10 +58,16 @@
 }
 
 [data-spw-surface="craft"] .site-frame {
+    border-radius: 8px;
     border-color: rgba(16, 132, 123, 0.20);
     background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(244, 252, 249, 0.78)),
         linear-gradient(90deg, rgba(16, 132, 123, 0.06), rgba(194, 43, 82, 0.06));
+}
+
+[data-spw-surface="craft"] .frame-card,
+[data-spw-surface="craft"] .operator-chip {
+    border-radius: 8px;
 }
 
 [data-spw-surface="craft"] .frame-note,
