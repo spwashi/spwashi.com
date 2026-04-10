@@ -4,8 +4,8 @@
  */
 
 [data-spw-surface="craft"] {
-    --bg: hsl(168 38% 94%);
-    --bg-deep: hsl(214 42% 91%);
+    --bg: hsl(42 64% 92%);
+    --bg-deep: hsl(44 54% 84%);
     --surface: rgba(255, 255, 255, 0.78);
     --surface-strong: rgba(255, 255, 255, 0.94);
     --surface-soft: rgba(244, 252, 249, 0.74);
@@ -27,19 +27,7 @@ body[data-spw-surface="craft"] {
     background: var(--bg);
 }
 
-[data-spw-surface="craft"] main {
-    font-family: var(--craft-serif);
-}
-
-[data-spw-surface="craft"] h1,
-[data-spw-surface="craft"] h2,
-[data-spw-surface="craft"] h3,
-[data-spw-surface="craft"] h4,
-[data-spw-surface="craft"] .spec-kicker,
-[data-spw-surface="craft"] .operator-chip,
-[data-spw-surface="craft"] .frame-sigil {
-    font-family: var(--craft-sans);
-}
+/* craft uses site-default JetBrains Mono; --craft-serif kept for drop-cap + caption use */
 
 [data-spw-surface="craft"] h1 {
     font-size: 2.65rem;
@@ -65,10 +53,6 @@ body[data-spw-surface="craft"] {
     border-radius: 8px;
 }
 
-[data-spw-surface="craft"] .frame-note,
-[data-spw-surface="craft"] .inline-note {
-    font-family: var(--craft-sans);
-}
 
 [data-spw-surface="craft"] a:not(.operator-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card) {
     color: var(--craft-accent);

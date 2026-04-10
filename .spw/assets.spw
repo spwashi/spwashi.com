@@ -42,15 +42,21 @@
     illustrations: {
       path: ~"../public/images/assets/illustrations/"
       purpose: "Site illustrations, backgrounds, decorative elements"
-      status: "ready-for-populating"
-      images: []
+      status: "active"
+      images: [
+        { name: "lore-land-signal-poster.png", spirit: "signal-atlas", role: "domain-illustration" },
+        { name: "lore-land-og-card.jpg", spirit: "lore-atlas-card", role: "social-preview" },
+        { name: "home-og-card.jpg", spirit: "prism-workbench-card", role: "social-preview" }
+      ]
     }
 
     motifs: {
       path: ~"../public/images/assets/motifs/"
       purpose: "Reusable design motifs — operator palettes, constellation patterns, UI elements"
-      status: "ready-for-populating"
-      images: []
+      status: "active"
+      images: [
+        { name: "spwashi-alchemy-token.png", spirit: "threshold-seal", role: "identity-token" }
+      ]
     }
   }
 
@@ -60,6 +66,9 @@
     studies: [
       { date: "2026-03-10", name: "favicon-study", status: "optimized-and-named", images: 1, content: [
         { spirit_name: "threshold-poise", variants: ["icon", "display", "large"], formats: ["avif", "webp", "png"] }
+      ]},
+      { date: "2026-04-10", name: "papergami-machinery-study", status: "archived-source-and-extracted", images: 11, content: [
+        { spirit_name: "papergami-machinery", variants: ["raw", "raw-2x2", "social-card", "study-panels"], formats: ["png", "jpg", "webp"] }
       ]}
     ]
   }

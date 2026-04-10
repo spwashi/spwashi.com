@@ -1450,3 +1450,168 @@ body[data-spw-surface="blog"] [data-attn-active] {
 body[data-spw-surface="blog"] .atelier-theme-toggle {
     touch-action: pan-y;
 }
+
+/* ── Spw Dialect dimension ──
+ * Cards are Spw.b block geometry: containment, brace physics, charge.
+ * Transitions are Spw.l line geometry: compact, search-laser, single-line.
+ * Buttons are Spw.x executable geometry: @profile:Spw.x, committed action.
+ *
+ * Each operator card takes a spectral slice from the global --op-X-color
+ * tokens defined in :root. Left edge accumulates charge (operator color);
+ * the soft bg wash is the operator's field at rest.
+ *
+ * Reference: .spw/_workbench/.spw/registries/dialect-spec.spw
+ *            .spw/_workbench/.spw/registries/brace-physics.spw
+ */
+
+/* Operator prism — spectral color assignments per sigil */
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="frame"]
+    { --card-op: var(--op-frame-color);    --card-op-bg: var(--op-frame-bg-soft);    }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="label"]
+    { --card-op: var(--op-baseline-color); --card-op-bg: var(--op-baseline-bg-soft); }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="layer"]
+    { --card-op: var(--op-layer-color);    --card-op-bg: var(--op-layer-bg-soft);    }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="baseline"]
+    { --card-op: var(--op-baseline-color); --card-op-bg: var(--op-baseline-bg-soft); }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="substrate"]
+    { --card-op: var(--op-meta-color);     --card-op-bg: var(--op-meta-bg-soft);     }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="ref"]
+    { --card-op: var(--op-ref-color);      --card-op-bg: var(--op-ref-bg-soft);      }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="probe"]
+    { --card-op: var(--op-probe-color);    --card-op-bg: var(--op-probe-bg-soft);    }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="action"]
+    { --card-op: var(--op-action-color);   --card-op-bg: var(--op-action-bg-soft);   }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="stream"]
+    { --card-op: var(--op-stream-color);   --card-op-bg: var(--op-stream-bg-soft);   }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="merge"]
+    { --card-op: var(--op-merge-color);    --card-op-bg: var(--op-merge-bg-soft);    }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="binding"]
+    { --card-op: var(--op-object-color);   --card-op-bg: var(--op-object-bg-soft);   }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="meta"]
+    { --card-op: var(--op-meta-color);     --card-op-bg: var(--op-meta-bg-soft);     }
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="normalize"]
+    { --card-op: var(--op-normalize-color);--card-op-bg: var(--op-normalize-bg-soft);}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator="surface"]
+    { --card-op: var(--op-surface-color);  --card-op-bg: var(--op-surface-bg-soft);  }
+
+/* Spw.b block geometry — charge accumulates on the left edge */
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--card-op, var(--blog-accent)) 44%, transparent);
+    background: color-mix(in srgb, var(--card-op-bg, var(--blog-bg-card)) 68%, var(--blog-bg-card));
+    transition: border-color 0.12s, box-shadow 0.15s, background 0.18s;
+}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]:hover,
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator][data-panel-open] {
+    box-shadow:
+        inset 3px 0 0 var(--card-op, var(--blog-accent)),
+        0 0 0 1px color-mix(in srgb, var(--card-op, var(--blog-accent)) 22%, transparent);
+}
+
+/* Sigil inherits operator color; drop-shadow filter on hover is the semantic glow */
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] .operator-snippet-sigil {
+    color: var(--card-op, var(--blog-accent));
+    transition: filter 0.22s, color 0.15s;
+}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]:hover .operator-snippet-sigil {
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--card-op, var(--blog-accent)) 50%, transparent));
+}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator] .operator-snippet-example {
+    color: color-mix(in srgb, var(--card-op, var(--blog-accent)) 90%, var(--blog-ink));
+}
+
+/* { brace mark — charge accumulator indicator, bottom-left, low-opacity */
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]::before {
+    content: "{";
+    position: absolute;
+    bottom: 0.12rem;
+    left: 0.2rem;
+    font-size: 0.58rem;
+    line-height: 1;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--card-op, var(--blog-accent));
+    opacity: 0.20;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 0;
+}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator]:hover::before {
+    opacity: 0.42;
+}
+body[data-spw-surface="blog"] .operator-snippet[data-spw-operator][data-panel-open]::before {
+    opacity: 0.55;
+}
+
+/* Spw.l line dialect — .blog-transition becomes a centered rule divider.
+ * The italic border-left style is replaced by two flanking gradient lines
+ * with the prose floating between them — compact, search geometry.
+ */
+body[data-spw-surface="blog"] .blog-transition {
+    max-width: none;
+    padding-left: 0;
+    border-left: none;
+    font-style: normal;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 0.45rem 0 0.9rem;
+    opacity: 0.72;
+}
+body[data-spw-surface="blog"] .blog-transition::before,
+body[data-spw-surface="blog"] .blog-transition::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--blog-line-strong) 35%,
+        var(--blog-line-strong) 65%,
+        transparent
+    );
+    opacity: 0.6;
+}
+
+/* Spw.x executable dialect — buttons commit without elevation */
+body[data-spw-surface="blog"] .blog-input-actions .operator-chip,
+body[data-spw-surface="blog"] button.operator-chip {
+    border-radius: 3px;
+}
+body[data-spw-surface="blog"] .blog-input-actions .operator-chip:hover,
+body[data-spw-surface="blog"] button.operator-chip:hover {
+    transform: none;
+    background: var(--blog-spw-bg);
+    border-color: var(--blog-accent);
+    box-shadow: none;
+}
+
+/* Spw.l dialect indicator — self-descriptive surface file */
+body[data-spw-surface="blog"] .spw-surface-file {
+    margin-top: 0.9rem;
+}
+body[data-spw-surface="blog"] .spw-surface-file summary {
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: var(--blog-ink-soft);
+    letter-spacing: 0.05em;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+}
+body[data-spw-surface="blog"] .spw-surface-file summary::before {
+    content: "~";
+    color: var(--op-stream-color, var(--blog-accent));
+    font-weight: 700;
+}
+body[data-spw-surface="blog"] .spw-surface-file[open] summary {
+    color: var(--blog-accent);
+}
+body[data-spw-surface="blog"] .spw-surface-file pre {
+    margin-top: 0.55rem;
+    font-size: 0.76rem;
+    line-height: 1.6;
+}

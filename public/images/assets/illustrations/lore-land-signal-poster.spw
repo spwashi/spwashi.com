@@ -1,0 +1,43 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "signal-atlas"
+  description: "Lore-land signal field rendered as a vertical atlas of notes, orbiting marks, and rippling light."
+  visual_qualities: "layered, vertical, resonant, archival, luminous"
+}
+
+^"thematic_mapping"{
+  operator: "ref"
+  valence: "honk"
+  spirit_phase: "expression"
+  liminality: "projected"
+  role: "domain-illustration"
+  context: "lore-land signal study"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "domain-art"
+  dimensions: { width: 768, height: 2048 }
+  formats_available: ["png", "webp"]
+  alt_text: "Vertical lore.land signal illustration with a glowing Spwashi mark, floating notes, and rippling water."
+}
+
+^"optimization"{
+  optimized_on: "2026-04-10T20:29:00Z"
+  original_size_bytes: 2612516
+  variants: [
+    { tier: "display", size: "640x1707", formats: ["png", "webp"] }
+  ]
+  notes: "Display variants generated for the lore.land domain page."
+}
+
+^"discovery"{
+  tags: ["lore-land", "signal", "illustration", "poster", "honk", "archive"]
+  spirit_name: "signal-atlas"
+  status: "placed"
+  previous_names: ["spwashi-logo-lore-land-signal"]
+  related_images: ["threshold-seal"]
+  notes: "Moved from public/images root into the illustrations surface."
+}

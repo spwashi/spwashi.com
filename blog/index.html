@@ -49,6 +49,40 @@
             <filter id="f-blur-soft">
                 <feGaussianBlur stdDeviation="1.5"/>
             </filter>
+            <!-- f-op-charge: semantic glow for charged/interactive operator nodes.
+                 Layered: soft outer bloom (stdDeviation=5) + precise inner halo (stdDeviation=1.5).
+                 Color driven by flood-color — set via inline style on the element. -->
+            <filter id="f-op-charge" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="bloom"/>
+                <feFlood flood-color="currentColor" flood-opacity="0.28" result="color-flood"/>
+                <feComposite in="color-flood" in2="bloom" operator="in" result="outer-glow"/>
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="inner-blur"/>
+                <feFlood flood-color="currentColor" flood-opacity="0.55" result="inner-flood"/>
+                <feComposite in="inner-flood" in2="inner-blur" operator="in" result="inner-glow"/>
+                <feMerge>
+                    <feMergeNode in="outer-glow"/>
+                    <feMergeNode in="inner-glow"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+            <!-- f-stream-wave: slow-drift turbulence for ~ stream operator elements.
+                 Semantic: periodic return through a medium — like oscillation. -->
+            <filter id="f-stream-wave" x="-8%" y="-8%" width="116%" height="116%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.18" numOctaves="2" seed="7" result="wave">
+                    <animate attributeName="baseFrequency" values="0.012 0.18;0.014 0.19;0.012 0.18" dur="4s" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="wave" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <!-- f-probe-pulse: radial ripple for ? probe operator — detects crossing without storing -->
+            <filter id="f-probe-pulse" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+                <feFlood flood-color="hsl(268 55% 42%)" flood-opacity="0.35" result="probe-color"/>
+                <feComposite in="probe-color" in2="blur" operator="in" result="halo"/>
+                <feMerge>
+                    <feMergeNode in="halo"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
         </defs>
     </svg>
     <header>
@@ -174,6 +208,40 @@
 <span class="sk-key">dimensional</span>     = { d1=[time], d2=[attention], d3=[relationship], d5=[meaning], projection = unfold -&gt; &lt;d1&lt;&gt;d2&lt;&gt;d3&lt;&gt;d5&gt; }
 <span class="sk-key">cohort_field</span>    = { emit=<span class="sk-op">@</span>projection, receivers=<span class="sk-op">?</span>[others], resonance=emit&amp;receivers, formation=<span class="sk-op">*</span>[resonance..return] }
 <span class="sk-key">discipline</span>      = { full kernel with premise, medium, dielectric, channels, ac_drift, anchor_loop, output, return }</code></pre>
+                <details class="spw-surface-file">
+                    <summary>"blog_surface.spw" — how this page describes itself</summary>
+                    <pre><code>#&gt;blog_surface
+#:layer #!dialect
+@profile:Spw.b          // default authored block geometry
+
+^"dialect_map"{
+  blocks = Spw.b         // .site-frame, .operator-snippet: containment + brace physics
+  lines  = Spw.l         // .blog-transition: compact, search geometry, single-line
+  exec   = Spw.x         // button.operator-chip: @profile:Spw.x, committed action
+}
+
+^"prism_map"{
+  #  = frame     → teal    · scope from outside   → var(--op-frame-color)
+  ^  = binding   → amber   · join without collapse → var(--op-object-color)
+  @  = ref       → blue    · points elsewhere      → var(--op-ref-color)
+  ?  = probe     → violet  · detect crossing       → var(--op-probe-color)
+  !  = action    → deep    · fires once            → var(--op-action-color)
+  ~  = stream    → green   · periodic return       → var(--op-stream-color)
+  *  = merge     → cyan    · accumulate range      → var(--op-merge-color)
+  =  = baseline  → warm    · ambient drift         → var(--op-baseline-color)
+  $  = substrate → slate   · what is shaped        → var(--op-meta-color)
+  %  = meta      → navy    · measure / reduce      → var(--op-meta-color)
+  +  = normalize → sage    · bring to form         → var(--op-normalize-color)
+  |  = surface   → teal    · presentation boundary → var(--op-surface-color)
+}
+
+?["What makes a .spw file different from Markdown?"]{
+  !probe{ "plain text stays readable; operator prefixes give LSP servers
+           stable handles for nav, hover docs, and semantic search.
+           Obsidian (or any editor) can parse the structure without
+           losing the human-readable layer." }
+}</code></pre>
+                </details>
             </section>
 
             <!-- Operator snippet reference -->
@@ -186,87 +254,87 @@
                     </div>
                 </div>
                 <h2>Operator Snippets</h2>
-                <p class="frame-note">Each sigil is a gesture. The examples below show how operators appear in Spw notation. <code>_</code> escapes a name from interpretation; labeled braces <code>{_A }_A</code> can overlap.</p>
+                <p class="frame-note">Each sigil is a gesture in <code>Spw.b</code> block geometry — the authored dialect. Cards accumulate charge from the left edge (<code>{</code>) and the color of each card is its spectral slice through the operator prism. Hover a card to feel its field. Swipe or press <code>⋯</code> to open its reduction. <code>_</code> holds a name flat; <code>{_A }_A</code> braces can overlap.</p>
                 <div class="operator-snippet-grid">
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="frame">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/frame/" data-spw-voice="frame · scope from outside" title="frame: scope from outside">#</a>
                         <span class="operator-snippet-name">frame</span>
                         <code class="operator-snippet-example">#&gt;blog_surface</code>
                         <span class="operator-snippet-note">extrinsic scope — names a container from outside</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="label">
                         <span class="operator-snippet-sigil" data-spw-voice="label · hold name flat" title="label: hold name flat">_</span>
                         <span class="operator-snippet-name">label</span>
                         <code class="operator-snippet-example">?_query &nbsp; {_A }_A</code>
                         <span class="operator-snippet-note">escape/intrinsic — holds a name flat, enables overlapping braces</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="layer">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/layer/" data-spw-voice="layer · stratum" title="layer: stratum">:</a>
                         <span class="operator-snippet-name">layer</span>
                         <code class="operator-snippet-example">#:layer #!draft</code>
                         <span class="operator-snippet-note">declares the stratum a frame operates in</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="baseline">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/baseline/" data-spw-voice="base · ambient drift" title="baseline: ambient drift">=</a>
                         <span class="operator-snippet-name">baseline</span>
                         <code class="operator-snippet-example">=[bias] &nbsp; --hue: 192</code>
                         <span class="operator-snippet-note">sets an ambient field value — like a CSS custom property</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="substrate">
                         <span class="operator-snippet-sigil" data-spw-voice="sub · what is shaped" title="substrate: what is shaped">$</span>
                         <span class="operator-snippet-name">substrate</span>
                         <code class="operator-snippet-example">$interpretation &nbsp; $[fiber]</code>
                         <span class="operator-snippet-note">the material a process acts on — what is being shaped</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="ref">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/ref/" data-spw-voice="ref · points elsewhere" title="ref: points elsewhere">@</a>
                         <span class="operator-snippet-name">ref</span>
                         <code class="operator-snippet-example">@projection &nbsp; @emit[cohort_field]</code>
                         <span class="operator-snippet-note">points to something elsewhere — a reference, not a copy</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="probe">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/probe/" data-spw-voice="probe · detect crossing" title="probe: detect crossing">?</a>
                         <span class="operator-snippet-name">probe</span>
                         <code class="operator-snippet-example">?[what_is_here] &nbsp; ?[threshold]</code>
                         <span class="operator-snippet-note">detects crossing without storing — like Intersection Observer</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="action">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/action/" data-spw-voice="act · fires once" title="action: fires once">!</a>
                         <span class="operator-snippet-name">action</span>
                         <code class="operator-snippet-example">![act_small] &nbsp; ! clear</code>
                         <span class="operator-snippet-note">fires once — a discrete act, not a sustained process</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="stream">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/stream/" data-spw-voice="stream · periodic return" title="stream: periodic return">~</a>
                         <span class="operator-snippet-name">stream</span>
                         <code class="operator-snippet-example">~[wave] &nbsp; ~ emit tone</code>
                         <span class="operator-snippet-note">periodic return through a medium — like Web Audio oscillation</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="merge">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/merge/" data-spw-voice="merge · accumulate range" title="merge: accumulate range">*</a>
                         <span class="operator-snippet-name">merge</span>
                         <code class="operator-snippet-example">*[micro..containment] &nbsp; *[w1..w2..w3..w5]</code>
                         <span class="operator-snippet-note">accumulates micro-acts into structure — like Canvas cumulation</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="binding">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/binding/" data-spw-voice="bind · join without collapse" title="binding: join without collapse">^</a>
                         <span class="operator-snippet-name">binding</span>
                         <code class="operator-snippet-example">^"summary"{ title: "..." }</code>
                         <span class="operator-snippet-note">joins things without collapsing difference — like SVG filter chains</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="meta">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/meta/" data-spw-voice="meta · measure / reduce" title="meta: measure or reduce">%</a>
                         <span class="operator-snippet-name">meta</span>
                         <code class="operator-snippet-example">%[reduction] &nbsp; %[measurement]</code>
                         <span class="operator-snippet-note">measurement or reduction — collapsing to a ratio</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="normalize">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/normalize/" data-spw-voice="norm · bring to form" title="normalize: bring to form">+</a>
                         <span class="operator-snippet-name">normalize</span>
                         <code class="operator-snippet-example">+[scale] &nbsp; +[align]</code>
                         <span class="operator-snippet-note">brings into standard form without losing identity</span>
                     </div>
-                    <div class="operator-snippet">
+                    <div class="operator-snippet" data-spw-operator="surface">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/surface/" data-spw-voice="surface · boundary" title="surface: presentation boundary">|</a>
                         <span class="operator-snippet-name">surface</span>
                         <code class="operator-snippet-example">|[blog] &nbsp; |[settings]</code>

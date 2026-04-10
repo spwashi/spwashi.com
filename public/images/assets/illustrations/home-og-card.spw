@@ -1,0 +1,42 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "prism-workbench-card"
+  description: "Wide social card for the homepage built from a papergami study of glowing paper forms and suspended structural fragments."
+  visual_qualities: "wide, luminous, geometric, airy, resonant"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  valence: "honk"
+  spirit_phase: "invitation"
+  liminality: "projected"
+  role: "social-preview"
+  context: "homepage social sharing"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "og-image"
+  dimensions: { width: 1200, height: 630 }
+  formats_available: ["jpg"]
+  alt_text: "Glowing paper forms and textured geometric volumes floating in a calm field, suggesting language, structure, and play."
+}
+
+^"optimization"{
+  optimized_on: "2026-04-10T23:28:00Z"
+  source_render: "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e.png"
+  variants: [
+    { tier: "social", size: "1200x630", formats: ["jpg"] }
+  ]
+  notes: "Center-cropped from the papergami render for homepage Open Graph and Twitter card previews."
+}
+
+^"discovery"{
+  tags: ["homepage", "social-card", "papergami", "language-tools", "structure", "play"]
+  spirit_name: "prism-workbench-card"
+  status: "placed"
+  related_images: ["lore-atlas-card", "signal-atlas", "threshold-seal"]
+  notes: "Used by the homepage for social sharing previews."
+}

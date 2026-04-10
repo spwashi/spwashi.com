@@ -1,0 +1,42 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "lore-atlas-card"
+  description: "Wide social card for the lore.land surface built from a papergami study of books, folded sheets, and glowing archival matter."
+  visual_qualities: "wide, textured, bookish, luminous, atmospheric"
+}
+
+^"thematic_mapping"{
+  operator: "surface"
+  valence: "book"
+  spirit_phase: "invitation"
+  liminality: "projected"
+  role: "social-preview"
+  context: "lore-land social sharing"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "og-image"
+  dimensions: { width: 1200, height: 630 }
+  formats_available: ["jpg"]
+  alt_text: "Textured paper architecture, luminous spheres, and layered archival forms arranged like an illuminated lore atlas."
+}
+
+^"optimization"{
+  optimized_on: "2026-04-10T23:20:00Z"
+  source_render: "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a.png"
+  variants: [
+    { tier: "social", size: "1200x630", formats: ["jpg"] }
+  ]
+  notes: "Center-cropped from the raw papergami render for Open Graph and Twitter card previews."
+}
+
+^"discovery"{
+  tags: ["lore-land", "social-card", "books", "texture", "papergami", "archive"]
+  spirit_name: "lore-atlas-card"
+  status: "placed"
+  related_images: ["signal-atlas", "threshold-seal"]
+  notes: "Used by the lore.land explainer route for link previews."
+}

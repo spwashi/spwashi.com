@@ -1,0 +1,43 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "threshold-seal"
+  description: "Circular Spwashi token held in a stone ring, with a bright signal stroke crossing the center."
+  visual_qualities: "centered, sealed, architectural, glowing, orbital"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  valence: "bone"
+  spirit_phase: "threshold"
+  liminality: "threshold"
+  role: "identity-motif"
+  context: "spwashi token study"
+}
+
+^"usage"{
+  surface: "motifs"
+  role: "identity-token"
+  dimensions: { width: 1269, height: 1239 }
+  formats_available: ["png", "webp"]
+  alt_text: "Circular Spwashi token with a glowing gold and blue stroke set inside a dark stone ring."
+}
+
+^"optimization"{
+  optimized_on: "2026-04-10T20:29:00Z"
+  original_size_bytes: 2361694
+  variants: [
+    { tier: "display", size: "720x703", formats: ["png", "webp"] }
+  ]
+  notes: "Display variants generated for the lore.land domain page and motif staging."
+}
+
+^"discovery"{
+  tags: ["motif", "token", "identity", "seal", "frame", "stone"]
+  spirit_name: "threshold-seal"
+  status: "placed"
+  previous_names: ["spwashi-aclhemy-token-logo"]
+  related_images: ["signal-atlas"]
+  notes: "Moved from public/images root into the motifs surface and corrected the source filename typo."
+}

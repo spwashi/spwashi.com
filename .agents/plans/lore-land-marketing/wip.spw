@@ -1,0 +1,108 @@
+# wip — lore-land-marketing
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/lore-land-marketing/PLAN.md"
+ @home: ~"index.html"
+ @about: ~"about/index.html"
+ @domain: ~"about/domains/lore.land/index.html"
+ @config: ~"public/data/media-focus.json"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Make lore.land read as a current destination inside the site itself: one strong signal on the homepage, sharper narrative framing on /about, a lore-land explainer route that sells the place instead of merely naming it, and beautiful share cards for / and /about/domains/lore.land/."
+ ~#taste: "Expressive internal marketing without dashboarding the site or drifting into generic promotion."
+}
+
+^["development"]{
+ lane: #editorial_surface
+ ladder: #public_story
+ develops: [#discoverability, #narrative_signal, #route_truth]
+ review_surfaces: [@plan, @home, @about, @domain, @config, @css]
+}
+
+^["concept_index"]{
+ primary: [#lore_land_marketing]
+ surfaces: [#home, #about, #lore_land, #website_field_guide]
+ tensions: [#signal_vs_spam, #story_vs_vagueness, #campaign_vs_navigation]
+ transfers: [#domains, #editorial_rhythm, #visual_staging]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? find the few places where a reader already looks for direction",
+  "< make lore.land visible there with one truthful promise per surface",
+  "$ sharpen the lore-land page so the click lands in a convincing room",
+  "^ keep the route network readable after the extra signal is added",
+  "% leave unrelated render intake and broad palette work for later passes unless one render earns a clear lore-land or social-card role"
+ ]
+ gates: [#link_truth, #copy_truth, #signal_containment]
+}
+
+^["parallel_work"]{
+ critical_path: [#home_signal, #about_frame, #lore_land_route]
+ parallelizable: []
+ shared_hot_files: ["index.html", "about/index.html", "about/domains/lore.land/index.html", "public/data/media-focus.json", "public/css/style.css"]
+ merge_risks: [#homepage_copy_drift, #style_growth]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: []
+ carries: [#positioning, #cta_language, #reader_paths]
+}
+
+^["interaction_depth"]{
+ subjects: [#discoverability, #editorial_focus, #visual_resonance]
+ questions: [#where_should_lore_land_surface, #what_promise_is_true, #what_should_stay_quiet]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["Homepage promotion displaces orientation.", "Lore-land is linked more often but with hollow copy."]
+ soft_failures: ["The internal route and the external lore.land destination feel disconnected.", "The new papergami renders tempt unrelated expansion.", "The share cards feel decorative but not meaningful."]
+ recoveries: ["Keep copy specific and directional.", "Anchor promotion to the strongest lore poster/token and papergami studies instead of broad image sprawl."]
+ non_negotiables: ["Static HTML remains complete without JavaScript.", "No campaign clutter across unrelated routes.", "Every promoted item gives a real next step."]
+}
+
+^["validation"]{
+ hypotheses: ["A reader can identify lore.land as a live narrative destination from the homepage or about surface in one scan."]
+ negative_controls: ["Software, craft, and play still remain primary entry points for their own audiences."]
+ demo_path: ["/", "/about", "/about/domains/lore.land/", "/about/website/"]
+}
+
+^["stream"]{
+ >>[2026-04-10 15:47] hygiene — base main@3296ac01bb2dccb94b42938ef2517038fd2c4482; unrelated blog/craft/PWA/raw-render drift is already dirty and remains outside this feature.
+ >>[2026-04-10 15:47] taste — lore.land should feel like a place with signal, archive, and narrative gravity, not just an external link in a list.
+ >>[2026-04-10 22:29] visuals — lore.land gained staged signal studies with poster/token assets and darker material language on the explainer route.
+ >>[2026-04-10 23:20] social — route-specific social card added for /about/domains/lore.land/ using papergami texture to prime books, archive, and wonder.
+ >>[2026-04-10 23:28] social — homepage gained a dedicated papergami social card and meaningful OG/Twitter descriptions.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[lore] - raise lore.land across home and about signals"
+}
+
+^["cache"]{
+ ~#status: "implemented-awaiting-commit"
+ ~#base_ref: "main@3296ac01bb2dccb94b42938ef2517038fd2c4482"
+ ~#rebased_at: ""
+ ~#hygiene_split: "blog/craft/PWA/image-intake drift already dirty; avoid broadening it"
+ ~#files_hot: "index.html about/index.html about/domains/lore.land/index.html public/data/media-focus.json public/css/style.css"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "social"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+ ~[1]: "lore.land explainer route now stages signal studies with placed illustration + token assets"
+ ~[2]: "homepage and lore-land route now have dedicated social-card images and useful OG/Twitter descriptions"
+}
