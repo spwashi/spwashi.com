@@ -11,6 +11,7 @@
   @spw: ~".."
   @site_semantics: ~"./site-semantics.spw"
   @style_development: ~"./style-development.spw"
+  @asset_management: ~"./asset-management.spw"
   @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
   @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
   @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
@@ -19,6 +20,7 @@
 ^"dispatch"{
   semantics: @site_semantics
   style: @style_development
+  assets: @asset_management
   selection: @workbench_selection
   naming: @workbench_naming
   submodule: @workbench_submodule

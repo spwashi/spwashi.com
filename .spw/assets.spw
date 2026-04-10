@@ -58,7 +58,9 @@
     path: ~"../public/images/renders/"
     purpose: "Archived full-resolution AI renders (Midjourney, etc.) — source material for potential asset extraction"
     studies: [
-      { date: "2026-03-10", name: "favicon-study", status: "awaiting-naming", images: 1 }
+      { date: "2026-03-10", name: "favicon-study", status: "optimized-and-named", images: 1, content: [
+        { spirit_name: "threshold-poise", variants: ["icon", "display", "large"], formats: ["avif", "webp", "png"] }
+      ]}
     ]
   }
 }

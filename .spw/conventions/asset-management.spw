@@ -1,0 +1,131 @@
+#>asset_management_convention
+#:convention #!assets
+
+^"workflow"{
+  ~#note: "Standard workflow for adding and managing semantic image assets across the site"
+
+  intake: {
+    source: "Midjourney renders, illustrations, screenshots, motifs"
+    destination: "public/images/renders/{date}-{purpose}/ for archiving; public/images/assets/{surface}/ for deployment"
+  }
+
+  naming: {
+    approach: "Whimsical spirit-based naming grounded in Spw semantics (operators, valence, phases, liminality)"
+    examples: [
+      "threshold-poise (frame operator + threshold phase + calm feeling)",
+      "boon-force (valence + motion energy)",
+      "teal-reflection (color + contemplative quality)"
+    ]
+    tools: [
+      "/image-naming-magic [image-path] — interactive visual analysis and name suggestion"
+    ]
+    documentation: ~"../assets.spw :: workflow.naming"
+  }
+
+  optimization: {
+    trigger: "After naming; before deployment to surfaces"
+    approach: "Surface-specific size tiers; multi-format generation (AVIF/WebP/PNG)"
+    tools: [
+      "/image-optimize [image-path] — variant generation with srcset output"
+    ]
+    size_tiers: {
+      rpg_wednesday: { thumb: "320x320", display: "640x640", hero: "1024x1024" },
+      pretext_lab: { thumb: "400x400", display: "800x800", hero: "1200x1200" },
+      illustrations: { thumb: "256x256", display: "512x512", hero: "1024x1024" },
+      motifs: { icon: "64x64", display: "256x256", large: "512x512" }
+    }
+    quality_targets: { thumb: 40, display: 60, hero: 75 }
+    documentation: ~"../assets.spw :: workflow.optimization"
+  }
+
+  metadata: {
+    format: ".spw sidecar paired with each image (matching basename)"
+    structure: {
+      spirit: "whimsy_name, description, visual_qualities"
+      thematic_mapping: "operator, valence, spirit_phase, liminality"
+      usage: "surfaces array, dimensions, formats_available, alt_text"
+      optimization: "dates, original/variant sizes, compression ratios, formats_generated"
+      discovery: "tags, status, related_images, notes"
+    }
+    location: "Same directory as image; auto-indexed by assets.spw discovery"
+  }
+
+  deployment: {
+    step_1: "Run /image-naming-magic [path] to assign spirit name"
+    step_2: "Run /image-optimize [path] to generate variants"
+    step_3: "Update .spw sidecar with naming and optimization metadata"
+    step_4: "Commit with structured message: #[assets] — {spirit-name} {description}"
+    step_5: "Asset becomes discoverable via assets.spw and surface directories"
+  }
+}
+
+^"surface_purposes"{
+  home: "Constellation overlays, operator markers, rhythm elements, identity icons — always visible on home surface"
+  rpg_wednesday: "Game renders, character portraits, UI elements, scene photography — gaming kit assets"
+  pretext_lab: "Physics visualizations, typography studies, layout explorations — technical research assets"
+  illustrations: "Decorative backgrounds, article headers, inline illustrations — general site content"
+  motifs: "Small reusable patterns, icon library, button states, UI components — design system elements"
+  renders: "Archive of full-resolution source materials; not deployed directly; candidates for asset extraction"
+}
+
+^"naming_vocabulary"{
+  operators: {
+    frame: "bounded, contained, still, architectural, frame-like, holding"
+    ref: "distant, pointing, thread-like, relational, connective"
+    action: "directed, active, calling, operative, functional"
+    stream: "flowing, temporal, patterned, rhythmic, sequential"
+    object: "concrete, rendered, present, material, substantial"
+  }
+
+  valence: {
+    boon: { feel: "growth, warm, generous", direction: "left-side motion" }
+    bane: { feel: "friction, cool, resistant", direction: "right-side motion" }
+    bone: { feel: "stable, neutral, centered, foundational" }
+    bonk: { feel: "collision, bright, striking, immediate impact" }
+    honk: { feel: "signal, resonant, calling, alert" }
+  }
+
+  spirit_phases: [
+    "initiation — entry, threshold, new, awakening, crossing-in",
+    "resistance — difficulty, pressure, tension, encounter, friction",
+    "transformation — pivot, revelation, rupture, crossing-over, becoming",
+    "expression — manifestation, projection, articulation, coming-forth",
+    "return — settling, aftermath, integration, arrival, home"
+  ]
+
+  liminality_layers: [
+    "entry — exposed, new, initial legibility, invitation",
+    "threshold — hovering, about-to, poised, boundary-space",
+    "settled — inhabit-able, familiar, known, grounded",
+    "nested — embedded, layered, recursive, deep-within",
+    "projected — surfaced, revealed, extended outward, made visible",
+    "deep — core, fundamental, irreducible, essence"
+  ]
+}
+
+^"compression_targets"{
+  ~#goal: "Achieve 40-75% compression (file size reduction) from original while maintaining visual quality"
+
+  thumb: {
+    reduction: "60-80% typical (aggressive compression acceptable for small display)"
+    reasoning: "Thumbnails are small; viewers expect lower fidelity"
+  }
+
+  display: {
+    reduction: "40-60% typical (balance point between quality and file size)"
+    reasoning: "Main viewing context; standard web image benchmark"
+  }
+
+  hero: {
+    reduction: "20-40% typical (quality prioritized)"
+    reasoning: "Large scale, prominent display; preserve detail and texture"
+  }
+}
+
+^"documentation_references"{
+  @asset_discovery: ~"../assets.spw"
+  @naming_skill: ~"../../.agents/skills/image-naming-magic/SKILL.md"
+  @optimization_skill: ~"../../.agents/skills/image-optimize/SKILL.md"
+  @naming_vocabulary: ~"../../.agents/skills/image-naming-magic/references/naming-lexicon.spw"
+  @size_tiers: ~"../../.agents/skills/image-optimize/references/size-tiers.spw"
+}
