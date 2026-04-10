@@ -3,6 +3,12 @@ const byId = (id) => document.getElementById(id);
 const AUDIO_FADE_SECONDS = 0.05;
 const AUDIO_STOP_DELAY_MS = 200;
 const AUDIO_GAIN = 0.18;
+const CHARGE_SELECTOR = '[data-spw-charge-key]';
+
+const isNativeInteractive = (element) => (
+    element.matches('a[href], button, input, select, textarea, summary')
+    || Boolean(element.closest('a[href], button'))
+);
 
 const initAtelierTheme = () => {
     const buttons = [...document.querySelectorAll('[data-theme-set]')];
@@ -272,8 +278,140 @@ const initSvgFilterDemo = () => {
     update();
 };
 
+const initBraceCharge = () => {
+    let chargeNodes = [];
+    if (!document.querySelector(CHARGE_SELECTOR)) return;
+
+    const status = document.createElement('div');
+    status.className = 'blog-charge-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    document.body.appendChild(status);
+
+    let pinned = null;
+
+    const getLabel = (element) => (
+        element.dataset.spwChargeLabel
+        || element.textContent.trim().replace(/\s+/g, ' ')
+        || element.dataset.spwChargeKey
+    );
+
+    const refreshChargeNodes = () => {
+        chargeNodes = [...document.querySelectorAll(CHARGE_SELECTOR)];
+    };
+
+    const clearCharge = (announce = true) => {
+        refreshChargeNodes();
+        pinned = null;
+        delete document.body.dataset.spwChargeKey;
+        delete document.body.dataset.spwChargeMode;
+        chargeNodes.forEach((node) => {
+            node.dataset.spwChargeState = 'ambient';
+            node.classList.remove('is-resonant', 'is-charge-source');
+            node.closest('.site-frame')?.classList.remove('has-active-charge');
+            if (node.getAttribute('role') === 'button') {
+                node.setAttribute('aria-pressed', 'false');
+            }
+        });
+        if (announce) status.textContent = 'Attention charge cleared.';
+    };
+
+    const applyCharge = (key, mode, source = null, announce = false) => {
+        refreshChargeNodes();
+        document.body.dataset.spwChargeKey = key;
+        document.body.dataset.spwChargeMode = mode;
+        const label = source ? getLabel(source) : key;
+        let count = 0;
+
+        chargeNodes.forEach((node) => {
+            const matches = node.dataset.spwChargeKey === key;
+            const isSource = Boolean(source && node === source);
+
+            node.dataset.spwChargeState = matches ? (isSource ? mode : 'resonant') : 'ambient';
+            node.classList.toggle('is-resonant', matches);
+            node.classList.toggle('is-charge-source', isSource);
+
+            if (matches) count += 1;
+
+            if (node.getAttribute('role') === 'button') {
+                node.setAttribute('aria-pressed', String(isSource && mode === 'pinned'));
+            }
+        });
+
+        document.querySelectorAll('.site-frame.has-active-charge').forEach((frame) => {
+            frame.classList.remove('has-active-charge');
+        });
+        chargeNodes
+            .filter((node) => node.dataset.spwChargeKey === key)
+            .forEach((node) => node.closest('.site-frame')?.classList.add('has-active-charge'));
+
+        if (announce) {
+            status.textContent = `${mode === 'pinned' ? 'Pinned' : 'Previewing'} ${label}; ${count} related phrase${count === 1 ? '' : 's'} highlighted.`;
+        }
+    };
+
+    const hydrateChargeNodes = () => {
+        refreshChargeNodes();
+        chargeNodes.forEach((node) => {
+            if (node.dataset.spwChargeReady === 'true') return;
+            node.dataset.spwChargeReady = 'true';
+            node.dataset.spwChargeState = 'ambient';
+
+            if (!isNativeInteractive(node)) {
+                node.tabIndex = 0;
+                node.setAttribute('role', 'button');
+                node.setAttribute('aria-pressed', 'false');
+                if (!node.hasAttribute('aria-label')) {
+                    node.setAttribute('aria-label', `Charge related phrase: ${getLabel(node)}`);
+                }
+            }
+
+            node.addEventListener('pointerenter', () => {
+                if (!pinned) applyCharge(node.dataset.spwChargeKey, 'preview', node);
+            });
+            node.addEventListener('pointerleave', () => {
+                if (!pinned && document.activeElement !== node) clearCharge(false);
+            });
+            node.addEventListener('focus', () => {
+                if (!pinned) applyCharge(node.dataset.spwChargeKey, 'preview', node, true);
+            });
+            node.addEventListener('blur', () => {
+                if (!pinned) clearCharge(false);
+            });
+
+            if (!isNativeInteractive(node)) {
+                node.addEventListener('click', () => {
+                    if (pinned === node.dataset.spwChargeKey) {
+                        clearCharge();
+                        return;
+                    }
+
+                    pinned = node.dataset.spwChargeKey;
+                    applyCharge(pinned, 'pinned', node, true);
+                });
+                node.addEventListener('keydown', (event) => {
+                    if (event.key !== 'Enter' && event.key !== ' ') return;
+                    event.preventDefault();
+                    node.click();
+                });
+            }
+        });
+    };
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && pinned) clearCharge();
+    });
+
+    hydrateChargeNodes();
+    new MutationObserver(hydrateChargeNodes).observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+};
+
 export const initBlogSpecimens = () => {
     initAtelierTheme();
+    initBraceCharge();
     initCssVarsDemo();
     initIntersectionObserverDemo();
     initAudioDemo();

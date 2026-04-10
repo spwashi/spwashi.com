@@ -205,11 +205,21 @@ const EMPTY_RESULT = Object.freeze({
     lens: 'wonder_to_language'
 });
 
-const setList = (node, items, ordered = false) => {
+const chargeKeyFor = (value) => value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+const setList = (node, items, ordered = false, options = {}) => {
     node.replaceChildren();
     items.forEach((item) => {
         const li = document.createElement('li');
         li.textContent = item;
+        if (options.chargeable) {
+            li.dataset.spwChargeKey = chargeKeyFor(item);
+            li.dataset.spwChargeLabel = item;
+        }
         node.appendChild(li);
     });
     node.dataset.count = String(items.length);
@@ -248,7 +258,7 @@ const renderResult = (root, result) => {
     $('[data-blog-reading-time]', root).textContent = result.readingTime;
     $('[data-blog-tone]', root).textContent = result.tone;
     $('[data-blog-lens]', root).textContent = result.lens.replace(/_/g, ' ');
-    setList($('[data-blog-tags]', root), result.tags);
+    setList($('[data-blog-tags]', root), result.tags, false, { chargeable: true });
     setList($('[data-blog-questions]', root), result.questions, true);
     setList($('[data-blog-outline]', root), result.outline, true);
     $('[data-blog-seed]', root).textContent = buildSeed(result);

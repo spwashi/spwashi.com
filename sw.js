@@ -59,6 +59,7 @@ const CORE_ASSETS = [
   '/public/js/media-publishing.js',
   '/public/js/blog-interpreter.js',
   '/public/js/blog-specimens.js',
+  '/public/js/attn-register.js',
   '/public/js/spw-shared.js',
   '/public/js/spw-operators.js',
   '/public/js/spw-console.js',

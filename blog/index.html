@@ -17,6 +17,7 @@
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
     <script type="module" src="/public/js/blog-specimens.js"></script>
+    <script type="module" src="/public/js/attn-register.js"></script>
     <script type="module">
         import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
         window.addEventListener('load', () => {
@@ -68,7 +69,7 @@
     <main>
         <article>
             <!-- w0: empty premise — the charged field before attention lands -->
-            <section class="site-frame site-hero" id="liminal-charge" data-wonder-level="w0" data-spw-liminality="threshold">
+            <section class="site-frame site-hero" id="liminal-charge" data-wonder-level="w0" data-spw-liminality="threshold" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#liminal-charge">#&gt;liminal_charge</a>
                     <div class="spec-strip">
@@ -113,11 +114,11 @@
                 </svg>
                 <p class="spec-kicker">Component Specimen Cabinet</p>
                 <h1>The blog is a kernel running.</h1>
-                <p class="frame-note">Each section is a wonder block. Attention accumulates. Language crystallizes from fragment toward public form. The interpreter at the base emits into the cohort field.</p>
+                <p class="frame-note">Each section is a <a href="#kernel-specimen" data-spw-charge-key="wonder-block">wonder block</a>. <span data-spw-charge-key="attention">Attention accumulates</span>. <span data-spw-charge-key="language-crystallizes">Language crystallizes</span> from fragment toward public form. The <a href="#blog-input-interpreter" data-spw-charge-key="interpreter">interpreter</a> at the base emits into the <a href="#field-notes" data-spw-charge-key="cohort-field">cohort field</a>.</p>
             </section>
 
             <!-- Atelier theme toggle -->
-            <section class="site-frame" id="atelier-themes" data-spw-liminality="entry">
+            <section class="site-frame" id="atelier-themes" data-spw-liminality="entry" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#atelier-themes">=[atelier_theme]</a>
                     <div class="spec-strip">
@@ -152,8 +153,10 @@
                 </div>
             </section>
 
+            <p class="blog-transition">Attention has landed. Now: what is here?</p>
+
             <!-- w1: kernel specimen — what is here -->
-            <section class="site-frame" id="kernel-specimen" data-wonder-level="w1" data-spw-liminality="entry">
+            <section class="site-frame" id="kernel-specimen" data-wonder-level="w1" data-spw-liminality="entry" data-spw-perspective="objective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#kernel-specimen">?["what_is_here"]</a>
                     <div class="spec-strip">
@@ -162,7 +165,7 @@
                     </div>
                 </div>
                 <h2>Spw.Kernel.LiminalCharge v:0.1</h2>
-                <p class="frame-note">The architecture this page embodies. Each section below is a node in the kernel running.</p>
+                <p class="frame-note">The architecture this page embodies. Each <a href="#specimen-index" data-spw-charge-key="node">section below</a> is a node in the kernel running. The <a href="#fiber-linguistics" data-spw-charge-key="fiber-language">fiber × language</a> mapping carries the signal path to its resonant end.</p>
                 <pre class="specimen-kernel-code"><code><span class="sk-comment">// premise → medium → dielectric → channels → ac_drift → anchor_loop → output → return</span>
 
 <span class="sk-key">cumulation</span>     = { micro = <span class="sk-op">!</span>[act_small], stack = <span class="sk-op">*</span>[micro..containment], bias = stack -&gt; charge }
@@ -173,8 +176,10 @@
 <span class="sk-key">discipline</span>      = { full kernel with premise, medium, dielectric, channels, ac_drift, anchor_loop, output, return }</code></pre>
             </section>
 
+            <p class="blog-transition">The kernel names its parts. Now: what calls for attention?</p>
+
             <!-- w2: specimen index — what is missing (navigation into the specimens) -->
-            <section class="site-frame" id="specimen-index" data-wonder-level="w2" data-spw-liminality="entry">
+            <section class="site-frame" id="specimen-index" data-wonder-level="w2" data-spw-liminality="entry" data-spw-perspective="objective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#specimen-index">?["what_is_missing"]</a>
                     <div class="spec-strip">
@@ -183,48 +188,48 @@
                     </div>
                 </div>
                 <h2>Web API Specimens</h2>
-                <p class="frame-note">Five APIs mapped to Spw operators. Each specimen is a charged node in the field.</p>
+                <p class="frame-note">Five browser APIs mapped to Spw operators and <span data-spw-charge-key="materials">material science</span> concepts. Each specimen is a <span data-spw-charge-key="charge-node">charged node</span> — interactive, documented, and linked to its <a href="https://developer.mozilla.org/en-US/docs/Web/API" data-spw-charge-key="docs">MDN reference</a>.</p>
                 <nav class="specimen-index-grid" aria-label="API specimen navigation">
                     <a class="specimen-index-card" href="#api-css-custom-properties">
                         <span class="specimen-index-sigil">=[bias]</span>
                         <span class="specimen-index-name">CSS Custom Properties</span>
-                        <span class="specimen-index-tag">= · bias · dielectric</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="dielectric">= · bias · dielectric</span>
                     </a>
                     <a class="specimen-index-card" href="#api-intersection-observer">
                         <span class="specimen-index-sigil">?[probe]</span>
                         <span class="specimen-index-name">Intersection Observer</span>
-                        <span class="specimen-index-tag">? · probe · threshold</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="threshold">? · probe · threshold</span>
                     </a>
                     <a class="specimen-index-card" href="#api-web-audio">
                         <span class="specimen-index-sigil">~[wave]</span>
                         <span class="specimen-index-name">Web Audio API</span>
-                        <span class="specimen-index-tag">~ · wave · vibration</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="resonance">~ · wave · vibration</span>
                     </a>
                     <a class="specimen-index-card" href="#api-canvas-weave">
                         <span class="specimen-index-sigil">*[repeat]</span>
                         <span class="specimen-index-name">Canvas 2D Weave</span>
-                        <span class="specimen-index-tag">* · repeat · cumulation</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="cumulation">* · repeat · cumulation</span>
                     </a>
                     <a class="specimen-index-card" href="#api-svg-filters">
                         <span class="specimen-index-sigil">^[bind]</span>
                         <span class="specimen-index-name">SVG Filter Primitives</span>
-                        <span class="specimen-index-tag">^ · bind · dielectric</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="dielectric">^ · bind · dielectric</span>
                     </a>
                 </nav>
             </section>
 
-            <section class="site-frame blog-interpreter-frame" id="blog-input-interpreter" data-spw-role="tool" data-spw-liminality="entry" data-spw-meaning="local blog input interpretation for Spw, wonder, and language">
+            <section class="site-frame blog-interpreter-frame" id="blog-input-interpreter" data-spw-role="tool" data-spw-liminality="entry" data-spw-perspective="subjective" data-spw-meaning="local blog input interpretation for Spw, wonder, and language">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#blog-input-interpreter">#&gt;blog_input_interpreter</a>
                     <div class="spec-strip">
                         <span class="spec-pill">local-only</span>
-                        <span class="spec-pill">wonder reader</span>
+                        <span class="spec-pill" data-spw-charge-key="wonder-block">wonder reader</span>
                         <span class="spec-pill">no network AI</span>
                     </div>
                 </div>
                 <p class="spec-kicker">Blog Surface</p>
                 <h1>Paste a Spw fragment, a wonder note, or a rough draft.</h1>
-                <p class="frame-note" id="blog-input-help">Use this when something feels alive but not article-shaped yet. The interpreter gives the note a title, questions, outline, and Spw seed so it can move toward readable language.</p>
+                <p class="frame-note" id="blog-input-help">Use this when something feels alive but not article-shaped yet. The <span data-spw-charge-key="interpreter">interpreter</span> gives the note a title, questions, outline, and Spw seed so it can move toward <span data-spw-charge-key="language-crystallizes">readable language</span>.</p>
 
                 <div class="blog-interpreter-layout" data-blog-interpreter data-blog-state="empty" data-blog-lens="wonder_to_language" data-blog-tone="quiet">
                     <form class="blog-input-panel" data-blog-input-form>
@@ -270,7 +275,7 @@
                             <section class="blog-output-card">
                                 <h3>Tags</h3>
                                 <ul class="blog-chip-list" data-blog-tags>
-                                    <li>draft</li>
+                                    <li data-spw-charge-key="draft">draft</li>
                                 </ul>
                             </section>
                             <section class="blog-output-card">
@@ -305,8 +310,10 @@
                 </div>
             </section>
 
+            <p class="blog-transition">Each specimen below is a gap made interactive — basis meeting the unknown through a browser API.</p>
+
             <!-- w3 specimens: basis..gap — API interactions mapped to kernel concepts -->
-            <section class="site-frame specimen-card" id="api-css-custom-properties" data-wonder-level="w3">
+            <section class="site-frame specimen-card" id="api-css-custom-properties" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-css-custom-properties">=[bias_operator]</a>
                     <div class="spec-strip">
@@ -314,22 +321,27 @@
                         <span class="spec-pill">w3</span>
                     </div>
                 </div>
-                <p class="specimen-material">material: <strong>dielectric</strong> — stores field bias without discharging</p>
+                <p class="specimen-material">material: <strong data-spw-charge-key="dielectric">dielectric</strong> — stores field bias without discharging</p>
+                <nav class="specimen-refs" aria-label="References">
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">CSS Custom Properties</a>
+                    <a class="specimen-ref specimen-ref--spw" href="/topics/software/spw/operators/baseline/">=[baseline]</a>
+                    <a class="specimen-ref specimen-ref--internal" href="#specimen-index">specimen index</a>
+                </nav>
                 <div class="specimen-index-grid specimen-axis-grid">
                     <div class="specimen-index-card">
                         <span class="specimen-index-sigil">=[bias]</span>
                         <span class="specimen-index-name">Spw</span>
-                        <span class="specimen-index-tag">sets ambient field value</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="charge-field">sets ambient field value</span>
                     </div>
                     <div class="specimen-index-card">
                         <span class="specimen-index-sigil">substrate</span>
                         <span class="specimen-index-name">Material</span>
-                        <span class="specimen-index-tag">stores tension without change</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="dielectric">stores tension without change</span>
                     </div>
                     <div class="specimen-index-card">
                         <span class="specimen-index-sigil">deixis</span>
                         <span class="specimen-index-name">Linguistic</span>
-                        <span class="specimen-index-tag">context-bound reference</span>
+                        <span class="specimen-index-tag" data-spw-charge-key="threshold">context-bound reference</span>
                     </div>
                 </div>
                 <div class="specimen-demo demo-css-vars" id="css-vars-demo" aria-label="CSS custom property live demo">
@@ -355,7 +367,7 @@
                 </div>
             </section>
 
-            <section class="site-frame specimen-card" id="api-intersection-observer" data-wonder-level="w3">
+            <section class="site-frame specimen-card" id="api-intersection-observer" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-intersection-observer">?[probe_threshold]</a>
                     <div class="spec-strip">
@@ -363,7 +375,12 @@
                         <span class="spec-pill">w3</span>
                     </div>
                 </div>
-                <p class="specimen-material">material: <strong>phase boundary</strong> — detects crossing, not content</p>
+                <p class="specimen-material">material: <strong data-spw-charge-key="threshold">phase boundary</strong> — detects crossing, not content</p>
+                <nav class="specimen-refs" aria-label="References">
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">Intersection Observer API</a>
+                    <a class="specimen-ref specimen-ref--spw" href="/topics/software/spw/operators/probe/">?[probe]</a>
+                    <a class="specimen-ref specimen-ref--internal" href="#specimen-index">specimen index</a>
+                </nav>
                 <div class="specimen-demo demo-io" id="io-demo" aria-label="Intersection Observer demo">
                     <p class="frame-note demo-note">Scroll the stripe below across the threshold line.</p>
                     <div class="demo-io-scroll-area" id="io-scroll-area" role="region" aria-label="Scrollable fiber stripes">
@@ -377,7 +394,7 @@
                 </div>
             </section>
 
-            <section class="site-frame specimen-card" id="api-web-audio" data-wonder-level="w3">
+            <section class="site-frame specimen-card" id="api-web-audio" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-web-audio">~[wave_vibration]</a>
                     <div class="spec-strip">
@@ -385,7 +402,12 @@
                         <span class="spec-pill">w3</span>
                     </div>
                 </div>
-                <p class="specimen-material">material: <strong>resonance</strong> — periodic return through a medium</p>
+                <p class="specimen-material">material: <strong data-spw-charge-key="resonance">resonance</strong> — periodic return through a medium</p>
+                <nav class="specimen-refs" aria-label="References">
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a>
+                    <a class="specimen-ref specimen-ref--spw" href="/topics/software/spw/operators/stream/">~[stream]</a>
+                    <a class="specimen-ref specimen-ref--internal" href="#specimen-index">specimen index</a>
+                </nav>
                 <div class="specimen-demo" id="audio-demo" aria-label="Web Audio oscillator demo">
                     <div class="demo-audio-controls">
                         <label for="audio-freq">frequency (Hz)</label>
@@ -408,7 +430,7 @@
                 </div>
             </section>
 
-            <section class="site-frame specimen-card" id="api-canvas-weave" data-wonder-level="w3">
+            <section class="site-frame specimen-card" id="api-canvas-weave" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-canvas-weave">*[repeat_cumulation]</a>
                     <div class="spec-strip">
@@ -416,7 +438,12 @@
                         <span class="spec-pill">w3</span>
                     </div>
                 </div>
-                <p class="specimen-material">material: <strong>lattice</strong> — micro-acts accumulate into woven structure</p>
+                <p class="specimen-material">material: <strong data-spw-charge-key="cumulation">lattice</strong> — micro-acts accumulate into woven structure</p>
+                <nav class="specimen-refs" aria-label="References">
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>
+                    <a class="specimen-ref specimen-ref--spw" href="/topics/software/spw/operators/action/">*[action]</a>
+                    <a class="specimen-ref specimen-ref--internal" href="#specimen-index">specimen index</a>
+                </nav>
                 <div class="specimen-demo demo-canvas-wrap" id="canvas-demo">
                     <canvas id="weave-canvas" width="520" height="200" aria-label="Woven field canvas. Click or press Enter to add charge nodes." aria-describedby="canvas-note" role="button" tabindex="0"></canvas>
                     <p class="frame-note demo-canvas-note" id="canvas-note">Click canvas or press Enter to drop a node. Nodes accumulate.</p>
@@ -424,7 +451,7 @@
                 </div>
             </section>
 
-            <section class="site-frame specimen-card" id="api-svg-filters" data-wonder-level="w3">
+            <section class="site-frame specimen-card" id="api-svg-filters" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-svg-filters">^[bind_dielectric]</a>
                     <div class="spec-strip">
@@ -432,7 +459,13 @@
                         <span class="spec-pill">w3</span>
                     </div>
                 </div>
-                <p class="specimen-material">material: <strong>warp-weft binding</strong> — transforms flow without storing it</p>
+                <p class="specimen-material">material: <strong data-spw-charge-key="binding">warp-weft binding</strong> — transforms flow without storing it</p>
+                <nav class="specimen-refs" aria-label="References">
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/filter">SVG filter element</a>
+                    <a class="specimen-ref specimen-ref--mdn" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence">feTurbulence</a>
+                    <a class="specimen-ref specimen-ref--spw" href="/topics/software/spw/operators/binding/">^[binding]</a>
+                    <a class="specimen-ref specimen-ref--internal" href="#specimen-index">specimen index</a>
+                </nav>
                 <div class="specimen-demo demo-filter-text-wrap" id="svg-filter-demo">
                     <div class="demo-sliders">
                         <div class="demo-slider-row">
@@ -454,13 +487,15 @@
                 </div>
             </section>
 
+            <p class="blog-transition">The signal path reaches its far end. What resonates across material and linguistic boundaries?</p>
+
             <!-- w5: fiber-linguistics — basis..gap..signal_path -->
-            <section class="site-frame" id="fiber-linguistics" data-wonder-level="w5">
+            <section class="site-frame" id="fiber-linguistics" data-wonder-level="w5" data-spw-perspective="subjective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#fiber-linguistics">*[fiber_x_language]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">w5</span>
-                        <span class="spec-pill">Materials × Linguistics</span>
+                        <span class="spec-pill" data-spw-charge-key="fiber-language">Materials × Linguistics</span>
                     </div>
                 </div>
                 <h2>Fiber × Language</h2>
@@ -471,37 +506,37 @@
                 </div>
                 <div class="fiber-linguistics-grid">
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">substrate × utterance</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="dielectric">substrate × utterance</span>
                         <span class="fiber-pair-material">The base material that holds structure before form is imposed.</span>
                         <span class="fiber-pair-linguistic">The raw vocalization before it becomes speech act.</span>
-                        <span class="fiber-pair-note">Spw: =[substrate] sets the field before operators act.</span>
+                        <span class="fiber-pair-note">Spw: <a href="#api-css-custom-properties">=[substrate]</a> sets the field before operators act.</span>
                     </div>
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">resonance × prosody</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="resonance">resonance × prosody</span>
                         <span class="fiber-pair-material">How fibers vibrate at harmonic frequencies when plucked.</span>
                         <span class="fiber-pair-linguistic">Rhythm, stress, and intonation — the music beneath words.</span>
-                        <span class="fiber-pair-note">Spw: ~[wave] carries resonance without encoding it.</span>
+                        <span class="fiber-pair-note">Spw: <a href="#api-web-audio">~[wave]</a> carries resonance without encoding it.</span>
                     </div>
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">phase boundary × deixis</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="threshold">phase boundary × deixis</span>
                         <span class="fiber-pair-material">The interface where one material property transitions to another.</span>
                         <span class="fiber-pair-linguistic">Context-anchored reference: here, now, I, this.</span>
-                        <span class="fiber-pair-note">Spw: ?[probe] detects threshold crossing without storing location.</span>
+                        <span class="fiber-pair-note">Spw: <a href="#api-intersection-observer">?[probe]</a> detects threshold crossing without storing location.</span>
                     </div>
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">lattice × paradigm</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="cumulation">lattice × paradigm</span>
                         <span class="fiber-pair-material">Regular crystalline arrangement that enables substitution.</span>
                         <span class="fiber-pair-linguistic">The set of alternatives at a grammatical slot.</span>
-                        <span class="fiber-pair-note">Spw: *[repeat] accumulates micro-acts into structure.</span>
+                        <span class="fiber-pair-note">Spw: <a href="#api-canvas-weave">*[repeat]</a> accumulates micro-acts into structure.</span>
                     </div>
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">warp-weft × syntagm</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="binding">warp-weft × syntagm</span>
                         <span class="fiber-pair-material">The crossed threads whose binding creates tensile strength.</span>
                         <span class="fiber-pair-linguistic">The linear combination of elements in sequence.</span>
-                        <span class="fiber-pair-note">Spw: ^[bind] creates relationship without collapsing difference.</span>
+                        <span class="fiber-pair-note">Spw: <a href="#api-svg-filters">^[bind]</a> creates relationship without collapsing difference.</span>
                     </div>
                     <div class="fiber-pair">
-                        <span class="fiber-pair-title">grain of voice × grain structure</span>
+                        <span class="fiber-pair-title" data-spw-charge-key="materials">grain of voice × grain structure</span>
                         <span class="fiber-pair-material">Crystallographic grain: the texture of a material's internal boundary network.</span>
                         <span class="fiber-pair-linguistic">Barthes: the grain of the voice — what exceeds meaning in the vocal body.</span>
                         <span class="fiber-pair-note">Both resist full semantic capture. Both age distinctively.</span>
@@ -510,12 +545,12 @@
             </section>
 
             <!-- w5: field notes -->
-            <section class="site-frame" id="field-notes" data-wonder-level="w5">
+            <section class="site-frame" id="field-notes" data-wonder-level="w5" data-spw-perspective="subjective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#field-notes">?["what_resonates"]</a>
                     <div class="spec-strip">
                         <span class="spec-pill">w5</span>
-                        <span class="spec-pill">p5 · resonance</span>
+                        <span class="spec-pill" data-spw-charge-key="resonance">p5 · resonance</span>
                     </div>
                 </div>
                 <h2>Field Notes</h2>
@@ -523,37 +558,37 @@
                     <div class="field-note" data-note-id="FN-001">
                         <h3>Materials × Linguistics</h3>
                         <p>The application begins with the claim that fiber structures and linguistic structures share a deep grammar. A woven textile is a syntagm. Its yarn choice is a paradigm selection. Its aging is prosodic.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">grad-school</span><span class="field-note-tag">materials-science</span><span class="field-note-tag">linguistics</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag">grad-school</span><span class="field-note-tag" data-spw-charge-key="materials">materials-science</span><span class="field-note-tag" data-spw-charge-key="fiber-language">linguistics</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-002">
                         <h3>Book as Living Material</h3>
                         <p>A book passed down through a town for centuries accumulates marginalia, repairs, and physical memory. It is a palimpsest woven through time. The fiber art useful for such books must be archival and inviting of inscription.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">archival</span><span class="field-note-tag">palimpsest</span><span class="field-note-tag">maturation</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag">archival</span><span class="field-note-tag" data-spw-charge-key="language-crystallizes">palimpsest</span><span class="field-note-tag">maturation</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-003">
                         <h3>Novel Physics via Spw</h3>
                         <p>Spw-workbench scripts can model conceptual physics: field charge, dielectric resistance, AC drift, anchor loops. These are not metaphors — they are computational structures for reasoning about attention and language.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">spw-physics</span><span class="field-note-tag">pretext-lab</span><span class="field-note-tag">novel-papers</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag" data-spw-charge-key="charge-field">spw-physics</span><span class="field-note-tag">pretext-lab</span><span class="field-note-tag">novel-papers</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-004">
                         <h3>Cohort Field</h3>
                         <p>The blog interpreter is not a tool for generating posts. It is an emission point. What goes in is a fragment. What returns is a seed that can enter the cohort field — others resonating with the same gap.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">cohort-field</span><span class="field-note-tag">community-semantics</span><span class="field-note-tag">@emit</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag" data-spw-charge-key="cohort-field">cohort-field</span><span class="field-note-tag">community-semantics</span><span class="field-note-tag">@emit</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-005">
                         <h3>Video as Wonder Block</h3>
                         <p>An improvised video of someone interacting with these specimens is itself a w3 output — basis and gap made visible. The processing campaign (visibility, thematic grounding) is the cohort field receiving the emission.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">video-workflow</span><span class="field-note-tag">wonder-block</span><span class="field-note-tag">campaign</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag">video-workflow</span><span class="field-note-tag" data-spw-charge-key="wonder-block">wonder-block</span><span class="field-note-tag">campaign</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-006">
                         <h3>AC Drift and Anchor Loop</h3>
                         <p>The kernel's AC drift allows the charge to oscillate without fixing. The anchor loop prevents infinite drift — it returns to a premise that holds. For writing: this is the difference between productive uncertainty and lost drafts.</p>
-                        <div class="field-note-tags"><span class="field-note-tag">ac-drift</span><span class="field-note-tag">anchor-loop</span><span class="field-note-tag">kernel</span></div>
+                        <div class="field-note-tags"><span class="field-note-tag">ac-drift</span><span class="field-note-tag">anchor-loop</span><span class="field-note-tag" data-spw-charge-key="node">kernel</span></div>
                     </div>
                 </div>
             </section>
 
-            <section class="site-frame" id="blog-method">
+            <section class="site-frame" id="blog-method" data-spw-perspective="objective">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#blog-method">?["how_it_reads"]</a>
                     <h2>How It Reads</h2>

@@ -25,10 +25,14 @@ body[data-spw-surface="blog"] {
     --blog-spw-bg: rgba(24, 123, 135, 0.10);
     --blog-draft-bg: rgba(35, 118, 82, 0.10);
     --blog-warn-bg: rgba(192, 48, 44, 0.10);
+    --blog-objective-line: rgba(24, 123, 135, 0.26);
+    --blog-subjective-line: rgba(160, 42, 77, 0.20);
     --blog-radius: 8px;
     --blog-gap: 1rem;
+    --blog-measure: 68ch;
     background-color: var(--blog-bg);
     color: var(--blog-ink);
+    line-height: 1.65;
 }
 
 html[data-spw-color-mode="dark"] body[data-spw-surface="blog"],
@@ -53,6 +57,8 @@ body[data-spw-surface="blog"][data-theme="atelier-dark"] {
     --blog-spw-bg: rgba(103, 212, 222, 0.13);
     --blog-draft-bg: rgba(95, 213, 157, 0.13);
     --blog-warn-bg: rgba(238, 112, 108, 0.13);
+    --blog-objective-line: rgba(103, 212, 222, 0.30);
+    --blog-subjective-line: rgba(228, 108, 144, 0.26);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,19 +83,182 @@ body[data-spw-surface="blog"][data-theme="atelier-dark"] {
         --blog-spw-bg: rgba(103, 212, 222, 0.13);
         --blog-draft-bg: rgba(95, 213, 157, 0.13);
         --blog-warn-bg: rgba(238, 112, 108, 0.13);
+        --blog-objective-line: rgba(103, 212, 222, 0.30);
+        --blog-subjective-line: rgba(228, 108, 144, 0.26);
     }
 }
 
 html[data-spw-high-contrast="on"] body[data-spw-surface="blog"] {
     --blog-line: currentColor;
     --blog-line-strong: currentColor;
+    --blog-objective-line: currentColor;
+    --blog-subjective-line: currentColor;
     --blog-focus-ring: transparent;
 }
 
+/* ── Brace perspective axis ──
+ * { anchors the objective plane: address, source, shared structure.
+ * } anchors the subjective plane: attention, meaning, situated reading.
+ * Authors can tune the gradient with data-spw-perspective or wonder level.
+ */
+
 body[data-spw-surface="blog"] .site-frame {
+    --blog-frame-objective-opacity: 0.22;
+    --blog-frame-subjective-opacity: 0.18;
+    position: relative;
     border-color: var(--blog-line);
+    border-left-color: var(--blog-objective-line);
+    border-right-color: var(--blog-subjective-line);
     border-radius: var(--blog-radius);
     background: var(--blog-bg-card);
+}
+
+body[data-spw-surface="blog"] .site-frame::before,
+body[data-spw-surface="blog"] .site-frame::after {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+body[data-spw-surface="blog"] .site-frame::before {
+    content: "{";
+    top: 0.55rem;
+    left: 0.65rem;
+    color: var(--blog-accent);
+    opacity: var(--blog-frame-objective-opacity);
+}
+
+body[data-spw-surface="blog"] .site-frame::after {
+    content: "}";
+    right: 0.65rem;
+    bottom: 0.5rem;
+    color: var(--blog-wonder);
+    opacity: var(--blog-frame-subjective-opacity);
+}
+
+body[data-spw-surface="blog"] .site-frame:hover::before {
+    opacity: max(var(--blog-frame-objective-opacity), 0.34);
+}
+
+body[data-spw-surface="blog"] .site-frame:hover::after {
+    opacity: max(var(--blog-frame-subjective-opacity), 0.34);
+}
+
+body[data-spw-surface="blog"] .site-frame:target,
+body[data-spw-surface="blog"] .site-frame:focus-within {
+    --blog-frame-objective-opacity: 0.48;
+    --blog-frame-subjective-opacity: 0.48;
+}
+
+body[data-spw-surface="blog"] .site-frame[data-spw-liminality="threshold"],
+body[data-spw-surface="blog"] .site-frame[data-wonder-level="w0"] {
+    --blog-frame-objective-opacity: 0.16;
+    --blog-frame-subjective-opacity: 0.16;
+}
+
+body[data-spw-surface="blog"] .site-frame[data-spw-perspective="objective"],
+body[data-spw-surface="blog"] .site-frame[data-wonder-level="w1"] {
+    --blog-frame-objective-opacity: 0.36;
+    --blog-frame-subjective-opacity: 0.18;
+}
+
+body[data-spw-surface="blog"] .site-frame[data-wonder-level="w2"] {
+    --blog-frame-objective-opacity: 0.32;
+    --blog-frame-subjective-opacity: 0.22;
+}
+
+body[data-spw-surface="blog"] .site-frame[data-spw-perspective="balanced"],
+body[data-spw-surface="blog"] .site-frame[data-wonder-level="w3"] {
+    --blog-frame-objective-opacity: 0.28;
+    --blog-frame-subjective-opacity: 0.28;
+}
+
+body[data-spw-surface="blog"] .site-frame[data-spw-perspective="subjective"],
+body[data-spw-surface="blog"] .site-frame[data-wonder-level="w5"] {
+    --blog-frame-objective-opacity: 0.22;
+    --blog-frame-subjective-opacity: 0.38;
+}
+
+/* ── Brace charge terms ──
+ * Words, phrases, and badges can carry data-spw-charge-key.
+ * Hover/focus previews resonance; click/space/enter pins attention.
+ */
+
+body[data-spw-surface="blog"] [data-spw-charge-key] {
+    cursor: pointer;
+    border-bottom: 1px dotted var(--blog-line-strong);
+    color: inherit;
+    text-decoration: none;
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        color 140ms ease,
+        box-shadow 140ms ease;
+}
+
+body[data-spw-surface="blog"] [data-spw-charge-key][role="button"] {
+    touch-action: manipulation;
+}
+
+body[data-spw-surface="blog"] [data-spw-charge-key]:focus-visible {
+    outline: 2px solid var(--blog-accent);
+    outline-offset: 3px;
+}
+
+body[data-spw-surface="blog"] [data-spw-charge-state="preview"],
+body[data-spw-surface="blog"] [data-spw-charge-state="resonant"] {
+    border-bottom-color: var(--blog-accent);
+    background-color: var(--blog-spw-bg);
+    color: var(--blog-accent);
+}
+
+body[data-spw-surface="blog"] [data-spw-charge-state="pinned"],
+body[data-spw-surface="blog"] [data-spw-charge-state="pinned"].is-charge-source {
+    border-bottom-color: var(--blog-wonder);
+    background-color: var(--blog-wonder-bg);
+    box-shadow: inset 0 -0.38em 0 var(--blog-wonder-bg);
+    color: var(--blog-wonder);
+}
+
+body[data-spw-surface="blog"] .site-frame.has-active-charge {
+    --blog-frame-objective-opacity: 0.42;
+    --blog-frame-subjective-opacity: 0.42;
+    border-left-color: var(--blog-objective-line);
+    border-right-color: var(--blog-subjective-line);
+}
+
+body[data-spw-surface="blog"] .blog-charge-status {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* ── Paper defaults ──
+ * Comfortable measure, vertical rhythm, and reading weight
+ * so the page invites reading before interacting.
+ */
+
+body[data-spw-surface="blog"] .frame-note,
+body[data-spw-surface="blog"] .specimen-material,
+body[data-spw-surface="blog"] .field-note p {
+    max-width: var(--blog-measure);
+}
+
+body[data-spw-surface="blog"] h1 {
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+}
+
+body[data-spw-surface="blog"] h2 {
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+    margin-top: 0;
 }
 
 body[data-spw-surface="blog"] .blog-svg-defs {
@@ -847,4 +1016,213 @@ body[data-spw-surface="blog"] .field-note-tag {
     font-size: 0.68rem;
     color: var(--blog-accent);
     letter-spacing: 0.04em;
+}
+
+/* ── Specimen reference links ──
+ * MDN docs, internal anchors, and operator page links.
+ * Styled as a quiet row of outbound references below each specimen's
+ * material description — the way a journal article cites its sources.
+ */
+
+body[data-spw-surface="blog"] .specimen-refs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: 0 0 0.8rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+body[data-spw-surface="blog"] .specimen-ref {
+    color: var(--blog-ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--blog-line);
+    transition: color 0.12s, border-color 0.12s;
+}
+body[data-spw-surface="blog"] .specimen-ref:hover,
+body[data-spw-surface="blog"] .specimen-ref:focus-visible {
+    color: var(--blog-accent);
+    border-color: var(--blog-accent);
+}
+body[data-spw-surface="blog"] .specimen-ref--mdn::before {
+    content: "docs: ";
+    color: var(--blog-ink-soft);
+    opacity: 0.6;
+}
+body[data-spw-surface="blog"] .specimen-ref--internal::before {
+    content: "↑ ";
+}
+body[data-spw-surface="blog"] .specimen-ref--spw::before {
+    content: "op: ";
+    color: var(--blog-ink-soft);
+    opacity: 0.6;
+}
+
+/* ── Wonder-level transitions ──
+ * Brief connective phrases between major sections — the logical
+ * joints that make the page read as a machine, not a gallery.
+ */
+
+body[data-spw-surface="blog"] .blog-transition {
+    max-width: var(--blog-measure);
+    margin: 0.2rem 0 0.6rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--blog-line);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--blog-ink-soft);
+    line-height: 1.55;
+}
+
+/* ── Fiber pair specimen links ── */
+
+body[data-spw-surface="blog"] .fiber-pair-note a {
+    color: var(--blog-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--blog-line);
+    transition: border-color 0.12s;
+}
+body[data-spw-surface="blog"] .fiber-pair-note a:hover {
+    border-color: var(--blog-accent);
+}
+
+/* ── Content links ──
+ * Inline links within prose — subtle underline that firms on hover.
+ */
+
+body[data-spw-surface="blog"] .frame-note a,
+body[data-spw-surface="blog"] .blog-transition a {
+    color: var(--blog-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--blog-line);
+    transition: border-color 0.12s;
+}
+body[data-spw-surface="blog"] .frame-note a:hover,
+body[data-spw-surface="blog"] .blog-transition a:hover {
+    border-color: var(--blog-accent);
+}
+
+/* ── Touch semantics ──
+ * Charge terms and badge elements are non-selectable — tapping them is
+ * intentional, not accidental word-select. Links still navigate. Marked
+ * non-links add their key to the attentional register: a running probe
+ * of what draws attention on the surface.
+ */
+
+body[data-spw-surface="blog"] .spec-pill,
+body[data-spw-surface="blog"] .field-note-tag,
+body[data-spw-surface="blog"] .specimen-api-tag,
+body[data-spw-surface="blog"] .specimen-index-tag,
+body[data-spw-surface="blog"] .blog-chip-list li,
+body[data-spw-surface="blog"] .fiber-pair-title,
+body[data-spw-surface="blog"] .theme-swatch-label,
+body[data-spw-surface="blog"] .sk-key,
+body[data-spw-surface="blog"] .sk-op {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body[data-spw-surface="blog"] .spec-pill,
+body[data-spw-surface="blog"] .field-note-tag,
+body[data-spw-surface="blog"] .specimen-api-tag,
+body[data-spw-surface="blog"] .blog-chip-list li {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: outline-color 0.12s, background 0.12s;
+}
+
+body[data-spw-surface="blog"] [data-attn-active] {
+    outline: 2px solid var(--blog-accent);
+    outline-offset: 1px;
+}
+
+/* ── Attentional register bar ──
+ * Floating bar at the bottom showing collected terms.
+ * Swipe down to dismiss. Tap a chip to remove it.
+ */
+
+[data-attn-register] {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--blog-line, rgba(0, 0, 0, 0.12));
+    border-radius: 0.6rem;
+    background: var(--blog-bg-card-strong, rgba(255, 255, 255, 0.92));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    z-index: 900;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: attn-slide-up 180ms ease;
+}
+
+@keyframes attn-slide-up {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-attn-register] .attn-label {
+    color: var(--blog-ink-soft, #666);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+[data-attn-register] .attn-terms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    flex: 1;
+    overflow: hidden;
+}
+
+[data-attn-register] .attn-chip {
+    padding: 0.12rem 0.4rem;
+    border: 1px solid var(--blog-accent, hsl(188 64% 32%));
+    border-radius: 3px;
+    background: transparent;
+    color: var(--blog-accent, hsl(188 64% 32%));
+    font: inherit;
+    font-size: 0.68rem;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background 0.1s;
+}
+
+[data-attn-register] .attn-chip:hover,
+[data-attn-register] .attn-chip:active {
+    background: var(--blog-spw-bg, rgba(24, 123, 135, 0.10));
+}
+
+[data-attn-register] .attn-clear {
+    padding: 0.12rem 0.35rem;
+    border: 1px solid var(--blog-line, rgba(0, 0, 0, 0.12));
+    border-radius: 3px;
+    background: transparent;
+    color: var(--blog-ink-soft, #666);
+    font: inherit;
+    font-size: 0.68rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ── Swipe hint ──
+ * Subtle indicator that the theme toggle supports swipe.
+ */
+
+body[data-spw-surface="blog"] .atelier-theme-toggle {
+    touch-action: pan-y;
 }

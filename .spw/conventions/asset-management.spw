@@ -78,11 +78,16 @@
   }
 
   valence: {
-    boon: { feel: "growth, warm, generous", direction: "left-side motion" }
-    bane: { feel: "friction, cool, resistant", direction: "right-side motion" }
+    boon: { feel: "growth, warm, generous", direction: "expansive motion" }
+    bane: { feel: "friction, cool, resistant", direction: "resistant motion" }
     bone: { feel: "stable, neutral, centered, foundational" }
     bonk: { feel: "collision, bright, striking, immediate impact" }
     honk: { feel: "signal, resonant, calling, alert" }
+  }
+
+  perspective_axis: {
+    objective: { feel: "shared, structural, source-like", direction: "opening brace / address side" }
+    subjective: { feel: "situated, interpretive, resonant", direction: "closing brace / synthesis side" }
   }
 
   spirit_phases: [

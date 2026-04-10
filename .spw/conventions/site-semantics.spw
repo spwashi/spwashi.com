@@ -30,6 +30,17 @@
   interface_rule: "Public pages stay calm at rest, but every component should become more legible when addressed."
 }
 
+^"brace_perspective_axis"{
+  rule: "Brace physics represents the objective -> subjective gradient before it represents boon/bane valence."
+  objective: "The opening brace marks shared structure: address, source, geometry, constraint, evidence, and reproducible position."
+  subjective: "The closing brace marks situated reading: attention, felt meaning, interpretation, resonance, and local synthesis."
+  gradient: "Components may lean objective, balanced, or subjective, but both sides remain present unless the author explicitly hides one."
+  valence_relation: "Boon/bane may still color mood, friction, or local valence; it must not own left/right brace physics."
+  html_contract: "Use data-spw-perspective='objective', 'balanced', or 'subjective' when a surface needs explicit perspective weight."
+  css_contract: ["--objective-brace-wash", "--subjective-brace-wash", "data-spw-brace-axis"]
+  aria_contract: "Decorative brace marks stay aria-hidden or pseudo-rendered; interactive perspective controls must be buttons, links, or named controls."
+}
+
 ^"component_grammar"{
   frame: {
     default_form: "brace"
@@ -134,6 +145,16 @@
   projection_bias: "Charge may prefer a lens, surface, or pivot when the user asks for depth, but it must not hide other available interactions."
   decay_rule: "Charge should either decay, transfer through registers, or be discharged by an explicit action; it should not become permanent hidden state."
   counterexample: "A frame remembers a hidden mode forever after a hover and later sends the user into a surprising projection with no inspectable cause."
+}
+
+^"brace_charge_interaction_semantics"{
+  rule: "Passive reading may become light interaction when a word, phrase, badge, or sigil carries an explicit charge key."
+  html_contract: "Use data-spw-charge-key for semantically similar phrases that should resonate together."
+  preview: "Hover or focus may preview charge by highlighting all matching keys without committing state."
+  pinned: "Click, Enter, or Space may pin charge on non-link phrases; Escape clears pinned charge."
+  aria_contract: "Non-link charge phrases become role='button' with aria-pressed state; link charge phrases keep normal navigation."
+  scale_rule: "Charge keys should name semantic recurrence, not every repeated word; a sparse set of high-signal terms keeps the page readable."
+  counterexample: "Every noun on the page becomes focusable, hover glows everywhere, and the reader can no longer tell what was semantically marked."
 }
 
 ^"exploration_safety"{

@@ -134,7 +134,7 @@ const buildNavigator = () => {
     triggerBtn.setAttribute('aria-label', 'Toggle surface map (g)');
     triggerBtn.innerHTML = `
         <span class="spw-nav-strip-label">#&gt;&nbsp;map</span>
-        <span class="spw-nav-strip-sublabel">boon</span>
+        <span class="spw-nav-strip-sublabel">objective</span>
     `;
     strip.appendChild(triggerBtn);
 

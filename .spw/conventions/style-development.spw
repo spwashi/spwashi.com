@@ -25,7 +25,8 @@
     "The constellation frame on the home page is the site's only committed visual vocabulary: sparse points, relational arcs, depth through layering.",
     "The operator atlas pages are the site's clearest voice: exact, relational, unhurried, with each sigil carrying both technical and metaphysical weight.",
     "Operator color tokens already form a visual hierarchy that is semantic, not decorative.",
-    "The site's own metaphysics vocabulary (boon/bane, charge, pivot, spirit phase, brace topology) is a richer source for motifs and names than external design calendars or trends.",
+    "The site's own metaphysics vocabulary (objective/subjective brace axis, charge, pivot, spirit phase, brace topology, and secondary valence) is a richer source for motifs and names than external design calendars or trends.",
+    "Brace charge should appear first as readable recurrence: a sparse phrase or badge can charge attention and reveal similar language elsewhere.",
     "The spirit cycle's five phases (initiation, resistance, transformation, expression, return) are available as an interaction arc — none of the plans have yet claimed them.",
   ]
 }
@@ -85,7 +86,7 @@
   brace_physics_vocabulary: {
     plan: ".agents/plans/interaction-grammar"
     commit: "2 — semantics formalization"
-    question: "Does boon/bane stay as the primary vocabulary, or does physical-intuition bridging become the default entry layer? Log the decision and the reasoning."
+    question: "Decision logged: objective/subjective is the primary brace axis; boon/bane remains secondary valence. Future surfaces should test how physical intuition makes that axis legible."
   }
   filetype_visual_grammar: {
     plan: ".agents/plans/cognitive-navigation"

@@ -352,30 +352,32 @@ const initBraceWalls = () => {
     };
 
     document.addEventListener('spw:frame-change', (e) => applyOpColor(e.detail?.opType, e.detail?.frame));
+    document.documentElement.dataset.spwBraceAxis = 'objective-subjective';
 
-    // Inject BOON wall (left)
-    const boon = document.createElement('div');
-    boon.className = 'spw-boon-wall';
-    boon.setAttribute('aria-hidden', 'true');
-    boon.innerHTML = '<span class="spw-boon-wall-char">{</span>';
-    document.body.appendChild(boon);
+    const objectiveWall = document.createElement('div');
+    objectiveWall.className = 'spw-objective-wall spw-boon-wall';
+    objectiveWall.setAttribute('aria-hidden', 'true');
+    objectiveWall.innerHTML = `
+        <span class="spw-objective-wall-char spw-boon-wall-char">{</span>
+        <span class="spw-objective-label">objective</span>
+    `;
+    document.body.appendChild(objectiveWall);
 
-    // Inject BANE wall (right)
-    const bane = document.createElement('div');
-    bane.className = 'spw-bane-wall';
-    bane.setAttribute('aria-hidden', 'true');
-    bane.innerHTML = `
-        <span class="spw-bane-wall-char">}</span>
-        <span class="spw-bane-label">bane</span>
-        <div class="spw-bane-scroll-track">
-            <div class="spw-bane-scroll-thumb" data-spw-scroll-thumb></div>
+    const subjectiveWall = document.createElement('div');
+    subjectiveWall.className = 'spw-subjective-wall spw-bane-wall';
+    subjectiveWall.setAttribute('aria-hidden', 'true');
+    subjectiveWall.innerHTML = `
+        <span class="spw-subjective-wall-char spw-bane-wall-char">}</span>
+        <span class="spw-subjective-label spw-bane-label">subjective</span>
+        <div class="spw-subjective-scroll-track spw-bane-scroll-track">
+            <div class="spw-subjective-scroll-thumb spw-bane-scroll-thumb" data-spw-scroll-thumb></div>
         </div>
     `;
-    document.body.appendChild(bane);
+    document.body.appendChild(subjectiveWall);
 
     // Scroll tracking
-    const thumb = bane.querySelector('[data-spw-scroll-thumb]');
-    const track = bane.querySelector('.spw-bane-scroll-track');
+    const thumb = subjectiveWall.querySelector('[data-spw-scroll-thumb]');
+    const track = subjectiveWall.querySelector('.spw-subjective-scroll-track');
     const updateScroll = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         if (max <= 0) { track.style.display = 'none'; return; }
@@ -457,21 +459,21 @@ const initSpiritSequenceEasterEgg = () => {
     };
 
     const triggerSpiritCycle = () => {
-        const boon = document.querySelector('.spw-boon-wall');
-        const bane = document.querySelector('.spw-bane-wall');
+        const objectiveWall = document.querySelector('.spw-objective-wall, .spw-boon-wall');
+        const subjectiveWall = document.querySelector('.spw-subjective-wall, .spw-bane-wall');
 
-        // Pulse the walls through operator colors
+        // Pulse the perspective walls through operator colors.
         let step = 0;
         const pulse = setInterval(() => {
             const color = SPIRIT_COLORS[step % SPIRIT_COLORS.length];
             document.documentElement.style.setProperty('--active-op-color', color);
-            if (boon) boon.style.color = color;
-            if (bane) bane.style.color = color;
+            if (objectiveWall) objectiveWall.style.color = color;
+            if (subjectiveWall) subjectiveWall.style.color = color;
             step++;
             if (step >= SPIRIT_COLORS.length * 2) {
                 clearInterval(pulse);
-                if (boon) boon.style.color = '';
-                if (bane) bane.style.color = '';
+                if (objectiveWall) objectiveWall.style.color = '';
+                if (subjectiveWall) subjectiveWall.style.color = '';
             }
         }, 140);
 
