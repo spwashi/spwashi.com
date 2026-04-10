@@ -21,7 +21,7 @@
         });
     </script>
 </head>
-<body data-spw-surface="website" data-spw-features="operators navigator console">
+<body data-spw-surface="website" data-spw-features="operators navigator console svg-surfaces">
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -106,6 +106,41 @@
                     <h2>Machine Register</h2>
                 </div>
                 <p class="inline-note">The plans now treat the site as a cognitive machine: a surface that helps a visitor orient, inspect, invoke, reflect, and pivot without losing the original structure.</p>
+                <figure class="spw-svg-figure" data-spw-svg-host data-spw-role="illustration" data-spw-meaning="cognitive machine stage diagram">
+                    <svg class="spw-svg-surface spw-svg-surface--machine" viewBox="0 0 720 300" role="img" aria-labelledby="machine-svg-title machine-svg-desc">
+                        <title id="machine-svg-title">Cognitive machine stage diagram</title>
+                        <desc id="machine-svg-desc">Five connected chambers show orient, inspect, invoke, reflect, and pivot as a reversible sequence.</desc>
+                        <rect class="spw-svg-frame" x="26" y="26" width="668" height="248" rx="26"></rect>
+                        <path class="spw-svg-flow" d="M126 150 C196 70, 272 70, 342 150 S488 230, 566 150"></path>
+                        <path class="spw-svg-flow" d="M566 150 C506 94, 438 88, 376 132 S228 222, 126 150"></path>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--probe" cx="126" cy="150" r="44"></circle>
+                            <text class="spw-svg-label" x="126" y="146" text-anchor="middle">orient</text>
+                            <text class="spw-svg-note" x="126" y="165" text-anchor="middle"># frame</text>
+                        </g>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--ref" cx="248" cy="94" r="42"></circle>
+                            <text class="spw-svg-label" x="248" y="90" text-anchor="middle">inspect</text>
+                            <text class="spw-svg-note" x="248" y="109" text-anchor="middle">? probe</text>
+                        </g>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--action" cx="360" cy="150" r="46"></circle>
+                            <text class="spw-svg-label" x="360" y="146" text-anchor="middle">invoke</text>
+                            <text class="spw-svg-note" x="360" y="165" text-anchor="middle">@ action</text>
+                        </g>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--object" cx="472" cy="206" r="42"></circle>
+                            <text class="spw-svg-label" x="472" y="202" text-anchor="middle">reflect</text>
+                            <text class="spw-svg-note" x="472" y="221" text-anchor="middle">$ meta</text>
+                        </g>
+                        <g>
+                            <circle class="spw-svg-node spw-svg-node--surface" cx="594" cy="150" r="44"></circle>
+                            <text class="spw-svg-label" x="594" y="146" text-anchor="middle">pivot</text>
+                            <text class="spw-svg-note" x="594" y="165" text-anchor="middle">&gt; surface</text>
+                        </g>
+                    </svg>
+                    <figcaption>A first SVG host: static, captioned, mobile-scaled, and backed by the same five-stage machine register described below.</figcaption>
+                </figure>
                 <div class="feature-ladder" aria-label="Cognitive machine stages">
                     <div class="frame-panel">
                         <h3>1 · Orient</h3>

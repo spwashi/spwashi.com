@@ -3,7 +3,7 @@
  * Improves offline navigation, installability, and update activation.
  */
 
-const APP_VERSION = '0.1.3';
+const APP_VERSION = '0.1.4';
 const CORE_CACHE_NAME = `spw-core-${APP_VERSION}`;
 const PAGE_CACHE_NAME = `spw-pages-${APP_VERSION}`;
 const ASSET_CACHE_NAME = `spw-assets-${APP_VERSION}`;
@@ -42,6 +42,8 @@ const CORE_ROUTES = [
 const CORE_ASSETS = [
   '/manifest.webmanifest',
   '/public/css/style.css',
+  '/public/css/enhancements.css',
+  '/public/css/svg-surfaces.css',
   '/public/js/site.js',
   '/public/js/spw-shared.js',
   '/public/js/spw-operators.js',

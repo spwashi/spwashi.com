@@ -1,0 +1,116 @@
+/*
+ * Progressive enhancement layer.
+ *
+ * These selectors make planned features easier to read, but they do not own
+ * route structure. Removing this file should leave the pages navigable.
+ */
+
+.feature-map,
+.feature-ladder,
+.motif-grid,
+.capture-preset-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.feature-map {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-map--asymmetric {
+    grid-template-columns: minmax(0, 1.25fr) repeat(2, minmax(0, 0.9fr));
+}
+
+.feature-card--primary {
+    grid-row: span 2;
+    background:
+        linear-gradient(135deg, rgba(0, 128, 128, 0.08), transparent 46%),
+        var(--card-bg);
+}
+
+.feature-ladder {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.feature-ladder .frame-panel {
+    min-height: auto;
+}
+
+.motif-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.motif-card,
+.capture-preset {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+.motif-card::before,
+.capture-preset::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.28rem;
+    background: var(--active-op-color);
+    opacity: 0.5;
+}
+
+.motif-card > *,
+.capture-preset > * {
+    position: relative;
+}
+
+.motif-card--operator::before { background: var(--op-probe-color); }
+.motif-card--land::before { background: var(--op-ref-color); }
+.motif-card--constellation::before { background: var(--op-stream-color); }
+.motif-card--archive::before { background: var(--op-binding-color); }
+
+.capture-preset-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.capture-preset {
+    min-height: 9.5rem;
+    justify-content: flex-end;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.72), transparent 34%),
+        linear-gradient(160deg, rgba(0, 128, 128, 0.08), rgba(255, 255, 255, 0.58));
+}
+
+.capture-preset--portrait { aspect-ratio: 4 / 5; }
+.capture-preset--square { aspect-ratio: 1 / 1; }
+.capture-preset--wide { aspect-ratio: 16 / 10; }
+.capture-preset--tall { aspect-ratio: 9 / 13; }
+
+@media (max-width: 860px) {
+    .feature-map,
+    .feature-map--asymmetric,
+    .feature-ladder,
+    .motif-grid,
+    .capture-preset-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feature-card--primary {
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .feature-map,
+    .feature-map--asymmetric,
+    .feature-ladder,
+    .motif-grid,
+    .capture-preset-grid {
+        grid-template-columns: 1fr;
+    }
+}

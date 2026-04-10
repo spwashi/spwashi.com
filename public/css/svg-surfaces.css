@@ -1,0 +1,97 @@
+/*
+ * SVG surface layer.
+ *
+ * SVG enters as a bounded, captioned host. The HTML around the SVG remains the
+ * semantic source of truth; the graphic projects relationships over it.
+ */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface {
+    display: block;
+    width: 100%;
+    max-width: 52rem;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background:
+        radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.74), transparent 30%),
+        linear-gradient(145deg, rgba(230, 248, 248, 0.58), rgba(255, 255, 255, 0.48));
+    box-shadow: var(--card-shadow);
+    color: var(--ink);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface text {
+    font-family: 'JetBrains Mono', monospace;
+    fill: currentColor;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-frame {
+    fill: rgba(255, 255, 255, 0.52);
+    stroke: var(--line);
+    stroke-width: 1.2;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-node {
+    fill: rgba(255, 255, 255, 0.82);
+    stroke: var(--active-op-border);
+    stroke-width: 1.5;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-node--probe { stroke: var(--op-probe-color); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--ref { stroke: var(--op-ref-color); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--action { stroke: var(--op-action-color); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--object { stroke: var(--op-object-color); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--surface { stroke: var(--op-surface-color); }
+
+[data-spw-features~="svg-surfaces"] .spw-svg-flow {
+    fill: none;
+    stroke: var(--active-op-color);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 6 8;
+    opacity: 0.48;
+    animation: spwSvgFlow 8s linear infinite;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-note {
+    fill: var(--ink-soft);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+}
+
+@keyframes spwSvgFlow {
+    to {
+        stroke-dashoffset: -28;
+    }
+}
+
+@media (max-width: 700px) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-surface {
+        border-radius: 0.7rem;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-label {
+        font-size: 0.78rem;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-note {
+        font-size: 0.58rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-flow {
+        animation: none;
+    }
+}
