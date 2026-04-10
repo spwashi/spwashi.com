@@ -1,0 +1,92 @@
+/* Grain Texture Layer
+ * Subtle film grain adds tactile depth and handcrafted feel
+ * Adjustable opacity based on semantic density setting
+ */
+
+:root {
+    --grain-opacity: 0.03;
+    --grain-blend: multiply;
+}
+
+/* Grain texture using SVG noise
+ * Very subtle, only visible on close inspection
+ */
+body {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/></filter><rect width="256" height="256" fill="rgba(0,0,0,0.02)" filter="url(%23noise)"/></svg>');
+    background-attachment: fixed;
+    background-size: 256px 256px;
+}
+
+/* Increase grain visibility based on semantic density setting */
+[data-spw-semantic-density="rich"] {
+    --grain-opacity: 0.05;
+}
+
+[data-spw-semantic-density="minimal"] {
+    --grain-opacity: 0.01;
+}
+
+/* Grain on key surfaces for visual coherence */
+.site-frame,
+.frame-card,
+.media-card,
+.operator-chip {
+    position: relative;
+}
+
+.site-frame::before,
+.frame-card::before,
+.media-card::before,
+.operator-chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/></filter><rect width="256" height="256" fill="rgba(0,0,0,0.03)" filter="url(%23noise)"/></svg>');
+    background-attachment: fixed;
+    background-size: 256px 256px;
+    opacity: var(--grain-opacity);
+    pointer-events: none;
+    mix-blend-mode: var(--grain-blend);
+    border-radius: inherit;
+}
+
+/* Ensure grain doesn't interfere with interactive elements */
+.site-frame::before {
+    z-index: -1;
+}
+
+.frame-card::before,
+.media-card::before,
+.operator-chip::before {
+    z-index: 0;
+}
+
+/* Light mode grain */
+@media (prefers-color-scheme: light) {
+    :root {
+        --grain-opacity: 0.03;
+        --grain-blend: multiply;
+    }
+}
+
+/* Dark mode grain (slightly more visible for contrast) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --grain-opacity: 0.04;
+        --grain-blend: screen;
+    }
+}
+
+/* Reduce grain under reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    body {
+        background-image: none;
+    }
+
+    .site-frame::before,
+    .frame-card::before,
+    .media-card::before,
+    .operator-chip::before {
+        opacity: 0.01;
+    }
+}
