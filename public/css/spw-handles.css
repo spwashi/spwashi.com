@@ -1,22 +1,45 @@
+/* ─── Liminality (Cognitive Depth) ─── */
+/* Extensible semantics for agents to construct cognitive depth */
+
+/* Entry: Priming wonder, first discovery. Soft glow. */
 [data-spw-form="brace"][data-spw-liminality="entry"] {
-    --brace-open-color: rgba(0, 128, 128, 0.34);
-    --brace-close-color: rgba(0, 128, 128, 0.18);
+    --brace-open-color: rgba(0, 128, 128, 0.44);
+    --brace-close-color: rgba(0, 128, 128, 0.28);
+    filter: drop-shadow(0 0 6px rgba(0, 128, 128, 0.25));
+}
+[data-spw-form="block"][data-spw-liminality="entry"] {
+    border-color: rgba(0, 128, 128, 0.22);
+    box-shadow: 0 0 12px rgba(0, 128, 128, 0.08); /* Wonder glow */
 }
 
+/* Threshold: Glassy passage, high cognitive load/liminal state */
+[data-spw-liminality="threshold"] {
+    backdrop-filter: blur(4px);
+    opacity: 0.85;
+}
 [data-spw-form="brace"][data-spw-liminality="threshold"] {
     --brace-open-color: rgba(0, 128, 128, 0.28);
     --brace-close-color: rgba(0, 128, 128, 0.14);
 }
 
+/* Projected: High value/tangibility, floats above the ambient logic */
+[data-spw-form="brace"][data-spw-liminality="projected"] {
+    --brace-open-color: rgba(0, 128, 128, 0.6);
+    filter: drop-shadow(0 4px 6px rgba(0, 128, 128, 0.15));
+}
 [data-spw-form="block"][data-spw-liminality="projected"] {
+    box-shadow: var(--shadow-active);
     --block-depth-size: 0.44rem;
     --block-depth-color: rgba(0, 128, 128, 0.035);
+    transform: translateY(-2px);
 }
 
+/* Deep: Low tangibility, foundation/background knowledge */
 [data-spw-form="block"][data-spw-liminality="deep"] {
     --block-border-color: rgba(14, 18, 20, 0.08);
     --block-depth-size: 0.2rem;
     --block-depth-color: rgba(14, 18, 20, 0.03);
+    opacity: 0.6;
 }
 
 [data-spw-liminality="entry"] > .spw-component-tag {
@@ -31,6 +54,32 @@
     border-style: solid;
 }
 
+/* ─── Charging / Discharging (Hover & Focus) ─── */
+
+[data-spw-form="brace"] {
+    transition: filter var(--charge-release-duration) var(--charge-release-ease);
+}
+[data-spw-form="brace"]:hover,
+[data-spw-form="brace"]:focus-within {
+    --brace-open-color: rgba(0, 128, 128, 0.44);
+    --brace-close-color: rgba(0, 128, 128, 0.28);
+    filter: drop-shadow(0 0 8px rgba(0, 128, 128, 0.12));
+}
+
+[data-spw-form="block"] {
+    transition: border-color var(--charge-release-duration) var(--charge-release-ease),
+                box-shadow var(--charge-release-duration) var(--charge-release-ease),
+                transform var(--charge-release-duration) var(--charge-release-ease);
+}
+[data-spw-form="block"]:hover,
+[data-spw-form="block"]:focus-within {
+    --block-border-color: rgba(0, 128, 128, 0.28);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+}
+
+/* ─── Selection ─── */
+
 [data-spw-selection="ambient"] > .spw-component-tag {
     opacity: 0.72;
 }
@@ -40,10 +89,10 @@
 }
 
 [data-spw-selection="focused"] {
-    --brace-open-color: rgba(0, 128, 128, 0.34);
-    --brace-close-color: rgba(0, 128, 128, 0.2);
-    --block-border-color: rgba(0, 128, 128, 0.14);
-    --block-depth-color: rgba(0, 128, 128, 0.03);
+    --brace-open-color: rgba(0, 128, 128, 0.44);
+    --brace-close-color: rgba(0, 128, 128, 0.28);
+    --block-border-color: rgba(0, 128, 128, 0.24);
+    --block-depth-color: rgba(0, 128, 128, 0.04);
 }
 
 [data-spw-selection="focused"] > .spw-component-tag {
@@ -53,10 +102,11 @@
 
 [data-spw-selection="active"],
 [data-spw-selection="selected"] {
-    --brace-open-color: rgba(0, 128, 128, 0.42);
-    --brace-close-color: rgba(0, 128, 128, 0.24);
-    --block-border-color: rgba(0, 128, 128, 0.18);
-    --block-depth-color: rgba(0, 128, 128, 0.045);
+    --brace-open-color: rgba(0, 128, 128, 0.54);
+    --brace-close-color: rgba(0, 128, 128, 0.38);
+    --block-border-color: rgba(0, 128, 128, 0.32);
+    --block-depth-color: rgba(0, 128, 128, 0.06);
+    filter: drop-shadow(0 0 12px rgba(0, 128, 128, 0.15));
 }
 
 [data-spw-selection="active"] > .spw-component-tag,
