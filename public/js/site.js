@@ -14,6 +14,7 @@ import './spirit-phase-dynamics.js';
 import './electromagnetic-containers.js';
 import { initBraceGestures } from './brace-gestures.js';
 import { initSpwExperiential } from './spw-experiential.js';
+import { initPretextPhysics } from './spw-pretext-physics.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -522,6 +523,7 @@ onDomReady(() => {
     initBraceWalls();
     initBraceGestures();
     initSpwExperiential();
+    initPretextPhysics();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

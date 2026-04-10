@@ -465,3 +465,44 @@
     color: var(--pink);
     border-bottom: 1px solid currentColor;
 }
+
+/* ─── Pretext Flow Magic ────────────────────────────────────────────────── */
+
+[data-spw-flow="pretext"] {
+    display: block;
+    margin: 1.5rem 0;
+    transition: opacity 0.3s ease;
+    min-height: 4rem;
+}
+
+.pretext-flow-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center lines for symmetry appreciation */
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink);
+    user-select: none;
+    pointer-events: none;
+}
+
+.pretext-flow-line {
+    white-space: pre;
+    text-align: center; /* Default to symmetrical centers */
+    transition: transform 0.2s var(--brace-settle-ease), opacity 0.2s ease;
+    opacity: calc(0.8 + (var(--flow-influence, 0) * 0.2));
+    
+    /* Subtle lean based on direction */
+    transform: translateX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * 12px))
+               skewX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * -2deg));
+}
+
+/* Highlight the 'current' influence */
+[data-spw-flow="pretext"]:hover {
+    --ink: var(--teal);
+}
+
+[data-spw-flow="pretext"][data-spw-gesture="charging"] .pretext-flow-line {
+    opacity: 1;
+}
