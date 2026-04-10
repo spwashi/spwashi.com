@@ -11,6 +11,7 @@
   @spw: ~".."
   @site_semantics: ~"./site-semantics.spw"
   @style_development: ~"./style-development.spw"
+  @design_whimsy: ~"./design-whimsy.spw"
   @asset_management: ~"./asset-management.spw"
   @operator_semantics: ~"./operator-semantics.spw"
   @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"

@@ -1,0 +1,256 @@
+#>design_whimsy
+#:conventions #!style
+#:layer #!pragmatics
+
+^"thesis"{
+  ~#note: "Whimsy is not decoration. It is earned delight through structural revelation and purposeful interaction."
+  claim: "Spw's interaction design should reward exploration, familiarity, and sustained engagement. Whimsy achieves this by making the site feel alive, responsive, and delightfully aware of the user's presence."
+  grounding: "Every whimsical element is grounded in the site's own semantics: operator physics, spirit cycle phases, brace topology, and valence qualities. Nothing is borrowed; everything is discovered from the work itself."
+}
+
+^"whimsy_principles"{
+  "Calm at rest, delight on contact — the default state is quiet; interaction reveals personality."
+  "Every interaction has micro-feedback — hovers, taps, and focuses get subtle responses that honor measurement, not just whim."
+  "Timing is semantic — animations use named tokens (practice-settle, threshold-reveal, full-express) that correspond to interaction depth."
+  "Spirit phases are visible — frames and sections carry subtle visual hints of their semantic role through color and accent."
+  "Symmetry is playful — operator pairs are recognized in interaction, not just documentation."
+  "Exploration is rewarded — links get markers (#), buttons get glows, and hidden depth rewards sustained interaction."
+  "Nothing traps — all animations are reversible; all interactions are discoverable; all states are recoverable."
+}
+
+^"timing_vocabulary"{
+  practice_settle: {
+    duration: "100ms"
+    feel: "instant feedback, no waiting"
+    use_cases: ["hover state change", "focus indication", "quick interactions"]
+    metaphor: "the time it takes to settle into focus"
+  }
+
+  threshold_reveal: {
+    duration: "300ms"
+    feel: "perceptible but not slow, a moment of recognition"
+    use_cases: ["state transitions", "reveal animations", "interactive emphasis"]
+    metaphor: "crossing a threshold, recognizing what was hidden"
+  }
+
+  full_express: {
+    duration: "600ms"
+    feel: "full-bodied expression, presence and intention"
+    use_cases: ["entrance animations", "complex sequences", "sustained interactions"]
+    metaphor: "a complete thought expressed, full articulation"
+  }
+}
+
+^"spirit_phase_visual_mapping"{
+  ~#note: "Each semantic role is hinted at through color and presence, so the user intuuits the type of frame they are in."
+
+  initiation: {
+    color: "hsl(210 70% 38%)"
+    feel: "entry, threshold, new"
+    roles: ["hub", "orientation"]
+    accent: "top accent bar (gradient)"
+  }
+
+  resistance: {
+    color: "hsl(0 40% 38%)"
+    feel: "friction, encounter, pressure"
+    roles: ["control", "settings"]
+    accent: "subtle pulse on interaction"
+  }
+
+  transformation: {
+    color: "hsl(268 55% 42%)"
+    feel: "pivot, rupture, becoming"
+    roles: ["interactive", "dynamic"]
+    accent: "corner glow on hover"
+  }
+
+  expression: {
+    color: "hsl(36 80% 36%)"
+    feel: "manifestation, projection, coming-forth"
+    roles: ["category", "schema", "plan"]
+    accent: "golden corner accent on cards"
+  }
+
+  return: {
+    color: "hsl(160 60% 32%)"
+    feel: "settling, integration, arrival"
+    roles: ["reference", "projection", "home"]
+    accent: "bottom settle line"
+  }
+}
+
+^"operator_interaction_whimsy"{
+  ~#note: "How operators are revealed and celebrated through interaction without being intrusive."
+
+  breathing: {
+    element: ".frame-sigil, [data-spw-operator]"
+    animation: "operator-breath (scale and letter-spacing shift on hover)"
+    message: "This operator is responsive; it acknowledges you"
+    timing: "full-express (600ms)"
+  }
+
+  glowing_chip: {
+    element: ".operator-chip"
+    animation: "radial glow appears on hover, subtle lift"
+    message: "This is an interactive operator reference"
+    timing: "threshold-reveal (300ms)"
+  }
+
+  link_marker: {
+    element: "a[href^='#']"
+    animation: "# symbol appears after link on hover"
+    message: "This link targets a named frame"
+    timing: "practice-settle (100ms)"
+  }
+
+  indicator_pulse: {
+    element: ".header-op-indicator"
+    animation: "pulses subtly when header is hovered"
+    message: "The current operator is being highlighted"
+    timing: "full-express (600ms)"
+  }
+}
+
+^"micro_interactions"{
+  plan_card_hover: {
+    what: "Card gets subtle corner accent (golden triangle), thesis gets bolded, wonder section glows"
+    why: "Cards are discoveries; hovering shows what's special about this plan"
+    timing: "staggered: practice-settle → threshold-reveal → full-express"
+  }
+
+  button_press: {
+    what: "Button scales down to 0.98, ripple glow appears from click point"
+    why: "Tactile feedback confirms the button was pressed"
+    timing: "practice-settle for scale, threshold-reveal for glow"
+  }
+
+  list_item_hover: {
+    what: "Item shifts left by 0.5rem, text shifts to active color"
+    why: "Lists are navigation; hovering shows readiness to select"
+    timing: "practice-settle"
+  }
+
+  input_check: {
+    what: "Checkbox/radio scales up 1.3x briefly, then settles to 1"
+    why: "Forms need tactile feedback; animation confirms the check happened"
+    timing: "practice-settle"
+  }
+
+  frame_heading_underline: {
+    what: "Horizontal line after heading fades in stronger on frame hover"
+    why: "Frames have structure; the underline reveals structure through interaction"
+    timing: "threshold-reveal"
+  }
+}
+
+^"easter_eggs_and_rewards"{
+  ~#note: "Sustained interaction discovers delightful moments that do not disrupt calm defaults."
+
+  operator_breathing: {
+    trigger: "hover over operator sigil for >1 second"
+    reward: "operator breathes (scale/letter-spacing animation)"
+    message: "Operators are alive and aware"
+  }
+
+  frame_phase_hints: {
+    trigger: "hover over any site-frame"
+    reward: "subtle colored accent bar at top reveals the frame's semantic role"
+    message: "This frame is a hub / control / expression / reference / etc."
+  }
+
+  plan_corner_glow: {
+    trigger: "hover over a plan card"
+    reward: "golden corner triangle appears, wonder section glows with soft light"
+    message: "This plan is special; wonder is present"
+  }
+
+  hashtag_reveal: {
+    trigger: "hover over internal links (#target)"
+    reward: "# symbol appears after the link text"
+    message: "Internal links target named frames"
+  }
+
+  footer_line_glow: {
+    trigger: "hover over footer"
+    reward: "the border line glows more brightly"
+    message: "Even the boundaries respond to your presence"
+  }
+}
+
+^"accessibility_and_restraint"{
+  ~#note: "Whimsy respects accessibility and does not trap or exclude users."
+
+  reduced_motion: {
+    rule: "If prefers-reduced-motion is set, all animations duration → 1ms (instant)"
+    message: "Whimsy is visual, not required; users who need calm get calm"
+    implementation: "@media (prefers-reduced-motion: reduce)"
+  }
+
+  dark_mode: {
+    rule: "Glows and accents are more subtle in light mode, more visible in dark mode"
+    message: "Whimsy scales to context; dark mode users still get delight"
+    implementation: "@media (prefers-color-scheme: dark)"
+  }
+
+  mobile_performance: {
+    rule: "Complex animations are reduced on mobile; tap feedback replaces hover"
+    message: "Mobile devices get equivalent delights without performance cost"
+    implementation: "@media (max-width: 768px)"
+  }
+
+  keyboard_navigation: {
+    rule: "All hover states work on focus; all hovers are also accessible via keyboard"
+    message: "Keyboard users get the same whimsy as mouse users"
+    implementation: ":focus matches :hover styles"
+  }
+
+  no_flashing: {
+    rule: "No animation flashes faster than 3 times per second"
+    message: "Whimsy is safe for photosensitive users"
+    implementation: "All animations are ≥300ms or have ≥300ms gaps"
+  }
+}
+
+^"css_organization"{
+  ~#note: "Whimsy CSS lives separately from core styles for clarity and iteration."
+
+  file: "public/css/spw-whimsy.css"
+  sections: [
+    "Typography whimsy (operator sigils, breathing)",
+    "Frame & panel whimsy (perspective shifts, heading accents)",
+    "Card whimsy (corner accents, glow effects)",
+    "Operator chip whimsy (lift, glow, spacing)",
+    "Navigation whimsy (underline animations, indicators)",
+    "Button & interactive whimsy (ripple, scale)",
+    "Spec pills whimsy (gradient shine effect)",
+    "Input & form whimsy (pulse on check)",
+    "Spirit phase visual hints (top accent bars)",
+    "Footer whimsy (glowing border, fade effects)",
+    "Accessibility (prefers-reduced-motion, color-scheme)",
+    "Mobile adjustments (reduced animations, bigger touch targets)"
+  ]
+
+  integration: "Imported into public/css/style.css after core styles and enhancements"
+  naming_convention: "Classes are semantic (plan-card, operator-chip, frame-sigil) not decorative"
+}
+
+^"future_whimsy_opportunities"{
+  ~#note: "Whimsy that could be added without breaking calm defaults."
+
+  parallax_depth: "Subtle parallax on plan cards or frames based on scroll position"
+  constellation_animation: "Home constellation renders itself slowly on page load"
+  operator_color_shift: "Operator colors shift slightly based on time of day or phase of moon"
+  interaction_physics: "Charged braces (from brace physics) have visual glow that dissipates on interaction"
+  discovery_trails: "Visited links leave subtle traces; the trail becomes visible through interaction"
+  responsive_whimsy: "Animations and effects change based on network speed and device capability"
+  collaborative_marks: "Multiple users on same page leaves subtle traces (future feature)"
+  seasonal_ornaments: "Whimsy shifts with the seasons; motifs evolve through the year"
+}
+
+^"documentation_references"{
+  @style_development: ~"./style-development.spw"
+  @operator_semantics: ~"./operator-semantics.spw"
+  @site_semantics: ~"./site-semantics.spw"
+  @cinematic_handles_plan: ~"../../.agents/plans/cinematic-handles/PLAN.md"
+}

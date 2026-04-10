@@ -1,5 +1,6 @@
 @import url('/public/css/enhancements.css');
 @import url('/public/css/svg-surfaces.css');
+@import url('/public/css/spw-whimsy.css');
 
 @property --active-op-color {
     syntax: '<color>';
@@ -1402,6 +1403,170 @@ figcaption {
     color: #7a1515;
 }
 
+/* ─── Blog Input Interpreter ─────────────────────────────────────────────── */
+
+[data-spw-features~="blog-interpreter"] .blog-interpreter-frame {
+    gap: 1rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-interpreter-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.95fr);
+    gap: 1rem;
+    align-items: stretch;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-panel,
+[data-spw-features~="blog-interpreter"] .blog-output-panel,
+[data-spw-features~="blog-interpreter"] .blog-output-card,
+[data-spw-features~="blog-interpreter"] .blog-seed-card,
+[data-spw-features~="blog-interpreter"] .blog-metric {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.58);
+    box-sizing: border-box;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-panel,
+[data-spw-features~="blog-interpreter"] .blog-output-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+    padding: 1rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-height: 100%;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-field > span,
+[data-spw-features~="blog-interpreter"] .blog-output-card h3,
+[data-spw-features~="blog-interpreter"] .blog-seed-card h3 {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-textarea {
+    width: 100%;
+    min-height: 22rem;
+    resize: vertical;
+    padding: 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--ink);
+    box-sizing: border-box;
+    font: inherit;
+    line-height: 1.55;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-textarea:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-input-status {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-header {
+    display: grid;
+    gap: 0.35rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-summary {
+    margin: 0;
+    color: var(--ink-soft);
+}
+
+[data-spw-features~="blog-interpreter"] .blog-metric-grid,
+[data-spw-features~="blog-interpreter"] .blog-output-grid {
+    display: grid;
+    gap: 0.7rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-metric-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-spw-features~="blog-interpreter"] .blog-metric {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.7rem;
+    background: rgba(236, 241, 255, 0.42);
+}
+
+[data-spw-features~="blog-interpreter"] .blog-metric span {
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-metric strong {
+    font-size: 1rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-card,
+[data-spw-features~="blog-interpreter"] .blog-seed-card {
+    padding: 0.85rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-card--wide {
+    grid-column: 1 / -1;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-chip-list,
+[data-spw-features~="blog-interpreter"] .blog-output-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-chip-list li {
+    padding: 0.22rem 0.55rem;
+    border: 1px solid var(--op-ref-border);
+    border-radius: 999px;
+    background: var(--op-ref-bg-soft);
+    color: var(--op-ref-color);
+    font-size: 0.78rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-output-list {
+    display: grid;
+    gap: 0.4rem;
+}
+
+[data-spw-features~="blog-interpreter"] .blog-seed-card pre {
+    margin: 0.65rem 0 0;
+    max-width: 100%;
+    overflow: auto;
+}
+
 /* ─── RPG Wednesday Local Gameplay Kit ───────────────────────────────────── */
 
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-kit {
@@ -2724,7 +2889,8 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     }
 
     [data-spw-features~="pretext-lab"] .pretext-lab-grid,
-    [data-spw-features~="pretext-lab"] .pretext-surface-grid {
+    [data-spw-features~="pretext-lab"] .pretext-surface-grid,
+    [data-spw-features~="blog-interpreter"] .blog-interpreter-layout {
         grid-template-columns: 1fr;
     }
 
@@ -2914,7 +3080,9 @@ html[data-spw-console="hidden"] [data-spw-features~="console"] .spw-console {
     .operator-detail-grid,
     [data-spw-features~="rpg-gameplay"] .rpg-gameplay-grid,
     [data-spw-features~="pretext-lab"] .pretext-control-grid,
-    [data-spw-features~="pretext-lab"] .pretext-metric-grid {
+    [data-spw-features~="pretext-lab"] .pretext-metric-grid,
+    [data-spw-features~="blog-interpreter"] .blog-metric-grid,
+    [data-spw-features~="blog-interpreter"] .blog-output-grid {
         grid-template-columns: 1fr;
     }
 
