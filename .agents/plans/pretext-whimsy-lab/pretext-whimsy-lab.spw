@@ -9,6 +9,7 @@
 ^["roots"]{
  @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
  @svg_plan: ~"../svg-surface-integration/svg-surface-integration.spw"
+ @css_plan: ~"../css-progressive-ornaments/css-progressive-ornaments.spw"
  @pretext_page: ~"topics/software/pretext/index.html"
  @lab: ~"public/js/pretext-lab.js"
  @utils: ~"public/js/pretext-utils.js"

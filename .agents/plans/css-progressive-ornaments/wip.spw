@@ -1,0 +1,72 @@
+# wip - css-progressive-ornaments
+# Branch: feature/css-progressive-ornaments
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/css-progressive-ornaments/PLAN.md"
+ @artifact: ~".agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw"
+ @css: ~"public/css/style.css"
+ @worker: ~"sw.js"
+ @manifest: ~"manifest.webmanifest"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @mobile_runtime: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @svg_plan: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"
+ @pretext_plan: ~".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
+ @operator_plan: ~".agents/plans/spw-operator-pages/spw-operator-pages.spw"
+}
+
+^["intent"]{
+ ~#goal: "Refactor the 2.5k-line stylesheet into responsibility-owned CSS layers while preserving GitHub Pages simplicity and preparing opt-in progressive enhancement plus seasonal ornament layers."
+ ~#taste: "calm core, summoned delight, explicit containment, and seasonal wonder that cannot break the site"
+}
+
+^["development"]{
+ lane: #craft_refactor
+ ladder: #static_to_enhanced
+ develops: [#css_layers, #progressive_enhancement, #seasonal_ornaments, #github_pages_assets]
+ review_surfaces: [@plan, @artifact, @css, @semantics]
+}
+
+^["concept_index"]{
+ primary: [#css_layer, #import_entrypoint, #enhancement_layer, #ornament_layer, #seasonal_token]
+ tensions: [#visual_parity, #cache_graph, #ornament_debt, #motion_safety, #cascade_order]
+ surfaces: [#home, #software, #spw_operator_atlas, #pretext, #play, #offline]
+}
+
+^["stream"]{
+ >>[2026-04-09 23:40] observe - `public/css/style.css` is 2576 lines and mixes tokens, base shell, Spw components, Pretext lab, operator atlas, navigator, console, responsive rules, and spirit sequence styling.
+ >>[2026-04-09 23:40] decide - Keep `/public/css/style.css` as the linked GitHub Pages entrypoint and split behind it first, rather than changing every HTML page or adding a build pipeline.
+ >>[2026-04-09 23:40] decide - Treat seasonal features as progressive ornaments: opt-in, cacheable, reduced-motion safe, and unable to own core layout or navigation.
+ >>[2026-04-09 23:40] taste - The refactor should make future SVG/Pretext/operator CSS easier to place without increasing visible noise. Ornament layers should feel like a removable glaze, not a second design system.
+}
+
+^["open"]{
+ ?[cascade_layers]: "Should the first split use native CSS @layer immediately or defer @layer until import parity is verified?"
+ ?[season_loading]: "Should seasonal CSS be imported by style.css, linked per page, or lazy-loaded after core CSS?"
+ ?[cache_policy]: "Should every seasonal file be precached, or should only the current season be cached?"
+ ?[snapshot_baseline]: "What screenshot set is enough to prove the no-behavior CSS split?"
+}
+
+^["commits"]{
+ ~[1]: "#[css] - capture CSS split and progressive ornament plan"
+ ~[2]: "&[css] - split style.css into stable layered imports without visual changes"
+ ~[3]: ".[semantics] - formalize progressive enhancement and ornament safety contracts"
+ ~[4]: "&[ornaments] - add opt-in seasonal ornament host and one quiet seasonal proof"
+ ~[5]: "![css] - verify visual parity, reduced motion, offline cache, and mobile containment"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@6c9b7a41fa6aeaddba76d24fa0f95bc14ce705d9"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/css/style.css, public/css/*.css, public/css/seasons/*.css, sw.js, manifest.webmanifest, .spw/conventions/site-semantics.spw"
+ ~#next_commit: "1"
+ ~#open_count: "4"
+ ~#last_stream: "2026-04-09 23:40"
+ ~#taste_debt: "The first split must not become a design-change commit. Seasonal motifs need enforceable safety rules before visual proofs."
+}
+
+^["done"]{
+}

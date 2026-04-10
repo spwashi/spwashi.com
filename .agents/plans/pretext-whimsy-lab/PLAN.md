@@ -61,6 +61,8 @@ Fuzz strategy:
 
 `svg-surface-integration` - shared host strategy for layout-driven drawings, widgets, and inspectable projections. Exploration can begin before the full SVG runtime lands, but the rendering model should not diverge from it.
 
+`css-progressive-ornaments` - CSS split and enhancement doctrine for keeping Pretext whimsy, physics surfaces, and seasonal ornaments bounded, cacheable, and reduced-motion safe.
+
 ## Failure Modes
 
 - **Hard**: the lab starts claiming Pretext can do glyph-level or arbitrary visual behaviors that it cannot actually compute.

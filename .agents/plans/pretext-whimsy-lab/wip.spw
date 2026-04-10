@@ -9,6 +9,7 @@
  @artifact: ~".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
  @runtime_plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
  @svg_plan: ~".agents/plans/svg-surface-integration/PLAN.md"
+ @css_plan: ~".agents/plans/css-progressive-ornaments/PLAN.md"
  @pretext_page: ~"topics/software/pretext/index.html"
  @software_page: ~"topics/software/index.html"
  @lab: ~"public/js/pretext-lab.js"
@@ -27,7 +28,7 @@
  lane: #execution_truth
  ladder: #service
  develops: [#experiment_design, #runtime, #projection_design, #semantics]
- review_surfaces: [@plan, @artifact, @runtime_plan, @svg_plan]
+ review_surfaces: [@plan, @artifact, @runtime_plan, @svg_plan, @css_plan]
  snippet_routes: [#example, #query, #spec]
 }
 
@@ -94,6 +95,7 @@
  >>[2026-04-09 21:29] decide - The whimsy lab should lean further into physics: line boxes become inspectable bodies under explicit constraints rather than just playful projections.
  >>[2026-04-09 21:29] revise - Physics here means deterministic force profiles seeded by width, line count, height, order, and anchors; it does not mean a generic particle engine detached from the text.
  >>[2026-04-09 21:29] taste - The right feeling is weight, tension, settling, orbit, or compression made legible enough to inspect, not decorative chaos.
+ >>[2026-04-09 23:45] maintain - Added `css-progressive-ornaments` as the CSS boundary plan for whimsy, physics, and seasonal ornament styling so Pretext experiments do not leak into the global stylesheet.
 }
 
 ^["open"]{

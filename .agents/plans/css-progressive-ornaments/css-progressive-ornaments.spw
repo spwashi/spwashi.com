@@ -1,0 +1,81 @@
+# css-progressive-ornaments
+# Distilled CSS architecture note for splitting the current stylesheet while
+# making progressive enhancement and seasonal ornaments safe to ship.
+
+#>css_progressive_ornaments
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "The core CSS should describe stable structure; ornaments should be detachable projections over that structure."
+ why: "This keeps the site calm, usable, and cacheable on GitHub Pages while still allowing seasonal wonder and small progressive features to appear when conditions are right."
+}
+
+^["layer_contract"]{
+ entrypoint: "public/css/style.css remains the linked stylesheet and import entrypoint."
+ order: [
+  "tokens - colors, spacing, timing, operator palettes, seasonal hooks",
+  "base - reset, typography, page shell, landmarks",
+  "components - frames, cards, panels, sigils, brace/block forms, operators",
+  "surfaces - route-specific layouts and demos",
+  "runtime - navigator, console, metrics, PWA chrome",
+  "enhancements - feature-gated additions that are safe to omit",
+  "ornaments - seasonal or temporary visual motifs that cannot own structure"
+ ]
+ rule: "A selector belongs to the layer that owns its reason to change."
+ counterexample: "A winter ornament rule changes `.site-frame` layout or hides a navigator element."
+}
+
+^["progressive_enhancement"]{
+ definition: "Progressive enhancement means the HTML and core CSS already provide the complete reading and navigation path; optional CSS adds clarity, atmosphere, or delight without becoming a dependency."
+ allowed: [
+  "extra background texture",
+  "subtle token shifts",
+  "feature-gated reveal polish",
+  "SVG/widget host styling when the host remains readable without it",
+  "ornamental pseudo-elements that do not affect content order"
+ ]
+ forbidden: [
+  "layout required for reading",
+  "hover-only semantics",
+  "motion-only information",
+  "hidden content without an HTML fallback",
+  "seasonal rules that alter focus visibility or route access"
+ ]
+}
+
+^["seasonal_ornaments"]{
+ definition: "A seasonal ornament is a temporary projection over the site's stable grammar."
+ host: "Prefer body-level data attributes or feature tokens such as `data-spw-season` and `data-spw-features`, not route-specific one-off selectors."
+ safety: [
+  "ornaments are removable without changing layout",
+  "ornaments respect `prefers-reduced-motion`",
+  "ornaments avoid blocking pointer, touch, keyboard, or screen-reader paths",
+  "ornaments use existing tokens or seasonal aliases rather than hard-coded palettes scattered through route CSS",
+  "ornaments have an expiry or review date"
+ ]
+ examples: [
+  "winter: cooler brace glow and sparse static star texture",
+  "spring: warmer boon glow and small growth marks near frame boundaries",
+  "halloween: sharper bane accent and low-contrast threshold grain",
+  "solstice: subtle operator-ring halo on the Spw atlas"
+ ]
+ counterexample: "A seasonal overlay with fixed positioning that captures taps or shifts scroll height."
+}
+
+^["github_pages_contract"]{
+ rule: "The split must work as static files served by GitHub Pages from the repo root."
+ constraints: [
+  "root-relative imports only",
+  "no required build step for the first split",
+  "service worker cache list updated for every core CSS file",
+  "manifest/service-worker version bumped when the CSS graph changes"
+ ]
+}
+
+^["validation"]{
+ parity: "No-behavior split should compare home, software, operator atlas, Pretext, play, and offline pages at mobile and desktop widths."
+ reduced_motion: "All ornament/enhancement motion is disabled or made static under `prefers-reduced-motion`."
+ offline: "Installed/offline pages retain the full core CSS graph."
+ falsify: "If disabling enhancements or ornaments changes navigation, reading order, focus visibility, or primary layout, the layer boundary is wrong."
+}
