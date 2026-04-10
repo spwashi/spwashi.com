@@ -1,0 +1,117 @@
+# wip — rpg-asset-capture-frames
+# Branch: main
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/rpg-asset-capture-frames/PLAN.md"
+ @artifact: ~".agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw"
+ @rpg_local: ~".agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
+ @screenshot_semantics: ~".agents/plans/screenshot-semantics/PLAN.md"
+ @css_ornaments: ~".agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @svg_surfaces: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"
+ @runtime: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ @rpg_module: ~"public/js/rpg-wednesday.js"
+ @css: ~"public/css/style.css"
+}
+
+^["intent"]{
+ ~#goal: "Plan local RPG image assets, screenshot-friendly character/item/place frames, prompt helpers, and motif customizations that reward exploration without blocking core table utility."
+ ~#taste: "Useful capture, local trust, screenshot legibility, and earned customization rooted in Spw/operator motifs rather than generic gamification."
+}
+
+^["development"]{
+ lane: #local_media_capture
+ ladder: #rpg_asset_surface
+ develops: [#asset_register, #screenshot_mode, #prompt_surface, #motif_rewards]
+ review_surfaces: [@plan, @artifact, @rpg_local, @screenshot_semantics, @css_ornaments]
+}
+
+^["concept_index"]{
+ primary: [#rpg_capture_frames]
+ surfaces: [#rpg_wednesday, #cast, #world, #sessions, #arcs]
+ tensions: [#manual_screenshot_vs_auto_capture, #reward_vs_manipulation, #local_images_vs_portability, #customization_vs_legibility]
+ transfers: [#indexeddb, #localstorage_metadata, #svg_frame_geometry, #spw_motifs, #external_ai_prompting]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? distinguish private local asset state from published campaign canon",
+  "< add a local asset register that can survive reloads without using localStorage for image blobs",
+  "$ render one screenshot-mode frame that stays legible as a still image",
+  "^ let exploration unlock motif choices without hiding baseline utility",
+  "% keep the core route readable without JavaScript or customization state",
+ ]
+ gates: [#privacy_truth, #screenshot_truth, #accessibility_truth, #offline_truth]
+}
+
+^["parallel_work"]{
+ critical_path: [#asset_store, #capture_frame_host, #screenshot_mode, #motif_rewards]
+ parallelizable: [#prompt_copy, #css_motifs]
+ shared_hot_files: ["public/js/rpg-wednesday.js", "public/css/style.css", "sw.js", "manifest.webmanifest"]
+ merge_risks: [#pwa_cache_drift, #style_growth, #state_schema_migration]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@screenshot_semantics, @style_development]
+ carries: [#asset_contract, #capture_presets, #motif_unlocks, #prompt_model]
+}
+
+^["interaction_depth"]{
+ subjects: [#upload, #preview, #associate_asset, #screenshot_mode, #copy_prompt, #unlock_motif, #clear_asset]
+ questions: [#what_is_core_utility, #what_is_rewarded, #what_is_safe_to_store, #what_survives_a_screenshot]
+ qualities: [#trust, #legibility, #wonder, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: ["Images stored as base64 in localStorage exceed quota or block the main thread.", "Screenshot mode cannot be dismissed on mobile.", "Import writes invalid asset metadata that strands blobs."]
+ soft_failures: ["Motifs feel arbitrary.", "Players mistake local assets for published campaign canon.", "Prompt helpers over-prescribe Midjourney/Grok style instead of giving useful context."]
+ recoveries: ["Use IndexedDB blobs and localStorage ids only.", "Keep a visible exit control and Escape handling.", "Validate imports before writing.", "Make motifs optional and utility-neutral."]
+ non_negotiables: ["No external upload.", "No analytics on private assets.", "Baseline frame available before unlocks.", "Contrast and reduced-motion safe."]
+}
+
+^["validation"]{
+ hypotheses: ["Manual screenshot staging is enough if the frame has stable aspect presets and hidden chrome.", "Exploration rewards can teach site features when they unlock motifs rather than power.", "Prompt text can help external tools without coupling the site to any service."]
+ negative_controls: ["Existing local gameplay kit remains usable.", "RPG routes remain readable without JavaScript.", "No image data is written to localStorage."]
+ demo_path: ["/play/rpg-wednesday/", "upload image", "assign character", "choose aspect", "enter screenshot mode", "copy prompt", "reload", "export", "clear", "import"]
+}
+
+^["stream"]{
+ >>[2026-04-10 00:00] hygiene — base main@7643d88ec9f4e30c2784a7dca4f36e825a659c8b; existing screenshot-semantics plan is untracked and adjacent.
+ >>[2026-04-10 00:00] decide — use IndexedDB for image blobs and localStorage for metadata/active customization only.
+ >>[2026-04-10 00:00] taste — unlockable customization should reward exploration of Spw/operator/site features, never gate table utility or create manipulative progression.
+}
+
+^["open"]{
+ ?[asset_bundle]: "Should export/import start as JSON with data URLs, or wait for a zip-like bundle format?"
+ ?[first_motifs]: "Which first motif family should ship: operator colors, land-cluster palettes, spirit phases, or campaign-specific arcs?"
+ ?[unlock_triggers]: "Which actions deserve motif unlocks without encouraging shallow clicking: visiting operator pages, using capture presets, exporting a backup, naming a cast asset, or exploring Pretext?"
+ ?[storage_budget]: "What compression and thumbnail policy keeps IndexedDB usage reasonable on mobile?"
+ ?[prompt_boundary]: "How opinionated should prompt helpers be for Midjourney/Grok without becoming a prompt-engineering product?"
+}
+
+^["commits"]{
+ ~[1]: "#[rpg] — plan local asset capture frames"
+ ~[2]: "&[rpg] — add indexed local asset register"
+ ~[3]: "&[rpg] — add screenshot-mode card frames and prompt helpers"
+ ~[4]: "&[rpg] — add motif customization and exploration rewards"
+ ~[5]: "![rpg] — verify local assets, capture frames, export/import, and offline behavior"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@7643d88ec9f4e30c2784a7dca4f36e825a659c8b"
+ ~#rebased_at: ""
+ ~#hygiene_split: "screenshot-semantics plan is adjacent untracked work"
+ ~#files_hot: "public/js/rpg-wednesday.js public/css/style.css sw.js manifest.webmanifest play/rpg-wednesday/index.html play/rpg-wednesday/cast/index.html"
+ ~#next_commit: "1"
+ ~#open_count: "5"
+ ~#last_stream: "taste"
+ ~#taste_debt: "Define motif unlocks as exploration receipts, not progression mechanics. Keep first motifs tied to existing operator or land-cluster palettes."
+}
+
+^["done"]{
+}

@@ -1,0 +1,106 @@
+# rpg-asset-capture-frames
+# Distilled model for local RPG image assets, screenshot-ready card staging,
+# prompt helpers, and exploration-reward motifs.
+
+#>rpg_asset_capture_frames
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "RPG Wednesday can become a local media staging table: players upload assets, frame them with campaign semantics, screenshot manually, and carry the result to external image or animation tools."
+ why: "This preserves GitHub Pages simplicity and privacy while making the site useful as a pre-production surface for character, item, place, artifact, and threat imagery."
+}
+
+^["storage_contract"]{
+ blobs: "IndexedDB stores uploaded image blobs and generated thumbnails."
+ metadata: "localStorage stores only ids, labels, tags, associations, selected motif, and active frame state."
+ privacy: "No image, prompt, or asset metadata leaves the browser unless the player exports or screenshots it."
+ portability: "Export/import must eventually include both metadata and images; first implementation may use a simple JSON bundle before a richer package format."
+}
+
+^["capture_frame"]{
+ purpose: "A stable stage for manual screenshots, not an automated screenshot engine."
+ presets: [
+  "character portrait - 4:5 or 1:1",
+  "item card - 1:1",
+  "place card - 16:9",
+  "artifact dossier - 4:5",
+  "threat reveal - 9:16"
+ ]
+ screenshot_mode: [
+  "hide controls",
+  "fix aspect ratio",
+  "increase type contrast",
+  "show one subject",
+  "show optional name, role, tags, and prompt band",
+  "provide clear exit control"
+ ]
+}
+
+^["prompt_surface"]{
+ role: "Prompt text is a companion to the screenshot, not a substitute for the image."
+ fields: [
+  "subject name",
+  "kind: character, item, place, artifact, threat",
+  "role or faction",
+  "mood",
+  "palette",
+  "scene context",
+  "style constraints",
+  "negative notes"
+ ]
+ rule: "Prompt helpers should describe the asset and campaign context; avoid hard-coding any external AI service workflow."
+}
+
+^["motif_rewards"]{
+ definition: "A motif reward is a local customization unlocked by meaningful exploration of the site or campaign surface."
+ allowed: [
+  "operator color families",
+  "land-cluster palettes: boon, bane, bone, bonk, honk",
+  "spirit phase bands",
+  "constellation dot/arc overlays",
+  "brace boundary treatments",
+  "campaign arc stamps"
+ ]
+ forbidden: [
+  "locking basic capture utility",
+  "counting clicks as achievement",
+  "using inaccessible color-only state",
+  "requiring analytics or server-side proof",
+  "making the default frame feel incomplete"
+ ]
+ unlock_examples: [
+  "visit the operator atlas -> unlock operator palette set",
+  "use the local gameplay kit across two RPG routes -> unlock brace-frame variant",
+  "export a local backup -> unlock archive-stamp motif",
+  "create a cast asset and an item asset -> unlock paired-card layout",
+  "visit the website field guide -> unlock media-instrument caption style"
+ ]
+}
+
+^["design_motifs"]{
+ operator_palette: "Sigil colors map capture frames to interaction intent: probe, ref, action, object, surface."
+ land_cluster: "Boon/bane/bone/bonk/honk palettes map asset mood and relation without requiring lore exposition."
+ spirit_phase: "Initiation, resistance, transformation, expression, return can become subtle bands or stamps on screenshot frames."
+ constellation: "Sparse point-and-arc overlays reward exploration of the home constellation without overwhelming the subject image."
+ brace_physics: "Frame boundaries can hold charge, bias projection, or show a threshold state while staying screenshot-legible."
+}
+
+^["implementation_ladder"]{
+ 1: "Plan storage, capture, prompt, and motif contracts."
+ 2: "Add IndexedDB asset store and metadata migration around the existing RPG local state."
+ 3: "Render one useful card frame with screenshot mode and prompt text."
+ 4: "Add motif selection and local unlock receipts."
+ 5: "Add export/import coverage and offline validation."
+}
+
+^["non_goals"]{
+ [
+  "automatic screenshot capture",
+  "direct Midjourney or Grok integration",
+  "cloud-hosted galleries",
+  "competitive achievement systems",
+  "image editing suite",
+  "server-side asset processing"
+ ]
+}
