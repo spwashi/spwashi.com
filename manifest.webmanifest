@@ -9,7 +9,7 @@
   "display_override": ["standalone", "browser"],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "orientation": "any",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
@@ -38,6 +38,11 @@
       "name": "Software",
       "short_name": "Software",
       "url": "/topics/software/"
+    },
+    {
+      "name": "Author Craft",
+      "short_name": "Craft",
+      "url": "/topics/craft/"
     },
     {
       "name": "Spw Operators",

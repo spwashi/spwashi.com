@@ -107,7 +107,7 @@ const maybeShowInstallPrompt = () => {
   if (deferredInstallPrompt && !getStoredValue(DISMISS_INSTALL_KEY)) {
     showToast({
       kind: 'install',
-      message: 'Install Spwashi for faster return visits and offline reopening.',
+      message: 'Add Spwashi to your home screen. Works offline, loads instantly.',
       actionLabel: 'Install',
       action: async () => {
         const prompt = deferredInstallPrompt;
@@ -134,8 +134,8 @@ const maybeShowInstallPrompt = () => {
   if (isIosSafari() && !getStoredValue(DISMISS_IOS_HINT_KEY)) {
     showToast({
       kind: 'install',
-      message: 'On iPhone or iPad, use Share and choose Add to Home Screen.',
-      dismissLabel: 'Dismiss',
+      message: 'Tap Share, then "Add to Home Screen" to install Spwashi.',
+      dismissLabel: 'Got it',
       dismiss: () => {
         setStoredValue(DISMISS_IOS_HINT_KEY, '1');
       }
@@ -254,6 +254,8 @@ const ensureToastStyles = () => {
 
 const ensurePwaHeadLinks = () => {
   ensureHeadLink('apple-touch-icon', '/public/images/apple-touch-icon.png');
+  ensureHeadLink('icon', '/favicon.ico', { sizes: '32x32' });
+  ensureHeadLink('icon', '/public/images/favicon.svg', { type: 'image/svg+xml' });
   ensureHeadLink('icon', '/public/images/icon-192.png', {
     sizes: '192x192',
     type: 'image/png'

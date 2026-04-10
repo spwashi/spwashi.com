@@ -3,7 +3,7 @@
  * Improves offline navigation, installability, and update activation.
  */
 
-const APP_VERSION = '0.1.8';
+const APP_VERSION = '0.2.0';
 const CORE_CACHE_NAME = `spw-core-${APP_VERSION}`;
 const PAGE_CACHE_NAME = `spw-pages-${APP_VERSION}`;
 const ASSET_CACHE_NAME = `spw-assets-${APP_VERSION}`;
@@ -22,6 +22,11 @@ const CORE_ROUTES = [
   '/play/rpg-wednesday/world/',
   '/play/rpg-wednesday/cast/',
   '/play/rpg-wednesday/arcs/',
+  '/topics/',
+  '/topics/craft/',
+  '/topics/craft/fragments/',
+  '/topics/craft/svg/',
+  '/topics/craft/files/',
   '/topics/software/',
   '/topics/software/spw/',
   '/topics/software/spw/operators/frame/',
@@ -46,6 +51,7 @@ const CORE_ASSETS = [
   '/public/css/style.css',
   '/public/css/enhancements.css',
   '/public/css/svg-surfaces.css',
+  '/public/css/craft-surface.css',
   '/public/data/media-focus.json',
   '/public/js/site.js',
   '/public/js/site-settings.js',
@@ -64,7 +70,9 @@ const CORE_ASSETS = [
   '/public/images/apple-touch-icon.png',
   '/public/images/icon-192.png',
   '/public/images/icon-512.png',
-  '/public/images/icon-maskable-512.png'
+  '/public/images/icon-maskable-512.png',
+  '/public/images/favicon.svg',
+  '/favicon.ico'
 ];
 
 const PRECACHE_URLS = [...CORE_ROUTES, ...CORE_ASSETS];
