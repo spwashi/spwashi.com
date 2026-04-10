@@ -81,6 +81,173 @@
     </header>
     <main>
         <article>
+            <!-- w0: empty premise — the charged field before attention lands -->
+            <section class="site-frame site-hero" id="liminal-charge" data-wonder-level="w0" data-spw-liminality="threshold">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#liminal-charge">#&gt;liminal_charge</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">Spw.Kernel.LiminalCharge v:0.1</span>
+                        <span class="spec-pill">w0</span>
+                    </div>
+                </div>
+                <svg class="blog-hero-svg" viewBox="0 0 800 220" aria-label="Fiber weave diagram: self/world plates, charged nodes, signal path" role="img" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="hero-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="hsla(192,62%,34%,0.08)"/>
+                            <stop offset="100%" stop-color="hsla(344,58%,38%,0.06)"/>
+                        </linearGradient>
+                        <linearGradient id="signal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="hsl(192,66%,50%)" stop-opacity="0.3"/>
+                            <stop offset="50%" stop-color="hsl(192,66%,50%)" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="hsl(344,58%,48%)" stop-opacity="0.6"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="800" height="220" fill="url(#hero-bg)" rx="6"/>
+                    <!-- warp threads (vertical self-axis) -->
+                    <g filter="url(#f-weave-warp)" opacity="0.35" stroke="hsl(192,40%,55%)" stroke-width="0.8" fill="none">
+                        <line x1="80" y1="0" x2="80" y2="220"/>
+                        <line x1="160" y1="0" x2="160" y2="220"/>
+                        <line x1="240" y1="0" x2="240" y2="220"/>
+                        <line x1="320" y1="0" x2="320" y2="220"/>
+                        <line x1="400" y1="0" x2="400" y2="220"/>
+                        <line x1="480" y1="0" x2="480" y2="220"/>
+                        <line x1="560" y1="0" x2="560" y2="220"/>
+                        <line x1="640" y1="0" x2="640" y2="220"/>
+                        <line x1="720" y1="0" x2="720" y2="220"/>
+                    </g>
+                    <!-- weft threads (horizontal world-axis) -->
+                    <g filter="url(#f-weave-warp)" opacity="0.25" stroke="hsl(344,40%,55%)" stroke-width="0.7" fill="none">
+                        <line x1="0" y1="44" x2="800" y2="44"/>
+                        <line x1="0" y1="88" x2="800" y2="88"/>
+                        <line x1="0" y1="132" x2="800" y2="132"/>
+                        <line x1="0" y1="176" x2="800" y2="176"/>
+                    </g>
+                    <!-- signal path -->
+                    <path d="M 60,110 C 160,60 240,160 360,100 S 560,140 740,110" stroke="url(#signal-grad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <!-- charged nodes -->
+                    <circle cx="160" cy="80" r="6" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
+                    <circle cx="320" cy="130" r="5" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
+                    <circle cx="480" cy="95" r="7" fill="hsl(192,62%,44%)" filter="url(#f-node-glow)"/>
+                    <circle cx="620" cy="140" r="5" fill="hsl(344,58%,44%)" filter="url(#f-warm-glow)"/>
+                    <circle cx="740" cy="110" r="6" fill="hsl(344,58%,44%)" filter="url(#f-warm-glow)"/>
+                    <!-- axis labels -->
+                    <text x="12" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(192,40%,55%)" opacity="0.7">self</text>
+                    <text x="752" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(344,40%,55%)" opacity="0.7">world</text>
+                    <text x="390" y="14" font-family="'JetBrains Mono',monospace" font-size="9" fill="currentColor" opacity="0.4" text-anchor="middle">time</text>
+                    <text x="390" y="214" font-family="'JetBrains Mono',monospace" font-size="9" fill="currentColor" opacity="0.4" text-anchor="middle">meaning</text>
+                </svg>
+                <p class="spec-kicker">Component Specimen Cabinet</p>
+                <h1>The blog is a kernel running.</h1>
+                <p class="frame-note">Each section is a wonder block. Attention accumulates. Language crystallizes from fragment toward public form. The interpreter at the base emits into the cohort field.</p>
+            </section>
+
+            <!-- Atelier theme toggle -->
+            <section class="site-frame" id="atelier-themes" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#atelier-themes">=[atelier_theme]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">theme</span>
+                        <span class="spec-pill">= bias</span>
+                    </div>
+                </div>
+                <p class="frame-note">Switch between atelier-light (forest-paper) and atelier-dark (heath-night).</p>
+                <div class="atelier-theme-toggle" role="group" aria-label="Atelier theme selection">
+                    <button class="theme-swatch theme-swatch--light" type="button" data-theme-set="atelier-light" aria-pressed="true">
+                        <span class="theme-swatch-label">atelier-light</span>
+                        <span class="theme-swatch-palette" aria-hidden="true">
+                            <span style="background:hsl(42,40%,96%)"></span>
+                            <span style="background:hsl(192,62%,34%)"></span>
+                            <span style="background:hsl(344,58%,38%)"></span>
+                            <span style="background:hsl(32,12%,16%)"></span>
+                            <span style="background:hsl(158,52%,30%)"></span>
+                            <span style="background:hsl(1,62%,48%)"></span>
+                        </span>
+                    </button>
+                    <button class="theme-swatch theme-swatch--dark" type="button" data-theme-set="atelier-dark" aria-pressed="false">
+                        <span class="theme-swatch-label">atelier-dark</span>
+                        <span class="theme-swatch-palette" aria-hidden="true">
+                            <span style="background:hsl(244,22%,10%)"></span>
+                            <span style="background:hsl(192,66%,58%)"></span>
+                            <span style="background:hsl(344,62%,64%)"></span>
+                            <span style="background:hsl(42,22%,86%)"></span>
+                            <span style="background:hsl(158,56%,54%)"></span>
+                            <span style="background:hsl(1,66%,66%)"></span>
+                        </span>
+                    </button>
+                </div>
+                <script type="module">
+                    const btns = document.querySelectorAll('[data-theme-set]');
+                    btns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const theme = btn.dataset.themeSet;
+                            document.body.dataset.theme = theme;
+                            btns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+                        });
+                    });
+                </script>
+            </section>
+
+            <!-- w1: kernel specimen — what is here -->
+            <section class="site-frame" id="kernel-specimen" data-wonder-level="w1" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#kernel-specimen">?["what_is_here"]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">w1</span>
+                        <span class="spec-pill">p1 · what_is_here</span>
+                    </div>
+                </div>
+                <h2>Spw.Kernel.LiminalCharge v:0.1</h2>
+                <p class="frame-note">The architecture this page embodies. Each section below is a node in the kernel running.</p>
+                <pre class="specimen-kernel-code"><code><span class="sk-comment">// premise → medium → dielectric → channels → ac_drift → anchor_loop → output → return</span>
+
+<span class="sk-key">cumulation</span>     = { micro = <span class="sk-op">!</span>[act_small], stack = <span class="sk-op">*</span>[micro..containment], gradient = stack -&gt; charge }
+<span class="sk-key">prime_components</span> = { p1=<span class="sk-op">?</span>[what_is_here], p2=<span class="sk-op">?</span>[what_is_missing], p3=<span class="sk-op">?</span>[what_repeats], p5=<span class="sk-op">?</span>[what_resonates], basis = p1&amp;p2&amp;p3&amp;p5 }
+<span class="sk-key">wonder_blocks</span>   = { w0={}, w1={p1}, w2={p1..p2}, w3={basis..gap}, w5={basis..gap..signal_path}, unfold=<span class="sk-op">*</span>[w1..w2..w3..w5] }
+<span class="sk-key">dimensional</span>     = { d1=[time], d2=[attention], d3=[relationship], d5=[meaning], projection = unfold -&gt; &lt;d1&lt;&gt;d2&lt;&gt;d3&lt;&gt;d5&gt; }
+<span class="sk-key">cohort_field</span>    = { emit=<span class="sk-op">@</span>projection, receivers=<span class="sk-op">?</span>[others], resonance=emit&amp;receivers, formation=<span class="sk-op">*</span>[resonance..return] }
+<span class="sk-key">discipline</span>      = { full kernel with premise, medium, dielectric, channels, ac_drift, anchor_loop, output, return }</code></pre>
+            </section>
+
+            <!-- w2: specimen index — what is missing (navigation into the specimens) -->
+            <section class="site-frame" id="specimen-index" data-wonder-level="w2" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#specimen-index">?["what_is_missing"]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">w2</span>
+                        <span class="spec-pill">p1..p2</span>
+                    </div>
+                </div>
+                <h2>Web API Specimens</h2>
+                <p class="frame-note">Five APIs mapped to Spw operators. Each specimen is a charged node in the field.</p>
+                <nav class="specimen-index-grid" aria-label="API specimen navigation">
+                    <a class="specimen-index-card" href="#api-css-custom-properties">
+                        <span class="specimen-index-sigil">=[bias]</span>
+                        <span class="specimen-index-name">CSS Custom Properties</span>
+                        <span class="specimen-index-tag">= · bias · dielectric</span>
+                    </a>
+                    <a class="specimen-index-card" href="#api-intersection-observer">
+                        <span class="specimen-index-sigil">?[probe]</span>
+                        <span class="specimen-index-name">Intersection Observer</span>
+                        <span class="specimen-index-tag">? · probe · threshold</span>
+                    </a>
+                    <a class="specimen-index-card" href="#api-web-audio">
+                        <span class="specimen-index-sigil">~[wave]</span>
+                        <span class="specimen-index-name">Web Audio API</span>
+                        <span class="specimen-index-tag">~ · wave · vibration</span>
+                    </a>
+                    <a class="specimen-index-card" href="#api-canvas-weave">
+                        <span class="specimen-index-sigil">*[repeat]</span>
+                        <span class="specimen-index-name">Canvas 2D Weave</span>
+                        <span class="specimen-index-tag">* · repeat · cumulation</span>
+                    </a>
+                    <a class="specimen-index-card" href="#api-svg-filters">
+                        <span class="specimen-index-sigil">^[bind]</span>
+                        <span class="specimen-index-name">SVG Filter Primitives</span>
+                        <span class="specimen-index-tag">^ · bind · dielectric</span>
+                    </a>
+                </nav>
+            </section>
+
             <section class="site-frame blog-interpreter-frame" id="blog-input-interpreter" data-spw-role="tool" data-spw-liminality="entry" data-spw-meaning="local blog input interpretation for Spw, wonder, and language">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#blog-input-interpreter">#&gt;blog_input_interpreter</a>
@@ -169,6 +336,404 @@
  claim: "Paste text to generate a local seed."
 }</code></pre>
                         </section>
+                    </div>
+                </div>
+            </section>
+
+            <!-- w3 specimens: basis..gap — API interactions mapped to kernel concepts -->
+            <section class="site-frame specimen-card" id="api-css-custom-properties" data-wonder-level="w3">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#api-css-custom-properties">=[bias_operator]</a>
+                    <div class="spec-strip">
+                        <span class="specimen-api-tag">CSS Custom Properties</span>
+                        <span class="spec-pill">w3</span>
+                    </div>
+                </div>
+                <p class="specimen-material">material: <strong>dielectric</strong> — stores field bias without discharging</p>
+                <div class="specimen-index-grid" style="margin-bottom:1rem">
+                    <div class="specimen-index-card">
+                        <span class="specimen-index-sigil">=[bias]</span>
+                        <span class="specimen-index-name">Spw</span>
+                        <span class="specimen-index-tag">sets ambient field value</span>
+                    </div>
+                    <div class="specimen-index-card">
+                        <span class="specimen-index-sigil">substrate</span>
+                        <span class="specimen-index-name">Material</span>
+                        <span class="specimen-index-tag">stores tension without change</span>
+                    </div>
+                    <div class="specimen-index-card">
+                        <span class="specimen-index-sigil">deixis</span>
+                        <span class="specimen-index-name">Linguistic</span>
+                        <span class="specimen-index-tag">context-bound reference</span>
+                    </div>
+                </div>
+                <div class="specimen-demo demo-css-vars" id="css-vars-demo" aria-label="CSS custom property live demo">
+                    <div class="demo-sliders">
+                        <div class="demo-slider-row">
+                            <label for="sl-hue">--hue</label>
+                            <input id="sl-hue" type="range" min="0" max="360" value="192" aria-valuemin="0" aria-valuemax="360">
+                            <output for="sl-hue" class="demo-slider-out" id="sl-hue-out">192</output>
+                        </div>
+                        <div class="demo-slider-row">
+                            <label for="sl-sat">--sat</label>
+                            <input id="sl-sat" type="range" min="0" max="100" value="62" aria-valuemin="0" aria-valuemax="100">
+                            <output for="sl-sat" class="demo-slider-out" id="sl-sat-out">62%</output>
+                        </div>
+                        <div class="demo-slider-row">
+                            <label for="sl-light">--light</label>
+                            <input id="sl-light" type="range" min="10" max="90" value="44" aria-valuemin="10" aria-valuemax="90">
+                            <output for="sl-light" class="demo-slider-out" id="sl-light-out">44%</output>
+                        </div>
+                    </div>
+                    <div class="demo-color-preview" id="css-color-preview" aria-label="Color preview swatch" role="img" style="background:hsl(192 62% 44%)"></div>
+                    <pre class="demo-code-output" id="css-code-out" aria-live="polite">--color: hsl(192 62% 44%);</pre>
+                </div>
+                <script type="module">
+                    const demo = document.getElementById('css-vars-demo');
+                    const preview = document.getElementById('css-color-preview');
+                    const codeOut = document.getElementById('css-code-out');
+                    const slHue = document.getElementById('sl-hue');
+                    const slSat = document.getElementById('sl-sat');
+                    const slLight = document.getElementById('sl-light');
+                    const update = () => {
+                        const h = slHue.value, s = slSat.value, l = slLight.value;
+                        const color = `hsl(${h} ${s}% ${l}%)`;
+                        preview.style.background = color;
+                        codeOut.textContent = `--color: ${color};`;
+                        document.getElementById('sl-hue-out').value = h;
+                        document.getElementById('sl-sat-out').value = s + '%';
+                        document.getElementById('sl-light-out').value = l + '%';
+                    };
+                    [slHue, slSat, slLight].forEach(s => s.addEventListener('input', update));
+                </script>
+            </section>
+
+            <section class="site-frame specimen-card" id="api-intersection-observer" data-wonder-level="w3">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#api-intersection-observer">?[probe_threshold]</a>
+                    <div class="spec-strip">
+                        <span class="specimen-api-tag">Intersection Observer</span>
+                        <span class="spec-pill">w3</span>
+                    </div>
+                </div>
+                <p class="specimen-material">material: <strong>phase boundary</strong> — detects crossing, not content</p>
+                <div class="specimen-demo demo-io" id="io-demo" aria-label="Intersection Observer demo">
+                    <p class="frame-note" style="margin-bottom:0.6rem">Scroll the stripe below across the threshold line.</p>
+                    <div class="demo-io-scroll-area" id="io-scroll-area" role="region" aria-label="Scrollable fiber stripes">
+                        <div class="demo-io-fiber" style="--io-ratio:0.1" aria-hidden="true"></div>
+                        <div class="demo-io-fiber" style="--io-ratio:0.3" aria-hidden="true"></div>
+                        <div class="demo-io-fiber demo-io-target" id="io-target" style="--io-ratio:0.5" aria-label="Observed element">observed</div>
+                        <div class="demo-io-fiber" style="--io-ratio:0.7" aria-hidden="true"></div>
+                        <div class="demo-io-fiber" style="--io-ratio:0.9" aria-hidden="true"></div>
+                    </div>
+                    <div class="demo-io-threshold-indicator" id="io-status" role="status" aria-live="polite">threshold: not crossed</div>
+                </div>
+                <script type="module">
+                    const target = document.getElementById('io-target');
+                    const status = document.getElementById('io-status');
+                    const scrollArea = document.getElementById('io-scroll-area');
+                    if (target && status && scrollArea) {
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(e => {
+                                const ratio = Math.round(e.intersectionRatio * 100);
+                                status.textContent = e.isIntersecting
+                                    ? `threshold: crossed — ${ratio}% visible`
+                                    : `threshold: not crossed — ${ratio}% visible`;
+                                target.style.setProperty('--io-ratio', e.intersectionRatio.toFixed(2));
+                            });
+                        }, { root: scrollArea, threshold: Array.from({length: 11}, (_, i) => i / 10) });
+                        observer.observe(target);
+                    }
+                </script>
+            </section>
+
+            <section class="site-frame specimen-card" id="api-web-audio" data-wonder-level="w3">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#api-web-audio">~[wave_vibration]</a>
+                    <div class="spec-strip">
+                        <span class="specimen-api-tag">Web Audio API</span>
+                        <span class="spec-pill">w3</span>
+                    </div>
+                </div>
+                <p class="specimen-material">material: <strong>resonance</strong> — periodic return through a medium</p>
+                <div class="specimen-demo" id="audio-demo" aria-label="Web Audio oscillator demo">
+                    <div class="demo-audio-controls">
+                        <label for="audio-freq">frequency (Hz)</label>
+                        <input id="audio-freq" type="range" min="80" max="880" value="220" step="1" style="width:12rem">
+                        <output for="audio-freq" id="audio-freq-out">220 Hz</output>
+                    </div>
+                    <div class="demo-audio-controls" style="margin-top:0.5rem">
+                        <label for="audio-wave">waveform</label>
+                        <select id="audio-wave">
+                            <option value="sine">sine</option>
+                            <option value="triangle">triangle</option>
+                            <option value="sawtooth">sawtooth</option>
+                            <option value="square">square</option>
+                        </select>
+                    </div>
+                    <button class="operator-chip demo-audio-btn" id="audio-toggle" type="button" data-active="false" style="margin-top:0.8rem">~ emit tone</button>
+                    <svg class="demo-audio-waveform" id="audio-waveform" viewBox="0 0 300 60" aria-hidden="true" preserveAspectRatio="none">
+                        <path id="audio-wave-path" d="" stroke="var(--blog-accent,hsl(192,62%,44%))" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <script type="module">
+                    let ctx = null, osc = null, gain = null;
+                    const toggle = document.getElementById('audio-toggle');
+                    const freqSlider = document.getElementById('audio-freq');
+                    const freqOut = document.getElementById('audio-freq-out');
+                    const waveSelect = document.getElementById('audio-wave');
+                    const wavePath = document.getElementById('audio-wave-path');
+                    const drawWave = (type, freq) => {
+                        const pts = [];
+                        const cycles = Math.max(1, Math.min(6, freq / 80));
+                        for (let i = 0; i <= 300; i++) {
+                            const t = (i / 300) * cycles * 2 * Math.PI;
+                            let y;
+                            if (type === 'sine') y = Math.sin(t);
+                            else if (type === 'triangle') y = (2 / Math.PI) * Math.asin(Math.sin(t));
+                            else if (type === 'sawtooth') y = (t % (2 * Math.PI)) / Math.PI - 1;
+                            else y = Math.sign(Math.sin(t));
+                            pts.push(`${i === 0 ? 'M' : 'L'}${i},${30 - y * 22}`);
+                        }
+                        wavePath.setAttribute('d', pts.join(' '));
+                    };
+                    drawWave('sine', 220);
+                    freqSlider.addEventListener('input', () => {
+                        freqOut.value = freqSlider.value + ' Hz';
+                        drawWave(waveSelect.value, Number(freqSlider.value));
+                        if (osc) osc.frequency.setTargetAtTime(Number(freqSlider.value), ctx.currentTime, 0.01);
+                    });
+                    waveSelect.addEventListener('change', () => {
+                        drawWave(waveSelect.value, Number(freqSlider.value));
+                        if (osc) osc.type = waveSelect.value;
+                    });
+                    toggle.addEventListener('click', () => {
+                        const active = toggle.dataset.active === 'true';
+                        if (active) {
+                            gain.gain.setTargetAtTime(0, ctx.currentTime, 0.05);
+                            setTimeout(() => { osc.stop(); osc = null; }, 200);
+                            toggle.dataset.active = 'false';
+                            toggle.textContent = '~ emit tone';
+                        } else {
+                            ctx = ctx || new AudioContext();
+                            osc = ctx.createOscillator();
+                            gain = ctx.createGain();
+                            osc.type = waveSelect.value;
+                            osc.frequency.value = Number(freqSlider.value);
+                            gain.gain.value = 0.18;
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.start();
+                            toggle.dataset.active = 'true';
+                            toggle.textContent = '! stop';
+                        }
+                    });
+                </script>
+            </section>
+
+            <section class="site-frame specimen-card" id="api-canvas-weave" data-wonder-level="w3">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#api-canvas-weave">*[repeat_cumulation]</a>
+                    <div class="spec-strip">
+                        <span class="specimen-api-tag">Canvas 2D</span>
+                        <span class="spec-pill">w3</span>
+                    </div>
+                </div>
+                <p class="specimen-material">material: <strong>lattice</strong> — micro-acts accumulate into woven structure</p>
+                <div class="specimen-demo demo-canvas-wrap" id="canvas-demo">
+                    <canvas id="weave-canvas" width="520" height="200" aria-label="Woven field canvas — click to add charge nodes" role="img" tabindex="0" style="cursor:crosshair;max-width:100%;border-radius:6px"></canvas>
+                    <p class="frame-note" style="margin-top:0.5rem;font-size:0.8rem">Click canvas to drop a node. Nodes accumulate.</p>
+                    <button class="operator-chip" type="button" id="canvas-clear" style="margin-top:0.4rem">! clear</button>
+                </div>
+                <script type="module">
+                    const canvas = document.getElementById('weave-canvas');
+                    const ctx = canvas.getContext('2d');
+                    const nodes = [];
+                    const TEAL = 'hsl(192,62%,44%)';
+                    const ROSE = 'hsl(344,58%,44%)';
+                    const drawBase = () => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.strokeStyle = 'rgba(120,180,180,0.18)';
+                        ctx.lineWidth = 0.7;
+                        for (let x = 20; x < canvas.width; x += 20) {
+                            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+                        }
+                        for (let y = 20; y < canvas.height; y += 20) {
+                            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+                        }
+                    };
+                    const drawNodes = () => {
+                        nodes.forEach((n, i) => {
+                            const color = i % 2 === 0 ? TEAL : ROSE;
+                            const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 2.5);
+                            grad.addColorStop(0, color.replace('hsl', 'hsla').replace(')', ',0.5)'));
+                            grad.addColorStop(1, 'transparent');
+                            ctx.fillStyle = grad;
+                            ctx.beginPath();
+                            ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = color;
+                            ctx.beginPath();
+                            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                            ctx.fill();
+                        });
+                    };
+                    const render = () => { drawBase(); drawNodes(); };
+                    render();
+                    canvas.addEventListener('click', (e) => {
+                        const rect = canvas.getBoundingClientRect();
+                        const scaleX = canvas.width / rect.width;
+                        const scaleY = canvas.height / rect.height;
+                        nodes.push({ x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY, r: 4 + Math.random() * 4 });
+                        render();
+                    });
+                    document.getElementById('canvas-clear').addEventListener('click', () => { nodes.length = 0; render(); });
+                </script>
+            </section>
+
+            <section class="site-frame specimen-card" id="api-svg-filters" data-wonder-level="w3">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#api-svg-filters">^[bind_dielectric]</a>
+                    <div class="spec-strip">
+                        <span class="specimen-api-tag">SVG Filter Primitives</span>
+                        <span class="spec-pill">w3</span>
+                    </div>
+                </div>
+                <p class="specimen-material">material: <strong>warp-weft binding</strong> — transforms flow without storing it</p>
+                <div class="specimen-demo demo-filter-text-wrap" id="svg-filter-demo">
+                    <div class="demo-sliders">
+                        <div class="demo-slider-row">
+                            <label for="turb-freq">turbulence freq</label>
+                            <input id="turb-freq" type="range" min="0.005" max="0.12" step="0.005" value="0.04">
+                            <output for="turb-freq" id="turb-freq-out">0.04</output>
+                        </div>
+                        <div class="demo-slider-row">
+                            <label for="displace-scale">displacement scale</label>
+                            <input id="displace-scale" type="range" min="0" max="60" step="1" value="12">
+                            <output for="displace-scale" id="displace-scale-out">12</output>
+                        </div>
+                    </div>
+                    <p id="filter-target-text" style="font-size:2.2rem;font-weight:bold;filter:url(#f-svg-demo);margin:1rem 0;line-height:1.2;color:var(--blog-accent,hsl(192,62%,44%))">
+                        ^"bind"{<br>dielectric
+                    </p>
+                    <pre class="demo-code-output" id="filter-code-out" aria-live="polite">&lt;feTurbulence baseFrequency="0.04"/&gt;
+&lt;feDisplacementMap scale="12"/&gt;</pre>
+                </div>
+                <script type="module">
+                    const freqIn = document.getElementById('turb-freq');
+                    const scaleIn = document.getElementById('displace-scale');
+                    const codeOut = document.getElementById('filter-code-out');
+                    const turbEl = document.getElementById('demo-turbulence');
+                    const displaceEl = document.getElementById('demo-displace');
+                    const update = () => {
+                        const freq = freqIn.value;
+                        const scale = scaleIn.value;
+                        if (turbEl) turbEl.setAttribute('baseFrequency', freq);
+                        if (displaceEl) displaceEl.setAttribute('scale', scale);
+                        document.getElementById('turb-freq-out').value = freq;
+                        document.getElementById('displace-scale-out').value = scale;
+                        codeOut.textContent = `<feTurbulence baseFrequency="${freq}"/>\n<feDisplacementMap scale="${scale}"/>`;
+                    };
+                    freqIn.addEventListener('input', update);
+                    scaleIn.addEventListener('input', update);
+                </script>
+            </section>
+
+            <!-- w5: fiber-linguistics — basis..gap..signal_path -->
+            <section class="site-frame" id="fiber-linguistics" data-wonder-level="w5">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#fiber-linguistics">*[fiber_x_language]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">w5</span>
+                        <span class="spec-pill">Materials × Linguistics</span>
+                    </div>
+                </div>
+                <h2>Fiber × Language</h2>
+                <p class="frame-note">Material Science properties mapped to linguistic structure. Toward grad school research: fiber art as a maturational medium for books passed down through a town for centuries.</p>
+                <div class="palimpsest-frame" aria-hidden="true">
+                    <div class="palimpsest-layer palimpsest-layer--generation-1">warp · weft · tension · crimp · twist · gauge · luster · memory</div>
+                    <div class="palimpsest-layer palimpsest-layer--generation-2">utterance · prosody · deixis · paradigm · syntagm · grain · voice · return</div>
+                </div>
+                <div class="fiber-linguistics-grid">
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">substrate × utterance</span>
+                        <span class="fiber-pair-material">The base material that holds structure before form is imposed.</span>
+                        <span class="fiber-pair-linguistic">The raw vocalization before it becomes speech act.</span>
+                        <span class="fiber-pair-note">Spw: =[substrate] sets the field before operators act.</span>
+                    </div>
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">resonance × prosody</span>
+                        <span class="fiber-pair-material">How fibers vibrate at harmonic frequencies when plucked.</span>
+                        <span class="fiber-pair-linguistic">Rhythm, stress, and intonation — the music beneath words.</span>
+                        <span class="fiber-pair-note">Spw: ~[wave] carries resonance without encoding it.</span>
+                    </div>
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">phase boundary × deixis</span>
+                        <span class="fiber-pair-material">The interface where one material property transitions to another.</span>
+                        <span class="fiber-pair-linguistic">Context-anchored reference: here, now, I, this.</span>
+                        <span class="fiber-pair-note">Spw: ?[probe] detects threshold crossing without storing location.</span>
+                    </div>
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">lattice × paradigm</span>
+                        <span class="fiber-pair-material">Regular crystalline arrangement that enables substitution.</span>
+                        <span class="fiber-pair-linguistic">The set of alternatives at a grammatical slot.</span>
+                        <span class="fiber-pair-note">Spw: *[repeat] accumulates micro-acts into structure.</span>
+                    </div>
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">warp-weft × syntagm</span>
+                        <span class="fiber-pair-material">The crossed threads whose binding creates tensile strength.</span>
+                        <span class="fiber-pair-linguistic">The linear combination of elements in sequence.</span>
+                        <span class="fiber-pair-note">Spw: ^[bind] creates relationship without collapsing difference.</span>
+                    </div>
+                    <div class="fiber-pair">
+                        <span class="fiber-pair-title">grain of voice × grain structure</span>
+                        <span class="fiber-pair-material">Crystallographic grain: the texture of a material's internal boundary network.</span>
+                        <span class="fiber-pair-linguistic">Barthes: the grain of the voice — what exceeds meaning in the vocal body.</span>
+                        <span class="fiber-pair-note">Both resist full semantic capture. Both age distinctively.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- w5: field notes -->
+            <section class="site-frame" id="field-notes" data-wonder-level="w5">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#field-notes">?["what_resonates"]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">w5</span>
+                        <span class="spec-pill">p5 · resonance</span>
+                    </div>
+                </div>
+                <h2>Field Notes</h2>
+                <div class="field-notes-grid">
+                    <div class="field-note" data-note-id="FN-001">
+                        <h3>Materials × Linguistics</h3>
+                        <p>The application begins with the claim that fiber structures and linguistic structures share a deep grammar. A woven textile is a syntagm. Its yarn choice is a paradigm selection. Its aging is prosodic.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">grad-school</span><span class="field-note-tag">materials-science</span><span class="field-note-tag">linguistics</span></div>
+                    </div>
+                    <div class="field-note" data-note-id="FN-002">
+                        <h3>Book as Living Material</h3>
+                        <p>A book passed down through a town for centuries accumulates marginalia, repairs, and physical memory. It is a palimpsest woven through time. The fiber art useful for such books must be archival and inviting of inscription.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">archival</span><span class="field-note-tag">palimpsest</span><span class="field-note-tag">maturation</span></div>
+                    </div>
+                    <div class="field-note" data-note-id="FN-003">
+                        <h3>Novel Physics via Spw</h3>
+                        <p>Spw-workbench scripts can model conceptual physics: field charge, dielectric resistance, AC drift, anchor loops. These are not metaphors — they are computational structures for reasoning about attention and language.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">spw-physics</span><span class="field-note-tag">pretext-lab</span><span class="field-note-tag">novel-papers</span></div>
+                    </div>
+                    <div class="field-note" data-note-id="FN-004">
+                        <h3>Cohort Field</h3>
+                        <p>The blog interpreter is not a tool for generating posts. It is an emission point. What goes in is a fragment. What returns is a seed that can enter the cohort field — others resonating with the same gap.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">cohort-field</span><span class="field-note-tag">community-semantics</span><span class="field-note-tag">@emit</span></div>
+                    </div>
+                    <div class="field-note" data-note-id="FN-005">
+                        <h3>Video as Wonder Block</h3>
+                        <p>An improvised video of someone interacting with these specimens is itself a w3 output — basis and gap made visible. The processing campaign (visibility, thematic grounding) is the cohort field receiving the emission.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">video-workflow</span><span class="field-note-tag">wonder-block</span><span class="field-note-tag">campaign</span></div>
+                    </div>
+                    <div class="field-note" data-note-id="FN-006">
+                        <h3>AC Drift and Anchor Loop</h3>
+                        <p>The kernel's AC drift allows the charge to oscillate without fixing. The anchor loop prevents infinite drift — it returns to a premise that holds. For writing: this is the difference between productive uncertainty and lost drafts.</p>
+                        <div class="field-note-tags"><span class="field-note-tag">ac-drift</span><span class="field-note-tag">anchor-loop</span><span class="field-note-tag">kernel</span></div>
                     </div>
                 </div>
             </section>
