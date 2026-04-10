@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <title>Spwashi • Settings</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#1a9999"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <meta name="description" content="Local browser settings for Spwashi runtime surfaces, including the surface map, console, and viewport activation.">
+    <meta name="description" content="Local browser settings for Spwashi runtime surfaces, including appearance, accessibility, and progressive enhancement.">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
@@ -27,10 +31,11 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
+                <li><a href="/about/plans/">Plans</a></li>
                 <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/topics/craft/">Craft</a></li>
                 <li><a href="/play/">Play</a></li>
                 <li><a href="/blog/">Blog</a></li>
-                <li><a href="/contact">Contact</a></li>
                 <li><a aria-current="page" href="/settings/">Settings</a></li>
             </ul>
         </nav>
@@ -49,14 +54,36 @@
                 </div>
                 <p class="spec-kicker">Local Configuration</p>
                 <h1>Settings</h1>
-                <p class="settings-note">Use this page to tune the optional site controls. These preferences are stored only in this browser with localStorage. They do not create an account, sync across devices, or change the published HTML.</p>
-                <nav class="frame-operators" aria-label="Settings routes">
-                    <a class="operator-chip" href="#runtime-preferences">^ runtime preferences</a>
-                    <a class="operator-chip" href="/about/website/#machine-register">$ machine register</a>
-                    <a class="operator-chip" href="/">home</a>
-                </nav>
+                <p class="settings-note">Preferences are stored in this browser only. Nothing syncs, nothing tracks.</p>
             </section>
 
+            <!-- Quick Presets -->
+            <section class="site-frame" id="presets" data-spw-role="control">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#presets">^"quick_presets"{</a>
+                    <h2>Quick Presets</h2>
+                </div>
+                <div class="settings-presets" data-settings-presets>
+                    <button class="settings-preset-btn" type="button" data-preset="calm">
+                        <strong>Calm</strong>
+                        <span>Quiet defaults. Minimal decoration, no auto-cycling.</span>
+                    </button>
+                    <button class="settings-preset-btn" type="button" data-preset="rich">
+                        <strong>Rich</strong>
+                        <span>Full visual experience. Grain, highlights, phase indicators.</span>
+                    </button>
+                    <button class="settings-preset-btn" type="button" data-preset="developer">
+                        <strong>Developer</strong>
+                        <span>Debug overlays, verbose logging, frame metadata visible.</span>
+                    </button>
+                    <button class="settings-preset-btn" type="button" data-preset="accessible">
+                        <strong>Accessible</strong>
+                        <span>High contrast, reduced motion, larger text.</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Settings Form -->
             <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-meaning="runtime preference controls">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
@@ -64,647 +91,493 @@
                 </div>
 
                 <form class="settings-form" data-site-settings-form>
-                    <div class="settings-grid">
-                        <!-- === Navigation & Interface === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Surface map</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="navigatorDisplay" value="quiet" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Quiet</strong>
-                                    <span>Keep the map available, but hide the persistent #&gt; map label until hover, focus, or open.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="navigatorDisplay" value="full">
-                                <span class="settings-option-copy">
-                                    <strong>Full</strong>
-                                    <span>Show the original left-edge surface map trigger.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="navigatorDisplay" value="hidden">
-                                <span class="settings-option-copy">
-                                    <strong>Hidden</strong>
-                                    <span>Hide the map chrome and disable its map and probe shortcuts for this browser.</span>
-                                </span>
-                            </label>
-                        </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Console</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="consoleDisplay" value="collapsed" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Collapsed</strong>
-                                    <span>Keep the textual interface compact unless you open it.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="consoleDisplay" value="expanded">
-                                <span class="settings-option-copy">
-                                    <strong>Expanded</strong>
-                                    <span>Start with the console open for active inspection.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="consoleDisplay" value="hidden">
-                                <span class="settings-option-copy">
-                                    <strong>Hidden</strong>
-                                    <span>Remove the console from the visual surface.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Viewport activation</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="viewportActivation" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Do not activate frames just because they pass through the viewport.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="viewportActivation" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Let scrolling update the active frame and console with @viewport.activate.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <!-- === Accessibility === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Reduce motion</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="reduceMotion" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Allow smooth transitions and animations.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="reduceMotion" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Minimize motion and use instant transitions.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>High contrast</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="highContrast" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Use standard color contrast.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="highContrast" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Increase color contrast for better readability.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Font size preset</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="fontSize" value="small">
-                                <span class="settings-option-copy">
-                                    <strong>Small</strong>
-                                    <span>Compact text layout.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="fontSize" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Standard readable size.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="fontSize" value="large">
-                                <span class="settings-option-copy">
-                                    <strong>Large</strong>
-                                    <span>Larger, more accessible text.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <!-- === Appearance === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Color mode</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="colorMode" value="auto" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Auto</strong>
-                                    <span>Follow system preference (light/dark).</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="colorMode" value="light">
-                                <span class="settings-option-copy">
-                                    <strong>Light</strong>
-                                    <span>Force light theme.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="colorMode" value="dark">
-                                <span class="settings-option-copy">
-                                    <strong>Dark</strong>
-                                    <span>Force dark theme.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Operator saturation</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="operatorSaturation" value="muted">
-                                <span class="settings-option-copy">
-                                    <strong>Muted</strong>
-                                    <span>Softer operator colors.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="operatorSaturation" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Standard vibrance.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="operatorSaturation" value="vibrant">
-                                <span class="settings-option-copy">
-                                    <strong>Vibrant</strong>
-                                    <span>More saturated operator colors.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Animation intensity</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="animationIntensity" value="reduced">
-                                <span class="settings-option-copy">
-                                    <strong>Reduced</strong>
-                                    <span>Subtle, minimal animations.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="animationIntensity" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Standard animation speed and feel.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="animationIntensity" value="enhanced">
-                                <span class="settings-option-copy">
-                                    <strong>Enhanced</strong>
-                                    <span>More pronounced transitions.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <!-- === Developer === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Debug mode</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="debugMode" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide debug information.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="debugMode" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Show debug overlays and frame boundaries.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Show frame metadata</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="showFrameMetadata" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide frame role and liminality data.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="showFrameMetadata" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Display semantic metadata on frames.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <fieldset class="settings-fieldset">
-                            <legend>Verbose logging</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="verboseLogging" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Minimal console output.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="verboseLogging" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Detailed runtime logs in browser console.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-
-                        <!-- === Typography === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Font size scale</legend>
-                            <div class="settings-scale-group">
+                    <!-- ═══ Appearance ═══ -->
+                    <details class="settings-category" open>
+                        <summary class="settings-category-header">Appearance</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Color mode</legend>
                                 <label class="settings-option">
-                                    <input type="radio" name="fontSizeScale" value="80">
-                                    <span class="settings-option-copy"><strong>80%</strong></span>
+                                    <input type="radio" name="colorMode" value="auto" checked>
+                                    <span class="settings-option-copy">
+                                        <strong>Auto</strong>
+                                        <span>Follow system preference.</span>
+                                    </span>
                                 </label>
                                 <label class="settings-option">
-                                    <input type="radio" name="fontSizeScale" value="90">
-                                    <span class="settings-option-copy"><strong>90%</strong></span>
+                                    <input type="radio" name="colorMode" value="light">
+                                    <span class="settings-option-copy"><strong>Light</strong></span>
                                 </label>
                                 <label class="settings-option">
-                                    <input type="radio" name="fontSizeScale" value="100" checked>
-                                    <span class="settings-option-copy"><strong>100%</strong></span>
+                                    <input type="radio" name="colorMode" value="dark">
+                                    <span class="settings-option-copy"><strong>Dark</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Operator saturation</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="operatorSaturation" value="muted">
+                                    <span class="settings-option-copy"><strong>Muted</strong></span>
                                 </label>
                                 <label class="settings-option">
-                                    <input type="radio" name="fontSizeScale" value="110">
-                                    <span class="settings-option-copy"><strong>110%</strong></span>
+                                    <input type="radio" name="operatorSaturation" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
                                 </label>
                                 <label class="settings-option">
-                                    <input type="radio" name="fontSizeScale" value="120">
-                                    <span class="settings-option-copy"><strong>120%</strong></span>
+                                    <input type="radio" name="operatorSaturation" value="vibrant">
+                                    <span class="settings-option-copy"><strong>Vibrant</strong></span>
                                 </label>
-                            </div>
-                        </fieldset>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Line spacing</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="lineSpacing" value="compact">
-                                <span class="settings-option-copy">
-                                    <strong>Compact</strong>
-                                    <span>Tighter line height.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="lineSpacing" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Standard line height.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="lineSpacing" value="loose">
-                                <span class="settings-option-copy">
-                                    <strong>Loose</strong>
-                                    <span>More space between lines.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Grain intensity</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="grainIntensity" value="none">
+                                    <span class="settings-option-copy"><strong>None</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="grainIntensity" value="subtle" checked>
+                                    <span class="settings-option-copy"><strong>Subtle</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="grainIntensity" value="moderate">
+                                    <span class="settings-option-copy"><strong>Moderate</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="grainIntensity" value="rich">
+                                    <span class="settings-option-copy"><strong>Rich</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Monospace font</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="monospaceVariant" value="system">
-                                <span class="settings-option-copy">
-                                    <strong>System</strong>
-                                    <span>Default system monospace.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="monospaceVariant" value="jetbrains" checked>
-                                <span class="settings-option-copy">
-                                    <strong>JetBrains Mono</strong>
-                                    <span>Optimized for code and terminals.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="monospaceVariant" value="courier">
-                                <span class="settings-option-copy">
-                                    <strong>Courier</strong>
-                                    <span>Classic typewriter style.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Animation intensity</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationIntensity" value="reduced">
+                                    <span class="settings-option-copy"><strong>Reduced</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationIntensity" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationIntensity" value="enhanced">
+                                    <span class="settings-option-copy"><strong>Enhanced</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
 
-                        <!-- === Component Visibility === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Show footer</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="showFooter" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Display footer on all pages.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="showFooter" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide footer to maximize content space.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                    <!-- ═══ Typography ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Typography</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Font size scale</legend>
+                                <div class="settings-scale-group">
+                                    <label class="settings-option"><input type="radio" name="fontSizeScale" value="80"><span class="settings-option-copy"><strong>80%</strong></span></label>
+                                    <label class="settings-option"><input type="radio" name="fontSizeScale" value="90"><span class="settings-option-copy"><strong>90%</strong></span></label>
+                                    <label class="settings-option"><input type="radio" name="fontSizeScale" value="100" checked><span class="settings-option-copy"><strong>100%</strong></span></label>
+                                    <label class="settings-option"><input type="radio" name="fontSizeScale" value="110"><span class="settings-option-copy"><strong>110%</strong></span></label>
+                                    <label class="settings-option"><input type="radio" name="fontSizeScale" value="120"><span class="settings-option-copy"><strong>120%</strong></span></label>
+                                </div>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Header opacity</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="headerOpacity" value="low">
-                                <span class="settings-option-copy">
-                                    <strong>Low</strong>
-                                    <span>Subtle, transparent header.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="headerOpacity" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Standard header visibility.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="headerOpacity" value="high">
-                                <span class="settings-option-copy">
-                                    <strong>High</strong>
-                                    <span>Solid, prominent header.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Font size preset</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSize" value="small">
+                                    <span class="settings-option-copy"><strong>Small</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSize" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="fontSize" value="large">
+                                    <span class="settings-option-copy"><strong>Large</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Show spec pills</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="showSpecPills" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Display metadata badges on frames.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="showSpecPills" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide specification badges.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Line spacing</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="lineSpacing" value="compact">
+                                    <span class="settings-option-copy"><strong>Compact</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="lineSpacing" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="lineSpacing" value="loose">
+                                    <span class="settings-option-copy"><strong>Loose</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <!-- === Performance === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Animation throttling</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="animationThrottling" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Full animation fidelity.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="animationThrottling" value="light">
-                                <span class="settings-option-copy">
-                                    <strong>Light</strong>
-                                    <span>Reduce frame rate slightly.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="animationThrottling" value="heavy">
-                                <span class="settings-option-copy">
-                                    <strong>Heavy</strong>
-                                    <span>Significantly reduce animations for performance.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Monospace font</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="monospaceVariant" value="system">
+                                    <span class="settings-option-copy"><strong>System</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="monospaceVariant" value="jetbrains" checked>
+                                    <span class="settings-option-copy"><strong>JetBrains Mono</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="monospaceVariant" value="courier">
+                                    <span class="settings-option-copy"><strong>Courier</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Image lazy loading</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="imageLazyLoading" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Load images only when they enter viewport.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="imageLazyLoading" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Load all images immediately.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                    <!-- ═══ Accessibility ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Accessibility</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Reduce motion</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="reduceMotion" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Allow smooth transitions.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="reduceMotion" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Use instant transitions.</span></span>
+                                </label>
+                            </fieldset>
 
-                        <!-- === Spirit Cycle & Dynamics === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Current spirit phase</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="currentSpiritPhase" value="initiation">
-                                <span class="settings-option-copy">
-                                    <strong>Initiation</strong>
-                                    <span>Fresh start, cool blues, entry-level energy.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="currentSpiritPhase" value="resistance">
-                                <span class="settings-option-copy">
-                                    <strong>Resistance</strong>
-                                    <span>Challenge, deeper colors, stronger presence.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="currentSpiritPhase" value="transformation">
-                                <span class="settings-option-copy">
-                                    <strong>Transformation</strong>
-                                    <span>Dynamic, warm golds, in flux.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="currentSpiritPhase" value="expression" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Expression</strong>
-                                    <span>Fully open, vibrant teal, maximum clarity.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="currentSpiritPhase" value="return">
-                                <span class="settings-option-copy">
-                                    <strong>Return</strong>
-                                    <span>Integration, warm earth tones, settled.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>High contrast</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="highContrast" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="highContrast" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Stronger color contrast.</span></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Spirit phase auto-cycle</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="spiritPhaseAutoCycle" value="off" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Keep phase fixed at the selected value.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="spiritPhaseAutoCycle" value="on">
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Automatically cycle through phases every 9 seconds.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Animation throttling</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationThrottling" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationThrottling" value="light">
+                                    <span class="settings-option-copy"><strong>Light</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="animationThrottling" value="heavy">
+                                    <span class="settings-option-copy"><strong>Heavy</strong><span>Significantly reduce animations.</span></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Grain intensity</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="grainIntensity" value="none">
-                                <span class="settings-option-copy">
-                                    <strong>None</strong>
-                                    <span>No texture grain.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="grainIntensity" value="subtle" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Subtle</strong>
-                                    <span>Very light film grain texture.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="grainIntensity" value="moderate">
-                                <span class="settings-option-copy">
-                                    <strong>Moderate</strong>
-                                    <span>More visible texture.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="grainIntensity" value="rich">
-                                <span class="settings-option-copy">
-                                    <strong>Rich</strong>
-                                    <span>Strong tactile texture.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                    <!-- ═══ Interface Chrome ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Interface Chrome</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Surface map</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="navigatorDisplay" value="quiet" checked>
+                                    <span class="settings-option-copy">
+                                        <strong>Quiet</strong>
+                                        <span>Show on hover or focus.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="navigatorDisplay" value="full">
+                                    <span class="settings-option-copy"><strong>Full</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="navigatorDisplay" value="hidden">
+                                    <span class="settings-option-copy"><strong>Hidden</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <!-- === Progressive Enhancement === -->
-                        <fieldset class="settings-fieldset">
-                            <legend>Enhancement level</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="enhancementLevel" value="minimal">
-                                <span class="settings-option-copy">
-                                    <strong>Minimal</strong>
-                                    <span>Basic interaction, reduced visual richness.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="enhancementLevel" value="balanced" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Balanced</strong>
-                                    <span>Standard interaction and visual polish.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="enhancementLevel" value="rich">
-                                <span class="settings-option-copy">
-                                    <strong>Rich</strong>
-                                    <span>Enhanced interactions and visual effects.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Console</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="consoleDisplay" value="collapsed" checked>
+                                    <span class="settings-option-copy"><strong>Collapsed</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="consoleDisplay" value="expanded">
+                                    <span class="settings-option-copy"><strong>Expanded</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="consoleDisplay" value="hidden">
+                                    <span class="settings-option-copy"><strong>Hidden</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Semantic density</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="semanticDensity" value="minimal">
-                                <span class="settings-option-copy">
-                                    <strong>Minimal</strong>
-                                    <span>Hide relational and contextual information.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="semanticDensity" value="normal" checked>
-                                <span class="settings-option-copy">
-                                    <strong>Normal</strong>
-                                    <span>Show essential relationships and context.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="semanticDensity" value="rich">
-                                <span class="settings-option-copy">
-                                    <strong>Rich</strong>
-                                    <span>Show all relational and dimensional information.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Header opacity</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="headerOpacity" value="low">
+                                    <span class="settings-option-copy"><strong>Low</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="headerOpacity" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="headerOpacity" value="high">
+                                    <span class="settings-option-copy"><strong>High</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Cognitive handles</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="cognitiveHandles" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide dimensional navigation affordances.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="cognitiveHandles" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Show handles for navigating structure and dimensions.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Show footer</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="showFooter" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="showFooter" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Dimensional breadcrumbs</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="dimensionalBreadcrumbs" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>Hide position indicators.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="dimensionalBreadcrumbs" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Show position across dimensions.</span>
-                                </span>
-                            </label>
-                        </fieldset>
+                            <fieldset class="settings-fieldset">
+                                <legend>Show spec pills</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="showSpecPills" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="showSpecPills" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                            </fieldset>
 
-                        <fieldset class="settings-fieldset">
-                            <legend>Operator highlighting</legend>
-                            <label class="settings-option">
-                                <input type="radio" name="operatorHighlighting" value="off">
-                                <span class="settings-option-copy">
-                                    <strong>Off</strong>
-                                    <span>No visual emphasis on operators.</span>
-                                </span>
-                            </label>
-                            <label class="settings-option">
-                                <input type="radio" name="operatorHighlighting" value="on" checked>
-                                <span class="settings-option-copy">
-                                    <strong>On</strong>
-                                    <span>Highlight operators with color and emphasis.</span>
-                                </span>
-                            </label>
-                        </fieldset>
-                    </div>
+                            <fieldset class="settings-fieldset">
+                                <legend>Viewport activation</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="viewportActivation" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="viewportActivation" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Scroll updates active frame.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Image lazy loading</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="imageLazyLoading" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="imageLazyLoading" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
+
+                    <!-- ═══ Spirit Cycle ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Spirit Cycle</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Current phase</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="currentSpiritPhase" value="initiation">
+                                    <span class="settings-option-copy"><strong>Initiation</strong><span>Cool blues, entry energy.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="currentSpiritPhase" value="resistance">
+                                    <span class="settings-option-copy"><strong>Resistance</strong><span>Deeper colors, challenge.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="currentSpiritPhase" value="transformation">
+                                    <span class="settings-option-copy"><strong>Transformation</strong><span>Warm golds, in flux.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="currentSpiritPhase" value="expression" checked>
+                                    <span class="settings-option-copy"><strong>Expression</strong><span>Vibrant teal, clarity.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="currentSpiritPhase" value="return">
+                                    <span class="settings-option-copy"><strong>Return</strong><span>Earth tones, settled.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Auto-cycle</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="spiritPhaseAutoCycle" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="spiritPhaseAutoCycle" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Cycle every 9 seconds.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Phase indicators</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="phaseIndicators" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="phaseIndicators" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
+
+                    <!-- ═══ Progressive Enhancement ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Progressive Enhancement</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Enhancement level</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="enhancementLevel" value="minimal">
+                                    <span class="settings-option-copy"><strong>Minimal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="enhancementLevel" value="balanced" checked>
+                                    <span class="settings-option-copy"><strong>Balanced</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="enhancementLevel" value="rich">
+                                    <span class="settings-option-copy"><strong>Rich</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Semantic density</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="semanticDensity" value="minimal">
+                                    <span class="settings-option-copy"><strong>Minimal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="semanticDensity" value="normal" checked>
+                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="semanticDensity" value="rich">
+                                    <span class="settings-option-copy"><strong>Rich</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Cognitive handles</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="cognitiveHandles" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="cognitiveHandles" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Dimensional breadcrumbs</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="dimensionalBreadcrumbs" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="dimensionalBreadcrumbs" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Operator highlighting</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="operatorHighlighting" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="operatorHighlighting" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Depth indicators</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="depthIndicators" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="depthIndicators" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
+
+                    <!-- ═══ Developer ═══ -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Developer</summary>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Debug mode</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="debugMode" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="debugMode" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Show debug overlays.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Frame metadata</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="showFrameMetadata" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="showFrameMetadata" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong><span>Show role and liminality.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Semantic metadata</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="showSemanticMetadata" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="showSemanticMetadata" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Verbose logging</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="verboseLogging" value="off" checked>
+                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="verboseLogging" value="on">
+                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
 
                     <div class="settings-actions">
                         <button class="operator-chip" type="submit">@ save settings</button>
@@ -712,6 +585,32 @@
                         <span class="settings-status" data-site-settings-status role="status" aria-live="polite"></span>
                     </div>
                 </form>
+            </section>
+
+            <section class="site-frame" id="pwa-status" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pwa-status">~"pwa_status"</a>
+                    <h2>App Status</h2>
+                </div>
+                <div class="pwa-status-grid" data-pwa-status>
+                    <div class="pwa-status-card">
+                        <span class="pwa-status-label">Install</span>
+                        <span class="pwa-status-value" data-pwa-install-status>Checking...</span>
+                    </div>
+                    <div class="pwa-status-card">
+                        <span class="pwa-status-label">Service Worker</span>
+                        <span class="pwa-status-value" data-pwa-sw-status>Checking...</span>
+                    </div>
+                    <div class="pwa-status-card">
+                        <span class="pwa-status-label">Cache</span>
+                        <span class="pwa-status-value" data-pwa-cache-status>Checking...</span>
+                    </div>
+                    <div class="pwa-status-card">
+                        <span class="pwa-status-label">Connection</span>
+                        <span class="pwa-status-value" data-pwa-connection-status>Online</span>
+                    </div>
+                </div>
+                <p class="frame-note">This site works offline after first visit. <a href="/about/website/">Learn more about the site architecture.</a></p>
             </section>
 
             <section class="site-frame" id="settings-notes" data-spw-role="reference" data-spw-meaning="settings behavior notes">
@@ -722,14 +621,14 @@
                 <div class="frame-grid">
                     <div class="frame-panel">
                         <h3>Why quiet by default?</h3>
-                        <p>The map and console are useful inspection tools, but they should not compete with the page. Quiet settings keep them available without making every route feel like a dashboard.</p>
+                        <p>The map and console are inspection tools that should not compete with the page content.</p>
                     </div>
                     <div class="frame-panel">
-                        <h3>What still activates frames?</h3>
-                        <p>Hash links, clicks, focus, hover, map selection, console controls, and mode switches still activate frames. The viewport setting only controls scroll-driven activation.</p>
+                        <h3>What activates frames?</h3>
+                        <p>Hash links, clicks, focus, hover, map selection, console controls, and mode switches. The viewport setting only controls scroll-driven activation.</p>
                     </div>
                     <div class="frame-panel">
-                        <h3>How do I recover hidden chrome?</h3>
+                        <h3>Hidden chrome?</h3>
                         <p>Return to <a href="/settings/">/settings/</a> from the header or direct URL and choose quiet or full display again.</p>
                     </div>
                 </div>
@@ -737,7 +636,7 @@
         </article>
     </main>
     <footer>
-        <p>© 2026 spwashi</p>
+        <p>&copy; 2026 spwashi</p>
     </footer>
 </body>
 </html>

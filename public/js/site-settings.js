@@ -247,6 +247,36 @@ const setStatus = (node, message) => {
     node.textContent = message;
 };
 
+const PRESETS = Object.freeze({
+    calm: {
+        navigatorDisplay: 'quiet', consoleDisplay: 'collapsed', colorMode: 'auto',
+        operatorSaturation: 'normal', animationIntensity: 'normal', grainIntensity: 'none',
+        enhancementLevel: 'minimal', semanticDensity: 'minimal', cognitiveHandles: 'off',
+        dimensionalBreadcrumbs: 'off', operatorHighlighting: 'off', depthIndicators: 'off',
+        phaseIndicators: 'off', debugMode: 'off', showFrameMetadata: 'off',
+        spiritPhaseAutoCycle: 'off', reduceMotion: 'off', highContrast: 'off'
+    },
+    rich: {
+        enhancementLevel: 'rich', semanticDensity: 'rich', grainIntensity: 'moderate',
+        operatorSaturation: 'vibrant', animationIntensity: 'enhanced',
+        cognitiveHandles: 'on', dimensionalBreadcrumbs: 'on', operatorHighlighting: 'on',
+        depthIndicators: 'on', phaseIndicators: 'on', showSpecPills: 'on',
+        spiritPhaseAutoCycle: 'on', navigatorDisplay: 'full', consoleDisplay: 'collapsed'
+    },
+    developer: {
+        debugMode: 'on', showFrameMetadata: 'on', showSemanticMetadata: 'on',
+        verboseLogging: 'on', navigatorDisplay: 'full', consoleDisplay: 'expanded',
+        semanticDensity: 'rich', operatorHighlighting: 'on', showSpecPills: 'on',
+        enhancementLevel: 'rich', grainIntensity: 'none'
+    },
+    accessible: {
+        highContrast: 'on', reduceMotion: 'on', fontSize: 'large',
+        fontSizeScale: '120', lineSpacing: 'loose', animationIntensity: 'reduced',
+        animationThrottling: 'heavy', grainIntensity: 'none',
+        navigatorDisplay: 'full', consoleDisplay: 'collapsed'
+    }
+});
+
 const initSiteSettingsPage = () => {
     const form = document.querySelector('[data-site-settings-form]');
     if (!form) return;
@@ -261,12 +291,12 @@ const initSiteSettingsPage = () => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         saveSiteSettings(getFormSettings(form));
-        setStatus(status, 'Saved locally. Viewport activation changes apply fully on the next page load.');
+        setStatus(status, 'Saved.');
     });
 
     form.addEventListener('change', () => {
         saveSiteSettings(getFormSettings(form));
-        setStatus(status, 'Saved locally. Viewport activation changes apply fully on the next page load.');
+        setStatus(status, 'Saved.');
     });
 
     resetButton?.addEventListener('click', () => {
@@ -274,6 +304,76 @@ const initSiteSettingsPage = () => {
         writeSettingsToForm(form, settings);
         setStatus(status, 'Reset to calm defaults.');
     });
+
+    // Preset buttons
+    document.querySelectorAll('[data-preset]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const presetName = btn.dataset.preset;
+            const preset = PRESETS[presetName];
+            if (!preset) return;
+
+            const merged = { ...getSiteSettings(), ...preset };
+            const settings = saveSiteSettings(merged);
+            writeSettingsToForm(form, settings);
+            setStatus(status, `Applied "${presetName}" preset.`);
+        });
+    });
+
+    // PWA status
+    initPwaStatusDisplay();
+};
+
+const initPwaStatusDisplay = () => {
+    const installEl = document.querySelector('[data-pwa-install-status]');
+    const swEl = document.querySelector('[data-pwa-sw-status]');
+    const cacheEl = document.querySelector('[data-pwa-cache-status]');
+    const connectionEl = document.querySelector('[data-pwa-connection-status]');
+
+    if (!installEl) return;
+
+    // Install status
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+    installEl.textContent = isStandalone ? 'Installed' : 'Browser tab';
+    installEl.dataset.status = isStandalone ? 'active' : 'inactive';
+
+    // Service worker
+    if (navigator.serviceWorker?.controller) {
+        swEl.textContent = 'Active';
+        swEl.dataset.status = 'active';
+    } else if (navigator.serviceWorker) {
+        swEl.textContent = 'Registering...';
+        swEl.dataset.status = 'inactive';
+        navigator.serviceWorker.ready.then(() => {
+            swEl.textContent = 'Active';
+            swEl.dataset.status = 'active';
+        });
+    } else {
+        swEl.textContent = 'Unsupported';
+        swEl.dataset.status = 'error';
+    }
+
+    // Cache
+    if ('caches' in window) {
+        caches.keys().then((names) => {
+            const count = names.length;
+            cacheEl.textContent = count > 0 ? `${count} cache${count > 1 ? 's' : ''}` : 'Empty';
+            cacheEl.dataset.status = count > 0 ? 'active' : 'inactive';
+        });
+    } else {
+        cacheEl.textContent = 'Unsupported';
+        cacheEl.dataset.status = 'error';
+    }
+
+    // Connection
+    const updateConnection = () => {
+        const online = navigator.onLine;
+        connectionEl.textContent = online ? 'Online' : 'Offline';
+        connectionEl.dataset.status = online ? 'active' : 'inactive';
+    };
+    updateConnection();
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
 };
 
 export {
