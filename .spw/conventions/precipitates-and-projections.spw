@@ -1,0 +1,357 @@
+#>precipitates_and_projections
+#:layer #!pragmatics
+#:conventions #!versioning
+
+^"thesis"{
+  claim: "Patches and updates are not arbitrary diffs—they're semantic crystallizations (precipitates) of change. Through Spw projections, a single idea's manifestation can be tracked across layers, files, and abstractions."
+  grounding: "Changes cluster naturally around Spw operators, phases, and relational dimensions. Mindful consolidation recognizes these clusters and crystallizes them into coherent, semantically meaningful patches."
+  vision: "Version control becomes a readable history of how ideas moved from conception through realization, with each patch representing a complete phase of cognitive transformation."
+}
+
+^"precipitate_concept"{
+  ~#note: "A precipitate is when a solution crystallizes into stable form. In Spw terms: scattered changes solidify into coherent semantic units."
+
+  metaphor: "Like salt crystallizing from brine, related changes naturally cluster and stabilize into meaningful patches."
+
+  process: [
+    "1. Identify related changes (same operator, related files, same phase)",
+    "2. Group by semantic affinity (what idea connects them?)",
+    "3. Consolidate into coherent unit (single, complete thought)",
+    "4. Assign Spw semantics (which operator? which phase? what relation?)",
+    "5. Crystallize into patch (commit with semantic metadata)"
+  ]
+
+  properties: {
+    stable: "Once precipitated, the patch form is stable and reusable"
+    meaningful: "Each patch tells a story about one idea or relationship"
+    traceable: "Can see how this patch relates to other precipitates"
+    semantic: "Patch meaning is encoded in Spw metadata, not just commit message"
+  }
+}
+
+^"projection_concept"{
+  ~#note: "A projection maps one form onto another dimension. How does a change manifest across layers?"
+
+  metaphor: "Like projecting a 3D object onto 2D planes, a change can be projected across abstraction levels, file boundaries, and relational dimensions."
+
+  dimensions_to_project_across: {
+    abstraction: "How does this change manifest at idea → design → implementation → instance levels?"
+    layer: "How does this affect CSS, JS, HTML, conventions, semantics?"
+    relation: "What's the symmetric pair? The complementary opposite? The next in sequence?"
+    temporal: "When does this idea appear? Early (initiation) or late (return)?"
+    spatial: "Where in the codebase? Which surfaces? Which frame types?"
+  }
+
+  example_projections: {
+    idea: "Add cognitive handles to improve navigation"
+
+    css_projection: "visual handles in CSS (cognitive-handles.css)"
+    js_projection: "interactive behavior in JS (cognitive-handles.js)"
+    html_projection: "semantic data attributes in markup"
+    convention_projection: "documented in conventions (cognitive-navigation.spw)"
+
+    abstraction_projection: {
+      idea: "Show handles as visual affordance"
+      design: "Plan handle types (primary, corner, dimensional, etc.)"
+      implementation: "Write CSS and JS for each type"
+      instance: "Use handles on actual frame elements"
+    }
+  }
+}
+
+^"consolidation_cycle"{
+  ~#note: "Mindful cycles for clustering and consolidating changes into coherent patches"
+
+  spirit_cycle_alignment: {
+    initiation: "Identify scattered changes, ask what they're about"
+    resistance: "Question groupings, find real semantic boundaries"
+    transformation: "Reorganize changes into new coherence"
+    expression: "Precipitate into stable patch"
+    return: "Integrate patch with existing codebase, close cycle"
+  }
+
+  electromagnetic_alignment: {
+    conception: "Changes exist as scattered files and commits"
+    potential: "Start clustering by semantic affinity"
+    kinetic: "Consolidate into coherent patch form"
+    manifest: "Precipitate into final, stable patch"
+  }
+
+  temporal_guidance: {
+    daily_clustering: "Each day, identify one coherent cluster (one idea's manifestation)"
+    weekly_consolidation: "Once per week, precipitate clustered changes into semantically meaningful patches"
+    phase_alignment: "Consolidation cycles align with spirit phases (conception → expression)"
+  }
+}
+
+^"patch_semantics"{
+  ~#note: "Patches carry semantic metadata that makes version history readable"
+
+  structure: {
+    id: "Unique patch identifier (uuid or sequential)"
+    operator: "Which Spw operator is this patch about? ~ # . ? ! * & @ etc."
+    phase: "What phase? initiation | resistance | transformation | expression | return"
+    valence: "What quality? boon | bane | bone | bonk | honk"
+    dimension: "What dimension does it operate on? depth | abstraction | relation | phase | scale"
+    slices: "What projections? [idea, design, implementation, instance]"
+    affected_systems: "Files/layers touched: [css, js, html, conventions, assets]"
+    relational: {
+      complements: "What other patches complete this idea?"
+      depends_on: "What must come before?"
+      enables: "What becomes possible after?"
+    }
+  }
+
+  example_patch_metadata: {
+    patch_id: "2026-04-10-001"
+    operator: "^"
+    phase: "expression"
+    valence: "boon"
+    dimension: "abstraction"
+    title: "Frame abstraction handles: perception aids across conception→realization"
+    description: "Add visual and interactive affordances for navigating frames at different abstraction levels."
+
+    slices: {
+      idea: "Help users understand frame nesting and depth through visual handles"
+      design: "Design six types of handles (primary, corner, dimensional, relational, anchor, portal)"
+      implementation: "Implement in CSS and JS with data attributes"
+      instance: "Apply to all frames on site, make interactive"
+    }
+
+    files_touched: [
+      "public/css/cognitive-handles.css",
+      "public/js/cognitive-handles.js",
+      ".spw/conventions/cognitive-navigation.spw",
+      "index.html",
+      "topics/software/index.html",
+      "about/index.html"
+    ]
+
+    depends_on: ["2026-04-10-000-frame-basics"]
+    enables: ["2026-04-11-000-dimensional-breadcrumbs", "2026-04-11-001-phase-indicators"]
+    complements: ["2026-04-10-002-relational-visualization"]
+  }
+}
+
+^"projection_maps"{
+  ~#note: "Templates for projecting a single idea across multiple dimensions and layers"
+
+  standard_projection_template: {
+    idea_level: {
+      question: "What is the core question or observation?"
+      output: "Abstract statement, possibly poetic"
+    }
+
+    design_level: {
+      architecture: "How should this be structured?"
+      constraints: "What limits our design?"
+      tradeoffs: "What are we choosing?"
+      output: "Specification, naming, boundaries"
+    }
+
+    implementation_level: {
+      mechanisms: "How do we make this real?"
+      tools: "What languages/frameworks?"
+      patterns: "What existing patterns fit?"
+      output: "Code, styles, scripts"
+    }
+
+    instance_level: {
+      manifestation: "What does this look like when running?"
+      interaction: "How do users experience it?"
+      feedback: "What does it feel like?"
+      output: "Live behavior, visual appearance"
+    }
+  }
+
+  layer_projection_template: {
+    semantic_layer: "Naming, concepts, meaning in Spw"
+    html_layer: "Markup structure, data attributes"
+    css_layer: "Visual expression, responsive behavior"
+    js_layer: "Interactive behavior, state management"
+    convention_layer: "Documented as pattern for reuse"
+  }
+
+  relational_projection_template: {
+    primary_operator: "What's the main operator? ^"
+    complementary: "What's the complement? ~"
+    symmetric_pair: "What pairs with this?"
+    next_in_sequence: "What comes after in the narrative?"
+  }
+}
+
+^"workflow_for_mindful_consolidation"{
+  ~#note: "Step-by-step process for identifying, clustering, and precipitating patches"
+
+  phase_1_identification: {
+    name: "Identify scattered changes"
+    step_1: "git status + git diff to see all uncommitted changes"
+    step_2: "List files and their purposes"
+    step_3: "Ask: what thread connects them?"
+    step_4: "What operator is central? What phase are we in?"
+    tools: ["git diff --stat", "git diff --name-status"]
+  }
+
+  phase_2_clustering: {
+    name: "Group by semantic affinity"
+    step_1: "Group files by which operator they serve (^ # ~ ? ! * & @)"
+    step_2: "Within each group, note cross-layer changes (css, js, html, conventions)"
+    step_3: "Identify the complete manifestation (all slices: idea → design → implementation → instance)"
+    step_4: "Check for dependencies (does this patch depend on another?)"
+    output: "Semantic clusters, each representing one coherent idea"
+  }
+
+  phase_3_consolidation: {
+    name: "Consolidate into coherent patches"
+    step_1: "Stage files by cluster (git add path/file for each cluster)"
+    step_2: "Write commit message with Spw semantics (operator, phase, valence, dimension)"
+    step_3: "Include projection mapping (idea → design → implementation → instance)"
+    step_4: "Reference dependencies and complements"
+    output: "One or more commits, each with semantic metadata"
+  }
+
+  phase_4_precipitation: {
+    name: "Crystallize into stable patch form"
+    step_1: "Generate patch metadata (patch_id, operator, phase, affected systems)"
+    step_2: "Create patch summary (what idea moved from conception → manifestation?)"
+    step_3: "Document in versioning log or patch registry"
+    step_4: "Close the consolidation cycle (return phase)"
+    output: "Recorded, semantically meaningful patch"
+  }
+
+  phase_5_integration: {
+    name: "Return phase: integrate with codebase"
+    step_1: "Verify all changes work together"
+    step_2: "Test across layers and abstractions"
+    step_3: "Update conventions if new pattern emerges"
+    step_4: "Close cycle, mark as complete"
+  }
+}
+
+^"tools_and_automation"{
+  ~#note: "Scripts and commands to support mindful consolidation"
+
+  git_helpers: {
+    stat_by_path: "git diff --stat -- path/pattern to see changes in a region"
+    show_changes: "git diff -- path/file to review specific file"
+    stage_by_cluster: "git add path/files for one semantic cluster"
+  }
+
+  semantic_commit_helper: {
+    template: "git commit -m '#[op] — idea through slices (idea→design→impl→instance)'"
+    example: "#[^] — frame handles across abstraction levels (afford→design→css+js→all-frames)"
+  }
+
+  patch_registry: {
+    location: ".spw/patches/ or .agents/patches/"
+    format: "Each patch has .spw metadata file + git commit hash"
+    content: "operator, phase, valence, projections, affected files, dependencies"
+  }
+
+  projection_visualizer: {
+    name: "Skill: patch-projections"
+    purpose: "Given a git commit, show its projections across layers and abstractions"
+    output: "Map showing idea → design → implementation → instance for the patch"
+  }
+}
+
+^"patch_registry_structure"{
+  ~#note: "How patches are recorded and made discoverable"
+
+  directory: ".spw/patches/yyyy-mm-dd-{number}"
+
+  files: {
+    metadata_spw: "Patch semantics and metadata"
+    summary_md: "Human-readable summary"
+    projection_map: "Visual map of projections"
+    commit_hash: "Link to git commit(s)"
+  }
+
+  example_patch_file: {
+    name: ".spw/patches/2026-04-10-001-cognitive-handles.spw"
+
+    content: "#>cognitive_handles_patch
+#:patches #!versioning
+#:phase expression
+#:operator ^
+
+^\"metadata\"{
+  patch_id: \"2026-04-10-001\"
+  date: \"2026-04-10T14:30:00Z\"
+  operator: \"^\"
+  phase: \"expression\"
+  valence: \"boon\"
+  dimension: \"abstraction\"
+
+  summary: \"Add visual and interactive cognitive handles for navigating frame abstraction levels\"
+
+  commit_hashes: [\"abc1234d\", \"def5678e\"]
+}
+
+^\"projections\"{
+  idea_level: {
+    question: \"How can users visually understand frame nesting and abstraction without getting lost?\"
+    observation: \"Handles let you 'grab' a concept and navigate through it\"
+  }
+
+  design_level: {
+    types: [\"primary (left-edge bar)\", \"corner (brackets)\", \"dimensional (striping)\", \"relational (connectors)\", \"anchor (bookmark)\", \"portal (dimension links)\"]
+    principle: \"Handles are structural anchors, not decorative\"
+  }
+
+  implementation_level: {
+    css: \"cognitive-handles.css\"
+    js: \"cognitive-handles.js\"
+    data_attr: \"[data-cognitive-handle], [data-handle-corner], [data-dimension], etc.\"
+  }
+
+  instance_level: {
+    where: \"All .site-frame elements on every page\"
+    interaction: \"Hover reveals handle, click to navigate\"
+    feedback: \"Visual brightening as you approach a handle\"
+  }
+}
+
+^\"dependencies\"{
+  depends_on: [\"2026-04-09-000-frame-basics\"]
+  enables: [\"2026-04-11-000-dimensional-breadcrumbs\"]
+  complements: [\"2026-04-10-002-relational-visualization\"]
+}
+"
+  }
+}
+
+^"clustering_guidelines"{
+  group_by_operator: "Changes serving ^ (frame) go together; ~ (ref) go together; etc."
+  include_all_slices: "One patch should show idea → design → implementation → instance if possible"
+  cross_layer_coherence: "If CSS, JS, and HTML all serve the same idea, they're one patch"
+  respect_boundaries: "Don't force unrelated changes into one patch just because they touch nearby files"
+  temporal_alignment: "Changes from the same thought session naturally cluster; respect that"
+  phase_coherence: "Don't mix initiation-phase changes with manifestation-phase changes in one patch"
+}
+
+^"benefits_of_semantic_patches"{
+  readable_history: "Git log tells the story of how ideas moved from conception → manifestation"
+  discoverability: "Search patches by operator, phase, or dimension"
+  reusability: "Patterns and patches can be reused across projects"
+  debugging: "When something breaks, you can trace it to which phase of ideation"
+  cognitive_workflow: "Consolidation cycles align with how humans think and create"
+  collaboration: "Patches communicate intent, not just changes"
+  documentation: "Version history becomes part of the project documentation"
+}
+
+^"integration_with_existing_systems"{
+  electromagnetic_containers: "Patches are containers; charge state = what phase of manifestation"
+  spirit_cycles: "Consolidation follows spirit cycle (conception → expression)"
+  cognitive_handles: "Navigate patch history like navigating frames"
+  dimensional_navigation: "View patches across dimensions (operator, phase, layer, abstraction)"
+  settings: "Users can control granularity of consolidation (minimal clustering vs. comprehensive)"
+}
+
+^"technical_implementation"{
+  patch_metadata_schema: "YAML or Spw format with operator, phase, valence, projections"
+  git_hooks: "Pre-commit hook suggests semantic clustering"
+  git_log_format: "Custom pretty-print shows operator and phase alongside commit message"
+  search_tool: "Find patches by operator: git log --grep='#\\[\\^\\]' for frame patches"
+  visualization: "Show patch as electromagnetic container with charge state = manifestation phase"
+}
