@@ -101,6 +101,29 @@ html, body {
     min-height: 100%;
 }
 
+::selection {
+    background: rgba(0, 128, 128, 0.18);
+    color: var(--ink);
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 128, 128, 0.22);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 128, 128, 0.40);
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -112,6 +135,9 @@ body {
     color: var(--ink);
     font-family: 'JetBrains Mono', monospace;
     line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 a {
@@ -126,8 +152,8 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid black;
-    outline-offset: 2px;
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
 }
 
 h1, h2, h3, h4 {
@@ -420,6 +446,17 @@ main > article {
     gap: 1.5rem;
 }
 
+main > article > .site-frame {
+    animation: frameFade 220ms ease both;
+}
+
+main > article > .site-frame:nth-child(1) { animation-delay: 0ms; }
+main > article > .site-frame:nth-child(2) { animation-delay: 40ms; }
+main > article > .site-frame:nth-child(3) { animation-delay: 80ms; }
+main > article > .site-frame:nth-child(4) { animation-delay: 120ms; }
+main > article > .site-frame:nth-child(5) { animation-delay: 160ms; }
+main > article > .site-frame:nth-child(n+6) { animation-delay: 200ms; }
+
 .site-frame {
     position: relative;
     display: flex;
@@ -432,6 +469,7 @@ main > article {
     box-shadow: var(--shadow);
     transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
     overflow: hidden;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
 .site-frame.is-active-frame {
@@ -1273,6 +1311,39 @@ figcaption {
     border-style: dashed;
 }
 
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-stat {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background:
+        linear-gradient(135deg, rgba(0, 128, 128, 0.07), transparent 50%),
+        rgba(255, 255, 255, 0.62);
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-stat-label {
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-stat-value {
+    min-width: 0;
+    color: var(--teal-deep);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1283,6 +1354,10 @@ figcaption {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-panel--brief {
+    grid-column: 1 / -1;
 }
 
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-field {
@@ -1315,6 +1390,18 @@ figcaption {
     padding: 0.45rem 0.6rem;
 }
 
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-segments {
+    min-width: 3.5rem;
+    max-width: 5rem;
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-brief {
+    min-height: 12rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    white-space: pre;
+}
+
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-input:focus-visible,
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-line-input:focus-visible {
     outline: 2px solid var(--active-op-color);
@@ -1325,6 +1412,10 @@ figcaption {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+}
+
+[data-spw-features~="rpg-gameplay"] .rpg-gameplay-actions .operator-chip {
+    min-height: 2.35rem;
 }
 
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-actions--footer {
@@ -1353,12 +1444,14 @@ figcaption {
 }
 
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock {
-    grid-template-columns: minmax(7rem, 1fr) minmax(5rem, 0.8fr) auto auto auto auto;
+    grid-template-columns: minmax(7rem, 1fr) auto minmax(5rem, 0.8fr) auto auto auto auto;
 }
 
 [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock progress {
     width: 100%;
     min-width: 4rem;
+    height: 0.5rem;
+    border-radius: 999px;
     accent-color: var(--active-op-color);
 }
 
@@ -1723,7 +1816,13 @@ figcaption {
 body > footer {
     margin-top: auto;
     min-height: var(--header-height);
-    background: var(--teal);
+    background: linear-gradient(
+        90deg,
+        hsl(168 90% 22%) 0%,
+        var(--teal) 35%,
+        var(--teal) 65%,
+        hsl(192 80% 24%) 100%
+    );
     color: white;
     display: flex;
     align-items: center;
@@ -1731,6 +1830,9 @@ body > footer {
     text-align: center;
     padding: 0.4rem 1rem;
     box-sizing: border-box;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    opacity: 0.9;
 }
 
 /* ─── Frame Navigator (JetBrains tool window pattern) ────────────────────── */
@@ -2374,11 +2476,34 @@ body > footer {
     }
 }
 
+@keyframes frameFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ── 860px: dense grids drop to 2-col; heavy lab layouts collapse ── */
 @media (max-width: 860px) {
     .frame-grid--dense,
     .domain-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    [data-spw-features~="rpg-gameplay"] .rpg-gameplay-dashboard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock {
+        grid-template-columns: minmax(8rem, 1fr) minmax(7rem, 0.8fr);
+    }
+
+    [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock progress {
+        grid-column: 1 / -1;
     }
 
     [data-spw-features~="pretext-lab"] .pretext-lab-grid,
@@ -2567,6 +2692,10 @@ body > footer {
     [data-spw-features~="rpg-gameplay"] .rpg-gameplay-grid,
     [data-spw-features~="pretext-lab"] .pretext-control-grid,
     [data-spw-features~="pretext-lab"] .pretext-metric-grid {
+        grid-template-columns: 1fr;
+    }
+
+    [data-spw-features~="rpg-gameplay"] .rpg-gameplay-dashboard {
         grid-template-columns: 1fr;
     }
 

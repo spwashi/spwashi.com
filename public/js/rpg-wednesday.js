@@ -165,6 +165,82 @@ const formatStatusTime = (iso) => {
 };
 
 const buildClockText = (clock) => `${clock.progress}/${clock.segments}`;
+const DASH_VALUE = 'not set';
+
+const debounce = (fn, ms) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), ms);
+    };
+};
+const CLOCK_SEGMENT_OPTIONS = [2, 4, 6, 8, 10, 12];
+
+const cleanLine = (value) => value.trim().replace(/\s+/g, ' ');
+
+const previewText = (value, fallback = DASH_VALUE, maxLength = 64) => {
+    const normalized = cleanLine(value || '');
+    if (!normalized) return fallback;
+    return normalized.length > maxLength ? `${normalized.slice(0, maxLength - 1)}…` : normalized;
+};
+
+const getActiveActor = (state) => (
+    state.initiative.find((actor) => actor.id === state.activeInitiativeId) || null
+);
+
+const getClockRatio = (clock) => (
+    clock.segments > 0 ? clock.progress / clock.segments : 0
+);
+
+const getPressureClock = (state) => state.clocks.reduce((selected, clock) => {
+    if (!selected) return clock;
+
+    const selectedScore = selected.progress > 0 ? getClockRatio(selected) : -1;
+    const clockScore = clock.progress > 0 ? getClockRatio(clock) : -1;
+    return clockScore > selectedScore ? clock : selected;
+}, null);
+
+const formatClockSummary = (clock) => (
+    clock
+        ? `${previewText(clock.name, 'unnamed clock', 36)} ${buildClockText(clock)}`
+        : DASH_VALUE
+);
+
+const buildSessionBrief = (state) => {
+    const activeActor = getActiveActor(state);
+    const pressureClock = getPressureClock(state);
+    const lines = [
+        '# RPG Wednesday table brief',
+        `Updated: ${state.updatedAt || 'not saved yet'}`,
+        `Scene: ${previewText(state.scene)}`,
+        `Objective: ${previewText(state.objective)}`,
+        `Party: ${previewText(state.party)}`,
+        `Active turn: ${activeActor ? previewText(activeActor.name, 'unnamed actor') : DASH_VALUE}`,
+        `Pressure: ${formatClockSummary(pressureClock)}`
+    ];
+
+    if (state.initiative.length) {
+        lines.push('', 'Initiative:');
+        state.initiative.forEach((actor, index) => {
+            const marker = actor.id === state.activeInitiativeId ? '@' : '-';
+            lines.push(`${marker} ${index + 1}. ${previewText(actor.name, 'unnamed actor')} — ${previewText(actor.detail)}`);
+        });
+    }
+
+    if (state.clocks.length) {
+        lines.push('', 'Clocks:');
+        state.clocks.forEach((clock) => {
+            lines.push(`- ${formatClockSummary(clock)}`);
+        });
+    }
+
+    if (cleanLine(state.seeds)) {
+        lines.push('', 'Session seeds:', state.seeds.trim());
+    }
+
+    lines.push('', 'Private scratch notes are not included in this brief.');
+    return lines.join('\n');
+};
 
 const downloadText = (filename, text) => {
     const blob = new Blob([text], { type: 'application/json' });
@@ -177,6 +253,29 @@ const downloadText = (filename, text) => {
     anchor.click();
     anchor.remove();
     URL.revokeObjectURL(url);
+};
+
+const copyText = async (text) => {
+    if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+
+    const fallback = createElement('textarea', {
+        value: text,
+        readOnly: true,
+        'aria-hidden': 'true'
+    });
+    fallback.style.position = 'fixed';
+    fallback.style.left = '-9999px';
+    document.body.appendChild(fallback);
+    fallback.select();
+    const copied = document.execCommand('copy');
+    fallback.remove();
+
+    if (!copied) {
+        throw new Error('copy failed');
+    }
 };
 
 export const initRpgWednesday = () => {
@@ -267,6 +366,48 @@ export const initRpgWednesday = () => {
         'aria-live': 'polite',
         text: formatStatusTime(state.updatedAt)
     });
+    const dashboard = createElement('div', {
+        className: 'rpg-gameplay-dashboard',
+        role: 'list',
+        'aria-label': 'Current table summary'
+    });
+    const createDashboardStat = (label) => {
+        const value = createElement('strong', {
+            className: 'rpg-gameplay-stat-value',
+            text: DASH_VALUE
+        });
+        dashboard.appendChild(createElement('div', {
+            className: 'rpg-gameplay-stat',
+            role: 'listitem'
+        }, [
+            createElement('span', { className: 'rpg-gameplay-stat-label', text: label }),
+            value
+        ]));
+        return value;
+    };
+    const dashboardValues = {
+        scene: createDashboardStat('Scene'),
+        objective: createDashboardStat('Objective'),
+        turn: createDashboardStat('Turn'),
+        pressure: createDashboardStat('Pressure')
+    };
+    let briefOutput = null;
+
+    const refreshDerivedSurfaces = () => {
+        const activeActor = getActiveActor(state);
+        const pressureClock = getPressureClock(state);
+
+        dashboardValues.scene.textContent = previewText(state.scene);
+        dashboardValues.objective.textContent = previewText(state.objective);
+        dashboardValues.turn.textContent = activeActor
+            ? previewText(activeActor.name, 'unnamed actor')
+            : DASH_VALUE;
+        dashboardValues.pressure.textContent = formatClockSummary(pressureClock);
+
+        if (briefOutput) {
+            briefOutput.value = buildSessionBrief(state);
+        }
+    };
 
     const save = (description = 'saved local gameplay state') => {
         state.updatedAt = new Date().toISOString();
@@ -274,6 +415,7 @@ export const initRpgWednesday = () => {
         status.textContent = storage.available
             ? formatStatusTime(state.updatedAt)
             : 'local storage unavailable; changes are only in memory';
+        refreshDerivedSurfaces();
         emitSpwAction('@local_gameplay.save', description);
     };
 
@@ -311,7 +453,9 @@ export const initRpgWednesday = () => {
             const name = createElement('input', {
                 className: 'rpg-gameplay-line-input',
                 value: actor.name,
-                placeholder: 'Actor'
+                placeholder: 'Actor',
+                'data-rpg-actor-id': actor.id,
+                'data-rpg-field': 'actor-name'
             });
             const detail = createElement('input', {
                 className: 'rpg-gameplay-line-input',
@@ -370,8 +514,29 @@ export const initRpgWednesday = () => {
             const name = createElement('input', {
                 className: 'rpg-gameplay-line-input',
                 value: clock.name,
-                placeholder: 'Clock'
+                placeholder: 'Clock',
+                'data-rpg-clock-id': clock.id,
+                'data-rpg-field': 'clock-name'
             });
+            const segments = createElement('select', {
+                className: 'rpg-gameplay-line-input rpg-gameplay-segments',
+                title: 'Segments',
+                'aria-label': `Segment count for ${clock.name || 'clock'}`
+            });
+            CLOCK_SEGMENT_OPTIONS.forEach((option) => {
+                segments.appendChild(createElement('option', {
+                    value: String(option),
+                    text: String(option),
+                    selected: clock.segments === option
+                }));
+            });
+            if (!CLOCK_SEGMENT_OPTIONS.includes(clock.segments)) {
+                segments.appendChild(createElement('option', {
+                    value: String(clock.segments),
+                    text: String(clock.segments),
+                    selected: true
+                }));
+            }
             const meter = createElement('progress', {
                 max: clock.segments,
                 value: clock.progress,
@@ -407,6 +572,12 @@ export const initRpgWednesday = () => {
                 clock.name = name.value;
                 save('updated gameplay clock');
             });
+            segments.addEventListener('change', () => {
+                clock.segments = Number(segments.value);
+                clock.progress = Math.min(clock.progress, clock.segments);
+                syncClockDisplay();
+                save('updated gameplay clock segments');
+            });
             decrement.addEventListener('click', () => {
                 clock.progress = Math.max(0, clock.progress - 1);
                 syncClockDisplay();
@@ -423,7 +594,7 @@ export const initRpgWednesday = () => {
                 renderClocks();
             });
 
-            row.append(name, meter, text, decrement, increment, remove);
+            row.append(name, segments, meter, text, decrement, increment, remove);
             clocksList.appendChild(row);
         });
     };
@@ -434,7 +605,7 @@ export const initRpgWednesday = () => {
         state.activeInitiativeId ||= actor.id;
         save('added initiative actor');
         renderInitiative();
-        initiativeList.querySelector('input')?.focus();
+        initiativeList.querySelector(`[data-rpg-actor-id="${actor.id}"][data-rpg-field="actor-name"]`)?.focus();
     };
 
     const nextTurn = () => {
@@ -450,21 +621,23 @@ export const initRpgWednesday = () => {
     };
 
     const addClock = () => {
-        state.clocks.push({
+        const clock = {
             id: makeId(),
             name: '',
             segments: 4,
             progress: 0
-        });
+        };
+        state.clocks.push(clock);
         save('added gameplay clock');
         renderClocks();
-        clocksList.querySelector('input')?.focus();
+        clocksList.querySelector(`[data-rpg-clock-id="${clock.id}"][data-rpg-field="clock-name"]`)?.focus();
     };
 
+    const debouncedTextSave = debounce(() => save('updated local gameplay text'), 400);
     [sceneInput, objectiveInput, partyInput, notesInput, seedsInput].forEach((input) => {
         input.addEventListener('input', () => {
             syncTextState();
-            save('updated local gameplay text');
+            debouncedTextSave();
         });
     });
 
@@ -498,6 +671,43 @@ export const initRpgWednesday = () => {
             })
         ]),
         clocksList
+    ]);
+
+    briefOutput = createElement('textarea', {
+        className: 'rpg-gameplay-input rpg-gameplay-brief',
+        rows: 9,
+        readOnly: true,
+        'aria-label': 'Generated RPG Wednesday table brief'
+    });
+    const copyBriefButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '~ copy brief'
+    });
+    copyBriefButton.addEventListener('click', async () => {
+        syncTextState();
+        refreshDerivedSurfaces();
+        try {
+            await copyText(briefOutput.value);
+            status.textContent = 'session brief copied';
+            copyBriefButton.textContent = '~ copied ✓';
+            setTimeout(() => { copyBriefButton.textContent = '~ copy brief'; }, 1800);
+            emitSpwAction('~local_gameplay.copy_brief', 'copied generated session brief');
+        } catch {
+            status.textContent = 'copy failed; select the table brief manually';
+        }
+    });
+
+    const briefPanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--brief'
+    }, [
+        createElement('h3', { text: 'Table Brief' }),
+        createElement('p', {
+            className: 'frame-note',
+            text: 'A copyable play-state summary for session recaps or player handoffs. Private scratch notes stay out of this generated text.'
+        }),
+        briefOutput,
+        createElement('div', { className: 'rpg-gameplay-actions' }, [copyBriefButton])
     ]);
 
     const exportButton = createElement('button', {
@@ -562,6 +772,7 @@ export const initRpgWednesday = () => {
         status.textContent = 'local gameplay state cleared';
         renderInitiative();
         renderClocks();
+        refreshDerivedSurfaces();
         emitSpwAction('!local_gameplay.clear', 'cleared local gameplay state');
     });
 
@@ -574,6 +785,7 @@ export const initRpgWednesday = () => {
     section.append(
         heading,
         privacy,
+        dashboard,
         createElement('div', { className: 'rpg-gameplay-grid' }, [
             createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
                 createElement('h3', { text: 'Scene Register' }),
@@ -587,7 +799,8 @@ export const initRpgWednesday = () => {
                 createElement('h3', { text: 'Private Notes' }),
                 notesField,
                 seedsField
-            ])
+            ]),
+            briefPanel
         ]),
         controls,
         status
@@ -595,6 +808,7 @@ export const initRpgWednesday = () => {
 
     renderInitiative();
     renderClocks();
+    refreshDerivedSurfaces();
 
     return { storageKey: STORAGE_KEY };
 };
