@@ -193,6 +193,18 @@ ${questionText}
 }`;
 };
 
+const EMPTY_RESULT = Object.freeze({
+    title: 'Untitled draft',
+    summary: 'Paste text and run the interpreter to turn a note toward language.',
+    tags: ['draft'],
+    questions: ['What should this piece help a reader understand next?'],
+    outline: ['Paste a draft to reveal likely sections.'],
+    words: 0,
+    readingTime: '0 min',
+    tone: 'quiet',
+    lens: 'wonder_to_language'
+});
+
 const setList = (node, items, ordered = false) => {
     node.replaceChildren();
     items.forEach((item) => {
@@ -242,23 +254,36 @@ const renderResult = (root, result) => {
     $('[data-blog-seed]', root).textContent = buildSeed(result);
 };
 
+const setInterpreterState = (root, input, output, state, result = EMPTY_RESULT) => {
+    root.dataset.blogState = state;
+    root.dataset.blogLens = result.lens;
+    root.dataset.blogTone = result.tone;
+    input.setAttribute('aria-invalid', state === 'needs-input' ? 'true' : 'false');
+    output.setAttribute('aria-busy', state === 'interpreting' ? 'true' : 'false');
+};
+
 export const initBlogInterpreter = () => {
     const root = document.querySelector('[data-blog-interpreter]');
     if (!root) return null;
 
     const form = $('[data-blog-input-form]', root);
     const input = $('[data-blog-input]', root);
+    const output = $('[data-blog-output]', root);
     const status = $('[data-blog-status]', root);
 
     const run = () => {
         const text = input.value.trim();
         if (!text) {
+            setInterpreterState(root, input, output, 'needs-input');
             status.textContent = 'Paste a draft before interpreting.';
             input.focus();
             return;
         }
 
-        renderResult(root, interpret(text));
+        setInterpreterState(root, input, output, 'interpreting');
+        const result = interpret(text);
+        renderResult(root, result);
+        setInterpreterState(root, input, output, 'interpreted', result);
         status.textContent = 'Interpreted locally.';
     };
 
@@ -274,9 +299,14 @@ export const initBlogInterpreter = () => {
 
     $('[data-blog-clear]', root).addEventListener('click', () => {
         input.value = '';
+        renderResult(root, EMPTY_RESULT);
+        setInterpreterState(root, input, output, 'empty');
         status.textContent = 'Cleared.';
         input.focus();
     });
+
+    renderResult(root, EMPTY_RESULT);
+    setInterpreterState(root, input, output, 'empty');
 
     return { interpret: run };
 };

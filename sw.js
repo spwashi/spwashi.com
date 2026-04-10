@@ -3,7 +3,7 @@
  * Improves offline navigation, installability, and update activation.
  */
 
-const APP_VERSION = '0.2.0';
+const APP_VERSION = '0.2.1';
 const CORE_CACHE_NAME = `spw-core-${APP_VERSION}`;
 const PAGE_CACHE_NAME = `spw-pages-${APP_VERSION}`;
 const ASSET_CACHE_NAME = `spw-assets-${APP_VERSION}`;
@@ -52,6 +52,7 @@ const CORE_ASSETS = [
   '/public/css/enhancements.css',
   '/public/css/svg-surfaces.css',
   '/public/css/craft-surface.css',
+  '/public/css/blog-surface.css',
   '/public/data/media-focus.json',
   '/public/js/site.js',
   '/public/js/site-settings.js',
