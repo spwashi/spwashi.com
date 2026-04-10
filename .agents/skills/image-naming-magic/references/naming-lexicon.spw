@@ -1,0 +1,93 @@
+#>naming_lexicon
+#:layer #!design
+
+^"semantic_vocabulary"{
+  operator_to_visual: {
+    frame: "bounded, contained, still, architectural, frame-like, holding"
+    ref: "distant, pointing, thread-like, relational, connective"
+    action: "directed, active, calling, operative, functional"
+    stream: "flowing, temporal, patterned, rhythmic, sequential"
+    object: "concrete, rendered, present, material, substantial"
+  }
+
+  valence_qualities: {
+    boon: { color: "warm", energy: "growth", motion: "left-side generous", feel: "abundant" }
+    bane: { color: "cool", energy: "friction", motion: "right-side resistant", feel: "tense" }
+    bone: { color: "neutral", energy: "stable", motion: "centered", feel: "foundational" }
+    bonk: { color: "bright", energy: "collision", motion: "immediate", feel: "striking" }
+    honk: { color: "varied", energy: "signal", motion: "calling", feel: "resonant" }
+  }
+
+  spirit_phases: {
+    initiation: "entry, threshold, new, awakening, crossing-in"
+    resistance: "difficulty, pressure, tension, encounter, friction"
+    transformation: "pivot, revelation, rupture, crossing-over, becoming"
+    expression: "manifestation, projection, articulation, coming-forth"
+    return: "settling, aftermath, integration, arrival, home"
+  }
+
+  liminality_layers: {
+    entry: "exposed, new, initial legibility, invitation"
+    threshold: "hovering, about-to, poised, boundary-space"
+    settled: "inhabit-able, familiar, known, grounded"
+    nested: "embedded, layered, recursive, deep-within"
+    projected: "surfaced, revealed, extended outward, made visible"
+    deep: "core, fundamental, irreducible, essence"
+  }
+}
+
+^"naming_patterns"{
+  two_word: {
+    structure: "{quality}-{noun}"
+    examples: [
+      "boon-force",
+      "threshold-stillness",
+      "rhythm-pulse",
+      "bone-structure"
+    ]
+  }
+
+  three_word: {
+    structure: "{operator}-{valence}-{noun}" (optional)
+    examples: [
+      "frame-boon-threshold",
+      "ref-bane-pressure"
+    ]
+  }
+
+  descriptive: {
+    pattern: "{color/quality}-{feeling/form}"
+    examples: [
+      "teal-reflection",
+      "calm-gradient",
+      "threshold-portal"
+    ]
+  }
+}
+
+^"used_names"{
+  home_constellation: [
+    "boon-force",
+    "bane-pressure",
+    "bone-structure",
+    "bonk-collision",
+    "honk-signal",
+    "book-archive",
+    "spwashi-mark",
+    "rhythm-pulse",
+    "constellation-dot-N"
+  ]
+
+  renders: [
+    "threshold-stillness"
+  ]
+}
+
+^"naming_heuristics"{
+  length: "2–3 words, hyphenated (kebab-case)"
+  emotion: "Evoke feeling + structure, not literal description"
+  grounding: "Based in Spw semantics — operators, valence, phases, liminality"
+  memorability: "Poetic but not obscure; should be sayable and memorable"
+  surprise: "Whimsical but justified by image analysis"
+  inclusivity: "Should work across surfaces (home, rpg, pretext, illustrations, motifs)"
+}
