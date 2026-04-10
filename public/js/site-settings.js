@@ -1,4 +1,40 @@
 const SITE_SETTINGS_KEY = 'spw-site-settings';
+const FONT_SIZE_PRESET_MULTIPLIER = Object.freeze({
+    small: 0.93,
+    normal: 1,
+    large: 1.12
+});
+const LINE_SPACING_VALUE = Object.freeze({
+    compact: '1.55',
+    normal: '1.68',
+    loose: '1.82'
+});
+const MONOSPACE_FONT_VALUE = Object.freeze({
+    system: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
+    jetbrains: '"JetBrains Mono", monospace',
+    courier: '"Courier New", Courier, monospace'
+});
+const GRAIN_INTENSITY_VALUE = Object.freeze({
+    none: 0,
+    subtle: 0.02,
+    moderate: 0.04,
+    rich: 0.06
+});
+const SEMANTIC_GRAIN_OFFSET = Object.freeze({
+    minimal: -0.01,
+    normal: 0,
+    rich: 0.01
+});
+const MOTION_INTENSITY_MULTIPLIER = Object.freeze({
+    reduced: 0.82,
+    normal: 1,
+    enhanced: 1.18
+});
+const ANIMATION_THROTTLE_MULTIPLIER = Object.freeze({
+    off: 1,
+    light: 0.76,
+    heavy: 0.4
+});
 
 const DEFAULT_SITE_SETTINGS = Object.freeze({
     // Navigation & Interface
@@ -127,6 +163,52 @@ const normalizeSiteSettings = (value = {}) => {
 
 const getSiteSettings = () => normalizeSiteSettings(readStoredSettings());
 
+const clampNumber = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const getRootFontSize = (settings) => {
+    const scale = Number(settings.fontSizeScale) || 100;
+    const presetMultiplier = FONT_SIZE_PRESET_MULTIPLIER[settings.fontSize] || 1;
+    return `${Math.round(scale * presetMultiplier)}%`;
+};
+
+const getGrainOpacity = (settings) => {
+    const base = GRAIN_INTENSITY_VALUE[settings.grainIntensity] ?? GRAIN_INTENSITY_VALUE.subtle;
+    const semanticOffset = SEMANTIC_GRAIN_OFFSET[settings.semanticDensity] ?? 0;
+    return String(clampNumber(base + semanticOffset, 0, 0.08));
+};
+
+const getMotionScale = (settings) => {
+    if (settings.reduceMotion === 'on') return 0.01;
+    const intensity = MOTION_INTENSITY_MULTIPLIER[settings.animationIntensity] || 1;
+    const throttle = ANIMATION_THROTTLE_MULTIPLIER[settings.animationThrottling] || 1;
+    return intensity * throttle;
+};
+
+const getDuration = (settings, milliseconds) => (
+    `${Math.max(1, Math.round(milliseconds * getMotionScale(settings)))}ms`
+);
+
+const applyImageLoadingPreference = (settings) => {
+    document.querySelectorAll('img').forEach((image) => {
+        if (!image.dataset.spwLoadingOriginal) {
+            image.dataset.spwLoadingOriginal = image.getAttribute('loading') || '';
+        }
+
+        const original = image.dataset.spwLoadingOriginal;
+
+        if (settings.imageLazyLoading === 'off' && original === 'lazy') {
+            image.setAttribute('loading', 'eager');
+            return;
+        }
+
+        if (original) {
+            image.setAttribute('loading', original);
+        } else {
+            image.removeAttribute('loading');
+        }
+    });
+};
+
 const applySiteSettings = (settings = getSiteSettings()) => {
     const normalized = normalizeSiteSettings(settings);
     const root = document.documentElement;
@@ -156,6 +238,9 @@ const applySiteSettings = (settings = getSiteSettings()) => {
     root.dataset.spwLineSpacing = normalized.lineSpacing;
     root.dataset.spwMonospaceVariant = normalized.monospaceVariant;
     root.style.setProperty('--font-size-scale', `${normalized.fontSizeScale}%`);
+    root.style.setProperty('--site-root-font-size', getRootFontSize(normalized));
+    root.style.setProperty('--site-line-height', LINE_SPACING_VALUE[normalized.lineSpacing] || LINE_SPACING_VALUE.normal);
+    root.style.setProperty('--site-mono-font', MONOSPACE_FONT_VALUE[normalized.monospaceVariant] || MONOSPACE_FONT_VALUE.jetbrains);
 
     // Component Visibility
     root.dataset.spwShowFooter = normalized.showFooter;
@@ -165,12 +250,16 @@ const applySiteSettings = (settings = getSiteSettings()) => {
     // Performance
     root.dataset.spwAnimationThrottling = normalized.animationThrottling;
     root.dataset.spwImageLazyLoading = normalized.imageLazyLoading;
+    root.style.setProperty('--duration-instant', getDuration(normalized, 50));
+    root.style.setProperty('--duration-fast', getDuration(normalized, 120));
+    root.style.setProperty('--duration-base', getDuration(normalized, 200));
+    root.style.setProperty('--duration-slow', getDuration(normalized, 400));
 
     // Spirit Cycle & Dynamics
     root.dataset.spwSpiritPhase = normalized.currentSpiritPhase;
     root.dataset.spwPhaseAutoCycle = normalized.spiritPhaseAutoCycle;
     root.dataset.spwGrainIntensity = normalized.grainIntensity;
-    root.style.setProperty('--grain-opacity', `${0.01 + (normalized.grainIntensity === 'subtle' ? 0.02 : normalized.grainIntensity === 'moderate' ? 0.04 : normalized.grainIntensity === 'rich' ? 0.06 : 0)}`);
+    root.style.setProperty('--grain-opacity', getGrainOpacity(normalized));
 
     // Progressive Enhancement
     root.dataset.spwEnhancementLevel = normalized.enhancementLevel;
@@ -187,6 +276,8 @@ const applySiteSettings = (settings = getSiteSettings()) => {
     root.dataset.spwRelationalVisualization = normalized.relationalVisualization;
     root.dataset.spwPhaseIndicators = normalized.phaseIndicators;
     root.dataset.spwDepthIndicators = normalized.depthIndicators;
+
+    applyImageLoadingPreference(normalized);
 
     return normalized;
 };
@@ -251,23 +342,20 @@ const PRESETS = Object.freeze({
     calm: {
         navigatorDisplay: 'quiet', consoleDisplay: 'collapsed', colorMode: 'auto',
         operatorSaturation: 'normal', animationIntensity: 'normal', grainIntensity: 'none',
-        enhancementLevel: 'minimal', semanticDensity: 'minimal', cognitiveHandles: 'off',
-        dimensionalBreadcrumbs: 'off', operatorHighlighting: 'off', depthIndicators: 'off',
-        phaseIndicators: 'off', debugMode: 'off', showFrameMetadata: 'off',
-        spiritPhaseAutoCycle: 'off', reduceMotion: 'off', highContrast: 'off'
+        semanticDensity: 'minimal', operatorHighlighting: 'off',
+        phaseIndicators: 'off', spiritPhaseAutoCycle: 'off',
+        reduceMotion: 'off', highContrast: 'off'
     },
     rich: {
-        enhancementLevel: 'rich', semanticDensity: 'rich', grainIntensity: 'moderate',
+        semanticDensity: 'rich', grainIntensity: 'moderate',
         operatorSaturation: 'vibrant', animationIntensity: 'enhanced',
-        cognitiveHandles: 'on', dimensionalBreadcrumbs: 'on', operatorHighlighting: 'on',
-        depthIndicators: 'on', phaseIndicators: 'on', showSpecPills: 'on',
+        operatorHighlighting: 'on', phaseIndicators: 'on', showSpecPills: 'on',
         spiritPhaseAutoCycle: 'on', navigatorDisplay: 'full', consoleDisplay: 'collapsed'
     },
     developer: {
-        debugMode: 'on', showFrameMetadata: 'on', showSemanticMetadata: 'on',
-        verboseLogging: 'on', navigatorDisplay: 'full', consoleDisplay: 'expanded',
-        semanticDensity: 'rich', operatorHighlighting: 'on', showSpecPills: 'on',
-        enhancementLevel: 'rich', grainIntensity: 'none'
+        navigatorDisplay: 'full', consoleDisplay: 'expanded',
+        semanticDensity: 'rich', operatorHighlighting: 'on',
+        showSpecPills: 'on', phaseIndicators: 'on', grainIntensity: 'none'
     },
     accessible: {
         highContrast: 'on', reduceMotion: 'on', fontSize: 'large',

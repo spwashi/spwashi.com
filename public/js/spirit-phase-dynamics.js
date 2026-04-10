@@ -1,18 +1,26 @@
 /* Spirit Phase Dynamics
- * Manages the current spirit phase, auto-cycling, and phase-specific interactions
- * Connects to site-settings.js for persistent phase preference
+ * Manages the current spirit phase palette/runtime.
+ * The user-facing layer controls speak in dispositions rather than valence-coded phases.
+ * Connects to site-settings.js for persistent preference storage.
  */
 
 import { getSiteSettings, saveSiteSettings } from './site-settings.js';
 
 const PHASES = ['initiation', 'resistance', 'transformation', 'expression', 'return'];
 const PHASE_DURATION = 9000; // 9 seconds per phase when auto-cycling
-const PHASE_SIGILS = Object.freeze({
-    initiation: '?{initiation}',
-    resistance: '!{resistance}',
-    transformation: '*{transformation}',
-    expression: '@{expression}',
-    return: '~{return}'
+const PHASE_LABELS = Object.freeze({
+    initiation: 'orient',
+    resistance: 'attune',
+    transformation: 'compose',
+    expression: 'project',
+    return: 'settle'
+});
+const PHASE_DESCRIPTIONS = Object.freeze({
+    initiation: 'Open the frame and foreground entry points.',
+    resistance: 'Sharpen edges and tune contrast for closer reading.',
+    transformation: 'Gather structure while the frame is still in motion.',
+    expression: 'Push signal outward for public-facing clarity.',
+    return: 'Let the frame rest into a grounded, finished state.'
 });
 
 let phaseAutoCycleTimer = null;
@@ -30,7 +38,8 @@ const applySpiritPhase = (phase) => {
     }));
 };
 
-const phaseSigil = (phase) => PHASE_SIGILS[phase] || `~{${phase}}`;
+const phaseLabel = (phase) => PHASE_LABELS[phase] || phase;
+const phaseDescription = (phase) => PHASE_DESCRIPTIONS[phase] || '';
 
 /**
  * Get the next phase in the cycle
@@ -139,8 +148,8 @@ const setupSettingsListener = () => {
  * Add phase indicators and interactive affordances
  */
 const makeStructuresInteractive = () => {
-    // Add braced phase menus to frame headings. The control is explicit:
-    // it opens a layer choice instead of making the whole frame react to arrows.
+    // Add braced layer menus to frame headings. The control is explicit:
+    // it opens a disposition choice instead of making the whole frame react to arrows.
     const phaseMenuUpdaters = [];
 
     document.querySelectorAll('.frame-heading, .site-frame > div:first-child').forEach((heading) => {
@@ -154,19 +163,20 @@ const makeStructuresInteractive = () => {
         phaseControls.className = 'phase-controls phase-menu';
         phaseControls.setAttribute('data-phase-cycle', 'true');
         phaseControls.dataset.phaseMenuState = 'closed';
-        phaseControls.setAttribute('aria-label', 'Spirit phase layer menu');
+        phaseControls.setAttribute('aria-label', 'Frame layer disposition menu');
 
         const trigger = document.createElement('summary');
         trigger.className = 'phase-menu-trigger';
         trigger.setAttribute('data-op', 'ref');
-        trigger.setAttribute('aria-label', 'Open spirit phase layer menu');
+        trigger.setAttribute('aria-label', 'Open this frame layer disposition menu');
         trigger.setAttribute('aria-expanded', 'false');
-        trigger.textContent = phaseSigil(getSiteSettings().currentSpiritPhase);
+        trigger.textContent = phaseLabel(getSiteSettings().currentSpiritPhase);
+        trigger.title = phaseDescription(getSiteSettings().currentSpiritPhase);
 
         const menu = document.createElement('div');
         menu.className = 'phase-menu-options';
         menu.setAttribute('role', 'group');
-        menu.setAttribute('aria-label', 'Choose spirit phase');
+        menu.setAttribute('aria-label', 'Choose a layer disposition for this frame');
 
         PHASES.forEach((phase) => {
             const choice = document.createElement('button');
@@ -174,8 +184,9 @@ const makeStructuresInteractive = () => {
             choice.type = 'button';
             choice.dataset.phaseChoice = phase;
             choice.dataset.op = 'probe';
-            choice.textContent = phaseSigil(phase);
-            choice.setAttribute('aria-label', `Set spirit phase to ${phase}`);
+            choice.textContent = phaseLabel(phase);
+            choice.title = phaseDescription(phase);
+            choice.setAttribute('aria-label', `Set this frame's layer disposition to ${phaseLabel(phase)}`);
             choice.addEventListener('click', () => {
                 jumpToPhase(phase);
                 phaseControls.removeAttribute('open');
@@ -184,7 +195,8 @@ const makeStructuresInteractive = () => {
         });
 
         const updatePhaseMenu = (phase) => {
-            trigger.textContent = phaseSigil(phase);
+            trigger.textContent = phaseLabel(phase);
+            trigger.title = phaseDescription(phase);
             menu.querySelectorAll('[data-phase-choice]').forEach((choice) => {
                 choice.setAttribute('aria-pressed', String(choice.dataset.phaseChoice === phase));
             });

@@ -66,11 +66,11 @@
                 <div class="settings-presets" data-settings-presets>
                     <button class="settings-preset-btn" type="button" data-preset="calm">
                         <strong>Calm</strong>
-                        <span>Quiet defaults. Minimal decoration, no auto-cycling.</span>
+                        <span>Quiet defaults. Minimal decoration, fixed disposition.</span>
                     </button>
                     <button class="settings-preset-btn" type="button" data-preset="rich">
                         <strong>Rich</strong>
-                        <span>Full visual experience. Grain, highlights, phase indicators.</span>
+                        <span>Full visual experience. Grain, highlights, and active layer markers.</span>
                     </button>
                     <button class="settings-preset-btn" type="button" data-preset="developer">
                         <strong>Developer</strong>
@@ -385,55 +385,56 @@
                         </div>
                     </details>
 
-                    <!-- ═══ Spirit Cycle ═══ -->
+                    <!-- ═══ Layer Disposition ═══ -->
                     <details class="settings-category">
-                        <summary class="settings-category-header">Spirit Cycle</summary>
+                        <summary class="settings-category-header">Layer Disposition</summary>
+                        <p class="frame-note">Layer disposition changes how a card leans without changing its structure: <strong>orient</strong> opens an entry, <strong>attune</strong> sharpens relations, <strong>compose</strong> gathers structure, <strong>project</strong> pushes signal outward, and <strong>settle</strong> lets the layer rest.</p>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
-                                <legend>Current phase</legend>
+                                <legend>Current disposition</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="currentSpiritPhase" value="initiation">
-                                    <span class="settings-option-copy"><strong>Initiation</strong><span>Cool blues, entry energy.</span></span>
+                                    <span class="settings-option-copy"><strong>Orient</strong><span>Open the card, widen the aperture, and foreground entry points.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="currentSpiritPhase" value="resistance">
-                                    <span class="settings-option-copy"><strong>Resistance</strong><span>Deeper colors, challenge.</span></span>
+                                    <span class="settings-option-copy"><strong>Attune</strong><span>Sharpen edges and tune contrast so nearby relations read more clearly.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="currentSpiritPhase" value="transformation">
-                                    <span class="settings-option-copy"><strong>Transformation</strong><span>Warm golds, in flux.</span></span>
+                                    <span class="settings-option-copy"><strong>Compose</strong><span>Gather pieces into an active arrangement while the structure is still in motion.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="currentSpiritPhase" value="expression" checked>
-                                    <span class="settings-option-copy"><strong>Expression</strong><span>Vibrant teal, clarity.</span></span>
+                                    <span class="settings-option-copy"><strong>Project</strong><span>Push signal outward for public-facing clarity and stronger handles.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="currentSpiritPhase" value="return">
-                                    <span class="settings-option-copy"><strong>Return</strong><span>Earth tones, settled.</span></span>
+                                    <span class="settings-option-copy"><strong>Settle</strong><span>Lower the temperature and let the layer read as grounded and complete.</span></span>
                                 </label>
                             </fieldset>
 
                             <fieldset class="settings-fieldset">
-                                <legend>Auto-cycle</legend>
+                                <legend>Auto-rotate</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="spiritPhaseAutoCycle" value="off" checked>
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Keep the current disposition fixed.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="spiritPhaseAutoCycle" value="on">
-                                    <span class="settings-option-copy"><strong>On</strong><span>Cycle every 9 seconds.</span></span>
+                                    <span class="settings-option-copy"><strong>On</strong><span>Move through orient, attune, compose, project, and settle every 9 seconds.</span></span>
                                 </label>
                             </fieldset>
 
                             <fieldset class="settings-fieldset">
-                                <legend>Phase indicators</legend>
+                                <legend>Layer markers</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="phaseIndicators" value="off">
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Keep cards visually quiet.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="phaseIndicators" value="on" checked>
-                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                    <span class="settings-option-copy"><strong>On</strong><span>Show the active disposition in cards and controls.</span></span>
                                 </label>
                             </fieldset>
                         </div>
@@ -622,6 +623,10 @@
                     <div class="frame-panel">
                         <h3>Why quiet by default?</h3>
                         <p>The map and console are inspection tools that should not compete with the page content.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What do layer dispositions do?</h3>
+                        <p>They change how a card announces itself: orient opens, attune sharpens, compose gathers, project broadcasts, and settle lets the layer rest.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>What activates frames?</h3>

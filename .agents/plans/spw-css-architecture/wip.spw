@@ -102,17 +102,20 @@
 }
 
 ^["cache"]{
- ~#status: "planning"
+ ~#status: "verifying"
  ~#base_ref: "main@3296ac01bb2dccb94b42938ef2517038fd2c4482"
  ~#rebased_at: ""
- ~#hygiene_split: "current staged lore/blog/image work plus Gemini-owned style.css drift must be resolved before commit 1"
+ ~#hygiene_split: "resolved"
  ~#files_hot: "public/css/style.css public/css/svg-surfaces.css public/css/spw-whimsy.css public/css/blog-surface.css public/css/craft-surface.css"
- ~#next_commit: "1"
- ~#open_count: "2"
+ ~#next_commit: "4"
+ ~#open_count: "1"
  ~#last_stream: "taste"
- ~#taste_debt: "Need an explicit answer on what remains semantic when decoration is turned off."
- ~#verification: "layer-verification.webp - visual integrity holds with the 8-layer ontology."
+ ~#taste_debt: "Semantic bounds and liminalities properly translate UI cognitive load into predictable constraints."
+ ~#verification: "lay-verify.webp and liminality-verify.webp artifacts capture interaction mechanics."
 }
 
 ^["done"]{
+ ~[1]: "#[spw-css] — carve shared tokens and semantic grammar out of style.css"
+ ~[2]: "&[spw-css] — extract ornamental and selection/resonance layers behind explicit gates"
+ ~[3]: "&[spw-css] — rewire blog, craft, svg, and core surfaces onto the shared grammar substrate"
 }
