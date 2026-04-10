@@ -537,3 +537,58 @@
     border-right: 1px dotted var(--teal-soft);
     background: rgba(0, 128, 128, 0.02);
 }
+
+/* ─── Semantic Phase Decorators ────────────────────────────────────────── */
+
+[data-spw-stateful] .frame-sigil {
+    position: relative;
+    cursor: pointer;
+}
+
+[data-spw-stateful] .frame-sigil::before,
+[data-spw-stateful] .frame-sigil::after {
+    position: absolute;
+    font-family: inherit;
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: all 0.2s var(--brace-settle-ease);
+    color: var(--pink);
+    pointer-events: none;
+}
+
+/* Prefix semantics (Left side) */
+[data-spw-stateful] .frame-sigil::before {
+    content: '[' attr(data-spw-phase-prefix) ']';
+    right: 100%;
+    margin-right: 0.5rem;
+    transform: translateX(10px);
+}
+
+/* Postfix semantics (Right side) */
+[data-spw-stateful] .frame-sigil::after {
+    content: '[' attr(data-spw-phase-postfix) ']';
+    left: 100%;
+    margin-left: 0.5rem;
+    transform: translateX(-10px);
+}
+
+/* Active phase state visibility */
+[data-spw-stateful][data-spw-phase] .frame-sigil::before,
+[data-spw-stateful][data-spw-phase] .frame-sigil::after {
+    opacity: 0.4;
+    transform: translateX(0);
+}
+
+[data-spw-stateful]:hover .frame-sigil::before,
+[data-spw-stateful]:hover .frame-sigil::after {
+    opacity: 1;
+}
+
+/* Polarities (Brace Types) tint the phase colors */
+[data-spw-form="brace"] { --phase-ink: var(--teal); }
+[data-spw-form="square"] { --phase-ink: var(--pink); }
+[data-spw-form="circle"] { --phase-ink: var(--amber); }
+
+[data-spw-stateful] .frame-sigil {
+    color: var(--phase-ink, inherit);
+}
