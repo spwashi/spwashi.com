@@ -49,10 +49,12 @@
                 <p class="spec-kicker">Software Surface</p>
                 <h1>Software</h1>
                 <p>Spw is the throughline here: a plain-text format that stays readable while becoming more addressable, queryable, and projectable. This page is the public landing surface for the syntax, the interaction grammar, and the small probes that connect LSP-aware tooling to cognitive integration pipelines for literate curricula.</p>
+                <p class="frame-note">The design direction is mobile-first and inspectable: page regions should own attention, every operator should have interaction semantics, and future Spw blocks or scripts should enter as progressive components over semantic HTML.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
                     <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
                     <a class="operator-chip" href="#spw-syntax-surface">syntax reference</a>
                     <a class="operator-chip" href="#spw-grammar-surface">grammar surface</a>
+                    <a class="operator-chip" href="#spw-component-surface">component surface</a>
                     <a class="operator-chip" href="#interactive-codeblocks">interactive codeblocks</a>
                     <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
                     <a class="operator-chip" href="/about/website/">website field guide</a>
@@ -368,6 +370,36 @@ Files should remain legible.
                         <p><strong>link:</strong> <a href="/">Tooling</a></p>
                         <p><strong>view:</strong> rendered card from a structured source unit</p>
                     </section>
+                </div>
+            </section>
+
+            <section class="site-frame" id="spw-component-surface" data-spw-role="schema" data-spw-meaning="future component implementation surface">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#spw-component-surface">^"spw_component_surface"{</a>
+                    <h2>Spw-backed Components</h2>
+                </div>
+                <p class="inline-note">The implementation target is not a browser-side parser bolted onto every page. It is a progressive component ecosystem where authored Spw blocks, semantic HTML, shared registers, and small scripts can agree about structure.</p>
+                <div class="feature-ladder">
+                    <div class="frame-panel">
+                        <h3>Semantic host</h3>
+                        <p>HTML landmarks, headings, lists, controls, and figures remain the canonical accessibility structure. Components enrich that host instead of replacing it.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Register behavior</h3>
+                        <p>Navigator, console, future mirrors, and Spw widgets should read shared route, focus, projection, and region registers rather than invent private state.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Prefix / postfix symmetry</h3>
+                        <p>Keyboard primers can choose intent first; touch inspection can choose target first. Equivalent outcomes should write the same semantic trace.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Graceful no-op</h3>
+                        <p>If a token has no action yet, the interface should explain the absent target or show an inspectable contract, never make exploration feel broken.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Blocks and scripts</h3>
+                        <p>Future Spw blocks can become widgets, inspect panels, capture frames, spell boards, or LSP-backed navigation surfaces when their contracts are stable.</p>
+                    </div>
                 </div>
             </section>
 

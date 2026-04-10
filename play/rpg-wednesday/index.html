@@ -20,7 +20,7 @@
         });
     </script>
 </head>
-<body data-spw-surface="rpg-wednesday" data-spw-features="operators navigator console rpg-gameplay">
+<body data-spw-surface="rpg-wednesday" data-spw-features="operators navigator console rpg-gameplay rpg-capture">
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -50,6 +50,7 @@
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="orientation">
                         <p>A recurring Wednesday tabletop RPG session. This surface holds the <a href="/play/rpg-wednesday/sessions/">session log</a>, <a href="/play/rpg-wednesday/world/">world</a>, and <a href="/play/rpg-wednesday/cast/">cast</a> — each session is a dated event; the world and characters are the persistent frame beneath them. The local gameplay kit below stores private table state in this browser for use during play.</p>
+                        <p class="frame-note">The next design layer is a local media staging table: players upload their own character, item, place, and artifact images, frame them in screenshot-ready cards, then manually capture those cards for external image or animation tools.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="rpgw-lens" data-mode-panel="system" hidden>
                         <pre><code>#&gt;rpg_wednesday
@@ -76,6 +77,7 @@
                     <a class="operator-chip" href="/play/rpg-wednesday/cast/">~ cast</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/arcs/">?[ arcs</a>
                     <a class="operator-chip" href="#local-gameplay-kit">@ local kit</a>
+                    <a class="operator-chip" href="#asset-capture-roadmap">@ capture frames</a>
                 </nav>
             </section>
 
@@ -85,6 +87,54 @@
                     <h2>Local Gameplay Kit</h2>
                 </div>
                 <p class="inline-note">Enable JavaScript to use private localStorage tools for scene state, initiative, clocks, notes, and session-log seeds. Static campaign routes remain available either way.</p>
+            </section>
+
+            <section class="site-frame rpg-capture-roadmap" id="asset-capture-roadmap" data-spw-role="projection" data-spw-meaning="planned local asset capture frames">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#asset-capture-roadmap">@asset_capture_frames</a>
+                    <h2>Asset Capture Frames</h2>
+                </div>
+                <p class="inline-note">Planned next: a private, browser-local asset register for images players provide themselves. The site will stage the image and text; the player takes the screenshot and chooses what to do with it outside the site.</p>
+                <div class="capture-preset-grid" aria-label="Planned capture frame presets">
+                    <div class="capture-preset capture-preset--portrait">
+                        <span class="frame-card-sigil">4:5</span>
+                        <strong>Character portrait</strong>
+                        <span>Name, role, faction, palette, and mood in a clean vertical frame.</span>
+                    </div>
+                    <div class="capture-preset capture-preset--square">
+                        <span class="frame-card-sigil">1:1</span>
+                        <strong>Item card</strong>
+                        <span>One subject, strong silhouette, optional tags, and a concise prompt band.</span>
+                    </div>
+                    <div class="capture-preset capture-preset--wide">
+                        <span class="frame-card-sigil">16:9</span>
+                        <strong>Place card</strong>
+                        <span>Location, scene context, weather, threat level, and wide screenshot composition.</span>
+                    </div>
+                    <div class="capture-preset capture-preset--tall">
+                        <span class="frame-card-sigil">9:16</span>
+                        <strong>Threat reveal</strong>
+                        <span>A mobile-first vertical frame for foes, omens, clocks, and dramatic reveals.</span>
+                    </div>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Storage boundary</h3>
+                        <p>Images should live in IndexedDB; localStorage should keep only metadata such as ids, labels, tags, selected motif, and active capture preset.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Prompt companion</h3>
+                        <p>Prompt text should describe subject, role, mood, palette, scene context, style constraints, and negative notes without hard-coding any external service workflow.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Screenshot mode</h3>
+                        <p>Controls recede, contrast increases, the frame locks to an aspect ratio, and an exit path remains visible. No automatic capture is required.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Exploration motifs</h3>
+                        <p>Operator palettes, land-cluster tones, constellation marks, archive stamps, and brace treatments can become optional local presentation rewards.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="site-frame" id="rpgw-current">
