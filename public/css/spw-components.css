@@ -42,11 +42,30 @@
 }
 
 .frame-operators,
-.spec-strip,
 .mode-switch {
     display: flex;
     flex-wrap: wrap;
     gap: 0.55rem;
+}
+
+.spec-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.55rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem; /* give space for scrollbar if forced */
+    /* Hide scrollbar for clean UI while keeping swipe */
+    scrollbar-width: none;
+}
+.spec-strip::-webkit-scrollbar {
+    display: none;
+}
+.spec-strip > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
 }
 
 .mode-panels {
@@ -163,10 +182,19 @@ a.frame-card {
     display: inline-flex;
     align-items: center;
     padding: 0.4rem 0.72rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--token-border-strong);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
+    background: var(--token-bg);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: transform var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease);
+}
+.spec-pill:hover,
+.spec-pill:focus-visible {
+    background: var(--teal);
+    color: white;
+    transform: translateY(-1.5px);
 }
 
 .syntax-list {
