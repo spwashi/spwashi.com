@@ -149,7 +149,7 @@ const initSiteCore = () => {
     };
 
     const anchorSelector = '.frame-sigil[href^="#"], .operator-chip[href^="#"]';
-    const frameContextSelector = '.frame-card, .frame-panel, .mode-panel, .site-figure, .syntax-token, .frame-list a';
+    const frameContextSelector = '.frame-card, .operator-card, .frame-panel, .mode-panel, .site-figure, .syntax-token, .frame-list a';
 
     const getClosestMatch = (target, selector) => (
         target instanceof Element ? target.closest(selector) : null

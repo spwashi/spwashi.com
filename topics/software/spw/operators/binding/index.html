@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • = Binding Operator</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators metrics navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="binding-operator" data-spw-role="schema" data-spw-liminality="entry" data-spw-meaning="binding operator">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#binding-operator">=binding_operator</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">bind</span>
+                        <span class="spec-pill">pin</span>
+                        <span class="spec-pill">categorize</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Spw Operator</p>
+                <h1>= Binding</h1>
+                <p>The binding operator names a local value so it can be reused, compared, pinned, or categorized. It is the moment salience gets an address.</p>
+                <nav class="frame-operators" aria-label="Binding operator routes">
+                    <a class="operator-chip" href="/topics/software/spw/operators/merge/">previous: &amp;</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="/topics/software/spw/operators/meta/">next: $</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="binding-contract" data-spw-role="reference" data-spw-meaning="operator contract">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#binding-contract">^"binding_contract"{</a>
+                    <h2>Contract</h2>
+                </div>
+                <div class="operator-detail-grid">
+                    <div class="frame-panel">
+                        <h3>Interaction</h3>
+                        <p>Name, pin, or categorize a value. Binding should be reversible or inspectable so names do not become hidden state.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Metaphysics</h3>
+                        <p>Binding is categorization: attention stops sliding and agrees to call something by a stable name.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Brace Physics</h3>
+                        <p>A binding brace stores charge as a local anchor. Too many hidden anchors create pressure, so bindings must be visible to inspection.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Symmetry</h3>
+                        <p>Prefix <code>=x</code> primes a value for naming. Postfix <code>x=</code> marks the value as bound after it resolves.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="binding-example" data-spw-role="example" data-spw-meaning="operator example">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#binding-example">?["binding_example"]</a>
+                    <h2>Example</h2>
+                </div>
+                <pre><code>=active_frame
+=reading_width
+=operator_bias</code></pre>
+            </section>
+
+            <section class="site-frame" id="operator-ring" data-spw-role="route" data-spw-meaning="operator ring">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-ring">~"operator_ring"</a>
+                    <h2>Operator Ring</h2>
+                </div>
+                <nav class="operator-ring-nav" aria-label="Operator ring">
+                    <a href="/topics/software/spw/operators/frame/">#&gt;</a>
+                    <a href="/topics/software/spw/operators/layer/">#:</a>
+                    <a href="/topics/software/spw/operators/baseline/">.</a>
+                    <a href="/topics/software/spw/operators/object/">^</a>
+                    <a href="/topics/software/spw/operators/ref/">~</a>
+                    <a href="/topics/software/spw/operators/probe/">?</a>
+                    <a href="/topics/software/spw/operators/action/">@</a>
+                    <a href="/topics/software/spw/operators/stream/">*</a>
+                    <a href="/topics/software/spw/operators/merge/">&amp;</a>
+                    <a aria-current="page" href="/topics/software/spw/operators/binding/">=</a>
+                    <a href="/topics/software/spw/operators/meta/">$</a>
+                    <a href="/topics/software/spw/operators/normalize/">%</a>
+                    <a href="/topics/software/spw/operators/pragma/">!</a>
+                    <a href="/topics/software/spw/operators/surface/">&gt;</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

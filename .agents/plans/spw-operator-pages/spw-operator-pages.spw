@@ -1,0 +1,54 @@
+# spw-operator-pages
+# Distilled surface note for publishing Spw operators as public, inspectable,
+# mobile-first pages rather than a private runtime table.
+
+#>spw_operator_pages
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "Each operator should be a public page because each operator is a way of changing attention, not merely a token in a syntax table."
+ why: "A user can compare pages, move through the operator ring, and learn the grammar as a machine for navigation, reflection, and projected structure."
+}
+
+^["page_contract"]{
+ required_sections: [
+  "interaction - what happens when the operator is invoked, inspected, or unavailable",
+  "metaphysics - what state of attention or projection the operator models",
+  "brace physics - how the operator stores, discharges, or biases charge",
+  "symmetry - how prefix and postfix readings differ without becoming arbitrary"
+ ]
+ rule: "Every operator page must support touch, keyboard, and pointer reading paths with ordinary HTML links before any scripted enhancement."
+}
+
+^["alchemistry"]{
+ definition: "Spw alchemistry is the disciplined transformation of attentional material: potential becomes reference, reference becomes action, action becomes stream, stream becomes object, and object becomes surface only when the transformation remains inspectable."
+ operators: {
+  probe: "raw curiosity into a bounded question"
+  ref: "trace into addressable relation"
+  action: "intention into committed change"
+  stream: "change into ongoing flow"
+  object: "flow into durable structure"
+  surface: "structure into rendered encounter"
+ }
+ falsify: "If an alchemical description does not change interaction, inspection, or projection behavior, it is metaphor drift."
+}
+
+^["prefix_postfix_symmetry"]{
+ prefix: "Operator before material primes how attention should read the next unit."
+ postfix: "Operator after material marks the residue, completion, or bias left by the unit."
+ rule: "Prefix and postfix should be mirrored but not collapsed; `!x` and `x!` may normalize to a common family while still carrying different timing and charge."
+}
+
+^["brace_physics"]{
+ charge: "A brace stores the tendency for a future projection."
+ bias: "Bias prefers one projection path while keeping alternatives visible."
+ pivot: "A pivot moves from the current page or component into a deeper structure without making the previous surface feel dead."
+ safety: "If a click has no local action, the page should still explain what the operator would inspect or invoke in a richer runtime."
+}
+
+^["implementation_rule"]{
+ static_first: "Publish stable HTML pages first."
+ runtime_later: "Only promote an operator page to a live widget after its static interaction contract is clear."
+ pwa_rule: "The atlas and operator pages should be cacheable as reference surfaces for installed use."
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Spw Operator Atlas</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators metrics navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="spw-operator-atlas" data-spw-role="schema" data-spw-liminality="entry" data-spw-meaning="operator atlas">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#spw-operator-atlas">#&gt;spw_operator_atlas</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">plain text</span>
+                        <span class="spec-pill">operators</span>
+                        <span class="spec-pill">brace physics</span>
+                        <span class="spec-pill">alchemistry</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Spw Reference Surface</p>
+                <h1>Spw Operator Atlas</h1>
+                <p>Each operator is a small interaction contract. It tells a reader, runtime, LSP client, or future Spw-backed component how attention should enter a structure, what can be inspected, and how a brace may pivot into deeper form.</p>
+                <nav class="frame-operators" aria-label="Operator atlas routes">
+                    <a class="operator-chip" href="/topics/software/">software surface</a>
+                    <a class="operator-chip" href="#operator-ring">operator ring</a>
+                    <a class="operator-chip" href="#spw-alchemistry">Spw alchemistry</a>
+                    <a class="operator-chip" href="/topics/software/pretext/">pretext lab</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="operator-ring" data-spw-role="schema" data-spw-meaning="operator ring">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-ring">?[operator_ring]</a>
+                    <h2>Operator Ring</h2>
+                </div>
+                <p class="inline-note">The ring is intentionally redundant: every card exposes token, intent, interaction, and a route. On mobile, this is the primary comparison surface.</p>
+                <div class="operator-atlas-grid" aria-label="Spw operators">
+                    <a class="operator-card" href="/topics/software/spw/operators/frame/">
+                        <span class="operator-card-token frame-card-sigil">#&gt;</span>
+                        <strong>Frame</strong>
+                        <span>Orient attention around a named unit.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/layer/">
+                        <span class="operator-card-token frame-card-sigil">#:</span>
+                        <strong>Layer</strong>
+                        <span>Qualify the interpretive register.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/baseline/">
+                        <span class="operator-card-token frame-card-sigil">.baseline</span>
+                        <strong>Baseline</strong>
+                        <span>Settle into the local default.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/object/">
+                        <span class="operator-card-token frame-card-sigil">^object</span>
+                        <strong>Object</strong>
+                        <span>Elevate material into inspectable structure.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/ref/">
+                        <span class="operator-card-token frame-card-sigil">~ref</span>
+                        <strong>Reference</strong>
+                        <span>Hold relation without forcing commitment.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/probe/">
+                        <span class="operator-card-token frame-card-sigil">?probe</span>
+                        <strong>Probe</strong>
+                        <span>Ask, filter, or reveal an inquiry surface.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/action/">
+                        <span class="operator-card-token frame-card-sigil">@action</span>
+                        <strong>Action</strong>
+                        <span>Commit intention into local change.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/stream/">
+                        <span class="operator-card-token frame-card-sigil">*stream</span>
+                        <strong>Stream</strong>
+                        <span>Connect structure to event-like flow.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/merge/">
+                        <span class="operator-card-token frame-card-sigil">&amp;merge</span>
+                        <strong>Merge</strong>
+                        <span>Overlay fields into an integrated reading.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/binding/">
+                        <span class="operator-card-token frame-card-sigil">=binding</span>
+                        <strong>Binding</strong>
+                        <span>Name, pin, or categorize local value.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/meta/">
+                        <span class="operator-card-token frame-card-sigil">$meta</span>
+                        <strong>Meta</strong>
+                        <span>Reflect on the medium and trace.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/normalize/">
+                        <span class="operator-card-token frame-card-sigil">%normalize</span>
+                        <strong>Normalize</strong>
+                        <span>Scale salience into comparable form.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/pragma/">
+                        <span class="operator-card-token frame-card-sigil">!pragma</span>
+                        <strong>Pragma</strong>
+                        <span>Apply a force, constraint, or runtime hint.</span>
+                    </a>
+                    <a class="operator-card" href="/topics/software/spw/operators/surface/">
+                        <span class="operator-card-token frame-card-sigil">&gt;surface</span>
+                        <strong>Surface</strong>
+                        <span>Project structure into rendered encounter.</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="spw-alchemistry" data-spw-role="reference" data-spw-meaning="operator alchemistry">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#spw-alchemistry">^"spw_alchemistry"{</a>
+                    <h2>Spw Alchemistry</h2>
+                </div>
+                <div class="operator-detail-grid">
+                    <div class="frame-panel">
+                        <h3>Transformation Model</h3>
+                        <p>Alchemistry is the disciplined transformation of attentional material. Curiosity becomes a probe, relation becomes a reference, intention becomes action, action becomes stream, stream becomes object, and object becomes surface only when the change remains inspectable.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Brace Physics</h3>
+                        <p>A brace stores charge when attention dwells near a boundary. That charge may bias the next projection, but it must never hide alternatives or leave the page feeling inert after an unavailable click.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Prefix / Postfix</h3>
+                        <p>A prefix operator primes how the next structure should be read. A postfix operator marks residue: what the structure leaves behind after contact. They mirror each other without collapsing into the same timing.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Future UI Surface</h3>
+                        <p>These pages are static first. Later, Spw blocks and scripts can target the same operator contracts to become widgets, inspect panels, spell boards, or LSP-backed navigation surfaces.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="authoring-seed" data-spw-role="example" data-spw-meaning="operator backed page seed">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#authoring-seed">$"authoring_seed"</a>
+                    <h2>Authoring Seed</h2>
+                </div>
+                <pre><code>#&gt;spw_operator_page
+#:surface #!reference
+
+^"operator"{
+ token: "*"
+ intent: "flow"
+ interaction: "connect to dynamic or event-like content"
+ metaphysics: "attention becomes a current"
+ brace_physics: "stored charge biases the next projection toward motion"
+}
+
+?["What should tapping this operator reveal?"]{
+ fallback: "show the inspectable contract before any runtime action"
+}</code></pre>
+                <p class="inline-note">The public atlas starts as HTML, but the repeated structure is already shaped like an authored Spw block.</p>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

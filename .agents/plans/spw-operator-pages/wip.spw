@@ -1,0 +1,74 @@
+# wip - spw-operator-pages
+# Branch: feature/spw-operator-pages
+# Started: 2026-04-09
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/spw-operator-pages/PLAN.md"
+ @artifact: ~".agents/plans/spw-operator-pages/spw-operator-pages.spw"
+ @software: ~"topics/software/index.html"
+ @atlas: ~"topics/software/spw/index.html"
+ @operators: ~"topics/software/spw/operators/"
+ @home: ~"index.html"
+ @site: ~".spw/site.spw"
+ @surfaces: ~".spw/surfaces.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @shared: ~"public/js/spw-shared.js"
+ @css: ~"public/css/style.css"
+ @manifest: ~"manifest.webmanifest"
+ @worker: ~"sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Publish one public route per Spw operator so the grammar becomes discoverable as interaction semantics, metaphysics, and future UI component doctrine."
+ ~#taste: "compact ritual clarity, mobile-first comparison, and wonder through inspectable structure"
+}
+
+^["development"]{
+ lane: #public_surface
+ ladder: #reference_to_runtime
+ develops: [#operator_semantics, #alchemistry, #brace_physics, #discoverability]
+ review_surfaces: [@plan, @artifact, @semantics, @atlas]
+}
+
+^["concept_index"]{
+ primary: [#operator_page, #operator_atlas, #prefix_postfix_symmetry, #brace_charge, #projection_bias]
+ operators: [#frame, #layer, #baseline, #object, #ref, #probe, #action, #stream, #merge, #binding, #meta, #normalize, #pragma, #surface]
+ tensions: [#glossary_vs_machine, #wonder_vs_vagueness, #clickability_vs_noop_safety]
+}
+
+^["stream"]{
+ >>[2026-04-09 22:45] observe - `public/js/spw-shared.js` currently defines fourteen public operator families: #>, #:, ., ^, ~, ?, @, *, &, =, $, %, !, and >.
+ >>[2026-04-09 22:45] decide - Add a software sub-route rather than bloating the software landing page. `/topics/software/spw/` can become the durable atlas for future Spw-backed pages.
+ >>[2026-04-09 22:45] taste - The repeated page pattern should feel like a learnable spell card: token, intent, interaction, metaphysics, brace physics, and symmetry. Keep each page compact.
+ >>[2026-04-09 22:45] semantics - Treat alchemistry as the disciplined transformation model: operators change the state of attention and projection only when the result remains inspectable.
+ >>[2026-04-09 23:05] implement - Added `/topics/software/spw/` plus fourteen operator routes, each with the same interaction/metaphysics/brace/symmetry contract.
+ >>[2026-04-09 23:05] maintain - Registered the atlas in site surfaces, linked it from home/software, and added PWA shortcut/cache entries so it behaves as a first-class reference surface.
+}
+
+^["open"]{
+ ?[runtime]: "Which operator pages should later gain live widgets instead of staying reference pages?"
+ ?[syntax]: "How much postfix syntax should be publicly claimed before parser/runtime support is visible?"
+ ?[alchemistry]: "Which operator transformations deserve a formal register model rather than descriptive copy?"
+}
+
+^["commits"]{
+ ~[1]: "#[spw] - add public operator atlas and route plan"
+ ~[2]: "&[spw] - publish operator pages and discoverability hooks"
+ ~[3]: ".[semantics] - formalize operator page metaphysics and alchemistry"
+}
+
+^["cache"]{
+ ~#status: "review"
+ ~#base_ref: "main@464341b049563857c0393d63d4531ddc04775053"
+ ~#hygiene_split: "none"
+ ~#files_hot: "topics/software/spw/index.html, topics/software/spw/operators/*/index.html, topics/software/index.html, index.html, .spw/site.spw, .spw/surfaces.spw, .spw/conventions/site-semantics.spw, public/css/style.css, public/js/site.js, public/js/frame-navigator.js, manifest.webmanifest, sw.js"
+ ~#next_commit: "review"
+ ~#open_count: "3"
+ ~#last_stream: "2026-04-09 23:05"
+ ~#taste_debt: "Avoid turning operator metaphysics into claims that cannot be inspected, clicked through, or falsified in the interface."
+}
+
+^["done"]{
+}

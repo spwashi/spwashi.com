@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • ~ Reference Operator</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators metrics navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="ref-operator" data-spw-role="schema" data-spw-liminality="entry" data-spw-meaning="reference operator">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#ref-operator">~ref_operator</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">refer</span>
+                        <span class="spec-pill">trace</span>
+                        <span class="spec-pill">defer</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Spw Operator</p>
+                <h1>~ Reference</h1>
+                <p>The reference operator carries relation without forcing immediate commitment. It keeps a path, memory trace, or anchor warm enough to resolve later.</p>
+                <nav class="frame-operators" aria-label="Reference operator routes">
+                    <a class="operator-chip" href="/topics/software/spw/operators/object/">previous: ^</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="/topics/software/spw/operators/probe/">next: ?</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="ref-contract" data-spw-role="reference" data-spw-meaning="operator contract">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ref-contract">^"ref_contract"{</a>
+                    <h2>Contract</h2>
+                </div>
+                <div class="operator-detail-grid">
+                    <div class="frame-panel">
+                        <h3>Interaction</h3>
+                        <p>Resolve or inspect a reference. If the target is absent, the reference should still reveal its literal path or intended relation.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Metaphysics</h3>
+                        <p>Reference is potential difference: the felt pull between here and elsewhere.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Brace Physics</h3>
+                        <p>A reference brace stores deferred charge. It biases projection toward a target without pretending the target is already present.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Symmetry</h3>
+                        <p>Prefix <code>~x</code> reads the next unit as relation. Postfix <code>x~</code> marks the residue of unresolved relation after contact.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="ref-example" data-spw-role="example" data-spw-meaning="operator example">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ref-example">?["ref_example"]</a>
+                    <h2>Example</h2>
+                </div>
+                <pre><code>^"link"{
+ target: ~"/topics/software/spw/"
+ reason: "operator atlas"
+}</code></pre>
+            </section>
+
+            <section class="site-frame" id="operator-ring" data-spw-role="route" data-spw-meaning="operator ring">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-ring">~"operator_ring"</a>
+                    <h2>Operator Ring</h2>
+                </div>
+                <nav class="operator-ring-nav" aria-label="Operator ring">
+                    <a href="/topics/software/spw/operators/frame/">#&gt;</a>
+                    <a href="/topics/software/spw/operators/layer/">#:</a>
+                    <a href="/topics/software/spw/operators/baseline/">.</a>
+                    <a href="/topics/software/spw/operators/object/">^</a>
+                    <a aria-current="page" href="/topics/software/spw/operators/ref/">~</a>
+                    <a href="/topics/software/spw/operators/probe/">?</a>
+                    <a href="/topics/software/spw/operators/action/">@</a>
+                    <a href="/topics/software/spw/operators/stream/">*</a>
+                    <a href="/topics/software/spw/operators/merge/">&amp;</a>
+                    <a href="/topics/software/spw/operators/binding/">=</a>
+                    <a href="/topics/software/spw/operators/meta/">$</a>
+                    <a href="/topics/software/spw/operators/normalize/">%</a>
+                    <a href="/topics/software/spw/operators/pragma/">!</a>
+                    <a href="/topics/software/spw/operators/surface/">&gt;</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

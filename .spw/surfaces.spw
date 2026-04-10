@@ -40,6 +40,11 @@
     ~#role: "grammar surface"
     ~#bridge: "public syntax, interaction grammar, and workbench-facing translation layer"
   }
+  spw_operator_atlas: {
+    ~#path: "../topics/software/spw/index.html"
+    ~#role: "operator atlas"
+    ~#bridge: "one public route per operator, translating Spw grammar into interaction semantics, brace physics, and inspectable metaphysics"
+  }
   pretext: {
     ~#path: "../topics/software/pretext/index.html"
     ~#role: "probe surface"
@@ -54,6 +59,7 @@
 
 ^"canon_alignment"{
   software: [@literate_ui, @symmetry_ui, @ocean_ux]
+  spw_operator_atlas: [@literate_ui, @symmetry_ui, @site_semantics]
   pretext: [@literate_ui, @ocean_ux]
   domains: [@canon_domains]
   site_contract: [@site, @domains, @conventions, @site_semantics]

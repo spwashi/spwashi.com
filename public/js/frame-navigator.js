@@ -20,6 +20,8 @@ let initialized = false;
 const NAV_ROUTE_SELECTOR = [
     'main .frame-operators a[href]',
     'main .frame-card[href]',
+    'main .operator-card[href]',
+    'main .operator-ring-nav a[href]',
     'main .syntax-token[href]',
     'main .frame-list a[href]',
     'main p a[href]'

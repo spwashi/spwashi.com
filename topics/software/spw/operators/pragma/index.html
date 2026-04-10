@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • ! Pragma Operator</title>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => {
+            initPwaUpdateHandler();
+        });
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators metrics navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="pragma-operator" data-spw-role="schema" data-spw-liminality="entry" data-spw-meaning="pragma operator">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#pragma-operator">!pragma_operator</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">constrain</span>
+                        <span class="spec-pill">force</span>
+                        <span class="spec-pill">runtime</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Spw Operator</p>
+                <h1>! Pragma</h1>
+                <p>The pragma operator applies force, constraint, or runtime hint. It names what the surface should obey before interpretation continues.</p>
+                <nav class="frame-operators" aria-label="Pragma operator routes">
+                    <a class="operator-chip" href="/topics/software/spw/operators/normalize/">previous: %</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="/topics/software/spw/operators/surface/">next: &gt;</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="pragma-contract" data-spw-role="reference" data-spw-meaning="operator contract">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pragma-contract">^"pragma_contract"{</a>
+                    <h2>Contract</h2>
+                </div>
+                <div class="operator-detail-grid">
+                    <div class="frame-panel">
+                        <h3>Interaction</h3>
+                        <p>Apply or inspect a runtime force or constraint. A pragma should never silently mutate unrelated surfaces.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Metaphysics</h3>
+                        <p>Pragma is force injection: constraint entering the system as a named condition.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Brace Physics</h3>
+                        <p>A pragma brace carries high charge. It needs visible boundaries, decay rules, and an inspectable reason for its force.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Symmetry</h3>
+                        <p>Prefix <code>!x</code> applies force before contact. Postfix <code>x!</code> marks a discharged force or constraint after contact.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="pragma-example" data-spw-role="example" data-spw-meaning="operator example">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#pragma-example">?["pragma_example"]</a>
+                    <h2>Example</h2>
+                </div>
+                <pre><code>#!pragmatics
+#!runtime
+#!reduced_motion</code></pre>
+            </section>
+
+            <section class="site-frame" id="operator-ring" data-spw-role="route" data-spw-meaning="operator ring">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-ring">~"operator_ring"</a>
+                    <h2>Operator Ring</h2>
+                </div>
+                <nav class="operator-ring-nav" aria-label="Operator ring">
+                    <a href="/topics/software/spw/operators/frame/">#&gt;</a>
+                    <a href="/topics/software/spw/operators/layer/">#:</a>
+                    <a href="/topics/software/spw/operators/baseline/">.</a>
+                    <a href="/topics/software/spw/operators/object/">^</a>
+                    <a href="/topics/software/spw/operators/ref/">~</a>
+                    <a href="/topics/software/spw/operators/probe/">?</a>
+                    <a href="/topics/software/spw/operators/action/">@</a>
+                    <a href="/topics/software/spw/operators/stream/">*</a>
+                    <a href="/topics/software/spw/operators/merge/">&amp;</a>
+                    <a href="/topics/software/spw/operators/binding/">=</a>
+                    <a href="/topics/software/spw/operators/meta/">$</a>
+                    <a href="/topics/software/spw/operators/normalize/">%</a>
+                    <a aria-current="page" href="/topics/software/spw/operators/pragma/">!</a>
+                    <a href="/topics/software/spw/operators/surface/">&gt;</a>
+                </nav>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2024 spwashi</p>
+    </footer>
+</body>
+</html>

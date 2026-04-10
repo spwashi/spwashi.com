@@ -9,10 +9,11 @@
 #:layer #!pragmatics
 
 ^"surfaces"{
-  ~#note: "Four main surfaces. Each follows the same frame architecture."
+  ~#note: "Main surfaces and nested reference surfaces. Each follows the same frame architecture."
   index:    { ~#path: "../index.html",                      ~#role: "hub, orientation, entry" }
   about:    { ~#path: "../about/index.html",                ~#role: "identity, register, land cluster" }
   software: { ~#path: "../topics/software/index.html",      ~#role: "grammar, operators, interactive codeblocks" }
+  spw:      { ~#path: "../topics/software/spw/index.html",  ~#role: "operator atlas, alchemistry, interaction semantics" }
   play:     { ~#path: "../play/index.html",                  ~#role: "games, sessions, creative work" }
 }
 
@@ -38,6 +39,7 @@
     "Every section is a .site-frame with a sigil (#>name) and metadata.",
     "Mode switching via data-mode-group — .source / ^syntax / >surface / @obsidian.",
     "Operator color tokens (--op-*-color) drive semantic visual hierarchy.",
+    "Operator pages expose interaction, metaphysics, brace physics, and prefix/postfix symmetry before runtime behavior.",
     "The 'g' key toggles the surface map; [ ] traverses frames.",
     "data-spw-role, data-spw-liminality, data-spw-meaning carry semantic metadata on frames.",
   ]

@@ -3,7 +3,7 @@
  * Improves offline navigation, installability, and update activation.
  */
 
-const APP_VERSION = '0.1.0';
+const APP_VERSION = '0.1.1';
 const CORE_CACHE_NAME = `spw-core-${APP_VERSION}`;
 const PAGE_CACHE_NAME = `spw-pages-${APP_VERSION}`;
 const ASSET_CACHE_NAME = `spw-assets-${APP_VERSION}`;
@@ -15,6 +15,21 @@ const CORE_ROUTES = [
   '/contact',
   '/play/',
   '/topics/software/',
+  '/topics/software/spw/',
+  '/topics/software/spw/operators/frame/',
+  '/topics/software/spw/operators/layer/',
+  '/topics/software/spw/operators/baseline/',
+  '/topics/software/spw/operators/object/',
+  '/topics/software/spw/operators/ref/',
+  '/topics/software/spw/operators/probe/',
+  '/topics/software/spw/operators/action/',
+  '/topics/software/spw/operators/stream/',
+  '/topics/software/spw/operators/merge/',
+  '/topics/software/spw/operators/binding/',
+  '/topics/software/spw/operators/meta/',
+  '/topics/software/spw/operators/normalize/',
+  '/topics/software/spw/operators/pragma/',
+  '/topics/software/spw/operators/surface/',
   OFFLINE_URL
 ];
 

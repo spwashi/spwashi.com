@@ -90,6 +90,34 @@
   counterexample: "A sigil receives an operator color but clicking, focusing, or inspecting it gives no semantic account of what the operator could do."
 }
 
+^"public_operator_pages"{
+  route_root: "../topics/software/spw/"
+  rule: "Each operator gets a stable public page before it gets richer runtime behavior."
+  required_sections: [
+    "interaction - what invoke, inspect, unavailable, or pass-through should mean",
+    "metaphysics - what state of attention, memory, force, or projection the operator models",
+    "brace physics - how charge, bias, discharge, or pivot behavior should be inspectable",
+    "prefix/postfix symmetry - how priming and residue mirror without becoming interchangeable"
+  ]
+  discoverability: "The software surface, home artifact register, route navigator, and PWA shortcut should expose the atlas."
+  counterexample: "A runtime widget uses an operator before the public page explains what that operator is allowed to do."
+}
+
+^"spw_alchemistry"{
+  definition: "Alchemistry is the operator-level transformation of attentional material into relation, action, stream, object, and surface while keeping the transformation inspectable."
+  rule: "Wonder belongs where a transformation becomes clearer through interaction, not where metaphor hides behavior."
+  transformations: [
+    "curiosity -> probe",
+    "trace -> reference",
+    "intention -> action",
+    "change -> stream",
+    "flow -> object",
+    "structure -> surface",
+    "reflection -> meta"
+  ]
+  falsify: "If the alchemical description can be removed without changing inspectability, projection choice, or no-op safety, it is decorative language rather than model."
+}
+
 ^"metaphysics_model"{
   rule: "Metaphysics is a modeling layer for attention and projection, not permission for vague effects."
   charge: "Stored tendency in a brace or component that can bias a later projection, inspection, or pivot."

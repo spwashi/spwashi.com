@@ -9,7 +9,7 @@
   "display_override": ["standalone", "browser"],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "orientation": "any",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
@@ -38,6 +38,11 @@
       "name": "Software",
       "short_name": "Software",
       "url": "/topics/software/"
+    },
+    {
+      "name": "Spw Operators",
+      "short_name": "Operators",
+      "url": "/topics/software/spw/"
     },
     {
       "name": "Play",

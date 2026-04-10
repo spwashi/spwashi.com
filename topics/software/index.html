@@ -50,6 +50,7 @@
                 <h1>Software</h1>
                 <p>Spw is the throughline here: a plain-text format that stays readable while becoming more addressable, queryable, and projectable. This page is the public landing surface for the syntax, the interaction grammar, and the small probes that connect LSP-aware tooling to cognitive integration pipelines for literate curricula.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
+                    <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
                     <a class="operator-chip" href="#spw-syntax-surface">syntax reference</a>
                     <a class="operator-chip" href="#spw-grammar-surface">grammar surface</a>
                     <a class="operator-chip" href="#interactive-codeblocks">interactive codeblocks</a>
@@ -93,6 +94,7 @@
                 </div>
                 <nav class="frame-operators" aria-label="Software routes">
                     <a class="operator-chip" aria-current="page" href="/topics/software/">software surface</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
                     <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
                 </nav>
             </section>
@@ -205,39 +207,59 @@ Files should remain legible.
                         <table class="spw-operator-table" aria-label="Spw operator reference">
                             <tbody>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="frame">#&gt;name</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/frame/" data-spw-operator="frame">#&gt;name</a></td>
                                     <td><strong>frame declaration</strong> — names a unit, makes it linkable, queryable, and addressable by tooling</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="layer">#:layer</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/layer/" data-spw-operator="layer">#:layer</a></td>
                                     <td><strong>layer marker</strong> — marks the interpretive role of a frame (<code>!pragmatics</code>, <code>!meaning_time</code>, <code>!ux</code>)</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="object">^"name"{ }</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/baseline/" data-spw-operator="baseline">.member</a></td>
+                                    <td><strong>baseline</strong> — returns attention to a local default, member, or settled lens</td>
+                                </tr>
+                                <tr>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/object/" data-spw-operator="object">^"name"{ }</a></td>
                                     <td><strong>object</strong> — holds structured, inspectable content; the body remains legible plain text</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="ref">~"path"</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/ref/" data-spw-operator="ref">~"path"</a></td>
                                     <td><strong>reference</strong> — carries a path, named anchor, or literal; points outward without breaking the file</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="probe">?[probe]{ }</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/probe/" data-spw-operator="probe">?[probe]{ }</a></td>
                                     <td><strong>probe</strong> — stores a question, query, or interactive unit; signals inquiry at the structural level</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="action">@action(...)</span></td>
-                                    <td><strong>action</strong> — triggers a behavior, projection, or rotation; the imperative operator</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/action/" data-spw-operator="action">@action(...)</a></td>
+                                    <td><strong>action</strong> — commits a local behavior or projection; the imperative operator</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="stream">*stream</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/stream/" data-spw-operator="stream">*stream</a></td>
                                     <td><strong>stream</strong> — connects to dynamic or event-driven content; marks where data flows in</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="pragma">!pragma</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/merge/" data-spw-operator="merge">&amp;merge</a></td>
+                                    <td><strong>merge</strong> — overlays fields so comparison and integration can stay inspectable</td>
+                                </tr>
+                                <tr>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/binding/" data-spw-operator="binding">=binding</a></td>
+                                    <td><strong>binding</strong> — names, pins, or categorizes a local value so it can be reused</td>
+                                </tr>
+                                <tr>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/meta/" data-spw-operator="meta">$meta</a></td>
+                                    <td><strong>meta</strong> — reflects on the medium, trace, or register itself</td>
+                                </tr>
+                                <tr>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/normalize/" data-spw-operator="normalize">%normalize</a></td>
+                                    <td><strong>normalize</strong> — adjusts salience or scale so comparison remains honest</td>
+                                </tr>
+                                <tr>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/pragma/" data-spw-operator="pragma">!pragma</a></td>
                                     <td><strong>pragma</strong> — encodes a runtime constraint or interpretive hint; metadata about the frame itself</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="frame-sigil" data-spw-operator="surface">&gt;surface</span></td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="surface">&gt;surface</a></td>
                                     <td><strong>surface</strong> — a projected or rendered view; the output end of a frame pipeline</td>
                                 </tr>
                             </tbody>
