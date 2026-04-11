@@ -34,8 +34,51 @@
     z-index: 2;
 }
 
-/* Hovering the host intensifies the accent via JS, 
+/* Hovering the host intensifies the accent via JS,
    but we can also add a CSS transition for smooth opacity. */
 .spw-accent-host:hover canvas {
     opacity: 0.8;
+}
+
+/* ── Wave / Vortex / Crystal accent variants ────────────────────── */
+/* These use multiply on light, screen on dark for palette resonance */
+
+[data-spw-accent="wave"] canvas,
+[data-spw-accent="vortex"] canvas {
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+}
+
+[data-spw-accent="crystal"] canvas {
+    opacity: 0.42;
+    mix-blend-mode: multiply;
+}
+
+html[data-spw-color-mode="dark"] [data-spw-accent="wave"] canvas,
+html[data-spw-color-mode="dark"] [data-spw-accent="vortex"] canvas,
+html[data-spw-color-mode="dark"] [data-spw-accent="crystal"] canvas {
+    mix-blend-mode: screen;
+    opacity: 0.35;
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-spw-color-mode="auto"] [data-spw-accent="wave"] canvas,
+    html[data-spw-color-mode="auto"] [data-spw-accent="vortex"] canvas,
+    html[data-spw-color-mode="auto"] [data-spw-accent="crystal"] canvas {
+        mix-blend-mode: screen;
+        opacity: 0.35;
+    }
+}
+
+/* Warm-palette accents tint slightly toward amber */
+[data-spw-accent-palette="warm"] canvas {
+    filter: saturate(1.1) hue-rotate(-8deg);
+}
+
+/* Reduced motion: static snapshot, no animation */
+@media (prefers-reduced-motion: reduce) {
+    .spw-accent-host canvas {
+        animation: none;
+        opacity: 0.18;
+    }
 }

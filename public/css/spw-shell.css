@@ -257,6 +257,70 @@ body > header a[aria-current='page'] {
   user-select: none;
 }
 
+/* ── Brace pivot interactive affordance ─────────────────────────── */
+/* The walls are clickable density/saturation pivots.
+   A subtle hover state and a small label communicate this.          */
+
+.spw-objective-wall[role="button"],
+.spw-subjective-wall[role="button"],
+.spw-boon-wall[role="button"],
+.spw-bane-wall[role="button"] {
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    box-shadow       200ms ease;
+}
+
+.spw-objective-wall[role="button"]:hover,
+.spw-boon-wall[role="button"]:hover {
+  background: color-mix(in srgb, var(--objective-brace-wash) 200%, transparent);
+  box-shadow: inset -2px 0 0 color-mix(in srgb, var(--objective-brace-color) 42%, transparent);
+}
+
+.spw-subjective-wall[role="button"]:hover,
+.spw-bane-wall[role="button"]:hover {
+  background: color-mix(in srgb, var(--subjective-brace-wash) 200%, transparent);
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--subjective-brace-color) 42%, transparent);
+}
+
+/* Active flash on click */
+.spw-objective-wall[data-spw-pivot-active="true"],
+.spw-boon-wall[data-spw-pivot-active="true"] {
+  background: color-mix(in srgb, var(--objective-brace-wash) 320%, transparent);
+  transition: background-color 80ms ease;
+}
+
+.spw-subjective-wall[data-spw-pivot-active="true"],
+.spw-bane-wall[data-spw-pivot-active="true"] {
+  background: color-mix(in srgb, var(--subjective-brace-wash) 320%, transparent);
+  transition: background-color 80ms ease;
+}
+
+/* Pivot label — vertical monospace value indicator */
+.spw-pivot-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.44rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--active-op-color);
+  opacity: 0.28;
+  margin-top: 0.4rem;
+  font-family: var(--site-mono-font);
+  user-select: none;
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    color   200ms ease;
+}
+
+.spw-objective-wall[role="button"]:hover .spw-pivot-label,
+.spw-subjective-wall[role="button"]:hover .spw-pivot-label,
+.spw-boon-wall[role="button"]:hover .spw-pivot-label,
+.spw-bane-wall[role="button"]:hover .spw-pivot-label {
+  opacity: 0.72;
+}
+
 .spw-subjective-scroll-track,
 .spw-bane-scroll-track {
   position: absolute;

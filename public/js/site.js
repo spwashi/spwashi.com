@@ -27,6 +27,7 @@ import { initCognitiveSurface } from './spw-cognitive-surface.js';
 import { initSpwPersonas } from './spw-personas.js';
 import { initSpwSvgFilters } from './spw-svg-filters.js';
 import { initSpwCanvasAccents } from './spw-canvas-accents.js';
+import { initBracePivots } from './spw-brace-pivots.js';
 import { initSpwGate } from './spw-gate.js';
 import { initSpwImageMetaphysics } from './spw-image-metaphysics.js';
 import { initSpwVisitation } from './spw-visitation.js';
@@ -561,6 +562,7 @@ onDomReady(() => {
     initSpwPersonas();
     initSpwSvgFilters();
     initSpwCanvasAccents();
+    initBracePivots();
     initSpwGate();
     initSpwImageMetaphysics();
     initSpwVisitation();
