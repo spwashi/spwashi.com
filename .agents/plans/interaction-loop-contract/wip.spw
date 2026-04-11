@@ -1,0 +1,100 @@
+# wip — interaction-loop-contract
+# Branch: feature/interaction-loop-contract
+# Started: 2026-04-11
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/interaction-loop-contract/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+ @references: ~".agents/plans/state-block-projections/wip.spw"
+}
+
+^["intent"]{
+ ~#goal: "Move the shared interaction-loop semantics into one small contract module so current and future components can participate in the same visible process model without duplicating labels, reasons, or timing reads."
+ ~#taste: "layering + clarity"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#interaction_contract, #runtime_legibility, #event_clarity]
+ review_surfaces: [@cluster, @plan, @pattern, @references]
+ snippet_routes: [#example, #query, #snippet]
+}
+
+^["concept_index"]{
+ primary: [#loop_state, #refresh_reason, #timing_contract]
+ surfaces: [#state_inspector, #image_metaphysics]
+ tensions: [#duplication, #truth, #overwiring]
+ transfers: [#language, #component, #page, #service]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread current consumers before naming the contract",
+  "< move only pure helpers into the shared module",
+  "$ keep downstream runtime ownership where it already belongs",
+  "^ rewire consumers onto the contract and verify the same behavior",
+  "% avoid inventing a second event layer"
+ ]
+ gates: [#claim_discipline, #preview_truth, #layer_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_contract]
+ parallelizable: [#plan_memory]
+ shared_hot_files: ["public/js/spw-state-inspector.js", "public/js/spw-image-metaphysics.js"]
+ merge_risks: [#loop_naming, #refresh_reason_alignment]
+ handoff_artifacts: [@plan, @references]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@pattern, @references]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#feedback, #preview, #legibility, #trust]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["validation"]{
+ hypotheses: ["shared loop semantics reduce duplication without changing interaction behavior"]
+ negative_controls: ["existing state blocks keep mutating real state", "image helper hold/effect paths stay intact"]
+ demo_path: ["/#home-frame", "/settings/#runtime-preferences"]
+}
+
+^["stream"]{
+ >>[2026-04-11 08:44] observe — current loop semantics are split between state inspector helper logic and image refresh reason strings
+ >>[2026-04-11 08:46] decide — extract a pure contract module rather than widening the bus or CSS layers
+ >>[2026-04-11 08:58] implement — added a shared interaction-loop contract with canonical loop states, image refresh reasons, loop labels, and timing reads from CSS tokens
+ >>[2026-04-11 09:01] integrate — rewired state inspector and image metaphysics onto the shared contract; local runtimes still own behavior, but no longer own duplicate strings
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: ".[interaction-loop] — capture the shared-loop refactor plan"
+ ~[2]: "&[interaction-loop] — extract shared interaction contract and rewire state inspector"
+ ~[3]: "&[interaction-loop] — rewire image metaphysics to shared refresh reasons and verify consumers"
+}
+
+^["cache"]{
+ ~#status: "implementing"
+ ~#base_ref: "main@9783be0"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/js/spw-state-inspector.js, public/js/spw-image-metaphysics.js"
+ ~#next_commit: "2"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-11 09:01"
+ ~#taste_debt: "Keep the shared contract small enough that consumers still own their local behavior"
+}
+
+^["done"]{
+}

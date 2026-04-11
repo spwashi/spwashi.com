@@ -76,24 +76,30 @@
 /* ── Persona Selector ────────────────────────────────────────────────────── */
 
 .persona-selector-mount {
-    margin-right: 1.5rem;
+    margin-right: 0;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .persona-selector-frame {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 0.2rem 0.6rem;
-    background: var(--charcoal-dark, #111);
-    border: 1px solid var(--line, #333);
+    gap: 0.45rem;
+    padding: 0.25rem 0.45rem;
+    background: color-mix(in srgb, var(--floating-bg-warm, var(--surface-strong)) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--active-op-border, var(--line)) 70%, var(--line));
     border-radius: 4px;
     font-family: var(--site-mono-font, monospace);
     font-size: 0.75rem;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .persona-chips {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.4rem;
+    min-width: 0;
 }
 
 .persona-chip {
@@ -101,7 +107,8 @@
     border: none;
     color: var(--ink-soft, #888);
     cursor: pointer;
-    padding: 2px 4px;
+    min-height: var(--touch-target-min);
+    padding: 0.2rem 0.45rem;
     border-radius: 2px;
     transition: all 0.2s ease;
     display: flex;
@@ -111,18 +118,29 @@
 
 .persona-chip:hover {
     color: var(--ink, #fff);
-    background: var(--charcoal-light, #222);
+    background: color-mix(in srgb, var(--surface-strong, #fff) 82%, transparent);
 }
 
 .persona-chip.is-active {
     color: var(--teal, #1a9999);
-    background: var(--charcoal-light, #222);
-    box-shadow: 0 0 8px rgba(26, 153, 153, 0.15);
+    background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-border, var(--teal)) 80%, transparent);
 }
 
 .persona-sigil {
     font-weight: bold;
     opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+    .persona-selector-frame {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .persona-chips {
+        justify-content: flex-end;
+    }
 }
 
 /* ── Persona-Aware Learnable Surfaces ───────────────────────────────────── */

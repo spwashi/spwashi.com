@@ -18,6 +18,12 @@ import { loadPretext } from '/public/js/pretext-utils.js';
 const DEMO_FONT = '16px system-ui';
 let initialized = false;
 
+const readCssNumber = (name, fallback) => {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const value = Number.parseFloat(raw);
+    return Number.isFinite(value) ? value : fallback;
+};
+
 const initPretextLab = async () => {
     if (initialized) return;
 
@@ -90,11 +96,18 @@ const initPretextLab = async () => {
         });
     };
 
-    const surfaceWidths = (baseWidth) => ({
-        phone: Math.max(160, Math.round(baseWidth * 0.72)),
-        tablet: baseWidth,
-        poster: Math.round(baseWidth * 1.38)
-    });
+    const surfaceWidths = (baseWidth) => {
+        const widthFloor = readCssNumber('--pretext-width-floor', 160);
+        const phoneScale = readCssNumber('--pretext-phone-scale', 0.72);
+        const tabletScale = readCssNumber('--pretext-tablet-scale', 1);
+        const posterScale = readCssNumber('--pretext-poster-scale', 1.38);
+
+        return {
+            phone: Math.max(widthFloor, Math.round(baseWidth * phoneScale)),
+            tablet: Math.max(widthFloor, Math.round(baseWidth * tabletScale)),
+            poster: Math.max(widthFloor, Math.round(baseWidth * posterScale))
+        };
+    };
 
     const syncOutputs = () => {
         widthOutput.textContent = `${widthInput.value}px`;

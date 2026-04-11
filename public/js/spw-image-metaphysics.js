@@ -10,6 +10,11 @@
  */
 
 import { bus } from './spw-bus.js';
+import {
+    dispatchImageRefresh,
+    IMAGE_REFRESH_EVENT,
+    IMAGE_REFRESH_REASONS
+} from './spw-interaction-loop.js';
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
 const HOLD_DURATION_MS = 480;
@@ -129,13 +134,6 @@ function getMemoryLabel(host, context, visited) {
     return 'hold to visit';
 }
 
-function requestHostRefresh(host, reason = 'sync') {
-    host.dispatchEvent(new CustomEvent('spw:image:refresh', {
-        bubbles: true,
-        detail: { reason }
-    }));
-}
-
 function updateHelper(host, context, visited) {
     const button = host.querySelector('.spw-image-helper');
     const memory = host.querySelector('.spw-image-memory');
@@ -177,7 +175,7 @@ function ensureHelper(host) {
         const current = host.dataset.spwImageEffectOverride || 'semantic';
         const nextIndex = (EFFECT_SEQUENCE.indexOf(current) + 1) % EFFECT_SEQUENCE.length;
         host.dataset.spwImageEffectOverride = EFFECT_SEQUENCE[nextIndex];
-        requestHostRefresh(host, 'effect');
+        dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.EFFECT);
     });
 
     strip.append(button, memory);
@@ -221,13 +219,13 @@ function markVisited(host) {
     host.dataset.spwVisited = 'true';
     host.dataset.spwVisitBurst = 'true';
     syncHost(host);
-    requestHostRefresh(host, 'visited');
+    dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.VISITED);
     bus.emit('image:visited', { key, page: window.location.pathname, medium: getMedium(host) }, { element: host });
 
     window.setTimeout(() => {
         delete host.dataset.spwVisitBurst;
         delete host.dataset.spwHoldState;
-        requestHostRefresh(host, 'settled');
+        dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.SETTLED);
     }, 900);
 }
 
@@ -246,12 +244,12 @@ function registerHoldGesture(host) {
         clearTimer();
         if (!activated) {
             delete host.dataset.spwHoldState;
-            requestHostRefresh(host, 'released');
+            dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.RELEASED);
             return;
         }
 
         host.dataset.spwHoldState = 'visited';
-        requestHostRefresh(host, 'visited');
+        dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.VISITED);
         activated = false;
     };
 
@@ -262,7 +260,7 @@ function registerHoldGesture(host) {
         activated = false;
         clearTimer();
         host.dataset.spwHoldState = 'arming';
-        requestHostRefresh(host, 'arming');
+        dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.ARMING);
         timer = window.setTimeout(() => {
             activated = true;
             markVisited(host);
@@ -315,7 +313,7 @@ function isEligibleHost(host) {
 function mountHost(host) {
     ensureHelper(host);
     registerHoldGesture(host);
-    host.addEventListener('spw:image:refresh', () => {
+    host.addEventListener(IMAGE_REFRESH_EVENT, () => {
         syncHost(host);
     });
     syncHost(host);

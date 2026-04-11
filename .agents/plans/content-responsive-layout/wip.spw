@@ -1,0 +1,96 @@
+# wip — content-responsive-layout
+# Branch: feature/content-responsive-layout
+# Started: 2026-04-11
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/content-responsive-layout/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+}
+
+^["intent"]{
+ ~#goal: "Audit breakpoint responsiveness across the shared shell and component surfaces, then replace brittle fixed-width assumptions with content-responsive layout tokens and a smaller set of precise fallbacks."
+ ~#taste: "containment and clarity"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#containment, #layout_measure, #responsive_rhythm]
+ review_surfaces: [@cluster, @plan, @pattern]
+ snippet_routes: [#audit, #token, #surface]
+}
+
+^["concept_index"]{
+ primary: [#content_owned_layout]
+ surfaces: [#shell, #components, #settings, #pretext]
+ tensions: [#mobile_density, #fixed_grids, #overlay_pressure]
+ transfers: [#layout, #component, #page, #runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread shared tokens and hot surfaces before widening layout claims",
+  "< ship token and surface fixes that move from shared to specific",
+  "$ record which container owns width, wrap, and scroll",
+  "^ fold research into reusable width and spacing variables",
+  "% keep desktop reading measure stable while tightening mobile flow",
+ ]
+ gates: [#containment_truth, #token_reuse, #claim_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_truth]
+ parallelizable: [#shell_density, #surface_grids]
+ shared_hot_files: ["public/css/spw-tokens.css", "public/css/spw-components.css", "public/css/spw-surfaces.css"]
+ merge_risks: [#large_css_files, #dirty_worktree]
+ handoff_artifacts: [@plan, @pattern]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@pattern]
+ carries: [#audit_notes, #review_notes, #source_map, #external_contracts]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #preview, #legibility, #containment]
+ questions: [#what_wraps, #what_scales, #what_stacks]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["stream"]{
+ >>[2026-04-11 08:44] observe — current shell and surface CSS still lean on fixed repeat grids and a single 720px shell breakpoint
+ >>[2026-04-11 08:45] observe — pretext lab widths are hardcoded ratios in JS instead of shared layout variables
+ >>[2026-04-11 08:46] observe — mobile screenshot of settings confirms chrome density and overlay pressure rather than isolated route markup failure
+ >>[2026-04-11 08:46] decide — keep this pass scoped to shared CSS and pretext width tokens; do not touch unrelated dirty interaction-loop files
+ >>[2026-04-11 09:03] implement — added shared content/measure tokens and retuned shell, frame, grid, settings, console, and persona responsiveness around container width
+ >>[2026-04-11 09:07] implement — wired pretext lab width projections to CSS variables so the demo follows the same ergonomic layout token surface
+ >>[2026-04-11 09:09] verify — node --check public/js/pretext-lab.js and git diff --check both pass after the responsive token pass
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "&[responsive-layout] — add shared content/measure tokens and retune shell density"
+ ~[2]: "&[responsive-layout] — convert shared grids and key surfaces to content-responsive layout rules"
+ ~[3]: "&[pretext-layout] — read shared layout tokens inside the pretext lab width model"
+}
+
+^["cache"]{
+ ~#status: "verifying"
+ ~#base_ref: "main@9783be0"
+ ~#rebased_at: ""
+ ~#hygiene_split: "unrelated dirty interaction-loop work kept untouched"
+ ~#files_hot: "public/css/spw-tokens.css, public/css/spw-shell.css, public/css/spw-components.css, public/css/spw-surfaces.css, public/js/pretext-lab.js"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-11 09:09"
+ ~#taste_debt: "large shared CSS files still mix multiple responsive responsibilities"
+}
+
+^["done"]{
+}

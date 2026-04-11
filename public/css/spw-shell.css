@@ -43,7 +43,7 @@ body > header::after {
 
 .header-sigil {
   padding-left: calc(var(--objective-brace-width, 28px) + 0.75rem);
-  font-size: 0.7rem;
+  font-size: clamp(0.64rem, 0.62rem + 0.2vw, 0.7rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.65;
@@ -56,7 +56,7 @@ body > header::after {
 
 .header-op-indicator {
   padding-right: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  font-size: 0.68rem;
+  font-size: clamp(0.6rem, 0.58rem + 0.18vw, 0.68rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.5;
@@ -69,10 +69,11 @@ body > header::after {
 
 .site-header nav,
 body > header nav {
-  width: min(94vw, var(--page-width));
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
   z-index: var(--z-base);
   position: relative;
   margin-inline: auto;
+  container-type: inline-size;
 }
 
 .site-header ul,
@@ -85,11 +86,13 @@ body > header ul {
   list-style: none;
   margin: 0;
   padding: 0.4rem 0;
+  min-width: 0;
 }
 
 .site-header li,
 body > header li {
   margin: 0;
+  min-width: 0;
 }
 
 .site-header a,
@@ -97,10 +100,15 @@ body > header a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.6rem;
-  padding: 0.55rem 0.9rem;
+  min-height: var(--shell-nav-min-height);
+  min-width: 0;
+  padding: var(--shell-nav-padding-block) var(--shell-nav-padding-inline);
   border-radius: var(--radius-pill);
   text-decoration: none;
+  font-size: var(--shell-nav-font-size);
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
   transition:
     background-color 120ms ease,
     color 120ms ease,
@@ -219,17 +227,17 @@ body > header a[aria-current='page'] {
 }
 
 main {
-  width: min(94vw, var(--page-width));
-  margin: 2rem auto 4rem;
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
+  margin: clamp(1rem, 2.6vw, 2rem) auto clamp(2.5rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--surface-gap);
 }
 
 main > article {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--surface-gap);
 }
 
 body > footer {
@@ -273,7 +281,26 @@ html[data-spw-show-footer='off'] body > footer {
 
   .site-header ul,
   body > header ul {
-    gap: 0.25rem 0.5rem;
-    padding-inline: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.2rem), 1fr));
+    gap: 0.35rem;
+    padding-inline: var(--page-gutter-inline);
+  }
+
+  .site-header a,
+  body > header a {
+    width: 100%;
+    border-radius: var(--radius);
+  }
+}
+
+@media (max-width: 480px) {
+  .header-op-indicator {
+    display: none;
+  }
+
+  .site-header ul,
+  body > header ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
