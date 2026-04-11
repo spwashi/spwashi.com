@@ -228,7 +228,7 @@ samp,
   --type-tracking-base: 0.01em;
   --type-tracking-range: -0.01em;
   --type-size-surge: -0.06;
-  opacity: calc(0.78 - var(--charge, 0) * 0.18);
+  opacity: calc(0.88 - var(--charge, 0) * 0.08);
 }
 
 [data-spw-operator='normalize'] {
