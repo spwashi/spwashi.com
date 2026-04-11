@@ -650,8 +650,35 @@
                     </div>
                 </div>
             </section>
-        </article>
-    </main>
+        <section class="site-frame" id="curriculum-control" data-spw-form="circle">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#curriculum-control">@curriculum_control</a>
+                <h2>Curriculum Management</h2>
+            </div>
+            <p class="inline-note">Manage your 'Consideration Register'. You can save your current progress as a checkpoint or reset the entire substrate to its default un-popped state.</p>
+            <div class="button-group">
+                <button class="operator-chip" id="btn-save-checkpoint">
+                    <span class="log-op">$</span> save_checkpoint
+                </button>
+                <button class="operator-chip" id="btn-reset-haptics">
+                    <span class="log-op">!</span> reset_curriculum
+                </button>
+            </div>
+        </section>
+
+        <script type="module">
+            document.getElementById('btn-save-checkpoint').onclick = () => {
+                const name = prompt('Checkpoint name:', 'my_learning_trace');
+                if (name) {
+                    document.dispatchEvent(new CustomEvent('spw:haptics:checkpoint', { detail: { name } }));
+                }
+            };
+            document.getElementById('btn-reset-haptics').onclick = () => {
+                if (confirm('Reset all interacted concepts? This will clear your bubble wrap trace.')) {
+                    document.dispatchEvent(new CustomEvent('spw:haptics:reset'));
+                }
+            };
+        </script>
     <footer>
         <p>&copy; 2026 spwashi</p>
     </footer>
