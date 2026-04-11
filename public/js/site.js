@@ -454,6 +454,10 @@ const initOptionalFeatures = async () => {
         loads.push(loadFeature('./blog-interpreter.js', 'initBlogInterpreter'));
     }
 
+    if (document.querySelector('[data-spw-surface="recipes"]')) {
+        loads.push(loadFeature('./recipe-semantics.js', 'initRecipeSemantics'));
+    }
+
     await Promise.all(loads);
     await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
 
