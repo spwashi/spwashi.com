@@ -18,9 +18,9 @@ const MONOSPACE_FONT_VALUE = Object.freeze({
 });
 const GRAIN_INTENSITY_VALUE = Object.freeze({
     none: 0,
-    subtle: 0.035,
-    moderate: 0.055,
-    rich: 0.08
+    subtle: 0.018,
+    moderate: 0.032,
+    rich: 0.055
 });
 const SEMANTIC_GRAIN_OFFSET = Object.freeze({
     minimal: -0.01,

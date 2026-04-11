@@ -351,3 +351,51 @@
    negative bias leans toward objective (shared structure).                 */
 [data-spw-stance="objective"] { --spw-bias: -1; }
 [data-spw-stance="subjective"] { --spw-bias:  1; }
+
+/* ── Sigil charge direction — prefix vs postfix orientation ───────────────── */
+/* Prefix sigils (#>name) denote effective charge entering — energy moving
+   from operator into subject. Postfix (name#>) denotes charge resolved —
+   subject has absorbed the operator's intent.
+   CSS biases glow direction and transition character accordingly.           */
+
+[data-spw-charge-direction="prefix"] .frame-card-sigil,
+[data-spw-charge-direction="prefix"] .frame-sigil {
+    text-shadow:
+        4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent);
+    transition: text-shadow var(--arc-spark-duration, 80ms) var(--arc-spark-ease, ease);
+}
+
+[data-spw-charge-direction="postfix"] .frame-card-sigil,
+[data-spw-charge-direction="postfix"] .frame-sigil {
+    text-shadow:
+        -4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 12%, transparent);
+    transition: text-shadow var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease);
+}
+
+/* ── Arc-discharge transitions — layered onto charge states ───────────────── */
+/* Spark in, dwell at peak, dissipate slowly on release.                    */
+
+[data-spw-form][data-spw-charge="charging"] {
+    transition:
+        --charge     var(--arc-spark-duration, 80ms)  var(--arc-spark-ease, ease),
+        filter       var(--arc-spark-duration, 80ms)  var(--arc-spark-ease, ease),
+        box-shadow   var(--arc-dwell-duration, 260ms) var(--arc-dwell-ease, ease),
+        outline-color var(--arc-spark-duration, 80ms) var(--arc-spark-ease, ease);
+}
+
+[data-spw-form][data-spw-charge="active"] {
+    transition:
+        --charge     var(--arc-dwell-duration, 260ms) var(--arc-dwell-ease, ease),
+        filter       var(--arc-dwell-duration, 260ms) var(--arc-dwell-ease, ease),
+        box-shadow   var(--arc-dwell-duration, 260ms) var(--arc-dwell-ease, ease),
+        outline-color var(--arc-dwell-duration, 260ms) var(--arc-dwell-ease, ease);
+}
+
+:where([data-spw-form]:not([data-spw-charge]):not(:hover)) {
+    transition:
+        --charge          var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease),
+        filter            var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease),
+        box-shadow        var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease),
+        outline-color     var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease),
+        background-color  var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease);
+}

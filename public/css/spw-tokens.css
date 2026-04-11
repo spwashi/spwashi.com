@@ -185,6 +185,16 @@
   --charge-release-duration:  var(--duration-fast);
   --charge-release-ease:      var(--ease-mechanical);
 
+  /* ── Arc-discharge timing — electricity across an attentional plane ── */
+  /* Charge arrives fast (spark), dwells briefly (arc), releases slow (dissipation).
+     These are layered onto existing charge transitions for subtlety.              */
+  --arc-spark-duration:  80ms;
+  --arc-dwell-duration:  260ms;
+  --arc-dissipate-duration: 520ms;
+  --arc-spark-ease:  cubic-bezier(0.0, 0, 0.2, 1);    /* instantaneous onset */
+  --arc-dwell-ease:  cubic-bezier(0.4, 0, 0.2, 1);    /* held tension */
+  --arc-dissipate-ease: cubic-bezier(0.16, 0.8, 0.2, 1); /* slow trailing release */
+
   --depth-ambient: 1;
   --depth-settled: 10;
   --depth-active: 50;

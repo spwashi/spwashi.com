@@ -157,7 +157,7 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     gap: 0.55rem;
     min-height: 100%;
     min-width: 0;
-    padding: clamp(0.85rem, 1.4vw, 1rem) clamp(0.9rem, 1.8vw, 1.05rem);
+    padding: clamp(1rem, 2vw, 1.35rem) clamp(1.05rem, 2.2vw, 1.4rem);
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
     background: var(--card-bg);
