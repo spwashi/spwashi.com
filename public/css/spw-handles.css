@@ -260,6 +260,12 @@ header,
     transition: transform 80ms ease-out, box-shadow 80ms ease-out;
 }
 
+.frame-card[data-spw-gesture="active"][data-spw-form="block"],
+.frame-panel[data-spw-gesture="active"][data-spw-form="block"],
+.software-card[data-spw-gesture="active"][data-spw-form="block"] {
+    transform: none;
+}
+
 [data-spw-gesture="active"][data-spw-form="angle"] {
     --angle-open-color: rgba(0, 100, 100, 0.8);
     --angle-close-color: rgba(0, 100, 100, 0.8);

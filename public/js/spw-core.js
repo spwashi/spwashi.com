@@ -16,10 +16,12 @@
 import { bus } from './spw-bus.js';
 import { groundElement } from './spw-haptics.js';
 
+const KNOWLEDGE_TARGET_SELECTOR = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .spw-delimiter, [data-spw-groundable="true"]';
+
 export function initSpwCore() {
     // Sustained hold on any operator chip or syntax token marks knowledge gained
     bus.on('brace:sustained', (e) => {
-        const target = e.target?.closest?.('.operator-chip, .syntax-token, .spw-delimiter, [data-spw-form]');
+        const target = e.target?.closest?.(KNOWLEDGE_TARGET_SELECTOR);
         if (!target) return;
 
         const cluster = target.dataset.spwCluster;

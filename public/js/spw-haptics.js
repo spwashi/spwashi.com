@@ -21,7 +21,8 @@ import { bus } from './spw-bus.js';
 const STORAGE_KEY = 'spw-grounded-registry';
 const COUPLING_KEY = (path = window.location.pathname) => `spw-coupling:${path}`;
 
-const GROUND_SELECTORS = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .frame-card, .badge, .tag, .pill, [data-spw-operator], [data-spw-cluster], [data-spw-form]';
+const GROUND_SELECTORS = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .badge, .tag, .pill, [data-spw-groundable="true"]';
+const CHARGE_SELECTORS = `${GROUND_SELECTORS}, .frame-card, .frame-panel, .software-card, [data-spw-operator], [data-spw-cluster], [data-spw-form]`;
 
 export function initSpwHaptics() {
     restoreGroundedState();
@@ -36,7 +37,7 @@ export function initSpwHaptics() {
 
     // Implicit Interactivity: Hover Charge via Bus
     document.addEventListener('mouseover', (e) => {
-        const target = e.target.closest(GROUND_SELECTORS);
+        const target = e.target.closest(CHARGE_SELECTORS);
         if (target && !target.dataset.spwGrounded) {
             bus.emit('brace:charged', { key: getElementKey(target) }, { element: target });
             bus.emit('spell:probe', { key: getElementKey(target) }, { target });
@@ -44,7 +45,7 @@ export function initSpwHaptics() {
     });
 
     document.addEventListener('mouseout', (e) => {
-        const target = e.target.closest(GROUND_SELECTORS);
+        const target = e.target.closest(CHARGE_SELECTORS);
         if (target && !target.dataset.spwGrounded) {
             bus.emit('brace:discharged', { key: getElementKey(target) }, { element: target });
         }

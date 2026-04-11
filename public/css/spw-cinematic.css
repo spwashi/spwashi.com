@@ -277,18 +277,26 @@
 }
 
 /* Grounded tokens have settled into the baseline (.) operator.
-   They are dimmed but not deleted — presence acknowledged, attention released. */
+   Keep the cue readable: a slight quieting, never a heavy fade. */
 
 [data-spw-grounded="true"] {
-    opacity: 0.48;
+    opacity: 0.92;
     /* Soft dot-underline marks the token as baseline-settled, not removed */
     text-decoration: underline dotted;
-    text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 24%, transparent);
     text-underline-offset: 3px;
     filter: none; /* suppress charge glow — this element is at rest */
     transition:
         opacity          var(--charge-out-duration) var(--charge-ease-out),
         text-decoration  var(--charge-out-duration) var(--charge-ease-out);
+}
+
+.frame-card[data-spw-grounded="true"],
+.frame-panel[data-spw-grounded="true"],
+.software-card[data-spw-grounded="true"],
+.site-frame[data-spw-grounded="true"] {
+    opacity: 1;
+    text-decoration: none;
 }
 
 /* Un-grounding snaps back to full salience */
