@@ -108,6 +108,77 @@
                 </nav>
             </section>
 
+            <section class="site-frame" id="reduction-cs" data-spw-form="brace" data-spw-liminality="deep" data-spw-accent="crystal" data-spw-accent-palette="cool">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#reduction-cs">#:reduction_cs</a>
+                    <h2>Reduction in Computer Science</h2>
+                </div>
+                <p class="inline-note">Reduction is abstraction. Remove implementation detail until only the contract remains. The interface IS the reduction — what survives when everything volatile is boiled away.</p>
+
+                <figure class="spw-svg-figure" aria-label="Abstraction funnel: implementation to interface">
+                    <svg class="spw-svg-surface" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A funnel diagram showing implementation details reducing through layers to a minimal interface contract">
+                        <defs>
+                            <linearGradient id="funnel-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(14,18,20,0.06)"/>
+                                <stop offset="100%" stop-color="color-mix(in srgb, hsl(180 100% 28%) 12%, transparent)"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Funnel shape -->
+                        <path d="M 80,24 L 640,24 L 460,210 L 260,210 Z" fill="url(#funnel-grad)" stroke="rgba(14,18,20,0.10)" stroke-width="1"/>
+
+                        <!-- Layer lines -->
+                        <line x1="110" y1="70" x2="610" y2="70" stroke="rgba(14,18,20,0.08)" stroke-width="0.8" stroke-dasharray="3 4"/>
+                        <line x1="160" y1="116" x2="560" y2="116" stroke="rgba(14,18,20,0.08)" stroke-width="0.8" stroke-dasharray="3 4"/>
+                        <line x1="220" y1="162" x2="500" y2="162" stroke="rgba(14,18,20,0.10)" stroke-width="0.8" stroke-dasharray="3 4"/>
+
+                        <!-- Implementation layer (wide) -->
+                        <text x="120" y="52" font-size="7.5" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.35)">malloc() · syscalls · registers · cache lines · branch prediction · pointer arithmetic</text>
+                        <text x="620" y="52" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.25)" text-anchor="end">volatile</text>
+
+                        <!-- Module layer -->
+                        <text x="160" y="96" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.40)">functions · structs · error handling · state machines · buffers</text>
+                        <text x="580" y="96" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.25)" text-anchor="end">internal</text>
+
+                        <!-- Interface layer -->
+                        <text x="200" y="142" font-size="8.5" font-family="JetBrains Mono, monospace" fill="hsl(180 100% 28%)" opacity="0.6">pub fn · trait · interface · protocol · schema</text>
+                        <text x="530" y="142" font-size="8" font-family="JetBrains Mono, monospace" fill="hsl(180 100% 28%)" opacity="0.4" text-anchor="end">contract</text>
+
+                        <!-- Contract layer (narrow) -->
+                        <rect x="280" y="182" width="160" height="24" rx="4" fill="color-mix(in srgb, hsl(180 100% 28%) 10%, transparent)" stroke="hsl(180 100% 28%)" stroke-width="1.2" opacity="0.6"/>
+                        <text x="360" y="198" text-anchor="middle" font-size="9" font-weight="600" font-family="JetBrains Mono, monospace" fill="hsl(180 100% 28%)">%interface</text>
+
+                        <!-- Side annotation -->
+                        <text x="36" y="120" font-size="7" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.25)" transform="rotate(-90, 36, 120)">detail removed →</text>
+                        <text x="690" y="120" font-size="7" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.25)" transform="rotate(90, 690, 120)">← signal concentrated</text>
+                    </svg>
+                    <figcaption class="frame-note">The abstraction funnel. Implementation detail (volatile) evaporates through layers. What remains at the narrow end is the interface — the contract other code depends on. The reduction is complete when nothing left can be removed.</figcaption>
+                </figure>
+
+                <div class="frame-grid">
+                    <div class="frame-card" data-spw-operator="normalize" data-spw-brace="objective">
+                        <span class="frame-card-sigil">%interface</span>
+                        <strong>Interface as reduction</strong>
+                        <span>An interface hides everything that can change behind everything that must stay stable. <code>trait Read { fn read(&amp;mut self, buf: &amp;mut [u8]) -> Result&lt;usize&gt;; }</code> — that's the sauce after the water is gone. Every implementation detail is volatile; only the signature survives.</span>
+                    </div>
+                    <div class="frame-card" data-spw-operator="normalize" data-spw-brace="objective">
+                        <span class="frame-card-sigil">%map_reduce</span>
+                        <strong>MapReduce</strong>
+                        <span>Literally named after the operation. Map distributes, reduce concentrates. The reduce step combines partial results until one answer remains — the computational equivalent of boiling a stock. The signal was distributed across nodes; the reduction brings it home.</span>
+                    </div>
+                    <div class="frame-card" data-spw-operator="probe" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">?[compression]</span>
+                        <strong>Lossless compression</strong>
+                        <span>Huffman coding, LZ77, zstd — remove redundancy without losing information. The compressed file IS a reduction: smaller, same signal, reversible. Lossy compression (JPEG, MP3) is the culinary reduction: irreversible, and the judgment of what to discard is the expertise.</span>
+                    </div>
+                    <div class="frame-card" data-spw-operator="frame" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">#&gt;refactoring</span>
+                        <strong>Refactoring as reduction</strong>
+                        <span>Extract a function, inline a variable, replace conditionals with polymorphism. Each refactor removes structural noise. The behavior does not change — it concentrates. The code says the same thing with fewer concepts. That's the finish point: when removing anything further would lose meaning.</span>
+                    </div>
+                </div>
+            </section>
+
         </article>
     </main>
     <footer>
