@@ -376,3 +376,10 @@ html[data-spw-show-footer='off'] body > footer {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+@media (max-width: 340px) {
+  .site-header ul,
+  body > header ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

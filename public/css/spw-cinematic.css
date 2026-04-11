@@ -85,6 +85,7 @@
 [data-spw-operator="surface"]   { --spw-operator-color: var(--op-surface-color);   }
 [data-spw-operator="layer"]     { --spw-operator-color: var(--op-layer-color);     }
 [data-spw-operator="baseline"]  { --spw-operator-color: var(--op-baseline-color);  }
+[data-spw-operator="topic"]     { --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%)); }
 
 /* ── Dimensional field — manifests at threshold ───────────────────────────  */
 /* The field is an ambient glow that appears when charge crosses 0.25.

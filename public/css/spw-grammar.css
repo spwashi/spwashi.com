@@ -777,6 +777,100 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border-radius: 999px;
 }
 
+/* ── Objective / Subjective brace behavioral distinction ─────────────────
+   Objective = structural, shared, cool-sided — left-anchored
+   Subjective = situated, felt-meaning, warm-sided — right-anchored
+   The --spw-bias CSS property (-1 objective ↔ +1 subjective) drives tinting.
+   ───────────────────────────────────────────────────────────────────────── */
+
+[data-spw-brace="objective"] {
+    --brace-open-color:  color-mix(in srgb, var(--objective-brace-color) 44%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--objective-brace-color) 18%, transparent);
+    border-left-color:   color-mix(in srgb, var(--objective-brace-color) 26%, transparent);
+    border-left-width: 2px;
+    background-image: linear-gradient(
+        90deg,
+        var(--objective-brace-wash) 0 2px,
+        transparent 2px
+    );
+}
+
+[data-spw-brace="subjective"] {
+    --brace-open-color:  color-mix(in srgb, var(--subjective-brace-color) 18%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--subjective-brace-color) 44%, transparent);
+    border-right-color:  color-mix(in srgb, var(--subjective-brace-color) 26%, transparent);
+    border-right-width: 2px;
+    background-image: linear-gradient(
+        -90deg,
+        var(--subjective-brace-wash) 0 2px,
+        transparent 2px
+    );
+}
+
+[data-spw-brace="objective"].is-active-frame,
+[data-spw-brace="objective"]:hover {
+    --brace-open-color:  color-mix(in srgb, var(--objective-brace-color) 58%, transparent);
+    border-left-color:   color-mix(in srgb, var(--objective-brace-color) 40%, transparent);
+}
+
+[data-spw-brace="subjective"].is-active-frame,
+[data-spw-brace="subjective"]:hover {
+    --brace-close-color: color-mix(in srgb, var(--subjective-brace-color) 58%, transparent);
+    border-right-color:  color-mix(in srgb, var(--subjective-brace-color) 40%, transparent);
+}
+
+/* ── Topic lens: <topic> inline angle-bracket form ───────────────────────
+   Represents a topical scope or field boundary.
+   Usage: <span data-spw-form="angle" data-spw-operator="topic">concept</span>
+   ───────────────────────────────────────────────────────────────────────── */
+
+[data-spw-operator="topic"] {
+    --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%));
+    --angle-open-color:   color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
+    --angle-close-color:  color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
+}
+
+/* Inline topic chip: <topic> rendered in monospace with angle brackets */
+.spw-topic,
+[data-spw-topic] {
+    display: inline;
+    font-family: var(--site-mono-font);
+    font-size: 0.87em;
+    color: var(--op-topic-color, hsl(192 62% 32%));
+    background: var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72));
+    border: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.24));
+    border-radius: 3px;
+    padding: 0.08em 0.32em;
+    cursor: default;
+    transition:
+        background   var(--duration-base) var(--ease-mechanical),
+        border-color var(--duration-snap) var(--ease-mechanical),
+        color        var(--duration-snap) var(--ease-mechanical);
+}
+
+.spw-topic::before { content: '<'; opacity: 0.52; font-weight: 300; }
+.spw-topic::after  { content: '>'; opacity: 0.52; font-weight: 300; }
+
+.spw-topic:hover,
+[data-spw-topic]:hover {
+    background: color-mix(in srgb, var(--op-topic-bg-soft, rgba(228,246,252,0.72)) 60%, rgba(255,255,255,0.3));
+    border-color: color-mix(in srgb, var(--op-topic-border) 70%, transparent);
+    color: color-mix(in srgb, var(--op-topic-color) 85%, black);
+}
+
+/* Scene connector: (scene-a) <> (scene-b) — relational field boundary */
+.spw-connector {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28em;
+    font-family: var(--site-mono-font);
+    font-size: 0.88em;
+    color: var(--connector-color, rgba(0, 128, 128, 0.32));
+    user-select: none;
+    pointer-events: none;
+    vertical-align: middle;
+}
+
 /* Brace-form tags: pill shape + { } bracket decoration */
 [data-spw-form="brace"] > .spw-component-tag::before {
     content: '{';

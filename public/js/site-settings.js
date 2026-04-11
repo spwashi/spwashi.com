@@ -18,9 +18,9 @@ const MONOSPACE_FONT_VALUE = Object.freeze({
 });
 const GRAIN_INTENSITY_VALUE = Object.freeze({
     none: 0,
-    subtle: 0.02,
-    moderate: 0.04,
-    rich: 0.06
+    subtle: 0.035,
+    moderate: 0.055,
+    rich: 0.08
 });
 const SEMANTIC_GRAIN_OFFSET = Object.freeze({
     minimal: -0.01,
@@ -92,7 +92,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
     // Spirit Cycle & Dynamics
     currentSpiritPhase: 'expression',
     spiritPhaseAutoCycle: 'off',
-    grainIntensity: 'none'
+    grainIntensity: 'subtle'
 });
 
 const SETTING_OPTIONS = Object.freeze({

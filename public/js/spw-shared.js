@@ -110,6 +110,14 @@ const OPERATOR_DEFINITIONS = [
         prefix: '>',
         intent: 'project',
         interaction: 'move into or inspect a rendered projection'
+    },
+    {
+        pattern: /^</,
+        type: 'topic',
+        label: 'topic lens',
+        prefix: '<',
+        intent: 'scope',
+        interaction: 'enter or define a topical boundary — <topic> or (scene) <> (scene)'
     }
 ];
 

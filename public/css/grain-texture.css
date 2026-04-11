@@ -9,12 +9,13 @@
 }
 
 /* Grain texture using SVG noise
- * Very subtle, only visible on close inspection
+ * Subtle paper/material texture — gives surfaces tactile presence.
+ * Opacity is controlled by --grain-opacity (set by grainIntensity setting).
  */
 body {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/></filter><rect width="256" height="256" fill="rgba(0,0,0,0.02)" filter="url(%23noise)"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23n)" opacity="0.5"/></svg>');
     background-attachment: fixed;
-    background-size: 256px 256px;
+    background-size: 200px 200px;
 }
 
 /* Grain on key surfaces for visual coherence */
@@ -32,9 +33,9 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/></filter><rect width="256" height="256" fill="rgba(0,0,0,0.03)" filter="url(%23noise)"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23n)" opacity="0.5"/></svg>');
     background-attachment: fixed;
-    background-size: 256px 256px;
+    background-size: 200px 200px;
     opacity: var(--grain-opacity);
     pointer-events: none;
     mix-blend-mode: var(--grain-blend);

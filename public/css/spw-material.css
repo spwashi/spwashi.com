@@ -1,0 +1,246 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   SPW MATERIAL CHARACTER
+   ───────────────────────────────────────────────────────────────────────
+   Physics-informed material language for Spwashi.com.
+
+   Registers:
+     bioplastic   — dense, slightly flexible, matte where not lit
+     glass        — thin reflective surface with blur-through depth
+     matte        — warm paper: opaque, textured, grounding
+     connector    — relational field boundary: (a) <> (b)
+
+   Attentional dynamics frame:
+     charge (0→1)    drives surface luminosity and glass clarity
+     valence (-1→+1) biases warm/cool tint on hover
+     bias  (-1→+1)   objective ↔ subjective pole coloring
+
+   Scientific register notes:
+     Surfaces obey a simplified Fresnel approximation — glass cards
+     are more transparent at low charge, more reflective at high charge.
+     Matte panels absorb: no specular highlight, subdued color contrast.
+     The inner highlight (box-shadow inset) is the top-face specular.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --material-settle-ease:   cubic-bezier(0.22, 0, 0.15, 1);
+  --material-lift-ease:     cubic-bezier(0.32, 0, 0.0,  1);
+  --material-gravity:       var(--duration-deliberate, 360ms);
+  --operator-prime-color:   var(--active-op-color, hsl(180 100% 28%));
+}
+
+/* ── Bioplastic lift — card weight on hover ─────────────────────────── */
+/* Cards feel like picking up a physical object: immediate lift,
+   deliberate settle. No bounce — this is not paper, it has mass.     */
+
+.frame-card:hover,
+.frame-card:focus-visible {
+  transition:
+    transform    var(--duration-fast) var(--material-lift-ease),
+    box-shadow   var(--duration-base) var(--ease-paper),
+    border-color var(--duration-base) var(--ease-mechanical),
+    background   var(--duration-fast) var(--ease-mechanical);
+}
+
+/* ── Operator swap priming — swipe-down activates prime mode ────────── */
+/* When an operator is primed (gesture: swipe-down or sustained hold),
+   a pulsing outline signals readiness to swap.                         */
+
+[data-spw-primed="true"],
+[data-spw-form-options][data-spw-charged="true"] {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  animation: spw-prime-pulse 1.1s var(--ease-settle) infinite;
+}
+
+@keyframes spw-prime-pulse {
+  0%, 100% {
+    outline-color: color-mix(in srgb, var(--operator-prime-color) 48%, transparent);
+    outline-offset: 2px;
+  }
+  50% {
+    outline-color: color-mix(in srgb, var(--operator-prime-color) 72%, transparent);
+    outline-offset: 3.5px;
+  }
+}
+
+/* ── Operator chip: tap-hold reveals intent label ───────────────────── */
+
+.frame-sigil,
+.operator-chip {
+  position: relative;
+  transform-origin: center bottom;
+}
+
+/* When sustained (420ms+ hold), chip settles down — signals engagement */
+.frame-sigil[data-spw-charge="sustained"],
+.operator-chip[data-spw-charge="sustained"] {
+  transform: scale(0.96) translateY(1px);
+}
+
+/* ── Inline literacy effects ────────────────────────────────────────── */
+/* Text selection highlights in operator-tinted hue — praising literacy */
+
+::selection {
+  background: color-mix(in srgb, var(--teal, hsl(180 100% 28%)) 16%, transparent);
+  color: inherit;
+}
+
+code::selection,
+.frame-sigil::selection,
+.operator-chip::selection,
+.syntax-token::selection,
+[data-spw-operator]::selection {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+
+/* Monospace operators glow faintly when cursor rests on them */
+.operator-chip:hover,
+.frame-sigil:hover,
+.syntax-token:hover {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+}
+
+/* ── Pretext calculation hooks — CSS variables for layout bias ──────── */
+/* These allow per-frame layout adjustments keyed to content density.
+   JS can compute and set these from pretext metrics.                   */
+
+:root {
+  --spw-pretext-weight: 0.5;   /* 0=sparse  1=dense  — biases padding */
+  --spw-pretext-depth:  1;     /* 1=surface 3=deep   — biases opacity */
+  --spw-pretext-tempo:  1;     /* 0=slow    2=fast   — biases duration */
+}
+
+/* Pretext-weight biases inner padding: dense content compresses */
+[data-spw-pretext-weight] {
+  --_w: var(--spw-pretext-weight, 0.5);
+  --surface-padding: clamp(
+    calc(0.65rem + (1 - var(--_w)) * 0.4rem),
+    calc(1rem    * (1 + (1 - var(--_w)) * 0.3)),
+    calc(1.5rem  + (1 - var(--_w)) * 0.4rem)
+  );
+}
+
+/* Pretext-depth biases surface opacity: deep content uses more opacity */
+[data-spw-pretext-depth="2"] { --card-bg: rgba(255, 255, 255, 0.72); }
+[data-spw-pretext-depth="3"] { --card-bg: rgba(255, 255, 255, 0.82); }
+
+/* ── Component kind surface differentiation ─────────────────────────── */
+/* Each kind has a distinct material register.                            */
+
+[data-spw-component-kind="frame"] {
+  --material-blur: 14px;
+  --material-saturation: 1.08;
+}
+
+[data-spw-component-kind="panel"] {
+  background: var(--matte-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-spw-component-kind="card"] {
+  --material-blur: 10px;
+  --material-saturation: 1.05;
+}
+
+[data-spw-component-kind="metric"] {
+  --material-blur: 0px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Mode panel matte override ──────────────────────────────────────── */
+/* Panels are always matte — they're the reading surface, not the cover  */
+
+.mode-panel {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ── Scene connector typography ─────────────────────────────────────── */
+/* (scene-a) <> (scene-b) renders as a relational bridge               */
+
+.spw-scene {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12em 0.48em;
+  border: 1.5px solid var(--circle-open-color, rgba(60, 40, 120, 0.2));
+  border-radius: 999px;
+  font-family: var(--site-mono-font);
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.72);
+  transition: border-color var(--duration-base) var(--ease-mechanical);
+}
+
+.spw-scene-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-family: var(--site-mono-font);
+  font-size: 0.9em;
+}
+
+.spw-scene-pair > .spw-connector {
+  color: var(--connector-color, rgba(0,128,128,0.32));
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  user-select: none;
+}
+
+/* ── SVG glyph operator marks — physics/topology hooks ─────────────── */
+/* Small SVG glyphs that annotate operators with physics register hints */
+
+.spw-glyph {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  opacity: 0.55;
+  transition: opacity var(--duration-fast) var(--ease-mechanical);
+  fill: currentColor;
+}
+
+.spw-glyph:hover { opacity: 0.9; }
+
+/* Topology glyphs for operator types */
+[data-spw-operator="frame"]     .spw-glyph { color: var(--op-frame-color); }
+[data-spw-operator="probe"]     .spw-glyph { color: var(--op-probe-color); }
+[data-spw-operator="ref"]       .spw-glyph { color: var(--op-ref-color); }
+[data-spw-operator="action"]    .spw-glyph { color: var(--op-action-color); }
+[data-spw-operator="merge"]     .spw-glyph { color: var(--op-merge-color); }
+[data-spw-operator="topic"]     .spw-glyph { color: var(--op-topic-color, hsl(192 62% 32%)); }
+
+/* ── Charge-responsive glass depth ─────────────────────────────────── */
+/* As charge rises, glass becomes more transparent (Fresnel-like).
+   This is a simplified attentional-dynamics effect.                   */
+
+@supports (backdrop-filter: blur(1px)) {
+  .frame-card[data-spw-charge="charging"] {
+    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.1)) saturate(1.10);
+  }
+
+  .frame-card[data-spw-charge="active"] {
+    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.2)) saturate(1.14);
+  }
+
+  .frame-card[data-spw-charge="sustained"] {
+    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.3)) saturate(1.18);
+    box-shadow:
+      var(--card-shadow-hover),
+      var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.52)),
+      0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  }
+}
+
+/* ── Reduced motion: preserve structure, strip animation ────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-card:hover {
+    transform: none;
+  }
+
+  [data-spw-primed="true"] {
+    animation: none;
+    outline: 2px solid color-mix(in srgb, var(--operator-prime-color) 52%, transparent);
+    outline-offset: 2px;
+  }
+}

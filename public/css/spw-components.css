@@ -103,9 +103,10 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
 .mode-panel {
     position: relative;
     padding: 1rem 1.05rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--matte-border, rgba(14, 18, 20, 0.09));
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.58);
+    /* Matte surface: warmer, opaque — paper not glass */
+    background: var(--matte-surface, rgba(247, 244, 238, 0.93));
     overflow: hidden;
     container-type: inline-size;
     background-image:
@@ -117,6 +118,9 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     background-repeat: no-repeat;
     background-size: calc(100% - 1.8rem) 1px;
     background-position: 0.9rem 0.85rem;
+    transition:
+        background   var(--duration-deliberate) var(--ease-mechanical),
+        border-color var(--duration-base) var(--ease-mechanical);
 }
 
 .mode-panel[hidden] {
@@ -159,9 +163,13 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     background: var(--card-bg);
     color: inherit;
     box-sizing: border-box;
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--card-shadow), var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.5));
     container-type: inline-size;
-    transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
+    transition:
+        border-color var(--charge-release-duration) var(--charge-release-ease),
+        background   var(--charge-release-duration) var(--charge-release-ease),
+        box-shadow   var(--duration-deliberate) var(--ease-settle),
+        transform    var(--duration-base) var(--ease-mechanical);
     overflow: hidden;
     background-image:
         linear-gradient(
@@ -172,6 +180,13 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     background-repeat: no-repeat;
     background-size: calc(100% - 1.8rem) 1px;
     background-position: 0.9rem 0.9rem;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+    .frame-card {
+        backdrop-filter: blur(var(--material-blur, 12px)) saturate(var(--material-saturation, 1.06));
+        -webkit-backdrop-filter: blur(var(--material-blur, 12px)) saturate(var(--material-saturation, 1.06));
+    }
 }
 
 a.frame-card {
@@ -186,7 +201,17 @@ a.frame-card {
 .software-card:focus-within {
     border-color: var(--card-border-hover);
     background: var(--card-bg-hover);
-    box-shadow: var(--card-shadow-hover);
+    box-shadow: var(--card-shadow-hover), var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.5));
+    transform: translateY(-2px);
+}
+
+/* Settle back with more deliberate ease — physical weight returning */
+.frame-card:not(:hover):not(:focus-visible) {
+    transition:
+        border-color var(--duration-base) var(--ease-mechanical),
+        background   var(--duration-deliberate) var(--ease-mechanical),
+        box-shadow   480ms var(--ease-settle),
+        transform    var(--duration-deliberate) var(--ease-settle);
 }
 
 .frame-card-sigil {

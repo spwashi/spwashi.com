@@ -92,24 +92,37 @@
   --token-border: rgba(0, 128, 128, 0.55);
   --token-border-strong: rgba(0, 128, 128, 0.8);
 
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-bg-hover: rgba(255, 255, 255, 0.84);
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-bg-hover: rgba(255, 255, 255, 0.82);
   --card-border-hover: rgba(0, 128, 128, 0.5);
-  --card-shadow: none;
-  --card-shadow-hover: none;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 4px 18px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
-  --floating-shadow: none;
-  --floating-shadow-side: none;
+  --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-active: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.10);
+
+  /* ── Material system ─ */
+  --material-blur: 12px;
+  --material-saturation: 1.06;
+  --matte-surface: rgba(247, 244, 238, 0.93);
+  --matte-border: rgba(14, 18, 20, 0.09);
 
   --radius-sm: 6px;
-  --radius: 8px;
+  --radius: 10px;
   --radius-pill: 999px;
+
+  /* ── Topic / connector operators ─ */
+  --op-topic-color: hsl(192 62% 32%);
+  --op-topic-border: hsla(192, 62%, 32%, 0.24);
+  --op-topic-bg-soft: rgba(228, 246, 252, 0.72);
+  --connector-color: rgba(0, 128, 128, 0.32);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -274,13 +287,19 @@ html[data-spw-color-mode='dark'] {
   --token-bg-hover: rgba(255, 255, 255, 0.12);
   --token-border: rgba(103, 212, 222, 0.28);
   --token-border-strong: rgba(103, 212, 222, 0.48);
-  --card-bg: rgba(255, 255, 255, 0.07);
-  --card-bg-hover: rgba(255, 255, 255, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-bg-hover: rgba(255, 255, 255, 0.11);
   --card-border-hover: rgba(103, 212, 222, 0.32);
+  --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --matte-surface: rgba(14, 18, 22, 0.96);
+  --matte-border: rgba(255, 255, 255, 0.08);
   --floating-bg: rgba(18, 24, 29, 0.94);
   --floating-bg-warm: rgba(20, 24, 27, 0.94);
-  --shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
-  --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.36);
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+  --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.40);
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.20), 0 3px 12px rgba(0, 0, 0, 0.16);
+  --card-shadow-hover: 0 5px 24px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
+  --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.18);
   --active-op-border: rgba(103, 212, 222, 0.42);
   --objective-brace-wash: rgba(103, 212, 222, 0.08);
   --subjective-brace-wash: rgba(228, 108, 144, 0.08);
@@ -305,13 +324,19 @@ html[data-spw-color-mode='dark'] {
     --token-bg-hover: rgba(255, 255, 255, 0.12);
     --token-border: rgba(103, 212, 222, 0.28);
     --token-border-strong: rgba(103, 212, 222, 0.48);
-    --card-bg: rgba(255, 255, 255, 0.07);
-    --card-bg-hover: rgba(255, 255, 255, 0.12);
+    --card-bg: rgba(255, 255, 255, 0.06);
+    --card-bg-hover: rgba(255, 255, 255, 0.11);
     --card-border-hover: rgba(103, 212, 222, 0.32);
+    --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    --matte-surface: rgba(14, 18, 22, 0.96);
+    --matte-border: rgba(255, 255, 255, 0.08);
     --floating-bg: rgba(18, 24, 29, 0.94);
     --floating-bg-warm: rgba(20, 24, 27, 0.94);
-    --shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
-    --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.36);
+    --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+    --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.40);
+    --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.20), 0 3px 12px rgba(0, 0, 0, 0.16);
+    --card-shadow-hover: 0 5px 24px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
+    --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.18);
     --active-op-border: rgba(103, 212, 222, 0.42);
     --objective-brace-wash: rgba(103, 212, 222, 0.08);
     --subjective-brace-wash: rgba(228, 108, 144, 0.08);
