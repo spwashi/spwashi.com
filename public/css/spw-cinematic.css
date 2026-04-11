@@ -292,3 +292,50 @@
     opacity: 1;
     text-decoration: none;
 }
+
+/* ── Resonance — cross-context coherence feedback ──────────────────────── */
+/* Resonance is sparse and earned (recurring pinned clusters), never constant.
+   The outline breathes gently; it does not animate at rest.
+   Design contract: selective coupling, not universal amplification.        */
+
+@keyframes spw-resonance-breathe {
+    0%, 100% { outline-offset: 2px; outline-width: 1.5px; }
+    50%      { outline-offset: 6px; outline-width: 1px;   }
+}
+
+[data-spw-resonance="high"] {
+    outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--teal)) 60%, transparent);
+    animation: spw-resonance-breathe 1100ms var(--cinematic-ease, ease) infinite;
+}
+
+[data-spw-resonance="medium"] {
+    outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--teal)) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-spw-resonance="high"],
+    [data-spw-resonance="medium"] {
+        animation: none;
+        outline-offset: 2px;
+    }
+}
+
+/* ── Valence — approach / avoid orientation ─────────────────────────────── */
+/* Valence is user-authored (never inferred). Approach tints warm-green;
+   avoid tints muted-red. Both must meet contrast requirements.             */
+
+[data-spw-valence="positive"] {
+    --spw-valence: 1;
+    box-shadow: inset 0 -2px 0 var(--valence-pos, hsl(160 55% 38%));
+}
+
+[data-spw-valence="negative"] {
+    --spw-valence: -1;
+    box-shadow: inset 0 -2px 0 var(--valence-neg, hsl(8 65% 44%));
+}
+
+/* Bias axis — objective ↔ subjective stance ────────────────────────────── */
+/* Positive bias leans toward subjective (personal salience);
+   negative bias leans toward objective (shared structure).                 */
+[data-spw-stance="objective"] { --spw-bias: -1; }
+[data-spw-stance="subjective"] { --spw-bias:  1; }

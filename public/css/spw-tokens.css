@@ -10,6 +10,27 @@
   initial-value: 0;
 }
 
+/* Valence: goal-relative orientation (-1 = avoid → 0 = neutral → +1 = approach) */
+@property --spw-valence {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+/* Resonance: cross-context coherence strength (0 = isolated → 1 = strongly coupled) */
+@property --spw-resonance {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+/* Bias: stance axis (−1 = objective/shared-structure → +1 = subjective/situated-meaning) */
+@property --spw-bias {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 :root {
   --header-height: 4rem;
   --page-width: 72rem;
@@ -40,6 +61,10 @@
   --teal: hsl(180 100% 28%);
   --teal-deep: hsl(180 100% 18%);
   --teal-soft: rgba(0, 128, 128, 0.7);
+
+  --resonance-accent: hsl(188 68% 52%);
+  --valence-pos: hsl(160 55% 38%);
+  --valence-neg: hsl(8 65% 44%);
 
   --token-bg: rgba(255, 255, 255, 0.82);
   --token-bg-hover: rgba(255, 255, 255, 0.97);

@@ -883,3 +883,53 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
 [data-spw-selection="navigation"] { --angle-open-color: var(--op-surface-color); }
 [data-spw-selection="relational"] { --circle-open-color: var(--op-ref-color); }
 [data-spw-selection="collection"] { --square-open-color: var(--op-probe-color); }
+
+/* ── Symmetric frame layout ──────────────────────────────────────────────── */
+/* Three-column grid: objective rail ← center measure → subjective rail.
+   The outer rails are optional annotation tracks; content lives in .center. */
+
+.spw-symmetric-frame {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--reading-width, 68ch)) 1fr;
+  gap: 0 1rem;
+}
+
+.spw-symmetric-frame > .center { grid-column: 2; min-width: 0; }
+.spw-rail-left  { grid-column: 1; justify-self: end;   align-self: start; }
+.spw-rail-right { grid-column: 3; justify-self: start; align-self: start; }
+
+/* ── Brace axis ──────────────────────────────────────────────────────────── */
+/* Marks a region as explicitly bounded by { } — the opening brace anchors
+   the objective frame; the closing brace anchors subjective completion.
+   The braces are typographic signifiers, not decorative chrome.            */
+
+.spw-brace-axis {
+  position: relative;
+  border-inline: 1px solid color-mix(in oklab, currentColor 18%, transparent);
+  padding-inline: clamp(1.5rem, 4ch, 2.5rem);
+}
+
+.spw-brace-axis::before,
+.spw-brace-axis::after {
+  position: absolute;
+  top: 0.5rem;
+  font-family: var(--site-mono-font);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--active-op-color, var(--teal));
+  opacity: 0.28;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 200ms ease, color 200ms ease;
+}
+
+.spw-brace-axis::before { content: "{"; inset-inline-start: 0.45rem; }
+.spw-brace-axis::after  { content: "}"; inset-inline-end:   0.45rem; }
+
+.spw-brace-axis:hover::before,
+.spw-brace-axis:hover::after,
+.spw-brace-axis:focus-within::before,
+.spw-brace-axis:focus-within::after {
+  opacity: 0.6;
+}

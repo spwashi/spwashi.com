@@ -47,6 +47,38 @@
  * hold attention, and the text rewards it.
  */
 
+/* ── Monospace alignment ─────────────────────────────────────────────────── */
+/* Chips, tokens, sigils, and code blocks must all render on the same
+   character grid. JetBrains Mono's contextual alternates ("calt") improve
+   operator glyph sequences (#>, ->, =>, etc.); "zero" keeps 0 legible.    */
+
+.operator-chip,
+.syntax-token,
+.spec-pill,
+.badge,
+.tag,
+.pill,
+.frame-sigil,
+.frame-card-sigil,
+.resonance-sigil {
+  font-family: var(--site-mono-font);
+  font-feature-settings: "calt" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+}
+
+/* Code surfaces: tab stops and pre-layout */
+pre,
+code,
+kbd,
+samp,
+.spw-transparent-block,
+.spw-state-block code {
+  tab-size: 2;
+  -moz-tab-size: 2;
+  font-feature-settings: "calt" 1;
+}
+
 /* ── Shared typographic custom properties ───────────────────────────────── */
 /* Each operator sets these on its own element so --charge calc expressions
    stay generic. Charge-driven calc() handles the actual interpolation.     */
