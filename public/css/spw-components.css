@@ -350,6 +350,55 @@ a.frame-card {
     display: block;
 }
 
+/* ── Expression comparison sets ─────────────────────────────── */
+
+.spw-compare-set {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.spw-compare-set + .spw-compare-set {
+    margin-top: var(--surface-gap);
+    padding-top: var(--surface-gap);
+    border-top: 1px solid var(--line);
+}
+
+.spw-compare-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-family: var(--site-mono-font);
+    padding-left: 0.1rem;
+}
+
+.frame-grid--compare {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.spw-compare-card {
+    justify-content: space-between;
+}
+
+.spw-compare-chip {
+    display: block;
+    margin-top: auto;
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 7%, rgba(255, 255, 255, 0.5));
+    border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--teal)) 24%, transparent);
+    font-family: var(--site-mono-font);
+    font-size: 0.78rem;
+    color: var(--spw-operator-color, var(--teal));
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: all;
+}
+
 .demo-render {
     background: rgba(255, 255, 255, 0.94);
 }

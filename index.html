@@ -98,8 +98,8 @@
             <div class="mode-panels">
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block" data-spw-liminality="projected">
                     <p>Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</a><a href="/topics/software/spw/">Spw</a><span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span> is a cognitive gesture: <span class="syntax-token" title="frame: orients a named unit of meaning">#&gt;</span> orients, <span class="syntax-token" title="probe: opens inquiry without committing">?</span> opens inquiry, <span class="syntax-token" title="ref: reaches without forcing commitment">~</span> reaches without binding, <span class="syntax-token" title="action: commits a local behavior">@</span> commits. Plain text becomes shared vocabulary for <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">(</span>people and tools alike<span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">)</span> — a grammar that keeps structure legible at every scale.</p>
-                    <p>I lead a team of engineers toward <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">(</span>learning science<span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">)</span> as design practice: building curricula through <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>constructive play<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, publishing pods where illustrators, narrators, and improvisers make book series together, and treating the tools themselves as a <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</span>laboratory for wonder<span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>.</p>
-                    <p>The current work converges on a language toolchain where <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>parsing<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>LSP<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, and <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>interactive rendering<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span> are each discoverable through play — each a doorway from common language into the materials science of meaning.</p>
+                    <p>The discipline behind this is <span class="spw-topic" data-spw-topic>applied learning science</span>: how structure shapes what can be noticed, transferred, and accumulated across a group. The same operators that describe a software module also describe a learning sequence, a narrative session, or a research note. Legibility compounds: once the containment is visible, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>parsing<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>LSP<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, and <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>interactive rendering<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span> are all variations on the same <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</span>attentional act<span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>.</p>
+                    <p>This site is a workbench for that question — one that rewards skeptics by staying plain and rewards practitioners by going deep. The surface is the argument.</p>
                     <nav class="frame-operators frame-operators--probe" aria-label="Topic probes">
                         <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="probe">?[operators]</a>
                         <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle" data-spw-operator="ref">~renderers</a>
@@ -318,7 +318,41 @@
                         <text text-anchor="middle" y="28" font-size="7.5" class="spw-svg-note">pragma</text>
                     </g>
                 </svg>
-                <figcaption class="frame-note">The Spw operator vocabulary: fourteen symbols that extend plain text with semantic intent. Top row is the cognitive spine — orient to project. Bottom row is the supporting grammar — qualify, bind, reflect, constrain.</figcaption>
+                <figcaption class="frame-note">Fourteen operators. Top row: cognitive spine — orient, elevate, inquire, refer, act, flow, project. Bottom row: supporting grammar — qualify, settle, bind, reflect, integrate, normalize, constrain.</figcaption>
+            </figure>
+
+            <!-- Polarity axis: the { } brace carries a structural bias -->
+            <figure class="spw-svg-figure" aria-label="Objective to subjective brace polarity axis" style="margin-top:0.2rem">
+                <svg class="spw-svg-surface"
+                     viewBox="0 0 640 72"
+                     xmlns="http://www.w3.org/2000/svg"
+                     role="img"
+                     aria-label="A horizontal gradient axis from left-brace (objective, cool teal) to right-brace (subjective, warm rose), labeled with --spw-bias in the center">
+                    <defs>
+                        <linearGradient id="polarity-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="hsl(188 58% 32%)" stop-opacity="0.8"/>
+                            <stop offset="50%"  stop-color="rgba(14,18,20,0.18)"/>
+                            <stop offset="100%" stop-color="hsl(342 48% 36%)" stop-opacity="0.8"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Axis line -->
+                    <line x1="48" y1="36" x2="592" y2="36" stroke="url(#polarity-grad)" stroke-width="1.2"/>
+                    <!-- Opening brace -->
+                    <text x="18" y="42" font-size="22" font-weight="300" font-family="JetBrains Mono, monospace" fill="hsl(188 58% 32%)" opacity="0.82">{</text>
+                    <!-- Closing brace -->
+                    <text x="607" y="42" font-size="22" font-weight="300" font-family="JetBrains Mono, monospace" fill="hsl(342 48% 36%)" opacity="0.82">}</text>
+                    <!-- Left label -->
+                    <text x="48" y="56" font-size="8.5" font-family="JetBrains Mono, monospace" fill="hsl(188 58% 32%)" opacity="0.72" letter-spacing="0.06em">objective · shared structure · cool</text>
+                    <!-- Right label -->
+                    <text x="592" y="56" font-size="8.5" font-family="JetBrains Mono, monospace" fill="hsl(342 48% 36%)" opacity="0.72" letter-spacing="0.06em" text-anchor="end">warm · situated meaning · subjective</text>
+                    <!-- Center axis label -->
+                    <text x="320" y="24" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(14,18,20,0.38)" letter-spacing="0.08em" text-anchor="middle">── spw-bias ──</text>
+                    <!-- Tick marks at quartiles -->
+                    <line x1="192" y1="30" x2="192" y2="42" stroke="rgba(14,18,20,0.12)" stroke-width="1"/>
+                    <line x1="320" y1="28" x2="320" y2="44" stroke="rgba(14,18,20,0.18)" stroke-width="1"/>
+                    <line x1="448" y1="30" x2="448" y2="42" stroke="rgba(14,18,20,0.12)" stroke-width="1"/>
+                </svg>
+                <figcaption class="frame-note">The brace is a polarity axis. The left wall <code>{</code> leans structural and shared; the right wall <code>}</code> leans situated and felt. Click either wall to cycle its register.</figcaption>
             </figure>
 
             <div class="feature-map feature-map--asymmetric">
@@ -465,29 +499,133 @@
             </div>
         </section>
 
-        <section class="site-frame" id="obsidian-homage" data-spw-accent="crystal" data-spw-accent-palette="cool">
+        <section class="site-frame" id="language-field" data-spw-role="reference" data-spw-form="brace" data-spw-accent="crystal" data-spw-accent-palette="cool">
             <div class="frame-heading">
-                <a class="frame-sigil" href="#obsidian-homage">@obsidian_application_context</a>
-                <h2>Engineering direction for language-first tools</h2>
+                <a class="frame-sigil" href="#language-field">#:language_field</a>
+                <h2>Language as a field — not a format</h2>
             </div>
             <div class="spec-grid">
-                <div class="frame-panel">
+                <div class="frame-panel" data-spw-brace="objective">
                     <h3>Plain text as the trust surface</h3>
-                    <p>Readable files don't require buy-in to understand. Spw extends that promise: sections gain names and query handles without the source becoming opaque. Engineers on layoffs and career pivots find stable ground here.</p>
+                    <p>Readable files don't require a runtime to understand. Spw extends that: sections become named and queryable while the source stays inspectable. The vocabulary is the contract — no hidden state, no required toolchain.</p>
                 </div>
-                <div class="frame-panel">
-                    <h3>LSP as a shared map</h3>
-                    <p>Operators, layers, and references index cleanly for LSP servers. The same structure that helps a reader navigate also gives a language server something to work with — one grammar, two audiences.</p>
+                <div class="frame-panel" data-spw-brace="objective">
+                    <h3>Structure that indexes cleanly</h3>
+                    <p>Operators, layers, and references map directly to what LSP servers track. The same structure that helps a reader navigate helps a language server too — one grammar, two attention regimes.</p>
                 </div>
-                <div class="frame-panel">
-                    <h3>Publishing pods as a production model</h3>
-                    <p>Illustrators, narrators, and improvisers making books together need shared vocabulary. Spw is that vocabulary — fragments become publishable, sessions become series, and series accumulate into a <span class="spw-topic" data-spw-topic>living corpus</span>.</p>
+                <div class="frame-panel" data-spw-brace="subjective">
+                    <h3>Fragments that accumulate</h3>
+                    <p>Illustrators, painters, librarians, gardeners, engineers — a loose network sharing work across disciplines. When the form is legible, a drawing sent on Tuesday and a code edit sent on Friday speak the same grammar. Sessions become series; series become <span class="spw-topic" data-spw-topic>corpus</span>. The vocabulary holds continuity without forcing uniformity.</p>
                 </div>
-                <div class="frame-panel">
-                    <h3>Literate curricula for any level</h3>
-                    <p>The grammar supports learning materials where reading, annotating, projecting, and reflecting stay connected. Skeptics of AI can learn web fundamentals here. Practitioners can reach into computer science fundamentals from a language they already use.</p>
+                <div class="frame-panel" data-spw-brace="subjective">
+                    <h3>Depth that scales with attention</h3>
+                    <p>Learning science calls this <span class="spw-topic" data-spw-topic>scaffolded access</span> — the same structure that helps a beginner orient is the structure an expert reasons with. Parsers, renderers, schedulers are all reachable from ordinary language by anyone willing to follow the thread. That distance is the curriculum; the grammar is the scaffold.</p>
                 </div>
             </div>
+        </section>
+
+        <section class="site-frame" id="operator-pivot-field" data-spw-role="reference" data-spw-form="brace" data-spw-liminality="threshold">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#operator-pivot-field">?["operator_pivot_field"]</a>
+                <h2>One concept, many stances</h2>
+            </div>
+            <p class="inline-note">The operator that leads a term is a <em>stance</em> — a way of holding the same subject. Compare the same concept across operator perspectives to see what changes semantically when the sigil does.</p>
+
+            <div class="spw-compare-set">
+                <p class="spw-compare-label">a page</p>
+                <div class="frame-grid frame-grid--compare">
+                    <div class="frame-card spw-compare-card" data-spw-operator="frame" data-spw-brace="objective">
+                        <span class="frame-card-sigil">#&gt;page</span>
+                        <strong>frame</strong>
+                        <span>A named container. The page becomes an address — it orients everything inside it. Other operators navigate to it; it doesn't navigate anywhere.</span>
+                        <code class="spw-compare-chip">#&gt;page{ ... }</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="object" data-spw-brace="objective">
+                        <span class="frame-card-sigil">^"page"</span>
+                        <strong>object</strong>
+                        <span>A held instance. The quotes name it exactly; the caret says it is elevated, complete, inspectable as a thing that happened and will not unhappen.</span>
+                        <code class="spw-compare-chip">^"page_v2"</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="probe" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">?[page]</span>
+                        <strong>probe</strong>
+                        <span>An open question. What belongs on it? Who is it for? What counts as done? The bracket holds the question without closing it — inquiry without commitment.</span>
+                        <code class="spw-compare-chip">?[page_scope]</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="stream" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">*pages</span>
+                        <strong>stream</strong>
+                        <span>Pages as an ongoing practice — not one artifact but many in sequence, each a pulse. The asterisk follows the rhythm, not the instance.</span>
+                        <code class="spw-compare-chip">*pages &gt; rendered</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spw-compare-set">
+                <p class="spw-compare-label">attention</p>
+                <div class="frame-grid frame-grid--compare">
+                    <div class="frame-card spw-compare-card" data-spw-operator="probe" data-spw-brace="objective">
+                        <span class="frame-card-sigil">?[attention]</span>
+                        <strong>probe</strong>
+                        <span>Attention as open inquiry — what is the learner noticing? Where does the inquiry land? The bracket holds the space without prescribing the answer.</span>
+                        <code class="spw-compare-chip">?[attention_target]</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="surface" data-spw-brace="objective">
+                        <span class="frame-card-sigil">&gt;attention</span>
+                        <strong>surface</strong>
+                        <span>Attention as projection — what rises into view. Given this input, what becomes figure? What recedes to ground? The surface operator renders a salience map.</span>
+                        <code class="spw-compare-chip">&gt;attention_surface</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="normalize" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">%attention</span>
+                        <strong>normalize</strong>
+                        <span>Attention as something calibrated — scaled to what's relevant. The percent sign says: attenuate noise, bring signal to a legible level. Salience is an engineering problem.</span>
+                        <code class="spw-compare-chip">%attention_weight</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="action" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">@attend</span>
+                        <strong>action</strong>
+                        <span>Attention as committed act — attending, not just noticing. The at-sign says: this is local, situated, done. You were present; something changed.</span>
+                        <code class="spw-compare-chip">@attend session</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spw-compare-set">
+                <p class="spw-compare-label">a voice</p>
+                <div class="frame-grid frame-grid--compare">
+                    <div class="frame-card spw-compare-card" data-spw-operator="topic" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">&lt;voice&gt;</span>
+                        <strong>topic</strong>
+                        <span>Voice as a topical lens — entering the subject of voice as a domain. The angle brackets bracket the topic, not the speaker. What you're looking through, not who you are.</span>
+                        <code class="spw-compare-chip">&lt;voice&gt; practice</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="object" data-spw-brace="objective">
+                        <span class="frame-card-sigil">^"voice"</span>
+                        <strong>object</strong>
+                        <span>A specific voice, held and named — this person's contribution, permanently real. The caret keeps it from dissolving into the collective. It happened; it has weight.</span>
+                        <code class="spw-compare-chip">^"voice_narrator"</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="merge" data-spw-brace="objective">
+                        <span class="frame-card-sigil">&amp;[voices]</span>
+                        <strong>merge</strong>
+                        <span>Multiple voices as an integrative act — not harmony but coherence. The merge operator asks how separate interpretive fields contact each other without collapsing.</span>
+                        <code class="spw-compare-chip">&amp;[voice_a, voice_b]</code>
+                    </div>
+                    <div class="frame-card spw-compare-card" data-spw-operator="ref" data-spw-brace="subjective">
+                        <span class="frame-card-sigil">~voice</span>
+                        <strong>ref</strong>
+                        <span>A reference to a voice — pointing without speaking for it. The tilde reaches without claiming. You cite; you don't become. Distance is built into the sigil.</span>
+                        <code class="spw-compare-chip">~voice_source</code>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="frame-operators" aria-label="Operator reference routes">
+                <a class="operator-chip" href="/topics/software/spw/" data-spw-operator="probe">?[operator atlas]</a>
+                <a class="operator-chip" href="/topics/software/spw/#topic-operator" data-spw-operator="topic">&lt;topic&gt;</a>
+                <a class="operator-chip" href="/about/website/#brace-polarity" data-spw-operator="frame">#&gt;brace_polarity</a>
+            </nav>
         </section>
 
         <section class="site-frame" id="surface-register" data-spw-swappable="?,#&gt;,^">
