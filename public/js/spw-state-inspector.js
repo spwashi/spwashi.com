@@ -43,8 +43,9 @@ const STATEFUL_PHASES = Object.freeze({
     stream: ['source', 'stream', 'sink'],
     pragma: ['hint', 'constraint', 'pragma']
 });
-
 let inspectorCount = 0;
+const LOOP_STATE = new WeakMap();
+const LOOP_TIMERS = new WeakMap();
 
 const escapeHtml = (value = '') => String(value)
     .replace(/&/g, '&amp;')
@@ -58,6 +59,29 @@ const toSnake = (value = '') => String(value)
     .replace(/[^a-zA-Z0-9]+/g, '_')
     .replace(/^_+|_+$/g, '')
     .toLowerCase();
+
+const readDurationMs = (name, fallback) => {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    if (!raw) return fallback;
+
+    if (raw.endsWith('ms')) {
+        const value = Number.parseFloat(raw);
+        return Number.isFinite(value) ? value : fallback;
+    }
+
+    if (raw.endsWith('s')) {
+        const value = Number.parseFloat(raw);
+        return Number.isFinite(value) ? value * 1000 : fallback;
+    }
+
+    const value = Number.parseFloat(raw);
+    return Number.isFinite(value) ? value : fallback;
+};
+
+const getLoopTiming = () => ({
+    previewReleaseMs: readDurationMs('--duration-fast', 180),
+    resolveMs: readDurationMs('--duration-slow', 480) * 2
+});
 
 const getTargetName = (target) => {
     if (target.dataset.spwInspect) return toSnake(target.dataset.spwInspect);
@@ -200,6 +224,16 @@ function readImageFields(target) {
 
     return [
         {
+            key: 'hold',
+            value: target.dataset.spwHoldState
+                || (target.dataset.spwVisited === 'true' ? 'settled' : 'idle'),
+            source: 'image-hold',
+            interactive: false,
+            tone: target.dataset.spwHoldState
+                ? 'activated'
+                : (target.dataset.spwVisited === 'true' ? 'resolved' : 'idle')
+        },
+        {
             key: 'effect',
             value: target.dataset.spwImageEffectOverride || target.dataset.spwImageEffect || 'semantic',
             options: [...IMAGE_EFFECT_OPTIONS],
@@ -221,8 +255,90 @@ function readImageFields(target) {
     ];
 }
 
+function readLoopState(target) {
+    return LOOP_STATE.get(target) || { state: 'idle', token: '', label: 'ready' };
+}
+
+function formatLoopLabel(state, token = '') {
+    if (state === 'idle') return 'ready';
+    if (!token) return state;
+    return `${state} · ${token}`;
+}
+
+function applyLoopDataset(target, loop) {
+    const inspector = target.querySelector(`[data-spw-state-block="${target.dataset.spwInspectId}"]`);
+    if (!inspector) return;
+
+    inspector.dataset.spwLoopState = loop.state;
+    inspector.dataset.spwLoopToken = loop.token || '';
+    inspector.dataset.spwLoopLabel = loop.label;
+}
+
+function setLoopState(target, state = 'idle', token = '') {
+    const loop = {
+        state,
+        token: state === 'idle' ? '' : token,
+        label: formatLoopLabel(state, token)
+    };
+    LOOP_STATE.set(target, loop);
+    applyLoopDataset(target, loop);
+}
+
+function clearLoopTimer(target) {
+    const timer = LOOP_TIMERS.get(target);
+    if (!timer) return;
+    window.clearTimeout(timer);
+    LOOP_TIMERS.delete(target);
+}
+
+function scheduleLoopIdle(target, delay = getLoopTiming().previewReleaseMs) {
+    clearLoopTimer(target);
+    const timer = window.setTimeout(() => {
+        setLoopState(target, 'idle');
+        syncTarget(target);
+    }, delay);
+    LOOP_TIMERS.set(target, timer);
+}
+
+function previewLoop(target, token) {
+    const current = readLoopState(target);
+    if (current.state === 'preview' && current.token === token) return;
+    if (current.state === 'activated' && current.token === token) return;
+    clearLoopTimer(target);
+    setLoopState(target, 'preview', token);
+    syncTarget(target);
+}
+
+function activateLoop(target, token) {
+    clearLoopTimer(target);
+    setLoopState(target, 'activated', token);
+    syncTarget(target);
+}
+
+function resolveLoop(target, token) {
+    const timing = getLoopTiming();
+    clearLoopTimer(target);
+    setLoopState(target, 'resolved', token);
+    syncTarget(target);
+    pulseInspector(target);
+    scheduleLoopIdle(target, timing.resolveMs);
+}
+
+function readLoopField(target) {
+    const loop = readLoopState(target);
+    return {
+        key: 'loop',
+        value: loop.state === 'idle'
+            ? 'ready'
+            : `${loop.state}(${loop.token || 'surface'})`,
+        source: 'loop',
+        interactive: false,
+        tone: loop.state
+    };
+}
+
 function collectFields(target) {
-    const fields = [];
+    const fields = [readLoopField(target)];
     const modeField = readModeField(target);
     const phaseField = readPhaseField(target);
 
@@ -238,11 +354,31 @@ function createInspector(target) {
     const block = document.createElement('pre');
     block.className = 'spw-state-block';
     block.dataset.spwStateBlock = target.dataset.spwInspectId;
+    block.addEventListener('pointerover', (event) => {
+        const token = event.target.closest('.spw-state-token[data-action]');
+        if (!token) return;
+        previewLoop(target, getLoopToken(token));
+    });
+    block.addEventListener('pointerleave', () => {
+        scheduleLoopIdle(target);
+    });
+    block.addEventListener('focusin', (event) => {
+        const token = event.target.closest('.spw-state-token[data-action]');
+        if (!token) return;
+        previewLoop(target, getLoopToken(token));
+    });
+    block.addEventListener('focusout', (event) => {
+        if (block.contains(event.relatedTarget)) return;
+        scheduleLoopIdle(target);
+    });
     block.addEventListener('click', (event) => {
         const token = event.target.closest('.spw-state-token[data-action]');
         if (!token) return;
         event.preventDefault();
         event.stopPropagation();
+
+        const loopToken = getLoopToken(token);
+        activateLoop(target, loopToken);
 
         const action = token.dataset.action;
         if (action === 'operator') {
@@ -253,8 +389,9 @@ function createInspector(target) {
             cycleFieldValue(target, token.dataset.key);
         }
 
-        syncTarget(target);
-        pulseInspector(target);
+        if (action === 'operator' || action === 'form') {
+            resolveLoop(target, loopToken);
+        }
     });
 
     return block;
@@ -293,6 +430,7 @@ function mountTarget(target) {
         }
     }
 
+    setLoopState(target, 'idle');
     syncTarget(target);
 }
 
@@ -315,11 +453,20 @@ function renderField(field) {
     const classes = [
         'spw-state-token',
         'spw-state-token--val',
-        field.interactive ? 'is-interactive' : ''
+        field.interactive ? 'is-interactive' : '',
+        field.source ? `spw-state-token--${field.source}` : '',
+        field.tone ? `is-${field.tone}` : ''
     ].filter(Boolean).join(' ');
 
     return `  <span class="spw-state-token spw-state-token--key">${escapeHtml(field.key)}</span>: `
         + `<span class="${classes}" data-key="${escapeHtml(field.key)}"${interactive}>${escapeHtml(field.value)}</span>`;
+}
+
+function getLoopToken(token) {
+    const action = token.dataset.action;
+    if (action === 'operator') return 'operator';
+    if (action === 'form') return 'brace';
+    return token.dataset.key || 'value';
 }
 
 function renderState(state) {
@@ -472,7 +619,10 @@ function cycleImageEffect(target) {
     const current = target.dataset.spwImageEffectOverride || target.dataset.spwImageEffect || 'semantic';
     const next = IMAGE_EFFECT_OPTIONS[(IMAGE_EFFECT_OPTIONS.indexOf(current) + 1) % IMAGE_EFFECT_OPTIONS.length];
     target.dataset.spwImageEffectOverride = next;
-    target.dispatchEvent(new CustomEvent('spw:image:refresh'));
+    target.dispatchEvent(new CustomEvent('spw:image:refresh', {
+        bubbles: true,
+        detail: { reason: 'effect' }
+    }));
 }
 
 function cycleFieldValue(target, key) {
@@ -511,7 +661,38 @@ export function initSpwStateInspector() {
 
     bus.on('image:visited', refreshAll);
     bus.on('settings:changed', refreshAll);
-    document.addEventListener('spw:mode-change', refreshAll);
+    document.addEventListener('spw:image:refresh', (event) => {
+        const target = event.target instanceof Element
+            ? event.target.closest('[data-spw-image-managed="true"]')
+            : null;
+        if (!(target instanceof HTMLElement)) return;
+
+        const reason = event.detail?.reason || '';
+        syncTarget(target);
+
+        if (reason === 'effect') {
+            resolveLoop(target, 'effect');
+        } else if (reason === 'arming') {
+            activateLoop(target, 'hold');
+        } else if (reason === 'visited' || reason === 'settled') {
+            resolveLoop(target, 'hold');
+        } else if (reason === 'released') {
+            scheduleLoopIdle(target);
+        }
+    });
+    document.addEventListener('spw:mode-change', (event) => {
+        refreshAll();
+        const groupName = event.detail?.groupName;
+        if (!groupName) return;
+
+        document
+            .querySelectorAll(`[data-spw-inspect-mode-group="${groupName}"]`)
+            .forEach((target) => {
+                if (target instanceof HTMLElement) {
+                    resolveLoop(target, 'mode');
+                }
+            });
+    });
     document.addEventListener('spw:component-semantics-ready', refreshAll);
     document.addEventListener('change', (event) => {
         const target = event.target instanceof Element
@@ -519,6 +700,10 @@ export function initSpwStateInspector() {
             : null;
         if (target instanceof HTMLElement) {
             syncTarget(target);
+            const changedKey = event.target.getAttribute?.('name');
+            if (changedKey) {
+                resolveLoop(target, toSnake(changedKey));
+            }
         }
     });
 }

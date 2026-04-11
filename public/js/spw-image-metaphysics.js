@@ -129,6 +129,13 @@ function getMemoryLabel(host, context, visited) {
     return 'hold to visit';
 }
 
+function requestHostRefresh(host, reason = 'sync') {
+    host.dispatchEvent(new CustomEvent('spw:image:refresh', {
+        bubbles: true,
+        detail: { reason }
+    }));
+}
+
 function updateHelper(host, context, visited) {
     const button = host.querySelector('.spw-image-helper');
     const memory = host.querySelector('.spw-image-memory');
@@ -170,7 +177,7 @@ function ensureHelper(host) {
         const current = host.dataset.spwImageEffectOverride || 'semantic';
         const nextIndex = (EFFECT_SEQUENCE.indexOf(current) + 1) % EFFECT_SEQUENCE.length;
         host.dataset.spwImageEffectOverride = EFFECT_SEQUENCE[nextIndex];
-        syncHost(host);
+        requestHostRefresh(host, 'effect');
     });
 
     strip.append(button, memory);
@@ -214,11 +221,13 @@ function markVisited(host) {
     host.dataset.spwVisited = 'true';
     host.dataset.spwVisitBurst = 'true';
     syncHost(host);
+    requestHostRefresh(host, 'visited');
     bus.emit('image:visited', { key, page: window.location.pathname, medium: getMedium(host) }, { element: host });
 
     window.setTimeout(() => {
         delete host.dataset.spwVisitBurst;
         delete host.dataset.spwHoldState;
+        requestHostRefresh(host, 'settled');
     }, 900);
 }
 
@@ -237,10 +246,12 @@ function registerHoldGesture(host) {
         clearTimer();
         if (!activated) {
             delete host.dataset.spwHoldState;
+            requestHostRefresh(host, 'released');
             return;
         }
 
         host.dataset.spwHoldState = 'visited';
+        requestHostRefresh(host, 'visited');
         activated = false;
     };
 
@@ -251,6 +262,7 @@ function registerHoldGesture(host) {
         activated = false;
         clearTimer();
         host.dataset.spwHoldState = 'arming';
+        requestHostRefresh(host, 'arming');
         timer = window.setTimeout(() => {
             activated = true;
             markVisited(host);
@@ -324,7 +336,7 @@ export function initSpwImageMetaphysics() {
         scan(document);
     });
 
-    document.addEventListener('spw:settings-change', () => {
+    bus.on('settings:changed', () => {
         document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncHost(host));
     });
 }

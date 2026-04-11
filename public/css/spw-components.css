@@ -894,10 +894,11 @@ figcaption {
 }
 
 .spw-state-block {
+    position: relative;
     width: fit-content;
     max-width: 100%;
     margin: 0.9rem 0 0;
-    padding: 0.72rem 0.9rem;
+    padding: 1.5rem 0.9rem 0.72rem;
     border: 1px solid color-mix(in srgb, var(--teal) 24%, rgba(255, 255, 255, 0.12));
     border-radius: 6px;
     background: rgba(12, 14, 18, 0.9);
@@ -910,6 +911,25 @@ figcaption {
         border-color var(--duration-fast, 120ms) ease,
         box-shadow var(--duration-fast, 120ms) ease,
         transform var(--duration-fast, 120ms) ease;
+}
+
+.spw-state-block::before {
+    content: attr(data-spw-loop-label);
+    position: absolute;
+    top: 0.42rem;
+    right: 0.58rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.2rem;
+    padding: 0 0.42rem;
+    border: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.28) 55%, transparent);
+    border-radius: 999px;
+    color: rgba(255, 245, 223, 0.74);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.63rem;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    opacity: 0.88;
 }
 
 .spw-state-block code {
@@ -940,6 +960,36 @@ figcaption {
 .spw-state-block:focus-within {
     border-color: color-mix(in srgb, var(--teal) 42%, rgba(255, 255, 255, 0.18));
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.spw-state-block[data-spw-loop-state="preview"] {
+    border-color: color-mix(in srgb, var(--teal) 38%, rgba(255, 255, 255, 0.2));
+}
+
+.spw-state-block[data-spw-loop-state="preview"]::before {
+    color: rgba(151, 238, 231, 0.88);
+    border-color: color-mix(in srgb, var(--teal) 26%, transparent);
+}
+
+.spw-state-block[data-spw-loop-state="activated"] {
+    border-color: color-mix(in srgb, var(--amber) 42%, rgba(255, 255, 255, 0.22));
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.24),
+        0 0 0 1px color-mix(in srgb, var(--amber) 16%, transparent);
+}
+
+.spw-state-block[data-spw-loop-state="activated"]::before {
+    color: rgba(255, 221, 150, 0.92);
+    border-color: color-mix(in srgb, var(--amber) 28%, transparent);
+}
+
+.spw-state-block[data-spw-loop-state="resolved"] {
+    border-color: color-mix(in srgb, var(--green, rgb(122, 211, 167)) 34%, rgba(255, 255, 255, 0.2));
+}
+
+.spw-state-block[data-spw-loop-state="resolved"]::before {
+    color: rgba(180, 241, 198, 0.9);
+    border-color: color-mix(in srgb, var(--green, rgb(122, 211, 167)) 22%, transparent);
 }
 
 .spw-state-token {
@@ -981,6 +1031,25 @@ figcaption {
 
 .spw-state-token--val {
     color: rgba(148, 232, 226, 0.96);
+}
+
+.spw-state-token--loop {
+    color: rgba(227, 234, 240, 0.86);
+}
+
+.spw-state-token--loop.is-preview,
+.spw-state-token--image-hold.is-preview {
+    color: rgba(151, 238, 231, 0.96);
+}
+
+.spw-state-token--loop.is-activated,
+.spw-state-token--image-hold.is-activated {
+    color: rgba(255, 219, 138, 0.96);
+}
+
+.spw-state-token--loop.is-resolved,
+.spw-state-token--image-hold.is-resolved {
+    color: rgba(182, 239, 197, 0.96);
 }
 
 .spw-state-block.is-dirty {

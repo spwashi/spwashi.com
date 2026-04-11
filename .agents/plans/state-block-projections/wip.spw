@@ -76,6 +76,8 @@
  >>[2026-04-11 09:08] taste — the block must read like a useful code surface first; interactivity is secondary
  >>[2026-04-11 09:31] implement — repaired the broken image hold timer, added image refresh hooks, and opted home/pretext/settings into explicit state inspection
  >>[2026-04-11 09:34] align — copy now frames the block as an epistemic boundary handle: stance, containment, and persisted mode/setting changes remain visible and reversible
+ >>[2026-04-11 09:53] refine — state blocks now expose a small explicit loop state (preview, activated, resolved) so actions read as deliberate processes rather than anonymous clicks
+ >>[2026-04-11 09:57] integrate — image helper, hold-to-visit, mode switches, and settings changes now resolve through shared refresh / change paths instead of isolated flashes
 }
 
 ^["open"]{
@@ -97,7 +99,7 @@
  ~#files_hot: "public/js/site.js, public/css/spw-components.css, public/js/spw-image-metaphysics.js"
  ~#next_commit: "2"
  ~#open_count: "1"
- ~#last_stream: "2026-04-11 09:34"
+ ~#last_stream: "2026-04-11 09:57"
  ~#taste_debt: "Keep the settings state block from becoming a full dashboard"
 }
 
