@@ -265,8 +265,27 @@
                     </div>
                 </div>
             </section>
-        </article>
-    </main>
+            <section class="site-frame" id="staff-considerations" data-spw-role="reference" data-spw-meaning="architectural deep-dive" data-spw-form="square">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#staff-considerations">$["staff_considerations"]</a>
+                    <h2>Staff Engineering Deep-Dive</h2>
+                </div>
+                <p class="inline-note">For principal leads: how we model time determines the durability of the publishing pipeline. Consider these architectural constraints when leading a team towards modern production.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Cooperative Multitasking</h3>
+                        <p>In a browser-first runtime, the main thread is a constrained resource. Staff leads must choose between synchronous 'magic' and predictable cooperative yields (<code>requestIdleCallback</code>, <code>scheduler.postTask</code>).</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Priority Inversion</h3>
+                        <p>When high-priority text layout is blocked by low-priority background indexing, the user experience fractures. Spw models these as explicit layers of consideration to prevent implicit inversion.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Mathematical Alchemy</h3>
+                        <p>The scheduler is a priority queue over a time-indexed lattice. By treating tasks as 'spells' with measurable costs, we can project a stable UI even during dense data mutations.</p>
+                    </div>
+                </div>
+            </section>
     <footer>
         <p>© 2026 spwashi</p>
     </footer>

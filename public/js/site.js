@@ -16,6 +16,7 @@ import { initBraceGestures } from './brace-gestures.js';
 import { initSpwExperiential } from './spw-experiential.js';
 import { initPretextPhysics } from './spw-pretext-physics.js';
 import { initSpwStates } from './spw-states.js';
+import { initSpwPromptUtils } from './spw-prompt-utils.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -526,6 +527,7 @@ onDomReady(() => {
     initSpwExperiential();
     initPretextPhysics();
     initSpwStates();
+    initSpwPromptUtils();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

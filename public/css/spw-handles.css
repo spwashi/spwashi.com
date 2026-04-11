@@ -592,3 +592,48 @@
 [data-spw-stateful] .frame-sigil {
     color: var(--phase-ink, inherit);
 }
+
+/* ─── Prompt-Useful Affordances ────────────────────────────────────────── */
+
+.frame-prompt-copy {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--charcoal);
+    border: 1px solid var(--ink-soft);
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-family: inherit;
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0.2;
+    transition: all 0.2s var(--brace-settle-ease);
+    z-index: 10;
+}
+
+.frame-prompt-copy:hover {
+    opacity: 1;
+    border-color: var(--teal);
+    color: var(--teal);
+    box-shadow: 0 0 10px rgba(26, 153, 153, 0.2);
+}
+
+.frame-prompt-copy.copy-success {
+    border-color: var(--pink);
+    color: var(--pink);
+    opacity: 1;
+}
+
+.frame-prompt-copy .log-op {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .frame-prompt-copy {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.1rem 0.4rem;
+    }
+}
