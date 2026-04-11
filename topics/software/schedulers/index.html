@@ -7,8 +7,34 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Schedulers: Orchestrating Time and Priority</title>
-    <meta name="description" content="A staff-level reference for task scheduling, cooperative multitasking, and priority queues in the web runtime. Connecting MDN documentation with Spw-oriented wonder.">
+    <title>Spwashi • Schedulers</title>
+    <meta name="description" content="Orchestrating time: cooperative multitasking, priority queues, and the geometry of schedulers in the Spw workbench."/>
+    <meta property="og:title" content="Spwashi • Schedulers and Time-Slicing"/>
+    <meta property="og:description" content="Exploring cooperative multitasking and priority queues for predictable, structural systems."/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/schedulers.png"/>
+    <meta property="og:image:alt" content="Glowing semi-transparent nodes connected by rhythmic lines of light, representing priority queues."/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://spwashi.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Software",
+                "item": "https://spwashi.com/topics/software/"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Schedulers",
+                "item": "https://spwashi.com/topics/software/schedulers/"
+            }]
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/spw-cinematic.css">
@@ -82,6 +108,14 @@
     <main>
         <article>
             <section class="site-frame site-hero" id="schedulers-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="scheduler-lens" data-mode-panel="orientation" data-spw-role="orientation">
+                        <figure class="frame-panel">
+                            <img src="/public/images/assets/illustrations/schedulers.png" alt="Geometric priority queue visualization." loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;">
+                        </figure>
+                        <p>How we orchestrate time determines how readable a system feels once it starts to move. Schedulers manage the 'tick' of the machine, ensuring that priority tasks and cooperative background work stay in balance.</p>
+                    </section>
+                </div>
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#schedulers-hero">#&gt;task_scheduling_systems</a>
                     <div class="spec-strip">

@@ -8,6 +8,33 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • Pretext Field Lab</title>
+    <meta name="description" content="Tasteful flow magic: measuring text once and projecting it at multiple widths without DOM reflow."/>
+    <meta property="og:title" content="Spwashi • Pretext and Text Physics"/>
+    <meta property="og:description" content="Exploring high-performance text layout via measurement-driven projection."/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/pretext-physics.png"/>
+    <meta property="og:image:alt" content="Glowing monospace characters in symmetrical, fanned-out patterns on a dark background."/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://spwashi.com/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Software",
+                "item": "https://spwashi.com/topics/software/"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Pretext",
+                "item": "https://spwashi.com/topics/software/pretext/"
+            }]
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
         <link rel="manifest" href="/manifest.webmanifest">
 <link rel="stylesheet" href="/public/css/style.css">
@@ -51,6 +78,9 @@
                 <h1>Pretext Field Lab</h1>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation" data-spw-role="orientation">
+                        <figure class="frame-panel">
+                            <img src="/public/images/assets/illustrations/pretext-physics.png" alt="Dynamic text physics visualization." loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;">
+                        </figure>
                         <p>This is a small observatory for Pretext.js: edit one text sample, project it at several widths, and watch line breaks update without DOM measurement APIs.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" data-spw-role="schema" hidden>
