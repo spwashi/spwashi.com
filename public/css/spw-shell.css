@@ -76,6 +76,61 @@ body > header nav {
   container-type: inline-size;
 }
 
+.spw-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  min-height: var(--shell-nav-min-height);
+  margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
+  padding: 0.32rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.94);
+  font: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.spw-nav-toggle-glyph {
+  position: relative;
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.65rem;
+}
+
+.spw-nav-toggle-glyph::before,
+.spw-nav-toggle-glyph::after,
+.spw-nav-toggle-glyph {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+}
+
+.spw-nav-toggle-glyph {
+  background-size: 100% 1.5px;
+  background-position: center;
+}
+
+.spw-nav-toggle-glyph::before,
+.spw-nav-toggle-glyph::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 1.5px;
+  background-size: 100% 100%;
+}
+
+.spw-nav-toggle-glyph::before {
+  top: 0;
+}
+
+.spw-nav-toggle-glyph::after {
+  bottom: 0;
+}
+
 .site-header ul,
 body > header ul {
   display: flex;
@@ -263,20 +318,37 @@ html[data-spw-show-footer='off'] body > footer {
 @media (max-width: 720px) {
   .site-header,
   body > header {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.25rem;
     padding-block: 0.35rem;
   }
 
   .header-sigil,
-  .header-op-indicator {
+  .header-op-indicator,
+  .spw-nav-toggle {
     padding-inline: 1rem;
+  }
+
+  .spw-nav-toggle {
+    display: inline-flex;
+    justify-self: end;
+  }
+
+  .header-op-indicator {
+    grid-column: 1 / -1;
+    padding-top: 0.1rem;
     text-align: center;
   }
 
   .site-header nav,
   body > header nav {
+    grid-column: 1 / -1;
     width: 100%;
+  }
+
+  .site-header[data-spw-menu='closed'] nav,
+  body > header[data-spw-menu='closed'] nav {
+    display: none;
   }
 
   .site-header ul,

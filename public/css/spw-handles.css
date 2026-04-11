@@ -919,6 +919,15 @@ html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [dat
     box-shadow: var(--shadow-active);
     animation: spw-resonance-slide 0.5s var(--brace-settle-ease);
     font-size: 0.9rem;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 15%, transparent) 0 3rem,
+            transparent 3rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2rem) 1px;
+    background-position: 1rem 0.9rem;
 }
 
 @keyframes spw-resonance-slide {

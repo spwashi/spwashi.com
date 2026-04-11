@@ -32,6 +32,8 @@ import { initSpwImageMetaphysics } from './spw-image-metaphysics.js';
 import { initSpwVisitation } from './spw-visitation.js';
 import { initSpwProjection } from './spw-projection.js';
 import { initSpwStateInspector } from './spw-state-inspector.js';
+import { initSpwShellDisclosure } from './spw-shell-disclosure.js';
+import { initSpwBraceActions } from './spw-brace-actions.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -541,6 +543,7 @@ const initSpiritSequenceEasterEgg = () => {
 onDomReady(() => {
     applySiteSettings();
     resetSoftwareEntryScroll();
+    initSpwShellDisclosure();
     initSiteCore();
     initBraceWalls();
     initBraceGestures();
@@ -563,6 +566,7 @@ onDomReady(() => {
     initSpwVisitation();
     initSpwProjection();
     initSpwStateInspector();
+    initSpwBraceActions();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

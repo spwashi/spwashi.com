@@ -1,0 +1,110 @@
+# wip — minimal-brace-disclosure
+# Branch: feature/minimal-brace-disclosure
+# Started: 2026-04-11
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/minimal-brace-disclosure/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+}
+
+^["intent"]{
+ ~#goal: "Quiet the default runtime, collapse shell chrome intentionally on mobile, and turn braces plus diagnostics into explicit reversible controls."
+ ~#taste: "containment + clarity + expressiveness"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#shell, #navigation, #brace_physics, #diagnostic_disclosure]
+ review_surfaces: [@cluster, @plan, @pattern]
+ snippet_routes: [#example, #query, #snippet]
+}
+
+^["concept_index"]{
+ primary: [#minimal_defaults, #hamburger_disclosure, #inline_statement_containers, #brace_actions, #dismissable_diagnostics]
+ surfaces: [#shell, #frames, #console, #state_block]
+ tensions: [#noise, #discoverability, #reversibility]
+ transfers: [#component, #page, #runtime]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread shell and brace runtime before changing the visible contract",
+  "< ship disclosure through shared primitives rather than per-page patches",
+  "$ record which controls are entry vs projection vs dismissal",
+  "^ fold new interaction truth back into shell, settings, and diagnostics",
+  "% keep frame activation and persistence stable while reducing noise",
+ ]
+ gates: [#preview_truth, #snippet_reuse, #claim_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#shell_disclosure]
+ parallelizable: [#css_surface, #js_runtime]
+ shared_hot_files: ["public/js/site.js", "public/css/spw-shell.css", "public/css/spw-components.css"]
+ merge_risks: [#shell_hotspot, #diagnostic_hotspot]
+ handoff_artifacts: [@plan, @pattern]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@pattern]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #preview, #legibility, #trust]
+ questions: [#what_is_primary, #what_is_reversible, #what_is_visible]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: [#menu_without_return]
+ soft_failures: [#brace_noise, #diagnostic_dead_end]
+ recoveries: [#reopen_controls, #idle_fallback]
+ non_negotiables: [#settings_persist, #frame_activation_survives]
+}
+
+^["validation"]{
+ hypotheses: [#quiet_default_reads_better, #mobile_shell_compacts_cleanly, #brace_clicks_explain_state]
+ negative_controls: [#mode_switching_unchanged, #hold_gestures_unchanged]
+ demo_path: ["/settings narrow", "/ home narrow", "#brace click", "#diagnostic dismiss + recover"]
+}
+
+^["stream"]{
+ >>[2026-04-11 04:25] observe — Current defaults are still richer than the calm preset, mobile header disclosure relies on wrapping, and diagnostics/state blocks stay visually present longer than needed.
+ >>[2026-04-11 04:26] decide — Keep new shell and brace behavior in dedicated modules so site.js stays wiring-only.
+ >>[2026-04-11 04:44] implement — Added shared shell disclosure and brace-edge action modules, wired them through site.js, and shifted runtime defaults toward the calm baseline.
+ >>[2026-04-11 04:45] implement — Refactored the state inspector into a collapsible/dismissable diagnostic surface with restore controls and collapsed-by-default behavior when cognitive handles are off.
+ >>[2026-04-11 04:47] taste — Container surfaces now read flatter and more statement-like through top-line syntax rules instead of heavier floating-card treatment.
+ >>[2026-04-11 04:49] verify — node --check passed for site.js, site-settings.js, spw-shell-disclosure.js, spw-brace-actions.js, and spw-state-inspector.js; git diff --check passed.
+ >>[2026-04-11 13:12] integrate — Minimal defaults now hide the console, the settings page checked states match runtime defaults before JS boots, and statement-line treatment extends to presets, categories, operator cards, mode panels, and smart resonance cards.
+}
+
+^["open"]{
+ ?[browser_smoke]: "Need a real narrow-screen browser pass to tune menu spacing, brace action overlap, and collapsed diagnostic affordances."
+}
+
+^["commits"]{
+ ~[1]: "&[defaults, shell] — quiet default runtime and add mobile hamburger disclosure"
+ ~[2]: "&[brace, disclosure] — turn braces and diagnostics into reversible controls"
+ ~[3]: "![shell, brace] — verify syntax and disclosure behavior"
+}
+
+^["cache"]{
+ ~#status: "verifying"
+ ~#base_ref: "main@1d48d4e"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/js/site.js, public/css/spw-shell.css, public/css/spw-components.css"
+ ~#next_commit: "1"
+ ~#open_count: "1"
+ ~#last_stream: "2026-04-11 04:49"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

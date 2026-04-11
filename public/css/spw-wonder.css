@@ -81,6 +81,10 @@
     min-width: 0;
 }
 
+html[data-spw-semantic-density="minimal"] .persona-selector-mount {
+    display: none;
+}
+
 .persona-selector-frame {
     display: flex;
     align-items: center;

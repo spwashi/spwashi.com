@@ -41,7 +41,7 @@ const ANIMATION_THROTTLE_MULTIPLIER = Object.freeze({
 const DEFAULT_SITE_SETTINGS = Object.freeze({
     // Navigation & Interface
     navigatorDisplay: 'quiet',
-    consoleDisplay: 'collapsed',
+    consoleDisplay: 'hidden',
     viewportActivation: 'off',
 
     // Accessibility
@@ -67,32 +67,32 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
     // Component Visibility
     showFooter: 'on',
     headerOpacity: 'normal',
-    showSpecPills: 'on',
+    showSpecPills: 'off',
 
     // Performance
     animationThrottling: 'off',
     imageLazyLoading: 'on',
 
     // Progressive Enhancement
-    enhancementLevel: 'balanced',
-    semanticDensity: 'normal',
+    enhancementLevel: 'minimal',
+    semanticDensity: 'minimal',
     operatorPresentation: 'symbolic',
-    infospaceComplexity: 'adaptive',
-    cognitiveHandles: 'on',
-    dimensionalBreadcrumbs: 'on',
-    fractalNesting: 'on',
+    infospaceComplexity: 'simple',
+    cognitiveHandles: 'off',
+    dimensionalBreadcrumbs: 'off',
+    fractalNesting: 'off',
 
     // Semantic & Markup
     showSemanticMetadata: 'off',
-    operatorHighlighting: 'on',
-    relationalVisualization: 'on',
-    phaseIndicators: 'on',
-    depthIndicators: 'on',
+    operatorHighlighting: 'off',
+    relationalVisualization: 'off',
+    phaseIndicators: 'off',
+    depthIndicators: 'off',
 
     // Spirit Cycle & Dynamics
     currentSpiritPhase: 'expression',
     spiritPhaseAutoCycle: 'off',
-    grainIntensity: 'subtle'
+    grainIntensity: 'none'
 });
 
 const SETTING_OPTIONS = Object.freeze({
@@ -342,12 +342,15 @@ const setStatus = (node, message) => {
 
 const PRESETS = Object.freeze({
     calm: {
-        navigatorDisplay: 'quiet', consoleDisplay: 'collapsed', colorMode: 'auto',
+        navigatorDisplay: 'quiet', consoleDisplay: 'hidden', colorMode: 'auto',
         operatorSaturation: 'normal', animationIntensity: 'normal', grainIntensity: 'none',
         semanticDensity: 'minimal', operatorHighlighting: 'off',
         cognitiveHandles: 'off', showSemanticMetadata: 'off',
-        phaseIndicators: 'off', spiritPhaseAutoCycle: 'off',
-        reduceMotion: 'off', highContrast: 'off'
+        phaseIndicators: 'off', depthIndicators: 'off',
+        relationalVisualization: 'off', showSpecPills: 'off',
+        enhancementLevel: 'minimal', infospaceComplexity: 'simple',
+        dimensionalBreadcrumbs: 'off', fractalNesting: 'off',
+        spiritPhaseAutoCycle: 'off', reduceMotion: 'off', highContrast: 'off'
     },
     rich: {
         semanticDensity: 'rich', grainIntensity: 'moderate',

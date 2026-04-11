@@ -118,6 +118,15 @@
     min-width: 0;
     container-type: inline-size;
     scroll-margin-top: calc(var(--header-height) + 1rem);
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent) 0 4.5rem,
+            transparent 4.5rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - (var(--surface-padding) * 2)) 1px;
+    background-position: var(--surface-padding) 1rem;
 }
 
 .site-frame.is-active-frame {

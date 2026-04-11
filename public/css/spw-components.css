@@ -108,6 +108,15 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     background: rgba(255, 255, 255, 0.58);
     overflow: hidden;
     container-type: inline-size;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent) 0 2.9rem,
+            transparent 2.9rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 1.8rem) 1px;
+    background-position: 0.9rem 0.85rem;
 }
 
 .mode-panel[hidden] {
@@ -154,6 +163,15 @@ html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
     container-type: inline-size;
     transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
     overflow: hidden;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent) 0 3.4rem,
+            transparent 3.4rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 1.8rem) 1px;
+    background-position: 0.9rem 0.9rem;
 }
 
 a.frame-card {
@@ -428,6 +446,15 @@ figcaption {
     box-shadow: var(--card-shadow);
     container-type: inline-size;
     transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent) 0 3rem,
+            transparent 3rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 1.8rem) 1px;
+    background-position: 0.9rem 0.85rem;
 }
 
 .operator-card:hover,
@@ -926,10 +953,13 @@ figcaption {
 
 .spw-state-block {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     width: fit-content;
     max-width: 100%;
     margin: 0.9rem 0 0;
-    padding: 1.5rem 0.9rem 0.72rem;
+    padding: 0.58rem 0.7rem 0.72rem;
     border: 1px solid color-mix(in srgb, var(--teal) 24%, rgba(255, 255, 255, 0.12));
     border-radius: 6px;
     background: rgba(12, 14, 18, 0.9);
@@ -947,8 +977,8 @@ figcaption {
 .spw-state-block::before {
     content: attr(data-spw-loop-label);
     position: absolute;
-    top: 0.42rem;
-    right: 0.58rem;
+    top: 0.46rem;
+    right: 2.95rem;
     display: inline-flex;
     align-items: center;
     min-height: 1.2rem;
@@ -963,7 +993,83 @@ figcaption {
     opacity: 0.88;
 }
 
-.spw-state-block code {
+.spw-state-block-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 1.45rem;
+    padding-right: 2.4rem;
+}
+
+.spw-state-block-summary {
+    min-width: 0;
+    color: rgba(255, 247, 227, 0.86);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spw-state-block-controls {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.18rem;
+}
+
+.spw-state-block-toggle,
+.spw-state-block-dismiss,
+.spw-state-block-restore {
+    border: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.2) 58%, transparent);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 247, 227, 0.82);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.68rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.spw-state-block-toggle,
+.spw-state-block-dismiss {
+    min-width: 1.45rem;
+    min-height: 1.45rem;
+    padding: 0;
+}
+
+.spw-state-block-restore {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.7rem;
+    padding: 0.3rem 0.6rem;
+}
+
+.spw-state-block-toggle:hover,
+.spw-state-block-dismiss:hover,
+.spw-state-block-restore:hover,
+.spw-state-block-toggle:focus-visible,
+.spw-state-block-dismiss:focus-visible,
+.spw-state-block-restore:focus-visible {
+    background: color-mix(in srgb, var(--teal) 14%, transparent);
+    color: #fff;
+}
+
+.spw-state-block--overlay + .spw-state-block-restore {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 3;
+    margin-top: 0;
+}
+
+.spw-state-block-body {
+    margin: 0;
+}
+
+.spw-state-block-body code {
     display: block;
     min-width: 0;
     color: rgba(255, 247, 227, 0.92);
@@ -971,6 +1077,19 @@ figcaption {
     font-size: 0.77rem;
     line-height: 1.65;
     white-space: pre;
+}
+
+.spw-state-block[data-spw-disclosure="collapsed"] {
+    width: min(100%, 26rem);
+    padding-bottom: 0.56rem;
+}
+
+.spw-state-block[data-spw-disclosure="collapsed"] .spw-state-block-body {
+    display: none;
+}
+
+.spw-state-block[data-spw-disclosure="dismissed"] {
+    display: none;
 }
 
 .spw-state-block--inline {
@@ -1083,6 +1202,65 @@ figcaption {
     color: rgba(182, 239, 197, 0.96);
 }
 
+[data-spw-brace-actions="on"] {
+    position: relative;
+}
+
+.spw-brace-actions {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.spw-brace-action {
+    position: absolute;
+    top: 0.7rem;
+    min-width: 1.8rem;
+    min-height: 2.4rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface, rgba(255,255,255,0.82)) 88%, transparent);
+    color: var(--active-op-color, var(--teal));
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.24;
+    pointer-events: auto;
+    cursor: pointer;
+    transition:
+        opacity var(--duration-fast, 120ms) ease,
+        transform var(--duration-fast, 120ms) ease,
+        background var(--duration-fast, 120ms) ease;
+}
+
+.spw-brace-action--entry {
+    left: 0.22rem;
+}
+
+.spw-brace-action--projection {
+    right: 0.22rem;
+}
+
+[data-spw-brace-actions="on"]:hover .spw-brace-action,
+[data-spw-brace-actions="on"]:focus-within .spw-brace-action,
+.spw-brace-action:focus-visible {
+    opacity: 0.82;
+}
+
+.spw-brace-action:hover,
+.spw-brace-action:focus-visible {
+    transform: translateY(-1px);
+    background: color-mix(in srgb, var(--teal) 12%, rgba(255,255,255,0.92));
+}
+
+@media (hover: none) {
+    .spw-brace-action {
+        opacity: 0.56;
+    }
+}
+
 .spw-state-block.is-dirty {
     animation: state-pulse 0.34s ease-out;
 }
@@ -1114,5 +1292,16 @@ figcaption {
         right: 0.55rem;
         bottom: 0.55rem;
         max-width: none;
+    }
+
+    .spw-state-block--overlay + .spw-state-block-restore {
+        left: 0.55rem;
+        bottom: 0.55rem;
+    }
+
+    .spw-brace-action {
+        top: 0.48rem;
+        min-width: 2rem;
+        min-height: 2.6rem;
     }
 }

@@ -418,6 +418,15 @@
     text-align: left;
     font-family: inherit;
     transition: border-color 0.15s, background-color 0.15s;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent) 0 2.9rem,
+            transparent 2.9rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2rem) 1px;
+    background-position: 1rem 0.8rem;
 }
 
 .settings-preset-btn:hover,
@@ -444,6 +453,15 @@
     border-radius: var(--radius);
     overflow: hidden;
     container-type: inline-size;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent) 0 3rem,
+            transparent 3rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2rem) 1px;
+    background-position: 1rem 0.9rem;
 }
 
 .settings-category + .settings-category {
@@ -511,6 +529,15 @@
     padding: 0.75rem 0.85rem;
     background: rgba(255, 255, 255, 0.44);
     min-width: 0;
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent) 0 3rem,
+            transparent 3rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 1.7rem) 1px;
+    background-position: 0.85rem 0.8rem;
 }
 
 .settings-fieldset legend {
@@ -629,6 +656,15 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: rgba(255, 255, 255, 0.44);
+    background-image:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent) 0 2.7rem,
+            transparent 2.7rem
+        );
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2rem) 1px;
+    background-position: 1rem 0.75rem;
 }
 
 .pwa-status-label {

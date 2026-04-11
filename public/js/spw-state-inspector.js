@@ -45,6 +45,12 @@ const FORM_DELIMITERS = Object.freeze({
 });
 
 const IMAGE_EFFECT_OPTIONS = Object.freeze(['semantic', 'pixelize', 'watercolor', 'clarify']);
+const DISCLOSURE_EVENT = 'spw:state-block-disclosure';
+const DISCLOSURE_STATES = Object.freeze({
+    EXPANDED: 'expanded',
+    COLLAPSED: 'collapsed',
+    DISMISSED: 'dismissed'
+});
 const STATEFUL_PHASES = Object.freeze({
     frame: ['objective', 'neutral', 'subjective'],
     object: ['source', 'syntax', 'projection'],
@@ -57,6 +63,7 @@ const STATEFUL_PHASES = Object.freeze({
 let inspectorCount = 0;
 const LOOP_STATE = new WeakMap();
 const LOOP_TIMERS = new WeakMap();
+const DISCLOSURE_STATE = new WeakMap();
 
 const escapeHtml = (value = '') => String(value)
     .replace(/&/g, '&amp;')
@@ -247,8 +254,62 @@ function readLoopState(target) {
     return LOOP_STATE.get(target) || createLoopRecord();
 }
 
+function getInspector(target) {
+    return target.querySelector(`[data-spw-state-block="${target.dataset.spwInspectId}"]`);
+}
+
+function getInspectorBody(target) {
+    return getInspector(target)?.querySelector('[data-spw-state-body]') || null;
+}
+
+function getRestoreButton(target) {
+    return target.querySelector(`[data-spw-state-restore="${target.dataset.spwInspectId}"]`);
+}
+
+function readDisclosureState(target) {
+    return DISCLOSURE_STATE.get(target) || DISCLOSURE_STATES.EXPANDED;
+}
+
+function syncDisclosure(target) {
+    const inspector = getInspector(target);
+    const body = getInspectorBody(target);
+    const restore = getRestoreButton(target);
+    if (!inspector || !body) return;
+
+    const disclosure = readDisclosureState(target);
+    inspector.dataset.spwDisclosure = disclosure;
+    inspector.hidden = disclosure === DISCLOSURE_STATES.DISMISSED;
+    body.hidden = disclosure !== DISCLOSURE_STATES.EXPANDED;
+
+    const collapse = inspector.querySelector('[data-spw-state-toggle]');
+    if (collapse) {
+        const expanded = disclosure === DISCLOSURE_STATES.EXPANDED;
+        collapse.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        collapse.textContent = expanded ? '▾' : '▸';
+    }
+
+    if (restore) {
+        restore.hidden = disclosure !== DISCLOSURE_STATES.DISMISSED;
+    }
+}
+
+function setDisclosureState(target, next) {
+    DISCLOSURE_STATE.set(target, next);
+    syncDisclosure(target);
+}
+
+function toggleDisclosure(target) {
+    const disclosure = readDisclosureState(target);
+    setDisclosureState(
+        target,
+        disclosure === DISCLOSURE_STATES.EXPANDED
+            ? DISCLOSURE_STATES.COLLAPSED
+            : DISCLOSURE_STATES.EXPANDED
+    );
+}
+
 function applyLoopDataset(target, loop) {
-    const inspector = target.querySelector(`[data-spw-state-block="${target.dataset.spwInspectId}"]`);
+    const inspector = getInspector(target);
     if (!inspector) return;
 
     inspector.dataset.spwLoopState = loop.state;
@@ -327,27 +388,58 @@ function collectFields(target) {
 }
 
 function createInspector(target) {
-    const block = document.createElement('pre');
+    const block = document.createElement('section');
     block.className = 'spw-state-block';
     block.dataset.spwStateBlock = target.dataset.spwInspectId;
-    block.addEventListener('pointerover', (event) => {
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'spw-state-block-toolbar';
+
+    const summary = document.createElement('span');
+    summary.className = 'spw-state-block-summary';
+    summary.setAttribute('data-spw-state-summary', '');
+
+    const controls = document.createElement('div');
+    controls.className = 'spw-state-block-controls';
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'spw-state-block-toggle';
+    toggle.setAttribute('data-spw-state-toggle', '');
+    toggle.setAttribute('aria-label', 'Collapse or expand state surface');
+
+    const dismiss = document.createElement('button');
+    dismiss.type = 'button';
+    dismiss.className = 'spw-state-block-dismiss';
+    dismiss.setAttribute('data-spw-state-dismiss', '');
+    dismiss.setAttribute('aria-label', 'Dismiss state surface');
+    dismiss.textContent = '×';
+
+    controls.append(toggle, dismiss);
+    toolbar.append(summary, controls);
+
+    const body = document.createElement('pre');
+    body.className = 'spw-state-block-body';
+    body.setAttribute('data-spw-state-body', '');
+
+    body.addEventListener('pointerover', (event) => {
         const token = event.target.closest('.spw-state-token[data-action]');
         if (!token) return;
         previewLoop(target, getLoopToken(token));
     });
-    block.addEventListener('pointerleave', () => {
+    body.addEventListener('pointerleave', () => {
         scheduleLoopIdle(target);
     });
-    block.addEventListener('focusin', (event) => {
+    body.addEventListener('focusin', (event) => {
         const token = event.target.closest('.spw-state-token[data-action]');
         if (!token) return;
         previewLoop(target, getLoopToken(token));
     });
-    block.addEventListener('focusout', (event) => {
-        if (block.contains(event.relatedTarget)) return;
+    body.addEventListener('focusout', (event) => {
+        if (body.contains(event.relatedTarget)) return;
         scheduleLoopIdle(target);
     });
-    block.addEventListener('click', (event) => {
+    body.addEventListener('click', (event) => {
         const token = event.target.closest('.spw-state-token[data-action]');
         if (!token) return;
         event.preventDefault();
@@ -370,11 +462,39 @@ function createInspector(target) {
         }
     });
 
+    [toggle, dismiss].forEach((button) => {
+        button.addEventListener('pointerdown', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+    });
+
+    toggle.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleDisclosure(target);
+    });
+
+    dismiss.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setDisclosureState(target, DISCLOSURE_STATES.DISMISSED);
+    });
+
+    block.append(toolbar, body);
     return block;
 }
 
 function getPlacement(target) {
     return target.dataset.spwImageManaged === 'true' ? 'overlay' : 'inline';
+}
+
+function getInitialDisclosureState(placement) {
+    const handles = document.documentElement.dataset.spwCognitiveHandles || 'on';
+    if (placement === 'overlay') return DISCLOSURE_STATES.COLLAPSED;
+    return handles === 'off'
+        ? DISCLOSURE_STATES.COLLAPSED
+        : DISCLOSURE_STATES.EXPANDED;
 }
 
 function getAnchor(target) {
@@ -406,7 +526,29 @@ function mountTarget(target) {
         }
     }
 
+    const restore = document.createElement('button');
+    restore.type = 'button';
+    restore.className = 'spw-state-block-restore';
+    restore.dataset.spwStateRestore = target.dataset.spwInspectId;
+    restore.hidden = true;
+    restore.textContent = '$ reopen_state';
+    restore.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setDisclosureState(target, DISCLOSURE_STATES.EXPANDED);
+    });
+
+    if (placement === 'overlay') {
+        target.append(restore);
+    } else {
+        inspector.after(restore);
+    }
+
     setLoopState(target, LOOP_STATES.IDLE);
+    setDisclosureState(
+        target,
+        getInitialDisclosureState(placement)
+    );
     syncTarget(target);
 }
 
@@ -468,15 +610,25 @@ function renderState(state) {
         + `<span class="${braceClasses}"${formAction}>${escapeHtml(close)}</span></code>`;
 }
 
-function syncTarget(target) {
-    const inspector = target.querySelector(`[data-spw-state-block="${target.dataset.spwInspectId}"]`);
-    if (!inspector) return;
+function renderSummary(state) {
+    const [open] = getDelimiters(state.form);
+    return `${state.operator}${state.name} ${open} …`;
+}
 
-    inspector.innerHTML = renderState(readTargetState(target));
+function syncTarget(target) {
+    const inspector = getInspector(target);
+    const body = getInspectorBody(target);
+    if (!inspector || !body) return;
+
+    const state = readTargetState(target);
+    body.innerHTML = renderState(state);
+
+    const summary = inspector.querySelector('[data-spw-state-summary]');
+    if (summary) summary.textContent = renderSummary(state);
 }
 
 function pulseInspector(target) {
-    const inspector = target.querySelector(`[data-spw-state-block="${target.dataset.spwInspectId}"]`);
+    const inspector = getInspector(target);
     if (!inspector) return;
     inspector.classList.remove('is-dirty');
     void inspector.offsetWidth;
@@ -631,6 +783,22 @@ function refreshAll() {
 
 export function initSpwStateInspector() {
     scan(document);
+
+    document.addEventListener(DISCLOSURE_EVENT, (event) => {
+        const target = event.target instanceof Element
+            ? event.target.closest('[data-spw-inspect], [data-spw-image-managed="true"]')
+            : null;
+        if (!(target instanceof HTMLElement)) return;
+
+        const action = event.detail?.action;
+        if (action === 'restore') {
+            setDisclosureState(target, DISCLOSURE_STATES.EXPANDED);
+        } else if (action === 'dismiss') {
+            setDisclosureState(target, DISCLOSURE_STATES.DISMISSED);
+        } else {
+            toggleDisclosure(target);
+        }
+    });
 
     bus.on('image:visited', refreshAll);
     bus.on('settings:changed', refreshAll);
