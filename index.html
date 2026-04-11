@@ -62,7 +62,6 @@
     <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body data-spw-features="operators navigator console media-publishing svg-surfaces">
@@ -83,7 +82,7 @@
         <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
     </header>
     <main>
-        <section class="site-frame site-hero" id="home-frame" data-spw-form="brace" data-spw-liminality="entry" data-spw-swappable="#>,^,?,@" data-spw-stateful>
+        <section class="site-frame site-hero" id="home-frame" data-spw-form="brace" data-spw-form-options="brace,block,angle" data-spw-liminality="entry" data-spw-swappable="#>,^,?,@" data-spw-stateful data-spw-inspect="home_frame" data-spw-inspect-mode-group="home-lens">
             <div class="frame-topline">
                 <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
                 <div class="mode-switch" role="group" aria-label="Home lens">
@@ -94,6 +93,7 @@
                 </div>
             </div>
             <h1>A working site for language tools, readable systems, and play.</h1>
+            <p class="frame-note">The live state block on this frame keeps the boundary explicit: swap the leading sigil to change stance, swap the braces to change containment, and turn <code>mode</code> to move between the same surface, syntax, artifact, and Obsidian views.</p>
             <p class="spw-spirit-sequence" aria-hidden="true"><span data-op="probe">?</span><span data-op="ref">~</span><span data-op="action">@</span><span data-op="stream">&amp;</span><span data-op="object">*</span><span data-op="frame">^</span></p>
             <div class="mode-panels">
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block" data-spw-liminality="projected">

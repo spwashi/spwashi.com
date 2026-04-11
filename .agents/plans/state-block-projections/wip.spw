@@ -74,6 +74,8 @@
  >>[2026-04-11 09:03] observe — Gemini left partial state/projection scaffolding in site.js, spw-components.css, spw-grammar.css, and spw-image-metaphysics.js
  >>[2026-04-11 09:06] decide — narrow the feature to truthful state blocks on home, pretext, settings, and image surfaces instead of site-wide overlays
  >>[2026-04-11 09:08] taste — the block must read like a useful code surface first; interactivity is secondary
+ >>[2026-04-11 09:31] implement — repaired the broken image hold timer, added image refresh hooks, and opted home/pretext/settings into explicit state inspection
+ >>[2026-04-11 09:34] align — copy now frames the block as an epistemic boundary handle: stance, containment, and persisted mode/setting changes remain visible and reversible
 }
 
 ^["open"]{
@@ -88,14 +90,14 @@
 }
 
 ^["cache"]{
- ~#status: "planning"
+ ~#status: "implementing"
  ~#base_ref: "main@e04c8c0"
  ~#rebased_at: ""
  ~#hygiene_split: "none"
  ~#files_hot: "public/js/site.js, public/css/spw-components.css, public/js/spw-image-metaphysics.js"
  ~#next_commit: "2"
  ~#open_count: "1"
- ~#last_stream: "2026-04-11 09:08"
+ ~#last_stream: "2026-04-11 09:34"
  ~#taste_debt: "Keep the settings state block from becoming a full dashboard"
 }
 

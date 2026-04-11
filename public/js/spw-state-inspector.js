@@ -73,7 +73,7 @@ const getTargetName = (target) => {
 };
 
 const normalizeOperatorSymbol = (value = '') => {
-    if (!value) return '#>';
+    if (!value) return '';
     if (OPERATOR_PREFIX_BY_TYPE[value]) return OPERATOR_PREFIX_BY_TYPE[value];
 
     const detected = detectOperator(value);
@@ -84,7 +84,9 @@ const normalizeOperatorSymbol = (value = '') => {
 
 const readOperatorSymbol = (target) => {
     const sigilText = target.querySelector('.frame-sigil')?.textContent?.trim() || '';
-    const explicit = normalizeOperatorSymbol(target.dataset.spwOperator || '');
+    const explicit = target.dataset.spwOperator
+        ? normalizeOperatorSymbol(target.dataset.spwOperator)
+        : '';
     const detected = normalizeOperatorSymbol(sigilText);
     return explicit || detected || '#>';
 };

@@ -228,13 +228,8 @@ function registerHoldGesture(host) {
 
     const clearTimer = () => {
         if (timer) {
-            scaffold.setAttribute('data-spw-inspect', 'metaphysics');
-        scaffold.setAttribute('data-spw-state-filter', 'none');
-        scaffold.setAttribute('data-spw-state-filter-modes', 'none,blur,pixel');
-
-        // Initial wrap
-        window.clearTimeout(timer);
-        timer = null;
+            window.clearTimeout(timer);
+            timer = null;
         }
     };
 
@@ -308,6 +303,9 @@ function isEligibleHost(host) {
 function mountHost(host) {
     ensureHelper(host);
     registerHoldGesture(host);
+    host.addEventListener('spw:image:refresh', () => {
+        syncHost(host);
+    });
     syncHost(host);
 }
 

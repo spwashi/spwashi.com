@@ -12,7 +12,6 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
-    <link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
@@ -96,11 +95,12 @@
             </section>
 
             <!-- Settings Form -->
-            <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-meaning="runtime preference controls">
+            <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-form="brace" data-spw-form-options="brace,block" data-spw-meaning="runtime preference controls" data-spw-inspect="runtime_preferences" data-spw-inspect-fields="colorMode,operatorSaturation,grainIntensity,animationIntensity">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
                     <h2>Runtime Preferences</h2>
                 </div>
+                <p class="frame-note">The state block here is another handle on the same persisted settings. It does not invent a second model: changing <code>colorMode</code>, <code>operatorSaturation</code>, <code>grainIntensity</code>, or <code>animationIntensity</code> updates the real form controls and the same local storage state.</p>
 
                 <form class="settings-form" data-site-settings-form>
 
