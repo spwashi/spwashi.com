@@ -1,36 +1,47 @@
 /**
  * Brace Gesture Physics
  *
- * Extends the CSS brace-form system with semantic gesture states:
- *   hover   → charge (glow builds)
- *   click   → activate (snap open / discharge pulse)
- *   hold    → sustain (deep charge accumulation, triggers pinning)
- *   drag    → project (element lifts and follows, shadow elongates)
+ * Translates pointer and keyboard interactions on [data-spw-form] elements
+ * into semantic gesture states, then routes all events through SpwBus so
+ * every listener in the system — CSS, JS, console — sees the same signal.
  *
- * Registered states:
- *   data-spw-pinned="true" (bookmarked/persisted)
+ * Gesture lifecycle (also expressed as CSS data-spw-gesture attributes):
+ *   neutral   → (pointerenter) → charging
+ *   charging  → (pointerdown)  → active
+ *   active    → (hold 420ms)   → sustained    (triggers pin)
+ *   active    → (drag 8px)     → projecting
+ *   any state → (pointerleave) → neutral
  *
- * Swappable Operators:
- *   data-spw-swappable="^,?,*,@" (cycles through these on click)
+ * Charge levels written to --charge by the bus:
+ *   charging=0.25  active=0.65  sustained=0.90  projecting=0.50  neutral=0
  *
- * Gesture states are expressed as data attributes so CSS can respond:
- *   data-spw-gesture="charging"
- *   data-spw-gesture="active"
- *   data-spw-gesture="sustained"
- *   data-spw-gesture="projecting"
- *
- * These attributes are set on any element matching [data-spw-form].
+ * CSS contract:
+ *   data-spw-gesture  — current gesture state label
+ *   data-spw-charge   — charge bucket: 'charging'|'active'|'sustained'
+ *   data-spw-pinned   — persisted bookmark
+ *   --drag-dx, --drag-dy, --drag-distance — live drag vector (projecting only)
  */
+
+import { bus } from './spw-bus.js';
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
+
+// Maps operator prefix strings (from data-spw-swappable) to CSS type names.
+const PREFIX_TO_TYPE = Object.freeze({
+    '#>': 'frame',   '#:': 'layer',    '.': 'baseline',
+    '^':  'object',  '~':  'ref',      '?': 'probe',
+    '@':  'action',  '*':  'stream',   '&': 'merge',
+    '=':  'binding', '$':  'meta',     '%': 'normalize',
+    '!':  'pragma',  '>':  'surface',
+});
 
 /** @type {WeakMap<Element, {timer:number, startX:number, startY:number, dragging:boolean}>} */
 const gestureState = new WeakMap();
 
 /**
- * Initialize brace gesture physics on all [data-spw-form] elements.
- * Safe to call multiple times; uses event delegation on <body>.
+ * Initialize brace gesture physics on all [data-spw-form] and .spw-delimiter
+ * elements. Safe to call multiple times; uses event delegation on <body>.
  */
 export function initBraceGestures() {
     const body = document.body;
@@ -39,26 +50,24 @@ export function initBraceGestures() {
 
     restorePins();
 
-    // ── Hover: charge / discharge ──────────────────────────────────
     body.addEventListener('pointerenter', onPointerEnter, true);
     body.addEventListener('pointerleave', onPointerLeave, true);
-
-    // ── Click / Hold / Drag ─────────────────────────────────────────
-    body.addEventListener('pointerdown', onPointerDown, true);
-    body.addEventListener('pointermove', onPointerMove, true);
-    body.addEventListener('pointerup', onPointerUp, true);
-    body.addEventListener('pointercancel', onPointerUp, true);
-
-    // ── Keyboard support ────────────────────────────────────────────
-    body.addEventListener('keydown', onKeyDown, true);
-    body.addEventListener('keyup', onKeyUp, true);
+    body.addEventListener('pointerdown',  onPointerDown,  true);
+    body.addEventListener('pointermove',  onPointerMove,  true);
+    body.addEventListener('pointerup',    onPointerUp,    true);
+    body.addEventListener('pointercancel',onPointerUp,    true);
+    body.addEventListener('keydown',      onKeyDown,      true);
+    body.addEventListener('keyup',        onKeyUp,        true);
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Target resolution ────────────────────────────────────────────────────────
 
+/** Returns the nearest [data-spw-form] or .spw-delimiter ancestor. */
 function braceTarget(el) {
-    return el?.closest?.('[data-spw-form]');
+    return el?.closest?.('[data-spw-form], .spw-delimiter');
 }
+
+// ── Gesture state ────────────────────────────────────────────────────────────
 
 function setGesture(el, gesture) {
     if (!el) return;
@@ -66,48 +75,51 @@ function setGesture(el, gesture) {
         el.dataset.spwGesture = gesture;
     } else {
         delete el.dataset.spwGesture;
+        delete el.dataset.spwCharge;
+        el.style.removeProperty('--charge');
     }
 }
+
+// ── Operator swap ────────────────────────────────────────────────────────────
 
 function handleOperatorSwap(el) {
     const swappable = el.dataset.spwSwappable;
     if (!swappable) return;
 
-    const operators = swappable.split(',');
-    const current = el.dataset.spwOperator || operators[0];
-    const currentIndex = operators.indexOf(current);
-    const nextIndex = (currentIndex + 1) % operators.length;
-    const nextOp = operators[nextIndex];
+    const operators    = swappable.split(',');
+    const currentRaw   = el.dataset.spwOperator || operators[0];
+    // Reverse-map type name back to prefix for indexOf
+    const currentPrefix = Object.keys(PREFIX_TO_TYPE).find(k => PREFIX_TO_TYPE[k] === currentRaw) || currentRaw;
+    const currentIndex  = operators.indexOf(currentPrefix);
+    const nextOp        = operators[(currentIndex + 1) % operators.length];
 
-    el.dataset.spwOperator = nextOp;
-    
-    // Also update sigil text if it exists
+    // Normalize to type name so CSS [data-spw-operator="frame"] selectors match
+    const nextType = PREFIX_TO_TYPE[nextOp] || nextOp;
+    el.dataset.spwOperator = nextType;
+
+    // Update any visible sigil text
     const sigil = el.querySelector('.frame-sigil, .frame-card-sigil, .frame-panel-sigil');
     if (sigil) {
-        // Many sigils include the operator in their text, we try to preserve the label
         const regex = /^[#>^?~!@*&=%$%]+/;
         if (regex.test(sigil.textContent)) {
             sigil.textContent = sigil.textContent.replace(regex, nextOp);
-        } else {
-            // If it's just a text labe, we might not want to overwrite it without care
-            // but for now, let's assume if it's swappable, we want to see the op.
         }
     }
 
-    emitBraceEvent(el, 'swap', { from: current, to: nextOp });
+    bus.emit('brace:swapped', { form: el.dataset.spwForm, from: currentRaw, to: nextType }, { element: el });
 }
 
+// ── Pin system ───────────────────────────────────────────────────────────────
+
 function togglePin(el) {
-    const isPinned = el.dataset.spwPinned === 'true';
-    const nextPinned = !isPinned;
+    const nextPinned = el.dataset.spwPinned !== 'true';
     el.dataset.spwPinned = nextPinned;
-    
-    // Save to localStorage
+
     const page = window.location.pathname;
-    const id = el.id || el.dataset.spwSigil || el.querySelector('.frame-sigil')?.textContent;
+    const id   = el.id || el.dataset.spwSigil || el.querySelector('.frame-sigil')?.textContent;
     if (id) {
         const pins = JSON.parse(localStorage.getItem('spw-pins') || '{}');
-        const key = `${page}#${id}`;
+        const key  = `${page}#${id}`;
         if (nextPinned) {
             pins[key] = { page, id, timestamp: Date.now(), title: document.title };
         } else {
@@ -116,7 +128,7 @@ function togglePin(el) {
         localStorage.setItem('spw-pins', JSON.stringify(pins));
     }
 
-    emitBraceEvent(el, 'pin-toggle', { pinned: nextPinned });
+    bus.emit('brace:pinned', { form: el.dataset.spwForm, pinned: nextPinned }, { element: el });
 }
 
 function restorePins() {
@@ -124,47 +136,38 @@ function restorePins() {
     Object.keys(pins).forEach(key => {
         const [page, id] = key.split('#');
         if (page === window.location.pathname) {
-            const el = document.getElementById(id) || document.querySelector(`[data-spw-sigil="${id}"]`);
-            if (el && el.hasAttribute('data-spw-form')) {
+            const el = document.getElementById(id)
+                ?? document.querySelector(`[data-spw-sigil="${id}"]`);
+            if (el?.hasAttribute('data-spw-form')) {
                 el.dataset.spwPinned = 'true';
             }
         }
     });
 }
 
-function emitBraceEvent(el, name, detail = {}) {
-    if (!el) return;
-    el.dispatchEvent(new CustomEvent(`spw:brace:${name}`, {
-        bubbles: true,
-        detail: { form: el.dataset.spwForm, ...detail }
-    }));
-}
-
 // ── Hover ────────────────────────────────────────────────────────────────────
 
 function onPointerEnter(e) {
     const target = braceTarget(e.target);
-    if (!target) return;
-    // Only transition to charging if not already in a deeper state
-    const current = target.dataset.spwGesture;
-    if (!current) {
-        setGesture(target, 'charging');
-        emitBraceEvent(target, 'charge-start');
-    }
+    if (!target || target.dataset.spwGesture) return;
+
+    setGesture(target, 'charging');
+    bus.emit('brace:charged', { form: target.dataset.spwForm }, { element: target });
 }
 
 function onPointerLeave(e) {
     const target = braceTarget(e.target);
     if (!target) return;
+
     const state = gestureState.get(target);
-    // If we're dragging, don't discharge on leave
-    if (state?.dragging) return;
+    if (state?.dragging) return; // don't discharge mid-drag
+
     clearHoldTimer(target);
     setGesture(target, null);
-    emitBraceEvent(target, 'discharge');
+    bus.emit('brace:discharged', { form: target.dataset.spwForm }, { element: target });
 }
 
-// ── Pointer Down / Hold / Drag ──────────────────────────────────────────────
+// ── Down / Hold / Drag ───────────────────────────────────────────────────────
 
 function onPointerDown(e) {
     const target = braceTarget(e.target);
@@ -172,77 +175,75 @@ function onPointerDown(e) {
 
     setGesture(target, 'active');
     handleOperatorSwap(target);
-    emitBraceEvent(target, 'activate');
+    bus.emit('brace:activated', { form: target.dataset.spwForm }, { element: target });
 
     const timer = window.setTimeout(() => {
         const s = gestureState.get(target);
         if (s && !s.dragging) {
             setGesture(target, 'sustained');
             togglePin(target);
-            emitBraceEvent(target, 'sustain');
+            bus.emit('brace:sustained', { form: target.dataset.spwForm }, { element: target });
         }
     }, HOLD_THRESHOLD_MS);
 
-    gestureState.set(target, {
-        timer,
-        startX: e.clientX,
-        startY: e.clientY,
-        dragging: false
-    });
+    gestureState.set(target, { timer, startX: e.clientX, startY: e.clientY, dragging: false });
 }
 
 function onPointerMove(e) {
     const target = braceTarget(e.target);
     if (!target) return;
+
     const state = gestureState.get(target);
     if (!state) return;
 
-    const dx = e.clientX - state.startX;
-    const dy = e.clientY - state.startY;
+    const dx       = e.clientX - state.startX;
+    const dy       = e.clientY - state.startY;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (!state.dragging && distance > DRAG_THRESHOLD_PX) {
         state.dragging = true;
         clearTimeout(state.timer);
         setGesture(target, 'projecting');
-        emitBraceEvent(target, 'project-start');
+        bus.emit('brace:projected', { form: target.dataset.spwForm, dx, dy, distance }, { element: target });
     }
 
     if (state.dragging) {
-        // Expose drag vector as CSS custom properties for cinematic response
-        target.style.setProperty('--drag-dx', `${dx}px`);
-        target.style.setProperty('--drag-dy', `${dy}px`);
+        target.style.setProperty('--drag-dx',       `${dx}px`);
+        target.style.setProperty('--drag-dy',       `${dy}px`);
         target.style.setProperty('--drag-distance', `${distance}px`);
-        emitBraceEvent(target, 'project-move', { dx, dy, distance });
+        bus.emit('brace:moved', { form: target.dataset.spwForm, dx, dy, distance }, { element: target });
     }
 }
 
 function onPointerUp(e) {
     const target = braceTarget(e.target);
     if (!target) return;
-    const state = gestureState.get(target);
 
+    const state = gestureState.get(target);
     if (state) {
         clearTimeout(state.timer);
         if (state.dragging) {
-            emitBraceEvent(target, 'project-end');
-            // Clean up drag properties
             target.style.removeProperty('--drag-dx');
             target.style.removeProperty('--drag-dy');
             target.style.removeProperty('--drag-distance');
+            bus.emit('brace:released', { form: target.dataset.spwForm }, { element: target });
         }
     }
-
     gestureState.delete(target);
 
-    // Return to charging if pointer is still over the element
-    const rect = target.getBoundingClientRect();
+    const rect   = target.getBoundingClientRect();
     const inside = (
         e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom
+        e.clientY >= rect.top  && e.clientY <= rect.bottom
     );
-    setGesture(target, inside ? 'charging' : null);
-    emitBraceEvent(target, inside ? 'charge-start' : 'discharge');
+
+    if (inside) {
+        setGesture(target, 'charging');
+        bus.emit('brace:charged', { form: target.dataset.spwForm }, { element: target });
+    } else {
+        setGesture(target, null);
+        bus.emit('brace:discharged', { form: target.dataset.spwForm }, { element: target });
+    }
 }
 
 function clearHoldTimer(el) {
@@ -253,7 +254,7 @@ function clearHoldTimer(el) {
     }
 }
 
-// ── Keyboard ────────────────────────────────────────────────────────────────
+// ── Keyboard ─────────────────────────────────────────────────────────────────
 
 function onKeyDown(e) {
     if (e.key !== 'Enter' && e.key !== ' ') return;
@@ -261,7 +262,7 @@ function onKeyDown(e) {
     if (!target) return;
     e.preventDefault();
     setGesture(target, 'active');
-    emitBraceEvent(target, 'activate');
+    bus.emit('brace:activated', { form: target.dataset.spwForm }, { element: target });
 }
 
 function onKeyUp(e) {
@@ -269,5 +270,5 @@ function onKeyUp(e) {
     const target = braceTarget(e.target);
     if (!target) return;
     setGesture(target, 'charging');
-    emitBraceEvent(target, 'discharge');
+    bus.emit('brace:discharged', { form: target.dataset.spwForm }, { element: target });
 }

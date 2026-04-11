@@ -1,0 +1,93 @@
+# wip - image-visit-metaphysics
+# Branch: feature/image-visit-metaphysics
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/image-visit-metaphysics/PLAN.md"
+ @artifact: ~".agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw"
+ @image_runtime: ~"public/js/spw-image-metaphysics.js"
+ @image_css: ~"public/css/spw-metaphysical-paper.css"
+ @site_entry: ~"public/js/site.js"
+ @compression: ~"topics/software/compression/index.html"
+ @schedulers: ~"topics/software/schedulers/index.html"
+ @lore_land: ~"about/domains/lore.land/index.html"
+ @brace_guides: ~".agents/plans/brace-literacy-guides/wip.spw"
+ @screenshots: ~".agents/plans/screenshot-semantics/wip.spw"
+}
+
+^["intent"]{
+ ~#goal: "Build a semantic image visitation layer where raster and SVG surfaces can be held to mark as visited, persist a rewarding glow, and expose a compact helper operator tied to realization and phrasing rather than random novelty."
+ ~#taste: "wonder with legibility, paper metaphysics, playful but disciplined interaction, image treatments that explain semantic state rather than decorate it"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #page
+ develops: [#semantic_image_treatment, #visited_memory, #hold_ritual, #helper_operator, #paper_semantics]
+ review_surfaces: [@plan, @artifact, @image_runtime, @image_css, @compression, @schedulers, @lore_land]
+}
+
+^["concept_index"]{
+ primary: [#visited_image, #semantic_treatment, #hold_to_visit, #paper_semantics, #raster_svg_parity]
+ surfaces: [#runtime, #css, #software_pages, #lore_land, #home_figures]
+ tensions: [#random_effects, #ornament_vs_legibility, #layout_stability, #shared_hot_files]
+ transfers: [#substrate_to_image, #realization_to_effect, #visited_to_returnable]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? find the smallest set of image-bearing surfaces worth annotating",
+  "< derive treatment from realization/substrate instead of random choice",
+  "$ make hold-to-visit persist in localStorage with stable keys",
+  "^ keep helper controls compact and nonintrusive",
+  "% verify SVG and raster surfaces share the same visitation language"
+ ]
+ gates: [#semantic_alignment, #layout_stability, #persistent_memory, #reduced_motion_legibility]
+}
+
+^["parallel_work"]{
+ critical_path: [#image_runtime, #image_css]
+ parallelizable: [#page_metadata_tightening]
+ shared_hot_files: ["public/js/site.js", "public/css/style.css", "topics/software/compression/index.html"]
+ merge_risks: [#other_agent_drift, #import_order, #inline_page_styles]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["stream"]{
+ >>[2026-04-10 13:55] observe — The current image prototype already exists, but it is effect-first: random hover choice, broad selectors, no stable visitation memory, and no semantic mapping between realization and treatment.
+ >>[2026-04-10 13:57] observe — Shared hot files from parallel work are already dirty; the cleanest path is to refine `spw-image-metaphysics.js` and `spw-metaphysical-paper.css`, then opt a few existing surfaces into the system rather than widening `style.css`.
+ >>[2026-04-10 13:59] decide — Holding an image should be the primary visit ritual. Click remains available to the helper operator, but press-and-hold better matches “mark and return” than a casual click toggle.
+ >>[2026-04-10 14:00] taste — The rewarding glow should feel archival and earned, like a remembered folio edge, not like a gamified neon badge.
+ >>[2026-04-10 14:16] implement — Replaced the randomized image runtime with semantic treatment mapping, stable image/SVG keying, localStorage-backed visited memory, a compact helper chip, and hold-to-visit gesture handling.
+ >>[2026-04-10 14:18] implement — Wired the compression study, scheduler study, and lore.land poster/token into explicit image metadata so the helper surface reads route intent instead of guessing from hover alone.
+ >>[2026-04-10 14:20] verify — `node --check public/js/spw-image-metaphysics.js`, direct ESM import of the module, and `git diff --check` all pass. Remaining dirty files in the tree are from adjacent work and were left alone.
+}
+
+^["open"]{
+ ?[keying]: "What is the most stable key for image visitation across raster srcsets and SVG figures without forcing explicit ids everywhere?"
+ ?[helper_scope]: "Should the helper operator only cycle treatments, or also expose visited state and return cues?"
+ ?[page_set]: "Which existing routes need explicit metadata beyond the current automatic selectors?"
+}
+
+^["commits"]{
+ ~[1]: "#[image-metaphysics] — capture semantic image visitation plan and Spw artifact"
+ ~[2]: "&[image-metaphysics] — replace random image effects with semantic treatments and hold-to-visit persistence"
+ ~[3]: "&[image-surfaces] — wire key raster and SVG surfaces into the helper model with better phrasing"
+ ~[4]: "![image-metaphysics] — verify imports, persistence, and nonintrusive visited-state behavior"
+}
+
+^["cache"]{
+ ~#status: "implementing"
+ ~#base_ref: "historical@2569d51"
+ ~#hygiene_split: "shared hot files exist; avoid broad rewrites"
+ ~#files_hot: "public/js/spw-image-metaphysics.js, public/css/spw-metaphysical-paper.css, topics/software/compression/index.html, topics/software/schedulers/index.html, about/domains/lore.land/index.html"
+ ~#next_commit: "2"
+ ~#open_count: "3"
+ ~#last_stream: "2026-04-10 14:20"
+ ~#taste_debt: "Need to keep the helper surface compact so it reads as scaffolding, not UI chrome."
+}
+
+^["done"]{
+}

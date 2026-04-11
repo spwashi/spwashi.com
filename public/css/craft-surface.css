@@ -23,6 +23,49 @@
     --craft-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
+html[data-spw-color-mode="dark"] [data-spw-surface="craft"] {
+    --bg: hsl(180 10% 12%);
+    --bg-deep: hsl(184 12% 9%);
+    --surface: rgba(255, 255, 255, 0.08);
+    --surface-strong: rgba(255, 255, 255, 0.12);
+    --surface-soft: rgba(255, 255, 255, 0.06);
+    --ink: hsl(170 18% 88%);
+    --ink-soft: hsl(170 10% 70%);
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(112, 214, 205, 0.34);
+    --craft-accent: hsl(344 66% 68%);
+    --craft-accent-soft: rgba(228, 108, 144, 0.12);
+    --craft-teal: hsl(176 62% 60%);
+    --craft-leaf: hsl(132 38% 58%);
+    --craft-ink-blue: hsl(205 56% 72%);
+    --craft-fold-edge: hsl(105 32% 60%);
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-spw-color-mode="auto"] [data-spw-surface="craft"] {
+        --bg: hsl(180 10% 12%);
+        --bg-deep: hsl(184 12% 9%);
+        --surface: rgba(255, 255, 255, 0.08);
+        --surface-strong: rgba(255, 255, 255, 0.12);
+        --surface-soft: rgba(255, 255, 255, 0.06);
+        --ink: hsl(170 18% 88%);
+        --ink-soft: hsl(170 10% 70%);
+        --line: rgba(255, 255, 255, 0.14);
+        --line-strong: rgba(112, 214, 205, 0.34);
+        --craft-accent: hsl(344 66% 68%);
+        --craft-accent-soft: rgba(228, 108, 144, 0.12);
+        --craft-teal: hsl(176 62% 60%);
+        --craft-leaf: hsl(132 38% 58%);
+        --craft-ink-blue: hsl(205 56% 72%);
+        --craft-fold-edge: hsl(105 32% 60%);
+    }
+}
+
+html[data-spw-high-contrast="on"] [data-spw-surface="craft"] {
+    --line: currentColor;
+    --line-strong: currentColor;
+}
+
 body[data-spw-surface="craft"] {
     background: var(--bg);
 }

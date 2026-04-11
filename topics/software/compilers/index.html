@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Compilers</title>
+    <meta name="description" content="Compiler surfaces for parsing, lowering, intermediate representations, and code generation in the Spw workbench."/>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .ref-card-sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+        .ref-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .ref-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+        }
+        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
+    </style>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/software/compilers/">Compilers</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>compiler</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="compilers-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#compilers-hero">#&gt;compiler_pipelines</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">AST</span>
+                        <span class="spec-pill">IR</span>
+                        <span class="spec-pill">code generation</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Translation Surfaces</p>
+                <h1>From Source to Executable Form</h1>
+                <p>Compilers are structured translation systems. They take a readable source, project it through <span class="spw-delimiter spw-delimiter--square">[</span>syntax trees<span class="spw-delimiter spw-delimiter--square">]</span>, stabilize it in <span class="spw-delimiter spw-delimiter--paren">(</span>intermediate representations<span class="spw-delimiter spw-delimiter--paren">)</span>, and emit <span class="spw-delimiter spw-delimiter--angle">&lt;</span>target code<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that a runtime can actually carry. In Spw terms, this is where authored frames become executable surfaces.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="#compilation-pipeline">pipeline</a>
+                    <a class="operator-chip" href="#optimization-surfaces">optimization</a>
+                    <a class="operator-chip" href="/topics/software/parsers/">parsers</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="compilation-pipeline" data-spw-role="reference" data-spw-meaning="translation pipeline" data-spw-form="square">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#compilation-pipeline">^"pipeline"{</a>
+                    <h2>Compilation Pipeline</h2>
+                </div>
+                <p class="inline-note">The compiler earns trust by preserving differentiation as it moves from one layer to the next. Tokens remain tokens, trees remain trees, and lowered instructions still point back to the authored intent that produced them.</p>
+                <div class="ref-grid">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">parse</span>
+                        <h3>Lexing and Parsing</h3>
+                        <p>Source text is segmented, ordered, and shaped into an AST. This is the first threshold where a linear document becomes addressable structure.</p>
+                        <div class="ref-links">
+                            <a href="/topics/software/parsers/">surface: Parsers</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Glossary/Abstract_Syntax_Tree" target="_blank">mdn: AST</a>
+                        </div>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">ir</span>
+                        <h3>Lowering and IR</h3>
+                        <p>Intermediate representations preserve enough semantics to optimize while shedding details that belong to the surface syntax alone.</p>
+                        <div class="ref-links">
+                            <a href="https://llvm.org/docs/LangRef.html" target="_blank">llvm: IR reference</a>
+                        </div>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">emit</span>
+                        <h3>Code Generation</h3>
+                        <p>The final pass chooses a target form: JavaScript, bytecode, machine code, or a structured artifact that another system can continue compiling.</p>
+                        <div class="ref-links">
+                            <a href="https://craftinginterpreters.com/" target="_blank">book: Crafting Interpreters</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame-code-enrichment" data-spw-form="block" style="margin-top:1.5rem">
+                    <pre><code>#>compilation_pipeline
+#!runtime/translation
+
+^"passes"{
+  source: ~"./surface.spw"
+  parse: ?[ast]
+  lower: ^"ir"{ form: "ssa" }
+  emit: !["javascript"]
+}</code></pre>
+                </div>
+            </section>
+
+            <section class="site-frame" id="optimization-surfaces" data-spw-role="reference" data-spw-meaning="optimization and stability" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#optimization-surfaces">$["optimization"]</a>
+                    <h2>Optimization Surfaces</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Control-Flow Clarity</h3>
+                        <p>Optimization starts by naming structure correctly. Basic blocks, dominance, and data-flow analysis are ways of making control visible enough to transform without erasing intent.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Incremental Rebuilds</h3>
+                        <p>For authoring tools, full recompilation is often the wrong default. Stable handles and partial invalidation matter more than absolute throughput.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Readable Lowering</h3>
+                        <p>Spw benefits from compiler thinking when projections stay explainable. A transformed surface should still let the author trace how one form became another.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

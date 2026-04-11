@@ -255,6 +255,168 @@ const getSelectionBase = (element, kind) => {
     return 'ambient';
 };
 
+const ROLE_TO_SUBSTRATE = Object.freeze({
+    orientation: 'frame',
+    routing: 'ref',
+    route: 'ref',
+    register: 'baseline',
+    reference: 'ref',
+    comparison: 'object',
+    schema: 'object',
+    pipeline: 'object',
+    probe: 'probe',
+    telemetry: 'probe',
+    lens: 'probe',
+    projection: 'surface',
+    surface: 'surface',
+    control: 'action',
+    rationale: 'meta',
+    scenario: 'pragma',
+    status: 'baseline',
+    artifact: 'surface',
+    destination: 'ref'
+});
+
+const CONCEPTUAL_ROLES = new Set([
+    'orientation',
+    'register',
+    'reference',
+    'routing',
+    'comparison',
+    'schema',
+    'pipeline',
+    'probe',
+    'telemetry',
+    'lens',
+    'rationale',
+    'scenario',
+    'status',
+    'control'
+]);
+
+const REALIZED_ROLES = new Set([
+    'artifact',
+    'route',
+    'projection',
+    'surface',
+    'destination'
+]);
+
+const PHRASE_BY_ROLE = Object.freeze({
+    orientation: 'premise',
+    status: 'premise',
+    routing: 'guide',
+    register: 'guide',
+    reference: 'guide',
+    route: 'artifact',
+    destination: 'artifact',
+    artifact: 'artifact',
+    projection: 'artifact',
+    surface: 'artifact',
+    probe: 'inquiry',
+    telemetry: 'inquiry',
+    comparison: 'inquiry',
+    lens: 'inquiry',
+    schema: 'structure',
+    pipeline: 'structure',
+    control: 'instruction',
+    rationale: 'reflection',
+    scenario: 'reflection'
+});
+
+const SUBSTRATE_SIGIL = Object.freeze({
+    frame: '#',
+    layer: ':',
+    baseline: '.',
+    object: '^',
+    ref: '~',
+    probe: '?',
+    action: '@',
+    stream: '*',
+    merge: '&',
+    binding: '=',
+    meta: '$',
+    normalize: '%',
+    pragma: '!',
+    surface: '>'
+});
+
+const getSubstrate = (element, kind, role) => {
+    const explicit = normalizeToken(element.dataset.spwSubstrate || '');
+    if (explicit) return explicit;
+
+    const directOperator = normalizeToken(element.dataset.spwOperator || '');
+    if (directOperator) return directOperator;
+
+    const inheritedOperator = normalizeToken(
+        element.closest('[data-spw-operator]')?.dataset.spwOperator || ''
+    );
+    if (inheritedOperator) return inheritedOperator;
+
+    if (ROLE_TO_SUBSTRATE[role]) return ROLE_TO_SUBSTRATE[role];
+
+    switch (kind) {
+    case 'frame':
+        return 'frame';
+    case 'panel':
+    case 'lens':
+        return 'probe';
+    case 'surface':
+        return 'surface';
+    case 'metric':
+        return 'probe';
+    case 'card':
+        return isAddressable(element) ? 'ref' : 'object';
+    default:
+        return 'frame';
+    }
+};
+
+const getRealization = (element, kind, role) => {
+    const explicit = normalizeToken(element.dataset.spwRealization || '');
+    if (explicit) return explicit;
+
+    if (REALIZED_ROLES.has(role)) return 'realized';
+    if (CONCEPTUAL_ROLES.has(role)) return 'conceptual';
+
+    switch (kind) {
+    case 'surface':
+        return 'realized';
+    case 'metric':
+    case 'lens':
+        return 'conceptual';
+    case 'panel':
+        return role === 'facet' ? 'hybrid' : 'conceptual';
+    case 'card':
+        return isAddressable(element) ? 'realized' : 'conceptual';
+    case 'frame':
+        return role === 'context' ? 'hybrid' : 'conceptual';
+    default:
+        return 'hybrid';
+    }
+};
+
+const getPhrase = (element, kind, role, realization) => (
+    normalizeToken(element.dataset.spwPhrase || '')
+    || PHRASE_BY_ROLE[role]
+    || (realization === 'realized'
+        ? 'artifact'
+        : kind === 'frame'
+            ? 'premise'
+            : 'context')
+);
+
+const createGuideChip = ({ label, kind, operator = '', value = '' }) => {
+    const chip = document.createElement('span');
+    chip.className = 'spw-guide-chip';
+    chip.dataset.spwGuideKind = kind;
+    if (value) chip.dataset.spwGuideValue = value;
+    if (operator) chip.dataset.spwOperator = operator;
+    chip.textContent = label;
+    chip.setAttribute('aria-hidden', 'true');
+    return chip;
+};
+
 const makeCaption = (kind, meaning) => `${kind} · ${meaning}`;
 
 const getTagHost = (element, kind) => {
@@ -274,9 +436,14 @@ const attachTag = (element) => {
     const form = getForm(element, kind);
     const liminality = getLiminality(element, kind, role);
     const selectionBase = getSelectionBase(element, kind);
+    const substrate = getSubstrate(element, kind, role);
+    const realization = getRealization(element, kind, role);
+    const phrase = getPhrase(element, kind, role, realization);
     const caption = makeCaption(kind, meaning);
     const host = getTagHost(element, kind);
+    const meta = document.createElement('span');
     const tag = document.createElement('span');
+    const guides = document.createElement('span');
 
     element.dataset.spwComponentKind = kind;
     element.dataset.spwComponentMeaning = meaning;
@@ -285,18 +452,52 @@ const attachTag = (element) => {
     element.dataset.spwLiminality = liminality;
     element.dataset.spwSelectionBase = selectionBase;
     element.dataset.spwSelection = selectionBase;
+    element.dataset.spwSubstrate = substrate;
+    element.dataset.spwRealization = realization;
+    element.dataset.spwPhrase = phrase;
     element.dataset.spwSemanticTagged = 'true';
+
+    meta.className = 'spw-component-meta';
+    meta.dataset.spwSubstrate = substrate;
+    meta.dataset.spwRealization = realization;
+    meta.dataset.spwPhrase = phrase;
 
     tag.className = 'spw-component-tag';
     tag.textContent = caption;
     tag.setAttribute('aria-hidden', 'true');
+    tag.dataset.spwSubstrate = substrate;
+    tag.dataset.spwRealization = realization;
+    tag.dataset.spwPhrase = phrase;
+
+    guides.className = 'spw-component-guides';
+    guides.setAttribute('aria-hidden', 'true');
+    guides.append(
+        createGuideChip({
+            kind: 'realization',
+            value: realization,
+            label: realization
+        }),
+        createGuideChip({
+            kind: 'phrase',
+            value: phrase,
+            label: phrase
+        }),
+        createGuideChip({
+            kind: 'substrate',
+            value: substrate,
+            operator: substrate,
+            label: `${SUBSTRATE_SIGIL[substrate] || ''} ${substrate}`.trim()
+        })
+    );
+
+    meta.append(tag, guides);
 
     if (host.classList.contains('frame-topline') || host.classList.contains('frame-heading')) {
-        host.appendChild(tag);
+        host.appendChild(meta);
         return;
     }
 
-    host.prepend(tag);
+    host.prepend(meta);
 };
 
 const annotateTree = (root = document) => {
@@ -411,6 +612,7 @@ const initSpwComponentSemantics = () => {
     document.addEventListener('spw:frame-change', syncSelectionState);
     document.addEventListener('spw:mode-change', syncSelectionState);
     window.addEventListener('hashchange', syncSelectionState);
+    document.dispatchEvent(new CustomEvent('spw:component-semantics-ready'));
 };
 
 export { initSpwComponentSemantics };

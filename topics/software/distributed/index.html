@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Distributed Systems</title>
+    <meta name="description" content="Consensus, replication, and failure boundaries for distributed systems, framed as software surfaces with explicit trust and latency tradeoffs."/>
+    <link href="https://fonts.googleapis.com/css?family=JetBrains+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-cinematic.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .ref-card-sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+        .ref-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .ref-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+        }
+        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
+    </style>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/software/distributed/">Distributed</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>quorum</span>
+    </header>
+    <main>
+        <article>
+            <section class="site-frame site-hero" id="distributed-hero" data-spw-role="orientation" data-spw-liminality="entry">
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="distributed-lens" data-mode-panel="orientation" data-spw-role="orientation">
+                        <div class="spw-scaffold" data-spw-accent="lattice" data-spw-operator="!">
+                            <div class="scaffold-placeholder" style="aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; background: var(--surface-code); font-family: monospace; font-size: 0.8rem; color: var(--teal-soft)">
+                                [Consensus Surface: quorum, clocks, partitions]
+                            </div>
+                        </div>
+                        <p>Distributed systems force a more careful account of truth. Once clocks diverge and partitions become normal, every write carries a question about who can see it, who can confirm it, and how long disagreement is acceptable.</p>
+                    </section>
+                </div>
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#distributed-hero">#&gt;distributed_systems</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">consensus</span>
+                        <span class="spec-pill">replication</span>
+                        <span class="spec-pill">fault tolerance</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Coordination Surfaces</p>
+                <h1>Architecting Agreement Across Distance</h1>
+                <p>How do we keep a system coherent when messages arrive late, nodes disappear, and no single machine can be assumed sovereign? This surface tracks the tradeoffs between <span class="spw-delimiter spw-delimiter--paren">(</span>consensus<span class="spw-delimiter spw-delimiter--paren">)</span>, <span class="spw-delimiter spw-delimiter--square">[</span>replication<span class="spw-delimiter spw-delimiter--square">]</span>, and <span class="spw-delimiter spw-delimiter--angle">&lt;</span>eventual agreement<span class="spw-delimiter spw-delimiter--angle">&gt;</span>.</p>
+                <nav class="frame-operators" aria-label="Topic nav">
+                    <a class="operator-chip" href="#consensus-models">consensus</a>
+                    <a class="operator-chip" href="#replication-surfaces">replication</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="consensus-models" data-spw-role="reference" data-spw-meaning="agreement under failure" data-spw-form="circle">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#consensus-models">^"consensus"{</a>
+                    <h2>Consensus Models</h2>
+                </div>
+                <p class="inline-note">Consensus is the price paid for strong coordination. The more failures and delays you want to survive, the more explicit the protocol has to become about leadership, voting, and recovery.</p>
+                <div class="ref-grid">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">raft</span>
+                        <h3>Leader and Log</h3>
+                        <p>Raft keeps the model legible: a leader proposes entries, followers acknowledge them, and committed history becomes the shared source of truth.</p>
+                        <div class="ref-links">
+                            <a href="https://raft.github.io/" target="_blank">paper: Raft</a>
+                        </div>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">quorum</span>
+                        <h3>Majority as Threshold</h3>
+                        <p>Quorums are brace-like thresholds for reality in a cluster. Below the line, a write is still proposed; above it, the system treats that write as instantiated.</p>
+                        <div class="ref-links">
+                            <a href="https://en.wikipedia.org/wiki/Quorum_(distributed_computing)" target="_blank">wiki: Quorum</a>
+                        </div>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">cap</span>
+                        <h3>Partition Tradeoffs</h3>
+                        <p>CAP is less a slogan than a boundary condition: when the network fractures, you choose which promise to weaken and how visibly to weaken it.</p>
+                        <div class="ref-links">
+                            <a href="https://en.wikipedia.org/wiki/CAP_theorem" target="_blank">wiki: CAP theorem</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="replication-surfaces" data-spw-role="reference" data-spw-meaning="replication and convergence" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#replication-surfaces">$["replication"]</a>
+                    <h2>Replication and Convergence</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Gossip and Anti-Entropy</h3>
+                        <p>Not every system needs a leader. Gossip spreads state through repeated local exchange, letting a cluster converge through cadence rather than command.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Vector Clocks and Causality</h3>
+                        <p>Once writes happen concurrently, timestamps alone stop being enough. Causal metadata preserves differentiation between “before,” “after,” and “simultaneous.”</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>CRDTs and Merge Safety</h3>
+                        <p>CRDTs trade stronger coordination for mergeable state. They are useful when the system values local action first and can afford delayed global settlement.</p>
+                    </div>
+                </div>
+
+                <div class="frame-code-enrichment" data-spw-form="block" style="margin-top:1.5rem">
+                    <pre><code>#>replica_cluster
+#!runtime/distributed
+
+^"write"{
+  value: "chapter_draft"
+  quorum: ?[majority]
+  replicate: ~"followers"
+  settle: !["commit when acknowledged"]
+}</code></pre>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>© 2026 spwashi</p>
+    </footer>
+</body>
+</html>

@@ -18,6 +18,20 @@ import { initPretextPhysics } from './spw-pretext-physics.js';
 import { initSpwStates } from './spw-states.js';
 import { initSpwPromptUtils } from './spw-prompt-utils.js';
 import { initSpwHaptics } from './spw-haptics.js';
+import { initSpwGuide } from './spw-guide.js';
+import { initSpwSpells } from './spw-spells.js';
+import { initSpwLattice } from './spw-lattice.js';
+import { initSpwCore } from './spw-core.js';
+import { initSpwSmart } from './spw-smart.js';
+import { initCognitiveSurface } from './spw-cognitive-surface.js';
+import { initSpwPersonas } from './spw-personas.js';
+import { initSpwSvgFilters } from './spw-svg-filters.js';
+import { initSpwCanvasAccents } from './spw-canvas-accents.js';
+import { initSpwGate } from './spw-gate.js';
+import { initSpwImageMetaphysics } from './spw-image-metaphysics.js';
+import { initSpwVisitation } from './spw-visitation.js';
+import { initSpwProjection } from './spw-projection.js';
+import { initSpwStateInspector } from './spw-state-inspector.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -261,7 +275,7 @@ const initSiteCore = () => {
         }
     });
 
-    if (shouldUseViewportActivation() && 'IntersectionObserver' in window && frames.length > 1) {
+    if ('IntersectionObserver' in window && frames.length > 1) {
         const visibleFrames = new Map();
         let viewportSyncId = 0;
 
@@ -309,6 +323,11 @@ const initSiteCore = () => {
         frames.forEach((frame) => observer.observe(frame));
         window.addEventListener('scroll', scheduleViewportSync, { passive: true });
         window.addEventListener('resize', scheduleViewportSync);
+        document.addEventListener('spw:settings-change', (event) => {
+            if (event.detail?.viewportActivation === 'on') {
+                scheduleViewportSync();
+            }
+        });
     }
 
     if (!activateFromHash() && frames[0]) {
@@ -530,6 +549,20 @@ onDomReady(() => {
     initSpwStates();
     initSpwPromptUtils();
     initSpwHaptics();
+    initSpwGuide();
+    initSpwSpells();
+    initSpwLattice();
+    initSpwCore();
+    initSpwSmart();
+    initCognitiveSurface();
+    initSpwPersonas();
+    initSpwSvgFilters();
+    initSpwCanvasAccents();
+    initSpwGate();
+    initSpwImageMetaphysics();
+    initSpwVisitation();
+    initSpwProjection();
+    initSpwStateInspector();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

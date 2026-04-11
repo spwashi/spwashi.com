@@ -179,6 +179,29 @@
     color: var(--badge-text);
 }
 
+html[data-spw-phase-indicators="off"] .site-frame {
+    background-color: var(--surface);
+}
+
+html[data-spw-phase-indicators="off"] .frame-card,
+html[data-spw-phase-indicators="off"] .media-card,
+html[data-spw-phase-indicators="off"] .spec-pill {
+    border-color: var(--line);
+}
+
+html[data-spw-phase-indicators="off"] .spec-pill {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: inherit;
+}
+
+html[data-spw-phase-indicators="off"] .phase-controls {
+    color: var(--ink-soft);
+}
+
+html[data-spw-phase-indicators="off"] [data-phase-indicator] {
+    opacity: 0;
+}
+
 /* Phase indicator styling */
 [data-phase-indicator] {
     color: hsl(var(--current-phase-hue) var(--current-phase-sat) var(--current-phase-light));

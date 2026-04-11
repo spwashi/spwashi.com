@@ -1,0 +1,34 @@
+#>state_block_projection
+#:layer #!interaction
+
+^"thesis"{
+  claim: "A state block should reveal a real mutation surface, not simulate one."
+  taste: "notation clarifies runtime"
+  scope: ["operator", "brace", "mode", "value"]
+}
+
+^"rules"{
+  ?[truth]{
+    !probe{ "Only attach to components that already own mutable state." }
+  }
+  ?[containment]{
+    !probe{ "The block is subordinate to the component, positioned like a local debug/readability surface rather than a global overlay." }
+  }
+  ?[swap]{
+    !probe{ "Operator and brace swaps are meaningful only when the component opts in." }
+  }
+}
+
+^"targets"{
+  home: ~"#home-frame"
+  pretext: ~"#pretext-field-lab"
+  settings: ~"#runtime-preferences"
+  images: ~".spw-metaphysics-host"
+}
+
+^"surface_shape"{
+  shell: "^\"state\"{ ... }"
+  operator: "swaps the governing stance"
+  brace: "swaps the containment form"
+  values: "cycle the component's real state"
+}

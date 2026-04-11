@@ -1,0 +1,249 @@
+/*
+ * Spw Metaphysical Paper
+ *
+ * Semantic ornament for image-bearing surfaces. The goal is not to impose a
+ * universal card treatment, but to let image studies, SVG figures, and page
+ * artifacts share a readable image ritual: semantic treatment, hold-to-visit,
+ * and a persistent visited glow.
+ */
+
+.spw-metaphysics-host {
+    position: relative;
+    isolation: isolate;
+    cursor: pointer;
+    --spw-image-accent: var(--spw-substrate-color, var(--teal));
+    --spw-image-paper: color-mix(in srgb, var(--spw-image-accent) 7%, rgba(255, 248, 236, 0.92));
+    --spw-image-line: color-mix(in srgb, var(--spw-image-accent) 18%, rgba(17, 18, 20, 0.14));
+    --spw-image-glow: color-mix(in srgb, var(--spw-image-accent) 28%, rgba(255, 208, 131, 0.22));
+    outline: none;
+}
+
+.spw-metaphysics-host:focus-visible {
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 28%, transparent),
+        0 0 0 4px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+}
+
+.spw-metaphysics-host.spw-scaffold::before {
+    content: none;
+}
+
+.spw-metaphysics-host::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.14), transparent 38%),
+        radial-gradient(circle at top left, rgba(255, 243, 215, 0.12), transparent 44%);
+    opacity: 0.68;
+    mix-blend-mode: screen;
+}
+
+.spw-metaphysics-host img,
+.spw-metaphysics-host svg {
+    position: relative;
+    z-index: 0;
+    transition:
+        filter var(--duration-base, 200ms) ease,
+        transform var(--duration-base, 200ms) ease,
+        opacity var(--duration-base, 200ms) ease,
+        box-shadow var(--duration-base, 200ms) ease;
+}
+
+.spw-metaphysics-host figcaption {
+    position: relative;
+    z-index: 1;
+}
+
+.spw-metaphysics-host[data-spw-medium="raster"] img {
+    filter: saturate(0.98) contrast(1.01);
+}
+
+.spw-metaphysics-host[data-spw-image-preview="on"] img,
+.spw-metaphysics-host[data-spw-image-preview="on"] svg,
+.spw-metaphysics-host:focus-within img,
+.spw-metaphysics-host:focus-within svg {
+    transform: scale(1.008);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"] img {
+    image-rendering: pixelated;
+    filter: saturate(0.84) contrast(1.12) brightness(1.01);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"][data-spw-image-preview="on"] img {
+    transform: scale(1.014);
+    filter: saturate(0.9) contrast(1.16) brightness(1.03);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="watercolor"] img,
+.spw-metaphysics-host[data-spw-image-effect="watercolor"] svg {
+    filter: url('#watercolor-blur') saturate(0.95) contrast(0.98);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-image-preview="on"] img,
+.spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-image-preview="on"] svg {
+    transform: scale(1.012);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="clarify"] img,
+.spw-metaphysics-host[data-spw-image-effect="clarify"] svg {
+    filter: saturate(1.04) contrast(1.05);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="clarify"][data-spw-medium="vector"] svg {
+    filter:
+        drop-shadow(0 1px 0 rgba(255, 255, 255, 0.16))
+        drop-shadow(0 0 12px color-mix(in srgb, var(--spw-image-accent) 8%, transparent));
+}
+
+.spw-image-helper-strip {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    max-width: calc(100% - 1.3rem);
+    pointer-events: none;
+}
+
+.spw-image-helper,
+.spw-image-memory {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.48rem;
+    border-radius: 999px;
+    border: 1px solid var(--spw-image-line);
+    backdrop-filter: blur(8px);
+    box-sizing: border-box;
+}
+
+.spw-image-helper {
+    background: color-mix(in srgb, var(--spw-image-paper) 86%, rgba(17, 18, 20, 0.12));
+    color: color-mix(in srgb, var(--spw-image-accent) 72%, var(--ink));
+    font: inherit;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        border-color var(--duration-fast, 120ms) ease,
+        background var(--duration-fast, 120ms) ease,
+        transform var(--duration-fast, 120ms) ease,
+        box-shadow var(--duration-fast, 120ms) ease;
+}
+
+.spw-image-helper:hover,
+.spw-image-helper:focus-visible {
+    border-color: color-mix(in srgb, var(--spw-image-accent) 42%, transparent);
+    background: color-mix(in srgb, var(--spw-image-paper) 92%, rgba(17, 18, 20, 0.08));
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 18%, transparent);
+}
+
+.spw-image-memory {
+    color: var(--ink-soft);
+    background: color-mix(in srgb, rgba(255, 255, 255, 0.86) 88%, transparent);
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
+    max-width: 9.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spw-metaphysics-host[data-spw-visited="true"] {
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+        0 0 22px var(--spw-image-glow);
+}
+
+.spw-metaphysics-host[data-spw-visited="true"]::after {
+    opacity: 0.94;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 34%),
+        radial-gradient(circle at top left, color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 236, 196, 0.2)), transparent 48%);
+}
+
+.spw-metaphysics-host[data-spw-visited="true"] .spw-image-memory {
+    color: color-mix(in srgb, var(--spw-image-accent) 58%, var(--ink));
+}
+
+.spw-metaphysics-host[data-spw-visited="true"] img,
+.spw-metaphysics-host[data-spw-visited="true"] svg {
+    box-shadow: 0 0 24px color-mix(in srgb, var(--spw-image-accent) 14%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-hold-state="arming"] {
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+        0 0 30px color-mix(in srgb, var(--spw-image-accent) 20%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-hold-state="arming"] .spw-image-helper {
+    animation: spw-image-hold-pulse 0.72s ease-in-out infinite;
+}
+
+.spw-metaphysics-host[data-spw-visit-burst="true"] {
+    animation: spw-image-visit-burst 0.82s ease;
+}
+
+.spw-metaphysics-host[data-spw-medium="vector"] {
+    padding: clamp(0.6rem, 2vw, 0.9rem);
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--spw-image-paper) 82%, transparent), transparent 56%),
+        rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+}
+
+.spw-metaphysics-host[data-spw-medium="vector"] .spw-image-helper-strip {
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+@keyframes spw-image-hold-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-image-accent) 0%, transparent);
+    }
+    50% {
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+    }
+}
+
+@keyframes spw-image-visit-burst {
+    0% {
+        box-shadow:
+            0 0 0 0 color-mix(in srgb, var(--spw-image-accent) 18%, transparent),
+            0 0 0 color-mix(in srgb, var(--spw-image-accent) 0%, transparent);
+    }
+    55% {
+        box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 26%, transparent),
+            0 0 38px color-mix(in srgb, var(--spw-image-accent) 22%, transparent);
+    }
+    100% {
+        box-shadow:
+            0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+            0 0 22px var(--spw-image-glow);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spw-metaphysics-host img,
+    .spw-metaphysics-host svg,
+    .spw-image-helper {
+        transition: none;
+    }
+
+    .spw-metaphysics-host[data-spw-hold-state="arming"] .spw-image-helper,
+    .spw-metaphysics-host[data-spw-visit-burst="true"] {
+        animation: none;
+    }
+}

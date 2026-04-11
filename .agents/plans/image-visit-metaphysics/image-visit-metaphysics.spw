@@ -1,0 +1,27 @@
+#>image_visit_metaphysics
+#:layer #!design
+
+^"claim"{
+  .image_surface = "A page surface that carries an image or SVG as part of the site's conceptual phrasing."
+  .visited = "A remembered encounter, earned by sustained attention rather than incidental hover."
+  .helper = "A compact Spw operator handle that explains or nudges image treatment without becoming a toolbar."
+}
+
+^"mapping"{
+  conceptual -> !pixelize
+  hybrid -> ~watercolor
+  realized -> .clarify
+  visited -> ^glow
+}
+
+^"ritual"{
+  ?[hold] "sustain pressure on an image surface"
+  @mark "persist visit memory for this surface"
+  ^reward "show an archival glow that survives reload"
+  ~return "let the surface feel discoverable again on later pages"
+}
+
+^"taste"{
+  $note "Paper semantics should feel tactile and metaphysical, but the meaning still comes first."
+  $note "The glow is memory, not achievement UI."
+}

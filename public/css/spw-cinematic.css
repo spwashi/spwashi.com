@@ -1,47 +1,294 @@
 /* Cinematic and Thematic Transitions
- * Used for high-depth engineering surfaces and learning labs.
+ * Charge-driven visual physics for Spw components.
+ *
+ * The --charge property (0→1) is written to elements by SpwBus and drives all
+ * cinematic effects from a single source of truth. CSS transitions on @property
+ * --charge enable smooth interpolation without JavaScript animation loops.
+ *
+ * Charge levels:
+ *   0           neutral    — element at rest
+ *   0.25        charging   — pointer hovered
+ *   0.50        projecting — drag in progress
+ *   0.65        active     — pointer down
+ *   0.90        sustained  — held 420ms+ (pin threshold)
+ *   1.0         manifest   — fully expressed
+ *
+ * CSS data contract:
+ *   --charge               number 0→1 on any element (set by bus)
+ *   --spw-operator-color   inherited from [data-spw-operator] context
+ *   data-spw-charge        charging | active | sustained | manifest
+ *   data-spw-gesture       neutral | charging | active | sustained | projecting
  */
+
+/* ── @property registration ──────────────────────────────────────────────── */
+/* Registering --charge as a typed CSS property enables interpolation,
+   which means transitions on charge-derived expressions actually animate. */
+
+@property --charge {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+}
+
+/* ── Base timing handles (if spw-tokens.css is not loaded first, fallbacks) ─ */
 
 :root {
     --cinematic-ease: cubic-bezier(0.23, 1, 0.32, 1);
     --cinematic-duration: 0.6s;
-    --glow-color: rgba(24, 123, 135, 0.2);
+    --charge-in-duration:  200ms;
+    --charge-out-duration: 500ms;
+    --charge-ease-in:  cubic-bezier(0, 0, 0.2, 1);
+    --charge-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Cinematic Filter Host
- * Attach this to an SVG or a container to enable internal thematic filters.
- */
+/* ── Charge transition on all tracked elements ───────────────────────────── */
+/* Any element that receives --charge from the bus gets a smooth transition.
+   We use :where() to keep specificity at 0 so component rules can override. */
+
+:where([data-spw-form], [data-spw-charge], .spw-delimiter) {
+    transition:
+        --charge         var(--charge-in-duration)  var(--charge-ease-in),
+        filter           var(--charge-in-duration)  var(--charge-ease-in),
+        box-shadow       var(--charge-in-duration)  var(--charge-ease-in),
+        outline-color    var(--charge-in-duration)  var(--charge-ease-in),
+        background-color var(--charge-out-duration) var(--charge-ease-out);
+}
+
+/* Discharge (return to rest) uses a slower, trailing ease */
+:where([data-spw-form]:not([data-spw-charge])) {
+    transition:
+        --charge         var(--charge-out-duration) var(--charge-ease-out),
+        filter           var(--charge-out-duration) var(--charge-ease-out),
+        box-shadow       var(--charge-out-duration) var(--charge-ease-out),
+        outline-color    var(--charge-out-duration) var(--charge-ease-out),
+        background-color var(--charge-out-duration) var(--charge-ease-out);
+}
+
+/* ── Operator color inheritance ──────────────────────────────────────────── */
+/* Each operator type resolves its color token so cinematic effects
+   can reference a single --spw-operator-color without type-specific branches. */
+
+[data-spw-operator="frame"]     { --spw-operator-color: var(--op-frame-color);     }
+[data-spw-operator="object"]    { --spw-operator-color: var(--op-object-color);    }
+[data-spw-operator="ref"]       { --spw-operator-color: var(--op-ref-color);       }
+[data-spw-operator="probe"]     { --spw-operator-color: var(--op-probe-color);     }
+[data-spw-operator="action"]    { --spw-operator-color: var(--op-action-color);    }
+[data-spw-operator="stream"]    { --spw-operator-color: var(--op-stream-color);    }
+[data-spw-operator="merge"]     { --spw-operator-color: var(--op-merge-color);     }
+[data-spw-operator="binding"]   { --spw-operator-color: var(--op-binding-color);   }
+[data-spw-operator="meta"]      { --spw-operator-color: var(--op-meta-color);      }
+[data-spw-operator="normalize"] { --spw-operator-color: var(--op-normalize-color); }
+[data-spw-operator="pragma"]    { --spw-operator-color: var(--op-pragma-color);    }
+[data-spw-operator="surface"]   { --spw-operator-color: var(--op-surface-color);   }
+[data-spw-operator="layer"]     { --spw-operator-color: var(--op-layer-color);     }
+[data-spw-operator="baseline"]  { --spw-operator-color: var(--op-baseline-color);  }
+
+/* ── Dimensional field — manifests at threshold ───────────────────────────  */
+/* The field is an ambient glow that appears when charge crosses 0.25.
+   It deepens at active (0.65) and pulses at sustained (0.90). */
+
+[data-spw-form][data-spw-charge] {
+    --field-opacity:  calc(var(--charge, 0) * 0.7);
+    --field-radius:   calc(4px + var(--charge, 0) * 20px);
+    --field-spread:   calc(var(--charge, 0) * 12px);
+    --field-color:    color-mix(
+        in srgb,
+        var(--spw-operator-color, var(--teal, hsl(180 100% 28%))) calc(var(--charge, 0) * 50%),
+        transparent
+    );
+
+    filter: drop-shadow(0 0 var(--field-radius) var(--field-color));
+}
+
+/* At active charge and above, add a second, tighter glow ring */
+[data-spw-charge="active"],
+[data-spw-charge="sustained"],
+[data-spw-charge="manifest"] {
+    filter:
+        drop-shadow(0 0 var(--field-radius) var(--field-color))
+        drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 80%, white));
+}
+
+/* Sustained hold — pulse animation to signal pin threshold crossing */
+[data-spw-charge="sustained"] {
+    animation: charge-sustain-pulse 1.4s var(--cinematic-ease) infinite;
+}
+
+@keyframes charge-sustain-pulse {
+    0%, 100% {
+        filter:
+            drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent))
+            drop-shadow(0 0 4px  color-mix(in srgb, var(--spw-operator-color, var(--teal)) 70%, white));
+    }
+    50% {
+        filter:
+            drop-shadow(0 0 28px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 50%, transparent))
+            drop-shadow(0 0 8px  color-mix(in srgb, var(--spw-operator-color, var(--teal)) 90%, white));
+    }
+}
+
+/* ── Projecting (drag) — directional field smear ─────────────────────────── */
+
+[data-spw-gesture="projecting"] {
+    --drag-dx:       0px;
+    --drag-dy:       0px;
+    filter:
+        drop-shadow(
+            calc(var(--drag-dx) * 0.08) calc(var(--drag-dy) * 0.08) 16px
+            color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent)
+        );
+    transition: none; /* live drag needs immediate response */
+}
+
+/* ── Outline affordance — focus ring scales with charge ─────────────────── */
+
+[data-spw-form][data-spw-charge] {
+    outline: 1px solid color-mix(
+        in srgb,
+        var(--spw-operator-color, var(--teal)) calc(var(--charge, 0) * 70%),
+        transparent
+    );
+    outline-offset: calc(1px + var(--charge, 0) * 4px);
+}
+
+/* ── Background wash — deepens with charge ───────────────────────────────── */
+
+[data-spw-form="brace"][data-spw-charge] {
+    --wash-alpha: calc(var(--charge, 0) * 0.12);
+    background-color: color-mix(
+        in srgb,
+        var(--spw-operator-color, var(--teal)) calc(var(--charge, 0) * 14%),
+        transparent
+    );
+}
+
+/* ── Pinned elements retain residual charge ──────────────────────────────── */
+
+[data-spw-pinned="true"] {
+    --charge: 0.30;
+    outline: 1px dashed color-mix(in srgb, var(--spw-operator-color, var(--teal)) 38%, transparent);
+    outline-offset: 3px;
+}
+
+/* ── Operator sigil — charge-scaled brightness ───────────────────────────── */
+
+[data-spw-charge] .frame-sigil,
+[data-spw-charge] .frame-card-sigil {
+    opacity: calc(0.55 + var(--charge, 0) * 0.45);
+    transition: opacity var(--charge-in-duration) var(--charge-ease-in);
+}
+
+/* ── Semantic phase state indicators ─────────────────────────────────────── */
+/* Phase panels and sigils reflect the operator's semantic phase position. */
+
+[data-spw-stateful][data-spw-phase] .frame-sigil[data-spw-phase-prefix] {
+    opacity: 0.65;
+}
+
+[data-spw-stateful][data-spw-phase] .frame-sigil[data-spw-phase-postfix] {
+    opacity: 1;
+    text-shadow: 0 0 6px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 50%, transparent);
+}
+
+/* ── Lattice phase — salience shifts across developmental cycle ──────────── */
+/* The body carries data-spw-lattice-phase. Operator chips relevant to the
+   current learning phase are brought forward; others recede. */
+
+[data-spw-lattice-phase="curiosity"]  .spec-pill[data-cluster~="runtime"]     { --charge: 0.40; }
+[data-spw-lattice-phase="competence"] .spec-pill[data-cluster~="structure"]   { --charge: 0.40; }
+[data-spw-lattice-phase="coherence"]  .spec-pill[data-cluster~="orchestration"]{ --charge: 0.40; }
+[data-spw-lattice-phase="principal"]  .spec-pill[data-cluster~="expressivity"] { --charge: 0.40; }
+
+/* ── Spirit phase body — ambient palette shifts ───────────────────────────── */
+/* The document root carries data-spw-spirit-phase.
+   Phases modulate the global charge receptivity (how vivid the field appears). */
+
+[data-spw-spirit-phase="initiation"]     { --phase-receptivity: 0.70; }
+[data-spw-spirit-phase="resistance"]     { --phase-receptivity: 1.00; }
+[data-spw-spirit-phase="transformation"] { --phase-receptivity: 0.85; }
+[data-spw-spirit-phase="expression"]     { --phase-receptivity: 0.90; }
+[data-spw-spirit-phase="return"]         { --phase-receptivity: 0.55; }
+
+/* ── SVG operator grammar — animated flow lines ───────────────────────────── */
+
 .cinematic-host {
     filter: drop-shadow(0 0 0 transparent);
     transition: filter var(--cinematic-duration) var(--cinematic-ease);
 }
 
 .cinematic-host:hover {
-    filter: drop-shadow(0 0 12px var(--glow-color));
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--teal) 22%, transparent));
 }
 
-/* Internal SVG semantic connections */
 .spw-svg-surface {
-    --svg-charge: 1;
-    transition: transform var(--charge-release-duration) var(--charge-release-ease);
+    transition: transform var(--charge-release-duration, 120ms) var(--charge-release-ease, ease-out);
 }
 
 .spw-svg-surface:hover {
     transform: scale(1.005);
 }
 
-/* Animated Flow Lines */
 @keyframes flow-dash {
-    to {
-        stroke-dashoffset: -40;
-    }
+    to { stroke-dashoffset: -40; }
 }
 
+/* Default flow: slow drift at ambient charge */
 .spw-svg-flow--animated {
-    animation: flow-dash 3s linear infinite;
+    animation: flow-dash 4s linear infinite;
 }
 
-/* Chromatic aberration filter (mental model for depth) */
+/* Faster flow when the SVG surface is inside a charged context */
+[data-spw-charge="active"]    .spw-svg-flow--animated { animation-duration: 2.2s; }
+[data-spw-charge="sustained"] .spw-svg-flow--animated { animation-duration: 1.2s; }
+
+/* ── Chromatic aberration filter hook ────────────────────────────────────── */
+/* Attach .filter-aberration to an SVG or container to invoke depth texture.   */
+
 .filter-aberration {
     filter: url('#cinematic-aberration');
+}
+
+/* ── Parallel shimmer — lattice relationship highlight ───────────────────── */
+
+.spw-parallel-shimmer {
+    animation: spw-parallel-pulse 1.8s var(--cinematic-ease) infinite;
+}
+
+@keyframes spw-parallel-pulse {
+    0%, 100% { box-shadow: 0 0 0   transparent; }
+    50%      { box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent); }
+}
+
+/* ── Pop snap (haptics) ───────────────────────────────────────────────────── */
+
+@keyframes spw-pop-snap {
+    0%   { transform: scale(1);    opacity: 1;   }
+    40%  { transform: scale(0.88); opacity: 0.9; }
+    70%  { transform: scale(1.06); opacity: 1;   }
+    100% { transform: scale(1);                  }
+}
+
+.spw-pop-snap {
+    animation: spw-pop-snap 180ms var(--cinematic-ease) forwards;
+}
+
+/* Grounded tokens have settled into the baseline (.) operator.
+   They are dimmed but not deleted — presence acknowledged, attention released. */
+
+[data-spw-grounded="true"] {
+    opacity: 0.48;
+    /* Soft dot-underline marks the token as baseline-settled, not removed */
+    text-decoration: underline dotted;
+    text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent);
+    text-underline-offset: 3px;
+    filter: none; /* suppress charge glow — this element is at rest */
+    transition:
+        opacity          var(--charge-out-duration) var(--charge-ease-out),
+        text-decoration  var(--charge-out-duration) var(--charge-ease-out);
+}
+
+/* Un-grounding snaps back to full salience */
+[data-spw-grounded="false"] {
+    opacity: 1;
+    text-decoration: none;
 }

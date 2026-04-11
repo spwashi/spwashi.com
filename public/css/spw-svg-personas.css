@@ -1,0 +1,73 @@
+/**
+ * Spw SVG Personas
+ *
+ * Tailors SVG rendering to the active technical persona.
+ */
+
+/* ── Viewer@ (Default) ─────────────────────────────────────────────────── */
+/* Clean, standard rendering using theme variables. */
+
+.spw-svg-surface {
+    background: var(--surface, #fff);
+    transition: all 0.4s var(--cinematic-ease, ease-in-out);
+}
+
+/* ── Doodler@ ──────────────────────────────────────────────────────────── */
+/* Hand-drawn aesthetic: sketchy lines, paper texture, vibrant flows. */
+
+[data-spw-persona="doodler"] .spw-svg-surface {
+    filter: url('#paper-texture');
+    border: 2px solid var(--wonder-accent-color, #ffbf00);
+    border-radius: 12px 8px 14px 10px; /* irregular */
+}
+
+[data-spw-persona="doodler"] .spw-svg-surface circle,
+[data-spw-persona="doodler"] .spw-svg-surface rect,
+[data-spw-persona="doodler"] .spw-svg-surface path:not(.spw-svg-flow) {
+    filter: url('#doodler-sketch');
+    stroke-width: 2;
+}
+
+[data-spw-persona="doodler"] .spw-svg-flow {
+    stroke-width: 3;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px var(--teal));
+}
+
+/* ── Scribe@ ───────────────────────────────────────────────────────────── */
+/* Blueprint aesthetic: grid background, rigid lines, meta reveals. */
+
+[data-spw-persona="scribe"] .spw-svg-surface {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTSAyMCAwIEwgMCAwIDAgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFhOTk5OSIgc3Ryb2tlLXdpZHRoPSIwLjIiIG9wYWNpdHk9IjAuMTUiLz48L3N2Zz4=');
+    background-color: var(--charcoal-dark, #111);
+    border: 1px solid var(--teal, #1a9999);
+}
+
+[data-spw-persona="scribe"] .spw-svg-surface text {
+    font-family: var(--site-mono-font, monospace);
+    font-size: 0.9em;
+}
+
+[data-spw-persona="scribe"] .spw-svg-node {
+    stroke-dasharray: 2 1; /* technical dashed border */
+}
+
+/* Scribe meta-reveal on SVG elements */
+[data-spw-persona="scribe"] .spw-svg-node:hover::after {
+    /* Note: ::after won't work on SVG elements, 
+       but we can use the JS augment as a fallback if needed 
+       or use the 'title' attribute which is native to SVG. */
+}
+
+/* ── Theme Responsiveness ───────────────────────────────────────────────── */
+/* Ensure SVGs adapt to dark/light modes via CSS variables. */
+
+:root[data-theme="dark"] .spw-svg-surface {
+    --surface: var(--charcoal-light, #222);
+    --ink: var(--ink-base, #eee);
+}
+
+:root[data-theme="light"] .spw-svg-surface {
+    --surface: #fff;
+    --ink: #111;
+}

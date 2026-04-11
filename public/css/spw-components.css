@@ -41,6 +41,29 @@
     max-width: var(--reading-width);
 }
 
+html[data-spw-show-spec-pills="off"] .spec-strip,
+html[data-spw-show-spec-pills="off"] .spec-pill {
+    display: none !important;
+}
+
+html[data-spw-operator-saturation="muted"] .frame-sigil,
+html[data-spw-operator-saturation="muted"] .operator-chip,
+html[data-spw-operator-saturation="muted"] .frame-card-sigil,
+html[data-spw-operator-saturation="muted"] .syntax-token,
+html[data-spw-operator-saturation="muted"] [data-op],
+html[data-spw-operator-saturation="muted"] [data-spw-operator] {
+    filter: saturate(0.72);
+}
+
+html[data-spw-operator-saturation="vibrant"] .frame-sigil,
+html[data-spw-operator-saturation="vibrant"] .operator-chip,
+html[data-spw-operator-saturation="vibrant"] .frame-card-sigil,
+html[data-spw-operator-saturation="vibrant"] .syntax-token,
+html[data-spw-operator-saturation="vibrant"] [data-op],
+html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
+    filter: saturate(1.18);
+}
+
 .frame-operators,
 .mode-switch {
     display: flex;
@@ -520,4 +543,476 @@ figcaption {
 
 .domain-visual--token {
     align-self: start;
+}
+
+/* ── Spw Atom Anatomy ───────────────────────────────────────────────────────
+ * All Spw components share a three-part grammar: prefix · nucleus · suffix.
+ * This mirrors the operator prefix/infix/postfix structure of Spw syntax.
+ * Cards, pills, and breadcrumbs are the same atom at different scales.
+ *
+ * Scale:  pill → chip → card → panel → frame
+ * Dialect: . baseline  ^ object  ~ ref  ? probe  @ action  etc.
+ *
+ * Anatomy attributes:
+ *   [data-spw-atom]         — marks the atom container
+ *   [data-spw-atom-prefix]  — operator sigil, prefix zone
+ *   [data-spw-atom-nucleus] — primary content
+ *   [data-spw-atom-suffix]  — postfix, metadata, or action
+ */
+
+/* Base atom */
+[data-spw-atom] {
+    display: inline-grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "prefix nucleus suffix";
+    align-items: center;
+    gap: 0.3em;
+    position: relative;
+    /* Operator color inherited from [data-spw-operator] ancestor */
+    --atom-color: var(--spw-operator-color, var(--teal));
+}
+
+[data-spw-atom-prefix] {
+    grid-area: prefix;
+    color: var(--atom-color);
+    font-weight: 600;
+    line-height: 1;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+[data-spw-atom-nucleus] {
+    grid-area: nucleus;
+    min-width: 0;
+}
+
+[data-spw-atom-suffix] {
+    grid-area: suffix;
+    color: var(--ink-soft);
+    font-size: 0.85em;
+    flex-shrink: 0;
+}
+
+/* ── Pill scale ── */
+[data-spw-atom="pill"] {
+    padding: 0.28em 0.65em;
+    border: 1px solid color-mix(in srgb, var(--atom-color) 28%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--atom-color) 8%, var(--surface, white));
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        border-color var(--charge-release-duration, 120ms) ease,
+        background   var(--charge-release-duration, 120ms) ease;
+}
+
+[data-spw-atom="pill"]:hover,
+[data-spw-atom="pill"]:focus-visible {
+    background: color-mix(in srgb, var(--atom-color) 16%, var(--surface, white));
+    border-color: color-mix(in srgb, var(--atom-color) 52%, transparent);
+}
+
+/* ── Chip scale (compact pill, no nucleus wrap) ── */
+[data-spw-atom="chip"] {
+    display: inline-flex;
+    padding: 0.2em 0.5em;
+    border: 1px solid color-mix(in srgb, var(--atom-color) 22%, transparent);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--atom-color) 6%, var(--surface, white));
+    font-size: 0.78rem;
+    gap: 0.2em;
+    cursor: default;
+}
+
+/* ── Card scale ── */
+[data-spw-atom="card"] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "prefix header"
+        "prefix body"
+        "prefix suffix";
+    gap: 0.15rem 0.75rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--atom-color) 18%, var(--line, rgba(0,0,0,0.12)));
+    border-radius: var(--radius-sm, 6px);
+    background: var(--card-bg, rgba(255,255,255,0.7));
+    color: inherit;
+    text-decoration: none;
+    transition:
+        border-color var(--charge-release-duration, 120ms) ease,
+        background   var(--charge-release-duration, 120ms) ease;
+}
+
+[data-spw-atom="card"]:hover,
+[data-spw-atom="card"]:focus-visible {
+    border-color: color-mix(in srgb, var(--atom-color) 38%, transparent);
+    background: var(--card-bg-hover, rgba(255,255,255,0.84));
+}
+
+/* ── Breadcrumb scale ── */
+[data-spw-atom="breadcrumb"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    font-size: 0.82rem;
+}
+
+[data-spw-atom="breadcrumb"] + [data-spw-atom="breadcrumb"]::before {
+    content: attr(data-spw-separator, '/');
+    padding: 0 0.4em;
+    color: var(--ink-soft);
+    opacity: 0.55;
+}
+
+/* ── Cognitive surface panel ─────────────────────────────────────────────── */
+
+.cognitive-surface-panel {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 900;
+    width: min(28rem, 90vw);
+    max-height: 65vh;
+    overflow: auto;
+    background: var(--floating-bg, rgba(255,255,255,0.94));
+    border: 1px solid var(--line-strong, rgba(0,128,128,0.28));
+    border-radius: var(--radius, 8px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(12px);
+    font-size: 0.88rem;
+}
+
+.cognitive-surface-panel[hidden] {
+    display: none;
+}
+
+.cognitive-surface-frame {
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cognitive-surface-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--line, rgba(0,0,0,0.1));
+}
+
+.cognitive-surface-header .frame-sigil {
+    flex: 1;
+    font-size: 0.82rem;
+}
+
+.cognitive-phase-badge {
+    font-size: 0.75rem;
+    opacity: 0.72;
+    color: var(--op-action-color, var(--teal));
+}
+
+.cognitive-surface-close {
+    background: none;
+    border: none;
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    line-height: 1;
+    border-radius: 4px;
+}
+
+.cognitive-surface-close:hover {
+    background: var(--surface-soft, rgba(0,0,0,0.06));
+    color: var(--ink);
+}
+
+.cognitive-surface-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.cognitive-page-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+}
+
+.cognitive-page-title {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.cognitive-page-description {
+    margin: -0.15rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.cognitive-realization-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.55rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm, 6px);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+}
+
+.cognitive-realization-group[data-spw-realization="conceptual"] {
+    border-style: dashed;
+}
+
+.cognitive-realization-group[data-spw-realization="realized"] {
+    border-style: solid;
+}
+
+.cognitive-realization-group[data-spw-realization="hybrid"] {
+    border-style: dotted;
+}
+
+.cognitive-realization-label {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cognitive-substrate-group {
+    padding: 0.5rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--teal)) 20%, transparent);
+    border-radius: var(--radius-sm, 6px);
+    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 4%, transparent);
+}
+
+.cognitive-substrate-label {
+    margin: 0 0 0.45rem;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--spw-operator-color, var(--teal));
+    letter-spacing: 0.06em;
+}
+
+.cognitive-token-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.cognitive-token {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.22em 0.55em;
+    border: 1px dotted color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 6%, var(--surface, white));
+    font-size: 0.82rem;
+    opacity: 0.82;
+    cursor: default;
+}
+
+.cognitive-token-phrase {
+    padding: 0.1rem 0.35rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--op-layer-bg-soft, var(--surface-soft)) 92%, transparent);
+    color: var(--op-layer-color, var(--ink-soft));
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.cognitive-token-sigil {
+    color: var(--op-baseline-color, var(--ink-soft));
+    font-weight: 400;
+    opacity: 0.65;
+}
+
+.cognitive-token-depth {
+    font-size: 0.7em;
+    color: var(--op-pragma-color, rgba(180,0,0,0.7));
+    font-weight: 600;
+}
+
+.cognitive-surface-footer {
+    border-top: 1px solid var(--line);
+    padding-top: 0.65rem;
+}
+
+.cognitive-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.cognitive-surface-source {
+    border-top: 1px solid var(--line);
+    padding-top: 0.6rem;
+    margin-top: 0.1rem;
+}
+
+.cognitive-surface-source summary {
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.04em;
+}
+
+.cognitive-source-pre {
+    margin: 0.5rem 0 0;
+    padding: 0.65rem;
+    background: var(--surface-code, rgba(18,23,27,0.96));
+    border-radius: var(--radius-sm, 6px);
+    overflow-x: auto;
+    font-size: 0.74rem;
+    line-height: 1.55;
+}
+
+.cognitive-source-pre code {
+    color: rgba(255, 244, 210, 0.88);
+}
+/* ── Spw State Inspector (Live Configuration) ────────────────────────── */
+
+[data-spw-inspect-mounted="true"],
+[data-spw-image-managed="true"] {
+    position: relative;
+}
+
+.spw-state-block {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0.9rem 0 0;
+    padding: 0.72rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--teal) 24%, rgba(255, 255, 255, 0.12));
+    border-radius: 6px;
+    background: rgba(12, 14, 18, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    overflow-x: auto;
+    box-sizing: border-box;
+    pointer-events: auto;
+    transition:
+        border-color var(--duration-fast, 120ms) ease,
+        box-shadow var(--duration-fast, 120ms) ease,
+        transform var(--duration-fast, 120ms) ease;
+}
+
+.spw-state-block code {
+    display: block;
+    min-width: 0;
+    color: rgba(255, 247, 227, 0.92);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.77rem;
+    line-height: 1.65;
+    white-space: pre;
+}
+
+.spw-state-block--inline {
+    margin-inline-start: 0;
+}
+
+.spw-state-block--overlay {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 3;
+    margin: 0;
+    max-width: calc(100% - 1.5rem);
+    background: rgba(12, 14, 18, 0.84);
+}
+
+.spw-state-block:hover,
+.spw-state-block:focus-within {
+    border-color: color-mix(in srgb, var(--teal) 42%, rgba(255, 255, 255, 0.18));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.spw-state-token {
+    border-radius: 3px;
+}
+
+.spw-state-token.is-interactive {
+    cursor: pointer;
+    transition:
+        background-color var(--duration-fast, 120ms) ease,
+        color var(--duration-fast, 120ms) ease,
+        box-shadow var(--duration-fast, 120ms) ease;
+}
+
+.spw-state-token.is-interactive:hover,
+.spw-state-token.is-interactive:focus-visible {
+    background: color-mix(in srgb, var(--teal) 16%, transparent);
+    color: #fff;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--teal) 22%, transparent);
+}
+
+.spw-state-token--op {
+    color: var(--spw-operator-color, var(--teal));
+    font-weight: 700;
+}
+
+.spw-state-token--name {
+    color: rgba(255, 255, 255, 0.94);
+}
+
+.spw-state-token--brace {
+    color: var(--amber);
+}
+
+.spw-state-token--key {
+    color: var(--pink);
+    opacity: 0.92;
+}
+
+.spw-state-token--val {
+    color: rgba(148, 232, 226, 0.96);
+}
+
+.spw-state-block.is-dirty {
+    animation: state-pulse 0.34s ease-out;
+}
+
+@keyframes state-pulse {
+    0% {
+        transform: translateY(0);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    }
+    50% {
+        transform: translateY(-1px);
+        box-shadow:
+            0 12px 28px rgba(0, 0, 0, 0.2),
+            0 0 0 1px color-mix(in srgb, var(--teal) 18%, transparent);
+    }
+    100% {
+        transform: translateY(0);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    }
+}
+
+@media (max-width: 700px) {
+    .spw-state-block {
+        width: 100%;
+    }
+
+    .spw-state-block--overlay {
+        left: 0.55rem;
+        right: 0.55rem;
+        bottom: 0.55rem;
+        max-width: none;
+    }
 }

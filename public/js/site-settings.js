@@ -1,3 +1,5 @@
+import { bus } from './spw-bus.js';
+
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 const FONT_SIZE_PRESET_MULTIPLIER = Object.freeze({
     small: 0.93,
@@ -283,7 +285,7 @@ const applySiteSettings = (settings = getSiteSettings()) => {
 };
 
 const emitSettingsChange = (settings) => {
-    document.dispatchEvent(new CustomEvent('spw:settings-change', { detail: settings }));
+    bus.emit('settings:changed', settings);
 };
 
 const saveSiteSettings = (nextSettings = {}) => {
@@ -343,24 +345,28 @@ const PRESETS = Object.freeze({
         navigatorDisplay: 'quiet', consoleDisplay: 'collapsed', colorMode: 'auto',
         operatorSaturation: 'normal', animationIntensity: 'normal', grainIntensity: 'none',
         semanticDensity: 'minimal', operatorHighlighting: 'off',
+        cognitiveHandles: 'off', showSemanticMetadata: 'off',
         phaseIndicators: 'off', spiritPhaseAutoCycle: 'off',
         reduceMotion: 'off', highContrast: 'off'
     },
     rich: {
         semanticDensity: 'rich', grainIntensity: 'moderate',
         operatorSaturation: 'vibrant', animationIntensity: 'enhanced',
-        operatorHighlighting: 'on', phaseIndicators: 'on', showSpecPills: 'on',
+        operatorHighlighting: 'on', cognitiveHandles: 'on',
+        showSemanticMetadata: 'on', phaseIndicators: 'on', showSpecPills: 'on',
         spiritPhaseAutoCycle: 'on', navigatorDisplay: 'full', consoleDisplay: 'collapsed'
     },
     developer: {
         navigatorDisplay: 'full', consoleDisplay: 'expanded',
         semanticDensity: 'rich', operatorHighlighting: 'on',
+        cognitiveHandles: 'on', showSemanticMetadata: 'on',
         showSpecPills: 'on', phaseIndicators: 'on', grainIntensity: 'none'
     },
     accessible: {
         highContrast: 'on', reduceMotion: 'on', fontSize: 'large',
         fontSizeScale: '120', lineSpacing: 'loose', animationIntensity: 'reduced',
         animationThrottling: 'heavy', grainIntensity: 'none',
+        cognitiveHandles: 'on', showSemanticMetadata: 'on',
         navigatorDisplay: 'full', consoleDisplay: 'collapsed'
     }
 });

@@ -1,0 +1,34 @@
+#:layer #!semantics
+
+#>brace_literacy_guides
+^["scope"]{
+ ~#subject: "brace semantics, substrate distinction, phrasing, literacy handles"
+ ~#status: "draft"
+ @plan: ~".agents/plans/brace-literacy-guides/PLAN.md"
+}
+
+^["definitions"]{
+ "conceptual" { meaning: "a surface that frames, names, compares, or guides an idea before collapsing into an artifact" }
+ "realized" { meaning: "a surface that presents a concrete artifact, route, asset, or committed output" }
+ "substrate" { meaning: "the operator or material family a concept is grounded in; the medium that gives the token its local behavior" }
+ "phrasing" { meaning: "the readable grouping of tokens and cues that tells a reader whether something is premise, guide, artifact, or consequence" }
+}
+
+^["heuristic_contract"]{
+ "A heuristic is acceptable only if a human can inspect the resulting metadata in DOM/state and understand why a surface was classified that way."
+ "Conceptual vs realized may be inferred from existing role, kind, liminality, link/artifact status, and component meaning."
+ "Substrate should prefer explicit operator context and only fall back to inferred families."
+ "Phrasing should be derived from nearby headings, captions, and semantic tags, not decorative text alone."
+}
+
+^["counterexamples"]{
+ "A richly styled card is not automatically realized."
+ "A route link is not automatically conceptual; destination cards are realized when they function as artifacts to choose."
+ "A floating guide panel is not good guidance if it cannot show what trace or metadata produced it."
+}
+
+^["falsification"]{
+ "If users cannot tell why two neighboring surfaces receive different brace/salience treatment, the heuristic failed."
+ "If the smart/cognitive surfaces become more verbose while conveying less substrate or phrasing signal, the model regressed."
+ "If settings create visible changes without readable explanatory value, literacy handles are decoration, not guidance."
+}

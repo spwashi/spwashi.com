@@ -1,35 +1,47 @@
 /**
  * Spw Component States
- * 
- * Implements semantic state machines for Spw components based on operator role,
- * prefix/postfix semantics, and brace polarity.
+ *
+ * Implements semantic phase state machines for Spw components.
+ * Each operator type cycles through its own phase sequence when activated.
+ *
+ * Listens for:  bus 'brace:activated'
+ * Emits:        bus 'operator:phased' (on the frame element)
+ *
+ * Phase sequences per operator:
+ *   #>  frame   → objective  → neutral   → subjective
+ *   ^   object  → source     → syntax    → projection
+ *   ?   probe   → inquiry    → observation → result
+ *   ~   ref     → local      → remote    → hyper
+ *   @   action  → idle       → charging  → committed
+ *   *   stream  → source     → stream    → sink
+ *   !   pragma  → hint       → constraint → pragma
  */
 
-const SEMANTIC_PHASES = {
-    '#>': ['objective', 'neutral', 'subjective'], // Frame: focal points
-    '^':  ['source', 'syntax', 'projection'],    // Object: visibility layers
-    '?':  ['inquiry', 'observation', 'result'],  // Probe: stages of measurement
-    '~':  ['local', 'remote', 'hyper'],          // Ref: proximity
-    '@':  ['idle', 'charging', 'committed'],      // Action: lifecycle
-    '*':  ['source', 'stream', 'sink'],           // Stream: data flow
-    '!':  ['hint', 'constraint', 'pragma']        // Pragma: level of enforcement
-};
+import { bus } from './spw-bus.js';
 
-/**
- * Initialize state machine listeners for stateful components.
- */
+const SEMANTIC_PHASES = Object.freeze({
+    'frame':   ['objective', 'neutral',     'subjective'],
+    'object':  ['source',    'syntax',      'projection'],
+    'probe':   ['inquiry',   'observation', 'result'],
+    'ref':     ['local',     'remote',      'hyper'],
+    'action':  ['idle',      'charging',    'committed'],
+    'stream':  ['source',    'stream',      'sink'],
+    'pragma':  ['hint',      'constraint',  'pragma'],
+});
+
+// Charge levels that correspond to each phase position (prefix/mid/postfix)
+const PHASE_CHARGE = [0.30, 0.65, 0.90];
+
 export function initSpwStates() {
-    document.addEventListener('spw:brace:activate', (e) => {
-        const frame = e.target.closest('.site-frame');
-        if (!frame) return;
-
-        // If the frame has data-spw-stateful, cycle its semantic phase
-        if (frame.hasAttribute('data-spw-stateful')) {
+    // Phase cycle on brace activation inside a stateful frame
+    bus.on('brace:activated', (e) => {
+        const frame = e.target?.closest?.('.site-frame');
+        if (frame?.hasAttribute('data-spw-stateful')) {
             cycleFramePhase(frame);
         }
     });
 
-    // Provide initial state if missing
+    // Set initial phase for all stateful components
     document.querySelectorAll('[data-spw-stateful]').forEach(frame => {
         if (!frame.dataset.spwPhase) {
             frame.dataset.spwPhase = getInitialPhase(frame);
@@ -39,47 +51,42 @@ export function initSpwStates() {
 }
 
 function cycleFramePhase(frame) {
-    const op = frame.dataset.spwOperator || '#>';
-    const phases = SEMANTIC_PHASES[op] || ['default'];
-    const current = frame.dataset.spwPhase || phases[0];
-    const nextIndex = (phases.indexOf(current) + 1) % phases.length;
-    const next = phases[nextIndex];
+    const opType = frame.dataset.spwOperator || 'frame';
+    const phases = SEMANTIC_PHASES[opType] ?? ['default'];
+    const curr   = frame.dataset.spwPhase || phases[0];
+    const next   = phases[(phases.indexOf(curr) + 1) % phases.length];
 
     frame.dataset.spwPhase = next;
-    
-    // Dispatch event for other systems (like Pretext) to react
-    frame.dispatchEvent(new CustomEvent('spw:phase:change', {
-        detail: { op, phase: next, prev: current }
-    }));
+
+    // Write charge level for the new phase
+    const phaseIndex = phases.indexOf(next);
+    const chargeLevel = PHASE_CHARGE[phaseIndex] ?? 0.5;
+    frame.style.setProperty('--charge', chargeLevel);
+
+    bus.emit('operator:phased',
+        { op: opType, phase: next, prev: curr, charge: chargeLevel },
+        { target: frame, element: frame }
+    );
 
     updateFrameUI(frame);
 }
 
 function getInitialPhase(frame) {
-    const op = frame.dataset.spwOperator || '#>';
-    return SEMANTIC_PHASES[op]?.[0] || 'default';
+    const opType = frame.dataset.spwOperator || 'frame';
+    return SEMANTIC_PHASES[opType]?.[0] ?? 'default';
 }
 
 function updateFrameUI(frame) {
-    const phase = frame.dataset.spwPhase;
-    const op = frame.dataset.spwOperator || '#>';
-    
-    // Update labels or classes
+    const phase  = frame.dataset.spwPhase;
+    const opType = frame.dataset.spwOperator || 'frame';
+    const phases = SEMANTIC_PHASES[opType] ?? ['default'];
+    const index  = phases.indexOf(phase);
+
     frame.setAttribute('data-spw-meaning', `state: ${phase}`);
-    
-    // Determine prefix/postfix based on phase
-    // Example: [objective] #> [name] or [source] ^ [syntax]
+
     const sigil = frame.querySelector('.frame-sigil');
     if (sigil) {
         sigil.setAttribute('data-spw-phase', phase);
-        
-        // Simple mapping: 
-        // first phase is prefix focal, 
-        // last phase is postfix focal, 
-        // middle is balance.
-        const phases = SEMANTIC_PHASES[op] || ['default'];
-        const index = phases.indexOf(phase);
-        
         if (index === 0) {
             sigil.setAttribute('data-spw-phase-prefix', phase);
             sigil.removeAttribute('data-spw-phase-postfix');
@@ -92,19 +99,20 @@ function updateFrameUI(frame) {
         }
     }
 
-    // Toggle content visibility if the frame has phase-specific panels
-    const panels = frame.querySelectorAll('[data-spw-phase-panel]');
-    panels.forEach(panel => {
+    // Show/hide phase-specific panels
+    frame.querySelectorAll('[data-spw-phase-panel]').forEach(panel => {
         panel.hidden = panel.getAttribute('data-spw-phase-panel') !== phase;
     });
 
-    // Log to console if available
-    const console = document.querySelector('.spw-console');
-    if (console) {
+    // Log to console surface if present
+    const consoleSurface = document.querySelector('.spw-console');
+    if (consoleSurface) {
         const msg = document.createElement('div');
         msg.className = 'console-log';
-        msg.innerHTML = `<span class="log-op">@</span> [phase_shift] <span class="log-meta">${op}</span> transitioned to <span class="log-node">${phase}</span>`;
-        console.appendChild(msg);
-        console.scrollTop = console.scrollHeight;
+        msg.innerHTML = `<span class="log-op">@</span> [phase] `
+            + `<span class="log-meta">${opType}</span> → `
+            + `<span class="log-node">${phase}</span>`;
+        consoleSurface.appendChild(msg);
+        consoleSurface.scrollTop = consoleSurface.scrollHeight;
     }
 }

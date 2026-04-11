@@ -32,10 +32,10 @@ body[data-spw-surface="blog"] {
     --blog-measure: 68ch;
     background-color: var(--blog-bg);
     color: var(--blog-ink);
-    line-height: 1.65;
+    line-height: var(--site-line-height, 1.65);
 }
 
-html[data-spw-color-mode="dark"] body[data-spw-surface="blog"],
+html[data-spw-color-mode="dark"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"]),
 body[data-spw-surface="blog"][data-theme="atelier-dark"] {
     --blog-bg: hsl(178 14% 11%);
     --blog-bg-deep: hsl(326 18% 14%);

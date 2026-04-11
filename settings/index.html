@@ -74,7 +74,7 @@
                     </button>
                     <button class="settings-preset-btn" type="button" data-preset="developer">
                         <strong>Developer</strong>
-                        <span>Debug overlays, verbose logging, frame metadata visible.</span>
+                        <span>Full map, expanded console, and richer semantic detail.</span>
                     </button>
                     <button class="settings-preset-btn" type="button" data-preset="accessible">
                         <strong>Accessible</strong>
@@ -452,63 +452,24 @@
                         </div>
                     </details>
 
-                    <!-- ═══ Progressive Enhancement ═══ -->
+                    <!-- ═══ Semantic Detail ═══ -->
                     <details class="settings-category">
-                        <summary class="settings-category-header">Progressive Enhancement</summary>
+                        <summary class="settings-category-header">Semantic Detail</summary>
+                        <p class="frame-note">These controls tune how much the site explains itself: field density, operator emphasis, visible literacy handles, and conceptual guidance derived from local page semantics.</p>
                         <div class="settings-grid">
-                            <fieldset class="settings-fieldset">
-                                <legend>Enhancement level</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="enhancementLevel" value="minimal">
-                                    <span class="settings-option-copy"><strong>Minimal</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="enhancementLevel" value="balanced" checked>
-                                    <span class="settings-option-copy"><strong>Balanced</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="enhancementLevel" value="rich">
-                                    <span class="settings-option-copy"><strong>Rich</strong></span>
-                                </label>
-                            </fieldset>
-
                             <fieldset class="settings-fieldset">
                                 <legend>Semantic density</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="semanticDensity" value="minimal">
-                                    <span class="settings-option-copy"><strong>Minimal</strong></span>
+                                    <span class="settings-option-copy"><strong>Minimal</strong><span>Quieter grain and lighter field response.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="semanticDensity" value="normal" checked>
-                                    <span class="settings-option-copy"><strong>Normal</strong></span>
+                                    <span class="settings-option-copy"><strong>Normal</strong><span>Default density across grain and field behavior.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="semanticDensity" value="rich">
-                                    <span class="settings-option-copy"><strong>Rich</strong></span>
-                                </label>
-                            </fieldset>
-
-                            <fieldset class="settings-fieldset">
-                                <legend>Cognitive handles</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="cognitiveHandles" value="off">
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="cognitiveHandles" value="on" checked>
-                                    <span class="settings-option-copy"><strong>On</strong></span>
-                                </label>
-                            </fieldset>
-
-                            <fieldset class="settings-fieldset">
-                                <legend>Dimensional breadcrumbs</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="dimensionalBreadcrumbs" value="off">
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="dimensionalBreadcrumbs" value="on" checked>
-                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                    <span class="settings-option-copy"><strong>Rich</strong><span>Heavier grain and stronger field response.</span></span>
                                 </label>
                             </fieldset>
 
@@ -516,77 +477,35 @@
                                 <legend>Operator highlighting</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="operatorHighlighting" value="off">
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Keep operator chips and tokens neutral.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="operatorHighlighting" value="on" checked>
-                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                    <span class="settings-option-copy"><strong>On</strong><span>Keep operator families visibly colored.</span></span>
                                 </label>
                             </fieldset>
 
                             <fieldset class="settings-fieldset">
-                                <legend>Depth indicators</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="depthIndicators" value="off">
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="depthIndicators" value="on" checked>
-                                    <span class="settings-option-copy"><strong>On</strong></span>
-                                </label>
-                            </fieldset>
-                        </div>
-                    </details>
-
-                    <!-- ═══ Developer ═══ -->
-                    <details class="settings-category">
-                        <summary class="settings-category-header">Developer</summary>
-                        <div class="settings-grid">
-                            <fieldset class="settings-fieldset">
-                                <legend>Debug mode</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="debugMode" value="off" checked>
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="debugMode" value="on">
-                                    <span class="settings-option-copy"><strong>On</strong><span>Show debug overlays.</span></span>
-                                </label>
-                            </fieldset>
-
-                            <fieldset class="settings-fieldset">
-                                <legend>Frame metadata</legend>
-                                <label class="settings-option">
-                                    <input type="radio" name="showFrameMetadata" value="off" checked>
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
-                                </label>
-                                <label class="settings-option">
-                                    <input type="radio" name="showFrameMetadata" value="on">
-                                    <span class="settings-option-copy"><strong>On</strong><span>Show role and liminality.</span></span>
-                                </label>
-                            </fieldset>
-
-                            <fieldset class="settings-fieldset">
-                                <legend>Semantic metadata</legend>
+                                <legend>Conceptual guides</legend>
                                 <label class="settings-option">
                                     <input type="radio" name="showSemanticMetadata" value="off" checked>
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Keep phrase, realization, and substrate cues implicit.</span></span>
                                 </label>
                                 <label class="settings-option">
                                     <input type="radio" name="showSemanticMetadata" value="on">
-                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                    <span class="settings-option-copy"><strong>On</strong><span>Show visible phrase, substrate, and conceptual versus realized cues on tagged surfaces.</span></span>
                                 </label>
                             </fieldset>
 
                             <fieldset class="settings-fieldset">
-                                <legend>Verbose logging</legend>
+                                <legend>Literacy handles</legend>
                                 <label class="settings-option">
-                                    <input type="radio" name="verboseLogging" value="off" checked>
-                                    <span class="settings-option-copy"><strong>Off</strong></span>
+                                    <input type="radio" name="cognitiveHandles" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Hide floating trace panels and guidance affordances.</span></span>
                                 </label>
                                 <label class="settings-option">
-                                    <input type="radio" name="verboseLogging" value="on">
-                                    <span class="settings-option-copy"><strong>On</strong></span>
+                                    <input type="radio" name="cognitiveHandles" value="on" checked>
+                                    <span class="settings-option-copy"><strong>On</strong><span>Show local trace panels and guided emphasis based on your grounded concepts.</span></span>
                                 </label>
                             </fieldset>
                         </div>
@@ -641,6 +560,10 @@
                         <p>They change how a card announces itself: orient opens, attune sharpens, compose gathers, project broadcasts, and settle lets the layer rest.</p>
                     </div>
                     <div class="frame-panel">
+                        <h3>Conceptual vs realized?</h3>
+                        <p>Conceptual surfaces frame or compare an idea; realized surfaces present an artifact or committed output. Substrate names the operator family the surface is leaning on, and phrasing tells you whether it is acting as premise, guide, inquiry, structure, reflection, instruction, or artifact.</p>
+                    </div>
+                    <div class="frame-panel">
                         <h3>What activates frames?</h3>
                         <p>Hash links, clicks, focus, hover, map selection, console controls, and mode switches. The viewport setting only controls scroll-driven activation.</p>
                     </div>
@@ -666,6 +589,17 @@
             </div>
         </section>
 
+        <section class="site-frame" id="spell-board" data-spw-role="spell-board" data-spw-form="brace">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#spell-board">@spell_board</a>
+                <h2>Spell Board</h2>
+            </div>
+            <p class="inline-note">Gathered curriculum ingredients appear here as a technical spell.</p>
+            <div class="spell-board-content">
+                <!-- Populated by spw-spells.js -->
+            </div>
+        </section>
+
         <script type="module">
             document.getElementById('btn-save-checkpoint').onclick = () => {
                 const name = prompt('Checkpoint name:', 'my_learning_trace');
@@ -679,6 +613,20 @@
                 }
             };
         </script>
+
+        <section class="site-frame" id="cognitive-trace" data-spw-role="registry" data-spw-form="brace">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#cognitive-trace">$cognitive_trace</a>
+                <h2>Cognitive Web Trace</h2>
+            </div>
+            <p class="inline-note">A transparent interpretation of your technical resonance. As you develop care and focus through the technical substrate, your subjective frame settles into this operable spell.</p>
+            <pre class="spw-transparent-block"><code id="spw-smart-spw-block">^"cognitive/web"{
+  nodes: 0
+  history: []
+  resonance: "substrate_definition"
+}</code></pre>
+        </section>
+
     <footer>
         <p>&copy; 2026 spwashi</p>
     </footer>

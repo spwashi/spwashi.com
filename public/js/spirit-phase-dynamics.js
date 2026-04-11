@@ -5,6 +5,7 @@
  */
 
 import { getSiteSettings, saveSiteSettings } from './site-settings.js';
+import { bus } from './spw-bus.js';
 
 const PHASES = ['initiation', 'resistance', 'transformation', 'expression', 'return'];
 const PHASE_DURATION = 9000; // 9 seconds per phase when auto-cycling
@@ -32,10 +33,9 @@ const applySpiritPhase = (phase) => {
     const root = document.documentElement;
     root.dataset.spwSpiritPhase = phase;
 
-    // Emit event so other components can respond to phase changes
-    document.dispatchEvent(new CustomEvent('spw:phase-change', {
-        detail: { phase, index: PHASES.indexOf(phase) }
-    }));
+    // Route through bus — dispatches both 'spw:spirit:shifted' (canonical)
+    // and 'spw:phase-change' (legacy) so all existing listeners still fire.
+    bus.emit('spirit:shifted', { phase, index: PHASES.indexOf(phase) });
 };
 
 const phaseLabel = (phase) => PHASE_LABELS[phase] || phase;
@@ -132,7 +132,7 @@ const initSpiritPhase = () => {
  * Listen for settings changes to update phase cycling
  */
 const setupSettingsListener = () => {
-    document.addEventListener('spw:settings-change', (event) => {
+    bus.on('settings:changed', (event) => {
         const { spiritPhaseAutoCycle } = event.detail;
 
         if (spiritPhaseAutoCycle === 'on') {
@@ -217,7 +217,7 @@ const makeStructuresInteractive = () => {
     });
 
     if (phaseMenuUpdaters.length) {
-        document.addEventListener('spw:phase-change', (event) => {
+        bus.on('spirit:shifted', (event) => {
             phaseMenuUpdaters.forEach((updatePhaseMenu) => updatePhaseMenu(event.detail.phase));
         });
     }
@@ -261,9 +261,7 @@ const makeStructuresInteractive = () => {
 
         opElement.addEventListener('click', () => {
             const phase = getSiteSettings().currentSpiritPhase;
-            document.dispatchEvent(new CustomEvent('spw:operator-activated', {
-                detail: { operator: opElement.getAttribute('data-op'), phase }
-            }));
+            bus.emit('operator:activated', { operator: opElement.getAttribute('data-op'), phase });
         });
 
         opElement.addEventListener('keydown', (event) => {

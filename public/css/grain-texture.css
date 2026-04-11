@@ -17,15 +17,6 @@ body {
     background-size: 256px 256px;
 }
 
-/* Increase grain visibility based on semantic density setting */
-[data-spw-semantic-density="rich"] {
-    --grain-opacity: 0.05;
-}
-
-[data-spw-semantic-density="minimal"] {
-    --grain-opacity: 0.01;
-}
-
 /* Grain on key surfaces for visual coherence */
 .site-frame,
 .frame-card,
@@ -62,18 +53,24 @@ body {
 }
 
 /* Light mode grain */
-@media (prefers-color-scheme: light) {
-    :root {
-        --grain-opacity: 0.03;
-        --grain-blend: multiply;
-    }
+html[data-spw-color-mode="light"] {
+    --grain-blend: multiply;
 }
 
 /* Dark mode grain (slightly more visible for contrast) */
+html[data-spw-color-mode="dark"] {
+    --grain-blend: screen;
+}
+
 @media (prefers-color-scheme: dark) {
-    :root {
-        --grain-opacity: 0.04;
+    html[data-spw-color-mode="auto"] {
         --grain-blend: screen;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    html[data-spw-color-mode="auto"] {
+        --grain-blend: multiply;
     }
 }
 

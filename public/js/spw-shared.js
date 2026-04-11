@@ -152,6 +152,11 @@ const loadFeature = async (specifier, exportName) => {
     return null;
 };
 
+// Re-export the bus so any module can reach it via spw-shared.
+export { bus } from './spw-bus.js';
+
+// Legacy thin-wrapper: routes through a direct DOM dispatch.
+// New code should call bus.emit() with canonical names instead.
 const emitSpwEvent = (name, detail) => {
     document.dispatchEvent(new CustomEvent(`spw:${name}`, { detail }));
 };

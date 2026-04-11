@@ -1,6 +1,7 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: var(--header-height);
+    font-size: var(--site-root-font-size, 100%);
 }
 
 html, body {
@@ -36,8 +37,8 @@ body {
     flex-direction: column;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'JetBrains Mono', monospace;
-    line-height: 1.68;
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    line-height: var(--site-line-height, 1.68);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -93,8 +94,9 @@ ul, ol {
     margin: 0;
 }
 
-code, pre {
-    font-family: 'JetBrains Mono', monospace;
+code, pre,
+input, textarea, select, button {
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
 }
 
 pre {
@@ -135,6 +137,34 @@ body[data-spw-surface="software"] .demo-panels,
 body[data-spw-surface="software"] .demo-panel {
     min-width: 0;
 }
+html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *,
+html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *::before,
+html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *::after {
+    animation-duration: 120ms !important;
+    transition-duration: 120ms !important;
+}
+
+html[data-spw-animation-throttling="heavy"]:not([data-spw-reduce-motion="on"]) *,
+html[data-spw-animation-throttling="heavy"]:not([data-spw-reduce-motion="on"]) *::before,
+html[data-spw-animation-throttling="heavy"]:not([data-spw-reduce-motion="on"]) *::after {
+    animation-duration: 60ms !important;
+    transition-duration: 60ms !important;
+    animation-iteration-count: 1 !important;
+}
+
+html[data-spw-reduce-motion="on"] {
+    scroll-behavior: auto;
+}
+
+html[data-spw-reduce-motion="on"] *,
+html[data-spw-reduce-motion="on"] *::before,
+html[data-spw-reduce-motion="on"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;

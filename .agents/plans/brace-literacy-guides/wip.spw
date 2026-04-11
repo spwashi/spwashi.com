@@ -1,0 +1,115 @@
+# wip — brace-literacy-guides
+# Branch: feature/brace-literacy-guides
+# Started: 2026-04-10
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
+ @plan: ~".agents/plans/brace-literacy-guides/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+ @references: ~".spw/_workbench/docs/runtime/spw/brace-registers.spw"
+ @artifact: ~".agents/plans/brace-literacy-guides/brace-literacy-guides.spw"
+}
+
+^["intent"]{
+ ~#goal: "Make brace semantics, substrate distinction, and literacy guidance read as one system across component metadata, settings, and localStorage-driven smart surfaces."
+ ~#taste: "clarity + expressiveness with better semantic layering"
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#taste, #linguistics, #design_transfer]
+ review_surfaces: [@cluster, @plan, @pattern, @references]
+ snippet_routes: [#example, #query, #snippet]
+}
+
+^["concept_index"]{
+ primary: [#brace_roles, #substrate, #phrasing, #literacy_handles, #conceptual_realized]
+ surfaces: [#settings, #runtime, #guide, #smart_console, #cognitive_surface]
+ tensions: [#drift, #noise, #heuristics, #shallow_accumulation]
+ transfers: [#language, #component, #page, #service]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread brace semantics and live component metadata before adding a new cue",
+  "< ship one semantics-sized runtime or styling change at a time",
+  "$ record which heuristics remain legible and which feel magical without support",
+  "^ fold validated meanings back into settings copy and the branch artifact",
+  "% keep localStorage behavior stable while improving the reading surface",
+ ]
+ gates: [#preview_truth, #snippet_reuse, #claim_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_truth]
+ parallelizable: [#metadata_lane, #css_lane]
+ shared_hot_files: ["public/css/spw-components.css", "public/js/site-settings.js", "settings/index.html"]
+ merge_risks: [#hot_file, #naming_drift, #heuristic_drift]
+ handoff_artifacts: [@plan, @artifact]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan, @artifact]
+ helpful: [@pattern, @references]
+ carries: [#examples, #glossary, #review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #preview, #legibility, #latency, #trust]
+ questions: [#what_is_conceptual, #what_is_realized, #what_counts_as_guidance]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: [#misclassified_surfaces, #settings_noop]
+ soft_failures: [#guidance_noise, #panel_overreach]
+ recoveries: [#quiet_defaults, #heuristic_fallbacks]
+ non_negotiables: [#no_data_loss, #no_stylecss_touch]
+}
+
+^["validation"]{
+ hypotheses: [#metadata_can_drive_salience, #localstorage_can_stay_legible]
+ negative_controls: [#navigator_stable, #console_stable, #quiet_routes_stay_quiet]
+ demo_path: ["/settings/", "content route with operator chips", "cognitive surface refresh"]
+}
+
+^["stream"]{
+ >>[2026-04-10 20:18] observe — user wants deeper brace/concept integration, better salience, settings-backed literacy handles, and smarter metadata/localStorage heuristics
+ >>[2026-04-10 20:20] observe — current working tree already contains in-scope cognitive-surface work in public/css/spw-components.css and public/js/site.js
+ >>[2026-04-10 20:24] decide — build on component semantics + cognitive surface + settings model instead of adding a parallel smart layer
+ >>[2026-04-10 20:25] taste — branch should reduce semantic shallowness by making heuristics inspectable and phrase-aware
+ >>[2026-04-10 20:41] implement — rewrote cognitive surface + smart console around page metadata, substrate, realization, and phrasing summaries from localStorage couplings
+ >>[2026-04-10 20:44] implement — upgraded guide/handle CSS so guided surfaces and floating panels coexist without corner collisions
+ >>[2026-04-10 20:46] verify — git diff --check and node --check passed for touched JS modules
+}
+
+^["open"]{
+ ?[conceptual_split]: "Which existing DOM cues are stable enough to distinguish conceptual from realized surfaces without route-specific markup?"
+ ?[settings_shape]: "Should literacy handles and conceptual guides be independent toggles or one coupled setting with quiet/rich modes?"
+}
+
+^["commits"]{
+ ~[1]: ".[brace-literacy-guides] — formalize conceptual/realized braces, substrate, and phrasing invariants"
+ ~[2]: "&[brace-literacy-guides] — derive metadata heuristics for components and cognitive surfaces"
+ ~[3]: "&[brace-literacy-guides] — improve brace salience, substrate distinction, and guided emphasis in split CSS"
+ ~[4]: "&[brace-literacy-guides] — wire literacy handles and conceptual guides into settings and runtime surfaces"
+ ~[5]: "![brace-literacy-guides] — verify localStorage heuristics, settings toggles, and cognitive surface behavior"
+}
+
+^["cache"]{
+ ~#status: "implementing"
+ ~#base_ref: "main@a0eec70"
+ ~#rebased_at: ""
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/js/spw-cognitive-surface.js, public/js/spw-smart.js, public/js/spw-guide.js, public/css/spw-grammar.css, public/css/spw-handles.css, public/css/spw-components.css"
+ ~#next_commit: "2"
+ ~#open_count: "2"
+ ~#last_stream: "2026-04-10 20:46"
+ ~#taste_debt: "Need to keep heuristics inspectable; avoid mystical CSS that hides weak classifications."
+}
+
+^["done"]{
+}

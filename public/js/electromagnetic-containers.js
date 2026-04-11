@@ -4,6 +4,8 @@
  * Metaphor: charge as cognitive potential, rendered as paper-machine state.
  */
 
+import { getSiteSettings } from './site-settings.js';
+
 /**
  * Container charge state machine
  * conception → potential → kinetic → manifest
@@ -31,6 +33,9 @@ class ElectromagneticContainer {
         this.slice = element.dataset.containerSlice || 'potential';
         this.fieldIntensity = 0.5;
         this.coherence = 0.8;
+        this.semanticDensityMultiplier = 1;
+        this.isHovered = false;
+        this.isFocused = false;
         this.resonanceTimer = null;
 
         this.initEventListeners();
@@ -122,12 +127,17 @@ class ElectromagneticContainer {
      * Update field intensity and coherence based on interaction
      */
     updateFieldDisplay() {
-        // Field intensity based on charge state
         const chargeIndex = CHARGE_STATE_MAP[this.charge];
-        this.fieldIntensity = 0.3 + (chargeIndex * 0.2);
+        const baseFieldIntensity = 0.3 + (chargeIndex * 0.2);
+        const baseCoherence = 0.6 + (chargeIndex * 0.08);
+        const interactionFieldBoost = (this.isHovered ? 0.15 : 0) + (this.isFocused ? 0.2 : 0);
+        const interactionCoherenceBoost = this.isFocused ? 0.1 : 0;
 
-        // Coherence increases with charge
-        this.coherence = 0.6 + (chargeIndex * 0.08);
+        this.fieldIntensity = Math.min(
+            1,
+            (baseFieldIntensity * this.semanticDensityMultiplier) + interactionFieldBoost
+        );
+        this.coherence = Math.min(1, baseCoherence + interactionCoherenceBoost);
 
         // Apply CSS variables used by the crease/fold surface.
         this.element.style.setProperty('--field-intensity', this.fieldIntensity);
@@ -138,7 +148,7 @@ class ElectromagneticContainer {
      * Handle mouse enter: increase field intensity
      */
     onEnter() {
-        this.fieldIntensity = Math.min(1, this.fieldIntensity + 0.15);
+        this.isHovered = true;
         this.updateFieldDisplay();
     }
 
@@ -146,8 +156,7 @@ class ElectromagneticContainer {
      * Handle mouse leave: return to base intensity
      */
     onLeave() {
-        const chargeIndex = CHARGE_STATE_MAP[this.charge];
-        this.fieldIntensity = 0.3 + (chargeIndex * 0.2);
+        this.isHovered = false;
         this.updateFieldDisplay();
     }
 
@@ -155,8 +164,7 @@ class ElectromagneticContainer {
      * Handle focus: increase coherence
      */
     onFocus() {
-        this.coherence = Math.min(1, this.coherence + 0.1);
-        this.fieldIntensity = Math.min(1, this.fieldIntensity + 0.2);
+        this.isFocused = true;
         this.updateFieldDisplay();
     }
 
@@ -164,9 +172,12 @@ class ElectromagneticContainer {
      * Handle blur: return to normal coherence
      */
     onBlur() {
-        const chargeIndex = CHARGE_STATE_MAP[this.charge];
-        this.coherence = 0.6 + (chargeIndex * 0.08);
-        this.fieldIntensity = 0.3 + (chargeIndex * 0.2);
+        this.isFocused = false;
+        this.updateFieldDisplay();
+    }
+
+    setSemanticDensityMultiplier(multiplier = 1) {
+        this.semanticDensityMultiplier = multiplier;
         this.updateFieldDisplay();
     }
 
@@ -316,17 +327,21 @@ const initElectromagneticContainers = () => {
  * Adjust field intensity based on semantic density setting
  */
 const hookElectromagneticToSettings = () => {
-    document.addEventListener('spw:settings-change', (event) => {
-        const { semanticDensity } = event.detail;
+    const applySemanticDensity = (semanticDensity = 'normal') => {
         const multiplier = semanticDensity === 'minimal' ? 0.5 : semanticDensity === 'rich' ? 1.5 : 1;
 
         document.querySelectorAll('[data-container-type]').forEach((element) => {
             const container = window.ElectromagneticField?.containers?.get(element);
             if (container) {
-                container.fieldIntensity *= multiplier;
-                container.updateFieldDisplay();
+                container.setSemanticDensityMultiplier(multiplier);
             }
         });
+    };
+
+    applySemanticDensity(getSiteSettings().semanticDensity);
+
+    document.addEventListener('spw:settings-change', (event) => {
+        applySemanticDensity(event.detail?.semanticDensity);
     });
 };
 

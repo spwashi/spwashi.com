@@ -3,7 +3,39 @@
  *
  * SVG enters as a bounded, captioned host. The HTML around the SVG remains the
  * semantic source of truth; the graphic projects relationships over it.
+ *
+ * Operator node color contexts (.op-node--{type}) are ungated — they apply
+ * to any SVG that uses the naming convention, not just svg-surfaces contexts.
+ * This lets inline SVG diagrams live anywhere and still pick up the palette.
  */
+
+/* ─── Flow animation ─────────────────────────────────────────────────────── */
+
+@keyframes svg-flow-dash {
+    to { stroke-dashoffset: -28; }
+}
+
+/* ─── Operator node color contexts ──────────────────────────────────────── */
+/*
+ * Setting `color` on an op-node group makes all SVG text inside inherit it
+ * through `fill: currentColor` (set by the .spw-svg-surface text rule below).
+ * Circle fills/strokes are handled via the .spw-svg-node--{type} rules.
+ */
+
+.op-node--frame     { color: var(--op-frame-color); }
+.op-node--object    { color: var(--op-object-color); }
+.op-node--probe     { color: var(--op-probe-color); }
+.op-node--ref       { color: var(--op-ref-color); }
+.op-node--action    { color: var(--op-action-color); }
+.op-node--stream    { color: var(--op-stream-color); }
+.op-node--surface   { color: var(--op-surface-color); }
+.op-node--layer     { color: var(--op-layer-color); }
+.op-node--baseline  { color: var(--op-baseline-color); }
+.op-node--binding   { color: var(--op-binding-color); }
+.op-node--meta      { color: var(--op-meta-color); }
+.op-node--merge     { color: var(--op-merge-color); }
+.op-node--normalize { color: var(--op-normalize-color); }
+.op-node--pragma    { color: var(--op-pragma-color); }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure {
     display: grid;
@@ -40,19 +72,33 @@
     stroke-width: 1.5;
 }
 
-[data-spw-features~="svg-surfaces"] .spw-svg-node--probe { stroke: var(--op-probe-color); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--ref { stroke: var(--op-ref-color); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--action { stroke: var(--op-action-color); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--object { stroke: var(--op-object-color); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--surface { stroke: var(--op-surface-color); }
+/* Operator-colored node fills — soft tint + stroke in the operator's hue */
+[data-spw-features~="svg-surfaces"] .spw-svg-node--frame    { stroke: var(--op-frame-color);     fill: color-mix(in srgb, var(--op-frame-color)     7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--probe    { stroke: var(--op-probe-color);     fill: color-mix(in srgb, var(--op-probe-color)     7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--ref      { stroke: var(--op-ref-color);       fill: color-mix(in srgb, var(--op-ref-color)       7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--action   { stroke: var(--op-action-color);    fill: color-mix(in srgb, var(--op-action-color)    7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--object   { stroke: var(--op-object-color);    fill: color-mix(in srgb, var(--op-object-color)    7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--surface  { stroke: var(--op-surface-color);   fill: color-mix(in srgb, var(--op-surface-color)   7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--stream   { stroke: var(--op-stream-color);    fill: color-mix(in srgb, var(--op-stream-color)    7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--merge    { stroke: var(--op-merge-color);     fill: color-mix(in srgb, var(--op-merge-color)     7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--binding  { stroke: var(--op-binding-color);   fill: color-mix(in srgb, var(--op-binding-color)   7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--meta     { stroke: var(--op-meta-color);      fill: color-mix(in srgb, var(--op-meta-color)      7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--pragma   { stroke: var(--op-pragma-color);    fill: color-mix(in srgb, var(--op-pragma-color)    7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--normalize{ stroke: var(--op-normalize-color); fill: color-mix(in srgb, var(--op-normalize-color) 7%, white); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--layer    { stroke: var(--op-layer-color);     fill: rgba(255, 255, 255, 0.82); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--baseline { stroke: var(--op-baseline-color);  fill: rgba(255, 255, 255, 0.82); }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow {
     fill: none;
     stroke: var(--active-op-color);
     stroke-width: 1.6;
     stroke-linecap: round;
-    stroke-dasharray: 6 8;
-    opacity: 0.48;
+    stroke-dasharray: 5 9;
+    opacity: 0.42;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
+    animation: svg-flow-dash 4s linear infinite;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-label {
@@ -67,6 +113,20 @@
     letter-spacing: 0.03em;
 }
 
+/* ─── Operator grammar flow diagram ─────────────────────────────────────── */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-flow-diagram {
+    padding: 0.2rem 0;
+    overflow: visible;
+}
+
+/* The .spw-svg-note text class is already defined above; we extend it: */
+[data-spw-features~="svg-surfaces"] .spw-svg-surface .spw-svg-note {
+    fill: var(--ink-soft);
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+}
+
 @media (max-width: 700px) {
     [data-spw-features~="svg-surfaces"] .spw-svg-surface {
         border-radius: 0.7rem;
@@ -78,6 +138,11 @@
 
     [data-spw-features~="svg-surfaces"] .spw-svg-note {
         font-size: 0.58rem;
+    }
+
+    /* Smaller operator diagrams on mobile: hide intent labels */
+    [data-spw-features~="svg-surfaces"] .spw-svg-flow-diagram .op-intent-label {
+        display: none;
     }
 }
 

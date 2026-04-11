@@ -68,6 +68,65 @@
     backdrop-filter: blur(6px);
 }
 
+.spw-component-meta {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    min-width: 0;
+    position: relative;
+}
+
+.frame-topline > .spw-component-meta,
+.frame-heading > .spw-component-meta {
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.spw-component-guides {
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.spw-guide-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.18rem 0.42rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface-strong);
+    color: var(--ink-soft);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="conceptual"] {
+    border-style: dashed;
+}
+
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="realized"] {
+    border-style: solid;
+}
+
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="hybrid"] {
+    border-style: dotted;
+}
+
+.spw-guide-chip[data-spw-operator] {
+    color: var(--spw-operator-color, var(--ink-soft));
+    border-color: var(--spw-operator-border, var(--line));
+    background: color-mix(in srgb, var(--spw-operator-bg-soft, var(--surface-soft)) 90%, transparent);
+}
+
+html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
+    display: inline-flex;
+}
+
 .spw-component-tag,
 .frame-sigil,
 .operator-chip,
@@ -108,6 +167,66 @@
     --brace-corner-stroke: 1.5px;
     --brace-open-color: rgba(0, 128, 128, 0.30);
     --brace-close-color: rgba(0, 128, 128, 0.18);
+}
+
+[data-spw-substrate="frame"] {
+    --spw-substrate-color: var(--op-frame-color);
+    --spw-substrate-border: var(--op-frame-border);
+    --spw-substrate-bg-soft: var(--op-frame-bg-soft);
+}
+
+[data-spw-substrate="object"] {
+    --spw-substrate-color: var(--op-object-color);
+    --spw-substrate-border: var(--op-object-border);
+    --spw-substrate-bg-soft: var(--op-object-bg-soft);
+}
+
+[data-spw-substrate="ref"] {
+    --spw-substrate-color: var(--op-ref-color);
+    --spw-substrate-border: var(--op-ref-border);
+    --spw-substrate-bg-soft: var(--op-ref-bg-soft);
+}
+
+[data-spw-substrate="probe"] {
+    --spw-substrate-color: var(--op-probe-color);
+    --spw-substrate-border: var(--op-probe-border);
+    --spw-substrate-bg-soft: var(--op-probe-bg-soft);
+}
+
+[data-spw-substrate="action"] {
+    --spw-substrate-color: var(--op-action-color);
+    --spw-substrate-border: var(--op-action-border);
+    --spw-substrate-bg-soft: var(--op-action-bg-soft);
+}
+
+[data-spw-substrate="layer"] {
+    --spw-substrate-color: var(--op-layer-color);
+    --spw-substrate-border: var(--op-layer-border);
+    --spw-substrate-bg-soft: var(--op-layer-bg-soft);
+}
+
+[data-spw-substrate="baseline"] {
+    --spw-substrate-color: var(--op-baseline-color);
+    --spw-substrate-border: var(--op-baseline-border);
+    --spw-substrate-bg-soft: var(--op-baseline-bg-soft);
+}
+
+[data-spw-substrate="meta"] {
+    --spw-substrate-color: var(--op-meta-color);
+    --spw-substrate-border: var(--op-meta-border);
+    --spw-substrate-bg-soft: var(--op-meta-bg-soft);
+}
+
+[data-spw-substrate="pragma"] {
+    --spw-substrate-color: var(--op-pragma-color);
+    --spw-substrate-border: var(--op-pragma-border);
+    --spw-substrate-bg-soft: var(--op-pragma-bg-soft);
+}
+
+[data-spw-substrate="surface"] {
+    --spw-substrate-color: var(--op-surface-color);
+    --spw-substrate-border: var(--op-surface-border);
+    --spw-substrate-bg-soft: var(--op-surface-bg-soft);
 }
 
 [data-spw-form="block"] {
@@ -251,10 +370,110 @@
     --brace-close-color: rgba(0, 128, 128, 0.12);
 }
 
+[data-spw-form="brace"][data-spw-realization="conceptual"] {
+    --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 36%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 14%, transparent);
+}
+
+[data-spw-form="brace"][data-spw-realization="realized"] {
+    --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 18%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 38%, transparent);
+}
+
+[data-spw-form="brace"][data-spw-realization="hybrid"] {
+    --brace-open-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 26%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 24%, transparent);
+}
+
+[data-spw-form="brace"][data-spw-realization="conceptual"][data-spw-selection="selected"],
+[data-spw-form="brace"][data-spw-realization="conceptual"].is-active-frame {
+    background-image: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 52%, transparent),
+        transparent 42%
+    );
+}
+
+[data-spw-form="brace"][data-spw-realization="realized"][data-spw-selection="selected"],
+[data-spw-form="brace"][data-spw-realization="realized"].is-active-frame {
+    background-image: linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 56%, transparent),
+        transparent 42%
+    );
+}
+
 /* Active frame: brace corners sharpen */
 .site-frame.is-active-frame[data-spw-form="brace"] {
     --brace-open-color: rgba(0, 128, 128, 0.40);
     --brace-close-color: rgba(0, 128, 128, 0.24);
+}
+
+/*
+ * ─── Operator-aware brace tinting ─────────────────────────────────────────
+ * When a brace form carries a Spw operator sigil, the corner marks inherit
+ * that operator's semantic color. Grammar form and cognitive intent unify:
+ * the container becomes a vessel for its operator's meaning.
+ *
+ * Uses color-mix() (baseline 2023) so opacity stays proportional to the
+ * operator's hue without hard-coding per-operator rgba values.
+ */
+
+[data-spw-form="brace"][data-spw-operator="frame"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-frame-color)     38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-frame-color)     20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="object"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-object-color)    38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-object-color)    20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="ref"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-ref-color)       38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-ref-color)       20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="probe"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-probe-color)     38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-probe-color)     20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="action"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-action-color)    42%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-action-color)    24%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="stream"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-stream-color)    38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-stream-color)    20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="merge"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-merge-color)     38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-merge-color)     20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="pragma"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-pragma-color)    36%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-pragma-color)    18%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="meta"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-meta-color)      38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-meta-color)      20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="surface"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-surface-color)   40%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-surface-color)   22%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="binding"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-binding-color)   38%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-binding-color)   20%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="normalize"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-normalize-color) 36%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-normalize-color) 18%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="layer"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-layer-color)     30%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-layer-color)     14%, transparent);
+}
+[data-spw-form="brace"][data-spw-operator="baseline"] {
+    --brace-open-color:  color-mix(in srgb, var(--op-baseline-color)  32%, transparent);
+    --brace-close-color: color-mix(in srgb, var(--op-baseline-color)  16%, transparent);
 }
 
 /*
@@ -370,90 +589,166 @@
     font-weight: bold;
 }
 
-/* Block-form tags: square-ish shape + [ ] bracket decoration */
-[data-spw-form="block"] > .spw-component-tag {
-    border-radius: 0.38rem;
+/* ─── Persona-Aware Salience (Projections) ─────────────────────────── */
+
+/* Viewer — soft circles, ambient pulses */
+[data-spw-persona="viewer"] .spw-delimiter--paren {
+    animation: viewer-pulse 2s infinite ease-in-out;
 }
-[data-spw-form="block"] > .spw-component-tag::before {
-    content: '[';
-    margin-right: 0.22em;
-    opacity: 0.45;
-}
-[data-spw-form="block"] > .spw-component-tag::after {
-    content: ']';
-    margin-left: 0.22em;
-    opacity: 0.28;
+@keyframes viewer-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 10px var(--teal-soft); }
 }
 
-[data-spw-component-kind="frame"] > .spw-component-tag,
-.frame-topline > .spw-component-tag,
-.frame-heading > .spw-component-tag {
+/* Scribe — sharp angles, meta reveals */
+[data-spw-persona="scribe"] .spw-delimiter--angle {
+    color: var(--amber);
+    border-bottom: 1px dotted var(--amber);
+    position: relative;
+}
+[data-spw-persona="scribe"] .spw-delimiter--angle:hover::after {
+    content: " [projection]";
+    font-size: 0.5rem;
+    vertical-align: super;
+    opacity: 0.7;
+}
+
+/* Doodler — blocky squares, sparkles */
+[data-spw-persona="doodler"] .spw-delimiter--square {
+    color: var(--pink);
+    background: color-mix(in srgb, var(--pink) 10%, transparent);
+    border-radius: 2px;
+}
+[data-spw-persona="doodler"] .spw-delimiter--square:hover {
+    animation: doodler-hop 0.4s ease-out;
+}
+@keyframes doodler-hop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* Sequence Selection Glow */
+[data-spw-selection="selected"].spw-delimiter {
+    background: var(--delight-color);
+    color: #fff !important;
+    padding: 0 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 15px var(--delight-color);
+}
+
+  /* ─── Inline Spw Delimiters (Brace Physics) ─────────────────────────── */
+
+.spw-delimiter {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s var(--brace-settle-ease);
+    display: inline-block;
+}
+
+.spw-delimiter--paren {
+    color: var(--teal-soft);
+    --spw-operator-color: var(--teal);
+}
+
+.spw-delimiter--square {
+    color: var(--pink-soft);
+    --spw-operator-color: var(--pink);
+}
+
+.spw-delimiter--angle {
+    color: var(--amber-soft);
+    --spw-operator-color: var(--amber);
+}
+
+/* Interaction with brace-gestures.js states */
+.spw-delimiter:hover,
+[data-spw-gesture="charging"].spw-delimiter {
+    color: var(--spw-operator-color);
+    text-shadow: 0 0 8px var(--spw-operator-color);
+    transform: scale(1.1);
+}
+
+[data-spw-gesture="active"].spw-delimiter {
+    color: #fff;
+    text-shadow: 0 0 15px var(--spw-operator-color);
+    transform: scale(1.2);
+}
+
+[data-spw-popped="true"].spw-delimiter {
+    border-bottom: 1px solid var(--spw-operator-color);
+    opacity: 1;
+}
+
+[data-spw-component-kind="frame"] > .spw-component-meta > .spw-component-tag,
+.frame-topline > .spw-component-meta > .spw-component-tag,
+.frame-heading > .spw-component-meta > .spw-component-tag {
     color: var(--teal-deep);
     border-color: rgba(0, 128, 128, 0.18);
     background: rgba(230, 248, 248, 0.74);
 }
 
-[data-spw-component-kind="card"] > .spw-component-tag {
+[data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag {
     color: hsl(210 70% 34%);
     border-color: hsla(210, 70%, 34%, 0.16);
     background: rgba(235, 244, 255, 0.72);
 }
 
-[data-spw-component-kind="panel"] > .spw-component-tag,
-[data-spw-component-kind="surface"] > .spw-component-tag {
+[data-spw-component-kind="panel"] > .spw-component-meta > .spw-component-tag,
+[data-spw-component-kind="surface"] > .spw-component-meta > .spw-component-tag {
     color: hsl(36 80% 32%);
     border-color: hsla(36, 80%, 32%, 0.16);
     background: rgba(255, 248, 235, 0.76);
 }
 
-[data-spw-component-kind="lens"] > .spw-component-tag {
+[data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag {
     color: hsl(268 55% 38%);
     border-color: hsla(268, 55%, 38%, 0.16);
     background: rgba(245, 238, 255, 0.78);
 }
 
-[data-spw-component-kind="metric"] > .spw-component-tag {
+[data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag {
     color: hsl(180 100% 22%);
     border-color: rgba(0, 100, 100, 0.18);
     background: rgba(230, 248, 248, 0.78);
 }
 
-[data-spw-role="routing"] > .spw-component-tag,
-[data-spw-role="register"] > .spw-component-tag,
-[data-spw-role="route"] > .spw-component-tag,
-[data-spw-role="artifact"] > .spw-component-tag,
-[data-spw-role="reference"] > .spw-component-tag {
+[data-spw-role="routing"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="register"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="route"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="artifact"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="reference"] > .spw-component-meta > .spw-component-tag {
     color: var(--op-ref-color);
     border-color: var(--op-ref-border);
     background: var(--op-ref-bg-soft);
 }
 
-[data-spw-role="schema"] > .spw-component-tag,
-[data-spw-role="comparison"] > .spw-component-tag,
-[data-spw-role="pipeline"] > .spw-component-tag {
+[data-spw-role="schema"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="comparison"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="pipeline"] > .spw-component-meta > .spw-component-tag {
     color: var(--op-object-color);
     border-color: var(--op-object-border);
     background: var(--op-object-bg-soft);
 }
 
-[data-spw-role="probe"] > .spw-component-tag,
-[data-spw-role="telemetry"] > .spw-component-tag,
-[data-spw-role="lens"] > .spw-component-tag {
+[data-spw-role="probe"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="telemetry"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="lens"] > .spw-component-meta > .spw-component-tag {
     color: var(--op-probe-color);
     border-color: var(--op-probe-border);
     background: var(--op-probe-bg-soft);
 }
 
-[data-spw-role="projection"] > .spw-component-tag,
-[data-spw-role="surface"] > .spw-component-tag,
-[data-spw-role="control"] > .spw-component-tag {
+[data-spw-role="projection"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="surface"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="control"] > .spw-component-meta > .spw-component-tag {
     color: var(--op-surface-color);
     border-color: var(--op-surface-border);
     background: var(--op-surface-bg-soft);
 }
 
-[data-spw-role="scenario"] > .spw-component-tag,
-[data-spw-role="rationale"] > .spw-component-tag {
+[data-spw-role="scenario"] > .spw-component-meta > .spw-component-tag,
+[data-spw-role="rationale"] > .spw-component-meta > .spw-component-tag {
     color: var(--op-pragma-color);
     border-color: var(--op-pragma-border);
     background: var(--op-pragma-bg-soft);

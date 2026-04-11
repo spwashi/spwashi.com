@@ -1,38 +1,83 @@
-/**
- * Spw Prompt Utils
- * 
- * Provides affordances to make the interface 'prompt-useful' for LLMs and 
- * engineering leads. Serializes UI state into clean Spw snippets.
- */
+import { bus } from './spw-bus.js';
+import { serializeLatticeToSpw } from './spw-lattice.js';
 
 export function initSpwPromptUtils() {
-    const frames = document.querySelectorAll('.site-frame');
-    
-    frames.forEach(frame => {
-        if (!frame.id) return;
+    initFrameCopyButtons();
+    initWonderBlocks();
+}
 
+function initFrameCopyButtons() {
+    const frames = document.querySelectorAll('.site-frame');
+    frames.forEach(frame => {
+        if (!frame.id || frame.querySelector('.frame-prompt-copy')) return;
         const copyBtn = document.createElement('button');
         copyBtn.className = 'frame-prompt-copy';
         copyBtn.innerHTML = '<span class="log-op">$</span> copy_context';
-        copyBtn.setAttribute('aria-label', `Copy Spw context for ${frame.id}`);
-        
-        // Positioning: top right of frame
         frame.style.position = 'relative';
         frame.appendChild(copyBtn);
 
         copyBtn.onclick = (e) => {
             e.stopPropagation();
             const snippet = serializeFrameToSpw(frame);
-            navigator.clipboard.writeText(snippet).then(() => {
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<span class="log-op">✓</span> copied';
-                copyBtn.classList.add('copy-success');
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                    copyBtn.classList.remove('copy-success');
-                }, 2000);
-            });
+            copyToClipboard(snippet, copyBtn);
         };
+    });
+}
+
+function initWonderBlocks() {
+    // Shared wonder blocks that appear sporadically or near canvases
+    const surfaces = document.querySelectorAll('.spw-accent-host, .spw-svg-surface');
+    surfaces.forEach(surface => {
+        const block = document.createElement('div');
+        block.className = 'spw-wonder-block';
+        block.innerHTML = `
+            <div class="wonder-header">
+                <span class="log-op">?</span> wonder_and_consideration
+                <button class="wonder-action" data-action="hydrate">#&gt;hydrate_for_midjourney</button>
+            </div>
+            <div class="wonder-body" data-wonder-text>Wait for resonance...</div>
+        `;
+        surface.after(block);
+
+        block.querySelector('[data-action="hydrate"]').onclick = () => {
+            const prompt = serializeWonderPrompt();
+            copyToClipboard(prompt, block.querySelector('[data-action="hydrate"]'));
+        };
+    });
+
+    // Update wonder text on bus events
+    bus.on('spell:grounded', (e) => {
+        const blocks = document.querySelectorAll('[data-wonder-text]');
+        const prompt = serializeWonderPrompt();
+        blocks.forEach(b => b.textContent = prompt.slice(0, 140) + '...');
+    });
+}
+
+function serializeWonderPrompt() {
+    const persona = document.body.dataset.spwPersona || 'viewer';
+    const phase   = document.body.dataset.spwLatticePhase || 'curiosity';
+    const grounded = Array.from(document.querySelectorAll('[data-spw-grounded="true"]'))
+        .map(el => el.textContent.trim().toLowerCase());
+
+    const descriptors = {
+        viewer:  'clean geometric clarity, mathematical harmony, subtle cyan lighting, paper-like textures',
+        doodler: 'expressive ink washes, vibrant chromatic shifts, hand-drawn lattices, fluid blooming flows',
+        scribe:  'dense technical blueprints, precise architectural lines, cyanotype aesthetic, data-rich overlays'
+    };
+
+    const basePrompt = `Concept collage of ${grounded.join(', ') || 'technical wonder'}, ${descriptors[persona]}, in the state of ${phase}, hyper-detailed, technical art, 8k, --ar 16:9`;
+    return basePrompt;
+}
+
+function copyToClipboard(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.innerHTML = '<span class="log-op">✓</span> copied';
+        btn.classList.add('copy-success');
+        setTimeout(() => {
+            btn.innerHTML = original;
+            btn.classList.remove('copy-success');
+        }, 2000);
     });
 }
 
@@ -40,22 +85,27 @@ function serializeFrameToSpw(frame) {
     const id = frame.id;
     const op = frame.dataset.spwOperator || '#>';
     const phase = frame.dataset.spwPhase || 'neutral';
-    const form = frame.dataset.spwForm || 'brace';
     const role = frame.dataset.spwRole || 'content';
     
     let spw = `${op}${id}\n`;
     spw += `#:layer #!${role}\n`;
-    spw += `#:phase .${phase}\n`;
-    spw += `#:form .${form}\n\n`;
+    spw += `#:phase .${phase}\n\n`;
     
-    // Extract a summary of the frame's content for the 'object' body
     const title = frame.querySelector('h1, h2, h3')?.textContent.trim() || 'untitled';
     const description = frame.querySelector('p')?.textContent.trim() || '';
     
     spw += `^"${title}"{\n`;
     spw += `  summary: "${description.slice(0, 100)}..."\n`;
     spw += `  url: "${window.location.origin}${window.location.pathname}#${id}"\n`;
-    spw += `}`;
+    spw += `}\n\n`;
     
+    const registry = JSON.parse(localStorage.getItem('spw-grounded-registry') || '[]');
+    if (registry.length > 0) {
+        spw += `^"consideration_register"{\n`;
+        spw += `  grounded_concepts: ${JSON.stringify(registry)}\n`;
+        spw += `}\n\n`;
+    }
+
+    spw += serializeLatticeToSpw();
     return spw;
 }

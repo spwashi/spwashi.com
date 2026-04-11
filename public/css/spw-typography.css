@@ -1,0 +1,273 @@
+/* Spw Operator Typography
+ *
+ * Each Spw operator has a distinct typographic character that manifests
+ * progressively as charge (--charge 0→1) accumulates. These are not
+ * decorative — each axis of change expresses what the operator DOES:
+ *
+ *   frame   (#>) — declares territory  → weight condenses, tracking tightens
+ *   probe   (?)  — opens inquiry       → tracking widens, tilts toward italic
+ *   action  (@)  — commits to act      → weight surges, capitalizes
+ *   ref     (~)  — points away         → oblique angle grows
+ *   stream  (*)  — carries flow        → tracking narrows (velocity)
+ *   pragma  (!)  — applies constraint  → weight max, small-caps → all-caps
+ *   object  (^)  — elevates content    → size grows, weight up
+ *   merge   (&)  — integrates fields   → tracking opens (dissolution)
+ *   binding (=)  — fixes a value       → monospace-feel, tabular
+ *   meta    ($)  — reflects on self    → oblique deepens
+ *   surface (>)  — projects outward    → size surges most
+ *   layer   (#:) — qualifies context   → small-caps, weight light
+ *   baseline(.)  — settles to rest     → size recedes, opacity fades
+ *   normalize(%) — scales proportion   → tabular, tight
+ *
+ * Font axes used (all via CSS calc so variable fonts can interpolate):
+ *   font-weight   — calc(base + charge * range)       → 100–900
+ *   letter-spacing — calc(base + charge * range)      → em units
+ *   font-size      — calc(1em * (1 + charge * surge)) → proportional scale
+ *   font-style     — oblique calc(0deg + charge * °)  → oblique angle
+ *   font-variant-caps — discrete, keyed on charge thresholds
+ *   font-variant-numeric — tabular-nums for binding/normalize
+ *
+ * The --charge property must be registered in spw-cinematic.css (or spw-tokens.css)
+ * as @property { syntax: '<number>'; inherits: false; initial-value: 0 }
+ * so that transitions on charge-derived expressions animate smoothly.
+ *
+ * Blog note — Operator Typography as Cognitive Texture
+ * ─────────────────────────────────────────────────────
+ * Typography is not decoration applied after meaning; it IS meaning in motion.
+ * When a `?` probe token charges up, the letter-spacing opens — the type itself
+ * performs the act of inquiry, reaching into white space. When a `@` action
+ * commits (sustained hold), the weight surges and the case locks: the type
+ * becomes the declaration it contains. This is liminality made tangible —
+ * the threshold at which text stops being information and starts being presence.
+ *
+ * Variable fonts make this continuous rather than stepped. Even without a
+ * variable font, the discrete threshold shifts (charging → active → sustained)
+ * act as cognitive affordances: each level of attention is acknowledged by
+ * a visible change in the reading surface. The reader trains themselves to
+ * hold attention, and the text rewards it.
+ */
+
+/* ── Shared typographic custom properties ───────────────────────────────── */
+/* Each operator sets these on its own element so --charge calc expressions
+   stay generic. Charge-driven calc() handles the actual interpolation.     */
+
+:where([data-spw-operator]) {
+  --type-weight-base: 400;
+  --type-weight-range: 0;
+  --type-tracking-base: 0em;
+  --type-tracking-range: 0em;
+  --type-size-surge: 0;
+  --type-oblique-range: 0;
+
+  font-weight: calc(var(--type-weight-base) + var(--charge, 0) * var(--type-weight-range));
+  letter-spacing: calc(var(--type-tracking-base) + var(--charge, 0) * var(--type-tracking-range));
+  font-size: calc(1em * (1 + var(--charge, 0) * var(--type-size-surge)));
+  font-style: oblique calc(var(--charge, 0) * var(--type-oblique-range) * 1deg);
+
+  transition:
+    font-weight var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in),
+    letter-spacing var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in),
+    font-size var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in),
+    font-style var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in);
+}
+
+[data-spw-operator='frame'] {
+  --type-weight-base: 500;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: -0.06em;
+  --type-size-surge: 0.04;
+}
+
+[data-spw-operator='probe'] {
+  --type-weight-base: 400;
+  --type-weight-range: 100;
+  --type-tracking-base: 0.03em;
+  --type-tracking-range: 0.12em;
+  --type-oblique-range: 8;
+}
+
+[data-spw-operator='action'] {
+  --type-weight-base: 500;
+  --type-weight-range: 400;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: -0.02em;
+}
+
+[data-spw-charge='active'][data-spw-operator='action'],
+[data-spw-charge='sustained'][data-spw-operator='action'],
+[data-spw-charge='manifest'][data-spw-operator='action'] {
+  font-variant-caps: all-small-caps;
+}
+
+[data-spw-charge='sustained'][data-spw-operator='action'],
+[data-spw-charge='manifest'][data-spw-operator='action'] {
+  text-transform: uppercase;
+  font-variant-caps: normal;
+}
+
+[data-spw-operator='ref'] {
+  --type-weight-base: 400;
+  --type-weight-range: 100;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: 0.06em;
+  --type-oblique-range: 12;
+}
+
+[data-spw-operator='stream'] {
+  --type-weight-base: 400;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: -0.08em;
+}
+
+[data-spw-operator='pragma'] {
+  --type-weight-base: 600;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: 0.04em;
+}
+
+[data-spw-charge='charging'][data-spw-operator='pragma'] {
+  font-variant-caps: small-caps;
+}
+
+[data-spw-charge='active'][data-spw-operator='pragma'],
+[data-spw-charge='sustained'][data-spw-operator='pragma'] {
+  font-variant-caps: all-small-caps;
+}
+
+[data-spw-operator='object'] {
+  --type-weight-base: 400;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: 0.03em;
+  --type-size-surge: 0.12;
+}
+
+[data-spw-operator='merge'] {
+  --type-weight-base: 400;
+  --type-weight-range: 0;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: 0.14em;
+}
+
+[data-spw-operator='binding'] {
+  --type-weight-base: 500;
+  --type-weight-range: 100;
+  --type-tracking-base: 0;
+  --type-tracking-range: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-spw-charge='active'][data-spw-operator='binding'],
+[data-spw-charge='sustained'][data-spw-operator='binding'] {
+  font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  font-variant-ligatures: none;
+}
+
+[data-spw-operator='meta'] {
+  --type-weight-base: 400;
+  --type-weight-range: -100;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: 0.06em;
+  --type-oblique-range: 16;
+}
+
+[data-spw-operator='surface'] {
+  --type-weight-base: 500;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.03em;
+  --type-tracking-range: 0.08em;
+  --type-size-surge: 0.18;
+}
+
+[data-spw-operator='layer'] {
+  --type-weight-base: 300;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.06em;
+  --type-tracking-range: 0.04em;
+  font-variant-caps: small-caps;
+}
+
+[data-spw-operator='baseline'] {
+  --type-weight-base: 400;
+  --type-weight-range: -100;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: -0.01em;
+  --type-size-surge: -0.06;
+  opacity: calc(0.78 - var(--charge, 0) * 0.18);
+}
+
+[data-spw-operator='normalize'] {
+  --type-weight-base: 500;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-spw-grounded='true'] {
+  --charge: 0 !important;
+  --type-weight-range: 0;
+  --type-tracking-range: 0em;
+  --type-size-surge: 0;
+  --type-oblique-range: 0;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  text-transform: none;
+  font-family: inherit;
+}
+
+[data-spw-grounded-in='probe'] {
+  color: var(--op-probe-color, inherit);
+}
+
+[data-spw-grounded-in='frame'] {
+  color: var(--op-frame-color, inherit);
+}
+
+[data-spw-grounded-in='action'] {
+  color: var(--op-action-color, inherit);
+}
+
+[data-spw-grounded-in='ref'] {
+  color: var(--op-ref-color, inherit);
+}
+
+[data-spw-grounded-in='stream'] {
+  color: var(--op-stream-color, inherit);
+}
+
+[data-spw-grounded-in='pragma'] {
+  color: var(--op-pragma-color, inherit);
+}
+
+[data-spw-grounded-in='object'] {
+  color: var(--op-object-color, inherit);
+}
+
+[data-spw-grounded-in='binding'] {
+  color: var(--op-binding-color, inherit);
+}
+
+[data-spw-grounded-in='meta'] {
+  color: var(--op-meta-color, inherit);
+}
+
+[data-spw-grounded-in='normalize'] {
+  color: var(--op-normalize-color, inherit);
+}
+
+[data-spw-grounded-in='surface'] {
+  color: var(--op-surface-color, inherit);
+}
+
+[data-spw-grounded-in='layer'] {
+  color: var(--op-layer-color, inherit);
+}
+
+[data-spw-grounded-in='baseline'] {
+  color: var(--op-baseline-color, inherit);
+}

@@ -126,13 +126,28 @@
                 </div>
                 <p class="spec-kicker">Software / Engineering Depth</p>
                 <h1>Orchestrating Time and Priority</h1>
-                <p>In a single-threaded runtime, the <strong>Scheduler</strong> is the sovereign that decides what lives and what waits. This surface explores the mechanisms of <span class="spw-delimiter spw-delimiter--circle">(</span>cooperative multitasking<span class="spw-delimiter spw-delimiter--circle">)</span>: yielding to the main thread, managing <span class="spw-delimiter spw-delimiter--square">[</span>priority levels<span class="spw-delimiter spw-delimiter--square">]</span>, and protecting the user experience from <span class="spw-delimiter spw-delimiter--angle">&lt;</span>long-task starvation<span class="spw-delimiter spw-delimiter--angle">&gt;</span>.</p>
+                <p>In a single-threaded runtime, the <strong>Scheduler</strong> is the sovereign that decides what lives and what waits. This surface explores the mechanics of <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">(</span>cooperative multitasking<span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">)</span>: yielding to the main thread, managing <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>priority levels<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, and protecting the user experience from <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</span>long-task starvation<span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>.</p>
                 <nav class="frame-operators" aria-label="Topic nav">
                     <a class="operator-chip" href="#task-priority">task priority</a>
                     <a class="operator-chip" href="#cooperative-yielding">cooperative yielding</a>
                     <a class="operator-chip" href="#abort-mechanics">abort mechanics</a>
                     <a class="operator-chip" href="/topics/software/">← software</a>
                 </nav>
+
+                <figure
+                    class="spw-scaffold"
+                    data-spw-accent="flow"
+                    data-spw-operator="!"
+                    data-spw-image-key="software-scheduler-clockwork"
+                    data-spw-realization="hybrid"
+                    data-spw-substrate="stream"
+                    data-spw-phrase="artifact"
+                    data-spw-returnable="true"
+                    style="margin-top: 2rem"
+                >
+                    <img src="/public/images/assets/scheduler-clockwork.png" alt="Complex clockwork mechanism representing priority queues and time-slices." loading="lazy">
+                    <figcaption>Scheduler study: clockwork pacing used here as a metaphor for queues, yielding, and weighted time slices.</figcaption>
+                </figure>
             </section>
 
             <section class="site-frame" id="task-priority" data-spw-role="reference" data-spw-meaning="task priority management" data-spw-form="square">
@@ -223,6 +238,17 @@
                 </div>
             </section>
 
+            <div class="spw-concept-chain" aria-label="Conceptual path">
+                <span class="chain-label">Consideration:</span>
+                <a href="/topics/software/" class="chain-node">Software</a>
+                <span class="chain-sep">&gt;</span>
+                <a href="#schedulers-hero" class="chain-node">Schedulers</a>
+                <span class="chain-sep">&gt;</span>
+                <a href="#task-priority" class="chain-node">Priority</a>
+                <span class="chain-sep">&gt;</span>
+                <a href="#scientific-resonance" class="chain-node">Lattice Dynamics</a>
+            </div>
+
             <section class="site-frame" id="cooperative-yielding" data-spw-role="reference" data-spw-meaning="cooperative concurrency" data-spw-form="circle">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#cooperative-yielding">~[cooperative_yielding]</a>
@@ -286,6 +312,30 @@
                     </div>
                 </div>
             </section>
+
+            <section class="site-frame" id="scientific-resonance" data-spw-role="reference" data-spw-meaning="molecular resonance and rhythm" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#scientific-resonance">$["resonance"]</a>
+                    <h2>Scientific Resonance: Lattice Dynamics</h2>
+                </div>
+                <p class="inline-note">Research Primer: How does clock-speed synchronicity translate into the 'Rhythmic Coherence' of a collaborative publishing pipeline?</p>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Molecular Schedulers</h3>
+                        <p>Tasks in a cognitive lattice behave like particles in a crystal. High-performance schedulers must manage the 'thermal noise' of asynchronous interrupts to maintain a stable, rhythmic state (molecular resonance).</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Cognitive Rhythm</h3>
+                        <p>The human heartbeat and the CPU clock are both oscillators. Staff leads should bridge these domains by building systems that pulse at biological frequencies, reducing the 'metabolic cost' of digital interaction.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Sustainable Pipelines</h3>
+                        <p>By treating the scheduler as a resonant circuit, we model project-based learning as a self-sustaining cycle of energy (discovery) and stabilization (publishing), preventing lead burnout through rhythmic flow.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
     <footer>
         <p>© 2026 spwashi</p>
     </footer>
