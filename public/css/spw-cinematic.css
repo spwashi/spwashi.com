@@ -33,12 +33,15 @@
 /* ── Base timing handles (if spw-tokens.css is not loaded first, fallbacks) ─ */
 
 :root {
-    --cinematic-ease: cubic-bezier(0.23, 1, 0.32, 1);
-    --cinematic-duration: 0.6s;
-    --charge-in-duration:  200ms;
-    --charge-out-duration: 500ms;
-    --charge-ease-in:  cubic-bezier(0, 0, 0.2, 1);
-    --charge-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    /* Cinematic timing aligns with the luxury-mechanical character:
+       charge feels like a precision instrument reading — deliberate,
+       no oscillation, exact landing. Resonance breathes slowly.     */
+    --cinematic-ease:     cubic-bezier(0.32, 0, 0.0, 1); /* mechanical */
+    --cinematic-duration: 0.48s;
+    --charge-in-duration:  220ms;
+    --charge-out-duration: 440ms;
+    --charge-ease-in:  cubic-bezier(0.22, 0, 0.0, 1);    /* chassis entry */
+    --charge-ease-out: cubic-bezier(0.0,  0, 0.0, 1);    /* precision release */
 }
 
 /* ── Charge transition on all tracked elements ───────────────────────────── */

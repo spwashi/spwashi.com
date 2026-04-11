@@ -1,3 +1,105 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTAINER VOCABULARY
+   ─────────────────────────────────────────────────────────────────────────
+   Containers distinguish conceptual categories spatially:
+
+     field    — ambient page space; no surface, just background
+     frame    — structural room you enter; a bounded region with a threshold
+     cluster  — group membership; things that belong together
+     concept  — discrete entity; one holdable thing
+
+   Within any container, [data-spw-stance] marks orientation:
+
+     entry    — threshold; you're stepping in; copy announces the space
+     ground   — interior; you're inside, settled; reading rhythm normalizes
+     exit     — completion; space is closing; copy recedes, quiets
+
+   The .frame-topline is naturally at the threshold of every site-frame;
+   it reads as the room sign and receives threshold treatment by default.
+   The .frame-heading follows immediately inside — already grounded.
+
+   Depth levels (data-spw-depth="0..3") control surface opacity:
+     0  ambient (no surface; field)
+     1  frame   (subtle surface; bounded)
+     2  panel   (elevated; nested)
+     3  detail  (most opaque; most specific)
+
+   Role-based spatial identity on .site-frame (from existing data-spw-role):
+     probe      → inquiry threshold; facing inward/forward
+     surface    → rendered output; facing outward
+     reference  → foundational ground; facing inward/downward
+     schema     → systematic map; facing across
+     broadcast  → projected expression; facing upward/outward
+     pragma     → constraint/truth; settling, closing
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Container depth levels ──────────────────────────────────────────── */
+
+[data-spw-depth="0"] { --container-surface: transparent; --container-border: transparent; }
+[data-spw-depth="1"] { --container-surface: var(--surface); --container-border: var(--line); }
+[data-spw-depth="2"] { --container-surface: var(--surface-strong); --container-border: rgba(14,18,20,0.12); }
+[data-spw-depth="3"] { --container-surface: rgba(255,255,255,0.92); --container-border: rgba(14,18,20,0.18); }
+
+[data-spw-depth] {
+    background: var(--container-surface);
+    border-color: var(--container-border);
+    transition:
+        background     var(--duration-deliberate) var(--ease-mechanical),
+        border-color   var(--duration-base)        var(--ease-mechanical);
+}
+
+/* ── Container type vocabulary ───────────────────────────────────────── */
+
+[data-spw-container="field"] {
+    background: transparent;
+    border-color: transparent;
+}
+
+[data-spw-container="cluster"] {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    background: var(--surface-soft);
+    transition:
+        background   var(--duration-base) var(--ease-mechanical),
+        border-color var(--duration-snap) var(--ease-mechanical);
+}
+
+[data-spw-container="concept"] {
+    display: inline-block;
+    border: 1.5px solid var(--active-op-color, var(--teal));
+    border-radius: var(--radius-sm);
+    padding: 0.15rem 0.5rem;
+    background: var(--token-bg);
+    transition:
+        border-color var(--duration-snap)  var(--ease-mechanical),
+        background   var(--duration-fast)  var(--ease-mechanical),
+        color        var(--duration-fast)  var(--ease-mechanical);
+}
+
+/* ── Spatial stance: where copy sits within a container ─────────────── */
+/* These create felt reading rhythm — subvocalizing position in space.
+   Threshold copy breathes wider (orienting); interior settles; exit recedes. */
+
+[data-spw-stance="entry"] {
+    letter-spacing: 0.04em;
+    color: color-mix(in oklab, var(--ink) 78%, transparent);
+    transition: color var(--duration-deliberate) var(--ease-mechanical);
+}
+
+[data-spw-stance="ground"] {
+    letter-spacing: 0.01em;
+    transition: color var(--duration-deliberate) var(--ease-mechanical);
+}
+
+[data-spw-stance="exit"] {
+    opacity: 0.76;
+    letter-spacing: 0.01em;
+    transition: opacity var(--duration-deliberate) var(--ease-mechanical);
+}
+
+/* ── Site frame (natural frame container) ────────────────────────────── */
+
 .site-frame {
     position: relative;
     display: flex;
@@ -8,7 +110,10 @@
     border-radius: var(--radius);
     background: var(--surface);
     box-shadow: var(--shadow);
-    transition: background 160ms ease, border-color 160ms ease;
+    transition:
+        background   var(--duration-deliberate) var(--ease-mechanical),
+        border-color var(--duration-base)        var(--ease-mechanical),
+        box-shadow   var(--duration-deliberate) var(--ease-mechanical);
     overflow: hidden;
     scroll-margin-top: calc(var(--header-height) + 1rem);
 }
@@ -49,6 +154,63 @@
     justify-content: space-between;
     gap: 0.9rem;
     flex-wrap: wrap;
+}
+
+/* frame-topline is the threshold of every frame — the room sign.
+   Lighter border below it marks the entry line before interior begins. */
+.frame-topline {
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
+    margin-bottom: -0.25rem;
+    transition:
+        border-color var(--duration-base) var(--ease-mechanical);
+}
+
+.site-frame.is-active-frame .frame-topline {
+    border-bottom-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 32%, transparent);
+}
+
+/* ── Role-based spatial identity ──────────────────────────────────────── */
+/* Each data-spw-role positions the reader in a different spatial stance.
+   Gradients lean toward opening or closing edge to signal direction.    */
+
+.site-frame[data-spw-role="probe"] {
+    background-image: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--op-probe-bg-soft, rgba(0,128,128,0.04)) 50%, transparent) 0%,
+        transparent 55%
+    );
+}
+
+.site-frame[data-spw-role="surface"] {
+    background-image: linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--op-surface-bg-soft, rgba(0,128,128,0.04)) 40%, transparent) 0%,
+        transparent 50%
+    );
+}
+
+.site-frame[data-spw-role="reference"] {
+    border-left-width: 2px;
+    border-left-color: var(--op-ref-border, rgba(0,128,128,0.22));
+}
+
+.site-frame[data-spw-role="schema"] {
+    border-style: dashed;
+    border-color: var(--line);
+}
+
+.site-frame[data-spw-role="broadcast"] {
+    background-image: linear-gradient(
+        180deg,
+        transparent 40%,
+        color-mix(in srgb, var(--op-surface-bg-soft, rgba(0,128,128,0.04)) 40%, transparent) 100%
+    );
+}
+
+.site-frame[data-spw-role="pragma"] {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--op-pragma-border, rgba(0,128,128,0.22));
 }
 
 .spw-component-tag {

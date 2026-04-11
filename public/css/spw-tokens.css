@@ -104,23 +104,52 @@
   --charcoal-light: rgb(26, 32, 35);
   --charcoal-dark: rgb(6, 8, 10);
 
-  --duration-instant: 50ms;
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-slow: 400ms;
+  /* ── Durations ── */
+  /* Graded by felt weight of the change, not raw speed.
+     Snap for micro-feedback; deliberate for spatial shifts.     */
+  --duration-instant:   50ms;
+  --duration-snap:      90ms;   /* mechanical micro-confirm */
+  --duration-fast:     140ms;   /* quick but weighted */
+  --duration-base:     220ms;   /* standard body of motion */
+  --duration-deliberate: 360ms; /* considered spatial moves */
+  --duration-slow:     480ms;   /* full-weight reveals */
 
-  --ease-settle: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-reveal: cubic-bezier(0, 0, 0, 1);
-  --ease-pivot: cubic-bezier(0.4, 0, 0.2, 1);
+  /* ── Easing — Precision / Luxury Vehicle Character ── */
+  /*
+     Mechanical precision: deliberate initiation, weighted travel,
+     exact landing. No bounce, no drift, no decorative flourish.
+     Think soft-close cabinet, high-end seat adjustment,
+     or a chassis door finding its seal.
+  */
+  --ease-mechanical: cubic-bezier(0.32, 0, 0.0, 1);    /* crisp, no overshoot */
+  --ease-paper:      cubic-bezier(0.40, 0, 0.2, 1);    /* paper fold — slight resistance */
+  --ease-chassis:    cubic-bezier(0.22, 0, 0.0, 1);    /* heavier, decisive rest */
+  --ease-settle:     cubic-bezier(0.2, 0.8, 0.2, 1);   /* content finding place */
+  --ease-reveal:     cubic-bezier(0.0, 0, 0.0, 1);     /* sharp precision reveal */
+  --ease-pivot:      var(--ease-paper);                 /* formerly separate, now aliased */
 
-  --brace-settle-duration: var(--duration-base);
-  --brace-settle-ease: var(--ease-settle);
-  --pivot-arc-duration: var(--duration-slow);
-  --pivot-arc-ease: var(--ease-pivot);
+  /* ── Crescendo Delays — Progressive Enhancement Layers ── */
+  /*
+     Each CSS layer (grammar → components → surfaces → ornament)
+     can stagger its appearance relative to structural baseline.
+     The crescendo is the felt arrival of capability, not decoration.
+     Baseline components render immediately; enhanced layers follow.
+  */
+  --crescendo-structural:    0ms;
+  --crescendo-compositional: 32ms;
+  --crescendo-component:     64ms;
+  --crescendo-surface:      100ms;
+  --crescendo-ornament:     160ms;
+
+  /* ── Named interaction timings (semantic aliases) ── */
+  --brace-settle-duration:    var(--duration-base);
+  --brace-settle-ease:        var(--ease-mechanical);
+  --pivot-arc-duration:       var(--duration-deliberate);
+  --pivot-arc-ease:           var(--ease-chassis);
   --threshold-cross-duration: var(--duration-base);
-  --threshold-cross-ease: var(--ease-reveal);
-  --charge-release-duration: var(--duration-fast);
-  --charge-release-ease: var(--ease-reveal);
+  --threshold-cross-ease:     var(--ease-paper);
+  --charge-release-duration:  var(--duration-fast);
+  --charge-release-ease:      var(--ease-mechanical);
 
   --depth-ambient: 1;
   --depth-settled: 10;
