@@ -841,11 +841,16 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.24));
     border-radius: 3px;
     padding: 0.08em 0.32em;
-    cursor: default;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
     transition:
-        background   var(--duration-base) var(--ease-mechanical),
-        border-color var(--duration-snap) var(--ease-mechanical),
-        color        var(--duration-snap) var(--ease-mechanical);
+        background     var(--duration-base) var(--ease-mechanical),
+        border-color   var(--duration-snap) var(--ease-mechanical),
+        color          var(--duration-snap) var(--ease-mechanical),
+        box-shadow     var(--duration-base) var(--ease-settle),
+        outline-offset var(--duration-snap) var(--ease-mechanical);
 }
 
 .spw-topic::before { content: '<'; opacity: 0.52; font-weight: 300; }
@@ -856,6 +861,95 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     background: color-mix(in srgb, var(--op-topic-bg-soft, rgba(228,246,252,0.72)) 60%, rgba(255,255,255,0.3));
     border-color: color-mix(in srgb, var(--op-topic-border) 70%, transparent);
     color: color-mix(in srgb, var(--op-topic-color) 85%, black);
+}
+
+/* Topic discovery: highlighted + active states */
+.spw-topic--highlighted {
+    background: color-mix(in srgb, var(--op-topic-color) 14%, rgba(255,255,255,0.6));
+    border-color: color-mix(in srgb, var(--op-topic-color) 42%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-topic-color) 12%, transparent);
+}
+.spw-topic--active {
+    background: color-mix(in srgb, var(--op-topic-color) 20%, rgba(255,255,255,0.7));
+    border-color: var(--op-topic-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-topic-color) 18%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--op-topic-color) 32%, transparent);
+    outline-offset: 2px;
+}
+
+/* Topic context popover */
+.spw-topic-popover {
+    position: absolute;
+    z-index: var(--z-modal, 2000);
+    max-width: 28rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--floating-bg, rgba(255,255,255,0.94));
+    border: 1px solid var(--line);
+    border-radius: var(--radius, 10px);
+    box-shadow: var(--floating-shadow);
+    font-family: var(--site-mono-font);
+    font-size: 0.82rem;
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+        opacity   var(--duration-fast) var(--ease-mechanical),
+        transform var(--duration-fast) var(--ease-settle);
+    pointer-events: auto;
+}
+.spw-topic-popover.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.spw-topic-popover-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin-bottom: 0.4rem;
+}
+.spw-topic-popover-sigil {
+    font-weight: 600;
+    color: var(--op-topic-color);
+}
+.spw-topic-popover-count {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+}
+.spw-topic-popover-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.35rem;
+}
+.spw-topic-popover-link {
+    display: block;
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--teal);
+    text-decoration: none;
+    transition: background var(--duration-snap) var(--ease-mechanical);
+}
+.spw-topic-popover-link:hover {
+    background: var(--surface-soft);
+}
+.spw-topic-popover-operators {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+.spw-topic-popover-op {
+    padding: 0.12rem 0.4rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--teal)) 20%, transparent);
+    font-size: 0.75rem;
+}
+
+/* Badge swipe active state */
+.is-badge-active {
+    background: color-mix(in srgb, var(--teal) 16%, rgba(255,255,255,0.5));
+    border-color: var(--teal);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--teal) 14%, transparent);
 }
 
 /* Scene connector: (scene-a) <> (scene-b) — relational field boundary */

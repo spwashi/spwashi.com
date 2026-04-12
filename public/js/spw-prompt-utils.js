@@ -69,15 +69,15 @@ function serializeWonderPrompt() {
     return basePrompt;
 }
 
-function copyToClipboard(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        const original = btn.innerHTML;
-        btn.innerHTML = '<span class="log-op">✓</span> copied';
-        btn.classList.add('copy-success');
-        setTimeout(() => {
-            btn.innerHTML = original;
-            btn.classList.remove('copy-success');
-        }, 2000);
+async function copyToClipboard(text, btn) {
+    const { handleCopyButton } = await import('./spw-copy.js');
+    const original = btn.innerHTML;
+    await handleCopyButton({
+        text,
+        button: btn,
+        labelCopied:  '<span class="log-op">✓</span> copied',
+        labelFailed:  '<span class="log-op">!</span> copy',
+        labelDefault: original
     });
 }
 

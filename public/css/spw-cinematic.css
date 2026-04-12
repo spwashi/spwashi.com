@@ -399,3 +399,260 @@
         outline-color     var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease),
         background-color  var(--arc-dissipate-duration, 520ms) var(--arc-dissipate-ease, ease);
 }
+
+/* ── Phase mode — material dominance shifts per reading mode ──────────────
+   html[data-spw-mode] is set by JS when the user switches between reading
+   modes (surface → syntax → artifacts). Each mode makes one material family
+   dominant; the other two recede. This is layered atop charge so the two
+   systems compose without collision.                                        */
+
+html[data-spw-mode="surface"] {
+    --phase-paper-weight: 1;
+    --phase-glass-weight: 0.08;
+    --phase-metal-weight: 0;
+    --phase-density:      0.22;
+}
+html[data-spw-mode="syntax"] {
+    --phase-paper-weight: 0.52;
+    --phase-glass-weight: 0.9;
+    --phase-metal-weight: 0.12;
+    --phase-density:      0.55;
+}
+html[data-spw-mode="artifacts"] {
+    --phase-paper-weight: 0.2;
+    --phase-glass-weight: 0.18;
+    --phase-metal-weight: 0.92;
+    --phase-density:      0.80;
+}
+
+/* Material overlay: each site-frame gets a thin composite wash
+   whose channels are gated by phase-weight variables.
+   Only phase-dominant material reads; others stay near-invisible. */
+.site-frame { position: relative; }
+.site-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,calc(var(--phase-paper-weight, 1) * 0.10)) 0%,
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(100,230,230,calc(var(--phase-glass-weight, 0) * 0.08)) 0%,
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(20,34,36,calc(var(--phase-metal-weight, 0) * 0.08)) 0%,
+            rgba(255,255,255,calc(var(--phase-metal-weight, 0) * 0.03)) 100%
+        );
+    transition:
+        background var(--duration-deliberate, 360ms) var(--ease-settle, ease);
+    z-index: 0;
+}
+/* Keep content above the phase overlay */
+.site-frame > * { position: relative; z-index: 1; }
+
+/* Spacing breathes with density */
+.site-frame,
+.frame-panel,
+.frame-card {
+    --density-padding-adjust: calc(var(--phase-density, 0.3) * -0.22rem);
+}
+
+/* ── Brace field physics — charge expressed as left/right field boundary ──
+   Left edge: accumulation (teal / cool charge building)
+   Right edge: release (warm discharge / resolved state)
+   The brace feels like a dielectric — energy enters left, resolves right.  */
+
+[data-spw-form="brace"] {
+    --brace-glow-alpha:   calc(var(--charge, 0) * 0.26);
+    --brace-edge-alpha:   calc(0.14 + var(--charge, 0) * 0.44);
+    --brace-inner-density: calc(0.02 + var(--charge, 0) * 0.07);
+    position: relative;
+}
+
+/* Inner directional wash — left accumulates, right dissipates */
+[data-spw-form="brace"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 128, 128, var(--brace-inner-density, 0.02)) 0%,
+        transparent 28%,
+        transparent 68%,
+        rgba(160, 42, 77, calc(var(--brace-inner-density, 0.02) * 0.8)) 100%
+    );
+    opacity: calc(0.4 + var(--charge, 0) * 0.5);
+    transition: opacity var(--charge-release-duration, 120ms) var(--charge-release-ease, ease-out);
+    z-index: 0;
+}
+
+/* Edge inset shadows — charge makes boundaries visible as fields */
+[data-spw-form="brace"][data-spw-charge="charging"] {
+    box-shadow:
+        inset 2px 0 0 rgba(0, 128, 128, var(--brace-edge-alpha, 0.28)),
+        0 0 10px rgba(0, 128, 128, var(--brace-glow-alpha, 0.12));
+}
+[data-spw-form="brace"][data-spw-charge="active"] {
+    box-shadow:
+        inset 3px 0 0 rgba(0, 128, 128, calc(var(--brace-edge-alpha, 0.28) + 0.1)),
+        inset -2px 0 0 rgba(160, 42, 77, 0.14),
+        0 0 18px rgba(0, 128, 128, calc(var(--brace-glow-alpha, 0.12) + 0.07));
+}
+[data-spw-form="brace"][data-spw-charge="sustained"],
+[data-spw-form="brace"][data-spw-charge="manifest"] {
+    box-shadow:
+        inset 4px 0 0 rgba(0, 128, 128, 0.60),
+        inset -3px 0 0 rgba(160, 42, 77, 0.24),
+        0 0 26px rgba(0, 128, 128, 0.20);
+}
+
+/* Brace emission — brief outward pulse when content is resolved/copied */
+[data-spw-brace-state="emitting"] {
+    animation: brace-emit 360ms var(--ease-release, ease-out) 1;
+}
+@keyframes brace-emit {
+    0%   { filter: brightness(1)    scale(1); }
+    38%  { filter: brightness(1.07) scale(1.008); }
+    100% { filter: brightness(1)    scale(1); }
+}
+
+/* ── Directional gradient — page-level left accumulation / right release ──
+   Applied to the page body as an ambient field signal.
+   Not a dramatic effect — a structural undercurrent.                       */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 96, 88, 0.028) 0%,
+            rgba(0, 96, 88, 0.010) 12%,
+            transparent 38%,
+            transparent 72%,
+            rgba(96, 40, 56, 0.014) 100%
+        );
+}
+
+/* ── Reactive spine — SVG op-node charge states ───────────────────────────
+   The .op-node--charged class is added by spw-reactive-spine.js.
+   Charge states on SVG nodes use opacity and filter rather than box-shadow
+   because SVG doesn't support box-shadow.                                  */
+
+.op-node circle {
+    transition:
+        opacity  var(--touch-acknowledge, 90ms)  var(--ease-precise, ease),
+        filter   var(--touch-acknowledge, 90ms)  var(--ease-precise, ease),
+        r        var(--touch-commit, 180ms)       var(--ease-joint, ease);
+}
+.op-node text {
+    transition: opacity var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+}
+
+.op-node--charged circle {
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--active-op-color, hsl(180 100% 28%)) 32%, transparent));
+    opacity: 1;
+}
+.op-node--charged[data-spw-charge="charging"] circle {
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color) 28%, transparent));
+}
+.op-node--charged[data-spw-charge="active"] circle {
+    filter:
+        drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color) 42%, transparent))
+        brightness(1.06);
+}
+.op-node--charged[data-spw-charge="sustained"] circle {
+    filter:
+        drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color) 58%, transparent))
+        brightness(1.1);
+    animation: spine-sustain 900ms var(--ease-joint) infinite;
+}
+@keyframes spine-sustain {
+    0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color) 42%, transparent)) brightness(1.06); }
+    50%      { filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color) 64%, transparent)) brightness(1.12); }
+}
+
+/* Operator-specific spine node colors */
+.op-node--frame     { --active-op-color: var(--op-frame-color,     hsl(180 100% 28%)); }
+.op-node--object    { --active-op-color: var(--op-object-color,    hsl(36 80% 36%));   }
+.op-node--probe     { --active-op-color: var(--op-probe-color,     hsl(268 55% 42%));  }
+.op-node--ref       { --active-op-color: var(--op-ref-color,       hsl(210 70% 38%));  }
+.op-node--action    { --active-op-color: var(--op-action-color,    hsl(180 100% 22%)); }
+.op-node--stream    { --active-op-color: var(--op-stream-color,    hsl(160 60% 32%));  }
+.op-node--surface   { --active-op-color: var(--op-surface-color,   hsl(180 70% 30%));  }
+.op-node--layer     { --active-op-color: var(--op-layer-color,     hsl(0 0% 40%));     }
+.op-node--baseline  { --active-op-color: var(--op-baseline-color,  hsl(42 18% 30%));   }
+.op-node--binding   { --active-op-color: var(--op-binding-color,   hsl(24 65% 34%));   }
+.op-node--meta      { --active-op-color: var(--op-meta-color,      hsl(220 45% 36%));  }
+.op-node--merge     { --active-op-color: var(--op-merge-color,     hsl(188 55% 34%));  }
+.op-node--normalize { --active-op-color: var(--op-normalize-color, hsl(95 34% 34%));   }
+.op-node--pragma    { --active-op-color: var(--op-pragma-color,    hsl(0 40% 38%));    }
+
+/* ── Selective touch interaction — controls vs readable content ───────────
+   Operator chips, walls, handles, and gesture surfaces: no text selection.
+   Prose, code, export blocks: always selectable.                          */
+
+button,
+[role="button"],
+[role="tab"],
+[data-spw-operator],
+[data-spw-wall],
+[data-spw-handle],
+[data-touch-ui],
+.operator-chip,
+.spec-pill,
+.mode-switch,
+.frame-sigil,
+.frame-card-sigil,
+.spw-objective-wall,
+.spw-subjective-wall,
+.spw-boon-wall,
+.spw-bane-wall {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+}
+
+p,
+li,
+pre,
+code,
+blockquote,
+[data-copyable],
+[data-readable],
+.frame-panel p,
+.frame-card span,
+.inline-note,
+.frame-note {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* ── Copy button states ───────────────────────────────────────────────────
+   Supports the shared handleCopyButton helper in spw-copy.js.             */
+
+[data-copy-button][aria-busy="true"],
+.copy-button[aria-busy="true"] {
+    opacity: 0.70;
+    pointer-events: none;
+}
+.copy-status {
+    min-height: 1.1em;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-family: var(--site-mono-font);
+    transition: opacity var(--duration-snap) var(--ease-mechanical);
+}

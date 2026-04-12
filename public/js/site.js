@@ -35,6 +35,8 @@ import { initSpwProjection } from './spw-projection.js';
 import { initSpwStateInspector } from './spw-state-inspector.js';
 import { initSpwShellDisclosure } from './spw-shell-disclosure.js';
 import { initSpwBraceActions } from './spw-brace-actions.js';
+import { initTopicDiscovery } from './spw-topic-discovery.js';
+import { initReactiveSpine } from './spw-reactive-spine.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -458,6 +460,8 @@ const initOptionalFeatures = async () => {
         loads.push(loadFeature('./recipe-semantics.js', 'initRecipeSemantics'));
     }
 
+    loads.push(loadFeature('./spw-pretext-presets.js', 'initPretextPresets'));
+
     await Promise.all(loads);
     await loadFeature('./spw-component-semantics.js', 'initSpwComponentSemantics');
 
@@ -573,6 +577,8 @@ onDomReady(() => {
     initSpwProjection();
     initSpwStateInspector();
     initSpwBraceActions();
+    initTopicDiscovery();
+    initReactiveSpine();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

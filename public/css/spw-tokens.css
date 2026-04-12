@@ -133,6 +133,35 @@
 
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
+  /* ── Line weight system — hierarchy through weight, not novelty ── */
+  --line-hair:  0.5px;
+  --line-thin:  1px;
+  --line-mid:   1.5px;
+  --line-thick: 2.5px;
+
+  --ink-strong: rgba(22, 28, 29, 0.88);
+  --ink-mid:    rgba(22, 28, 29, 0.52);
+  --ink-faint:  rgba(22, 28, 29, 0.12);
+  --ink-speculative: rgba(22, 28, 29, 0.18);
+
+  /* ── Motion grammar — articulated, not atmospheric ── */
+  /* Joint-like: directional, brief, asymmetric, cause-linked.
+     No floating, no hover breathing, no generic easing.       */
+  --ease-precise: cubic-bezier(0.2, 0, 0.12, 1);   /* crisp precision landing */
+  --ease-joint:   cubic-bezier(0.28, 0.02, 0.12, 0.98); /* hinged redirect */
+  --ease-release: cubic-bezier(0.18, 0.72, 0.18, 1);    /* controlled discharge */
+
+  /* Touch rhythm — machine/insect acknowledgment timing */
+  --touch-acknowledge: 90ms;   /* press lands */
+  --touch-commit:      180ms;  /* state commits */
+  --touch-emit:        360ms;  /* discharge completes */
+
+  /* ── Phase mode variables — material dominance per mode ── */
+  --phase-paper-weight:  1;
+  --phase-glass-weight:  0;
+  --phase-metal-weight:  0;
+  --phase-density:       0.3;
+
   --charcoal-rgb: 14, 18, 20;
   --charcoal: rgb(var(--charcoal-rgb));
   --charcoal-light: rgb(26, 32, 35);
