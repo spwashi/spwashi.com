@@ -18,6 +18,9 @@ const HANDLE = 'spwashi';
 // attributes in the HTML source. This prevents naive HTML scrapers from
 // harvesting payment handles by parsing static markup. The handles themselves
 // are intentionally visible in the rendered UI.
+//
+// amountUrl(n): builds a URL with a suggested amount pre-filled where supported.
+// PayPal.me supports /amount suffix. Cash App and Venmo do not have stable URL schemes for amounts.
 const PAYMENT_METHODS = [
     {
         id: 'cashapp',
@@ -25,6 +28,7 @@ const PAYMENT_METHODS = [
         handle: `$${HANDLE}`,
         sigil: '$',
         url: `https://cash.app/$${HANDLE}`,
+        amountUrl: null, // Cash App does not support amount in URL
     },
     {
         id: 'venmo',
@@ -32,6 +36,7 @@ const PAYMENT_METHODS = [
         handle: `@${HANDLE}`,
         sigil: 'V',
         url: `https://venmo.com/${HANDLE}`,
+        amountUrl: null, // Venmo deep links are app-only; web fallback lacks amount
     },
     {
         id: 'paypal',
@@ -39,6 +44,7 @@ const PAYMENT_METHODS = [
         handle: HANDLE,
         sigil: 'P',
         url: `https://paypal.me/${HANDLE}`,
+        amountUrl: (n) => `https://paypal.me/${HANDLE}/${n}`,
     },
     {
         id: 'github',
@@ -46,10 +52,20 @@ const PAYMENT_METHODS = [
         handle: HANDLE,
         sigil: '♥',
         url: `https://github.com/sponsors/${HANDLE}`,
+        amountUrl: null,
     },
 ];
 
-export { PAYMENT_METHODS };
+// ── Suggested amounts ─────────────────────────────────────────────────────────
+// Displayed as quick-tap chips above the payment links.
+// Selecting one updates PayPal's link to pre-fill the amount.
+const SUGGESTED_AMOUNTS = [
+    { value: 5,  label: '$5',  note: 'coffee' },
+    { value: 15, label: '$15', note: 'session' },
+    { value: 50, label: '$50', note: 'day' },
+];
+
+export { PAYMENT_METHODS, SUGGESTED_AMOUNTS };
 
 // ── Settings ─────────────────────────────────────────────────────────────────
 const SETTINGS_KEY = 'spw-payment-enabled';
@@ -74,8 +90,61 @@ export function setPaymentEnabled(ids) {
 }
 
 // ── Rendering ─────────────────────────────────────────────────────────────────
-function buildUrl(method) {
+function buildUrl(method, amount = null) {
+    if (amount && method.amountUrl) return method.amountUrl(amount);
     return method.url;
+}
+
+function buildAmountChips(body) {
+    const strip = document.createElement('div');
+    strip.className = 'payment-card__amounts';
+    strip.setAttribute('data-spw-region', 'amounts');
+    strip.setAttribute('aria-label', 'Suggested amounts');
+
+    let selectedAmount = null;
+
+    const label = document.createElement('span');
+    label.className = 'payment-card__amounts-label';
+    label.textContent = 'suggest';
+    strip.appendChild(label);
+
+    SUGGESTED_AMOUNTS.forEach(({ value, label: chipLabel, note }) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'payment-card__amount';
+        btn.dataset.spwTouch = 'tap';
+        btn.dataset.amount = value;
+        btn.setAttribute('title', note);
+        btn.innerHTML = `<span>${chipLabel}</span><span class="payment-card__amount-note">${note}</span>`;
+
+        btn.addEventListener('click', () => {
+            const alreadySelected = selectedAmount === value;
+            selectedAmount = alreadySelected ? null : value;
+
+            strip.querySelectorAll('.payment-card__amount').forEach(b => {
+                b.classList.toggle('is-selected', b.dataset.amount == selectedAmount);
+            });
+
+            // Update all link hrefs with or without amount
+            body.querySelectorAll('.payment-card__link').forEach(link => {
+                const id = link.dataset.method;
+                const method = PAYMENT_METHODS.find(m => m.id === id);
+                if (method) link.href = buildUrl(method, selectedAmount);
+            });
+
+            // Show which methods support amount pre-fill
+            body.querySelectorAll('.payment-card__link').forEach(link => {
+                const id = link.dataset.method;
+                const method = PAYMENT_METHODS.find(m => m.id === id);
+                link.classList.toggle('has-amount', !!(selectedAmount && method?.amountUrl));
+                link.classList.toggle('no-amount-support', !!(selectedAmount && !method?.amountUrl));
+            });
+        });
+
+        strip.appendChild(btn);
+    });
+
+    return strip;
 }
 
 function buildLinkEl(method) {
@@ -107,6 +176,7 @@ function buildLinkEl(method) {
 
 function renderLinks(body, enabledIds) {
     body.innerHTML = '';
+    body.appendChild(buildAmountChips(body));
     PAYMENT_METHODS.filter(m => enabledIds.includes(m.id)).forEach(m => {
         body.appendChild(buildLinkEl(m));
     });

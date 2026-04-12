@@ -179,6 +179,81 @@
     text-align: right;
 }
 
+/* ── Suggested amounts ─────────────────────────────────────────────────────── */
+
+.payment-card__amounts {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.payment-card__amounts-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    opacity: 0.45;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    flex-shrink: 0;
+    margin-right: 0.1rem;
+}
+
+.payment-card__amount {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--link-border);
+    background: transparent;
+    color: inherit;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background 100ms, border-color 100ms, transform 60ms;
+    touch-action: manipulation;
+    user-select: none;
+    line-height: 1;
+}
+
+.payment-card__amount-note {
+    font-size: 0.58rem;
+    opacity: 0.5;
+    letter-spacing: 0.03em;
+}
+
+.payment-card__amount:hover {
+    background: var(--link-bg);
+    border-color: color-mix(in oklab, var(--teal, #1a9999) 30%, transparent);
+}
+
+.payment-card__amount:active {
+    transform: scale(0.95);
+}
+
+.payment-card__amount.is-selected {
+    background: color-mix(in oklab, var(--teal, #1a9999) 16%, transparent);
+    border-color: color-mix(in oklab, var(--teal, #1a9999) 40%, transparent);
+    color: var(--teal, #1a9999);
+}
+
+/* Methods that support the selected amount get a subtle highlight */
+.payment-card__link.has-amount .payment-card__method-handle::after {
+    content: ' ✓';
+    font-size: 0.65em;
+    opacity: 0.7;
+    color: var(--teal, #1a9999);
+}
+
+/* Methods that don't support amount pre-fill get a subtle dim */
+.payment-card__link.no-amount-support {
+    opacity: 0.6;
+}
+
 /* ── Footer ────────────────────────────────────────────────────────────────── */
 
 .payment-card__footer {
