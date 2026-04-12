@@ -219,10 +219,32 @@
   opacity: 1;
 }
 
+.seed-card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .seed-card-actions {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
+}
+
+.seed-autosave-status {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.6rem;
+  color: var(--teal);
+  opacity: 0;
+  transition: opacity var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.seed-autosave-status:not(:empty) {
+  opacity: 0.55;
 }
 
 .seed-action {
@@ -297,6 +319,28 @@
   border-left-color: var(--teal);
   box-shadow: 0 0 0 1px rgba(0, 128, 128, 0.1),
               inset 0 0 0 1px rgba(0, 128, 128, 0.04);
+}
+
+/* ── Editing state ── */
+
+.seed-card[data-spw-state="editing"] {
+  border-left-color: rgba(0, 128, 128, 0.6);
+}
+
+/* Touch channel rules */
+[data-spw-touch="tap"],
+[data-spw-touch="tap"] * {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-spw-touch="edit"] {
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ── Screenshot mode ── */

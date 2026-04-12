@@ -136,7 +136,7 @@ export class SeedCard {
       pivot.after(fieldsEl);
     }
     fieldsEl.innerHTML = template.fields.map(f => `
-      <div class="seed-field" data-field="${f.key}">
+      <div class="seed-field" data-field="${f.key}" data-spw-touch="edit">
         <span class="seed-field-op" aria-hidden="true">${f.op}</span>
         <label class="seed-field-label" title="${f.hint}">${f.label}</label>
         <span
@@ -161,10 +161,13 @@ export class SeedCard {
     }
     footer.innerHTML = `
       <code class="seed-output" aria-live="polite" aria-label="seed notation"></code>
-      <div class="seed-card-actions">
-        <button type="button" class="seed-action" data-action="copy">copy seed</button>
-        <button type="button" class="seed-action" data-action="screenshot">screenshot</button>
-        <button type="button" class="seed-action" data-action="clear">clear</button>
+      <div class="seed-card-footer-row">
+        <div class="seed-card-actions" data-spw-touch="tap">
+          <button type="button" class="seed-action" data-action="copy">copy seed</button>
+          <button type="button" class="seed-action" data-action="screenshot">screenshot</button>
+          <button type="button" class="seed-action" data-action="clear">clear</button>
+        </div>
+        <span class="seed-autosave-status" aria-live="polite" aria-label="save status"></span>
       </div>
     `;
   }
@@ -191,6 +194,31 @@ export class SeedCard {
       if (e.target.classList.contains('seed-card-year')) {
         this._update();
         this._scheduleSave();
+      }
+    });
+
+    // Paste sanitization — plain text only
+    el.addEventListener('paste', e => {
+      if (!e.target.closest('[data-spw-touch="edit"]')) return;
+      e.preventDefault();
+      const text = e.clipboardData?.getData('text/plain') || '';
+      document.execCommand('insertText', false, text);
+    });
+
+    // Editing state transitions
+    el.addEventListener('focusin', e => {
+      if (e.target.closest('.seed-field-value')) {
+        el.dataset.spwState = 'editing';
+      }
+    });
+    el.addEventListener('focusout', e => {
+      if (e.target.closest('.seed-field-value')) {
+        // Only clear editing state if focus left the card entirely
+        requestAnimationFrame(() => {
+          if (!el.contains(document.activeElement)) {
+            this._update(); // re-derive state from charge
+          }
+        });
       }
     });
 
@@ -252,7 +280,10 @@ export class SeedCard {
     const charge = computeCharge(template.fields, values);
     const state = chargeToState(charge);
 
-    el.dataset.state = state;
+    // Only update state if not currently editing
+    if (el.dataset.spwState !== 'editing') {
+      el.dataset.state = state;
+    }
     el.style.setProperty('--card-charge', charge.toFixed(2));
 
     // Seed output
@@ -262,6 +293,15 @@ export class SeedCard {
         outputEl.textContent = buildSeedText(template, year, values);
       }
     }
+  }
+
+  /** Show autosave status briefly */
+  _showSaveStatus(text, durationMs = 1600) {
+    const status = this.el.querySelector('.seed-autosave-status');
+    if (!status) return;
+    clearTimeout(this._statusTimer);
+    status.textContent = text;
+    this._statusTimer = setTimeout(() => { status.textContent = ''; }, durationMs);
   }
 
   /** Copy seed text to clipboard */
@@ -410,8 +450,9 @@ export class SeedCard {
         template: this.templateKey,
         savedAt: Date.now(),
       }));
+      this._showSaveStatus('saved');
     } catch {
-      // ignore quota errors
+      this._showSaveStatus('!');
     }
   }
 
