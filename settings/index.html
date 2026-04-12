@@ -627,8 +627,33 @@
 }</code></pre>
         </section>
 
+        <!-- Payment Settings -->
+        <section
+            class="site-frame"
+            id="payment-settings"
+            data-spw-role="control"
+            data-spw-form="circle"
+            data-spw-meaning="which payment methods to display on the support card"
+        >
+            <div class="frame-heading">
+                <h2>Payment Options</h2>
+            </div>
+            <p class="inline-note">Choose which payment methods appear on the support card. One must always remain active.</p>
+            <div id="payment-settings-container" data-spw-region="body">
+                <!-- Rendered by payment-card.js -->
+            </div>
+        </section>
+
     <footer>
         <p>&copy; 2026 spwashi</p>
     </footer>
+
+    <link rel="stylesheet" href="/public/css/payment-card.css">
+    <script type="module">
+        import { initPaymentSettings } from '/public/js/payment-card.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initPaymentSettings(document.getElementById('payment-settings-container'));
+        });
+    </script>
 </body>
 </html>

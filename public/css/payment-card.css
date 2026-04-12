@@ -1,0 +1,336 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   payment-card.css
+   Distinct card component for payment links.
+   Enough semantic markup to be handed to a designer.
+   Theme via CSS custom properties.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Card shell ────────────────────────────────────────────────────────────── */
+
+.payment-card {
+    /* Shape */
+    --card-radius: 1.1rem;
+    --card-padding: 1.25rem 1.35rem;
+    --card-max-width: 22rem;
+
+    /* Surface */
+    --card-bg: color-mix(in oklab, var(--page-bg, #f8f7f5) 92%, var(--teal, #1a9999) 8%);
+    --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 22%, transparent);
+    --card-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.07),
+        0 4px 16px rgba(0, 0, 0, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+
+    /* Link items */
+    --link-bg: color-mix(in oklab, var(--teal, #1a9999) 7%, transparent);
+    --link-border: color-mix(in oklab, var(--teal, #1a9999) 18%, transparent);
+    --link-radius: 0.6rem;
+    --link-padding: 0.6rem 0.85rem;
+
+    /* Hints */
+    --hint-bg: color-mix(in oklab, var(--page-bg, #f8f7f5) 96%, var(--teal) 4%);
+
+    isolation: isolate;
+    position: relative;
+    max-width: var(--card-max-width);
+    border-radius: var(--card-radius);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    box-shadow: var(--card-shadow);
+    padding: var(--card-padding);
+    contain: layout style;
+}
+
+/* Grain texture overlay — matches site material aesthetic */
+.payment-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+    z-index: 0;
+}
+
+.payment-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+
+.payment-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.payment-card__sigil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--teal, #1a9999);
+    color: #fff;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.payment-card__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.payment-card__title {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text, currentColor);
+}
+
+.payment-card__subtitle {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    opacity: 0.55;
+    letter-spacing: 0.03em;
+}
+
+/* ── Body (payment links) ──────────────────────────────────────────────────── */
+
+.payment-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.payment-card__link {
+    display: grid;
+    grid-template-columns: 1.8rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: var(--link-padding);
+    border-radius: var(--link-radius);
+    background: var(--link-bg);
+    border: 1px solid var(--link-border);
+    text-decoration: none;
+    color: inherit;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.82rem;
+    transition:
+        background 100ms var(--ease-mechanical, ease),
+        border-color 100ms var(--ease-mechanical, ease),
+        transform 60ms var(--ease-mechanical, ease),
+        box-shadow 100ms var(--ease-mechanical, ease);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.payment-card__link:hover {
+    background: color-mix(in oklab, var(--teal, #1a9999) 13%, transparent);
+    border-color: color-mix(in oklab, var(--teal, #1a9999) 35%, transparent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.payment-card__link:active {
+    transform: scale(0.98) translateY(0.5px);
+    background: color-mix(in oklab, var(--teal, #1a9999) 18%, transparent);
+}
+
+.payment-card__method-sigil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--teal, #1a9999) 15%, transparent);
+    border: 1px solid color-mix(in oklab, var(--teal, #1a9999) 25%, transparent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-mono, monospace);
+    color: var(--teal, #1a9999);
+    flex-shrink: 0;
+}
+
+.payment-card__method-label {
+    font-weight: 500;
+    color: var(--text, currentColor);
+    white-space: nowrap;
+}
+
+.payment-card__method-handle {
+    font-size: 0.74rem;
+    opacity: 0.55;
+    letter-spacing: 0.02em;
+    text-align: right;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+
+.payment-card__footer {
+    margin-top: 0.85rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--card-border-color);
+}
+
+.payment-card__note {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    opacity: 0.45;
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+/* ── Hold hint ─────────────────────────────────────────────────────────────── */
+
+.payment-card__hint {
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(100% + 0.5rem);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+        opacity 180ms var(--ease-mechanical, ease),
+        transform 180ms var(--ease-mechanical, ease);
+}
+
+.payment-card__hint.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.payment-card__hint-link {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.74rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    background: var(--hint-bg);
+    border: 1px solid var(--card-border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: var(--teal, #1a9999);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.payment-card__hint-link:hover {
+    text-decoration: underline;
+}
+
+/* ── Settings toggles (for /settings/ page) ────────────────────────────────── */
+
+.payment-settings__toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.payment-settings__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.82rem;
+    border: 1px solid transparent;
+    transition: background 100ms, border-color 100ms;
+}
+
+.payment-settings__toggle:has(input:checked) {
+    background: color-mix(in oklab, var(--teal, #1a9999) 8%, transparent);
+    border-color: color-mix(in oklab, var(--teal, #1a9999) 20%, transparent);
+}
+
+.payment-settings__toggle input {
+    accent-color: var(--teal, #1a9999);
+}
+
+.payment-settings__toggle-sigil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--teal, #1a9999) 12%, transparent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--teal, #1a9999);
+    flex-shrink: 0;
+}
+
+.payment-settings__note {
+    margin-bottom: 0.5rem;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+    .payment-card {
+        --card-bg: color-mix(in oklab, #1a1a1a 90%, var(--teal, #1a9999) 10%);
+        --card-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.25),
+            0 4px 16px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        --hint-bg: #1e2020;
+    }
+
+    .payment-card::before {
+        mix-blend-mode: screen;
+        opacity: 0.08;
+    }
+
+    .payment-card__link:hover {
+        background: color-mix(in oklab, var(--teal, #1a9999) 16%, transparent);
+    }
+}
+
+/* ── Size variants ─────────────────────────────────────────────────────────── */
+
+/* Compact — for sidebar or narrow column contexts */
+.payment-card--compact {
+    --card-padding: 0.85rem 1rem;
+    --card-max-width: 16rem;
+    --link-padding: 0.45rem 0.65rem;
+}
+
+.payment-card--compact .payment-card__sigil {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.78rem;
+}
+
+.payment-card--compact .payment-card__title {
+    font-size: 0.78rem;
+}
+
+/* Wide — for full-width or hero contexts */
+.payment-card--wide {
+    --card-max-width: 100%;
+}
+
+.payment-card--wide .payment-card__body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.5rem;
+}

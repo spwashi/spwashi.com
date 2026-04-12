@@ -11,6 +11,7 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/seed-card.css">
+    <link rel="stylesheet" href="/public/css/payment-card.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
     <script type="module">
@@ -19,7 +20,11 @@
     </script>
     <script type="module">
         import { initSeedCards } from '/public/js/seed-card.js';
-        document.addEventListener('DOMContentLoaded', () => { initSeedCards(); });
+        import { initPaymentCards } from '/public/js/payment-card.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initSeedCards();
+            initPaymentCards();
+        });
     </script>
 </head>
 <body data-spw-surface="services" data-spw-features="operators navigator console">
@@ -64,9 +69,11 @@
                 <p>More than a decade of frontend systems, developer tooling, content platforms, and product architecture. The work is visible in <a href="/topics/software/">the grammar surface</a>, <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, and every Wednesday at the RPG table. That context is part of what I bring to a collaboration.</p>
                 <nav class="frame-operators" aria-label="Services routes">
                     <a class="operator-chip" href="#services-card">^ services card</a>
+                    <a class="operator-chip" href="#pricing">~ pricing</a>
                     <a class="operator-chip" href="#what-i-do">^ what I do</a>
                     <a class="operator-chip" href="#social-context">~ how I work</a>
                     <a class="operator-chip" href="#ask-card">( ask card</a>
+                    <a class="operator-chip" href="#support">$ support</a>
                     <a class="operator-chip" href="/topics/software/">software surface</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
                 </nav>
@@ -193,6 +200,51 @@
                 </div>
             </section>
 
+            <!-- Pricing tiers -->
+            <section
+                class="site-frame"
+                id="pricing"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="web development pricing tiers"
+                data-spw-operator="object"
+            >
+                <div class="frame-heading">
+                    <h2>Pricing</h2>
+                </div>
+                <p class="inline-note">Three tiers. Production season is October through the New Year — availability is limited during that window.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel" data-spw-brace="objective">
+                        <h3><span class="spec-pill" data-cluster="tier">fast</span> $700</h3>
+                        <p>A focused, fast-turnaround website. Clear scope, clean execution, delivered quickly.</p>
+                        <ul class="frame-list">
+                            <li>One-time engagement</li>
+                            <li>Defined deliverable, fast turnaround</li>
+                            <li>Best for clear, bounded projects</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="objective">
+                        <h3><span class="spec-pill" data-cluster="tier">standard</span> $200<span class="spec-pill" data-cluster="trait">/mo</span></h3>
+                        <p>Professional website with ongoing work. One-year horizon, consistent quality, iterative improvement.</p>
+                        <ul class="frame-list">
+                            <li>12-month engagement</li>
+                            <li>Monthly updates and refinements</li>
+                            <li>Best for growing, evolving projects</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="subjective">
+                        <h3><span class="spec-pill" data-cluster="tier">premium</span> $5,000</h3>
+                        <p>Full-scope website with upgrades available. The kind of system that earns its cost over time.</p>
+                        <ul class="frame-list">
+                            <li>Complete scope and architecture</li>
+                            <li>Upgrades available outside production season</li>
+                            <li>Production season: October – New Year</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="frame-note">Not sure which tier fits? The services card above is a good starting point — fill in what you need and the scope usually clarifies itself.</p>
+            </section>
+
             <!-- Ask card — for personal needs -->
             <section
                 class="site-frame"
@@ -220,6 +272,45 @@
                 ></div>
 
                 <p class="frame-note">Configure the ask, screenshot it, share it. The same infrastructure as the services card — because a personal need and a professional offer are both honest transactions.</p>
+            </section>
+
+            <!-- Support / Payment -->
+            <section
+                class="site-frame"
+                id="support"
+                data-spw-role="vessel"
+                data-spw-form="circle"
+                data-spw-meaning="direct support links for ongoing work"
+                data-spw-operator="relay"
+            >
+                <div class="frame-heading">
+                    <h2>Support the Work</h2>
+                </div>
+                <p class="inline-note">If the tools here are useful and you want to say so directly, these are the ways. Hold the card for display options.</p>
+
+                <div
+                    class="payment-card"
+                    data-payment-card
+                    data-spw-kind="vessel"
+                    data-spw-memory="local"
+                    data-spw-touch="tap"
+                    data-spw-meaning="direct payment links"
+                >
+                    <div class="payment-card__header" data-spw-region="header">
+                        <span class="payment-card__sigil" aria-hidden="true">$</span>
+                        <div class="payment-card__title-group">
+                            <span class="payment-card__title">Support spwashi</span>
+                            <span class="payment-card__subtitle">direct · local · no account needed</span>
+                        </div>
+                    </div>
+                    <div class="payment-card__body" data-spw-region="body">
+                        <!-- Payment links rendered by payment-card.js -->
+                    </div>
+                    <div class="payment-card__footer" data-spw-region="footer">
+                        <p class="payment-card__note">local-only · hold to adjust options</p>
+                    </div>
+                </div>
+
             </section>
 
         </article>
