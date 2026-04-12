@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 52" fill="none"
+  aria-hidden="true">
+  <!--
+    Mask variant — white strokes on transparent background
+    Use as CSS mask: mask-image: url('/public/images/logo/spw-mark-mask.svg')
+    The white strokes become the mask shape; transparent areas are cut out
+  -->
+
+  <path
+    class="mark-layer mark-layer--arc"
+    d="M 8 20 Q 24 5 40 20"
+    stroke="white"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <path
+    class="mark-layer mark-layer--w"
+    d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+    stroke="white"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+</svg>

@@ -210,6 +210,25 @@
     }
 }
 
+/* ── Frame sigil hierarchy ─────────────────────────────────────────────────
+   In frame-heading, the adjacent h2/h3 IS the label.
+   The sigil is an anchor handle — useful but secondary.
+   De-emphasize it globally; hide it on narrow containers where it competes. */
+.frame-heading > .frame-sigil {
+    font-size: 0.78rem;
+    opacity: 0.6;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+@container (max-width: 28rem) {
+    .frame-heading > .frame-sigil {
+        display: none;
+    }
+}
+
+/* frame-topline sigil stays visible — it is the room sign, not a label duplicate */
+
 /* ── Role-based spatial identity ──────────────────────────────────────── */
 /* Each data-spw-role positions the reader in a different spatial stance.
    Gradients lean toward opening or closing edge to signal direction.    */

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!--
+    SVG sprite sheet — reference with <use href="/public/images/logo/spw-mark-symbol.svg#spw-mark">
+    or inline this file once in the document and use <use href="#spw-mark">
+  -->
+
+  <symbol id="spw-mark" viewBox="0 0 48 52" fill="none">
+    <title>Spwashi mark</title>
+    <path
+      id="mark-arc"
+      class="mark-layer mark-layer--arc"
+      d="M 8 20 Q 24 5 40 20"
+      stroke="var(--spw-logo-stroke, currentColor)"
+      stroke-width="var(--spw-logo-stroke-width, 2.4)"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      id="mark-w"
+      class="mark-layer mark-layer--w"
+      d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+      stroke="var(--spw-logo-stroke, currentColor)"
+      stroke-width="var(--spw-logo-stroke-width, 2.4)"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+  </symbol>
+
+  <symbol id="spw-mark-sm" viewBox="0 0 48 52" fill="none">
+    <title>Spwashi mark (compact)</title>
+    <path
+      class="mark-layer mark-layer--arc"
+      d="M 8 20 Q 24 5 40 20"
+      stroke="var(--spw-logo-stroke, currentColor)"
+      stroke-width="var(--spw-logo-stroke-width, 3.1)"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <path
+      class="mark-layer mark-layer--w"
+      d="M 8 26 L 16 44 L 24 26 L 32 44 L 40 26"
+      stroke="var(--spw-logo-stroke, currentColor)"
+      stroke-width="var(--spw-logo-stroke-width, 3.1)"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+  </symbol>
+</svg>

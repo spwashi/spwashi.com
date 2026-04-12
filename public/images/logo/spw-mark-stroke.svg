@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 52" fill="none"
+  role="img" aria-labelledby="spw-mark-stroke-title">
+  <title id="spw-mark-stroke-title">Spwashi mark (animated)</title>
+  <!--
+    Stroke-draw variant — paths prepped for stroke-dashoffset reveal animation
+    Arc path length ≈ 40 units; W path length ≈ 90 units
+    Animate stroke-dashoffset from length → 0 to draw the stroke
+    Arc draws first; W follows with a phase offset
+
+    CSS usage:
+      .mark-layer--arc {
+        stroke-dasharray: 40;
+        stroke-dashoffset: 40;
+        animation: draw-arc 240ms cubic-bezier(0.4,0,0.2,1) forwards;
+      }
+      .mark-layer--w {
+        stroke-dasharray: 90;
+        stroke-dashoffset: 90;
+        animation: draw-w 280ms cubic-bezier(0.4,0,0.2,1) 60ms forwards;
+      }
+      @keyframes draw-arc { to { stroke-dashoffset: 0; } }
+      @keyframes draw-w   { to { stroke-dashoffset: 0; } }
+  -->
+
+  <path
+    id="mark-arc"
+    class="mark-layer mark-layer--arc"
+    d="M 8 20 Q 24 5 40 20"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
+    stroke-linecap="round"
+    fill="none"
+    stroke-dasharray="40"
+    stroke-dashoffset="40"
+  />
+
+  <path
+    id="mark-w"
+    class="mark-layer mark-layer--w"
+    d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+    stroke-dasharray="90"
+    stroke-dashoffset="90"
+  />
+</svg>

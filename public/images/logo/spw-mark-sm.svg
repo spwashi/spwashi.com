@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 52" fill="none"
+  role="img" aria-labelledby="spw-mark-sm-title">
+  <title id="spw-mark-sm-title">Spwashi mark (compact)</title>
+  <!--
+    Compact variant — heavier strokes for 16–32px / favicon contexts
+    W reach compressed slightly (±1 unit vertical) to read cleaner at small sizes
+  -->
+
+  <path
+    id="mark-arc"
+    class="mark-layer mark-layer--arc"
+    d="M 8 20 Q 24 5 40 20"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 3.1)"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <path
+    id="mark-w"
+    class="mark-layer mark-layer--w"
+    d="M 8 26 L 16 44 L 24 26 L 32 44 L 40 26"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 3.1)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+</svg>

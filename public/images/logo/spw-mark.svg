@@ -1,31 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 52" fill="none"
+  role="img" aria-labelledby="spw-mark-title spw-mark-desc">
+  <title id="spw-mark-title">Spwashi mark</title>
+  <desc id="spw-mark-desc">Two-stroke glyph: overhead arc (^) above descending W</desc>
+
   <!--
     Spwashi mark — two-layer glyph
-    #mark-arc  : the overhead swoop / lasso (S-curve into omega)
-    #mark-w    : the descent / w-shape below
+    #mark-arc  : overhead swoop / lasso (structure, ^ operator)
+    #mark-w    : descending zigzag / w-shape (action, ! operator)
 
-    Layers are independently addressable by CSS and JS.
-    Scale reference: designed at 48×56, works cleanly from 16px to 256px.
+    Addressable by CSS and JS via #mark-arc, #mark-w, .mark-layer--arc, .mark-layer--w
+    CSS vars: --spw-logo-stroke (defaults currentColor), --spw-logo-stroke-width (defaults 2.4)
+    Scale range: 16px → 256px
   -->
 
-  <!-- Arc: sweeping left-right lasso that loops overhead and trails inward -->
   <path
     id="mark-arc"
     class="mark-layer mark-layer--arc"
-    d="M 10 30 C 6 14 16 3 29 3 C 42 3 48 14 46 26 C 44 36 36 40 26 36"
-    stroke="currentColor"
-    stroke-width="2.4"
+    d="M 8 20 Q 24 5 40 20"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
     stroke-linecap="round"
     fill="none"
   />
 
-  <!-- W: the sharp zigzag descent — two V shapes forming the lower body -->
   <path
     id="mark-w"
     class="mark-layer mark-layer--w"
-    d="M 12 34 L 19 52 L 27 40 L 35 52 L 42 34"
-    stroke="currentColor"
-    stroke-width="2.4"
+    d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+    stroke="var(--spw-logo-stroke, currentColor)"
+    stroke-width="var(--spw-logo-stroke-width, 2.4)"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
