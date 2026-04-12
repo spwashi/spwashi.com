@@ -1,0 +1,322 @@
+/* ── Seed Card ─────────────────────────────────────────────────────────
+ * A physical card for capturing and transmitting annual seeds.
+ * Role: vessel — holds the shape of intent after the feeling fades.
+ * Form: brace — left edge accumulates, right edge releases.
+ * State contract: empty → filling → complete → sealed
+ * Serialization: ^seed[...]{...} Spw block
+ * ────────────────────────────────────────────────────────────────────── */
+
+.seed-card {
+  --card-charge: 0;        /* 0 → 1, driven by JS as fields fill */
+  --card-left-glow: rgba(0, 128, 128, calc(0.06 + var(--card-charge) * 0.12));
+  --card-border-alpha: calc(0.10 + var(--card-charge) * 0.18);
+
+  width: min(420px, 100%);
+  margin-inline: auto;
+
+  background: var(--surface-strong);
+  border: var(--line-thin, 1px) solid rgba(14, 18, 20, var(--card-border-alpha));
+  border-radius: var(--radius);
+  border-left: 2px solid rgba(0, 128, 128, calc(0.2 + var(--card-charge) * 0.5));
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  transition:
+    border-color var(--touch-commit, 180ms) var(--ease-precise, ease),
+    box-shadow var(--touch-commit, 180ms) var(--ease-precise, ease);
+}
+
+/* grain overlay */
+.seed-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23n)" opacity="0.5"/></svg>');
+  background-size: 200px 200px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* left-edge accumulation wash */
+.seed-card::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3rem;
+  background: linear-gradient(to right, var(--card-left-glow), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.seed-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+
+.seed-card-header {
+  padding: 0.9rem 1.1rem 0.65rem;
+  border-bottom: var(--line-hair, 0.5px) solid rgba(14, 18, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.seed-card-sigil {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  color: var(--teal);
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+  user-select: none;
+}
+
+.seed-card-year {
+  /* editable year inline */
+  cursor: text;
+  outline: none;
+  padding-inline: 0.1em;
+  border-radius: 2px;
+  transition: background var(--touch-acknowledge, 90ms);
+}
+.seed-card-year:focus {
+  background: rgba(0, 128, 128, 0.1);
+}
+
+/* ── Fields ── */
+
+.seed-card-fields {
+  padding: 0.25rem 0;
+}
+
+.seed-field {
+  display: grid;
+  grid-template-columns: 2rem 5.5rem 1fr;
+  align-items: baseline;
+  padding: 0.5rem 1.1rem;
+  border-left: 2px solid transparent;
+  transition: border-color var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+  cursor: text;
+}
+
+.seed-field:focus-within {
+  border-left-color: var(--teal);
+}
+
+.seed-field-op {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.75rem;
+  color: var(--teal);
+  opacity: 0.35;
+  transition: opacity var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+  user-select: none;
+  padding-top: 0.1em;
+}
+
+.seed-field:focus-within .seed-field-op,
+.seed-field[data-filled] .seed-field-op {
+  opacity: 0.85;
+}
+
+.seed-field-label {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-mid, rgba(14,18,20,0.52));
+  user-select: none;
+  padding-top: 0.12em;
+  transition: color var(--touch-acknowledge, 90ms);
+  cursor: default;
+  position: relative;
+}
+
+/* wonder hint — shown when label is hovered */
+.seed-field-label[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: calc(100% + 0.3rem);
+  left: 0;
+  min-width: 14rem;
+  max-width: 22rem;
+  background: var(--surface-code, rgba(18,23,27,0.96));
+  color: rgba(255,255,255,0.82);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm, 6px);
+  pointer-events: none;
+  z-index: 100;
+  white-space: pre-wrap;
+  border: var(--line-hair, 0.5px) solid rgba(0, 128, 128, 0.3);
+}
+
+.seed-field:focus-within .seed-field-label {
+  color: var(--ink, rgba(14,18,20,0.92));
+}
+
+.seed-field-value {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.85rem;
+  color: var(--ink, rgba(14,18,20,0.92));
+  line-height: 1.45;
+  min-height: 1.45em;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.seed-field-value:empty::before {
+  content: attr(data-placeholder);
+  color: var(--ink-faint, rgba(14,18,20,0.2));
+  pointer-events: none;
+}
+
+/* ── Footer ── */
+
+.seed-card-footer {
+  padding: 0.65rem 1.1rem 0.9rem;
+  border-top: var(--line-hair, 0.5px) solid rgba(14, 18, 20, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* seed output — materializes as fields fill */
+.seed-output {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  line-height: 1.65;
+  color: var(--teal);
+  opacity: 0;
+  white-space: pre;
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition:
+    max-height var(--touch-emit, 360ms) var(--ease-release, ease),
+    opacity var(--touch-commit, 180ms) var(--ease-precise, ease);
+  pointer-events: none;
+}
+
+.seed-card[data-state="filling"] .seed-output,
+.seed-card[data-state="complete"] .seed-output,
+.seed-card[data-state="sealed"] .seed-output {
+  max-height: 12rem;
+  opacity: 0.7;
+  pointer-events: auto;
+}
+
+.seed-card[data-state="sealed"] .seed-output {
+  opacity: 1;
+}
+
+.seed-card-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.seed-action {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  padding: 0.22rem 0.55rem;
+  border: var(--line-thin, 1px) solid rgba(14, 18, 20, 0.12);
+  border-radius: calc(var(--radius, 10px) * 0.5);
+  background: transparent;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+  cursor: pointer;
+  transition:
+    border-color var(--touch-acknowledge, 90ms) var(--ease-precise, ease),
+    color var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.seed-action:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.seed-action[data-state="success"] {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.seed-action[data-state="fail"] {
+  border-color: rgba(180, 60, 40, 0.5);
+  color: rgba(180, 60, 40, 0.8);
+}
+
+/* pivot selector — template switcher */
+.seed-card-pivot {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  padding: 0.4rem 1.1rem;
+  border-bottom: var(--line-hair, 0.5px) solid rgba(14, 18, 20, 0.06);
+}
+
+.seed-pivot-btn {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  padding: 0.15rem 0.45rem;
+  border: var(--line-hair, 0.5px) solid rgba(14, 18, 20, 0.12);
+  border-radius: var(--radius-pill, 999px);
+  background: transparent;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+  cursor: pointer;
+  transition:
+    background var(--touch-acknowledge, 90ms),
+    border-color var(--touch-acknowledge, 90ms),
+    color var(--touch-acknowledge, 90ms);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.seed-pivot-btn[aria-pressed="true"],
+.seed-pivot-btn:hover {
+  background: rgba(0, 128, 128, 0.08);
+  border-color: rgba(0, 128, 128, 0.3);
+  color: var(--teal);
+}
+
+/* ── Sealed state ── */
+
+.seed-card[data-state="sealed"] {
+  border-left-color: var(--teal);
+  box-shadow: 0 0 0 1px rgba(0, 128, 128, 0.1),
+              inset 0 0 0 1px rgba(0, 128, 128, 0.04);
+}
+
+/* ── Screenshot mode ── */
+
+.seed-card--screenshot {
+  background: #f6f2eb;
+  border: var(--line-thin, 1px) solid rgba(14,18,20,0.15);
+  box-shadow: 0 3px 32px rgba(14,18,20,0.1);
+}
+
+.seed-card--screenshot .seed-card-pivot,
+.seed-card--screenshot .seed-card-actions {
+  display: none;
+}
+
+.seed-card--screenshot .seed-field-value:empty::before {
+  content: '—';
+  opacity: 0.25;
+}
+
+.seed-card--screenshot .seed-output {
+  opacity: 0.9;
+}
