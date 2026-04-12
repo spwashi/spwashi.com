@@ -1,0 +1,229 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   boonhonk-mixer.css
+   Visual mixer for the five boonhonk operators.
+   The pentagon shows weighted forces; the center shows the resulting color.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.bhm-wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.75rem 1.25rem;
+    align-items: start;
+    max-width: 36rem;
+    padding: 1rem;
+    background: var(--card-bg, rgba(255,255,255,0.84));
+    border: 1px solid var(--line, rgba(18,52,50,0.12));
+    border-radius: 1rem;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.bhm-svg {
+    grid-row: 1 / 3;
+    width: min(240px, 100%);
+    height: auto;
+    overflow: visible;
+    cursor: default;
+}
+
+/* ── SVG internals ─────────────────────────────────────────────────────────── */
+
+.bhm-field {
+    fill: color-mix(in oklab, var(--active-op-color, #1a9999) 4%, var(--page-bg, #f8f7f5));
+    stroke: color-mix(in oklab, var(--active-op-color, #1a9999) 14%, transparent);
+    stroke-width: 1;
+}
+
+.bhm-polygon {
+    opacity: 0.22;
+    transition: fill 220ms ease, opacity 180ms ease;
+}
+
+.bhm-spoke {
+    transition: stroke-width 220ms ease, opacity 180ms ease;
+}
+
+.bhm-center {
+    transition: fill 220ms ease;
+    filter: drop-shadow(0 0 6px color-mix(in oklab, currentColor 30%, transparent));
+}
+
+.bhm-center-hit {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.bhm-center-label {
+    fill: rgba(255,255,255,0.8);
+    font-family: var(--font-mono, monospace);
+    font-size: 14px;
+    font-weight: 700;
+    pointer-events: none;
+    user-select: none;
+}
+
+.bhm-node {
+    cursor: pointer;
+    outline: none;
+}
+
+.bhm-node-hit {
+    fill: transparent;
+}
+
+.bhm-node-dot {
+    transition: opacity 180ms ease, r 160ms ease;
+    stroke: rgba(255,255,255,0.4);
+    stroke-width: 1.5;
+}
+
+.bhm-node:focus-visible .bhm-node-dot {
+    stroke: white;
+    stroke-width: 3;
+}
+
+.bhm-node:hover .bhm-node-dot {
+    filter: brightness(1.15);
+}
+
+.bhm-node.is-active .bhm-node-dot {
+    filter: drop-shadow(0 0 4px currentColor);
+}
+
+.bhm-node-label {
+    fill: var(--ink, hsl(178 18% 14%));
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    font-weight: 600;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.72;
+}
+
+.bhm-node.is-active .bhm-node-label {
+    opacity: 1;
+}
+
+.bhm-node-sigil {
+    fill: rgba(255,255,255,0.85);
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    font-weight: 700;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── Readout ────────────────────────────────────────────────────────────────── */
+
+.bhm-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.bhm-color-preview {
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 0.6rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    transition: background 220ms ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.bhm-formula {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.bhm-formula-line {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--ink-soft, hsl(178 10% 42%));
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.bhm-val {
+    color: var(--ink, hsl(178 18% 14%));
+    font-weight: 600;
+    min-width: 2.5ch;
+    transition: color 180ms ease;
+}
+
+.bhm-operator-row {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.bhm-op-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.35rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    border: 1px solid var(--line, rgba(18,52,50,0.12));
+    background: rgba(255,255,255,0.5);
+    color: var(--ink-soft, hsl(178 10% 42%));
+    transition: background 140ms, border-color 140ms, color 140ms;
+}
+
+.bhm-op-chip.is-active {
+    color: var(--ink, hsl(178 18% 14%));
+    border-color: var(--active-op-color, #1a9999);
+    background: color-mix(in oklab, var(--active-op-color, #1a9999) 10%, transparent);
+}
+
+.bhm-op-val {
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+/* ── Note ───────────────────────────────────────────────────────────────────── */
+
+.bhm-note {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--ink-soft, hsl(178 10% 42%));
+    margin: 0;
+    opacity: 0.65;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 500px) {
+    .bhm-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .bhm-svg {
+        grid-row: auto;
+        width: min(200px, 80vw);
+        margin: 0 auto;
+    }
+
+    .bhm-readout {
+        grid-column: 1;
+    }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .bhm-polygon,
+    .bhm-spoke,
+    .bhm-center,
+    .bhm-color-preview,
+    .bhm-val,
+    .bhm-op-chip {
+        transition: none !important;
+    }
+}

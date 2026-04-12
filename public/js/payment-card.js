@@ -28,7 +28,7 @@ const PAYMENT_METHODS = [
         handle: `$${HANDLE}`,
         sigil: '$',
         url: `https://cash.app/$${HANDLE}`,
-        amountUrl: null, // Cash App does not support amount in URL
+        amountUrl: (n) => `https://cash.app/$${HANDLE}/${n}`,
     },
     {
         id: 'venmo',
@@ -36,7 +36,7 @@ const PAYMENT_METHODS = [
         handle: `@${HANDLE}`,
         sigil: 'V',
         url: `https://venmo.com/${HANDLE}`,
-        amountUrl: null, // Venmo deep links are app-only; web fallback lacks amount
+        amountUrl: (n) => `https://venmo.com/u/${HANDLE}?txn=charge&amount=${n}&note=Support+spwashi`,
     },
     {
         id: 'paypal',

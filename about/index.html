@@ -17,6 +17,11 @@
         });
     </script>
     <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/boonhonk-mixer.css">
+    <script type="module">
+        import { initBoonhonkMixers } from '/public/js/boonhonk-mixer.js';
+        document.addEventListener('DOMContentLoaded', () => { initBoonhonkMixers(); });
+    </script>
 </head>
 <body data-spw-features="operators navigator console">
     <header>
@@ -187,6 +192,30 @@
                     <span>observatory · fact dynamics field station and atlas</span>
                 </li>
             </ul>
+        </section>
+
+        <!-- Boonhonk mixer -->
+        <section
+            class="site-frame"
+            id="boonhonk-mixer"
+            data-spw-role="probe"
+            data-spw-form="circle"
+            data-spw-meaning="interactive boonhonk operator weight visualizer"
+        >
+            <div class="frame-heading">
+                <h2>Mood Field</h2>
+            </div>
+            <p class="inline-note">The site's color comes from a weighted formula across five operators. Tap each node to step its weight. The center shows the resulting color. The page itself updates live.</p>
+
+            <div data-boonhonk-mixer></div>
+
+            <details class="frame-note" style="margin-top:1rem;">
+                <summary>The math</summary>
+                <pre style="font-size:0.78rem; line-height:1.6; margin-top:0.5rem; overflow-x:auto;"><code>hue   = (boon×140) + (bone×40) + (bonk×300) + (honk×200)
+sat   = 38% + (boon×32%) + (bonk×25%)
+light = 52% + (bone×12%) − (bane×18%)</code></pre>
+                <p style="margin-top:0.5rem;">Each operator pulls the hue, saturation, and lightness toward its territory. Bane is the only force that darkens rather than shifting hue — it's the constraint that makes the others feel heavier.</p>
+            </details>
         </section>
 
         <section class="site-frame" id="flow-magic" data-spw-role="probe" data-spw-form="brace">
