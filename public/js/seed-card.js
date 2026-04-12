@@ -50,6 +50,30 @@ export const SEED_TEMPLATES = {
       { key: 'revisit',   op: '?[', label: 'revisit',  placeholder: 'return when you have more evidence', hint: 'This is a probe — it should come back with more life.' },
     ],
   },
+
+  services: {
+    label: 'services',
+    sigil: '^seed[Services.Offer ref:',
+    fields: [
+      { key: 'offer',     op: '>', label: 'offer',     placeholder: 'what you bring', hint: 'State what you do, plainly. Engineering, teaching, systems design, tooling, play facilitation.' },
+      { key: 'scope',     op: '^', label: 'scope',     placeholder: 'what a collaboration looks like', hint: 'What is included. What is not. What a good engagement produces.' },
+      { key: 'rate',      op: '@', label: 'rate',      placeholder: 'how this is priced or negotiated', hint: 'Rate, range, or trade. Be direct. Context can soften what numbers cannot.' },
+      { key: 'context',   op: '~', label: 'context',   placeholder: 'where I already work', hint: 'RPG Wednesday, Pretext.js, spw-workbench, spwashi.com — the work is visible.' },
+      { key: 'contact',   op: '>', label: 'contact',   placeholder: 'how to reach me', hint: 'Email, link, or shared context. Make the first step easy.' },
+    ],
+  },
+
+  ask: {
+    label: 'ask',
+    sigil: '^seed[Ask.Card ref:',
+    fields: [
+      { key: 'need',      op: '>', label: 'need',      placeholder: 'what I need right now', hint: 'Be specific. Food, a bill, supplies, time. Vague asks are harder to answer.' },
+      { key: 'context',   op: '^', label: 'context',   placeholder: 'why now / what is happening', hint: 'The situation. Enough context to make the ask feel real, not performative.' },
+      { key: 'amount',    op: '@', label: 'amount',    placeholder: 'how much / how many', hint: 'A number, if relevant. Or a range. Make it easy to act.' },
+      { key: 'offer',     op: '~', label: 'offer',     placeholder: 'what I can offer in return', hint: 'Optional. Time, skills, a session seed, a future exchange. Or just gratitude.' },
+      { key: 'relay',     op: '~', label: 'relay',     placeholder: 'how to send or respond', hint: 'A link, an address, a method. Make the path frictionless.' },
+    ],
+  },
 };
 
 /** Generate the Spw seed block from current field values */

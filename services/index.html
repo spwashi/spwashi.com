@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi · Services</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/seed-card.css">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
+        window.addEventListener('load', () => { initPwaUpdateHandler(); });
+    </script>
+    <script type="module">
+        import { initSeedCards } from '/public/js/seed-card.js';
+        document.addEventListener('DOMContentLoaded', () => { initSeedCards(); });
+    </script>
+</head>
+<body data-spw-surface="services" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/services/">Services</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+
+    <main>
+        <article>
+
+            <!-- Hero -->
+            <section
+                class="site-frame site-hero"
+                id="services-frame"
+                data-spw-role="context"
+                data-spw-form="brace"
+                data-spw-meaning="web development services and collaboration context"
+                data-spw-operator="object"
+            >
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#services-frame">^"services"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill" data-cluster="role">engineer</span>
+                        <span class="spec-pill" data-cluster="role">systems designer</span>
+                        <span class="spec-pill" data-cluster="context">local-first</span>
+                        <span class="spec-pill" data-cluster="context">semantic tooling</span>
+                    </div>
+                </div>
+                <h1>Services</h1>
+                <p class="site-lede">I build systems that teach their own structure.</p>
+                <p>More than a decade of frontend systems, developer tooling, content platforms, and product architecture. The work is visible in <a href="/topics/software/">the grammar surface</a>, <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, and every Wednesday at the RPG table. That context is part of what I bring to a collaboration.</p>
+                <nav class="frame-operators" aria-label="Services routes">
+                    <a class="operator-chip" href="#services-card">^ services card</a>
+                    <a class="operator-chip" href="#what-i-do">^ what I do</a>
+                    <a class="operator-chip" href="#social-context">~ how I work</a>
+                    <a class="operator-chip" href="#ask-card">( ask card</a>
+                    <a class="operator-chip" href="/topics/software/">software surface</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
+                </nav>
+            </section>
+
+            <!-- Services card — configurable, screenshottable -->
+            <section
+                class="site-frame"
+                id="services-card"
+                data-spw-role="vessel"
+                data-spw-form="brace"
+                data-spw-meaning="configurable services offer card"
+                data-spw-operator="object"
+                data-spw-serializes-as="spw-seed-block"
+                data-spw-state-contract="empty:filling:complete:sealed"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#services-card">^"services_card"</a>
+                    <h2>Services Card</h2>
+                </div>
+                <p class="inline-note">Configure what you offer, scope, and rate. Screenshot the result. Hover field labels for orientation. Switch to the <em>ask</em> template for personal needs.</p>
+
+                <div
+                    class="seed-card"
+                    id="spw-services-card"
+                    data-seed-card
+                    data-template="services"
+                    data-spw-role="vessel"
+                    data-spw-form="brace"
+                    data-spw-meaning="services offer card"
+                ></div>
+
+                <p class="frame-note">Stored locally in this browser. The <em>copy seed</em> button produces a Spw block for pasting anywhere. Screenshot mode clears controls for a clean capture.</p>
+            </section>
+
+            <!-- What I actually do -->
+            <section
+                class="site-frame"
+                id="what-i-do"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="capabilities and technical depth"
+                data-spw-operator="object"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#what-i-do">^"capabilities"</a>
+                    <h2>What I Do</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel" data-spw-brace="objective">
+                        <h3>Frontend systems</h3>
+                        <ul class="frame-list">
+                            <li>Interface architecture and design systems</li>
+                            <li>Accessible web applications and semantic HTML</li>
+                            <li>Progressive enhancement and local-first tooling</li>
+                            <li>PWA shells, service workers, offline-capable surfaces</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="objective">
+                        <h3>Language tooling</h3>
+                        <ul class="frame-list">
+                            <li>Parser-driven systems and grammar design</li>
+                            <li>Developer experience and workflow tooling</li>
+                            <li>Text layout engines (<a href="/topics/software/pretext/">Pretext.js</a> — measurement-driven layout)</li>
+                            <li>Semantic metadata and component contract systems</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="subjective">
+                        <h3>Product architecture</h3>
+                        <ul class="frame-list">
+                            <li>Staff-level system architecture and API design</li>
+                            <li>Engineering group leadership and mentorship</li>
+                            <li>Content platforms and publishing systems</li>
+                            <li>Interactive curricula and learning surfaces</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel" data-spw-brace="subjective">
+                        <h3>Play and facilitation</h3>
+                        <ul class="frame-list">
+                            <li>Tabletop RPG game design and table facilitation</li>
+                            <li>World-building tools and session log systems</li>
+                            <li>Collaborative narrative and structured play</li>
+                            <li>Learning-science framing for constructive play</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social context — how I actually work -->
+            <section
+                class="site-frame"
+                id="social-context"
+                data-spw-role="context"
+                data-spw-form="circle"
+                data-spw-meaning="social and collaborative context — the work is already visible"
+                data-spw-operator="relay"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#social-context">~"how_I_work"</a>
+                    <h2>How I Work</h2>
+                </div>
+                <p class="inline-note">The work is public and social. The best collaborations come from shared context — seeing how I think, watching how the tools behave, playing at the same table.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3><a href="/play/rpg-wednesday/">RPG Wednesday</a></h3>
+                        <p>A recurring Wednesday tabletop session. Watching how someone runs a table or plays a character tells you something real about how they think, collaborate under uncertainty, and treat other people's ideas.</p>
+                        <p class="frame-note">If you play tabletop RPGs and want to see how I work with a group, this is the most honest context available.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="/topics/software/pretext/">Pretext.js</a></h3>
+                        <p>A measurement-driven text layout library. No DOM reflow. Reads body copy, writes CSS custom properties, lets layouts breathe correctly at any size. The code is the calling card.</p>
+                        <p class="frame-note">If you're an engineer evaluating the work, read the source. The quality of the library tells you more than a portfolio page.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></h3>
+                        <p>The public parser, runtime, and tooling work. Where the grammar research and systems thinking are most visible. Where I push on deep algorithmic problems.</p>
+                        <p class="frame-note">Long-horizon work, visible in public. The kind of project that takes years and produces durable things.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>This site</h3>
+                        <p>The site itself is a working system: semantic HTML as a conceptual ledger, CSS as material physics, JS as readable state transitions. Every component has a contract. The interaction model is intentional.</p>
+                        <p class="frame-note">Inspect the source. The architecture is the portfolio.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ask card — for personal needs -->
+            <section
+                class="site-frame"
+                id="ask-card"
+                data-spw-role="vessel"
+                data-spw-form="circle"
+                data-spw-meaning="personal ask card — existing as a person who has needs"
+                data-spw-operator="relay"
+                data-spw-serializes-as="spw-seed-block"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ask-card">~"ask"</a>
+                    <h2>Ask Card</h2>
+                </div>
+                <p class="inline-note">Sometimes I have bills. Sometimes I need supplies, food, or time. This card is for making those asks feel like what they are — honest requests from a person doing real work — rather than appeals to guilt or charity. The aesthetic matters because dignity matters.</p>
+
+                <div
+                    class="seed-card"
+                    id="spw-ask-card"
+                    data-seed-card
+                    data-template="ask"
+                    data-spw-role="vessel"
+                    data-spw-form="circle"
+                    data-spw-meaning="personal ask card"
+                ></div>
+
+                <p class="frame-note">Configure the ask, screenshot it, share it. The same infrastructure as the services card — because a personal need and a professional offer are both honest transactions.</p>
+            </section>
+
+        </article>
+    </main>
+
+    <footer><p>© 2026 spwashi</p></footer>
+</body>
+</html>
