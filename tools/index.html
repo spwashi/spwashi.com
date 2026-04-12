@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <title>Spwashi · Tools</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script type="module" src="/public/js/site.js"></script>
+</head>
+<body data-spw-surface="tools" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a aria-current="page" href="/tools/">Tools</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/services/">Services</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+
+    <main>
+        <article>
+
+            <section class="site-frame site-hero" id="tools-frame"
+                data-spw-role="context"
+                data-spw-form="brace"
+                data-spw-meaning="tools index — browser-local components and community resources">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#tools-frame">^"tools"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill" data-cluster="trait">local-only</span>
+                        <span class="spec-pill" data-cluster="trait">JSON-extensible</span>
+                        <span class="spec-pill" data-cluster="trait">screenshottable</span>
+                    </div>
+                </div>
+                <h1>Tools</h1>
+                <p class="site-lede">Browser-local components for describing, building, and sharing.</p>
+                <p>Each tool is a configurable card — JSON in, rendered output. Nothing is sent anywhere. Everything stores locally in this browser, exports as JSON or a seed block, and is screenshottable.</p>
+                <nav class="frame-operators" aria-label="Tools routes">
+                    <a class="operator-chip" href="#profile-tools">^ profile</a>
+                    <a class="operator-chip" href="#card-tools">~ cards</a>
+                    <a class="operator-chip" href="#rpg-tools">@ play</a>
+                    <a class="operator-chip" href="#community-resources">?[ community</a>
+                    <a class="operator-chip" href="/services/">services</a>
+                    <a class="operator-chip" href="/play/">play surface</a>
+                </nav>
+            </section>
+
+            <!-- Profile tools -->
+            <section class="site-frame" id="profile-tools"
+                data-spw-role="reference"
+                data-spw-form="brace"
+                data-spw-meaning="tools for professional identity and self-description">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#profile-tools">^"profile_tools"</a>
+                    <h2>Profile Tools</h2>
+                </div>
+                <p class="inline-note">For engineers, designers, and peers who need to describe what they do — to a collaborator, a hiring manager, or themselves. Especially useful when recently laid off and trying to articulate your work quickly.</p>
+                <ul class="syntax-list">
+                    <li>
+                        <a class="syntax-token" href="/tools/profile/">^ profile builder</a>
+                        <span>Fill in fields, get a configurable card with header, badges, sections, and footer. Copy as JSON or Spw seed. Screenshot for sharing. Local-only, no account needed.</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/services/#services-card">^ services card</a>
+                        <span>A pre-configured seed card for describing services and rates. From the services page.</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/services/#ask-card">~ ask card</a>
+                        <span class="frame-note">A card for personal asks — supplies, food, bills. The same aesthetic makes a personal need feel as intentional as a professional offer.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Card tools -->
+            <section class="site-frame" id="card-tools"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="configurable seed cards for various purposes">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#card-tools">~"card_tools"</a>
+                    <h2>Seed Cards</h2>
+                </div>
+                <p class="inline-note">Seed cards are minimal vessels — fill in, copy, screenshot, share. Templates: new year, session, wonder, services, ask.</p>
+                <ul class="syntax-list">
+                    <li>
+                        <a class="syntax-token" href="/newyear/#seed-card">^ new year card</a>
+                        <span>Annual threshold card — vow, bundle, relay, revisit. For the moment when time feels writable again.</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/#local-gameplay-kit">@ session card</a>
+                        <span class="frame-note">Date, scene, turn, carry, revisit. For documenting what happened at the table.</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/tools/profile/#builder-form">?[ wonder card</a>
+                        <span class="frame-note">Question, tension, material, relay, revisit. For open questions you're genuinely uncertain about.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- RPG tools -->
+            <section class="site-frame" id="rpg-tools"
+                data-spw-role="reference"
+                data-spw-form="circle"
+                data-spw-meaning="play tools including character sheets and session logs — a pretext for professional self-description"
+                data-spw-stub>
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#rpg-tools">@"play_tools"</a>
+                    <h2>Play Tools</h2>
+                </div>
+                <p class="inline-note">Character sheets are a low-stakes practice for professional self-description. Describing a character's abilities, background, and tools uses the same cognitive structure as writing a profile. The RPG Wednesday page hosts the local gameplay kit.</p>
+                <ul class="syntax-list">
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/">@ rpg wednesday</a>
+                        <span>The recurring session — character cards, local gameplay state, session logs, and the character 'l'n'd'r as a profile specimen.</span>
+                    </li>
+                    <li>
+                        <a class="syntax-token" href="/play/rpg-wednesday/sessions/">@ session log</a>
+                        <span class="frame-note">Dated event log. Use the session seed card template to document plays.</span>
+                    </li>
+                    <li>
+                        <span class="syntax-token" aria-disabled="true">~ character sheet builder</span>
+                        <span class="frame-note">Planned: a character sheet that maps abilities to skill clusters, links to .md documentation, and exports as a professional profile seed. The character sheet is a pretext for the profile card.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Community resources -->
+            <section class="site-frame" id="community-resources"
+                data-spw-role="reference"
+                data-spw-form="angle"
+                data-spw-meaning="community resources for peers — especially those recently laid off or between roles">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#community-resources">?["community_resources"]</a>
+                    <h2>Community Resources</h2>
+                </div>
+                <p class="inline-note">For peers navigating layoffs, career transitions, and the work of articulating what you do. These tools and links are a starting point.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Articulate your work</h3>
+                        <ul class="frame-list">
+                            <li><a href="/tools/profile/">Profile builder</a> — configurable card, JSON export, screenshottable</li>
+                            <li><a href="/services/">Services page</a> — services card and ask card with dignity-first framing</li>
+                            <li>The wonder card template — for questions you're investigating</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Visible work anchors</h3>
+                        <ul class="frame-list">
+                            <li><a href="/topics/software/">Software surface</a> — Spw grammar and interactive codeblocks as technical calling card</li>
+                            <li><a href="/topics/software/pretext/">Pretext.js</a> — measurement-driven text layout library</li>
+                            <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser and runtime work, open source</li>
+                        </ul>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Stay in touch</h3>
+                        <p class="frame-note">RPG Wednesday is a real recurring session. If you play tabletop RPGs and want to see how I work with a group, the table is the most honest context available. <a href="/play/rpg-wednesday/">More on the RPG page.</a></p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Wonder practice</h3>
+                        <p class="frame-note">The wonder card and the profile builder both work best when you approach them as practice rather than output. Fill them out badly and iterate. The format is stable; the content will improve with use.</p>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+    </main>
+    <footer><p>© 2026 spwashi</p></footer>
+</body>
+</html>

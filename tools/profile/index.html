@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>Profile Builder · Spwashi Tools</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/profile-card.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <script type="module">
+        import {
+            emptyProfile, renderProfileCard, profileToJSON, profileToSpw,
+            parseBadgeLine, STATUS_OPTIONS, OPERATOR_OPTIONS, BADGE_CLUSTERS
+        } from '/public/js/profile-builder.js';
+
+        const STORAGE_KEY = 'spw-profile-builder';
+        let profile = emptyProfile();
+        let saveTimer = null;
+
+        function load() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) profile = { ...emptyProfile(), ...JSON.parse(raw) };
+            } catch {}
+        }
+
+        function save() {
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); } catch {}
+            }, 500);
+        }
+
+        function update() {
+            renderProfileCard(profile, document.getElementById('profile-preview'));
+            save();
+        }
+
+        function bind() {
+            // Header fields
+            const fields = {
+                name:    document.getElementById('f-name'),
+                role:    document.getElementById('f-role'),
+                tagline: document.getElementById('f-tagline'),
+                status:  document.getElementById('f-status'),
+                sigil:   document.getElementById('f-sigil'),
+                contact: document.getElementById('f-contact'),
+            };
+
+            Object.entries(fields).forEach(([key, el]) => {
+                if (!el) return;
+                el.addEventListener('input', () => {
+                    if (key === 'contact') profile.footer.contact = el.value;
+                    else profile.header[key] = el.value;
+                    update();
+                });
+            });
+
+            // Badge input
+            const badgeInput   = document.getElementById('badge-input');
+            const badgeCluster = document.getElementById('badge-cluster');
+            const badgeAdd     = document.getElementById('badge-add');
+            const badgeStrip   = document.getElementById('badge-strip');
+
+            function addBadge() {
+                const raw = badgeInput.value.trim();
+                if (!raw) return;
+                const cluster = badgeCluster.value;
+                parseBadgeLine(raw, cluster).forEach(b => profile.badges.push(b));
+                badgeInput.value = '';
+                renderBadgeStrip();
+                update();
+            }
+
+            function renderBadgeStrip() {
+                badgeStrip.innerHTML = profile.badges.map((b, i) => `
+                    <span class="profile-tag" data-cluster="${b.cluster}">
+                        <span>${b.value}</span>
+                        <button class="profile-tag-remove" data-remove="${i}" aria-label="remove ${b.value}">×</button>
+                    </span>
+                `).join('');
+                badgeStrip.querySelectorAll('[data-remove]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        profile.badges.splice(Number(btn.dataset.remove), 1);
+                        renderBadgeStrip();
+                        update();
+                    });
+                });
+            }
+
+            badgeAdd.addEventListener('click', addBadge);
+            badgeInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); addBadge(); }
+            });
+
+            // Sections
+            document.querySelectorAll('.section-body').forEach((el, i) => {
+                el.addEventListener('input', () => {
+                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
+                    profile.sections[i].body = el.value;
+                    update();
+                });
+            });
+            document.querySelectorAll('.section-heading').forEach((el, i) => {
+                el.addEventListener('input', () => {
+                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
+                    profile.sections[i].heading = el.value;
+                    update();
+                });
+            });
+            document.querySelectorAll('.section-operator').forEach((el, i) => {
+                el.addEventListener('change', () => {
+                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
+                    profile.sections[i].operator = el.value;
+                    update();
+                });
+            });
+
+            // Links
+            const linkInput = document.getElementById('link-input');
+            const linkHref  = document.getElementById('link-href');
+            const linkAdd   = document.getElementById('link-add');
+            const linkStrip = document.getElementById('link-strip');
+
+            function addLink() {
+                const label = linkInput.value.trim();
+                const href  = linkHref.value.trim();
+                if (!label || !href) return;
+                profile.footer.links.push({ label, href });
+                linkInput.value = '';
+                linkHref.value = '';
+                renderLinkStrip();
+                update();
+            }
+
+            function renderLinkStrip() {
+                linkStrip.innerHTML = profile.footer.links.map((l, i) => `
+                    <span class="profile-tag">
+                        <span>${l.label}</span>
+                        <button class="profile-tag-remove" data-remove-link="${i}" aria-label="remove ${l.label}">×</button>
+                    </span>
+                `).join('');
+                linkStrip.querySelectorAll('[data-remove-link]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        profile.footer.links.splice(Number(btn.dataset.removeLink), 1);
+                        renderLinkStrip();
+                        update();
+                    });
+                });
+            }
+
+            linkAdd.addEventListener('click', addLink);
+            linkHref.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addLink(); } });
+
+            // Export actions
+            document.querySelectorAll('[data-export]').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    let text = '';
+                    const type = btn.dataset.export;
+                    if (type === 'json')       text = profileToJSON(profile);
+                    else if (type === 'spw')   text = profileToSpw(profile);
+                    else if (type === 'screenshot') {
+                        document.getElementById('profile-preview')
+                            .querySelector('.profile-card')
+                            ?.classList.toggle('profile-card--screenshot');
+                        return;
+                    }
+                    else if (type === 'clear') {
+                        profile = emptyProfile();
+                        populateForm();
+                        renderBadgeStrip();
+                        renderLinkStrip();
+                        update();
+                        return;
+                    }
+                    if (!text) return;
+                    const orig = btn.textContent;
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        btn.textContent = '✓ copied';
+                        btn.dataset.state = 'success';
+                    } catch {
+                        btn.textContent = '! failed';
+                    }
+                    setTimeout(() => { btn.textContent = orig; delete btn.dataset.state; }, 1800);
+                });
+            });
+
+            // JSON import
+            document.getElementById('json-import-btn')?.addEventListener('click', () => {
+                const raw = document.getElementById('json-import-area').value.trim();
+                if (!raw) return;
+                try {
+                    profile = { ...emptyProfile(), ...JSON.parse(raw) };
+                    populateForm();
+                    renderBadgeStrip();
+                    renderLinkStrip();
+                    update();
+                    document.getElementById('json-import-area').value = '';
+                } catch {
+                    alert('Invalid JSON — check format and try again.');
+                }
+            });
+
+            // Populate form from loaded profile
+            function populateForm() {
+                if (fields.name)    fields.name.value    = profile.header.name    || '';
+                if (fields.role)    fields.role.value    = profile.header.role    || '';
+                if (fields.tagline) fields.tagline.value = profile.header.tagline || '';
+                if (fields.status)  fields.status.value  = profile.header.status  || 'available';
+                if (fields.sigil)   fields.sigil.value   = profile.header.sigil   || '^';
+                if (fields.contact) fields.contact.value = profile.footer.contact || '';
+                document.querySelectorAll('.section-heading').forEach((el, i) => {
+                    el.value = profile.sections[i]?.heading || '';
+                });
+                document.querySelectorAll('.section-body').forEach((el, i) => {
+                    el.value = profile.sections[i]?.body || '';
+                });
+                document.querySelectorAll('.section-operator').forEach((el, i) => {
+                    el.value = profile.sections[i]?.operator || '^';
+                });
+            }
+
+            load();
+            populateForm();
+            renderBadgeStrip();
+            renderLinkStrip();
+            update();
+        }
+
+        document.addEventListener('DOMContentLoaded', bind);
+    </script>
+</head>
+<body data-spw-surface="tools-profile" data-spw-features="operators navigator console">
+    <header>
+        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/tools/">Tools</a></li>
+                <li><a aria-current="page" href="/tools/profile/">Profile</a></li>
+                <li><a href="/services/">Services</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+
+    <main>
+        <article>
+
+            <section class="site-frame site-hero" id="profile-builder-frame"
+                data-spw-role="context"
+                data-spw-form="brace"
+                data-spw-meaning="professional profile card wizard for laid-off engineers and peers"
+                data-spw-operator="object">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#profile-builder-frame">^"profile_builder"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill" data-cluster="tool">local-only</span>
+                        <span class="spec-pill" data-cluster="tool">JSON-extensible</span>
+                        <span class="spec-pill" data-cluster="tool">screenshottable</span>
+                    </div>
+                </div>
+                <h1>Profile Builder</h1>
+                <p class="site-lede">Describe what you do in a form that travels.</p>
+                <p>For engineers and peers who need to articulate their work quickly and clearly — to a hiring manager, a collaborator, or just to themselves. Fill in the fields, get a card. Copy the JSON to reuse anywhere. Screenshot the card to share it as an image.</p>
+                <p class="frame-note">Everything stays in this browser. Nothing is sent anywhere.</p>
+                <nav class="frame-operators" aria-label="Profile builder sections">
+                    <a class="operator-chip" href="#builder-form">^ fill in</a>
+                    <a class="operator-chip" href="#builder-preview">~ preview</a>
+                    <a class="operator-chip" href="#import-export">@ import / export</a>
+                    <a class="operator-chip" href="/tools/">tools index</a>
+                    <a class="operator-chip" href="/services/">services</a>
+                </nav>
+            </section>
+
+            <!-- Builder: form + live preview -->
+            <section class="site-frame" id="builder-form"
+                data-spw-role="vessel"
+                data-spw-form="brace"
+                data-spw-meaning="profile wizard — form fields that drive live card preview">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#builder-form">^"build"</a>
+                    <h2>Build Your Card</h2>
+                </div>
+                <div class="profile-wizard">
+
+                    <!-- Left: form -->
+                    <div class="profile-wizard-form" id="builder-inputs">
+
+                        <!-- Identity -->
+                        <div class="frame-panel">
+                            <h3>Identity</h3>
+
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-name">
+                                    <span class="profile-field-op">^</span> name
+                                </label>
+                                <input id="f-name" type="text" placeholder="your name" autocomplete="name" spellcheck="false"/>
+                            </div>
+
+                            <div class="profile-field" style="margin-top:0.5rem">
+                                <label class="profile-field-label" for="f-role">
+                                    <span class="profile-field-op">^</span> role
+                                </label>
+                                <input id="f-role" type="text" placeholder="frontend engineer, systems designer, …" spellcheck="false"/>
+                            </div>
+
+                            <div class="profile-field" style="margin-top:0.5rem">
+                                <label class="profile-field-label" for="f-tagline">
+                                    <span class="profile-field-op">~</span> tagline
+                                    <span class="profile-field-hint">one sentence</span>
+                                </label>
+                                <input id="f-tagline" type="text" placeholder="I build systems that teach their own structure." spellcheck="false"/>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem">
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-status">
+                                        <span class="profile-field-op">@</span> status
+                                    </label>
+                                    <select id="f-status">
+                                        <option value="available">available</option>
+                                        <option value="consulting">consulting</option>
+                                        <option value="open">open to offers</option>
+                                        <option value="building">building</option>
+                                        <option value="looking">actively looking</option>
+                                    </select>
+                                </div>
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-sigil">
+                                        <span class="profile-field-op">#</span> operator
+                                        <span class="profile-field-hint">your stance</span>
+                                    </label>
+                                    <select id="f-sigil">
+                                        <option value="^">^ object — I build stable things</option>
+                                        <option value="~">~ relay — I connect and transmit</option>
+                                        <option value="@">@ event — I make things happen</option>
+                                        <option value="?[">?[ probe — I investigate</option>
+                                        <option value=">"> > boon — I bring possibility</option>
+                                        <option value="!">! pragma — I enforce correctness</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Badges -->
+                        <div class="frame-panel">
+                            <h3>Skills &amp; Context</h3>
+                            <p class="frame-note">Comma-separated. Each entry becomes a badge.</p>
+                            <div class="badge-input-row">
+                                <input id="badge-input" type="text" placeholder="React, TypeScript, …" spellcheck="false"/>
+                                <select id="badge-cluster">
+                                    <option value="stack">stack</option>
+                                    <option value="domain">domain</option>
+                                    <option value="approach">approach</option>
+                                    <option value="context">context</option>
+                                    <option value="role">role</option>
+                                </select>
+                                <button id="badge-add" type="button">add</button>
+                            </div>
+                            <div class="profile-tag-strip" id="badge-strip" style="margin-top:0.4rem"></div>
+                        </div>
+
+                        <!-- Sections -->
+                        <div class="frame-panel">
+                            <h3>Sections</h3>
+
+                            <div class="profile-field" style="margin-bottom:0.75rem">
+                                <div style="display:grid;grid-template-columns:auto 1fr;gap:0.4rem;align-items:center">
+                                    <select class="section-operator" style="width:auto">
+                                        <option value="^">^</option>
+                                        <option value="~">~</option>
+                                        <option value="@">@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">">></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="What I bring" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" style="margin-top:0.3rem" placeholder="2–4 sentences about your work, approach, or what you are looking for." rows="3"></textarea>
+                            </div>
+
+                            <div class="profile-field">
+                                <div style="display:grid;grid-template-columns:auto 1fr;gap:0.4rem;align-items:center">
+                                    <select class="section-operator" style="width:auto">
+                                        <option value="^">^</option>
+                                        <option value="~" selected>~</option>
+                                        <option value="@">@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">">></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="Context" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" style="margin-top:0.3rem" placeholder="Where your work is visible — GitHub, portfolio, past roles, open source." rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="frame-panel">
+                            <h3>Contact</h3>
+
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-contact">
+                                    <span class="profile-field-op">~</span> contact
+                                </label>
+                                <input id="f-contact" type="text" placeholder="email, link, or how to reach you" spellcheck="false"/>
+                            </div>
+
+                            <div class="profile-field" style="margin-top:0.5rem">
+                                <label class="profile-field-label">
+                                    <span class="profile-field-op">~</span> links
+                                    <span class="profile-field-hint">label + URL</span>
+                                </label>
+                                <div class="badge-input-row">
+                                    <input id="link-input" type="text" placeholder="GitHub" spellcheck="false"/>
+                                    <input id="link-href" type="url" placeholder="https://…" spellcheck="false" style="grid-column:span 2"/>
+                                </div>
+                                <button id="link-add" type="button" class="profile-add-btn" style="margin-top:0.3rem">add link</button>
+                                <div class="profile-tag-strip" id="link-strip" style="margin-top:0.4rem"></div>
+                            </div>
+                        </div>
+
+                        <!-- Export actions -->
+                        <div class="profile-export-actions">
+                            <button class="profile-export-btn" data-export="json">copy JSON</button>
+                            <button class="profile-export-btn" data-export="spw">copy Spw seed</button>
+                            <button class="profile-export-btn" data-export="screenshot">screenshot mode</button>
+                            <button class="profile-export-btn" data-export="clear">clear</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: live preview -->
+                    <div id="builder-preview" id="profile-preview-panel">
+                        <div class="frame-panel" style="padding:0;background:transparent;border:none">
+                            <div id="profile-preview"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Import / Export -->
+            <section class="site-frame" id="import-export"
+                data-spw-role="vessel"
+                data-spw-form="square"
+                data-spw-meaning="JSON import — paste a saved profile to restore it">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#import-export">@"import"</a>
+                    <h2>Import JSON</h2>
+                </div>
+                <p class="inline-note">Paste a previously exported profile JSON to restore it. The card format is stable — a JSON exported today will still work here later.</p>
+                <div class="profile-field">
+                    <textarea id="json-import-area" rows="6" placeholder='{"header":{"name":"..."},...}'></textarea>
+                </div>
+                <div class="profile-export-actions" style="margin-top:0.5rem">
+                    <button class="profile-export-btn" id="json-import-btn">load JSON</button>
+                </div>
+            </section>
+
+            <!-- Schema reference -->
+            <section class="site-frame" id="schema-reference"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="profile card JSON schema reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#schema-reference">~"schema"</a>
+                    <h2>Schema Reference</h2>
+                </div>
+                <p class="inline-note">The profile card is driven by a plain JSON object. Any page that imports the <code>renderProfileCard</code> function can render one. The format is intentionally stable.</p>
+                <pre class="spw-codeblock" data-spw-form="brace"><code>{
+  "header": {
+    "name":    "your name",
+    "role":    "your role",
+    "tagline": "one sentence",
+    "status":  "available | consulting | open | building | looking",
+    "sigil":   "^ | ~ | @ | ?[ | > | !"
+  },
+  "badges": [
+    { "cluster": "stack | domain | approach | context | role", "value": "skill" }
+  ],
+  "sections": [
+    { "heading": "What I bring", "body": "...", "operator": "^" },
+    { "heading": "Context",      "body": "...", "operator": "~" }
+  ],
+  "footer": {
+    "contact": "email or link",
+    "links": [{ "label": "GitHub", "href": "https://..." }]
+  }
+}</code></pre>
+            </section>
+
+        </article>
+    </main>
+    <footer><p>© 2026 spwashi</p></footer>
+</body>
+</html>
