@@ -38,6 +38,7 @@ import { initSpwBraceActions } from './spw-brace-actions.js';
 import { initTopicDiscovery } from './spw-topic-discovery.js';
 import { initReactiveSpine } from './spw-reactive-spine.js';
 import { initPageUniverse } from './spw-page-universe.js';
+import { mountLogo, initLogoRuntime } from './spw-logo-runtime.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -581,6 +582,8 @@ onDomReady(() => {
     initTopicDiscovery();
     initReactiveSpine();
     initPageUniverse();
+    mountLogo('.header-sigil', { href: '/', wordmark: 'Spwashi' });
+    initLogoRuntime();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 

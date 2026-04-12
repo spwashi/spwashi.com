@@ -22,6 +22,7 @@
 @import url('/public/css/cognitive-handles.css') layer(handles);
 @import url('/public/css/spw-handles.css') layer(handles);
 @import url('/public/css/phase-controls.css') layer(handles);
+@import url('/public/css/spw-logo.css') layer(handles);
 
 @import url('/public/css/spw-material.css') layer(ornament);
 @import url('/public/css/enhancements.css') layer(ornament);

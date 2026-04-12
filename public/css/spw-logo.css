@@ -1,0 +1,174 @@
+/* ── Spwashi Logo Runtime ──────────────────────────────────────────────
+ * The logo is the smallest unit of the site's physics.
+ * Every state it can enter — preview, charged, emitting, settled —
+ * matches the site-wide canonical state vocabulary.
+ *
+ * Component topology: island (self-contained, interactive, serializable)
+ * Touch: tap channel
+ * State contract: settled → preview → charged → emitting → settled
+ * ────────────────────────────────────────────────────────────────────── */
+
+.spw-logo {
+  --logo-charge: 0;
+  --logo-arc-color: currentColor;
+  --logo-w-color: currentColor;
+  --logo-wordmark-opacity: 1;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+
+  transition:
+    color var(--touch-acknowledge, 90ms) var(--ease-precise, ease),
+    opacity var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+}
+
+/* ── Mark (SVG glyph) ── */
+
+.spw-logo-mark {
+  flex-shrink: 0;
+  display: block;
+  width: 1.4em;
+  height: 1.63em;  /* preserves 48:56 aspect ratio */
+  color: var(--teal, hsl(180 100% 28%));
+  transition:
+    color var(--touch-commit, 180ms) var(--ease-precise, ease),
+    transform var(--touch-commit, 180ms) var(--ease-precise, ease),
+    filter var(--touch-commit, 180ms) var(--ease-precise, ease);
+  will-change: transform, filter;
+}
+
+.mark-layer {
+  transition:
+    stroke-opacity var(--touch-commit, 180ms) var(--ease-precise, ease),
+    stroke-width var(--touch-commit, 180ms) var(--ease-precise, ease),
+    stroke var(--touch-commit, 180ms) var(--ease-precise, ease);
+}
+
+.mark-layer--arc {
+  stroke-opacity: 0.85;
+}
+
+.mark-layer--w {
+  stroke-opacity: 0.65;
+}
+
+/* ── Wordmark ── */
+
+.spw-logo-wordmark {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.88em;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  opacity: var(--logo-wordmark-opacity);
+  transition: opacity var(--touch-commit, 180ms) var(--ease-precise, ease);
+  white-space: nowrap;
+}
+
+/* ── State: settled (default) ── */
+
+.spw-logo[data-logo-state="settled"],
+.spw-logo:not([data-logo-state]) {
+  --logo-charge: 0;
+}
+
+/* ── State: preview ── */
+
+.spw-logo[data-logo-state="preview"] {
+  --logo-charge: 0.3;
+}
+
+.spw-logo[data-logo-state="preview"] .spw-logo-mark {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.spw-logo[data-logo-state="preview"] .mark-layer--arc {
+  stroke-opacity: 1;
+}
+
+/* ── State: charged ── */
+
+.spw-logo[data-logo-state="charged"] {
+  --logo-charge: 0.7;
+}
+
+.spw-logo[data-logo-state="charged"] .spw-logo-mark {
+  color: var(--teal, hsl(180 100% 28%));
+  filter: brightness(1.08) saturate(1.12);
+  transform: translateY(-1px) scale(1.04);
+}
+
+.spw-logo[data-logo-state="charged"] .mark-layer--arc {
+  stroke-opacity: 1;
+  stroke-width: 2.8;
+}
+
+.spw-logo[data-logo-state="charged"] .mark-layer--w {
+  stroke-opacity: 0.9;
+}
+
+/* ── State: emitting ── */
+
+.spw-logo[data-logo-state="emitting"] {
+  --logo-charge: 1;
+}
+
+.spw-logo[data-logo-state="emitting"] .spw-logo-mark {
+  color: var(--teal, hsl(180 100% 28%));
+  filter: brightness(1.12) saturate(1.2);
+  transform: scale(1.06);
+}
+
+@keyframes logo-emit-pulse {
+  0%   { opacity: 0; transform: scale(0.95); }
+  40%  { opacity: 0.3; transform: scale(1.08); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+
+.spw-logo[data-logo-state="emitting"]::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1.5px solid var(--teal, hsl(180 100% 28%));
+  border-radius: 50%;
+  pointer-events: none;
+  animation: logo-emit-pulse 480ms var(--ease-release, ease) forwards;
+}
+
+/* ── Scroll-charge: driven by --logo-charge from JS ── */
+
+.spw-logo[data-logo-scroll] .spw-logo-mark {
+  filter:
+    brightness(calc(1 + var(--logo-charge) * 0.08))
+    saturate(calc(1 + var(--logo-charge) * 0.15));
+}
+
+/* ── Header placement ── */
+
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+/* On small screens, hide wordmark and show mark only */
+@media (max-width: 480px) {
+  .spw-logo-wordmark {
+    display: none;
+  }
+}
+
+/* On very small screens, shrink the mark */
+@media (max-width: 360px) {
+  .spw-logo-mark {
+    width: 1.1em;
+    height: 1.28em;
+  }
+}
