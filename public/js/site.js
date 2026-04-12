@@ -37,6 +37,7 @@ import { initSpwShellDisclosure } from './spw-shell-disclosure.js';
 import { initSpwBraceActions } from './spw-brace-actions.js';
 import { initTopicDiscovery } from './spw-topic-discovery.js';
 import { initReactiveSpine } from './spw-reactive-spine.js';
+import { initPageUniverse } from './spw-page-universe.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
@@ -579,6 +580,7 @@ onDomReady(() => {
     initSpwBraceActions();
     initTopicDiscovery();
     initReactiveSpine();
+    initPageUniverse();
     initSpiritSequenceEasterEgg();
     initSiteSettingsPage();
 
