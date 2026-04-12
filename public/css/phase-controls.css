@@ -30,8 +30,9 @@
 }
 
 .phase-menu-trigger::before {
-    content: '#:layer ';
+    content: '#:layer · ';
     color: var(--ink-soft);
+    letter-spacing: 0.02em;
 }
 
 .phase-menu-trigger:focus-visible {

@@ -1,0 +1,352 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   services-configurator.css
+   Weighted field for tier resolution. Four dimensions resolve to a service
+   tier via a scoring formula. Mirrors the boonhonk-mixer interaction language.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.svc-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 32rem;
+    padding: 1rem 1rem 0.5rem;
+    background: var(--card-bg, rgba(255,255,255,0.84));
+    border: 1px solid var(--line, rgba(18,52,50,0.12));
+    border-radius: 1rem;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* ── SVG ─────────────────────────────────────────────────────────────────── */
+
+.svc-svg {
+    width: min(260px, 100%);
+    height: auto;
+    overflow: visible;
+    cursor: default;
+}
+
+.svc-field {
+    fill: color-mix(in oklab, var(--spw-accent, #1a9999) 3%, var(--page-bg, #f8f7f5));
+    stroke: color-mix(in oklab, var(--spw-accent, #1a9999) 10%, transparent);
+    stroke-width: 1;
+}
+
+.svc-polygon {
+    transition: fill 260ms ease, opacity 200ms ease, points 160ms ease;
+}
+
+.svc-spoke {
+    transition: stroke-width 240ms ease, opacity 200ms ease;
+}
+
+/* ── Center ──────────────────────────────────────────────────────────────── */
+
+.svc-center {
+    transition: fill 260ms ease, opacity 200ms ease;
+}
+
+.svc-svg.is-resolved .svc-center {
+    filter: drop-shadow(0 0 8px color-mix(in oklab, currentColor 40%, transparent));
+}
+
+.svc-center-hit {
+    fill: transparent;
+    cursor: default;
+    transition: cursor 0ms;
+}
+
+.svc-svg.is-resolved .svc-center-hit {
+    cursor: pointer;
+}
+
+.svc-center-tier {
+    fill: rgba(255,255,255,0.9);
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    font-weight: 700;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 180ms ease;
+}
+
+.svc-center-price {
+    fill: rgba(255,255,255,0.75);
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    font-weight: 500;
+    pointer-events: none;
+    user-select: none;
+}
+
+.svc-svg.is-resolved .svc-center-tier {
+    fill: white;
+}
+
+/* ── Nodes ───────────────────────────────────────────────────────────────── */
+
+.svc-node {
+    cursor: pointer;
+    outline: none;
+}
+
+.svc-node-hit {
+    fill: transparent;
+}
+
+.svc-node-dot {
+    transition: opacity 180ms ease;
+    stroke: rgba(255,255,255,0.35);
+    stroke-width: 1.5;
+}
+
+.svc-node:focus-visible .svc-node-dot {
+    stroke: white;
+    stroke-width: 3;
+}
+
+.svc-node:hover .svc-node-dot {
+    filter: brightness(1.15);
+}
+
+.svc-node.is-active .svc-node-dot {
+    filter: drop-shadow(0 0 5px currentColor);
+}
+
+.svc-node-label {
+    fill: var(--ink, hsl(178 18% 14%));
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    font-weight: 600;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.65;
+    text-decoration: none;
+}
+
+.svc-node.is-active .svc-node-label {
+    opacity: 1;
+}
+
+.svc-node-step {
+    fill: var(--ink-soft, hsl(178 10% 42%));
+    font-family: var(--font-mono, monospace);
+    font-size: 8px;
+    font-weight: 500;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.8;
+}
+
+.svc-node.is-active .svc-node-step {
+    opacity: 1;
+}
+
+/* ── Legend ──────────────────────────────────────────────────────────────── */
+
+.svc-legend {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.svc-legend__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 0.35rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    border: 1px solid var(--line, rgba(18,52,50,0.12));
+    background: rgba(255,255,255,0.5);
+    color: var(--ink-soft, hsl(178 10% 42%));
+    transition: background 140ms, border-color 140ms, color 140ms;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+a.svc-legend__chip:hover {
+    background: color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+    border-color: color-mix(in oklab, var(--node-color, currentColor) 28%, transparent);
+    color: var(--ink, hsl(178 18% 14%));
+}
+
+.svc-legend__chip::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--node-color, currentColor);
+    flex-shrink: 0;
+}
+
+/* ── CTA panel ───────────────────────────────────────────────────────────── */
+
+.svc-cta {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: color-mix(in oklab, var(--spw-accent, #1a9999) 6%, var(--page-bg, #f8f7f5));
+    border: 1px solid color-mix(in oklab, var(--spw-accent, #1a9999) 20%, transparent);
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: svc-cta-in 220ms ease both;
+}
+
+@keyframes svc-cta-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.svc-cta__title {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink, hsl(178 18% 14%));
+    margin: 0;
+}
+
+.svc-cta__note {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--ink-soft, hsl(178 10% 42%));
+    margin: 0;
+}
+
+.svc-cta__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.svc-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.8rem;
+    border-radius: 0.45rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 140ms, color 140ms, border-color 140ms;
+}
+
+.svc-cta__btn--primary {
+    background: var(--spw-accent, #1a9999);
+    color: white;
+    border: 1px solid transparent;
+}
+
+.svc-cta__btn--primary:hover {
+    filter: brightness(1.1);
+}
+
+.svc-cta__btn--secondary {
+    background: transparent;
+    color: var(--ink, hsl(178 18% 14%));
+    border: 1px solid var(--line, rgba(18,52,50,0.18));
+}
+
+.svc-cta__btn--secondary:hover {
+    background: color-mix(in oklab, var(--spw-accent, #1a9999) 8%, transparent);
+    border-color: var(--spw-accent, #1a9999);
+}
+
+/* ── Nudge ───────────────────────────────────────────────────────────────── */
+
+.svc-nudge {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--ink-soft, hsl(178 10% 42%));
+    margin: 0;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.svc-nudge__btn {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--spw-accent, #1a9999);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.svc-nudge__btn:hover {
+    opacity: 0.8;
+}
+
+/* ── Note ────────────────────────────────────────────────────────────────── */
+
+.svc-note {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    color: var(--ink-soft, hsl(178 10% 42%));
+    margin: 0;
+    text-align: center;
+    opacity: 0.6;
+    padding-bottom: 0.25rem;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .svc-polygon,
+    .svc-spoke,
+    .svc-center,
+    .svc-cta,
+    .svc-cta__btn {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+    .svc-wrapper {
+        background: var(--card-bg, rgba(18,32,30,0.88));
+        border-color: rgba(255,255,255,0.08);
+    }
+
+    .svc-node-label {
+        fill: rgba(255,255,255,0.7);
+    }
+
+    .svc-node-step {
+        fill: rgba(255,255,255,0.5);
+    }
+
+    .svc-legend__chip {
+        background: rgba(255,255,255,0.04);
+        color: rgba(255,255,255,0.55);
+        border-color: rgba(255,255,255,0.1);
+    }
+
+    .svc-cta {
+        background: color-mix(in oklab, var(--spw-accent, #1a9999) 8%, rgba(10,20,18,0.9));
+    }
+
+    .svc-cta__title {
+        color: rgba(255,255,255,0.92);
+    }
+
+    .svc-cta__note {
+        color: rgba(255,255,255,0.55);
+    }
+
+    .svc-cta__btn--secondary {
+        color: rgba(255,255,255,0.8);
+        border-color: rgba(255,255,255,0.15);
+    }
+}

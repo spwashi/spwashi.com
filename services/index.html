@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/seed-card.css">
     <link rel="stylesheet" href="/public/css/payment-card.css">
+    <link rel="stylesheet" href="/public/css/services-configurator.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
     <script type="module">
@@ -21,9 +22,11 @@
     <script type="module">
         import { initSeedCards } from '/public/js/seed-card.js';
         import { initPaymentCards } from '/public/js/payment-card.js';
+        import { initServicesConfigurators } from '/public/js/services-configurator.js';
         document.addEventListener('DOMContentLoaded', () => {
             initSeedCards();
             initPaymentCards();
+            initServicesConfigurators();
         });
     </script>
 </head>
@@ -70,6 +73,7 @@
                 <p>More than a decade of frontend systems, developer tooling, content platforms, and product architecture. The work is visible in <a href="/topics/software/">the grammar surface</a>, <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, and every Wednesday at the RPG table.</p>
                 <nav class="frame-operators" aria-label="Services routes">
                     <a class="operator-chip" href="#services-card">^ services card</a>
+                    <a class="operator-chip" href="#configure">⋄ configure</a>
                     <a class="operator-chip" href="#pricing">~ pricing</a>
                     <a class="operator-chip" href="#what-i-do">^ what I do</a>
                     <a class="operator-chip" href="#social-context">~ how I work</a>
@@ -179,6 +183,55 @@
                         <p class="frame-note">Inspect the source. The architecture is the portfolio.</p>
                     </div>
                 </div>
+            </section>
+
+            <!-- Services configurator -->
+            <section
+                class="site-frame"
+                id="configure"
+                data-spw-role="vessel"
+                data-spw-form="diamond"
+                data-spw-meaning="weighted field for tier resolution — four dimensions produce a tier score"
+                data-spw-operator="object"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#configure">^"configure"</a>
+                    <h2>Configure</h2>
+                </div>
+                <p class="inline-note">Four dimensions produce a tier. Tap each node to step through its named states. When a tier resolves clearly, the center becomes a path forward.</p>
+
+                <!--
+                    Dimensions:
+                      time   — urgency:     open → months → weeks → now
+                      scope  — breadth:     focused → growing → full
+                      depth  — architecture: surface → system → architectural
+                      tenure — duration:    project → season → ongoing
+
+                    The scoring formula weights each dimension:
+                      fast     = time-driven   (urgency + bounded scope)
+                      standard = tenure-driven (ongoing + evolving scope)
+                      premium  = depth-driven  (architectural + full scope)
+
+                    This is cognitive scaffolding for numeracy — the field
+                    makes the weighting visible and interactable. Each dimension
+                    has a home below in the pricing section.
+                -->
+                <div
+                    data-services-configurator
+                    data-spw-role="vessel"
+                    data-spw-form="diamond"
+                    data-spw-meaning="services tier resolver"
+                    data-spw-touch="tap"
+                >
+                </div>
+
+                <details class="frame-details">
+                    <summary class="frame-note">about the formula</summary>
+                    <div class="frame-panel" style="margin-top: 0.5rem;">
+                        <p class="frame-note">The four dimensions weight toward different tiers. <strong>Time</strong> (urgency) drives the <a href="#pricing">fast</a> tier. <strong>Tenure</strong> (duration) drives <a href="#pricing">standard</a>. <strong>Depth</strong> (architecture) drives <a href="#pricing">premium</a>. Scope amplifies in all directions — a full-scope project costs more regardless of tier.</p>
+                        <p class="frame-note">The center resolves when one tier leads by more than 10 points and exceeds 42% of the weighted field. Below that threshold, the combination is genuinely ambiguous — <a href="/contact">a conversation</a> resolves it better than a formula.</p>
+                    </div>
+                </details>
             </section>
 
             <!-- Pricing tiers -->

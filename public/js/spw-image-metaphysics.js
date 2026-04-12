@@ -124,14 +124,14 @@ function getEffectLabel(effect) {
     }
 }
 
-function getMemoryLabel(host, context, visited) {
+function getMemoryLabel(_host, context, visited) {
     if (visited) return '. visited';
 
     if (document.documentElement.dataset.spwShowSemanticMetadata === 'on') {
         return `${context.realization} · ${context.phrase}`;
     }
 
-    return 'hold to visit';
+    return '';
 }
 
 function updateHelper(host, context, visited) {

@@ -125,7 +125,7 @@
     background: var(--link-bg);
     border: 1px solid var(--link-border);
     text-decoration: none;
-    color: inherit;
+    color: var(--ink, hsl(178 18% 14%));
     font-family: var(--font-mono, monospace);
     font-size: 0.82rem;
     transition:
@@ -139,10 +139,21 @@
     user-select: none;
 }
 
-.payment-card__link:hover {
-    background: color-mix(in oklab, var(--teal, #1a9999) 13%, transparent);
-    border-color: color-mix(in oklab, var(--teal, #1a9999) 35%, transparent);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+/* On devices with hover (desktop), enhance on hover */
+@media (hover: hover) {
+    .payment-card__link:hover {
+        background: color-mix(in oklab, var(--teal, #1a9999) 13%, transparent);
+        border-color: color-mix(in oklab, var(--teal, #1a9999) 35%, transparent);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+}
+
+/* On touch devices, bump resting contrast since there's no hover state */
+@media (hover: none) {
+    .payment-card__link {
+        background: color-mix(in oklab, var(--teal, #1a9999) 11%, transparent);
+        border-color: color-mix(in oklab, var(--teal, #1a9999) 28%, transparent);
+    }
 }
 
 .payment-card__link:active {
@@ -174,9 +185,10 @@
 
 .payment-card__method-handle {
     font-size: 0.74rem;
-    opacity: 0.55;
+    opacity: 0.72;
     letter-spacing: 0.02em;
     text-align: right;
+    color: var(--ink-soft, hsl(178 10% 38%));
 }
 
 /* ── Suggested amounts ─────────────────────────────────────────────────────── */
@@ -363,11 +375,15 @@
 @media (prefers-color-scheme: dark) {
     .payment-card {
         --card-bg: color-mix(in oklab, #1a1a1a 90%, var(--teal, #1a9999) 10%);
+        --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 28%, transparent);
+        --link-bg: color-mix(in oklab, var(--teal, #1a9999) 10%, rgba(255,255,255,0.04));
+        --link-border: color-mix(in oklab, var(--teal, #1a9999) 24%, rgba(255,255,255,0.08));
         --card-shadow:
             0 1px 3px rgba(0, 0, 0, 0.25),
             0 4px 16px rgba(0, 0, 0, 0.2),
             inset 0 1px 0 rgba(255, 255, 255, 0.05);
         --hint-bg: #1e2020;
+        color: rgba(255,255,255,0.88);
     }
 
     .payment-card::before {
@@ -375,8 +391,60 @@
         opacity: 0.08;
     }
 
+    .payment-card__title {
+        color: rgba(255,255,255,0.92);
+    }
+
+    .payment-card__subtitle {
+        color: rgba(255,255,255,0.65);
+        opacity: 1;
+    }
+
+    .payment-card__link {
+        color: rgba(255,255,255,0.88);
+    }
+
+    .payment-card__method-label {
+        color: rgba(255,255,255,0.88);
+    }
+
+    .payment-card__method-handle {
+        color: rgba(255,255,255,0.65);
+        opacity: 1;
+    }
+
+    .payment-card__amounts-label {
+        color: rgba(255,255,255,0.5);
+        opacity: 1;
+    }
+
+    .payment-card__amount {
+        color: rgba(255,255,255,0.82);
+    }
+
+    .payment-card__amount-note {
+        color: rgba(255,255,255,0.5);
+        opacity: 1;
+    }
+
+    .payment-card__amount.is-selected {
+        color: var(--teal, #1a9999);
+    }
+
+    .payment-card__note {
+        color: rgba(255,255,255,0.4);
+        opacity: 1;
+    }
+
+    @media (hover: none) {
+        .payment-card__link {
+            background: color-mix(in oklab, var(--teal, #1a9999) 14%, rgba(255,255,255,0.06));
+            border-color: color-mix(in oklab, var(--teal, #1a9999) 32%, rgba(255,255,255,0.1));
+        }
+    }
+
     .payment-card__link:hover {
-        background: color-mix(in oklab, var(--teal, #1a9999) 16%, transparent);
+        background: color-mix(in oklab, var(--teal, #1a9999) 20%, rgba(255,255,255,0.06));
     }
 }
 
