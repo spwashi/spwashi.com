@@ -43,6 +43,9 @@ import { bus } from './spw-bus.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
+let activeBoot = null;
+let bootSequence = 0;
+
 /* ==========================================================================
    Module registry
    ========================================================================== */
@@ -119,6 +122,7 @@ const createModuleRegistry = () => {
         if (!record) return;
         record.status = 'skipped';
         record.error = reason;
+        record.cleanup = null;
     };
 
     const markFailed = (id, error) => {
@@ -126,6 +130,7 @@ const createModuleRegistry = () => {
         if (!record) return;
         record.status = 'failed';
         record.error = error instanceof Error ? error.message : String(error);
+        record.cleanup = null;
     };
 
     const setMindfulness = (id, update = {}) => {
@@ -150,13 +155,17 @@ const createModuleRegistry = () => {
     const getByLayer = (layer) => snapshot().filter((item) => item.layer === layer);
 
     const destroyMounted = () => {
-        [...records.values()].forEach((record) => {
+        [...records.values()].reverse().forEach((record) => {
             if (typeof record.cleanup === 'function') {
                 try {
                     record.cleanup();
                 } catch (error) {
                     console.warn(`Cleanup failed for module "${record.id}".`, error);
                 }
+            }
+            record.cleanup = null;
+            if (record.status === 'mounted') {
+                record.status = 'destroyed';
             }
         });
     };
@@ -214,11 +223,16 @@ const createBootContext = (registry) => {
     };
 };
 
-const safeMountModule = (definition, boot, mount) => {
+const normalizeCleanup = (cleanup) => {
+    if (typeof cleanup === 'function') return cleanup;
+    return null;
+};
+
+const safeMountModule = async (definition, boot, mount) => {
     boot.registry.register(definition);
 
     try {
-        const cleanup = mount(boot);
+        const cleanup = normalizeCleanup(await mount(boot));
         boot.registry.markMounted(definition.id, cleanup);
         return cleanup;
     } catch (error) {
@@ -233,10 +247,10 @@ const safeMountModule = (definition, boot, mount) => {
     }
 };
 
-const mountStaticModules = (boot, definitions) => {
-    definitions.forEach((definition) => {
-        safeMountModule(definition, boot, definition.mount);
-    });
+const mountStaticModules = async (boot, definitions) => {
+    for (const definition of definitions) {
+        await safeMountModule(definition, boot, definition.mount);
+    }
 };
 
 const loadAndMountFeatureModule = async (definition, boot) => {
@@ -260,7 +274,7 @@ const loadAndMountFeatureModule = async (definition, boot) => {
                 mindfulness: normalized.mindfulness || definition.mindfulness
             });
 
-            const cleanup = await normalized.mount(boot);
+            const cleanup = normalizeCleanup(await normalized.mount(boot));
             boot.registry.markMounted(definition.id, cleanup);
             return;
         }
@@ -270,7 +284,7 @@ const loadAndMountFeatureModule = async (definition, boot) => {
             throw new Error(`Expected export "${definition.exportName}" in ${definition.path}`);
         }
 
-        const cleanup = await initFn(boot);
+        const cleanup = normalizeCleanup(await initFn(boot));
         boot.registry.markMounted(definition.id, cleanup);
     } catch (error) {
         boot.registry.markFailed(definition.id, error);
@@ -289,8 +303,8 @@ const loadAndMountFeatureModule = async (definition, boot) => {
    ========================================================================== */
 
 const resetSoftwareEntryScroll = () => {
-    if (!isSoftwareRoute()) return;
-    if (window.location.hash) return;
+    if (!isSoftwareRoute()) return () => {};
+    if (window.location.hash) return () => {};
 
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
@@ -308,6 +322,8 @@ const resetSoftwareEntryScroll = () => {
     requestAnimationFrame(scrollToTop);
     window.addEventListener('pageshow', scrollToTop, { once: true });
     window.addEventListener('load', scrollToTop, { once: true });
+
+    return () => {};
 };
 
 const initSiteCore = () => {
@@ -317,6 +333,10 @@ const initSiteCore = () => {
         activeFrameId: null,
         groupModes: new Map()
     };
+
+    const abortController = new AbortController();
+    const observerCleanups = [];
+    const offFrameChange = null;
 
     const activateFrame = (frame, options = {}) => {
         if (!frame) return;
@@ -388,6 +408,7 @@ const initSiteCore = () => {
         const activePanel = panels.find((panel) => panel.dataset.modePanel === nextMode);
         const activeButton = buttons.find((button) => button.dataset.setMode === nextMode);
         const frame = activePanel?.closest('.site-frame') || activeButton?.closest('.site-frame');
+
         if (frame) {
             activateFrame(frame, {
                 source: options.source || 'mode-switch',
@@ -449,19 +470,19 @@ const initSiteCore = () => {
         if (targetFrame) {
             activateFrame(targetFrame, { source: 'anchor', force: true });
         }
-    });
+    }, { signal: abortController.signal });
 
     document.addEventListener('pointerover', (event) => {
         const node = getClosestMatch(event.target, frameContextSelector);
         if (!node) return;
         if (event.relatedTarget instanceof Node && node.contains(event.relatedTarget)) return;
         activateFrameFromNode(node, 'hover');
-    });
+    }, { signal: abortController.signal });
 
     document.addEventListener('focusin', (event) => {
         const node = getClosestMatch(event.target, frameContextSelector);
         if (node) activateFrameFromNode(node, 'focus');
-    });
+    }, { signal: abortController.signal });
 
     const groupedNodes = Array.from(document.querySelectorAll('[data-mode-group]'));
     const groupNames = Array.from(
@@ -481,7 +502,7 @@ const initSiteCore = () => {
                     source: 'mode-switch',
                     force: true
                 });
-            });
+            }, { signal: abortController.signal });
 
             const switchRoot = button.closest('.mode-switch');
             if (!switchRoot) return;
@@ -515,12 +536,13 @@ const initSiteCore = () => {
                 const direction = event.key === 'ArrowRight' ? 1 : -1;
                 const nextIndex = (currentIndex + direction + switchButtons.length) % switchButtons.length;
                 const nextButton = switchButtons[nextIndex];
+
                 setGroupMode(groupName, nextButton.dataset.setMode, {
                     source: 'keyboard-mode',
                     force: true
                 });
                 nextButton.focus();
-            });
+            }, { signal: abortController.signal });
         });
 
         if (initialMode) {
@@ -574,12 +596,23 @@ const initSiteCore = () => {
         });
 
         frames.forEach((frame) => observer.observe(frame));
-        window.addEventListener('scroll', scheduleViewportSync, { passive: true });
-        window.addEventListener('resize', scheduleViewportSync);
+
+        window.addEventListener('scroll', scheduleViewportSync, {
+            passive: true,
+            signal: abortController.signal
+        });
+        window.addEventListener('resize', scheduleViewportSync, {
+            signal: abortController.signal
+        });
         document.addEventListener('spw:settings-change', (event) => {
             if (event.detail?.viewportActivation === 'on') {
                 scheduleViewportSync();
             }
+        }, { signal: abortController.signal });
+
+        observerCleanups.push(() => {
+            cancelAnimationFrame(viewportSyncId);
+            observer.disconnect();
         });
     }
 
@@ -587,10 +620,28 @@ const initSiteCore = () => {
         activateFrame(frames[0], { source: 'init', force: true });
     }
 
-    window.addEventListener('hashchange', activateFromHash);
+    window.addEventListener('hashchange', activateFromHash, { signal: abortController.signal });
+
+    return () => {
+        observerCleanups.forEach((cleanup) => {
+            try {
+                cleanup();
+            } catch (error) {
+                console.warn('[site-core] Cleanup failed.', error);
+            }
+        });
+
+        abortController.abort();
+
+        if (window.spwInterface?.getState) {
+            delete window.spwInterface;
+        }
+    };
 };
 
 const initBraceWalls = () => {
+    const abortController = new AbortController();
+
     const humanizeToken = (value = '') => value.replace(/-/g, ' ');
 
     const readOperatorVar = (opType, suffix, fallback) => {
@@ -629,7 +680,10 @@ const initBraceWalls = () => {
         if (slot) slot.textContent = getIndicatorText(frame, opType);
     };
 
-    document.addEventListener('spw:frame-change', (e) => applyOpColor(e.detail?.opType, e.detail?.frame));
+    document.addEventListener('spw:frame-change', (event) => {
+        applyOpColor(event.detail?.opType, event.detail?.frame);
+    }, { signal: abortController.signal });
+
     document.documentElement.dataset.spwBraceAxis = 'objective-subjective';
 
     const objectiveWall = document.createElement('div');
@@ -655,24 +709,40 @@ const initBraceWalls = () => {
 
     const thumb = subjectiveWall.querySelector('[data-spw-scroll-thumb]');
     const track = subjectiveWall.querySelector('.spw-subjective-scroll-track');
+
     const updateScroll = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (max <= 0) { track.style.display = 'none'; return; }
+        if (max <= 0) {
+            track.style.display = 'none';
+            return;
+        }
         track.style.display = '';
         thumb.style.height = `${Math.min(100, (window.scrollY / max) * 100)}%`;
     };
 
-    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('scroll', updateScroll, {
+        passive: true,
+        signal: abortController.signal
+    });
+
     applyOpColor(
         window.spwInterface?.getActiveFrame?.()
             ? getFrameMeta(window.spwInterface.getActiveFrame()).opType
             : 'frame',
         window.spwInterface?.getActiveFrame?.() || null
     );
+
     updateScroll();
+
+    return () => {
+        abortController.abort();
+        objectiveWall.remove();
+        subjectiveWall.remove();
+    };
 };
 
 const initSpiritSequenceEasterEgg = () => {
+    const abortController = new AbortController();
     const SPIRIT_SEQUENCE = ['?', '~', '@', '&', '*', '^'];
     const SPIRIT_COLORS = [
         'hsl(268 55% 42%)',
@@ -680,11 +750,13 @@ const initSpiritSequenceEasterEgg = () => {
         'hsl(180 100% 22%)',
         'hsl(160 60% 32%)',
         'hsl(36 80% 36%)',
-        'hsl(180 100% 28%)',
+        'hsl(180 100% 28%)'
     ];
 
     let buffer = [];
-    let resetTimeout = null;
+    let resetTimeout = 0;
+    let pulseInterval = 0;
+    let toastTimeout = 0;
 
     const isInputFocused = () => {
         const tag = document.activeElement?.tagName;
@@ -696,14 +768,15 @@ const initSpiritSequenceEasterEgg = () => {
         const subjectiveWall = document.querySelector('.spw-subjective-wall, .spw-bane-wall');
 
         let step = 0;
-        const pulse = setInterval(() => {
+        pulseInterval = window.setInterval(() => {
             const color = SPIRIT_COLORS[step % SPIRIT_COLORS.length];
             document.documentElement.style.setProperty('--active-op-color', color);
             if (objectiveWall) objectiveWall.style.color = color;
             if (subjectiveWall) subjectiveWall.style.color = color;
-            step++;
+            step += 1;
             if (step >= SPIRIT_COLORS.length * 2) {
-                clearInterval(pulse);
+                clearInterval(pulseInterval);
+                pulseInterval = 0;
                 if (objectiveWall) objectiveWall.style.color = '';
                 if (subjectiveWall) subjectiveWall.style.color = '';
             }
@@ -717,17 +790,21 @@ const initSpiritSequenceEasterEgg = () => {
 
         requestAnimationFrame(() => toast.classList.add('is-visible'));
 
-        setTimeout(() => {
+        toastTimeout = window.setTimeout(() => {
             toast.classList.remove('is-visible');
             toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+            toastTimeout = 0;
         }, 2800);
     };
 
-    document.addEventListener('keydown', (e) => {
-        if (isInputFocused()) { buffer = []; return; }
-        if (e.metaKey || e.ctrlKey || e.altKey) return;
+    document.addEventListener('keydown', (event) => {
+        if (isInputFocused()) {
+            buffer = [];
+            return;
+        }
+        if (event.metaKey || event.ctrlKey || event.altKey) return;
 
-        const key = e.key;
+        const key = event.key;
         const expected = SPIRIT_SEQUENCE[buffer.length];
 
         if (key === expected) {
@@ -738,16 +815,30 @@ const initSpiritSequenceEasterEgg = () => {
                 buffer = [];
                 triggerSpiritCycle();
             } else {
-                resetTimeout = setTimeout(() => { buffer = []; }, 3000);
+                resetTimeout = window.setTimeout(() => {
+                    buffer = [];
+                    resetTimeout = 0;
+                }, 3000);
             }
         } else {
             buffer = key === SPIRIT_SEQUENCE[0] ? [key] : [];
             clearTimeout(resetTimeout);
             if (buffer.length) {
-                resetTimeout = setTimeout(() => { buffer = []; }, 3000);
+                resetTimeout = window.setTimeout(() => {
+                    buffer = [];
+                    resetTimeout = 0;
+                }, 3000);
             }
         }
-    });
+    }, { signal: abortController.signal });
+
+    return () => {
+        abortController.abort();
+        buffer = [];
+        if (resetTimeout) clearTimeout(resetTimeout);
+        if (pulseInterval) clearInterval(pulseInterval);
+        if (toastTimeout) clearTimeout(toastTimeout);
+    };
 };
 
 /* ==========================================================================
@@ -760,7 +851,7 @@ const createRhythmController = (options = {}) => {
         beatsPerMeasure: Number(options.beatsPerMeasure || 4),
         bpm: Number(options.bpm || 96),
         autoplay: Boolean(options.autoplay),
-        target: options.target || document,
+        target: options.target || document
     };
 
     const state = {
@@ -772,7 +863,7 @@ const createRhythmController = (options = {}) => {
         playing: false,
         startedAt: 0,
         lastTickAt: 0,
-        timerId: 0,
+        timerId: 0
     };
 
     const root = document.documentElement;
@@ -907,6 +998,8 @@ const createRhythmController = (options = {}) => {
     };
 
     const bindKeyboard = () => {
+        const abortController = new AbortController();
+
         const isInputFocused = () => {
             const tag = document.activeElement?.tagName;
             return tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
@@ -926,8 +1019,8 @@ const createRhythmController = (options = {}) => {
             }
         };
 
-        document.addEventListener('keydown', onKeydown);
-        return () => document.removeEventListener('keydown', onKeydown);
+        document.addEventListener('keydown', onKeydown, { signal: abortController.signal });
+        return () => abortController.abort();
     };
 
     const getState = () => ({
@@ -971,27 +1064,36 @@ const initSiteRhythm = (boot) => {
         autoplay: !boot.flags.reduceMotion && boot.html.dataset.spwAutoplayRhythm === 'on',
         bpm: Number(boot.html.dataset.spwBpm || 96),
         phase: boot.html.dataset.spwPhase || 'ambient',
-        beatsPerMeasure: Number(boot.html.dataset.spwBeatsPerMeasure || 4),
+        beatsPerMeasure: Number(boot.html.dataset.spwBeatsPerMeasure || 4)
     });
 
     window.spwRhythm = rhythm;
 
-    bus.on('operator:phased', (event) => {
-        const phase = event.detail?.phase;
-        if (phase) {
-            rhythm.setPhase(phase, { source: 'operator' });
-        }
-    });
-
-    bus.on('spirit:shifted', (event) => {
-        const phase = event.detail?.phase;
-        if (phase) {
-            rhythm.setPhase(phase, { source: 'spirit' });
-        }
-    });
+    const offs = [
+        bus.on('operator:phased', (event) => {
+            const phase = event.detail?.phase;
+            if (phase) rhythm.setPhase(phase, { source: 'operator' });
+        }),
+        bus.on('spirit:shifted', (event) => {
+            const phase = event.detail?.phase;
+            if (phase) rhythm.setPhase(phase, { source: 'spirit' });
+        })
+    ];
 
     return () => {
+        offs.forEach((off) => {
+            try {
+                off?.();
+            } catch (error) {
+                console.warn('[site-rhythm] Failed to unsubscribe.', error);
+            }
+        });
+
         rhythm.destroy();
+
+        if (window.spwRhythm === rhythm) {
+            delete window.spwRhythm;
+        }
     };
 };
 
@@ -1425,9 +1527,9 @@ const OPTIONAL_FEATURES = [
    Boot stages
    ========================================================================== */
 
-const initPreflightStage = (boot) => {
+const initPreflightStage = async (boot) => {
     applySiteSettings();
-    resetSoftwareEntryScroll();
+    const resetCleanup = resetSoftwareEntryScroll();
 
     boot.registry.register({
         id: 'site-settings-apply',
@@ -1447,11 +1549,11 @@ const initPreflightStage = (boot) => {
         scope: 'route',
         mindfulness: { level: 'local', broaderPatterns: ['route', 'scroll'] }
     });
-    boot.registry.markMounted('software-entry-scroll-reset');
+    boot.registry.markMounted('software-entry-scroll-reset', resetCleanup);
 };
 
-const initCoreStage = (boot) => {
-    mountStaticModules(boot, CORE_MODULES);
+const initCoreStage = async (boot) => {
+    await mountStaticModules(boot, CORE_MODULES);
 };
 
 const initOptionalStage = async (boot) => {
@@ -1469,13 +1571,44 @@ const initOptionalStage = async (boot) => {
     }
 };
 
+const createBootHandle = (registry, sequence) => ({
+    sequence,
+    registry,
+    destroy() {
+        registry.destroyMounted();
+        if (activeBoot?.sequence === sequence) {
+            activeBoot = null;
+        }
+    }
+});
+
 const bootSite = async () => {
+    const sequence = ++bootSequence;
+
+    if (activeBoot) {
+        activeBoot.destroy();
+    }
+
     const registry = createModuleRegistry();
     const boot = createBootContext(registry);
 
-    initPreflightStage(boot);
-    initCoreStage(boot);
+    await initPreflightStage(boot);
+    await initCoreStage(boot);
     await initOptionalStage(boot);
+
+    const handle = createBootHandle(registry, sequence);
+    activeBoot = handle;
+    window.spwSiteRuntime = handle;
+
+    return handle;
+};
+
+export const destroySite = () => {
+    activeBoot?.destroy();
+};
+
+export const rebootSite = async () => {
+    return bootSite();
 };
 
 onDomReady(() => {

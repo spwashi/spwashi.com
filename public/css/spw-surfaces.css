@@ -43,6 +43,31 @@
   min-width: 0;
 }
 
+/* Shared grid normalization for early-route card systems */
+:where(
+  .frame-grid,
+  .media-card-grid,
+  .media-focus-layout,
+  .feature-map,
+  .domain-grid,
+  .spec-grid
+) {
+  align-items: stretch;
+}
+
+:where(
+  .frame-grid > .frame-card,
+  .frame-grid > .software-card,
+  .media-card-grid > .media-card,
+  .media-focus-layout > * > .media-focus-card,
+  .feature-map > .frame-card,
+  .domain-grid > .frame-panel,
+  .spec-grid > .software-card,
+  .spec-grid > .frame-panel
+) {
+  height: 100%;
+}
+
 /* ==========================================================================
    2. Media publishing
    ========================================================================== */
@@ -564,6 +589,10 @@
   gap: 0.8rem;
 }
 
+:where(.settings-grid > .settings-fieldset) {
+  height: 100%;
+}
+
 :where(.settings-fieldset) {
   border: 1px solid var(--spw-shell-line);
   border-radius: var(--radius);
@@ -684,6 +713,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: 0.65rem;
+}
+
+:where(.pwa-status-grid > .pwa-status-card) {
+  height: 100%;
 }
 
 :where(.pwa-status-card) {
@@ -1235,6 +1268,7 @@
   font-size: 0.72rem;
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
 }
 
 :where([data-spw-features~='console'] .spw-console-history-copy) {

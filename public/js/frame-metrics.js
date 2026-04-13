@@ -3,15 +3,20 @@ import { loadPretext } from '/public/js/pretext-utils.js';
 const METRICS_FONT = '16px JetBrains Mono, monospace';
 const LINE_HEIGHT = 26;
 const PADDING = 40;
+
 let initialized = false;
+let cleanupCurrent = null;
 
 const getFramePrimaryText = (frame) => {
     const h1 = frame.querySelector('h1');
     if (h1) return h1.textContent.trim();
+
     const h2 = frame.querySelector('h2');
     if (h2) return h2.textContent.trim();
+
     const p = frame.querySelector('p:not(.frame-note):not(.inline-note)');
     if (p?.textContent.trim().length > 20) return p.textContent.trim();
+
     return '';
 };
 
@@ -59,19 +64,21 @@ const measureFrame = (frame, pretext, handleCache) => {
 };
 
 const updateAll = (tracked, pretext, handleCache) => {
-    for (const { frame, items } of tracked) {
-        const m = measureFrame(frame, pretext, handleCache);
-        if (m) {
-            items.textContent = `${m.lineCount}L · ~${Math.round(m.height)}px · @${Math.round(m.width)}px`;
-        }
-    }
+    tracked.forEach(({ frame, items }) => {
+        const metrics = measureFrame(frame, pretext, handleCache);
+        if (!metrics) return;
+        items.textContent = `${metrics.lineCount}L · ~${Math.round(metrics.height)}px · @${Math.round(metrics.width)}px`;
+    });
 };
 
-const initFrameMetrics = async () => {
-    if (initialized) return;
+export async function initFrameMetrics(root = document) {
+    if (initialized) {
+        return cleanupCurrent || (() => {});
+    }
 
-    const frames = Array.from(document.querySelectorAll('.site-frame'));
-    if (!frames.length) return;
+    const frames = Array.from(root.querySelectorAll('.site-frame'));
+    if (!frames.length) return () => {};
+
     initialized = true;
 
     let pretext;
@@ -79,27 +86,58 @@ const initFrameMetrics = async () => {
         if (document.fonts?.ready) await document.fonts.ready;
         pretext = await loadPretext();
     } catch {
-        return;
+        initialized = false;
+        return () => {};
     }
 
-    const handleCache = new Map();
+    const handleCache = new WeakMap();
 
     const tracked = frames.map((frame) => {
+        const existing = frame.querySelector(':scope > .frame-metrics-bar');
+        if (existing) existing.remove();
+
         const { bar, items } = createMetricsBar();
         frame.appendChild(bar);
-        return { frame, items };
+        return { frame, bar, items };
     });
 
-    let rafId;
+    let rafId = 0;
     const scheduleUpdate = () => {
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(() => updateAll(tracked, pretext, handleCache));
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+            rafId = 0;
+            updateAll(tracked, pretext, handleCache);
+        });
     };
 
-    const observer = new ResizeObserver(scheduleUpdate);
-    frames.forEach((frame) => observer.observe(frame));
+    let observer = null;
+    if ('ResizeObserver' in window) {
+        observer = new ResizeObserver(scheduleUpdate);
+        frames.forEach((frame) => observer.observe(frame));
+    } else {
+        window.addEventListener('resize', scheduleUpdate, { passive: true });
+    }
 
     scheduleUpdate();
-};
 
-export { initFrameMetrics };
+    cleanupCurrent = () => {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+        }
+
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        } else {
+            window.removeEventListener('resize', scheduleUpdate);
+        }
+
+        tracked.forEach(({ bar }) => bar.remove());
+
+        cleanupCurrent = null;
+        initialized = false;
+    };
+
+    return cleanupCurrent;
+}

@@ -92,6 +92,7 @@
   position: relative;
   min-width: 0;
   isolation: isolate;
+  container-type: inline-size;
 }
 
 :where(
@@ -108,19 +109,32 @@
 }
 
 /* ==========================================================================
-   3. Concept / inline container utility
+   3. Bleed utilities
    ========================================================================== */
 
-:where([data-spw-container="concept"]) {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border: 1.5px solid var(--component-accent);
-  border-radius: var(--component-radius-tight);
-  background: var(--token-bg, color-mix(in srgb, var(--component-accent) 8%, transparent));
-  transition:
-    border-color var(--component-transition-base),
-    background   var(--component-transition-fast),
-    color        var(--component-transition-fast);
+:where(.spw-bleed) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  width: calc(100% + (var(--local-bleed-offset) * 2));
+  margin-inline-start: calc(var(--local-bleed-offset) * -1);
+  margin-inline-end: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.spw-bleed-block) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  margin-block-start: calc(var(--local-bleed-offset) * -1);
+  margin-block-end: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed:first-child,
+:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed-block:first-child {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed:last-child,
+:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed-block:last-child {
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
 }
 
 /* ==========================================================================
@@ -150,16 +164,29 @@
    5. Shared card / panel shell
    ========================================================================== */
 
-:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) {
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel
+) {
   display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
   gap: var(--component-gap-tight);
   min-width: 0;
+  min-height: 100%;
   padding: var(--component-pad);
   color: var(--ink, inherit);
   background: var(--component-surface);
   border: var(--component-border);
   border-radius: var(--component-radius-tight);
   box-shadow: var(--component-shadow);
+  overflow: clip;
+  box-sizing: border-box;
   transition:
     background   var(--component-transition-deliberate),
     border-color var(--component-transition-base),
@@ -167,8 +194,65 @@
     color        var(--component-transition-fast);
 }
 
-:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel):is(:hover, :focus-within) {
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel
+):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel
+) > :last-child:is(.operator-chip, .media-card-cta, .frame-operators) {
+  margin-top: auto;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel
+) :is(
+  h1, h2, h3, h4, h5, h6,
+  p, ul, ol, li, blockquote,
+  pre, code,
+  figure, figcaption,
+  .frame-note, .frame-copy, .specimen-material, .operator-snippet-note
+) {
+  min-width: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card
+) :is(h2, h3, h4, p, ul, ol, pre, figure, figcaption) {
+  margin: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card
+) :is(p, li, span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol)) {
+  line-height: 1.5;
+  max-inline-size: 60ch;
 }
 
 /* Enhancements previously from whimsy layer */
@@ -351,7 +435,6 @@ code[data-interactive]:focus-visible::after {
   border-radius: var(--component-radius);
   background: var(--component-surface);
   box-shadow: var(--component-shadow);
-  container-type: inline-size;
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
 
   background-image:
@@ -675,34 +758,34 @@ code[data-interactive]:focus-visible::after {
    13. Meaningful card utilities
    ========================================================================== */
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-density="soft"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-density="soft"] {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-density="dense"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-density="dense"] {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-reading="measure"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="measure"] {
   max-inline-size: min(100%, var(--component-measure));
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-reading="code"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="code"] {
   max-inline-size: min(100%, var(--component-code-measure));
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-reading="ambient"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="ambient"] {
   color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-attention="focused"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="focused"] {
   border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent), var(--component-shadow);
 }
 
-:where(.frame-card, .media-card, .operator-card)[data-spw-attention="held"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="held"] {
   border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent), var(--component-shadow-active);
 }
@@ -711,10 +794,11 @@ code[data-interactive]:focus-visible::after {
    14. Media + card text flow safeguards
    ========================================================================== */
 
-:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
   h1, h2, h3, h4, h5, h6,
   p, ul, ol, li, blockquote,
   pre, code,
+  figure, figcaption,
   .frame-note,
   .frame-copy,
   .specimen-material,
@@ -723,14 +807,14 @@ code[data-interactive]:focus-visible::after {
   min-width: 0;
 }
 
-:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
   p, li, .frame-note, .frame-copy, .specimen-material
 ) {
   max-inline-size: var(--component-measure);
   text-wrap: pretty;
 }
 
-:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
   pre, code, .operator-snippet-example, .operator-card-panel-reduction
 ) {
   overflow-x: auto;
@@ -738,136 +822,18 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   15. Responsive adjustments
+   15. Nested structural quieting
    ========================================================================== */
-
-@media (max-width: 600px) {
-  .site-frame {
-    padding: clamp(0.85rem, 4vw, 1.25rem);
-    gap: 0.85rem;
-  }
-  .frame-grid {
-    gap: 0.75rem;
-  }
-  .frame-panel {
-    padding: 0.85rem;
-  }
-}
-
-@container (max-width: 38rem) {
-  :where(.frame-topline, .frame-heading) {
-    align-items: stretch;
-  }
-
-  :where(.frame-topline > .spec-strip,
-         .frame-topline > .mode-switch,
-         .frame-topline > .frame-operators,
-         .frame-topline > .spw-component-meta,
-         .frame-heading > .spw-component-meta) {
-    width: 100%;
-    margin-left: 0;
-    justify-content: flex-start;
-  }
-
-  :where(.frame-topline > .mode-switch > *,
-         .frame-topline > .frame-operators > *) {
-    flex: 1 1 min(100%, 8rem);
-    justify-content: center;
-  }
-}
-
-@container (max-width: 28rem) {
-  :where(.frame-heading > .frame-sigil) {
-    display: none;
-  }
-}
-
-@container (max-width: 26rem) {
-  :where(.frame-topline) {
-    margin-bottom: 0;
-  }
-
-  :where(.site-frame) {
-    --surface-padding: var(--component-pad);
-  }
-}
-
-/* ==========================================================================
-   16. Reduced motion / enhancement gating
-   ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  :where(.site-frame,
-         .frame-card,
-         .media-card,
-         .operator-card,
-         .frame-panel,
-         .mode-panel,
-         .frame-topline,
-         [data-spw-container="concept"],
-         [data-spw-flow="pretext"],
-         [data-spw-flow="pretext"] .line-decor) {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-:where(html[data-spw-enhance="off"]) :is(
-  [data-spw-metamaterial="glass"],
-  [data-spw-metamaterial="field"],
-  [data-spw-metamaterial="signal"]
-) {
-  background: var(--component-surface);
-}
-
-:where(html[data-spw-ornament="minimal"]) :where(.pretext-flow-scaffold) {
-  display: none;
-}
-
-/* Base component definition */
-:where(.frame-card, .frame-panel, .mode-panel) {
-  --local-border-alpha: 1; /* Default full opacity */
-  border: 1px solid color-mix(in srgb, var(--line) calc(100% * var(--local-border-alpha)), transparent);
-}
 
 /* When a panel or card is nested inside another structural component, 
    quiet its border to reduce visual noise */
-:where(.site-frame, .frame-panel) :where(.frame-card, .frame-panel, .mode-panel) {
+:where(.site-frame, .frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card, .frame-panel, .mode-panel) {
   --local-border-alpha: 0.4; /* Dim nested borders */
   box-shadow: var(--shadow-sm); /* Rely more on subtle depth than hard lines */
 }
 
 /* If heavily nested (level 3), remove the border entirely and rely on background contrast */
-:where(.site-frame) :where(.frame-panel) :where(.frame-card) {
+:where(.site-frame) :where(.frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card) {
   border-color: transparent;
   background: var(--surface-strong);
-}
-
-/* Elevate .ref-card and .plan-card to global component variants */
-.frame-card--reference,
-.frame-card--plan {
-  /* Inherit the base .frame-card physics, but override specific geometry */
-  display: grid;
-  gap: 0.45rem;
-  padding: 1.25rem;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  /* The before/after pseudo-elements will automatically pick up the 
-     transition physics defined in spw-cinematic.css */
-}
-
-/* Specific Plan Card flourishes (migrated from inline HTML) */
-.frame-card--plan::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  border-style: solid;
-  border-width: 0 2rem 2rem 0;
-  border-color: transparent var(--active-op-color, hsl(36 80% 36%)) transparent transparent;
-  opacity: 0;
-  transition: opacity var(--duration-base) var(--ease-mechanical);
-}
-
-.frame-card--plan:is(:hover, :focus-within)::before {
-  opacity: 0.12;
 }

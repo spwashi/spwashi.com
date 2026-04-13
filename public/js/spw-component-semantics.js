@@ -1,9 +1,13 @@
 import { bus } from './spw-bus.js';
 
 let initialized = false;
+let cleanupCurrent = null;
+
 let hoveredComponent = null;
 let resizeObserver = null;
 let mutationObserver = null;
+let scheduledSelectionSync = 0;
+let scheduledMutationFlush = 0;
 
 const COMPONENT_SELECTOR = [
     '[data-spw-kind]',
@@ -37,6 +41,30 @@ const COMPONENT_SELECTOR = [
     '.spw-console',
     '.spw-nav-panel'
 ].join(', ');
+
+const MUTATION_ATTRIBUTE_FILTER = [
+    'data-spw-kind',
+    'data-spw-form',
+    'data-spw-role',
+    'data-spw-meaning',
+    'data-spw-liminality',
+    'data-spw-context',
+    'data-spw-room',
+    'data-spw-permeability',
+    'data-spw-succession',
+    'data-spw-affordance',
+    'data-spw-wonder',
+    'data-spw-realization',
+    'data-spw-substrate',
+    'data-spw-phrase',
+    'data-spw-visited',
+    'data-spw-pinned',
+    'data-spw-latched',
+    'class',
+    'href',
+    'id',
+    'aria-current'
+];
 
 const normalizeText = (value = '') => value.replace(/\s+/g, ' ').trim();
 
@@ -228,6 +256,8 @@ const SUBSTRATE_SIGIL = Object.freeze({
     pragma: '!',
     surface: '>'
 });
+
+const pendingMutationNodes = new Set();
 
 const getFrameMeaning = (element) => {
     if (element.dataset.spwMeaning) return humanize(element.dataset.spwMeaning);
@@ -451,7 +481,6 @@ const getLiminality = (element, kind, role) => {
     case 'surface':
         return 'projected';
     case 'artifact':
-        return 'deep';
     case 'metric':
         return 'deep';
     default:
@@ -497,7 +526,6 @@ const getSubstrate = (element, kind, role) => {
     case 'lens':
         return 'probe';
     case 'surface':
-        return 'surface';
     case 'artifact':
         return 'surface';
     case 'metric':
@@ -646,7 +674,41 @@ const getGuideDensity = (room) => {
 
 const getScopedMeta = (host) => host.querySelector(':scope > .spw-component-meta');
 
-const attachTag = (element) => {
+function setDataIfChanged(element, key, value) {
+    if (element.dataset[key] !== String(value)) {
+        element.dataset[key] = String(value);
+    }
+}
+
+function updateSelectionStateIfNeeded(element, nextSelection) {
+    if (element.dataset.spwSelection !== nextSelection) {
+        element.dataset.spwSelection = nextSelection;
+    }
+
+    const nextSuccession = getSuccession(element);
+    if (element.dataset.spwSuccession !== nextSuccession) {
+        element.dataset.spwSuccession = nextSuccession;
+    }
+
+    const nextRoom = getRoom(element);
+    if (element.dataset.spwRoom !== nextRoom) {
+        element.dataset.spwRoom = nextRoom;
+    }
+
+    const nextDensity = getGuideDensity(nextRoom);
+    if (element.dataset.spwGuideDensity !== nextDensity) {
+        element.dataset.spwGuideDensity = nextDensity;
+    }
+
+    const meta = getScopedMeta(getTagHost(element, element.dataset.spwComponentKind || getKind(element)));
+    if (meta && meta.dataset.spwGuideDensity !== nextDensity) {
+        meta.dataset.spwGuideDensity = nextDensity;
+    }
+}
+
+function attachTag(element) {
+    if (!(element instanceof Element) || !element.isConnected) return;
+
     const kind = getKind(element);
     const meaning = getMeaning(element, kind);
     const role = getRole(element, kind);
@@ -670,27 +732,27 @@ const attachTag = (element) => {
     let tag = meta?.querySelector(':scope > .spw-component-tag') || null;
     let guides = meta?.querySelector(':scope > .spw-component-guides') || null;
 
-    element.dataset.spwComponentKind = kind;
-    element.dataset.spwSurfaceKind = kind;
-    element.dataset.spwComponentMeaning = meaning;
-    element.dataset.spwRole = role;
-    element.dataset.spwForm = form;
-    element.dataset.spwLiminality = liminality;
-    element.dataset.spwSelectionBase = selectionBase;
+    setDataIfChanged(element, 'spwComponentKind', kind);
+    setDataIfChanged(element, 'spwSurfaceKind', kind);
+    setDataIfChanged(element, 'spwComponentMeaning', meaning);
+    setDataIfChanged(element, 'spwRole', role);
+    setDataIfChanged(element, 'spwForm', form);
+    setDataIfChanged(element, 'spwLiminality', liminality);
+    setDataIfChanged(element, 'spwSelectionBase', selectionBase);
     if (!element.dataset.spwSelection) {
         element.dataset.spwSelection = selectionBase;
     }
-    element.dataset.spwSubstrate = substrate;
-    element.dataset.spwRealization = realization;
-    element.dataset.spwPhrase = phrase;
-    element.dataset.spwContext = context;
-    element.dataset.spwAffordance = affordance;
-    element.dataset.spwWonder = wonder;
-    element.dataset.spwPermeability = permeability;
-    element.dataset.spwSuccession = succession;
-    element.dataset.spwRoom = room;
-    element.dataset.spwGuideDensity = guideDensity;
-    element.dataset.spwSemanticTagged = 'true';
+    setDataIfChanged(element, 'spwSubstrate', substrate);
+    setDataIfChanged(element, 'spwRealization', realization);
+    setDataIfChanged(element, 'spwPhrase', phrase);
+    setDataIfChanged(element, 'spwContext', context);
+    setDataIfChanged(element, 'spwAffordance', affordance);
+    setDataIfChanged(element, 'spwWonder', wonder);
+    setDataIfChanged(element, 'spwPermeability', permeability);
+    setDataIfChanged(element, 'spwSuccession', succession);
+    setDataIfChanged(element, 'spwRoom', room);
+    setDataIfChanged(element, 'spwGuideDensity', guideDensity);
+    setDataIfChanged(element, 'spwSemanticTagged', 'true');
     element.setAttribute('data-spw-field-root', '');
 
     if (!meta) {
@@ -714,71 +776,64 @@ const attachTag = (element) => {
         }
     }
 
-    meta.dataset.spwSubstrate = substrate;
-    meta.dataset.spwRealization = realization;
-    meta.dataset.spwPhrase = phrase;
-    meta.dataset.spwContext = context;
-    meta.dataset.spwWonder = wonder;
-    meta.dataset.spwGuideDensity = guideDensity;
+    setDataIfChanged(meta, 'spwSubstrate', substrate);
+    setDataIfChanged(meta, 'spwRealization', realization);
+    setDataIfChanged(meta, 'spwPhrase', phrase);
+    setDataIfChanged(meta, 'spwContext', context);
+    setDataIfChanged(meta, 'spwWonder', wonder);
+    setDataIfChanged(meta, 'spwGuideDensity', guideDensity);
 
-    tag.textContent = caption;
-    tag.dataset.spwSubstrate = substrate;
-    tag.dataset.spwRealization = realization;
-    tag.dataset.spwPhrase = phrase;
+    if (tag.textContent !== caption) {
+        tag.textContent = caption;
+    }
+    setDataIfChanged(tag, 'spwSubstrate', substrate);
+    setDataIfChanged(tag, 'spwRealization', realization);
+    setDataIfChanged(tag, 'spwPhrase', phrase);
 
-    const guideItems = [
-        createGuideChip({
-            kind: 'realization',
-            value: realization,
-            label: realization
-        }),
-        createGuideChip({
-            kind: 'phrase',
-            value: phrase,
-            label: phrase
-        }),
-        createGuideChip({
+    const desiredGuideSpec = [
+        { kind: 'realization', value: realization, label: realization, operator: '' },
+        { kind: 'phrase', value: phrase, label: phrase, operator: '' },
+        {
             kind: 'substrate',
             value: substrate,
             operator: substrate,
             label: `${SUBSTRATE_SIGIL[substrate] || ''} ${substrate}`.trim()
-        })
+        }
     ];
 
     if (guideDensity !== 'minimal') {
-        guideItems.push(
-            createGuideChip({
-                kind: 'context',
-                value: context,
-                label: context
-            }),
-            createGuideChip({
-                kind: 'wonder',
-                value: wonder,
-                label: wonder
-            })
+        desiredGuideSpec.push(
+            { kind: 'context', value: context, label: context, operator: '' },
+            { kind: 'wonder', value: wonder, label: wonder, operator: '' }
         );
     }
 
     if (guideDensity === 'rich') {
-        guideItems.push(
-            createGuideChip({
-                kind: 'permeability',
-                value: permeability,
-                label: permeability
-            }),
-            createGuideChip({
-                kind: 'affordance',
-                value: affordance,
-                label: affordance
-            })
+        desiredGuideSpec.push(
+            { kind: 'permeability', value: permeability, label: permeability, operator: '' },
+            { kind: 'affordance', value: affordance, label: affordance, operator: '' }
         );
     }
 
-    guides.replaceChildren(...guideItems);
-};
+    const existingGuides = Array.from(guides.children);
+    const needsReplace = existingGuides.length !== desiredGuideSpec.length
+        || existingGuides.some((node, index) => {
+            const spec = desiredGuideSpec[index];
+            return (
+                node.textContent !== spec.label
+                || node.dataset.spwGuideKind !== spec.kind
+                || (node.dataset.spwGuideValue || '') !== spec.value
+                || (node.dataset.spwOperator || '') !== spec.operator
+            );
+        });
 
-const annotateTree = (root = document) => {
+    if (needsReplace) {
+        const guideItems = desiredGuideSpec.map((spec) => createGuideChip(spec));
+        guides.replaceChildren(...guideItems);
+    }
+}
+
+function annotateTree(root = document) {
     const nodes = new Set();
 
     if (root instanceof Element && root.matches(COMPONENT_SELECTOR)) {
@@ -787,7 +842,7 @@ const annotateTree = (root = document) => {
 
     root.querySelectorAll?.(COMPONENT_SELECTOR).forEach((node) => nodes.add(node));
     nodes.forEach((node) => attachTag(node));
-};
+}
 
 const getComponentSelectionRank = (value) => ({
     ambient: 0,
@@ -801,7 +856,9 @@ const getTaggedComponent = (target) => (
     target instanceof Element ? target.closest('[data-spw-semantic-tagged="true"]') : null
 );
 
-const syncSelectionState = () => {
+function syncSelectionState() {
+    scheduledSelectionSync = 0;
+
     const focused = getTaggedComponent(document.activeElement);
     let target = null;
 
@@ -842,39 +899,80 @@ const syncSelectionState = () => {
             selection = 'selected';
         }
 
-        element.dataset.spwSelection = selection;
-        element.dataset.spwSuccession = getSuccession(element);
-        element.dataset.spwRoom = getRoom(element);
-        element.dataset.spwGuideDensity = getGuideDensity(element.dataset.spwRoom || 'standard');
-
-        const meta = getScopedMeta(getTagHost(element, element.dataset.spwComponentKind || getKind(element)));
-        if (meta) {
-            meta.dataset.spwGuideDensity = element.dataset.spwGuideDensity;
-        }
+        updateSelectionStateIfNeeded(element, selection);
     });
-};
+}
 
-const observeTaggedNode = (node) => {
+function scheduleSelectionSync() {
+    if (scheduledSelectionSync) return;
+    scheduledSelectionSync = requestAnimationFrame(syncSelectionState);
+}
+
+function observeTaggedNode(node) {
     if (!(node instanceof Element)) return;
     if (node.dataset.spwSemanticTagged !== 'true') return;
     resizeObserver?.observe(node);
-};
+}
 
-const initSpwComponentSemantics = () => {
-    if (initialized) return;
+function processPendingMutationNodes() {
+    scheduledMutationFlush = 0;
+
+    const nodes = Array.from(pendingMutationNodes);
+    pendingMutationNodes.clear();
+
+    nodes.forEach((node) => {
+        if (!(node instanceof Element) || !node.isConnected) return;
+        annotateTree(node);
+
+        if (node.dataset.spwSemanticTagged === 'true') {
+            observeTaggedNode(node);
+        }
+
+        node.querySelectorAll?.('[data-spw-semantic-tagged="true"]').forEach(observeTaggedNode);
+    });
+
+    scheduleSelectionSync();
+}
+
+function scheduleMutationNode(node) {
+    if (!(node instanceof Element)) return;
+    pendingMutationNodes.add(node);
+
+    if (!scheduledMutationFlush) {
+        scheduledMutationFlush = requestAnimationFrame(processPendingMutationNodes);
+    }
+}
+
+export function initSpwComponentSemantics() {
+    if (initialized) {
+        return cleanupCurrent || (() => {});
+    }
+
     initialized = true;
 
+    const abortController = new AbortController();
+    const offs = [];
+
     annotateTree(document);
-    syncSelectionState();
+    scheduleSelectionSync();
 
     resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
             if (!(target instanceof Element)) return;
             if (target.dataset.spwSemanticTagged !== 'true') return;
 
-            target.dataset.spwRoom = getRoom(target);
-            target.dataset.spwSuccession = getSuccession(target);
-            target.dataset.spwGuideDensity = getGuideDensity(target.dataset.spwRoom || 'standard');
+            const nextRoom = getRoom(target);
+            const nextSuccession = getSuccession(target);
+            const nextDensity = getGuideDensity(nextRoom);
+
+            if (
+                target.dataset.spwRoom === nextRoom
+                && target.dataset.spwSuccession === nextSuccession
+                && target.dataset.spwGuideDensity === nextDensity
+            ) {
+                return;
+            }
+
             attachTag(target);
         });
     });
@@ -885,78 +983,97 @@ const initSpwComponentSemantics = () => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'childList') {
                 mutation.addedNodes.forEach((node) => {
-                    if (!(node instanceof Element)) return;
-                    annotateTree(node);
-                    if (node.dataset.spwSemanticTagged === 'true') {
-                        observeTaggedNode(node);
+                    if (node instanceof Element) {
+                        scheduleMutationNode(node);
                     }
-                    node.querySelectorAll?.('[data-spw-semantic-tagged="true"]').forEach(observeTaggedNode);
                 });
                 return;
             }
 
             if (mutation.type === 'attributes' && mutation.target instanceof Element) {
-                attachTag(mutation.target);
+                if (mutation.attributeName === 'class'
+                    || mutation.attributeName === 'aria-current'
+                    || mutation.attributeName === 'href'
+                    || mutation.attributeName === 'id') {
+                    scheduleSelectionSync();
+                }
+                scheduleMutationNode(mutation.target);
             }
         });
-
-        syncSelectionState();
     });
 
     mutationObserver.observe(document.body, {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: [
-            'data-spw-kind',
-            'data-spw-form',
-            'data-spw-role',
-            'data-spw-meaning',
-            'data-spw-liminality',
-            'data-spw-context',
-            'data-spw-room',
-            'data-spw-permeability',
-            'data-spw-succession',
-            'data-spw-affordance',
-            'data-spw-wonder',
-            'data-spw-realization',
-            'data-spw-substrate',
-            'data-spw-phrase',
-            'data-spw-visited',
-            'data-spw-pinned',
-            'data-spw-latched',
-            'class',
-            'href',
-            'id',
-            'aria-current'
-        ]
+        attributeFilter: MUTATION_ATTRIBUTE_FILTER
     });
 
     document.addEventListener('pointerover', (event) => {
         hoveredComponent = getTaggedComponent(event.target);
-        syncSelectionState();
-    });
+        scheduleSelectionSync();
+    }, { signal: abortController.signal });
 
     document.addEventListener('pointerout', (event) => {
         hoveredComponent = getTaggedComponent(event.relatedTarget);
-        syncSelectionState();
-    });
+        scheduleSelectionSync();
+    }, { signal: abortController.signal });
 
-    document.addEventListener('focusin', syncSelectionState);
-    document.addEventListener('focusout', () => requestAnimationFrame(syncSelectionState));
-    document.addEventListener('click', () => requestAnimationFrame(syncSelectionState));
+    document.addEventListener('focusin', scheduleSelectionSync, { signal: abortController.signal });
+    document.addEventListener('focusout', scheduleSelectionSync, { signal: abortController.signal });
+    document.addEventListener('click', scheduleSelectionSync, { signal: abortController.signal });
+    window.addEventListener('hashchange', scheduleSelectionSync, { signal: abortController.signal });
 
-    bus.on('frame:activated', syncSelectionState);
-    bus.on('frame:mode', syncSelectionState);
-    bus.on('brace:pinned', syncSelectionState);
-    bus.on('brace:committed', syncSelectionState);
-    bus.on('brace:swapped', syncSelectionState);
+    offs.push(
+        bus.on('frame:activated', scheduleSelectionSync),
+        bus.on('frame:mode', scheduleSelectionSync),
+        bus.on('brace:pinned', scheduleSelectionSync),
+        bus.on('brace:committed', scheduleSelectionSync),
+        bus.on('brace:swapped', scheduleSelectionSync)
+    );
 
-    document.addEventListener('spw:frame-change', syncSelectionState);
-    document.addEventListener('spw:mode-change', syncSelectionState);
-    window.addEventListener('hashchange', syncSelectionState);
+    document.addEventListener('spw:frame-change', scheduleSelectionSync, { signal: abortController.signal });
+    document.addEventListener('spw:mode-change', scheduleSelectionSync, { signal: abortController.signal });
 
     document.dispatchEvent(new CustomEvent('spw:component-semantics-ready'));
-};
 
-export { initSpwComponentSemantics };
+    cleanupCurrent = () => {
+        abortController.abort();
+
+        offs.forEach((off) => {
+            try {
+                off?.();
+            } catch (error) {
+                console.warn('[ComponentSemantics] Failed to unsubscribe.', error);
+            }
+        });
+
+        if (scheduledSelectionSync) {
+            cancelAnimationFrame(scheduledSelectionSync);
+            scheduledSelectionSync = 0;
+        }
+
+        if (scheduledMutationFlush) {
+            cancelAnimationFrame(scheduledMutationFlush);
+            scheduledMutationFlush = 0;
+        }
+
+        pendingMutationNodes.clear();
+        hoveredComponent = null;
+
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+            resizeObserver = null;
+        }
+
+        if (mutationObserver) {
+            mutationObserver.disconnect();
+            mutationObserver = null;
+        }
+
+        initialized = false;
+        cleanupCurrent = null;
+    };
+
+    return cleanupCurrent;
+}

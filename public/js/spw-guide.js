@@ -1,9 +1,10 @@
 /**
  * Spw Cognitive Guide
  *
- * Provides learnability and scaffolding by monitoring grounded tokens and
- * substrate context, then marking nearby conceptual surfaces as guided rather
- * than silently changing their state.
+ * Lifetime-safe version:
+ * - returns teardown
+ * - unsubscribes bus handlers
+ * - aborts DOM listeners
  */
 
 import { bus } from './spw-bus.js';
@@ -14,11 +15,14 @@ const SCAFFOLD_MAP = {
     'software:Schedulers': ['pretext-probe-frame', 'browser-frame'],
     'software:Compression': ['lattices-frame', 'parsers-frame'],
     'software:Spw': ['spw-syntax-surface', 'spw-grammar-surface'],
-    'about:Land Cluster': ['flow-magic', 'concept-register']
+    'about:Land Cluster': ['flow-magic', 'concept-register'],
 };
 
 const GUIDED_SELECTOR = '[data-spw-guided="true"]';
 const isGuidanceEnabled = () => getSiteSettings().cognitiveHandles === 'on';
+
+let initialized = false;
+let currentCleanup = null;
 
 function getActiveGuideKeys() {
     const keys = new Set(getGroundedRegistry());
@@ -34,27 +38,30 @@ function clearGuidance() {
     document.querySelectorAll(GUIDED_SELECTOR).forEach((element) => {
         const previous = element.dataset.spwGuidePreviousLiminality;
         const meta = element.querySelector('.spw-component-meta');
-        if (previous) {
-            element.dataset.spwLiminality = previous;
-        } else {
-            delete element.dataset.spwLiminality;
+
+        if (previous !== undefined) {
+            if (previous) element.dataset.spwLiminality = previous;
+            else delete element.dataset.spwLiminality;
         }
 
         delete element.dataset.spwGuidePreviousLiminality;
         delete element.dataset.spwGuided;
         delete element.dataset.spwGuideReason;
+
         if (meta) delete meta.dataset.spwGuideReason;
     });
 }
 
 function guideElement(element, reason) {
     if (!element || element.dataset.spwGuided === 'true') return;
+
     const meta = element.querySelector('.spw-component-meta');
 
     element.dataset.spwGuidePreviousLiminality = element.dataset.spwLiminality || '';
     element.dataset.spwGuided = 'true';
     element.dataset.spwGuideReason = reason;
     element.dataset.spwLiminality = 'threshold';
+
     if (meta) meta.dataset.spwGuideReason = reason;
 }
 
@@ -66,9 +73,14 @@ function guideBySubstrate() {
     );
 
     activeSubstrates.forEach((substrate) => {
-        const candidates = Array.from(
-            document.querySelectorAll(`.site-frame[data-spw-substrate="${substrate}"], .frame-panel[data-spw-substrate="${substrate}"], .frame-card[data-spw-substrate="${substrate}"]`)
-        ).filter((element) => element.dataset.spwRealization !== 'realized');
+        const selector = [
+            `.site-frame[data-spw-substrate="${substrate}"]`,
+            `.frame-panel[data-spw-substrate="${substrate}"]`,
+            `.frame-card[data-spw-substrate="${substrate}"]`,
+        ].join(', ');
+
+        const candidates = Array.from(document.querySelectorAll(selector))
+            .filter((element) => element.dataset.spwRealization !== 'realized');
 
         candidates.slice(0, 3).forEach((element) => {
             guideElement(element, `${substrate} substrate`);
@@ -76,27 +88,56 @@ function guideBySubstrate() {
     });
 }
 
-function updateScaffolding() {
-    clearGuidance();
-    if (!isGuidanceEnabled()) return;
+function createUpdater() {
+    return function updateScaffolding() {
+        clearGuidance();
+        if (!isGuidanceEnabled()) return;
 
-    const registry = getActiveGuideKeys();
+        const registry = getActiveGuideKeys();
 
-    registry.forEach((key) => {
-        (SCAFFOLD_MAP[key] || []).forEach((id) => {
-            guideElement(document.getElementById(id), key);
+        registry.forEach((key) => {
+            (SCAFFOLD_MAP[key] || []).forEach((id) => {
+                guideElement(document.getElementById(id), key);
+            });
         });
-    });
 
-    guideBySubstrate();
+        guideBySubstrate();
+    };
 }
 
 export function initSpwGuide() {
+    if (initialized) {
+        return currentCleanup || (() => {});
+    }
+
+    initialized = true;
+
+    const updateScaffolding = createUpdater();
+    const abortController = new AbortController();
+    const offs = [
+        bus.on('spell:grounded', updateScaffolding),
+        bus.on('spell:ungrounded', updateScaffolding),
+        bus.on('spell:reset', updateScaffolding),
+    ];
+
+    document.addEventListener('spw:settings-change', updateScaffolding, { signal: abortController.signal });
+    document.addEventListener('spw:component-semantics-ready', updateScaffolding, { signal: abortController.signal });
+
     updateScaffolding();
 
-    bus.on('spell:grounded', updateScaffolding);
-    bus.on('spell:ungrounded', updateScaffolding);
-    bus.on('spell:reset', updateScaffolding);
-    document.addEventListener('spw:settings-change', updateScaffolding);
-    document.addEventListener('spw:component-semantics-ready', updateScaffolding);
+    currentCleanup = () => {
+        abortController.abort();
+        offs.forEach((off) => {
+            try {
+                off?.();
+            } catch (error) {
+                console.warn('[SpwGuide] Failed to unsubscribe.', error);
+            }
+        });
+        clearGuidance();
+        initialized = false;
+        currentCleanup = null;
+    };
+
+    return currentCleanup;
 }

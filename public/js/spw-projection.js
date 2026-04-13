@@ -1,62 +1,97 @@
 /**
  * Spw Sequence Projection
  *
- * Implements interactive 'nuanced selection' of braced copy.
- * By selecting a sequence of Spw delimiters, users can project
- * conceptual paths based on their active persona.
- *
- * Interactivity:
- * - Click Delimiter → Add to Sequence
- * - Sequence >= 3 → Trigger Projection
- * - Timeout (5s) → Clear Sequence
+ * Lifetime-safe version:
+ * - idempotent init
+ * - clearable interval + timeout
+ * - removable click listener
  */
 
 import { bus } from './spw-bus.js';
 
+let initialized = false;
 let currentSequence = [];
 let lastTimestamp = 0;
+let timeoutId = 0;
+let intervalId = 0;
+let clickHandler = null;
+
 const TIMEOUT = 5000;
+const CLEAR_DELAY_MS = 1000;
 
 export function initSpwProjection() {
-    document.addEventListener('click', (e) => {
-        const delimiter = e.target.closest('.spw-delimiter');
+    if (initialized) {
+        return () => destroySpwProjection();
+    }
+
+    initialized = true;
+
+    clickHandler = (event) => {
+        const delimiter = event.target instanceof Element
+            ? event.target.closest('.spw-delimiter')
+            : null;
+
         if (!delimiter) return;
-
         handleSelection(delimiter);
-    });
+    };
 
-    // Cleanup stale sequences periodically
-    setInterval(() => {
+    document.addEventListener('click', clickHandler);
+
+    intervalId = window.setInterval(() => {
         if (currentSequence.length > 0 && Date.now() - lastTimestamp > TIMEOUT) {
             clearSequence('timeout');
         }
     }, 1000);
+
+    return () => destroySpwProjection();
 }
 
-function handleSelection(el) {
+function destroySpwProjection() {
+    if (!initialized) return;
+
+    initialized = false;
+
+    if (clickHandler) {
+        document.removeEventListener('click', clickHandler);
+        clickHandler = null;
+    }
+
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = 0;
+    }
+
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = 0;
+    }
+
+    clearSequence('destroy');
+}
+
+function handleSelection(element) {
     const now = Date.now();
-    
-    // Reset if it's been too long
+
     if (now - lastTimestamp > TIMEOUT) {
         clearSequence('reset');
     }
 
     lastTimestamp = now;
 
-    if (el.dataset.spwSelection === 'selected') {
-        // Toggle off if already selected
-        el.removeAttribute('data-spw-selection');
-        currentSequence = currentSequence.filter(item => item !== el);
+    if (element.dataset.spwSelection === 'selected') {
+        element.removeAttribute('data-spw-selection');
+        element.classList.remove('spw-delight');
+        currentSequence = currentSequence.filter((item) => item !== element);
         return;
     }
 
-    el.setAttribute('data-spw-selection', 'selected');
-    currentSequence.push(el);
+    element.setAttribute('data-spw-selection', 'selected');
+    currentSequence.push(element);
 
-    bus.emit('sequence:selected', { 
-        length: currentSequence.length, 
-        el,
-        content: el.textContent.trim() 
+    bus.emit('sequence:selected', {
+        length: currentSequence.length,
+        el: element,
+        content: element.textContent.trim(),
     });
 
     if (currentSequence.length >= 3) {
@@ -66,20 +101,18 @@ function handleSelection(el) {
 
 function triggerProjection() {
     const persona = document.body.dataset.spwPersona || 'baseline';
-    const fragments = currentSequence.map(el => el.textContent.trim()).join(' → ');
-    
+    const fragments = currentSequence.map((el) => el.textContent.trim()).join(' → ');
+
     bus.emit('persona:projected', {
         persona,
         sequence: fragments,
-        elements: [...currentSequence]
+        elements: [...currentSequence],
     });
 
-    // Visual reward for projection
-    currentSequence.forEach(el => {
+    currentSequence.forEach((el) => {
         el.classList.add('spw-delight');
     });
 
-    // Log to console surface
     const consoleSurface = document.querySelector('.spw-console');
     if (consoleSurface) {
         const msg = document.createElement('div');
@@ -91,11 +124,15 @@ function triggerProjection() {
         consoleSurface.scrollTop = consoleSurface.scrollHeight;
     }
 
-    setTimeout(() => clearSequence('complete'), 1000);
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+        timeoutId = 0;
+        clearSequence('complete');
+    }, CLEAR_DELAY_MS);
 }
 
-function clearSequence(reason) {
-    currentSequence.forEach(el => {
+function clearSequence(_reason) {
+    currentSequence.forEach((el) => {
         el.removeAttribute('data-spw-selection');
         el.classList.remove('spw-delight');
     });
