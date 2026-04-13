@@ -1,14 +1,14 @@
 /*
  * Root-scoped service worker for spwashi.com
- * Improves offline navigation, installability, update activation, and cache resilience.
- * Strategy:
- * - Precache only shell-critical routes and assets
- * - Cache pages with network-first
- * - Cache same-origin static assets with stale-while-revalidate
- * - Avoid letting decorative or volatile assets poison install stability
+ * ---------------------------------------------------------------------------
+ * Goals
+ * - Keep startup and navigation resilient without adding runtime jank.
+ * - Make caching predictable and easy to invalidate.
+ * - Avoid caching volatile responses or poisoning caches with bad responses.
+ * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.2.9';
+const APP_VERSION = '0.3.0';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -80,12 +80,12 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE.core);
+
       const results = await Promise.allSettled(
-        PRECACHE_URLS.map((url) => cacheOne(cache, url))
+        PRECACHE_URLS.map((url) => precacheUrl(cache, url))
       );
 
       const failed = results.filter((result) => result.status === 'rejected');
-
       if (failed.length) {
         console.warn(
           `[SW ${APP_VERSION}] Partial precache failure: ${failed.length}/${PRECACHE_URLS.length}`
@@ -102,25 +102,25 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
-      try {
-        const keep = new Set(Object.values(CACHE));
-        const names = await caches.keys();
+      const keep = new Set(Object.values(CACHE));
+      const names = await caches.keys();
 
-        await Promise.all(
-          names.filter((name) => !keep.has(name)).map((name) => caches.delete(name))
-        );
+      await Promise.all(
+        names
+          .filter((name) => !keep.has(name))
+          .map((name) => caches.delete(name))
+      );
 
-        if (self.registration.navigationPreload) {
-          await self.registration.navigationPreload.enable();
-        }
-
-        await self.clients.claim();
-        console.log(`[SW ${APP_VERSION}] Activated`);
-      } catch (error) {
-        console.warn(`[SW ${APP_VERSION}] Activate failed`, error);
-        await self.clients.claim();
+      if (self.registration.navigationPreload) {
+        await self.registration.navigationPreload.enable();
       }
-    })()
+
+      await self.clients.claim();
+      console.log(`[SW ${APP_VERSION}] Activated`);
+    })().catch(async (error) => {
+      console.warn(`[SW ${APP_VERSION}] Activate failed`, error);
+      await self.clients.claim();
+    })
   );
 });
 
@@ -152,21 +152,31 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(staleWhileRevalidate(event, request, CACHE.assets));
+  event.respondWith(networkFirst(request, CACHE.assets));
 });
 
-const shouldHandleRequest = (request) => {
+/* ==========================================================================
+   Request routing
+   ========================================================================== */
+
+function shouldHandleRequest(request) {
   if (request.method !== 'GET') return false;
+  if (request.headers.has('range')) return false;
 
   const url = new URL(request.url);
 
   if (url.origin !== self.location.origin) return false;
   if (url.protocol !== 'https:' && self.location.protocol === 'https:') return false;
 
-  return true;
-};
+  // Let browser/dev tooling handle special endpoints directly.
+  if (url.pathname.startsWith('/__') || url.pathname.startsWith('/.well-known/')) {
+    return false;
+  }
 
-const isStaticAssetRequest = (request, url) => {
+  return true;
+}
+
+function isStaticAssetRequest(request, url) {
   if (
     ['style', 'script', 'image', 'font', 'audio', 'video'].includes(request.destination)
   ) {
@@ -187,37 +197,49 @@ const isStaticAssetRequest = (request, url) => {
     url.pathname.endsWith('.woff') ||
     url.pathname.endsWith('.woff2')
   );
-};
+}
 
-const cacheOne = async (cache, url) => {
-  const request = new Request(url, { credentials: 'same-origin' });
+/* ==========================================================================
+   Install / precache
+   ========================================================================== */
+
+async function precacheUrl(cache, url) {
+  const request = new Request(url, {
+    credentials: 'same-origin',
+    cache: 'reload',
+  });
+
   const response = await fetch(request);
 
-  if (!response.ok) {
+  if (!isCacheableResponse(response)) {
     throw new Error(`Failed to precache ${url}: ${response.status}`);
   }
 
-  await cache.put(request, response);
-};
+  await cache.put(normalizeCacheKey(request), response);
+}
 
-const handleNavigationRequest = async (event) => {
+/* ==========================================================================
+   Strategies
+   ========================================================================== */
+
+async function handleNavigationRequest(event) {
+  const request = event.request;
+
   try {
     const preloadResponse = await event.preloadResponse;
-
-    if (preloadResponse && preloadResponse.ok) {
-      event.waitUntil(cacheResponse(CACHE.pages, event.request, preloadResponse.clone()));
+    if (isCacheableHtmlResponse(preloadResponse)) {
+      event.waitUntil(cacheResponse(CACHE.pages, request, preloadResponse.clone()));
       return preloadResponse;
     }
 
-    const response = await fetch(event.request);
-
-    if (response && response.ok) {
-      event.waitUntil(cacheResponse(CACHE.pages, event.request, response.clone()));
+    const networkResponse = await fetch(request, { cache: 'no-cache' });
+    if (isCacheableHtmlResponse(networkResponse)) {
+      event.waitUntil(cacheResponse(CACHE.pages, request, networkResponse.clone()));
     }
 
-    return response;
+    return networkResponse;
   } catch {
-    const cached = await matchNavigationCache(event.request);
+    const cached = await matchNavigationCache(request);
     if (cached) return cached;
 
     const offline = await caches.match(OFFLINE_URL);
@@ -229,19 +251,19 @@ const handleNavigationRequest = async (event) => {
       })
     );
   }
-};
+}
 
-const networkFirst = async (request, cacheName) => {
+async function networkFirst(request, cacheName) {
   try {
-    const response = await fetch(request);
+    const response = await fetch(request, { cache: 'no-cache' });
 
-    if (response && response.ok) {
+    if (isCacheableResponse(response)) {
       await cacheResponse(cacheName, request, response.clone());
     }
 
     return response;
   } catch {
-    const cached = await caches.match(request);
+    const cached = await caches.match(normalizeCacheKey(request));
     if (cached) return cached;
 
     if (request.destination === 'document') {
@@ -254,59 +276,85 @@ const networkFirst = async (request, cacheName) => {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     });
   }
-};
+}
 
-const staleWhileRevalidate = async (event, request, cacheName) => {
-  try {
-    const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match(request);
+async function staleWhileRevalidate(event, request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cacheKey = normalizeCacheKey(request);
+  const cached = await cache.match(cacheKey);
 
-    const networkPromise = fetch(request)
-      .then(async (response) => {
-        if (response && response.ok) {
-          await cache.put(request, response.clone());
-        }
-        return response;
-      })
-      .catch(() => null);
+  const networkPromise = fetch(request)
+    .then(async (response) => {
+      if (isCacheableResponse(response)) {
+        await cache.put(cacheKey, response.clone());
+      }
+      return response;
+    })
+    .catch(() => null);
 
-    if (cachedResponse) {
-      event.waitUntil(networkPromise);
-      return cachedResponse;
-    }
-
-    const networkResponse = await networkPromise;
-    if (networkResponse) return networkResponse;
-
-    if (request.destination === 'image') {
-      const fallback = await caches.match(FALLBACK_IMAGE_URL);
-      if (fallback) return fallback;
-    }
-
-    return new Response('Offline', {
-      status: 503,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-    });
-  } catch {
-    return new Response('Offline', {
-      status: 503,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-    });
+  if (cached) {
+    event.waitUntil(networkPromise);
+    return cached;
   }
-};
 
-const cacheResponse = async (cacheName, request, response) => {
-  if (!response || !response.ok) return;
+  const networkResponse = await networkPromise;
+  if (networkResponse) return networkResponse;
+
+  if (request.destination === 'image') {
+    const fallback = await caches.match(FALLBACK_IMAGE_URL);
+    if (fallback) return fallback;
+  }
+
+  return new Response('Offline', {
+    status: 503,
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  });
+}
+
+/* ==========================================================================
+   Cache helpers
+   ========================================================================== */
+
+async function cacheResponse(cacheName, request, response) {
+  if (!isCacheableResponse(response)) return;
 
   try {
     const cache = await caches.open(cacheName);
-    await cache.put(request, response);
+    await cache.put(normalizeCacheKey(request), response);
   } catch (error) {
     console.warn(`[SW ${APP_VERSION}] Cache put failed`, error);
   }
-};
+}
 
-const matchNavigationCache = async (request) => {
+function normalizeCacheKey(request) {
+  const url = new URL(request.url);
+
+  // Keep navigation cache keys stable and avoid query noise.
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    url.search = '';
+    url.hash = '';
+    return url.pathname;
+  }
+
+  // For static assets, preserve the full URL so version/query-busted assets remain distinct.
+  return request;
+}
+
+function isCacheableResponse(response) {
+  if (!response) return false;
+  if (!response.ok) return false;
+  if (response.type === 'opaque') return false;
+  return true;
+}
+
+function isCacheableHtmlResponse(response) {
+  if (!isCacheableResponse(response)) return false;
+
+  const contentType = response.headers.get('content-type') || '';
+  return contentType.includes('text/html');
+}
+
+async function matchNavigationCache(request) {
   try {
     const url = new URL(request.url);
     const candidates = buildNavigationCandidates(url);
@@ -315,31 +363,33 @@ const matchNavigationCache = async (request) => {
       const cached = await caches.match(candidate);
       if (cached) return cached;
     }
-  } catch {}
+  } catch {
+    // fall through
+  }
 
   return null;
-};
+}
 
-const buildNavigationCandidates = (url) => {
+function buildNavigationCandidates(url) {
   const pathname = url.pathname;
-  const trimmedPath = trimIndexAndTrailingSlash(pathname);
-  const candidates = new Set([pathname, trimmedPath]);
+  const trimmed = trimIndexAndTrailingSlash(pathname);
+  const candidates = new Set([pathname, trimmed]);
 
-  if (trimmedPath === '/') {
+  if (trimmed === '/') {
     candidates.add('/');
     candidates.add('/index.html');
     return [...candidates];
   }
 
-  candidates.add(`${trimmedPath}/`);
-  candidates.add(`${trimmedPath}/index.html`);
+  candidates.add(`${trimmed}/`);
+  candidates.add(`${trimmed}/index.html`);
   candidates.add(`${pathname.replace(/\/$/, '')}/index.html`);
 
   return [...candidates];
-};
+}
 
-const trimIndexAndTrailingSlash = (pathname) => {
+function trimIndexAndTrailingSlash(pathname) {
   const withoutIndex = pathname.replace(/index\.html$/, '');
   const trimmed = withoutIndex.replace(/\/+$/, '');
   return trimmed || '/';
-};
+}
