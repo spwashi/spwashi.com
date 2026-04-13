@@ -2,44 +2,23 @@
  * SpwBus — unified event coordination for all Spw systems.
  *
  * Design principles:
- *  1. Single emit path: every custom event passes through here
- *  2. Consistent payload: every event includes { _name, _ts, _source, ...detail }
- *  3. Backward compat: also dispatches legacy DOM event names so CSS/HTML stays stable
- *  4. Charge model: automatically tracks and writes --charge (0→1) onto elements
- *  5. Introspection: bus.recent() exposes event history for the console and debugging
+ * 1. Single emit path: every custom event passes through here
+ * 2. Consistent payload: every event includes { _name, _ts, _source, ...detail }
+ * 3. Backward compat: also dispatches legacy DOM event names so CSS/HTML stays stable
+ * 4. Charge model: automatically tracks and writes --charge (0→1) onto elements
+ * 5. Introspection: bus.recent() exposes event history for the console and debugging
  *
- * Canonical event names use colon-separated "noun:verb-past" form:
- *
- *   Gesture       brace:charged | brace:discharged | brace:activated | brace:sustained
- *                 brace:projected | brace:moved | brace:released | brace:swapped | brace:pinned
- *
- *   Frame         frame:activated | frame:mode
- *
- *   Operator      operator:phased | operator:activated
- *
- *   Spirit        spirit:shifted
- *
- *   Field         field:charged | field:sliced
- *
- *   Spell         spell:popped | spell:reset | spell:checkpoint | spell:cast
- *
- *   Settings      settings:changed
- *
- *   Lattice       lattice:cycled
- *
- * Usage:
- *   import { bus } from './spw-bus.js';
- *
- *   bus.emit('brace:charged', { form }, { element: el });
- *   const off = bus.on('brace:activated', handler);
- *   off(); // unsubscribe
- *   bus.getCharge(el); // → 0..1
+ * Canonical event families:
+ * brace:* gesture / projection / activation
+ * frame:* frame activation / mode changes
+ * operator:* operator / phase state
+ * spirit:* higher-order phase shifts
+ * field:* field energy / charge
+ * spell:* haptics / checkpoints / cast state
+ * lattice:* lattice cycles
+ * rhythm:* tempo / pulse / phase / measure / transport
+ * stream:* compatibility channel for time-based consumers
  */
-
-// ── Charge table ───────────────────────────────────────────────────────────
-// Each event maps to a normalized charge level (0 = neutral, 1 = manifest).
-// The bus writes this value to `--charge` on the element, enabling CSS to
-// drive all cinematic effects from a single source of truth.
 
 const CHARGE_BY_EVENT = Object.freeze({
     'brace:charged':    0.25,
@@ -49,13 +28,15 @@ const CHARGE_BY_EVENT = Object.freeze({
     'brace:moved':      0.50,
     'brace:discharged': 0,
     'brace:released':   0,
-    // Pinned elements hold a residual charge even after the gesture ends
     'brace:pinned':     0.30,
-});
 
-// ── Legacy event name map ──────────────────────────────────────────────────
-// New canonical names → old DOM event names.
-// Both are dispatched so existing code requires no changes.
+    'rhythm:start':     0.20,
+    'rhythm:pulse':     0.35,
+    'rhythm:phase':     0.45,
+    'rhythm:measure':   0.55,
+    'rhythm:stop':      0,
+    'rhythm:reset':     0,
+});
 
 const LEGACY = Object.freeze({
     'brace:charged':      'spw:brace:charge-start',
@@ -77,89 +58,101 @@ const LEGACY = Object.freeze({
     'spell:checkpoint':   'spw:haptics:checkpoint',
     'field:charged':      'electromagnetic:charge-change',
     'lattice:cycled':     'spw:phase:cycle',
+
+    // Temporal compatibility for modules already listening on stream names.
+    'rhythm:pulse':       'stream:pulse',
+    'rhythm:phase':       'stream:phase',
 });
 
-// ── SpwBus ─────────────────────────────────────────────────────────────────
-
 class SpwBus {
-    #history    = [];
+    #history = [];
     #maxHistory = 100;
-    #chargeMap  = new WeakMap(); // element → current 0..1 charge
+    #chargeMap = new WeakMap();
+    #mirrorToConsole = false;
 
-    /**
-     * Emit a canonical Spw event.
-     *
-     * @param {string}  name              Canonical name, e.g. 'brace:charged'
-     * @param {object}  detail            Event payload (merged with metadata)
-     * @param {object}  [opts]
-     * @param {EventTarget} [opts.target=document]
-     * @param {boolean}     [opts.bubbles=true]
-     * @param {Element}     [opts.element]  Enables charge tracking on this element
-     */
+    constructor() {
+        // Moved the standalone listener into the constructor so it binds properly
+        // without risking execution before the class is initialized.
+        this.on('settings:changed', (event) => {
+            const settings = event.detail || {};
+            this.setHistoryLimit(Number(settings.busHistorySize || 100));
+            this.setMirrorToConsole(settings.busMirrorToConsole === 'on');
+        });
+    }
+
     emit(name, detail = {}, { target = document, bubbles = true, element = null } = {}) {
-        const ts  = Date.now();
+        const ts = Date.now();
         const src = name.split(':')[0];
-
         const enriched = { ...detail, _name: `spw:${name}`, _ts: ts, _source: src };
 
         this.#record(name, enriched, ts);
 
-        // Canonical event (e.g. "spw:brace:charged")
+        if (this.#mirrorToConsole) {
+            console.debug('[SpwBus]', name, enriched);
+        }
+
         target.dispatchEvent(new CustomEvent(`spw:${name}`, {
-            detail:   enriched,
+            detail: enriched,
             bubbles,
             composed: true,
         }));
 
-        // Legacy event for backward compat (e.g. "spw:brace:charge-start")
         const legacyName = LEGACY[name];
         if (legacyName) {
             target.dispatchEvent(new CustomEvent(legacyName, {
-                detail:   enriched,
+                detail: enriched,
                 bubbles,
                 composed: true,
             }));
         }
 
-        // Update charge on element if provided (or detected in detail)
         const el = element ?? (detail.element instanceof Element ? detail.element : null);
         if (el) this.#applyCharge(el, name);
 
         return { name, detail: enriched, ts };
     }
 
-    /**
-     * Listen for a canonical Spw event.
-     * Returns an unsubscribe function.
-     *
-     * @param {string}      name
-     * @param {Function}    handler
-     * @param {object}      [opts]
-     * @param {EventTarget} [opts.target=document]
-     * @param {boolean}     [opts.once=false]
-     * @param {AbortSignal} [opts.signal]
-     */
     on(name, handler, { target = document, once = false, signal } = {}) {
         const canonical = `spw:${name}`;
-        const options   = { once };
+        const options = { once };
         if (signal) options.signal = signal;
         target.addEventListener(canonical, handler, options);
         return () => target.removeEventListener(canonical, handler);
     }
 
-    /**
-     * Read recent event history. Optional string filter matches against event name.
-     * Useful for the console: window.spw.bus.recent('brace')
-     */
     recent(filter = null) {
         return filter
-            ? this.#history.filter(r => r.name.includes(filter))
+            ? this.#history.filter((r) => r.name.includes(filter))
             : [...this.#history];
     }
 
-    /** Read the current charge level (0→1) for an element. */
     getCharge(element) {
         return this.#chargeMap.get(element) ?? 0;
+    }
+
+    setHistoryLimit(limit) {
+        const next = Number(limit);
+        if (!Number.isFinite(next) || next < 10) return;
+        this.#maxHistory = next;
+        if (this.#history.length > this.#maxHistory) {
+            this.#history = this.#history.slice(-this.#maxHistory);
+        }
+    }
+
+    getHistoryLimit() {
+        return this.#maxHistory;
+    }
+
+    setMirrorToConsole(value) {
+        this.#mirrorToConsole = Boolean(value);
+    }
+
+    getDiagnostics() {
+        return {
+            historySize: this.#history.length,
+            historyLimit: this.#maxHistory,
+            mirrorToConsole: this.#mirrorToConsole,
+        };
     }
 
     #record(name, detail, ts) {
@@ -174,7 +167,6 @@ class SpwBus {
         this.#chargeMap.set(element, level);
         element.style.setProperty('--charge', level);
 
-        // data-spw-charge carries a human-readable label for CSS selectors
         if (level === 0) {
             delete element.dataset.spwCharge;
         } else {

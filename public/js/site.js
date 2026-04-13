@@ -9,7 +9,7 @@ import {
     initSiteSettingsPage,
     shouldUseViewportActivation
 } from './site-settings.js';
-import './spirit-phase-dynamics.js';
+import './spw-developmental-climate.js';
 import './electromagnetic-containers.js';
 import { initBraceGestures } from './brace-gestures.js';
 import { initSpwExperiential } from './spw-experiential.js';
@@ -39,17 +39,12 @@ import { initReactiveSpine } from './spw-reactive-spine.js';
 import { initPageUniverse } from './spw-page-universe.js';
 import { mountLogo, initLogoRuntime } from './spw-logo-runtime.js';
 import { initAttnRegister } from './attn-register.js';
+import { bus } from './spw-bus.js';
 
 const isSoftwareRoute = () => /^\/topics\/software\/?$/.test(window.location.pathname);
 
 /* ==========================================================================
    Module registry
-   --------------------------------------------------------------------------
-   Purpose
-   - Track which modules are still legacy init modules and which later adopt
-     a normalized registration API.
-   - Record layer / scope / mindfulness metadata for future layered
-     integration, local enhancement, and model-guided site awareness.
    ========================================================================== */
 
 const createModuleRegistry = () => {
@@ -223,7 +218,7 @@ const safeMountModule = (definition, boot, mount) => {
     boot.registry.register(definition);
 
     try {
-        const cleanup = mount();
+        const cleanup = mount(boot);
         boot.registry.markMounted(definition.id, cleanup);
         return cleanup;
     } catch (error) {
@@ -275,7 +270,7 @@ const loadAndMountFeatureModule = async (definition, boot) => {
             throw new Error(`Expected export "${definition.exportName}" in ${definition.path}`);
         }
 
-        const cleanup = await initFn();
+        const cleanup = await initFn(boot);
         boot.registry.markMounted(definition.id, cleanup);
     } catch (error) {
         boot.registry.markFailed(definition.id, error);
@@ -756,6 +751,251 @@ const initSpiritSequenceEasterEgg = () => {
 };
 
 /* ==========================================================================
+   Site rhythm runtime
+   ========================================================================== */
+
+const createRhythmController = (options = {}) => {
+    const config = {
+        phaseOrder: options.phaseOrder || ['ambient', 'verse', 'chorus', 'bridge', 'drop'],
+        beatsPerMeasure: Number(options.beatsPerMeasure || 4),
+        bpm: Number(options.bpm || 96),
+        autoplay: Boolean(options.autoplay),
+        target: options.target || document,
+    };
+
+    const state = {
+        phase: options.phase || 'ambient',
+        beat: 0,
+        measure: 0,
+        beatsPerMeasure: config.beatsPerMeasure,
+        bpm: config.bpm,
+        playing: false,
+        startedAt: 0,
+        lastTickAt: 0,
+        timerId: 0,
+    };
+
+    const root = document.documentElement;
+
+    const syncRoot = () => {
+        root.dataset.spwPhase = state.phase;
+        root.dataset.spwBeat = String(state.beat);
+        root.dataset.spwMeasure = String(state.measure);
+        root.dataset.spwPlaying = state.playing ? 'on' : 'off';
+
+        root.style.setProperty('--spw-phase', `"${state.phase}"`);
+        root.style.setProperty('--spw-beat', `${state.beat}`);
+        root.style.setProperty('--spw-measure', `${state.measure}`);
+        root.style.setProperty('--spw-bpm', `${state.bpm}`);
+        root.style.setProperty('--spw-beat-progress', '0');
+    };
+
+    const emitState = (name, detail = {}) => {
+        bus.emit(name, {
+            phase: state.phase,
+            beat: state.beat,
+            measure: state.measure,
+            beatsPerMeasure: state.beatsPerMeasure,
+            bpm: state.bpm,
+            playing: state.playing,
+            ...detail
+        }, { target: config.target });
+    };
+
+    const setPhase = (phase, detail = {}) => {
+        if (!phase || phase === state.phase) return state.phase;
+        state.phase = phase;
+        syncRoot();
+        emitState('rhythm:phase', { phase, ...detail });
+        return state.phase;
+    };
+
+    const setTempo = (bpm, detail = {}) => {
+        const next = Math.max(1, Number(bpm || state.bpm));
+        if (next === state.bpm) return state.bpm;
+        state.bpm = next;
+        root.style.setProperty('--spw-bpm', `${state.bpm}`);
+        emitState('rhythm:tempo', { bpm: state.bpm, ...detail });
+        if (state.playing) {
+            stop({ silent: true });
+            start({ source: detail.source || 'tempo-change' });
+        }
+        return state.bpm;
+    };
+
+    const tick = (detail = {}) => {
+        state.beat += 1;
+        state.lastTickAt = performance.now();
+
+        if ((state.beat - 1) > 0 && (state.beat - 1) % state.beatsPerMeasure === 0) {
+            state.measure += 1;
+            emitState('rhythm:measure', { source: detail.source || 'tick' });
+        }
+
+        syncRoot();
+        emitState('rhythm:pulse', {
+            beat: state.beat,
+            beatInMeasure: ((state.beat - 1) % state.beatsPerMeasure) + 1,
+            source: detail.source || 'tick'
+        });
+
+        return state.beat;
+    };
+
+    const start = (detail = {}) => {
+        if (state.playing) return;
+        state.playing = true;
+        state.startedAt = performance.now();
+        syncRoot();
+        emitState('rhythm:start', { source: detail.source || 'start' });
+
+        const intervalMs = () => 60000 / state.bpm;
+
+        const loop = () => {
+            if (!state.playing) return;
+            tick({ source: detail.source || 'auto' });
+            state.timerId = window.setTimeout(loop, intervalMs());
+        };
+
+        state.timerId = window.setTimeout(loop, intervalMs());
+    };
+
+    const stop = (detail = {}) => {
+        if (!state.playing && !detail.silent) {
+            emitState('rhythm:stop', { source: detail.source || 'stop' });
+            return;
+        }
+
+        state.playing = false;
+        clearTimeout(state.timerId);
+        state.timerId = 0;
+        syncRoot();
+
+        if (!detail.silent) {
+            emitState('rhythm:stop', { source: detail.source || 'stop' });
+        }
+    };
+
+    const reset = (detail = {}) => {
+        stop({ source: detail.source || 'reset', silent: true });
+        state.beat = 0;
+        state.measure = 0;
+        state.lastTickAt = 0;
+        syncRoot();
+        emitState('rhythm:reset', { source: detail.source || 'reset' });
+    };
+
+    const cyclePhase = (detail = {}) => {
+        const index = config.phaseOrder.indexOf(state.phase);
+        const nextIndex = index >= 0 ? (index + 1) % config.phaseOrder.length : 0;
+        return setPhase(config.phaseOrder[nextIndex], {
+            source: detail.source || 'cycle'
+        });
+    };
+
+    const setState = (next = {}) => {
+        if (next.beatsPerMeasure && Number(next.beatsPerMeasure) > 0) {
+            state.beatsPerMeasure = Number(next.beatsPerMeasure);
+        }
+        if (next.phase) setPhase(next.phase, { source: next.source || 'set-state' });
+        if (next.bpm) setTempo(next.bpm, { source: next.source || 'set-state' });
+        if (typeof next.beat === 'number') state.beat = next.beat;
+        if (typeof next.measure === 'number') state.measure = next.measure;
+        syncRoot();
+        emitState('rhythm:state', { source: next.source || 'set-state' });
+        return getState();
+    };
+
+    const bindKeyboard = () => {
+        const isInputFocused = () => {
+            const tag = document.activeElement?.tagName;
+            return tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
+        };
+
+        const onKeydown = (event) => {
+            if (isInputFocused()) return;
+            if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+            if (event.key === '.') {
+                tick({ source: 'keyboard' });
+            } else if (event.key === ',') {
+                cyclePhase({ source: 'keyboard' });
+            } else if (event.key === '/') {
+                if (state.playing) stop({ source: 'keyboard' });
+                else start({ source: 'keyboard' });
+            }
+        };
+
+        document.addEventListener('keydown', onKeydown);
+        return () => document.removeEventListener('keydown', onKeydown);
+    };
+
+    const getState = () => ({
+        phase: state.phase,
+        beat: state.beat,
+        measure: state.measure,
+        beatsPerMeasure: state.beatsPerMeasure,
+        bpm: state.bpm,
+        playing: state.playing,
+        startedAt: state.startedAt,
+        lastTickAt: state.lastTickAt
+    });
+
+    syncRoot();
+
+    if (config.autoplay) {
+        start({ source: 'autoplay' });
+    }
+
+    const keyboardCleanup = bindKeyboard();
+
+    return {
+        getState,
+        setState,
+        setPhase,
+        setTempo,
+        tick,
+        start,
+        stop,
+        reset,
+        cyclePhase,
+        destroy() {
+            keyboardCleanup();
+            stop({ source: 'destroy', silent: true });
+        }
+    };
+};
+
+const initSiteRhythm = (boot) => {
+    const rhythm = createRhythmController({
+        autoplay: !boot.flags.reduceMotion && boot.html.dataset.spwAutoplayRhythm === 'on',
+        bpm: Number(boot.html.dataset.spwBpm || 96),
+        phase: boot.html.dataset.spwPhase || 'ambient',
+        beatsPerMeasure: Number(boot.html.dataset.spwBeatsPerMeasure || 4),
+    });
+
+    window.spwRhythm = rhythm;
+
+    bus.on('operator:phased', (event) => {
+        const phase = event.detail?.phase;
+        if (phase) {
+            rhythm.setPhase(phase, { source: 'operator' });
+        }
+    });
+
+    bus.on('spirit:shifted', (event) => {
+        const phase = event.detail?.phase;
+        if (phase) {
+            rhythm.setPhase(phase, { source: 'spirit' });
+        }
+    });
+
+    return () => {
+        rhythm.destroy();
+    };
+};
+
+/* ==========================================================================
    Boot manifests
    ========================================================================== */
 
@@ -783,6 +1023,18 @@ const CORE_MODULES = [
             broaderPatterns: ['frame', 'mode-switch', 'hash', 'viewport']
         },
         mount: () => initSiteCore()
+    },
+    {
+        id: 'site-rhythm',
+        label: 'Site rhythm',
+        api: 'legacy-init',
+        layer: 'runtime',
+        scope: 'site',
+        mindfulness: {
+            level: 'site',
+            broaderPatterns: ['beat', 'phase', 'tempo', 'measure', 'rhythm']
+        },
+        mount: (boot) => initSiteRhythm(boot)
     },
     {
         id: 'brace-walls',
@@ -1216,10 +1468,6 @@ const initOptionalStage = async (boot) => {
         });
     }
 };
-
-/* ==========================================================================
-   Main boot
-   ========================================================================== */
 
 const bootSite = async () => {
     const registry = createModuleRegistry();

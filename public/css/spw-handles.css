@@ -34,6 +34,37 @@ header,
   z-index: 120;
 }
 
+/* Unify the bounding box for all interactive tokens */
+:root {
+  --handle-min-height: 2.2rem; /* Ensure consistent touch targets */
+  --handle-baseline-offset: 0.1em;
+}
+
+:where(.spec-strip, .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--handle-gap, 0.45rem);
+  /* Align to baseline so text inside chips aligns perfectly, 
+     even if borders/padding differ slightly */
+  align-items: baseline; 
+}
+
+:where(
+  .operator-chip, 
+  .syntax-token, 
+  .spec-pill, 
+  .frame-sigil
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--handle-min-height);
+  padding: var(--handle-pad-y) var(--handle-pad-x);
+  box-sizing: border-box;
+  /* Push text down slightly if fonts render off-center */
+  padding-top: calc(var(--handle-pad-y) + var(--handle-baseline-offset)); 
+}
+
 :root {
   --handle-radius: 0.42rem;
   --handle-radius-tight: 0.28rem;

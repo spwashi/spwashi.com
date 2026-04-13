@@ -1573,103 +1573,503 @@
 }
 
 /* ==========================================================================
-   16. Feature flags + enhancement control
+   16. Runtime-aligned preset + rhythm bridge
+   --------------------------------------------------------------------------
+   Purpose
+   - Bind blog surface layout to measured Pretext presets and site rhythm state.
+   - Keep route-specific behavior additive: do not replace the global pretext
+     layer; specialize it for the blog surface.
+   - Expose stable fallbacks when JS measurement has not run yet.
    ========================================================================== */
 
-:where(html[data-spw-enhance="off"], html[data-spw-ornament="minimal"]) :is(
-  .site-frame::before,
-  .site-frame::after
-) {
-  opacity: 0.18;
+:where(body[data-spw-surface="blog"]) {
+  /* measured-readable widths */
+  --blog-readable-width:
+    min(
+      var(--blog-measure),
+      calc(var(--spw-preset-panel-readable-width, 42rem) * 1px)
+    );
+
+  --blog-card-readable-width:
+    min(
+      100%,
+      calc(var(--spw-preset-card-readable-width, 34rem) * 1px)
+    );
+
+  /* derived component defaults from presets */
+  --blog-card-min-height-phone:
+    var(--spw-preset-card-min-height-phone, 12rem);
+  --blog-card-min-height-tablet:
+    var(--spw-preset-card-min-height-tablet, 10rem);
+  --blog-panel-min-height-phone:
+    var(--spw-preset-panel-min-height-phone, 14rem);
+  --blog-panel-min-height-tablet:
+    var(--spw-preset-panel-min-height-tablet, 12rem);
+
+  --blog-control-min-width:
+    var(--spw-preset-control-min-width, 8.5rem);
+  --blog-control-min-height:
+    var(--spw-preset-control-min-height, 2.35rem);
+
+  --blog-caption-min-height:
+    var(--spw-preset-caption-min-height, 2rem);
+  --blog-caption-max-width:
+    var(--spw-preset-caption-max-width, 24rem);
+
+  --blog-code-readable-width:
+    min(
+      100%,
+      var(--spw-preset-code-readable-width, 48rem)
+    );
+
+  /* pretext rhythm bridge */
+  --blog-pretext-line-gap-resting: 0.14rem;
+  --blog-pretext-line-gap-approach: 0.18rem;
+  --blog-pretext-line-gap-projecting: 0.24rem;
+  --blog-pretext-line-gap-contact: 0.2rem;
+
+  --blog-rhythm-accent-mix: 0%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.22;
 }
 
-:where(html[data-spw-enhance="off"]) :is(
-  .operator-card-panel,
-  [data-attn-register]
-) {
-  animation: none;
+/* Phase-aware site surface bias */
+:where(html[data-spw-phase="ambient"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 4%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.20;
 }
 
-:where(html[data-spw-filters="off"]) :is(
-  .demo-filter-target,
-  .palimpsest-layer--generation-1
-) {
-  filter: none;
+:where(html[data-spw-phase="verse"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 7%;
+  --blog-rhythm-shadow-strength: 0.07;
+  --blog-rhythm-border-strength: 0.24;
 }
 
-:where(html[data-spw-enhance="off"]) [data-attn-register] {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+:where(html[data-spw-phase="chorus"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 12%;
+  --blog-rhythm-shadow-strength: 0.11;
+  --blog-rhythm-border-strength: 0.32;
 }
 
-:where(html[data-spw-charge="off"] body[data-spw-surface="blog"]) :is(
-  [data-spw-charge-key],
-  .spec-pill,
-  .field-note-tag,
-  .specimen-api-tag,
-  .blog-chip-list li
-) {
-  cursor: default;
-  border-bottom-style: solid;
+:where(html[data-spw-phase="bridge"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 9%;
+  --blog-rhythm-shadow-strength: 0.09;
+  --blog-rhythm-border-strength: 0.28;
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 15%;
+  --blog-rhythm-shadow-strength: 0.14;
+  --blog-rhythm-border-strength: 0.36;
 }
 
 /* ==========================================================================
-   17. Responsive rules
+   17. Measured readable widths
    ========================================================================== */
 
-@container (max-width: 34rem) {
-  :where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-panel {
-    padding: 0.85rem;
+:where(body[data-spw-surface="blog"]) :is(
+  .frame-note,
+  .specimen-material,
+  .field-note p,
+  .blog-transition,
+  .blog-output-summary,
+  .blog-output-list,
+  .blog-seed-card pre,
+  .blog-input-textarea,
+  .blog-output-card p,
+  .blog-output-card li
+) {
+  max-width: var(--blog-readable-width);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .blog-output-card,
+  .blog-seed-card,
+  .specimen-demo,
+  .field-note,
+  .fiber-pair
+) {
+  min-height: var(--blog-card-min-height-phone);
+}
+
+@media (min-width: 48rem) {
+  :where(body[data-spw-surface="blog"]) :is(
+    .blog-output-card,
+    .blog-seed-card,
+    .specimen-demo,
+    .field-note,
+    .fiber-pair
+  ) {
+    min-height: var(--blog-card-min-height-tablet);
   }
 
-  :where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-textarea {
-    min-height: 16rem;
+  :where(body[data-spw-surface="blog"]) :is(
+    .blog-input-panel,
+    .blog-output-panel
+  ) {
+    min-height: var(--blog-panel-min-height-tablet);
   }
 }
 
-@media (max-width: 860px) {
+:where(body[data-spw-surface="blog"]) :is(
+  .blog-input-panel,
+  .blog-output-panel
+) {
+  min-height: var(--blog-panel-min-height-phone);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .blog-seed-card pre,
+  .specimen-kernel-code,
+  .demo-code-output
+) {
+  max-width: var(--blog-code-readable-width);
+}
+
+/* ==========================================================================
+   18. Controls + mode switches consume measured presets
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) :is(
+  button,
+  .theme-swatch,
+  .c-swatch,
+  .operator-card-panel-btn,
+  .blog-input-actions > *,
+  .mode-switch button,
+  [data-mode-group][data-set-mode]
+) {
+  min-width: var(--blog-control-min-width);
+  min-height: var(--blog-control-min-height);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .mode-switch,
+  .blog-input-actions,
+  .operator-card-panel-actions
+) {
+  gap: max(0.35rem, calc(var(--spw-preset-label-line-height, 18px) * 0.02));
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .mode-switch button,
+  [data-mode-group][data-set-mode]
+) {
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--blog-radius-tight);
+  transition:
+    border-color var(--blog-transition-fast),
+    background-color var(--blog-transition-fast),
+    box-shadow var(--blog-transition-fast),
+    transform var(--blog-transition-fast);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .mode-switch button.is-selected,
+  [data-mode-group][data-set-mode].is-selected,
+  [data-mode-group][data-set-mode][aria-pressed="true"]
+) {
+  border-color: color-mix(
+    in srgb,
+    var(--blog-accent) calc(60% + var(--blog-rhythm-accent-mix)),
+    var(--blog-line)
+  );
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--blog-spw-bg) 85%, transparent) 0%,
+      color-mix(in srgb, var(--blog-bg-card) 94%, transparent) 100%
+    );
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    0 0.3rem 0.8rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength));
+}
+
+/* ==========================================================================
+   19. Site-frame rhythm + frame activation bridge
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) .site-frame {
+  transition:
+    border-color var(--blog-transition-ui),
+    box-shadow var(--blog-transition-ui),
+    background-color var(--blog-transition-ui),
+    transform var(--blog-transition-ui);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .site-frame.is-active-frame,
+  .site-frame:focus-within,
+  .site-frame:target
+) {
+  border-color: color-mix(
+    in srgb,
+    var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix)),
+    var(--blog-line)
+  );
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength));
+}
+
+:where(html[data-spw-playing="on"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--blog-spw-bg) calc(18% + var(--blog-rhythm-accent-mix)), transparent) 0%,
+      var(--blog-bg-card) 100%
+    );
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
+  transform: translateY(-1px);
+}
+
+:where(html[data-spw-phase="chorus"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
+  --blog-frame-objective-opacity: 0.44;
+  --blog-frame-subjective-opacity: 0.44;
+}
+
+/* ==========================================================================
+   20. Blog interpreter + metrics become more measurable
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+}
+
+:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric {
+  min-height: calc(var(--blog-caption-min-height) + 1.75rem);
+}
+
+:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
+  .blog-output-card,
+  .blog-seed-card
+) {
+  max-width: 100%;
+  min-width: 0;
+}
+
+:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-card--wide {
+  max-width: min(100%, calc(var(--blog-card-readable-width) * 1.18));
+}
+
+:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-chip-list li {
+  min-height: calc(var(--blog-caption-min-height) - 0.25rem);
+}
+
+/* ==========================================================================
+   21. Route-specific pretext host specialization
+   --------------------------------------------------------------------------
+   Notes
+   - The base pretext-flow host already exists in the shared surface layer.
+   - These rules only tune the blog route with richer spacing, rhythm response,
+     scaffold legibility, and measured width discipline.
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0.18rem;
+  --pretext-local-radius: var(--blog-radius-tight);
+  --pretext-line-gap: var(--blog-pretext-line-gap-resting);
+  --pretext-line-height:
+    var(--spw-preset-body-line-height, 1.55rem);
+
+  max-width: 100%;
+  color: inherit;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%,
+      color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%
+    );
+  border: 1px solid color-mix(
+    in srgb,
+    var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%),
+    transparent
+  );
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-lines) {
+  gap: var(--pretext-line-gap);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line) {
+  min-height: calc(var(--blog-caption-min-height) - 0.4rem);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
+  max-width: min(100%, var(--blog-readable-width));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .line-decor) {
+  opacity: calc(0.18 + (var(--pretext-influence, 0) * 0.42));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="resting"]) {
+  --pretext-line-gap: var(--blog-pretext-line-gap-resting);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="approach"]) {
+  --pretext-line-gap: var(--blog-pretext-line-gap-approach);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="contact"]) {
+  --pretext-line-gap: var(--blog-pretext-line-gap-contact);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="projecting"]) {
+  --pretext-line-gap: var(--blog-pretext-line-gap-projecting);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="stable"]) {
+  border-color: color-mix(in srgb, var(--blog-line) 88%, transparent);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  border-color: color-mix(in srgb, var(--blog-accent) 28%, var(--blog-line));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  border-color: color-mix(in srgb, var(--blog-wonder) 30%, var(--blog-line));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="verse"]) {
+  letter-spacing: -0.005em;
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="chorus"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--blog-accent) 22%, transparent),
+    0 0.4rem 1.1rem rgba(0, 0, 0, 0.08);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="drop"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--blog-wonder) 20%, transparent),
+    0 0.55rem 1.5rem rgba(0, 0, 0, 0.12);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-density="compressed"] .pretext-flow-line-text) {
+  font-size: 0.96em;
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-kind="caption"]) {
+  max-width: min(100%, calc(var(--blog-caption-max-width) * 1px));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-scaffold) {
+  margin-top: 0.45rem;
+  padding-top: 0.38rem;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: var(--blog-ink-soft);
+  border-top: 1px dashed var(--blog-line);
+  opacity: 0.88;
+}
+
+/* ==========================================================================
+   22. Beat-aware ambient emphasis
+   --------------------------------------------------------------------------
+   Keeps the effect subtle and route-local. The rhythm controller writes
+   data onto :root, and these selectors use that state without requiring
+   additional JS in the blog surface itself.
+   ========================================================================== */
+
+:where(html[data-spw-playing="on"][data-spw-beat="1"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 3%);
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat="5"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="9"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="13"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 2%);
+}
+
+:where(html[data-spw-playing="on"] body[data-spw-surface="blog"] [data-attn-register]) {
+  border-color: color-mix(
+    in srgb,
+    var(--blog-accent) calc(18% + var(--blog-rhythm-accent-mix)),
+    var(--blog-line)
+  );
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"] [data-attn-register]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent),
+    0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   23. Responsive tightening with measured controls
+   ========================================================================== */
+
+@media (max-width: 48rem) {
   :where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) [data-blog-interpreter] {
     grid-template-columns: 1fr;
   }
+
+  :where(body[data-spw-surface="blog"]) :is(
+    .blog-input-actions,
+    .atelier-theme-toggle,
+    .operator-card-panel-actions
+  ) {
+    align-items: stretch;
+  }
+
+  :where(body[data-spw-surface="blog"]) :is(
+    .blog-input-actions > *,
+    .atelier-theme-toggle > *,
+    .operator-card-panel-actions > *,
+    .mode-switch button,
+    [data-mode-group][data-set-mode]
+  ) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  :where(body[data-spw-surface="blog"]) .blog-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :where(body[data-spw-surface="blog"]) .blog-output-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media (max-width: 640px) {
-  :where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-    .blog-metric-grid,
-    .blog-output-grid
-  ) {
+@media (max-width: 32rem) {
+  :where(body[data-spw-surface="blog"]) .specimen-index-grid,
+  :where(body[data-spw-surface="blog"]) .fiber-linguistics-grid,
+  :where(body[data-spw-surface="blog"]) .field-notes-grid,
+  :where(body[data-spw-surface="blog"]) .operator-snippet-grid {
     grid-template-columns: 1fr;
   }
 
-  [data-attn-register] {
-    padding: 0.45rem 0.55rem;
+  :where(body[data-spw-surface="blog"]) .blog-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line) {
+    gap: 0.28em;
   }
 }
 
 /* ==========================================================================
-   18. Motion reduction
+   24. Reduced motion
    ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  :where(body[data-spw-surface="blog"]) *,
-  :where(body[data-spw-surface="blog"]) *::before,
-  :where(body[data-spw-surface="blog"]) *::after,
-  [data-attn-register],
-  [data-attn-register] * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-:where(html[data-spw-reduce-motion="on"]) :is(
-  body[data-spw-surface="blog"] *,
-  body[data-spw-surface="blog"] *::before,
-  body[data-spw-surface="blog"] *::after,
-  [data-attn-register],
-  [data-attn-register] *
+:where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
+  .site-frame,
+  .mode-switch button,
+  [data-mode-group][data-set-mode],
+  [data-spw-flow="pretext"],
+  [data-spw-flow="pretext"] .line-decor,
+  [data-attn-register]
 ) {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+  transition: none;
+  animation: none;
+  transform: none;
 }

@@ -1,52 +1,26 @@
 /**
  * spw-pretext-physics.js
  * ---------------------------------------------------------------------------
- * Spw Pretext Physics
+ * Spw Pretext Physics (Rhythm-aligned Edition)
  *
  * Purpose
  * - Treat live text interaction as measured typesetting, not transform-only FX.
  * - Recompose text blocks under changing conditions while preserving a
  *   canonical resting layout.
- * - Expose quantified, inspectable context for future CSS, haptics, sound,
- *   ornament, and story-specific component tropes.
+ * - Integrate site-level rhythm concepts (phase / beat / measure / tempo)
+ *   without making text layout depend on a media-specific transport.
  *
  * Core idea
  * - Text is prepared once.
  * - Typography is measured and cached in quantized width buckets.
  * - Interaction changes projected width / mode, not raw text.
+ * - Rhythm changes projection bias and ornament policy, not substrate text.
  * - Rendered lines are the precipitate of:
- *     text + font anatomy + measure + interaction + ornament policy
- *
- * Contexts of live text interaction
- * - resting      : canonical readable layout
- * - approach     : anticipatory proximity influence
- * - contact      : discrete activation pulse
- * - projecting   : continuous gesture-driven projection
- * - settling     : return toward canonical layout
- *
- * Reasons for measurement
- * - preserve readable lineation under interaction
- * - keep interaction semantic rather than scale-only
- * - separate structure from ornament
- * - allow a canonical width to be cached and trusted while other interactions happen
- * - expose intermediate scaffolding for design and performance literacy
- *
- * Distinguishing router
- * - The text content itself should route the block into quantized typographic
- *   classes (kind / density / measure / projection / ornament).
- *
- * Current font
- * - JetBrains Mono is assumed as the current default. That makes rough width
- *   estimation and operator-density analysis more meaningful.
- *
- * Expansion channels
- * - classify(context, state) -> override or refine quantized context
- * - project(proposal, state) -> tune projected width / influence / mode
- * - decorate(lineInfo)       -> provide deterministic line ornament
- * - scaffold(summary, state) -> expose intermediate diagnostics
+ *     text + font anatomy + measure + interaction + rhythm + ornament
  */
 
 import { loadPretext } from './pretext-utils.js';
+import { bus } from './spw-bus.js';
 
 /* ==========================================================================
    Configuration
@@ -79,9 +53,24 @@ const DEFAULTS = Object.freeze({
 
   // Ornament
   ornamentEnabled: true,
-  deterministicDecoration: true,
 
-  // Channels
+  // Rhythm
+  rhythmEnabled: true,
+  rhythmPulseAffectsOnlyResting: true,
+  phaseAffectsCanonicalWidth: false,
+  phaseTransitionSettles: false,
+  phasicModes: {
+    ambient: { measureProfile: 'standard', widthScale: 1.0, pulseInfluence: 0.35 },
+    verse:   { measureProfile: 'tight',    widthScale: 0.9, pulseInfluence: 0.45 },
+    chorus:  { measureProfile: 'wide',     widthScale: 1.12, pulseInfluence: 0.7  },
+    bridge:  { measureProfile: 'elastic',  widthScale: 0.94, pulseInfluence: 0.55 },
+    drop:    { measureProfile: 'wide',     widthScale: 1.22, pulseInfluence: 1.0  },
+  },
+
+  // Async scheduling
+  asyncLayout: true,
+  schedulerPriority: 'user-visible',
+
   channels: {
     classify: null,
     project: null,
@@ -95,14 +84,27 @@ const FLOW_RUNTIME = {
   pretext: null,
   instances: new Set(),
   byElement: new WeakMap(),
+
   pointer: {
     x: 0,
     y: 0,
     rafId: 0,
     active: false,
   },
+
+  rhythm: {
+    phase: 'ambient',
+    beat: 0,
+    measure: 0,
+    bpm: 96,
+    playing: false,
+  },
+
   listenersAttached: false,
   resizeObserver: null,
+  config: DEFAULTS,
+
+  unsubs: [],
 };
 
 const OPERATOR_SIGIL_FALLBACK = '?';
@@ -111,16 +113,6 @@ const OPERATOR_SIGIL_FALLBACK = '?';
    Public API
    ========================================================================== */
 
-/**
- * Initialize Pretext physics on the current surface.
- * Backward-compatible with no arguments.
- *
- * @param {object} [options]
- * @param {ParentNode} [options.root=document]
- * @param {string} [options.selector]
- * @param {object} [options.channels]
- * @returns {Promise<() => void>} cleanup
- */
 export async function initPretextPhysics(options = {}) {
   const config = createConfig(options);
   const root = options.root || document;
@@ -143,7 +135,7 @@ export async function initPretextPhysics(options = {}) {
       teardownRuntimeIfIdle();
     };
   } catch (error) {
-    console.warn('Pretext physics failed to initialize:', error);
+    console.warn('[Pretext] Physics failed to initialize:', error);
     return () => {};
   }
 }
@@ -156,6 +148,10 @@ function createConfig(options) {
   return {
     ...DEFAULTS,
     ...options,
+    phasicModes: {
+      ...DEFAULTS.phasicModes,
+      ...(options.phasicModes || {}),
+    },
     channels: {
       ...DEFAULTS.channels,
       ...(options.channels || {}),
@@ -183,6 +179,10 @@ function ensureRuntimeListeners(config) {
   document.addEventListener('spw:brace:project-end', onBraceProjectEnd);
   window.addEventListener('blur', settleAllFlows);
 
+  if (config.rhythmEnabled) {
+    attachRhythmListeners();
+  }
+
   if ('ResizeObserver' in window) {
     FLOW_RUNTIME.resizeObserver = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
@@ -199,6 +199,38 @@ function ensureRuntimeListeners(config) {
   FLOW_RUNTIME.config = config;
 }
 
+function attachRhythmListeners() {
+  detachRhythmListeners();
+
+  // Primary, generalized runtime vocabulary
+  FLOW_RUNTIME.unsubs.push(
+    bus.on('rhythm:pulse', onRhythmicPulse),
+    bus.on('rhythm:phase', onPhaseShift),
+    bus.on('rhythm:measure', onMeasureShift),
+    bus.on('rhythm:tempo', onTempoShift),
+    bus.on('rhythm:start', onTransportStart),
+    bus.on('rhythm:stop', onTransportStop),
+    bus.on('rhythm:reset', onTransportReset),
+  );
+
+  // Compatibility transport
+  FLOW_RUNTIME.unsubs.push(
+    bus.on('stream:pulse', onLegacyStreamPulse),
+    bus.on('stream:phase', onLegacyStreamPhase),
+  );
+}
+
+function detachRhythmListeners() {
+  FLOW_RUNTIME.unsubs.forEach((off) => {
+    try {
+      off?.();
+    } catch (error) {
+      console.warn('[Pretext] Failed to detach rhythm listener:', error);
+    }
+  });
+  FLOW_RUNTIME.unsubs = [];
+}
+
 function teardownRuntimeIfIdle() {
   if (FLOW_RUNTIME.instances.size) return;
   if (!FLOW_RUNTIME.listenersAttached) return;
@@ -211,6 +243,8 @@ function teardownRuntimeIfIdle() {
   document.removeEventListener('spw:brace:project-end', onBraceProjectEnd);
   window.removeEventListener('blur', settleAllFlows);
   window.removeEventListener('resize', onWindowResize);
+
+  detachRhythmListeners();
 
   FLOW_RUNTIME.resizeObserver?.disconnect();
   FLOW_RUNTIME.resizeObserver = null;
@@ -267,6 +301,8 @@ function mountFlowElement(el, pretext, config) {
 
     context: {
       ...context,
+      baseMeasureProfile: context.measureProfile,
+      rhythmMeasureProfile: context.measureProfile,
     },
 
     measurement: {
@@ -278,6 +314,8 @@ function mountFlowElement(el, pretext, config) {
       canonicalLineCount: 0,
       wrapVolatility: 'stable',
       widthClass: classifyWidthClass(canonicalWidth),
+      requestToken: 0,
+      appliedToken: 0,
     },
 
     interaction: {
@@ -288,6 +326,15 @@ function mountFlowElement(el, pretext, config) {
       activeProjectionSource: 'none',
     },
 
+    rhythm: {
+      phase: FLOW_RUNTIME.rhythm.phase,
+      beat: FLOW_RUNTIME.rhythm.beat,
+      measure: FLOW_RUNTIME.rhythm.measure,
+      bpm: FLOW_RUNTIME.rhythm.bpm,
+      playing: FLOW_RUNTIME.rhythm.playing,
+      pulseInfluence: 0,
+    },
+
     ornament: {
       enabled: config.ornamentEnabled && context.ornamentFamily !== 'none',
       family: context.ornamentFamily,
@@ -296,6 +343,7 @@ function mountFlowElement(el, pretext, config) {
     dom: {
       linesRoot,
       scaffoldRoot,
+      lineNodes: [],
     },
 
     channels: {
@@ -314,11 +362,12 @@ function mountFlowElement(el, pretext, config) {
   }
 
   syncElementSurface(state);
-  const canonicalLayout = getOrMeasureLayout(state, canonicalWidth);
+
+  const canonicalLayout = getOrMeasureLayoutSync(state, canonicalWidth);
   state.measurement.canonicalLayoutKey = widthKey(canonicalWidth, widthStep);
   state.measurement.canonicalLineCount = canonicalLayout.lines.length;
 
-  renderProjectedLines(state, canonicalWidth);
+  renderProjectedLinesSync(state, canonicalWidth);
 
   return state;
 }
@@ -326,6 +375,7 @@ function mountFlowElement(el, pretext, config) {
 function unmountFlowElement(state) {
   if (!state) return;
 
+  state.measurement.requestToken += 1;
   FLOW_RUNTIME.instances.delete(state);
   FLOW_RUNTIME.byElement.delete(state.el);
   FLOW_RUNTIME.resizeObserver?.unobserve?.(state.el);
@@ -399,23 +449,11 @@ function classifyTextContext({ el, anatomy, fontProfile, config }) {
   const explicitOrnament = el.dataset.textOrnament || '';
   const explicitMeasure = el.dataset.textMeasure || '';
 
-  const kind =
-    explicitKind
-    || selectTextKind(anatomy);
-
+  const kind = explicitKind || selectTextKind(anatomy);
   const density = selectDensityClass(anatomy);
-  const measureProfile =
-    explicitMeasure
-    || selectMeasureProfile(anatomy, fontProfile);
-
-  const projectionFamily =
-    explicitProjection
-    || selectProjectionFamily(kind, anatomy);
-
-  const ornamentFamily =
-    explicitOrnament
-    || selectOrnamentFamily(kind, anatomy);
-
+  const measureProfile = explicitMeasure || selectMeasureProfile(anatomy, fontProfile);
+  const projectionFamily = explicitProjection || selectProjectionFamily(kind, anatomy);
+  const ornamentFamily = explicitOrnament || selectOrnamentFamily(kind, anatomy);
   const widthStepPx = selectWidthStep(measureProfile, config);
   const lineHeightPx = selectLineHeight(fontProfile, kind);
 
@@ -494,7 +532,6 @@ function selectLineHeight(fontProfile, kind) {
 function guessCanonicalWidth(el, anatomy, fontProfile, context, config) {
   const measured = Math.max(el.clientWidth || 0, el.offsetWidth || 0);
   const estimatedFromChars = estimateWidthFromText(anatomy, fontProfile, context);
-
   const candidate = measured || estimatedFromChars || 400;
   return clamp(candidate, config.minCanonicalWidth, config.maxCanonicalWidth);
 }
@@ -528,6 +565,8 @@ function refreshCanonicalMeasurement(state) {
   state.measurement.canonicalWidth = nextCanonical;
   state.measurement.widthClass = classifyWidthClass(nextCanonical);
   state.measurement.layoutCache.clear();
+  state.measurement.canonicalLayoutKey = null;
+  state.measurement.canonicalLineCount = 0;
 
   if (state.interaction.mode === 'resting' || state.interaction.mode === 'settling') {
     projectWidth(state, nextCanonical, {
@@ -541,7 +580,7 @@ function refreshCanonicalMeasurement(state) {
   }
 }
 
-function getOrMeasureLayout(state, width) {
+function getOrMeasureLayoutSync(state, width) {
   const key = widthKey(width, state.measurement.widthStepPx);
   const cached = state.measurement.layoutCache.get(key);
   if (cached) return cached;
@@ -557,6 +596,38 @@ function getOrMeasureLayout(state, width) {
   updateWrapVolatility(state, result.lines.length);
 
   return result;
+}
+
+async function getOrMeasureLayoutAsync(state, width) {
+  const key = widthKey(width, state.measurement.widthStepPx);
+  const cached = state.measurement.layoutCache.get(key);
+  if (cached) return cached;
+
+  const quantizedWidth = quantize(width, state.measurement.widthStepPx);
+
+  const measureTask = () => {
+    const result = state.pretext.layoutWithLines(
+      state.substrate.preparedText,
+      quantizedWidth,
+      state.substrate.lineHeightPx
+    );
+
+    state.measurement.layoutCache.set(key, result);
+    updateWrapVolatility(state, result.lines.length);
+    return result;
+  };
+
+  if (
+    state.config.asyncLayout &&
+    window.scheduler &&
+    typeof window.scheduler.postTask === 'function'
+  ) {
+    return window.scheduler.postTask(measureTask, {
+      priority: state.config.schedulerPriority,
+    });
+  }
+
+  return measureTask();
 }
 
 function updateWrapVolatility(state, lineCount) {
@@ -778,6 +849,160 @@ function resolveFlowStateFromEvent(event) {
 }
 
 /* ==========================================================================
+   Rhythm / phase
+   ========================================================================== */
+
+function onRhythmicPulse(event) {
+  const beat = Number(event?.detail?.beat || 0);
+  const measure = Number(event?.detail?.measure ?? FLOW_RUNTIME.rhythm.measure);
+
+  FLOW_RUNTIME.rhythm.beat = beat;
+  FLOW_RUNTIME.rhythm.measure = measure;
+
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.beat = beat;
+    state.rhythm.measure = measure;
+
+    if (
+      state.config.rhythmPulseAffectsOnlyResting &&
+      state.interaction.mode === 'projecting'
+    ) {
+      syncElementSurface(state);
+      updateScaffold(state);
+      return;
+    }
+
+    applyProjectionPulse(state);
+  });
+}
+
+function onPhaseShift(event) {
+  const nextPhase = event?.detail?.phase || 'ambient';
+  if (!FLOW_RUNTIME.config.phasicModes[nextPhase]) return;
+
+  FLOW_RUNTIME.rhythm.phase = nextPhase;
+
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.phase = nextPhase;
+    applyRhythmicContext(state, nextPhase);
+
+    if (state.config.phaseAffectsCanonicalWidth) {
+      refreshCanonicalMeasurement(state);
+      return;
+    }
+
+    if (state.config.phaseTransitionSettles) {
+      applyProjectionProposal(state, {
+        width: state.measurement.canonicalWidth,
+        influence: 0,
+        direction: 0,
+        mode: 'settling',
+        source: 'phase-shift',
+        force: true,
+      });
+    } else {
+      syncElementSurface(state);
+      updateScaffold(state);
+    }
+  });
+}
+
+function onMeasureShift(event) {
+  const measure = Number(event?.detail?.measure ?? FLOW_RUNTIME.rhythm.measure);
+  FLOW_RUNTIME.rhythm.measure = measure;
+
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.measure = measure;
+    syncElementSurface(state);
+    updateScaffold(state);
+  });
+}
+
+function onTempoShift(event) {
+  const bpm = Number(event?.detail?.bpm || FLOW_RUNTIME.rhythm.bpm);
+  FLOW_RUNTIME.rhythm.bpm = bpm;
+
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.bpm = bpm;
+    syncElementSurface(state);
+    updateScaffold(state);
+  });
+}
+
+function onTransportStart() {
+  FLOW_RUNTIME.rhythm.playing = true;
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.playing = true;
+    syncElementSurface(state);
+    updateScaffold(state);
+  });
+}
+
+function onTransportStop() {
+  FLOW_RUNTIME.rhythm.playing = false;
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.playing = false;
+    syncElementSurface(state);
+    updateScaffold(state);
+  });
+}
+
+function onTransportReset() {
+  FLOW_RUNTIME.rhythm.beat = 0;
+  FLOW_RUNTIME.rhythm.measure = 0;
+
+  FLOW_RUNTIME.instances.forEach((state) => {
+    state.rhythm.beat = 0;
+    state.rhythm.measure = 0;
+    syncElementSurface(state);
+    updateScaffold(state);
+  });
+}
+
+// Compatibility listeners
+function onLegacyStreamPulse(event) {
+  const beat = Number(event?.detail?.beat || 0);
+  if (beat === FLOW_RUNTIME.rhythm.beat) return;
+  onRhythmicPulse(event);
+}
+
+function onLegacyStreamPhase(event) {
+  const nextPhase = event?.detail?.phase || 'ambient';
+  if (nextPhase === FLOW_RUNTIME.rhythm.phase) return;
+  onPhaseShift(event);
+}
+
+function applyRhythmicContext(state, phase) {
+  const phaseConfig = state.config.phasicModes[phase] || state.config.phasicModes.ambient;
+  state.context.rhythmMeasureProfile = phaseConfig.measureProfile || state.context.baseMeasureProfile;
+  state.rhythm.pulseInfluence = phaseConfig.pulseInfluence ?? 0;
+}
+
+function applyProjectionPulse(state) {
+  const phaseConfig = state.config.phasicModes[state.rhythm.phase] || state.config.phasicModes.ambient;
+
+  const beatInMeasure = ((Math.max(state.rhythm.beat, 1) - 1) % 4) + 1;
+  const beatAccent =
+    beatInMeasure === 1 ? 1 :
+    beatInMeasure === 3 ? 0.65 :
+    0.35;
+
+  const targetWidth =
+    state.measurement.canonicalWidth * (phaseConfig.widthScale || 1);
+
+  const influence =
+    clamp((phaseConfig.pulseInfluence ?? 0.5) * beatAccent, 0, 1);
+
+  applyProjectionProposal(state, {
+    width: targetWidth,
+    influence,
+    direction: 0,
+    mode: state.interaction.mode === 'projecting' ? 'projecting' : 'approach',
+    source: 'rhythm-pulse',
+  });
+}
+
+/* ==========================================================================
    Projection
    ========================================================================== */
 
@@ -831,18 +1056,69 @@ function projectWidth(state, width, meta = {}) {
   renderProjectedLines(state, nextWidth);
 }
 
+function renderProjectedLines(state, width) {
+  const nextToken = ++state.measurement.requestToken;
+
+  getOrMeasureLayoutAsync(state, width)
+    .then((layout) => {
+      if (!FLOW_RUNTIME.instances.has(state)) return;
+      if (nextToken !== state.measurement.requestToken) return;
+
+      state.measurement.appliedToken = nextToken;
+
+      if (!state.measurement.canonicalLayoutKey && width === state.measurement.canonicalWidth) {
+        state.measurement.canonicalLayoutKey = widthKey(width, state.measurement.widthStepPx);
+        state.measurement.canonicalLineCount = layout.lines.length;
+      }
+
+      patchRenderedLines(state, layout, width);
+      syncElementSurface(state);
+      updateScaffold(state);
+    })
+    .catch((error) => {
+      if (nextToken !== state.measurement.requestToken) return;
+      console.warn('[Pretext] Layout render failed:', error);
+    });
+}
+
+function renderProjectedLinesSync(state, width) {
+  const layout = getOrMeasureLayoutSync(state, width);
+
+  if (!state.measurement.canonicalLayoutKey && width === state.measurement.canonicalWidth) {
+    state.measurement.canonicalLayoutKey = widthKey(width, state.measurement.widthStepPx);
+    state.measurement.canonicalLineCount = layout.lines.length;
+  }
+
+  patchRenderedLines(state, layout, width);
+  syncElementSurface(state);
+  updateScaffold(state);
+}
+
 /* ==========================================================================
    Render + ornament + scaffold
    ========================================================================== */
 
-function renderProjectedLines(state, width) {
-  const layout = getOrMeasureLayout(state, width);
-  const fragment = document.createDocumentFragment();
+function patchRenderedLines(state, layout, width) {
   const operator = readOperatorContext(state.el);
+  const existing = state.dom.lineNodes;
+  const lines = layout.lines;
+  const neededCount = lines.length;
 
-  layout.lines.forEach((line, index) => {
-    const lineEl = document.createElement('div');
-    lineEl.className = 'pretext-flow-line';
+  while (existing.length < neededCount) {
+    const lineEl = createLineNode();
+    existing.push(lineEl);
+    state.dom.linesRoot.appendChild(lineEl);
+  }
+
+  while (existing.length > neededCount) {
+    const node = existing.pop();
+    node.remove();
+  }
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const lineEl = existing[index];
+
     lineEl.style.width = `${width}px`;
     lineEl.style.setProperty('--line-index', index);
 
@@ -853,33 +1129,58 @@ function renderProjectedLines(state, width) {
       influence: state.interaction.influence,
       influenceBucket: state.interaction.influenceBucket,
       mode: state.interaction.mode,
+      beat: state.rhythm.beat,
+      phase: state.rhythm.phase,
+      measure: state.rhythm.measure,
+      bpm: state.rhythm.bpm,
+      playing: state.rhythm.playing,
     });
 
-    if (decoration.before) {
-      const before = document.createElement('span');
-      before.className = `line-decor ${decoration.className || ''}`.trim();
-      before.textContent = decoration.before;
-      lineEl.appendChild(before);
+    const beforeText = decoration.before || '';
+    const textValue = line.text || '';
+    const afterText = decoration.after || '';
+    const className = `line-decor ${decoration.className || ''}`.trim();
+
+    if (lineEl._before.textContent !== beforeText) {
+      lineEl._before.textContent = beforeText;
+    }
+    lineEl._before.className = className;
+    lineEl._before.hidden = !beforeText;
+
+    if (lineEl._text.textContent !== textValue) {
+      lineEl._text.textContent = textValue;
     }
 
-    const textNode = document.createElement('span');
-    textNode.className = 'pretext-flow-line-text';
-    textNode.textContent = line.text;
-    lineEl.appendChild(textNode);
-
-    if (decoration.after) {
-      const after = document.createElement('span');
-      after.className = `line-decor ${decoration.className || ''}`.trim();
-      after.textContent = decoration.after;
-      lineEl.appendChild(after);
+    if (lineEl._after.textContent !== afterText) {
+      lineEl._after.textContent = afterText;
     }
+    lineEl._after.className = className;
+    lineEl._after.hidden = !afterText;
+  }
+}
 
-    fragment.appendChild(lineEl);
-  });
+function createLineNode() {
+  const lineEl = document.createElement('div');
+  lineEl.className = 'pretext-flow-line';
 
-  state.dom.linesRoot.replaceChildren(fragment);
-  syncElementSurface(state);
-  updateScaffold(state);
+  const before = document.createElement('span');
+  before.className = 'line-decor';
+  before.hidden = true;
+
+  const text = document.createElement('span');
+  text.className = 'pretext-flow-line-text';
+
+  const after = document.createElement('span');
+  after.className = 'line-decor';
+  after.hidden = true;
+
+  lineEl.append(before, text, after);
+
+  lineEl._before = before;
+  lineEl._text = text;
+  lineEl._after = after;
+
+  return lineEl;
 }
 
 function getLineDecoration(state, lineInfo) {
@@ -915,7 +1216,7 @@ function getLineDecoration(state, lineInfo) {
 }
 
 function shouldDecorateLineDeterministically(state, lineInfo) {
-  const { influenceBucket, index } = lineInfo;
+  const { influenceBucket, index, beat, phase } = lineInfo;
   if (influenceBucket <= 0) return false;
 
   const densityBias =
@@ -923,7 +1224,22 @@ function shouldDecorateLineDeterministically(state, lineInfo) {
     state.context.density === 'dense' ? 2 :
     1;
 
-  const threshold = Math.max(1, 5 - influenceBucket - densityBias);
+  const rhythmicBias =
+    phase === 'drop' ? 1 :
+    phase === 'chorus' ? 0 :
+    -1;
+
+  const beatBias =
+    beat % 4 === 1 ? 1 :
+    beat % 2 === 1 ? 0 :
+    -1;
+
+  const threshold = clamp(
+    Math.max(1, 5 - influenceBucket - densityBias - rhythmicBias - beatBias),
+    1,
+    6
+  );
+
   return index % threshold === 0;
 }
 
@@ -934,6 +1250,7 @@ function updateScaffold(state) {
     kind: state.context.kind,
     density: state.context.density,
     measure: state.context.measureProfile,
+    rhythmMeasure: state.context.rhythmMeasureProfile,
     projection: state.context.projectionFamily,
     ornament: state.context.ornamentFamily,
     mode: state.interaction.mode,
@@ -943,6 +1260,12 @@ function updateScaffold(state) {
     projectedWidth: state.measurement.projectedWidth,
     cacheEntries: state.measurement.layoutCache.size,
     influenceBucket: state.interaction.influenceBucket,
+    phase: state.rhythm.phase,
+    beat: state.rhythm.beat,
+    measureCount: state.rhythm.measure,
+    bpm: state.rhythm.bpm,
+    playing: state.rhythm.playing,
+    appliedToken: state.measurement.appliedToken,
   };
 
   const override =
@@ -957,8 +1280,14 @@ function updateScaffold(state) {
           `kind:${summary.kind}`,
           `density:${summary.density}`,
           `measure:${summary.measure}`,
+          `r-measure:${summary.rhythmMeasure}`,
           `projection:${summary.projection}`,
           `mode:${summary.mode}`,
+          `phase:${summary.phase}`,
+          `beat:${summary.beat}`,
+          `bar:${summary.measureCount}`,
+          `bpm:${summary.bpm}`,
+          `play:${summary.playing ? 'on' : 'off'}`,
           `width:${summary.projectedWidth}px`,
           `cache:${summary.cacheEntries}`,
           `wrap:${summary.wrapVolatility}`,
@@ -968,11 +1297,12 @@ function updateScaffold(state) {
 }
 
 function syncElementSurface(state) {
-  const { el, context, interaction, measurement } = state;
+  const { el, context, interaction, measurement, rhythm } = state;
 
   el.dataset.textKind = context.kind;
   el.dataset.textDensity = context.density;
   el.dataset.textMeasure = context.measureProfile;
+  el.dataset.textRhythmMeasure = context.rhythmMeasureProfile;
   el.dataset.textProjection = context.projectionFamily;
   el.dataset.textOrnament = context.ornamentFamily;
 
@@ -982,10 +1312,19 @@ function syncElementSurface(state) {
   el.dataset.textWidthClass = measurement.widthClass;
   el.dataset.textWrap = measurement.wrapVolatility;
 
+  el.dataset.textPhase = `${rhythm.phase}`;
+  el.dataset.textBeat = `${rhythm.beat}`;
+  el.dataset.textMeasureCount = `${rhythm.measure}`;
+  el.dataset.textPlaying = rhythm.playing ? 'on' : 'off';
+
   el.style.setProperty('--pretext-canonical-width', `${measurement.canonicalWidth}px`);
   el.style.setProperty('--pretext-projected-width', `${measurement.projectedWidth}px`);
   el.style.setProperty('--pretext-influence', `${interaction.influence}`);
   el.style.setProperty('--pretext-direction', `${interaction.direction}`);
+  el.style.setProperty('--pretext-phase', `"${rhythm.phase}"`);
+  el.style.setProperty('--pretext-beat', `${rhythm.beat}`);
+  el.style.setProperty('--pretext-measure', `${rhythm.measure}`);
+  el.style.setProperty('--pretext-bpm', `${rhythm.bpm}`);
 }
 
 /* ==========================================================================

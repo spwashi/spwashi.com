@@ -1,7 +1,7 @@
 /**
- * Spw SVG Personas
+ * Spw SVG Personas & Meta-UI
  *
- * Tailors SVG rendering to the active technical persona.
+ * Tailors SVG rendering and interaction artifacts to the active technical persona.
  */
 
 /* ── Viewer@ (Default) ─────────────────────────────────────────────────── */
@@ -34,6 +34,22 @@
     filter: drop-shadow(0 0 4px var(--teal));
 }
 
+/* Doodler Particle Burst (Injected by JS) */
+.doodler-burst {
+    position: absolute;
+    pointer-events: none;
+    color: var(--wonder-accent-color, #ffbf00);
+    font-size: 1.2rem;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    animation: doodler-scatter 0.6s ease-out forwards;
+}
+
+@keyframes doodler-scatter {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -250%) scale(1.5) rotate(15deg); opacity: 0; letter-spacing: 0.5em; }
+}
+
 /* ── Scribe@ ───────────────────────────────────────────────────────────── */
 /* Blueprint aesthetic: grid background, rigid lines, meta reveals. */
 
@@ -52,11 +68,28 @@
     stroke-dasharray: 2 1; /* technical dashed border */
 }
 
-/* Scribe meta-reveal on SVG elements */
-[data-spw-persona="scribe"] .spw-svg-node:hover::after {
-    /* Note: ::after won't work on SVG elements, 
-       but we can use the JS augment as a fallback if needed 
-       or use the 'title' attribute which is native to SVG. */
+/* Scribe Meta Tooltip (Injected by JS) */
+.scribe-meta-tooltip {
+    position: absolute;
+    transform: translateX(-50%) translateY(10px);
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: 0.65rem;
+    background: var(--charcoal, #1a1a1a);
+    color: var(--teal-soft, #1a9999);
+    padding: 3px 8px;
+    border: 1px solid var(--ink-soft, #333);
+    border-radius: 3px;
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 150ms ease, transform 150ms ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.scribe-meta-tooltip.is-visible {
+    opacity: 0.95;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* ── Theme Responsiveness ───────────────────────────────────────────────── */

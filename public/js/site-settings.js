@@ -243,7 +243,11 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
     developmentalClimateAutoCycle: 'off',
 
     /* Material Grain */
-    grainIntensity: 'subtle'
+    grainIntensity: 'subtle',
+
+    busDiagnostics: 'off',
+    busMirrorToConsole: 'off',
+    busHistorySize: '100'
 });
 
 const SETTING_OPTIONS = Object.freeze({
@@ -292,7 +296,11 @@ const SETTING_OPTIONS = Object.freeze({
     currentDevelopmentalClimate: new Set(Object.keys(DEVELOPMENTAL_CLIMATES)),
     developmentalClimateAutoCycle: new Set(['off', 'on']),
 
-    grainIntensity: new Set(['none', 'subtle', 'moderate', 'rich'])
+    grainIntensity: new Set(['none', 'subtle', 'moderate', 'rich']),
+
+    busDiagnostics: new Set(['off', 'basic', 'verbose']),
+    busMirrorToConsole: new Set(['off', 'on']),
+    busHistorySize: new Set(['100', '250', '500'])
 });
 
 const PRESETS = Object.freeze({
@@ -319,7 +327,10 @@ const PRESETS = Object.freeze({
         implementationMutations: 'off',
         developmentalClimateAutoCycle: 'off',
         reduceMotion: 'off',
-        highContrast: 'off'
+        highContrast: 'off',
+        busDiagnostics: 'off',
+        busMirrorToConsole: 'off',
+        busHistorySize: '100'
     },
     loom: {
         currentDevelopmentalClimate: 'weave',
@@ -338,7 +349,10 @@ const PRESETS = Object.freeze({
         dimensionalBreadcrumbs: 'on',
         developmentalClimateAutoCycle: 'on',
         navigatorDisplay: 'full',
-        consoleDisplay: 'collapsed'
+        consoleDisplay: 'collapsed',
+        busDiagnostics: 'basic',
+        busMirrorToConsole: 'off',
+        busHistorySize: '250'
     },
     workshop: {
         currentDevelopmentalClimate: 'anchor',
@@ -354,7 +368,10 @@ const PRESETS = Object.freeze({
         implementationMutations: 'on',
         grainIntensity: 'none',
         debugMode: 'on',
-        showFrameMetadata: 'on'
+        showFrameMetadata: 'on',
+        busDiagnostics: 'verbose',
+        busMirrorToConsole: 'on',
+        busHistorySize: '500'
     },
     access: {
         currentDevelopmentalClimate: 'anchor',
@@ -370,7 +387,10 @@ const PRESETS = Object.freeze({
         showSemanticMetadata: 'on',
         developmentalIndicators: 'on',
         navigatorDisplay: 'full',
-        consoleDisplay: 'collapsed'
+        consoleDisplay: 'collapsed',
+        busDiagnostics: 'basic',
+        busMirrorToConsole: 'off',
+        busHistorySize: '100'
     }
 });
 

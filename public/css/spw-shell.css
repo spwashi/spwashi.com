@@ -373,3 +373,27 @@ html[data-spw-show-footer='off'] body > footer {
     background: var(--teal);
   }
 }
+
+body {
+  /* Ensure the body itself respects the safe area to prevent horizontal scroll bleed */
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+
+main {
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
+  /* Ensure bottom padding accounts for iOS home indicator */
+  margin: clamp(1rem, 2.6vw, 2rem) auto calc(clamp(2.5rem, 5vw, 4rem) + env(safe-area-inset-bottom));
+}
+
+.spw-spirit-toast,
+[data-attn-register] {
+  /* Push floating UI above the home indicator */
+  bottom: calc(2rem + env(safe-area-inset-bottom)); 
+}
+
+.site-header,
+body > header {
+  /* Prevent header content from sliding under the notch in landscape mode */
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}

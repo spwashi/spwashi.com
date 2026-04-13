@@ -823,3 +823,51 @@ code[data-interactive]:focus-visible::after {
 :where(html[data-spw-ornament="minimal"]) :where(.pretext-flow-scaffold) {
   display: none;
 }
+
+/* Base component definition */
+:where(.frame-card, .frame-panel, .mode-panel) {
+  --local-border-alpha: 1; /* Default full opacity */
+  border: 1px solid color-mix(in srgb, var(--line) calc(100% * var(--local-border-alpha)), transparent);
+}
+
+/* When a panel or card is nested inside another structural component, 
+   quiet its border to reduce visual noise */
+:where(.site-frame, .frame-panel) :where(.frame-card, .frame-panel, .mode-panel) {
+  --local-border-alpha: 0.4; /* Dim nested borders */
+  box-shadow: var(--shadow-sm); /* Rely more on subtle depth than hard lines */
+}
+
+/* If heavily nested (level 3), remove the border entirely and rely on background contrast */
+:where(.site-frame) :where(.frame-panel) :where(.frame-card) {
+  border-color: transparent;
+  background: var(--surface-strong);
+}
+
+/* Elevate .ref-card and .plan-card to global component variants */
+.frame-card--reference,
+.frame-card--plan {
+  /* Inherit the base .frame-card physics, but override specific geometry */
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  /* The before/after pseudo-elements will automatically pick up the 
+     transition physics defined in spw-cinematic.css */
+}
+
+/* Specific Plan Card flourishes (migrated from inline HTML) */
+.frame-card--plan::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  border-style: solid;
+  border-width: 0 2rem 2rem 0;
+  border-color: transparent var(--active-op-color, hsl(36 80% 36%)) transparent transparent;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-mechanical);
+}
+
+.frame-card--plan:is(:hover, :focus-within)::before {
+  opacity: 0.12;
+}
