@@ -8,7 +8,7 @@
  * - Avoid letting decorative or volatile assets poison install stability
  */
 
-const APP_VERSION = '0.2.8';
+const APP_VERSION = '0.2.9';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
