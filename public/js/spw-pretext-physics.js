@@ -4,64 +4,34 @@
  * Pretext Physics Runtime
  *
  * Goals
- * - Treat text projection as a measurable layout system, not transform-only FX.
- * - Keep runtime cost bounded: no scroll listeners, no mutation observers,
- *   no per-instance global listeners.
- * - Make genre physics composable through small policy hooks:
- *     classify -> project -> decorate -> scaffold
- * - Keep mounting/unmounting lifecycle-safe.
- *
- * Public API
- * - initPretextPhysics(options?) => Promise<cleanup>
- *
- * Expected host markup
- * - Elements matching [data-spw-flow="pretext"]
- *
- * Optional per-element data attributes
- * - data-text-kind
- * - data-text-density
- * - data-text-measure
- * - data-text-projection
- * - data-text-ornament
- * - data-spw-text
- *
- * Optional options.channels hooks
- * - classify(baseContext, meta) => partialContext | fullContext | null
- * - project(baseProposal, state) => proposal | null
- * - decorate(lineInfo, state) => { before, after, className } | null
- * - scaffold(summary, state) => string | null
+ * - Treat text projection as a measurable layout system.
+ * - Keep runtime bounded and composable.
+ * - Prefer semantic context from markup over class-only inference.
+ * - Make genre physics extensible via classify/project/decorate/scaffold hooks.
  */
 
 import { loadPretext } from './pretext-utils.js';
 import { bus } from './spw-bus.js';
-
-/* ==========================================================================
-   Defaults
-   ========================================================================== */
 
 const DEFAULTS = Object.freeze({
   root: document,
   selector: '[data-spw-flow="pretext"]',
   scaffoldSelector: '[data-spw-pretext-scaffold], [data-spw-debug~="pretext"]',
 
-  // Pointer field
   pointerFieldX: 520,
   pointerFieldY: 260,
   centerSnapPx: 12,
   approachRangePx: 120,
   projectDxMultiplier: 1.3,
 
-  // Measurement
   minWidthPx: 140,
   maxWidthPx: 960,
   defaultLineHeightPx: 24,
   widthStepPx: 12,
 
-  // Rendering
   asyncLayout: true,
   schedulerPriority: 'user-visible',
 
-  // Ornaments / rhythm
   ornamentEnabled: true,
   rhythmEnabled: true,
   rhythmPulseAffectsOnlyResting: true,
@@ -84,10 +54,6 @@ const DEFAULTS = Object.freeze({
 
 const INFLUENCE_BUCKETS = Object.freeze([0, 0.2, 0.4, 0.6, 0.8, 1]);
 const FALLBACK_OPERATOR = '?';
-
-/* ==========================================================================
-   Shared runtime
-   ========================================================================== */
 
 const RUNTIME = {
   pretextPromise: null,
@@ -117,10 +83,6 @@ const RUNTIME = {
   unsubs: [],
   config: DEFAULTS
 };
-
-/* ==========================================================================
-   Public mount
-   ========================================================================== */
 
 export async function initPretextPhysics(options = {}) {
   const config = mergeConfig(options);
@@ -153,10 +115,6 @@ export async function initPretextPhysics(options = {}) {
   }
 }
 
-/* ==========================================================================
-   Config
-   ========================================================================== */
-
 function mergeConfig(options) {
   return {
     ...DEFAULTS,
@@ -180,10 +138,6 @@ async function ensurePretext() {
   RUNTIME.pretext = RUNTIME.pretext || (await RUNTIME.pretextPromise);
   return RUNTIME.pretext;
 }
-
-/* ==========================================================================
-   Runtime listeners
-   ========================================================================== */
 
 function ensureRuntimeListeners(config) {
   if (RUNTIME.listenersAttached) return;
@@ -257,8 +211,6 @@ function attachRhythmListeners() {
     bus.on('rhythm:start', onRhythmStart),
     bus.on('rhythm:stop', onRhythmStop),
     bus.on('rhythm:reset', onRhythmReset),
-
-    // compatibility
     bus.on('stream:pulse', onRhythmPulse),
     bus.on('stream:phase', onRhythmPhase)
   );
@@ -275,21 +227,19 @@ function detachRhythmListeners() {
   RUNTIME.unsubs = [];
 }
 
-/* ==========================================================================
-   Instance lifecycle
-   ========================================================================== */
-
 function mountInstance(el, pretext, config) {
   const text = getSourceText(el);
   const computed = getComputedStyle(el);
   const font = readFontProfile(computed);
   const anatomy = analyzeText(text);
+  const semanticContext = resolveSemanticContext(el);
 
   const baseContext = classifyTextContext({
     el,
     text,
     anatomy,
     font,
+    semanticContext,
     config
   });
 
@@ -298,6 +248,7 @@ function mountInstance(el, pretext, config) {
     text,
     anatomy,
     font,
+    semanticContext,
     config
   });
 
@@ -329,6 +280,8 @@ function mountInstance(el, pretext, config) {
     },
 
     anatomy,
+    semanticContext,
+
     context: {
       ...context,
       baseMeasure: context.measureProfile,
@@ -407,10 +360,6 @@ function unmountInstance(state) {
   RUNTIME.resizeObserver?.unobserve?.(state.el);
 }
 
-/* ==========================================================================
-   Source / context classification
-   ========================================================================== */
-
 function getSourceText(el) {
   return (el.dataset.spwText || el.innerText || '').trim();
 }
@@ -437,7 +386,6 @@ function analyzeText(text) {
   const uppercase = text.match(/[A-Z]/g) || [];
   const numerals = text.match(/\d/g) || [];
   const lineBreaks = text.match(/\n/g) || [];
-
   const chars = text.length || 0;
 
   return {
@@ -457,17 +405,85 @@ function analyzeText(text) {
   };
 }
 
-function classifyTextContext({ el, anatomy, font, config }) {
+function resolveSemanticContext(el) {
+  const nearestArticle = el.closest('article');
+  const nearestSection = el.closest('section');
+  const nearestFigure = el.closest('figure');
+  const nearestNav = el.closest('nav');
+  const nearestFrame = el.closest('.site-frame');
+  const labelledContainer = el.closest('[aria-labelledby]');
+  const headingId = labelledContainer?.getAttribute('aria-labelledby')?.split(/\s+/)[0];
+  const heading = headingId ? document.getElementById(headingId) : null;
+
+  const headingText = normalizeText(
+    heading?.textContent ||
+    nearestArticle?.querySelector('h1, h2, h3, h4')?.textContent ||
+    nearestSection?.querySelector('h1, h2, h3, h4')?.textContent ||
+    nearestFigure?.querySelector('figcaption')?.textContent ||
+    ''
+  );
+
+  const scopeType =
+    nearestFigure ? 'figure' :
+    nearestArticle ? 'article' :
+    nearestNav ? 'nav' :
+    nearestSection ? 'section' :
+    'ambient';
+
+  const semanticGenre =
+    el.dataset.spwGenre ||
+    labelledContainer?.dataset.spwGenre ||
+    inferGenreFromStructure(el, {
+      headingText,
+      scopeType,
+      nearestArticle,
+      nearestSection,
+      nearestFigure,
+      nearestNav,
+      nearestFrame
+    });
+
+  return {
+    scopeType,
+    headingText,
+    semanticGenre,
+    nearestArticle,
+    nearestSection,
+    nearestFigure,
+    nearestNav,
+    nearestFrame
+  };
+}
+
+function inferGenreFromStructure(el, context) {
+  const haystack = humanize([
+    context.headingText,
+    context.nearestFrame?.dataset.spwRole,
+    context.nearestSection?.dataset.spwRole,
+    context.nearestArticle?.dataset.spwRole,
+    el.dataset.textKind,
+    el.textContent
+  ].filter(Boolean).join(' '));
+
+  if (context.scopeType === 'figure') return 'figure-caption';
+  if (/operator|syntax|grammar|spec|normaliz|binding|probe|frame|layer|surface/.test(haystack)) return 'operator-spec';
+  if (/session|arc|cast|world|play|rpg/.test(haystack)) return 'session-log';
+  if (/register|index|routes|atlas/.test(haystack)) return 'registry';
+  if (/prompt|spell|invocation/.test(haystack)) return 'prompt-block';
+  return 'editorial';
+}
+
+function classifyTextContext({ el, anatomy, font, semanticContext, config }) {
   const explicitKind = el.dataset.textKind || '';
   const explicitMeasure = el.dataset.textMeasure || '';
   const explicitProjection = el.dataset.textProjection || '';
   const explicitOrnament = el.dataset.textOrnament || '';
 
-  const kind = explicitKind || selectTextKind(anatomy);
-  const density = selectDensity(anatomy);
-  const measureProfile = explicitMeasure || selectMeasureProfile(anatomy, font);
-  const projectionFamily = explicitProjection || selectProjectionFamily(kind, anatomy);
-  const ornamentFamily = explicitOrnament || selectOrnamentFamily(kind, anatomy);
+  const kind = explicitKind || selectTextKind(anatomy, semanticContext);
+  const density = selectDensity(anatomy, semanticContext);
+  const measureProfile = explicitMeasure || selectMeasureProfile(anatomy, font, semanticContext);
+  const projectionFamily = explicitProjection || selectProjectionFamily(kind, anatomy, semanticContext);
+  const ornamentFamily = explicitOrnament || selectOrnamentFamily(kind, anatomy, semanticContext);
 
   return {
     kind,
@@ -476,11 +492,16 @@ function classifyTextContext({ el, anatomy, font, config }) {
     projectionFamily,
     ornamentFamily,
     widthStepPx: selectWidthStep(measureProfile, config),
-    lineHeightPx: selectLineHeight(font, kind)
+    lineHeightPx: selectLineHeight(font, kind),
+    semanticGenre: semanticContext.semanticGenre
   };
 }
 
-function selectTextKind(anatomy) {
+function selectTextKind(anatomy, semanticContext) {
+  if (semanticContext.semanticGenre === 'operator-spec') return 'operator-dense';
+  if (semanticContext.semanticGenre === 'session-log') return 'ledger';
+  if (semanticContext.semanticGenre === 'figure-caption') return 'caption';
+  if (semanticContext.semanticGenre === 'prompt-block') return 'invocation';
   if (anatomy.operatorDensity > 0.08) return 'operator-dense';
   if (anatomy.questionDensity > 0.02) return 'question';
   if (anatomy.lineBreakCount >= 2) return 'ledger';
@@ -489,12 +510,15 @@ function selectTextKind(anatomy) {
   return 'prose';
 }
 
-function selectDensity(anatomy) {
-  const load =
+function selectDensity(anatomy, semanticContext) {
+  let load =
     anatomy.operatorDensity * 2.4 +
     anatomy.punctuationDensity * 1.6 +
     anatomy.uppercaseDensity * 1.2 +
     Math.min(anatomy.words / 120, 1);
+
+  if (semanticContext.semanticGenre === 'operator-spec') load += 0.25;
+  if (semanticContext.semanticGenre === 'figure-caption') load -= 0.2;
 
   if (load > 1.45) return 'compressed';
   if (load > 1.05) return 'dense';
@@ -502,14 +526,19 @@ function selectDensity(anatomy) {
   return 'soft';
 }
 
-function selectMeasureProfile(anatomy, font) {
+function selectMeasureProfile(anatomy, font, semanticContext) {
+  if (semanticContext.semanticGenre === 'figure-caption') return 'tight';
+  if (semanticContext.semanticGenre === 'session-log') return 'elastic';
+  if (semanticContext.semanticGenre === 'registry') return 'wide';
   if (anatomy.words <= 8) return 'tight';
   if (anatomy.operatorDensity > 0.08) return 'elastic';
   if (font.isMonospaceHint && anatomy.words > 48) return 'wide';
   return 'standard';
 }
 
-function selectProjectionFamily(kind, anatomy) {
+function selectProjectionFamily(kind, anatomy, semanticContext) {
+  if (semanticContext.semanticGenre === 'registry') return 'indent';
+  if (semanticContext.semanticGenre === 'prompt-block') return 'pulse';
   if (kind === 'operator-dense') return 'expand';
   if (kind === 'question') return 'lean';
   if (kind === 'caption') return 'pulse';
@@ -517,7 +546,9 @@ function selectProjectionFamily(kind, anatomy) {
   return 'expand';
 }
 
-function selectOrnamentFamily(kind, anatomy) {
+function selectOrnamentFamily(kind, anatomy, semanticContext) {
+  if (semanticContext.semanticGenre === 'operator-spec') return 'sigil-edge';
+  if (semanticContext.semanticGenre === 'prompt-block') return 'echo';
   if (kind === 'operator-dense') return 'sigil-edge';
   if (kind === 'question') return 'echo';
   if (anatomy.operatorDensity > 0.04) return 'staged';
@@ -541,10 +572,6 @@ function applyClassifyChannel(baseContext, classifyChannel, meta) {
   if (typeof classifyChannel !== 'function') return baseContext;
   return classifyChannel(baseContext, meta) || baseContext;
 }
-
-/* ==========================================================================
-   Measurement
-   ========================================================================== */
 
 function guessCanonicalWidth(el, anatomy, font, context, config) {
   const measured = Math.max(el.clientWidth || 0, el.offsetWidth || 0);
@@ -667,10 +694,6 @@ function classifyWidthClass(width) {
 function widthKey(width, step) {
   return String(quantize(width, step));
 }
-
-/* ==========================================================================
-   Pointer / brace interaction
-   ========================================================================== */
 
 function onPointerMove(event) {
   RUNTIME.pointer.active = true;
@@ -855,10 +878,6 @@ function resolveStateFromEvent(event) {
   return flowEl ? RUNTIME.byElement.get(flowEl) : null;
 }
 
-/* ==========================================================================
-   Rhythm
-   ========================================================================== */
-
 function onRhythmPulse(event) {
   const beat = Number(event?.detail?.beat || 0);
   const measure = Number(event?.detail?.measure ?? RUNTIME.rhythm.measure);
@@ -975,10 +994,6 @@ function applyRhythmPulse(state) {
   });
 }
 
-/* ==========================================================================
-   Projection
-   ========================================================================== */
-
 function applyProjectionProposal(state, proposal) {
   const baseProposal = {
     width: proposal.width,
@@ -1047,10 +1062,6 @@ function renderProjectedLines(state, width) {
       console.warn('[Pretext] Layout render failed.', error);
     });
 }
-
-/* ==========================================================================
-   Rendering
-   ========================================================================== */
 
 function patchRenderedLines(state, layout, width) {
   const operator = readOperatorContext(state.el);
@@ -1122,7 +1133,6 @@ function createLineNode() {
   after.hidden = true;
 
   line.append(before, text, after);
-
   line._before = before;
   line._text = text;
   line._after = after;
@@ -1182,10 +1192,6 @@ function shouldDecorateLine(state, lineInfo) {
   return lineInfo.influenceBucket > 0 && lineInfo.index % threshold === 0;
 }
 
-/* ==========================================================================
-   Scaffold + surface state
-   ========================================================================== */
-
 function createScaffoldRoot() {
   const root = document.createElement('div');
   root.className = 'pretext-flow-scaffold';
@@ -1207,6 +1213,8 @@ function updateScaffold(state) {
     rhythmMeasure: state.context.rhythmMeasure,
     projection: state.context.projectionFamily,
     ornament: state.context.ornamentFamily,
+    genre: state.context.semanticGenre,
+    scope: state.semanticContext.scopeType,
     mode: state.interaction.mode,
     influence: state.interaction.influenceBucket,
     widthClass: state.measurement.widthClass,
@@ -1231,6 +1239,8 @@ function updateScaffold(state) {
       ? override
       : [
           `kind:${summary.kind}`,
+          `genre:${summary.genre}`,
+          `scope:${summary.scope}`,
           `density:${summary.density}`,
           `measure:${summary.measure}`,
           `r-measure:${summary.rhythmMeasure}`,
@@ -1248,7 +1258,7 @@ function updateScaffold(state) {
 }
 
 function syncSurfaceState(state) {
-  const { el, context, interaction, measurement, rhythm } = state;
+  const { el, context, interaction, measurement, rhythm, semanticContext } = state;
 
   el.dataset.textKind = context.kind;
   el.dataset.textDensity = context.density;
@@ -1256,6 +1266,8 @@ function syncSurfaceState(state) {
   el.dataset.textRhythmMeasure = context.rhythmMeasure;
   el.dataset.textProjection = context.projectionFamily;
   el.dataset.textOrnament = context.ornamentFamily;
+  el.dataset.textGenre = context.semanticGenre;
+  el.dataset.textScope = semanticContext.scopeType;
 
   el.dataset.textMode = interaction.mode;
   el.dataset.textInfluence = String(interaction.influenceBucket);
@@ -1277,10 +1289,6 @@ function syncSurfaceState(state) {
   el.style.setProperty('--pretext-measure', `${rhythm.measure}`);
   el.style.setProperty('--pretext-bpm', `${rhythm.bpm}`);
 }
-
-/* ==========================================================================
-   Utilities
-   ========================================================================== */
 
 function readOperatorContext(el) {
   return el.closest('.site-frame')?.dataset.spwOperator || FALLBACK_OPERATOR;
@@ -1318,4 +1326,12 @@ function parseLineHeight(value, fontSizePx, fallback) {
   return value.endsWith('px')
     ? parsed
     : Math.round(parsed * fontSizePx);
+}
+
+function normalizeText(value = '') {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+function humanize(value = '') {
+  return normalizeText(value).replace(/[_-]+/g, ' ').toLowerCase();
 }
