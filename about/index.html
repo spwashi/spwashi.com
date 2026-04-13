@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <title>Spwashi • About</title>
+    <meta name="description" content="I build readable systems that teach their own structure. Spwashi is the public workbench for applying learning science through constructive play, local-first architecture, and plain-text semantics that stay inspectable at every scale."/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#1a9999"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <link rel="canonical" href="https://spwashi.com/about">
     <link rel="manifest" href="/manifest.webmanifest">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
@@ -18,269 +20,566 @@
     </script>
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/boonhonk-mixer.css">
+    <link rel="stylesheet" href="/public/css/spw-components.css">
+    <link rel="stylesheet" href="/public/css/spw-surfaces.css">
     <script type="module">
         import { initBoonhonkMixers } from '/public/js/boonhonk-mixer.js';
         document.addEventListener('DOMContentLoaded', () => { initBoonhonkMixers(); });
     </script>
 </head>
 <body data-spw-features="operators navigator console">
-    <header>
-        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a aria-current="page" href="/about">About</a></li>
-                <li><a href="/about/plans/">Plans</a></li>
-                <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header" role="banner">
+    <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+    <nav aria-label="Primary">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a aria-current="page" href="/about">About</a></li>
+            <li><a href="/about/plans/">Plans</a></li>
+            <li><a href="/topics/software/">Software</a></li>
+            <li><a href="/play/">Play</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/settings/">Settings</a></li>
+        </ul>
+    </nav>
+    <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+</header>
+
+<main id="main-content">
+
+    <section
+        class="site-frame site-hero"
+        id="about-frame"
+        aria-labelledby="about-title"
+        aria-describedby="about-orientation-note"
+        data-spw-kind="frame"
+        data-spw-role="orientation"
+        data-spw-context="reading"
+        data-spw-wonder="orientation"
+        data-spw-affordance="navigate"
+        data-spw-form="brace"
+        data-spw-liminality="entry">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#about-frame">#&gt;about_frame</a>
+            <div class="spec-strip">
+                <span class="spec-pill">readable systems</span>
+                <span class="spec-pill">learning science</span>
+                <span class="spec-pill">local-first</span>
+                <span class="spec-pill">semantic play</span>
+                <span class="spec-pill">Obsidian alignment</span>
+            </div>
+        </div>
+
+        <h1 id="about-title">About</h1>
+
+        <p id="about-orientation-note">
+            I build readable systems that teach their own structure. Spwashi is the public workbench for that aim: a place where software architecture, learning science, symbolic grammar, narrative ecology, and plain-text publishing can accumulate into one inspectable field. I care about structures that let people think together without needing to surrender ownership, legibility, or wonder.
+        </p>
+
+        <p>
+            I dropped out of college while trying to answer a question that still structures my work: <strong>Why are we here?</strong> At UIUC, I founded a student organization called <strong>Student Body for Meaningful Education</strong>. SBME had three committees — <strong>Discussion</strong>, <strong>Connection</strong>, and <strong>Create</strong> — because I wanted to treat student motivation as a design problem, not just a compliance problem. I wondered whether student council could function as the head of student motivation, and whether a school could become more conscious of the relationship between structure and meaning.
+        </p>
+
+        <p>
+            That question did not leave when I left school. It changed substrates. It moved into software, interfaces, note systems, parsers, and educational media. I still care about motivation, but now I think of it as a problem of <span class="spw-delimiter spw-delimiter--angle">&lt;</span>legible containment<span class="spw-delimiter spw-delimiter--angle">&gt;</span>: how we shape spaces where attention can gather, where internal and external structure can resonate, and where learning can become cumulative without becoming dead.
+        </p>
+
+        <p>
+            An important update to the present moment is that my Obsidian application has moved into the review phase. Whether the applicant pool is hundreds or something closer to a ritual number like <strong>1200</strong>, I want to answer that pressure with care. So I am treating this season as an invitation to bless the process through quality: 1200 acts of care, 1200 openings for study, 1200 chances to turn attention into form. Not a shallow stunt — a discipline of distributed sincerity.
+        </p>
+
+        <nav class="frame-operators" aria-label="About routes">
+            <a class="operator-chip" href="#about-index" data-spw-form="angle" data-spw-operator="ref">~page_index</a>
+            <a class="operator-chip" href="#philosophy-register" data-spw-form="angle" data-spw-operator="probe">?philosophy</a>
+            <a class="operator-chip" href="#systems-register" data-spw-form="angle" data-spw-operator="object">^systems_register</a>
+            <a class="operator-chip" href="#documentation-register" data-spw-form="angle" data-spw-operator="ref">~documentation_field</a>
+            <a class="operator-chip" href="#surface-register" data-spw-form="angle" data-spw-operator="surface">&gt;surface_register</a>
+            <a class="operator-chip" href="#direction-register" data-spw-form="angle" data-spw-operator="action">@current_direction</a>
         </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
-    </header>
-    <main>
-        <section class="site-frame site-hero" id="about-frame" data-spw-accent="flow">
-            <div class="frame-topline">
-                <a class="frame-sigil" href="#about-frame">#&gt;about_frame</a>
-                <div class="spec-strip">
-                    <span class="spec-pill">systems</span>
-                    <span class="spec-pill">design</span>
-                    <span class="spec-pill">local-first</span>
-                    <span class="spec-pill">Obsidian application</span>
-                </div>
-            </div>
-            <h1>About</h1>
-            <p>I lead engineering groups by applying principles of <span class="spw-delimiter spw-delimiter--circle">(</span>Learning Science<span class="spw-delimiter spw-delimiter--circle">)</span> through substrates of constructive play towards mindful design and architecture. This site is a culture starter for that approach.</p>
-            <p>The current public direction focuses on building systems that teach their own structure: exploring how <span class="spw-delimiter spw-delimiter--angle">&lt;</span>data structures<span class="spw-delimiter spw-delimiter--angle">&gt;</span> and algorithms drive interfaces, and forging public pages where interactive semantics invite deeper inquiry into engineering depth.</p>
-            <nav class="frame-operators" aria-label="About routes">
-                <a class="operator-chip" href="#systems-register" data-spw-form="angle">^ systems</a>
-                <a class="operator-chip" href="#surface-register" data-spw-form="angle">? surfaces</a>
-                <a class="operator-chip" href="#boonhonk-register" data-spw-form="angle">~ land cluster</a>
-                <a class="operator-chip" href="/about/website/" data-spw-form="angle">website field guide</a>
-                <a class="operator-chip" href="/topics/software/" data-spw-form="angle">software surface</a>
-                <a class="operator-chip" href="/play/" data-spw-form="angle">play surface</a>
-                <a class="operator-chip" href="/blog/" data-spw-form="angle">wonder blog</a>
-            </nav>
-        </section>
+    </section>
 
-        <section class="site-frame" id="systems-register" data-spw-accent="lattice">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#systems-register">^"systems_register"{</a>
-                <h2>Systems Register</h2>
-            </div>
-            <div class="frame-grid">
-                <div class="frame-panel">
-                    <h3>I build systems</h3>
-                    <p>I have spent more than a decade building frontend systems, developer tooling, content platforms, and product architecture. The current parser/runtime thread is most visible in <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
-                    <ul class="frame-list">
-                        <li>Language tooling and parser-driven systems</li>
-                        <li>Interface architecture and design systems</li>
-                        <li>Developer experience and workflow design</li>
-                        <li>Accessible web applications and content surfaces</li>
-                    </ul>
-                </div>
-                <div class="frame-panel">
-                    <h3>Edges I'm pushing</h3>
-                    <p>While I optimize for stable structure and readable files, I want to expand my awareness of the deep algorithmic work underneath the tools I use every day.</p>
-                    <ul class="frame-list">
-                        <li>Data structures underlying text layout renderers</li>
-                        <li>Algorithms for compression and concurrent schedulers</li>
-                        <li>Computational linguistics and rigorous formal grammar</li>
-                        <li>Staff-level system architecture and API contract design</li>
-                    </ul>
-                </div>
-                <div class="frame-panel">
-                    <h3>Why I am applying to Obsidian</h3>
-                    <p>Obsidian sits close to the problems I already care about: local-first trust, metadata-rich files, extensible tooling, and the relationship between structure and interaction.</p>
-                    <ul class="frame-list">
-                        <li>Local-first architecture matches how I think about ownership and user trust.</li>
-                        <li>Editor, plugin, LSP, and metadata-heavy systems are exactly where I like to work.</li>
-                        <li>Small teams with strong product taste are where I can contribute most effectively.</li>
-                    </ul>
-                </div>
-                <div class="frame-panel">
-                    <h3>Semantics as Spells</h3>
-                    <p>My interest in Spw semantics functions almost like spells—small mnemonic tools that open up the underlying mechanics of a system.</p>
-                    <p class="frame-note">Following an operator or a syntax token often leads me to wonder about deep architectural truths I haven't fully learned yet. The structure is the start of the interaction.</p>
-                </div>
-            </div>
-        </section>
+    <nav
+        class="site-frame"
+        id="about-index"
+        aria-labelledby="about-index-title"
+        data-spw-kind="frame"
+        data-spw-role="routing"
+        data-spw-context="routing"
+        data-spw-wonder="orientation">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#about-index">~"about_index"</a>
+        </div>
+        <h2 id="about-index-title">How to read this page</h2>
+        <ul class="frame-list">
+            <li><a href="#philosophy-register">Philosophy Register</a> — why readable systems matter to me.</li>
+            <li><a href="#career-register">Career and Practice</a> — where my background, dropout, and engineering arc meet.</li>
+            <li><a href="#systems-register">Systems Register</a> — what I build and which problems I am pressing into.</li>
+            <li><a href="#documentation-register">Documentation Field</a> — the official docs, projects, and references I want this work to resonate with.</li>
+            <li><a href="#surface-register">Surface Register</a> — routes through the public ecosystem.</li>
+            <li><a href="#boonhonk-register">Land Cluster</a> — the symbolic ecology behind the broader project.</li>
+            <li><a href="#flow-magic">Pretext and Flow</a> — how text, rhythm, and containment become measurable surfaces.</li>
+            <li><a href="#direction-register">Current Direction</a> — what I am building toward now.</li>
+        </ul>
+    </nav>
 
-        <section class="site-frame" id="surface-register" data-spw-form="square">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#surface-register">?["surface_register"]</a>
-                <h2>Surface Register</h2>
-            </div>
-            <p class="inline-note">This section groups the public work by what a visitor is trying to understand: engineering, play, narrative, or the wider domain constellation.</p>
-            <div class="frame-grid">
-                <div class="frame-panel">
-                    <h3>Engineering surfaces</h3>
-                    <ul class="frame-list">
-                        <li><a href="/topics/software/">software surface</a> — Spw grammar, operator roles, and interactive codeblocks</li>
-                        <li><a href="/services/">services</a> — web development, systems design, and configurable offer/ask cards</li>
-                        <li><a href="/about/website/">website field guide</a> — a tour of the PWA shell, frame navigation, and interaction features</li>
-                        <li><a href="/blog/">blog interpreter</a> — local synthesis for Spw fragments, wonder notes, and readable drafts</li>
-                        <li><a href="https://spw.quest">spw.quest</a> — language documentation</li>
-                        <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser, runtime, and tooling work</li>
-                        <li><a href="https://spwashi.dev">spwashi.dev</a> — developer tools and workbench notes</li>
-                        <li><a href="https://spwashi.design">spwashi.design</a> — design systems and visual language</li>
-                    </ul>
-                </div>
-                <div class="frame-panel">
-                    <h3>Play surfaces</h3>
-                    <ul class="frame-list">
-                        <li><a href="/play/rpg-wednesday/">rpg wednesday</a> — a recurring tabletop session with local play tools</li>
-                        <li><a href="/topics/software/pretext/">pretext lab</a> — a live text layout experiment</li>
-                        <li><a href="https://boonhonk.ing">boonhonk.ing</a> — genre engine and biome construction</li>
-                        <li><a href="https://brainstorm.monster">brainstorm.monster</a> — collective ideation</li>
-                        <li><a href="https://wap.christmas">wap.christmas</a> — Wondering About Pi, holiday shell</li>
-                        <li><a href="https://wap.mom">wap.mom</a> — Wondering About Pi, nurturing path</li>
-                    </ul>
-                </div>
-                <div class="frame-panel">
-                    <h3>Narrative surfaces</h3>
-                    <ul class="frame-list">
-                        <li><a href="/about/domains/lore.land/">lore.land</a> — long-form story and symbolic structure</li>
-                        <li><a href="https://www.spwashi.ai/">spwashi.ai</a> — writing about surfaces and systems</li>
-                        <li><a href="https://spwashi.ink">spwashi.ink</a> — publishing imprint</li>
-                        <li><a href="https://trope.wiki">trope.wiki</a> — narrative structure reference</li>
-                        <li><a href="https://boof.land">boof.land</a> — Boof, protagonist and lore carrier</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    <section
+        class="site-frame"
+        id="philosophy-register"
+        aria-labelledby="philosophy-register-title"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-kind="frame">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#philosophy-register">$"philosophy_register"</a>
+        </div>
+        <h2 id="philosophy-register-title">Philosophy Register</h2>
 
-        <section class="site-frame" id="boonhonk-register" data-spw-form="circle">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#boonhonk-register">~"boonhonk_cluster"</a>
-                <h2>Land Cluster</h2>
-            </div>
-            <p class="inline-note">The land cluster is a small symbolic system. Boon and bane define the polarity, bone carries the structure, bonk marks the event, and honk sends the signal outward.</p>
-            <ul class="syntax-list">
-                <li>
-                    <a class="syntax-token" href="/about/domains/boon.land/">&gt; boon</a>
-                    <span>+1 · arrival, benefit — the attractive field</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="/about/domains/bane.land/">! bane</a>
-                    <span>−1 · departure, cost — the bounding constraint</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="/about/domains/bone.land/">^ bone</a>
-                    <span>0 · structural carrier — the neutral medium</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="/about/domains/bonk.land/">@ bonk</a>
-                    <span>event · collision, state change — the impulse</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="/about/domains/honk.land/">~ honk</a>
-                    <span>signal · outward relay, transmission — the wave</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="https://boonhonk.ing">boonhonk.ing</a>
-                    <span>engine · genre hybridization and biome construction</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="https://factshift.com">factshift.com</a>
-                    <span>engine · physics of narrative transformation</span>
-                </li>
-                <li>
-                    <a class="syntax-token" href="https://factshift.center">factshift.center</a>
-                    <span>observatory · fact dynamics field station and atlas</span>
-                </li>
-            </ul>
-        </section>
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>Software as applied linguistic integration</h3>
+                <p>
+                    I do not experience software merely as implementation. I experience it as a way of stabilizing shared meaning across time, groups, and substrates. A codebase is a language environment. A UI is a grammar of permission and orientation. A parser is not just a machine that accepts strings — it is a gatekeeper for what kinds of interpretation a community can sustain together.
+                </p>
+                <p class="frame-note">
+                    This is why I keep returning to plain text. Plain text gives us the strongest baseline for shared inspectability, versioning, portability, and long-horizon continuity.
+                </p>
+            </article>
 
-        <!-- Boonhonk mixer -->
-        <section
-            class="site-frame"
-            id="boonhonk-mixer"
-            data-spw-role="probe"
-            data-spw-form="circle"
-            data-spw-meaning="interactive boonhonk operator weight visualizer"
-        >
-            <div class="frame-heading">
-                <h2>Mood Field</h2>
-            </div>
-            <p class="inline-note">The site's color comes from a weighted formula across five operators. Tap each node to step its weight. The center shows the resulting color. The page itself updates live.</p>
+            <article class="frame-panel">
+                <h3>Learning science as engineering discipline</h3>
+                <p>
+                    My academic background in learning and education studies taught me to care about more than correctness. It taught me to care about transfer, working memory, motivation, retention, timing, perceptual scaffolding, and the difference between a structure that merely functions and one that actually helps people learn. That difference matters to me everywhere: in a parser error, in a mode switch, in a service surface, in a note-taking environment, in a lore engine, in a recipe.
+                </p>
+            </article>
 
-            <div data-boonhonk-mixer></div>
+            <article class="frame-panel">
+                <h3>Readable systems over opaque automation</h3>
+                <p>
+                    The AI era does not make structure less important. It makes structure more important. When generation is cheap, the value of legibility goes up. The structures that matter are the ones that let people inspect what happened, recover what they meant, and navigate the relationship between intention and execution without becoming dependent on black boxes. I want systems that remain navigable even when the surrounding technological conditions become more volatile.
+                </p>
+            </article>
 
-            <details class="frame-note" style="margin-top:1rem;">
-                <summary>The math</summary>
-                <pre style="font-size:0.78rem; line-height:1.6; margin-top:0.5rem; overflow-x:auto;"><code>hue   = (boon×140) + (bone×40) + (bonk×300) + (honk×200)
-sat   = 38% + (boon×32%) + (bonk×25%)
+            <article class="frame-panel">
+                <h3>Why meaning still structures the work</h3>
+                <p>
+                    SBME was my early attempt to give institutional form to the question “Why are we here?” I still think that is the right question. It just shows up now in different clothes: why do we store this locally, why does this parser choose this interpretation, why does this interaction reward one stance and not another, why does a syntax feel alive instead of dead, why does a project deserve time and care?
+                </p>
+                <p>
+                    I sometimes wonder whether octopi really have heads distinct from their bodies, or whether some forms of intelligence are more distributed than our metaphors allow. I think about my companion Boof and the strange beauty of a mind that seems near-harmonious with its own experience. Those reflections matter to the work because they keep me from building systems that assume cognition is merely hierarchical, merely abstract, or merely verbal. Sometimes the healthiest structure is one where mentality and embodiment are less split.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="career-register"
+        aria-labelledby="career-register-title"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-kind="frame">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#career-register">^"career_register"</a>
+        </div>
+        <h2 id="career-register-title">Career and Practice</h2>
+
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>Experience and trajectory</h3>
+                <p>
+                    I have spent roughly fifteen years building software, with a long arc through frontend systems, design systems, developer experience, content surfaces, and public-facing product architecture. My orientation is strongest where engineering, interface design, language, and pedagogy overlap.
+                </p>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Why the dropout matters</h3>
+                <p>
+                    I did not leave school because I stopped caring about education. I left because I cared about meaning intensely enough that I could not ignore the mismatch between institutional form and lived motivation. That fracture never stopped being relevant. It is one reason I care so much about environments like Obsidian, where files remain locally owned and where the relationship between structure and thought is not entirely captured by a platform.
+                </p>
+            </article>
+
+            <article class="frame-panel">
+                <h3>How I like to work</h3>
+                <p>
+                    I like small, high-taste teams with strong product conviction, technical depth, and a willingness to refine the invisible structure around an experience. I care about architecture, but not architecture for its own sake. I care about the way it changes what a team can sustain, how a product feels to inhabit, and how a community can accumulate trust over time.
+                </p>
+            </article>
+
+            <article class="frame-panel">
+                <h3>What I am aiming toward professionally</h3>
+                <p>
+                    I am aiming toward senior, staff, and principal-caliber work that integrates software engineering, design systems, knowledge workflows, and educational structure. I want to help build products that respect local ownership, deep personalization, extensibility, and long-horizon intellectual life.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="systems-register"
+        aria-labelledby="systems-register-title"
+        data-spw-role="registry"
+        data-spw-accent="lattice">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#systems-register">^"systems_register"{</a>
+        </div>
+        <h2 id="systems-register-title">Systems Register</h2>
+
+        <figure class="spw-svg-figure" aria-labelledby="lattice-title">
+            <svg class="spw-svg-surface spw-svg-lattice" viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lattice-title lattice-desc">
+                <title id="lattice-title">Semantic Lattice — Parser, Runtime, and Readable Systems</title>
+                <desc id="lattice-desc">A hexagonal lattice showing interconnected nodes for parser, runtime, LSP, and pretext physics.</desc>
+                <defs>
+                    <linearGradient id="lattice-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="hsl(188 58% 32%)"/>
+                        <stop offset="100%" stop-color="hsl(342 48% 36%)"/>
+                    </linearGradient>
+                </defs>
+                <g class="lattice-nodes">
+                    <circle cx="80" cy="60" r="22" fill="#1a9999" stroke="#0e1214" stroke-width="3"/>
+                    <text x="80" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">#&gt;</text>
+                    <circle cx="220" cy="60" r="22" fill="#1a9999" stroke="#0e1214" stroke-width="3"/>
+                    <text x="220" y="68" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">^</text>
+                    <circle cx="360" cy="120" r="28" fill="#0e1214" stroke="#1a9999" stroke-width="4"/>
+                    <text x="360" y="130" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">@</text>
+                    <circle cx="500" cy="60" r="22" fill="#1a9999" stroke="#0e1214" stroke-width="3"/>
+                    <text x="500" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">~</text>
+                </g>
+                <g class="lattice-flow" stroke="url(#lattice-grad)" stroke-width="2" fill="none">
+                    <path d="M102 60 Q160 60 200 60"/>
+                    <path d="M242 60 Q280 80 340 120"/>
+                    <path d="M388 120 Q440 100 480 60"/>
+                </g>
+            </svg>
+            <figcaption class="frame-note">The semantic lattice: parser, runtime, LSP, and pretext physics interlock. Structure compounds; legibility scales.</figcaption>
+        </figure>
+
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>I build systems</h3>
+                <p>
+                    I have spent years building frontend systems, developer tooling, content platforms, and architecture for interfaces that need to stay coherent under real constraints. The most concentrated expression of this right now is <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>: a parser/runtime/tooling environment for Spw and the broader workbench ecosystem.
+                </p>
+                <ul class="frame-list">
+                    <li>Language tooling and parser-driven systems</li>
+                    <li>Interface architecture and design systems</li>
+                    <li>Developer experience and workflow design</li>
+                    <li>Accessible web applications and content surfaces</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Edges I am pushing</h3>
+                <p>
+                    I want to deepen the algorithmic and systems knowledge underneath the structures I already use instinctively: parsing, compression, schedulers, concurrency, document integrity, local-first synchronization, rendering, and formal grammar. Pretext physics and brace polarity are part of that effort: ways to make the deep timing and structure of software experientially visible.
+                </p>
+                <ul class="frame-list">
+                    <li>Data structures underlying text layout and interaction</li>
+                    <li>Algorithms for compression and distributed state</li>
+                    <li>Formal grammar and computational linguistics</li>
+                    <li>Staff-level system architecture and API contracts</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Why Obsidian matters to me</h3>
+                <p>
+                    Obsidian sits close to several problems I care about deeply: local-first trust, plain-text ownership, metadata-rich files, link-dense knowledge work, extensibility, plugins, and the relationship between visible structure and accumulated thought. I do not merely want to use environments like that — I want to help extend them carefully.
+                </p>
+                <p class="frame-note">
+                    The fit is philosophical as much as technical: systems that preserve user ownership while making the file system more navigable are exactly the kinds of systems I want to help build. Official references: <a href="https://help.obsidian.md/">Obsidian Help</a> and <a href="https://docs.obsidian.md/">Obsidian Developer Docs</a>.
+                </p>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Why readable systems matter</h3>
+                <p>
+                    A readable system is not only easier to debug. It is easier to teach, easier to inherit, easier to trust, easier to revise, easier to extend, and easier to mourn if it must end. In an era of proliferating AI surfaces, that matters more. I want structures that let people inspect what happened and understand why.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="documentation-register"
+        aria-labelledby="documentation-register-title"
+        data-spw-role="reference"
+        data-spw-context="analysis">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#documentation-register">~"documentation_field"</a>
+        </div>
+        <h2 id="documentation-register-title">Documentation Field</h2>
+        <p class="inline-note">
+            This page should point outward, not just inward. These are some of the documents, projects, and references that shape the environment I want this work to resonate with.
+        </p>
+
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>My public documentation and code</h3>
+                <ul class="frame-list">
+                    <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser, runtime, tooling, and workbench direction.</li>
+                    <li><a href="https://spw.quest">spw.quest</a> — language documentation and operator field.</li>
+                    <li><a href="/topics/software/">software surface</a> — public route into the syntax, ideas, and experiments.</li>
+                    <li><a href="/about/website/">website field guide</a> — the runtime shell and interaction model of this site.</li>
+                    <li><a href="/blog/">blog interpreter</a> — wonder notes, fragments, and public thinking.</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Obsidian and knowledge environment references</h3>
+                <ul class="frame-list">
+                    <li><a href="https://help.obsidian.md/">Obsidian Help</a> — official user documentation.</li>
+                    <li><a href="https://docs.obsidian.md/">Obsidian Developer Docs</a> — official API and plugin documentation.</li>
+                    <li><a href="https://help.obsidian.md/obsidian">What is Obsidian</a> — plain text, links, and local-first knowledge framing.</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Local-first and document architecture references</h3>
+                <ul class="frame-list">
+                    <li><a href="https://automerge.org/docs/hello/">Welcome to Automerge</a> — collaborative local-first document model.</li>
+                    <li><a href="https://automerge.org/docs/tutorial/concepts/">Automerge Core Concepts</a> — documents, repositories, and synchronization.</li>
+                    <li><a href="https://automerge.org/docs/tutorial/local-sync/">Local Storage and Sync</a> — local-first storage and cross-tab sync.</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Language and tooling references</h3>
+                <ul class="frame-list">
+                    <li><a href="https://tree-sitter.github.io/tree-sitter/">Tree-sitter</a> — incremental parsing substrate.</li>
+                    <li><a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> — editor/tooling contract surface.</li>
+                    <li><a href="https://codemirror.net/">CodeMirror</a> — editor infrastructure and extensible text environments.</li>
+                    <li><a href="https://www.typescriptlang.org/docs/">TypeScript Docs</a> — type-rich language tooling practice.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="surface-register"
+        aria-labelledby="surface-register-title"
+        data-spw-role="directory"
+        data-spw-form="square">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#surface-register">?["surface_register"]</a>
+        </div>
+        <h2 id="surface-register-title">Surface Register</h2>
+        <p class="inline-note">
+            These public surfaces are grouped by intent: where to learn the grammar, where to see experiments, where to encounter the wider domain constellation, and where the long-arc publishing strategy starts to become visible.
+        </p>
+
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>Primary engineering surfaces</h3>
+                <ul class="frame-list">
+                    <li><a href="/topics/software/">software surface</a> — Spw grammar, operator roles, parsers, and live system ideas.</li>
+                    <li><a href="/about/website/">website field guide</a> — PWA shell, frame navigation, runtime semantics.</li>
+                    <li><a href="/blog/">blog</a> — public fragments, development notes, and reflective synthesis.</li>
+                    <li><a href="https://spw.quest">spw.quest</a> — canonical language surface.</li>
+                    <li><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> — parser/runtime/tooling nucleus.</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Experimental and play surfaces</h3>
+                <ul class="frame-list">
+                    <li><a href="/play/rpg-wednesday/">RPG Wednesday</a> — recurring tabletop practice and lore toolchain.</li>
+                    <li><a href="/topics/software/pretext/">pretext lab</a> — measurable whimsy for text layout and projection.</li>
+                    <li><a href="https://boonhonk.ing">boonhonk.ing</a> — genre engine and biome construction.</li>
+                    <li><a href="https://brainstorm.monster">brainstorm.monster</a> — collaborative ideation surface.</li>
+                </ul>
+            </article>
+
+            <article class="frame-panel">
+                <h3>Constellation and publishing surfaces</h3>
+                <ul class="frame-list">
+                    <li><a href="/about/domains/lore.land/">lore.land</a> — narrative atlas and symbolic structure.</li>
+                    <li><a href="https://factshift.com">factshift.com</a> — metacognitive and narrative shift environment.</li>
+                    <li><a href="https://factshift.center">factshift.center</a> — observatory and directional atlas.</li>
+                    <li><a href="https://tealstripesvibes.com">tealstripesvibes.com</a> — publishing and cultural continuity.</li>
+                    <li><a href="https://texture.website">texture.website</a> — style, theming, and contagious surface thinking.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="boonhonk-register"
+        aria-labelledby="boonhonk-register-title"
+        data-spw-form="circle"
+        data-spw-role="context">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#boonhonk-register">~"boonhonk_cluster"</a>
+        </div>
+        <h2 id="boonhonk-register-title">Land Cluster</h2>
+        <p class="inline-note">
+            The land cluster is a symbolic system for polarity, containment, impulse, and outward signal. Boon and bane define the field, bone carries the structure, bonk marks the event, and honk sends the wave outward. This polarity mirrors the brace physics of the rest of the site.
+        </p>
+
+        <figure class="spw-svg-figure" aria-labelledby="polarity-wheel-title">
+            <svg class="spw-svg-surface" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="polarity-wheel-title polarity-wheel-desc">
+                <title id="polarity-wheel-title">Land Cluster Polarity Wheel</title>
+                <desc id="polarity-wheel-desc">Circular polarity wheel showing boon, bane, bone, bonk, and honk as a relational field.</desc>
+                <circle cx="180" cy="180" r="140" fill="none" stroke="#1a9999" stroke-width="12" stroke-dasharray="4 8"/>
+                <text x="180" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#1a9999">&gt; boon</text>
+                <text x="280" y="140" text-anchor="middle" font-size="22" font-weight="700" fill="#e05d8c">! bane</text>
+                <text x="180" y="240" text-anchor="middle" font-size="22" font-weight="700" fill="#0e1214">^ bone</text>
+                <text x="80" y="140" text-anchor="middle" font-size="22" font-weight="700" fill="#f4a261">@ bonk</text>
+                <text x="180" y="300" text-anchor="middle" font-size="22" font-weight="700" fill="#1a9999">~ honk</text>
+            </svg>
+            <figcaption class="frame-note">Boon and bane define the polarity. The wheel is the same tension as the brace axis across the work.</figcaption>
+        </figure>
+
+        <ul class="syntax-list">
+            <li><a class="syntax-token" href="/about/domains/boon.land/">&gt; boon</a><span>+1 · arrival, benefit, attraction.</span></li>
+            <li><a class="syntax-token" href="/about/domains/bane.land/">! bane</a><span>−1 · cost, loss, bounding force.</span></li>
+            <li><a class="syntax-token" href="/about/domains/bone.land/">^ bone</a><span>0 · structure, carrier, scaffold.</span></li>
+            <li><a class="syntax-token" href="/about/domains/bonk.land/">@ bonk</a><span>event · collision, change, impulse.</span></li>
+            <li><a class="syntax-token" href="/about/domains/honk.land/">~ honk</a><span>signal · relay, resonance, outward wave.</span></li>
+            <li><a class="syntax-token" href="https://boonhonk.ing">boonhonk.ing</a><span>genre engine and biome construction.</span></li>
+            <li><a class="syntax-token" href="https://factshift.com">factshift.com</a><span>narrative and conceptual transformation engine.</span></li>
+        </ul>
+    </section>
+
+    <section
+        class="site-frame"
+        id="boonhonk-mixer"
+        aria-labelledby="mood-field-title"
+        data-spw-role="probe"
+        data-spw-form="circle"
+        data-spw-meaning="interactive boonhonk operator weight visualizer">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#boonhonk-mixer">*"mood_field"</a>
+        </div>
+        <h2 id="mood-field-title">Mood Field</h2>
+        <p class="inline-note">
+            The palette is weighted across five operators. Tap each node to step its weight. The center shows the resulting color. The page updates live. This is a public way of studying how abstraction can still remain embodied — how structure becomes atmosphere.
+        </p>
+        <div data-boonhonk-mixer></div>
+        <details class="frame-note" style="margin-top:1rem;">
+            <summary>The math</summary>
+            <pre style="font-size:0.78rem; line-height:1.6; margin-top:0.5rem; overflow-x:auto;"><code>hue = (boon×140) + (bone×40) + (bonk×300) + (honk×200)
+sat = 38% + (boon×32%) + (bonk×25%)
 light = 52% + (bone×12%) − (bane×18%)</code></pre>
-                <p style="margin-top:0.5rem;">Each operator pulls the hue, saturation, and lightness toward its territory. Bane is the only force that darkens rather than shifting hue — it's the constraint that makes the others feel heavier.</p>
-            </details>
-        </section>
+            <p style="margin-top:0.5rem;">
+                Each operator pulls the hue, saturation, and lightness toward its territory. Bane is the only force that consistently darkens rather than only rotating hue — the constraint that makes the other operators feel heavier.
+            </p>
+        </details>
+    </section>
 
-        <section class="site-frame" id="flow-magic" data-spw-role="probe" data-spw-form="brace">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#flow-magic">?["symmetry_and_flow"]</a>
-                <h2>Symmetry and Flow</h2>
-            </div>
-            <p class="inline-note">Approaching sigils from the left (objective) or right (subjective) reveals layers of consideration across the substrate. Watch how the prose below responds to the directional influence of your approach.</p>
-            <div data-spw-flow="pretext">
-                The file remains readable. The surface becomes measurable. The layout learns to breathe. Symbols are not just static markers; they are physical gates that respond to the direction of inquiry. By measuring once and projecting many, we achieve a stable ground for whimsy.
-            </div>
-            <p class="frame-note">Powered by Pretext.js — measurement-driven layout without DOM reflow.</p>
-        </section>
+    <section
+        class="site-frame"
+        id="flow-magic"
+        aria-labelledby="flow-magic-title"
+        data-spw-role="probe"
+        data-spw-form="brace">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#flow-magic">?["symmetry_and_flow"]</a>
+        </div>
+        <h2 id="flow-magic-title">Pretext, Symmetry, and Flow</h2>
+        <p class="inline-note">
+            I want symbols to behave less like static labels and more like measurable gates. Approaching them from different directions should reveal layers of consideration in the substrate. This is part of what pretext physics is for: allowing the file to remain readable while the surface becomes responsive to stance, rhythm, and containment.
+        </p>
 
-        <section class="site-frame" id="world-creatures" data-spw-form="brace" data-spw-role="context" data-spw-accent="crystal">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#world-creatures">*"world_creatures"</a>
-                <h2>Whimsical Landscape</h2>
-            </div>
-            <p class="inline-note">The team sketches, paints, and images together. This is some of what emerged.</p>
-            <div class="frame-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--surface-gap);">
-                <figure class="spw-scaffold" data-spw-image-surface>
-                    <picture>
-                        <source srcset="/public/images/creatures/whimsical-landscape.webp" type="image/webp" />
-                        <img
-                            src="/public/images/creatures/whimsical-landscape.jpg"
-                            alt="Whimsical misty landscape with floating stone-faced creatures wearing teal berets, a small musician in red with a top hat, and a fluffy yellow cloud-creature. Atmospheric and dreamlike."
-                            width="640"
-                            height="960"
-                            loading="lazy"
-                            decoding="async"
-                            style="width: 100%; height: auto; border-radius: var(--radius);"
-                        />
-                    </picture>
-                    <figcaption class="frame-note">Floating entities · misty field</figcaption>
-                </figure>
-                <figure class="spw-scaffold" data-spw-image-surface>
-                    <picture>
-                        <source srcset="/public/images/renders/papergami/papergami-botanical.webp" type="image/webp" />
-                        <img
-                            src="/public/images/renders/papergami/papergami-botanical.jpg"
-                            alt="Warm botanical papergami render: plant-like folded paper forms with amber interior light and layered text fragments."
-                            width="800"
-                            height="800"
-                            loading="lazy"
-                            decoding="async"
-                            style="width: 100%; height: auto; border-radius: var(--radius);"
-                        />
-                    </picture>
-                    <figcaption class="frame-note">Papergami · botanical</figcaption>
-                </figure>
-            </div>
-        </section>
+        <figure class="spw-svg-figure" aria-labelledby="flow-gate-title">
+            <svg class="spw-svg-surface" viewBox="0 0 420 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="flow-gate-title flow-gate-desc">
+                <title id="flow-gate-title">Pretext Flow Gate — Measure Once, Project Many</title>
+                <desc id="flow-gate-desc">Two vertical gates with a horizontal beam showing how text can remain stable while surface behavior changes.</desc>
+                <rect x="60" y="20" width="40" height="100" rx="8" fill="none" stroke="#1a9999" stroke-width="6"/>
+                <rect x="320" y="20" width="40" height="100" rx="8" fill="none" stroke="#e05d8c" stroke-width="6"/>
+                <line x1="100" y1="70" x2="320" y2="70" stroke="#1a9999" stroke-width="3" stroke-dasharray="6 4"/>
+                <text x="210" y="110" text-anchor="middle" font-size="18" font-weight="700" fill="#0e1214">pretext</text>
+            </svg>
+            <figcaption class="frame-note">The file remains readable. The surface becomes measurable. The layout learns to breathe.</figcaption>
+        </figure>
 
-        <section class="site-frame" id="direction-register">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#direction-register">~"current_direction"</a>
-                <h2>Current Direction</h2>
-            </div>
-            <p>I am aligning my public work into a durable thread: building culture around rigorous, readable systems. While formal curricula will eventually live at Spwashi.College, this site serves as the workbench. I am pursuing deeper algorithmic backing for plain-text ecosystems—this means richer parser syntax, data compression strategies for syntax trees, and optimizing the schedulers beneath text renderers. The clearest entry points into this engineering work are the <a href="/topics/software/">software surface</a> and <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>.</p>
-            <p class="frame-note">That connects Spw, this site's underlying rendering logic, the Obsidian application architecture, and my pursuit of high-performance learning environments built on constructive play.</p>
-        </section>
-    </main>
-    <footer>
-        <p>© 2026 spwashi</p>
-    </footer>
+        <div data-spw-flow="pretext" data-spw-genre="editorial">
+            The file remains readable. The surface becomes measurable. The layout learns to breathe. Symbols are not merely static markers; they are gates into different forms of attention. By measuring once and projecting many, a text can remain plain while gaining rhythm, stance, and useful whimsy. This is not decoration for its own sake. It is an attempt to make the relationship between semantics and interaction more observable.
+        </div>
+
+        <p class="frame-note">
+            Powered by Pretext.js and the broader Spw workbench effort. This is also one place where I suspect products outside my immediate ecosystem — even sharp-edged tools emerging from the current educational and startup climate — could find something interesting in spw-workbench. The question is not whether education is under strain. The question is what kinds of structures can metabolize that strain into wonder rather than collapse.
+        </p>
+    </section>
+
+    <section
+        class="site-frame"
+        id="world-creatures"
+        aria-labelledby="world-creatures-title"
+        data-spw-form="brace"
+        data-spw-role="context"
+        data-spw-accent="crystal">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#world-creatures">*"world_creatures"</a>
+        </div>
+        <h2 id="world-creatures-title">Whimsical Landscape</h2>
+        <p class="inline-note">
+            The visual world matters because it keeps the work from pretending that cognition is purely abstract. Sketches, renders, creatures, motifs, and landscapes are part of the same semantic lattice. They are reminders that systems need atmosphere, not only rules.
+        </p>
+
+        <div class="frame-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--surface-gap);">
+            <figure class="spw-scaffold" data-spw-image-surface>
+                <picture>
+                    <source srcset="/public/images/creatures/whimsical-landscape.webp" type="image/webp" />
+                    <img src="/public/images/creatures/whimsical-landscape.jpg" alt="Whimsical misty landscape with floating stone-faced creatures wearing teal berets, a small musician in red with a top hat, and a fluffy yellow cloud-creature." width="640" height="960" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: var(--radius);"/>
+                </picture>
+                <figcaption class="frame-note">Floating entities · misty field</figcaption>
+            </figure>
+            <figure class="spw-scaffold" data-spw-image-surface>
+                <picture>
+                    <source srcset="/public/images/renders/papergami/papergami-botanical.webp" type="image/webp" />
+                    <img src="/public/images/renders/papergami/papergami-botanical.jpg" alt="Warm botanical papergami render: plant-like folded paper forms with amber interior light and layered text fragments." width="800" height="800" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: var(--radius);"/>
+                </picture>
+                <figcaption class="frame-note">Papergami · botanical</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="direction-register"
+        aria-labelledby="direction-register-title"
+        data-spw-role="orientation">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#direction-register">~"current_direction"</a>
+        </div>
+        <h2 id="direction-register-title">Current Direction</h2>
+
+        <p>
+            The current direction is to align the public work into a durable thread: readable systems, semantic tooling, public publishing, and environments that respect local ownership while expanding what structured interaction can feel like. Formal curricula may eventually live at Spwashi.College, but this site is the workbench and culture starter.
+        </p>
+
+        <p>
+            Concretely, that means deepening the technical foundations beneath the aesthetic vocabulary: parser syntax, document integrity, text projection, schedulers, compression, educational interfaces, and the architecture of environments where shared meaning can accumulate over time. It also means strengthening the bridges between the software surfaces and the narrative/publishing surfaces so the whole constellation feels like one field rather than unrelated domains.
+        </p>
+
+        <p>
+            I am also treating the present application season as a blessing discipline. If there are 1200 applicants, then let me answer with 1200 distributions of care. If there are 1200 imagined internships, let them be 1200 openings for apprenticeship inside the work: 1200 moments where attention becomes integrity, where process becomes blessing, where an application becomes not just a plea for consideration but evidence of lived structure.
+        </p>
+
+        <nav class="frame-operators" aria-label="Directional routes">
+            <a class="operator-chip" href="https://github.com/spwashi/spw-workbench" data-spw-form="angle" data-spw-operator="object">^spw_workbench</a>
+            <a class="operator-chip" href="https://spw.quest" data-spw-form="angle" data-spw-operator="surface">&gt;spw.quest</a>
+            <a class="operator-chip" href="/topics/software/pretext/" data-spw-form="angle" data-spw-operator="probe">?pretext_lab</a>
+            <a class="operator-chip" href="/about/website/" data-spw-form="angle" data-spw-operator="frame">#&gt;website_field_guide</a>
+            <a class="operator-chip" href="https://texture.website" data-spw-form="angle" data-spw-operator="surface">&gt;texture.website</a>
+            <a class="operator-chip" href="/about/domains/lore.land/" data-spw-form="angle" data-spw-operator="stream">*lore.land</a>
+            <a class="operator-chip" href="https://factshift.com" data-spw-form="angle" data-spw-operator="normalize">%factshift</a>
+            <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="action">@rpg_wednesday</a>
+        </nav>
+    </section>
+
+</main>
+
+<footer role="contentinfo">
+    <p>© 2026 spwashi</p>
+</footer>
+
 </body>
 </html>
