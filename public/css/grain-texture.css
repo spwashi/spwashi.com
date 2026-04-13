@@ -1,90 +1,638 @@
-/* Grain Texture Layer
- * Subtle film grain adds tactile depth and handcrafted feel
- * Adjustable opacity based on semantic density setting
- */
+/* ==========================================================================
+   grain-texture.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Subtle substrate texture for tactile depth and semantic atmosphere.
+   - Grain should read as material evidence: paper fiber, ink settlement,
+     environmental residue, handling, and memory.
+   - The layer responds to semantic density, developmental climate, context,
+     wonder, and surface ecology without becoming visually loud.
+
+   Design stance
+   - Body grain = ambient field memory
+   - Surface grain = local material presence
+   - Handle grain = smallest / quietest tactile cue
+   - Grain quiets in constrained or high-contrast states
+   - Grain enriches slightly where atmosphere, memory, or resonance matter
+
+   Core contracts consumed
+   - --grain-opacity
+   - html[data-spw-color-mode]
+   - html[data-spw-semantic-density]
+   - html[data-spw-enhancement-level]
+   - html[data-spw-developmental-climate]
+   - [data-spw-context]
+   - [data-spw-room]
+   - [data-spw-permeability]
+   - [data-spw-succession]
+   - [data-spw-field-wonder]
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root grain system
+   ========================================================================== */
 
 :root {
-    --grain-opacity: 0.03;
-    --grain-blend: multiply;
+  --grain-opacity: 0.028;
+  --grain-blend: multiply;
+
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
+  --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
+
+  --grain-body-scale: 224px;
+  --grain-surface-scale: 176px;
+  --grain-handle-scale: 136px;
+
+  --grain-body-contrast: 1;
+  --grain-surface-contrast: 1;
+  --grain-handle-contrast: 0.94;
+
+  --grain-atmosphere-bias: 0;
+  --grain-memory-bias: 0;
+  --grain-resonance-bias: 0;
 }
 
-/* Grain texture using SVG noise
- * Subtle paper/material texture — gives surfaces tactile presence.
- * Opacity is controlled by --grain-opacity (set by grainIntensity setting).
- */
+/* SVG textures
+   - ambient grain is broader and quieter
+   - surface grain is finer and more paper-like
+   - handle grain is smallest and most restrained
+*/
+:root {
+  --grain-texture-ambient:
+    url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224">\
+  <filter id="n">\
+    <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="7" stitchTiles="stitch"/>\
+    <feColorMatrix type="saturate" values="0"/>\
+    <feComponentTransfer>\
+      <feFuncA type="table" tableValues="0 0.4"/>\
+    </feComponentTransfer>\
+  </filter>\
+  <rect width="224" height="224" filter="url(%23n)" opacity="0.44"/>\
+</svg>');
+
+  --grain-texture-surface:
+    url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="176" viewBox="0 0 176 176">\
+  <filter id="n">\
+    <feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="4" seed="11" stitchTiles="stitch"/>\
+    <feColorMatrix type="saturate" values="0"/>\
+    <feComponentTransfer>\
+      <feFuncA type="table" tableValues="0 0.48"/>\
+    </feComponentTransfer>\
+  </filter>\
+  <rect width="176" height="176" filter="url(%23n)" opacity="0.5"/>\
+</svg>');
+
+  --grain-texture-handle:
+    url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 136 136">\
+  <filter id="n">\
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="19" stitchTiles="stitch"/>\
+    <feColorMatrix type="saturate" values="0"/>\
+    <feComponentTransfer>\
+      <feFuncA type="table" tableValues="0 0.42"/>\
+    </feComponentTransfer>\
+  </filter>\
+  <rect width="136" height="136" filter="url(%23n)" opacity="0.48"/>\
+</svg>');
+}
+
+/* ==========================================================================
+   2. Global semantic tuning
+   ========================================================================== */
+
+html[data-spw-semantic-density="minimal"] {
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.62);
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.46);
+  --grain-handle-opacity: calc(var(--grain-opacity) * 0.26);
+}
+
+html[data-spw-semantic-density="normal"] {
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
+  --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
+}
+
+html[data-spw-semantic-density="rich"] {
+  --grain-body-opacity: calc(var(--grain-opacity) * 1.02);
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.8);
+  --grain-handle-opacity: calc(var(--grain-opacity) * 0.46);
+}
+
+html[data-spw-enhancement-level="minimal"] {
+  --grain-surface-contrast: 0.92;
+  --grain-handle-contrast: 0.86;
+}
+
+html[data-spw-enhancement-level="balanced"] {
+  --grain-surface-contrast: 1;
+  --grain-handle-contrast: 0.94;
+}
+
+html[data-spw-enhancement-level="rich"] {
+  --grain-surface-contrast: 1.06;
+  --grain-handle-contrast: 1;
+}
+
+/* ==========================================================================
+   3. Developmental climate tuning
+   --------------------------------------------------------------------------
+   Grain behaves like climate residue rather than decoration.
+   ========================================================================== */
+
+html[data-spw-developmental-climate="orient"] {
+  --grain-atmosphere-bias: 0.07;
+  --grain-memory-bias: -0.01;
+  --grain-resonance-bias: 0.02;
+}
+
+html[data-spw-developmental-climate="anchor"] {
+  --grain-atmosphere-bias: -0.02;
+  --grain-memory-bias: 0.08;
+  --grain-resonance-bias: -0.02;
+}
+
+html[data-spw-developmental-climate="weave"] {
+  --grain-atmosphere-bias: 0.02;
+  --grain-memory-bias: 0.03;
+  --grain-resonance-bias: 0.09;
+}
+
+html[data-spw-developmental-climate="rehearse"] {
+  --grain-atmosphere-bias: -0.01;
+  --grain-memory-bias: 0.09;
+  --grain-resonance-bias: 0.02;
+}
+
+html[data-spw-developmental-climate="offer"] {
+  --grain-atmosphere-bias: -0.04;
+  --grain-memory-bias: 0.02;
+  --grain-resonance-bias: 0.04;
+}
+
+/* ==========================================================================
+   4. Scope-local grain controls
+   --------------------------------------------------------------------------
+   These are intentionally local so nested surfaces do not leak settings
+   into one another through inherited custom properties.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .software-card,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .domain-visual,
+  .spw-console,
+  .spw-nav-panel,
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+) {
+  --grain-scope-opacity-multiplier: 1;
+  --grain-scope-scale-multiplier: 1;
+  --grain-scope-contrast-multiplier: 1;
+}
+
+/* ==========================================================================
+   5. Ambient field grain
+   ========================================================================== */
+
+html,
 body {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23n)" opacity="0.5"/></svg>');
-    background-attachment: fixed;
-    background-size: 200px 200px;
+  min-height: 100%;
 }
 
-/* Grain on key surfaces for visual coherence */
-.site-frame,
-.frame-card,
-.media-card,
-.operator-chip {
-    position: relative;
+body {
+  position: relative;
+  background-image: var(--grain-texture-ambient);
+  background-repeat: repeat;
+  background-size: var(--grain-body-scale) var(--grain-body-scale);
+  background-attachment: fixed;
+  background-blend-mode: normal;
 }
 
-.site-frame::before,
-.frame-card::before,
-.media-card::before,
-.operator-chip::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(%23n)" opacity="0.5"/></svg>');
-    background-attachment: fixed;
-    background-size: 200px 200px;
-    opacity: var(--grain-opacity);
-    pointer-events: none;
-    mix-blend-mode: var(--grain-blend);
-    border-radius: inherit;
+/* Use a fixed overlay for ambient field memory. Keep it behind content and
+   non-interactive so it behaves like substrate rather than ornament.
+*/
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: clamp(
+    0,
+    calc(
+      var(--grain-body-opacity)
+      + var(--grain-atmosphere-bias)
+      + (var(--grain-memory-bias) * 0.34)
+      + (var(--grain-resonance-bias) * 0.24)
+    ),
+    0.09
+  );
+  background-image: var(--grain-texture-ambient);
+  background-repeat: repeat;
+  background-size: var(--grain-body-scale) var(--grain-body-scale);
+  mix-blend-mode: var(--grain-blend);
+  filter: contrast(var(--grain-body-contrast));
 }
 
-/* Ensure grain doesn't interfere with interactive elements */
-.site-frame::before {
-    z-index: -1;
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
-.frame-card::before,
-.media-card::before,
-.operator-chip::before {
-    z-index: 0;
+/* ==========================================================================
+   6. Grain-bearing surfaces
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .software-card,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .domain-visual,
+  .spw-console,
+  .spw-nav-panel
+) {
+  position: relative;
+  isolation: isolate;
 }
 
-/* Light mode grain */
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+) {
+  position: relative;
+  isolation: isolate;
+  --grain-scope-opacity-multiplier: 0.8;
+  --grain-scope-scale-multiplier: 0.92;
+  --grain-scope-contrast-multiplier: 0.95;
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .software-card,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .domain-visual,
+  .spw-console,
+  .spw-nav-panel,
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-repeat: repeat;
+  mix-blend-mode: var(--grain-blend);
+  z-index: 0;
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .software-card,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .domain-visual,
+  .spw-console,
+  .spw-nav-panel
+) > *,
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+) > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Surface grain */
+:where(
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .software-card,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .domain-visual,
+  .spw-console,
+  .spw-nav-panel
+)::before {
+  opacity: clamp(
+    0,
+    calc(
+      var(--grain-surface-opacity) * var(--grain-scope-opacity-multiplier)
+      + (var(--grain-memory-bias) * 0.16)
+      + (var(--grain-resonance-bias) * 0.1)
+    ),
+    0.08
+  );
+  background-image: var(--grain-texture-surface);
+  background-size:
+    calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier))
+    calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier));
+  filter:
+    contrast(calc(var(--grain-surface-contrast) * var(--grain-scope-contrast-multiplier)));
+}
+
+/* Handle grain */
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+)::before {
+  opacity: clamp(
+    0,
+    calc(
+      var(--grain-handle-opacity) * var(--grain-scope-opacity-multiplier)
+      + (var(--grain-memory-bias) * 0.06)
+    ),
+    0.055
+  );
+  background-image: var(--grain-texture-handle);
+  background-size:
+    calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier))
+    calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier));
+  filter:
+    contrast(calc(var(--grain-handle-contrast) * var(--grain-scope-contrast-multiplier)));
+}
+
+/* ==========================================================================
+   7. Context tuning
+   ========================================================================== */
+
+:where([data-spw-context="reading"]) {
+  --grain-scope-opacity-multiplier: 0.92;
+  --grain-scope-scale-multiplier: 1.04;
+}
+
+:where([data-spw-context="analysis"]) {
+  --grain-scope-opacity-multiplier: 0.8;
+  --grain-scope-scale-multiplier: 0.94;
+  --grain-scope-contrast-multiplier: 1.05;
+}
+
+:where([data-spw-context="routing"]) {
+  --grain-scope-opacity-multiplier: 0.66;
+  --grain-scope-scale-multiplier: 0.9;
+}
+
+:where([data-spw-context="ritual"]) {
+  --grain-scope-opacity-multiplier: 1.1;
+  --grain-scope-scale-multiplier: 1.08;
+  --grain-scope-contrast-multiplier: 1.06;
+}
+
+:where([data-spw-context="play"]) {
+  --grain-scope-opacity-multiplier: 1;
+}
+
+:where([data-spw-context="settings"]) {
+  --grain-scope-opacity-multiplier: 0.54;
+  --grain-scope-scale-multiplier: 0.9;
+}
+
+:where([data-spw-context="publishing"]) {
+  --grain-scope-opacity-multiplier: 0.88;
+  --grain-scope-scale-multiplier: 1.02;
+}
+
+/* ==========================================================================
+   8. Surface ecology tuning
+   ========================================================================== */
+
+:where([data-spw-room="compact"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.82);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.9);
+}
+
+:where([data-spw-room="roomy"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.04);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.04);
+}
+
+:where([data-spw-permeability="sealed"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.72);
+}
+
+:where([data-spw-permeability="porous"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1);
+}
+
+:where([data-spw-permeability="annotatable"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.08);
+}
+
+:where([data-spw-permeability="mutable"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.12);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.05);
+}
+
+:where([data-spw-succession="raw"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.04);
+}
+
+:where([data-spw-succession="measured"]) {
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.03);
+}
+
+:where([data-spw-succession="resolved"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.9);
+}
+
+:where([data-spw-succession="visited"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.02);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.03);
+}
+
+:where([data-spw-succession="latched"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.86);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 0.96);
+}
+
+/* ==========================================================================
+   9. Wonder tuning
+   ========================================================================== */
+
+:where([data-spw-field-wonder="orientation"]) {
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.06);
+}
+
+:where([data-spw-field-wonder="inquiry"]) {
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.08);
+}
+
+:where([data-spw-field-wonder="comparison"]) {
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.04);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.98);
+}
+
+:where([data-spw-field-wonder="memory"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.08);
+}
+
+:where([data-spw-field-wonder="projection"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.82);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 0.94);
+}
+
+:where([data-spw-field-wonder="constraint"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.76);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.92);
+}
+
+:where([data-spw-field-wonder="resonance"]) {
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.1);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.04);
+}
+
+/* ==========================================================================
+   10. Mode / contrast tuning
+   ========================================================================== */
+
 html[data-spw-color-mode="light"] {
-    --grain-blend: multiply;
+  --grain-blend: multiply;
 }
 
-/* Dark mode grain (slightly more visible for contrast) */
 html[data-spw-color-mode="dark"] {
-    --grain-blend: screen;
+  --grain-blend: screen;
+  --grain-body-opacity: calc(var(--grain-body-opacity) * 1.08);
+  --grain-surface-opacity: calc(var(--grain-surface-opacity) * 1.04);
 }
 
 @media (prefers-color-scheme: dark) {
-    html[data-spw-color-mode="auto"] {
-        --grain-blend: screen;
-    }
+  html[data-spw-color-mode="auto"] {
+    --grain-blend: screen;
+    --grain-body-opacity: calc(var(--grain-body-opacity) * 1.08);
+    --grain-surface-opacity: calc(var(--grain-surface-opacity) * 1.04);
+  }
 }
 
 @media (prefers-color-scheme: light) {
-    html[data-spw-color-mode="auto"] {
-        --grain-blend: multiply;
-    }
+  html[data-spw-color-mode="auto"] {
+    --grain-blend: multiply;
+  }
 }
 
-/* Reduce grain under reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    body {
-        background-image: none;
-    }
+html[data-spw-high-contrast="on"] {
+  --grain-body-opacity: 0;
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.14);
+  --grain-handle-opacity: 0;
+  --grain-blend: normal;
+}
 
-    .site-frame::before,
-    .frame-card::before,
-    .media-card::before,
-    .operator-chip::before {
-        opacity: 0.01;
-    }
+/* ==========================================================================
+   11. State quieting
+   ========================================================================== */
+
+:where([data-spw-grounded="true"], [data-spw-latched="true"], [data-spw-pinned="true"])::before {
+  opacity: calc(var(--grain-surface-opacity) * 0.68);
+}
+
+:where(
+  [data-spw-gesture="active"],
+  [data-spw-gesture="armed"],
+  [data-spw-charge="active"],
+  [data-spw-charge="sustained"]
+)::before {
+  opacity: calc(var(--grain-surface-opacity) * 0.88);
+}
+
+:where(
+  .operator-chip[data-spw-gesture],
+  .spec-pill[data-spw-gesture],
+  .badge[data-spw-gesture],
+  .tag[data-spw-gesture],
+  .pill[data-spw-gesture]
+)::before {
+  opacity: calc(var(--grain-handle-opacity) * 0.78);
+}
+
+/* ==========================================================================
+   12. Reduced motion / reduced load
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    background-image: none;
+  }
+
+  body::before {
+    opacity: 0.006;
+  }
+
+  :where(
+    .site-frame,
+    .frame-card,
+    .frame-panel,
+    .mode-panel,
+    .software-card,
+    .operator-card,
+    .media-card,
+    .media-focus-card,
+    .pretext-surface,
+    .settings-category,
+    .settings-fieldset,
+    .domain-visual,
+    .spw-console,
+    .spw-nav-panel,
+    .operator-chip,
+    .spec-pill,
+    .badge,
+    .tag,
+    .pill
+  )::before {
+    opacity: 0.006;
+  }
 }

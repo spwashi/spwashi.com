@@ -1,1038 +1,671 @@
-/* ─── Global Layering ─────────────────────────────────────────────────── */
+/* ==========================================================================
+   spw-handles.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Interactive handles, inline affordances, compact control seams, and
+     literate gesture states.
+   - This layer owns "how something can be grasped", not full material,
+     phase, or pretext layout systems.
 
-header, 
+   Does own
+   - sigils, operator chips, syntax tokens, inline delimiters, spec pills
+   - selection / activation / latch / bookmark states
+   - compact breadcrumbs and frame metrics seams
+   - room-aware swap hints and memo surfaces
+   - subtle gesture signaling for inline and card-adjacent handles
+
+   Does not own
+   - deep material rendering
+   - pretext line layout / measurement
+   - developmental salience / lattice-wide phase systems
+   - full operator typography chemistry
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Layering + handle tokens
+   ========================================================================== */
+
+header,
 .header-op-indicator,
 .spw-navigator,
 .spw-console {
-    z-index: 2000;
+  z-index: 2000;
 }
 
 .mode-switch,
-.demo-controls {
-    position: relative;
-    z-index: 100;
-}
-
-/* ─── Operator Chips & Tokens ─────────────────────────────────────────── */
-
-.operator-chip,
-.syntax-token,
-.spec-pill,
-.badge,
-.tag,
-.pill,
-.frame-sigil {
-    display: inline-block;
-    padding: 0.25rem 0.65rem;
-    background: var(--surface-strong, rgba(255, 255, 255, 0.82));
-    border: 1.5px solid var(--active-op-color, var(--teal));
-    color: var(--active-op-color, var(--teal));
-    text-shadow: none;
-    text-decoration: none;
-    font-size: 0.85rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s var(--brace-settle-ease);
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.operator-chip:hover,
-.syntax-token:hover,
-.spec-pill:hover,
-.badge:hover,
-.tag:hover,
-.pill:hover,
-.frame-sigil:hover {
-    background: var(--active-op-color, var(--teal));
-    color: white;
-    border-color: var(--active-op-color, var(--teal));
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
-    z-index: 100;
-}
-
-/* Specific fix for mode-switches rendering below text */
-.mode-switch,
-.frame-sigil,
-.demo-controls {
-    z-index: 500; /* Medium-high for controls */
-}
-
-/* Headings in stateful frames */
-[data-spw-liminality="threshold"] h2,
-[data-spw-liminality="projected"] h2,
-[data-spw-stateful] h2 {
-    color: var(--teal);
-    text-shadow: 0 0 1px var(--teal-soft);
-    letter-spacing: 0.02em;
-}
-
-
-
-/* Reversible 'Bubble Wrap' state: Tactile Settlement */
-[data-spw-popped="true"] {
-    background: var(--ink-soft) !important;
-    border-color: var(--teal) !important;
-    color: var(--charcoal) !important; /* Settled high-contrast */
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4) !important;
-    transform: translateY(1px) !important;
-}
-
-/* ─── Pop Animations ───────────────────────────────────────────────────── */
-
-.spw-pop-snap {
-    animation: spw-pop-spring 0.15s var(--brace-settle-ease);
-}
-
-@keyframes spw-pop-spring {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); } /* Press down feel */
-    100% { transform: scale(1); }
-}
-
-
-/* ─── Liminality (Cognitive Depth) ─── */
-/* Extensible semantics for agents to construct cognitive depth */
-
-/* Entry: Priming wonder, first discovery. Soft glow. */
-[data-spw-form="brace"][data-spw-liminality="entry"] {
-    --brace-open-color: rgba(0, 128, 128, 0.44);
-    --brace-close-color: rgba(0, 128, 128, 0.28);
-    filter: drop-shadow(0 0 6px rgba(0, 128, 128, 0.25));
-}
-[data-spw-form="block"][data-spw-liminality="entry"] {
-    border-color: rgba(0, 128, 128, 0.22);
-    box-shadow: 0 0 12px rgba(0, 128, 128, 0.08); /* Wonder glow */
-}
-
-/* Threshold: Glassy passage, high cognitive load/liminal state */
-[data-spw-liminality="threshold"] {
-    backdrop-filter: blur(4px);
-    opacity: 0.85;
-}
-[data-spw-form="brace"][data-spw-liminality="threshold"] {
-    --brace-open-color: rgba(0, 128, 128, 0.28);
-    --brace-close-color: rgba(0, 128, 128, 0.14);
-}
-
-/* Projected: High value/tangibility, floats above the ambient logic */
-[data-spw-form="brace"][data-spw-liminality="projected"] {
-    --brace-open-color: rgba(0, 128, 128, 0.6);
-    filter: drop-shadow(0 4px 6px rgba(0, 128, 128, 0.15));
-}
-[data-spw-form="block"][data-spw-liminality="projected"] {
-    box-shadow: var(--shadow-active);
-    --block-depth-size: 0.44rem;
-    --block-depth-color: rgba(0, 128, 128, 0.035);
-    transform: translateY(-2px);
-}
-
-/* Deep: Low tangibility, foundation/background knowledge */
-[data-spw-form="block"][data-spw-liminality="deep"] {
-    --block-border-color: rgba(14, 18, 20, 0.08);
-    --block-depth-size: 0.2rem;
-    --block-depth-color: rgba(14, 18, 20, 0.03);
-    opacity: 0.6;
-}
-
-[data-spw-liminality="entry"] > .spw-component-tag {
-    letter-spacing: 0.1em;
-}
-
-[data-spw-liminality="threshold"] > .spw-component-tag {
-    backdrop-filter: blur(8px);
-}
-
-[data-spw-liminality="projected"] > .spw-component-tag {
-    border-style: solid;
-}
-
-/* ─── Gesture Physics ─── */
-/*
- * Four semantic gesture states, set by brace-gestures.js:
- *   charging   → hover: glow builds, corners brighten
- *   active     → click: snap pulse, corners flare
- *   sustained  → hold (>420ms): deep charge accumulation, pulse animation
- *   projecting → drag: lift, elongate shadow, follow drag vector
- */
-
-/* ── Charging (hover) ──────────────────────────────────────────────── */
-
-[data-spw-form="brace"] {
-    transition: filter var(--charge-release-duration) var(--charge-release-ease);
-}
-
-[data-spw-gesture="charging"][data-spw-form="brace"],
-[data-spw-form="brace"]:hover,
-[data-spw-form="brace"]:focus-within {
-    --brace-open-color: rgba(0, 128, 128, 0.44);
-    --brace-close-color: rgba(0, 128, 128, 0.28);
-    filter: drop-shadow(0 0 8px rgba(0, 128, 128, 0.12));
-}
-
-/*
- * ─── Operator-aware gesture glow ──────────────────────────────────────────
- * When a brace form also carries a Spw operator, gesture states illuminate
- * in that operator's semantic color. The charge medium becomes the operator
- * itself — the glow belongs to the intent, not the generic container.
- *
- * --spw-operator-color is set unconditionally by [data-spw-operator] rules
- * in spw-grammar.css, available regardless of the operators feature flag.
- */
-
-[data-spw-gesture="charging"][data-spw-operator][data-spw-form="brace"],
-[data-spw-operator][data-spw-form="brace"]:hover,
-[data-spw-operator][data-spw-form="brace"]:focus-within {
-    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, rgba(0,128,128,1)) 28%, transparent));
-}
-
-[data-spw-gesture="active"][data-spw-operator][data-spw-form="brace"] {
-    filter: drop-shadow(0 0 16px color-mix(in srgb, var(--spw-operator-color, rgba(0,128,128,1)) 40%, transparent));
-}
-
-@keyframes operator-sustain-pulse {
-    0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--spw-operator-color, rgba(0,128,128,1)) 28%, transparent)); }
-    50%      { filter: drop-shadow(0 0 26px color-mix(in srgb, var(--spw-operator-color, rgba(0,128,128,1)) 50%, transparent)); }
-}
-
-[data-spw-gesture="sustained"][data-spw-operator][data-spw-form="brace"] {
-    animation: operator-sustain-pulse 1.6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    [data-spw-gesture="sustained"][data-spw-operator][data-spw-form="brace"] {
-        animation: none;
-    }
-}
-
-[data-spw-form="block"] {
-    transition: border-color var(--charge-release-duration) var(--charge-release-ease),
-                box-shadow var(--charge-release-duration) var(--charge-release-ease),
-                transform var(--charge-release-duration) var(--charge-release-ease);
-}
-
-[data-spw-gesture="charging"][data-spw-form="block"],
-[data-spw-form="block"]:hover,
-[data-spw-form="block"]:focus-within {
-    --block-border-color: rgba(0, 128, 128, 0.28);
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
-}
-
-[data-spw-gesture="charging"][data-spw-form="angle"],
-[data-spw-form="angle"]:hover {
-    --angle-open-color: rgba(0, 100, 100, 0.5);
-    --angle-close-color: rgba(0, 100, 100, 0.5);
-    filter: drop-shadow(0 0 6px rgba(0, 100, 100, 0.15));
-}
-
-[data-spw-gesture="charging"][data-spw-form="circle"],
-[data-spw-form="circle"]:hover {
-    --circle-open-color: rgba(60, 40, 120, 0.4);
-    --circle-close-color: rgba(60, 40, 120, 0.4);
-    filter: drop-shadow(0 0 6px rgba(60, 40, 120, 0.12));
-}
-
-[data-spw-gesture="charging"][data-spw-form="square"],
-[data-spw-form="square"]:hover {
-    --square-open-color: rgba(40, 80, 140, 0.45);
-    --square-close-color: rgba(40, 80, 140, 0.45);
-    filter: drop-shadow(0 0 6px rgba(40, 80, 140, 0.15));
-}
-
-/* ── Active (click) ────────────────────────────────────────────────── */
-
-[data-spw-gesture="active"][data-spw-form="brace"] {
-    --brace-open-color: rgba(0, 128, 128, 0.70);
-    --brace-close-color: rgba(0, 128, 128, 0.55);
-    --brace-corner-width: 2.2rem;
-    --brace-corner-height: 1.6rem;
-    filter: drop-shadow(0 0 14px rgba(0, 128, 128, 0.25));
-    transition: filter 80ms ease-out;
-}
-
-[data-spw-gesture="active"][data-spw-form="block"] {
-    --block-border-color: rgba(0, 128, 128, 0.40);
-    box-shadow: var(--shadow-active);
-    transform: scale(0.985);
-    transition: transform 80ms ease-out, box-shadow 80ms ease-out;
-}
-
-.frame-card[data-spw-gesture="active"][data-spw-form="block"],
-.frame-panel[data-spw-gesture="active"][data-spw-form="block"],
-.software-card[data-spw-gesture="active"][data-spw-form="block"] {
-    transform: none;
-}
-
-[data-spw-gesture="active"][data-spw-form="angle"] {
-    --angle-open-color: rgba(0, 100, 100, 0.8);
-    --angle-close-color: rgba(0, 100, 100, 0.8);
-    --angle-width: 1.1rem;
-    filter: drop-shadow(0 0 10px rgba(0, 100, 100, 0.3));
-}
-
-[data-spw-gesture="active"][data-spw-form="circle"] {
-    --circle-open-color: rgba(60, 40, 120, 0.7);
-    --circle-close-color: rgba(60, 40, 120, 0.7);
-    --circle-width: 1.5rem;
-    filter: drop-shadow(0 0 10px rgba(60, 40, 120, 0.25));
-}
-
-[data-spw-gesture="active"][data-spw-form="square"] {
-    --square-open-color: rgba(40, 80, 140, 0.75);
-    --square-close-color: rgba(40, 80, 140, 0.75);
-    --square-height: 2.4rem;
-    filter: drop-shadow(0 0 10px rgba(40, 80, 140, 0.3));
-}
-
-/* ── Sustained (hold) ──────────────────────────────────────────────── */
-
-@keyframes brace-sustain-pulse {
-    0%, 100% { filter: drop-shadow(0 0 12px rgba(0, 128, 128, 0.20)); }
-    50%      { filter: drop-shadow(0 0 22px rgba(0, 128, 128, 0.35)); }
-}
-
-@keyframes block-sustain-pulse {
-    0%, 100% { box-shadow: 0 2px 12px rgba(0, 128, 128, 0.10); }
-    50%      { box-shadow: 0 4px 24px rgba(0, 128, 128, 0.22); }
-}
-
-[data-spw-gesture="sustained"][data-spw-form="brace"] {
-    --brace-open-color: rgba(0, 128, 128, 0.80);
-    --brace-close-color: rgba(0, 128, 128, 0.65);
-    --brace-corner-width: 2.8rem;
-    --brace-corner-height: 2rem;
-    --brace-corner-stroke: 2.5px;
-    animation: brace-sustain-pulse 1.6s ease-in-out infinite;
-}
-
-[data-spw-gesture="sustained"][data-spw-form="block"] {
-    --block-border-color: rgba(0, 128, 128, 0.45);
-    transform: scale(0.98);
-    animation: block-sustain-pulse 1.6s ease-in-out infinite;
-}
-
-/* ── Projecting (drag) ─────────────────────────────────────────────── */
-
-[data-spw-gesture="projecting"][data-spw-form="brace"] {
-    --brace-open-color: rgba(0, 128, 128, 0.60);
-    --brace-close-color: rgba(0, 128, 128, 0.45);
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
-    transform: translate(
-        calc(var(--drag-dx, 0px) * 0.06),
-        calc(var(--drag-dy, 0px) * 0.06)
-    );
-    z-index: 100;
-    transition: none;
-}
-
-[data-spw-gesture="projecting"][data-spw-form="block"] {
-    --block-border-color: rgba(0, 128, 128, 0.35);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    transform: translate(
-        calc(var(--drag-dx, 0px) * 0.04),
-        calc(var(--drag-dy, 0px) * 0.04)
-    ) scale(1.02);
-    z-index: 100;
-    transition: none;
-}
-
-[data-spw-gesture="projecting"][data-spw-form="angle"] {
-    --angle-open-color: rgba(0, 100, 100, 0.6);
-    --angle-close-color: rgba(0, 100, 100, 0.6);
-    transform: translate(calc(var(--drag-dx, 0px) * 0.1), calc(var(--drag-dy, 0px) * 0.1));
-}
-
-[data-spw-gesture="projecting"][data-spw-form="circle"] {
-    --circle-open-color: rgba(60, 40, 120, 0.5);
-    --circle-close-color: rgba(60, 40, 120, 0.5);
-    transform: translate(calc(var(--drag-dx, 0px) * 0.08), calc(var(--drag-dy, 0px) * 0.08));
-}
-
-[data-spw-gesture="projecting"][data-spw-form="square"] {
-    --square-open-color: rgba(40, 80, 140, 0.55);
-    --square-close-color: rgba(40, 80, 140, 0.55);
-    transform: translate(calc(var(--drag-dx, 0px) * 0.07), calc(var(--drag-dy, 0px) * 0.07));
-}
-
-/* ── Reduced Motion Override ───────────────────────────────────────── */
-
-@media (prefers-reduced-motion: reduce) {
-    [data-spw-gesture="sustained"][data-spw-form="brace"],
-    [data-spw-gesture="sustained"][data-spw-form="block"] {
-        animation: none;
-    }
-    [data-spw-gesture="projecting"][data-spw-form="brace"],
-    [data-spw-gesture="projecting"][data-spw-form="block"] {
-        transform: none;
-    }
-}
-
-/* ─── Selection ─── */
-
-[data-spw-selection="ambient"] > .spw-component-tag {
-    opacity: 0.72;
-}
-
-[data-spw-selection="addressable"] > .spw-component-tag {
-    opacity: 0.86;
-}
-
-[data-spw-selection="focused"] {
-    --brace-open-color: rgba(0, 128, 128, 0.44);
-    --brace-close-color: rgba(0, 128, 128, 0.28);
-    --block-border-color: rgba(0, 128, 128, 0.24);
-    --block-depth-color: rgba(0, 128, 128, 0.04);
-}
-
-[data-spw-selection="focused"] > .spw-component-tag {
-    opacity: 1;
-    transform: translateY(-1px);
-}
-
-[data-spw-selection="active"],
-[data-spw-selection="selected"] {
-    --brace-open-color: rgba(0, 128, 128, 0.54);
-    --brace-close-color: rgba(0, 128, 128, 0.38);
-    --block-border-color: rgba(0, 128, 128, 0.32);
-    --block-depth-color: rgba(0, 128, 128, 0.06);
-    filter: drop-shadow(0 0 12px rgba(0, 128, 128, 0.15));
-}
-
-[data-spw-selection="active"] > .spw-component-tag,
-[data-spw-selection="selected"] > .spw-component-tag {
-    opacity: 1;
-    border-color: rgba(0, 128, 128, 0.24);
-    box-shadow: var(--shadow-active);
-}
-
-[data-spw-selection="selected"] > .spw-component-tag {
-    background: rgba(230, 248, 248, 0.84);
-}
-[data-spw-features~="operators"] [data-spw-operator],
-[data-spw-features~="console"] .spw-console [data-spw-operator] {
-    color: var(--spw-operator-color, currentColor);
-    border-color: var(--spw-operator-border, currentColor);
-}
-
-[data-spw-features~="operators"] [data-spw-operator="object"],
-[data-spw-features~="operators"] [data-spw-operator="ref"],
-[data-spw-features~="operators"] [data-spw-operator="probe"],
-[data-spw-features~="operators"] [data-spw-operator="action"],
-[data-spw-features~="operators"] [data-spw-operator="layer"],
-[data-spw-features~="operators"] [data-spw-operator="baseline"],
-[data-spw-features~="operators"] [data-spw-operator="pragma"],
-[data-spw-features~="operators"] [data-spw-operator="stream"],
-[data-spw-features~="operators"] [data-spw-operator="merge"],
-[data-spw-features~="operators"] [data-spw-operator="binding"],
-[data-spw-features~="operators"] [data-spw-operator="meta"],
-[data-spw-features~="operators"] [data-spw-operator="normalize"],
-[data-spw-features~="operators"] [data-spw-operator="surface"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="object"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="ref"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="probe"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="action"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="layer"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="baseline"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="pragma"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="stream"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="merge"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="binding"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="meta"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="normalize"],
-[data-spw-features~="console"] .spw-console [data-spw-operator="surface"] {
-    background: var(--spw-operator-bg-soft);
-}
-
-/* Hover/focus states respect the operator family color */
-[data-spw-features~="operators"] [data-spw-operator]:hover,
-[data-spw-features~="operators"] [data-spw-operator]:focus-visible {
-    filter: brightness(1.08);
-    background: rgba(255, 255, 255, 0.96);
-}
-
-[data-spw-features~="operators"] [data-spw-operator].is-selected,
-[data-spw-features~="operators"] [data-spw-operator][aria-pressed="true"] {
-    background: var(--spw-operator-color, var(--teal)) !important;
-    color: #fff !important;
-    border-color: var(--spw-operator-color, var(--teal)) !important;
-    filter: brightness(1.1);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 25%, transparent);
-}
-
-html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [data-spw-operator],
-html[data-spw-operator-highlighting="off"] [data-spw-features~="console"] .spw-console [data-spw-operator] {
-    color: inherit;
-    border-color: var(--line);
-    background: transparent;
-    filter: none;
-}
-
-html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [data-spw-operator]:hover,
-html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [data-spw-operator]:focus-visible,
-html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [data-spw-operator].is-selected,
-html[data-spw-operator-highlighting="off"] [data-spw-features~="operators"] [data-spw-operator][aria-pressed="true"] {
-    background: transparent;
-    color: inherit;
-    border-color: var(--line);
-}
-/* ─── Frame metrics bar ───────────────────────────────────────────────────── */
-
-[data-spw-features~="metrics"] .frame-metrics-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding-top: 0.7rem;
-    border-top: 1px dashed var(--line);
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    opacity: 0.55;
-    transform: translateY(0.12rem);
-    transition: opacity var(--brace-settle-duration) var(--brace-settle-ease), transform var(--brace-settle-duration) var(--brace-settle-ease);
-}
-
-[data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
-[data-spw-features~="metrics"] .frame-metrics-bar:hover {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-[data-spw-features~="metrics"] .frame-metrics-label {
-    color: var(--teal);
-    font-size: 0.76rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    flex-shrink: 0;
-}
-
-[data-spw-features~="metrics"] .frame-metrics-items {
-    font-variant-numeric: tabular-nums;
-    max-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    opacity: 0;
-    transition: max-width var(--brace-settle-duration) var(--brace-settle-ease), opacity var(--brace-settle-duration) var(--brace-settle-ease);
-}
-
-[data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-items,
-[data-spw-features~="metrics"] .frame-metrics-bar:hover .frame-metrics-items {
-    max-width: 14rem;
-    opacity: 1;
-}
-
-/* ─── Pinned State (Bookmarked) ─────────────────────────────────────────── */
-
-[data-spw-pinned="true"] {
-    position: relative;
-    --pinned-glow: rgba(255, 170, 0, 0.15);
-    filter: drop-shadow(0 0 10px var(--pinned-glow));
-}
-
-[data-spw-pinned="true"]::after {
-    content: "!";
-    position: absolute;
-    top: -0.5rem;
-    right: -0.5rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    background: var(--surface);
-    border: 1px solid rgba(255, 170, 0, 0.6);
-    border-radius: 50%;
-    color: orange;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: bold;
-    font-family: 'JetBrains Mono', monospace;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 10;
-    pointer-events: none;
-    animation: pin-flare 0.3s ease-out;
-}
-
-@keyframes pin-flare {
-    0% { transform: scale(0.5); opacity: 0; }
-    80% { transform: scale(1.2); }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-[data-spw-gesture="charging"][data-spw-pinned="true"] {
-    --pinned-glow: rgba(255, 170, 0, 0.3);
-}
-
-/* ─── Swappable Affordance ──────────────────────────────────────────────── */
-
-[data-spw-swappable] .frame-sigil,
-[data-spw-swappable] .frame-card-sigil {
-    cursor: pointer;
-    position: relative;
-}
-
-[data-spw-swappable] .frame-sigil::before {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed var(--teal-soft);
-    opacity: 0.5;
-}
-
-[data-spw-gesture="charging"][data-spw-swappable] .frame-sigil::before {
-    opacity: 1;
-    border-color: var(--teal);
-}
-
-/* ─── Spell Breadcrumbs ─────────────────────────────────────────────────── */
-
-.spw-spell-path {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--ink-soft);
-    padding: 0.4rem 0.8rem;
-    background: rgba(0, 128, 128, 0.03);
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
-}
-
-.spw-spell-path .spell-op {
-    color: var(--teal);
-    font-weight: bold;
-}
-
-.spw-spell-path .spell-node {
-    color: var(--ink);
-}
-
-.spw-spell-path .spell-sep {
-    color: var(--line-strong);
-}
-
-.spw-spell-path .spell-current {
-    color: var(--pink);
-    border-bottom: 1px solid currentColor;
-}
-
-/* ─── Pretext Flow Magic ────────────────────────────────────────────────── */
-
-[data-spw-flow="pretext"] {
-    display: block;
-    margin: 1.5rem 0;
-    transition: opacity 0.3s ease;
-    min-height: 4rem;
-}
-
-.pretext-flow-lines {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center lines for symmetry appreciation */
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--ink);
-    user-select: none;
-    pointer-events: none;
-}
-
-.pretext-flow-line {
-    white-space: pre;
-    text-align: center; /* Default to symmetrical centers */
-    transition: transform 0.2s var(--brace-settle-ease), 
-                opacity 0.2s ease,
-                color 0.2s ease;
-    opacity: calc(0.8 + (var(--flow-influence, 0) * 0.2));
-    
-    /* Subtle lean based on direction */
-    transform: translateX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * 16px))
-               skewX(calc(var(--flow-direction, 0) * var(--flow-influence, 0) * -4deg));
-               
-    /* Staggered entry/motion */
-    transition-delay: calc(var(--line-index, 0) * 10ms);
-}
-
-.line-decor {
-    font-size: 0.7rem;
-    color: var(--pink);
-    opacity: 0.5;
-    margin: 0 0.4rem;
-    vertical-align: middle;
-    animation: decor-flicker 0.4s ease-in-out infinite alternate;
-}
-
-@keyframes decor-flicker {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    100% { opacity: 0.6; transform: scale(1.1); }
-}
-
-/* Highlight the 'current' influence */
-[data-spw-flow="pretext"]:hover {
-    --ink: var(--teal);
-}
-
-[data-spw-gesture="charging"] .pretext-flow-line {
-    opacity: 1;
-    color: var(--ink);
-}
-
-[data-spw-gesture="active"] .pretext-flow-line {
-    color: var(--pink);
-    transform: scale(1.02);
-}
-
-[data-spw-gesture="projecting"] .pretext-flow-line {
-    border-left: 1px dotted var(--teal-soft);
-    border-right: 1px dotted var(--teal-soft);
-    background: rgba(0, 128, 128, 0.02);
-}
-
-/* ─── Semantic Phase Decorators ────────────────────────────────────────── */
-
-[data-spw-stateful] .frame-sigil {
-    position: relative;
-    cursor: pointer;
-}
-
-[data-spw-stateful] .frame-sigil::before,
-[data-spw-stateful] .frame-sigil::after {
-    position: absolute;
-    font-family: inherit;
-    font-size: 0.65rem;
-    opacity: 0;
-    transition: all 0.2s var(--brace-settle-ease);
-    color: var(--pink);
-    pointer-events: none;
-}
-
-/* Prefix semantics (Left side) */
-[data-spw-stateful] .frame-sigil::before {
-    content: '[' attr(data-spw-phase-prefix) ']';
-    right: 100%;
-    margin-right: 0.5rem;
-    transform: translateX(10px);
-}
-
-/* Postfix semantics (Right side) */
-[data-spw-stateful] .frame-sigil::after {
-    content: '[' attr(data-spw-phase-postfix) ']';
-    left: 100%;
-    margin-left: 0.5rem;
-    transform: translateX(-10px);
-}
-
-/* Active phase state visibility */
-[data-spw-stateful][data-spw-phase] .frame-sigil::before,
-[data-spw-stateful][data-spw-phase] .frame-sigil::after {
-    opacity: 0.4;
-    transform: translateX(0);
-}
-
-[data-spw-stateful]:hover .frame-sigil::before,
-[data-spw-stateful]:hover .frame-sigil::after {
-    opacity: 1;
-}
-
-/* Polarities (Brace Types) tint the phase colors */
-[data-spw-form="brace"] { --phase-ink: var(--teal); }
-[data-spw-form="square"] { --phase-ink: var(--pink); }
-[data-spw-form="circle"] { --phase-ink: var(--amber); }
-
-[data-spw-stateful] .frame-sigil {
-    color: var(--phase-ink, inherit);
-}
-
-/* ─── Prompt-Useful Affordances ────────────────────────────────────────── */
-
-.frame-prompt-copy {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--charcoal);
-    border: 1px solid var(--ink-soft);
-    border-radius: 4px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.75rem;
-    font-family: inherit;
-    color: var(--ink);
-    cursor: pointer;
-    opacity: 0.2;
-    transition: all 0.2s var(--brace-settle-ease);
-    z-index: 10;
-}
-
-.frame-prompt-copy:hover {
-    opacity: 1;
-    border-color: var(--teal);
-    color: var(--teal);
-    box-shadow: 0 0 10px rgba(26, 153, 153, 0.2);
-}
-
-.frame-prompt-copy.copy-success {
-    border-color: var(--pink);
-    color: var(--pink);
-    opacity: 1;
-}
-
-.frame-prompt-copy .log-op {
-    margin-right: 4px;
-    font-weight: bold;
-}
-
-/* ─── Spell Board ───────────────────────────────────────────────────────── */
-
-.spell-board-content {
-    margin-top: 1rem;
-    padding: 1.5rem;
-    background: var(--charcoal-dark);
-    border: 1px solid var(--ink-soft);
-    border-radius: 8px;
-}
-
-.spell-visual {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.spell-ingredient {
-    background: var(--charcoal-light);
-    border-color: var(--teal-soft);
-    color: var(--teal);
-    font-weight: bold;
-    animation: spw-pop-spring 0.3s ease-out;
-}
-
-.spell-source {
-    background: #000;
-    color: var(--teal);
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    overflow-x: auto;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--charcoal-light);
-}
-
-.spell-source code {
-    font-family: 'JetBrains Mono', monospace;
-}
-
-/* ─── Concept Chains (Plaintext Breadcrumbs) ─────────────────────────── */
-
-.spw-concept-chain {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 0;
-    margin: 2rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    border-top: 1px dashed var(--line-soft);
-    border-bottom: 1px dashed var(--line-soft);
-}
-
-.spw-concept-chain .chain-node {
-    color: var(--teal);
-    text-decoration: none;
-    padding: 0.2rem 0.4rem;
-    border-radius: 3px;
-    transition: all 0.2s ease;
-}
-
-.spw-concept-chain .chain-node:hover {
-    background: var(--teal-soft);
-    color: #fff;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-.spw-concept-chain .chain-sep {
-    color: var(--line-strong);
-    opacity: 0.6;
-    user-select: none;
-}
-
-.spw-concept-chain .chain-label {
-    margin-right: 0.5rem;
-    font-weight: bold;
-    color: var(--ink);
-    opacity: 0.7;
-}
-
-/* ─── Wonder Accents (Guided Discovery) ──────────────────────────────── */
-
-.spw-wonder-accent {
-    --ink: var(--amber);
-    --line: var(--amber-soft);
-    box-shadow: 0 0 25px rgba(255, 170, 0, 0.2);
-    filter: brightness(1.1);
-    z-index: 100 !important;
-    transition: all 0.6s ease-out;
-}
-
-[data-spw-knowledge="gained"] {
-    border-color: var(--amber);
-    box-shadow: 0 0 10px rgba(255, 170, 0, 0.1);
-}
-
-/* ─── Gentle Friction (Sustained Recall) ────────────────────────────── */
-
-/* Deep work concepts require longer transition durations to 'charge' */
-[data-spw-friction="deep"] {
-    --charge-rate: 1.2s;
-    transition: filter var(--charge-rate) ease-in-out;
-}
-
-[data-spw-gesture="charging"][data-spw-friction="deep"] {
-    animation: spw-friction-shimmer 2.0s ease-in-out infinite alternate;
-}
-
-@keyframes spw-friction-shimmer {
-    0%   { filter: brightness(1); }
-    100% { filter: brightness(1.3) drop-shadow(0 0 10px var(--amber-soft)); }
-}
-
-
-/* ─── Smart Resonance & Cognitive Console ────────────────────────────── */
-
-.spw-smart-console-host {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    max-width: min(24rem, calc(100vw - 4rem));
-    z-index: 2100; /* Above regular header/menus */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    pointer-events: none;
-}
-
-.spw-smart-resonance {
-    pointer-events: auto;
-    background: var(--floating-bg-warm);
-    border: 1px solid var(--line-strong);
-    border-radius: 8px;
-    padding: 1rem;
-    color: var(--ink);
-    box-shadow: var(--shadow-active);
-    animation: spw-resonance-slide 0.5s var(--brace-settle-ease);
-    font-size: 0.9rem;
-    background-image:
-        linear-gradient(
-            90deg,
-            color-mix(in srgb, var(--active-op-color, var(--teal)) 15%, transparent) 0 3rem,
-            transparent 3rem
-        );
-    background-repeat: no-repeat;
-    background-size: calc(100% - 2rem) 1px;
-    background-position: 1rem 0.9rem;
-}
-
-@keyframes spw-resonance-slide {
-    from { transform: translateX(50px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-.resonance-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    color: var(--active-op-color, var(--teal));
-    font-weight: bold;
-}
-
-.resonance-sigil {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
-.spw-transparent-block {
-    margin-top: 1rem;
-    background: var(--surface-code);
-    padding: 0.75rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    border-left: 2px solid var(--line-strong);
-    color: rgba(255, 244, 210, 0.88);
-}
-
-.spw-transparent-block code {
-    white-space: pre-wrap;
-    word-break: break-all;
-}
-
-
-/* ─── Developmental Salience ───────────────────────────────────────────── */
-
-[data-spw-lattice-phase="principal"] [data-spw-role="reference"] {
-    --ink: var(--amber);
-    box-shadow: 0 0 30px rgba(255, 170, 0, 0.05);
-}
-
-[data-spw-lattice-phase="curiosity"] [data-spw-liminality="entry"] {
-    --ink: var(--teal);
-    filter: brightness(1.2);
-}
-
-[data-spw-lattice-phase="coherence"] [data-spw-form="brace"] {
-    transform: scale(1.02);
-    transition: transform 0.4s var(--brace-settle-ease);
-}
-
-[data-spw-guided="true"] {
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 28%, transparent),
-        0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 18%, transparent);
-    background-image: linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 46%, transparent),
-        transparent 52%
+.demo-controls,
+.spw-spell-path,
+.frame-metrics-bar {
+  position: relative;
+  z-index: 120;
+}
+
+:root {
+  --handle-radius: 0.42rem;
+  --handle-radius-tight: 0.28rem;
+  --handle-pad-y: 0.2rem;
+  --handle-pad-x: 0.54rem;
+  --handle-gap: 0.38rem;
+
+  --handle-bg: var(--surface-strong, rgba(255, 255, 255, 0.82));
+  --handle-bg-active: color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, var(--handle-bg));
+  --handle-bg-selected: var(--active-op-color, var(--teal));
+  --handle-ink: var(--active-op-color, var(--teal));
+  --handle-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 62%, transparent);
+  --handle-line-soft: color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+
+  --handle-shadow-rest: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --handle-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  --handle-shadow-latched: inset 0 1px 0 rgba(255,255,255,0.34), 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+
+  --handle-duration-fast: var(--duration-fast, 120ms);
+  --handle-duration-base: var(--duration-base, 180ms);
+  --handle-duration-deliberate: var(--duration-deliberate, 280ms);
+
+  --handle-ease: var(--ease-mechanical, ease);
+  --handle-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
+
+  --handle-underline-thickness: 1.5px;
+  --handle-underline-offset: 0.16em;
+
+  --handle-roomy-hint-threshold: 44rem;
+}
+
+/* ==========================================================================
+   2. Shared handle primitive
+   --------------------------------------------------------------------------
+   Purpose
+   - Unify sigils, chips, tokens, pills, and inline handles.
+   - Keep interactions subtle and compositionally sane.
+   ========================================================================== */
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  [data-spw-handle="true"]
+) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  min-width: 0;
+  max-width: 100%;
+  padding: var(--handle-pad-y) var(--handle-pad-x);
+  border: 1.25px solid var(--handle-line);
+  border-radius: var(--handle-radius);
+  background: var(--handle-bg);
+  color: var(--handle-ink);
+  text-decoration: none;
+  text-shadow: none;
+  box-shadow: var(--handle-shadow-rest);
+  cursor: pointer;
+  transition:
+    color            var(--handle-duration-fast) var(--handle-ease),
+    background-color var(--handle-duration-fast) var(--handle-ease),
+    border-color     var(--handle-duration-base) var(--handle-ease),
+    box-shadow       var(--handle-duration-base) var(--handle-settle-ease),
+    transform        var(--handle-duration-fast) var(--handle-settle-ease),
+    opacity          var(--handle-duration-fast) var(--handle-ease);
+}
+
+/* Inline handles should feel more like annotated text than pills */
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  [data-spw-charge-key],
+  [data-spw-operator]
+):not(.operator-chip):not(.frame-sigil):not(.spec-pill) {
+  padding-inline: 0.24rem;
+  padding-block: 0.04rem;
+  border-color: transparent;
+  background: transparent;
+  border-radius: var(--handle-radius-tight);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   3. Hover / focus / keyboard states
+   ========================================================================== */
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .spw-delimiter,
+  [data-spw-handle="true"]
+):is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, transparent);
+  background: var(--handle-bg-active);
+  box-shadow: var(--handle-shadow-focus);
+  outline: none;
+}
+
+/* Keep motion restrained: no big hover jumps */
+:where(
+  .operator-chip,
+  .frame-sigil,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill
+):hover {
+  transform: translateY(-1px);
+}
+
+/* Inline tokens stay almost still */
+:where(.syntax-token, .spw-delimiter, [data-spw-charge-key]):hover {
+  transform: none;
+}
+
+/* ==========================================================================
+   4. Literate underline seam
+   --------------------------------------------------------------------------
+   Purpose
+   - Reward knowing words through subtle underlines that can coexist with
+     italics, pretext, and inline syntax.
+   ========================================================================== */
+
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  [data-spw-charge-key],
+  [data-spw-operator]
+):not(.operator-chip):not(.frame-sigil) {
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
+  text-decoration-thickness: var(--handle-underline-thickness);
+  text-underline-offset: var(--handle-underline-offset);
+  text-decoration-skip-ink: auto;
+}
+
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  [data-spw-charge-key],
+  [data-spw-operator]
+):not(.operator-chip):not(.frame-sigil):is(:hover, :focus-visible) {
+  text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
+}
+
+/* Italic-friendly fallback seam */
+:where(em .syntax-token, em .spw-delimiter, em [data-spw-charge-key]),
+:where(i .syntax-token, i .spw-delimiter, i [data-spw-charge-key]) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+/* ==========================================================================
+   5. Handle state semantics
+   --------------------------------------------------------------------------
+   Purpose
+   - Distinguish immediate interaction from latched/bookmarked knowledge.
+   ========================================================================== */
+
+/* Focused: nearby, readable, lightly energized */
+:where([data-spw-selection="focused"]) {
+  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 54%, transparent);
+}
+
+/* Active: immediate engagement */
+:where(
+  .frame-sigil.is-selected,
+  .frame-sigil[aria-pressed="true"],
+  .operator-chip[aria-current="page"],
+  [data-spw-selection="active"],
+  [data-spw-selection="selected"]
+) {
+  background: var(--handle-bg-selected);
+  border-color: var(--handle-bg-selected);
+  color: #fff;
+  box-shadow:
+    0 3px 10px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+}
+
+/* Latched: precise mechanical retention, not just "selected" */
+:where([data-spw-latched="true"]) {
+  background: color-mix(in srgb, var(--handle-bg) 86%, var(--active-op-color, var(--teal)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
+  box-shadow: var(--handle-shadow-latched);
+  transform: translateY(0.5px);
+}
+
+/* Bookmarked / pinned: persistent memory, quieter than active */
+:where([data-spw-pinned="true"], [data-spw-bookmarked="true"]) {
+  border-color: color-mix(in srgb, var(--amber, #ffaa00) 62%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--amber, #ffaa00) 9%, transparent) 0%,
+      transparent 100%
+    ),
+    var(--handle-bg);
+}
+
+:where([data-spw-pinned="true"], [data-spw-bookmarked="true"])::after {
+  content: "";
+  position: absolute;
+  inset: auto 0.28rem 0.16rem auto;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--amber, #ffaa00) 72%, transparent);
+  opacity: 0.82;
+}
+
+/* Knowledge gained: quieter than flare, more durable than delight */
+:where([data-spw-knowledge="gained"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line, transparent));
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent),
+      transparent 52%
+    ),
+    var(--handle-bg);
+}
+
+/* ==========================================================================
+   6. Gesture states
+   --------------------------------------------------------------------------
+   Purpose
+   - Charging should read as progressive attentional commitment.
+   - Keep gestures subtle enough to coexist with typography and pretext.
+   ========================================================================== */
+
+:where([data-spw-form]) {
+  transition:
+    filter      var(--handle-duration-base) var(--handle-settle-ease),
+    transform   var(--handle-duration-base) var(--handle-settle-ease),
+    box-shadow  var(--handle-duration-base) var(--handle-settle-ease),
+    border-color var(--handle-duration-base) var(--handle-settle-ease);
+}
+
+/* Charging: clearer than before, but not loud */
+:where([data-spw-gesture="charging"][data-spw-form="brace"]),
+:where([data-spw-form="brace"]:hover),
+:where([data-spw-form="brace"]:focus-within) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 54%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 34%, transparent);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 16%, transparent));
+}
+
+/* Active: one tactile latch moment */
+:where([data-spw-gesture="active"][data-spw-form="brace"]) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 76%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 58%, transparent);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 22%, transparent));
+}
+
+:where([data-spw-gesture="active"][data-spw-form="block"]) {
+  box-shadow: var(--shadow-active);
+  transform: translateY(0.5px);
+}
+
+/* Sustained: reward waiting with extra affordance, not endurance theatre */
+@keyframes spw-handle-sustain-breath {
+  0%, 100% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent);
+  }
+}
+
+:where([data-spw-gesture="sustained"][data-spw-form="brace"]),
+:where([data-spw-gesture="sustained"][data-spw-form="block"]) {
+  animation: spw-handle-sustain-breath 1.6s ease-in-out infinite;
+}
+
+/* Projecting: use slight offset only; pretext should remain readable */
+:where([data-spw-gesture="projecting"][data-spw-form="brace"]) {
+  transform: translate(
+    calc(var(--drag-dx, 0px) * 0.03),
+    calc(var(--drag-dy, 0px) * 0.03)
+  );
+}
+
+:where([data-spw-gesture="projecting"][data-spw-form="block"]) {
+  transform: translate(
+    calc(var(--drag-dx, 0px) * 0.02),
+    calc(var(--drag-dy, 0px) * 0.02)
+  );
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* ==========================================================================
+   7. Operator-aware highlighting
+   ========================================================================== */
+
+:where([data-spw-features~="operators"] [data-spw-operator],
+       [data-spw-features~="console"] .spw-console [data-spw-operator]) {
+  color: var(--spw-operator-color, currentColor);
+  border-color: var(--spw-operator-border, currentColor);
+}
+
+:where([data-spw-features~="operators"] [data-spw-operator]) {
+  background: var(--spw-operator-bg-soft, transparent);
+}
+
+:where([data-spw-features~="operators"] [data-spw-operator]:is(:hover, :focus-visible)) {
+  filter: brightness(1.04);
+}
+
+:where(html[data-spw-operator-highlighting="off"]) :where(
+  [data-spw-features~="operators"] [data-spw-operator],
+  [data-spw-features~="console"] .spw-console [data-spw-operator]
+) {
+  color: inherit;
+  border-color: var(--line);
+  background: transparent;
+  filter: none;
+}
+
+/* ==========================================================================
+   8. Inline delimiters and brace phrases
+   --------------------------------------------------------------------------
+   Purpose
+   - Make braces and delimiters recognizable as site-wide interactive grammar.
+   ========================================================================== */
+
+:where(.spw-delimiter) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-weight: 700;
+  padding-inline: 0.08rem;
+  cursor: help;
+  border-radius: 0.18rem;
+}
+
+:where(.spw-delimiter--angle)  { color: var(--op-surface-color, var(--teal)); }
+:where(.spw-delimiter--circle) { color: var(--op-ref-color, rgba(60, 40, 120, 0.82)); }
+:where(.spw-delimiter--square) { color: var(--op-probe-color, var(--teal)); }
+:where(.spw-delimiter--brace)  { color: var(--op-frame-color, var(--teal)); }
+
+/* Phrase wrappers for future inline semantics */
+:where([data-spw-inline-form]) {
+  position: relative;
+  display: inline;
+  border-radius: 0.2rem;
+  transition:
+    background-color var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
+}
+
+:where([data-spw-inline-form="brace"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 72%,
+      color-mix(in srgb, var(--op-frame-color, var(--teal)) 14%, transparent) 72%
     );
 }
 
-html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta {
-    position: relative;
+:where([data-spw-inline-form="angle"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 72%,
+      color-mix(in srgb, var(--op-surface-color, var(--teal)) 14%, transparent) 72%
+    );
 }
 
-html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta::after {
-    content: attr(data-spw-guide-reason);
+:where([data-spw-inline-form="square"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 72%,
+      color-mix(in srgb, var(--op-probe-color, var(--teal)) 14%, transparent) 72%
+    );
+}
+
+:where([data-spw-inline-form="circle"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 72%,
+      color-mix(in srgb, var(--op-ref-color, rgba(60,40,120,0.82)) 14%, transparent) 72%
+    );
+}
+
+/* ==========================================================================
+   9. Swappable affordance and roomy hints
+   --------------------------------------------------------------------------
+   Purpose
+   - The swap affordance should not depend on a tiny dashed underline alone.
+   - Hints appear only where there is enough room.
+   ========================================================================== */
+
+:where([data-spw-swappable] .frame-sigil,
+       [data-spw-swappable] .frame-card-sigil) {
+  cursor: pointer;
+}
+
+:where([data-spw-swappable] .frame-sigil)::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0.08rem 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--teal, #008080) 36%, transparent);
+  opacity: 0.66;
+}
+
+:where([data-spw-gesture="charging"][data-spw-swappable] .frame-sigil)::before,
+:where([data-spw-swappable] .frame-sigil:is(:hover, :focus-visible))::before {
+  border-color: color-mix(in srgb, var(--teal, #008080) 72%, transparent);
+  opacity: 1;
+}
+
+/* Room-aware memo surface for swap / handle critique */
+:where([data-spw-hint-surface]) {
+  display: none;
+  margin-top: 0.35rem;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.64rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+}
+
+@container (min-width: 44rem) {
+  :where([data-spw-hint-surface][data-spw-hint-density="roomy"]) {
     display: inline-flex;
     align-items: center;
-    padding: 0.18rem 0.42rem;
-    border: 1px solid color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 26%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 72%, transparent);
-    color: var(--ink-soft);
-    font-size: 0.62rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    gap: 0.3rem;
+  }
 }
 
-html[data-spw-cognitive-handles="off"] .spw-smart-console-host,
-html[data-spw-cognitive-handles="off"] .cognitive-surface-panel {
-    display: none !important;
+/* ==========================================================================
+   10. Spell breadcrumbs
+   --------------------------------------------------------------------------
+   Purpose
+   - Compact, higher-contrast header path seam.
+   - Printable enough to imagine as sticker or streamer later.
+   ========================================================================== */
+
+:where(.spw-spell-path) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+  min-width: 0;
+  margin-block: 0.35rem 0.75rem;
+  padding: 0.24rem 0.56rem;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--teal, #008080) 10%, transparent) 0,
+      transparent 48%
+    ),
+    color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 18%, transparent);
+  border-radius: 0.42rem;
 }
 
-html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
-    box-shadow: none;
-    background-image: none;
+:where(.spw-spell-path .spell-op) {
+  color: var(--teal);
+  font-weight: 700;
 }
 
-@media (max-width: 900px) {
-    .spw-smart-console-host {
-        left: 1rem;
-        right: 1rem;
-        bottom: 1rem;
-        max-width: none;
-    }
+:where(.spw-spell-path .spell-node) {
+  color: var(--ink);
+}
+
+:where(.spw-spell-path .spell-sep) {
+  color: var(--line-strong);
+  opacity: 0.78;
+}
+
+:where(.spw-spell-path .spell-current) {
+  color: var(--pink, hsl(342 58% 42%));
+  border-bottom: 1px solid currentColor;
+}
+
+/* ==========================================================================
+   11. Frame metrics
+   --------------------------------------------------------------------------
+   Purpose
+   - Keep metrics secondary and perspective-aware.
+   - Let later JS choose which metric deserves space.
+   ========================================================================== */
+
+:where([data-spw-features~="metrics"] .frame-metrics-bar) {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  margin-top: 0.15rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  opacity: 0.68;
+  transition:
+    opacity var(--handle-duration-base) var(--handle-settle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
+}
+
+:where([data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
+       [data-spw-features~="metrics"] .frame-metrics-bar:hover) {
+  opacity: 1;
+}
+
+:where([data-spw-features~="metrics"] .frame-metrics-label) {
+  color: var(--teal);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Metric hooks for future profile-specific outputs */
+:where([data-spw-metric-kind]) {
+  border-radius: 999px;
+  padding: 0.1rem 0.36rem;
+  background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
+}
+
+/* ==========================================================================
+   12. Guided / cognitive handles
+   --------------------------------------------------------------------------
+   Purpose
+   - Keep guided surfaces informative without screaming.
+   - Compatible with show-semantic-metadata and cognitive-handle toggles.
+   ========================================================================== */
+
+:where([data-spw-guided="true"]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 12%, transparent);
+  background-image:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 38%, transparent),
+      transparent 52%
+    );
+}
+
+:where(html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta)::after {
+  content: attr(data-spw-guide-reason);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.16rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 70%, transparent);
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:where(html[data-spw-cognitive-handles="off"]) :is(
+  .spw-smart-console-host,
+  .cognitive-surface-panel
+) {
+  display: none !important;
+}
+
+:where(html[data-spw-cognitive-handles="off"] [data-spw-guided="true"]) {
+  box-shadow: none;
+  background-image: none;
+}
+
+/* ==========================================================================
+   13. Resonance seam
+   --------------------------------------------------------------------------
+   Purpose
+   - Keep resonance available as a handle concept, but quiet.
+   ========================================================================== */
+
+:where(.resonance-header) {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.7rem;
+  color: var(--active-op-color, var(--teal));
+  font-weight: 700;
+}
+
+:where(.resonance-sigil) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.8rem;
+  opacity: 0.72;
+}
+
+/* ==========================================================================
+   14. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .operator-chip,
+    .syntax-token,
+    .spec-pill,
+    .badge,
+    .tag,
+    .pill,
+    .frame-sigil,
+    .spw-delimiter,
+    [data-spw-form],
+    .spw-spell-path,
+    .frame-metrics-bar
+  ) {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }

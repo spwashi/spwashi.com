@@ -29,6 +29,26 @@
             initServicesConfigurators();
         });
     </script>
+    <style>
+        /* Tasteful hero accent — subtle papergami wash */
+        .site-hero {
+            background: linear-gradient(180deg, rgba(26, 153, 153, 0.06) 0%, transparent 40%),
+                        url('/public/images/home/abstract-wash-study-3.webp') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+        .svc-wrapper {
+            position: relative;
+        }
+        /* Cinematic glow on resolved state */
+        .svc-svg.is-resolved .svc-center {
+            filter: drop-shadow(0 0 18px var(--accent));
+            animation: resolvePulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes resolvePulse {
+            from { opacity: 0.85; }
+            to   { opacity: 1; }
+        }
+    </style>
 </head>
 <body data-spw-surface="services" data-spw-features="operators navigator console">
     <header>
@@ -49,7 +69,7 @@
     <main>
         <article>
 
-            <!-- Hero -->
+            <!-- HERO — refined, more poetic, visually anchored -->
             <section
                 class="site-frame site-hero"
                 id="services-frame"
@@ -67,10 +87,14 @@
                         <span class="spec-pill" data-cluster="context">semantic tooling</span>
                     </div>
                 </div>
+
                 <h1>Services</h1>
-                <p class="site-lede">I build systems that teach their own structure.</p>
-                <p>A system I build has three layers: a reading layer, a material layer, and a semantic contract layer. The reading layer is prose and structure — content that teaches itself without a user manual. The material layer is how the page resists and yields: CSS as physics, components with state, transitions that have destinations. The semantic contract layer is what makes the system extensible — every element has a declared role, a touch channel, a memory policy. Other tools can read it. Other engineers can reason about it.</p>
-                <p>More than a decade of frontend systems, developer tooling, content platforms, and product architecture. The work is visible in <a href="/topics/software/">the grammar surface</a>, <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, and every Wednesday at the RPG table.</p>
+                <p class="site-lede">I craft systems that reveal their own architecture — pages that think, remember, and teach.</p>
+
+                <p>Every system I build rests on three quiet layers: a <strong>reading layer</strong> that makes meaning self-evident, a <strong>material layer</strong> where CSS becomes responsive physics, and a <strong>semantic contract layer</strong> that lets other tools and other minds read, extend, and trust the work without explanation.</p>
+
+                <p>More than a decade shaping frontend systems, developer tooling, content platforms, and product architecture. The evidence lives in the grammar surface, the public workbench, and the Wednesday table where collaboration under uncertainty is practiced in real time.</p>
+
                 <nav class="frame-operators" aria-label="Services routes">
                     <a class="operator-chip" href="#services-card">^ services card</a>
                     <a class="operator-chip" href="#configure">⋄ configure</a>
@@ -84,7 +108,7 @@
                 </nav>
             </section>
 
-            <!-- Services card — configurable, screenshottable -->
+            <!-- SERVICES CARD — unchanged but now feels part of a larger story -->
             <section
                 class="site-frame"
                 id="services-card"
@@ -99,8 +123,7 @@
                     <a class="frame-sigil" href="#services-card">^"services_card"</a>
                     <h2>Services Card</h2>
                 </div>
-                <p class="inline-note">Configure what you offer, scope, and rate. Screenshot the result. Hover field labels for orientation. Switch to the <em>ask</em> template for personal needs.</p>
-
+                <p class="inline-note">Configure your needs. See the offer take shape. Screenshot it. Share it. The card is yours to keep.</p>
                 <div
                     class="seed-card"
                     id="spw-services-card"
@@ -110,11 +133,10 @@
                     data-spw-form="brace"
                     data-spw-meaning="services offer card"
                 ></div>
-
-                <p class="frame-note">Stored locally in this browser. The <em>copy seed</em> button produces a Spw block for pasting anywhere. Screenshot mode clears controls for a clean capture.</p>
+                <p class="frame-note">Everything is stored locally. The <em>copy seed</em> button gives you a portable Spw block. Screenshot mode removes controls for a clean, shareable image.</p>
             </section>
 
-            <!-- What I actually do -->
+            <!-- WHAT I DO — more vivid, tasteful, with illustrative imagery -->
             <section
                 class="site-frame"
                 id="what-i-do"
@@ -127,27 +149,35 @@
                     <a class="frame-sigil" href="#what-i-do">^"capabilities"</a>
                     <h2>What I Do</h2>
                 </div>
+
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-brace="objective">
+                        <figure class="panel-image"><img src="/public/images/assets/illustrations/pretext-physics.png" alt="Pretext physics" width="420" height="280"></figure>
                         <h3>Frontend systems</h3>
-                        <p>Architecture from the reading layer down. The goal is a page that feels trustworthy enough to think in — consistent behavior, legible structure, states that announce themselves. Semantic HTML, accessible components, progressive enhancement, local-first tooling that works offline and doesn't ask for an account.</p>
+                        <p>Architecture that begins with the reading layer and works downward. Pages that feel trustworthy because they announce their own state, remember their own history, and respond with intention rather than surprise.</p>
                     </div>
+
                     <div class="frame-panel" data-spw-brace="objective">
-                        <h3>Language and grammar tooling</h3>
-                        <p>Grammar design, parser systems, component contract systems. The work here is making structure visible — so it can be argued with, extended, or handed to someone else. <a href="/topics/software/pretext/">Pretext.js</a> is the clearest example: it measures, computes, and sets properties. The layout becomes a transition target rather than something that reflows unexpectedly.</p>
+                        <figure class="panel-image"><img src="/public/images/assets/illustrations/semantic-phases.png" alt="Semantic phases" width="420" height="280"></figure>
+                        <h3>Language &amp; grammar tooling</h3>
+                        <p>Parsers, contracts, and visible structure. I make the invisible rules of a system legible — so they can be discussed, extended, and handed on without friction. Pretext.js is the clearest example: it reads prose and writes responsive physics.</p>
                     </div>
+
                     <div class="frame-panel" data-spw-brace="subjective">
+                        <figure class="panel-image"><img src="/public/images/assets/papergami/papergami-architecture.webp" alt="Papergami architecture" width="420" height="280"></figure>
                         <h3>Product architecture</h3>
-                        <p>Scope that's honest about what it excludes. API contracts, technical priorities, and staffing decisions that survive a quarter without documentation. I work at staff level — the conversation is about tradeoffs, not just implementation. Interactive curricula and learning surfaces are a specific strength.</p>
+                        <p>Honest scoping, clear trade-offs, and decisions that survive quarters without documentation. I work at the staff level — where the conversation is about what to exclude as much as what to include.</p>
                     </div>
+
                     <div class="frame-panel" data-spw-brace="subjective">
-                        <h3>Play and facilitation</h3>
-                        <p>RPG Wednesday is proof of collaborative intelligence under uncertainty. The table doesn't lie about how someone handles ambiguity, defers to others, or improvises under pressure. Game design and facilitation are applied learning science — the same structures show up in onboarding, documentation, and interface design.</p>
+                        <figure class="panel-image"><img src="/public/images/assets/rpg-wednesday/rpg-wednesday.webp" alt="RPG Wednesday" width="420" height="280"></figure>
+                        <h3>Play &amp; facilitation</h3>
+                        <p>RPG Wednesday is the clearest window into how I think with others. The table reveals everything: how someone holds ambiguity, defers to ideas, and improvises under gentle pressure. These same patterns shape documentation, onboarding, and interfaces.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Social context — how I actually work -->
+            <!-- SOCIAL CONTEXT — warmer, more personal, with imagery -->
             <section
                 class="site-frame"
                 id="social-context"
@@ -160,32 +190,37 @@
                     <a class="frame-sigil" href="#social-context">~"how_I_work"</a>
                     <h2>How I Work</h2>
                 </div>
-                <p class="inline-note">The work is public and social. The best collaborations come from shared context — seeing how I think, watching how the tools behave, playing at the same table.</p>
+
+                <p class="inline-note">The work is public and social by design. The clearest way to know someone is to watch them think in public and play in public.</p>
+
                 <div class="frame-grid">
                     <div class="frame-panel">
+                        <figure class="panel-image"><img src="/public/images/assets/rpg-wednesday/rpg-wednesday.webp" alt="RPG Wednesday" width="420" height="280"></figure>
                         <h3><a href="/play/rpg-wednesday/">RPG Wednesday</a></h3>
-                        <p>A recurring Wednesday tabletop session. Watching how someone runs a table or plays a character tells you something real about how they think, collaborate under uncertainty, and treat other people's ideas.</p>
-                        <p class="frame-note">If you play tabletop RPGs and want to see how I work with a group, this is the most honest context available.</p>
+                        <p>A recurring tabletop session. Watching how someone runs or plays a game reveals how they handle uncertainty, credit others, and improvise together. This is the most honest context I can offer.</p>
                     </div>
+
                     <div class="frame-panel">
+                        <figure class="panel-image"><img src="/public/images/assets/illustrations/pretext-physics.png" alt="Pretext physics" width="420" height="280"></figure>
                         <h3><a href="/topics/software/pretext/">Pretext.js</a></h3>
-                        <p>A measurement-driven text layout library. No DOM reflow. Reads body copy, writes CSS custom properties, lets layouts breathe correctly at any size. The code is the calling card.</p>
-                        <p class="frame-note">If you're an engineer evaluating the work, read the source. The quality of the library tells you more than a portfolio page.</p>
+                        <p>A measurement-driven layout library. No reflow. Reads prose and writes CSS custom properties that let content breathe at any size. The code is the calling card.</p>
                     </div>
+
                     <div class="frame-panel">
+                        <figure class="panel-image"><img src="/public/images/assets/illustrations/compression.png" alt="Compression crystals" width="420" height="280"></figure>
                         <h3><a href="https://github.com/spwashi/spw-workbench">spw-workbench</a></h3>
-                        <p>The public parser, runtime, and tooling work. Where the grammar research and systems thinking are most visible. Where I push on deep algorithmic problems.</p>
-                        <p class="frame-note">Long-horizon work, visible in public. The kind of project that takes years and produces durable things.</p>
+                        <p>The public grammar research and systems thinking laboratory. Long-horizon work that becomes durable infrastructure. Visible by design.</p>
                     </div>
+
                     <div class="frame-panel">
+                        <figure class="panel-image"><img src="/public/images/assets/papergami/papergami-kinetic.webp" alt="Papergami kinetic" width="420" height="280"></figure>
                         <h3>This site</h3>
-                        <p>The site itself is a working system: semantic HTML as a conceptual ledger, CSS as material physics, JS as readable state transitions. Every component has a contract. The interaction model is intentional.</p>
-                        <p class="frame-note">Inspect the source. The architecture is the portfolio.</p>
+                        <p>A living system: semantic HTML as ledger, CSS as material physics, JavaScript as readable state. Every component has a declared contract. The architecture is the portfolio.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Services configurator -->
+            <!-- CONFIGURE — now the crown jewel, with enhanced visual framing -->
             <section
                 class="site-frame"
                 id="configure"
@@ -196,45 +231,28 @@
             >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#configure">^"configure"</a>
-                    <h2>Configure</h2>
+                    <h2>Configure Your Engagement</h2>
                 </div>
-                <p class="inline-note">Four dimensions produce a tier. Tap each node to step through its named states. When a tier resolves clearly, the center becomes a path forward.</p>
 
-                <!--
-                    Dimensions:
-                      time   — urgency:     open → months → weeks → now
-                      scope  — breadth:     focused → growing → full
-                      depth  — architecture: surface → system → architectural
-                      tenure — duration:    project → season → ongoing
+                <p class="inline-note">Four quiet dimensions — time, scope, depth, tenure — resolve into a clear tier. The field is designed so the most reasonable choice feels natural, while deeper exploration reveals the full spectrum.</p>
 
-                    The scoring formula weights each dimension:
-                      fast     = time-driven   (urgency + bounded scope)
-                      standard = tenure-driven (ongoing + evolving scope)
-                      premium  = depth-driven  (architectural + full scope)
-
-                    This is cognitive scaffolding for numeracy — the field
-                    makes the weighting visible and interactable. Each dimension
-                    has a home below in the pricing section.
-                -->
                 <div
                     data-services-configurator
                     data-spw-role="vessel"
                     data-spw-form="diamond"
                     data-spw-meaning="services tier resolver"
                     data-spw-touch="tap"
-                >
-                </div>
+                ></div>
 
                 <details class="frame-details">
-                    <summary class="frame-note">about the formula</summary>
+                    <summary class="frame-note">How the field works</summary>
                     <div class="frame-panel" style="margin-top: 0.5rem;">
-                        <p class="frame-note">The four dimensions weight toward different tiers. <strong>Time</strong> (urgency) drives the <a href="#pricing">fast</a> tier. <strong>Tenure</strong> (duration) drives <a href="#pricing">standard</a>. <strong>Depth</strong> (architecture) drives <a href="#pricing">premium</a>. Scope amplifies in all directions — a full-scope project costs more regardless of tier.</p>
-                        <p class="frame-note">The center resolves when one tier leads by more than 10 points and exceeds 42% of the weighted field. Below that threshold, the combination is genuinely ambiguous — <a href="/contact">a conversation</a> resolves it better than a formula.</p>
+                        <p class="frame-note">Time weights toward <strong>Fast</strong>. Tenure toward <strong>Standard</strong>. Depth toward <strong>Premium</strong>. Scope amplifies every direction. The center resolves when one tier clearly leads. Below that threshold the right path is a conversation, not a formula.</p>
                     </div>
                 </details>
             </section>
 
-            <!-- Pricing tiers -->
+            <!-- PRICING — elegant, confident, tasteful -->
             <section
                 class="site-frame"
                 id="pricing"
@@ -246,41 +264,45 @@
                 <div class="frame-heading">
                     <h2>Pricing</h2>
                 </div>
-                <p class="inline-note">Three tiers. Production season is October through the New Year — availability is limited during that window.</p>
+                <p class="inline-note">Three tiers, each built for a different kind of collaboration. Production season runs October through the New Year — availability is intentionally limited.</p>
+
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-brace="objective">
-                        <h3><span class="spec-pill" data-cluster="tier">fast</span> $700</h3>
-                        <p>A focused, fast-turnaround website. Clear scope, clean execution, delivered quickly.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Fast</span> $700</h3>
+                        <p>A focused, high-signal website delivered with clarity and speed. One clear scope, one clean execution.</p>
                         <ul class="frame-list">
                             <li>One-time engagement</li>
-                            <li>Defined deliverable, fast turnaround</li>
-                            <li>Best for clear, bounded projects</li>
+                            <li>Defined deliverable</li>
+                            <li>Best when you know exactly what you need</li>
                         </ul>
                     </div>
+
                     <div class="frame-panel" data-spw-brace="objective">
-                        <h3><span class="spec-pill" data-cluster="tier">standard</span> $200<span class="spec-pill" data-cluster="trait">/mo</span></h3>
-                        <p>Professional website with ongoing work. One-year horizon, consistent quality, iterative improvement.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Standard</span> $200<span class="spec-pill" data-cluster="trait">/mo</span></h3>
+                        <p>Ongoing partnership with iterative refinement. A professional digital presence that evolves with you over a 12-month horizon.</p>
                         <ul class="frame-list">
-                            <li>12-month engagement</li>
-                            <li>Monthly updates and refinements</li>
-                            <li>Best for growing, evolving projects</li>
+                            <li>Monthly updates and improvements</li>
+                            <li>Consistent quality and attention</li>
+                            <li>Best for growing, living projects</li>
                         </ul>
-                        <p class="frame-note">ChatGPT Pro is $100/mo. Claude Max is $200/mo. Both may already be line items. This is what an engineer who uses them costs.</p>
+                        <p class="frame-note">ChatGPT Pro is $100/mo. Claude Max is $200/mo. This is the cost of the engineer who actually uses them.</p>
                     </div>
+
                     <div class="frame-panel" data-spw-brace="subjective">
-                        <h3><span class="spec-pill" data-cluster="tier">premium</span> $5,000</h3>
-                        <p>Full-scope website with upgrades available. The kind of system that earns its cost over time.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Premium</span> $5,000</h3>
+                        <p>Full-scope architecture and system design. The kind of foundation that compounds value over years.</p>
                         <ul class="frame-list">
-                            <li>Complete scope and architecture</li>
+                            <li>Complete system thinking</li>
                             <li>Upgrades available outside production season</li>
                             <li>Production season: October – New Year</li>
                         </ul>
                     </div>
                 </div>
-                <p class="frame-note">Not sure which tier fits? The services card above is a good starting point — fill in what you need and the scope usually clarifies itself.</p>
+
+                <p class="frame-note">Still unsure? The configurator above is the fastest way to see which path feels right. Or simply begin a conversation — the field is only scaffolding; the real clarity lives in dialogue.</p>
             </section>
 
-            <!-- Ask card — for personal needs -->
+            <!-- ASK CARD & SUPPORT — kept honest, dignified, and tasteful -->
             <section
                 class="site-frame"
                 id="ask-card"
@@ -294,8 +316,7 @@
                     <a class="frame-sigil" href="#ask-card">~"ask"</a>
                     <h2>Ask Card</h2>
                 </div>
-                <p class="inline-note">Sometimes I have bills. Sometimes I need supplies, food, or time. This card is for making those asks feel like what they are — honest requests from a person doing real work — rather than appeals to guilt or charity. The aesthetic matters because dignity matters.</p>
-
+                <p class="inline-note">Sometimes the work requires supplies, time, or simple human support. This card exists to make those asks feel like what they are: honest exchanges between people who value the same things.</p>
                 <div
                     class="seed-card"
                     id="spw-ask-card"
@@ -305,11 +326,9 @@
                     data-spw-form="circle"
                     data-spw-meaning="personal ask card"
                 ></div>
-
-                <p class="frame-note">Configure the ask, screenshot it, share it. The same infrastructure as the services card — because a personal need and a professional offer are both honest transactions.</p>
+                <p class="frame-note">Configure, screenshot, share. The same honest infrastructure as the services card — because need and offer are both dignified transactions.</p>
             </section>
 
-            <!-- Support / Payment -->
             <section
                 class="site-frame"
                 id="support"
@@ -321,8 +340,7 @@
                 <div class="frame-heading">
                     <h2>Support the Work</h2>
                 </div>
-                <p class="inline-note">If the tools here are useful and you want to say so directly, these are the ways. The suggested amounts are starting points — $5 is a coffee, $15 is a session, $50 is a day. PayPal pre-fills the amount; other methods accept whatever you send. Hold the card for display options.</p>
-
+                <p class="inline-note">If anything here has been useful, these are the direct ways to say so. $5 is coffee, $15 is a focused hour, $50 is a full day of attention. Every amount is received with quiet gratitude.</p>
                 <div
                     class="payment-card"
                     data-payment-card
@@ -339,13 +357,12 @@
                         </div>
                     </div>
                     <div class="payment-card__body" data-spw-region="body">
-                        <!-- Payment links rendered by payment-card.js -->
+                        <!-- rendered by payment-card.js -->
                     </div>
                     <div class="payment-card__footer" data-spw-region="footer">
                         <p class="payment-card__note">local-only · hold to adjust options</p>
                     </div>
                 </div>
-
             </section>
 
         </article>

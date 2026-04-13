@@ -1,0 +1,646 @@
+/* ==========================================================================
+   spw-developmental-climate.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Visual and interaction styling for developmental climate.
+   - Replaces the older "spirit phases" framing with a more learning-centered
+     climate model:
+       orient  -> kindle
+       anchor  -> anchor
+       weave   -> weave
+       rehearse -> rehearse
+       offer   -> offer
+   - Exposes semantic variables for expressive design rather than only swapping
+     a small set of colors.
+   - Supports older data-spw-spirit-phase selectors during migration.
+
+   Primary hooks
+   - html[data-spw-developmental-climate]
+   - html[data-spw-developmental-label]
+   - html[data-spw-learning-mode]
+
+   Compatibility hooks
+   - html[data-spw-spirit-phase]
+   - html[data-spw-phase-indicators="off"]
+
+   Design stance
+   - Climate should bias perception and interaction, not dominate it.
+   - Operational depth comes from variables that other files can consume:
+     clarity, pressure, atmosphere, memory, resonance, charge, and seam tone.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Global climate tokens
+   ========================================================================== */
+
+:root {
+  --developmental-transition-duration: 180ms;
+  --developmental-transition-slow: 320ms;
+  --developmental-transition-timing: cubic-bezier(0.22, 0, 0.15, 1);
+
+  /* Fallback / current climate tokens */
+  --developmental-hue: 38;
+  --developmental-sat: 76%;
+  --developmental-light: 46%;
+
+  --developmental-accent:
+    hsl(var(--developmental-hue) var(--developmental-sat) var(--developmental-light));
+  --developmental-accent-soft:
+    color-mix(in srgb, var(--developmental-accent) 18%, transparent);
+  --developmental-accent-strong:
+    color-mix(in srgb, var(--developmental-accent) 34%, transparent);
+
+  --developmental-surface-tint:
+    color-mix(in srgb, var(--developmental-accent) 7%, transparent);
+  --developmental-surface-tint-strong:
+    color-mix(in srgb, var(--developmental-accent) 12%, transparent);
+
+  --developmental-border:
+    color-mix(in srgb, var(--developmental-accent) 22%, var(--line, transparent));
+  --developmental-border-strong:
+    color-mix(in srgb, var(--developmental-accent) 34%, var(--line, transparent));
+
+  --developmental-badge-bg:
+    color-mix(in srgb, var(--developmental-accent) 10%, rgba(255, 255, 255, 0.88));
+  --developmental-badge-text:
+    color-mix(in srgb, var(--developmental-accent) 72%, var(--ink, currentColor));
+
+  --developmental-menu-bg:
+    color-mix(in srgb, var(--surface, #fff) 92%, var(--developmental-accent-soft));
+  --developmental-menu-line:
+    color-mix(in srgb, var(--developmental-accent) 24%, transparent);
+  --developmental-menu-shadow:
+    0 10px 28px color-mix(in srgb, var(--developmental-accent) 10%, transparent);
+
+  --developmental-seam-opacity: 0.72;
+  --developmental-guide-opacity: 0.76;
+  --developmental-indicator-opacity: 0.9;
+
+  /* Semantic operational axes */
+  --developmental-clarity: 0.64;
+  --developmental-pressure: 0.34;
+  --developmental-atmosphere: 0.18;
+  --developmental-memory: 0.18;
+  --developmental-resonance: 0.16;
+  --developmental-charge-bias: 0.24;
+  --developmental-selection-bias: 0.24;
+
+  /* Explicit handoff to the rest of the design system */
+  --active-op-color: var(--developmental-accent);
+  --card-border-emphasis: var(--developmental-border);
+  --badge-bg: var(--developmental-badge-bg);
+  --badge-text: var(--developmental-badge-text);
+}
+
+/* ==========================================================================
+   2. Climate mappings
+   --------------------------------------------------------------------------
+   Use new attrs first. Keep old phase names as compatibility aliases.
+   ========================================================================== */
+
+/* ORIENT / KINDLE --------------------------------------------------------- */
+html:is(
+  [data-spw-developmental-climate="orient"],
+  [data-spw-spirit-phase="orient"],
+  [data-spw-spirit-phase="initiation"]
+) {
+  --developmental-hue: 38;
+  --developmental-sat: 78%;
+  --developmental-light: 46%;
+
+  --developmental-clarity: 0.56;
+  --developmental-pressure: 0.24;
+  --developmental-atmosphere: 0.32;
+  --developmental-memory: 0.12;
+  --developmental-resonance: 0.18;
+  --developmental-charge-bias: 0.18;
+  --developmental-selection-bias: 0.18;
+}
+
+/* ANCHOR ------------------------------------------------------------------ */
+html:is(
+  [data-spw-developmental-climate="anchor"],
+  [data-spw-spirit-phase="anchor"],
+  [data-spw-spirit-phase="resistance"],
+  [data-spw-spirit-phase="attune"],
+  [data-spw-spirit-phase="settle"]
+) {
+  --developmental-hue: 214;
+  --developmental-sat: 48%;
+  --developmental-light: 40%;
+
+  --developmental-clarity: 0.74;
+  --developmental-pressure: 0.46;
+  --developmental-atmosphere: 0.12;
+  --developmental-memory: 0.32;
+  --developmental-resonance: 0.14;
+  --developmental-charge-bias: 0.22;
+  --developmental-selection-bias: 0.32;
+}
+
+/* WEAVE ------------------------------------------------------------------- */
+html:is(
+  [data-spw-developmental-climate="weave"],
+  [data-spw-spirit-phase="weave"],
+  [data-spw-spirit-phase="transformation"],
+  [data-spw-spirit-phase="compose"]
+) {
+  --developmental-hue: 160;
+  --developmental-sat: 48%;
+  --developmental-light: 34%;
+
+  --developmental-clarity: 0.68;
+  --developmental-pressure: 0.42;
+  --developmental-atmosphere: 0.2;
+  --developmental-memory: 0.2;
+  --developmental-resonance: 0.36;
+  --developmental-charge-bias: 0.26;
+  --developmental-selection-bias: 0.24;
+}
+
+/* REHEARSE ---------------------------------------------------------------- */
+html:is(
+  [data-spw-developmental-climate="rehearse"],
+  [data-spw-spirit-phase="rehearse"],
+  [data-spw-spirit-phase="return"],
+  [data-spw-spirit-phase="practice"]
+) {
+  --developmental-hue: 286;
+  --developmental-sat: 34%;
+  --developmental-light: 42%;
+
+  --developmental-clarity: 0.7;
+  --developmental-pressure: 0.38;
+  --developmental-atmosphere: 0.16;
+  --developmental-memory: 0.42;
+  --developmental-resonance: 0.22;
+  --developmental-charge-bias: 0.2;
+  --developmental-selection-bias: 0.28;
+}
+
+/* OFFER ------------------------------------------------------------------- */
+html:is(
+  [data-spw-developmental-climate="offer"],
+  [data-spw-spirit-phase="offer"],
+  [data-spw-spirit-phase="expression"],
+  [data-spw-spirit-phase="project"]
+) {
+  --developmental-hue: 180;
+  --developmental-sat: 100%;
+  --developmental-light: 28%;
+
+  --developmental-clarity: 0.84;
+  --developmental-pressure: 0.3;
+  --developmental-atmosphere: 0.1;
+  --developmental-memory: 0.22;
+  --developmental-resonance: 0.28;
+  --developmental-charge-bias: 0.3;
+  --developmental-selection-bias: 0.34;
+}
+
+/* ==========================================================================
+   3. Global climate application
+   ========================================================================== */
+
+html:is([data-spw-developmental-climate], [data-spw-spirit-phase]) {
+  color-scheme: light dark;
+}
+
+body {
+  transition:
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+/* Surface seams: subtle climate bias, not full recolor */
+.site-frame {
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--developmental-accent) calc((0.08 + var(--developmental-atmosphere) * 0.08) * 100%), transparent) 0 4rem,
+      transparent 4rem
+    );
+  transition:
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+}
+
+.site-frame::before {
+  opacity: calc(0.1 + var(--developmental-resonance) * 0.18);
+}
+
+.frame-card,
+.media-card,
+.media-focus-card,
+.operator-card,
+.frame-panel,
+.mode-panel,
+.pretext-surface,
+.settings-category,
+.settings-fieldset,
+.spw-console,
+.spw-nav-panel {
+  border-color: var(--developmental-border);
+  transition:
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+}
+
+/* Tokens / pills / badges */
+.spec-pill,
+.badge,
+.tag,
+.pill {
+  background: var(--developmental-badge-bg);
+  color: var(--developmental-badge-text);
+  border-color: var(--developmental-border);
+  transition:
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+/* Memos and guide seams */
+.spw-context-memo,
+.spw-experience-memo,
+.spw-guide-chip,
+.spw-surface-helper-chip {
+  border-color: var(--developmental-border);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--developmental-accent) 8%, transparent) 0,
+      transparent 48%
+    ),
+    color-mix(in srgb, var(--surface, #fff) 90%, transparent);
+  opacity: var(--developmental-seam-opacity);
+  transition:
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+.spw-component-meta {
+  opacity: var(--developmental-guide-opacity);
+  transition:
+    opacity var(--developmental-transition-duration) var(--developmental-transition-timing),
+    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+/* ==========================================================================
+   4. Interaction state
+   --------------------------------------------------------------------------
+   Climate should bias states, not replace them.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil,
+  .syntax-token,
+  .spw-delimiter
+)[data-spw-selection="focused"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--developmental-accent) calc((0.18 + var(--developmental-selection-bias) * 0.18) * 100%), transparent);
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil
+)[data-spw-selection="active"] {
+  border-color: var(--developmental-border-strong);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--developmental-accent) 22%, transparent),
+    0 8px 22px color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil
+)[data-spw-selection="selected"] {
+  border-color: var(--developmental-border-strong);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--developmental-accent) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+}
+
+/* Gesture phases */
+:where([data-spw-gesture="charging"]) {
+  --developmental-live-accent:
+    color-mix(in srgb, var(--developmental-accent) calc((0.14 + var(--developmental-charge-bias) * 0.12) * 100%), transparent);
+}
+
+:where([data-spw-gesture="active"]) {
+  --developmental-live-accent:
+    color-mix(in srgb, var(--developmental-accent) calc((0.22 + var(--developmental-charge-bias) * 0.18) * 100%), transparent);
+}
+
+:where([data-spw-gesture="armed"]) {
+  --developmental-live-accent:
+    color-mix(in srgb, var(--developmental-accent) calc((0.28 + var(--developmental-charge-bias) * 0.2) * 100%), transparent);
+}
+
+:where([data-spw-gesture="committed"]) {
+  --developmental-live-accent:
+    color-mix(in srgb, var(--developmental-accent) 34%, transparent);
+}
+
+:where(
+  .frame-sigil,
+  .operator-chip,
+  .spec-pill,
+  .syntax-token,
+  .spw-delimiter,
+  [data-spw-form]
+)[data-spw-gesture] {
+  border-color: var(--developmental-live-accent, var(--developmental-border));
+  box-shadow:
+    0 0 0 1px var(--developmental-live-accent, transparent);
+}
+
+/* Latched / pinned / grounded should feel stable, not merely loud */
+:where([data-spw-latched="true"], [data-spw-pinned="true"], [data-spw-grounded="true"]) {
+  border-color: var(--developmental-border-strong);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--developmental-accent) calc((0.08 + var(--developmental-memory) * 0.12) * 100%), transparent),
+      transparent 54%
+    ),
+    var(--developmental-badge-bg);
+}
+
+/* ==========================================================================
+   5. Wonder-field tuning
+   ========================================================================== */
+
+:where([data-spw-field-wonder="orientation"]) {
+  --developmental-seam-opacity: calc(0.68 + var(--developmental-atmosphere) * 0.12);
+}
+
+:where([data-spw-field-wonder="inquiry"]) {
+  --developmental-guide-opacity: calc(0.72 + var(--developmental-clarity) * 0.12);
+}
+
+:where([data-spw-field-wonder="comparison"]) {
+  --developmental-seam-opacity: calc(0.7 + var(--developmental-resonance) * 0.12);
+}
+
+:where([data-spw-field-wonder="memory"]) {
+  --developmental-guide-opacity: calc(0.74 + var(--developmental-memory) * 0.14);
+}
+
+:where([data-spw-field-wonder="projection"]) {
+  --developmental-indicator-opacity: calc(0.84 + var(--developmental-clarity) * 0.1);
+}
+
+:where([data-spw-field-wonder="constraint"]) {
+  --developmental-seam-opacity: calc(0.68 + var(--developmental-pressure) * 0.14);
+}
+
+:where([data-spw-field-wonder="resonance"]) {
+  --developmental-guide-opacity: calc(0.72 + var(--developmental-resonance) * 0.16);
+}
+
+/* ==========================================================================
+   6. Developmental climate controls
+   --------------------------------------------------------------------------
+   New JS creates .developmental-climate-controls and climate-menu-* classes.
+   Keep legacy .phase-controls aliases during migration.
+   ========================================================================== */
+
+:where(.developmental-climate-controls, .phase-controls) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  color: var(--developmental-badge-text);
+}
+
+:where(.developmental-climate-controls[open], .phase-controls[open]) {
+  z-index: 20;
+}
+
+:where(.climate-menu-trigger, .phase-menu-trigger) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--developmental-menu-line);
+  border-radius: 999px;
+  background: var(--developmental-menu-bg);
+  color: var(--developmental-badge-text);
+  cursor: pointer;
+  list-style: none;
+  font: inherit;
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: var(--developmental-menu-shadow);
+  transition:
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    box-shadow var(--developmental-transition-duration) var(--developmental-transition-timing),
+    transform var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+:where(.climate-menu-trigger, .phase-menu-trigger)::-webkit-details-marker {
+  display: none;
+}
+
+:where(.climate-menu-trigger, .phase-menu-trigger):hover,
+:where(.climate-menu-trigger, .phase-menu-trigger):focus-visible {
+  border-color: var(--developmental-border-strong);
+  transform: translateY(-1px);
+}
+
+:where(.climate-menu-options, .phase-menu-options) {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.45rem);
+  display: grid;
+  gap: 0.35rem;
+  min-width: 12rem;
+  padding: 0.55rem;
+  border: 1px solid var(--developmental-menu-line);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--surface, #fff) 94%, var(--developmental-accent-soft));
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--developmental-accent) 10%, transparent);
+}
+
+:where(.climate-menu-choice, .phase-menu-choice) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 2.2rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--ink, currentColor);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  transition:
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+:where(.climate-menu-choice, .phase-menu-choice):hover,
+:where(.climate-menu-choice, .phase-menu-choice):focus-visible {
+  border-color: var(--developmental-border);
+  background: color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+}
+
+:where(.climate-menu-choice[aria-pressed="true"], .phase-menu-choice[aria-pressed="true"]) {
+  border-color: var(--developmental-border-strong);
+  background: color-mix(in srgb, var(--developmental-accent) 12%, transparent);
+  color: var(--developmental-badge-text);
+}
+
+/* ==========================================================================
+   7. Indicator hooks
+   ========================================================================== */
+
+:where([data-developmental-indicator], [data-phase-indicator]) {
+  color: var(--developmental-accent);
+  opacity: var(--developmental-indicator-opacity);
+  transition:
+    color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+:where([data-op], [data-spw-operator]) {
+  transition:
+    color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+    background-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+}
+
+/* ==========================================================================
+   8. Indicator-off modes
+   ========================================================================== */
+
+html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"]) .site-frame {
+  background-image: none;
+}
+
+html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"])
+:is(.frame-card, .media-card, .media-focus-card, .operator-card, .frame-panel, .mode-panel, .spec-pill) {
+  border-color: var(--line);
+}
+
+html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"])
+:is(.spec-pill, .badge, .tag, .pill) {
+  background: rgba(255, 255, 255, 0.8);
+  color: inherit;
+}
+
+html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"])
+:is(.developmental-climate-controls, .phase-controls) {
+  color: var(--ink-soft);
+}
+
+html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"])
+:is([data-developmental-indicator], [data-phase-indicator]) {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   9. Dark mode refinements
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --developmental-badge-bg:
+      color-mix(in srgb, var(--developmental-accent) 20%, rgba(22, 24, 28, 0.92));
+    --developmental-badge-text:
+      color-mix(in srgb, var(--developmental-accent) 62%, white);
+    --developmental-menu-bg:
+      color-mix(in srgb, rgba(18, 20, 24, 0.94) 88%, var(--developmental-accent-soft));
+  }
+
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .spw-console,
+  .spw-nav-panel {
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 6%, transparent),
+      0 12px 28px color-mix(in srgb, black 24%, transparent);
+  }
+}
+
+/* ==========================================================================
+   10. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .spw-context-memo,
+  .spw-experience-memo,
+  .spw-guide-chip,
+  .spw-component-meta,
+  .developmental-climate-controls,
+  .phase-controls,
+  .climate-menu-trigger,
+  .phase-menu-trigger,
+  .climate-menu-choice,
+  .phase-menu-choice,
+  [data-developmental-indicator],
+  [data-phase-indicator],
+  [data-op],
+  [data-spw-operator] {
+    animation: none !important;
+    transition: none !important;
+  }
+}

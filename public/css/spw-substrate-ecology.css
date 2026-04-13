@@ -1,0 +1,385 @@
+ /* ==========================================================================
+   spw-substrate-ecology.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Shared ecological contract for Spw surfaces.
+   - Defines context, room, permeability, succession, and field-state tokens
+     that other surface files can consume.
+   - Keeps memo seams, helper seams, and environmental response generic enough
+     to work across cards, labs, settings, figures, navigator, and console.
+
+   Design rules
+   - Surface ecology should be composable and medium-agnostic.
+   - Local field state should feel environmental, not gimmicky.
+   - Room-aware seams should appear only when the substrate has enough space.
+   - This file sets contracts; feature shells consume them.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root ecology tokens
+   ========================================================================== */
+
+:root {
+  --spw-surface-clarity: 0.62;
+  --spw-surface-pressure: 0.34;
+  --spw-surface-atmosphere: 0.18;
+  --spw-surface-permeability: 0.3;
+  --spw-surface-memory: 0.16;
+  --spw-surface-resonance: 0.18;
+
+  --spw-surface-room-scale: 1;
+  --spw-surface-seam-opacity: 0.72;
+  --spw-surface-seam-gap: 0.5rem;
+  --spw-surface-seam-radius: var(--radius-sm, 10px);
+
+  --spw-field-charge: 0;
+  --spw-field-orientation: 0;
+  --spw-field-inquiry: 0;
+  --spw-field-comparison: 0;
+  --spw-field-memory: 0;
+  --spw-field-projection: 0;
+  --spw-field-constraint: 0;
+  --spw-field-resonance: 0;
+}
+
+/* ==========================================================================
+   2. Generic ecology hosts
+   ========================================================================== */
+
+:where(
+  [data-spw-surface-kind],
+  .site-frame,
+  .frame-card,
+  .frame-panel,
+  .mode-panel,
+  .operator-card,
+  .media-card,
+  .media-focus-card,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .spw-console,
+  .spw-nav-panel
+) {
+  --spw-surface-local-clarity: var(--spw-surface-clarity);
+  --spw-surface-local-pressure: var(--spw-surface-pressure);
+  --spw-surface-local-atmosphere: var(--spw-surface-atmosphere);
+  --spw-surface-local-permeability: var(--spw-surface-permeability);
+  --spw-surface-local-memory: var(--spw-surface-memory);
+  --spw-surface-local-resonance: var(--spw-surface-resonance);
+
+  position: relative;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   3. Context routing
+   --------------------------------------------------------------------------
+   reading | analysis | routing | ritual | play | settings | publishing
+   ========================================================================== */
+
+:where([data-spw-context='reading']) {
+  --spw-surface-local-clarity: 0.82;
+  --spw-surface-local-pressure: 0.22;
+  --spw-surface-local-atmosphere: 0.08;
+  --spw-surface-local-permeability: 0.24;
+}
+
+:where([data-spw-context='analysis']) {
+  --spw-surface-local-clarity: 0.76;
+  --spw-surface-local-pressure: 0.48;
+  --spw-surface-local-atmosphere: 0.14;
+  --spw-surface-local-permeability: 0.38;
+}
+
+:where([data-spw-context='routing']) {
+  --spw-surface-local-clarity: 0.68;
+  --spw-surface-local-pressure: 0.54;
+  --spw-surface-local-atmosphere: 0.12;
+  --spw-surface-local-permeability: 0.34;
+}
+
+:where([data-spw-context='ritual']) {
+  --spw-surface-local-clarity: 0.52;
+  --spw-surface-local-pressure: 0.56;
+  --spw-surface-local-atmosphere: 0.34;
+  --spw-surface-local-permeability: 0.42;
+}
+
+:where([data-spw-context='play']) {
+  --spw-surface-local-clarity: 0.58;
+  --spw-surface-local-pressure: 0.42;
+  --spw-surface-local-atmosphere: 0.28;
+  --spw-surface-local-permeability: 0.46;
+}
+
+:where([data-spw-context='settings']) {
+  --spw-surface-local-clarity: 0.84;
+  --spw-surface-local-pressure: 0.24;
+  --spw-surface-local-atmosphere: 0.06;
+  --spw-surface-local-permeability: 0.18;
+}
+
+:where([data-spw-context='publishing']) {
+  --spw-surface-local-clarity: 0.74;
+  --spw-surface-local-pressure: 0.32;
+  --spw-surface-local-atmosphere: 0.16;
+  --spw-surface-local-permeability: 0.28;
+}
+
+/* ==========================================================================
+   4. Room routing
+   --------------------------------------------------------------------------
+   compact | standard | roomy
+   ========================================================================== */
+
+:where([data-spw-room='compact']) {
+  --spw-surface-room-scale: 0.82;
+  --spw-surface-seam-opacity: 0.58;
+}
+
+:where([data-spw-room='standard']) {
+  --spw-surface-room-scale: 1;
+  --spw-surface-seam-opacity: 0.72;
+}
+
+:where([data-spw-room='roomy']) {
+  --spw-surface-room-scale: 1.14;
+  --spw-surface-seam-opacity: 0.86;
+}
+
+/* ==========================================================================
+   5. Permeability routing
+   --------------------------------------------------------------------------
+   sealed | porous | annotatable | mutable
+   ========================================================================== */
+
+:where([data-spw-permeability='sealed']) {
+  --spw-surface-local-permeability: 0.08;
+}
+
+:where([data-spw-permeability='porous']) {
+  --spw-surface-local-permeability: 0.34;
+}
+
+:where([data-spw-permeability='annotatable']) {
+  --spw-surface-local-permeability: 0.52;
+}
+
+:where([data-spw-permeability='mutable']) {
+  --spw-surface-local-permeability: 0.68;
+}
+
+/* ==========================================================================
+   6. Succession routing
+   --------------------------------------------------------------------------
+   raw | measured | resolved | visited | latched
+   ========================================================================== */
+
+:where([data-spw-succession='raw']) {
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 0.88);
+  --spw-surface-local-memory: 0.08;
+}
+
+:where([data-spw-succession='measured']) {
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 1.02);
+  --spw-surface-local-memory: 0.18;
+}
+
+:where([data-spw-succession='resolved']) {
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 1.08);
+  --spw-surface-local-memory: 0.24;
+}
+
+:where([data-spw-succession='visited']) {
+  --spw-surface-local-memory: 0.42;
+  --spw-surface-local-resonance: 0.32;
+}
+
+:where([data-spw-succession='latched']) {
+  --spw-surface-local-memory: 0.58;
+  --spw-surface-local-pressure: calc(var(--spw-surface-local-pressure) * 1.08);
+}
+
+/* ==========================================================================
+   7. Wonder-field routing
+   --------------------------------------------------------------------------
+   The gesture / experiential layers can set data-spw-field-wonder on local
+   roots. This file turns that into generic environmental tuning.
+   ========================================================================== */
+
+:where([data-spw-field-wonder='orientation']) {
+  --spw-field-orientation: max(var(--spw-field-orientation), 0.65);
+}
+
+:where([data-spw-field-wonder='inquiry']) {
+  --spw-field-inquiry: max(var(--spw-field-inquiry), 0.65);
+}
+
+:where([data-spw-field-wonder='comparison']) {
+  --spw-field-comparison: max(var(--spw-field-comparison), 0.65);
+}
+
+:where([data-spw-field-wonder='memory']) {
+  --spw-field-memory: max(var(--spw-field-memory), 0.65);
+}
+
+:where([data-spw-field-wonder='projection']) {
+  --spw-field-projection: max(var(--spw-field-projection), 0.65);
+}
+
+:where([data-spw-field-wonder='constraint']) {
+  --spw-field-constraint: max(var(--spw-field-constraint), 0.65);
+}
+
+:where([data-spw-field-wonder='resonance']) {
+  --spw-field-resonance: max(var(--spw-field-resonance), 0.65);
+}
+
+/* ==========================================================================
+   8. Generic seams
+   --------------------------------------------------------------------------
+   These are shared ecological seams, not feature-specific widgets.
+   ========================================================================== */
+
+:where(.spw-context-memo, .spw-experience-memo) {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-width: min(100%, 72ch);
+  margin-top: 0.4rem;
+  padding: 0.22rem 0.54rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent) 0,
+      transparent 48%
+    ),
+    color-mix(in srgb, var(--surface, white) 90%, transparent);
+  color: var(--ink-soft);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  opacity: var(--spw-surface-seam-opacity);
+}
+
+:where(.spw-context-memo[hidden], .spw-experience-memo[hidden]) {
+  display: none !important;
+}
+
+:where(.spw-surface-helper-strip) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-width: 100%;
+}
+
+:where(.spw-surface-helper-chip) {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface, white) 86%, transparent);
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   9. Memo-wonder tinting
+   ========================================================================== */
+
+:where([data-spw-memo-wonder='orientation']) .spw-context-memo,
+:where([data-spw-field-wonder='orientation']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-frame-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='inquiry']) .spw-context-memo,
+:where([data-spw-field-wonder='inquiry']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-probe-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='memory']) .spw-context-memo,
+:where([data-spw-field-wonder='memory']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-object-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='projection']) .spw-context-memo,
+:where([data-spw-field-wonder='projection']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-surface-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='constraint']) .spw-context-memo,
+:where([data-spw-field-wonder='constraint']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-pragma-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='comparison']) .spw-context-memo,
+:where([data-spw-field-wonder='comparison']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-merge-color, var(--teal)) 24%, transparent);
+}
+
+:where([data-spw-memo-wonder='resonance']) .spw-context-memo,
+:where([data-spw-field-wonder='resonance']) .spw-context-memo {
+  border-color: color-mix(in srgb, var(--op-ref-color, var(--teal)) 24%, transparent);
+}
+
+/* ==========================================================================
+   10. Room-aware visibility
+   ========================================================================== */
+
+:where([data-spw-room='compact']) :is(.spw-context-memo, .spw-surface-helper-strip) {
+  display: none;
+}
+
+:where([data-spw-room='standard']) .spw-context-memo {
+  max-width: min(100%, 52ch);
+}
+
+:where([data-spw-room='roomy']) .spw-context-memo {
+  max-width: min(100%, 72ch);
+}
+
+@container (max-width: 42rem) {
+  :where(.spw-context-memo, .spw-experience-memo) {
+    max-width: 100%;
+    font-size: 0.62rem;
+  }
+}
+
+/* ==========================================================================
+   11. Surface-field seam
+   ========================================================================== */
+
+:where([data-spw-field-wonder])::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  pointer-events: none;
+  opacity: calc(0.12 + (var(--spw-field-charge, 0) * 0.28));
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent) 0%,
+      transparent 62%
+    );
+}
+
+/* ==========================================================================
+   12. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-context-memo, .spw-experience-memo, .spw-surface-helper-chip) {
+    transition: none !important;
+    animation: none !important;
+  }
+}

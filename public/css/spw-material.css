@@ -1,177 +1,501 @@
-/* ═══════════════════════════════════════════════════════════════════════
-   SPW MATERIAL CHARACTER
-   ───────────────────────────────────────────────────────────────────────
-   Physics-informed material language for Spwashi.com.
+/* ==========================================================================
+   SPW MATERIAL
+   --------------------------------------------------------------------------
+   Purpose
+   - Physics-informed material language for Spwashi.com.
+   - Provide depth, context, and low-cost material tuning for cards, panels,
+     chips, scenes, and text hosts.
+   - Support present interaction systems and future pretext-aware JS without
+     forcing expensive visual effects by default.
 
-   Registers:
-     bioplastic   — dense, slightly flexible, matte where not lit
-     glass        — thin reflective surface with blur-through depth
-     matte        — warm paper: opaque, textured, grounding
-     connector    — relational field boundary: (a) <> (b)
+   Material registers
+   - bioplastic : dense, slightly flexible, matte where not lit
+   - glass      : reflective / transmissive cover surface
+   - matte      : grounded reading plane
+   - connector  : relational bridge / boundary condition
+   - field      : low-contrast atmospheric context
+   - shell      : lightly charged container membrane
 
-   Attentional dynamics frame:
-     charge (0→1)    drives surface luminosity and glass clarity
-     valence (-1→+1) biases warm/cool tint on hover
-     bias  (-1→+1)   objective ↔ subjective pole coloring
+   Runtime principles
+   - Structure first. Ornament second.
+   - Matte is the baseline; glass is opt-in and capability-gated.
+   - Depth should be inferable from border, gradient, and contrast before blur.
+   - Pretext-related measurement should be legible through stable hooks, not
+     width animation.
+   ========================================================================== */
 
-   Scientific register notes:
-     Surfaces obey a simplified Fresnel approximation — glass cards
-     are more transparent at low charge, more reflective at high charge.
-     Matte panels absorb: no specular highlight, subdued color contrast.
-     The inner highlight (box-shadow inset) is the top-face specular.
-   ═══════════════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   1. Root material tokens
+   ========================================================================== */
 
 :root {
-  --material-settle-ease:   cubic-bezier(0.22, 0, 0.15, 1);
-  --material-lift-ease:     cubic-bezier(0.32, 0, 0.0,  1);
-  --material-gravity:       var(--duration-deliberate, 360ms);
-  --operator-prime-color:   var(--active-op-color, hsl(180 100% 28%));
+  --material-settle-ease: cubic-bezier(0.22, 0, 0.15, 1);
+  --material-lift-ease: cubic-bezier(0.32, 0, 0, 1);
+  --material-glide-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --material-duration-fast: var(--duration-fast, 120ms);
+  --material-duration-base: var(--duration-base, 180ms);
+  --material-duration-deliberate: var(--duration-deliberate, 320ms);
+
+  --material-prime-color: var(--active-op-color, hsl(180 100% 28%));
+  --material-line: var(--line, rgba(0, 128, 128, 0.18));
+  --material-line-strong: var(--line-strong, rgba(0, 128, 128, 0.32));
+  --material-ink: var(--ink, inherit);
+  --material-ink-soft: var(--ink-soft, color-mix(in srgb, currentColor 72%, transparent));
+
+  --material-surface: var(--surface, rgba(255, 255, 255, 0.92));
+  --material-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  --material-surface-soft: color-mix(in srgb, var(--material-surface) 86%, transparent);
+
+  --material-shadow-rest: var(--shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
+  --material-shadow-lift: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
+  --material-highlight-inset: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+
+  --material-depth-opacity-1: 0.88;
+  --material-depth-opacity-2: 0.93;
+  --material-depth-opacity-3: 0.97;
+
+  --material-blur-frame: 14px;
+  --material-blur-card: 10px;
+  --material-blur-soft: 8px;
+
+  /* Pretext scaffolding hooks */
+  --spw-pretext-weight: 0.5; /* 0 sparse → 1 dense */
+  --spw-pretext-depth: 1;    /* 1 surface → 3 deep */
+  --spw-pretext-tempo: 1;    /* 0 slow → 2 fast */
+
+  --spw-pretext-cache-confidence: 0.5;
+  --spw-pretext-wrap-volatility: 0;
+  --spw-pretext-density-bias: 0.5;
+
+  /* Contextual route hooks */
+  --spw-context-pressure: 0.4;
+  --spw-context-clarity: 0.6;
+  --spw-context-atmosphere: 0.2;
 }
 
-/* ── Bioplastic lift — card weight on hover ─────────────────────────── */
-/* Cards feel like picking up a physical object: immediate lift,
-   deliberate settle. No bounce — this is not paper, it has mass.     */
+/* ==========================================================================
+   2. Baseline material behavior
+   --------------------------------------------------------------------------
+   Purpose
+   - Give components a low-cost depth language before any filters are applied.
+   ========================================================================== */
 
-.frame-card:hover,
-.frame-card:focus-visible {
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  [data-spw-component-kind]
+) {
+  --material-depth-opacity: var(--material-depth-opacity-2);
+  --material-local-surface:
+    color-mix(
+      in srgb,
+      var(--material-surface) calc(var(--material-depth-opacity) * 100%),
+      transparent
+    );
+
+  color: var(--material-ink);
+  background: var(--material-local-surface);
+  border-color: var(--material-line);
+  box-shadow: var(--material-shadow-rest);
   transition:
-    transform    var(--duration-fast) var(--material-lift-ease),
-    box-shadow   var(--duration-base) var(--ease-paper),
-    border-color var(--duration-base) var(--ease-mechanical),
-    background   var(--duration-fast) var(--ease-mechanical);
+    transform    var(--material-duration-fast) var(--material-lift-ease),
+    box-shadow   var(--material-duration-base) var(--material-settle-ease),
+    border-color var(--material-duration-base) var(--material-glide-ease),
+    background   var(--material-duration-base) var(--material-glide-ease),
+    color        var(--material-duration-fast) var(--material-glide-ease);
 }
 
-/* ── Operator swap priming — swipe-down activates prime mode ────────── */
-/* When an operator is primed (gesture: swipe-down or sustained hold),
-   a pulsing outline signals readiness to swap.                         */
+/* ==========================================================================
+   3. Material kinds
+   --------------------------------------------------------------------------
+   Purpose
+   - Explicit material routing via data-spw-metamaterial.
+   - Matte is default reading material.
+   ========================================================================== */
 
-[data-spw-primed="true"],
-[data-spw-form-options][data-spw-charged="true"] {
-  outline: 2px solid transparent;
+:where([data-spw-metamaterial]) {
+  --material-local-border: 1px solid var(--material-line);
+  --material-local-shadow: var(--material-shadow-rest);
+  --material-local-background: var(--material-local-surface);
+
+  background: var(--material-local-background);
+  border: var(--material-local-border);
+  box-shadow: var(--material-local-shadow);
+}
+
+:where([data-spw-metamaterial="matte"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface) 96%, var(--material-prime-color) 3%) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-line) 88%, transparent);
+}
+
+:where([data-spw-metamaterial="paper"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface) 96%, rgba(215, 193, 160, 0.14)) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-line) 82%, rgba(120, 92, 64, 0.08));
+}
+
+:where([data-spw-metamaterial="bioplastic"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-prime-color) 8%, var(--material-surface)) 0%,
+      color-mix(in srgb, var(--material-prime-color) 3%, var(--material-surface)) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-prime-color) 22%, var(--material-line));
+}
+
+:where([data-spw-metamaterial="field"]) {
+  --material-local-background:
+    radial-gradient(
+      circle at 14% 18%,
+      color-mix(in srgb, var(--material-prime-color) 10%, transparent) 0%,
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface) 94%, transparent) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-prime-color) 16%, var(--material-line));
+}
+
+:where([data-spw-metamaterial="signal"]) {
+  --material-local-background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--material-prime-color) 12%, transparent) 0%,
+      transparent 32%
+    ),
+    var(--material-surface);
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-prime-color) 28%, var(--material-line));
+}
+
+:where([data-spw-metamaterial="shell"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-prime-color) 6%, transparent) 0%,
+      transparent 52%
+    ),
+    var(--material-surface);
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-prime-color) 18%, var(--material-line));
+}
+
+:where([data-spw-metamaterial="glass"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #fff 12%, transparent) 0%,
+      color-mix(in srgb, var(--material-surface) 92%, transparent) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, #fff 14%, var(--material-line));
+  --material-local-shadow:
+    var(--material-shadow-rest),
+    var(--material-highlight-inset);
+}
+
+/* ==========================================================================
+   4. Context routing
+   --------------------------------------------------------------------------
+   Purpose
+   - Allow surfaces to respond to content field without redefining materials.
+   ========================================================================== */
+
+:where([data-spw-context="reading"]) {
+  --spw-context-pressure: 0.22;
+  --spw-context-clarity: 0.82;
+  --spw-context-atmosphere: 0.08;
+}
+
+:where([data-spw-context="analysis"]) {
+  --spw-context-pressure: 0.46;
+  --spw-context-clarity: 0.74;
+  --spw-context-atmosphere: 0.16;
+}
+
+:where([data-spw-context="ritual"]) {
+  --spw-context-pressure: 0.58;
+  --spw-context-clarity: 0.52;
+  --spw-context-atmosphere: 0.34;
+}
+
+:where([data-spw-context="signal"]) {
+  --spw-context-pressure: 0.7;
+  --spw-context-clarity: 0.68;
+  --spw-context-atmosphere: 0.22;
+}
+
+:where([data-spw-context="ambient"]) {
+  --spw-context-pressure: 0.18;
+  --spw-context-clarity: 0.58;
+  --spw-context-atmosphere: 0.4;
+}
+
+/* ==========================================================================
+   5. Depth routing
+   --------------------------------------------------------------------------
+   Purpose
+   - Contextual depth before filters: border, opacity, shadow, and highlight.
+   ========================================================================== */
+
+:where([data-spw-depth="1"]) {
+  --material-depth-opacity: var(--material-depth-opacity-1);
+  --material-local-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+:where([data-spw-depth="2"]) {
+  --material-depth-opacity: var(--material-depth-opacity-2);
+  --material-local-shadow: var(--material-shadow-rest);
+}
+
+:where([data-spw-depth="3"]) {
+  --material-depth-opacity: var(--material-depth-opacity-3);
+  --material-local-shadow: var(--material-shadow-lift);
+}
+
+:where([data-spw-depth="3"][data-spw-metamaterial="matte"]),
+:where([data-spw-depth="3"][data-spw-metamaterial="paper"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface-strong) 98%, var(--material-prime-color) 2%) 0%,
+      var(--material-surface-strong) 100%
+    );
+}
+
+/* ==========================================================================
+   6. Pretext-informed material tuning
+   --------------------------------------------------------------------------
+   Purpose
+   - Give future JS a stable surface for text-density / cache / volatility clues.
+   - No width animation here; use spacing, opacity, and border emphasis instead.
+   ========================================================================== */
+
+:where([data-spw-pretext-weight]) {
+  --_w: var(--spw-pretext-weight, 0.5);
+
+  --surface-padding: clamp(
+    calc(0.68rem + (1 - var(--_w)) * 0.34rem),
+    calc(0.92rem + (1 - var(--_w)) * 0.22rem),
+    calc(1.34rem + (1 - var(--_w)) * 0.32rem)
+  );
+}
+
+:where([data-spw-pretext-depth="1"]) {
+  --material-depth-opacity: var(--material-depth-opacity-1);
+}
+
+:where([data-spw-pretext-depth="2"]) {
+  --material-depth-opacity: var(--material-depth-opacity-2);
+}
+
+:where([data-spw-pretext-depth="3"]) {
+  --material-depth-opacity: var(--material-depth-opacity-3);
+}
+
+:where([data-text-wrap="stable"]) {
+  --spw-pretext-wrap-volatility: 0;
+}
+
+:where([data-text-wrap="responsive"]) {
+  --spw-pretext-wrap-volatility: 0.5;
+}
+
+:where([data-text-wrap="volatile"]) {
+  --spw-pretext-wrap-volatility: 1;
+}
+
+:where([data-text-wrap="volatile"]) {
+  border-left-color: color-mix(in srgb, var(--material-prime-color) 28%, var(--material-line));
+}
+
+:where([data-spw-pretext-cache="warm"]),
+:where([data-spw-precipitation="measured"]),
+:where([data-spw-precipitation="resolved"]) {
+  --spw-pretext-cache-confidence: 0.85;
+}
+
+:where([data-spw-pretext-cache="cold"]),
+:where([data-spw-precipitation="raw"]) {
+  --spw-pretext-cache-confidence: 0.25;
+}
+
+/* Intermediate confidence hint: subtle top seam, not a loud badge */
+:where([data-spw-pretext-cache])::before,
+:where([data-spw-precipitation])::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  pointer-events: none;
+  opacity: calc(0.12 + var(--spw-pretext-cache-confidence, 0.5) * 0.26);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--material-prime-color) 22%, transparent) 0%,
+      transparent 65%
+    );
+}
+
+/* ==========================================================================
+   7. Card lift and contact
+   --------------------------------------------------------------------------
+   Purpose
+   - Lift should feel massful, not bouncy.
+   - Use transform + shadow only; no filter churn.
+   ========================================================================== */
+
+:where(.frame-card, .media-card, .operator-card):is(:hover, :focus-visible) {
+  transform: translate3d(0, -1px, 0);
+  box-shadow: var(--material-shadow-lift);
+  border-color: color-mix(in srgb, var(--material-prime-color) 24%, var(--material-line));
+}
+
+:where(.frame-card[data-spw-charge="sustained"],
+       .media-card[data-spw-charge="sustained"],
+       .operator-card[data-spw-charge="sustained"]) {
+  box-shadow:
+    var(--material-shadow-lift),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--material-prime-color)) 16%, transparent);
+}
+
+/* ==========================================================================
+   8. Priming and operator engagement
+   --------------------------------------------------------------------------
+   Purpose
+   - Primed state should be visible without requiring constant high-cost pulse.
+   ========================================================================== */
+
+:where([data-spw-primed="true"],
+       [data-spw-form-options][data-spw-charged="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--material-prime-color) 46%, transparent);
   outline-offset: 2px;
-  animation: spw-prime-pulse 1.1s var(--ease-settle) infinite;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--material-prime-color) 14%, transparent);
+}
+
+:where(html:not([data-spw-enhance="off"])) :where(
+  [data-spw-primed="true"],
+  [data-spw-form-options][data-spw-charged="true"]
+) {
+  animation: spw-prime-pulse var(--material-duration-deliberate) var(--material-settle-ease) infinite;
 }
 
 @keyframes spw-prime-pulse {
   0%, 100% {
-    outline-color: color-mix(in srgb, var(--operator-prime-color) 48%, transparent);
+    outline-color: color-mix(in srgb, var(--material-prime-color) 44%, transparent);
     outline-offset: 2px;
   }
   50% {
-    outline-color: color-mix(in srgb, var(--operator-prime-color) 72%, transparent);
-    outline-offset: 3.5px;
+    outline-color: color-mix(in srgb, var(--material-prime-color) 66%, transparent);
+    outline-offset: 3px;
   }
 }
 
-/* ── Operator chip: tap-hold reveals intent label ───────────────────── */
-
-.frame-sigil,
-.operator-chip {
+:where(.frame-sigil, .operator-chip) {
   position: relative;
   transform-origin: center bottom;
+  transition:
+    transform var(--material-duration-fast) var(--material-lift-ease),
+    text-shadow var(--material-duration-fast) var(--material-glide-ease),
+    color var(--material-duration-fast) var(--material-glide-ease);
 }
 
-/* When sustained (420ms+ hold), chip settles down — signals engagement */
-.frame-sigil[data-spw-charge="sustained"],
-.operator-chip[data-spw-charge="sustained"] {
-  transform: scale(0.96) translateY(1px);
+:where(.frame-sigil[data-spw-charge="sustained"],
+       .operator-chip[data-spw-charge="sustained"]) {
+  transform: scale(0.97) translateY(1px);
 }
 
-/* ── Inline literacy effects ────────────────────────────────────────── */
-/* Text selection highlights in operator-tinted hue — praising literacy */
+/* ==========================================================================
+   9. Inline literacy and selection
+   ========================================================================== */
 
 ::selection {
   background: color-mix(in srgb, var(--teal, hsl(180 100% 28%)) 16%, transparent);
   color: inherit;
 }
 
-code::selection,
-.frame-sigil::selection,
-.operator-chip::selection,
-.syntax-token::selection,
-[data-spw-operator]::selection {
+:where(code, .frame-sigil, .operator-chip, .syntax-token, [data-spw-operator])::selection {
   background: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
 }
 
-/* Monospace operators glow faintly when cursor rests on them */
-.operator-chip:hover,
-.frame-sigil:hover,
-.syntax-token:hover {
-  text-shadow: 0 0 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+@media (hover: hover) and (pointer: fine) {
+  :where(.operator-chip:hover, .frame-sigil:hover, .syntax-token:hover) {
+    text-shadow:
+      0 0 10px color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  }
 }
 
-/* ── Pretext calculation hooks — CSS variables for layout bias ──────── */
-/* These allow per-frame layout adjustments keyed to content density.
-   JS can compute and set these from pretext metrics.                   */
+/* ==========================================================================
+   10. Component kind differentiation
+   --------------------------------------------------------------------------
+   Purpose
+   - Reading surfaces should default matte.
+   - Glass should be capability gated and opt-in, not the baseline.
+   ========================================================================== */
 
-:root {
-  --spw-pretext-weight: 0.5;   /* 0=sparse  1=dense  — biases padding */
-  --spw-pretext-depth:  1;     /* 1=surface 3=deep   — biases opacity */
-  --spw-pretext-tempo:  1;     /* 0=slow    2=fast   — biases duration */
+:where([data-spw-component-kind="frame"]) {
+  --material-blur-local: var(--material-blur-frame);
 }
 
-/* Pretext-weight biases inner padding: dense content compresses */
-[data-spw-pretext-weight] {
-  --_w: var(--spw-pretext-weight, 0.5);
-  --surface-padding: clamp(
-    calc(0.65rem + (1 - var(--_w)) * 0.4rem),
-    calc(1rem    * (1 + (1 - var(--_w)) * 0.3)),
-    calc(1.5rem  + (1 - var(--_w)) * 0.4rem)
-  );
+:where([data-spw-component-kind="card"]) {
+  --material-blur-local: var(--material-blur-card);
 }
 
-/* Pretext-depth biases surface opacity: deep content uses more opacity */
-[data-spw-pretext-depth="2"] { --card-bg: rgba(255, 255, 255, 0.72); }
-[data-spw-pretext-depth="3"] { --card-bg: rgba(255, 255, 255, 0.82); }
-
-/* ── Component kind surface differentiation ─────────────────────────── */
-/* Each kind has a distinct material register.                            */
-
-[data-spw-component-kind="frame"] {
-  --material-blur: 14px;
-  --material-saturation: 1.08;
+:where([data-spw-component-kind="panel"],
+       .mode-panel) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface) 96%, transparent) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border: 1px solid color-mix(in srgb, var(--material-line) 88%, transparent);
 }
 
-[data-spw-component-kind="panel"] {
-  background: var(--matte-surface) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-[data-spw-component-kind="card"] {
-  --material-blur: 10px;
-  --material-saturation: 1.05;
-}
-
-[data-spw-component-kind="metric"] {
-  --material-blur: 0px;
+:where([data-spw-component-kind="metric"]) {
+  --material-local-shadow: none;
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Mode panel matte override ──────────────────────────────────────── */
-/* Panels are always matte — they're the reading surface, not the cover  */
+/* ==========================================================================
+   11. Scene / connector surfaces
+   ========================================================================== */
 
-.mode-panel {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-/* ── Scene connector typography ─────────────────────────────────────── */
-/* (scene-a) <> (scene-b) renders as a relational bridge               */
-
-.spw-scene {
+:where(.spw-scene) {
   display: inline-flex;
   align-items: center;
   padding: 0.12em 0.48em;
-  border: 1.5px solid var(--circle-open-color, rgba(60, 40, 120, 0.2));
+  border: 1.5px solid color-mix(in srgb, var(--circle-open-color, rgba(60, 40, 120, 0.2)) 86%, transparent);
   border-radius: 999px;
   font-family: var(--site-mono-font);
   font-size: 0.88em;
-  background: rgba(255, 255, 255, 0.72);
-  transition: border-color var(--duration-base) var(--ease-mechanical);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.76) 0%,
+      rgba(255, 255, 255, 0.66) 100%
+    );
+  transition:
+    border-color var(--material-duration-base) var(--material-glide-ease),
+    background   var(--material-duration-base) var(--material-glide-ease);
 }
 
-.spw-scene-pair {
+:where(.spw-scene-pair) {
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
@@ -179,68 +503,152 @@ code::selection,
   font-size: 0.9em;
 }
 
-.spw-scene-pair > .spw-connector {
-  color: var(--connector-color, rgba(0,128,128,0.32));
+:where(.spw-scene-pair > .spw-connector) {
+  color: var(--connector-color, rgba(0, 128, 128, 0.32));
   font-weight: 500;
   letter-spacing: -0.06em;
   user-select: none;
 }
 
-/* ── SVG glyph operator marks — physics/topology hooks ─────────────── */
-/* Small SVG glyphs that annotate operators with physics register hints */
+/* ==========================================================================
+   12. SVG glyph hooks
+   ========================================================================== */
 
-.spw-glyph {
+:where(.spw-glyph) {
   display: inline-block;
   width: 1em;
   height: 1em;
   vertical-align: middle;
   opacity: 0.55;
-  transition: opacity var(--duration-fast) var(--ease-mechanical);
   fill: currentColor;
+  transition:
+    opacity var(--material-duration-fast) var(--material-glide-ease),
+    color   var(--material-duration-fast) var(--material-glide-ease);
 }
 
-.spw-glyph:hover { opacity: 0.9; }
+:where(.spw-glyph:hover) {
+  opacity: 0.9;
+}
 
-/* Topology glyphs for operator types */
-[data-spw-operator="frame"]     .spw-glyph { color: var(--op-frame-color); }
-[data-spw-operator="probe"]     .spw-glyph { color: var(--op-probe-color); }
-[data-spw-operator="ref"]       .spw-glyph { color: var(--op-ref-color); }
-[data-spw-operator="action"]    .spw-glyph { color: var(--op-action-color); }
-[data-spw-operator="merge"]     .spw-glyph { color: var(--op-merge-color); }
-[data-spw-operator="topic"]     .spw-glyph { color: var(--op-topic-color, hsl(192 62% 32%)); }
+:where([data-spw-operator="frame"] .spw-glyph)    { color: var(--op-frame-color); }
+:where([data-spw-operator="probe"] .spw-glyph)    { color: var(--op-probe-color); }
+:where([data-spw-operator="ref"] .spw-glyph)      { color: var(--op-ref-color); }
+:where([data-spw-operator="action"] .spw-glyph)   { color: var(--op-action-color); }
+:where([data-spw-operator="merge"] .spw-glyph)    { color: var(--op-merge-color); }
+:where([data-spw-operator="topic"] .spw-glyph)    { color: var(--op-topic-color, hsl(192 62% 32%)); }
 
-/* ── Charge-responsive glass depth ─────────────────────────────────── */
-/* As charge rises, glass becomes more transparent (Fresnel-like).
-   This is a simplified attentional-dynamics effect.                   */
+/* ==========================================================================
+   13. Capability-gated glass depth
+   --------------------------------------------------------------------------
+   Purpose
+   - Blur and saturation are only for explicit glass contexts and only when
+     filters are allowed.
+   ========================================================================== */
 
 @supports (backdrop-filter: blur(1px)) {
-  .frame-card[data-spw-charge="charging"] {
-    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.1)) saturate(1.10);
+  :where(html:not([data-spw-filters="off"])) :where(
+    [data-spw-metamaterial="glass"],
+    .frame-card[data-spw-metamaterial="glass"],
+    [data-spw-component-kind="frame"][data-spw-metamaterial="glass"]
+  ) {
+    backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
+    -webkit-backdrop-filter: blur(var(--material-blur-soft)) saturate(1.04);
   }
 
-  .frame-card[data-spw-charge="active"] {
-    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.2)) saturate(1.14);
+  :where(html:not([data-spw-filters="off"])) :where(
+    .frame-card[data-spw-metamaterial="glass"][data-spw-charge="charging"],
+    .frame-card[data-spw-charge="charging"][data-spw-component-kind="frame"][data-spw-metamaterial="glass"]
+  ) {
+    backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.05)) saturate(1.08);
+    -webkit-backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.05)) saturate(1.08);
   }
 
-  .frame-card[data-spw-charge="sustained"] {
-    backdrop-filter: blur(calc(var(--material-blur, 12px) * 1.3)) saturate(1.18);
+  :where(html:not([data-spw-filters="off"])) :where(
+    .frame-card[data-spw-metamaterial="glass"][data-spw-charge="active"],
+    .frame-card[data-spw-charge="active"][data-spw-component-kind="frame"][data-spw-metamaterial="glass"]
+  ) {
+    backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.12)) saturate(1.12);
+    -webkit-backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.12)) saturate(1.12);
+  }
+
+  :where(html:not([data-spw-filters="off"])) :where(
+    .frame-card[data-spw-metamaterial="glass"][data-spw-charge="sustained"],
+    .frame-card[data-spw-charge="sustained"][data-spw-component-kind="frame"][data-spw-metamaterial="glass"]
+  ) {
+    backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.18)) saturate(1.16);
+    -webkit-backdrop-filter: blur(calc(var(--material-blur-local, var(--material-blur-card)) * 1.18)) saturate(1.16);
     box-shadow:
-      var(--card-shadow-hover),
-      var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.52)),
-      0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+      var(--material-shadow-lift),
+      var(--material-highlight-inset),
+      0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--material-prime-color)) 22%, transparent);
   }
 }
 
-/* ── Reduced motion: preserve structure, strip animation ────────────── */
+/* ==========================================================================
+   14. Reduced motion and enhancement fallback
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .frame-card:hover {
+  :where(.frame-card:hover, .media-card:hover, .operator-card:hover) {
     transform: none;
   }
 
-  [data-spw-primed="true"] {
+  :where([data-spw-primed="true"],
+         [data-spw-form-options][data-spw-charged="true"]) {
     animation: none;
-    outline: 2px solid color-mix(in srgb, var(--operator-prime-color) 52%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--material-prime-color) 52%, transparent);
     outline-offset: 2px;
   }
+}
+
+:where(html[data-spw-enhance="off"]) :where(
+  .operator-chip:hover,
+  .frame-sigil:hover,
+  .syntax-token:hover
+) {
+  text-shadow: none;
+}
+
+:where(html[data-spw-enhance="off"]) :where(
+  [data-spw-primed="true"],
+  [data-spw-form-options][data-spw-charged="true"]
+) {
+  animation: none;
+}
+
+:where(html[data-spw-filters="off"]) :where(
+  [data-spw-metamaterial="glass"],
+  .frame-card[data-spw-metamaterial="glass"]
+) {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ==========================================================================
+   15. Optional debug / scaffolding seams
+   --------------------------------------------------------------------------
+   Purpose
+   - Let future pretext and state systems expose intermediate confidence and
+     chemistry without redesigning core materials.
+   ========================================================================== */
+
+:where([data-spw-debug~="material"])::after,
+:where([data-spw-material-scaffold])::after {
+  content:
+    "depth:" attr(data-spw-depth)
+    " · context:" attr(data-spw-context)
+    " · wrap:" attr(data-text-wrap);
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.55rem;
+  max-width: calc(100% - 1.3rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--material-ink-soft) 88%, transparent);
+  opacity: 0.78;
 }

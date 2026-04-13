@@ -1,0 +1,33 @@
+/* Text context routing */
+[data-text-kind='operator-dense'] {
+  --type-field-sigil-salience: 0.85;
+  --type-field-pressure: 0.72;
+}
+
+[data-text-kind='prose'] {
+  --type-field-sigil-salience: 0.32;
+  --type-field-pressure: 0.28;
+}
+
+[data-text-kind='question'] {
+  --type-field-rhythm-bias: 0.6;
+}
+
+/* Rhythm ensembles */
+[data-spw-rhythm='chorus'] [data-spw-operator] {
+  transition-delay: calc(var(--rhythm-index, 0) * 18ms);
+}
+
+[data-spw-rhythm='anchor'] [data-spw-operator='frame'],
+[data-spw-rhythm='anchor'] [data-spw-operator='binding'] {
+  --type-weight-range: calc(var(--type-weight-range) + 60);
+}
+
+/* Measurement-aware adaptation */
+[data-text-wrap='volatile'] [data-spw-operator='surface'] {
+  --type-size-surge: calc(var(--type-size-surge) * 0.7);
+}
+
+[data-text-wrap='stable'] [data-spw-operator='probe'] {
+  --type-tracking-range: calc(var(--type-tracking-range) + 0.03em);
+}

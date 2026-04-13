@@ -1,1381 +1,721 @@
-.frame-sigil,
-.operator-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    width: fit-content;
-    padding: 0.32rem 0.62rem;
-    border: 1px solid var(--token-border);
-    border-radius: 999px;
-    background: var(--token-bg);
-    color: var(--teal);
-    text-decoration: none;
-    font-size: 0.82rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease), box-shadow var(--charge-release-duration) var(--charge-release-ease);
+/* ==========================================================================
+   spw-components.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Structural component layer for reusable Spw frames, cards, panels, chips,
+     and pretext-aware text hosts.
+   - Provide low-cost, tunable “metamaterial” surfaces that support semantic
+     instrumentation without requiring expensive filters or layout-heavy effects.
+   - Expose component contracts that future JS runtimes (especially
+     spw-pretext-physics.js) can target through documented custom properties
+     and data attributes.
+
+   Design rules
+   - Reading and text flow take priority over ornament.
+   - Components should remain legible when enhancement is off.
+   - Width / lineation changes are driven by JS measurement; CSS should not
+     animate width or force expensive reflow loops.
+   - Use data attributes for semantics and runtime state.
+   - Keep specificity low and prefer generic, composable utilities.
+
+   Expected collaborators
+   - /public/css/spw-typography.css
+   - /public/css/spw-typography-context.css
+   - /public/js/spw-pretext-physics.js
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Component tokens
+   ========================================================================== */
+
+:root {
+  --component-gap: 0.9rem;
+  --component-gap-tight: 0.55rem;
+  --component-gap-loose: 1.2rem;
+
+  --component-pad: 0.9rem;
+  --component-pad-tight: 0.65rem;
+  --component-pad-loose: 1.15rem;
+
+  --component-radius: var(--radius, 12px);
+  --component-radius-tight: var(--radius-sm, 8px);
+
+  --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
+  --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
+
+  --component-surface: var(--surface, rgba(255, 255, 255, 0.92));
+  --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
+
+  --component-shadow: var(--shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
+  --component-shadow-active: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
+
+  --component-accent: var(--active-op-color, var(--teal, #008080));
+  --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
+  --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
+
+  --component-measure: 68ch;
+  --component-code-measure: 84ch;
+
+  --component-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+  --component-transition-base: var(--duration-base, 180ms) var(--ease-mechanical, ease);
+  --component-transition-deliberate: var(--duration-deliberate, 260ms) var(--ease-mechanical, ease);
+
+  --pretext-line-gap: 0.18rem;
+  --pretext-line-height: 1.55;
+  --pretext-width: auto;
+  --pretext-canonical-width: auto;
+  --pretext-projected-width: auto;
+  --pretext-influence: 0;
+  --pretext-direction: 0;
+  --pretext-scaffold-opacity: 0.74;
 }
 
-.frame-sigil:hover,
-.frame-sigil:focus-visible,
-.operator-chip:hover,
-.operator-chip:focus-visible {
-    background: var(--token-bg-hover);
-    border-color: var(--token-border-strong);
-    transform: translateY(-1.5px);
-    box-shadow: var(--shadow);
+/* ==========================================================================
+   2. Base component ownership
+   ========================================================================== */
+
+:where(
+  [data-spw-component-kind="frame"],
+  [data-spw-component-kind="panel"],
+  [data-spw-component-kind="card"],
+  [data-spw-component-kind="surface"],
+  [data-spw-component-kind="lens"],
+  [data-spw-component-kind="metric"],
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel
+) {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
 }
 
-.frame-sigil.is-selected,
-.frame-sigil[aria-pressed="true"],
-.operator-chip[aria-current="page"] {
-    background-color: var(--teal);
-    border-color: var(--teal);
-    color: white;
+:where(
+  [data-spw-component-kind="frame"] > *,
+  [data-spw-component-kind="panel"] > *,
+  [data-spw-component-kind="card"] > *,
+  [data-spw-component-kind="surface"] > *,
+  [data-spw-component-kind="lens"] > *,
+  [data-spw-component-kind="metric"] > *
+) {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
 }
 
-.frame-note,
-.inline-note {
-    color: var(--ink-soft);
-    max-width: var(--reading-width);
+/* ==========================================================================
+   3. Concept / inline container utility
+   ========================================================================== */
+
+:where([data-spw-container="concept"]) {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1.5px solid var(--component-accent);
+  border-radius: var(--component-radius-tight);
+  background: var(--token-bg, color-mix(in srgb, var(--component-accent) 8%, transparent));
+  transition:
+    border-color var(--component-transition-base),
+    background   var(--component-transition-fast),
+    color        var(--component-transition-fast);
 }
 
-html[data-spw-show-spec-pills="off"] .spec-strip,
-html[data-spw-show-spec-pills="off"] .spec-pill {
-    display: none !important;
+/* ==========================================================================
+   4. Spatial stance utilities
+   --------------------------------------------------------------------------
+   Purpose
+   - Felt reading rhythm for copy entering, grounding, or receding inside a
+     container. Useful for frame copy, small meta rows, and pretext scaffolds.
+   ========================================================================== */
+
+:where([data-spw-stance="entry"]) {
+  letter-spacing: 0.04em;
+  color: color-mix(in oklab, var(--ink, currentColor) 78%, transparent);
+  transition: color var(--component-transition-deliberate);
 }
 
-html[data-spw-operator-saturation="muted"] .frame-sigil,
-html[data-spw-operator-saturation="muted"] .operator-chip,
-html[data-spw-operator-saturation="muted"] .frame-card-sigil,
-html[data-spw-operator-saturation="muted"] .syntax-token,
-html[data-spw-operator-saturation="muted"] [data-op],
-html[data-spw-operator-saturation="muted"] [data-spw-operator] {
-    filter: saturate(0.72);
+:where([data-spw-stance="ground"]) {
+  letter-spacing: 0.01em;
+  transition: color var(--component-transition-deliberate);
 }
 
-html[data-spw-operator-saturation="vibrant"] .frame-sigil,
-html[data-spw-operator-saturation="vibrant"] .operator-chip,
-html[data-spw-operator-saturation="vibrant"] .frame-card-sigil,
-html[data-spw-operator-saturation="vibrant"] .syntax-token,
-html[data-spw-operator-saturation="vibrant"] [data-op],
-html[data-spw-operator-saturation="vibrant"] [data-spw-operator] {
-    filter: saturate(1.18);
+:where([data-spw-stance="exit"]) {
+  opacity: 0.76;
+  letter-spacing: 0.01em;
+  transition:
+    opacity var(--component-transition-deliberate),
+    color   var(--component-transition-deliberate);
 }
 
-.frame-operators,
-.mode-switch {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    max-width: 100%;
-    min-width: 0;
+/* ==========================================================================
+   5. Shared card / panel shell
+   --------------------------------------------------------------------------
+   Purpose
+   - Base shell for cards, panels, media blocks, and operator reference units.
+   - Tuned to be pretext-friendly: min-width:0, stable padding, readable surface,
+     no blur requirement, and low-cost transitions.
+   ========================================================================== */
+
+:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) {
+  display: grid;
+  gap: var(--component-gap-tight);
+  min-width: 0;
+  padding: var(--component-pad);
+  color: var(--ink, inherit);
+  background: var(--component-surface);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  box-shadow: var(--component-shadow);
+  transition:
+    background   var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    box-shadow   var(--component-transition-deliberate),
+    color        var(--component-transition-fast);
 }
 
-.spec-strip {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.55rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 0.25rem; /* give space for scrollbar if forced */
-    /* Hide scrollbar for clean UI while keeping swipe */
-    scrollbar-width: none;
-    max-width: 100%;
-    min-width: 0;
-}
-.spec-strip::-webkit-scrollbar {
-    display: none;
-}
-.spec-strip > * {
-    scroll-snap-align: start;
-    flex-shrink: 0;
+:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
 }
 
-.mode-panels {
-    display: grid;
-    gap: 1rem;
+/* ==========================================================================
+   6. Site frame
+   --------------------------------------------------------------------------
+   Purpose
+   - Primary structural room container.
+   - Should feel stable even when text inside is live and re-typeset.
+   ========================================================================== */
+
+:where(.site-frame) {
+  --surface-gap: var(--surface-gap, var(--component-gap));
+  --surface-padding: var(--surface-padding, var(--component-pad-loose));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+  min-width: 0;
+  overflow: clip;
+  padding: var(--surface-padding);
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  background: var(--component-surface);
+  box-shadow: var(--component-shadow);
+  container-type: inline-size;
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
+  background-repeat: no-repeat;
+  background-size: calc(100% - (var(--surface-padding) * 2)) 1px;
+  background-position: var(--surface-padding) 1rem;
+
+  transition:
+    background   var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    box-shadow   var(--component-transition-deliberate);
 }
 
-.mode-panel {
-    position: relative;
-    padding: 1rem 1.05rem;
-    border: 1px solid var(--matte-border, rgba(14, 18, 20, 0.09));
-    border-radius: var(--radius-sm);
-    /* Matte surface: warmer, opaque — paper not glass */
-    background: var(--matte-surface, rgba(247, 244, 238, 0.93));
-    overflow: hidden;
-    container-type: inline-size;
-    background-image:
-        linear-gradient(
-            90deg,
-            color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent) 0 2.9rem,
-            transparent 2.9rem
-        );
-    background-repeat: no-repeat;
-    background-size: calc(100% - 1.8rem) 1px;
-    background-position: 0.9rem 0.85rem;
-    transition:
-        background   var(--duration-deliberate) var(--ease-mechanical),
-        border-color var(--duration-base) var(--ease-mechanical);
+:where(.site-frame.is-active-frame) {
+  border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
+  background: var(--component-surface-strong);
+  box-shadow: var(--component-shadow-active);
 }
 
-.mode-panel[hidden] {
-    display: none !important;
+/* ==========================================================================
+   7. Hero + heading thresholds
+   ========================================================================== */
+
+:where(.site-hero) {
+  gap: 1.1rem;
 }
 
-.mode-panel.is-active-panel {
-    display: block;
+:where(.frame-topline, .frame-heading) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(0.6rem, 1.6vw, 0.9rem);
+  min-width: 0;
 }
 
-.frame-grid,
-.spec-grid,
-.contact-grid,
-.domain-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card)), 1fr));
-    gap: var(--surface-gap);
+/* frame-topline is the threshold of every frame — the room sign */
+:where(.frame-topline) {
+  margin-bottom: -0.25rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--component-accent) 16%, transparent);
+  transition: border-color var(--component-transition-base);
 }
 
-.frame-grid--dense {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-compact)), 1fr));
+:where(.site-frame.is-active-frame .frame-topline) {
+  border-bottom-color: color-mix(in oklab, var(--component-accent) 32%, transparent);
 }
 
-.domain-grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-compact)), 1fr));
+/* In frame-heading, adjacent heading is the label; sigil is secondary */
+:where(.frame-heading > .frame-sigil) {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: 0.78rem;
+  opacity: 0.6;
 }
 
-.frame-card,
-.frame-panel,
-.software-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    min-height: 100%;
-    min-width: 0;
-    padding: clamp(1rem, 2vw, 1.35rem) clamp(1.05rem, 2.2vw, 1.4rem);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--card-bg);
-    color: inherit;
-    box-sizing: border-box;
-    box-shadow: var(--card-shadow), var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.5));
-    container-type: inline-size;
-    transition:
-        border-color var(--charge-release-duration) var(--charge-release-ease),
-        background   var(--charge-release-duration) var(--charge-release-ease),
-        box-shadow   var(--duration-deliberate) var(--ease-settle),
-        transform    var(--duration-base) var(--ease-mechanical);
-    overflow: hidden;
-    background-image:
-        linear-gradient(
-            90deg,
-            color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent) 0 3.4rem,
-            transparent 3.4rem
-        );
-    background-repeat: no-repeat;
-    background-size: calc(100% - 1.8rem) 1px;
-    background-position: 0.9rem 0.9rem;
+/* ==========================================================================
+   8. Role-based frame stance
+   --------------------------------------------------------------------------
+   Purpose
+   - Light, low-cost metamaterial identity for common frame roles.
+   - Avoid blur-heavy ornament; use gradient direction and border logic instead.
+   ========================================================================== */
+
+:where(.site-frame[data-spw-role="probe"]) {
+  background-image:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--op-probe-bg-soft, var(--component-accent-soft)) 50%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
 }
 
-@supports (backdrop-filter: blur(1px)) {
-    .frame-card {
-        backdrop-filter: blur(var(--material-blur, 12px)) saturate(var(--material-saturation, 1.06));
-        -webkit-backdrop-filter: blur(var(--material-blur, 12px)) saturate(var(--material-saturation, 1.06));
-    }
+:where(.site-frame[data-spw-role="surface"]) {
+  background-image:
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--op-surface-bg-soft, var(--component-accent-soft)) 40%, transparent) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
 }
 
-a.frame-card {
-    text-decoration: none;
+:where(.site-frame[data-spw-role="reference"]) {
+  border-left-width: 2px;
+  border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
 }
 
-.frame-card:hover,
-.frame-card:focus-visible,
-.frame-panel:hover,
-.frame-panel:focus-within,
-.software-card:hover,
-.software-card:focus-within {
-    border-color: var(--card-border-hover);
-    background: var(--card-bg-hover);
-    box-shadow: var(--card-shadow-hover), var(--card-inset-highlight, inset 0 1px 0 rgba(255,255,255,0.5));
-    transform: translateY(-2px);
+:where(.site-frame[data-spw-role="status"]) {
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 12%, transparent) 0,
+      transparent 42%
+    );
 }
 
-/* Settle back with more deliberate ease — physical weight returning */
-.frame-card:not(:hover):not(:focus-visible) {
-    transition:
-        border-color var(--duration-base) var(--ease-mechanical),
-        background   var(--duration-deliberate) var(--ease-mechanical),
-        box-shadow   480ms var(--ease-settle),
-        transform    var(--duration-deliberate) var(--ease-settle);
+:where(.site-frame[data-spw-role="routing"]) {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--component-accent) 24%, var(--line, transparent));
 }
 
-.frame-card-sigil {
-    color: var(--teal);
-    font-size: 0.84rem;
+/* ==========================================================================
+   9. Metamaterial selectors
+   --------------------------------------------------------------------------
+   Purpose
+   - Tunable surface families for cards / panels / frames.
+   - Meant to feel meaningful, not merely decorative.
+   - Safe for performance: gradients and border treatment only.
+   ========================================================================== */
+
+:where([data-spw-metamaterial]) {
+  --component-material-border: var(--component-border);
+  --component-material-bg: var(--component-surface);
+  --component-material-shadow: var(--component-shadow);
+  --component-material-line: var(--component-accent-soft);
 }
 
-.frame-list,
-.source-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+:where([data-spw-metamaterial]) {
+  background: var(--component-material-bg);
+  border: var(--component-material-border);
+  box-shadow: var(--component-material-shadow);
 }
 
-.frame-list li + li,
-.source-list li + li {
-    margin-top: 0.55rem;
+:where([data-spw-metamaterial="paper"]) {
+  --component-material-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface, #fff) 96%, var(--component-accent-soft)) 0%,
+      var(--surface, #fff) 100%
+    );
+  --component-material-border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, var(--component-accent-soft));
 }
 
-.frame-list--inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+:where([data-spw-metamaterial="ledger"]) {
+  --component-material-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 6%, transparent) 0 1px,
+      transparent 1px 100%
+    ),
+    var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 22%, var(--line, transparent));
 }
 
-.frame-list--inline li {
-    margin: 0;
+:where([data-spw-metamaterial="signal"]) {
+  --component-material-bg:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 10%, transparent) 0,
+      transparent 30%
+    ),
+    var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 30%, var(--line, transparent));
 }
 
-.spec-kicker {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
+:where([data-spw-metamaterial="field"]) {
+  --component-material-bg:
+    radial-gradient(
+      circle at 12% 18%,
+      color-mix(in srgb, var(--component-accent) 9%, transparent) 0%,
+      transparent 34%
+    ),
+    var(--component-surface);
 }
 
-.spec-pill {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.4rem 0.72rem;
-    border: 1px solid var(--token-border-strong);
-    border-radius: 999px;
-    background: var(--token-bg);
-    color: var(--ink);
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: transform var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease);
-}
-.spec-pill:hover,
-.spec-pill:focus-visible {
-    background: var(--teal);
-    color: white;
-    transform: translateY(-1.5px);
+:where([data-spw-metamaterial="glass"]) {
+  --component-material-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #fff 14%, transparent) 0%,
+      color-mix(in srgb, var(--component-surface) 92%, transparent) 100%
+    );
+  --component-material-border: 1px solid color-mix(in srgb, #fff 12%, var(--line, transparent));
 }
 
-.syntax-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+:where([data-spw-metamaterial="shell"]) {
+  --component-material-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 5%, transparent) 0%,
+      transparent 48%
+    ),
+    var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
 }
 
-.syntax-list li {
-    display: grid;
-    grid-template-columns: minmax(6.5rem, 10rem) minmax(0, 1fr);
-    gap: 1rem;
-    padding: 0.7rem 0;
-    border-top: 1px solid var(--line);
+/* ==========================================================================
+   10. Pretext flow host
+   --------------------------------------------------------------------------
+   Purpose
+   - Stable host for JS-measured line recomposition.
+   - CSS should expose state and debug surfaces, not fight width changes.
+   - No width transitions: keep lineation deterministic.
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0;
+  --pretext-local-radius: var(--component-radius-tight);
+
+  position: relative;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  contain: layout paint style;
+  isolation: isolate;
+
+  padding: var(--pretext-local-pad);
+  border-radius: var(--pretext-local-radius);
+
+  color: inherit;
+  transition:
+    color var(--component-transition-fast),
+    background-color var(--component-transition-fast),
+    box-shadow var(--component-transition-base);
 }
 
-.syntax-list li:first-child {
-    border-top: 0;
-    padding-top: 0;
+:where([data-spw-flow="pretext"] .pretext-flow-lines) {
+  display: grid;
+  gap: var(--pretext-line-gap);
+  min-width: 0;
+  align-content: start;
 }
 
-.syntax-token {
-    width: fit-content;
-    font: inherit;
-    font-weight: bold;
-    color: var(--teal);
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(0, 128, 128, 0.22);
-    border-radius: 999px;
-    padding: 0.22rem 0.58rem;
-    cursor: pointer;
-    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease), box-shadow var(--charge-release-duration) var(--charge-release-ease);
+:where([data-spw-flow="pretext"] .pretext-flow-line) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38em;
+  min-width: 0;
+  max-width: 100%;
+  line-height: var(--pretext-line-height);
+  white-space: normal;
+  text-wrap: pretty;
+  text-wrap: stable;
 }
 
-.syntax-token:hover,
-.syntax-token:focus-visible,
-.syntax-token.is-selected {
-    background: rgba(0, 128, 128, 0.1);
-    border-color: rgba(0, 128, 128, 0.42);
-    transform: translateY(-1.5px);
-    box-shadow: var(--shadow);
+:where([data-spw-flow="pretext"] .pretext-flow-line-text) {
+  min-width: 0;
+  max-width: 100%;
 }
 
-.source-list li {
-    padding-top: 0.6rem;
-    border-top: 1px solid var(--line);
+:where([data-spw-flow="pretext"] .line-decor) {
+  flex: 0 0 auto;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.92em;
+  opacity: calc(0.22 + (var(--pretext-influence, 0) * 0.34));
+  color: color-mix(in srgb, currentColor 72%, transparent);
+  transition:
+    opacity var(--component-transition-fast),
+    color var(--component-transition-fast);
 }
 
-.source-list li:first-child {
-    border-top: 0;
-    padding-top: 0;
+/* ==========================================================================
+   11. Measurement-visible text routing hooks
+   --------------------------------------------------------------------------
+   Purpose
+   - CSS hooks for the future JS replacement.
+   - Quantized states should be visible and tunable without requiring expensive
+     continuous animation.
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-mode="resting"]) {
+  --pretext-line-gap: 0.16rem;
 }
 
-.source-name {
-    display: inline-block;
-    min-width: 13rem;
-    font-weight: bold;
-    color: var(--teal);
+:where([data-spw-flow="pretext"][data-text-mode="approach"]) {
+  --pretext-line-gap: 0.2rem;
 }
 
-.demo-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
+:where([data-spw-flow="pretext"][data-text-mode="contact"]) {
+  --pretext-line-gap: 0.22rem;
 }
 
-.demo-panels {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.72);
-    overflow: hidden;
+:where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
+  --pretext-line-gap: 0.24rem;
 }
 
-.demo-panel {
-    display: none;
-    padding: 1rem;
+:where([data-spw-flow="pretext"][data-text-mode="settling"]) {
+  --pretext-line-gap: 0.18rem;
 }
 
-.demo-panel.is-active-panel {
-    display: block;
+:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) {
+  --pretext-local-pad: 0.35rem 0.45rem;
 }
 
-/* ── Expression comparison sets ─────────────────────────────── */
-
-.spw-compare-set {
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
+:where([data-spw-flow="pretext"][data-text-kind="question"]) {
+  --pretext-local-pad: 0.25rem 0.35rem;
 }
 
-.spw-compare-set + .spw-compare-set {
-    margin-top: var(--surface-gap);
-    padding-top: var(--surface-gap);
-    border-top: 1px solid var(--line);
+:where([data-spw-flow="pretext"][data-text-density="compressed"]) {
+  --pretext-line-gap: 0.12rem;
 }
 
-.spw-compare-label {
-    font-size: 0.78rem;
-    letter-spacing: 0.10em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    font-family: var(--site-mono-font);
-    padding-left: 0.1rem;
+:where([data-spw-flow="pretext"][data-text-density="soft"]) {
+  --pretext-line-gap: 0.24rem;
 }
 
-.frame-grid--compare {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent);
 }
 
-.spw-compare-card {
-    justify-content: space-between;
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent);
 }
 
-.spw-compare-chip {
-    display: block;
-    margin-top: auto;
-    padding: 0.3rem 0.55rem;
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 7%, rgba(255, 255, 255, 0.5));
-    border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--teal)) 24%, transparent);
-    font-family: var(--site-mono-font);
-    font-size: 0.78rem;
-    color: var(--spw-operator-color, var(--teal));
-    letter-spacing: 0.03em;
-    line-height: 1.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    user-select: all;
+:where([data-spw-flow="pretext"][data-text-width-class="xs"]) {
+  max-inline-size: 20rem;
 }
 
-.demo-render {
-    background: rgba(255, 255, 255, 0.94);
+:where([data-spw-flow="pretext"][data-text-width-class="sm"]) {
+  max-inline-size: 28rem;
 }
 
-.site-figure {
-    gap: 1rem;
+:where([data-spw-flow="pretext"][data-text-width-class="md"]) {
+  max-inline-size: 40rem;
 }
 
-.site-figure > figure {
-    margin: 0;
-    width: min(100%, 34rem);
+:where([data-spw-flow="pretext"][data-text-width-class="lg"]) {
+  max-inline-size: 54rem;
 }
 
-.site-figure > figure > picture {
-    display: block;
+:where([data-spw-flow="pretext"][data-text-width-class="xl"]) {
+  max-inline-size: min(100%, 72rem);
 }
 
-.site-figure > figure img {
-    display: block;
+/* ==========================================================================
+   12. Intermediate scaffold
+   --------------------------------------------------------------------------
+   Purpose
+   - Occasional, clever intermediate scaffolding for quantified routing and
+     cache-aware typesetting.
+   - Should feel like instrument readout, not error state.
+   ========================================================================== */
+
+:where(.pretext-flow-scaffold) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  margin-top: 0.45rem;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  opacity: var(--pretext-scaffold-opacity);
+  color: color-mix(in srgb, var(--ink-soft, currentColor) 88%, transparent);
+}
+
+:where([data-spw-debug~="pretext"] .pretext-flow-scaffold),
+:where([data-spw-pretext-scaffold] .pretext-flow-scaffold) {
+  padding-top: 0.4rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where(.pretext-flow-scaffold > span) {
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   13. Meaningful card utilities
+   --------------------------------------------------------------------------
+   Purpose
+   - Refine cards toward “metamaterials” without heavy effects.
+   - Useful now for frame/media/operator cards and later for pretext-guided
+     story components.
+   ========================================================================== */
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-density="soft"] {
+  --component-pad: 1rem;
+  --component-gap-tight: 0.65rem;
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-density="dense"] {
+  --component-pad: 0.75rem;
+  --component-gap-tight: 0.4rem;
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-reading="measure"] {
+  max-inline-size: min(100%, var(--component-measure));
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-reading="code"] {
+  max-inline-size: min(100%, var(--component-code-measure));
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-reading="ambient"] {
+  color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-attention="focused"] {
+  border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent), var(--component-shadow);
+}
+
+:where(.frame-card, .media-card, .operator-card)[data-spw-attention="held"] {
+  border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent), var(--component-shadow-active);
+}
+
+/* ==========================================================================
+   14. Media + card text flow safeguards
+   ========================================================================== */
+
+:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+  h1, h2, h3, h4, h5, h6,
+  p, ul, ol, li, blockquote,
+  pre, code,
+  .frame-note,
+  .frame-copy,
+  .specimen-material,
+  .operator-snippet-note
+) {
+  min-width: 0;
+}
+
+:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+  p, li, .frame-note, .frame-copy, .specimen-material
+) {
+  max-inline-size: var(--component-measure);
+  text-wrap: pretty;
+}
+
+:where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) :is(
+  pre, code, .operator-snippet-example, .operator-card-panel-reduction
+) {
+  overflow-x: auto;
+  max-inline-size: 100%;
+}
+
+/* ==========================================================================
+   15. Responsive adjustments
+   ========================================================================== */
+
+@container (max-width: 38rem) {
+  :where(.frame-topline, .frame-heading) {
+    align-items: stretch;
+  }
+
+  :where(.frame-topline > .spec-strip,
+         .frame-topline > .mode-switch,
+         .frame-topline > .frame-operators,
+         .frame-topline > .spw-component-meta,
+         .frame-heading > .spw-component-meta) {
     width: 100%;
-    height: auto;
-}
+    margin-left: 0;
+    justify-content: flex-start;
+  }
 
-.constellation-figure {
-    position: relative;
-}
-
-.constellation-panels {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card)), 1fr));
-    gap: var(--surface-gap);
-    align-items: start;
-}
-
-.image-study {
-    margin: 0;
-    gap: 0.85rem;
-}
-
-.image-study picture {
-    display: block;
-    overflow: hidden;
-    border-radius: var(--radius-sm);
-}
-
-.image-study img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.site-figure .overlay img {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.site-figure .overlay img {
-    opacity: 0.62;
-}
-
-figcaption {
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-}
-/* Operator reference table used in the grammar surface */
-[data-spw-features~="operators"] .spw-operator-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.92rem;
-}
-
-[data-spw-features~="operators"] .spw-operator-table tr {
-    border-top: 1px solid var(--line);
-}
-
-[data-spw-features~="operators"] .spw-operator-table tr:first-child {
-    border-top: 0;
-}
-
-[data-spw-features~="operators"] .spw-operator-table td {
-    padding: 0.65rem 0.5rem;
-    vertical-align: top;
-}
-
-[data-spw-features~="operators"] .spw-operator-table td:first-child {
-    padding-left: 0;
-    white-space: nowrap;
-    width: 9rem;
-}
-
-[data-spw-features~="operators"] .spw-operator-table td:last-child {
-    color: var(--ink-soft);
-}
-
-/* Public Spw operator atlas and per-operator route pages */
-.operator-atlas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel)), 1fr));
-    gap: 0.85rem;
-}
-
-.operator-card {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-        "token title"
-        "token body";
-    gap: 0.15rem 0.75rem;
-    min-height: 100%;
-    min-width: 0;
-    padding: clamp(0.85rem, 1.4vw, 0.95rem) clamp(0.9rem, 1.8vw, 1rem);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--card-bg);
-    color: inherit;
-    text-decoration: none;
-    box-shadow: var(--card-shadow);
-    container-type: inline-size;
-    transition: border-color var(--charge-release-duration) var(--charge-release-ease), background var(--charge-release-duration) var(--charge-release-ease);
-    background-image:
-        linear-gradient(
-            90deg,
-            color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent) 0 3rem,
-            transparent 3rem
-        );
-    background-repeat: no-repeat;
-    background-size: calc(100% - 1.8rem) 1px;
-    background-position: 0.9rem 0.85rem;
-}
-
-.operator-card:hover,
-.operator-card:focus-visible {
-    border-color: var(--card-border-hover);
-    background: var(--card-bg-hover);
-    box-shadow: var(--card-shadow-hover);
-}
-
-.operator-card-token {
-    grid-area: token;
-    align-self: start;
-    min-width: 3.2rem;
-    font-size: 1.45rem;
-    line-height: 1;
-    color: var(--spw-operator-color, var(--teal));
-    word-break: keep-all;
-}
-
-.operator-card strong {
-    grid-area: title;
-}
-
-.operator-card span:last-child {
-    grid-area: body;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-}
-
-.operator-detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card)), 1fr));
-    gap: var(--surface-gap);
-}
-
-.operator-ring-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.operator-ring-nav a {
-    display: inline-flex;
-    align-items: center;
+  :where(.frame-topline > .mode-switch > *,
+         .frame-topline > .frame-operators > *) {
+    flex: 1 1 min(100%, 8rem);
     justify-content: center;
-    min-width: 2.35rem;
-    min-height: 2.35rem;
-    padding: 0.35rem 0.5rem;
-    border: 1px solid var(--token-border);
-    border-radius: 999px;
-    background: var(--token-bg);
-    color: var(--teal);
-    text-decoration: none;
-    font-size: 0.9rem;
-    line-height: 1;
-    transition: background var(--charge-release-duration) var(--charge-release-ease), border-color var(--charge-release-duration) var(--charge-release-ease), color var(--charge-release-duration) var(--charge-release-ease), transform var(--charge-release-duration) var(--charge-release-ease);
+  }
 }
 
-.operator-ring-nav a:hover,
-.operator-ring-nav a:focus-visible {
-    background: var(--token-bg-hover);
-    border-color: var(--token-border-strong);
-    transform: translateY(-1px);
-}
-
-.operator-ring-nav a[aria-current="page"] {
-    background: var(--teal);
-    border-color: var(--teal);
-    color: white;
-}
-.domain-kicker {
-    color: var(--ink-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-size: 0.8rem;
-}
-
-.domain-visual-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-feature)), 1fr));
-    gap: var(--surface-gap);
-    align-items: start;
-}
-
-.domain-visual-stack {
-    display: grid;
-    gap: 1rem;
-}
-
-.domain-visual {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    min-width: 0;
-    padding: clamp(0.9rem, 1.8vw, 1rem);
-    border: 1px solid rgba(255, 187, 94, 0.18);
-    border-radius: var(--radius-sm);
-    background: linear-gradient(165deg, rgba(17, 18, 20, 0.96), rgba(43, 35, 29, 0.93));
-    color: rgba(255, 244, 225, 0.94);
-    box-sizing: border-box;
-    container-type: inline-size;
-}
-
-.domain-visual picture {
-    display: block;
-}
-
-.domain-visual img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: calc(var(--radius-sm) - 1px);
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.domain-visual figcaption {
-    color: rgba(255, 236, 208, 0.78);
-}
-
-.domain-visual--poster {
-    min-height: 100%;
-}
-
-.domain-visual--token {
-    align-self: start;
-}
-
-@container (max-width: 30rem) {
-    .operator-card {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "token"
-            "title"
-            "body";
-        gap: 0.35rem;
-    }
-
-    .operator-card-token {
-        min-width: 0;
-    }
-
-    .syntax-list li {
-        grid-template-columns: 1fr;
-        gap: 0.45rem;
-    }
-}
-
-/* ── Spw Atom Anatomy ───────────────────────────────────────────────────────
- * All Spw components share a three-part grammar: prefix · nucleus · suffix.
- * This mirrors the operator prefix/infix/postfix structure of Spw syntax.
- * Cards, pills, and breadcrumbs are the same atom at different scales.
- *
- * Scale:  pill → chip → card → panel → frame
- * Dialect: . baseline  ^ object  ~ ref  ? probe  @ action  etc.
- *
- * Anatomy attributes:
- *   [data-spw-atom]         — marks the atom container
- *   [data-spw-atom-prefix]  — operator sigil, prefix zone
- *   [data-spw-atom-nucleus] — primary content
- *   [data-spw-atom-suffix]  — postfix, metadata, or action
- */
-
-/* Base atom */
-[data-spw-atom] {
-    display: inline-grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas: "prefix nucleus suffix";
-    align-items: center;
-    gap: 0.3em;
-    position: relative;
-    /* Operator color inherited from [data-spw-operator] ancestor */
-    --atom-color: var(--spw-operator-color, var(--teal));
-}
-
-[data-spw-atom-prefix] {
-    grid-area: prefix;
-    color: var(--atom-color);
-    font-weight: 600;
-    line-height: 1;
-    user-select: none;
-    flex-shrink: 0;
-}
-
-[data-spw-atom-nucleus] {
-    grid-area: nucleus;
-    min-width: 0;
-}
-
-[data-spw-atom-suffix] {
-    grid-area: suffix;
-    color: var(--ink-soft);
-    font-size: 0.85em;
-    flex-shrink: 0;
-}
-
-/* ── Pill scale ── */
-[data-spw-atom="pill"] {
-    padding: 0.28em 0.65em;
-    border: 1px solid color-mix(in srgb, var(--atom-color) 28%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--atom-color) 8%, var(--surface, white));
-    font-size: 0.82rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition:
-        border-color var(--charge-release-duration, 120ms) ease,
-        background   var(--charge-release-duration, 120ms) ease;
-}
-
-[data-spw-atom="pill"]:hover,
-[data-spw-atom="pill"]:focus-visible {
-    background: color-mix(in srgb, var(--atom-color) 16%, var(--surface, white));
-    border-color: color-mix(in srgb, var(--atom-color) 52%, transparent);
-}
-
-/* ── Chip scale (compact pill, no nucleus wrap) ── */
-[data-spw-atom="chip"] {
-    display: inline-flex;
-    padding: 0.2em 0.5em;
-    border: 1px solid color-mix(in srgb, var(--atom-color) 22%, transparent);
-    border-radius: 4px;
-    background: color-mix(in srgb, var(--atom-color) 6%, var(--surface, white));
-    font-size: 0.78rem;
-    gap: 0.2em;
-    cursor: default;
-}
-
-/* ── Card scale ── */
-[data-spw-atom="card"] {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    grid-template-areas:
-        "prefix header"
-        "prefix body"
-        "prefix suffix";
-    gap: 0.15rem 0.75rem;
-    padding: 0.95rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--atom-color) 18%, var(--line, rgba(0,0,0,0.12)));
-    border-radius: var(--radius-sm, 6px);
-    background: var(--card-bg, rgba(255,255,255,0.7));
-    color: inherit;
-    text-decoration: none;
-    transition:
-        border-color var(--charge-release-duration, 120ms) ease,
-        background   var(--charge-release-duration, 120ms) ease;
-}
-
-[data-spw-atom="card"]:hover,
-[data-spw-atom="card"]:focus-visible {
-    border-color: color-mix(in srgb, var(--atom-color) 38%, transparent);
-    background: var(--card-bg-hover, rgba(255,255,255,0.84));
-}
-
-/* ── Breadcrumb scale ── */
-[data-spw-atom="breadcrumb"] {
-    display: inline-flex;
-    align-items: center;
-    gap: 0;
-    font-size: 0.82rem;
-}
-
-[data-spw-atom="breadcrumb"] + [data-spw-atom="breadcrumb"]::before {
-    content: attr(data-spw-separator, '/');
-    padding: 0 0.4em;
-    color: var(--ink-soft);
-    opacity: 0.55;
-}
-
-/* ── Cognitive surface panel ─────────────────────────────────────────────── */
-
-.cognitive-surface-panel {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 900;
-    width: min(28rem, 90vw);
-    max-height: 65vh;
-    overflow: auto;
-    background: var(--floating-bg, rgba(255,255,255,0.94));
-    border: 1px solid var(--line-strong, rgba(0,128,128,0.28));
-    border-radius: var(--radius, 8px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(12px);
-    font-size: 0.88rem;
-}
-
-.cognitive-surface-panel[hidden] {
+@container (max-width: 28rem) {
+  :where(.frame-heading > .frame-sigil) {
     display: none;
-}
-
-.cognitive-surface-frame {
-    padding: 0.9rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.cognitive-surface-header {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding-bottom: 0.65rem;
-    border-bottom: 1px solid var(--line, rgba(0,0,0,0.1));
-}
-
-.cognitive-surface-header .frame-sigil {
-    flex: 1;
-    font-size: 0.82rem;
-}
-
-.cognitive-phase-badge {
-    font-size: 0.75rem;
-    opacity: 0.72;
-    color: var(--op-action-color, var(--teal));
-}
-
-.cognitive-surface-close {
-    background: none;
-    border: none;
-    padding: 0.2rem 0.4rem;
-    cursor: pointer;
-    color: var(--ink-soft);
-    font-size: 1.1rem;
-    line-height: 1;
-    border-radius: 4px;
-}
-
-.cognitive-surface-close:hover {
-    background: var(--surface-soft, rgba(0,0,0,0.06));
-    color: var(--ink);
-}
-
-.cognitive-surface-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-
-.cognitive-page-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    color: var(--ink-soft);
-    font-size: 0.76rem;
-}
-
-.cognitive-page-title {
-    color: var(--ink);
-    font-weight: 600;
-}
-
-.cognitive-page-description {
-    margin: -0.15rem 0 0;
-    color: var(--ink-soft);
-    font-size: 0.8rem;
-    line-height: 1.5;
-}
-
-.cognitive-realization-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.55rem 0.6rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm, 6px);
-    background: color-mix(in srgb, var(--surface) 86%, transparent);
-}
-
-.cognitive-realization-group[data-spw-realization="conceptual"] {
-    border-style: dashed;
-}
-
-.cognitive-realization-group[data-spw-realization="realized"] {
-    border-style: solid;
-}
-
-.cognitive-realization-group[data-spw-realization="hybrid"] {
-    border-style: dotted;
-}
-
-.cognitive-realization-label {
-    margin: 0;
-    color: var(--ink-soft);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.cognitive-substrate-group {
-    padding: 0.5rem 0.6rem;
-    border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--teal)) 20%, transparent);
-    border-radius: var(--radius-sm, 6px);
-    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 4%, transparent);
-}
-
-.cognitive-substrate-label {
-    margin: 0 0 0.45rem;
-    font-size: 0.74rem;
-    font-weight: 500;
-    color: var(--spw-operator-color, var(--teal));
-    letter-spacing: 0.06em;
-}
-
-.cognitive-token-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-}
-
-.cognitive-token {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25em;
-    padding: 0.22em 0.55em;
-    border: 1px dotted color-mix(in srgb, var(--spw-operator-color, var(--teal)) 40%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 6%, var(--surface, white));
-    font-size: 0.82rem;
-    opacity: 0.82;
-    cursor: default;
-}
-
-.cognitive-token-phrase {
-    padding: 0.1rem 0.35rem;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--op-layer-bg-soft, var(--surface-soft)) 92%, transparent);
-    color: var(--op-layer-color, var(--ink-soft));
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.cognitive-token-sigil {
-    color: var(--op-baseline-color, var(--ink-soft));
-    font-weight: 400;
-    opacity: 0.65;
-}
-
-.cognitive-token-depth {
-    font-size: 0.7em;
-    color: var(--op-pragma-color, rgba(180,0,0,0.7));
-    font-weight: 600;
-}
-
-.cognitive-surface-footer {
-    border-top: 1px solid var(--line);
-    padding-top: 0.65rem;
-}
-
-.cognitive-action-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.cognitive-surface-source {
-    border-top: 1px solid var(--line);
-    padding-top: 0.6rem;
-    margin-top: 0.1rem;
-}
-
-.cognitive-surface-source summary {
-    font-size: 0.76rem;
-    color: var(--ink-soft);
-    cursor: pointer;
-    user-select: none;
-    letter-spacing: 0.04em;
-}
-
-.cognitive-source-pre {
-    margin: 0.5rem 0 0;
-    padding: 0.65rem;
-    background: var(--surface-code, rgba(18,23,27,0.96));
-    border-radius: var(--radius-sm, 6px);
-    overflow-x: auto;
-    font-size: 0.74rem;
-    line-height: 1.55;
-}
-
-.cognitive-source-pre code {
-    color: rgba(255, 244, 210, 0.88);
-}
-/* ── Spw State Inspector (Live Configuration) ────────────────────────── */
-
-[data-spw-inspect-mounted="true"],
-[data-spw-image-managed="true"] {
-    position: relative;
-}
-
-.spw-state-block {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: fit-content;
-    max-width: 100%;
-    margin: 0.9rem 0 0;
-    padding: 0.58rem 0.7rem 0.72rem;
-    border: 1px solid color-mix(in srgb, var(--teal) 24%, rgba(255, 255, 255, 0.12));
-    border-radius: 6px;
-    background: rgba(12, 14, 18, 0.9);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
-    overflow-x: auto;
-    box-sizing: border-box;
-    pointer-events: auto;
-    transition:
-        border-color var(--duration-fast, 120ms) ease,
-        box-shadow var(--duration-fast, 120ms) ease,
-        transform var(--duration-fast, 120ms) ease;
-}
-
-.spw-state-block::before {
-    content: attr(data-spw-loop-label);
-    position: absolute;
-    top: 0.46rem;
-    right: 2.95rem;
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.2rem;
-    padding: 0 0.42rem;
-    border: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.28) 55%, transparent);
-    border-radius: 999px;
-    color: rgba(255, 245, 223, 0.74);
-    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-    font-size: 0.63rem;
-    letter-spacing: 0.04em;
-    pointer-events: none;
-    opacity: 0.88;
-}
-
-.spw-state-block-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: 1.45rem;
-    padding-right: 2.4rem;
-}
-
-.spw-state-block-summary {
-    min-width: 0;
-    color: rgba(255, 247, 227, 0.86);
-    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-    font-size: 0.7rem;
-    line-height: 1.4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.spw-state-block-controls {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.18rem;
-}
-
-.spw-state-block-toggle,
-.spw-state-block-dismiss,
-.spw-state-block-restore {
-    border: 1px solid color-mix(in srgb, rgba(255, 255, 255, 0.2) 58%, transparent);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 247, 227, 0.82);
-    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-    font-size: 0.68rem;
-    line-height: 1;
-    cursor: pointer;
-}
-
-.spw-state-block-toggle,
-.spw-state-block-dismiss {
-    min-width: 1.45rem;
-    min-height: 1.45rem;
-    padding: 0;
-}
-
-.spw-state-block-restore {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    margin-top: 0.7rem;
-    padding: 0.3rem 0.6rem;
-}
-
-.spw-state-block-toggle:hover,
-.spw-state-block-dismiss:hover,
-.spw-state-block-restore:hover,
-.spw-state-block-toggle:focus-visible,
-.spw-state-block-dismiss:focus-visible,
-.spw-state-block-restore:focus-visible {
-    background: color-mix(in srgb, var(--teal) 14%, transparent);
-    color: #fff;
-}
-
-.spw-state-block--overlay + .spw-state-block-restore {
-    position: absolute;
-    left: 0.75rem;
-    bottom: 0.75rem;
-    z-index: 3;
-    margin-top: 0;
-}
-
-.spw-state-block-body {
-    margin: 0;
-}
-
-.spw-state-block-body code {
-    display: block;
-    min-width: 0;
-    color: rgba(255, 247, 227, 0.92);
-    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-    font-size: 0.77rem;
-    line-height: 1.65;
-    white-space: pre;
-}
-
-.spw-state-block[data-spw-disclosure="collapsed"] {
-    width: min(100%, 26rem);
-    padding-bottom: 0.56rem;
-}
-
-.spw-state-block[data-spw-disclosure="collapsed"] .spw-state-block-body {
-    display: none;
-}
-
-.spw-state-block[data-spw-disclosure="dismissed"] {
-    display: none;
-}
-
-.spw-state-block--inline {
-    margin-inline-start: 0;
-}
-
-.spw-state-block--overlay {
-    position: absolute;
-    left: 0.75rem;
-    bottom: 0.75rem;
-    z-index: 3;
-    margin: 0;
-    max-width: calc(100% - 1.5rem);
-    background: rgba(12, 14, 18, 0.84);
-}
-
-.spw-state-block:hover,
-.spw-state-block:focus-within {
-    border-color: color-mix(in srgb, var(--teal) 42%, rgba(255, 255, 255, 0.18));
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-}
-
-.spw-state-block[data-spw-loop-state="preview"] {
-    border-color: color-mix(in srgb, var(--teal) 38%, rgba(255, 255, 255, 0.2));
-}
-
-.spw-state-block[data-spw-loop-state="preview"]::before {
-    color: rgba(151, 238, 231, 0.88);
-    border-color: color-mix(in srgb, var(--teal) 26%, transparent);
-}
-
-.spw-state-block[data-spw-loop-state="activated"] {
-    border-color: color-mix(in srgb, var(--amber) 42%, rgba(255, 255, 255, 0.22));
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.24),
-        0 0 0 1px color-mix(in srgb, var(--amber) 16%, transparent);
-}
-
-.spw-state-block[data-spw-loop-state="activated"]::before {
-    color: rgba(255, 221, 150, 0.92);
-    border-color: color-mix(in srgb, var(--amber) 28%, transparent);
-}
-
-.spw-state-block[data-spw-loop-state="resolved"] {
-    border-color: color-mix(in srgb, var(--green, rgb(122, 211, 167)) 34%, rgba(255, 255, 255, 0.2));
-}
-
-.spw-state-block[data-spw-loop-state="resolved"]::before {
-    color: rgba(180, 241, 198, 0.9);
-    border-color: color-mix(in srgb, var(--green, rgb(122, 211, 167)) 22%, transparent);
-}
-
-.spw-state-token {
-    border-radius: 3px;
-}
-
-.spw-state-token.is-interactive {
-    cursor: pointer;
-    transition:
-        background-color var(--duration-fast, 120ms) ease,
-        color var(--duration-fast, 120ms) ease,
-        box-shadow var(--duration-fast, 120ms) ease;
-}
-
-.spw-state-token.is-interactive:hover,
-.spw-state-token.is-interactive:focus-visible {
-    background: color-mix(in srgb, var(--teal) 16%, transparent);
-    color: #fff;
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--teal) 22%, transparent);
-}
-
-.spw-state-token--op {
-    color: var(--spw-operator-color, var(--teal));
-    font-weight: 700;
-}
-
-.spw-state-token--name {
-    color: rgba(255, 255, 255, 0.94);
-}
-
-.spw-state-token--brace {
-    color: var(--amber);
-}
-
-.spw-state-token--key {
-    color: var(--pink);
-    opacity: 0.92;
-}
-
-.spw-state-token--val {
-    color: rgba(148, 232, 226, 0.96);
-}
-
-.spw-state-token--loop {
-    color: rgba(227, 234, 240, 0.86);
-}
-
-.spw-state-token--loop.is-preview,
-.spw-state-token--image-hold.is-preview {
-    color: rgba(151, 238, 231, 0.96);
-}
-
-.spw-state-token--loop.is-activated,
-.spw-state-token--image-hold.is-activated {
-    color: rgba(255, 219, 138, 0.96);
-}
-
-.spw-state-token--loop.is-resolved,
-.spw-state-token--image-hold.is-resolved {
-    color: rgba(182, 239, 197, 0.96);
-}
-
-[data-spw-brace-actions="on"] {
-    position: relative;
-}
-
-.spw-brace-actions {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.spw-brace-action {
-    position: absolute;
-    top: 0.7rem;
-    min-width: 1.8rem;
-    min-height: 2.4rem;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--surface, rgba(255,255,255,0.82)) 88%, transparent);
-    color: var(--active-op-color, var(--teal));
-    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-    font-size: 1rem;
-    line-height: 1;
-    opacity: 0.24;
-    pointer-events: auto;
-    cursor: pointer;
-    transition:
-        opacity var(--duration-fast, 120ms) ease,
-        transform var(--duration-fast, 120ms) ease,
-        background var(--duration-fast, 120ms) ease;
-}
-
-.spw-brace-action--entry {
-    left: 0.22rem;
-}
-
-.spw-brace-action--projection {
-    right: 0.22rem;
-}
-
-[data-spw-brace-actions="on"]:hover .spw-brace-action,
-[data-spw-brace-actions="on"]:focus-within .spw-brace-action,
-.spw-brace-action:focus-visible {
-    opacity: 0.82;
-}
-
-.spw-brace-action:hover,
-.spw-brace-action:focus-visible {
-    transform: translateY(-1px);
-    background: color-mix(in srgb, var(--teal) 12%, rgba(255,255,255,0.92));
-}
-
-@media (hover: none) {
-    .spw-brace-action {
-        opacity: 0.56;
-    }
-}
-
-.spw-state-block.is-dirty {
-    animation: state-pulse 0.34s ease-out;
-}
-
-@keyframes state-pulse {
-    0% {
-        transform: translateY(0);
-        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
-    }
-    50% {
-        transform: translateY(-1px);
-        box-shadow:
-            0 12px 28px rgba(0, 0, 0, 0.2),
-            0 0 0 1px color-mix(in srgb, var(--teal) 18%, transparent);
-    }
-    100% {
-        transform: translateY(0);
-        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
-    }
-}
-
-@media (max-width: 700px) {
-    .spw-state-block {
-        width: 100%;
-    }
-
-    .spw-state-block--overlay {
-        left: 0.55rem;
-        right: 0.55rem;
-        bottom: 0.55rem;
-        max-width: none;
-    }
-
-    .spw-state-block--overlay + .spw-state-block-restore {
-        left: 0.55rem;
-        bottom: 0.55rem;
-    }
-
-    .spw-brace-action {
-        top: 0.48rem;
-        min-width: 2rem;
-        min-height: 2.6rem;
-    }
+  }
+}
+
+@container (max-width: 26rem) {
+  :where(.frame-topline) {
+    margin-bottom: 0;
+  }
+
+  :where(.site-frame) {
+    --surface-padding: var(--component-pad);
+  }
+}
+
+/* ==========================================================================
+   16. Reduced motion / enhancement gating
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame,
+         .frame-card,
+         .media-card,
+         .operator-card,
+         .frame-panel,
+         .mode-panel,
+         .frame-topline,
+         [data-spw-container="concept"],
+         [data-spw-flow="pretext"],
+         [data-spw-flow="pretext"] .line-decor) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+:where(html[data-spw-enhance="off"]) :is(
+  [data-spw-metamaterial="glass"],
+  [data-spw-metamaterial="field"],
+  [data-spw-metamaterial="signal"]
+) {
+  background: var(--component-surface);
+}
+
+:where(html[data-spw-ornament="minimal"]) :where(.pretext-flow-scaffold) {
+  display: none;
 }

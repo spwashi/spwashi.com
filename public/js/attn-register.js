@@ -1,232 +1,537 @@
 /**
- * Attentional Register + Touch Semantics
+ * attn-register.js
+ * ---------------------------------------------------------------------------
+ * Purpose
+ * - Session-scoped attentional register for chargeable phrases and badges.
+ * - Maintains a stable floating bar with delegated events.
+ * - Scopes badge discovery to a provided root instead of rescanning document.
  *
- * Charge phrases and badges on the blog surface are non-selectable
- * (CSS handles that). Tapping a marked phrase that is NOT a link adds
- * its charge key to a session-scoped register — a running ?[probe] of
- * what draws attention.
+ * Component contract
+ * - Charge sources:
+ *   [data-spw-charge-key]
+ *   .spec-pill
+ *   .field-note-tag
+ *   .specimen-api-tag
+ *   .specimen-index-tag
+ *   .blog-chip-list li
  *
- * The register appears as a floating bar. Tap a chip to remove it.
- * Swipe down on the bar to clear. Swipe horizontally on the atelier
- * theme toggle to pivot between light and dark.
+ * Root flags (read from documentElement / body)
+ * - data-spw-charge="off"      -> disable register interactions entirely
+ * - data-spw-enhance="off"     -> keep logic, avoid non-essential flourish
+ *
+ * Public API
+ * - initAttnRegister(root?, options?)
+ *   Returns an instance with:
+ *     destroy()
+ *     render()
+ *     clear()
+ *     getTerms()
+ *     addTerm(term)
+ *     removeTerm(term)
  */
 
 const REGISTER_KEY = 'spw-attn-register';
 
-const BADGE_SELECTORS = [
+const DEFAULT_SELECTORS = [
   '[data-spw-charge-key]',
   '.spec-pill',
   '.field-note-tag',
   '.specimen-api-tag',
   '.specimen-index-tag',
-  '.blog-chip-list li'
+  '.blog-chip-list li',
 ].join(',');
 
-const SWIPE_MIN_PX = 40;
+const DEFAULTS = Object.freeze({
+  badgeSelectors: DEFAULT_SELECTORS,
+  registerHost: document.body,
+  storageKey: REGISTER_KEY,
+  swipeMinPx: 40,
+  barAttribute: 'data-attn-register',
+  barLabel: 'Attentional register',
+  themeToggleSelector: '.atelier-theme-toggle',
+  enableThemeSwipe: true,
+  enableMutationObserver: true,
+});
 
-/* ── Register state ── */
+function createAttnRegisterConfig(options = {}) {
+  return { ...DEFAULTS, ...options };
+}
 
-const loadTerms = () => {
+function isElement(value) {
+  return value instanceof Element;
+}
+
+function getRootElement(root) {
+  if (isElement(root)) return root;
+  return document;
+}
+
+function getSurfaceBody() {
+  return document.body;
+}
+
+function getFeatureState() {
+  const html = document.documentElement;
+  const body = getSurfaceBody();
+
+  return {
+    chargeEnabled:
+      html.dataset.spwCharge !== 'off' &&
+      body?.dataset.spwCharge !== 'off',
+    enhanceEnabled:
+      html.dataset.spwEnhance !== 'off' &&
+      body?.dataset.spwEnhance !== 'off',
+  };
+}
+
+function loadTerms(storageKey) {
   try {
-    return new Set(JSON.parse(sessionStorage.getItem(REGISTER_KEY) || '[]'));
+    const raw = sessionStorage.getItem(storageKey);
+    const parsed = JSON.parse(raw || '[]');
+    return Array.isArray(parsed) ? new Set(parsed.filter(Boolean)) : new Set();
   } catch {
     return new Set();
   }
-};
+}
 
-const saveTerms = (terms) => {
+function saveTerms(storageKey, terms) {
   try {
-    sessionStorage.setItem(REGISTER_KEY, JSON.stringify([...terms]));
-  } catch { /* storage unavailable */ }
-};
+    sessionStorage.setItem(storageKey, JSON.stringify([...terms]));
+  } catch {
+    /* storage unavailable */
+  }
+}
 
-const terms = loadTerms();
+function normalizeTerm(value) {
+  return String(value || '').trim();
+}
 
-const termFor = (node) => (
-  node.dataset.spwChargeKey
-  || node.textContent.trim()
-);
+function displayTerm(term) {
+  return term.replace(/-/g, ' ');
+}
 
-const displayTerm = (term) => term.replace(/-/g, ' ');
+function termFor(node) {
+  if (!node) return '';
+  const explicit = normalizeTerm(node.dataset.spwChargeKey);
+  if (explicit) return explicit;
 
-/* ── Register UI ── */
+  const label = normalizeTerm(node.dataset.spwChargeLabel);
+  if (label) return label;
 
-const ensureBar = () => {
-  let bar = document.querySelector('[data-attn-register]');
-  if (bar) return bar;
+  return normalizeTerm(node.textContent);
+}
 
-  bar = document.createElement('aside');
-  bar.setAttribute('data-attn-register', '');
-  bar.setAttribute('role', 'log');
-  bar.setAttribute('aria-label', 'Attentional register');
-  document.body.appendChild(bar);
-  return bar;
-};
+function isActualLink(node) {
+  if (!node) return false;
+  return node.tagName === 'A' || Boolean(node.closest('a[href]'));
+}
 
-const renderRegister = () => {
-  const existing = document.querySelector('[data-attn-register]');
-  if (!terms.size) {
-    existing?.remove();
-    return;
+function ensureButtonSemantics(node) {
+  if (!node || isActualLink(node)) return;
+
+  if (!node.hasAttribute('tabindex')) {
+    node.tabIndex = 0;
+  }
+  if (!node.hasAttribute('role')) {
+    node.setAttribute('role', 'button');
+  }
+  if (!node.hasAttribute('aria-pressed')) {
+    node.setAttribute('aria-pressed', 'false');
+  }
+  if (!node.hasAttribute('aria-label')) {
+    const label = node.dataset.spwChargeLabel || displayTerm(termFor(node));
+    if (label) node.setAttribute('aria-label', `Toggle attention charge: ${label}`);
+  }
+}
+
+function createBadgeRegistry() {
+  /** @type {Map<string, Set<Element>>} */
+  const byTerm = new Map();
+  /** @type {WeakMap<Element, string>} */
+  const byNode = new WeakMap();
+
+  function add(node) {
+    const term = termFor(node);
+    if (!term) return;
+
+    byNode.set(node, term);
+    if (!byTerm.has(term)) byTerm.set(term, new Set());
+    byTerm.get(term).add(node);
   }
 
-  const bar = ensureBar();
-  bar.innerHTML = '';
+  function remove(node) {
+    const term = byNode.get(node);
+    if (!term) return;
 
-  const label = document.createElement('span');
-  label.className = 'attn-label';
-  label.textContent = '?[';
-  bar.appendChild(label);
-
-  const list = document.createElement('span');
-  list.className = 'attn-terms';
-
-  terms.forEach((term) => {
-    const chip = document.createElement('button');
-    chip.type = 'button';
-    chip.className = 'attn-chip';
-    chip.textContent = displayTerm(term);
-    chip.setAttribute('aria-label', `Remove "${term}"`);
-    chip.addEventListener('click', (e) => {
-      e.stopPropagation();
-      terms.delete(term);
-      saveTerms(terms);
-      syncBadgeStates();
-      renderRegister();
-    });
-    list.appendChild(chip);
-  });
-
-  bar.appendChild(list);
-
-  const closing = document.createElement('span');
-  closing.className = 'attn-label';
-  closing.textContent = ']';
-  bar.appendChild(closing);
-
-  const clear = document.createElement('button');
-  clear.type = 'button';
-  clear.className = 'attn-clear';
-  clear.textContent = '× clear';
-  clear.setAttribute('aria-label', 'Clear register');
-  clear.addEventListener('click', (e) => {
-    e.stopPropagation();
-    terms.clear();
-    saveTerms(terms);
-    syncBadgeStates();
-    renderRegister();
-  });
-  bar.appendChild(clear);
-};
-
-/* ── Badge state sync ── */
-
-const syncBadgeStates = () => {
-  document.querySelectorAll(BADGE_SELECTORS).forEach((badge) => {
-    const term = termFor(badge);
-    if (terms.has(term)) {
-      badge.setAttribute('data-attn-active', '');
-    } else {
-      badge.removeAttribute('data-attn-active');
+    const set = byTerm.get(term);
+    if (set) {
+      set.delete(node);
+      if (!set.size) byTerm.delete(term);
     }
-  });
-};
+    byNode.delete(node);
+  }
 
-/* ── Badge tap ── */
+  function replaceAll(nodes) {
+    byTerm.clear();
+    nodes.forEach(add);
+  }
 
-const initBadgeTap = () => {
-  document.addEventListener('click', (e) => {
-    const badge = e.target.closest(BADGE_SELECTORS);
-    if (!badge) return;
+  function termOf(node) {
+    return byNode.get(node) || termFor(node);
+  }
 
-    // Don't intercept actual links
-    if (badge.tagName === 'A' || badge.closest('a')) return;
+  function nodesFor(term) {
+    return byTerm.get(term) || new Set();
+  }
+
+  function terms() {
+    return [...byTerm.keys()];
+  }
+
+  return {
+    add,
+    remove,
+    replaceAll,
+    termOf,
+    nodesFor,
+    terms,
+  };
+}
+
+function createBar(config) {
+  const bar = document.createElement('aside');
+  bar.setAttribute(config.barAttribute, '');
+  bar.setAttribute('role', 'log');
+  bar.setAttribute('aria-label', config.barLabel);
+
+  const openLabel = document.createElement('span');
+  openLabel.className = 'attn-label';
+  openLabel.textContent = '?[';
+
+  const termsWrap = document.createElement('div');
+  termsWrap.className = 'attn-terms';
+
+  const closeLabel = document.createElement('span');
+  closeLabel.className = 'attn-label';
+  closeLabel.textContent = ']';
+
+  const clearButton = document.createElement('button');
+  clearButton.type = 'button';
+  clearButton.className = 'attn-clear';
+  clearButton.setAttribute('data-attn-action', 'clear');
+  clearButton.setAttribute('aria-label', 'Clear register');
+  clearButton.textContent = '× clear';
+
+  bar.append(openLabel, termsWrap, closeLabel, clearButton);
+
+  return {
+    bar,
+    termsWrap,
+    clearButton,
+  };
+}
+
+function createChip(term) {
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'attn-chip';
+  chip.setAttribute('data-attn-action', 'remove');
+  chip.setAttribute('data-attn-term', term);
+  chip.setAttribute('aria-label', `Remove "${term}"`);
+  chip.textContent = displayTerm(term);
+  return chip;
+}
+
+export function initAttnRegister(root = document, options = {}) {
+  const config = createAttnRegisterConfig(options);
+  const rootEl = getRootElement(root);
+  const body = getSurfaceBody();
+  const featureState = getFeatureState();
+
+  if (!body || !featureState.chargeEnabled) {
+    return {
+      destroy() {},
+      render() {},
+      clear() {},
+      getTerms() { return []; },
+      addTerm() {},
+      removeTerm() {},
+    };
+  }
+
+  const terms = loadTerms(config.storageKey);
+  const registry = createBadgeRegistry();
+
+  let destroyed = false;
+  let observer = null;
+  let badgeNodes = [];
+  let swipeStartY = 0;
+  let themeSwipeStartX = 0;
+  let themeSwipeStartY = 0;
+
+  const { bar, termsWrap } = createBar(config);
+  config.registerHost.appendChild(bar);
+
+  function collectBadges() {
+    badgeNodes = [...rootEl.querySelectorAll(config.badgeSelectors)]
+      .filter((node) => !isActualLink(node));
+
+    badgeNodes.forEach(ensureButtonSemantics);
+    registry.replaceAll(badgeNodes);
+  }
+
+  function applyPressedState(node, active) {
+    if (node.getAttribute('role') === 'button') {
+      node.setAttribute('aria-pressed', String(active));
+    }
+  }
+
+  function syncBadgeStates() {
+    badgeNodes.forEach((badge) => {
+      const term = registry.termOf(badge);
+      const active = Boolean(term && terms.has(term));
+
+      if (active) {
+        badge.setAttribute('data-attn-active', '');
+      } else {
+        badge.removeAttribute('data-attn-active');
+      }
+
+      applyPressedState(badge, active);
+    });
+  }
+
+  function renderBar() {
+    if (destroyed) return;
+
+    if (!terms.size) {
+      bar.hidden = true;
+      termsWrap.replaceChildren();
+      return;
+    }
+
+    bar.hidden = false;
+    const fragment = document.createDocumentFragment();
+
+    [...terms]
+      .sort((a, b) => a.localeCompare(b))
+      .forEach((term) => {
+        fragment.appendChild(createChip(term));
+      });
+
+    termsWrap.replaceChildren(fragment);
+  }
+
+  function persistAndRender() {
+    saveTerms(config.storageKey, terms);
+    syncBadgeStates();
+    renderBar();
+  }
+
+  function addTerm(term) {
+    const normalized = normalizeTerm(term);
+    if (!normalized) return;
+    terms.add(normalized);
+    persistAndRender();
+  }
+
+  function removeTerm(term) {
+    const normalized = normalizeTerm(term);
+    if (!normalized) return;
+    terms.delete(normalized);
+    persistAndRender();
+  }
+
+  function clear() {
+    if (!terms.size) return;
+    terms.clear();
+    persistAndRender();
+  }
+
+  function toggleBadge(node) {
+    const term = registry.termOf(node);
+    if (!term) return;
+
+    if (terms.has(term)) {
+      terms.delete(term);
+    } else {
+      terms.add(term);
+    }
+
+    persistAndRender();
+  }
+
+  function onRootClick(event) {
+    const badge = event.target.closest(config.badgeSelectors);
+    if (!badge || !rootEl.contains(badge) || isActualLink(badge)) return;
+
+    if (!featureState.chargeEnabled) return;
 
     const term = termFor(badge);
     if (!term) return;
 
-    e.preventDefault();
+    event.preventDefault();
+    toggleBadge(badge);
+  }
 
-    if (terms.has(term)) {
-      terms.delete(term);
-      badge.removeAttribute('data-attn-active');
-    } else {
-      terms.add(term);
-      badge.setAttribute('data-attn-active', '');
+  function onRootKeydown(event) {
+    const badge = event.target.closest(config.badgeSelectors);
+    if (!badge || !rootEl.contains(badge) || isActualLink(badge)) return;
+
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    toggleBadge(badge);
+  }
+
+  function onBarClick(event) {
+    const actionNode = event.target.closest('[data-attn-action]');
+    if (!actionNode || !bar.contains(actionNode)) return;
+
+    const action = actionNode.getAttribute('data-attn-action');
+    if (action === 'clear') {
+      event.preventDefault();
+      clear();
+      return;
     }
 
-    saveTerms(terms);
-    renderRegister();
-  });
+    if (action === 'remove') {
+      event.preventDefault();
+      removeTerm(actionNode.getAttribute('data-attn-term') || '');
+    }
+  }
 
-  syncBadgeStates();
-};
+  function onBarTouchStart(event) {
+    if (!event.target.closest(`[${config.barAttribute}]`)) return;
+    swipeStartY = event.touches[0].clientY;
+  }
 
-/* ── Swipe: theme toggle ── */
+  function onBarTouchEnd(event) {
+    if (!event.target.closest(`[${config.barAttribute}]`)) return;
+    const dy = event.changedTouches[0].clientY - swipeStartY;
+    if (dy > config.swipeMinPx) {
+      clear();
+    }
+  }
 
-const initThemeSwipe = () => {
-  const toggle = document.querySelector('.atelier-theme-toggle');
-  if (!toggle) return;
+  function onThemeTouchStart(event) {
+    if (!config.enableThemeSwipe) return;
 
-  let startX = 0;
-  let startY = 0;
+    const toggle = event.target.closest(config.themeToggleSelector);
+    if (!toggle) return;
 
-  toggle.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
+    themeSwipeStartX = event.touches[0].clientX;
+    themeSwipeStartY = event.touches[0].clientY;
+  }
 
-  toggle.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - startX;
-    const dy = e.changedTouches[0].clientY - startY;
+  function onThemeTouchEnd(event) {
+    if (!config.enableThemeSwipe) return;
 
-    if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dy) > Math.abs(dx)) return;
+    const toggle = event.target.closest(config.themeToggleSelector);
+    if (!toggle) return;
 
-    const current = document.body.dataset.theme || 'atelier-light';
+    const dx = event.changedTouches[0].clientX - themeSwipeStartX;
+    const dy = event.changedTouches[0].clientY - themeSwipeStartY;
+
+    if (Math.abs(dx) < config.swipeMinPx || Math.abs(dy) > Math.abs(dx)) return;
+
+    const current = body.dataset.theme || 'atelier-light';
     const next = current === 'atelier-light' ? 'atelier-dark' : 'atelier-light';
-    document.body.dataset.theme = next;
+    body.dataset.theme = next;
 
-    document.querySelectorAll('[data-theme-set]').forEach((btn) => {
-      btn.setAttribute('aria-pressed', String(btn.dataset.themeSet === next));
+    document.querySelectorAll('[data-theme-set]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.themeSet === next));
     });
-  }, { passive: true });
-};
+  }
 
-/* ── Swipe: dismiss register ── */
+  function maybeRefreshFromMutations(mutations) {
+    let shouldRefresh = false;
 
-const initRegisterSwipe = () => {
-  let startY = 0;
+    for (const mutation of mutations) {
+      if (mutation.type !== 'childList') continue;
 
-  document.addEventListener('touchstart', (e) => {
-    if (!e.target.closest('[data-attn-register]')) return;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof Element)) return;
+        if (node.matches?.(config.badgeSelectors) || node.querySelector?.(config.badgeSelectors)) {
+          shouldRefresh = true;
+        }
+      });
 
-  document.addEventListener('touchend', (e) => {
-    if (!e.target.closest('[data-attn-register]')) return;
-    const dy = e.changedTouches[0].clientY - startY;
-    if (dy > SWIPE_MIN_PX) {
-      terms.clear();
-      saveTerms(terms);
-      syncBadgeStates();
-      renderRegister();
+      mutation.removedNodes.forEach((node) => {
+        if (!(node instanceof Element)) return;
+        if (node.matches?.(config.badgeSelectors) || node.querySelector?.(config.badgeSelectors)) {
+          shouldRefresh = true;
+        }
+      });
+
+      if (shouldRefresh) break;
     }
-  }, { passive: true });
-};
 
-/* ── Init ── */
+    if (!shouldRefresh) return;
 
-const initAttnRegister = () => {
-  initBadgeTap();
-  initThemeSwipe();
-  initRegisterSwipe();
-  renderRegister();
-};
+    collectBadges();
+    syncBadgeStates();
+  }
 
-export { initAttnRegister };
+  function observeRoot() {
+    if (!config.enableMutationObserver || !(rootEl instanceof Element || rootEl === document)) return;
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAttnRegister);
-} else {
-  initAttnRegister();
+    const observeTarget = rootEl === document ? document.body : rootEl;
+    if (!observeTarget) return;
+
+    observer = new MutationObserver((mutations) => {
+      maybeRefreshFromMutations(mutations);
+    });
+
+    observer.observe(observeTarget, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  function destroy() {
+    if (destroyed) return;
+    destroyed = true;
+
+    rootEl.removeEventListener('click', onRootClick);
+    rootEl.removeEventListener('keydown', onRootKeydown);
+    bar.removeEventListener('click', onBarClick);
+    bar.removeEventListener('touchstart', onBarTouchStart);
+    bar.removeEventListener('touchend', onBarTouchEnd);
+
+    if (config.enableThemeSwipe) {
+      document.removeEventListener('touchstart', onThemeTouchStart, { passive: true });
+      document.removeEventListener('touchend', onThemeTouchEnd, { passive: true });
+    }
+
+    observer?.disconnect();
+    bar.remove();
+  }
+
+  collectBadges();
+  syncBadgeStates();
+  renderBar();
+  observeRoot();
+
+  rootEl.addEventListener('click', onRootClick);
+  rootEl.addEventListener('keydown', onRootKeydown);
+  bar.addEventListener('click', onBarClick);
+  bar.addEventListener('touchstart', onBarTouchStart, { passive: true });
+  bar.addEventListener('touchend', onBarTouchEnd, { passive: true });
+
+  if (config.enableThemeSwipe && featureState.enhanceEnabled) {
+    document.addEventListener('touchstart', onThemeTouchStart, { passive: true });
+    document.addEventListener('touchend', onThemeTouchEnd, { passive: true });
+  }
+
+  return {
+    destroy,
+    render: renderBar,
+    clear,
+    getTerms() {
+      return [...terms];
+    },
+    addTerm,
+    removeTerm,
+  };
 }
