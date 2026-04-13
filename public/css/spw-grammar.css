@@ -78,8 +78,6 @@
 }
 
 /* ── Spatial stance: where copy sits within a container ─────────────── */
-/* These create felt reading rhythm — subvocalizing position in space.
-   Threshold copy breathes wider (orienting); interior settles; exit recedes. */
 
 [data-spw-stance="entry"] {
     letter-spacing: 0.04em;
@@ -127,6 +125,7 @@
     background-repeat: no-repeat;
     background-size: calc(100% - (var(--surface-padding) * 2)) 1px;
     background-position: var(--surface-padding) 1rem;
+    touch-action: pan-y;
 }
 
 .site-frame.is-active-frame {
@@ -167,14 +166,11 @@
     flex-wrap: wrap;
 }
 
-/* frame-topline is the threshold of every frame — the room sign.
-   Lighter border below it marks the entry line before interior begins. */
 .frame-topline {
     padding-bottom: 0.55rem;
     border-bottom: 1px solid color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
     margin-bottom: -0.25rem;
-    transition:
-        border-color var(--duration-base) var(--ease-mechanical);
+    transition: border-color var(--duration-base) var(--ease-mechanical);
 }
 
 .site-frame.is-active-frame .frame-topline {
@@ -210,10 +206,7 @@
     }
 }
 
-/* ── Frame sigil hierarchy ─────────────────────────────────────────────────
-   In frame-heading, the adjacent h2/h3 IS the label.
-   The sigil is an anchor handle — useful but secondary.
-   De-emphasize it globally; hide it on narrow containers where it competes. */
+/* ── Frame sigil hierarchy ───────────────────────────────────────────────── */
 .frame-heading > .frame-sigil {
     font-size: 0.78rem;
     opacity: 0.6;
@@ -227,12 +220,7 @@
     }
 }
 
-/* frame-topline sigil stays visible — it is the room sign, not a label duplicate */
-
 /* ── Role-based spatial identity ──────────────────────────────────────── */
-/* Each data-spw-role positions the reader in a different spatial stance.
-   Gradients lean toward opening or closing edge to signal direction.    */
-
 .site-frame[data-spw-role="probe"] {
     background-image: linear-gradient(
         180deg,
@@ -326,17 +314,9 @@
     white-space: nowrap;
 }
 
-.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="conceptual"] {
-    border-style: dashed;
-}
-
-.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="realized"] {
-    border-style: solid;
-}
-
-.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="hybrid"] {
-    border-style: dotted;
-}
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="conceptual"] { border-style: dashed; }
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="realized"] { border-style: solid; }
+.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="hybrid"] { border-style: dotted; }
 
 .spw-guide-chip[data-spw-operator] {
     color: var(--spw-operator-color, var(--ink-soft));
@@ -356,14 +336,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
 .syntax-token {
     user-select: none;
 }
-/*
- * Brace form: 1D grammar (the { } character pair) projected into 2D space.
- * The opening brace materializes as a top-left corner; the closing brace as
- * bottom-right. Arm length and opacity scale with containment depth.
- *
- * Block form: a 2D surface that hints at N-D depth — nested inner layers
- * suggest the content extends beyond what is immediately visible.
- */
 
 [data-spw-form="brace"]::before,
 [data-spw-form="brace"]::after,
@@ -390,65 +362,16 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --brace-close-color: rgba(0, 128, 128, 0.18);
 }
 
-[data-spw-substrate="frame"] {
-    --spw-substrate-color: var(--op-frame-color);
-    --spw-substrate-border: var(--op-frame-border);
-    --spw-substrate-bg-soft: var(--op-frame-bg-soft);
-}
-
-[data-spw-substrate="object"] {
-    --spw-substrate-color: var(--op-object-color);
-    --spw-substrate-border: var(--op-object-border);
-    --spw-substrate-bg-soft: var(--op-object-bg-soft);
-}
-
-[data-spw-substrate="ref"] {
-    --spw-substrate-color: var(--op-ref-color);
-    --spw-substrate-border: var(--op-ref-border);
-    --spw-substrate-bg-soft: var(--op-ref-bg-soft);
-}
-
-[data-spw-substrate="probe"] {
-    --spw-substrate-color: var(--op-probe-color);
-    --spw-substrate-border: var(--op-probe-border);
-    --spw-substrate-bg-soft: var(--op-probe-bg-soft);
-}
-
-[data-spw-substrate="action"] {
-    --spw-substrate-color: var(--op-action-color);
-    --spw-substrate-border: var(--op-action-border);
-    --spw-substrate-bg-soft: var(--op-action-bg-soft);
-}
-
-[data-spw-substrate="layer"] {
-    --spw-substrate-color: var(--op-layer-color);
-    --spw-substrate-border: var(--op-layer-border);
-    --spw-substrate-bg-soft: var(--op-layer-bg-soft);
-}
-
-[data-spw-substrate="baseline"] {
-    --spw-substrate-color: var(--op-baseline-color);
-    --spw-substrate-border: var(--op-baseline-border);
-    --spw-substrate-bg-soft: var(--op-baseline-bg-soft);
-}
-
-[data-spw-substrate="meta"] {
-    --spw-substrate-color: var(--op-meta-color);
-    --spw-substrate-border: var(--op-meta-border);
-    --spw-substrate-bg-soft: var(--op-meta-bg-soft);
-}
-
-[data-spw-substrate="pragma"] {
-    --spw-substrate-color: var(--op-pragma-color);
-    --spw-substrate-border: var(--op-pragma-border);
-    --spw-substrate-bg-soft: var(--op-pragma-bg-soft);
-}
-
-[data-spw-substrate="surface"] {
-    --spw-substrate-color: var(--op-surface-color);
-    --spw-substrate-border: var(--op-surface-border);
-    --spw-substrate-bg-soft: var(--op-surface-bg-soft);
-}
+[data-spw-substrate="frame"] { --spw-substrate-color: var(--op-frame-color); --spw-substrate-border: var(--op-frame-border); --spw-substrate-bg-soft: var(--op-frame-bg-soft); }
+[data-spw-substrate="object"] { --spw-substrate-color: var(--op-object-color); --spw-substrate-border: var(--op-object-border); --spw-substrate-bg-soft: var(--op-object-bg-soft); }
+[data-spw-substrate="ref"] { --spw-substrate-color: var(--op-ref-color); --spw-substrate-border: var(--op-ref-border); --spw-substrate-bg-soft: var(--op-ref-bg-soft); }
+[data-spw-substrate="probe"] { --spw-substrate-color: var(--op-probe-color); --spw-substrate-border: var(--op-probe-border); --spw-substrate-bg-soft: var(--op-probe-bg-soft); }
+[data-spw-substrate="action"] { --spw-substrate-color: var(--op-action-color); --spw-substrate-border: var(--op-action-border); --spw-substrate-bg-soft: var(--op-action-bg-soft); }
+[data-spw-substrate="layer"] { --spw-substrate-color: var(--op-layer-color); --spw-substrate-border: var(--op-layer-border); --spw-substrate-bg-soft: var(--op-layer-bg-soft); }
+[data-spw-substrate="baseline"] { --spw-substrate-color: var(--op-baseline-color); --spw-substrate-border: var(--op-baseline-border); --spw-substrate-bg-soft: var(--op-baseline-bg-soft); }
+[data-spw-substrate="meta"] { --spw-substrate-color: var(--op-meta-color); --spw-substrate-border: var(--op-meta-border); --spw-substrate-bg-soft: var(--op-meta-bg-soft); }
+[data-spw-substrate="pragma"] { --spw-substrate-color: var(--op-pragma-color); --spw-substrate-border: var(--op-pragma-border); --spw-substrate-bg-soft: var(--op-pragma-bg-soft); }
+[data-spw-substrate="surface"] { --spw-substrate-color: var(--op-surface-color); --spw-substrate-border: var(--op-surface-border); --spw-substrate-bg-soft: var(--op-surface-bg-soft); }
 
 [data-spw-form="block"] {
     --block-inset: 0.42rem;
@@ -464,7 +387,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --block-hover-depth-color: rgba(14, 18, 20, 0.04);
 }
 
-/* Opening brace corner { — top-left */
 [data-spw-form="brace"]::before {
     top: var(--brace-corner-offset);
     left: var(--brace-corner-offset);
@@ -476,7 +398,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     transition: border-color 200ms ease;
 }
 
-/* Closing brace corner } — bottom-right */
 [data-spw-form="brace"]::after {
     right: var(--brace-corner-offset);
     bottom: var(--brace-corner-offset);
@@ -488,7 +409,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     transition: border-color 200ms ease;
 }
 
-/* ─── Angle Form < > ─────────────────────────────────────────────────── */
 [data-spw-form="angle"] {
     --angle-offset: 0.45rem;
     --angle-width: 0.85rem;
@@ -518,7 +438,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     clip-path: polygon(0% 0%, 100% 50%, 0% 100%, 15% 100%, 115% 50%, 15% 0%);
 }
 
-/* ─── Circle Form ( ) ────────────────────────────────────────────────── */
 [data-spw-form="circle"] {
     --circle-offset: 0.5rem;
     --circle-width: 1.2rem;
@@ -550,7 +469,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border-bottom-right-radius: 100%;
 }
 
-/* ─── Square Form [ ] ────────────────────────────────────────────────── */
 [data-spw-form="square"] {
     --square-offset: 0.6rem;
     --square-width: 0.6rem;
@@ -582,7 +500,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border-bottom: var(--square-stroke) solid var(--square-close-color);
 }
 
-/* site-frame is the outermost brace level — larger corners */
 .site-frame[data-spw-form="brace"] {
     --brace-corner-width: 2.2rem;
     --brace-corner-height: 1.6rem;
@@ -606,104 +523,25 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --brace-close-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 24%, transparent);
 }
 
-[data-spw-form="brace"][data-spw-realization="conceptual"][data-spw-selection="selected"],
-[data-spw-form="brace"][data-spw-realization="conceptual"].is-active-frame {
-    background-image: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 52%, transparent),
-        transparent 42%
-    );
-}
-
-[data-spw-form="brace"][data-spw-realization="realized"][data-spw-selection="selected"],
-[data-spw-form="brace"][data-spw-realization="realized"].is-active-frame {
-    background-image: linear-gradient(
-        0deg,
-        color-mix(in srgb, var(--spw-substrate-bg-soft, transparent) 56%, transparent),
-        transparent 42%
-    );
-}
-
-/* Active frame: brace corners sharpen */
 .site-frame.is-active-frame[data-spw-form="brace"] {
     --brace-open-color: rgba(0, 128, 128, 0.40);
     --brace-close-color: rgba(0, 128, 128, 0.24);
 }
 
-/*
- * ─── Operator-aware brace tinting ─────────────────────────────────────────
- * When a brace form carries a Spw operator sigil, the corner marks inherit
- * that operator's semantic color. Grammar form and cognitive intent unify:
- * the container becomes a vessel for its operator's meaning.
- *
- * Uses color-mix() (baseline 2023) so opacity stays proportional to the
- * operator's hue without hard-coding per-operator rgba values.
- */
-
-[data-spw-form="brace"][data-spw-operator="frame"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-frame-color)     38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-frame-color)     20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="object"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-object-color)    38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-object-color)    20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="ref"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-ref-color)       38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-ref-color)       20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="probe"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-probe-color)     38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-probe-color)     20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="action"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-action-color)    42%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-action-color)    24%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="stream"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-stream-color)    38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-stream-color)    20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="merge"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-merge-color)     38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-merge-color)     20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="pragma"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-pragma-color)    36%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-pragma-color)    18%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="meta"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-meta-color)      38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-meta-color)      20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="surface"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-surface-color)   40%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-surface-color)   22%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="binding"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-binding-color)   38%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-binding-color)   20%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="normalize"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-normalize-color) 36%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-normalize-color) 18%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="layer"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-layer-color)     30%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-layer-color)     14%, transparent);
-}
-[data-spw-form="brace"][data-spw-operator="baseline"] {
-    --brace-open-color:  color-mix(in srgb, var(--op-baseline-color)  32%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--op-baseline-color)  16%, transparent);
-}
-
-/*
- * Fractal universe: recursive corner scaling at each nesting level.
- * Each contained brace element (card, panel) scales down proportionally,
- * creating self-similar visual structure at different magnifications.
- * This gives the sense that every component is made from the same
- * grammar, just at different zoom levels.
- */
+[data-spw-form="brace"][data-spw-operator="frame"]    { --brace-open-color: color-mix(in srgb, var(--op-frame-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-frame-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="object"]   { --brace-open-color: color-mix(in srgb, var(--op-object-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-object-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="ref"]      { --brace-open-color: color-mix(in srgb, var(--op-ref-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-ref-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="probe"]    { --brace-open-color: color-mix(in srgb, var(--op-probe-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-probe-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="action"]   { --brace-open-color: color-mix(in srgb, var(--op-action-color) 42%, transparent); --brace-close-color: color-mix(in srgb, var(--op-action-color) 24%, transparent); }
+[data-spw-form="brace"][data-spw-operator="stream"]   { --brace-open-color: color-mix(in srgb, var(--op-stream-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-stream-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="merge"]    { --brace-open-color: color-mix(in srgb, var(--op-merge-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-merge-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="pragma"]   { --brace-open-color: color-mix(in srgb, var(--op-pragma-color) 36%, transparent); --brace-close-color: color-mix(in srgb, var(--op-pragma-color) 18%, transparent); }
+[data-spw-form="brace"][data-spw-operator="meta"]     { --brace-open-color: color-mix(in srgb, var(--op-meta-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-meta-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="surface"]  { --brace-open-color: color-mix(in srgb, var(--op-surface-color) 40%, transparent); --brace-close-color: color-mix(in srgb, var(--op-surface-color) 22%, transparent); }
+[data-spw-form="brace"][data-spw-operator="binding"]  { --brace-open-color: color-mix(in srgb, var(--op-binding-color) 38%, transparent); --brace-close-color: color-mix(in srgb, var(--op-binding-color) 20%, transparent); }
+[data-spw-form="brace"][data-spw-operator="normalize"]{ --brace-open-color: color-mix(in srgb, var(--op-normalize-color) 36%, transparent); --brace-close-color: color-mix(in srgb, var(--op-normalize-color) 18%, transparent); }
+[data-spw-form="brace"][data-spw-operator="layer"]    { --brace-open-color: color-mix(in srgb, var(--op-layer-color) 30%, transparent); --brace-close-color: color-mix(in srgb, var(--op-layer-color) 14%, transparent); }
+[data-spw-form="brace"][data-spw-operator="baseline"] { --brace-open-color: color-mix(in srgb, var(--op-baseline-color) 32%, transparent); --brace-close-color: color-mix(in srgb, var(--op-baseline-color) 16%, transparent); }
 
 .frame-card[data-spw-form="brace"] {
     --brace-corner-offset: 0.4rem;
@@ -711,7 +549,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --brace-corner-height: 1.1rem;
 }
 
-/* Frame panels: even smaller */
 .frame-panel[data-spw-form="brace"] {
     --brace-corner-offset: 0.3rem;
     --brace-corner-width: 1.2rem;
@@ -719,7 +556,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --brace-corner-stroke: 1.2px;
 }
 
-/* Mode panels: smallest scale */
 .mode-panel[data-spw-form="brace"] {
     --brace-corner-offset: 0.25rem;
     --brace-corner-width: 0.95rem;
@@ -728,7 +564,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --brace-corner-stroke: 1px;
 }
 
-/* Block form: layered inner depth — nested insets suggest hidden N-D content */
 [data-spw-form="block"]::before {
     inset: var(--block-inset);
     border: var(--block-border-width) solid var(--block-border-color);
@@ -746,7 +581,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
         inset 0 0 0 var(--block-depth-size) var(--block-hover-depth-color);
 }
 
-/* Fractal block scaling — nested levels */
 .frame-card[data-spw-form="block"] {
     --block-inset: 0.32rem;
     --block-radius: calc(var(--radius-sm) - 0.08rem);
@@ -775,6 +609,7 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     --block-depth-size: 0.18rem;
     --block-depth-color: rgba(14, 18, 20, 0.01);
 }
+
 .site-frame > .spw-component-tag,
 .frame-panel > .spw-component-tag,
 .frame-card > .spw-component-tag,
@@ -796,60 +631,36 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border-radius: 999px;
 }
 
-/* ── Objective / Subjective brace behavioral distinction ─────────────────
-   Objective = structural, shared, cool-sided — left-anchored
-   Subjective = situated, felt-meaning, warm-sided — right-anchored
-   The --spw-bias CSS property (-1 objective ↔ +1 subjective) drives tinting.
-   ───────────────────────────────────────────────────────────────────────── */
-
+/* ── Objective / Subjective brace behavioral distinction ───────────────── */
 [data-spw-brace="objective"] {
-    --brace-open-color:  color-mix(in srgb, var(--objective-brace-color) 44%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--objective-brace-color) 18%, transparent);
-    border-left-color:   color-mix(in srgb, var(--objective-brace-color) 26%, transparent);
-    border-left-width: 2px;
-    background-image: linear-gradient(
-        90deg,
-        var(--objective-brace-wash) 0 2px,
-        transparent 2px
-    );
+    border-left: 2px solid color-mix(in oklab, var(--objective-brace-color) 22%, transparent);
+    background: transparent;
+    background-image: none;
 }
 
 [data-spw-brace="subjective"] {
-    --brace-open-color:  color-mix(in srgb, var(--subjective-brace-color) 18%, transparent);
-    --brace-close-color: color-mix(in srgb, var(--subjective-brace-color) 44%, transparent);
-    border-right-color:  color-mix(in srgb, var(--subjective-brace-color) 26%, transparent);
-    border-right-width: 2px;
-    background-image: linear-gradient(
-        -90deg,
-        var(--subjective-brace-wash) 0 2px,
-        transparent 2px
-    );
+    border-right: 2px solid color-mix(in oklab, var(--subjective-brace-color) 22%, transparent);
+    background: transparent;
+    background-image: none;
 }
 
 [data-spw-brace="objective"].is-active-frame,
 [data-spw-brace="objective"]:hover {
-    --brace-open-color:  color-mix(in srgb, var(--objective-brace-color) 58%, transparent);
-    border-left-color:   color-mix(in srgb, var(--objective-brace-color) 40%, transparent);
+    border-left-color: color-mix(in oklab, var(--objective-brace-color) 44%, transparent);
 }
 
 [data-spw-brace="subjective"].is-active-frame,
 [data-spw-brace="subjective"]:hover {
-    --brace-close-color: color-mix(in srgb, var(--subjective-brace-color) 58%, transparent);
-    border-right-color:  color-mix(in srgb, var(--subjective-brace-color) 40%, transparent);
+    border-right-color: color-mix(in oklab, var(--subjective-brace-color) 44%, transparent);
 }
 
-/* ── Topic lens: <topic> inline angle-bracket form ───────────────────────
-   Represents a topical scope or field boundary.
-   Usage: <span data-spw-form="angle" data-spw-operator="topic">concept</span>
-   ───────────────────────────────────────────────────────────────────────── */
-
+/* ── Topic lens: <topic> inline angle-bracket form ─────────────────────── */
 [data-spw-operator="topic"] {
     --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%));
-    --angle-open-color:   color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
-    --angle-close-color:  color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
+    --angle-open-color:  color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
+    --angle-close-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
 }
 
-/* Inline topic chip: <topic> rendered in monospace with angle brackets */
 .spw-topic,
 [data-spw-topic] {
     display: inline;
@@ -882,7 +693,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     color: color-mix(in srgb, var(--op-topic-color) 85%, black);
 }
 
-/* Topic discovery: highlighted + active states */
 .spw-topic--highlighted {
     background: color-mix(in srgb, var(--op-topic-color) 14%, rgba(255,255,255,0.6));
     border-color: color-mix(in srgb, var(--op-topic-color) 42%, transparent);
@@ -896,7 +706,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     outline-offset: 2px;
 }
 
-/* Topic context popover */
 .spw-topic-popover {
     position: absolute;
     z-index: var(--z-modal, 2000);
@@ -964,14 +773,12 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     font-size: 0.75rem;
 }
 
-/* Badge swipe active state */
 .is-badge-active {
     background: color-mix(in srgb, var(--teal) 16%, rgba(255,255,255,0.5));
     border-color: var(--teal);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--teal) 14%, transparent);
 }
 
-/* Scene connector: (scene-a) <> (scene-b) — relational field boundary */
 .spw-connector {
     display: inline-flex;
     align-items: center;
@@ -984,7 +791,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     vertical-align: middle;
 }
 
-/* Brace-form tags: pill shape + { } bracket decoration */
 [data-spw-form="brace"] > .spw-component-tag::before {
     content: '{';
     margin-right: 0.25em;
@@ -1000,7 +806,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
 
 /* ─── Persona-Aware Salience (Projections) ─────────────────────────── */
 
-/* Viewer — soft circles, ambient pulses */
 [data-spw-persona="viewer"] .spw-delimiter--paren {
     animation: viewer-pulse 2s infinite ease-in-out;
 }
@@ -1009,7 +814,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 10px var(--teal-soft); }
 }
 
-/* Scribe — sharp angles, meta reveals */
 [data-spw-persona="scribe"] .spw-delimiter--angle {
     color: var(--amber);
     border-bottom: 1px dotted var(--amber);
@@ -1022,7 +826,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     opacity: 0.7;
 }
 
-/* Doodler — blocky squares, sparkles */
 [data-spw-persona="doodler"] .spw-delimiter--square {
     color: var(--pink);
     background: color-mix(in srgb, var(--pink) 10%, transparent);
@@ -1036,7 +839,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     50% { transform: translateY(-3px) rotate(5deg); }
 }
 
-/* Sequence Selection Glow */
 [data-spw-selection="selected"].spw-delimiter {
     background: var(--delight-color);
     color: #fff !important;
@@ -1044,8 +846,6 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     border-radius: 4px;
     box-shadow: 0 0 15px var(--delight-color);
 }
-
-  /* ─── Inline Spw Delimiters (Brace Physics) ─────────────────────────── */
 
 .spw-delimiter {
     font-family: var(--font-mono);
@@ -1055,22 +855,10 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     display: inline-block;
 }
 
-.spw-delimiter--paren {
-    color: var(--teal-soft);
-    --spw-operator-color: var(--teal);
-}
+.spw-delimiter--paren { color: var(--teal-soft); --spw-operator-color: var(--teal); }
+.spw-delimiter--square { color: var(--pink-soft); --spw-operator-color: var(--pink); }
+.spw-delimiter--angle { color: var(--amber-soft); --spw-operator-color: var(--amber); }
 
-.spw-delimiter--square {
-    color: var(--pink-soft);
-    --spw-operator-color: var(--pink);
-}
-
-.spw-delimiter--angle {
-    color: var(--amber-soft);
-    --spw-operator-color: var(--amber);
-}
-
-/* Interaction with brace-gestures.js states */
 .spw-delimiter:hover,
 [data-spw-gesture="charging"].spw-delimiter {
     color: var(--spw-operator-color);
@@ -1161,184 +949,4 @@ html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     color: var(--op-pragma-color);
     border-color: var(--op-pragma-border);
     background: var(--op-pragma-bg-soft);
-}
-/* ─── Spw operator family visual identity ─────────────────────────────────── */
-
-/*
- * Each operator prefix has a distinct semantic role in the Spw grammar.
- * The palette is defined once as custom properties so frame sigils, the
- * navigator, and any future textual surfaces can reuse it without copying
- * per-operator colors.
- */
-
-[data-spw-operator="frame"] {
-    /* #>name — canonical frame declaration, the primary structural anchor */
-    --spw-operator-color: var(--op-frame-color);
-    --spw-operator-border: var(--op-frame-border);
-    --spw-operator-bg-soft: var(--op-frame-bg-soft);
-}
-
-[data-spw-operator="object"] {
-    /* ^"name"{ } — structured content body, warm-shifted */
-    --spw-operator-color: var(--op-object-color);
-    --spw-operator-border: var(--op-object-border);
-    --spw-operator-bg-soft: var(--op-object-bg-soft);
-}
-
-[data-spw-operator="ref"] {
-    /* ~"path" or ~#name — reference, points outward, cooler hue */
-    --spw-operator-color: var(--op-ref-color);
-    --spw-operator-border: var(--op-ref-border);
-    --spw-operator-bg-soft: var(--op-ref-bg-soft);
-}
-
-[data-spw-operator="probe"] {
-    /* ?[...] — question or interactive probe, violet-adjacent */
-    --spw-operator-color: var(--op-probe-color);
-    --spw-operator-border: var(--op-probe-border);
-    --spw-operator-bg-soft: var(--op-probe-bg-soft);
-}
-
-[data-spw-operator="action"] {
-    /* @action — imperative, deeper teal */
-    --spw-operator-color: var(--op-action-color);
-    --spw-operator-border: var(--op-action-border);
-    --spw-operator-bg-soft: var(--op-action-bg-soft);
-}
-
-[data-spw-operator="layer"] {
-    /* #:layer — meta, interpretive role, muted */
-    --spw-operator-color: var(--op-layer-color);
-    --spw-operator-border: var(--op-layer-border);
-    --spw-operator-bg-soft: var(--op-layer-bg-soft);
-}
-
-[data-spw-operator="baseline"] {
-    /* .member - local baseline, default lens, or grounded percept */
-    --spw-operator-color: var(--op-baseline-color);
-    --spw-operator-border: var(--op-baseline-border);
-    --spw-operator-bg-soft: var(--op-baseline-bg-soft);
-}
-
-[data-spw-operator="pragma"] {
-    /* !pragma — runtime constraint, also muted but slightly stronger */
-    --spw-operator-color: var(--op-pragma-color);
-    --spw-operator-border: var(--op-pragma-border);
-    --spw-operator-bg-soft: var(--op-pragma-bg-soft);
-}
-
-[data-spw-operator="stream"] {
-    /* *stream — dynamic / event-driven */
-    --spw-operator-color: var(--op-stream-color);
-    --spw-operator-border: var(--op-stream-border);
-    --spw-operator-bg-soft: var(--op-stream-bg-soft);
-}
-
-[data-spw-operator="merge"] {
-    /* &merge - overlay or integration of fields */
-    --spw-operator-color: var(--op-merge-color);
-    --spw-operator-border: var(--op-merge-border);
-    --spw-operator-bg-soft: var(--op-merge-bg-soft);
-}
-
-[data-spw-operator="binding"] {
-    /* =binding - naming, pinning, or categorization */
-    --spw-operator-color: var(--op-binding-color);
-    --spw-operator-border: var(--op-binding-border);
-    --spw-operator-bg-soft: var(--op-binding-bg-soft);
-}
-
-[data-spw-operator="meta"] {
-    /* $meta - metacognitive reflection on the medium */
-    --spw-operator-color: var(--op-meta-color);
-    --spw-operator-border: var(--op-meta-border);
-    --spw-operator-bg-soft: var(--op-meta-bg-soft);
-}
-
-[data-spw-operator="normalize"] {
-    /* %normalize - comparable scale or salience */
-    --spw-operator-color: var(--op-normalize-color);
-    --spw-operator-border: var(--op-normalize-border);
-    --spw-operator-bg-soft: var(--op-normalize-bg-soft);
-}
-
-[data-spw-operator="surface"] {
-    /* >surface — projection, rendered view */
-    --spw-operator-color: var(--op-surface-color);
-    --spw-operator-border: var(--op-surface-border);
-    --spw-operator-bg-soft: var(--op-surface-bg-soft);
-}
-
-/* ─── Inline Delimiters for Copy Markup ────────────────────────────────── */
-
-.spw-delimiter {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    padding: 0 0.1rem;
-    color: var(--teal);
-    transition: filter 160ms ease;
-    cursor: help;
-}
-
-.spw-delimiter:hover {
-    filter: drop-shadow(0 0 3px rgba(0, 128, 128, 0.4));
-}
-
-.spw-delimiter--angle { color: var(--op-surface-color); }
-.spw-delimiter--circle { color: var(--op-ref-color); }
-.spw-delimiter--square { color: var(--op-probe-color); }
-
-/* Selection states for larger forms */
-[data-spw-selection="navigation"] { --angle-open-color: var(--op-surface-color); }
-[data-spw-selection="relational"] { --circle-open-color: var(--op-ref-color); }
-[data-spw-selection="collection"] { --square-open-color: var(--op-probe-color); }
-
-/* ── Symmetric frame layout ──────────────────────────────────────────────── */
-/* Three-column grid: objective rail ← center measure → subjective rail.
-   The outer rails are optional annotation tracks; content lives in .center. */
-
-.spw-symmetric-frame {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, var(--reading-width, 68ch)) 1fr;
-  gap: 0 1rem;
-}
-
-.spw-symmetric-frame > .center { grid-column: 2; min-width: 0; }
-.spw-rail-left  { grid-column: 1; justify-self: end;   align-self: start; }
-.spw-rail-right { grid-column: 3; justify-self: start; align-self: start; }
-
-/* ── Brace axis ──────────────────────────────────────────────────────────── */
-/* Marks a region as explicitly bounded by { } — the opening brace anchors
-   the objective frame; the closing brace anchors subjective completion.
-   The braces are typographic signifiers, not decorative chrome.            */
-
-.spw-brace-axis {
-  position: relative;
-  border-inline: 1px solid color-mix(in oklab, currentColor 18%, transparent);
-  padding-inline: clamp(1.5rem, 4ch, 2.5rem);
-}
-
-.spw-brace-axis::before,
-.spw-brace-axis::after {
-  position: absolute;
-  top: 0.5rem;
-  font-family: var(--site-mono-font);
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 300;
-  line-height: 1;
-  color: var(--active-op-color, var(--teal));
-  opacity: 0.28;
-  pointer-events: none;
-  user-select: none;
-  transition: opacity 200ms ease, color 200ms ease;
-}
-
-.spw-brace-axis::before { content: "{"; inset-inline-start: 0.45rem; }
-.spw-brace-axis::after  { content: "}"; inset-inline-end:   0.45rem; }
-
-.spw-brace-axis:hover::before,
-.spw-brace-axis:hover::after,
-.spw-brace-axis:focus-within::before,
-.spw-brace-axis:focus-within::after {
-  opacity: 0.6;
 }

@@ -125,10 +125,6 @@
 
 /* ==========================================================================
    4. Spatial stance utilities
-   --------------------------------------------------------------------------
-   Purpose
-   - Felt reading rhythm for copy entering, grounding, or receding inside a
-     container. Useful for frame copy, small meta rows, and pretext scaffolds.
    ========================================================================== */
 
 :where([data-spw-stance="entry"]) {
@@ -152,11 +148,6 @@
 
 /* ==========================================================================
    5. Shared card / panel shell
-   --------------------------------------------------------------------------
-   Purpose
-   - Base shell for cards, panels, media blocks, and operator reference units.
-   - Tuned to be pretext-friendly: min-width:0, stable padding, readable surface,
-     no blur requirement, and low-cost transitions.
    ========================================================================== */
 
 :where(.frame-card, .media-card, .operator-card, .frame-panel, .mode-panel) {
@@ -180,12 +171,170 @@
   border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
 }
 
+/* Enhancements previously from whimsy layer */
+.frame-card, .media-focus-card, .plan-card {
+  position: relative;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.frame-card:hover, .frame-card:focus-within, 
+.media-focus-card:hover, .media-focus-card:focus-within, 
+.plan-card:hover, .plan-card:focus-within {
+  border-color: var(--active-op-border);
+  background: var(--active-op-bg-soft);
+}
+
+.frame-card-sigil, .operator-symbol {
+  display: inline-block;
+  font-weight: 700;
+  transition: color 140ms ease;
+}
+
+.frame-card:hover .frame-card-sigil,
+.frame-card:focus-within .frame-card-sigil,
+.operator-symbol:hover,
+.operator-symbol:focus-visible {
+  color: var(--active-op-color);
+}
+
+code[data-interactive] {
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease, outline-color 140ms ease;
+}
+
+code[data-interactive]::after {
+  content: ' ={ready}';
+  color: var(--op-stream-color);
+  font-weight: 700;
+  opacity: 0;
+}
+
+code[data-interactive]:hover,
+code[data-interactive]:focus-visible {
+  outline: 1px solid var(--active-op-border);
+  outline-offset: 2px;
+}
+
+code[data-interactive]:hover::after,
+code[data-interactive]:focus-visible::after {
+  opacity: 1;
+}
+
+.settings-fieldset {
+  position: relative;
+  transition: border-color 140ms ease;
+}
+
+.settings-fieldset legend {
+  font-weight: 700;
+  color: var(--ink);
+  transition: color 140ms ease;
+}
+
+.settings-fieldset:hover legend,
+.settings-fieldset:focus-within legend {
+  color: var(--op-frame-color);
+}
+
+.settings-option {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.settings-option:hover,
+.settings-option:focus-within {
+  background: var(--op-frame-bg-soft);
+}
+
+[data-status-indicator] {
+  position: relative;
+  display: inline-block;
+}
+
+[data-status-indicator]::after {
+  content: ' #';
+  color: currentColor;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+[data-status-indicator]:hover::after,
+[data-status-indicator]:focus-visible::after,
+[data-status-indicator][aria-current="true"]::after {
+  opacity: 0.7;
+}
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.breadcrumb a {
+  position: relative;
+}
+
+.breadcrumb a::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  border-bottom: 1px solid currentColor;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.breadcrumb a:hover::before,
+.breadcrumb a:focus-visible::before,
+.breadcrumb a[aria-current="page"]::before {
+  opacity: 0.75;
+}
+
+.breadcrumb > span {
+  opacity: 0.55;
+}
+
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  opacity: 0.78;
+}
+
+.empty-state::before {
+  content: '{}';
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--ink-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+}
+
+.inline-note {
+  position: relative;
+  padding-left: 1.35rem;
+}
+
+.inline-note::before {
+  content: '~{';
+  position: absolute;
+  left: 0;
+  color: var(--op-ref-color);
+  font-weight: 700;
+}
+
+.inline-note::after {
+  content: '}';
+  color: var(--op-ref-color);
+  font-weight: 700;
+}
+
 /* ==========================================================================
    6. Site frame
-   --------------------------------------------------------------------------
-   Purpose
-   - Primary structural room container.
-   - Should feel stable even when text inside is live and re-typeset.
    ========================================================================== */
 
 :where(.site-frame) {
@@ -227,6 +376,35 @@
   box-shadow: var(--component-shadow-active);
 }
 
+/* Site Frame Hierarchy Scaling */
+.site-frame h1 {
+  font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.site-frame h2 {
+  font-size: clamp(1.05rem, 0.9rem + 1vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.site-frame h3 {
+  font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.site-lede {
+  font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.45;
+  opacity: 1;
+}
+
 /* ==========================================================================
    7. Hero + heading thresholds
    ========================================================================== */
@@ -256,20 +434,8 @@
   border-bottom-color: color-mix(in oklab, var(--component-accent) 32%, transparent);
 }
 
-/* In frame-heading, adjacent heading is the label; sigil is secondary */
-:where(.frame-heading > .frame-sigil) {
-  flex-shrink: 0;
-  align-self: center;
-  font-size: 0.78rem;
-  opacity: 0.6;
-}
-
 /* ==========================================================================
    8. Role-based frame stance
-   --------------------------------------------------------------------------
-   Purpose
-   - Light, low-cost metamaterial identity for common frame roles.
-   - Avoid blur-heavy ornament; use gradient direction and border logic instead.
    ========================================================================== */
 
 :where(.site-frame[data-spw-role="probe"]) {
@@ -321,11 +487,6 @@
 
 /* ==========================================================================
    9. Metamaterial selectors
-   --------------------------------------------------------------------------
-   Purpose
-   - Tunable surface families for cards / panels / frames.
-   - Meant to feel meaningful, not merely decorative.
-   - Safe for performance: gradients and border treatment only.
    ========================================================================== */
 
 :where([data-spw-metamaterial]) {
@@ -333,9 +494,6 @@
   --component-material-bg: var(--component-surface);
   --component-material-shadow: var(--component-shadow);
   --component-material-line: var(--component-accent-soft);
-}
-
-:where([data-spw-metamaterial]) {
   background: var(--component-material-bg);
   border: var(--component-material-border);
   box-shadow: var(--component-material-shadow);
@@ -406,11 +564,6 @@
 
 /* ==========================================================================
    10. Pretext flow host
-   --------------------------------------------------------------------------
-   Purpose
-   - Stable host for JS-measured line recomposition.
-   - CSS should expose state and debug surfaces, not fight width changes.
-   - No width transitions: keep lineation deterministic.
    ========================================================================== */
 
 :where([data-spw-flow="pretext"]) {
@@ -472,84 +625,27 @@
 
 /* ==========================================================================
    11. Measurement-visible text routing hooks
-   --------------------------------------------------------------------------
-   Purpose
-   - CSS hooks for the future JS replacement.
-   - Quantized states should be visible and tunable without requiring expensive
-     continuous animation.
    ========================================================================== */
 
-:where([data-spw-flow="pretext"][data-text-mode="resting"]) {
-  --pretext-line-gap: 0.16rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-mode="approach"]) {
-  --pretext-line-gap: 0.2rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-mode="contact"]) {
-  --pretext-line-gap: 0.22rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
-  --pretext-line-gap: 0.24rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-mode="settling"]) {
-  --pretext-line-gap: 0.18rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) {
-  --pretext-local-pad: 0.35rem 0.45rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-kind="question"]) {
-  --pretext-local-pad: 0.25rem 0.35rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-density="compressed"]) {
-  --pretext-line-gap: 0.12rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-density="soft"]) {
-  --pretext-line-gap: 0.24rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) {
-  border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent);
-}
-
-:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) {
-  border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent);
-}
-
-:where([data-spw-flow="pretext"][data-text-width-class="xs"]) {
-  max-inline-size: 20rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-width-class="sm"]) {
-  max-inline-size: 28rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-width-class="md"]) {
-  max-inline-size: 40rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-width-class="lg"]) {
-  max-inline-size: 54rem;
-}
-
-:where([data-spw-flow="pretext"][data-text-width-class="xl"]) {
-  max-inline-size: min(100%, 72rem);
-}
+:where([data-spw-flow="pretext"][data-text-mode="resting"]) { --pretext-line-gap: 0.16rem; }
+:where([data-spw-flow="pretext"][data-text-mode="approach"]) { --pretext-line-gap: 0.2rem; }
+:where([data-spw-flow="pretext"][data-text-mode="contact"]) { --pretext-line-gap: 0.22rem; }
+:where([data-spw-flow="pretext"][data-text-mode="projecting"]) { --pretext-line-gap: 0.24rem; }
+:where([data-spw-flow="pretext"][data-text-mode="settling"]) { --pretext-line-gap: 0.18rem; }
+:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) { --pretext-local-pad: 0.35rem 0.45rem; }
+:where([data-spw-flow="pretext"][data-text-kind="question"]) { --pretext-local-pad: 0.25rem 0.35rem; }
+:where([data-spw-flow="pretext"][data-text-density="compressed"]) { --pretext-line-gap: 0.12rem; }
+:where([data-spw-flow="pretext"][data-text-density="soft"]) { --pretext-line-gap: 0.24rem; }
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) { border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent); }
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent); }
+:where([data-spw-flow="pretext"][data-text-width-class="xs"]) { max-inline-size: 20rem; }
+:where([data-spw-flow="pretext"][data-text-width-class="sm"]) { max-inline-size: 28rem; }
+:where([data-spw-flow="pretext"][data-text-width-class="md"]) { max-inline-size: 40rem; }
+:where([data-spw-flow="pretext"][data-text-width-class="lg"]) { max-inline-size: 54rem; }
+:where([data-spw-flow="pretext"][data-text-width-class="xl"]) { max-inline-size: min(100%, 72rem); }
 
 /* ==========================================================================
    12. Intermediate scaffold
-   --------------------------------------------------------------------------
-   Purpose
-   - Occasional, clever intermediate scaffolding for quantified routing and
-     cache-aware typesetting.
-   - Should feel like instrument readout, not error state.
    ========================================================================== */
 
 :where(.pretext-flow-scaffold) {
@@ -577,11 +673,6 @@
 
 /* ==========================================================================
    13. Meaningful card utilities
-   --------------------------------------------------------------------------
-   Purpose
-   - Refine cards toward “metamaterials” without heavy effects.
-   - Useful now for frame/media/operator cards and later for pretext-guided
-     story components.
    ========================================================================== */
 
 :where(.frame-card, .media-card, .operator-card)[data-spw-density="soft"] {
@@ -649,6 +740,19 @@
 /* ==========================================================================
    15. Responsive adjustments
    ========================================================================== */
+
+@media (max-width: 600px) {
+  .site-frame {
+    padding: clamp(0.85rem, 4vw, 1.25rem);
+    gap: 0.85rem;
+  }
+  .frame-grid {
+    gap: 0.75rem;
+  }
+  .frame-panel {
+    padding: 0.85rem;
+  }
+}
 
 @container (max-width: 38rem) {
   :where(.frame-topline, .frame-heading) {

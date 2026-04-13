@@ -13,12 +13,6 @@
    - compact breadcrumbs and frame metrics seams
    - room-aware swap hints and memo surfaces
    - subtle gesture signaling for inline and card-adjacent handles
-
-   Does not own
-   - deep material rendering
-   - pretext line layout / measurement
-   - developmental salience / lattice-wide phase systems
-   - full operator typography chemistry
    ========================================================================== */
 
 /* ==========================================================================
@@ -74,10 +68,6 @@ header,
 
 /* ==========================================================================
    2. Shared handle primitive
-   --------------------------------------------------------------------------
-   Purpose
-   - Unify sigils, chips, tokens, pills, and inline handles.
-   - Keep interactions subtle and compositionally sane.
    ========================================================================== */
 
 :where(
@@ -132,18 +122,73 @@ header,
   box-shadow: none;
 }
 
+/* ── Frame Sigils ── 
+   Frame sigils act as invisible anchor handles unless in the topline context. */
+.frame-sigil {
+  font-size: 0;
+  display: block;
+  width: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.frame-topline .frame-sigil {
+  font-size: 0.72rem;
+  opacity: 0.42;
+  position: static;
+  width: auto;
+  overflow: visible;
+  color: var(--ink-soft);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: opacity 120ms ease;
+}
+
+.frame-topline .frame-sigil:hover,
+.frame-topline .frame-sigil:focus-visible {
+  opacity: 0.75;
+}
+
+/* ── Operator Chips ── */
+.operator-chip {
+  background: color-mix(in oklab, var(--active-op-color) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--active-op-color) 24%, transparent);
+  color: var(--active-op-color);
+  font-weight: 500;
+}
+
+.operator-chip:hover {
+  background: color-mix(in oklab, var(--active-op-color) 16%, transparent);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .operator-chip {
+    min-height: 2.4rem;
+    padding: 0.4rem 0.7rem;
+  }
+}
+
+/* ── Spec Pills ── */
+.spec-pill {
+  color: var(--ink-soft);
+}
+
 /* ==========================================================================
    3. Hover / focus / keyboard states
    ========================================================================== */
 
 :where(
-  .operator-chip,
   .syntax-token,
   .spec-pill,
   .badge,
   .tag,
   .pill,
-  .frame-sigil,
   .spw-delimiter,
   [data-spw-handle="true"]
 ):is(:hover, :focus-visible) {
@@ -153,15 +198,7 @@ header,
   outline: none;
 }
 
-/* Keep motion restrained: no big hover jumps */
-:where(
-  .operator-chip,
-  .frame-sigil,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-):hover {
+:where(.spec-pill, .badge, .tag, .pill):hover {
   transform: translateY(-1px);
 }
 
@@ -172,10 +209,6 @@ header,
 
 /* ==========================================================================
    4. Literate underline seam
-   --------------------------------------------------------------------------
-   Purpose
-   - Reward knowing words through subtle underlines that can coexist with
-     italics, pretext, and inline syntax.
    ========================================================================== */
 
 :where(
@@ -209,17 +242,12 @@ header,
 
 /* ==========================================================================
    5. Handle state semantics
-   --------------------------------------------------------------------------
-   Purpose
-   - Distinguish immediate interaction from latched/bookmarked knowledge.
    ========================================================================== */
 
-/* Focused: nearby, readable, lightly energized */
 :where([data-spw-selection="focused"]) {
   --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 54%, transparent);
 }
 
-/* Active: immediate engagement */
 :where(
   .frame-sigil.is-selected,
   .frame-sigil[aria-pressed="true"],
@@ -230,11 +258,9 @@ header,
   background: var(--handle-bg-selected);
   border-color: var(--handle-bg-selected);
   color: #fff;
-  box-shadow:
-    0 3px 10px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
 }
 
-/* Latched: precise mechanical retention, not just "selected" */
 :where([data-spw-latched="true"]) {
   background: color-mix(in srgb, var(--handle-bg) 86%, var(--active-op-color, var(--teal)) 8%);
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
@@ -242,7 +268,6 @@ header,
   transform: translateY(0.5px);
 }
 
-/* Bookmarked / pinned: persistent memory, quieter than active */
 :where([data-spw-pinned="true"], [data-spw-bookmarked="true"]) {
   border-color: color-mix(in srgb, var(--amber, #ffaa00) 62%, transparent);
   background:
@@ -265,7 +290,6 @@ header,
   opacity: 0.82;
 }
 
-/* Knowledge gained: quieter than flare, more durable than delight */
 :where([data-spw-knowledge="gained"]) {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line, transparent));
   background:
@@ -279,10 +303,6 @@ header,
 
 /* ==========================================================================
    6. Gesture states
-   --------------------------------------------------------------------------
-   Purpose
-   - Charging should read as progressive attentional commitment.
-   - Keep gestures subtle enough to coexist with typography and pretext.
    ========================================================================== */
 
 :where([data-spw-form]) {
@@ -293,7 +313,6 @@ header,
     border-color var(--handle-duration-base) var(--handle-settle-ease);
 }
 
-/* Charging: clearer than before, but not loud */
 :where([data-spw-gesture="charging"][data-spw-form="brace"]),
 :where([data-spw-form="brace"]:hover),
 :where([data-spw-form="brace"]:focus-within) {
@@ -302,7 +321,19 @@ header,
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 16%, transparent));
 }
 
-/* Active: one tactile latch moment */
+/* Charging shouldn't use destructive scale transforms */
+[data-spw-charge='active'],
+[data-spw-charge='sustained'],
+[data-spw-charge='manifest'] {
+  transform: none !important;
+}
+
+[data-spw-touch]:active,
+[data-spw-touch='tap']:active {
+  transform: scale(0.985);
+  transition: transform 60ms var(--ease-mechanical);
+}
+
 :where([data-spw-gesture="active"][data-spw-form="brace"]) {
   --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 76%, transparent);
   --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 58%, transparent);
@@ -314,14 +345,9 @@ header,
   transform: translateY(0.5px);
 }
 
-/* Sustained: reward waiting with extra affordance, not endurance theatre */
 @keyframes spw-handle-sustain-breath {
-  0%, 100% {
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent);
-  }
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent); }
+  50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent); }
 }
 
 :where([data-spw-gesture="sustained"][data-spw-form="brace"]),
@@ -329,19 +355,12 @@ header,
   animation: spw-handle-sustain-breath 1.6s ease-in-out infinite;
 }
 
-/* Projecting: use slight offset only; pretext should remain readable */
 :where([data-spw-gesture="projecting"][data-spw-form="brace"]) {
-  transform: translate(
-    calc(var(--drag-dx, 0px) * 0.03),
-    calc(var(--drag-dy, 0px) * 0.03)
-  );
+  transform: translate(calc(var(--drag-dx, 0px) * 0.03), calc(var(--drag-dy, 0px) * 0.03));
 }
 
 :where([data-spw-gesture="projecting"][data-spw-form="block"]) {
-  transform: translate(
-    calc(var(--drag-dx, 0px) * 0.02),
-    calc(var(--drag-dy, 0px) * 0.02)
-  );
+  transform: translate(calc(var(--drag-dx, 0px) * 0.02), calc(var(--drag-dy, 0px) * 0.02));
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
 }
 
@@ -375,9 +394,6 @@ header,
 
 /* ==========================================================================
    8. Inline delimiters and brace phrases
-   --------------------------------------------------------------------------
-   Purpose
-   - Make braces and delimiters recognizable as site-wide interactive grammar.
    ========================================================================== */
 
 :where(.spw-delimiter) {
@@ -393,62 +409,34 @@ header,
 :where(.spw-delimiter--square) { color: var(--op-probe-color, var(--teal)); }
 :where(.spw-delimiter--brace)  { color: var(--op-frame-color, var(--teal)); }
 
-/* Phrase wrappers for future inline semantics */
 :where([data-spw-inline-form]) {
   position: relative;
   display: inline;
   border-radius: 0.2rem;
-  transition:
-    background-color var(--handle-duration-fast) var(--handle-ease),
-    color var(--handle-duration-fast) var(--handle-ease);
+  transition: background-color var(--handle-duration-fast) var(--handle-ease), color var(--handle-duration-fast) var(--handle-ease);
 }
 
 :where([data-spw-inline-form="brace"]) {
-  background:
-    linear-gradient(
-      180deg,
-      transparent 72%,
-      color-mix(in srgb, var(--op-frame-color, var(--teal)) 14%, transparent) 72%
-    );
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-frame-color, var(--teal)) 14%, transparent) 72%);
 }
 
 :where([data-spw-inline-form="angle"]) {
-  background:
-    linear-gradient(
-      180deg,
-      transparent 72%,
-      color-mix(in srgb, var(--op-surface-color, var(--teal)) 14%, transparent) 72%
-    );
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-surface-color, var(--teal)) 14%, transparent) 72%);
 }
 
 :where([data-spw-inline-form="square"]) {
-  background:
-    linear-gradient(
-      180deg,
-      transparent 72%,
-      color-mix(in srgb, var(--op-probe-color, var(--teal)) 14%, transparent) 72%
-    );
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-probe-color, var(--teal)) 14%, transparent) 72%);
 }
 
 :where([data-spw-inline-form="circle"]) {
-  background:
-    linear-gradient(
-      180deg,
-      transparent 72%,
-      color-mix(in srgb, var(--op-ref-color, rgba(60,40,120,0.82)) 14%, transparent) 72%
-    );
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-ref-color, rgba(60,40,120,0.82)) 14%, transparent) 72%);
 }
 
 /* ==========================================================================
    9. Swappable affordance and roomy hints
-   --------------------------------------------------------------------------
-   Purpose
-   - The swap affordance should not depend on a tiny dashed underline alone.
-   - Hints appear only where there is enough room.
    ========================================================================== */
 
-:where([data-spw-swappable] .frame-sigil,
-       [data-spw-swappable] .frame-card-sigil) {
+:where([data-spw-swappable] .frame-sigil, [data-spw-swappable] .frame-card-sigil) {
   cursor: pointer;
 }
 
@@ -466,7 +454,6 @@ header,
   opacity: 1;
 }
 
-/* Room-aware memo surface for swap / handle critique */
 :where([data-spw-hint-surface]) {
   display: none;
   margin-top: 0.35rem;
@@ -487,10 +474,6 @@ header,
 
 /* ==========================================================================
    10. Spell breadcrumbs
-   --------------------------------------------------------------------------
-   Purpose
-   - Compact, higher-contrast header path seam.
-   - Printable enough to imagine as sticker or streamer later.
    ========================================================================== */
 
 :where(.spw-spell-path) {
@@ -515,31 +498,13 @@ header,
   border-radius: 0.42rem;
 }
 
-:where(.spw-spell-path .spell-op) {
-  color: var(--teal);
-  font-weight: 700;
-}
-
-:where(.spw-spell-path .spell-node) {
-  color: var(--ink);
-}
-
-:where(.spw-spell-path .spell-sep) {
-  color: var(--line-strong);
-  opacity: 0.78;
-}
-
-:where(.spw-spell-path .spell-current) {
-  color: var(--pink, hsl(342 58% 42%));
-  border-bottom: 1px solid currentColor;
-}
+:where(.spw-spell-path .spell-op) { color: var(--teal); font-weight: 700; }
+:where(.spw-spell-path .spell-node) { color: var(--ink); }
+:where(.spw-spell-path .spell-sep) { color: var(--line-strong); opacity: 0.78; }
+:where(.spw-spell-path .spell-current) { color: var(--pink, hsl(342 58% 42%)); border-bottom: 1px solid currentColor; }
 
 /* ==========================================================================
    11. Frame metrics
-   --------------------------------------------------------------------------
-   Purpose
-   - Keep metrics secondary and perspective-aware.
-   - Let later JS choose which metric deserves space.
    ========================================================================== */
 
 :where([data-spw-features~="metrics"] .frame-metrics-bar) {
@@ -553,9 +518,7 @@ header,
   font-size: 0.76rem;
   color: var(--ink-soft);
   opacity: 0.68;
-  transition:
-    opacity var(--handle-duration-base) var(--handle-settle-ease),
-    color var(--handle-duration-fast) var(--handle-ease);
+  transition: opacity var(--handle-duration-base) var(--handle-settle-ease), color var(--handle-duration-fast) var(--handle-ease);
 }
 
 :where([data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
@@ -571,7 +534,6 @@ header,
   flex-shrink: 0;
 }
 
-/* Metric hooks for future profile-specific outputs */
 :where([data-spw-metric-kind]) {
   border-radius: 999px;
   padding: 0.1rem 0.36rem;
@@ -580,10 +542,6 @@ header,
 
 /* ==========================================================================
    12. Guided / cognitive handles
-   --------------------------------------------------------------------------
-   Purpose
-   - Keep guided surfaces informative without screaming.
-   - Compatible with show-semantic-metadata and cognitive-handle toggles.
    ========================================================================== */
 
 :where([data-spw-guided="true"]) {
@@ -612,10 +570,7 @@ header,
   text-transform: uppercase;
 }
 
-:where(html[data-spw-cognitive-handles="off"]) :is(
-  .spw-smart-console-host,
-  .cognitive-surface-panel
-) {
+:where(html[data-spw-cognitive-handles="off"]) :is(.spw-smart-console-host, .cognitive-surface-panel) {
   display: none !important;
 }
 
@@ -626,9 +581,6 @@ header,
 
 /* ==========================================================================
    13. Resonance seam
-   --------------------------------------------------------------------------
-   Purpose
-   - Keep resonance available as a handle concept, but quiet.
    ========================================================================== */
 
 :where(.resonance-header) {

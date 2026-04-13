@@ -3,13 +3,12 @@
 /* JetBrains Mono — site body font.
    Weights: 300 thin, 400 regular, 500 medium, 600 semi-bold, 700 bold.
    Italic 400 for oblique operator typography (probe, ref, meta operators).
-   display=swap prevents FOIT while the font loads.                         */
+   display=swap prevents FOIT while the font loads.                                 */
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
 
 @import url('/public/css/spw-reset.css') layer(reset);
 @import url('/public/css/spw-tokens.css') layer(tokens);
 @import url('/public/css/spw-shell.css') layer(shell);
-@import url('/public/css/spwashi-typography.css') layer(typography);
 @import url('/public/css/spw-typography.css') layer(typography);
 @import url('/public/css/spw-typography-context.css') layer(typography);
 @import url('/public/css/spw-grammar.css') layer(grammar);
@@ -21,6 +20,8 @@
 @import url('/public/css/spw-svg-personas.css') layer(surfaces);
 @import url('/public/css/craft-surface.css') layer(surfaces);
 @import url('/public/css/blog-surface.css') layer(surfaces);
+@import url('/public/css/settings-surface.css') layer(surfaces);
+@import url('/public/css/play-surface.css') layer(surfaces);
 
 @import url('/public/css/cognitive-handles.css') layer(handles);
 @import url('/public/css/spw-handles.css') layer(handles);
@@ -33,10 +34,8 @@
 @import url('/public/css/spirit-phases.css') layer(ornament);
 @import url('/public/css/containers-electromagnetic.css') layer(ornament);
 @import url('/public/css/spw-whimsy.css') layer(ornament);
-@import url('/public/css/whimsy-enhancements.css') layer(ornament);
 @import url('/public/css/spw-cinematic.css') layer(ornament);
 @import url('/public/css/spw-wonder.css') layer(ornament);
 @import url('/public/css/spw-canvas-accents.css') layer(ornament);
 @import url('/public/css/spw-metaphysical-paper.css') layer(ornament);
 @import url('/public/css/spw-ornament.css') layer(ornament);
-@import url('/public/css/ux-polish.css') layer(ornament);

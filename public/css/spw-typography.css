@@ -4,47 +4,32 @@
  * progressively as charge (--charge 0→1) accumulates. These are not
  * decorative — each axis of change expresses what the operator DOES:
  *
- *   frame   (#>) — declares territory  → weight condenses, tracking tightens
- *   probe   (?)  — opens inquiry       → tracking widens, tilts toward italic
- *   action  (@)  — commits to act      → weight surges, capitalizes
- *   ref     (~)  — points away         → oblique angle grows
- *   stream  (*)  — carries flow        → tracking narrows (velocity)
- *   pragma  (!)  — applies constraint  → weight max, small-caps → all-caps
- *   object  (^)  — elevates content    → size grows, weight up
- *   merge   (&)  — integrates fields   → tracking opens (dissolution)
- *   binding (=)  — fixes a value       → monospace-feel, tabular
- *   meta    ($)  — reflects on self    → oblique deepens
- *   surface (>)  — projects outward    → size surges most
- *   layer   (#:) — qualifies context   → small-caps, weight light
- *   baseline(.)  — settles to rest     → size recedes, opacity fades
- *   normalize(%) — scales proportion   → tabular, tight
+ * frame   (#>) — declares territory  → weight condenses, tracking tightens
+ * probe   (?)  — opens inquiry       → tracking widens, tilts toward italic
+ * action  (@)  — commits to act      → weight surges, capitalizes
+ * ref     (~)  — points away         → oblique angle grows
+ * stream  (*)  — carries flow        → tracking narrows (velocity)
+ * pragma  (!)  — applies constraint  → weight max, small-caps → all-caps
+ * object  (^)  — elevates content    → size grows, weight up
+ * merge   (&)  — integrates fields   → tracking opens (dissolution)
+ * binding (=)  — fixes a value       → monospace-feel, tabular
+ * meta    ($)  — reflects on self    → oblique deepens
+ * surface (>)  — projects outward    → size surges most
+ * layer   (#:) — qualifies context   → small-caps, weight light
+ * baseline(.)  — settles to rest     → size recedes, opacity fades
+ * normalize(%) — scales proportion   → tabular, tight
  *
  * Font axes used (all via CSS calc so variable fonts can interpolate):
- *   font-weight   — calc(base + charge * range)       → 100–900
- *   letter-spacing — calc(base + charge * range)      → em units
- *   font-size      — calc(1em * (1 + charge * surge)) → proportional scale
- *   font-style     — oblique calc(0deg + charge * °)  → oblique angle
- *   font-variant-caps — discrete, keyed on charge thresholds
- *   font-variant-numeric — tabular-nums for binding/normalize
+ * font-weight  — calc(base + charge * range)        → 100–900
+ * letter-spacing — calc(base + charge * range)      → em units
+ * font-size      — calc(1em * (1 + charge * surge)) → proportional scale
+ * font-style     — oblique calc(0deg + charge * °)  → oblique angle
+ * font-variant-caps — discrete, keyed on charge thresholds
+ * font-variant-numeric — tabular-nums for binding/normalize
  *
  * The --charge property must be registered in spw-cinematic.css (or spw-tokens.css)
  * as @property { syntax: '<number>'; inherits: false; initial-value: 0 }
  * so that transitions on charge-derived expressions animate smoothly.
- *
- * Blog note — Operator Typography as Cognitive Texture
- * ─────────────────────────────────────────────────────
- * Typography is not decoration applied after meaning; it IS meaning in motion.
- * When a `?` probe token charges up, the letter-spacing opens — the type itself
- * performs the act of inquiry, reaching into white space. When a `@` action
- * commits (sustained hold), the weight surges and the case locks: the type
- * becomes the declaration it contains. This is liminality made tangible —
- * the threshold at which text stops being information and starts being presence.
- *
- * Variable fonts make this continuous rather than stepped. Even without a
- * variable font, the discrete threshold shifts (charging → active → sustained)
- * act as cognitive affordances: each level of attention is acknowledged by
- * a visible change in the reading surface. The reader trains themselves to
- * hold attention, and the text rewards it.
  */
 
 /* ── Monospace alignment ─────────────────────────────────────────────────── */
@@ -101,6 +86,19 @@ samp,
     letter-spacing var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in),
     font-size var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in),
     font-style var(--charge-in-duration, 200ms) var(--charge-ease-in, ease-in);
+}
+
+/* Disable size surge for structural framing logic to prevent layout shift */
+.site-frame [data-spw-operator] {
+  --type-size-surge: 0;
+}
+
+/* Apply minimal size surge directly to specific inline token handles */
+.operator-chip[data-spw-operator],
+.spec-pill[data-spw-operator],
+.badge[data-spw-operator],
+.syntax-token[data-spw-operator] {
+  --type-size-surge: 0.04;
 }
 
 [data-spw-operator='frame'] {
@@ -252,54 +250,16 @@ samp,
   font-family: inherit;
 }
 
-[data-spw-grounded-in='probe'] {
-  color: var(--op-probe-color, inherit);
-}
-
-[data-spw-grounded-in='frame'] {
-  color: var(--op-frame-color, inherit);
-}
-
-[data-spw-grounded-in='action'] {
-  color: var(--op-action-color, inherit);
-}
-
-[data-spw-grounded-in='ref'] {
-  color: var(--op-ref-color, inherit);
-}
-
-[data-spw-grounded-in='stream'] {
-  color: var(--op-stream-color, inherit);
-}
-
-[data-spw-grounded-in='pragma'] {
-  color: var(--op-pragma-color, inherit);
-}
-
-[data-spw-grounded-in='object'] {
-  color: var(--op-object-color, inherit);
-}
-
-[data-spw-grounded-in='binding'] {
-  color: var(--op-binding-color, inherit);
-}
-
-[data-spw-grounded-in='meta'] {
-  color: var(--op-meta-color, inherit);
-}
-
-[data-spw-grounded-in='normalize'] {
-  color: var(--op-normalize-color, inherit);
-}
-
-[data-spw-grounded-in='surface'] {
-  color: var(--op-surface-color, inherit);
-}
-
-[data-spw-grounded-in='layer'] {
-  color: var(--op-layer-color, inherit);
-}
-
-[data-spw-grounded-in='baseline'] {
-  color: var(--op-baseline-color, inherit);
-}
+[data-spw-grounded-in='probe'] { color: var(--op-probe-color, inherit); }
+[data-spw-grounded-in='frame'] { color: var(--op-frame-color, inherit); }
+[data-spw-grounded-in='action'] { color: var(--op-action-color, inherit); }
+[data-spw-grounded-in='ref'] { color: var(--op-ref-color, inherit); }
+[data-spw-grounded-in='stream'] { color: var(--op-stream-color, inherit); }
+[data-spw-grounded-in='pragma'] { color: var(--op-pragma-color, inherit); }
+[data-spw-grounded-in='object'] { color: var(--op-object-color, inherit); }
+[data-spw-grounded-in='binding'] { color: var(--op-binding-color, inherit); }
+[data-spw-grounded-in='meta'] { color: var(--op-meta-color, inherit); }
+[data-spw-grounded-in='normalize'] { color: var(--op-normalize-color, inherit); }
+[data-spw-grounded-in='surface'] { color: var(--op-surface-color, inherit); }
+[data-spw-grounded-in='layer'] { color: var(--op-layer-color, inherit); }
+[data-spw-grounded-in='baseline'] { color: var(--op-baseline-color, inherit); }
