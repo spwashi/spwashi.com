@@ -8,128 +8,221 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • Topics</title>
-    <meta name="description" content="Topic routes for Spwashi: software, author craft, play, blog, and website field guides.">
+    <meta name="description" content="Topic routes for Spwashi: software, author craft, play, blog, and website field guides. Choose the surface that matches the kind of attention you have.">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/spw-components.css">
+    <link rel="stylesheet" href="/public/css/spw-surfaces.css">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js"></script>
     <script type="module">
         import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
-        window.addEventListener('load', () => {
-            initPwaUpdateHandler();
-        });
+        window.addEventListener('load', () => { initPwaUpdateHandler(); });
     </script>
 </head>
 <body data-spw-surface="topics" data-spw-features="operators navigator console">
-    <header>
-        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/about/plans/">Plans</a></li>
-                <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/topics/craft/">Craft</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>topics</span>
-    </header>
-    <main>
-        <article>
-            <section class="site-frame site-hero" id="topics-register" data-spw-role="orientation" data-spw-meaning="topic register">
-                <div class="frame-topline">
-                    <a class="frame-sigil" href="#topics-register">#&gt;topics_register</a>
-                    <div class="spec-strip">
-                        <span class="spec-pill">software</span>
-                        <span class="spec-pill">craft</span>
-                        <span class="spec-pill">play</span>
-                        <span class="spec-pill">writing</span>
-                    </div>
-                </div>
-                <p class="spec-kicker">Topic Register</p>
-                <h1>Choose the surface that matches the kind of attention you have.</h1>
-                <p class="frame-note">Some routes are for systems and syntax. Some are for authors, motifs, and files as creative material. The links below keep those paths close enough to cross.</p>
-                <nav class="frame-operators" aria-label="Topic routes">
-                    <a class="operator-chip" href="/topics/craft/">author craft</a>
-                    <a class="operator-chip" href="/topics/software/">software</a>
-                    <a class="operator-chip" href="/topics/architecture/">architecture</a>
-                    <a class="operator-chip" href="/topics/pedagogy/">pedagogy</a>
-                    <a class="operator-chip" href="/blog/">blog</a>
-                    <a class="operator-chip" href="/play/">play</a>
-                    <a class="operator-chip" href="/about/website/">site guide</a>
-                </nav>
-            </section>
 
-            <section class="site-frame" id="topic-cards" data-spw-role="directory">
-                <div class="frame-heading">
-                    <a class="frame-sigil" href="#topic-cards">^"topic_cards"{</a>
-                    <h2>Topic Cards</h2>
-                </div>
-                <div class="frame-grid">
-                    <a class="frame-card" href="/topics/craft/">
-                        <span class="frame-card-sigil">#&gt;author_craft</span>
-                        <strong>Author craft</strong>
-                        <span>HTML, CSS, SVG, motifs, and file traditions for writers who want a small web surface to touch.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/software/">
-                        <span class="frame-card-sigil">#&gt;software_surface</span>
-                        <strong>Software</strong>
-                        <span>Spw syntax, operator grammar, interactive codeblocks, and the local-first tooling path.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/software/spw/">
-                        <span class="frame-card-sigil">?[operators]</span>
-                        <strong>Operator atlas</strong>
-                        <span>A symbol-by-symbol atlas for reading Spw as syntax, interaction, and design behavior.</span>
-                    </a>
-                    <a class="frame-card" href="/blog/">
-                        <span class="frame-card-sigil">#&gt;blog_input_interpreter</span>
-                        <strong>Blog interpreter</strong>
-                        <span>Turn Spw fragments, wonder notes, and rough drafts into questions, outlines, and seeds.</span>
-                    </a>
-                    <a class="frame-card" href="/play/rpg-wednesday/">
-                        <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
-                        <strong>RPG Wednesday</strong>
-                        <span>Session logs, cast references, world notes, and local tools for a recurring table.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/software/renderers/">
-                        <span class="frame-card-sigil">#&gt;renderers</span>
-                        <strong>Renderers</strong>
-                        <span>The geometry of light and type: affine transforms, HarfBuzz shaping, and GPU pipelines.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/software/geometry/">
-                        <span class="frame-card-sigil">#&gt;hyperbolic_geometry</span>
-                        <strong>Hyperbolic Geometry</strong>
-                        <span>Non-Euclidean space and the Poincaré disk: projecting infinite manifolds into pixels.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/software/schedulers/">
-                        <span class="frame-card-sigil">#&gt;schedulers</span>
-                        <strong>Schedulers</strong>
-                        <span>Orchestrating time: cooperative multitasking, priority queues, and the event loop sovereignty.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/architecture/">
-                        <span class="frame-card-sigil">#&gt;architecture</span>
-                        <strong>Architecture</strong>
-                        <span>Field guides for intentional systems: durable protocols and system design.</span>
-                    </a>
-                    <a class="frame-card" href="/topics/pedagogy/">
-                        <span class="frame-card-sigil">#&gt;pedagogy</span>
-                        <strong>Pedagogy</strong>
-                        <span>Learning science and constructive play foundations for mindful engineering.</span>
-                    </a>
-                    <a class="frame-card" href="/about/website/">
-                        <span class="frame-card-sigil">#&gt;website_field_guide</span>
-                        <strong>Website guide</strong>
-                        <span>The PWA shell, frame navigation, screenshot-friendly surfaces, and exploration motifs.</span>
-                    </a>
-                </div>
-            </section>
-        </article>
-    </main>
-    <footer>
-        <p>© 2026 spwashi</p>
-    </footer>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header" role="banner">
+    <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+    <nav aria-label="Primary">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/about/plans/">Plans</a></li>
+            <li><a href="/topics/software/">Software</a></li>
+            <li><a href="/topics/craft/">Craft</a></li>
+            <li><a href="/play/">Play</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/settings/">Settings</a></li>
+        </ul>
+    </nav>
+    <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>topics</span>
+</header>
+
+<main id="main-content">
+
+    <!-- Topic Register / Orientation -->
+    <section class="site-frame site-hero" id="topics-register" aria-labelledby="topics-title" data-spw-role="orientation" data-spw-meaning="topic register">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#topics-register">#&gt;topics_register</a>
+            <div class="spec-strip">
+                <span class="spec-pill">software</span>
+                <span class="spec-pill">craft</span>
+                <span class="spec-pill">play</span>
+                <span class="spec-pill">writing</span>
+            </div>
+        </div>
+        <p class="spec-kicker">Topic Register</p>
+        <h1 id="topics-title">Choose the surface that matches the kind of attention you have.</h1>
+        <p class="frame-note">Some routes are for systems and syntax. Some are for authors, motifs, and files as creative material. The links below keep those paths close enough to cross.</p>
+        
+        <nav aria-label="Topic index" class="frame-operators">
+            <a class="operator-chip" href="/topics/craft/">author craft</a>
+            <a class="operator-chip" href="/topics/software/">software</a>
+            <a class="operator-chip" href="/topics/architecture/">architecture</a>
+            <a class="operator-chip" href="/topics/pedagogy/">pedagogy</a>
+            <a class="operator-chip" href="/blog/">blog</a>
+            <a class="operator-chip" href="/play/">play</a>
+            <a class="operator-chip" href="/about/website/">site guide</a>
+        </nav>
+    </section>
+
+    <!-- Topic Cards -->
+    <section class="site-frame" id="topic-cards" aria-labelledby="topic-cards-title" data-spw-role="directory">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#topic-cards">^"topic_cards"{</a>
+        </div>
+        <h2 id="topic-cards-title">Topic Cards</h2>
+
+        <div class="frame-grid">
+
+            <!-- Author Craft -->
+            <article class="frame-card" aria-labelledby="card-author-craft">
+                <a href="/topics/craft/" id="card-author-craft">
+                    <span class="frame-card-sigil">#&gt;author_craft</span>
+                    <strong>Author craft</strong>
+                    <span>HTML, CSS, SVG, motifs, and file traditions for writers who want a small web surface to touch.</span>
+                </a>
+                <nav class="card-sub-links" aria-label="Craft sub-routes">
+                    <a href="/topics/craft/files/">files</a>
+                    <a href="/topics/craft/fragments/">fragments</a>
+                    <a href="/topics/craft/svg/">svg motifs</a>
+                </nav>
+            </article>
+
+            <!-- Software -->
+            <article class="frame-card" aria-labelledby="card-software">
+                <a href="/topics/software/" id="card-software">
+                    <span class="frame-card-sigil">#&gt;software_surface</span>
+                    <strong>Software</strong>
+                    <span>Spw syntax, operator grammar, interactive codeblocks, and the local-first tooling path.</span>
+                </a>
+                <nav class="card-sub-links" aria-label="Software sub-routes">
+                    <a href="/topics/software/spw/">spw atlas</a>
+                    <a href="/topics/software/pretext/">pretext lab</a>
+                    <a href="/topics/software/renderers/">renderers</a>
+                    <a href="/topics/software/schedulers/">schedulers</a>
+                    <a href="/topics/software/geometry/">geometry</a>
+                    <a href="/topics/software/parsers/">parsers</a>
+                    <a href="/topics/software/compilers/">compilers</a>
+                    <a href="/topics/software/compression/">compression</a>
+                    <a href="/topics/software/lattices/">lattices</a>
+                    <a href="/topics/software/distributed/">distributed</a>
+                </nav>
+            </article>
+
+            <!-- Operator Atlas -->
+            <article class="frame-card" aria-labelledby="card-operator-atlas">
+                <a href="/topics/software/spw/" id="card-operator-atlas">
+                    <span class="frame-card-sigil">?[operators]</span>
+                    <strong>Operator atlas</strong>
+                    <span>A symbol-by-symbol atlas for reading Spw as syntax, interaction, and design behavior.</span>
+                </a>
+            </article>
+
+            <!-- Blog -->
+            <article class="frame-card" aria-labelledby="card-blog">
+                <a href="/blog/" id="card-blog">
+                    <span class="frame-card-sigil">#&gt;blog_input_interpreter</span>
+                    <strong>Blog interpreter</strong>
+                    <span>Turn Spw fragments, wonder notes, and rough drafts into questions, outlines, and seeds.</span>
+                </a>
+            </article>
+
+            <!-- RPG Wednesday -->
+            <article class="frame-card" aria-labelledby="card-rpg">
+                <a href="/play/rpg-wednesday/" id="card-rpg">
+                    <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
+                    <strong>RPG Wednesday</strong>
+                    <span>Session logs, cast references, world notes, and local tools for a recurring table.</span>
+                </a>
+                <nav class="card-sub-links" aria-label="RPG sub-routes">
+                    <a href="/play/rpg-wednesday/sessions/">sessions</a>
+                    <a href="/play/rpg-wednesday/cast/">cast</a>
+                    <a href="/play/rpg-wednesday/world/">world</a>
+                    <a href="/play/rpg-wednesday/arcs/">arcs</a>
+                </nav>
+            </article>
+
+            <!-- Remaining cards (Renderers, Geometry, Schedulers, Architecture, Pedagogy, Website Guide) -->
+            <article class="frame-card" aria-labelledby="card-renderers">
+                <a href="/topics/software/renderers/" id="card-renderers">
+                    <span class="frame-card-sigil">#&gt;renderers</span>
+                    <strong>Renderers</strong>
+                    <span>The geometry of light and type: affine transforms, HarfBuzz shaping, and GPU pipelines.</span>
+                </a>
+            </article>
+            <article class="frame-card" aria-labelledby="card-geometry">
+                <a href="/topics/software/geometry/" id="card-geometry">
+                    <span class="frame-card-sigil">#&gt;hyperbolic_geometry</span>
+                    <strong>Hyperbolic Geometry</strong>
+                    <span>Non-Euclidean space and the Poincaré disk: projecting infinite manifolds into pixels.</span>
+                </a>
+            </article>
+            <article class="frame-card" aria-labelledby="card-schedulers">
+                <a href="/topics/software/schedulers/" id="card-schedulers">
+                    <span class="frame-card-sigil">#&gt;schedulers</span>
+                    <strong>Schedulers</strong>
+                    <span>Orchestrating time: cooperative multitasking, priority queues, and the event loop sovereignty.</span>
+                </a>
+            </article>
+            <article class="frame-card" aria-labelledby="card-architecture">
+                <a href="/topics/architecture/" id="card-architecture">
+                    <span class="frame-card-sigil">#&gt;architecture</span>
+                    <strong>Architecture</strong>
+                    <span>Field guides for intentional systems: durable protocols and system design.</span>
+                </a>
+            </article>
+            <article class="frame-card" aria-labelledby="card-pedagogy">
+                <a href="/topics/pedagogy/" id="card-pedagogy">
+                    <span class="frame-card-sigil">#&gt;pedagogy</span>
+                    <strong>Pedagogy</strong>
+                    <span>Learning science and constructive play foundations for mindful engineering.</span>
+                </a>
+            </article>
+            <article class="frame-card" aria-labelledby="card-website-guide">
+                <a href="/about/website/" id="card-website-guide">
+                    <span class="frame-card-sigil">#&gt;website_field_guide</span>
+                    <strong>Website guide</strong>
+                    <span>The PWA shell, frame navigation, screenshot-friendly surfaces, and exploration motifs.</span>
+                </a>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Cross-linked surfaces -->
+    <section class="site-frame" id="cross-linked-surfaces" aria-labelledby="cross-linked-title" data-spw-role="routing">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#cross-linked-surfaces">&amp;["cross-linked_surfaces"]</a>
+        </div>
+        <h2 id="cross-linked-title">Cross-linked surfaces</h2>
+        <p class="frame-note">Deeper entry points that connect the lattice across topics, domains, and play surfaces.</p>
+        
+        <nav class="frame-operators" aria-label="Cross-linked routes">
+            <a class="operator-chip" href="/about/domains/boon.land/">boon.land</a>
+            <a class="operator-chip" href="/about/domains/bane.land/">bane.land</a>
+            <a class="operator-chip" href="/about/domains/bone.land/">bone.land</a>
+            <a class="operator-chip" href="/about/domains/bonk.land/">bonk.land</a>
+            <a class="operator-chip" href="/about/domains/honk.land/">honk.land</a>
+            <a class="operator-chip" href="/about/domains/lore.land/">lore.land</a>
+            <a class="operator-chip" href="/about/domains/factshift.com/">factshift.com</a>
+            <a class="operator-chip" href="/services/">services</a>
+            <a class="operator-chip" href="/topics/software/parsers/">parsers</a>
+            <a class="operator-chip" href="/topics/software/compilers/">compilers</a>
+            <a class="operator-chip" href="/topics/software/compression/">compression</a>
+            <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
+            <a class="operator-chip" href="/topics/software/distributed/">distributed</a>
+        </nav>
+    </section>
+
+</main>
+
+<footer role="contentinfo">
+    <p>© 2026 spwashi</p>
+</footer>
+
 </body>
 </html>

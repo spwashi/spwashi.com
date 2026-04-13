@@ -552,6 +552,13 @@ code[data-interactive]:focus-visible::after {
 :where(.site-frame[data-spw-role="reference"]) {
   border-left-width: 2px;
   border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
+  /* Long-form reference frame tuning */
+  --component-measure: 74ch; 
+  --surface-gap: 1.3rem; 
+}
+
+:where(.site-frame[data-spw-role="reference"] p) {
+  line-height: 1.65;
 }
 
 :where(.site-frame[data-spw-role="status"]) {
@@ -829,11 +836,228 @@ code[data-interactive]:focus-visible::after {
    quiet its border to reduce visual noise */
 :where(.site-frame, .frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card, .frame-panel, .mode-panel) {
   --local-border-alpha: 0.4; /* Dim nested borders */
-  box-shadow: var(--shadow-sm); /* Rely more on subtle depth than hard lines */
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.03)); /* Rely more on subtle depth than hard lines */
 }
 
 /* If heavily nested (level 3), remove the border entirely and rely on background contrast */
 :where(.site-frame) :where(.frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card) {
   border-color: transparent;
   background: var(--surface-strong);
+}
+
+/* ==========================================================================
+   16. Page Index Navigation & Local Atlas
+   ========================================================================== */
+
+:where(.page-index, .section-atlas) {
+  margin-block: 1.5rem;
+  padding: var(--component-pad);
+  background: var(--component-surface-soft);
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.92rem;
+}
+
+:where(.page-index ul, .section-atlas ul) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.6rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.page-index a, .section-atlas a) {
+  display: block;
+  padding: 0.3rem 0.6rem;
+  margin-left: -0.6rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all var(--component-transition-fast);
+}
+
+:where(.page-index a:hover, .section-atlas a:hover, 
+       .page-index a:focus-visible, .section-atlas a:focus-visible) {
+  color: var(--component-accent);
+  background: color-mix(in srgb, var(--component-accent) 12%, transparent);
+  outline: none;
+}
+
+:where(.page-index a[aria-current="true"], .page-index a:target) {
+  color: var(--ink);
+  font-weight: 600;
+  border-left: 2px solid var(--component-accent);
+  background: color-mix(in srgb, var(--component-accent) 8%, transparent);
+}
+
+/* ==========================================================================
+   17. Reference Lists & Documentation Fields
+   ========================================================================== */
+
+:where([data-spw-role="reference"] .frame-panel),
+:where(.reference-panel, .reference-cluster) {
+  padding: var(--component-pad-loose);
+  background: var(--component-surface-strong);
+  border: var(--component-border-strong);
+}
+
+ul.frame-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding-left: 0;
+  margin: 1rem 0;
+  list-style: none;
+}
+
+ul.frame-list > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid color-mix(in srgb, var(--component-accent) 22%, var(--component-border));
+}
+
+ul.frame-list > li > a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--component-accent-soft);
+  align-self: flex-start;
+  transition: text-decoration-color var(--component-transition-fast);
+}
+
+ul.frame-list > li > a:hover,
+ul.frame-list > li > a:focus-visible {
+  text-decoration-color: var(--component-accent);
+}
+
+ul.frame-list > li > p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   18. Figures, Images, and Study Surfaces
+   ========================================================================== */
+
+.spw-svg-figure,
+.image-study {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 1.5rem 0;
+  padding: var(--component-pad);
+  background: var(--component-surface);
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  box-shadow: var(--component-shadow);
+}
+
+:where(.spw-svg-figure svg, .image-study img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--component-radius-tight);
+  overflow: hidden;
+}
+
+figcaption.frame-note,
+.study-summary {
+  font-size: 0.88em;
+  color: var(--ink-soft);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  text-wrap: balance;
+  max-inline-size: 65ch;
+  border-top: 1px dashed color-mix(in srgb, var(--component-border) 80%, transparent);
+  padding-top: 0.6rem;
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   19. Semantic Metadata & Chips (spec-strip / spec-pill)
+   ========================================================================== */
+
+.spec-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+  align-items: center;
+}
+
+.spec-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.82rem;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  color: var(--ink);
+  background: var(--component-surface-soft);
+  border: 1px solid var(--component-border);
+  border-radius: 999px;
+  transition: all var(--component-transition-fast);
+  white-space: nowrap;
+}
+
+.spec-pill[aria-current="true"],
+.spec-pill.is-active,
+.spec-pill:hover,
+.spec-pill:focus-visible {
+  background: color-mix(in srgb, var(--component-accent) 15%, transparent);
+  border-color: var(--component-accent-soft);
+  color: var(--component-accent);
+  outline: none;
+}
+
+/* Soften structural overlays when inside long-form reference frames */
+:where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip) {
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  transform: scale(0.96);
+  transition: opacity var(--component-transition-fast), transform var(--component-transition-fast);
+}
+
+:where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip):hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Reflective Inline Notes */
+.inline-note[data-spw-spacing="tight"] { 
+  padding-left: 1rem; 
+}
+.inline-note[data-spw-spacing="loose"] { 
+  padding-left: 2rem; 
+  margin-block: 1.5rem; 
+}
+.inline-note.editorial-note {
+  border-left: 3px solid var(--component-accent-soft);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.inline-note.editorial-note::before,
+.inline-note.editorial-note::after { 
+  content: none; 
+}
+
+/* ==========================================================================
+   20. Accessibility & Reader Utilities
+   ========================================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
