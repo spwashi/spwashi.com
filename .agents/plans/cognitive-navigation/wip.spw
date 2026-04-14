@@ -17,7 +17,7 @@
  @shared: ~"public/js/spw-shared.js"
  @components: ~"public/js/spw-component-semantics.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
  @home: ~"index.html"
  @about: ~"about/index.html"
  @software: ~"topics/software/index.html"

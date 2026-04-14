@@ -13,7 +13,7 @@
  @pretext_page: ~"topics/software/pretext/index.html"
  @lab: ~"public/js/pretext-lab.js"
  @utils: ~"public/js/pretext-utils.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
 }
 
 ^["thesis"]{

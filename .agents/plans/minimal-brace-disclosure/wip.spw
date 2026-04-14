@@ -44,7 +44,7 @@
 ^["parallel_work"]{
  critical_path: [#shell_disclosure]
  parallelizable: [#css_surface, #js_runtime]
- shared_hot_files: ["public/js/site.js?v=0.0.1", "public/css/spw-shell.css", "public/css/spw-components.css"]
+ shared_hot_files: ["public/js/site.js?v=0.0.2", "public/css/spw-shell.css", "public/css/spw-components.css"]
  merge_risks: [#shell_hotspot, #diagnostic_hotspot]
  handoff_artifacts: [@plan, @pattern]
 }

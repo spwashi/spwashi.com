@@ -7,7 +7,7 @@
 ^["roots"]{
  @plan: ~".agents/plans/css-progressive-ornaments/PLAN.md"
  @artifact: ~".agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
  @worker: ~"sw.js"
  @manifest: ~"manifest.webmanifest"
  @semantics: ~".spw/conventions/site-semantics.spw"

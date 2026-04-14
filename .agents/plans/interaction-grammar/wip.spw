@@ -81,7 +81,7 @@
  ~#status: "planning"
  ~#base_ref: "main@14442d42b8fe4d9d5bfec5906e652fbca98d5f22"
  ~#hygiene_split: "none"
- ~#files_hot: "public/js/spw-component-semantics.js, public/js/spw-interaction-runtime.js (planned), .spw/conventions/site-semantics.spw, public/css/style.css?v=0.0.1"
+ ~#files_hot: "public/js/spw-component-semantics.js, public/js/spw-interaction-runtime.js (planned), .spw/conventions/site-semantics.spw, public/css/style.css?v=0.0.2"
  ~#next_commit: "1"
  ~#open_count: "8"
  ~#last_stream: "2026-04-09"

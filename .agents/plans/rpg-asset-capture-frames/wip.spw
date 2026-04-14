@@ -14,7 +14,7 @@
  @svg_surfaces: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"
  @runtime: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
  @rpg_module: ~"public/js/rpg-wednesday.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
 }
 
 ^["intent"]{
@@ -50,7 +50,7 @@
 ^["parallel_work"]{
  critical_path: [#asset_store, #capture_frame_host, #screenshot_mode, #motif_rewards]
  parallelizable: [#prompt_copy, #css_motifs]
- shared_hot_files: ["public/js/rpg-wednesday.js", "public/css/style.css?v=0.0.1", "sw.js", "manifest.webmanifest"]
+ shared_hot_files: ["public/js/rpg-wednesday.js", "public/css/style.css?v=0.0.2", "sw.js", "manifest.webmanifest"]
  merge_risks: [#pwa_cache_drift, #style_growth, #state_schema_migration]
 }
 

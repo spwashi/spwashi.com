@@ -15,7 +15,7 @@
  @surfaces: ~".spw/surfaces.spw"
  @semantics: ~".spw/conventions/site-semantics.spw"
  @shared: ~"public/js/spw-shared.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
  @manifest: ~"manifest.webmanifest"
  @worker: ~"sw.js"
 }

@@ -7,10 +7,10 @@
 ^["roots"]{
  @plan: ~".agents/plans/runtime-settings/PLAN.md"
  @settings: ~"public/js/site-settings.js"
- @site: ~"public/js/site.js?v=0.0.1"
+ @site: ~"public/js/site.js?v=0.0.2"
  @navigator: ~"public/js/frame-navigator.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
  @page: ~"settings/index.html"
 }
 
@@ -47,7 +47,7 @@
 ^["parallel_work"]{
  critical_path: [#settings_module, #site_core_gate, #css_states]
  parallelizable: []
- shared_hot_files: ["public/css/style.css?v=0.0.1", "sw.js", "manifest.webmanifest"]
+ shared_hot_files: ["public/css/style.css?v=0.0.2", "sw.js", "manifest.webmanifest"]
  merge_risks: [#rpg_wednesday_uncommitted_overlap, #style_growth]
 }
 

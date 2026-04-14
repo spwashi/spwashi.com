@@ -16,7 +16,7 @@
  @utils: ~"public/js/pretext-utils.js"
  @shared: ~"public/js/spw-shared.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
 }
 
 ^["intent"]{
@@ -55,7 +55,7 @@
 ^["parallel_work"]{
  critical_path: [#capability_lattice, #physics_profile_taxonomy]
  parallelizable: [#experiment_family_inventory, #svg_bridge_note, #telemetry_contract]
- shared_hot_files: ["topics/software/pretext/index.html", "public/js/pretext-lab.js", "public/js/pretext-utils.js", "public/css/style.css?v=0.0.1", "public/js/spw-shared.js", "public/js/spw-console.js"]
+ shared_hot_files: ["topics/software/pretext/index.html", "public/js/pretext-lab.js", "public/js/pretext-utils.js", "public/css/style.css?v=0.0.2", "public/js/spw-shared.js", "public/js/spw-console.js"]
  merge_risks: [#runtime_bloat, #mode_collision, #rendering_divergence, #naming_drift]
  handoff_artifacts: [@plan, @artifact]
 }
@@ -130,7 +130,7 @@
  ~#base_ref: "main@d4e504661006b947d6f60591814b8f21020bed96"
  ~#rebased_at: ""
  ~#hygiene_split: "none"
- ~#files_hot: "topics/software/pretext/index.html, topics/software/index.html, public/js/pretext-lab.js, public/js/pretext-utils.js, public/js/spw-shared.js, public/js/spw-console.js, public/css/style.css?v=0.0.1"
+ ~#files_hot: "topics/software/pretext/index.html, topics/software/index.html, public/js/pretext-lab.js, public/js/pretext-utils.js, public/js/spw-shared.js, public/js/spw-console.js, public/css/style.css?v=0.0.2"
  ~#next_commit: "1"
  ~#open_count: "9"
  ~#last_stream: "2026-04-09 21:29"

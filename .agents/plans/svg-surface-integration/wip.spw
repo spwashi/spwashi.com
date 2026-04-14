@@ -15,10 +15,10 @@
  @software: ~"topics/software/index.html"
  @pretext: ~"topics/software/pretext/index.html"
  @shared: ~"public/js/spw-shared.js"
- @core: ~"public/js/site.js?v=0.0.1"
+ @core: ~"public/js/site.js?v=0.0.2"
  @components: ~"public/js/spw-component-semantics.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.2"
 }
 
 ^["intent"]{
@@ -56,7 +56,7 @@
 ^["parallel_work"]{
  critical_path: [#svg_host_contract]
  parallelizable: [#asset_strategy_note, #surface_inventory, #pretext_bridge]
- shared_hot_files: ["public/css/style.css?v=0.0.1", "public/js/spw-shared.js", "public/js/spw-component-semantics.js", "index.html", "about/index.html", "topics/software/index.html", "topics/software/pretext/index.html"]
+ shared_hot_files: ["public/css/style.css?v=0.0.2", "public/js/spw-shared.js", "public/js/spw-component-semantics.js", "index.html", "about/index.html", "topics/software/index.html", "topics/software/pretext/index.html"]
  merge_risks: [#id_collision, #naming_drift, #runtime_sprawl, #interaction_collision]
  handoff_artifacts: [@plan, @artifact]
 }
