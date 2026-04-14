@@ -10,7 +10,7 @@
  * - Make genre physics extensible via classify/project/decorate/scaffold hooks.
  */
 
-import { loadPretext } from './pretext-utils.js';
+import { loadPretext } from '../legacy/pretext-utils.js';
 import { bus } from './spw-bus.js';
 
 const DEFAULTS = Object.freeze({

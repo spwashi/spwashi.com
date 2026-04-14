@@ -21,7 +21,7 @@
  * - No transition layer for older spirit-phase vocabulary is kept here.
  */
 
-import { bus } from './spw-bus.js';
+import { bus } from '../refactor/spw-bus.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 

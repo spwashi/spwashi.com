@@ -36,7 +36,7 @@
  * - These are intended for subtle environmental responses in CSS.
  */
 
-import { bus } from './spw-bus.js';
+import { bus } from '../refactor/spw-bus.js';
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
