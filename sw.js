@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.3';
+const APP_VERSION = '0.3.4';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
