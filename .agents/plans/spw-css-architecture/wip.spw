@@ -7,7 +7,7 @@
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/spw-css-architecture/PLAN.md"
- @style: ~"public/css/style.css"
+ @style: ~"public/css/style.css?v=0.0.1"
  @svg: ~"public/css/svg-surfaces.css"
  @whimsy: ~"public/css/spw-whimsy.css"
  @blog: ~"public/css/blog-surface.css"
@@ -51,7 +51,7 @@
 ^["parallel_work"]{
  critical_path: [#style_ownership, #semantic_hooks, #surface_rewire]
  parallelizable: [#svg_alignment, #surface_audits]
- shared_hot_files: ["public/css/style.css", "public/css/blog-surface.css", "public/css/craft-surface.css"]
+ shared_hot_files: ["public/css/style.css?v=0.0.1", "public/css/blog-surface.css", "public/css/craft-surface.css"]
  merge_risks: [#gemini_style_refactor, #surface_override_drift]
  handoff_artifacts: [@plan]
 }

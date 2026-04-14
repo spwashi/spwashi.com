@@ -13,7 +13,7 @@
  @svg: ~"topics/craft/svg/index.html"
  @files: ~"topics/craft/files/index.html"
  @css: ~"public/css/craft-surface.css"
- @site_css: ~"public/css/style.css"
+ @site_css: ~"public/css/style.css?v=0.0.1"
  @home: ~"index.html"
  @software: ~"topics/software/index.html"
  @guide: ~"about/website/index.html"

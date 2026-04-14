@@ -12,7 +12,7 @@
  @site_semantics: ~".spw/conventions/site-semantics.spw"
  @shared: ~"public/js/spw-shared.js"
  @components: ~"public/js/spw-component-semantics.js"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["thesis"]{

@@ -11,11 +11,11 @@
  @site_semantics: ~".spw/conventions/site-semantics.spw"
  @surfaces: ~".spw/surfaces.spw"
  @shared: ~"public/js/spw-shared.js"
- @core: ~"public/js/site.js"
+ @core: ~"public/js/site.js?v=0.0.1"
  @components: ~"public/js/spw-component-semantics.js"
  @navigator: ~"public/js/frame-navigator.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["thesis"]{

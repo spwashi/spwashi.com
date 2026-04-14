@@ -13,7 +13,7 @@
  @runtime_plan: ~".agents/plans/mobile-runtime-foundation/wip.spw"
  @svg_plan: ~".agents/plans/svg-surface-integration/wip.spw"
  @screenshot_plan: ~".agents/plans/screenshot-semantics/wip.spw"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["intent"]{

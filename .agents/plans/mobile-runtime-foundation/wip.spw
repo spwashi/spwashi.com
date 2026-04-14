@@ -11,11 +11,11 @@
  @semantics: ~".spw/conventions/site-semantics.spw"
  @surfaces: ~".spw/surfaces.spw"
  @shared: ~"public/js/spw-shared.js"
- @core: ~"public/js/site.js"
+ @core: ~"public/js/site.js?v=0.0.1"
  @components: ~"public/js/spw-component-semantics.js"
  @navigator: ~"public/js/frame-navigator.js"
  @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["intent"]{
@@ -56,7 +56,7 @@
 ^["parallel_work"]{
  critical_path: [#shared_runtime_boundary, #operator_semantics_contract, #semantic_reflection_contract]
  parallelizable: [#semantics_note, #region_inventory, #ux_criteria, #html_landmark_inventory]
- shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js", "public/js/spw-component-semantics.js", "public/js/spw-operators.js", "public/css/style.css", "public/js/spw-shared.js"]
+ shared_hot_files: [".spw/conventions/site-semantics.spw", "public/js/site.js?v=0.0.1", "public/js/spw-component-semantics.js", "public/js/spw-operators.js", "public/css/style.css?v=0.0.1", "public/js/spw-shared.js"]
  merge_risks: [#state_duplication, #naming_drift, #interaction_collision, #symmetry_drift, #semantic_reflection_drift, #charge_bias_drift]
  handoff_artifacts: [@plan, @artifact]
 }
@@ -149,7 +149,7 @@
  ~#base_ref: "main@afae5c402a2f7e25116f9cdf820e8fdfef6e73f4"
  ~#rebased_at: ""
  ~#hygiene_split: "none"
- ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-shared.js, public/js/spw-operators.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css"
+ ~#files_hot: ".spw/conventions/site-semantics.spw, public/js/site.js, public/js/spw-shared.js, public/js/spw-operators.js, public/js/spw-component-semantics.js, public/js/frame-navigator.js, public/js/spw-console.js, public/css/style.css?v=0.0.1"
  ~#next_commit: "1"
  ~#open_count: "14"
  ~#last_stream: "2026-04-09 22:36"

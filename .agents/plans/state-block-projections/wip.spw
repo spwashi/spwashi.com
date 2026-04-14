@@ -47,7 +47,7 @@
 ^["parallel_work"]{
  critical_path: [#site_runtime]
  parallelizable: [#markup_opt_ins, #css_surface]
- shared_hot_files: ["public/js/site.js", "public/css/spw-components.css", "public/js/spw-image-metaphysics.js"]
+ shared_hot_files: ["public/js/site.js?v=0.0.1", "public/css/spw-components.css", "public/js/spw-image-metaphysics.js"]
  merge_risks: [#runtime_wiring, #overlay_containment]
  handoff_artifacts: [@plan, @artifact]
 }

@@ -9,7 +9,7 @@
  @artifact: ~".agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw"
  @image_runtime: ~"public/js/spw-image-metaphysics.js"
  @image_css: ~"public/css/spw-metaphysical-paper.css"
- @site_entry: ~"public/js/site.js"
+ @site_entry: ~"public/js/site.js?v=0.0.1"
  @compression: ~"topics/software/compression/index.html"
  @schedulers: ~"topics/software/schedulers/index.html"
  @lore_land: ~"about/domains/lore.land/index.html"
@@ -50,7 +50,7 @@
 ^["parallel_work"]{
  critical_path: [#image_runtime, #image_css]
  parallelizable: [#page_metadata_tightening]
- shared_hot_files: ["public/js/site.js", "public/css/style.css", "topics/software/compression/index.html"]
+ shared_hot_files: ["public/js/site.js?v=0.0.1", "public/css/style.css?v=0.0.1", "topics/software/compression/index.html"]
  merge_risks: [#other_agent_drift, #import_order, #inline_page_styles]
  handoff_artifacts: [@plan, @artifact]
 }

@@ -4,7 +4,7 @@ Refactor the site's CSS into explicit layers while preparing a progressive-enhan
 
 ## Goal
 
-The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing `<link href="/public/css/style.css">` contract. The taste note is **calm core, summoned delight**: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.
+The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing `<link href="/public/css/style.css?v=0.0.1">` contract. The taste note is **calm core, summoned delight**: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.
 
 ## Scope
 

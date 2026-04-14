@@ -14,7 +14,7 @@
  @nav_plan: ~".agents/plans/cognitive-navigation/wip.spw"
  @components: ~"public/js/spw-component-semantics.js"
  @shared: ~"public/js/spw-shared.js"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
  @home: ~"index.html"
  @software: ~"topics/software/index.html"
  @spw_atlas: ~"topics/software/spw/index.html"

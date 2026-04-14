@@ -8,10 +8,10 @@
  @plan: ~".agents/plans/media-publishing/PLAN.md"
  @config: ~"public/data/media-focus.json"
  @module: ~"public/js/media-publishing.js"
- @site: ~"public/js/site.js"
+ @site: ~"public/js/site.js?v=0.0.1"
  @home: ~"index.html"
  @guide: ~"about/website/index.html"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["intent"]{
@@ -47,7 +47,7 @@
 ^["parallel_work"]{
  critical_path: [#config_contract, #renderer, #hosts, #cache]
  parallelizable: []
- shared_hot_files: ["public/css/style.css", "public/js/site.js", "sw.js", "manifest.webmanifest"]
+ shared_hot_files: ["public/css/style.css?v=0.0.1", "public/js/site.js?v=0.0.1", "sw.js", "manifest.webmanifest"]
  merge_risks: [#dirty_asset_moves, #style_growth]
 }
 

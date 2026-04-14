@@ -10,7 +10,7 @@
  @about: ~"about/index.html"
  @domain: ~"about/domains/lore.land/index.html"
  @config: ~"public/data/media-focus.json"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["intent"]{
@@ -46,7 +46,7 @@
 ^["parallel_work"]{
  critical_path: [#home_signal, #about_frame, #lore_land_route]
  parallelizable: []
- shared_hot_files: ["index.html", "about/index.html", "about/domains/lore.land/index.html", "public/data/media-focus.json", "public/css/style.css"]
+ shared_hot_files: ["index.html", "about/index.html", "about/domains/lore.land/index.html", "public/data/media-focus.json", "public/css/style.css?v=0.0.1"]
  merge_risks: [#homepage_copy_drift, #style_growth]
 }
 
@@ -95,7 +95,7 @@
  ~#base_ref: "main@3296ac01bb2dccb94b42938ef2517038fd2c4482"
  ~#rebased_at: ""
  ~#hygiene_split: "blog/craft/PWA/image-intake drift already dirty; avoid broadening it"
- ~#files_hot: "index.html about/index.html about/domains/lore.land/index.html public/data/media-focus.json public/css/style.css"
+ ~#files_hot: "index.html about/index.html about/domains/lore.land/index.html public/data/media-focus.json public/css/style.css?v=0.0.1"
  ~#next_commit: "1"
  ~#open_count: "0"
  ~#last_stream: "social"

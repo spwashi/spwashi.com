@@ -9,8 +9,8 @@
  @artifact: ~".agents/plans/blog-input-interpreter/blog-input-interpreter.spw"
  @route: ~"blog/index.html"
  @module: ~"public/js/blog-interpreter.js"
- @site: ~"public/js/site.js"
- @css: ~"public/css/style.css"
+ @site: ~"public/js/site.js?v=0.0.1"
+ @css: ~"public/css/style.css?v=0.0.1"
 }
 
 ^["intent"]{

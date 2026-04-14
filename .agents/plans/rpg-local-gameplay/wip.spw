@@ -7,9 +7,9 @@
 ^["roots"]{
  @plan: ~".agents/plans/rpg-local-gameplay/PLAN.md"
  @artifact: ~".agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
- @site: ~"public/js/site.js"
+ @site: ~"public/js/site.js?v=0.0.1"
  @module: ~"public/js/rpg-wednesday.js"
- @css: ~"public/css/style.css"
+ @css: ~"public/css/style.css?v=0.0.1"
  @rpg: ~"play/rpg-wednesday/index.html"
  @sessions: ~"play/rpg-wednesday/sessions/index.html"
  @world: ~"play/rpg-wednesday/world/index.html"
@@ -50,7 +50,7 @@
 ^["parallel_work"]{
  critical_path: [#module, #route_wiring, #css, #pwa_cache]
  parallelizable: []
- shared_hot_files: ["public/css/style.css", "public/js/site.js", "sw.js", "manifest.webmanifest"]
+ shared_hot_files: ["public/css/style.css?v=0.0.1", "public/js/site.js?v=0.0.1", "sw.js", "manifest.webmanifest"]
  merge_risks: [#pwa_version_overlap, #style_growth]
 }
 
