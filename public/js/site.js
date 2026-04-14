@@ -13,7 +13,6 @@ import './spw-developmental-climate.js';
 import './electromagnetic-containers.js';
 import { initBraceGestures } from './brace-gestures.js';
 import { initSpwExperiential } from './spw-experiential.js';
-import { initPretextPhysics } from './spw-pretext-physics.js';
 import { initSpwStates } from './spw-states.js';
 import { initSpwPromptUtils } from './spw-prompt-utils.js';
 import { initSpwHaptics } from './spw-haptics.js';
@@ -1241,7 +1240,7 @@ const CORE_MODULES = [
     layer: 'runtime',
     scope: 'site',
     mindfulness: { level: 'pattern-aware', broaderPatterns: ['pretext', 'layout', 'genre'] },
-    mount: () => initPretextPhysics()
+    mount: () => {}
   },
   {
     id: 'spw-states',
