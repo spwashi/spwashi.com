@@ -92,6 +92,198 @@
                     </button>
                 </div>
             </section>
+            <section class="site-frame" id="runtime-map" data-spw-role="schema" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#runtime-map">^"runtime_map"{</a>
+                    <h2>Runtime Map</h2>
+                </div>
+                <p class="frame-note">
+                    Settings do not only change visible controls. They update stored values, derived architectural
+                    modifiers,
+                    document datasets, and CSS custom properties that other surfaces read.
+                </p>
+
+                <div class="settings-system-map">
+                    <article class="settings-map-card">
+                        <h3>1. Stored Settings</h3>
+                        <p>Local values are normalized against the site settings registry before they are applied.</p>
+                        <code>DEFAULT_SITE_SETTINGS → normalizeSiteSettings()</code>
+                    </article>
+
+                    <article class="settings-map-card">
+                        <h3>2. Derived Modifiers</h3>
+                        <p>Settings become modifiers for typography, motion, grain, climate, ecology, and semantic
+                            behavior.</p>
+                        <code>deriveArchitecturalModifiers(settings)</code>
+                    </article>
+
+                    <article class="settings-map-card">
+                        <h3>3. Document Datasets</h3>
+                        <p>The runtime writes stable <code>data-spw-*</code> attributes to the root for CSS and JS to
+                            read.</p>
+                        <code>html[data-spw-color-mode] · html[data-spw-semantic-density]</code>
+                    </article>
+
+                    <article class="settings-map-card">
+                        <h3>4. CSS Variables</h3>
+                        <p>Typography, motion, grain, and other values are expressed as custom properties for route
+                            surfaces.</p>
+                        <code>--site-root-font-size · --site-line-height · --grain-opacity</code>
+                    </article>
+
+                    <article class="settings-map-card">
+                        <h3>5. Surface Readers</h3>
+                        <p>Shell, components, route surfaces, and optional JS modules read those values to decide
+                            behavior.</p>
+                        <code>shell → components → routes → enhancements</code>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="token-navigator" data-spw-role="reference" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#token-navigator">~"token_navigator"</a>
+                    <h2>CSS Token Navigator</h2>
+                </div>
+                <p class="frame-note">
+                    These controls influence token families and custom properties used across the site. This is not a
+                    full token browser yet,
+                    but it gives a meaningful route into the system.
+                </p>
+
+                <div class="settings-navigator-grid">
+                    <article class="settings-nav-card">
+                        <h3>Typography Tokens</h3>
+                        <p>Font size scale, preset multiplier, line spacing, and monospace choice.</p>
+                        <ul class="frame-list">
+                            <li><code>--site-root-font-size</code></li>
+                            <li><code>--site-line-height</code></li>
+                            <li><code>--site-mono-font</code></li>
+                        </ul>
+                        <a class="operator-chip" href="#runtime-preferences">^ typography controls</a>
+                    </article>
+
+                    <article class="settings-nav-card">
+                        <h3>Motion Tokens</h3>
+                        <p>Reduce motion, animation intensity, throttling, and derived duration scales.</p>
+                        <ul class="frame-list">
+                            <li><code>--duration-instant</code></li>
+                            <li><code>--duration-fast</code></li>
+                            <li><code>--duration-base</code></li>
+                            <li><code>--duration-slow</code></li>
+                        </ul>
+                        <a class="operator-chip" href="#runtime-preferences">~ motion controls</a>
+                    </article>
+
+                    <article class="settings-nav-card">
+                        <h3>Semantic / Ecology Tokens</h3>
+                        <p>Semantic density, enhancement level, infospace complexity, operator presentation, and
+                            climate.</p>
+                        <ul class="frame-list">
+                            <li><code>--semantic-density-factor</code></li>
+                            <li><code>--enhancement-factor</code></li>
+                            <li><code>--infospace-factor</code></li>
+                            <li><code>--operator-saturation-factor</code></li>
+                        </ul>
+                        <a class="operator-chip" href="#runtime-preferences">? semantic controls</a>
+                    </article>
+
+                    <article class="settings-nav-card">
+                        <h3>Material Tokens</h3>
+                        <p>Grain intensity, route contrast, and field response.</p>
+                        <ul class="frame-list">
+                            <li><code>--grain-opacity</code></li>
+                            <li><code>--site-header-opacity</code></li>
+                        </ul>
+                        <a class="operator-chip" href="#runtime-preferences">@ material controls</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="data-structures" data-spw-role="schema" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#data-structures">^"data_structures"{</a>
+                    <h2>Underlying Data Structures</h2>
+                </div>
+                <p class="frame-note">
+                    The page is backed by registries and derived structures, not isolated form fields.
+                </p>
+
+                <div class="settings-structures-grid">
+                    <article class="settings-structure-card">
+                        <h3>Defaults</h3>
+                        <p>Canonical local fallback values for the full runtime settings model.</p>
+                        <code>DEFAULT_SITE_SETTINGS</code>
+                    </article>
+
+                    <article class="settings-structure-card">
+                        <h3>Options Registry</h3>
+                        <p>Allowed values per setting, used to normalize and reject invalid state.</p>
+                        <code>SETTING_OPTIONS</code>
+                    </article>
+
+                    <article class="settings-structure-card">
+                        <h3>Presets</h3>
+                        <p>Named bundles like Hearth, Loom, Workshop, and Access.</p>
+                        <code>PRESETS</code>
+                    </article>
+
+                    <article class="settings-structure-card">
+                        <h3>Developmental Climates</h3>
+                        <p>Orient, Anchor, Weave, Rehearse, and Offer with clarity/pressure/memory/resonance biases.</p>
+                        <code>DEVELOPMENTAL_CLIMATES</code>
+                    </article>
+
+                    <article class="settings-structure-card">
+                        <h3>Derived Modifiers</h3>
+                        <p>Typography, motion, grain, climate, ecology, and semantic multipliers.</p>
+                        <code>deriveArchitecturalModifiers(settings)</code>
+                    </article>
+
+                    <article class="settings-structure-card">
+                        <h3>Document State</h3>
+                        <p>Normalized datasets and CSS variables applied to <code>document.documentElement</code>.</p>
+                        <code>root.dataset.spw*</code>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="applied-state" data-spw-role="reference" data-spw-form="brace">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#applied-state">>"applied_state"</a>
+                    <h2>Applied State</h2>
+                </div>
+                <p class="frame-note">
+                    A readable local summary of what the runtime is currently expressing.
+                </p>
+
+                <div class="settings-state-grid" data-settings-state-grid>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">developmental climate</span>
+                        <strong data-settings-state="currentDevelopmentalClimate">orient</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">semantic density</span>
+                        <strong data-settings-state="semanticDensity">minimal</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">enhancement level</span>
+                        <strong data-settings-state="enhancementLevel">minimal</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">color mode</span>
+                        <strong data-settings-state="colorMode">auto</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">line spacing</span>
+                        <strong data-settings-state="lineSpacing">normal</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">bus diagnostics</span>
+                        <strong data-settings-state="busDiagnostics">off</strong>
+                    </article>
+                </div>
+            </section>
 
             <!-- Runtime Preferences -->
             <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-form="brace"
@@ -781,7 +973,8 @@
                 <p class="frame-note">The state block here is another handle on the same persisted settings. It does not
                     invent a second model: changing <code>colorMode</code>, <code>operatorSaturation</code>,
                     <code>grainIntensity</code>, or <code>animationIntensity</code> updates the real form controls and
-                    the same local storage state.</p>
+                    the same local storage state.
+                </p>
 
                 <form class="settings-form" data-site-settings-form>
 
@@ -1099,7 +1292,8 @@
                         <p class="frame-note">Layer disposition changes how a card leans without changing its structure:
                             <strong>orient</strong> opens an entry, <strong>attune</strong> sharpens relations,
                             <strong>compose</strong> gathers structure, <strong>project</strong> pushes signal outward,
-                            and <strong>settle</strong> lets the layer rest.</p>
+                            and <strong>settle</strong> lets the layer rest.
+                        </p>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
                                 <legend>Current disposition</legend>

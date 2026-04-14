@@ -22,6 +22,7 @@
 @import url('/public/css/spw-surfaces.css') layer(systems);
 @import url('/public/css/svg-surfaces.css') layer(systems);
 @import url('/public/css/spw-svg-personas.css') layer(systems);
+@import url('/public/css/spw-pretext-physics.css') layer(systems);
 
 @import url('/public/css/home-surface.css') layer(routes);
 @import url('/public/css/contact-surface.css') layer(routes);

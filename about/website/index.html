@@ -20,7 +20,11 @@
         });
     </script>
 </head>
-<body data-spw-surface="website" data-spw-features="operators navigator console svg-surfaces media-publishing">
+<body
+    data-spw-surface="website"
+    data-spw-context="publishing"
+    data-spw-features="operators navigator console svg-surfaces media-publishing field-guide inspectability"
+>
     <header>
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
         <nav>
@@ -34,91 +38,178 @@
                 <li><a href="/settings/">Settings</a></li>
             </ul>
         </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>surface</span>
     </header>
+
     <main>
         <article>
-            <section class="site-frame site-hero" id="website-field-guide">
+            <section
+                class="site-frame site-hero"
+                id="website-field-guide"
+                data-spw-role="orientation"
+                data-spw-meaning="website field guide"
+                data-spw-form="brace"
+            >
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#website-field-guide">#&gt;website_field_guide</a>
                     <div class="spec-strip">
                         <span class="spec-pill">media surface</span>
-                        <span class="spec-pill">PWA shell</span>
+                        <span class="spec-pill">installable shell</span>
+                        <span class="spec-pill">plain HTML</span>
                         <span class="spec-pill">Spw grammar</span>
-                        <span class="spec-pill">inspectable web</span>
+                        <span class="spec-pill">inspectable structure</span>
                     </div>
                 </div>
-                <p class="spec-kicker">For Media Enthusiasts</p>
-                <h1>A field guide to this website as a media instrument.</h1>
-                <p>This site is not only a portfolio. It is a small static website becoming an installable, inspectable publishing surface: the pages stay readable HTML, while Spw grammar, frame navigation, operator routes, and text experiments make the structure visible.</p>
-                <p>Read it like a web zine with handles: start with the page, follow the named regions, and use the extra controls only when they help.</p>
+
+                <p class="spec-kicker">For media enthusiasts, interface designers, and curious readers</p>
+                <h1>This website is a publishing surface, not only a portfolio.</h1>
+
+                <p>
+                    spwashi.com is a small static site that is being developed as a readable, installable,
+                    inspectable media instrument. The goal is not to hide structure behind effects. The goal is
+                    to let pages stay understandable as HTML while named frames, operator routes, text experiments,
+                    and local controls make more of the structure visible.
+                </p>
+
+                <p>
+                    In practical terms, this site is a place to test how publishing, software explanation,
+                    cognitive surfaces, and interactive literacy can live in the same web environment without
+                    requiring a heavy application stack.
+                </p>
+
+                <p>
+                    Read this page in layers: first as a guide to what already exists, then as a map of what the
+                    site is trying to become.
+                </p>
+
                 <nav class="frame-operators" aria-label="Website field guide routes">
+                    <a class="operator-chip" href="#use-this-page">? how to use</a>
                     <a class="operator-chip" href="#feature-register">^ features</a>
                     <a class="operator-chip" href="#publishing-register">* publishing</a>
                     <a class="operator-chip" href="#machine-register">$ machine</a>
+                    <a class="operator-chip" href="#interaction-register">? interaction</a>
                     <a class="operator-chip" href="#exploration-motifs">* motifs</a>
-                    <a class="operator-chip" href="#what-to-try">? what to try</a>
                     <a class="operator-chip" href="#media-thesis">~ media thesis</a>
-                    <a class="operator-chip" href="#current-boundaries">@ current boundaries</a>
+                    <a class="operator-chip" href="#current-boundaries">! boundaries</a>
                 </nav>
             </section>
 
-            <section class="site-frame" id="feature-register" data-spw-role="surface" data-spw-meaning="public feature summary">
+            <section
+                class="site-frame"
+                id="use-this-page"
+                data-spw-role="routing"
+                data-spw-meaning="how to use this page"
+                data-spw-form="brace"
+            >
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#use-this-page">?["use_this_page"]</a>
+                    <h2>How To Use This Page</h2>
+                </div>
+
+                <div class="spec-grid">
+                    <div class="frame-panel">
+                        <h3>Start with the headings</h3>
+                        <p>Each section names a part of the website’s current function: features, publishing rhythm, machine logic, interaction, motifs, and boundaries.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Follow the frame sigils</h3>
+                        <p>Frame names work like local addresses. They help the page behave more like a map than a long uninterrupted document.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Use the chips when helpful</h3>
+                        <p>The operator chips are optional handles. They should help you pivot, not force a special reading mode.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Treat the links as proof</h3>
+                        <p>When this page points somewhere, it should point to a real route, a real experiment, or a real surface that already says something concrete.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section
+                class="site-frame"
+                id="feature-register"
+                data-spw-role="surface"
+                data-spw-meaning="public feature summary"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#feature-register">^"feature_register"{</a>
-                    <h2>What Has Developed</h2>
+                    <h2>What Exists Right Now</h2>
                 </div>
-                <p class="inline-note">These are the current proof points. Each one turns a site idea into something you can visit, inspect, or try.</p>
+
+                <p class="inline-note">
+                    These are current proof points. They show what the site can already do, not only what it may do later.
+                </p>
+
                 <div class="frame-grid">
                     <a class="frame-card" href="/topics/software/spw/">
                         <span class="frame-card-sigil">#&gt;operator_atlas</span>
                         <strong>Spw operator atlas</strong>
-                        <span>Each operator has a page that explains its syntax, interaction role, brace behavior, and design metaphor.</span>
+                        <span>Each operator has a page describing syntax, interaction role, brace behavior, and design metaphor.</span>
                     </a>
+
                     <a class="frame-card" href="/topics/software/pretext/">
                         <span class="frame-card-sigil">&gt;pretext_field_lab</span>
                         <strong>Pretext field lab</strong>
-                        <span>A live typography experiment: prepare text once, then project it across several responsive widths.</span>
+                        <span>A live typography experiment where text is prepared once, then projected across several responsive measures.</span>
                     </a>
+
                     <a class="frame-card" href="/topics/software/">
                         <span class="frame-card-sigil">#&gt;software_surface</span>
                         <strong>Software surface</strong>
-                        <span>The public explanation of Spw as readable plain text with richer semantics for LSP-aware tools.</span>
+                        <span>A public explanation of Spw as readable plain text with richer semantics for tools and interfaces.</span>
                     </a>
+
                     <a class="frame-card" href="/play/rpg-wednesday/">
                         <span class="frame-card-sigil">#&gt;rpg_wednesday</span>
                         <strong>RPG Wednesday</strong>
                         <span>A creative route for session logs, cast, world notes, table state, and future media capture.</span>
                     </a>
+
                     <a class="frame-card" href="/play/rpg-wednesday/#asset-capture-roadmap">
                         <span class="frame-card-sigil">@asset_capture_frames</span>
                         <strong>Asset capture roadmap</strong>
                         <span>A planned local staging area for character, item, place, artifact, and threat screenshots.</span>
                     </a>
+
                     <a class="frame-card" href="/blog/">
                         <span class="frame-card-sigil">#&gt;blog_input_interpreter</span>
                         <strong>Blog interpreter</strong>
-                        <span>A local synthesis surface that turns Spw fragments and wonder notes toward readable language.</span>
+                        <span>A synthesis surface that turns Spw fragments and wonder notes toward readable language.</span>
                     </a>
+
                     <a class="frame-card" href="/topics/craft/">
                         <span class="frame-card-sigil">#&gt;author_craft</span>
                         <strong>Author craft</strong>
                         <span>HTML/CSS fragments, SVG storytelling, file traditions, and screenshot prompts for creative collaborators.</span>
                     </a>
-                    <a class="frame-card" href="#exploration-motifs">
-                        <span class="frame-card-sigil">^"motif_rewards"{</span>
-                        <strong>Exploration motifs</strong>
-                        <span>Optional color and frame customizations that reward curiosity without hiding the content.</span>
+
+                    <a class="frame-card" href="/settings/">
+                        <span class="frame-card-sigil">#&gt;settings_surface</span>
+                        <strong>Settings surface</strong>
+                        <span>A local state surface for typography, motion, density, navigator behavior, and developmental climate.</span>
                     </a>
                 </div>
             </section>
 
-            <section class="site-frame media-publishing-frame" id="publishing-register" data-spw-role="broadcast" data-spw-meaning="configured media publishing register">
+            <section
+                class="site-frame media-publishing-frame"
+                id="publishing-register"
+                data-spw-role="broadcast"
+                data-spw-meaning="configured media publishing register"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#publishing-register">*"publishing_register"</a>
-                    <h2>Signal Register</h2>
+                    <h2>Publishing Register</h2>
                 </div>
-                <p class="inline-note">This register gives the site an editorial rhythm. It keeps a few current routes easy to find without turning every page into promotion.</p>
+
+                <p class="inline-note">
+                    This site is also a publishing instrument. A page can be informative, but it can also keep rhythm,
+                    foreground a route, and preserve a tone without turning everything into promotion.
+                </p>
+
                 <div class="media-focus-layout">
                     <div data-media-focus="weekly" aria-live="polite">
                         <article class="media-focus-card">
@@ -127,10 +218,11 @@
                                 <span class="frame-card-sigil media-focus-operator">$</span>
                                 <h3>Quiet controls, open doors</h3>
                             </div>
-                            <p>The controls stay close, but the page still gets to breathe.</p>
+                            <p>The controls stay nearby, but the page still gets to breathe.</p>
                             <a class="operator-chip" href="/settings/">Set the threshold</a>
                         </article>
                     </div>
+
                     <div data-media-focus="daily" aria-live="polite">
                         <article class="media-focus-card media-focus-card--daily">
                             <p class="spec-kicker">Daily focus</p>
@@ -143,25 +235,33 @@
                         </article>
                     </div>
                 </div>
+
                 <div class="media-collection-stack">
                     <div>
                         <h3>Featured pages</h3>
                         <div data-media-collection="featuredPages" aria-label="Featured pages">
                             <div class="media-card-grid">
                                 <a class="media-card" href="/topics/software/spw/">
-                                    <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">^</span><span class="media-card-tag">symbols</span></span>
+                                    <span class="media-card-topline">
+                                        <span class="frame-card-sigil media-card-operator">^</span>
+                                        <span class="media-card-tag">symbols</span>
+                                    </span>
                                     <strong class="media-card-title">Operator atlas</strong>
                                     <span class="media-card-summary">A ring of symbols with grammar, interaction behavior, and design metaphor.</span>
                                 </a>
                             </div>
                         </div>
                     </div>
+
                     <div>
-                        <h3>Featured topics</h3>
-                        <div data-media-collection="featuredTopics" aria-label="Featured topics">
+                        <h3>Featured ideas</h3>
+                        <div data-media-collection="featuredTopics" aria-label="Featured ideas">
                             <div class="media-card-grid">
                                 <a class="media-card" href="#machine-register">
-                                    <span class="media-card-topline"><span class="frame-card-sigil media-card-operator">$</span><span class="media-card-tag">attention</span></span>
+                                    <span class="media-card-topline">
+                                        <span class="frame-card-sigil media-card-operator">$</span>
+                                        <span class="media-card-tag">attention</span>
+                                    </span>
                                     <strong class="media-card-title">Attention has handles</strong>
                                     <span class="media-card-summary">A frame can invite inspection without taking over the whole page.</span>
                                 </a>
@@ -171,13 +271,29 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="machine-register" data-spw-role="reference" data-spw-meaning="cognitive machine design">
+            <section
+                class="site-frame"
+                id="machine-register"
+                data-spw-role="reference"
+                data-spw-meaning="cognitive machine design"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#machine-register">$"machine_register"</a>
                     <h2>Machine Register</h2>
                 </div>
-                <p class="inline-note">The site is organized as a small cognitive machine: it helps a visitor orient, inspect, act, reflect, and move on without losing the original page structure.</p>
-                <figure class="spw-svg-figure" data-spw-svg-host data-spw-role="illustration" data-spw-meaning="cognitive machine stage diagram">
+
+                <p class="inline-note">
+                    The website is organized like a small cognitive machine. It should help a reader orient, inspect,
+                    act, reflect, and pivot without losing the page beneath them.
+                </p>
+
+                <figure
+                    class="spw-svg-figure"
+                    data-spw-svg-host
+                    data-spw-role="illustration"
+                    data-spw-meaning="cognitive machine stage diagram"
+                >
                     <svg class="spw-svg-surface spw-svg-surface--machine" viewBox="0 0 720 300" role="img" aria-labelledby="machine-svg-title machine-svg-desc">
                         <title id="machine-svg-title">Cognitive machine stage diagram</title>
                         <desc id="machine-svg-desc">Five connected chambers show orient, inspect, invoke, reflect, and pivot as a reversible sequence.</desc>
@@ -212,6 +328,7 @@
                     </svg>
                     <figcaption>A static SVG host for the five-stage sequence described below.</figcaption>
                 </figure>
+
                 <div class="feature-ladder" aria-label="Cognitive machine stages">
                     <div class="frame-panel">
                         <h3>1 · Orient</h3>
@@ -223,79 +340,107 @@
                     </div>
                     <div class="frame-panel">
                         <h3>3 · Invoke</h3>
-                        <p>Links, buttons, operator chips, and planned controls should make their local action clear.</p>
+                        <p>Links, buttons, operator chips, and controls should make their local action clear.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>4 · Reflect</h3>
-                        <p>Navigator, console, screenshots, and future mirrors should make state changes visible.</p>
+                        <p>Navigator, console, screenshots, and future mirrors should make state changes more visible.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>5 · Pivot</h3>
-                        <p>Deeper structures should open in a reversible way and stay connected to where they started.</p>
+                        <p>Deeper structures should open in a reversible way and remain connected to where they started.</p>
                     </div>
                 </div>
             </section>
 
-            <section class="site-frame" id="interaction-register" data-spw-role="schema" data-spw-meaning="interaction features">
+            <section
+                class="site-frame"
+                id="interaction-register"
+                data-spw-role="schema"
+                data-spw-meaning="interaction features"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#interaction-register">?["interaction_register"]</a>
                     <h2>Interaction You Can Inspect</h2>
                 </div>
+
                 <div class="spec-grid">
                     <div class="frame-panel">
                         <h3>Frames as media units</h3>
-                        <p>Sections are named frames with sigils. A frame can be linked, selected, traversed, and explained without being separated from the surrounding page.</p>
+                        <p>Sections are named frames with sigils. A frame can be linked, selected, traversed, and explained without being separated from the rest of the page.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Operators as handles</h3>
                         <p>Tokens like <code>#&gt;</code>, <code>?</code>, <code>~</code>, <code>@</code>, and <code>^</code> describe how a region should be read, queried, referenced, acted on, or structured.</p>
                     </div>
                     <div class="frame-panel">
-                        <h3>Navigator and console</h3>
+                        <h3>Optional navigation layers</h3>
                         <p>Some routes expose a frame map and a small status console. They make the page feel less flat while staying optional.</p>
                     </div>
                     <div class="frame-panel">
                         <h3>Installable shell</h3>
-                        <p>The PWA manifest and service worker let the site behave like a lightweight app, with core routes prepared for offline reading and updates.</p>
+                        <p>The manifest and service worker let the site behave like a lightweight app, with core routes prepared for offline reading and updates.</p>
                     </div>
                 </div>
             </section>
 
-            <section class="site-frame" id="exploration-motifs" data-spw-role="schema" data-spw-meaning="motif and customization direction">
+            <section
+                class="site-frame"
+                id="exploration-motifs"
+                data-spw-role="schema"
+                data-spw-meaning="motif and customization direction"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#exploration-motifs">^"exploration_motifs"{</a>
                     <h2>Exploration Motifs</h2>
                 </div>
-                <p class="inline-note">Customization can reward exploration, but it should never be required for comprehension. Motifs sit on top of stable structure: color families, brace treatments, stamps, and screenshot frames.</p>
+
+                <p class="inline-note">
+                    Customization should reward exploration without becoming required for comprehension.
+                    Motifs belong on top of stable structure.
+                </p>
+
                 <div class="motif-grid" aria-label="Exploration motif families">
                     <div class="motif-card motif-card--operator">
                         <span class="frame-card-sigil">?[operator_palette]</span>
                         <strong>Operator palettes</strong>
                         <span>Exploring the operator atlas can unlock color families tied to probe, reference, action, stream, object, and surface roles.</span>
                     </div>
+
                     <div class="motif-card motif-card--land">
                         <span class="frame-card-sigil">~land_cluster</span>
                         <strong>Land cluster tones</strong>
                         <span>Boon, bane, bone, bonk, and honk can become mood sets for frames and RPG capture cards.</span>
                     </div>
+
                     <div class="motif-card motif-card--constellation">
                         <span class="frame-card-sigil">*"constellation"</span>
                         <strong>Constellation marks</strong>
                         <span>Sparse point-and-arc overlays can reward deep reading without turning the default site into a game board.</span>
                     </div>
+
                     <div class="motif-card motif-card--archive">
                         <span class="frame-card-sigil">=archive_stamp</span>
                         <strong>Archive stamps</strong>
-                        <span>Backing up local state or capturing a useful route can earn visible receipts for care, not click-counting.</span>
+                        <span>Backing up local state or capturing a useful route can earn visible receipts for care rather than empty gamification.</span>
                     </div>
                 </div>
             </section>
 
-            <section class="site-frame" id="what-to-try" data-spw-role="probe" data-spw-meaning="guided visitor path">
+            <section
+                class="site-frame"
+                id="what-to-try"
+                data-spw-role="probe"
+                data-spw-meaning="guided visitor path"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#what-to-try">?["what_to_try"]{</a>
                     <h2>What To Try First</h2>
                 </div>
+
                 <ol class="frame-list">
                     <li>Open the <a href="/topics/software/spw/">Spw operator atlas</a> and skim the operators as interaction verbs.</li>
                     <li>Visit the <a href="/topics/software/pretext/">Pretext field lab</a>, change the text settings, and watch layout become measurable.</li>
@@ -304,27 +449,40 @@
                     <li>Install the site from a supported browser and revisit the core routes as a small media app.</li>
                     <li>Compare <a href="/topics/software/">Software</a>, <a href="/play/rpg-wednesday/">RPG Wednesday</a>, and <a href="/about">About</a> as different uses of the same grammar.</li>
                 </ol>
-                <p class="inline-note">The best reading mode is exploratory: tap, focus, follow anchors, and notice which parts reveal structure when addressed.</p>
+
+                <p class="inline-note">
+                    The intended reading mode is exploratory: follow anchors, notice named regions, and pay attention to what becomes easier to understand when addressed directly.
+                </p>
             </section>
 
-            <section class="site-frame" id="media-thesis" data-spw-role="reference" data-spw-meaning="media interpretation">
+            <section
+                class="site-frame"
+                id="media-thesis"
+                data-spw-role="reference"
+                data-spw-meaning="media interpretation"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#media-thesis">~"media_thesis"</a>
                     <h2>Why Media Enthusiasts Might Care</h2>
                 </div>
+
                 <div class="frame-grid">
                     <div class="frame-panel">
                         <h3>Plain text as score</h3>
                         <p>Spw treats plain text as something tools can perform. The source stays legible, but the symbols give software useful semantic hooks.</p>
                     </div>
+
                     <div class="frame-panel">
                         <h3>Pages as instruments</h3>
                         <p>A page can expose its regions, frames, controls, and status surfaces so the reader learns how to operate it.</p>
                     </div>
+
                     <div class="frame-panel">
                         <h3>Responsive publishing</h3>
                         <p>The site treats mobile, desktop, installable app mode, and offline reading as one publishing environment.</p>
                     </div>
+
                     <div class="frame-panel">
                         <h3>Cognitive surfaces</h3>
                         <p>The design language asks how interfaces can model attention, reflection, memory, and wonder without becoming noisy.</p>
@@ -332,13 +490,30 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="current-boundaries" data-spw-role="pragma" data-spw-meaning="current truth and next direction">
+            <section
+                class="site-frame"
+                id="current-boundaries"
+                data-spw-role="pragma"
+                data-spw-meaning="current truth and next direction"
+                data-spw-form="brace"
+            >
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#current-boundaries">!current_boundaries</a>
                     <h2>Current Boundaries</h2>
                 </div>
-                <p>This is still a framework-free GitHub Pages site. That is part of the point: the media system begins as HTML, CSS, JavaScript, a manifest, a service worker, and plain-text planning surfaces.</p>
-                <p>The deeper work includes mobile-first region semantics, portable hover and click behavior, SVG widgets, screenshot semantics, RPG asset capture frames, seasonal ornaments, Spw-backed components, and richer inspectable registers. Those are directions, not requirements for using what already ships.</p>
+
+                <p>
+                    This is still a framework-free GitHub Pages site. That is part of the point. The media system begins as HTML, CSS, JavaScript, a manifest, a service worker, and plain-text planning surfaces.
+                </p>
+
+                <p>
+                    The deeper work includes mobile-first region semantics, portable hover and click behavior, SVG widgets, screenshot semantics, RPG asset capture frames, seasonal ornaments, Spw-backed components, and richer inspectable registers. Those are active directions, not requirements for using what already ships.
+                </p>
+
+                <p>
+                    The practical thesis is simple: a website can remain understandable as a website while still becoming a better instrument for publishing, software explanation, and careful attention.
+                </p>
+
                 <nav class="frame-operators" aria-label="Next reading routes">
                     <a class="operator-chip" href="/">home</a>
                     <a class="operator-chip" href="/about">about</a>
@@ -349,6 +524,7 @@
             </section>
         </article>
     </main>
+
     <footer>
         <p>© 2026 spwashi</p>
     </footer>

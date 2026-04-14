@@ -507,4 +507,373 @@
   --honk-color: hsl(320 52% 46%);
 
   --boon-border: hsla(160, 54%, 40%, 0.24);
-  --bane-border: hsla(6
+  --bane-border: hsla(6, 58%, 44%, 0.24);
+  --bone-border: hsla(42, 72%, 48%, 0.24);
+  --bonk-border: hsla(212, 62%, 46%, 0.24);
+  --honk-border: hsla(320, 52%, 46%, 0.24);
+}
+
+/* ==========================================================================
+   8. Palette balance, thematic granularity, and artist-facing texture handles
+   --------------------------------------------------------------------------
+   Goals
+   - keep palette harmonics more predictable across routes
+   - prepare for Midjourney / artist-led texture and material exploration
+   - create granular handles for theme packs and compositional fixtures
+   - separate spectral identity from local semantic activation
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     8.1 Palette balancing controls
+     ------------------------------------------------------------------------
+     These are intended as higher-order dials rather than direct per-component
+     colors. They let the site preserve recognizable identity while tuning
+     warmth/coolness and saturation across themes.
+     ------------------------------------------------------------------------ */
+
+  --palette-temperature: 0;
+  --palette-contrast-bias: 0;
+  --palette-saturation-bias: 1;
+  --palette-lightness-bias: 1;
+  --palette-earth-bias: 0.28;
+  --palette-electric-bias: 0.32;
+  --palette-organic-bias: 0.24;
+  --palette-ritual-bias: 0.16;
+
+  --theme-balance-cool: 0.52;
+  --theme-balance-warm: 0.48;
+  --theme-balance-neutral: 0.5;
+  --theme-noise-bias: 0.18;
+  --theme-fiber-bias: 0.22;
+  --theme-specular-bias: 0.14;
+  --theme-oxide-bias: 0.2;
+
+  /* Global harmonics for future palette mixers */
+  --harmony-primary-weight: 1;
+  --harmony-secondary-weight: 0.74;
+  --harmony-tertiary-weight: 0.48;
+  --harmony-contrast-weight: 0.62;
+  --harmony-muted-weight: 0.36;
+  --harmony-accent-weight: 0.82;
+
+  /* ------------------------------------------------------------------------
+     8.2 Granular spectral families
+     ------------------------------------------------------------------------
+     These are not one-to-one with operators. They describe families that
+     artists or models can lean into while keeping semantic identity stable.
+     ------------------------------------------------------------------------ */
+
+  --pigment-teal-mineral: hsl(182 58% 30%);
+  --pigment-teal-electric: hsl(186 88% 38%);
+  --pigment-amber-resin: hsl(38 82% 50%);
+  --pigment-copper-oxide: hsl(22 58% 40%);
+  --pigment-violet-ink: hsl(268 42% 38%);
+  --pigment-rose-dust: hsl(342 44% 46%);
+  --pigment-clay-red: hsl(10 52% 42%);
+  --pigment-brass-warm: hsl(42 54% 46%);
+  --pigment-paper-cream: hsl(42 44% 94%);
+  --pigment-charcoal-fiber: hsl(205 16% 12%);
+  --pigment-moss-soft: hsl(102 26% 34%);
+  --pigment-lapis-soft: hsl(214 58% 42%);
+
+  /* ------------------------------------------------------------------------
+     8.3 Themeable texture + Midjourney prompt handles
+     ------------------------------------------------------------------------
+     These are descriptive enough to inform future prompt generation, while
+     still usable as CSS levers for image overlays, grain, and SVG treatment.
+     ------------------------------------------------------------------------ */
+
+  --texture-grain-density: 0.22;
+  --texture-grain-scale: 1;
+  --texture-grain-tilt: 0deg;
+  --texture-fiber-density: 0.34;
+  --texture-fiber-length: 0.42;
+  --texture-oxide-density: 0.12;
+  --texture-speckle-density: 0.16;
+  --texture-porosity: 0.26;
+  --texture-patina-strength: 0.18;
+  --texture-brush-drag: 0.14;
+  --texture-edge-fray: 0.12;
+  --texture-stamp-pressure: 0.2;
+  --texture-risograph-offset: 0px;
+  --texture-ink-bleed: 0.08;
+  --texture-lamination: 0;
+  --texture-holographic-flare: 0;
+  --texture-glass-frost: 0;
+  --texture-vellum-opacity: 0;
+  --texture-emboss-depth: 0;
+
+  /* Phrase-like compositional cues for future tooling */
+  --theme-surface-phrase: "paper-oxide";
+  --theme-boundary-phrase: "soft-brace";
+  --theme-fixture-phrase: "indexed-rail";
+  --theme-ornament-phrase: "quiet-sigil";
+  --theme-cinematic-phrase: "ambient-grain";
+
+  /* ==========================================================================
+     9. Energy budgeting and predictable runtime load
+     --------------------------------------------------------------------------
+     The goal is not only performance. The goal is stable semantic energy:
+     predictable average cost per surface, predictable motion burden, and
+     enough granularity to tune without rewrite.
+     ========================================================================== */
+
+  /* ------------------------------------------------------------------------
+     9.1 Global energy lanes
+     ------------------------------------------------------------------------ */
+
+  --energy-ambient: 0.12;
+  --energy-structural: 0.2;
+  --energy-interactive: 0.34;
+  --energy-ornamental: 0.16;
+  --energy-cinematic: 0.22;
+  --energy-debug: 0.18;
+
+  /* Local semantic energy pools */
+  --energy-budget-inline: 0.12;
+  --energy-budget-component: 0.24;
+  --energy-budget-surface: 0.34;
+  --energy-budget-route: 0.42;
+  --energy-budget-overlay: 0.28;
+  --energy-budget-global: 0.38;
+
+  /* Per-domain budget hints */
+  --energy-budget-motion: 0.26;
+  --energy-budget-color: 0.18;
+  --energy-budget-depth: 0.22;
+  --energy-budget-grain: 0.14;
+  --energy-budget-texture: 0.18;
+  --energy-budget-semantic: 0.34;
+  --energy-budget-interaction: 0.32;
+
+  /* Predictable average-load dials */
+  --average-activation-cost: 0.2;
+  --average-hover-cost: 0.12;
+  --average-focus-cost: 0.16;
+  --average-selection-cost: 0.18;
+  --average-overlay-cost: 0.22;
+  --average-debug-cost: 0.28;
+
+  /* ------------------------------------------------------------------------
+     9.2 Stable “animate well” vs “prefer-static” guidance
+     ------------------------------------------------------------------------
+     These tokens let later CSS/JS tests distinguish properties that should
+     move freely from those that should usually snap or remain structural.
+     ------------------------------------------------------------------------ */
+
+  --animatable-opacity-weight: 1;
+  --animatable-transform-weight: 1;
+  --animatable-filter-weight: 0.38;
+  --animatable-shadow-weight: 0.32;
+  --animatable-outline-weight: 0.44;
+  --animatable-color-weight: 0.58;
+  --animatable-background-shift-weight: 0.22;
+
+  --structural-layout-weight: 0.86;
+  --structural-measure-weight: 0.82;
+  --structural-border-weight: 0.6;
+  --structural-radius-weight: 0.34;
+  --structural-grid-weight: 0.92;
+  --structural-spacing-weight: 0.88;
+  --structural-text-wrap-weight: 0.94;
+
+  /* Motion policy shorthands for future modules/tests */
+  --motion-policy-snap-safe: 1;
+  --motion-policy-drift-safe: 0.42;
+  --motion-policy-orbit-safe: 0.18;
+  --motion-policy-layout-safe: 0.12;
+  --motion-policy-grain-safe: 0.22;
+  --motion-policy-texture-safe: 0.16;
+
+  /* ==========================================================================
+     10. Boundary fixtures, tropes, and compositional rails
+     --------------------------------------------------------------------------
+     These create repeatable edge-language for cards, surfaces, panels, route
+     heroes, and future generated mockups.
+     ========================================================================== */
+
+  /* Boundary families */
+  --boundary-rail-width: 1px;
+  --boundary-rail-width-strong: 3px;
+  --boundary-brace-span: 28px;
+  --boundary-brace-offset: 0px;
+  --boundary-notch-size: 6px;
+  --boundary-tab-width: 1.4rem;
+  --boundary-ribbon-width: 0.55rem;
+  --boundary-index-depth: 0.18rem;
+
+  /* Edge treatments */
+  --edge-softness: 0.24;
+  --edge-precision: 0.74;
+  --edge-erosion: 0.08;
+  --edge-burnish: 0.16;
+  --edge-chamfer: 0;
+  --edge-frost: 0;
+  --edge-ink-fray: 0.06;
+  --edge-oxide-bloom: 0.08;
+
+  /* Composition tropes */
+  --trope-index-rail: 1;
+  --trope-brace-ledger: 0;
+  --trope-topic-ribbon: 0;
+  --trope-panel-tab: 0;
+  --trope-offset-caption: 0;
+  --trope-specimen-stage: 0;
+  --trope-cinematic-border: 0;
+  --trope-soft-map-grid: 0;
+  --trope-ritual-stamp: 0;
+
+  /* Fixture emphasis */
+  --fixture-header-weight: 0.62;
+  --fixture-footer-weight: 0.24;
+  --fixture-sidebar-weight: 0.28;
+  --fixture-overlay-weight: 0.18;
+  --fixture-annotation-weight: 0.34;
+  --fixture-sigil-weight: 0.26;
+
+  /* ==========================================================================
+     11. Theme packs and route-facing modulation
+     --------------------------------------------------------------------------
+     These provide coarse route-level packs that can later be refined through
+     JS, settings, Midjourney prompt generation, or artist-facing controls.
+     ========================================================================== */
+
+  --theme-pack-neutral-paper: 1;
+  --theme-pack-oxide-ledger: 0;
+  --theme-pack-electric-studio: 0;
+  --theme-pack-ritual-vellum: 0;
+  --theme-pack-copper-brace: 0;
+  --theme-pack-glass-console: 0;
+
+  /* Route modulation */
+  --route-formality: 0.44;
+  --route-playfulness: 0.22;
+  --route-density: 0.38;
+  --route-materiality: 0.42;
+  --route-spectral-intensity: 0.3;
+  --route-indexedness: 0.34;
+  --route-performative-charge: 0.16;
+
+  /* ==========================================================================
+     12. Composable test handles for HTML fixtures
+     --------------------------------------------------------------------------
+     These are designed specifically so pages can expose meaningful test
+     surfaces without bespoke token invention each time.
+     ========================================================================== */
+
+  --fixture-test-inline-density: 0.18;
+  --fixture-test-card-density: 0.32;
+  --fixture-test-panel-density: 0.42;
+  --fixture-test-grid-density: 0.52;
+  --fixture-test-overlay-density: 0.26;
+  --fixture-test-debug-density: 0.4;
+
+  --fixture-test-semantic-noise: 0.12;
+  --fixture-test-motion-noise: 0.08;
+  --fixture-test-texture-noise: 0.1;
+  --fixture-test-contrast-spread: 0.18;
+  --fixture-test-theme-drift: 0.14;
+
+  --fixture-test-context-reading: 1;
+  --fixture-test-context-analysis: 0;
+  --fixture-test-context-routing: 0;
+  --fixture-test-context-settings: 0;
+  --fixture-test-context-publishing: 0;
+  --fixture-test-context-play: 0;
+
+  /* ==========================================================================
+     13. Balanced operator harmonics
+     --------------------------------------------------------------------------
+     Refine operator families so they can support richer surfaces without
+     diverging too violently in value or saturation.
+     ========================================================================== */
+
+  --op-frame-luma: 0.38;
+  --op-topic-luma: 0.36;
+  --op-object-luma: 0.4;
+  --op-ref-luma: 0.38;
+  --op-probe-luma: 0.36;
+  --op-action-luma: 0.34;
+  --op-layer-luma: 0.3;
+  --op-baseline-luma: 0.3;
+  --op-pragma-luma: 0.34;
+  --op-stream-luma: 0.34;
+  --op-merge-luma: 0.36;
+  --op-binding-luma: 0.35;
+  --op-meta-luma: 0.34;
+  --op-normalize-luma: 0.34;
+  --op-surface-luma: 0.35;
+
+  --operator-harmony-spread: 0.18;
+  --operator-softness-factor: 0.72;
+  --operator-contrast-factor: 0.84;
+  --operator-border-factor: 0.7;
+  --operator-bg-soft-factor: 0.76;
+
+  /* ==========================================================================
+     14. Artist / model prompt scaffolding
+     --------------------------------------------------------------------------
+     These are string-friendly enough to inform future Midjourney or image
+     generation helpers, but still meaningful for CSS/JS routing.
+     ========================================================================== */
+
+  --prompt-material-core: "paper vellum oxide glass fiber";
+  --prompt-accent-core: "teal amber copper violet";
+  --prompt-edge-core: "indexed rail brace tab ledger stamp";
+  --prompt-texture-core: "grain patina speckle risograph emboss";
+  --prompt-light-core: "soft daylight directional glow matte specular";
+  --prompt-motion-core: "settle drift snap orbit pulse";
+}
+
+/* ==========================================================================
+   15. Component-scoped energy defaults
+   --------------------------------------------------------------------------
+   These should be safe as inherited helpers. They make it easier to reason
+   about average interaction energy later.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .plan-card,
+  .settings-map-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-state-card,
+  [data-spw-flow="pretext"]
+) {
+  --local-energy-budget: var(--energy-budget-component);
+  --local-motion-budget: var(--energy-budget-motion);
+  --local-grain-budget: var(--energy-budget-grain);
+  --local-semantic-budget: var(--energy-budget-semantic);
+  --local-ornament-budget: var(--energy-ornamental);
+  --local-boundary-weight: var(--fixture-annotation-weight);
+  --local-edge-softness: var(--edge-softness);
+  --local-indexedness: var(--route-indexedness);
+}
+
+/* ==========================================================================
+   16. Suggested harmony aliases for JS / future settings / HTML tests
+   --------------------------------------------------------------------------
+   These aliases are intentionally explicit so pages can declare test fixtures
+   without inventing arbitrary route-local names.
+   ========================================================================== */
+
+:root {
+  --harmony-reading-calm: 0.34;
+  --harmony-analysis-measured: 0.48;
+  --harmony-routing-indexed: 0.56;
+  --harmony-settings-controllable: 0.62;
+  --harmony-publishing-editorial: 0.52;
+  --harmony-play-reactive: 0.4;
+
+  --theme-granularity-coarse: 0.22;
+  --theme-granularity-medium: 0.48;
+  --theme-granularity-fine: 0.76;
+
+  --semantic-test-fixture-min: 0.18;
+  --semantic-test-fixture-mid: 0.42;
+  --semantic-test-fixture-max: 0.78;
+}

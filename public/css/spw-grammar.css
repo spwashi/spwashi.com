@@ -1,11 +1,19 @@
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ==========================================================================
    spw-grammar.css
    --------------------------------------------------------------------------
    Purpose
-   - Defines the shared spatial/container grammar for frames, clusters,
-     concepts, forms, delimiters, and semantic metadata.
-   - Binds grammar behavior to the site token system.
-   - Keeps route flavor additive while preserving reusable component semantics.
+   - Shared spatial/container grammar for frames, clusters, concepts, forms,
+     delimiters, topic lenses, semantic metadata, and brace/rail distinctions.
+   - Bridge token physics to reusable structural semantics.
+   - Keep route flavor additive while preserving predictable component grammar.
+   - Prepare grammar for future JS cooperation, scoped enhancement, and richer
+     testing across pages/contexts.
+
+   Design stance
+   - Structural grammar should remain legible without JS.
+   - Metadata should be useful to CSS and runtime without requiring visible UI.
+   - Motion should bias toward opacity / color / transform, not costly layout.
+   - Forms should express semantic stance, not only decoration.
    ========================================================================== */
 
 /* ==========================================================================
@@ -13,36 +21,55 @@
    ========================================================================== */
 
 :root {
-  /* grammar durations */
-  --grammar-duration-fast: var(--duration-fast, 120ms);
-  --grammar-duration-base: var(--duration-base, 180ms);
-  --grammar-duration-deliberate: var(--duration-deliberate, 260ms);
+  /* timing */
+  --grammar-duration-instant: var(--duration-instant, 50ms);
+  --grammar-duration-fast: var(--duration-fast, 140ms);
+  --grammar-duration-base: var(--duration-base, 220ms);
+  --grammar-duration-deliberate: var(--duration-deliberate, 360ms);
 
-  /* grammar easing */
+  /* easing */
   --grammar-ease-mechanical: var(--ease-mechanical, ease);
   --grammar-ease-settle: var(--ease-settle, ease);
+  --grammar-ease-paper: var(--ease-paper, ease);
+  --grammar-ease-joint: var(--ease-joint, ease);
 
   /* shared surfaces */
-  --grammar-radius: var(--radius, 10px);
-  --grammar-radius-sm: var(--radius-sm, 6px);
-  --grammar-surface: var(--surface, rgba(255, 255, 255, 0.78));
-  --grammar-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.92));
-  --grammar-surface-soft: var(--surface-soft, rgba(255, 255, 255, 0.68));
+  --grammar-radius: var(--shape-surface, var(--radius-md, 10px));
+  --grammar-radius-sm: var(--shape-component, var(--radius-sm, 6px));
+  --grammar-radius-xs: var(--shape-element, var(--radius-xs, 4px));
+
+  --grammar-surface: var(--surface, rgba(255, 255, 255, 0.62));
+  --grammar-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.78));
+  --grammar-surface-soft: var(--surface-soft, rgba(255, 255, 255, 0.44));
+  --grammar-surface-panel: var(--surface-panel, rgba(255, 255, 255, 0.72));
+  --grammar-surface-panel-strong: var(--surface-panel-strong, rgba(255, 255, 255, 0.84));
+  --grammar-surface-matte: var(--surface-matte, rgba(247, 244, 238, 0.93));
+
   --grammar-line: var(--line, rgba(14, 18, 20, 0.14));
-  --grammar-line-strong: var(--line-strong, rgba(0, 128, 128, 0.28));
+  --grammar-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
+  --grammar-line-quiet: var(--line-quiet, rgba(14, 18, 20, 0.07));
+
   --grammar-ink: var(--ink, rgba(14, 18, 20, 0.92));
   --grammar-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  --grammar-ink-mid: var(--ink-mid, rgba(14, 18, 20, 0.52));
 
-  /* motion / shadow */
-  --grammar-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.08));
-  --grammar-shadow-active: var(--shadow-active, 0 10px 28px rgba(0, 0, 0, 0.12));
+  /* shadow / lift */
+  --grammar-shadow: var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
+  --grammar-shadow-active: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.1));
+  --grammar-shadow-projecting: var(--shadow-projecting, 0 14px 34px rgba(0, 0, 0, 0.14));
 
   /* sizing */
-  --grammar-surface-gap: var(--surface-gap, 1rem);
-  --grammar-surface-padding: var(--surface-padding, 1rem);
+  --grammar-surface-gap: var(--gap-surface, 1rem);
+  --grammar-panel-gap: var(--gap-panel, 0.85rem);
+  --grammar-cluster-gap: var(--gap-cluster, 0.45rem);
+
+  --grammar-surface-padding: var(--inset-surface, 1rem);
+  --grammar-panel-padding: var(--inset-panel, 0.75rem);
+  --grammar-component-padding: var(--inset-component, 0.75rem 1rem);
 
   /* typography */
-  --grammar-mono-font: var(--site-mono-font, var(--font-mono, 'JetBrains Mono', monospace));
+  --grammar-mono-font: var(--site-mono-font, var(--font-family-mono, "JetBrains Mono", monospace));
+  --grammar-reading-measure: var(--measure-reading, 68ch);
 
   /* focus */
   --grammar-focus-outline: 2px solid var(--active-op-color, var(--teal, #008080));
@@ -53,44 +80,116 @@
   --grammar-form-close: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
 
   /* objective / subjective rails */
-  --objective-brace-color: var(--objective-brace-color, var(--active-op-color, var(--teal, #008080)));
-  --subjective-brace-color: var(--subjective-brace-color, var(--op-meta-color, hsl(220 42% 42%)));
+  --grammar-objective-brace-color: var(--objective-brace-color, hsl(188 58% 32%));
+  --grammar-subjective-brace-color: var(--subjective-brace-color, hsl(342 48% 36%));
+
+  /* grammar energy / motion safety */
+  --grammar-motion-budget: var(--local-motion-budget, var(--energy-budget-motion, 0.26));
+  --grammar-ornament-budget: var(--local-ornament-budget, var(--energy-ornamental, 0.16));
+  --grammar-boundary-weight: var(--local-boundary-weight, var(--fixture-annotation-weight, 0.34));
+  --grammar-edge-softness: var(--local-edge-softness, var(--edge-softness, 0.24));
 }
 
 /* ==========================================================================
-   2. Container depth vocabulary
+   2. Shared ownership and safe defaults
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  [data-spw-container],
+  [data-spw-form]
+) {
+  position: relative;
+  min-width: 0;
+}
+
+:where(
+  .site-frame > *,
+  .frame-panel > *,
+  .frame-card > *,
+  .software-card > *,
+  .mode-panel > *,
+  .plan-card > *,
+  .compare-card > *,
+  .spec-column > *
+) {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+:where(
+  .frame-topline,
+  .frame-heading,
+  .spec-strip,
+  .frame-operators,
+  .spw-component-meta,
+  .spw-component-guides
+) {
+  min-width: 0;
+}
+
+:where(
+  .spw-component-tag,
+  .frame-sigil,
+  .operator-chip,
+  .frame-card-sigil,
+  .spec-kicker,
+  .syntax-token,
+  .spw-topic,
+  [data-spw-topic]
+) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   3. Container depth vocabulary
    ========================================================================== */
 
 [data-spw-depth="0"] {
   --container-surface: transparent;
   --container-border: transparent;
+  --container-shadow: none;
 }
 
 [data-spw-depth="1"] {
   --container-surface: var(--grammar-surface);
   --container-border: var(--grammar-line);
+  --container-shadow: none;
 }
 
 [data-spw-depth="2"] {
-  --container-surface: var(--grammar-surface-strong);
+  --container-surface: var(--grammar-surface-panel);
   --container-border: color-mix(in srgb, var(--grammar-ink) 12%, transparent);
+  --container-shadow: var(--grammar-shadow);
 }
 
 [data-spw-depth="3"] {
   --container-surface: color-mix(in srgb, white 92%, var(--grammar-surface));
   --container-border: color-mix(in srgb, var(--grammar-ink) 18%, transparent);
+  --container-shadow: var(--grammar-shadow-active);
 }
 
 :where([data-spw-depth]) {
   background: var(--container-surface);
   border-color: var(--container-border);
+  box-shadow: var(--container-shadow);
   transition:
     background var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
-    border-color var(--grammar-duration-base) var(--grammar-ease-mechanical);
+    border-color var(--grammar-duration-base) var(--grammar-ease-mechanical),
+    box-shadow var(--grammar-duration-base) var(--grammar-ease-settle);
 }
 
 /* ==========================================================================
-   3. Container type vocabulary
+   4. Container type vocabulary
    ========================================================================== */
 
 :where([data-spw-container="field"]) {
@@ -105,11 +204,13 @@
   background: var(--grammar-surface-soft);
   transition:
     background var(--grammar-duration-base) var(--grammar-ease-mechanical),
-    border-color var(--grammar-duration-fast) var(--grammar-ease-mechanical);
+    border-color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    box-shadow var(--grammar-duration-base) var(--grammar-ease-settle);
 }
 
 :where([data-spw-container="concept"]) {
   display: inline-block;
+  min-width: 0;
   padding: 0.15rem 0.5rem;
   border: 1.5px solid var(--active-op-color, var(--teal, #008080));
   border-radius: var(--grammar-radius-sm);
@@ -117,11 +218,20 @@
   transition:
     border-color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
     background var(--grammar-duration-fast) var(--grammar-ease-mechanical),
-    color var(--grammar-duration-fast) var(--grammar-ease-mechanical);
+    color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    box-shadow var(--grammar-duration-base) var(--grammar-ease-settle);
+}
+
+:where([data-spw-container="concept"][data-spw-interactivity="controllable"]) {
+  cursor: pointer;
+}
+
+:where([data-spw-container="concept"][data-spw-inspectability="deep"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
 }
 
 /* ==========================================================================
-   4. Spatial stance
+   5. Spatial stance
    ========================================================================== */
 
 :where([data-spw-stance="entry"]) {
@@ -138,11 +248,13 @@
 :where([data-spw-stance="exit"]) {
   opacity: 0.76;
   letter-spacing: 0.01em;
-  transition: opacity var(--grammar-duration-deliberate) var(--grammar-ease-mechanical);
+  transition:
+    opacity var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
+    color var(--grammar-duration-deliberate) var(--grammar-ease-mechanical);
 }
 
 /* ==========================================================================
-   5. Frame primitives
+   6. Frame primitives
    ========================================================================== */
 
 :where(.site-frame) {
@@ -151,7 +263,7 @@
   flex-direction: column;
   gap: var(--grammar-surface-gap);
   min-width: 0;
-  overflow: hidden;
+  overflow: clip;
   padding: var(--grammar-surface-padding);
   border: 1px solid var(--grammar-line);
   border-radius: var(--grammar-radius);
@@ -164,6 +276,7 @@
     background var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
     border-color var(--grammar-duration-base) var(--grammar-ease-mechanical),
     box-shadow var(--grammar-duration-deliberate) var(--grammar-ease-mechanical);
+
   background-image:
     linear-gradient(
       90deg,
@@ -181,27 +294,10 @@
   box-shadow: var(--grammar-shadow-active);
 }
 
-:where(
-  [data-spw-component-kind="frame"],
-  [data-spw-component-kind="panel"],
-  [data-spw-component-kind="card"],
-  [data-spw-component-kind="surface"],
-  [data-spw-component-kind="lens"],
-  [data-spw-component-kind="metric"]
-) {
-  position: relative;
-}
-
-:where(
-  [data-spw-component-kind="frame"] > *,
-  [data-spw-component-kind="panel"] > *,
-  [data-spw-component-kind="card"] > *,
-  [data-spw-component-kind="surface"] > *,
-  [data-spw-component-kind="lens"] > *,
-  [data-spw-component-kind="metric"] > *
-) {
-  position: relative;
-  z-index: 1;
+:where(.site-frame[data-spw-attention="focused"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent),
+    var(--grammar-shadow-active);
 }
 
 :where(.site-hero) {
@@ -225,6 +321,13 @@
 
 :where(.site-frame.is-active-frame .frame-topline) {
   border-bottom-color: color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
+}
+
+:where(.frame-heading > .frame-sigil) {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: 0.78rem;
+  opacity: 0.6;
 }
 
 @container (max-width: 38rem) {
@@ -253,27 +356,20 @@
   }
 }
 
-@container (max-width: 26rem) {
-  :where(.frame-topline) {
-    margin-bottom: 0;
-  }
-}
-
-:where(.frame-heading > .frame-sigil) {
-  flex-shrink: 0;
-  align-self: center;
-  font-size: 0.78rem;
-  opacity: 0.6;
-}
-
 @container (max-width: 28rem) {
   :where(.frame-heading > .frame-sigil) {
     display: none;
   }
 }
 
+@container (max-width: 26rem) {
+  :where(.frame-topline) {
+    margin-bottom: 0;
+  }
+}
+
 /* ==========================================================================
-   6. Role-based frame identity
+   7. Role-based frame identity
    ========================================================================== */
 
 :where(.site-frame[data-spw-role="probe"]) {
@@ -282,6 +378,11 @@
       180deg,
       color-mix(in srgb, var(--op-probe-bg-soft, rgba(0, 128, 128, 0.04)) 50%, transparent) 0%,
       transparent 55%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
     );
 }
 
@@ -291,6 +392,11 @@
       0deg,
       color-mix(in srgb, var(--op-surface-bg-soft, rgba(0, 128, 128, 0.04)) 40%, transparent) 0%,
       transparent 50%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
     );
 }
 
@@ -310,6 +416,11 @@
       180deg,
       transparent 40%,
       color-mix(in srgb, var(--op-surface-bg-soft, rgba(0, 128, 128, 0.04)) 40%, transparent) 100%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
     );
 }
 
@@ -318,14 +429,27 @@
   border-bottom-color: var(--op-pragma-border, rgba(0, 128, 128, 0.22));
 }
 
+:where(.site-frame[data-spw-harmony="indexed"]) {
+  --grammar-boundary-weight: 0.5;
+}
+
+:where(.site-frame[data-spw-harmony="structured"]) {
+  --grammar-edge-softness: 0.12;
+}
+
+:where(.site-frame[data-spw-harmony="responsive"]) {
+  --grammar-motion-budget: 0.32;
+}
+
 /* ==========================================================================
-   7. Semantic metadata tags
+   8. Semantic metadata tags
    ========================================================================== */
 
 :where(.spw-component-tag) {
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  max-width: 100%;
   padding: 0.24rem 0.5rem;
   white-space: nowrap;
   pointer-events: none;
@@ -398,20 +522,114 @@
   display: inline-flex;
 }
 
+/* semantic bias by interactivity / configurability */
+:where([data-spw-interactivity="controllable"] > .spw-component-meta > .spw-component-tag) {
+  color: var(--op-action-color);
+  border-color: var(--op-action-border);
+  background: var(--op-action-bg-soft);
+}
+
+:where([data-spw-inspectability="deep"] > .spw-component-meta > .spw-component-tag) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+}
+
+:where([data-spw-config-domain="site-settings"] > .spw-component-meta > .spw-component-tag) {
+  color: var(--op-surface-color);
+  border-color: var(--op-surface-border);
+  background: var(--op-surface-bg-soft);
+}
+
+/* meta tag bias by component kind / role */
 :where(
-  .spw-component-tag,
-  .frame-sigil,
-  .operator-chip,
-  .frame-card-sigil,
-  .spec-kicker,
-  .syntax-token
+  [data-spw-component-kind="frame"] > .spw-component-meta > .spw-component-tag,
+  .frame-topline > .spw-component-meta > .spw-component-tag,
+  .frame-heading > .spw-component-meta > .spw-component-tag
 ) {
-  -webkit-user-select: none;
-  user-select: none;
+  color: var(--teal-deep, hsl(180 100% 18%));
+  border-color: rgba(0, 128, 128, 0.18);
+  background: rgba(230, 248, 248, 0.74);
+}
+
+:where([data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag) {
+  color: hsl(210 70% 34%);
+  border-color: hsla(210, 70%, 34%, 0.16);
+  background: rgba(235, 244, 255, 0.72);
+}
+
+:where(
+  [data-spw-component-kind="panel"],
+  [data-spw-component-kind="surface"]
+) > .spw-component-meta > .spw-component-tag {
+  color: hsl(36 80% 32%);
+  border-color: hsla(36, 80%, 32%, 0.16);
+  background: rgba(255, 248, 235, 0.76);
+}
+
+:where([data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag) {
+  color: hsl(268 55% 38%);
+  border-color: hsla(268, 55%, 38%, 0.16);
+  background: rgba(245, 238, 255, 0.78);
+}
+
+:where([data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag) {
+  color: hsl(180 100% 22%);
+  border-color: rgba(0, 100, 100, 0.18);
+  background: rgba(230, 248, 248, 0.78);
+}
+
+:where(
+  [data-spw-role="routing"],
+  [data-spw-role="register"],
+  [data-spw-role="route"],
+  [data-spw-role="artifact"],
+  [data-spw-role="reference"]
+) > .spw-component-meta > .spw-component-tag {
+  color: var(--op-ref-color);
+  border-color: var(--op-ref-border);
+  background: var(--op-ref-bg-soft);
+}
+
+:where(
+  [data-spw-role="schema"],
+  [data-spw-role="comparison"],
+  [data-spw-role="pipeline"]
+) > .spw-component-meta > .spw-component-tag {
+  color: var(--op-object-color);
+  border-color: var(--op-object-border);
+  background: var(--op-object-bg-soft);
+}
+
+:where(
+  [data-spw-role="probe"],
+  [data-spw-role="telemetry"],
+  [data-spw-role="lens"]
+) > .spw-component-meta > .spw-component-tag {
+  color: var(--op-probe-color);
+  border-color: var(--op-probe-border);
+  background: var(--op-probe-bg-soft);
+}
+
+:where(
+  [data-spw-role="projection"],
+  [data-spw-role="surface"],
+  [data-spw-role="control"]
+) > .spw-component-meta > .spw-component-tag {
+  color: var(--op-surface-color);
+  border-color: var(--op-surface-border);
+  background: var(--op-surface-bg-soft);
+}
+
+:where(
+  [data-spw-role="scenario"],
+  [data-spw-role="rationale"]
+) > .spw-component-meta > .spw-component-tag {
+  color: var(--op-pragma-color);
+  border-color: var(--op-pragma-border);
+  background: var(--op-pragma-bg-soft);
 }
 
 /* ==========================================================================
-   8. Form substrate mapping
+   9. Substrate mapping
    ========================================================================== */
 
 :where(
@@ -492,7 +710,7 @@
 }
 
 /* ==========================================================================
-   9. Brace form
+   10. Brace form
    ========================================================================== */
 
 :where([data-spw-form="brace"]) {
@@ -553,6 +771,7 @@
   --brace-close-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
 }
 
+/* operator-specific brace hues */
 :where([data-spw-form="brace"][data-spw-operator="frame"]) {
   --brace-open-color: color-mix(in srgb, var(--op-frame-color) 38%, transparent);
   --brace-close-color: color-mix(in srgb, var(--op-frame-color) 20%, transparent);
@@ -645,7 +864,7 @@
 }
 
 /* ==========================================================================
-   10. Angle / circle / square forms
+   11. Angle / circle / square forms
    ========================================================================== */
 
 :where([data-spw-form="angle"]) {
@@ -740,7 +959,7 @@
 }
 
 /* ==========================================================================
-   11. Block form
+   12. Block form
    ========================================================================== */
 
 :where([data-spw-form="block"]) {
@@ -806,7 +1025,7 @@
 }
 
 /* ==========================================================================
-   12. Tag placement
+   13. Tag placement
    ========================================================================== */
 
 :where(
@@ -848,31 +1067,31 @@
 }
 
 /* ==========================================================================
-   13. Objective / subjective brace rails
+   14. Objective / subjective brace rails
    ========================================================================== */
 
 :where([data-spw-brace="objective"]) {
-  border-left: 2px solid color-mix(in oklab, var(--objective-brace-color) 22%, transparent);
+  border-left: 2px solid color-mix(in oklab, var(--grammar-objective-brace-color) 22%, transparent);
   background: transparent;
   background-image: none;
 }
 
 :where([data-spw-brace="subjective"]) {
-  border-right: 2px solid color-mix(in oklab, var(--subjective-brace-color) 22%, transparent);
+  border-right: 2px solid color-mix(in oklab, var(--grammar-subjective-brace-color) 22%, transparent);
   background: transparent;
   background-image: none;
 }
 
 :where([data-spw-brace="objective"].is-active-frame, [data-spw-brace="objective"]:hover) {
-  border-left-color: color-mix(in oklab, var(--objective-brace-color) 44%, transparent);
+  border-left-color: color-mix(in oklab, var(--grammar-objective-brace-color) 44%, transparent);
 }
 
 :where([data-spw-brace="subjective"].is-active-frame, [data-spw-brace="subjective"]:hover) {
-  border-right-color: color-mix(in oklab, var(--subjective-brace-color) 44%, transparent);
+  border-right-color: color-mix(in oklab, var(--grammar-subjective-brace-color) 44%, transparent);
 }
 
 /* ==========================================================================
-   14. Topic lens
+   15. Topic lens
    ========================================================================== */
 
 :where([data-spw-operator="topic"]) {
@@ -883,6 +1102,7 @@
 
 :where(.spw-topic, [data-spw-topic]) {
   display: inline;
+  min-width: 0;
   padding: 0.08em 0.32em;
   border: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.24));
   border-radius: 3px;
@@ -891,9 +1111,9 @@
   font-family: var(--grammar-mono-font);
   font-size: 0.87em;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
   transition:
     background var(--grammar-duration-base) var(--grammar-ease-mechanical),
     border-color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
@@ -936,7 +1156,7 @@
 
 :where(.spw-topic-popover) {
   position: absolute;
-  z-index: var(--z-modal, 2000);
+  z-index: var(--layer-priority, 2000);
   max-width: 28rem;
   padding: 0.65rem 0.85rem;
   pointer-events: auto;
@@ -1017,7 +1237,7 @@
 }
 
 /* ==========================================================================
-   15. Connectors and delimiters
+   16. Connectors and delimiters
    ========================================================================== */
 
 :where(.spw-connector) {
@@ -1042,7 +1262,8 @@
   transition:
     color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
     text-shadow var(--grammar-duration-fast) var(--grammar-ease-mechanical),
-    transform var(--grammar-duration-fast) var(--grammar-ease-settle);
+    transform var(--grammar-duration-fast) var(--grammar-ease-settle),
+    opacity var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
 :where(.spw-delimiter--paren) {
@@ -1072,367 +1293,24 @@
   transform: scale(1.2);
 }
 
-.frame-card[data-spw-form="brace"] {
-  --brace-corner-offset: 0.4rem;
-  --brace-corner-width: 1.55rem;
-  --brace-corner-height: 1.1rem;
-}
-
-.frame-panel[data-spw-form="brace"] {
-  --brace-corner-offset: 0.3rem;
-  --brace-corner-width: 1.2rem;
-  --brace-corner-height: 0.85rem;
-  --brace-corner-stroke: 1.2px;
-}
-
-.mode-panel[data-spw-form="brace"] {
-  --brace-corner-offset: 0.25rem;
-  --brace-corner-width: 0.95rem;
-  --brace-corner-height: 0.7rem;
-  --brace-corner-radius: 0.5rem;
-  --brace-corner-stroke: 1px;
-}
-
-[data-spw-form="block"]::before {
-  inset: var(--block-inset);
-  border: var(--block-border-width) solid var(--block-border-color);
-  border-radius: var(--block-radius);
-  box-shadow:
-    inset 0 var(--block-highlight-offset) 0 var(--block-highlight-color),
-    inset 0 0 0 var(--block-depth-size) var(--block-depth-color);
-  transition:
-    border-color var(--duration-base, 200ms) var(--ease-mechanical, ease),
-    box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease);
-}
-
-[data-spw-form="block"]:hover::before {
-  border-color: var(--block-hover-border-color);
-  box-shadow:
-    inset 0 var(--block-highlight-offset) 0 var(--block-hover-highlight-color),
-    inset 0 0 0 var(--block-depth-size) var(--block-hover-depth-color);
-}
-
-.frame-card[data-spw-form="block"] {
-  --block-inset: 0.32rem;
-  --block-radius: calc(var(--radius-sm) - 0.08rem);
-  --block-highlight-offset: 0.8px;
-  --block-highlight-color: rgba(255, 255, 255, 0.42);
-  --block-depth-size: 0.28rem;
-  --block-depth-color: rgba(14, 18, 20, 0.02);
-}
-
-.frame-panel[data-spw-form="block"] {
-  --block-inset: 0.25rem;
-  --block-radius: calc(var(--radius-sm) - 0.06rem);
-  --block-highlight-offset: 0.6px;
-  --block-highlight-color: rgba(255, 255, 255, 0.40);
-  --block-depth-size: 0.22rem;
-  --block-depth-color: rgba(14, 18, 20, 0.015);
-}
-
-.mode-panel[data-spw-form="block"] {
-  --block-inset: 0.2rem;
-  --block-border-width: 0.8px;
-  --block-border-color: rgba(14, 18, 20, 0.05);
-  --block-radius: calc(var(--radius-sm) - 0.05rem);
-  --block-highlight-offset: 0.5px;
-  --block-highlight-color: rgba(255, 255, 255, 0.38);
-  --block-depth-size: 0.18rem;
-  --block-depth-color: rgba(14, 18, 20, 0.01);
-}
-
-:where(
-  .site-frame,
-  .frame-panel,
-  .frame-card,
-  .software-card,
-  .mode-panel,
-  [data-spw-features~="pretext-lab"] .pretext-metric
-) > .spw-component-tag {
-  align-self: flex-end;
-  margin-bottom: -0.2rem;
-}
-
-:where(.frame-topline, .frame-heading) > .spw-component-tag {
-  margin-left: auto;
-}
-
-:where(
-  [data-spw-form="brace"] > .spw-component-tag,
-  .frame-topline > .spw-component-tag,
-  .frame-heading > .spw-component-tag
-) {
-  border-radius: 999px;
-}
-
-/* ── Objective / Subjective brace distinction ───────────────────────── */
-
-[data-spw-brace="objective"] {
-  border-left: 2px solid color-mix(
-    in oklab,
-    var(--objective-brace-color, var(--active-op-color, var(--teal))) 22%,
-    transparent
-  );
-  background: transparent;
-  background-image: none;
-}
-
-[data-spw-brace="subjective"] {
-  border-right: 2px solid color-mix(
-    in oklab,
-    var(--subjective-brace-color, var(--active-op-color, var(--teal))) 22%,
-    transparent
-  );
-  background: transparent;
-  background-image: none;
-}
-
-:where(
-  [data-spw-brace="objective"].is-active-frame,
-  [data-spw-brace="objective"]:hover
-) {
-  border-left-color: color-mix(
-    in oklab,
-    var(--objective-brace-color, var(--active-op-color, var(--teal))) 44%,
-    transparent
-  );
-}
-
-:where(
-  [data-spw-brace="subjective"].is-active-frame,
-  [data-spw-brace="subjective"]:hover
-) {
-  border-right-color: color-mix(
-    in oklab,
-    var(--subjective-brace-color, var(--active-op-color, var(--teal))) 44%,
-    transparent
-  );
-}
-
-/* ── Topic lens ──────────────────────────────────────────────────────── */
-
-[data-spw-operator="topic"] {
-  --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%));
-  --angle-open-color: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 38%,
-    transparent
-  );
-  --angle-close-color: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 38%,
-    transparent
-  );
-}
-
-:where(.spw-topic, [data-spw-topic]) {
-  display: inline;
-  padding: 0.08em 0.32em;
-  border: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.24));
-  border-radius: 3px;
-  background: var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72));
-  color: var(--op-topic-color, hsl(192 62% 32%));
-  cursor: pointer;
-  font-family: var(--site-mono-font, var(--font-mono, monospace));
-  font-size: 0.87em;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  user-select: none;
-  transition:
-    background var(--duration-base) var(--ease-mechanical),
-    border-color var(--duration-snap) var(--ease-mechanical),
-    color var(--duration-snap) var(--ease-mechanical),
-    box-shadow var(--duration-base) var(--ease-settle, ease),
-    outline-offset var(--duration-snap) var(--ease-mechanical);
-}
-
-.spw-topic::before {
-  content: "<";
-  opacity: 0.52;
-  font-weight: 300;
-}
-
-.spw-topic::after {
-  content: ">";
-  opacity: 0.52;
-  font-weight: 300;
-}
-
-:where(.spw-topic, [data-spw-topic]):hover {
-  background: color-mix(
-    in srgb,
-    var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 60%,
-    rgba(255, 255, 255, 0.3)
-  );
-  border-color: color-mix(
-    in srgb,
-    var(--op-topic-border, hsla(192, 62%, 32%, 0.24)) 70%,
-    transparent
-  );
-  color: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 85%,
-    black
-  );
-}
-
-.spw-topic--highlighted {
-  background: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 14%,
-    rgba(255, 255, 255, 0.6)
-  );
-  border-color: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 42%,
-    transparent
-  );
-  box-shadow: 0 0 0 2px color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 12%,
-    transparent
-  );
-}
-
-.spw-topic--active {
-  background: color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 20%,
-    rgba(255, 255, 255, 0.7)
-  );
-  border-color: var(--op-topic-color, hsl(192 62% 32%));
-  box-shadow: 0 0 0 3px color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 18%,
-    transparent
-  );
-  outline: 2px solid color-mix(
-    in srgb,
-    var(--op-topic-color, hsl(192 62% 32%)) 32%,
-    transparent
-  );
-  outline-offset: 2px;
-}
-
-.spw-topic-popover {
-  position: absolute;
-  z-index: var(--z-modal, 2000);
-  max-width: 28rem;
-  padding: 0.65rem 0.85rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius, 10px);
-  background: var(--floating-bg, rgba(255, 255, 255, 0.94));
-  box-shadow: var(--floating-shadow);
-  color: var(--ink);
-  font-family: var(--site-mono-font, var(--font-mono, monospace));
-  font-size: 0.82rem;
-  opacity: 0;
-  transform: translateY(4px);
-  pointer-events: auto;
-  transition:
-    opacity var(--duration-fast) var(--ease-mechanical),
-    transform var(--duration-fast) var(--ease-settle, ease);
-}
-
-.spw-topic-popover.is-visible {
+:where([data-spw-popped="true"].spw-delimiter) {
   opacity: 1;
-  transform: translateY(0);
+  border-bottom: 1px solid var(--spw-operator-color);
 }
 
-.spw-topic-popover-header {
-  display: flex;
-  align-items: baseline;
-  gap: 0.65rem;
-  margin-bottom: 0.4rem;
+:where([data-spw-selection="selected"].spw-delimiter) {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--delight-color, color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 22%, transparent));
+  color: #fff !important;
+  box-shadow: 0 0 15px var(--delight-color, var(--spw-operator-color, var(--teal, #008080)));
 }
 
-.spw-topic-popover-sigil {
-  font-weight: 600;
-  color: var(--op-topic-color, hsl(192 62% 32%));
-}
+/* ==========================================================================
+   17. Persona-aware salience
+   ========================================================================== */
 
-.spw-topic-popover-count {
-  color: var(--ink-soft);
-  font-size: 0.75rem;
-}
-
-.spw-topic-popover-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 0.35rem;
-}
-
-.spw-topic-popover-link {
-  display: block;
-  padding: 0.2rem 0.4rem;
-  border-radius: var(--radius-sm, 6px);
-  color: var(--teal);
-  text-decoration: none;
-  transition: background var(--duration-snap) var(--ease-mechanical);
-}
-
-.spw-topic-popover-link:hover {
-  background: var(--surface-soft);
-}
-
-.spw-topic-popover-operators {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.spw-topic-popover-op {
-  padding: 0.12rem 0.4rem;
-  border: 1px solid color-mix(
-    in srgb,
-    var(--spw-operator-color, var(--teal)) 20%,
-    transparent
-  );
-  border-radius: var(--radius-sm);
-  background: color-mix(
-    in srgb,
-    var(--spw-operator-color, var(--teal)) 8%,
-    transparent
-  );
-  font-size: 0.75rem;
-}
-
-.is-badge-active {
-  background: color-mix(in srgb, var(--teal) 16%, rgba(255, 255, 255, 0.5));
-  border-color: var(--teal);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--teal) 14%, transparent);
-}
-
-.spw-connector {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.28em;
-  color: var(--connector-color, rgba(0, 128, 128, 0.32));
-  font-family: var(--site-mono-font, var(--font-mono, monospace));
-  font-size: 0.88em;
-  pointer-events: none;
-  user-select: none;
-  vertical-align: middle;
-}
-
-[data-spw-form="brace"] > .spw-component-tag::before {
-  content: "{";
-  margin-right: 0.25em;
-  opacity: 0.5;
-  font-weight: 700;
-}
-
-[data-spw-form="brace"] > .spw-component-tag::after {
-  content: "}";
-  margin-left: 0.25em;
-  opacity: 0.28;
-  font-weight: 700;
-}
-
-/* ── Persona-aware salience ──────────────────────────────────────────── */
-
-[data-spw-persona="viewer"] .spw-delimiter--paren {
+:where([data-spw-persona="viewer"] .spw-delimiter--paren) {
   animation: viewer-pulse 2s infinite ease-in-out;
 }
 
@@ -1450,26 +1328,26 @@
   }
 }
 
-[data-spw-persona="scribe"] .spw-delimiter--angle {
+:where([data-spw-persona="scribe"] .spw-delimiter--angle) {
   position: relative;
   color: var(--amber);
   border-bottom: 1px dotted var(--amber);
 }
 
-[data-spw-persona="scribe"] .spw-delimiter--angle:hover::after {
+:where([data-spw-persona="scribe"] .spw-delimiter--angle:hover::after) {
   content: " [projection]";
   font-size: 0.5rem;
   vertical-align: super;
   opacity: 0.7;
 }
 
-[data-spw-persona="doodler"] .spw-delimiter--square {
+:where([data-spw-persona="doodler"] .spw-delimiter--square) {
   color: var(--pink);
   background: color-mix(in srgb, var(--pink) 10%, transparent);
   border-radius: 2px;
 }
 
-[data-spw-persona="doodler"] .spw-delimiter--square:hover {
+:where([data-spw-persona="doodler"] .spw-delimiter--square:hover) {
   animation: doodler-hop 0.4s ease-out;
 }
 
@@ -1484,147 +1362,29 @@
   }
 }
 
-[data-spw-selection="selected"].spw-delimiter {
-  padding: 0 4px;
-  border-radius: 4px;
-  background: var(--delight-color);
-  color: #fff !important;
-  box-shadow: 0 0 15px var(--delight-color);
-}
+/* ==========================================================================
+   18. Accessibility
+   ========================================================================== */
 
-.spw-delimiter {
-  display: inline-block;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  transition: all 0.2s var(--brace-settle-ease);
-}
-
-.spw-delimiter--paren {
-  color: var(--teal-soft);
-  --spw-operator-color: var(--teal);
-}
-
-.spw-delimiter--square {
-  color: var(--pink-soft);
-  --spw-operator-color: var(--pink);
-}
-
-.spw-delimiter--angle {
-  color: var(--amber-soft);
-  --spw-operator-color: var(--amber);
-}
-
-:where(.spw-delimiter:hover, [data-spw-gesture="charging"].spw-delimiter) {
-  color: var(--spw-operator-color);
-  text-shadow: 0 0 8px var(--spw-operator-color);
-  transform: scale(1.1);
-}
-
-[data-spw-gesture="active"].spw-delimiter {
-  color: #fff;
-  text-shadow: 0 0 15px var(--spw-operator-color);
-  transform: scale(1.2);
-}
-
-[data-spw-popped="true"].spw-delimiter {
-  opacity: 1;
-  border-bottom: 1px solid var(--spw-operator-color);
-}
-
-/* ── Meta tag bias by component kind and role ───────────────────────── */
-
-[data-spw-component-kind="frame"] > .spw-component-meta > .spw-component-tag,
-.frame-topline > .spw-component-meta > .spw-component-tag,
-.frame-heading > .spw-component-meta > .spw-component-tag {
-  color: var(--teal-deep);
-  border-color: rgba(0, 128, 128, 0.18);
-  background: rgba(230, 248, 248, 0.74);
-}
-
-[data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag {
-  color: hsl(210 70% 34%);
-  border-color: hsla(210, 70%, 34%, 0.16);
-  background: rgba(235, 244, 255, 0.72);
-}
-
-:where(
-  [data-spw-component-kind="panel"],
-  [data-spw-component-kind="surface"]
-) > .spw-component-meta > .spw-component-tag {
-  color: hsl(36 80% 32%);
-  border-color: hsla(36, 80%, 32%, 0.16);
-  background: rgba(255, 248, 235, 0.76);
-}
-
-[data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag {
-  color: hsl(268 55% 38%);
-  border-color: hsla(268, 55%, 38%, 0.16);
-  background: rgba(245, 238, 255, 0.78);
-}
-
-[data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag {
-  color: hsl(180 100% 22%);
-  border-color: rgba(0, 100, 100, 0.18);
-  background: rgba(230, 248, 248, 0.78);
-}
-
-:where(
-  [data-spw-role="routing"],
-  [data-spw-role="register"],
-  [data-spw-role="route"],
-  [data-spw-role="artifact"],
-  [data-spw-role="reference"]
-) > .spw-component-meta > .spw-component-tag {
-  color: var(--op-ref-color);
-  border-color: var(--op-ref-border);
-  background: var(--op-ref-bg-soft);
-}
-
-:where(
-  [data-spw-role="schema"],
-  [data-spw-role="comparison"],
-  [data-spw-role="pipeline"]
-) > .spw-component-meta > .spw-component-tag {
-  color: var(--op-object-color);
-  border-color: var(--op-object-border);
-  background: var(--op-object-bg-soft);
-}
-
-:where(
-  [data-spw-role="probe"],
-  [data-spw-role="telemetry"],
-  [data-spw-role="lens"]
-) > .spw-component-meta > .spw-component-tag {
-  color: var(--op-probe-color);
-  border-color: var(--op-probe-border);
-  background: var(--op-probe-bg-soft);
-}
-
-:where(
-  [data-spw-role="projection"],
-  [data-spw-role="surface"],
-  [data-spw-role="control"]
-) > .spw-component-meta > .spw-component-tag {
-  color: var(--op-surface-color);
-  border-color: var(--op-surface-border);
-  background: var(--op-surface-bg-soft);
-}
-
-:where(
-  [data-spw-role="scenario"],
-  [data-spw-role="rationale"]
-) > .spw-component-meta > .spw-component-tag {
-  color: var(--op-pragma-color);
-  border-color: var(--op-pragma-border);
-  background: var(--op-pragma-bg-soft);
+:where([data-spw-form], .spw-topic, [data-spw-topic], .spw-delimiter):focus-visible {
+  outline: var(--grammar-focus-outline);
+  outline-offset: var(--grammar-focus-offset);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-spw-persona="viewer"] .spw-delimiter--paren,
-  [data-spw-persona="doodler"] .spw-delimiter--square:hover,
-  .spw-delimiter,
-  .spw-topic-popover {
+  :where(
+    [data-spw-persona="viewer"] .spw-delimiter--paren,
+    [data-spw-persona="doodler"] .spw-delimiter--square:hover,
+    .spw-delimiter,
+    .spw-topic-popover,
+    [data-spw-depth],
+    [data-spw-container="cluster"],
+    [data-spw-container="concept"],
+    .site-frame,
+    .frame-topline,
+    .spw-topic,
+    [data-spw-topic]
+  ) {
     animation: none !important;
     transition: none !important;
     transform: none !important;

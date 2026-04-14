@@ -3,49 +3,50 @@
  * --------------------------------------------------------------------------
  * Purpose
  * - Minimal staged runtime bootstrap for spwashi.com.
- * - Restore a sane starting point after removing heavier JS.
- * - Provide explicit lifecycle contracts for future modules:
- *   core -> feature hydration -> idle enhancements.
- * - Make cleanup and refresh first-class so old modules can be reintroduced
- *   safely, one at a time.
+ * - Provide explicit lifecycle contracts for:
+ *   core -> feature hydration -> region enhancement -> idle enhancement.
+ * - Give CSS and JS a shared semantic vocabulary for discoverable harmony.
+ * - Keep cleanup and refresh first-class so older modules can be reintroduced
+ *   safely and incrementally.
  *
  * Design constraints
  * - Do not hijack scrolling.
- * - Do not continuously measure layout in core runtime.
- * - Do not mount modules unless a route or DOM selector proves they are needed.
- * - Do not assume every module supports refresh/cleanup yet.
- * - Keep this file useful even before all modules are migrated.
+ * - Do not continuously rank regions on scroll.
+ * - Do not mount modules unless route/DOM proves they are needed.
+ * - Expose region state and harmony hints to CSS.
+ * - Keep core small and region work bounded.
  *
  * Page lifecycle
  * - booting
  * - interactive
  * - hydrated
+ * - region-enhanced
  * - enhanced
  *
  * Region lifecycle
  * - queued
+ * - primed
  * - hydrating
  * - interactive
  * - enhanced
+ * - settling
  *
  * Module contract
  * A module definition should provide:
- * - id: unique runtime id
- * - layer: "core" | "feature" | "enhancement"
- * - when: "immediate" | "visible" | "idle" | "interaction"
- * - selector?: CSS selector for feature sniffing
- * - route?: string | string[] route surface(s)
+ * - id
+ * - layer: "core" | "feature" | "region" | "enhancement"
+ * - when: "immediate" | "visible" | "idle" | "interaction" | "region"
+ * - selector?: CSS selector
+ * - route?: string | string[]
+ * - rootMode?: "single" | "each"
  * - load(): Promise<module>
  * - mount(mod, ctx, root?): cleanup fn | { cleanup?, refresh? } | void
  *
- * Optional future exports for modules
- * - cleanup(): void
- * - refresh(nextCtx): void
- *
  * Notes
- * - This file intentionally avoids importing heavy modules at top-level.
- * - Reintroduce modules by adding them to FEATURE_DEFS or ENHANCEMENT_DEFS.
- * - Keep core small until route behavior is verified as stable.
+ * - This file intentionally avoids importing heavier modules at top-level.
+ * - Region enhancement is lightweight by default and mostly writes state.
+ * - Reintroduce richer modules by adding them to FEATURE_DEFS, REGION_DEFS,
+ *   or ENHANCEMENT_DEFS.
  * --------------------------------------------------------------------------
  */
 
@@ -57,19 +58,23 @@ const PAGE_STATES = {
   BOOTING: 'booting',
   INTERACTIVE: 'interactive',
   HYDRATED: 'hydrated',
+  REGION_ENHANCED: 'region-enhanced',
   ENHANCED: 'enhanced',
 };
 
 const REGION_STATES = {
   QUEUED: 'queued',
+  PRIMED: 'primed',
   HYDRATING: 'hydrating',
   INTERACTIVE: 'interactive',
   ENHANCED: 'enhanced',
+  SETTLING: 'settling',
 };
 
 const MODULE_LAYERS = {
   CORE: 'core',
   FEATURE: 'feature',
+  REGION: 'region',
   ENHANCEMENT: 'enhancement',
 };
 
@@ -78,12 +83,23 @@ const MOUNT_WHEN = {
   VISIBLE: 'visible',
   IDLE: 'idle',
   INTERACTION: 'interaction',
+  REGION: 'region',
 };
 
 const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
 const SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
+
+const REGION_SELECTOR = [
+  '.site-frame',
+  '[data-spw-kind="frame"]',
+  '[data-spw-kind="panel"]',
+  '[data-spw-kind="card"]',
+  '[data-spw-kind="surface"]',
+  '[data-spw-role]',
+  '[data-spw-slot]'
+].join(', ');
 
 /* ==========================================================================
    2. Small runtime helpers
@@ -177,10 +193,31 @@ function whenWindowLoaded() {
   });
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function parseFeatureList(value) {
+  if (!value || typeof value !== 'string') return new Set();
+  return new Set(
+    value
+      .split(/[\s,]+/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+  );
+}
+
+function setDataIfMissing(el, key, value) {
+  if (!el || !value) return;
+  if (!el.dataset[key]) el.dataset[key] = value;
+}
+
+function readSet(...values) {
+  return new Set(values.filter(Boolean));
+}
+
 /* ==========================================================================
    3. Tiny event bus
-   --------------------------------------------------------------------------
-   Keep this small. Enough for lifecycle and future contracts.
    ========================================================================== */
 
 function createBus() {
@@ -202,16 +239,6 @@ function createBus() {
    ========================================================================== */
 
 function createRegistry() {
-  /** @type {Map<string, {
-   *   id: string,
-   *   layer: string,
-   *   status: 'idle' | 'mounted' | 'failed',
-   *   cleanup: null | (() => void),
-   *   refresh: null | ((ctx: object) => void),
-   *   root: Element | null,
-   *   mountedAt: number | null,
-   *   error: unknown
-   * }>} */
   const records = new Map();
 
   function set(id, record) {
@@ -276,7 +303,167 @@ function normalizeMountHandle(result) {
 }
 
 /* ==========================================================================
-   6. Runtime context
+   6. Region profiling and harmony
+   --------------------------------------------------------------------------
+   This is the main new layer: a lightweight semantic read of regions that
+   both CSS and JS can use without expensive choreography.
+   ========================================================================== */
+
+function collectRegions(root = document) {
+  const regions = safeQueryAll(REGION_SELECTOR, root).filter((el) => el instanceof HTMLElement);
+  const seen = new Set();
+  const ordered = [];
+
+  for (const el of regions) {
+    if (seen.has(el)) continue;
+    seen.add(el);
+    ordered.push(el);
+  }
+
+  return ordered;
+}
+
+function inferRegionKind(el) {
+  return (
+    el.dataset.spwKind ||
+    (el.classList.contains('site-frame') ? 'frame' : '') ||
+    (el.classList.contains('frame-panel') ? 'panel' : '') ||
+    (el.classList.contains('frame-card') ? 'card' : '') ||
+    (el.matches('nav') ? 'nav' : '') ||
+    (el.matches('aside') ? 'aside' : '') ||
+    (el.matches('section') ? 'section' : '') ||
+    'component'
+  );
+}
+
+function inferRegionRole(el) {
+  if (el.dataset.spwRole) return el.dataset.spwRole;
+
+  const text = (
+    el.id ||
+    el.getAttribute('aria-label') ||
+    el.querySelector('h1,h2,h3,h4,strong')?.textContent ||
+    ''
+  ).toLowerCase();
+
+  if (el.matches('nav')) return 'routing';
+  if (text.includes('index') || text.includes('routes') || text.includes('navigation')) return 'routing';
+  if (text.includes('plan') || text.includes('schema') || text.includes('structure')) return 'schema';
+  if (text.includes('reference') || text.includes('register')) return 'reference';
+  if (text.includes('settings')) return 'control';
+  if (text.includes('hero') || text.includes('about') || text.includes('contact')) return 'orientation';
+
+  return el.classList.contains('site-hero') ? 'orientation' : 'reference';
+}
+
+function inferRegionContext(el) {
+  return (
+    el.dataset.spwContext ||
+    el.closest('[data-spw-context]')?.dataset?.spwContext ||
+    BODY?.dataset?.spwContext ||
+    'reading'
+  );
+}
+
+function inferRegionSurface(el) {
+  return (
+    el.dataset.spwSurface ||
+    el.closest('[data-spw-surface]')?.dataset?.spwSurface ||
+    SITE_SURFACE
+  );
+}
+
+function inferRegionHarmony(profile) {
+  const role = profile.role;
+  const kind = profile.kind;
+  const context = profile.context;
+
+  if (role === 'routing') return 'indexed';
+  if (role === 'schema') return 'structured';
+  if (role === 'reference') return 'measured';
+  if (role === 'control') return 'responsive';
+  if (role === 'orientation') return 'anchored';
+  if (context === 'publishing') return 'editorial';
+  if (kind === 'card') return 'modular';
+  return 'ambient';
+}
+
+function inferRegionTempo(profile) {
+  switch (profile.harmony) {
+    case 'indexed': return 'snap';
+    case 'structured': return 'deliberate';
+    case 'responsive': return 'fast';
+    case 'editorial': return 'settle';
+    case 'anchored': return 'base';
+    default: return 'base';
+  }
+}
+
+function inferRegionDensity(profile) {
+  if (profile.kind === 'card') return 'compact';
+  if (profile.kind === 'panel') return 'medium';
+  if (profile.role === 'reference') return 'reading';
+  if (profile.role === 'schema') return 'dense';
+  return 'medium';
+}
+
+function buildRegionProfile(el, index = 0) {
+  const kind = inferRegionKind(el);
+  const role = inferRegionRole(el);
+  const context = inferRegionContext(el);
+  const surface = inferRegionSurface(el);
+
+  const profile = {
+    index,
+    id: el.id || null,
+    key: el.id || el.dataset.spwId || `${kind}-${index}`,
+    kind,
+    role,
+    context,
+    surface,
+    harmony: '',
+    tempo: '',
+    density: '',
+    features: readSet(
+      ...parseFeatureList(el.dataset.spwFeatures).values?.() || [],
+      kind,
+      role,
+      context
+    )
+  };
+
+  profile.harmony = inferRegionHarmony(profile);
+  profile.tempo = inferRegionTempo(profile);
+  profile.density = inferRegionDensity(profile);
+
+  return profile;
+}
+
+function applyRegionProfile(el, profile) {
+  setDataIfMissing(el, 'spwKind', profile.kind);
+  setDataIfMissing(el, 'spwRole', profile.role);
+  setDataIfMissing(el, 'spwContext', profile.context);
+  setDataIfMissing(el, 'spwSurface', profile.surface);
+
+  el.dataset.spwHarmony = profile.harmony;
+  el.dataset.spwTempo = profile.tempo;
+  el.dataset.spwDensity = profile.density;
+  el.dataset.spwRegionKey = profile.key;
+  el.style.setProperty('--region-index', String(profile.index));
+}
+
+function syncPageHarmony(ctx) {
+  const profiles = ctx.regions.map((entry) => entry.profile);
+  const harmonies = new Set(profiles.map((profile) => profile.harmony));
+  const tempos = new Set(profiles.map((profile) => profile.tempo));
+
+  HTML.dataset.spwHarmonyField = [...harmonies].join(' ');
+  HTML.dataset.spwTempoField = [...tempos].join(' ');
+  HTML.style.setProperty('--region-count', String(profiles.length));
+}
+
+/* ==========================================================================
+   7. Runtime context
    ========================================================================== */
 
 function createRuntimeContext() {
@@ -284,7 +471,7 @@ function createRuntimeContext() {
   const registry = createRegistry();
 
   const ctx = {
-    version: 'site-runtime-v0.1',
+    version: 'site-runtime-v0.2',
     bus,
     registry,
     html: HTML,
@@ -298,6 +485,7 @@ function createRuntimeContext() {
     observers: new Set(),
     timers: new Set(),
     cleanupStack: [],
+    regions: [],
   };
 
   ctx.addCleanup = (fn) => {
@@ -350,25 +538,38 @@ function createRuntimeContext() {
         console.warn('[site.js] context cleanup failed', error);
       }
     }
+    ctx.regions = [];
   };
 
   return ctx;
 }
 
-function parseFeatureList(value) {
-  if (!value || typeof value !== 'string') return new Set();
-  return new Set(
-    value
-      .split(/[\s,]+/)
-      .map((item) => item.trim())
-      .filter(Boolean)
-  );
+function primeRegions(ctx) {
+  const elements = collectRegions(document);
+  ctx.regions = elements.map((el, index) => {
+    const profile = buildRegionProfile(el, index);
+    applyRegionProfile(el, profile);
+    setRegionState(el, REGION_STATES.QUEUED);
+    return {
+      el,
+      profile,
+      visible: false,
+      enhanced: false,
+      active: false,
+    };
+  });
+
+  syncPageHarmony(ctx);
+
+  ctx.bus.emit('spw:regions-primed', {
+    route: ctx.route,
+    count: ctx.regions.length,
+    profiles: ctx.regions.map((entry) => entry.profile),
+  });
 }
 
 /* ==========================================================================
-   7. Minimal core behavior
-   --------------------------------------------------------------------------
-   Intentionally light. No scroll hijacking. No viewport ranking.
+   8. Minimal core behavior
    ========================================================================== */
 
 function initMinimalSiteCore(ctx) {
@@ -378,6 +579,7 @@ function initMinimalSiteCore(ctx) {
   cleanups.push(bindExplicitFrameActivation(ctx));
   cleanups.push(bindHashLandingState(ctx));
   cleanups.push(bindHashChangeRefresh(ctx));
+  cleanups.push(bindRegionPrimeObserver(ctx));
 
   return {
     cleanup() {
@@ -390,8 +592,8 @@ function initMinimalSiteCore(ctx) {
       }
     },
     refresh(nextCtx) {
-      // lightweight refresh hook for future route transitions
       nextCtx?.bus?.emit('spw:core-refresh', { route: nextCtx.route });
+      refreshRegionProfiles(nextCtx || ctx);
     },
   };
 }
@@ -455,6 +657,13 @@ function bindExplicitFrameActivation(ctx) {
       frame.dataset.spwActive = isActive ? 'true' : 'false';
     }
 
+    const region = ctx.regions.find((entry) => entry.el === nextFrame);
+    if (region) {
+      region.active = true;
+      region.el.dataset.spwAttention = 'focused';
+      region.el.dataset.spwStateAccent = 'active';
+    }
+
     ctx.bus.emit('spw:frame-change', {
       id: nextFrame?.id || null,
       frame: nextFrame || null,
@@ -498,6 +707,7 @@ function bindHashLandingState(ctx) {
     if (!frame) return;
     frame.classList.add('is-active-frame');
     frame.dataset.spwActive = 'true';
+    frame.dataset.spwAttention = 'focused';
     ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
   }
 
@@ -513,6 +723,7 @@ function bindHashChangeRefresh(ctx) {
     if (!frame) return;
     frame.classList.add('is-active-frame');
     frame.dataset.spwActive = 'true';
+    frame.dataset.spwAttention = 'focused';
     ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
   };
 
@@ -520,10 +731,111 @@ function bindHashChangeRefresh(ctx) {
   return () => window.removeEventListener('hashchange', handler);
 }
 
+function bindRegionPrimeObserver(ctx) {
+  if (!ctx.regions.length || !('IntersectionObserver' in window)) return () => {};
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const region = ctx.regions.find((item) => item.el === entry.target);
+        if (!region) continue;
+
+        region.visible = entry.isIntersecting || entry.intersectionRatio > 0;
+        if (region.visible) {
+          setRegionState(region.el, REGION_STATES.PRIMED);
+          region.el.dataset.spwAttention = region.active ? 'focused' : 'approach';
+          region.el.dataset.spwStateAccent = region.profile.harmony;
+        } else if (!region.enhanced) {
+          setRegionState(region.el, REGION_STATES.QUEUED);
+          region.el.dataset.spwAttention = 'ambient';
+        }
+      }
+    },
+    {
+      root: null,
+      rootMargin: '220px 0px',
+      threshold: [0, 0.01, 0.2],
+    }
+  );
+
+  ctx.addObserver(observer);
+  ctx.regions.forEach((region) => observer.observe(region.el));
+
+  return () => observer.disconnect();
+}
+
+function refreshRegionProfiles(ctx) {
+  ctx.regions.forEach((entry, index) => {
+    entry.profile = buildRegionProfile(entry.el, index);
+    applyRegionProfile(entry.el, entry.profile);
+  });
+  syncPageHarmony(ctx);
+}
+
 /* ==========================================================================
-   8. Module definitions
+   9. Region enhancement layer
    --------------------------------------------------------------------------
-   Start small. Reintroduce modules one by one.
+   Lightweight by default. Writes CSS-facing state and can mount tiny
+   region-scoped helpers later.
+   ========================================================================== */
+
+function initRegionEnhancer(ctx, root) {
+  if (!(root instanceof HTMLElement)) return;
+
+  const region = ctx.regions.find((entry) => entry.el === root);
+  if (!region) return;
+
+  setRegionState(root, REGION_STATES.HYDRATING);
+
+  const { profile } = region;
+
+  root.dataset.spwEnhanced = 'true';
+  root.dataset.spwMotionFamily = profile.tempo;
+  root.dataset.spwHarmony = profile.harmony;
+  root.dataset.spwDensity = profile.density;
+  root.dataset.spwRegionLayer = 'enhanced';
+  root.style.setProperty('--region-harmonic-weight', String(region.profile.index + 1));
+
+  const chips = root.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
+  if (chips) {
+    chips.dataset.spwRegionLinked = 'true';
+  }
+
+  setRegionState(root, REGION_STATES.ENHANCED);
+  region.enhanced = true;
+
+  ctx.bus.emit('spw:region-enhanced', {
+    route: ctx.route,
+    id: profile.id,
+    key: profile.key,
+    harmony: profile.harmony,
+    tempo: profile.tempo,
+    density: profile.density,
+    root,
+  });
+
+  return {
+    cleanup() {
+      region.enhanced = false;
+      root.dataset.spwRegionLayer = 'settling';
+      setRegionState(root, REGION_STATES.SETTLING);
+      delete root.dataset.spwEnhanced;
+      const chips = root.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
+      if (chips) delete chips.dataset.spwRegionLinked;
+    },
+    refresh(nextCtx) {
+      const nextRegion = (nextCtx || ctx).regions.find((entry) => entry.el === root);
+      if (!nextRegion) return;
+      applyRegionProfile(root, nextRegion.profile);
+      root.dataset.spwMotionFamily = nextRegion.profile.tempo;
+      root.dataset.spwHarmony = nextRegion.profile.harmony;
+      root.dataset.spwDensity = nextRegion.profile.density;
+    },
+  };
+}
+
+/* ==========================================================================
+   10. Module definitions
    ========================================================================== */
 
 const CORE_DEFS = [
@@ -562,12 +874,6 @@ const CORE_DEFS = [
   },
 ];
 
-/**
- * Feature modules
- * --------------------------------------------------------------------------
- * Reintroduce route-specific behavior here.
- * Start with low-risk, high-value modules only.
- */
 const FEATURE_DEFS = [
   {
     id: 'blog-interpreter',
@@ -575,6 +881,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.VISIBLE,
     selector: '[data-blog-interpreter]',
     route: 'blog',
+    rootMode: 'each',
     load: () => import('./blog-interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
@@ -588,6 +895,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.VISIBLE,
     selector: '.specimen-card, #specimen-index',
     route: 'blog',
+    rootMode: 'single',
     load: () => import('./blog-specimens.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initBlogSpecimens;
@@ -610,18 +918,29 @@ const FEATURE_DEFS = [
   },
 ];
 
-/**
- * Enhancements
- * --------------------------------------------------------------------------
- * Only loaded after the page is already interactive/hydrated.
- * Add more later, but keep this sparse until performance is verified.
- */
+const REGION_DEFS = [
+  {
+    id: 'region-enhancer',
+    layer: MODULE_LAYERS.REGION,
+    when: MOUNT_WHEN.REGION,
+    selector: REGION_SELECTOR,
+    rootMode: 'each',
+    load: async () => ({ initRegionEnhancer }),
+    mount: (mod, ctx, root) => {
+      const fn = mod?.initRegionEnhancer;
+      if (!isFn(fn)) return;
+      return fn(ctx, root);
+    },
+  },
+];
+
 const ENHANCEMENT_DEFS = [
   {
     id: 'logo-runtime',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     selector: '.spw-logo, [data-spw-logo]',
+    rootMode: 'single',
     load: () => import('./spw-logo-runtime.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;
@@ -634,6 +953,7 @@ const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     selector: '.spw-topic, [data-spw-topic]',
+    rootMode: 'single',
     load: () => import('./spw-topic-discovery.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwTopicDiscovery || mod?.initTopicDiscovery;
@@ -646,6 +966,7 @@ const ENHANCEMENT_DEFS = [
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
+    rootMode: 'single',
     load: () => import('./spw-component-semantics.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwComponentSemantics;
@@ -656,12 +977,12 @@ const ENHANCEMENT_DEFS = [
 ];
 
 /* ==========================================================================
-   9. Module mounting
+   11. Module mounting
    ========================================================================== */
 
 function makeRecordId(def, root = null, index = 0) {
   if (!root || root === document.body) return def.id;
-  const rootId = root.id || root.getAttribute('data-spw-id') || root.getAttribute('data-spw-kind') || index;
+  const rootId = root.id || root.getAttribute('data-spw-region-key') || root.getAttribute('data-spw-id') || root.getAttribute('data-spw-kind') || index;
   return `${def.id}::${String(rootId)}`;
 }
 
@@ -703,7 +1024,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
 
     if (root instanceof HTMLElement) {
       const state =
-        def.layer === MODULE_LAYERS.ENHANCEMENT
+        def.layer === MODULE_LAYERS.ENHANCEMENT || def.layer === MODULE_LAYERS.REGION
           ? REGION_STATES.ENHANCED
           : REGION_STATES.INTERACTIVE;
       setRegionState(root, state);
@@ -765,10 +1086,17 @@ async function mountVisibleFeatures(defs, ctx) {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
         const el = entry.target;
-        const defsForEl = visibleDefs.filter((def) => el.matches(def.selector));
-        for (const def of defsForEl) {
-          void mountDefinition(def, ctx, el);
+
+        for (const def of visibleDefs) {
+          if (!el.matches(def.selector)) continue;
+
+          if (def.rootMode === 'single') {
+            void mountDefinition(def, ctx, null, 0);
+          } else {
+            void mountDefinition(def, ctx, el);
+          }
         }
+
         observer.unobserve(el);
       }
     },
@@ -799,7 +1127,7 @@ async function mountInteractionFeatures(defs, ctx) {
   const activate = once(async () => {
     for (const def of interactionDefs) {
       const roots = getRoots(def);
-      if (!roots.length) {
+      if (!roots.length || def.rootMode === 'single') {
         await mountDefinition(def, ctx, null, 0);
         continue;
       }
@@ -828,6 +1156,39 @@ async function mountInteractionFeatures(defs, ctx) {
   ctx.addCleanup(cleanup);
 }
 
+async function mountRegionLayer(defs, ctx) {
+  const regionDefs = defs.filter((def) => def.when === MOUNT_WHEN.REGION && matchesRoute(def) && hasSelector(def));
+  if (!regionDefs.length || !ctx.regions.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const el = entry.target;
+
+        for (const def of regionDefs) {
+          if (!el.matches(def.selector)) continue;
+          void mountDefinition(def, ctx, el);
+        }
+
+        observer.unobserve(el);
+      }
+    },
+    {
+      root: null,
+      rootMargin: '160px 0px',
+      threshold: 0.01,
+    }
+  );
+
+  ctx.addObserver(observer);
+
+  ctx.regions.forEach((region) => {
+    setRegionState(region.el, REGION_STATES.PRIMED);
+    observer.observe(region.el);
+  });
+}
+
 function queueIdleEnhancements(defs, ctx) {
   const idleDefs = defs.filter((def) => def.when === MOUNT_WHEN.IDLE && matchesRoute(def) && hasSelector(def));
   if (!idleDefs.length) return;
@@ -835,7 +1196,8 @@ function queueIdleEnhancements(defs, ctx) {
   const handle = onIdle(async () => {
     for (const def of idleDefs) {
       const roots = getRoots(def);
-      if (!roots.length) {
+
+      if (!roots.length || def.rootMode === 'single') {
         await mountDefinition(def, ctx, null, 0);
         continue;
       }
@@ -853,12 +1215,12 @@ function queueIdleEnhancements(defs, ctx) {
 }
 
 /* ==========================================================================
-   10. Refresh support
-   --------------------------------------------------------------------------
-   Future-safe hook for route transitions, font changes, or manual rebinds.
+   12. Refresh support
    ========================================================================== */
 
 function refreshRuntime(ctx) {
+  refreshRegionProfiles(ctx);
+
   for (const record of ctx.registry.values()) {
     try {
       record.refresh?.(ctx);
@@ -866,11 +1228,12 @@ function refreshRuntime(ctx) {
       console.warn(`[site.js] refresh failed for ${record.id}`, error);
     }
   }
+
   ctx.bus.emit('spw:runtime-refresh', { route: ctx.route });
 }
 
 /* ==========================================================================
-   11. Public teardown / reinit hooks
+   13. Public teardown / reinit hooks
    ========================================================================== */
 
 let runtimeCtx = null;
@@ -880,6 +1243,8 @@ function destroyRuntime() {
   runtimeCtx.destroy();
   runtimeCtx = null;
   delete HTML.dataset.spwPageState;
+  delete HTML.dataset.spwHarmonyField;
+  delete HTML.dataset.spwTempoField;
 }
 
 async function bootSite() {
@@ -889,6 +1254,8 @@ async function bootSite() {
   setPageState(PAGE_STATES.BOOTING);
 
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
+
+  primeRegions(runtimeCtx);
 
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(
@@ -905,9 +1272,13 @@ async function bootSite() {
   setPageState(PAGE_STATES.HYDRATED);
   runtimeCtx.bus.emit('spw:page-hydrated', { route: runtimeCtx.route });
 
+  await mountRegionLayer(REGION_DEFS, runtimeCtx);
+
+  setPageState(PAGE_STATES.REGION_ENHANCED);
+  runtimeCtx.bus.emit('spw:page-region-enhanced', { route: runtimeCtx.route });
+
   queueIdleEnhancements(ENHANCEMENT_DEFS, runtimeCtx);
 
-  // refresh after full load in case late assets/fonts affect modules that opt in
   whenWindowLoaded().then(() => {
     if (!runtimeCtx) return;
     refreshRuntime(runtimeCtx);
@@ -917,7 +1288,7 @@ async function bootSite() {
 }
 
 /* ==========================================================================
-   12. Dev / manual hooks
+   14. Dev / manual hooks
    ========================================================================== */
 
 window.__SPW_SITE__ = {
@@ -928,7 +1299,7 @@ window.__SPW_SITE__ = {
 };
 
 /* ==========================================================================
-   13. Start
+   15. Start
    ========================================================================== */
 
 void bootSite();
