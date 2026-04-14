@@ -1155,6 +1155,161 @@ html[data-spw-show-footer="off"] body > footer {
 }
 
 /* ==========================================================================
+   11. Missing shell integration defaults
+   --------------------------------------------------------------------------
+   Patch-level shell ownership for skip links, nav interior containment, and
+   fallback frame header structures when route/component styling is incomplete.
+   ========================================================================== */
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: 0.55rem;
+  left: max(0.55rem, env(safe-area-inset-left));
+  z-index: calc(var(--z-priority, 2000) + 10);
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 90%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.92)) 96%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transform: translateY(-140%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--shell-duration-fast) var(--shell-ease),
+    opacity var(--shell-duration-fast) var(--shell-ease),
+    border-color var(--shell-duration-fast) var(--shell-ease);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  outline: none;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
+}
+
+/* Slightly more breathing room below sticky shell */
+main {
+  padding-top: clamp(0.2rem, 0.8vw, 0.5rem);
+}
+
+/* Nav interior panel */
+.site-header nav,
+body > header nav {
+  padding: 0.35rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
+  border-radius: var(--shell-panel-radius-loose);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    0 4px 16px rgba(0,0,0,0.04);
+}
+
+.site-header[data-spw-menu="closed"] nav,
+body > header[data-spw-menu="closed"] nav {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10), transparent 62%),
+    color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 82%, transparent);
+}
+
+/* Fallback frame header structures */
+.frame-topline,
+.frame-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.55rem 0.8rem;
+  min-width: 0;
+}
+
+.frame-topline {
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
+}
+
+.frame-sigil {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.frame-sigil:hover,
+.frame-sigil:focus-visible {
+  color: var(--active-op-color, var(--teal, #008080));
+  outline: none;
+}
+
+.spec-strip,
+.frame-operators {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+  min-width: 0;
+}
+
+.spec-strip {
+  justify-content: flex-end;
+}
+
+.frame-operators {
+  margin-top: 0.2rem;
+}
+
+.frame-topline .spec-pill,
+.frame-operators .operator-chip {
+  max-width: 100%;
+}
+
+/* Avoid awkward header stacking when route CSS is thin */
+.site-header ul,
+body > header ul {
+  min-width: 0;
+}
+
+.site-header li,
+body > header li {
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .site-header nav,
+  body > header nav {
+    padding: 0.3rem;
+  }
+
+  .frame-topline,
+  .frame-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .spec-strip {
+    justify-content: flex-start;
+  }
+}
+
+/* ==========================================================================
    12. A few targeted compatibility bridges
    --------------------------------------------------------------------------
    Keep these at the end so older markup still works while the shell becomes
