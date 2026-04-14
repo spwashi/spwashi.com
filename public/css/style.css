@@ -23,6 +23,10 @@
 @import url('/public/css/svg-surfaces.css') layer(systems);
 @import url('/public/css/spw-svg-personas.css') layer(systems);
 
+@import url('/public/css/home-surface.css') layer(routes);
+@import url('/public/css/contact-surface.css') layer(routes);
+@import url('/public/css/about-surface.css') layer(routes);
+@import url('/public/css/plans-surface.css') layer(routes);
 @import url('/public/css/craft-surface.css') layer(routes);
 @import url('/public/css/blog-surface.css') layer(routes);
 @import url('/public/css/settings-surface.css') layer(routes);

@@ -69,14 +69,17 @@
     <link rel="manifest" href="/manifest.webmanifest">
 
     <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
-    <link rel="stylesheet" href="/public/css/spw-components.css">
-    <link rel="stylesheet" href="/public/css/spw-surfaces.css">
 </head>
-<body data-spw-features="operators navigator console media-publishing svg-surfaces">
+<body
+    data-spw-surface="home"
+    data-spw-route-family="editorial system"
+    data-spw-features="operators navigator console media-publishing svg-surfaces"
+    data-spw-context="orientation"
+    data-spw-wonder="orientation">
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-<header class="site-header" role="banner">
+<header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
     <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
     <nav aria-label="Primary">
         <ul>
@@ -113,6 +116,7 @@
         data-spw-stateful
         data-spw-inspect="home_frame"
         data-spw-inspect-mode-group="home-lens">
+
         <div class="frame-topline">
             <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
             <div class="mode-switch" role="group" aria-label="Home lens">
@@ -123,10 +127,15 @@
             </div>
         </div>
 
+        <p class="page-kicker">language • structure • play • local-first</p>
         <h1 id="home-title">Language as material. Structure as play. Systems that stay readable.</h1>
 
         <p id="home-frame-note" class="frame-note">
-            This site is a live workbench — every frame, operator, and brace has a job. Swap the leading sigil to change stance, swap the braces to change containment, and cycle <code>mode</code> to move between the surface, syntax, artifact, and Obsidian views. The side walls are clickable pivots. Each layer you unlock stays unlocked, building a semantic lattice that rewards repeated attention.
+            This site is a live workbench. A <span class="spw-topic" data-spw-topic="frame">frame</span> can be read as a page section, a semantic unit, a panel, a room, or a cognitive container. A word can be treated as a <span class="spw-topic" data-spw-topic="topic">topic</span>, a <span class="spw-topic" data-spw-topic="signal">signal</span>, a <span class="spw-topic" data-spw-topic="handle">handle</span>, or a <span class="spw-topic" data-spw-topic="seed">seed</span>. Images are not illustrations alone; they are nearby materials that show what structure feels like when it gathers light, weight, and rhythm.
+        </p>
+
+        <p class="page-lede">
+            The homepage should be readable in layers. A reader can move through the page as prose, as a registry, as a topical map, as a gallery, or as an operator grammar. The goal is not merely navigation. The goal is to let someone wonder into a language, then into a component system, then into a field of relationships among <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">words</span>, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">panels</span>, <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">topics</span>, and images.
         </p>
 
         <nav class="frame-operators frame-operators--probe" aria-label="Start here">
@@ -141,6 +150,10 @@
         <nav class="page-index" aria-label="Home sections">
             <ul>
                 <li><a href="#home-frame">Home</a></li>
+                <li><a href="#reading-layers">Reading Layers</a></li>
+                <li><a href="#parts-of-speech-field">Parts of Speech</a></li>
+                <li><a href="#accent-context-field">Accent Contexts</a></li>
+                <li><a href="#image-topic-bridge">Image–Topic Relations</a></li>
                 <li><a href="#cognitive-machine-map">How To Read The Site</a></li>
                 <li><a href="#media-focus">Signal Register</a></li>
                 <li><a href="#artifact-register">Artifact Register</a></li>
@@ -153,7 +166,12 @@
         </nav>
 
         <p class="spw-spirit-sequence" aria-hidden="true">
-            <span data-op="probe">?</span><span data-op="ref">~</span><span data-op="action">@</span><span data-op="stream">&amp;</span><span data-op="object">*</span><span data-op="frame">^</span>
+            <span data-op="probe">?</span>
+            <span data-op="ref">~</span>
+            <span data-op="action">@</span>
+            <span data-op="stream">&amp;</span>
+            <span data-op="object">*</span>
+            <span data-op="frame">^</span>
         </p>
 
         <div class="mode-panels">
@@ -166,23 +184,14 @@
                 aria-labelledby="home-surface-title">
                 <h2 id="home-surface-title" class="sr-only">Surface view</h2>
                 <p>
-                    Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</a><a href="/topics/software/spw/">Spw</a><span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span> is a cognitive gesture: <span class="syntax-token" title="frame: orients a named unit of meaning">#&gt;</span> orients, <span class="syntax-token" title="probe: opens inquiry without committing">?</span> opens inquiry, <span class="syntax-token" title="ref: reaches without forcing commitment">~</span> reaches without binding, <span class="syntax-token" title="action: commits a local behavior">@</span> commits. Plain text becomes shared vocabulary for <span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">(</span>people and tools alike<span class="spw-delimiter spw-delimiter--paren" data-spw-form="circle">)</span> — a grammar that keeps structure legible at every scale.
+                    Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</a><a href="/topics/software/spw/">Spw</a><span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span> is a cognitive gesture. A frame <span class="syntax-token" title="frame: orients a named unit of meaning">#&gt;</span> orients. A probe <span class="syntax-token" title="probe: opens inquiry without committing">?</span> opens inquiry. A reference <span class="syntax-token" title="ref: reaches without forcing commitment">~</span> reaches without binding. An action <span class="syntax-token" title="action: commits a local behavior">@</span> commits. A surface <span class="syntax-token" title="surface: makes a layer available to perception">&gt;</span> projects.
                 </p>
                 <p>
-                    The discipline behind this is <span class="spw-topic" data-spw-topic>applied learning science</span>: how structure shapes what can be noticed, transferred, and accumulated across a group. The same operators that describe a software module also describe a learning sequence, a narrative session, or a research note. Legibility compounds: once the containment is visible, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>parsing<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>LSP<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span>, and <span class="spw-delimiter spw-delimiter--square" data-spw-form="block">[</span>interactive rendering<span class="spw-delimiter spw-delimiter--square" data-spw-form="block">]</span> are all variations on the same <span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&lt;</span>attentional act<span class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>. This forms a semantic lattice where motifs, realms, and operators interlock without losing plain-text inspectability.
+                    The same unit can be stressed differently depending on context. A word may be plain prose in one paragraph, a <span class="spw-topic" data-spw-topic="topic">topic handle</span> in another, an <span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">operator route</span> somewhere else, or a label inside an SVG. This lets the page teach that typography is not only styling — it is a model of emphasis, access, and relationship.
                 </p>
                 <p>
-                    This site is a workbench for that question — one that rewards skeptics by staying plain and rewards practitioners by going deep. The surface is the argument; the depth emerges through repeated traversal and incremental topical accumulation.
+                    The site is built from reusable frames, cards, chips, figures, operator routes, and image studies. Those are not separate concerns. They are parts of one semantic lattice where plain text, component structure, and visual atmosphere can reinforce one another.
                 </p>
-                <nav class="frame-operators frame-operators--probe" aria-label="Topic probes">
-                    <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="probe">?[operators]</a>
-                    <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle" data-spw-operator="ref">~renderers</a>
-                    <a class="operator-chip" href="/topics/software/schedulers/" data-spw-form="angle" data-spw-operator="stream">*schedulers</a>
-                    <a class="operator-chip" href="/topics/software/compression/" data-spw-form="angle" data-spw-operator="normalize">%compression</a>
-                    <a class="operator-chip" href="/topics/architecture/" data-spw-form="angle" data-spw-operator="frame">#&gt;architecture</a>
-                    <a class="operator-chip" href="/topics/pedagogy/" data-spw-form="angle" data-spw-operator="object">^learning_science</a>
-                    <a class="operator-chip" href="/about/plans/" data-spw-form="angle" data-spw-operator="action">@plans</a>
-                </nav>
             </section>
 
             <section
@@ -193,22 +202,21 @@
                 aria-labelledby="home-syntax-title">
                 <h2 id="home-syntax-title" class="sr-only">Syntax view</h2>
                 <p class="frame-note">
-                    Each line is a gesture in a grammar that stays readable as plain text. The operators are the vocabulary; the braces are the containment. Brace physics and operator precedence keep meaning unambiguous across scales.
+                    Each line is a gesture in a grammar that stays readable as plain text. Operators are vocabulary. Braces are containment. Topic handles and image studies can both be indexed as semantic surfaces.
                 </p>
                 <pre><code>#>home_frame &lt; orients this unit of meaning
-#:layer pragmatics &lt; qualifies the interpretive layer
-^"focus"{ &lt; elevates structured content
-  ?[claim] &lt; probes without committing
-  ~"obsidian" &lt; refers outward
-  @publish &lt; commits a local action
-  *feed &lt; connects dynamic content
+#:layer pragmatics &lt; qualifies interpretive layer
+^"reading_layers"{ 
+  ?[word] &lt; asks what a word is doing here
+  ~image &lt; relates text to nearby study
+  @accent &lt; commits a local emphasis
+  *topic &lt; connects repeated themes
+  >surface &lt; projects visible hierarchy
 }
-&amp;[context]{ &lt; merges interpretive fields
-  =label "learning" &lt; binds a name
-  $meta &lt; reflects on the medium
-  !pragma &lt; constrains the runtime
-  %scale &lt; normalizes salience
-  >surface &lt; projects a rendered view
+&amp;[context]{
+  =part_of_speech "noun|verb|adjective|operator|topic"
+  $meta "panel|caption|card|image|route"
+  !constraint "stay readable in plain text"
 }</code></pre>
             </section>
 
@@ -226,28 +234,28 @@
                         <a href="https://github.com/spwashi/spw-workbench" id="card-spw-workbench">
                             <span class="frame-card-sigil">#&gt;spw_workbench</span>
                             <strong>spw-workbench</strong>
-                            <span>TypeScript workbench for the language, runtime, parser, and tooling ideas — the kernel that makes every Spwashi property legible, composable, and shippable.</span>
+                            <span>TypeScript workbench for parser, runtime, projection, and readable operator systems.</span>
                         </a>
                     </article>
                     <article class="frame-card" role="listitem" aria-labelledby="card-spw-quest">
                         <a href="https://spw.quest" id="card-spw-quest">
                             <span class="frame-card-sigil">#&gt;spw_quest</span>
                             <strong>spw.quest</strong>
-                            <span>Language documentation for Spw as a readable plain-text grammar, with examples that demonstrate brace physics and operator precedence in action.</span>
+                            <span>Language documentation for Spw as a plain-text grammar with visible structure and operator precedence.</span>
                         </a>
                     </article>
                     <article class="frame-card" role="listitem" aria-labelledby="card-syntax-surface">
                         <a href="/topics/software/#spw-syntax-surface" id="card-syntax-surface">
                             <span class="frame-card-sigil">#&gt;syntax_surface</span>
                             <strong>Spw syntax</strong>
-                            <span>A quick route into frames, operators, and interactive code examples that reveal how plain text gains queryable structure without opacity.</span>
+                            <span>Routes into frames, operators, and examples that show how plain text becomes inspectable structure.</span>
                         </a>
                     </article>
                     <article class="frame-card" role="listitem" aria-labelledby="card-pretext-surface">
                         <a href="/topics/software/pretext/" id="card-pretext-surface">
                             <span class="frame-card-sigil">&gt;pretext_surface</span>
                             <strong>Pretext physics</strong>
-                            <span>Textual projection, rhythm, and measurable whimsy for genre-aware rendering without losing plain text.</span>
+                            <span>Projection, rhythm, and measurable whimsy for genre-aware rendering.</span>
                         </a>
                     </article>
                 </div>
@@ -261,25 +269,189 @@
                 aria-labelledby="home-obsidian-title">
                 <h2 id="home-obsidian-title" class="sr-only">Obsidian view</h2>
                 <p>
-                    Obsidian is a strong fit because it starts with local files and user trust. Spw extends that model by asking how plain text can gain richer structure without becoming opaque — turning notes into a semantic lattice that supports both human intuition and machine inspection.
+                    Obsidian is a useful fit because it begins with local files and user trust. Spw extends that model by asking how plain text can gain richer structure without losing inspectability. The home page itself should feel like a note that has learned to become a page, a route map, an image register, and a component field.
                 </p>
                 <p class="frame-note">
-                    The practical thesis: readable syntax can give people and tools the same map, with LSP making that map navigable. Pretext physics adds measurable whimsy to the layout layer.
+                    The practical thesis: readable syntax can give people and tools the same map. A typographic layer becomes more valuable when it is also a semantic layer.
                 </p>
             </section>
         </div>
+    </section>
 
-        <nav class="frame-operators" aria-label="Operator routes">
-            <a class="operator-chip" href="/topics/software/" data-spw-form="angle" data-spw-operator="probe">?[software]</a>
-            <a class="operator-chip" href="/topics/architecture/" data-spw-form="angle" data-spw-operator="frame">#&gt;architecture</a>
-            <a class="operator-chip" href="/topics/pedagogy/" data-spw-form="angle" data-spw-operator="object">^learning_science</a>
-            <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="baseline">.craft</a>
-            <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="action">@rpg_wednesday</a>
-            <a class="operator-chip" href="/blog/" data-spw-form="angle" data-spw-operator="stream">*blog</a>
+    <section
+        class="site-frame"
+        id="reading-layers"
+        aria-labelledby="reading-layers-title"
+        data-spw-kind="frame"
+        data-spw-role="reference"
+        data-spw-context="reading"
+        data-spw-form="brace"
+        data-spw-wonder="comparison">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#reading-layers">^"reading_layers"</a>
+        </div>
+        <h2 id="reading-layers-title">One page, many reading layers</h2>
+        <p class="frame-note">
+            The home page should let a person read by prose, by components, by topics, by images, or by operator stance.
+        </p>
+
+        <div class="compare-sets" role="list">
+            <article class="compare-card" role="listitem" aria-labelledby="layer-prose">
+                <h3 id="layer-prose">As prose</h3>
+                <p>Read sentences for argument, tone, and invitation. A word behaves like language first.</p>
+            </article>
+            <article class="compare-card" role="listitem" aria-labelledby="layer-components">
+                <h3 id="layer-components">As components</h3>
+                <p>Read frames, cards, chips, figures, panels, and captions as a visible grammar of page structure.</p>
+            </article>
+            <article class="compare-card" role="listitem" aria-labelledby="layer-topics">
+                <h3 id="layer-topics">As topics</h3>
+                <p>Read repeated terms as handles into software, pedagogy, craft, architecture, or play.</p>
+            </article>
+            <article class="compare-card" role="listitem" aria-labelledby="layer-images">
+                <h3 id="layer-images">As image relations</h3>
+                <p>Read images as nearby materials that test how a concept behaves when it gathers form and light.</p>
+            </article>
+        </div>
+
+        <nav class="frame-operators" aria-label="Reading layer routes">
             <a class="operator-chip" href="/about/website/" data-spw-form="angle" data-spw-operator="ref">~site_guide</a>
-            <a class="operator-chip" href="/tools/" data-spw-form="angle" data-spw-operator="object">^tools</a>
-            <a class="operator-chip" href="/services/" data-spw-form="angle" data-spw-operator="action">@services</a>
+            <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="baseline">.craft</a>
+            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;spw</a>
+            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle" data-spw-operator="surface">&gt;renderers</a>
         </nav>
+    </section>
+
+    <section
+        class="site-frame"
+        id="parts-of-speech-field"
+        aria-labelledby="parts-of-speech-field-title"
+        data-spw-kind="frame"
+        data-spw-role="schema"
+        data-spw-context="analysis"
+        data-spw-form="brace"
+        data-spw-wonder="inquiry">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#parts-of-speech-field">?["parts_of_speech_field"]</a>
+        </div>
+        <h2 id="parts-of-speech-field-title">A word can play many parts of speech</h2>
+        <p class="frame-note">
+            On this page, a term can behave as noun, verb, adjective, topic, route, operator, label, caption, or material cue.
+        </p>
+
+        <div class="spec-grid">
+            <article class="spec-column" aria-labelledby="speech-noun">
+                <h3 id="speech-noun">Noun</h3>
+                <p><strong>frame</strong> as a thing: a container, a card, a room, a visible boundary.</p>
+            </article>
+            <article class="spec-column" aria-labelledby="speech-verb">
+                <h3 id="speech-verb">Verb</h3>
+                <p><strong>frame</strong> as an action: to orient, to prepare, to set expectation and containment.</p>
+            </article>
+            <article class="spec-column" aria-labelledby="speech-adjective">
+                <h3 id="speech-adjective">Adjective</h3>
+                <p><strong>frame-like</strong> as a quality: bounded, editorial, deliberate, clarifying.</p>
+            </article>
+            <article class="spec-column" aria-labelledby="speech-operator">
+                <h3 id="speech-operator">Operator</h3>
+                <p><span class="syntax-token">#&gt;</span> as an operator: a formal stance that changes how the next thing is read.</p>
+            </article>
+        </div>
+
+        <p>
+            The same principle applies to <span class="spw-topic" data-spw-topic="surface">surface</span>, <span class="spw-topic" data-spw-topic="signal">signal</span>, <span class="spw-topic" data-spw-topic="craft">craft</span>, and <span class="spw-topic" data-spw-topic="play">play</span>. This is useful because the site is not just cataloguing topics. It is also showing how a vocabulary becomes more expressive when the page itself demonstrates multiple grammatical uses.
+        </p>
+    </section>
+
+    <section
+        class="site-frame"
+        id="accent-context-field"
+        aria-labelledby="accent-context-field-title"
+        data-spw-kind="frame"
+        data-spw-role="schema"
+        data-spw-context="analysis"
+        data-spw-form="brace"
+        data-spw-wonder="comparison">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#accent-context-field">>"accent_context_field"</a>
+        </div>
+        <h2 id="accent-context-field-title">Different contexts for accenting words</h2>
+        <p class="frame-note">
+            Accent should not mean one thing. It should be able to indicate topic, operator stance, utility, emphasis, relation to image, or route depth.
+        </p>
+
+        <div class="frame-grid" role="list">
+            <article class="frame-card" role="listitem" aria-labelledby="accent-prose">
+                <h3 id="accent-prose">Inside prose</h3>
+                <p>Use italics, rhythm, and sentence placement to make a word feel mobile or alive.</p>
+                <p><span class="craft-sensory">A structure can lean forward before it is named.</span></p>
+            </article>
+            <article class="frame-card" role="listitem" aria-labelledby="accent-topic">
+                <h3 id="accent-topic">As topic handle</h3>
+                <p>Use a topic wrapper when a word is meant to be revisited, discovered, or connected to nearby sections.</p>
+                <p><span class="spw-topic" data-spw-topic="compression">compression</span></p>
+            </article>
+            <article class="frame-card" role="listitem" aria-labelledby="accent-operator">
+                <h3 id="accent-operator">As operator route</h3>
+                <p>Use an operator chip when the word is a navigational stance or a procedural invitation.</p>
+                <p><span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">?parsers</span></p>
+            </article>
+            <article class="frame-card" role="listitem" aria-labelledby="accent-caption">
+                <h3 id="accent-caption">Near an image</h3>
+                <p>Use a caption or figure note when the word is explaining what the image is testing or materializing.</p>
+                <p class="frame-note">“Typographic routing” behaves differently beside a rendered study than inside a paragraph.</p>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="image-topic-bridge"
+        aria-labelledby="image-topic-bridge-title"
+        data-spw-kind="frame"
+        data-spw-role="projection"
+        data-spw-context="publishing"
+        data-spw-form="brace"
+        data-spw-wonder="projection">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#image-topic-bridge">~"image_topic_bridge"</a>
+        </div>
+        <h2 id="image-topic-bridge-title">Words, topics, and images should reinforce one another</h2>
+        <p class="frame-note">
+            An image can act as evidence, mood, nearby material, contrast, or an invitation to reinterpret a topic physically.
+        </p>
+
+        <div class="gallery-overlays" role="list">
+            <figure class="image-study" role="listitem">
+                <a href="/topics/software/pretext/">
+                    <img
+                        src="/public/images/assets/illustrations/pretext-physics.png"
+                        alt="A visual study representing pretext physics as layered textual motion and structural rhythm."
+                        loading="lazy"
+                        decoding="async"
+                        width="1600"
+                        height="900"/>
+                </a>
+                <figcaption>
+                    <strong>Pretext Physics</strong> — the image behaves like a nearby material proof for the topic <span class="spw-topic" data-spw-topic="pretext">pretext</span>.
+                </figcaption>
+            </figure>
+
+            <figure class="image-study" role="listitem">
+                <a href="/topics/software/renderers/">
+                    <img
+                        src="/public/images/assets/illustrations/semantic-phases.png"
+                        alt="A diagrammatic image showing semantic phases and layered structural transitions."
+                        loading="lazy"
+                        decoding="async"
+                        width="1600"
+                        height="900"/>
+                </a>
+                <figcaption>
+                    <strong>Semantic Phases</strong> — the image behaves like a structural cross-section for <span class="spw-topic" data-spw-topic="rendering">rendering</span>, <span class="spw-topic" data-spw-topic="phases">phases</span>, and <span class="spw-topic" data-spw-topic="projection">projection</span>.
+                </figcaption>
+            </figure>
+        </div>
     </section>
 
     <section
@@ -300,7 +472,7 @@
         </div>
         <h2 id="cognitive-machine-map-title">How To Read The Site</h2>
         <p id="cognitive-machine-map-note" class="inline-note">
-            Start with the page in front of you, follow the handles when you want more. The left wall cycles density — the right wall cycles operator color. Each layer you unlock stays unlocked, forming incremental topical depth through repeated traversal.
+            Start with the page in front of you, then follow handles when you want more. The left wall can bias density; the right wall can bias operator color. Each layer you unlock can stay unlocked, forming incremental topical depth through repeated traversal.
         </p>
 
         <figure class="spw-svg-figure" aria-labelledby="operator-grammar-title">
@@ -311,7 +483,7 @@
                 <text x="472" y="114" fill="var(--spw-text-muted)" text-anchor="middle" font-family="monospace">SVG: Operator Flow Diagram</text>
             </svg>
             <figcaption class="frame-note">
-                Fourteen operators. Top row: cognitive spine — orient, elevate, inquire, refer, act, flow, project. Bottom row: supporting grammar — qualify, settle, bind, reflect, integrate, normalize, constrain. These form the lattice that lets structure accumulate without losing legibility.
+                Fourteen operators. Top row: cognitive spine — orient, elevate, inquire, refer, act, flow, project. Bottom row: supporting grammar — qualify, settle, bind, reflect, integrate, normalize, constrain.
             </figcaption>
         </figure>
 
@@ -323,7 +495,7 @@
                 <text x="320" y="36" fill="var(--spw-text-muted)" text-anchor="middle" font-family="monospace">SVG: Brace Polarity Continuum</text>
             </svg>
             <figcaption class="frame-note">
-                The brace is a polarity axis. The left wall <code>{</code> leans structural and shared; the right wall <code>}</code> leans situated and felt. Click either wall to cycle its register — this bias is the substrate for incremental topical depth.
+                The brace is also a polarity axis. The left wall <code>{</code> leans structural and shared; the right wall <code>}</code> leans situated and felt.
             </figcaption>
         </figure>
 
@@ -379,7 +551,7 @@
                 </a>
                 <div class="media-focus-content">
                     <h3>Routing the Intent</h3>
-                    <p>Operators aren't just syntax; they are active routing paths for human attention and machine parsing.</p>
+                    <p>Operators are not just syntax; they are routing paths for human attention and machine parsing.</p>
                 </div>
             </article>
         </div>
@@ -425,7 +597,7 @@
                     <a href="/topics/software/corpus/" id="card-corpus">
                         <span class="frame-card-sigil">#&gt;accumulated_corpus</span>
                         <strong>The Corpus</strong>
-                        <span>Raw text files demonstrating learning science principles mapped over the span of a year.</span>
+                        <span>Raw text files demonstrating learning science principles mapped over time.</span>
                     </a>
                 </article>
             </li>
@@ -434,7 +606,7 @@
                     <a href="/play/pretext/" id="card-whimsy">
                         <span class="frame-card-sigil">?[pretext_whimsy]</span>
                         <strong>Pretext Injector</strong>
-                        <span>Testing measurable whimsy: adding non-semantic spacing and decorators that survive the parse.</span>
+                        <span>Testing measurable whimsy: spacing and decorators that survive the parse.</span>
                     </a>
                 </article>
             </li>
@@ -471,24 +643,24 @@
         <div class="frame-topline">
             <a class="frame-sigil" href="#language-field">#:language_field</a>
         </div>
-        <h2 id="language-field-title">Language as a field — not a format</h2>
+        <h2 id="language-field-title">Language as a field — not only a format</h2>
         <div class="spec-grid">
             <article class="spec-column" aria-labelledby="spec-static-rigidity">
-                <h3 id="spec-static-rigidity">Static Rigidity (Formats)</h3>
+                <h3 id="spec-static-rigidity">Static Rigidity</h3>
                 <ul>
                     <li>Demands exact serialization.</li>
                     <li>Fails on missing commas.</li>
                     <li>Opaque to the uninitiated.</li>
-                    <li>Designed for transmission.</li>
+                    <li>Designed mainly for transmission.</li>
                 </ul>
             </article>
             <article class="spec-column" aria-labelledby="spec-living-field">
-                <h3 id="spec-living-field">Living Field (Spwashi)</h3>
+                <h3 id="spec-living-field">Living Field</h3>
                 <ul>
                     <li>Tolerates ambiguous intent.</li>
                     <li>Gracefully degrades to plain text.</li>
-                    <li>Scaffolded access for learners.</li>
-                    <li>Designed for accumulation.</li>
+                    <li>Supports scaffolded access for learners.</li>
+                    <li>Designed for accumulation and reuse.</li>
                 </ul>
             </article>
         </div>
@@ -515,15 +687,15 @@
         <div class="compare-sets" role="list">
             <article class="compare-card" role="listitem" aria-labelledby="compare-project-frame">
                 <h3 id="compare-project-frame"><span class="syntax-token">#&gt;</span> project</h3>
-                <p>Establishes the environment. Sets the boundaries, imports dependencies, prepares the state.</p>
+                <p>Establishes the environment. Sets boundaries, imports dependencies, prepares state.</p>
             </article>
             <article class="compare-card" role="listitem" aria-labelledby="compare-project-probe">
                 <h3 id="compare-project-probe"><span class="syntax-token">?</span> project</h3>
-                <p>Questions the assumptions of the environment. Triggers tests, linters, or philosophical audits.</p>
+                <p>Questions assumptions. Triggers tests, audits, or interpretive challenges.</p>
             </article>
             <article class="compare-card" role="listitem" aria-labelledby="compare-project-action">
                 <h3 id="compare-project-action"><span class="syntax-token">@</span> project</h3>
-                <p>Executes the artifact. Builds the bundles, writes to disk, fires the deployment webhook.</p>
+                <p>Executes the artifact. Builds, writes, emits, or deploys.</p>
             </article>
         </div>
     </section>
@@ -542,13 +714,13 @@
         <div class="directory-list">
             <dl>
                 <dt><a href="/recipes/typography/">.typography</a></dt>
-                <dd>Baseline rules for text rendering and readable systems.</dd>
+                <dd>Baseline rules for text rendering, hierarchy, and readable systems.</dd>
 
                 <dt><a href="/recipes/layout/">.layout</a></dt>
                 <dd>Grid mathematics and the physics of semantic walls.</dd>
 
                 <dt><a href="/recipes/interaction/">@interaction</a></dt>
-                <dd>How the DOM responds to structural play.</dd>
+                <dd>How the DOM responds to structural play and visible affordance.</dd>
 
                 <dt><a href="/recipes/">~recipes</a></dt>
                 <dd>Applied kitchen structure, mise en place, reduction, and fermentation.</dd>

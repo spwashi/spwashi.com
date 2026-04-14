@@ -7,7 +7,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <meta name="description" content="Fast contact routes for Spwashi: services first, then DMs on X, TikTok, and Instagram, with additional public surfaces for context.">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Contact"/>
+    <meta property="og:description" content="The fastest way to get in contact with Spwashi is through services, followed by DMs on X, TikTok, and Instagram."/>
+    <meta property="og:url" content="https://spwashi.com/contact"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Spwashi • Contact"/>
+    <meta name="twitter:description" content="Fast contact routes for Spwashi: services first, then DMs on X, TikTok, and Instagram.">
+    <link rel="canonical" href="https://spwashi.com/contact">
     <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js?v=0.0.2"></script>
     <script type="module">
@@ -18,79 +31,204 @@
     </script>
     <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
 </head>
-<body data-spw-features="operators navigator console">
-    <header>
+<body
+    data-spw-surface="contact"
+    data-spw-features="operators navigator console contact-routing"
+    data-spw-route-family="editorial routing"
+    data-spw-context="routing">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" role="banner">
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
+        <nav aria-label="Primary">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
+                <li><a href="/topics/craft/">Craft</a></li>
                 <li><a href="/topics/software/">Software</a></li>
                 <li><a href="/play/">Play</a></li>
                 <li><a href="/blog/">Blog</a></li>
-                
                 <li><a aria-current="page" href="/contact">Contact</a></li>
                 <li><a href="/settings/">Settings</a></li>
             </ul>
         </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>contact</span>
     </header>
-    <main>
-        <section class="site-frame site-hero" id="contact-frame">
+
+    <main id="main-content" tabindex="-1">
+        <section
+            class="site-frame site-hero"
+            id="contact-frame"
+            data-spw-kind="frame"
+            data-spw-role="routing"
+            data-spw-context="routing"
+            data-spw-form="brace"
+            aria-labelledby="contact-title"
+            aria-describedby="contact-note">
             <div class="frame-topline">
                 <a class="frame-sigil" href="#contact-frame">#&gt;contact_frame</a>
                 <div class="spec-strip">
                     <span class="spec-pill">direct</span>
                     <span class="spec-pill">public</span>
                     <span class="spec-pill">current</span>
+                    <span class="spec-pill">fast routes first</span>
                 </div>
             </div>
-            <h1>Contact</h1>
-            <p>Direct message is the best route right now. Social channels are fastest, while <a href="https://github.com/spwashi">GitHub</a>, <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>, and the <a href="/topics/software/">software surface</a> give the clearest context for the current work.</p>
-            <nav class="frame-operators" aria-label="Contact routes">
-                <a class="operator-chip" href="#contact-register">^ contact register</a>
-                <a class="operator-chip" href="/about/#surface-register">about surfaces</a>
-                <a class="operator-chip" href="/topics/software/">software surface</a>
-                <a class="operator-chip" href="/blog/">wonder blog</a>
-                <a class="operator-chip" href="/play/">play surface</a>
+
+            <p class="page-kicker">contact • visibility • discussion • services</p>
+            <h1 id="contact-title">Contact</h1>
+            <p id="contact-note" class="page-lede">
+                The fastest way to get in contact with me is to use one of my services listed on <a href="/services">/services</a>. That gives the interaction a clearer surface for visibility, scope, and response. Otherwise, the best direct route right now is a DM on <strong>X</strong>, <strong>TikTok</strong>, or <strong>Instagram</strong>.
+            </p>
+
+            <p class="frame-note">
+                Course signups are currently once per season and include reasonable surfaces for visibility and discussion. Public surfaces like YouTube, software notes, and the blog are useful for context, but they are not the fastest path for outreach.
+            </p>
+
+            <nav class="frame-operators" aria-label="Primary contact routes">
+                <a class="operator-chip" href="/services" data-spw-form="angle" data-spw-operator="action">@ services</a>
+                <a class="operator-chip" href="https://x.com/spwashi" target="_blank" rel="noopener noreferrer" data-spw-form="angle" data-spw-operator="stream">~ DM on X</a>
+                <a class="operator-chip" href="https://www.tiktok.com/@spwashi" target="_blank" rel="noopener noreferrer" data-spw-form="angle" data-spw-operator="action">@ TikTok</a>
+                <a class="operator-chip" href="https://www.instagram.com/spwashi/" target="_blank" rel="noopener noreferrer" data-spw-form="angle" data-spw-operator="surface">&gt; Instagram</a>
+                <a class="operator-chip" href="#contact-register" data-spw-form="angle" data-spw-operator="binding">^ register</a>
             </nav>
         </section>
 
-        <section class="site-frame" id="contact-register">
+        <section
+            class="site-frame"
+            id="fastest-routes"
+            data-spw-kind="frame"
+            data-spw-role="priority-routing"
+            data-spw-context="routing"
+            aria-labelledby="fastest-routes-title">
             <div class="frame-heading">
-                <a class="frame-sigil" href="#contact-register">^"contact_register"{</a>
-                <h2>Contact Register</h2>
+                <a class="frame-sigil" href="#fastest-routes">!["fastest_routes"]</a>
+                <h2 id="fastest-routes-title">Fastest Routes</h2>
             </div>
+
             <div class="contact-grid">
-                <a class="frame-card" target="_blank" href="https://www.instagram.com/spwashi/">
-                    <span class="frame-card-sigil">#&gt;instagram_dm</span>
-                    <strong>Instagram</strong>
-                    <span>Direct message for the fastest reply path.</span>
+                <a class="frame-card" href="/services">
+                    <span class="frame-card-sigil">⚡ @services</span>
+                    <strong>Services</strong>
+                    <span>The fastest and most structured way to get in contact. Best for serious inquiries, project context, and clearer response surfaces.</span>
                 </a>
-                <a class="frame-card" target="_blank" href="https://www.tiktok.com/@spwashi/">
-                    <span class="frame-card-sigil">#&gt;tiktok_dm</span>
-                    <strong>TikTok</strong>
-                    <span>Direct message and short-form public posts.</span>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://x.com/spwashi">
+                    <span class="frame-card-sigil">✉ ~x_dm</span>
+                    <strong>X — @spwashi</strong>
+                    <span>Very easy DM route. Preferred for quick outreach, direct questions, and current public context.</span>
                 </a>
-                <a class="frame-card" target="_blank" href="https://github.com/spwashi">
-                    <span class="frame-card-sigil">#&gt;github_surface</span>
-                    <strong>GitHub</strong>
-                    <span>Current code, repositories, and implementation depth.</span>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@spwashi">
+                    <span class="frame-card-sigil">✦ @tiktok_dm</span>
+                    <strong>TikTok — @spwashi</strong>
+                    <span>Preferred DM path with strong public context around ongoing work, design, and engineering direction.</span>
                 </a>
-                <a class="frame-card" target="_blank" href="https://www.youtube.com/@spwashi/">
-                    <span class="frame-card-sigil">#&gt;youtube_surface</span>
-                    <strong>YouTube</strong>
-                    <span>Public iteration around engineering, design, and application work.</span>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/spwashi/">
+                    <span class="frame-card-sigil">◌ &gt;instagram_dm</span>
+                    <strong>Instagram — @spwashi</strong>
+                    <span>Preferred DM path for visual context, creative conversation, and lightweight contact.</span>
                 </a>
             </div>
         </section>
 
-        <section class="site-frame" id="related-surfaces">
+        <section
+            class="site-frame"
+            id="contact-register"
+            data-spw-kind="frame"
+            data-spw-role="directory"
+            data-spw-context="routing"
+            aria-labelledby="contact-register-title">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#contact-register">^"contact_register"{</a>
+                <h2 id="contact-register-title">Contact Register</h2>
+            </div>
+
+            <div class="contact-grid">
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://x.com/spwashi">
+                    <span class="frame-card-sigil">✉ ~x</span>
+                    <strong>X</strong>
+                    <span>@spwashi — currently one of the easiest DM routes.</span>
+                </a>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@spwashi">
+                    <span class="frame-card-sigil">✦ @tiktok</span>
+                    <strong>TikTok</strong>
+                    <span>@spwashi — direct messages plus short-form public context.</span>
+                </a>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/spwashi/">
+                    <span class="frame-card-sigil">◌ &gt;instagram</span>
+                    <strong>Instagram</strong>
+                    <span>@spwashi — direct messages and visual/public surface.</span>
+                </a>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://bsky.app/profile/spwashi.com">
+                    <span class="frame-card-sigil">☁ ~bluesky</span>
+                    <strong>BlueSky</strong>
+                    <span>@spwashi.com — public surface and message-adjacent context.</span>
+                </a>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@spwashi">
+                    <span class="frame-card-sigil">▶ ^youtube</span>
+                    <strong>YouTube</strong>
+                    <span>@spwashi — public iteration around engineering, design, and long-arc direction.</span>
+                </a>
+
+                <a class="frame-card" target="_blank" rel="noopener noreferrer" href="https://github.com/spwashi">
+                    <span class="frame-card-sigil">⌘ #&gt;github</span>
+                    <strong>GitHub</strong>
+                    <span>Current code, repositories, implementation depth, and active technical context.</span>
+                </a>
+            </div>
+        </section>
+
+        <section
+            class="site-frame"
+            id="course-signups"
+            data-spw-kind="frame"
+            data-spw-role="advisory"
+            data-spw-context="publishing"
+            aria-labelledby="course-signups-title">
+            <div class="frame-heading">
+                <a class="frame-sigil" href="#course-signups">*["course_signups"]</a>
+                <h2 id="course-signups-title">Courses and Seasonal Visibility</h2>
+            </div>
+
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Once per season</h3>
+                    <p>Course signups currently happen once per season rather than continuously.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Reasonable surfaces</h3>
+                    <p>Those signups include reasonable surfaces for visibility, discussion, and sustained attention.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Best route for now</h3>
+                    <p>For immediate outreach, use <a href="/services">services</a> or send a DM on X, TikTok, or Instagram.</p>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="site-frame"
+            id="related-surfaces"
+            data-spw-kind="frame"
+            data-spw-role="reference"
+            aria-labelledby="related-surfaces-title">
             <div class="frame-heading">
                 <a class="frame-sigil" href="#related-surfaces">~"related_surfaces"</a>
-                <h2>Related Surfaces</h2>
+                <h2 id="related-surfaces-title">Related Surfaces</h2>
             </div>
             <div class="frame-grid">
+                <a class="frame-card" href="/services">
+                    <span class="frame-card-sigil">⚡ @services</span>
+                    <strong>Services</strong>
+                    <span>Fastest contact path, with clearer structure for collaboration and response.</span>
+                </a>
                 <a class="frame-card" href="/about/">
                     <span class="frame-card-sigil">#&gt;about_frame</span>
                     <strong>About</strong>
@@ -99,12 +237,7 @@
                 <a class="frame-card" href="/topics/software/">
                     <span class="frame-card-sigil">#&gt;software_surface</span>
                     <strong>Software</strong>
-                    <span>Spw syntax, operator grammar, interactive codeblocks, and the Obsidian application context.</span>
-                </a>
-                <a class="frame-card" href="/play/">
-                    <span class="frame-card-sigil">&gt;play_surface</span>
-                    <strong>Play</strong>
-                    <span>Game routes, session logs, and the RPG Wednesday table tools.</span>
+                    <span>Spw syntax, operator grammar, interactive codeblocks, and implementation context.</span>
                 </a>
                 <a class="frame-card" href="/blog/">
                     <span class="frame-card-sigil">#&gt;blog_input_interpreter</span>
@@ -114,6 +247,7 @@
             </div>
         </section>
     </main>
+
     <footer>
         <p>© 2026 spwashi</p>
     </footer>

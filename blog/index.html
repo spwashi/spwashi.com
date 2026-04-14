@@ -8,6 +8,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <meta name="description" content="A local blog interpreter for turning Spw fragments, wonder notes, and rough drafts into readable language.">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Blog"/>
+    <meta property="og:description" content="A local blog interpreter for turning Spw fragments, wonder notes, and rough drafts into readable language.">
+    <meta property="og:url" content="https://spwashi.com/blog/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="A textured field of charged signals, fibers, and structural paths for the Spwashi blog."/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Blog"/>
+    <meta name="twitter:description" content="A local blog interpreter for turning Spw fragments, wonder notes, and rough drafts into readable language.">
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+
+    <link rel="canonical" href="https://spwashi.com/blog/">
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
@@ -24,33 +37,33 @@
         });
     </script>
 </head>
-<body data-spw-surface="blog" data-spw-features="operators navigator console blog-interpreter" data-theme="atelier-light">
+<body
+    data-spw-surface="blog"
+    data-spw-features="operators navigator console blog-interpreter svg-surfaces"
+    data-theme="atelier-light"
+    data-spw-route-family="editorial laboratory"
+    data-spw-context="publishing"
+    data-spw-wonder="orientation">
+
     <svg class="blog-svg-defs" aria-hidden="true" focusable="false">
         <defs>
-            <!-- f-grain: subtle surface texture -->
             <filter id="f-grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
                 <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
                 <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
                 <feBlend in="SourceGraphic" in2="grey" mode="multiply" result="blended"/>
                 <feComposite in="blended" in2="SourceGraphic" operator="in"/>
             </filter>
-            <!-- f-weave-warp: displacement for woven fiber look -->
             <filter id="f-weave-warp" x="-5%" y="-5%" width="110%" height="110%">
                 <feTurbulence type="turbulence" baseFrequency="0.02 0.08" numOctaves="2" seed="3" result="warp"/>
                 <feDisplacementMap in="SourceGraphic" in2="warp" scale="6" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
-            <!-- f-svg-demo: live-manipulable filter for SVG filter playground -->
             <filter id="f-svg-demo" x="-10%" y="-10%" width="120%" height="120%">
                 <feTurbulence id="demo-turbulence" type="turbulence" baseFrequency="0.04" numOctaves="2" seed="1" result="turb"/>
                 <feDisplacementMap id="demo-displace" in="SourceGraphic" in2="turb" scale="12" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
-            <!-- f-blur-soft: gentle soft-focus blur -->
             <filter id="f-blur-soft">
                 <feGaussianBlur stdDeviation="1.5"/>
             </filter>
-            <!-- f-op-charge: semantic glow for charged/interactive operator nodes.
-                 Layered: soft outer bloom (stdDeviation=5) + precise inner halo (stdDeviation=1.5).
-                 Color driven by flood-color — set via inline style on the element. -->
             <filter id="f-op-charge" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="bloom"/>
                 <feFlood flood-color="currentColor" flood-opacity="0.28" result="color-flood"/>
@@ -64,15 +77,12 @@
                     <feMergeNode in="SourceGraphic"/>
                 </feMerge>
             </filter>
-            <!-- f-stream-wave: slow-drift turbulence for ~ stream operator elements.
-                 Semantic: periodic return through a medium — like oscillation. -->
             <filter id="f-stream-wave" x="-8%" y="-8%" width="116%" height="116%">
                 <feTurbulence type="fractalNoise" baseFrequency="0.012 0.18" numOctaves="2" seed="7" result="wave">
                     <animate attributeName="baseFrequency" values="0.012 0.18;0.014 0.19;0.012 0.18" dur="4s" repeatCount="indefinite"/>
                 </feTurbulence>
                 <feDisplacementMap in="SourceGraphic" in2="wave" scale="3" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
-            <!-- f-probe-pulse: radial ripple for ? probe operator — detects crossing without storing -->
             <filter id="f-probe-pulse" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
                 <feFlood flood-color="hsl(268 55% 42%)" flood-opacity="0.35" result="probe-color"/>
@@ -84,35 +94,64 @@
             </filter>
         </defs>
     </svg>
-    <header>
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" role="banner">
         <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
+        <nav aria-label="Primary">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
+                <li><a href="/topics/craft/">Craft</a></li>
                 <li><a href="/topics/software/">Software</a></li>
                 <li><a href="/play/">Play</a></li>
                 <li><a aria-current="page" href="/blog/">Blog</a></li>
-                <li><a href="/contact">Contact</a></li>
                 <li><a href="/settings/">Settings</a></li>
             </ul>
         </nav>
         <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>blog</span>
     </header>
-    <main>
+
+    <main id="main-content" tabindex="-1">
         <article>
-            <!-- w0: empty premise — the charged field before attention lands -->
-            <section class="site-frame site-hero" id="liminal-charge" data-wonder-level="w0" data-spw-liminality="threshold" data-spw-perspective="balanced">
+            <section
+                class="site-frame site-hero"
+                id="liminal-charge"
+                data-wonder-level="w0"
+                data-spw-kind="frame"
+                data-spw-role="orientation"
+                data-spw-liminality="threshold"
+                data-spw-perspective="balanced"
+                data-spw-form="brace"
+                aria-labelledby="blog-title"
+                aria-describedby="blog-hero-note">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#liminal-charge">#&gt;liminal_charge</a>
                     <div class="spec-strip">
                         <span class="spec-pill">Spw.Kernel.LiminalCharge v:0.1</span>
                         <span class="spec-pill">w0</span>
+                        <span class="spec-pill">editorial laboratory</span>
                     </div>
                 </div>
+
+                <nav class="page-index" aria-label="Blog sections">
+                    <ul>
+                        <li><a href="#liminal-charge">Liminal Charge</a></li>
+                        <li><a href="#blog-reading-layers">Reading Layers</a></li>
+                        <li><a href="#atelier-themes">Themes</a></li>
+                        <li><a href="#kernel-specimen">Kernel</a></li>
+                        <li><a href="#operator-reference">Operators</a></li>
+                        <li><a href="#specimen-index">Specimens</a></li>
+                        <li><a href="#blog-input-interpreter">Interpreter</a></li>
+                        <li><a href="#fiber-linguistics">Fiber × Language</a></li>
+                        <li><a href="#field-notes">Field Notes</a></li>
+                        <li><a href="#blog-method">Method</a></li>
+                    </ul>
+                </nav>
+
                 <svg class="blog-hero-svg" viewBox="0 0 800 220" aria-label="Fiber weave diagram: self/world plates, charged nodes, signal path" role="img" xmlns="http://www.w3.org/2000/svg">
                     <rect width="800" height="220" fill="rgba(24, 123, 135, 0.04)" stroke="rgba(24, 123, 135, 0.18)" rx="6"/>
-                    <!-- warp threads (vertical self-axis) -->
                     <g filter="url(#f-weave-warp)" opacity="0.35" stroke="hsl(192,40%,55%)" stroke-width="0.8" fill="none">
                         <line x1="80" y1="0" x2="80" y2="220"/>
                         <line x1="160" y1="0" x2="160" y2="220"/>
@@ -124,33 +163,80 @@
                         <line x1="640" y1="0" x2="640" y2="220"/>
                         <line x1="720" y1="0" x2="720" y2="220"/>
                     </g>
-                    <!-- weft threads (horizontal world-axis) -->
                     <g filter="url(#f-weave-warp)" opacity="0.25" stroke="hsl(344,40%,55%)" stroke-width="0.7" fill="none">
                         <line x1="0" y1="44" x2="800" y2="44"/>
                         <line x1="0" y1="88" x2="800" y2="88"/>
                         <line x1="0" y1="132" x2="800" y2="132"/>
                         <line x1="0" y1="176" x2="800" y2="176"/>
                     </g>
-                    <!-- signal path -->
                     <path d="M 60,110 C 160,60 240,160 360,100 S 560,140 740,110" stroke="hsl(188,64%,32%)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <!-- charged nodes -->
                     <circle cx="160" cy="80" r="6" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
                     <circle cx="320" cy="130" r="5" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
                     <circle cx="480" cy="95" r="7" fill="rgba(24, 123, 135, 0.16)" stroke="hsl(192,62%,34%)" stroke-width="1.5"/>
                     <circle cx="620" cy="140" r="5" fill="rgba(160, 42, 77, 0.14)" stroke="hsl(344,58%,36%)" stroke-width="1.5"/>
                     <circle cx="740" cy="110" r="6" fill="rgba(160, 42, 77, 0.14)" stroke="hsl(344,58%,36%)" stroke-width="1.5"/>
-                    <!-- axis labels -->
                     <text x="12" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(192,40%,55%)" opacity="0.7">self</text>
                     <text x="752" y="114" font-family="'JetBrains Mono',monospace" font-size="9" fill="hsl(344,40%,55%)" opacity="0.7">world</text>
                     <text x="390" y="14" font-family="'JetBrains Mono',monospace" font-size="9" fill="currentColor" opacity="0.4" text-anchor="middle">time</text>
                     <text x="390" y="214" font-family="'JetBrains Mono',monospace" font-size="9" fill="currentColor" opacity="0.4" text-anchor="middle">meaning</text>
                 </svg>
+
                 <p class="spec-kicker">Component Specimen Cabinet</p>
-                <h1>The blog is a kernel running.</h1>
-                <p class="frame-note">Each section is a <a href="#kernel-specimen" data-spw-charge-key="wonder-block">wonder block</a>. <span data-spw-charge-key="attention">Attention accumulates</span>. <span data-spw-charge-key="language-crystallizes">Language crystallizes</span> from fragment toward public form. The <a href="#blog-input-interpreter" data-spw-charge-key="interpreter">interpreter</a> at the base emits into the <a href="#field-notes" data-spw-charge-key="cohort-field">cohort field</a>.</p>
+                <h1 id="blog-title">The blog is a kernel running.</h1>
+                <p id="blog-hero-note" class="frame-note">
+                    Each section is a <a href="#kernel-specimen" data-spw-charge-key="wonder-block">wonder block</a>. <span data-spw-charge-key="attention">Attention accumulates</span>. <span data-spw-charge-key="language-crystallizes">Language crystallizes</span> from fragment toward public form. The <a href="#blog-input-interpreter" data-spw-charge-key="interpreter">interpreter</a> at the base emits into the <a href="#field-notes" data-spw-charge-key="cohort-field">cohort field</a>.
+                </p>
+
+                <p class="page-lede">
+                    This page can be read as an editorial index, a tool surface, an operator atlas, a set of browser API specimens, or a field notebook. Each part is meant to stay readable in plain language while also teaching how Spw organizes attention, relation, and projection.
+                </p>
+
+                <nav class="frame-operators" aria-label="Blog routes">
+                    <a class="operator-chip" href="#blog-input-interpreter" data-spw-form="angle" data-spw-operator="action">@ interpret</a>
+                    <a class="operator-chip" href="#operator-reference" data-spw-form="angle" data-spw-operator="probe">? operators</a>
+                    <a class="operator-chip" href="#specimen-index" data-spw-form="angle" data-spw-operator="merge">* specimens</a>
+                    <a class="operator-chip" href="#fiber-linguistics" data-spw-form="angle" data-spw-operator="stream">~ resonance</a>
+                </nav>
             </section>
 
-            <!-- Atelier theme toggle -->
+            <section
+                class="site-frame"
+                id="blog-reading-layers"
+                data-spw-kind="frame"
+                data-spw-role="reference"
+                data-spw-context="reading"
+                data-spw-form="brace"
+                data-spw-liminality="entry"
+                aria-labelledby="blog-reading-layers-title">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#blog-reading-layers">^"reading_layers"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">editorial</span>
+                        <span class="spec-pill">tool</span>
+                        <span class="spec-pill">specimen</span>
+                    </div>
+                </div>
+                <h2 id="blog-reading-layers-title">How to read this page</h2>
+                <div class="compare-sets" role="list">
+                    <article class="compare-card" role="listitem">
+                        <h3>As blog structure</h3>
+                        <p>Read the transitions, field notes, and interpreter as a system for moving from fragment to article.</p>
+                    </article>
+                    <article class="compare-card" role="listitem">
+                        <h3>As component cabinet</h3>
+                        <p>Read frames, cards, SVGs, chips, and notes as reusable page structures.</p>
+                    </article>
+                    <article class="compare-card" role="listitem">
+                        <h3>As operator grammar</h3>
+                        <p>Read sigils as gestures: probe, bind, merge, stream, action, frame, and surface.</p>
+                    </article>
+                    <article class="compare-card" role="listitem">
+                        <h3>As material bridge</h3>
+                        <p>Read browser APIs, fibers, thresholds, and resonance as neighboring explanatory materials.</p>
+                    </article>
+                </div>
+            </section>
+
             <section class="site-frame" id="atelier-themes" data-spw-liminality="entry" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#atelier-themes">=[atelier_theme]</a>
@@ -188,7 +274,6 @@
 
             <p class="blog-transition">Attention has landed. Now: what is here?</p>
 
-            <!-- w1: kernel specimen — what is here -->
             <section class="site-frame" id="kernel-specimen" data-wonder-level="w1" data-spw-liminality="entry" data-spw-perspective="objective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#kernel-specimen">?["what_is_here"]</a>
@@ -198,7 +283,9 @@
                     </div>
                 </div>
                 <h2>Spw.Kernel.LiminalCharge v:0.1</h2>
-                <p class="frame-note">The architecture this page embodies. Each <a href="#specimen-index" data-spw-charge-key="node">section below</a> is a node in the kernel running. The <a href="#fiber-linguistics" data-spw-charge-key="fiber-language">fiber × language</a> mapping carries the signal path to its resonant end.</p>
+                <p class="frame-note">
+                    The architecture this page embodies. Each <a href="#specimen-index" data-spw-charge-key="node">section below</a> is a node in the kernel running. The <a href="#fiber-linguistics" data-spw-charge-key="fiber-language">fiber × language</a> mapping carries the signal path to its resonant end.
+                </p>
                 <pre class="specimen-kernel-code"><code><span class="sk-comment">// premise ~ medium ~ dielectric ~ channels ~ ac_drift ~ anchor_loop ~ output ~ return</span>
 
 <span class="sk-key">cumulation</span>     = { micro = <span class="sk-op">!</span>[act_small], stack = <span class="sk-op">*</span>[micro..containment], bias = stack -&gt; charge }
@@ -207,43 +294,40 @@
 <span class="sk-key">dimensional</span>     = { d1=[time], d2=[attention], d3=[relationship], d5=[meaning], projection = unfold -&gt; &lt;d1&lt;&gt;d2&lt;&gt;d3&lt;&gt;d5&gt; }
 <span class="sk-key">cohort_field</span>    = { emit=<span class="sk-op">@</span>projection, receivers=<span class="sk-op">?</span>[others], resonance=emit&amp;receivers, formation=<span class="sk-op">*</span>[resonance..return] }
 <span class="sk-key">discipline</span>      = { full kernel with premise, medium, dielectric, channels, ac_drift, anchor_loop, output, return }</code></pre>
+
                 <details class="spw-surface-file">
                     <summary>"blog_surface.spw" — how this page describes itself</summary>
                     <pre><code>#&gt;blog_surface
 #:layer #!dialect
-@profile:Spw.b          // default authored block geometry
+@profile:Spw.b
 
 ^"dialect_map"{
-  blocks = Spw.b         // .site-frame, .operator-snippet: containment + brace physics
-  lines  = Spw.l         // .blog-transition: compact, search geometry, single-line
-  exec   = Spw.x         // button.operator-chip: @profile:Spw.x, committed action
+  blocks = Spw.b
+  lines  = Spw.l
+  exec   = Spw.x
 }
 
 ^"prism_map"{
-  #  = frame     → teal    · scope from outside   → var(--op-frame-color)
-  ^  = binding   → amber   · join without collapse → var(--op-object-color)
-  @  = ref       → blue    · points elsewhere      → var(--op-ref-color)
-  ?  = probe     → violet  · detect crossing       → var(--op-probe-color)
-  !  = action    → deep    · fires once            → var(--op-action-color)
-  ~  = stream    → green   · periodic return       → var(--op-stream-color)
-  *  = merge     → cyan    · accumulate range      → var(--op-merge-color)
-  =  = baseline  → warm    · ambient drift         → var(--op-baseline-color)
-  $  = substrate → slate   · what is shaped        → var(--op-meta-color)
-  %  = meta      → navy    · measure / reduce      → var(--op-meta-color)
-  +  = normalize → sage    · bring to form         → var(--op-normalize-color)
-  |  = surface   → teal    · presentation boundary → var(--op-surface-color)
+  #  = frame
+  ^  = binding
+  @  = ref
+  ?  = probe
+  !  = action
+  ~  = stream
+  *  = merge
+  =  = baseline
+  $  = substrate
+  %  = meta
+  +  = normalize
+  |  = surface
 }
 
 ?["What makes a .spw file different from Markdown?"]{
-  !probe{ "plain text stays readable; operator prefixes give LSP servers
-           stable handles for nav, hover docs, and semantic search.
-           Obsidian (or any editor) can parse the structure without
-           losing the human-readable layer." }
+  !probe{ "plain text stays readable; operator prefixes give LSP servers stable handles for nav, hover docs, and semantic search." }
 }</code></pre>
                 </details>
             </section>
 
-            <!-- Operator snippet reference -->
             <section class="site-frame" id="operator-reference" data-wonder-level="w1">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#operator-reference">@[operator_atlas]</a>
@@ -253,7 +337,9 @@
                     </div>
                 </div>
                 <h2>Operator Snippets</h2>
-                <p class="frame-note">Each sigil is a gesture in <code>Spw.b</code> block geometry — the authored dialect. Cards accumulate charge from the left edge (<code>{</code>) and the color of each card is its spectral slice through the operator prism. Hover a card to feel its field. Swipe or press <code>⋯</code> to open its reduction. <code>_</code> holds a name flat; <code>{_A }_A</code> braces can overlap.</p>
+                <p class="frame-note">
+                    Each sigil is a gesture in <code>Spw.b</code> block geometry — the authored dialect. Cards accumulate charge from the left edge and the color of each card is its spectral slice through the operator prism.
+                </p>
                 <div class="operator-snippet-grid">
                     <div class="operator-snippet" data-spw-operator="frame">
                         <a class="operator-snippet-sigil" href="/topics/software/spw/operators/frame/" data-spw-voice="frame · scope from outside" title="frame: scope from outside">#</a>
@@ -344,7 +430,6 @@
 
             <p class="blog-transition">The kernel names its parts. Now: what calls for attention?</p>
 
-            <!-- w2: specimen index — what is missing (navigation into the specimens) -->
             <section class="site-frame" id="specimen-index" data-wonder-level="w2" data-spw-liminality="entry" data-spw-perspective="objective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#specimen-index">?["what_is_missing"]</a>
@@ -354,7 +439,9 @@
                     </div>
                 </div>
                 <h2>Web API Specimens</h2>
-                <p class="frame-note">Five browser APIs mapped to Spw operators and <span data-spw-charge-key="materials">material science</span> concepts. Each specimen is a <span data-spw-charge-key="charge-node">charged node</span> — interactive, documented, and linked to its <a href="https://developer.mozilla.org/en-US/docs/Web/API" data-spw-charge-key="docs">MDN reference</a>.</p>
+                <p class="frame-note">
+                    Five browser APIs mapped to Spw operators and material science concepts. Each specimen is a charged node — interactive, documented, and linked to its MDN reference.
+                </p>
                 <nav class="specimen-index-grid" aria-label="API specimen navigation">
                     <a class="specimen-index-card" href="#api-css-custom-properties">
                         <span class="specimen-index-sigil">=[bias]</span>
@@ -394,8 +481,10 @@
                     </div>
                 </div>
                 <p class="spec-kicker">Blog Surface</p>
-                <h1>Paste a Spw fragment, a wonder note, or a rough draft.</h1>
-                <p class="frame-note" id="blog-input-help">Use this when something feels alive but not article-shaped yet. The <span data-spw-charge-key="interpreter">interpreter</span> gives the note a title, questions, outline, and Spw seed so it can move toward <span data-spw-charge-key="language-crystallizes">readable language</span>.</p>
+                <h2>Paste a Spw fragment, a wonder note, or a rough draft.</h2>
+                <p class="frame-note" id="blog-input-help">
+                    Use this when something feels alive but not article-shaped yet. The interpreter gives the note a title, questions, outline, and Spw seed so it can move toward readable language.
+                </p>
 
                 <div class="blog-interpreter-layout" data-blog-interpreter data-blog-state="empty" data-blog-lens="wonder_to_language" data-blog-tone="quiet">
                     <form class="blog-input-panel" data-blog-input-form>
@@ -414,7 +503,7 @@
                     <div class="blog-output-panel" data-blog-output role="region" aria-labelledby="blog-output-title" aria-live="polite" aria-busy="false">
                         <div class="blog-output-header">
                             <span class="frame-card-sigil">$interpretation</span>
-                            <h2 id="blog-output-title" data-blog-title>Untitled draft</h2>
+                            <h3 id="blog-output-title" data-blog-title>Untitled draft</h3>
                         </div>
                         <p class="blog-output-summary" data-blog-summary>Paste text and run the interpreter to turn a note toward language.</p>
 
@@ -478,7 +567,6 @@
 
             <p class="blog-transition">Each specimen below is a gap made interactive — basis meeting the unknown through a browser API.</p>
 
-            <!-- w3 specimens: basis..gap — API interactions mapped to kernel concepts -->
             <section class="site-frame specimen-card" id="api-css-custom-properties" data-wonder-level="w3" data-spw-perspective="balanced">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#api-css-custom-properties">=[bias_operator]</a>
@@ -655,7 +743,6 @@
 
             <p class="blog-transition">The signal path reaches its far end. What resonates across material and linguistic boundaries?</p>
 
-            <!-- w5: fiber-linguistics — basis..gap..signal_path -->
             <section class="site-frame" id="fiber-linguistics" data-wonder-level="w5" data-spw-perspective="subjective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#fiber-linguistics">*[fiber_x_language]</a>
@@ -710,7 +797,6 @@
                 </div>
             </section>
 
-            <!-- w5: field notes -->
             <section class="site-frame" id="field-notes" data-wonder-level="w5" data-spw-perspective="subjective">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#field-notes">?["what_resonates"]</a>
@@ -743,7 +829,7 @@
                     </div>
                     <div class="field-note" data-note-id="FN-005">
                         <h3>Video as Wonder Block</h3>
-                        <p>An improvised video of someone interacting with these specimens is itself a w3 output — basis and gap made visible. The processing campaign (visibility, thematic grounding) is the cohort field receiving the emission.</p>
+                        <p>An improvised video of someone interacting with these specimens is itself a w3 output — basis and gap made visible. The processing campaign is the cohort field receiving the emission.</p>
                         <div class="field-note-tags"><span class="field-note-tag">video-workflow</span><span class="field-note-tag" data-spw-charge-key="wonder-block">wonder-block</span><span class="field-note-tag">campaign</span></div>
                     </div>
                     <div class="field-note" data-note-id="FN-006">
@@ -784,6 +870,7 @@
             </section>
         </article>
     </main>
+
     <footer>
         <p>© 2026 spwashi</p>
     </footer>

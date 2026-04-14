@@ -1,64 +1,621 @@
+/* ==========================================================================
+   spw-shell.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Site shell, viewport framing, page scaffolding, safe-area behavior,
+     generic page rhythm, header/footer/navigation contracts, and broad
+     “default page” presentation for spwashi.com.
+   - This file should be trustworthy even on pages with minimal markup.
+   - It should provide a pleasant generic page by default, while leaving room
+     for routes to bias identity later.
+
+   Design stance
+   - The shell should feel materially calm, structurally clear, and subtly
+     dimensional before any route-specific CSS loads.
+   - Defaults should never aggressively tint the whole site into one operator.
+   - Generic pages should still feel authored: readable measure, good spacing,
+     decent panels, figure treatment, and useful empty-state behavior.
+   - Shell semantics should remain low-specificity enough that route files can
+     override them without fighting.
+
+   Responsibilities
+   - viewport / body / safe area scaffolding
+   - generic page surfaces and reading defaults
+   - site header, nav, nav toggle, footer
+   - global side walls / brace rails
+   - main / article / section / aside / figure shell defaults
+   - generic cards, panels, notes, and page intro scaffolds
+   - generic responsive behavior
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Shell root tokens
+   ========================================================================== */
+
+:root {
+  /* Widths */
+  --page-width: 72rem;
+  --page-width-reading: 56rem;
+  --page-width-wide: 84rem;
+  --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
+  --page-gutter-block: clamp(0.9rem, 2.2vw, 1.8rem);
+
+  /* Vertical rhythm */
+  --surface-gap: clamp(1rem, 2vw, 1.35rem);
+  --page-stack-gap: clamp(1.1rem, 2.3vw, 1.7rem);
+  --page-stack-gap-loose: clamp(1.6rem, 3vw, 2.4rem);
+  --page-section-gap: clamp(2rem, 4vw, 3.25rem);
+  --page-section-gap-tight: clamp(1.3rem, 2.8vw, 2rem);
+
+  /* Header */
+  --shell-header-height: var(--header-height, 4rem);
+  --shell-header-min-height: 3.75rem;
+  --shell-header-pad-inline: clamp(0.85rem, 2vw, 1.2rem);
+  --shell-header-pad-block: 0.45rem;
+  --shell-header-grid-gap: 0.5rem;
+
+  /* Nav */
+  --shell-nav-min-height: max(2.5rem, var(--touch-target-min, 2.75rem));
+  --shell-nav-font-size: 0.84rem;
+  --shell-nav-padding-inline: 0.82rem;
+  --shell-nav-padding-block: 0.42rem;
+  --shell-nav-gap-inline: 0.72rem;
+  --shell-nav-gap-block: 0.4rem;
+  --shell-nav-radius: var(--radius-pill, 999px);
+
+  /* Generic surface shell */
+  --shell-panel-radius: var(--shape-surface, 10px);
+  --shell-panel-radius-tight: var(--shape-component, 6px);
+  --shell-panel-radius-loose: var(--shape-floating, 16px);
+
+  --shell-panel-bg:
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 92%, transparent);
+  --shell-panel-bg-soft:
+    color-mix(in srgb, var(--surface, rgba(255, 255, 255, 0.62)) 90%, transparent);
+  --shell-panel-bg-matte:
+    color-mix(in srgb, var(--surface-matte, rgba(247, 244, 238, 0.93)) 94%, transparent);
+
+  --shell-panel-line:
+    color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 96%, transparent);
+  --shell-panel-line-strong:
+    color-mix(in srgb, var(--active-op-border, rgba(0, 128, 128, 0.34)) 90%, transparent);
+
+  --shell-panel-shadow:
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.52)),
+    var(--card-shadow, 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.03));
+
+  --shell-panel-shadow-hover:
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.52)),
+    var(--card-shadow-hover, 0 4px 18px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04));
+
+  --shell-panel-pad-inline: clamp(0.9rem, 2vw, 1.25rem);
+  --shell-panel-pad-block: clamp(0.8rem, 1.7vw, 1.1rem);
+
+  /* Generic reading */
+  --shell-reading-measure: var(--measure-reading, 68ch);
+  --shell-reading-measure-tight: var(--measure-panel, 52ch);
+  --shell-reading-measure-compact: var(--measure-card, 42ch);
+
+  /* Generic page hero */
+  --shell-hero-pad-inline: clamp(1rem, 2.4vw, 1.5rem);
+  --shell-hero-pad-block: clamp(1rem, 2.4vw, 1.4rem);
+
+  /* Footer */
+  --shell-footer-min-height: 3.5rem;
+  --shell-footer-font-size: 0.8rem;
+  --shell-footer-opacity: 0.92;
+
+  /* Rails / walls */
+  --shell-wall-width: 2px;
+  --shell-wall-opacity: 0.72;
+  --shell-wall-active-opacity: 1;
+
+  /* Motion */
+  --shell-duration-fast: var(--duration-fast, 140ms);
+  --shell-duration-base: var(--duration-base, 220ms);
+  --shell-duration-deliberate: var(--duration-deliberate, 360ms);
+
+  --shell-ease: var(--ease-mechanical, ease);
+  --shell-settle-ease: var(--ease-settle, ease);
+
+  /* Z layers */
+  --z-base: var(--layer-ground, 1);
+  --z-surface: var(--layer-surface, 20);
+  --z-floating: var(--layer-floating, 100);
+  --z-header: var(--layer-header, 1000);
+  --z-priority: var(--layer-priority, 2000);
+}
+
+/* ==========================================================================
+   2. Body / viewport scaffolding
+   ========================================================================== */
+
+html {
+  min-height: 100%;
+  scroll-padding-top: calc(var(--shell-header-height) + 1rem);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background:
+    radial-gradient(
+      circle at top center,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 4%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(180deg, var(--bg-field, var(--bg, hsl(42 77% 82%))), var(--bg, hsl(42 77% 82%)));
+  text-rendering: optimizeLegibility;
+
+  /* Ensure the body itself respects the safe area to prevent horizontal bleed */
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+
+  /* Shell-friendly defaults */
+  line-height: var(--site-line-height, 1.68);
+  overflow-wrap: break-word;
+}
+
+body[data-spw-shell-density="compact"] {
+  --surface-gap: clamp(0.8rem, 1.5vw, 1rem);
+  --page-stack-gap: clamp(0.9rem, 1.8vw, 1.2rem);
+  --page-section-gap: clamp(1.4rem, 2.6vw, 2rem);
+}
+
+body[data-spw-shell-density="roomy"] {
+  --surface-gap: clamp(1.15rem, 2.2vw, 1.55rem);
+  --page-stack-gap: clamp(1.35rem, 2.8vw, 1.95rem);
+  --page-section-gap: clamp(2.4rem, 4.4vw, 3.8rem);
+}
+
+/* Generic top-level flow */
+body > * {
+  position: relative;
+}
+
+/* ==========================================================================
+   3. Generic page defaults
+   --------------------------------------------------------------------------
+   These make an otherwise plain page look intentional before route CSS adds
+   more specific identity.
+   ========================================================================== */
+
+main {
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
+  margin:
+    clamp(1rem, 2.6vw, 2rem)
+    auto
+    calc(clamp(2.5rem, 5vw, 4rem) + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+  touch-action: pan-y;
+}
+
+main > article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-stack-gap);
+  touch-action: pan-y;
+}
+
+main > :where(section, aside, nav, article, figure) + :where(section, aside, nav, article, figure) {
+  margin-top: 0;
+}
+
+:where(main > article > *, main > section > *, main > aside > *) {
+  min-width: 0;
+}
+
+main :where(section, aside, figure) {
+  min-width: 0;
+}
+
+main :where(section, aside) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+}
+
+main :where(article > h1:first-child, section > h1:first-child) {
+  margin-bottom: 0.25rem;
+}
+
+main :where(article > p, section > p, aside > p, li, blockquote, figcaption) {
+  max-width: var(--shell-reading-measure);
+}
+
+main :where(article > ul, article > ol, section > ul, section > ol) {
+  max-width: var(--shell-reading-measure-tight);
+}
+
+/* Generic page hero / intro */
+.page-intro,
+.page-hero,
+.shell-hero,
+.site-hero {
+  position: relative;
+  display: grid;
+  gap: clamp(0.55rem, 1.6vw, 0.9rem);
+  padding: var(--shell-hero-pad-block) var(--shell-hero-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius-loose);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 4%, transparent),
+      transparent 26%
+    ),
+    var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+.page-intro > :first-child,
+.page-hero > :first-child,
+.shell-hero > :first-child,
+.site-hero > :first-child {
+  margin-top: 0;
+}
+
+.page-intro > :last-child,
+.page-hero > :last-child,
+.shell-hero > :last-child,
+.site-hero > :last-child {
+  margin-bottom: 0;
+}
+
+.page-kicker,
+.hero-kicker,
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 1.7rem;
+  padding: 0.14rem 0.54rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.page-lede,
+.hero-lede,
+.shell-lede {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: clamp(1rem, 1.2rem + 0.2vw, 1.15rem);
+  line-height: 1.72;
+  max-width: min(56ch, 100%);
+}
+
+/* Generic page clusters and grids */
+.page-grid,
+.panel-grid,
+.card-grid,
+.generic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+  gap: var(--surface-gap);
+  min-width: 0;
+}
+
+.panel-grid--wide,
+.card-grid--wide {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
+}
+
+.page-cluster,
+.generic-cluster,
+.meta-cluster,
+.action-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  align-items: center;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   4. Generic surface defaults for common page content
+   --------------------------------------------------------------------------
+   This is intentionally broad so a route with sparse markup still looks good.
+   ========================================================================== */
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) {
+  position: relative;
+  min-width: 0;
+  padding: var(--shell-panel-pad-block) var(--shell-panel-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+  transition:
+    border-color var(--shell-duration-base) var(--shell-ease),
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--active-op-border, rgba(0, 128, 128, 0.34)) 88%, transparent);
+  box-shadow: var(--shell-panel-shadow-hover);
+}
+
+.callout-card,
+.note-card {
+  border-inline-start: 0.28rem solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
+}
+
+.page-panel--matte,
+.generic-panel--matte {
+  background: var(--shell-panel-bg-matte);
+}
+
+.page-card--soft,
+.generic-card--soft {
+  background: var(--shell-panel-bg-soft);
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) > :first-child {
+  margin-top: 0;
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) > :last-child {
+  margin-bottom: 0;
+}
+
+/* Generic panels for figures and screenshots */
+figure.page-figure,
+figure.generic-figure,
+.screenshot-frame,
+.media-frame {
+  display: grid;
+  gap: 0.75rem;
+  padding: var(--shell-panel-pad-block) var(--shell-panel-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > img,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > svg,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > video,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: calc(var(--shell-panel-radius) - 2px);
+}
+
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > figcaption {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+/* Generic data / list surfaces */
+.data-stack,
+.page-index,
+.link-index,
+.file-index,
+.section-index {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.link-row,
+.file-row,
+.index-row,
+.page-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+  min-width: 0;
+  padding: 0.82rem 0.95rem;
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+.index-sigil,
+.row-sigil,
+.file-ext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.6rem;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--shell-panel-radius-tight);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 64%),
+    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 84%, var(--ink));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   5. Header shell
+   --------------------------------------------------------------------------
+   The previous defaults were too aggressive and overly teal-heavy.
+   This version keeps identity while remaining usable across routes.
+   ========================================================================== */
+
 .site-header,
 body > header {
-  min-height: var(--header-height);
-  background: color-mix(in oklab, var(--teal) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  color: white;
+  min-height: var(--shell-header-height);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  position: relative;
+  gap: var(--shell-header-grid-gap);
+
+  position: sticky;
+  top: 0;
   z-index: var(--z-header);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.08), 0 2px 12px rgba(0,0,0,0.08);
+
+  padding-top: max(var(--shell-header-pad-block), env(safe-area-inset-top));
+  padding-bottom: var(--shell-header-pad-block);
+  padding-left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
+  padding-right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
+
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent),
+      color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 96%, transparent)
+    );
+  box-shadow:
+    inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
+    0 2px 14px rgba(0, 0, 0, 0.05);
+
+  backdrop-filter: blur(14px) saturate(1.08);
+  -webkit-backdrop-filter: blur(14px) saturate(1.08);
+
+  transition:
+    background-color var(--shell-duration-base) var(--shell-ease),
+    box-shadow var(--shell-duration-base) var(--shell-ease),
+    border-color var(--shell-duration-base) var(--shell-ease);
 }
 
-html[data-spw-header-opacity='low'] .site-header,
-html[data-spw-header-opacity='low'] body > header {
-  opacity: 0.76;
+html[data-spw-header-opacity="low"] :is(.site-header, body > header) {
+  opacity: 0.8;
 }
 
-html[data-spw-header-opacity='normal'] .site-header,
-html[data-spw-header-opacity='normal'] body > header {
-  opacity: 0.9;
+html[data-spw-header-opacity="normal"] :is(.site-header, body > header) {
+  opacity: 0.93;
 }
 
-html[data-spw-header-opacity='high'] .site-header,
-html[data-spw-header-opacity='high'] body > header {
+html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   opacity: 1;
 }
 
 .site-header::before,
 body > header::before {
-  content: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at top center,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 5%, transparent),
+      transparent 48%
+    );
+  opacity: 0.9;
 }
 
 .site-header::after,
 body > header::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: auto 0 0 0;
   height: 2px;
-  background-color: var(--active-op-color);
-  transition: background-color 160ms ease;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 58%, transparent),
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 72%, transparent) 50%,
+      color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 58%, transparent)
+    );
+  opacity: 0.78;
+  transition: background-color var(--shell-duration-base) var(--shell-ease);
 }
 
+/* Header sigil area */
 .header-sigil {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
+.header-sigil a,
+.header-sigil a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* subtle header state indicator */
 .header-op-indicator {
   padding-right: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  font-size: 0.6rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.38;
-  color: rgba(255, 255, 255, 0.85);
+  opacity: 0.54;
   text-align: right;
   white-space: nowrap;
-  transition: opacity 200ms ease;
+  transition:
+    opacity var(--shell-duration-base) var(--shell-ease),
+    color var(--shell-duration-fast) var(--shell-ease);
   user-select: none;
 }
+
+.site-header:is(:hover, :focus-within) .header-op-indicator,
+body > header:is(:hover, :focus-within) .header-op-indicator {
+  opacity: 0.76;
+}
+
+/* ==========================================================================
+   6. Navigation
+   ========================================================================== */
 
 .site-header nav,
 body > header nav {
@@ -67,6 +624,7 @@ body > header nav {
   position: relative;
   margin-inline: auto;
   container-type: inline-size;
+  min-width: 0;
 }
 
 .spw-nav-toggle {
@@ -76,16 +634,37 @@ body > header nav {
   gap: 0.42rem;
   min-height: var(--shell-nav-min-height);
   margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  padding: 0.32rem 0.7rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  padding: 0.36rem 0.76rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.94);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
   font: inherit;
-  font-size: 0.78rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
+  box-shadow: var(--shadow-xs, 0 1px 2px rgba(0, 0, 0, 0.04));
+  transition:
+    border-color var(--shell-duration-fast) var(--shell-ease),
+    background var(--shell-duration-fast) var(--shell-ease),
+    color var(--shell-duration-fast) var(--shell-ease),
+    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+.spw-nav-toggle:hover,
+.spw-nav-toggle:focus-visible {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
+    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 6%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  outline: none;
 }
 
 .spw-nav-toggle-glyph {
@@ -109,7 +688,7 @@ body > header nav {
 
 .spw-nav-toggle-glyph::before,
 .spw-nav-toggle-glyph::after {
-  content: '';
+  content: "";
   position: absolute;
   inset-inline: 0;
   height: 1.5px;
@@ -130,7 +709,7 @@ body > header ul {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem 0.7rem;
+  gap: var(--shell-nav-gap-block) var(--shell-nav-gap-inline);
   list-style: none;
   margin: 0;
   padding: 0.4rem 0;
@@ -151,61 +730,87 @@ body > header a {
   min-height: var(--shell-nav-min-height);
   min-width: 0;
   padding: var(--shell-nav-padding-block) var(--shell-nav-padding-inline);
-  border-radius: var(--radius-pill);
+  border-radius: var(--shell-nav-radius);
   text-decoration: none;
   font-size: var(--shell-nav-font-size);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   line-height: 1.15;
   text-align: center;
   text-wrap: balance;
-  transition: background-color 120ms ease, color 120ms ease;
+  transition:
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    color var(--shell-duration-fast) var(--shell-ease),
+    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
 .site-header a:hover,
 .site-header a:focus-visible,
 body > header a:hover,
 body > header a:focus-visible {
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+  outline: none;
 }
 
-.site-header a[aria-current='page'],
-body > header a[aria-current='page'] {
-  background: rgba(255, 255, 255, 0.18);
-  color: white;
+.site-header a[aria-current="page"],
+body > header a[aria-current="page"] {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
   font-weight: 600;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
 }
+
+/* ==========================================================================
+   7. Side rails / brace walls
+   --------------------------------------------------------------------------
+   Keep these subtle. The old defaults were too assertive for generic pages.
+   ========================================================================== */
 
 .spw-objective-wall,
 .spw-boon-wall {
   position: fixed;
   left: 0;
-  top: var(--header-height);
+  top: var(--shell-header-height);
   bottom: 0;
-  width: 2px;
+  width: var(--shell-wall-width);
   z-index: 198;
   pointer-events: none;
   background: transparent;
-  box-shadow: inset -1px 0 0 color-mix(in oklab, var(--active-op-color) 18%, transparent);
-  transition: box-shadow 320ms ease;
+  opacity: var(--shell-wall-opacity);
+  box-shadow:
+    inset -1px 0 0 color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  transition:
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    opacity var(--shell-duration-fast) var(--shell-ease);
 }
 
 .spw-subjective-wall,
 .spw-bane-wall {
   position: fixed;
   right: 0;
-  top: var(--header-height);
+  top: var(--shell-header-height);
   bottom: 0;
-  width: 2px;
+  width: var(--shell-wall-width);
   z-index: 198;
   pointer-events: none;
   background: transparent;
-  box-shadow: inset 1px 0 0 color-mix(in oklab, var(--active-op-color) 18%, transparent);
-  transition: box-shadow 320ms ease;
+  opacity: var(--shell-wall-opacity);
+  box-shadow:
+    inset 1px 0 0 color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  transition:
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    opacity var(--shell-duration-fast) var(--shell-ease);
 }
 
-/* Hide interior content from walls */
+/* Hide interior content from walls by default */
 .spw-objective-wall-char,
 .spw-boon-wall-char,
 .spw-subjective-wall-char,
@@ -225,68 +830,170 @@ body > header a[aria-current='page'] {
 .spw-bane-wall[role="button"] {
   cursor: pointer;
   pointer-events: auto;
-  transition: background-color 200ms ease, box-shadow 200ms ease;
 }
 
 .spw-objective-wall[role="button"]:hover,
 .spw-boon-wall[role="button"]:hover {
-  background: color-mix(in srgb, var(--objective-brace-wash) 200%, transparent);
-  box-shadow: inset -2px 0 0 color-mix(in srgb, var(--objective-brace-color) 42%, transparent);
+  opacity: var(--shell-wall-active-opacity);
+  background: color-mix(in srgb, var(--objective-brace-wash, rgba(0, 128, 128, 0.08)) 170%, transparent);
+  box-shadow:
+    inset -2px 0 0 color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 34%, transparent);
 }
 
 .spw-subjective-wall[role="button"]:hover,
 .spw-bane-wall[role="button"]:hover {
-  background: color-mix(in srgb, var(--subjective-brace-wash) 200%, transparent);
-  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--subjective-brace-color) 42%, transparent);
+  opacity: var(--shell-wall-active-opacity);
+  background: color-mix(in srgb, var(--subjective-brace-wash, rgba(160, 42, 77, 0.08)) 170%, transparent);
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 34%, transparent);
 }
 
-/* Active flash on click */
 .spw-objective-wall[data-spw-pivot-active="true"],
 .spw-boon-wall[data-spw-pivot-active="true"] {
-  background: color-mix(in srgb, var(--objective-brace-wash) 320%, transparent);
-  transition: background-color 80ms ease;
+  background: color-mix(in srgb, var(--objective-brace-wash, rgba(0, 128, 128, 0.08)) 280%, transparent);
 }
 
 .spw-subjective-wall[data-spw-pivot-active="true"],
 .spw-bane-wall[data-spw-pivot-active="true"] {
-  background: color-mix(in srgb, var(--subjective-brace-wash) 320%, transparent);
-  transition: background-color 80ms ease;
+  background: color-mix(in srgb, var(--subjective-brace-wash, rgba(160, 42, 77, 0.08)) 280%, transparent);
 }
 
-main {
-  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
-  margin: clamp(1rem, 2.6vw, 2rem) auto clamp(2.5rem, 5vw, 4rem);
-  display: flex;
-  flex-direction: column;
-  gap: var(--surface-gap);
-  touch-action: pan-y;
-}
-
-main > article {
-  display: flex;
-  flex-direction: column;
-  gap: var(--surface-gap);
-  touch-action: pan-y;
-}
+/* ==========================================================================
+   8. Footer
+   ========================================================================== */
 
 body > footer {
   margin-top: auto;
-  min-height: var(--header-height);
-  background: var(--teal);
-  color: white;
+  min-height: var(--shell-footer-min-height);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.4rem 1rem;
+  padding:
+    0.65rem
+    max(1rem, env(safe-area-inset-right))
+    calc(0.65rem + env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
   box-sizing: border-box;
-  font-size: 0.8rem;
+
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 84%, transparent),
+      color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent)
+    );
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--shell-footer-font-size);
   letter-spacing: 0.04em;
-  opacity: 0.9;
+  opacity: var(--shell-footer-opacity);
+
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
 }
 
-html[data-spw-show-footer='off'] body > footer {
+html[data-spw-show-footer="off"] body > footer {
   display: none;
+}
+
+/* ==========================================================================
+   9. Utility shell defaults for common authoring structures
+   --------------------------------------------------------------------------
+   These support a generic page with decent style depth even without route CSS.
+   ========================================================================== */
+
+.page-columns,
+.columns-2,
+.columns-3 {
+  display: grid;
+  gap: var(--surface-gap);
+  min-width: 0;
+}
+
+.page-columns,
+.columns-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.columns-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-meta,
+.page-note,
+.page-transition,
+.inline-note,
+.section-note {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.page-note,
+.page-transition,
+.section-note {
+  padding-left: 0.95rem;
+  border-left: 2px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 96%, transparent);
+}
+
+.page-rule,
+.section-rule,
+.soft-rule {
+  width: 100%;
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  margin: 0;
+}
+
+.page-label,
+.section-label,
+.meta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.page-actions,
+.card-actions,
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.6rem;
+  align-items: center;
+}
+
+.page-chip,
+.meta-chip,
+.info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 1.7rem;
+  padding: 0.14rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   10. Responsive
+   ========================================================================== */
+
+@media (max-width: 980px) {
+  .page-columns,
+  .columns-2,
+  .columns-3 {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -312,6 +1019,7 @@ html[data-spw-show-footer='off'] body > footer {
     grid-column: 1 / -1;
     padding-top: 0.1rem;
     text-align: center;
+    padding-right: 0;
   }
 
   .site-header nav,
@@ -320,15 +1028,15 @@ html[data-spw-show-footer='off'] body > footer {
     width: 100%;
   }
 
-  .site-header[data-spw-menu='closed'] nav,
-  body > header[data-spw-menu='closed'] nav {
+  .site-header[data-spw-menu="closed"] nav,
+  body > header[data-spw-menu="closed"] nav {
     display: none;
   }
 
   .site-header ul,
   body > header ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.2rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.4rem), 1fr));
     gap: 0.35rem;
     padding-inline: var(--page-gutter-inline);
   }
@@ -336,7 +1044,14 @@ html[data-spw-show-footer='off'] body > footer {
   .site-header a,
   body > header a {
     width: 100%;
-    border-radius: var(--radius);
+    border-radius: var(--shell-panel-radius);
+  }
+
+  .page-intro,
+  .page-hero,
+  .shell-hero,
+  .site-hero {
+    padding-inline: 1rem;
   }
 }
 
@@ -344,6 +1059,27 @@ html[data-spw-show-footer='off'] body > footer {
   .spw-nav-toggle {
     min-height: 2.6rem;
     padding: 0.45rem 0.9rem;
+  }
+
+  main {
+    width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
+  }
+
+  :where(
+    .page-panel,
+    .generic-panel,
+    .info-panel,
+    .page-card,
+    .generic-card,
+    .reading-card,
+    .note-card,
+    .callout-card,
+    figure.page-figure,
+    figure.generic-figure,
+    .screenshot-frame,
+    .media-frame
+  ) {
+    padding-inline: 0.95rem;
   }
 }
 
@@ -356,6 +1092,19 @@ html[data-spw-show-footer='off'] body > footer {
   body > header ul {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .index-sigil,
+  .row-sigil,
+  .file-ext {
+    min-width: 3rem;
+  }
+
+  .link-row,
+  .file-row,
+  .index-row,
+  .page-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 340px) {
@@ -365,34 +1114,68 @@ html[data-spw-show-footer='off'] body > footer {
   }
 }
 
+/* ==========================================================================
+   11. Reduced motion / low processing defaults
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .site-header,
   body > header {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: var(--teal);
+  }
+
+  .site-header,
+  body > header,
+  .spw-nav-toggle,
+  .site-header a,
+  body > header a,
+  .spw-objective-wall,
+  .spw-subjective-wall,
+  .spw-boon-wall,
+  .spw-bane-wall,
+  :where(
+    .page-panel,
+    .generic-panel,
+    .info-panel,
+    .page-card,
+    .generic-card,
+    .reading-card,
+    .note-card,
+    .callout-card,
+    .link-row,
+    .file-row,
+    .index-row,
+    .page-row
+  ) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
   }
 }
 
-body {
-  /* Ensure the body itself respects the safe area to prevent horizontal scroll bleed */
-  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
-}
+/* ==========================================================================
+   12. A few targeted compatibility bridges
+   --------------------------------------------------------------------------
+   Keep these at the end so older markup still works while the shell becomes
+   more reasonable.
+   ========================================================================== */
 
-main {
-  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
-  /* Ensure bottom padding accounts for iOS home indicator */
-  margin: clamp(1rem, 2.6vw, 2rem) auto calc(clamp(2.5rem, 5vw, 4rem) + env(safe-area-inset-bottom));
-}
-
+/* Push floating UI above the home indicator */
 [data-attn-register] {
-  /* Push floating UI above the home indicator */
-  bottom: calc(2rem + env(safe-area-inset-bottom)); 
+  bottom: calc(2rem + env(safe-area-inset-bottom));
 }
 
-.site-header,
-body > header {
-  /* Prevent header content from sliding under the notch in landscape mode */
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
+/* Old pages sometimes place the header directly under body without classes */
+body > header:empty {
+  display: none;
+}
+
+/* Generic fallback when a page has almost no structure */
+main > :where(h1, h2, h3, p, ul, ol, figure):first-child {
+  margin-top: 0;
+}
+
+main > :where(h1, h2, h3, p, ul, ol, figure):last-child {
+  margin-bottom: 0;
 }

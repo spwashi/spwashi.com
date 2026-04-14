@@ -1,0 +1,684 @@
+/* ==========================================================================
+   home-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped identity for the root home page.
+   - Bias the homepage toward editorial orientation, semantic invitation,
+     multi-layer reading, and topic/image/operator relationships.
+   - Preserve compatibility with shared shell/components/systems layers.
+
+   Scope
+   - Applies only to [data-spw-surface="home"].
+   - Owns route palette, section rhythm, hero bias, comparison fields,
+     topic/image bridge presentation, and homepage-specific card emphasis.
+   ========================================================================== */
+
+[data-spw-surface="home"] {
+  --home-bg: hsl(42 42% 95%);
+  --home-bg-deep: hsl(38 30% 89%);
+  --home-bg-field: hsl(44 34% 97%);
+
+  --home-surface: rgba(255, 252, 248, 0.84);
+  --home-surface-strong: rgba(255, 253, 250, 0.95);
+  --home-surface-soft: rgba(247, 242, 235, 0.74);
+  --home-surface-glass: rgba(255, 255, 255, 0.54);
+
+  --home-ink: rgba(28, 24, 22, 0.94);
+  --home-ink-soft: rgba(28, 24, 22, 0.70);
+  --home-ink-mid: rgba(28, 24, 22, 0.54);
+  --home-ink-faint: rgba(28, 24, 22, 0.32);
+
+  --home-line: rgba(56, 43, 35, 0.14);
+  --home-line-strong: rgba(116, 82, 63, 0.26);
+
+  --home-accent: hsl(186 34% 34%);
+  --home-accent-2: hsl(330 28% 40%);
+  --home-accent-3: hsl(40 56% 48%);
+  --home-accent-soft: hsla(186, 34%, 34%, 0.08);
+  --home-accent-rose-soft: hsla(330, 28%, 40%, 0.08);
+  --home-accent-gold-soft: hsla(40, 56%, 48%, 0.10);
+
+  --home-reading-measure: 68ch;
+  --home-reading-measure-tight: 56ch;
+  --home-reading-measure-wide: 78ch;
+
+  --home-frame-shadow:
+    0 1px 3px rgba(39, 24, 15, 0.04),
+    0 10px 24px rgba(39, 24, 15, 0.05);
+  --home-frame-shadow-hover:
+    0 0 0 1px color-mix(in srgb, var(--home-accent) 10%, transparent),
+    0 14px 30px rgba(39, 24, 15, 0.08);
+
+  --home-panel-radius: 12px;
+  --home-panel-radius-loose: 16px;
+
+  --grain-panel-fill-local: color-mix(in srgb, var(--home-surface-strong) 96%, #f3eadf 4%);
+  --grain-panel-shadow-local:
+    0 2px 4px rgba(49, 34, 24, 0.04),
+    0 14px 28px rgba(49, 34, 24, 0.06);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(116, 82, 63, 0.08),
+    0 0 18px rgba(116, 82, 63, 0.05);
+
+  --active-op-color: var(--home-accent);
+  --active-op-border: color-mix(in srgb, var(--home-accent) 30%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--home-accent) 8%, transparent);
+
+  --objective-brace-color: color-mix(in srgb, var(--home-accent) 84%, black 6%);
+  --subjective-brace-color: color-mix(in srgb, var(--home-accent-2) 82%, black 6%);
+  --objective-brace-wash: color-mix(in srgb, var(--home-accent) 10%, transparent);
+  --subjective-brace-wash: color-mix(in srgb, var(--home-accent-2) 10%, transparent);
+
+  color: var(--home-ink);
+}
+
+html[data-spw-color-mode="dark"] [data-spw-surface="home"] {
+  --home-bg: hsl(18 10% 11%);
+  --home-bg-deep: hsl(18 12% 8%);
+  --home-bg-field: hsl(26 10% 13%);
+
+  --home-surface: rgba(255, 248, 239, 0.08);
+  --home-surface-strong: rgba(255, 248, 239, 0.12);
+  --home-surface-soft: rgba(255, 248, 239, 0.06);
+  --home-surface-glass: rgba(255, 255, 255, 0.05);
+
+  --home-ink: hsl(32 24% 91%);
+  --home-ink-soft: hsl(30 12% 72%);
+  --home-ink-mid: hsla(30, 12%, 72%, 0.72);
+  --home-ink-faint: hsla(30, 12%, 72%, 0.40);
+
+  --home-line: rgba(255, 240, 225, 0.12);
+  --home-line-strong: rgba(209, 164, 134, 0.24);
+
+  --home-accent: hsl(184 34% 66%);
+  --home-accent-2: hsl(334 40% 70%);
+  --home-accent-3: hsl(42 60% 66%);
+  --home-accent-soft: hsla(184, 34%, 66%, 0.10);
+  --home-accent-rose-soft: hsla(334, 40%, 70%, 0.12);
+  --home-accent-gold-soft: hsla(42, 60%, 66%, 0.12);
+
+  --grain-panel-fill-local: color-mix(in srgb, rgba(255,255,255,0.10) 88%, transparent);
+  --grain-panel-shadow-local:
+    0 2px 8px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.28);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(209, 164, 134, 0.10),
+    0 0 24px rgba(209, 164, 134, 0.08);
+
+  --active-op-color: var(--home-accent);
+  --active-op-border: color-mix(in srgb, var(--home-accent) 32%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--home-accent) 10%, transparent);
+}
+
+/* ==========================================================================
+   1. Route background + page-wide rhythm
+   ========================================================================== */
+
+body[data-spw-surface="home"] {
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--home-accent-3) 8%, transparent), transparent 32%),
+    linear-gradient(180deg, var(--home-bg-field), var(--home-bg));
+  color: var(--home-ink);
+}
+
+[data-spw-surface="home"] main {
+  gap: clamp(1.15rem, 2.6vw, 1.6rem);
+}
+
+[data-spw-surface="home"] main > section + section {
+  margin-top: clamp(0.15rem, 0.6vw, 0.4rem);
+}
+
+/* ==========================================================================
+   2. Generic home frame tuning
+   ========================================================================== */
+
+[data-spw-surface="home"] .site-frame {
+  border-color: color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: var(--home-panel-radius);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-soft) 56%, transparent), transparent 18%),
+    var(--home-surface);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    var(--home-frame-shadow);
+  color: var(--home-ink);
+}
+
+[data-spw-surface="home"] .site-frame:is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--home-accent) 18%, var(--home-line));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    var(--home-frame-shadow-hover);
+}
+
+[data-spw-surface="home"] .frame-topline {
+  align-items: baseline;
+}
+
+[data-spw-surface="home"] .frame-sigil {
+  color: color-mix(in srgb, var(--home-ink-soft) 90%, var(--home-accent));
+}
+
+[data-spw-surface="home"] .frame-note,
+[data-spw-surface="home"] .inline-note {
+  color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] .frame-note code,
+[data-spw-surface="home"] .inline-note code {
+  color: color-mix(in srgb, var(--home-accent) 82%, var(--home-ink));
+}
+
+/* ==========================================================================
+   3. Hero bias
+   ========================================================================== */
+
+[data-spw-surface="home"] #home-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--home-panel-radius-loose);
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--home-accent-3) 7%, transparent), transparent 32%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--home-accent-2) 6%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-soft) 72%, transparent), transparent 22%),
+    var(--home-surface-strong);
+}
+
+[data-spw-surface="home"] #home-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--home-accent) 8%, transparent),
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--home-accent-2) 7%, transparent)
+    );
+  opacity: 0.9;
+}
+
+[data-spw-surface="home"] #home-title {
+  max-width: 15ch;
+  color: color-mix(in srgb, var(--home-ink) 90%, var(--home-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(2.35rem, 4.5vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+[data-spw-surface="home"] #home-frame > :where(p, nav, .mode-panels) {
+  position: relative;
+  z-index: 1;
+}
+
+[data-spw-surface="home"] #home-frame > p:not(.page-kicker) {
+  max-width: var(--home-reading-measure);
+}
+
+[data-spw-surface="home"] #home-frame .page-kicker {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
+    color-mix(in srgb, var(--home-surface-strong) 92%, transparent);
+  border-color: color-mix(in srgb, var(--home-accent) 18%, transparent);
+  color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] #home-frame .page-lede {
+  max-width: var(--home-reading-measure-tight);
+  color: color-mix(in srgb, var(--home-ink-soft) 92%, var(--home-accent));
+}
+
+/* ==========================================================================
+   4. Home mode panels
+   ========================================================================== */
+
+[data-spw-surface="home"] .mode-panels {
+  display: grid;
+  gap: 0.9rem;
+}
+
+[data-spw-surface="home"] .mode-panel {
+  border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 58%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    0 4px 14px rgba(34, 22, 14, 0.04);
+}
+
+[data-spw-surface="home"] .mode-panel[data-mode-panel="surface"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-soft) 62%, transparent), transparent 28%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+}
+
+[data-spw-surface="home"] .mode-panel[data-mode-panel="syntax"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-gold-soft) 58%, transparent), transparent 28%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+}
+
+[data-spw-surface="home"] .mode-panel[data-mode-panel="artifacts"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-rose-soft) 58%, transparent), transparent 28%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+}
+
+[data-spw-surface="home"] .mode-panel[data-mode-panel="obsidian"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-soft) 36%, transparent), transparent 28%),
+    color-mix(in srgb, var(--home-surface-soft) 94%, transparent);
+}
+
+[data-spw-surface="home"] .mode-panel pre {
+  border-radius: 10px;
+  background: var(--surface-code, rgba(18, 23, 27, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 10px 22px rgba(0,0,0,0.14);
+}
+
+/* ==========================================================================
+   5. Reading layers / parts of speech / accent contexts
+   ========================================================================== */
+
+[data-spw-surface="home"] #reading-layers,
+[data-spw-surface="home"] #parts-of-speech-field,
+[data-spw-surface="home"] #accent-context-field,
+[data-spw-surface="home"] #image-topic-bridge {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-soft) 52%, transparent), transparent 18%),
+    var(--home-surface);
+}
+
+[data-spw-surface="home"] #parts-of-speech-field {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-gold-soft) 56%, transparent), transparent 18%),
+    var(--home-surface);
+}
+
+[data-spw-surface="home"] #accent-context-field {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-rose-soft) 56%, transparent), transparent 18%),
+    var(--home-surface);
+}
+
+[data-spw-surface="home"] .compare-sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.9rem;
+}
+
+[data-spw-surface="home"] .compare-card {
+  min-width: 0;
+  padding: 1rem 1rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 60%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    0 6px 16px rgba(34,22,14,0.04);
+}
+
+[data-spw-surface="home"] .compare-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  color: color-mix(in srgb, var(--home-ink) 88%, var(--home-accent-2));
+}
+
+[data-spw-surface="home"] .spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.9rem;
+}
+
+[data-spw-surface="home"] .spec-column {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+}
+
+[data-spw-surface="home"] .spec-column h3 {
+  margin-top: 0;
+  color: color-mix(in srgb, var(--home-ink) 88%, var(--home-accent));
+}
+
+[data-spw-surface="home"] .spec-column p,
+[data-spw-surface="home"] .spec-column li {
+  color: var(--home-ink-soft);
+}
+
+/* ==========================================================================
+   6. Topic and word emphasis on home
+   ========================================================================== */
+
+[data-spw-surface="home"] .spw-topic,
+[data-spw-surface="home"] [data-spw-topic] {
+  border-color: color-mix(in srgb, var(--home-accent) 22%, transparent);
+  background: color-mix(in srgb, var(--home-accent) 7%, rgba(255,255,255,0.70));
+  color: color-mix(in srgb, var(--home-accent) 88%, var(--home-ink));
+}
+
+[data-spw-surface="home"] .spw-topic:hover,
+[data-spw-surface="home"] [data-spw-topic]:hover {
+  border-color: color-mix(in srgb, var(--home-accent) 34%, transparent);
+  background: color-mix(in srgb, var(--home-accent) 10%, rgba(255,255,255,0.78));
+}
+
+[data-spw-surface="home"] .syntax-token,
+[data-spw-surface="home"] .spw-delimiter {
+  color: color-mix(in srgb, var(--home-accent) 88%, var(--home-ink));
+}
+
+[data-spw-surface="home"] .craft-sensory {
+  color: color-mix(in srgb, var(--home-accent-2) 86%, var(--home-ink));
+  font-style: italic;
+}
+
+/* ==========================================================================
+   7. Operator chips on home
+   ========================================================================== */
+
+[data-spw-surface="home"] .frame-operators {
+  gap: 0.5rem 0.6rem;
+}
+
+[data-spw-surface="home"] .operator-chip {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--home-accent) 7%, transparent);
+  border-color: color-mix(in srgb, var(--home-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--home-accent) 86%, var(--home-ink));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    0 1px 3px rgba(35, 22, 16, 0.04);
+}
+
+[data-spw-surface="home"] .operator-chip:hover,
+[data-spw-surface="home"] .operator-chip:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--home-accent) 11%, transparent);
+  border-color: color-mix(in srgb, var(--home-accent) 28%, transparent);
+  color: var(--home-ink);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--home-accent) 8%, transparent),
+    0 6px 14px rgba(35, 22, 16, 0.06);
+}
+
+/* ==========================================================================
+   8. Home index / directory / artifact register
+   ========================================================================== */
+
+[data-spw-surface="home"] .page-index ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0.45rem 0.55rem;
+  padding: 0;
+  list-style: none;
+}
+
+[data-spw-surface="home"] .page-index a {
+  display: block;
+  padding: 0.55rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+  color: var(--home-ink-soft);
+  text-decoration: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.25;
+  transition:
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-surface="home"] .page-index a:hover,
+[data-spw-surface="home"] .page-index a:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--home-accent) 7%, transparent);
+  border-color: color-mix(in srgb, var(--home-accent) 20%, transparent);
+  color: var(--home-ink);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+[data-spw-surface="home"] .frame-grid--dense {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+}
+
+[data-spw-surface="home"] .frame-card {
+  border-color: color-mix(in srgb, var(--home-line) 96%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--home-surface-strong) 95%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 6px 16px rgba(34, 22, 14, 0.04);
+}
+
+[data-spw-surface="home"] .frame-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+[data-spw-surface="home"] .frame-card strong {
+  color: color-mix(in srgb, var(--home-ink) 90%, var(--home-accent));
+}
+
+[data-spw-surface="home"] .frame-card span:last-child {
+  color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] .frame-card-sigil {
+  color: color-mix(in srgb, var(--home-accent) 84%, var(--home-ink-soft));
+}
+
+/* ==========================================================================
+   9. Image studies / media focus / constellation
+   ========================================================================== */
+
+[data-spw-surface="home"] .gallery-overlays,
+[data-spw-surface="home"] .frame-grid--media {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+[data-spw-surface="home"] .image-study,
+[data-spw-surface="home"] .media-focus-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), transparent 58%),
+    color-mix(in srgb, var(--home-surface-strong) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    0 10px 20px rgba(34, 22, 14, 0.05);
+}
+
+[data-spw-surface="home"] .image-study img,
+[data-spw-surface="home"] .media-focus-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition:
+    transform var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
+    filter var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-surface="home"] .image-study:hover img,
+[data-spw-surface="home"] .media-focus-card:hover img,
+[data-spw-surface="home"] .image-study:focus-within img,
+[data-spw-surface="home"] .media-focus-card:focus-within img {
+  transform: scale(1.015);
+  filter: saturate(1.03) contrast(1.02);
+}
+
+[data-spw-surface="home"] .image-study figcaption,
+[data-spw-surface="home"] .media-focus-content {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem 1rem;
+}
+
+[data-spw-surface="home"] .image-study figcaption {
+  color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] .image-study figcaption strong,
+[data-spw-surface="home"] .media-focus-content h3 {
+  color: color-mix(in srgb, var(--home-ink) 88%, var(--home-accent-2));
+}
+
+[data-spw-surface="home"] .media-focus-content p {
+  color: var(--home-ink-soft);
+  margin: 0;
+}
+
+/* ==========================================================================
+   10. Directory / dl surfaces
+   ========================================================================== */
+
+[data-spw-surface="home"] .directory-list dl {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+}
+
+[data-spw-surface="home"] .directory-list dt {
+  margin: 0;
+}
+
+[data-spw-surface="home"] .directory-list dd {
+  margin: 0;
+  color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] .directory-list dt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.18rem 0;
+  color: color-mix(in srgb, var(--home-accent) 86%, var(--home-ink));
+  text-decoration: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.95rem;
+}
+
+[data-spw-surface="home"] .directory-list dt a:hover,
+[data-spw-surface="home"] .directory-list dt a:focus-visible {
+  color: color-mix(in srgb, var(--home-accent-2) 82%, var(--home-accent));
+  outline: none;
+}
+
+/* ==========================================================================
+   11. Home-specific editorial text refinements
+   ========================================================================== */
+
+[data-spw-surface="home"] h2 {
+  color: color-mix(in srgb, var(--home-ink) 90%, var(--home-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}
+
+[data-spw-surface="home"] h3 {
+  color: color-mix(in srgb, var(--home-ink) 88%, var(--home-accent));
+  font-family: var(--site-sans-font, Inter, sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+[data-spw-surface="home"] p,
+[data-spw-surface="home"] li,
+[data-spw-surface="home"] dd,
+[data-spw-surface="home"] figcaption {
+  color: var(--home-ink);
+}
+
+[data-spw-surface="home"] p {
+  max-width: var(--home-reading-measure);
+}
+
+[data-spw-surface="home"] .frame-note,
+[data-spw-surface="home"] .inline-note,
+[data-spw-surface="home"] figcaption,
+[data-spw-surface="home"] dd {
+  max-width: var(--home-reading-measure-tight);
+}
+
+/* ==========================================================================
+   12. Responsive
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  [data-spw-surface="home"] #home-title {
+    max-width: none;
+    font-size: 2.15rem;
+  }
+
+  [data-spw-surface="home"] .page-index ul,
+  [data-spw-surface="home"] .spec-grid,
+  [data-spw-surface="home"] .compare-sets,
+  [data-spw-surface="home"] .gallery-overlays,
+  [data-spw-surface="home"] .frame-grid--media {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  [data-spw-surface="home"] .image-study img,
+  [data-spw-surface="home"] .media-focus-card img {
+    aspect-ratio: 4 / 3;
+  }
+
+  [data-spw-surface="home"] .page-index a {
+    padding: 0.6rem 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   13. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-surface="home"] .site-frame,
+  [data-spw-surface="home"] .frame-card,
+  [data-spw-surface="home"] .operator-chip,
+  [data-spw-surface="home"] .page-index a,
+  [data-spw-surface="home"] .image-study img,
+  [data-spw-surface="home"] .media-focus-card img {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

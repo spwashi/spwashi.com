@@ -1,0 +1,725 @@
+/* ==========================================================================
+   plans-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped identity for /about/plans
+   - Support the rewritten plans page as a semantic registry rather than a
+     loose stack of cards
+   - Emphasize verbs, stages, relationships, and later visualization
+   - Prepare the page for future JS filters / graph views / semantic overlays
+
+   Design stance
+   - Practical, structured, inspectable
+   - Less ornamental than craft, less ambient than blog
+   - Strong enough to suggest diagrams, without pretending the diagram is
+     already built
+   - Verbs should feel like handles for later interaction
+   ========================================================================== */
+
+[data-spw-surface="plans"] {
+  --plans-bg: hsl(42 34% 95%);
+  --plans-bg-deep: hsl(38 24% 89%);
+  --plans-bg-field: hsl(44 28% 97%);
+
+  --plans-surface: rgba(255, 252, 248, 0.86);
+  --plans-surface-strong: rgba(255, 253, 250, 0.95);
+  --plans-surface-soft: rgba(247, 242, 235, 0.74);
+  --plans-surface-matte: rgba(248, 245, 239, 0.96);
+
+  --plans-ink: rgba(24, 22, 20, 0.96);
+  --plans-ink-soft: rgba(24, 22, 20, 0.72);
+  --plans-ink-mid: rgba(24, 22, 20, 0.56);
+  --plans-ink-faint: rgba(24, 22, 20, 0.34);
+
+  --plans-line: rgba(56, 43, 35, 0.14);
+  --plans-line-strong: rgba(98, 76, 64, 0.24);
+  --plans-line-accent: rgba(24, 123, 135, 0.20);
+
+  --plans-accent: hsl(186 34% 34%);
+  --plans-accent-2: hsl(28 46% 40%);
+  --plans-accent-3: hsl(334 22% 40%);
+  --plans-accent-4: hsl(40 56% 48%);
+
+  --plans-accent-soft: hsla(186, 34%, 34%, 0.08);
+  --plans-accent-2-soft: hsla(28, 46%, 40%, 0.08);
+  --plans-accent-3-soft: hsla(334, 22%, 40%, 0.06);
+  --plans-accent-4-soft: hsla(40, 56%, 48%, 0.10);
+
+  --plans-reading-measure: 72ch;
+  --plans-reading-measure-tight: 58ch;
+  --plans-reading-measure-wide: 84ch;
+
+  --plans-frame-shadow:
+    0 1px 3px rgba(39, 24, 15, 0.04),
+    0 10px 22px rgba(39, 24, 15, 0.05);
+  --plans-frame-shadow-hover:
+    0 0 0 1px color-mix(in srgb, var(--plans-accent) 10%, transparent),
+    0 14px 28px rgba(39, 24, 15, 0.08);
+
+  --plans-panel-radius: 12px;
+  --plans-panel-radius-loose: 16px;
+
+  --plans-stage-foundation-bg: rgba(212, 237, 218, 0.7);
+  --plans-stage-foundation-ink: rgb(21, 87, 36);
+  --plans-stage-active-bg: rgba(209, 236, 241, 0.72);
+  --plans-stage-active-ink: rgb(12, 84, 96);
+  --plans-stage-planning-bg: rgba(255, 243, 205, 0.75);
+  --plans-stage-planning-ink: rgb(133, 100, 4);
+
+  --plans-verb-refine: hsl(186 34% 34%);
+  --plans-verb-build: hsl(28 46% 40%);
+  --plans-verb-map: hsl(334 22% 40%);
+  --plans-verb-integrate: hsl(212 34% 40%);
+  --plans-verb-teach: hsl(40 56% 44%);
+  --plans-verb-stage: hsl(270 24% 42%);
+  --plans-verb-publish: hsl(152 34% 34%);
+  --plans-verb-adapt: hsl(8 42% 42%);
+
+  --grain-panel-fill-local: color-mix(in srgb, var(--plans-surface-strong) 96%, #f3eadf 4%);
+  --grain-panel-shadow-local:
+    0 2px 4px rgba(49, 34, 24, 0.04),
+    0 14px 28px rgba(49, 34, 24, 0.06);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(98, 76, 64, 0.08),
+    0 0 18px rgba(98, 76, 64, 0.04);
+
+  --active-op-color: var(--plans-accent);
+  --active-op-border: color-mix(in srgb, var(--plans-accent) 30%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--plans-accent) 8%, transparent);
+
+  --objective-brace-color: color-mix(in srgb, var(--plans-accent) 84%, black 6%);
+  --subjective-brace-color: color-mix(in srgb, var(--plans-accent-3) 82%, black 6%);
+  --objective-brace-wash: color-mix(in srgb, var(--plans-accent) 10%, transparent);
+  --subjective-brace-wash: color-mix(in srgb, var(--plans-accent-3) 8%, transparent);
+
+  color: var(--plans-ink);
+}
+
+html[data-spw-color-mode="dark"] [data-spw-surface="plans"] {
+  --plans-bg: hsl(18 10% 11%);
+  --plans-bg-deep: hsl(18 12% 8%);
+  --plans-bg-field: hsl(24 10% 13%);
+
+  --plans-surface: rgba(255, 248, 239, 0.08);
+  --plans-surface-strong: rgba(255, 248, 239, 0.12);
+  --plans-surface-soft: rgba(255, 248, 239, 0.06);
+  --plans-surface-matte: rgba(255, 248, 239, 0.08);
+
+  --plans-ink: hsl(32 22% 91%);
+  --plans-ink-soft: hsl(30 12% 72%);
+  --plans-ink-mid: hsla(30, 12%, 72%, 0.72);
+  --plans-ink-faint: hsla(30, 12%, 72%, 0.40);
+
+  --plans-line: rgba(255, 240, 225, 0.12);
+  --plans-line-strong: rgba(209, 164, 134, 0.22);
+  --plans-line-accent: rgba(132, 204, 212, 0.18);
+
+  --plans-accent: hsl(184 34% 66%);
+  --plans-accent-2: hsl(32 54% 68%);
+  --plans-accent-3: hsl(336 28% 68%);
+  --plans-accent-4: hsl(44 62% 68%);
+
+  --plans-stage-foundation-bg: rgba(36, 74, 46, 0.5);
+  --plans-stage-foundation-ink: rgb(197, 231, 203);
+  --plans-stage-active-bg: rgba(27, 71, 80, 0.5);
+  --plans-stage-active-ink: rgb(196, 230, 237);
+  --plans-stage-planning-bg: rgba(87, 68, 18, 0.5);
+  --plans-stage-planning-ink: rgb(249, 233, 173);
+
+  --grain-panel-fill-local: color-mix(in srgb, rgba(255,255,255,0.10) 88%, transparent);
+  --grain-panel-shadow-local:
+    0 2px 8px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.28);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(209, 164, 134, 0.10),
+    0 0 24px rgba(209, 164, 134, 0.08);
+
+  --active-op-color: var(--plans-accent);
+  --active-op-border: color-mix(in srgb, var(--plans-accent) 32%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--plans-accent) 10%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] [data-spw-surface="plans"] {
+    --plans-bg: hsl(18 10% 11%);
+    --plans-bg-deep: hsl(18 12% 8%);
+    --plans-bg-field: hsl(24 10% 13%);
+
+    --plans-surface: rgba(255, 248, 239, 0.08);
+    --plans-surface-strong: rgba(255, 248, 239, 0.12);
+    --plans-surface-soft: rgba(255, 248, 239, 0.06);
+    --plans-surface-matte: rgba(255, 248, 239, 0.08);
+
+    --plans-ink: hsl(32 22% 91%);
+    --plans-ink-soft: hsl(30 12% 72%);
+    --plans-ink-mid: hsla(30, 12%, 72%, 0.72);
+    --plans-ink-faint: hsla(30, 12%, 72%, 0.40);
+
+    --plans-line: rgba(255, 240, 225, 0.12);
+    --plans-line-strong: rgba(209, 164, 134, 0.22);
+    --plans-line-accent: rgba(132, 204, 212, 0.18);
+
+    --plans-accent: hsl(184 34% 66%);
+    --plans-accent-2: hsl(32 54% 68%);
+    --plans-accent-3: hsl(336 28% 68%);
+    --plans-accent-4: hsl(44 62% 68%);
+  }
+}
+
+/* ==========================================================================
+   1. Route background and shell bias
+   ========================================================================== */
+
+body[data-spw-surface="plans"] {
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--plans-accent-4) 8%, transparent), transparent 32%),
+    linear-gradient(180deg, var(--plans-bg-field), var(--plans-bg));
+  color: var(--plans-ink);
+}
+
+[data-spw-surface="plans"] main {
+  gap: clamp(1.05rem, 2.3vw, 1.55rem);
+}
+
+[data-spw-surface="plans"] main > section + section,
+[data-spw-surface="plans"] main > nav + section,
+[data-spw-surface="plans"] main > section + nav {
+  margin-top: clamp(0.1rem, 0.5vw, 0.35rem);
+}
+
+/* ==========================================================================
+   2. Generic frame tuning
+   ========================================================================== */
+
+[data-spw-surface="plans"] .site-frame {
+  border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
+  border-radius: var(--plans-panel-radius);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-soft) 56%, transparent), transparent 18%),
+    var(--plans-surface);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    var(--plans-frame-shadow);
+  color: var(--plans-ink);
+}
+
+[data-spw-surface="plans"] .site-frame:is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--plans-accent) 18%, var(--plans-line));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    var(--plans-frame-shadow-hover);
+}
+
+[data-spw-surface="plans"] .frame-sigil {
+  color: color-mix(in srgb, var(--plans-ink-soft) 90%, var(--plans-accent));
+}
+
+[data-spw-surface="plans"] .frame-note,
+[data-spw-surface="plans"] .inline-note {
+  color: var(--plans-ink-soft);
+  max-width: var(--plans-reading-measure-tight);
+}
+
+[data-spw-surface="plans"] p,
+[data-spw-surface="plans"] li {
+  color: var(--plans-ink);
+}
+
+[data-spw-surface="plans"] p:not(.spec-kicker):not(.inline-note):not(.frame-note):not(.plan-thesis) {
+  max-width: var(--plans-reading-measure);
+}
+
+/* ==========================================================================
+   3. Hero and index
+   ========================================================================== */
+
+[data-spw-surface="plans"] #plans-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--plans-panel-radius-loose);
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--plans-accent-2) 7%, transparent), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--plans-accent-3) 6%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-soft) 74%, transparent), transparent 22%),
+    var(--plans-surface-strong);
+}
+
+[data-spw-surface="plans"] #plans-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--plans-accent) 7%, transparent),
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--plans-accent-3) 6%, transparent)
+    );
+  opacity: 0.9;
+}
+
+[data-spw-surface="plans"] #plans-title {
+  max-width: 12ch;
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(2.15rem, 4vw, 2.95rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+[data-spw-surface="plans"] #plans-surface .page-lede {
+  max-width: 60ch;
+  color: color-mix(in srgb, var(--plans-ink-soft) 92%, var(--plans-accent));
+}
+
+[data-spw-surface="plans"] #plans-index {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-surface-matte) 96%, transparent), transparent),
+    var(--plans-surface);
+}
+
+[data-spw-surface="plans"] #plans-index .frame-list {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 1.15rem;
+}
+
+[data-spw-surface="plans"] #plans-index .frame-list li {
+  color: var(--plans-ink-soft);
+}
+
+[data-spw-surface="plans"] #plans-index .frame-list a {
+  color: color-mix(in srgb, var(--plans-accent) 84%, var(--plans-ink));
+  text-decoration-color: color-mix(in srgb, var(--plans-accent) 24%, transparent);
+  text-underline-offset: 0.14em;
+}
+
+/* ==========================================================================
+   4. Verb register
+   ========================================================================== */
+
+[data-spw-surface="plans"] #verb-register {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-4-soft) 58%, transparent), transparent 18%),
+    var(--plans-surface-strong);
+}
+
+[data-spw-surface="plans"] #verb-register .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0.85rem;
+}
+
+[data-spw-surface="plans"] #verb-register .frame-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 9rem;
+  border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 6px 16px rgba(34, 22, 14, 0.04);
+}
+
+[data-spw-surface="plans"] #verb-register .frame-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: color-mix(in srgb, var(--plans-accent) 65%, transparent);
+  opacity: 0.9;
+}
+
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="refine"]::before { background: var(--plans-verb-refine); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="build"]::before { background: var(--plans-verb-build); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="map"]::before { background: var(--plans-verb-map); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="integrate"]::before { background: var(--plans-verb-integrate); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="teach"]::before { background: var(--plans-verb-teach); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="stage"]::before { background: var(--plans-verb-stage); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="publish"]::before { background: var(--plans-verb-publish); }
+[data-spw-surface="plans"] #verb-register .frame-panel[data-plan-verb="adapt"]::before { background: var(--plans-verb-adapt); }
+
+[data-spw-surface="plans"] #verb-register h3 {
+  margin-bottom: 0.35rem;
+}
+
+/* ==========================================================================
+   5. Plans grid and plan cards
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plans-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+[data-spw-surface="plans"] .plan-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--plans-line) 96%, transparent);
+  border-radius: 14px;
+  padding: 1.15rem 1.15rem 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 8px 18px rgba(34, 22, 14, 0.04);
+  transition:
+    border-color var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-surface="plans"] .plan-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: color-mix(in srgb, var(--plans-accent) 60%, transparent);
+  opacity: 0.92;
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="foundation"]::before {
+  background: color-mix(in srgb, var(--plans-stage-foundation-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="active"]::before {
+  background: color-mix(in srgb, var(--plans-stage-active-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="planning"]::before {
+  background: color-mix(in srgb, var(--plans-stage-planning-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card:hover,
+[data-spw-surface="plans"] .plan-card:focus-within {
+  border-color: color-mix(in srgb, var(--plans-accent) 20%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--plans-accent) 8%, transparent),
+    0 14px 26px rgba(34, 22, 14, 0.06);
+  transform: translateY(-1px);
+}
+
+[data-spw-surface="plans"] .plan-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-spw-surface="plans"] .plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+[data-spw-surface="plans"] .plan-header h3 {
+  margin: 0;
+  flex: 1;
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
+  font-size: 1.08rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+[data-spw-surface="plans"] .plan-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.6rem;
+  padding: 0.18rem 0.58rem;
+  border-radius: 999px;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="foundation"] {
+  background: var(--plans-stage-foundation-bg);
+  color: var(--plans-stage-foundation-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-foundation-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="active"] {
+  background: var(--plans-stage-active-bg);
+  color: var(--plans-stage-active-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-active-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="planning"] {
+  background: var(--plans-stage-planning-bg);
+  color: var(--plans-stage-planning-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-planning-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-thesis {
+  margin: 0 0 0.9rem 0;
+  max-width: var(--plans-reading-measure-tight);
+  color: var(--plans-ink);
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+/* ==========================================================================
+   6. Verb strips on plans
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plan-verb-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1rem 0;
+}
+
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill {
+  border-radius: 999px;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid color-mix(in srgb, var(--plans-line) 92%, transparent);
+  color: var(--plans-ink-soft);
+}
+
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(1) {
+  border-color: color-mix(in srgb, var(--plans-verb-refine) 24%, transparent);
+}
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(2) {
+  border-color: color-mix(in srgb, var(--plans-verb-build) 24%, transparent);
+}
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(3) {
+  border-color: color-mix(in srgb, var(--plans-verb-map) 24%, transparent);
+}
+
+/* ==========================================================================
+   7. Considerations / wonder / links
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plan-considerations,
+[data-spw-surface="plans"] .plan-wonder {
+  margin-top: 1rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--plans-line) 90%, transparent);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--plans-surface-matte) 95%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-considerations {
+  border-left: 3px solid color-mix(in srgb, var(--plans-accent) 52%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-wonder {
+  border-left: 3px solid color-mix(in srgb, var(--plans-accent-2) 44%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-4-soft) 42%, transparent), transparent 68%),
+    color-mix(in srgb, var(--plans-surface-matte) 95%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-considerations strong,
+[data-spw-surface="plans"] .plan-wonder strong {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent));
+  font-size: 0.88rem;
+}
+
+[data-spw-surface="plans"] .plan-considerations ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+[data-spw-surface="plans"] .plan-considerations li {
+  margin: 0.45rem 0;
+  color: var(--plans-ink-soft);
+}
+
+[data-spw-surface="plans"] .plan-wonder p {
+  margin: 0;
+  color: var(--plans-ink-soft);
+  line-height: 1.58;
+}
+
+[data-spw-surface="plans"] .plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   8. Relationship panels
+   ========================================================================== */
+
+[data-spw-surface="plans"] #plan-relationships {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--plans-accent-3-soft) 88%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-soft) 42%, transparent), transparent 18%),
+    var(--plans-surface);
+}
+
+[data-spw-surface="plans"] #plan-relationships .frame-grid,
+[data-spw-surface="plans"] #plan-discovery .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.9rem;
+}
+
+[data-spw-surface="plans"] #plan-relationships .frame-panel,
+[data-spw-surface="plans"] #plan-discovery .frame-panel {
+  min-width: 0;
+  border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 6px 16px rgba(34, 22, 14, 0.04);
+}
+
+[data-spw-surface="plans"] #plan-relationships .frame-panel h3,
+[data-spw-surface="plans"] #plan-discovery .frame-panel h3 {
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
+}
+
+[data-spw-surface="plans"] #plan-relationships .frame-panel p,
+[data-spw-surface="plans"] #plan-discovery .frame-panel p,
+[data-spw-surface="plans"] #plan-discovery .frame-panel li {
+  color: var(--plans-ink-soft);
+}
+
+/* ==========================================================================
+   9. Links and chips
+   ========================================================================== */
+
+[data-spw-surface="plans"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token) {
+  color: color-mix(in srgb, var(--plans-accent) 86%, var(--plans-ink));
+  text-decoration-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
+  text-underline-offset: 0.16em;
+}
+
+[data-spw-surface="plans"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):hover,
+[data-spw-surface="plans"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):focus-visible {
+  color: color-mix(in srgb, var(--plans-accent-2) 82%, var(--plans-accent));
+  text-decoration-color: currentColor;
+  outline: none;
+}
+
+[data-spw-surface="plans"] .frame-operators {
+  gap: 0.5rem 0.6rem;
+}
+
+[data-spw-surface="plans"] .operator-chip {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--plans-accent) 7%, transparent);
+  border-color: color-mix(in srgb, var(--plans-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--plans-accent) 86%, var(--plans-ink));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    0 1px 3px rgba(35, 22, 16, 0.04);
+}
+
+[data-spw-surface="plans"] .operator-chip:hover,
+[data-spw-surface="plans"] .operator-chip:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--plans-accent) 11%, transparent);
+  border-color: color-mix(in srgb, var(--plans-accent) 28%, transparent);
+  color: var(--plans-ink);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--plans-accent) 8%, transparent),
+    0 6px 14px rgba(35, 22, 16, 0.06);
+}
+
+/* ==========================================================================
+   10. Typography
+   ========================================================================== */
+
+[data-spw-surface="plans"] h2 {
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}
+
+[data-spw-surface="plans"] h3 {
+  color: color-mix(in srgb, var(--plans-ink) 88%, var(--plans-accent));
+  font-family: var(--site-sans-font, Inter, sans-serif);
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0.004em;
+}
+
+/* ==========================================================================
+   11. Responsive
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  [data-spw-surface="plans"] #plans-title {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  [data-spw-surface="plans"] .plan-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  [data-spw-surface="plans"] .plan-status {
+    align-self: flex-start;
+  }
+
+  [data-spw-surface="plans"] #verb-register .frame-grid,
+  [data-spw-surface="plans"] #plan-relationships .frame-grid,
+  [data-spw-surface="plans"] #plan-discovery .frame-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  [data-spw-surface="plans"] .plans-grid {
+    gap: 0.8rem;
+  }
+
+  [data-spw-surface="plans"] .plan-card {
+    padding: 1rem;
+  }
+
+  [data-spw-surface="plans"] .plan-links {
+    gap: 0.45rem 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   12. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-surface="plans"] .site-frame,
+  [data-spw-surface="plans"] .plan-card,
+  [data-spw-surface="plans"] .frame-panel,
+  [data-spw-surface="plans"] .operator-chip {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
