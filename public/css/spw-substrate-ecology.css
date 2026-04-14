@@ -1,4 +1,4 @@
- /* ==========================================================================
+/* ==========================================================================
    spw-substrate-ecology.css
    --------------------------------------------------------------------------
    Purpose
@@ -29,8 +29,8 @@
 
   --spw-surface-room-scale: 1;
   --spw-surface-seam-opacity: 0.72;
-  --spw-surface-seam-gap: 0.5rem;
-  --spw-surface-seam-radius: var(--radius-sm, 10px);
+  --spw-surface-seam-gap: var(--space-xs, 0.5rem);
+  --spw-surface-seam-radius: var(--shape-surface, 10px);
 
   --spw-field-charge: 0;
   --spw-field-orientation: 0;
@@ -61,12 +61,12 @@
   .spw-console,
   .spw-nav-panel
 ) {
-  --spw-surface-local-clarity: var(--spw-surface-clarity);
-  --spw-surface-local-pressure: var(--spw-surface-pressure);
-  --spw-surface-local-atmosphere: var(--spw-surface-atmosphere);
-  --spw-surface-local-permeability: var(--spw-surface-permeability);
-  --spw-surface-local-memory: var(--spw-surface-memory);
-  --spw-surface-local-resonance: var(--spw-surface-resonance);
+  --spw-surface-local-clarity: var(--spw-surface-clarity, 0.62);
+  --spw-surface-local-pressure: var(--spw-surface-pressure, 0.34);
+  --spw-surface-local-atmosphere: var(--spw-surface-atmosphere, 0.18);
+  --spw-surface-local-permeability: var(--spw-surface-permeability, 0.3);
+  --spw-surface-local-memory: var(--spw-surface-memory, 0.16);
+  --spw-surface-local-resonance: var(--spw-surface-resonance, 0.18);
 
   position: relative;
   min-width: 0;
@@ -177,17 +177,17 @@
    ========================================================================== */
 
 :where([data-spw-succession='raw']) {
-  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 0.88);
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity, 0.62) * 0.88);
   --spw-surface-local-memory: 0.08;
 }
 
 :where([data-spw-succession='measured']) {
-  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 1.02);
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity, 0.62) * 1.02);
   --spw-surface-local-memory: 0.18;
 }
 
 :where([data-spw-succession='resolved']) {
-  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity) * 1.08);
+  --spw-surface-local-clarity: calc(var(--spw-surface-local-clarity, 0.62) * 1.08);
   --spw-surface-local-memory: 0.24;
 }
 
@@ -198,7 +198,7 @@
 
 :where([data-spw-succession='latched']) {
   --spw-surface-local-memory: 0.58;
-  --spw-surface-local-pressure: calc(var(--spw-surface-local-pressure) * 1.08);
+  --spw-surface-local-pressure: calc(var(--spw-surface-local-pressure, 0.34) * 1.08);
 }
 
 /* ==========================================================================
@@ -209,31 +209,31 @@
    ========================================================================== */
 
 :where([data-spw-field-wonder='orientation']) {
-  --spw-field-orientation: max(var(--spw-field-orientation), 0.65);
+  --spw-field-orientation: max(var(--spw-field-orientation, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='inquiry']) {
-  --spw-field-inquiry: max(var(--spw-field-inquiry), 0.65);
+  --spw-field-inquiry: max(var(--spw-field-inquiry, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='comparison']) {
-  --spw-field-comparison: max(var(--spw-field-comparison), 0.65);
+  --spw-field-comparison: max(var(--spw-field-comparison, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='memory']) {
-  --spw-field-memory: max(var(--spw-field-memory), 0.65);
+  --spw-field-memory: max(var(--spw-field-memory, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='projection']) {
-  --spw-field-projection: max(var(--spw-field-projection), 0.65);
+  --spw-field-projection: max(var(--spw-field-projection, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='constraint']) {
-  --spw-field-constraint: max(var(--spw-field-constraint), 0.65);
+  --spw-field-constraint: max(var(--spw-field-constraint, 0), 0.65);
 }
 
 :where([data-spw-field-wonder='resonance']) {
-  --spw-field-resonance: max(var(--spw-field-resonance), 0.65);
+  --spw-field-resonance: max(var(--spw-field-resonance, 0), 0.65);
 }
 
 /* ==========================================================================
@@ -246,25 +246,28 @@
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: var(--space-2xs, 0.35rem);
   max-width: min(100%, 72ch);
-  margin-top: 0.4rem;
+  margin-top: var(--space-2xs, 0.4rem);
   padding: 0.22rem 0.54rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
-  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
+  border-radius: var(--radius-pill, 999px);
   background:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent) 0,
+      color-mix(in srgb, var(--active-op-color, #008080) 8%, transparent) 0,
       transparent 48%
     ),
-    color-mix(in srgb, var(--surface, white) 90%, transparent);
-  color: var(--ink-soft);
+    color-mix(in srgb, var(--surface, #ffffff) 90%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-size: 0.66rem;
+  font-size: var(--text-size-xs, 0.66rem);
   line-height: 1.35;
   letter-spacing: 0.04em;
-  opacity: var(--spw-surface-seam-opacity);
+  opacity: var(--spw-surface-seam-opacity, 0.72);
+  transition: 
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
 :where(.spw-context-memo[hidden], .spw-experience-memo[hidden]) {
@@ -275,7 +278,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: var(--space-2xs, 0.4rem);
   max-width: 100%;
 }
 
@@ -284,12 +287,13 @@
   align-items: center;
   min-width: 0;
   padding: 0.16rem 0.42rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--surface, white) 86%, transparent);
-  color: var(--ink-soft);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
+  border-radius: var(--radius-pill, 999px);
+  background: color-mix(in srgb, var(--surface, #ffffff) 86%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-size: 0.64rem;
   line-height: 1.3;
+  transition: border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
 /* ==========================================================================
@@ -298,37 +302,37 @@
 
 :where([data-spw-memo-wonder='orientation']) .spw-context-memo,
 :where([data-spw-field-wonder='orientation']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-frame-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-frame-color, #008080) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='inquiry']) .spw-context-memo,
 :where([data-spw-field-wonder='inquiry']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-probe-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='memory']) .spw-context-memo,
 :where([data-spw-field-wonder='memory']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-object-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='projection']) .spw-context-memo,
 :where([data-spw-field-wonder='projection']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-surface-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-surface-color, #178282) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='constraint']) .spw-context-memo,
 :where([data-spw-field-wonder='constraint']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-pragma-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-pragma-color, #883a3a) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='comparison']) .spw-context-memo,
 :where([data-spw-field-wonder='comparison']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-merge-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-merge-color, #277a87) 24%, transparent);
 }
 
 :where([data-spw-memo-wonder='resonance']) .spw-context-memo,
 :where([data-spw-field-wonder='resonance']) .spw-context-memo {
-  border-color: color-mix(in srgb, var(--op-ref-color, var(--teal)) 24%, transparent);
+  border-color: color-mix(in srgb, var(--op-ref-color, #1d57a3) 24%, transparent);
 }
 
 /* ==========================================================================
@@ -340,11 +344,11 @@
 }
 
 :where([data-spw-room='standard']) .spw-context-memo {
-  max-width: min(100%, 52ch);
+  max-width: min(100%, var(--measure-panel, 52ch));
 }
 
 :where([data-spw-room='roomy']) .spw-context-memo {
-  max-width: min(100%, 72ch);
+  max-width: min(100%, var(--measure-reading, 72ch));
 }
 
 @container (max-width: 42rem) {
@@ -368,7 +372,7 @@
   background:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent) 0%,
+      color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent) 0%,
       transparent 62%
     );
 }

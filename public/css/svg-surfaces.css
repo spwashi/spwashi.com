@@ -1,4 +1,6 @@
-/*
+/* ==========================================================================
+ * svg-surfaces.css
+ * --------------------------------------------------------------------------
  * SVG surface layer.
  *
  * SVG enters as a bounded, captioned host. The HTML around the SVG remains the
@@ -7,7 +9,7 @@
  * Operator node color contexts (.op-node--{type}) are ungated — they apply
  * to any SVG that uses the naming convention, not just svg-surfaces contexts.
  * This lets inline SVG diagrams live anywhere and still pick up the palette.
- */
+ * ========================================================================== */
 
 /* ─── Flow animation ─────────────────────────────────────────────────────── */
 
@@ -22,114 +24,128 @@
  * Circle fills/strokes are handled via the .spw-svg-node--{type} rules.
  */
 
-.op-node--frame     { color: var(--op-frame-color); }
-.op-node--object    { color: var(--op-object-color); }
-.op-node--probe     { color: var(--op-probe-color); }
-.op-node--ref       { color: var(--op-ref-color); }
-.op-node--action    { color: var(--op-action-color); }
-.op-node--stream    { color: var(--op-stream-color); }
-.op-node--surface   { color: var(--op-surface-color); }
-.op-node--layer     { color: var(--op-layer-color); }
-.op-node--baseline  { color: var(--op-baseline-color); }
-.op-node--binding   { color: var(--op-binding-color); }
-.op-node--meta      { color: var(--op-meta-color); }
-.op-node--merge     { color: var(--op-merge-color); }
-.op-node--normalize { color: var(--op-normalize-color); }
-.op-node--pragma    { color: var(--op-pragma-color); }
+.op-node--frame      { color: var(--op-frame-color, #008080); }
+.op-node--object     { color: var(--op-object-color, #a67c00); }
+.op-node--probe      { color: var(--op-probe-color, #4a2180); }
+.op-node--ref        { color: var(--op-ref-color, #1d57a3); }
+.op-node--action     { color: var(--op-action-color, #005959); }
+.op-node--stream     { color: var(--op-stream-color, #208259); }
+.op-node--surface    { color: var(--op-surface-color, #178282); }
+.op-node--layer      { color: var(--op-layer-color, rgba(14, 18, 20, 0.68)); }
+.op-node--baseline   { color: var(--op-baseline-color, #594d3f); }
+.op-node--binding    { color: var(--op-binding-color, #8f401f); }
+.op-node--meta       { color: var(--op-meta-color, #324a85); }
+.op-node--merge      { color: var(--op-merge-color, #277a87); }
+.op-node--normalize  { color: var(--op-normalize-color, #4d7539); }
+.op-node--pragma     { color: var(--op-pragma-color, #883a3a); }
+
+/* ─── SVG Container & Surface ───────────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure {
     display: grid;
-    gap: 0.6rem;
+    gap: var(--space-sm, 0.6rem);
     margin: 0;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface {
     display: block;
     width: 100%;
-    max-width: 52rem;
+    max-width: var(--measure-panel, 52rem);
     height: auto;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    box-shadow: var(--card-shadow);
-    color: var(--ink);
+    border: 1px solid var(--spw-shell-line, rgba(14, 18, 20, 0.14));
+    border-radius: var(--shape-surface, 10px);
+    background: var(--surface, #ffffff);
+    box-shadow: var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05));
+    color: var(--ink, #161c1d);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
     fill: currentColor;
 }
 
+/* ─── Structural Node Primitives ────────────────────────────────────────── */
+
 [data-spw-features~="svg-surfaces"] .spw-svg-frame {
-    fill: rgba(255, 255, 255, 0.52);
-    stroke: var(--line);
-    stroke-width: 1.2;
+    fill: var(--surface-soft, rgba(255, 255, 255, 0.52));
+    stroke: var(--line, rgba(14, 18, 20, 0.14));
+    stroke-width: var(--line-mid, 1.2px);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-node {
-    fill: rgba(255, 255, 255, 0.82);
-    stroke: var(--active-op-border);
-    stroke-width: 1.5;
+    fill: var(--surface-strong, rgba(255, 255, 255, 0.88));
+    stroke: var(--active-op-border, rgba(0, 128, 128, 0.34));
+    stroke-width: var(--line-thick, 2.5px);
 }
 
-/* Operator-colored node fills — soft tint + stroke in the operator's hue */
-[data-spw-features~="svg-surfaces"] .spw-svg-node--frame    { stroke: var(--op-frame-color);     fill: color-mix(in srgb, var(--op-frame-color)     7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--probe    { stroke: var(--op-probe-color);     fill: color-mix(in srgb, var(--op-probe-color)     7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--ref      { stroke: var(--op-ref-color);       fill: color-mix(in srgb, var(--op-ref-color)       7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--action   { stroke: var(--op-action-color);    fill: color-mix(in srgb, var(--op-action-color)    7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--object   { stroke: var(--op-object-color);    fill: color-mix(in srgb, var(--op-object-color)    7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--surface  { stroke: var(--op-surface-color);   fill: color-mix(in srgb, var(--op-surface-color)   7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--stream   { stroke: var(--op-stream-color);    fill: color-mix(in srgb, var(--op-stream-color)    7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--merge    { stroke: var(--op-merge-color);     fill: color-mix(in srgb, var(--op-merge-color)     7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--binding  { stroke: var(--op-binding-color);   fill: color-mix(in srgb, var(--op-binding-color)   7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--meta     { stroke: var(--op-meta-color);      fill: color-mix(in srgb, var(--op-meta-color)      7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--pragma   { stroke: var(--op-pragma-color);    fill: color-mix(in srgb, var(--op-pragma-color)    7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--normalize{ stroke: var(--op-normalize-color); fill: color-mix(in srgb, var(--op-normalize-color) 7%, white); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--layer    { stroke: var(--op-layer-color);     fill: rgba(255, 255, 255, 0.82); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--baseline { stroke: var(--op-baseline-color);  fill: rgba(255, 255, 255, 0.82); }
+/* * Operator-colored node fills 
+ * Mixes against --surface-strong to ensure nodes invert correctly in dark mode 
+ * while maintaining a solid "fill" that obscures paths behind them. 
+ */
+[data-spw-features~="svg-surfaces"] .spw-svg-node--frame     { stroke: var(--op-frame-color, #008080);      fill: color-mix(in srgb, var(--op-frame-color, #008080)      10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--probe     { stroke: var(--op-probe-color, #4a2180);      fill: color-mix(in srgb, var(--op-probe-color, #4a2180)      10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--ref       { stroke: var(--op-ref-color, #1d57a3);        fill: color-mix(in srgb, var(--op-ref-color, #1d57a3)        10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--action    { stroke: var(--op-action-color, #005959);     fill: color-mix(in srgb, var(--op-action-color, #005959)     10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--object    { stroke: var(--op-object-color, #a67c00);     fill: color-mix(in srgb, var(--op-object-color, #a67c00)     10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--surface   { stroke: var(--op-surface-color, #178282);    fill: color-mix(in srgb, var(--op-surface-color, #178282)    10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--stream    { stroke: var(--op-stream-color, #208259);     fill: color-mix(in srgb, var(--op-stream-color, #208259)     10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--merge     { stroke: var(--op-merge-color, #277a87);      fill: color-mix(in srgb, var(--op-merge-color, #277a87)      10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--binding   { stroke: var(--op-binding-color, #8f401f);    fill: color-mix(in srgb, var(--op-binding-color, #8f401f)    10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--meta      { stroke: var(--op-meta-color, #324a85);       fill: color-mix(in srgb, var(--op-meta-color, #324a85)       10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--pragma    { stroke: var(--op-pragma-color, #883a3a);     fill: color-mix(in srgb, var(--op-pragma-color, #883a3a)     10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--normalize { stroke: var(--op-normalize-color, #4d7539);  fill: color-mix(in srgb, var(--op-normalize-color, #4d7539)  10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--layer     { stroke: var(--op-layer-color, rgba(14,18,20,0.68)); fill: var(--surface-strong, #ffffff); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--baseline  { stroke: var(--op-baseline-color, #594d3f);   fill: var(--surface-strong, #ffffff); }
+
+/* ─── Flows & Connectors ────────────────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow {
     fill: none;
-    stroke: var(--active-op-color);
-    stroke-width: 1.6;
+    stroke: var(--active-op-color, #008080);
+    stroke-width: var(--line-mid, 1.5px);
     stroke-linecap: round;
     stroke-dasharray: 5 9;
     opacity: 0.42;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
+    /* Using generic animation token fallback if --duration-slow is missing */
     animation: svg-flow-dash 4s linear infinite;
 }
 
+/* ─── Typography & Labels ───────────────────────────────────────────────── */
+
 [data-spw-features~="svg-surfaces"] .spw-svg-label {
-    font-size: 0.92rem;
+    font-size: var(--text-size-sm, 0.92rem);
     font-weight: 700;
     letter-spacing: 0.04em;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-note {
-    fill: var(--ink-soft);
-    font-size: 0.68rem;
+    fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-size: var(--text-size-xs, 0.68rem);
     letter-spacing: 0.03em;
 }
 
-/* ─── Operator grammar flow diagram ─────────────────────────────────────── */
+/* ─── Operator Grammar Flow Diagram ─────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow-diagram {
-    padding: 0.2rem 0;
+    padding: var(--space-2xs, 0.2rem) 0;
     overflow: visible;
 }
 
-/* The .spw-svg-note text class is already defined above; we extend it: */
+/* Extension for finer notes inside diagram boundaries */
 [data-spw-features~="svg-surfaces"] .spw-svg-surface .spw-svg-note {
-    fill: var(--ink-soft);
-    font-size: 0.65rem;
+    fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-size: calc(var(--text-size-xs, 0.68rem) * 0.95);
     letter-spacing: 0.02em;
 }
 
+/* ─── Responsive & Accessibility ────────────────────────────────────────── */
+
 @media (max-width: 700px) {
     [data-spw-features~="svg-surfaces"] .spw-svg-surface {
-        border-radius: 0.7rem;
+        border-radius: var(--shape-component, 8px);
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-label {

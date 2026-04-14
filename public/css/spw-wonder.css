@@ -1,310 +1,701 @@
-/* Spw Wonder and Delight
- *
- * Ambient highlights, threshold pulses, and celebratory micro-animations
- * that reward sustained attention and conceptual grounding.
- */
+/* ==========================================================================
+   spw-wonder.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Wonder, delight, threshold charge, and semantic celebration layers.
+   - Ambient affordances that can be driven by JS without requiring JS.
+   - Persona-aware modulation for related surfaces, tokens, images, and frames.
+
+   Notes
+   - This file should remain additive. It should not redefine baseline layout.
+   - Most selectors are low-specificity and attach to existing component nouns.
+   - JS can safely toggle data attributes such as:
+       [data-spw-charge]
+       [data-spw-wonder-state]
+       [data-spw-delight]
+       [data-spw-visited]
+       [data-spw-hold-state]
+       [data-spw-semantic-density]
+       html[data-spw-persona]
+   ========================================================================== */
 
 :root {
-    --wonder-accent-color: var(--amber, #ffbf00);
-    --delight-color: var(--teal, #008080);
+  --wonder-accent-color: var(--amber, #ffbf00);
+  --delight-color: var(--teal, #008080);
+
+  --spw-wonder-duration-fast: var(--duration-fast, 120ms);
+  --spw-wonder-duration-base: var(--duration-base, 200ms);
+  --spw-wonder-duration-deliberate: var(--duration-deliberate, 420ms);
+
+  --spw-wonder-ease: var(--cinematic-ease, ease-in-out);
+  --spw-wonder-ease-settle: var(--ease-settle, ease-out);
+  --spw-wonder-ease-mechanical: var(--ease-mechanical, ease);
+
+  --spw-wonder-ring:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 28%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
+
+  --spw-delight-ring:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 28%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--delight-color) 12%, transparent);
 }
 
-/* ── Spw Delight — conceptual grounding burst ───────────────────────────── */
-/* Applied to tokens when they settle into knowledge (sustained charge). */
+/* ==========================================================================
+   1. Shared wonder-ready targets
+   --------------------------------------------------------------------------
+   These selectors establish a common semantic substrate for JS and styling to
+   act upon across frames, cards, panels, chips, SVG surfaces, and image hosts.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .mode-panel,
+  .software-card,
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .spw-delimiter,
+  .spw-svg-surface,
+  .spw-metaphysics-host,
+  .spw-wonder-block,
+  .spw-scaffold,
+  .persona-chip,
+  .spw-component-tag,
+  .spw-guide-chip,
+  [data-spw-charge],
+  [data-spw-wonder-state],
+  [data-spw-delight],
+  [data-spw-visited]
+) {
+  position: relative;
+}
+
+/* ==========================================================================
+   2. Delight bursts
+   --------------------------------------------------------------------------
+   Conceptual grounding, successful interpretation, and local semantic reward.
+   ========================================================================== */
 
 @keyframes spw-delight-burst {
-    0% {
-        box-shadow: 0 0 0 0 color-mix(in srgb, var(--delight-color) 60%, transparent);
-        transform: scale(1);
-    }
-    30% {
-        transform: scale(1.12);
-    }
-    100% {
-        box-shadow: 0 0 20px 10px transparent;
-        transform: scale(1);
-    }
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--delight-color) 60%, transparent);
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    box-shadow: 0 0 20px 10px transparent;
+    transform: scale(1);
+  }
 }
 
-.spw-delight {
-    animation: spw-delight-burst 0.6s var(--cinematic-ease, ease-out) forwards;
-    z-index: 100 !important;
+.spw-delight,
+[data-spw-delight="burst"],
+[data-spw-delight="settled"] {
+  z-index: 100 !important;
+  animation: spw-delight-burst 0.6s var(--spw-wonder-ease-settle) forwards;
 }
 
-/* ── Spw Wonder Accent — cluster guidance ───────────────────────────────── */
-/* Ambient highlight used to draw attention toward related concepts. */
+:where(
+  .operator-chip.spw-delight,
+  .spec-pill.spw-delight,
+  .spw-topic.spw-delight,
+  [data-spw-topic].spw-delight,
+  .spw-delimiter.spw-delight,
+  [data-spw-delight="settled"]
+) {
+  box-shadow: var(--spw-delight-ring);
+}
+
+:where(
+  .site-frame[data-spw-delight="settled"],
+  .frame-panel[data-spw-delight="settled"],
+  .frame-card[data-spw-delight="settled"],
+  .mode-panel[data-spw-delight="settled"]
+) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 20%, transparent),
+    0 0 18px color-mix(in srgb, var(--delight-color) 14%, transparent);
+}
+
+/* ==========================================================================
+   3. Wonder accents
+   --------------------------------------------------------------------------
+   Ambient guidance toward related concepts or semantically resonant clusters.
+   ========================================================================== */
 
 @keyframes spw-wonder-glow {
-    0%, 100% {
-        filter: drop-shadow(0 0 2px var(--wonder-accent-color));
-        opacity: 0.85;
-    }
-    50% {
-        filter: drop-shadow(0 0 12px var(--wonder-accent-color));
-        opacity: 1;
-        transform: translateY(-2px);
-    }
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px var(--wonder-accent-color));
+    opacity: 0.85;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px var(--wonder-accent-color));
+    opacity: 1;
+    transform: translateY(-2px);
+  }
 }
 
-.spw-wonder-accent {
-    animation: spw-wonder-glow 1.4s var(--cinematic-ease, ease-in-out) infinite;
-    color: var(--wonder-accent-color) !important;
-    border-color: var(--wonder-accent-color) !important;
-    z-index: 50;
+.spw-wonder-accent,
+[data-spw-wonder-state="accented"],
+[data-spw-wonder-state="resonant"] {
+  z-index: 50;
+  color: var(--wonder-accent-color) !important;
+  border-color: var(--wonder-accent-color) !important;
+  animation: spw-wonder-glow 1.4s var(--spw-wonder-ease) infinite;
 }
 
-/* ── Brace Threshold — conception into reality ───────────────────────────── */
-/* Sustained-charge pulse for large structural braces. */
+:where(
+  .site-frame[data-spw-wonder-state="resonant"],
+  .frame-panel[data-spw-wonder-state="resonant"],
+  .frame-card[data-spw-wonder-state="resonant"],
+  .mode-panel[data-spw-wonder-state="resonant"]
+) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
+    0 0 20px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+}
+
+/* ==========================================================================
+   4. Charge states
+   --------------------------------------------------------------------------
+   JS can toggle these states to create a lightweight semantic lifecycle:
+   idle → preview → arming → sustained → settled
+   ========================================================================== */
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-charge]
+)[data-spw-charge="preview"] {
+  background:
+    color-mix(in srgb, var(--wonder-accent-color) 8%, transparent);
+  border-color:
+    color-mix(in srgb, var(--wonder-accent-color) 26%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-charge]
+)[data-spw-charge="arming"] {
+  background:
+    color-mix(in srgb, var(--delight-color) 10%, transparent);
+  border-color:
+    color-mix(in srgb, var(--delight-color) 32%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-charge]
+)[data-spw-charge="sustained"] {
+  background:
+    color-mix(in srgb, var(--delight-color) 14%, transparent);
+  border-color:
+    color-mix(in srgb, var(--delight-color) 42%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 22%, transparent),
+    0 0 10px color-mix(in srgb, var(--delight-color) 10%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-charge]
+)[data-spw-charge="settled"] {
+  background:
+    color-mix(in srgb, var(--delight-color) 10%, transparent);
+  border-color: var(--delight-color);
+}
+
+/* ==========================================================================
+   5. Brace thresholds and large structural surfaces
+   ========================================================================== */
 
 [data-spw-form="brace"][data-spw-charge="sustained"]::before,
-[data-spw-form="brace"][data-spw-charge="sustained"]::after {
-    animation: brace-threshold-pulse 2s var(--cinematic-ease) infinite;
+[data-spw-form="brace"][data-spw-charge="sustained"]::after,
+[data-spw-form="brace"][data-spw-wonder-state="resonant"]::before,
+[data-spw-form="brace"][data-spw-wonder-state="resonant"]::after {
+  animation: brace-threshold-pulse 2s var(--spw-wonder-ease) infinite;
 }
 
 @keyframes brace-threshold-pulse {
-    0%, 100% {
-        border-color: var(--spw-operator-color, var(--teal));
-        opacity: 0.4;
-    }
-    50% {
-        border-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 80%, white);
-        opacity: 0.9;
-        filter: blur(1px);
-    }
+  0%,
+  100% {
+    border-color: var(--spw-operator-color, var(--teal));
+    opacity: 0.4;
+  }
+
+  50% {
+    border-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 80%, white);
+    opacity: 0.9;
+    filter: blur(1px);
+  }
 }
 
-/* ── Persona Selector ────────────────────────────────────────────────────── */
+:where(
+  .site-frame[data-spw-charge="sustained"],
+  .frame-panel[data-spw-charge="sustained"],
+  .frame-card[data-spw-charge="sustained"],
+  .mode-panel[data-spw-charge="sustained"]
+) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 22%, transparent),
+    0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 12%, transparent);
+}
+
+/* ==========================================================================
+   6. Persona selector
+   ========================================================================== */
 
 .persona-selector-mount {
-    margin-right: 0;
-    max-width: 100%;
-    min-width: 0;
+  margin-right: 0;
+  max-width: 100%;
+  min-width: 0;
 }
 
 html[data-spw-semantic-density="minimal"] .persona-selector-mount {
-    display: none;
+  display: none;
 }
 
 .persona-selector-frame {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.25rem 0.45rem;
-    background: color-mix(in srgb, var(--floating-bg-warm, var(--surface-strong)) 92%, transparent);
-    border: 1px solid color-mix(in srgb, var(--active-op-border, var(--line)) 70%, var(--line));
-    border-radius: 4px;
-    font-family: var(--site-mono-font, monospace);
-    font-size: 0.75rem;
-    max-width: 100%;
-    min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-border, var(--line)) 70%, var(--line));
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(
+    in srgb,
+    var(--floating-bg-warm, var(--surface-strong)) 92%,
+    transparent
+  );
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.75rem;
 }
 
 .persona-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
 .persona-chip {
-    background: none;
-    border: none;
-    color: var(--ink-soft, #888);
-    cursor: pointer;
-    min-height: var(--touch-target-min);
-    padding: 0.2rem 0.45rem;
-    border-radius: 2px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  min-height: var(--touch-target-min);
+  padding: 0.2rem 0.45rem;
+  border: none;
+  border-radius: 2px;
+  background: none;
+  color: var(--ink-soft, #888);
+  cursor: pointer;
+  transition:
+    color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    background var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease-mechanical);
 }
 
 .persona-chip:hover {
-    color: var(--ink, #fff);
-    background: color-mix(in srgb, var(--surface-strong, #fff) 82%, transparent);
+  color: var(--ink, #fff);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 82%, transparent);
 }
 
-.persona-chip.is-active {
-    color: var(--teal, #1a9999);
-    background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-border, var(--teal)) 80%, transparent);
+.persona-chip.is-active,
+.persona-chip[aria-pressed="true"] {
+  color: var(--teal, #1a9999);
+  background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-border, var(--teal)) 80%, transparent);
+}
+
+.persona-chip[data-spw-charge="preview"] {
+  transform: translateY(-1px);
 }
 
 .persona-sigil {
-    font-weight: bold;
-    opacity: 0.6;
+  font-weight: 700;
+  opacity: 0.6;
 }
 
 @media (max-width: 640px) {
-    .persona-selector-frame {
-        width: 100%;
-        justify-content: space-between;
-    }
+  .persona-selector-frame {
+    width: 100%;
+    justify-content: space-between;
+  }
 
-    .persona-chips {
-        justify-content: flex-end;
-    }
+  .persona-chips {
+    justify-content: flex-end;
+  }
 }
 
-/* ── Persona-Aware Learnable Surfaces ───────────────────────────────────── */
-
-/* Topic Badges (.spec-pill) react to persona state */
+/* ==========================================================================
+   7. Persona-aware learnable surfaces
+   ========================================================================== */
 
 [data-spw-persona="doodler"] .spec-pill {
-    text-decoration: underline wavy var(--wonder-accent-color);
-    text-underline-offset: 4px;
+  text-decoration: underline wavy var(--wonder-accent-color);
+  text-underline-offset: 4px;
 }
 
 [data-spw-persona="scribe"] .spec-pill {
-    font-family: var(--site-mono-font, monospace);
-    letter-spacing: -0.02em;
-    background: var(--charcoal-dark, #111) !important;
-    border-color: var(--teal-soft, #1a9999) !important;
+  font-family: var(--site-mono-font, monospace);
+  letter-spacing: -0.02em;
+  background: var(--charcoal-dark, #111) !important;
+  border-color: var(--teal-soft, #1a9999) !important;
 }
 
-/* ── Personas — Aesthetic Modulation ────────────────────────────────────── */
+[data-spw-persona="viewer"] :where(.site-frame, .frame-panel, .frame-card)[data-spw-wonder-state="resonant"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
+    0 0 14px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
+}
 
-/* Doodler — extra visual flair, hand-drawn feel */
-[data-spw-persona="doodler"] .spw-delight::after {
-    content: '✧';
-    position: absolute;
-    top: -1em;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.2em;
-    color: var(--wonder-accent-color);
-    animation: doodler-sparkle 0.6s ease-out forwards;
+[data-spw-persona="scribe"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-charge="sustained"] {
+  font-family: var(--site-mono-font, monospace);
+  letter-spacing: 0.05em;
+}
+
+[data-spw-persona="doodler"] :where(.operator-chip, .spw-topic, [data-spw-topic])[data-spw-wonder-state="accented"] {
+  transform: rotate(-1deg);
+}
+
+/* ==========================================================================
+   8. Persona-specific micro events
+   ========================================================================== */
+
+[data-spw-persona="doodler"] .spw-delight::after,
+[data-spw-persona="doodler"] [data-spw-delight="burst"]::after {
+  content: "✧";
+  position: absolute;
+  top: -1em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2em;
+  color: var(--wonder-accent-color);
+  animation: doodler-sparkle 0.6s ease-out forwards;
 }
 
 @keyframes doodler-sparkle {
-    0% { transform: translate(-50%, 0) scale(0); opacity: 1; }
-    100% { transform: translate(-50%, -1.5em) scale(1.5) rotate(45deg); opacity: 0; }
+  0% {
+    transform: translate(-50%, 0) scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -1.5em) scale(1.5) rotate(45deg);
+    opacity: 0;
+  }
 }
 
-/* Scribe — technical precision, meta-text reveals */
-[data-spw-persona="scribe"] [data-scribe-meta]:hover::after {
-    content: attr(data-scribe-meta);
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-    font-size: 0.55rem;
-    background: var(--charcoal, #1a1a1a);
-    color: var(--teal-soft, #1a9999);
-    padding: 2px 6px;
-    border: 1px solid var(--ink-soft, #333);
-    border-radius: 2px;
-    white-space: nowrap;
-    z-index: 1000;
-    pointer-events: none;
-    opacity: 0.9;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+[data-spw-persona="scribe"] [data-scribe-meta]:hover::after,
+[data-spw-persona="scribe"] [data-scribe-meta][data-spw-wonder-state="accented"]::after {
+  content: attr(data-scribe-meta);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 2px 6px;
+  border: 1px solid var(--ink-soft, #333);
+  border-radius: 2px;
+  background: var(--charcoal, #1a1a1a);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: var(--teal-soft, #1a9999);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.55rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
-/* ── Wonder & Consideration Blocks ───────────────────────────────────────── */
+/* ==========================================================================
+   9. Wonder blocks
+   --------------------------------------------------------------------------
+   Good JS hooks:
+   - [data-spw-wonder-block-state="idle|thinking|revealed|expanded"]
+   - .wonder-action[aria-pressed]
+   ========================================================================== */
 
 .spw-wonder-block {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    background: var(--surface-code, #12171b);
-    border: 1px solid var(--line-strong, #008080);
-    border-radius: 4px;
-    font-family: var(--site-mono-font, monospace);
-    font-size: 0.82rem;
-    color: var(--teal-soft, #1a9999);
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line-strong, #008080);
+  border-radius: var(--shape-surface, 4px);
+  background: var(--surface-code, #12171b);
+  color: var(--teal-soft, #1a9999);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.82rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.spw-wonder-block[data-spw-wonder-block-state="thinking"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 22%, transparent),
+    0 0 18px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+}
+
+.spw-wonder-block[data-spw-wonder-block-state="revealed"],
+.spw-wonder-block[data-spw-wonder-block-state="expanded"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 24%, transparent),
+    0 0 20px color-mix(in srgb, var(--delight-color) 14%, transparent);
 }
 
 .wonder-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.6rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid rgba(26, 153, 153, 0.2);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(26, 153, 153, 0.2);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .wonder-action {
-    background: none;
-    border: 1px solid var(--teal-soft);
-    color: var(--teal-soft);
-    padding: 2px 8px;
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 0.65rem;
-    transition: all 0.2s ease;
+  padding: 2px 8px;
+  border: 1px solid var(--teal-soft);
+  border-radius: 2px;
+  background: none;
+  color: var(--teal-soft);
+  cursor: pointer;
+  font-size: 0.65rem;
+  transition:
+    background var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease-mechanical);
 }
 
-.wonder-action:hover {
-    background: var(--teal-soft);
-    color: var(--charcoal-dark);
+.wonder-action:hover,
+.wonder-action:focus-visible,
+.wonder-action[aria-pressed="true"] {
+  background: var(--teal-soft);
+  color: var(--charcoal-dark);
 }
 
 .wonder-body {
-    line-height: 1.4;
-    font-style: italic;
-    opacity: 0.85;
+  line-height: 1.4;
+  font-style: italic;
+  opacity: 0.85;
 }
 
-/* ── Metaphysics Scaffolding ─────────────────────────────────────────────── */
+.wonder-body[data-spw-charge="settled"] {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   10. Metaphysics scaffolding
+   --------------------------------------------------------------------------
+   Supports related JS for progressive reveal, attention pinning, and stateful
+   image or figure inspection.
+   ========================================================================== */
 
 .spw-scaffold {
-    position: relative;
-    padding: 0.5rem;
-    background: var(--surface-soft, rgba(255,255,255,0.05));
-    border: 1px dashed var(--line-strong, #008080);
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border: 1px dashed var(--line-strong, #008080);
+  border-radius: 6px;
+  background: var(--surface-soft, rgba(255, 255, 255, 0.05));
 }
 
 .spw-scaffold::before {
-    content: 'SCFFLD@METAPHYSICS';
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: var(--charcoal-dark, #111);
-    color: var(--teal, #1a9999);
-    font-size: 0.6rem;
-    padding: 0 6px;
-    border: 1px solid var(--line-strong);
+  content: "SCFFLD@METAPHYSICS";
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  padding: 0 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--charcoal-dark, #111);
+  color: var(--teal, #1a9999);
+  font-size: 0.6rem;
 }
 
-/* Premium Unlocks */
+.spw-scaffold[data-spw-wonder-state="accented"] {
+  border-style: solid;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
+    0 0 16px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
+}
+
+/* ==========================================================================
+   11. Semantic unlocks
+   ========================================================================== */
+
 [data-spw-semantics="unlocked"] .spw-wonder-block {
-    border-style: double;
-    border-width: 3px;
-    box-shadow: 0 0 15px rgba(26, 153, 153, 0.3);
+  border-width: 3px;
+  border-style: double;
+  box-shadow: 0 0 15px rgba(26, 153, 153, 0.3);
 }
 
 [data-spw-semantics="unlocked"] .wonder-body {
-    opacity: 1;
-    font-weight: 500;
+  opacity: 1;
+  font-weight: 500;
 }
-/* Visited Asset Glow */
+
+[data-spw-semantics="unlocked"] :where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .mode-panel,
+  .spw-svg-surface,
+  .spw-metaphysics-host
+) {
+  --wonder-accent-color: color-mix(in srgb, var(--amber, #ffbf00) 72%, white);
+}
+
+/* ==========================================================================
+   12. Visited glow
+   --------------------------------------------------------------------------
+   Keep broad enough for JS to reuse, but avoid assuming every visited target
+   wants identical ornament. Specialized files can override locally.
+   ========================================================================== */
+
 [data-spw-visited="true"] {
-    box-shadow: 0 0 15px var(--delight-color, #008080) !important;
-    filter: drop-shadow(0 0 8px var(--delight-color, #008080)) brightness(1.05) !important;
-    outline: 1px solid var(--delight-color) !important;
-    transition: all 1s ease;
+  outline: 1px solid var(--delight-color) !important;
+  box-shadow: 0 0 15px var(--delight-color, #008080) !important;
+  filter: drop-shadow(0 0 8px var(--delight-color, #008080)) brightness(1.05) !important;
+  transition:
+    box-shadow 1s var(--spw-wonder-ease),
+    filter 1s var(--spw-wonder-ease),
+    outline-color 1s var(--spw-wonder-ease);
 }
 
 [data-spw-visited="true"]::after {
-    content: '◈';
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    color: var(--delight-color);
-    font-size: 0.8rem;
-    opacity: 0.8;
+  content: "◈";
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  color: var(--delight-color);
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 [data-spw-visited="true"].spw-svg-surface {
-    filter: url('#scribe-grid') drop-shadow(0 0 12px var(--delight-color));
+  filter: url("#scribe-grid") drop-shadow(0 0 12px var(--delight-color));
+}
+
+/* ==========================================================================
+   13. SVG and image-adjacent wonder
+   --------------------------------------------------------------------------
+   Pairs with spw-metaphysical-paper.css and svg-surfaces.css without replacing
+   them. This gives JS one common semantic vocabulary across media.
+   ========================================================================== */
+
+:where(
+  .spw-svg-surface[data-spw-wonder-state="accented"],
+  .spw-metaphysics-host[data-spw-wonder-state="accented"]
+) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 20%, transparent),
+    0 0 18px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+}
+
+:where(
+  .spw-svg-surface[data-spw-charge="sustained"],
+  .spw-metaphysics-host[data-spw-charge="sustained"]
+) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
+    0 0 20px color-mix(in srgb, var(--delight-color) 12%, transparent);
+}
+
+/* ==========================================================================
+   14. Route/header integration hooks
+   --------------------------------------------------------------------------
+   These references help the file participate in the wider site system.
+   ========================================================================== */
+
+:where(
+  .site-header [data-header-op-slot][data-spw-wonder-state="accented"],
+  .frame-topline .frame-sigil[data-spw-wonder-state="accented"],
+  .frame-heading .frame-sigil[data-spw-wonder-state="accented"]
+) {
+  color: var(--wonder-accent-color);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--wonder-accent-color) 24%, transparent);
+}
+
+:where(
+  .frame-topline .spec-strip [data-spw-charge="preview"],
+  .frame-operators [data-spw-charge="preview"]
+) {
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   15. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .spw-delight,
+    [data-spw-delight],
+    .spw-wonder-accent,
+    [data-spw-wonder-state],
+    .spw-delimiter,
+    .spw-topic,
+    [data-spw-topic],
+    .spw-topic-popover,
+    .persona-chip,
+    .wonder-action,
+    .spw-image-helper,
+    .spw-svg-surface,
+    .spw-metaphysics-host
+  ) {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  [data-spw-form="brace"][data-spw-charge="sustained"]::before,
+  [data-spw-form="brace"][data-spw-charge="sustained"]::after,
+  [data-spw-form="brace"][data-spw-wonder-state="resonant"]::before,
+  [data-spw-form="brace"][data-spw-wonder-state="resonant"]::after {
+    animation: none !important;
+    filter: none !important;
+  }
 }

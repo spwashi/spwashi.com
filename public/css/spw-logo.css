@@ -1,4 +1,7 @@
-/* ── Spwashi Logo Runtime ──────────────────────────────────────────────
+/* ==========================================================================
+ * spw-logo.css
+ * --------------------------------------------------------------------------
+ * Spwashi Logo Runtime
  * The logo is the smallest unit of the site's physics.
  * Every state it can enter — preview, charged, emitting, settled —
  * matches the site-wide canonical state vocabulary.
@@ -6,9 +9,9 @@
  * Component topology: island (self-contained, interactive, serializable)
  * Touch: tap channel
  * State contract: settled → preview → charged → emitting → settled
- * ────────────────────────────────────────────────────────────────────── */
+ * ========================================================================== */
 
-.spw-logo {
+:where(.spw-logo) {
   --logo-charge: 0;
   --logo-arc-color: currentColor;
   --logo-w-color: currentColor;
@@ -16,7 +19,7 @@
 
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
+  gap: var(--space-2xs, 0.45em);
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -26,103 +29,95 @@
   position: relative;
 
   transition:
-    color var(--touch-acknowledge, 90ms) var(--ease-precise, ease),
-    opacity var(--touch-acknowledge, 90ms) var(--ease-precise, ease);
+    color var(--touch-acknowledge, 90ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    opacity var(--touch-acknowledge, 90ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
 }
 
 /* ── Mark (SVG glyph) ── */
 
-.spw-logo-mark {
+:where(.spw-logo-mark) {
   flex-shrink: 0;
   display: block;
   width: 1.4em;
   height: 1.63em;  /* preserves 48:56 aspect ratio */
-  color: var(--teal, hsl(180 100% 28%));
+  color: var(--active-op-color, #008080);
   transition:
-    color var(--touch-commit, 180ms) var(--ease-precise, ease),
-    transform var(--touch-commit, 180ms) var(--ease-precise, ease),
-    filter var(--touch-commit, 180ms) var(--ease-precise, ease);
+    color var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    transform var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    filter var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
   will-change: transform, filter;
 }
 
-.mark-layer {
+:where(.mark-layer) {
   transition:
-    stroke-opacity var(--touch-commit, 180ms) var(--ease-precise, ease),
-    stroke-width var(--touch-commit, 180ms) var(--ease-precise, ease),
-    stroke var(--touch-commit, 180ms) var(--ease-precise, ease);
+    stroke-opacity var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    stroke-width var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    stroke var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
 }
 
-.mark-layer--arc {
-  stroke-opacity: 0.85;
-}
-
-.mark-layer--w {
-  stroke-opacity: 0.65;
-}
+:where(.mark-layer--arc) { stroke-opacity: 0.85; }
+:where(.mark-layer--w)   { stroke-opacity: 0.65; }
 
 /* ── Wordmark ── */
 
-.spw-logo-wordmark {
-  font-family: var(--site-mono-font, monospace);
-  font-size: 0.88em;
+:where(.spw-logo-wordmark) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.88em);
   letter-spacing: 0.02em;
   font-weight: 400;
   opacity: var(--logo-wordmark-opacity);
-  transition: opacity var(--touch-commit, 180ms) var(--ease-precise, ease);
+  transition: opacity var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
   white-space: nowrap;
 }
 
 /* ── State: settled (default) ── */
 
-.spw-logo[data-logo-state="settled"],
-.spw-logo:not([data-logo-state]) {
+:where(.spw-logo[data-logo-state="settled"], .spw-logo:not([data-logo-state])) {
   --logo-charge: 0;
 }
 
 /* ── State: preview ── */
 
-.spw-logo[data-logo-state="preview"] {
+:where(.spw-logo[data-logo-state="preview"]) {
   --logo-charge: 0.3;
 }
 
-.spw-logo[data-logo-state="preview"] .spw-logo-mark {
+:where(.spw-logo[data-logo-state="preview"] .spw-logo-mark) {
   transform: translateY(-1px);
   filter: brightness(1.04);
 }
 
-.spw-logo[data-logo-state="preview"] .mark-layer--arc {
+:where(.spw-logo[data-logo-state="preview"] .mark-layer--arc) {
   stroke-opacity: 1;
 }
 
 /* ── State: charged ── */
 
-.spw-logo[data-logo-state="charged"] {
+:where(.spw-logo[data-logo-state="charged"]) {
   --logo-charge: 0.7;
 }
 
-.spw-logo[data-logo-state="charged"] .spw-logo-mark {
-  color: var(--teal, hsl(180 100% 28%));
+:where(.spw-logo[data-logo-state="charged"] .spw-logo-mark) {
   filter: brightness(1.08) saturate(1.12);
   transform: translateY(-1px) scale(1.04);
 }
 
-.spw-logo[data-logo-state="charged"] .mark-layer--arc {
+:where(.spw-logo[data-logo-state="charged"] .mark-layer--arc) {
   stroke-opacity: 1;
   stroke-width: 2.8;
 }
 
-.spw-logo[data-logo-state="charged"] .mark-layer--w {
+:where(.spw-logo[data-logo-state="charged"] .mark-layer--w) {
   stroke-opacity: 0.9;
 }
 
 /* ── State: emitting ── */
 
-.spw-logo[data-logo-state="emitting"] {
+:where(.spw-logo[data-logo-state="emitting"]) {
   --logo-charge: 1;
 }
 
-.spw-logo[data-logo-state="emitting"] .spw-logo-mark {
-  color: var(--teal, hsl(180 100% 28%));
+:where(.spw-logo[data-logo-state="emitting"] .spw-logo-mark) {
   filter: brightness(1.12) saturate(1.2);
   transform: scale(1.06);
 }
@@ -133,42 +128,54 @@
   100% { opacity: 0; transform: scale(1.2); }
 }
 
-.spw-logo[data-logo-state="emitting"]::after {
+:where(.spw-logo[data-logo-state="emitting"])::after {
   content: '';
   position: absolute;
   inset: -4px;
-  border: 1.5px solid var(--teal, hsl(180 100% 28%));
-  border-radius: 50%;
+  border: 1.5px solid var(--active-op-color, #008080);
+  border-radius: var(--radius-pill, 50%);
   pointer-events: none;
-  animation: logo-emit-pulse 480ms var(--ease-release, ease) forwards;
+  animation: logo-emit-pulse var(--duration-slow, 480ms) var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1)) forwards;
 }
 
 /* ── Scroll-charge: driven by --logo-charge from JS ── */
 
-.spw-logo[data-logo-scroll] .spw-logo-mark {
+:where(.spw-logo[data-logo-scroll] .spw-logo-mark) {
   filter:
-    brightness(calc(1 + var(--logo-charge) * 0.08))
-    saturate(calc(1 + var(--logo-charge) * 0.15));
+    brightness(calc(1 + var(--logo-charge, 0) * 0.08))
+    saturate(calc(1 + var(--logo-charge, 0) * 0.15));
 }
 
 /* ── Header placement ── */
 
-.header-logo {
+:where(.header-logo) {
   display: flex;
   align-items: center;
 }
 
-/* On small screens, hide wordmark and show mark only */
+/* ── Responsive & Accessibility ── */
+
 @media (max-width: 480px) {
-  .spw-logo-wordmark {
+  :where(.spw-logo-wordmark) {
     display: none;
   }
 }
 
-/* On very small screens, shrink the mark */
 @media (max-width: 360px) {
-  .spw-logo-mark {
+  :where(.spw-logo-mark) {
     width: 1.1em;
     height: 1.28em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-logo[data-logo-state="emitting"])::after {
+    animation: none !important;
+    display: none;
+  }
+  
+  :where(.spw-logo-mark, .mark-layer, .spw-logo) {
+    transition: none !important;
+    transform: none !important;
   }
 }

@@ -45,14 +45,14 @@
 
   --component-surface: var(--surface, rgba(255, 255, 255, 0.92));
   --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
-  --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
+  --component-surface-soft: color-mix(in srgb, var(--component-surface, rgba(255, 255, 255, 0.92)) 86%, transparent);
 
   --component-shadow: var(--shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
   --component-shadow-active: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
 
   --component-accent: var(--active-op-color, var(--teal, #008080));
-  --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
-  --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  --component-accent-soft: color-mix(in srgb, var(--component-accent, #008080) 20%, transparent);
+  --component-accent-strong: color-mix(in srgb, var(--component-accent, #008080) 42%, transparent);
 
   --component-measure: 68ch;
   --component-code-measure: 84ch;
@@ -113,14 +113,14 @@
    ========================================================================== */
 
 :where(.spw-bleed) {
-  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  --local-bleed-offset: var(--surface-padding, var(--component-pad, 0.9rem));
   width: calc(100% + (var(--local-bleed-offset) * 2));
   margin-inline-start: calc(var(--local-bleed-offset) * -1);
   margin-inline-end: calc(var(--local-bleed-offset) * -1);
 }
 
 :where(.spw-bleed-block) {
-  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  --local-bleed-offset: var(--surface-padding, var(--component-pad, 0.9rem));
   margin-block-start: calc(var(--local-bleed-offset) * -1);
   margin-block-end: calc(var(--local-bleed-offset) * -1);
 }
@@ -144,20 +144,20 @@
 :where([data-spw-stance="entry"]) {
   letter-spacing: 0.04em;
   color: color-mix(in oklab, var(--ink, currentColor) 78%, transparent);
-  transition: color var(--component-transition-deliberate);
+  transition: color var(--component-transition-deliberate, 260ms ease);
 }
 
 :where([data-spw-stance="ground"]) {
   letter-spacing: 0.01em;
-  transition: color var(--component-transition-deliberate);
+  transition: color var(--component-transition-deliberate, 260ms ease);
 }
 
 :where([data-spw-stance="exit"]) {
   opacity: 0.76;
   letter-spacing: 0.01em;
   transition:
-    opacity var(--component-transition-deliberate),
-    color   var(--component-transition-deliberate);
+    opacity var(--component-transition-deliberate, 260ms ease),
+    color   var(--component-transition-deliberate, 260ms ease);
 }
 
 /* ==========================================================================
@@ -176,22 +176,22 @@
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   align-content: start;
-  gap: var(--component-gap-tight);
+  gap: var(--component-gap-tight, 0.55rem);
   min-width: 0;
   min-height: 100%;
-  padding: var(--component-pad);
+  padding: var(--component-pad, 0.9rem);
   color: var(--ink, inherit);
-  background: var(--component-surface);
-  border: var(--component-border);
-  border-radius: var(--component-radius-tight);
-  box-shadow: var(--component-shadow);
+  background: var(--component-surface, rgba(255, 255, 255, 0.92));
+  border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
+  border-radius: var(--component-radius-tight, 8px);
+  box-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
   overflow: clip;
   box-sizing: border-box;
   transition:
-    background   var(--component-transition-deliberate),
-    border-color var(--component-transition-base),
-    box-shadow   var(--component-transition-deliberate),
-    color        var(--component-transition-fast);
+    background   var(--component-transition-deliberate, 260ms ease),
+    border-color var(--component-transition-base, 180ms ease),
+    box-shadow   var(--component-transition-deliberate, 260ms ease),
+    color        var(--component-transition-fast, 120ms ease);
 }
 
 :where(
@@ -203,7 +203,7 @@
   .frame-panel,
   .mode-panel
 ):is(:hover, :focus-within) {
-  border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
+  border-color: color-mix(in srgb, var(--component-accent, #008080) 28%, var(--line, transparent));
 }
 
 :where(
@@ -258,44 +258,48 @@
 /* Enhancements previously from whimsy layer */
 .frame-card, .media-focus-card, .plan-card {
   position: relative;
-  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+  transition: border-color var(--component-transition-fast, 140ms ease), 
+              background-color var(--component-transition-fast, 140ms ease), 
+              color var(--component-transition-fast, 140ms ease);
 }
 
 .frame-card:hover, .frame-card:focus-within, 
 .media-focus-card:hover, .media-focus-card:focus-within, 
 .plan-card:hover, .plan-card:focus-within {
-  border-color: var(--active-op-border);
-  background: var(--active-op-bg-soft);
+  border-color: var(--active-op-border, var(--component-accent, #008080));
+  background: var(--active-op-bg-soft, var(--component-surface-soft, rgba(0, 128, 128, 0.05)));
 }
 
 .frame-card-sigil, .operator-symbol {
   display: inline-block;
   font-weight: 700;
-  transition: color 140ms ease;
+  transition: color var(--component-transition-fast, 140ms ease);
 }
 
 .frame-card:hover .frame-card-sigil,
 .frame-card:focus-within .frame-card-sigil,
 .operator-symbol:hover,
 .operator-symbol:focus-visible {
-  color: var(--active-op-color);
+  color: var(--active-op-color, var(--component-accent, #008080));
 }
 
 code[data-interactive] {
   cursor: pointer;
-  transition: background-color 140ms ease, color 140ms ease, outline-color 140ms ease;
+  transition: background-color var(--component-transition-fast, 140ms ease), 
+              color var(--component-transition-fast, 140ms ease), 
+              outline-color var(--component-transition-fast, 140ms ease);
 }
 
 code[data-interactive]::after {
   content: ' ={ready}';
-  color: var(--op-stream-color);
+  color: var(--op-stream-color, var(--component-accent, #008080));
   font-weight: 700;
   opacity: 0;
 }
 
 code[data-interactive]:hover,
 code[data-interactive]:focus-visible {
-  outline: 1px solid var(--active-op-border);
+  outline: 1px solid var(--active-op-border, var(--component-accent, #008080));
   outline-offset: 2px;
 }
 
@@ -306,18 +310,18 @@ code[data-interactive]:focus-visible::after {
 
 .settings-fieldset {
   position: relative;
-  transition: border-color 140ms ease;
+  transition: border-color var(--component-transition-fast, 140ms ease);
 }
 
 .settings-fieldset legend {
   font-weight: 700;
-  color: var(--ink);
-  transition: color 140ms ease;
+  color: var(--ink, currentColor);
+  transition: color var(--component-transition-fast, 140ms ease);
 }
 
 .settings-fieldset:hover legend,
 .settings-fieldset:focus-within legend {
-  color: var(--op-frame-color);
+  color: var(--op-frame-color, var(--component-accent, #008080));
 }
 
 .settings-option {
@@ -326,12 +330,13 @@ code[data-interactive]:focus-visible::after {
   padding: 0.75rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 140ms ease, border-color 140ms ease;
+  transition: background-color var(--component-transition-fast, 140ms ease), 
+              border-color var(--component-transition-fast, 140ms ease);
 }
 
 .settings-option:hover,
 .settings-option:focus-within {
-  background: var(--op-frame-bg-soft);
+  background: var(--op-frame-bg-soft, var(--component-surface-soft, rgba(0, 128, 128, 0.05)));
 }
 
 [data-status-indicator] {
@@ -343,7 +348,7 @@ code[data-interactive]:focus-visible::after {
   content: ' #';
   color: currentColor;
   opacity: 0;
-  transition: opacity 140ms ease;
+  transition: opacity var(--component-transition-fast, 140ms ease);
 }
 
 [data-status-indicator]:hover::after,
@@ -370,7 +375,7 @@ code[data-interactive]:focus-visible::after {
   left: 0;
   border-bottom: 1px solid currentColor;
   opacity: 0;
-  transition: opacity 140ms ease;
+  transition: opacity var(--component-transition-fast, 140ms ease);
 }
 
 .breadcrumb a:hover::before,
@@ -393,8 +398,8 @@ code[data-interactive]:focus-visible::after {
   content: '{}';
   display: block;
   margin-bottom: 1rem;
-  color: var(--ink-soft);
-  font-family: 'JetBrains Mono', monospace;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 2rem;
 }
 
@@ -407,13 +412,13 @@ code[data-interactive]:focus-visible::after {
   content: '~{';
   position: absolute;
   left: 0;
-  color: var(--op-ref-color);
+  color: var(--op-ref-color, var(--component-accent, #008080));
   font-weight: 700;
 }
 
 .inline-note::after {
   content: '}';
-  color: var(--op-ref-color);
+  color: var(--op-ref-color, var(--component-accent, #008080));
   font-weight: 700;
 }
 
@@ -422,8 +427,8 @@ code[data-interactive]:focus-visible::after {
    ========================================================================== */
 
 :where(.site-frame) {
-  --surface-gap: var(--surface-gap, var(--component-gap));
-  --surface-padding: var(--surface-padding, var(--component-pad-loose));
+  --surface-gap: var(--surface-gap, var(--component-gap, 0.9rem));
+  --surface-padding: var(--surface-padding, var(--component-pad-loose, 1.15rem));
 
   display: flex;
   flex-direction: column;
@@ -431,16 +436,16 @@ code[data-interactive]:focus-visible::after {
   min-width: 0;
   overflow: clip;
   padding: var(--surface-padding);
-  border: var(--component-border);
-  border-radius: var(--component-radius);
-  background: var(--component-surface);
-  box-shadow: var(--component-shadow);
+  border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
+  border-radius: var(--component-radius, 12px);
+  background: var(--component-surface, rgba(255, 255, 255, 0.92));
+  box-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
 
   background-image:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
       transparent 4.5rem
     );
   background-repeat: no-repeat;
@@ -448,15 +453,15 @@ code[data-interactive]:focus-visible::after {
   background-position: var(--surface-padding) 1rem;
 
   transition:
-    background   var(--component-transition-deliberate),
-    border-color var(--component-transition-base),
-    box-shadow   var(--component-transition-deliberate);
+    background   var(--component-transition-deliberate, 260ms ease),
+    border-color var(--component-transition-base, 180ms ease),
+    box-shadow   var(--component-transition-deliberate, 260ms ease);
 }
 
 :where(.site-frame.is-active-frame) {
-  border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
-  background: var(--component-surface-strong);
-  box-shadow: var(--component-shadow-active);
+  border-color: var(--line-strong, color-mix(in srgb, var(--component-accent, #008080) 34%, transparent));
+  background: var(--component-surface-strong, rgba(255, 255, 255, 0.98));
+  box-shadow: var(--component-shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
 }
 
 /* Site Frame Hierarchy Scaling */
@@ -509,12 +514,12 @@ code[data-interactive]:focus-visible::after {
 :where(.frame-topline) {
   margin-bottom: -0.25rem;
   padding-bottom: 0.55rem;
-  border-bottom: 1px solid color-mix(in oklab, var(--component-accent) 16%, transparent);
-  transition: border-color var(--component-transition-base);
+  border-bottom: 1px solid color-mix(in oklab, var(--component-accent, #008080) 16%, transparent);
+  transition: border-color var(--component-transition-base, 180ms ease);
 }
 
 :where(.site-frame.is-active-frame .frame-topline) {
-  border-bottom-color: color-mix(in oklab, var(--component-accent) 32%, transparent);
+  border-bottom-color: color-mix(in oklab, var(--component-accent, #008080) 32%, transparent);
 }
 
 /* ==========================================================================
@@ -525,12 +530,12 @@ code[data-interactive]:focus-visible::after {
   background-image:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--op-probe-bg-soft, var(--component-accent-soft)) 50%, transparent) 0%,
+      color-mix(in srgb, var(--op-probe-bg-soft, var(--component-accent-soft, rgba(0, 128, 128, 0.1))) 50%, transparent) 0%,
       transparent 55%
     ),
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
       transparent 4.5rem
     );
 }
@@ -539,19 +544,19 @@ code[data-interactive]:focus-visible::after {
   background-image:
     linear-gradient(
       0deg,
-      color-mix(in srgb, var(--op-surface-bg-soft, var(--component-accent-soft)) 40%, transparent) 0%,
+      color-mix(in srgb, var(--op-surface-bg-soft, var(--component-accent-soft, rgba(0, 128, 128, 0.1))) 40%, transparent) 0%,
       transparent 50%
     ),
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--component-accent) 18%, transparent) 0 4.5rem,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
       transparent 4.5rem
     );
 }
 
 :where(.site-frame[data-spw-role="reference"]) {
   border-left-width: 2px;
-  border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
+  border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent, #008080) 22%, transparent));
   /* Long-form reference frame tuning */
   --component-measure: 74ch; 
   --surface-gap: 1.3rem; 
@@ -565,14 +570,14 @@ code[data-interactive]:focus-visible::after {
   background-image:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--component-accent) 12%, transparent) 0,
+      color-mix(in srgb, var(--component-accent, #008080) 12%, transparent) 0,
       transparent 42%
     );
 }
 
 :where(.site-frame[data-spw-role="routing"]) {
   border-style: dashed;
-  border-color: color-mix(in srgb, var(--component-accent) 24%, var(--line, transparent));
+  border-color: color-mix(in srgb, var(--component-accent, #008080) 24%, var(--line, transparent));
 }
 
 /* ==========================================================================
@@ -580,10 +585,10 @@ code[data-interactive]:focus-visible::after {
    ========================================================================== */
 
 :where([data-spw-metamaterial]) {
-  --component-material-border: var(--component-border);
-  --component-material-bg: var(--component-surface);
-  --component-material-shadow: var(--component-shadow);
-  --component-material-line: var(--component-accent-soft);
+  --component-material-border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
+  --component-material-bg: var(--component-surface, rgba(255, 255, 255, 0.92));
+  --component-material-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
+  --component-material-line: var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   background: var(--component-material-bg);
   border: var(--component-material-border);
   box-shadow: var(--component-material-shadow);
@@ -593,42 +598,42 @@ code[data-interactive]:focus-visible::after {
   --component-material-bg:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--surface, #fff) 96%, var(--component-accent-soft)) 0%,
+      color-mix(in srgb, var(--surface, #fff) 96%, var(--component-accent-soft, rgba(0, 128, 128, 0.1))) 0%,
       var(--surface, #fff) 100%
     );
-  --component-material-border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, var(--component-accent-soft));
+  --component-material-border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, var(--component-accent-soft, rgba(0, 128, 128, 0.1)));
 }
 
 :where([data-spw-metamaterial="ledger"]) {
   --component-material-bg:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-accent) 6%, transparent) 0 1px,
+      color-mix(in srgb, var(--component-accent, #008080) 6%, transparent) 0 1px,
       transparent 1px 100%
     ),
-    var(--component-surface);
-  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 22%, var(--line, transparent));
+    var(--component-surface, rgba(255, 255, 255, 0.92));
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent, #008080) 22%, var(--line, transparent));
 }
 
 :where([data-spw-metamaterial="signal"]) {
   --component-material-bg:
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--component-accent) 10%, transparent) 0,
+      color-mix(in srgb, var(--component-accent, #008080) 10%, transparent) 0,
       transparent 30%
     ),
-    var(--component-surface);
-  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 30%, var(--line, transparent));
+    var(--component-surface, rgba(255, 255, 255, 0.92));
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent, #008080) 30%, var(--line, transparent));
 }
 
 :where([data-spw-metamaterial="field"]) {
   --component-material-bg:
     radial-gradient(
       circle at 12% 18%,
-      color-mix(in srgb, var(--component-accent) 9%, transparent) 0%,
+      color-mix(in srgb, var(--component-accent, #008080) 9%, transparent) 0%,
       transparent 34%
     ),
-    var(--component-surface);
+    var(--component-surface, rgba(255, 255, 255, 0.92));
 }
 
 :where([data-spw-metamaterial="glass"]) {
@@ -636,7 +641,7 @@ code[data-interactive]:focus-visible::after {
     linear-gradient(
       180deg,
       color-mix(in srgb, #fff 14%, transparent) 0%,
-      color-mix(in srgb, var(--component-surface) 92%, transparent) 100%
+      color-mix(in srgb, var(--component-surface, rgba(255, 255, 255, 0.92)) 92%, transparent) 100%
     );
   --component-material-border: 1px solid color-mix(in srgb, #fff 12%, var(--line, transparent));
 }
@@ -645,11 +650,11 @@ code[data-interactive]:focus-visible::after {
   --component-material-bg:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-accent) 5%, transparent) 0%,
+      color-mix(in srgb, var(--component-accent, #008080) 5%, transparent) 0%,
       transparent 48%
     ),
-    var(--component-surface);
-  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
+    var(--component-surface, rgba(255, 255, 255, 0.92));
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, var(--line, transparent));
 }
 
 /* ==========================================================================
@@ -658,7 +663,7 @@ code[data-interactive]:focus-visible::after {
 
 :where([data-spw-flow="pretext"]) {
   --pretext-local-pad: 0;
-  --pretext-local-radius: var(--component-radius-tight);
+  --pretext-local-radius: var(--component-radius-tight, 8px);
 
   position: relative;
   display: block;
@@ -673,14 +678,14 @@ code[data-interactive]:focus-visible::after {
 
   color: inherit;
   transition:
-    color var(--component-transition-fast),
-    background-color var(--component-transition-fast),
-    box-shadow var(--component-transition-base);
+    color var(--component-transition-fast, 120ms ease),
+    background-color var(--component-transition-fast, 120ms ease),
+    box-shadow var(--component-transition-base, 180ms ease);
 }
 
 :where([data-spw-flow="pretext"] .pretext-flow-lines) {
   display: grid;
-  gap: var(--pretext-line-gap);
+  gap: var(--pretext-line-gap, 0.18rem);
   min-width: 0;
   align-content: start;
 }
@@ -691,7 +696,7 @@ code[data-interactive]:focus-visible::after {
   gap: 0.38em;
   min-width: 0;
   max-width: 100%;
-  line-height: var(--pretext-line-height);
+  line-height: var(--pretext-line-height, 1.55);
   white-space: normal;
   text-wrap: pretty;
   text-wrap: stable;
@@ -709,8 +714,8 @@ code[data-interactive]:focus-visible::after {
   opacity: calc(0.22 + (var(--pretext-influence, 0) * 0.34));
   color: color-mix(in srgb, currentColor 72%, transparent);
   transition:
-    opacity var(--component-transition-fast),
-    color var(--component-transition-fast);
+    opacity var(--component-transition-fast, 120ms ease),
+    color var(--component-transition-fast, 120ms ease);
 }
 
 /* ==========================================================================
@@ -726,8 +731,8 @@ code[data-interactive]:focus-visible::after {
 :where([data-spw-flow="pretext"][data-text-kind="question"]) { --pretext-local-pad: 0.25rem 0.35rem; }
 :where([data-spw-flow="pretext"][data-text-density="compressed"]) { --pretext-line-gap: 0.12rem; }
 :where([data-spw-flow="pretext"][data-text-density="soft"]) { --pretext-line-gap: 0.24rem; }
-:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) { border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent); }
-:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent); }
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) { border-left: 2px solid color-mix(in srgb, var(--component-accent, #008080) 24%, transparent); }
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-left: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, transparent); }
 :where([data-spw-flow="pretext"][data-text-width-class="xs"]) { max-inline-size: 20rem; }
 :where([data-spw-flow="pretext"][data-text-width-class="sm"]) { max-inline-size: 28rem; }
 :where([data-spw-flow="pretext"][data-text-width-class="md"]) { max-inline-size: 40rem; }
@@ -747,14 +752,14 @@ code[data-interactive]:focus-visible::after {
   font-size: 0.66rem;
   line-height: 1.35;
   letter-spacing: 0.03em;
-  opacity: var(--pretext-scaffold-opacity);
-  color: color-mix(in srgb, var(--ink-soft, currentColor) 88%, transparent);
+  opacity: var(--pretext-scaffold-opacity, 0.74);
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.6)) 88%, transparent);
 }
 
 :where([data-spw-debug~="pretext"] .pretext-flow-scaffold),
 :where([data-spw-pretext-scaffold] .pretext-flow-scaffold) {
   padding-top: 0.4rem;
-  border-top: 1px dashed color-mix(in srgb, var(--component-accent) 18%, transparent);
+  border-top: 1px dashed color-mix(in srgb, var(--component-accent, #008080) 18%, transparent);
 }
 
 :where(.pretext-flow-scaffold > span) {
@@ -776,11 +781,11 @@ code[data-interactive]:focus-visible::after {
 }
 
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="measure"] {
-  max-inline-size: min(100%, var(--component-measure));
+  max-inline-size: min(100%, var(--component-measure, 68ch));
 }
 
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="code"] {
-  max-inline-size: min(100%, var(--component-code-measure));
+  max-inline-size: min(100%, var(--component-code-measure, 84ch));
 }
 
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="ambient"] {
@@ -788,13 +793,13 @@ code[data-interactive]:focus-visible::after {
 }
 
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="focused"] {
-  border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent), var(--component-shadow);
+  border-color: color-mix(in srgb, var(--component-accent, #008080) 34%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, #008080) 18%, transparent), var(--component-shadow, 0 10px 24px rgba(0,0,0,0.06));
 }
 
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="held"] {
-  border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent), var(--component-shadow-active);
+  border-color: color-mix(in srgb, var(--component-accent, #008080) 44%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, #008080) 24%, transparent), var(--component-shadow-active, 0 16px 34px rgba(0,0,0,0.1));
 }
 
 /* ==========================================================================
@@ -817,7 +822,7 @@ code[data-interactive]:focus-visible::after {
 :where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
   p, li, .frame-note, .frame-copy, .specimen-material
 ) {
-  max-inline-size: var(--component-measure);
+  max-inline-size: var(--component-measure, 68ch);
   text-wrap: pretty;
 }
 
@@ -842,7 +847,7 @@ code[data-interactive]:focus-visible::after {
 /* If heavily nested (level 3), remove the border entirely and rely on background contrast */
 :where(.site-frame) :where(.frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card) {
   border-color: transparent;
-  background: var(--surface-strong);
+  background: var(--surface-strong, rgba(255, 255, 255, 0.98));
 }
 
 /* ==========================================================================
@@ -851,10 +856,10 @@ code[data-interactive]:focus-visible::after {
 
 :where(.page-index, .section-atlas) {
   margin-block: 1.5rem;
-  padding: var(--component-pad);
-  background: var(--component-surface-soft);
-  border: var(--component-border);
-  border-radius: var(--component-radius);
+  padding: var(--component-pad, 0.9rem);
+  background: var(--component-surface-soft, rgba(255, 255, 255, 0.8));
+  border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
+  border-radius: var(--component-radius, 12px);
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 0.92rem;
 }
@@ -872,24 +877,24 @@ code[data-interactive]:focus-visible::after {
   display: block;
   padding: 0.3rem 0.6rem;
   margin-left: -0.6rem;
-  color: var(--ink-soft);
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   text-decoration: none;
   border-radius: 6px;
-  transition: all var(--component-transition-fast);
+  transition: all var(--component-transition-fast, 120ms ease);
 }
 
 :where(.page-index a:hover, .section-atlas a:hover, 
        .page-index a:focus-visible, .section-atlas a:focus-visible) {
-  color: var(--component-accent);
-  background: color-mix(in srgb, var(--component-accent) 12%, transparent);
+  color: var(--component-accent, #008080);
+  background: color-mix(in srgb, var(--component-accent, #008080) 12%, transparent);
   outline: none;
 }
 
 :where(.page-index a[aria-current="true"], .page-index a:target) {
-  color: var(--ink);
+  color: var(--ink, currentColor);
   font-weight: 600;
-  border-left: 2px solid var(--component-accent);
-  background: color-mix(in srgb, var(--component-accent) 8%, transparent);
+  border-left: 2px solid var(--component-accent, #008080);
+  background: color-mix(in srgb, var(--component-accent, #008080) 8%, transparent);
 }
 
 /* ==========================================================================
@@ -898,9 +903,9 @@ code[data-interactive]:focus-visible::after {
 
 :where([data-spw-role="reference"] .frame-panel),
 :where(.reference-panel, .reference-cluster) {
-  padding: var(--component-pad-loose);
-  background: var(--component-surface-strong);
-  border: var(--component-border-strong);
+  padding: var(--component-pad-loose, 1.15rem);
+  background: var(--component-surface-strong, rgba(255, 255, 255, 0.98));
+  border: var(--component-border-strong, 1px solid rgba(0, 128, 128, 0.32));
 }
 
 ul.frame-list {
@@ -917,26 +922,26 @@ ul.frame-list > li {
   flex-direction: column;
   gap: 0.4rem;
   padding-left: 1.25rem;
-  border-left: 2px solid color-mix(in srgb, var(--component-accent) 22%, var(--component-border));
+  border-left: 2px solid color-mix(in srgb, var(--component-accent, #008080) 22%, var(--component-border, rgba(0, 128, 128, 0.18)));
 }
 
 ul.frame-list > li > a {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
-  text-decoration-color: var(--component-accent-soft);
+  text-decoration-color: var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   align-self: flex-start;
-  transition: text-decoration-color var(--component-transition-fast);
+  transition: text-decoration-color var(--component-transition-fast, 120ms ease);
 }
 
 ul.frame-list > li > a:hover,
 ul.frame-list > li > a:focus-visible {
-  text-decoration-color: var(--component-accent);
+  text-decoration-color: var(--component-accent, #008080);
 }
 
 ul.frame-list > li > p {
   margin: 0;
-  color: var(--ink-soft);
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.95em;
   line-height: 1.5;
 }
@@ -951,29 +956,29 @@ ul.frame-list > li > p {
   flex-direction: column;
   gap: 0.85rem;
   margin: 1.5rem 0;
-  padding: var(--component-pad);
-  background: var(--component-surface);
-  border: var(--component-border);
-  border-radius: var(--component-radius);
-  box-shadow: var(--component-shadow);
+  padding: var(--component-pad, 0.9rem);
+  background: var(--component-surface, rgba(255, 255, 255, 0.92));
+  border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
+  border-radius: var(--component-radius, 12px);
+  box-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
 }
 
 :where(.spw-svg-figure svg, .image-study img) {
   display: block;
   max-width: 100%;
   height: auto;
-  border-radius: var(--component-radius-tight);
+  border-radius: var(--component-radius-tight, 8px);
   overflow: hidden;
 }
 
 figcaption.frame-note,
 .study-summary {
   font-size: 0.88em;
-  color: var(--ink-soft);
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   text-wrap: balance;
   max-inline-size: 65ch;
-  border-top: 1px dashed color-mix(in srgb, var(--component-border) 80%, transparent);
+  border-top: 1px dashed color-mix(in srgb, var(--component-border, rgba(0, 128, 128, 0.18)) 80%, transparent);
   padding-top: 0.6rem;
   margin-top: 0.2rem;
 }
@@ -996,11 +1001,11 @@ figcaption.frame-note,
   padding: 0.25rem 0.65rem;
   font-size: 0.82rem;
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  color: var(--ink);
-  background: var(--component-surface-soft);
-  border: 1px solid var(--component-border);
+  color: var(--ink, currentColor);
+  background: var(--component-surface-soft, rgba(255, 255, 255, 0.8));
+  border: 1px solid var(--component-border, rgba(0, 128, 128, 0.18));
   border-radius: 999px;
-  transition: all var(--component-transition-fast);
+  transition: all var(--component-transition-fast, 120ms ease);
   white-space: nowrap;
 }
 
@@ -1008,9 +1013,9 @@ figcaption.frame-note,
 .spec-pill.is-active,
 .spec-pill:hover,
 .spec-pill:focus-visible {
-  background: color-mix(in srgb, var(--component-accent) 15%, transparent);
-  border-color: var(--component-accent-soft);
-  color: var(--component-accent);
+  background: color-mix(in srgb, var(--component-accent, #008080) 15%, transparent);
+  border-color: var(--component-accent-soft, rgba(0, 128, 128, 0.2));
+  color: var(--component-accent, #008080);
   outline: none;
 }
 
@@ -1019,7 +1024,7 @@ figcaption.frame-note,
   opacity: 0.55;
   mix-blend-mode: multiply;
   transform: scale(0.96);
-  transition: opacity var(--component-transition-fast), transform var(--component-transition-fast);
+  transition: opacity var(--component-transition-fast, 120ms ease), transform var(--component-transition-fast, 120ms ease);
 }
 
 :where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip):hover {
@@ -1036,10 +1041,10 @@ figcaption.frame-note,
   margin-block: 1.5rem; 
 }
 .inline-note.editorial-note {
-  border-left: 3px solid var(--component-accent-soft);
+  border-left: 3px solid var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   padding-left: 1.25rem;
   font-style: italic;
-  color: var(--ink-soft);
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
 }
 .inline-note.editorial-note::before,
 .inline-note.editorial-note::after { 

@@ -1,33 +1,122 @@
-/* Text context routing */
-[data-text-kind='operator-dense'] {
+/* ==========================================================================
+ * spw-typography-context.css
+ * --------------------------------------------------------------------------
+ * Spw Typography Context Routing
+ * Modulates the base typography and operator axes based on the surrounding
+ * environmental state (density, rhythm, and layout stability).
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Text Context Routing (Density & Pressure)
+   ========================================================================== */
+
+/* Base application of field physics to typography */
+:where([data-text-kind]) {
+  /* Pressure tightens the vertical rhythm and tracking */
+  line-height: calc(var(--site-line-height, 1.68) - (var(--type-field-pressure, 0) * 0.25));
+  letter-spacing: calc((var(--type-field-pressure, 0) * -0.01em));
+}
+
+:where([data-text-kind] [data-spw-operator]) {
+  /* Salience dictates how brightly operators punch through the text */
+  opacity: calc(0.35 + (var(--type-field-sigil-salience, 0.5) * 0.65));
+  filter: saturate(calc(0.5 + var(--type-field-sigil-salience, 0.5)));
+}
+
+/* -- Specific Context Profiles -- */
+
+:where([data-text-kind='operator-dense']) {
   --type-field-sigil-salience: 0.85;
   --type-field-pressure: 0.72;
+  --type-weight-bias: 100;
 }
 
-[data-text-kind='prose'] {
+:where([data-text-kind='prose']) {
   --type-field-sigil-salience: 0.32;
-  --type-field-pressure: 0.28;
+  --type-field-pressure: 0.18; /* Relaxed for reading */
 }
 
-[data-text-kind='question'] {
+:where([data-text-kind='question']) {
+  --type-field-sigil-salience: 0.6;
+  --type-field-pressure: 0.4;
   --type-field-rhythm-bias: 0.6;
+  font-style: italic;
+  color: var(--ink-strong, #090b0c);
 }
 
-/* Rhythm ensembles */
-[data-spw-rhythm='chorus'] [data-spw-operator] {
+:where([data-text-kind='metadata']) {
+  --type-field-sigil-salience: 0.4;
+  --type-field-pressure: 0.85; /* Tightly packed */
+  font-size: var(--text-size-xs, 0.85em);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* ==========================================================================
+   2. Rhythm Ensembles (Group Dynamics)
+   ========================================================================== */
+
+/* Chorus: Staggered transition delays for cascading activation */
+:where([data-spw-rhythm='chorus'] [data-spw-operator]) {
   transition-delay: calc(var(--rhythm-index, 0) * 18ms);
 }
 
-[data-spw-rhythm='anchor'] [data-spw-operator='frame'],
-[data-spw-rhythm='anchor'] [data-spw-operator='binding'] {
-  --type-weight-range: calc(var(--type-weight-range) + 60);
+/* Anchor: Grounds the structure by heavily weighting bounding operators */
+:where(
+  [data-spw-rhythm='anchor'] [data-spw-operator='frame'],
+  [data-spw-rhythm='anchor'] [data-spw-operator='binding'],
+  [data-spw-rhythm='anchor'] [data-spw-operator='baseline']
+) {
+  --type-weight-range: calc(var(--type-weight-range-base, 300) + 120);
+  --type-size-surge: calc(var(--type-size-surge-base, 0) + 0.05);
 }
 
-/* Measurement-aware adaptation */
-[data-text-wrap='volatile'] [data-spw-operator='surface'] {
-  --type-size-surge: calc(var(--type-size-surge) * 0.7);
+/* Pulse: Creates a breathing rhythm for long-running processes */
+:where([data-spw-rhythm='pulse'] [data-spw-operator]) {
+  animation: type-pulse-rhythm var(--duration-slow, 480ms) alternate infinite var(--ease-settle, ease-in-out);
+  animation-delay: calc(var(--rhythm-index, 0) * 45ms);
 }
 
-[data-text-wrap='stable'] [data-spw-operator='probe'] {
-  --type-tracking-range: calc(var(--type-tracking-range) + 0.03em);
+@keyframes type-pulse-rhythm {
+  0%   { opacity: 0.6; transform: scale(0.98); }
+  100% { opacity: 1;   transform: scale(1.02); }
+}
+
+/* ==========================================================================
+   3. Measurement-Aware Adaptation
+   ========================================================================== */
+/* Protects layout integrity during reflows or in highly constrained spaces */
+
+/* Volatile: Container is resizing or extremely narrow. Restrict horizontal/vertical surges. */
+:where([data-text-wrap='volatile'] [data-spw-operator]) {
+  --type-size-surge: calc(var(--type-size-surge-base, 0.1) * 0.4);
+  --type-tracking-range: calc(var(--type-tracking-range-base, 0.05em) * 0.5);
+  transition-duration: var(--duration-instant, 50ms); /* Snap to prevent layout lag */
+}
+
+:where([data-text-wrap='volatile'] [data-spw-operator='surface']) {
+  --type-size-surge: calc(var(--type-size-surge-base, 0.18) * 0.3); /* Surface surges the most, reign it in */
+}
+
+/* Stable: Container has guaranteed width. Allow full typographic expression. */
+:where([data-text-wrap='stable'] [data-spw-operator='probe']) {
+  --type-tracking-range: calc(var(--type-tracking-range-base, 0.12em) + 0.04em);
+}
+
+:where([data-text-wrap='stable'] [data-spw-operator='stream']) {
+  --type-tracking-range: calc(var(--type-tracking-range-base, -0.08em) - 0.02em);
+}
+
+/* ==========================================================================
+   4. Reduced Motion Handler
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-rhythm='pulse'] [data-spw-operator]) {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  
+  :where([data-spw-rhythm='chorus'] [data-spw-operator]) {
+    transition-delay: 0ms !important;
+  }
 }

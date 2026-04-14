@@ -1,48 +1,53 @@
-/**
+/* ==========================================================================
+ * spw-svg-personas.css
+ * --------------------------------------------------------------------------
  * Spw SVG Personas & Meta-UI
- *
  * Tailors SVG rendering and interaction artifacts to the active technical persona.
- */
+ * Integrated with the global token ecology, eliminating the need for manual
+ * dark/light mode overrides.
+ * ========================================================================== */
 
-/* ── Viewer@ (Default) ─────────────────────────────────────────────────── */
-/* Clean, standard rendering using theme variables. */
+/* ─── Viewer@ (Default) ─────────────────────────────────────────────────── */
+/* Clean, standard rendering using inherited theme variables. */
 
-.spw-svg-surface {
-    background: var(--surface, #fff);
-    transition: all 0.4s var(--cinematic-ease, ease-in-out);
+:where(.spw-svg-surface) {
+    background: var(--surface, #ffffff);
+    transition: all var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
 }
 
-/* ── Doodler@ ──────────────────────────────────────────────────────────── */
+/* ─── Doodler@ ──────────────────────────────────────────────────────────── */
 /* Hand-drawn aesthetic: sketchy lines, paper texture, vibrant flows. */
 
-[data-spw-persona="doodler"] .spw-svg-surface {
+:where([data-spw-persona="doodler"] .spw-svg-surface) {
     filter: url('#paper-texture');
-    border: 2px solid var(--wonder-accent-color, #ffbf00);
+    border: 2px solid var(--op-object-color, #a67c00);
     border-radius: 12px 8px 14px 10px; /* irregular */
 }
 
-[data-spw-persona="doodler"] .spw-svg-surface circle,
-[data-spw-persona="doodler"] .spw-svg-surface rect,
-[data-spw-persona="doodler"] .spw-svg-surface path:not(.spw-svg-flow) {
+:where(
+    [data-spw-persona="doodler"] .spw-svg-surface circle,
+    [data-spw-persona="doodler"] .spw-svg-surface rect,
+    [data-spw-persona="doodler"] .spw-svg-surface path:not(.spw-svg-flow)
+) {
     filter: url('#doodler-sketch');
     stroke-width: 2;
 }
 
-[data-spw-persona="doodler"] .spw-svg-flow {
+:where([data-spw-persona="doodler"] .spw-svg-flow) {
     stroke-width: 3;
     opacity: 0.8;
-    filter: drop-shadow(0 0 4px var(--teal));
+    filter: drop-shadow(0 0 4px var(--active-op-color, #008080));
 }
 
 /* Doodler Particle Burst (Injected by JS) */
-.doodler-burst {
+:where(.doodler-burst) {
     position: absolute;
     pointer-events: none;
-    color: var(--wonder-accent-color, #ffbf00);
-    font-size: 1.2rem;
+    color: var(--op-object-color, #a67c00);
+    font-size: var(--text-size-xl, 1.2rem);
     transform: translate(-50%, -50%);
-    z-index: 9999;
-    animation: doodler-scatter 0.6s ease-out forwards;
+    z-index: var(--layer-priority, 2000);
+    animation: doodler-scatter var(--duration-slow, 480ms) var(--ease-release, ease-out) forwards;
 }
 
 @keyframes doodler-scatter {
@@ -50,57 +55,61 @@
     100% { transform: translate(-50%, -250%) scale(1.5) rotate(15deg); opacity: 0; letter-spacing: 0.5em; }
 }
 
-/* ── Scribe@ ───────────────────────────────────────────────────────────── */
+/* ─── Scribe@ ───────────────────────────────────────────────────────────── */
 /* Blueprint aesthetic: grid background, rigid lines, meta reveals. */
 
-[data-spw-persona="scribe"] .spw-svg-surface {
+:where([data-spw-persona="scribe"] .spw-svg-surface) {
+    /* Subtle technical grid */
     background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTSAyMCAwIEwgMCAwIDAgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFhOTk5OSIgc3Ryb2tlLXdpZHRoPSIwLjIiIG9wYWNpdHk9IjAuMTUiLz48L3N2Zz4=');
-    background-color: var(--charcoal-dark, #111);
-    border: 1px solid var(--teal, #1a9999);
+    background-color: var(--surface-code, #12171b);
+    border: 1px solid var(--active-op-color, #008080);
 }
 
-[data-spw-persona="scribe"] .spw-svg-surface text {
-    font-family: var(--site-mono-font, monospace);
+:where([data-spw-persona="scribe"] .spw-svg-surface text) {
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
     font-size: 0.9em;
+    fill: var(--surface-strong, #ffffff);
 }
 
-[data-spw-persona="scribe"] .spw-svg-node {
+:where([data-spw-persona="scribe"] .spw-svg-node) {
     stroke-dasharray: 2 1; /* technical dashed border */
 }
 
 /* Scribe Meta Tooltip (Injected by JS) */
-.scribe-meta-tooltip {
+:where(.scribe-meta-tooltip) {
     position: absolute;
     transform: translateX(-50%) translateY(10px);
     font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-    font-size: 0.65rem;
-    background: var(--charcoal, #1a1a1a);
-    color: var(--teal-soft, #1a9999);
-    padding: 3px 8px;
-    border: 1px solid var(--ink-soft, #333);
-    border-radius: 3px;
+    font-size: var(--text-size-xs, 0.65rem);
+    background: var(--surface-strong, #ffffff);
+    color: var(--ink, #161c1d);
+    padding: var(--space-3xs, 3px) var(--space-xs, 8px);
+    border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+    border-radius: var(--shape-element, 3px);
     white-space: nowrap;
-    z-index: 9999;
+    z-index: var(--layer-priority, 2000);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 150ms ease, transform 150ms ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    box-shadow: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
+    transition: 
+        opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease), 
+        transform var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-.scribe-meta-tooltip.is-visible {
+:where(.scribe-meta-tooltip.is-visible) {
     opacity: 0.95;
     transform: translateX(-50%) translateY(0);
 }
 
-/* ── Theme Responsiveness ───────────────────────────────────────────────── */
-/* Ensure SVGs adapt to dark/light modes via CSS variables. */
+/* ─── Accessibility Constraints ─────────────────────────────────────────── */
 
-:root[data-theme="dark"] .spw-svg-surface {
-    --surface: var(--charcoal-light, #222);
-    --ink: var(--ink-base, #eee);
-}
-
-:root[data-theme="light"] .spw-svg-surface {
-    --surface: #fff;
-    --ink: #111;
+@media (prefers-reduced-motion: reduce) {
+    :where(.doodler-burst) {
+        animation: none !important;
+        display: none;
+    }
+    
+    :where(.scribe-meta-tooltip) {
+        transition: none !important;
+    }
 }

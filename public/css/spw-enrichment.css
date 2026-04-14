@@ -1,60 +1,203 @@
-/* Mobile Swipe and Physics
- * Cinematic scroll-snapping for badges and operator strips.
+/* ==========================================================================
+ * spw-enrichment.css
+ * --------------------------------------------------------------------------
+ * Purpose:
+ * - Touch ecology, swipe physics, and enriched code block interactions.
+ * - Establishes strict boundaries for CSS scroll-snapping and prepares
+ * state hooks for JavaScript physics handoffs.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Horizontal Swipe Ecology
+   ========================================================================== */
+
+/* * Apply to token strips, operator arrays, and horizontal card stacks.
+ * Uses `overscroll-behavior-x: contain` to prevent the browser from 
+ * triggering "swipe to go back/forward" navigation during component use.
  */
-
-@media (max-width: 700px) {
+:where(
+    [data-spw-swipe="container"],
     .spec-strip,
-    .frame-operators {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 0.5rem; /* Room for scrollbar if needed */
-        scrollbar-width: none; /* Hide scrollbar in Firefox */
-    }
+    .frame-operators,
+    .operator-snippet-grid--horizontal,
+    .media-card-grid--horizontal
+) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    
+    /* CSS Snapping Defaults */
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
+    
+    /* Hide scrollbars for a native app feel */
+    scrollbar-width: none; /* Firefox */
+    
+    /* Allow browser to optimize horizontal panning */
+    touch-action: pan-x pan-y;
+    
+    /* Ensure child margins don't collapse in flex containers */
+    gap: var(--space-sm, 0.75rem);
+    padding-bottom: var(--space-xs, 0.5rem); /* Safe area for hidden scrollbars */
+}
 
-    .spec-strip::-webkit-scrollbar,
-    .frame-operators::-webkit-scrollbar {
-        display: none; /* Hide scrollbar in Chrome/Safari */
-    }
+:where([data-spw-swipe="container"])::-webkit-scrollbar,
+:where(.spec-strip)::-webkit-scrollbar,
+:where(.frame-operators)::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+}
 
-    .spec-pill,
-    .operator-chip {
-        scroll-snap-align: start;
-        flex-shrink: 0;
-    }
+/* ==========================================================================
+   2. Swipe Items & Snap Alignment
+   ========================================================================== */
 
-    /* Physics: add a bit of "weight" to the cards during swipe */
-    .frame-card {
-        scroll-snap-align: center;
-        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+:where(
+    [data-spw-swipe="item"],
+    .spec-strip > .spec-pill,
+    .frame-operators > .operator-chip
+) {
+    scroll-snap-align: start;
+    scroll-margin-inline-start: var(--page-gutter, 1.5rem);
+    flex-shrink: 0;
+}
+
+/* Cards usually feel better snapped to the center on mobile */
+:where(.media-card-grid--horizontal > .media-card, .frame-card--swipeable) {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    width: min(85vw, var(--measure-card, 42ch));
+    /* The transform transition acts as the return-to-rest physics */
+    transition: 
+        transform var(--duration-deliberate, 360ms) var(--ease-settle, cubic-bezier(0.2, 0.8, 0.2, 1)),
+        box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease);
+}
+
+/* ==========================================================================
+   3. JS Physics Handoff & Interaction States
+   ========================================================================== */
+
+/* * CRITICAL: When JavaScript initiates a drag or applies spring physics, 
+ * CSS snapping and transitions MUST be disabled to prevent stuttering.
+ */
+:where([data-spw-swipe="container"].is-js-driven) {
+    scroll-snap-type: none !important;
+}
+
+:where([data-spw-swipe="container"].is-dragging) {
+    scroll-snap-type: none !important;
+    cursor: grabbing !important;
+}
+
+:where([data-spw-swipe="container"].is-dragging > *) {
+    /* Kill transitions while finger/mouse is actively dragging */
+    transition: none !important;
+    user-select: none;
+    pointer-events: none; /* Prevent accidental link clicks during swipe */
+}
+
+/* ==========================================================================
+   4. Mobile Touch Nuances
+   ========================================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* * On touch devices, 'hover' sticks. We rely on ':active' for 
+     * physical press feedback instead.
+     */
+    :where(
+        .frame-card:active, 
+        .operator-chip:active, 
+        .spec-pill:active, 
+        button:active
+    ) {
+        transform: scale(0.98);
+        transition-duration: var(--touch-acknowledge, 90ms);
+        transition-timing-function: var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+    }
+    
+    /* Ensure swipeable containers feel loose, not rigid, on phones */
+    :where([data-spw-swipe="container"]) {
+        scroll-snap-type: x proximity; 
     }
 }
 
-/* Enriched Code Block States */
-.frame-code-enrichment {
+/* ==========================================================================
+   5. Enriched Code Surfaces
+   ========================================================================== */
+
+:where(.frame-code-enrichment) {
     position: relative;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-sm);
-    background: var(--token-bg);
+    border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+    border-radius: var(--shape-component, 8px);
+    background: var(--surface-code, rgba(18, 23, 27, 0.96));
     overflow: hidden;
-    margin: 1rem 0;
+    margin: var(--space-md, 1rem) 0;
+    box-shadow: var(--shadow-sm, 0 2px 6px rgba(0,0,0,0.05));
+    transition: 
+        border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-.frame-code-enrichment:hover {
-    border-color: var(--teal);
+:where(.frame-code-enrichment:hover, .frame-code-enrichment:focus-within) {
+    border-color: var(--active-op-border, rgba(0, 128, 128, 0.55));
+    box-shadow: var(--shadow-base, 0 4px 12px rgba(0,0,0,0.06));
 }
 
-.frame-code-enrichment::after {
-    content: 'spw-enriched';
+/* Execution / Terminal Badge */
+:where(.frame-code-enrichment::after) {
+    content: attr(data-lang);
     position: absolute;
     top: 0;
     right: 0;
-    padding: 2px 6px;
-    background: var(--teal);
-    color: white;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.58rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.15));
+    color: var(--active-op-color, #008080);
+    border-bottom-left-radius: var(--shape-element, 4px);
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-xs, 0.65rem);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     opacity: 0.8;
+    pointer-events: none;
+    transition: 
+        opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+/* Interactive States for Enriched Code */
+:where(.frame-code-enrichment[data-code-state="ready"]:hover::after) {
+    content: 'run = { enter }';
+    background: var(--active-op-color, #008080);
+    color: var(--surface-strong, #fff);
+    opacity: 1;
+}
+
+:where(.frame-code-enrichment[data-code-state="executing"]) {
+    border-color: var(--op-stream-color, #208259);
+}
+
+:where(.frame-code-enrichment[data-code-state="executing"]::after) {
+    content: 'executing...';
+    background: var(--op-stream-color, #208259);
+    color: var(--surface-strong, #fff);
+    opacity: 1;
+    animation: code-pulse var(--duration-slow, 480ms) infinite alternate ease-in-out;
+}
+
+@keyframes code-pulse {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+/* ==========================================================================
+   6. Touch Target Accessibility
+   ========================================================================== */
+
+/* Ensure internal buttons (like 'copy' or 'run' inside code blocks) are tappable */
+:where(.frame-code-enrichment button) {
+    min-height: var(--touch-target-min, 2.75rem);
+    min-width: var(--touch-target-min, 2.75rem);
+    touch-action: manipulation;
 }

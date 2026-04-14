@@ -7,12 +7,19 @@
    - This layer owns "how something can be grasped", not full material,
      phase, or pretext layout systems.
 
+   Mental model
+   - Tokens can be grasped as text, pills, seams, or room-signs.
+   - Handles should expose semantic allocation without overwhelming prose.
+   - A good handle explains what can be touched, how it will respond, and
+     which operator / substrate / stance / role it belongs to.
+
    Does own
    - sigils, operator chips, syntax tokens, inline delimiters, spec pills
-   - selection / activation / latch / bookmark states
+   - selection / activation / latch / bookmark / allocation states
    - compact breadcrumbs and frame metrics seams
    - room-aware swap hints and memo surfaces
    - subtle gesture signaling for inline and card-adjacent handles
+   - semantic seams for operator, substrate, role, stance, and flow hints
    ========================================================================== */
 
 /* ==========================================================================
@@ -29,60 +36,55 @@ header,
 .mode-switch,
 .demo-controls,
 .spw-spell-path,
-.frame-metrics-bar {
+.frame-metrics-bar,
+.frame-topline,
+.frame-heading {
   position: relative;
   z-index: 120;
 }
 
-/* Unify the bounding box for all interactive tokens */
 :root {
-  --handle-min-height: 2.2rem; /* Ensure consistent touch targets */
-  --handle-baseline-offset: 0.1em;
-}
+  --handle-min-height: max(2.2rem, var(--touch-target-min, 2.2rem));
+  --handle-min-height-compact: 1.72rem;
+  --handle-baseline-offset: 0.08em;
 
-:where(.spec-strip, .frame-operators) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--handle-gap, 0.45rem);
-  /* Align to baseline so text inside chips aligns perfectly, 
-     even if borders/padding differ slightly */
-  align-items: baseline; 
-}
+  --handle-radius: var(--shape-component, 0.42rem);
+  --handle-radius-tight: var(--shape-element, 0.28rem);
+  --handle-radius-pill: 999px;
 
-:where(
-  .operator-chip, 
-  .syntax-token, 
-  .spec-pill, 
-  .frame-sigil
-) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--handle-min-height);
-  padding: var(--handle-pad-y) var(--handle-pad-x);
-  box-sizing: border-box;
-  /* Push text down slightly if fonts render off-center */
-  padding-top: calc(var(--handle-pad-y) + var(--handle-baseline-offset)); 
-}
-
-:root {
-  --handle-radius: 0.42rem;
-  --handle-radius-tight: 0.28rem;
   --handle-pad-y: 0.2rem;
   --handle-pad-x: 0.54rem;
+  --handle-pad-inline-inline: 0.24rem;
+  --handle-pad-block-inline: 0.04rem;
   --handle-gap: 0.38rem;
+  --handle-gap-tight: 0.22rem;
 
   --handle-bg: var(--surface-strong, rgba(255, 255, 255, 0.82));
-  --handle-bg-active: color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, var(--handle-bg));
+  --handle-bg-soft: color-mix(in srgb, var(--handle-bg) 82%, transparent);
+  --handle-bg-active:
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, var(--handle-bg));
   --handle-bg-selected: var(--active-op-color, var(--teal));
+
   --handle-ink: var(--active-op-color, var(--teal));
   --handle-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.62));
-  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 62%, transparent);
-  --handle-line-soft: color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+  --handle-ink-quiet: color-mix(in srgb, var(--handle-ink-soft) 78%, transparent);
 
-  --handle-shadow-rest: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --handle-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
-  --handle-shadow-latched: inset 0 1px 0 rgba(255,255,255,0.34), 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  --handle-line:
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 62%, transparent);
+  --handle-line-soft:
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+  --handle-line-quiet:
+    color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+
+  --handle-shadow-rest: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.06));
+  --handle-shadow-focus:
+    0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  --handle-shadow-latched:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  --handle-shadow-guided:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 12%, transparent);
 
   --handle-duration-fast: var(--duration-fast, 120ms);
   --handle-duration-base: var(--duration-base, 180ms);
@@ -95,10 +97,21 @@ header,
   --handle-underline-offset: 0.16em;
 
   --handle-roomy-hint-threshold: 44rem;
+  --handle-meta-font: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where(.spec-strip, .frame-operators, .spw-component-meta, .spw-component-guides) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--handle-gap);
+  align-items: baseline;
+  min-width: 0;
 }
 
 /* ==========================================================================
    2. Shared handle primitive
+   --------------------------------------------------------------------------
+   The handle primitive is intentionally broad. Specific nouns bias from here.
    ========================================================================== */
 
 :where(
@@ -112,15 +125,25 @@ header,
   .frame-card-sigil,
   .resonance-sigil,
   .spw-delimiter,
-  [data-spw-handle="true"]
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"],
+  [data-spw-charge-key],
+  [data-spw-inline-form],
+  [data-spw-operator]
 ) {
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.2em;
   min-width: 0;
   max-width: 100%;
+  min-height: var(--handle-min-height);
   padding: var(--handle-pad-y) var(--handle-pad-x);
+  padding-top: calc(var(--handle-pad-y) + var(--handle-baseline-offset));
+  box-sizing: border-box;
   border: 1.25px solid var(--handle-line);
   border-radius: var(--handle-radius);
   background: var(--handle-bg);
@@ -130,88 +153,204 @@ header,
   box-shadow: var(--handle-shadow-rest);
   cursor: pointer;
   transition:
-    color            var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease),
     background-color var(--handle-duration-fast) var(--handle-ease),
-    border-color     var(--handle-duration-base) var(--handle-ease),
-    box-shadow       var(--handle-duration-base) var(--handle-settle-ease),
-    transform        var(--handle-duration-fast) var(--handle-settle-ease),
-    opacity          var(--handle-duration-fast) var(--handle-ease);
+    border-color var(--handle-duration-base) var(--handle-ease),
+    box-shadow var(--handle-duration-base) var(--handle-settle-ease),
+    transform var(--handle-duration-fast) var(--handle-settle-ease),
+    opacity var(--handle-duration-fast) var(--handle-ease),
+    filter var(--handle-duration-base) var(--handle-settle-ease);
 }
 
-/* Inline handles should feel more like annotated text than pills */
+/* Inline handles should read like annotated language before they read as pills. */
 :where(
   .syntax-token,
   .spw-delimiter,
   [data-spw-charge-key],
-  [data-spw-operator]
-):not(.operator-chip):not(.frame-sigil):not(.spec-pill) {
-  padding-inline: 0.24rem;
-  padding-block: 0.04rem;
+  [data-spw-operator],
+  [data-spw-inline-form]
+):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
+  min-height: auto;
+  padding-inline: var(--handle-pad-inline-inline);
+  padding-block: var(--handle-pad-block-inline);
   border-color: transparent;
   background: transparent;
   border-radius: var(--handle-radius-tight);
   box-shadow: none;
 }
 
-/* ── Frame Sigils ── 
-   Frame sigils act as invisible anchor handles unless in the topline context. */
-.frame-sigil {
-  font-size: 0;
-  display: block;
-  width: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.frame-topline .frame-sigil {
-  font-size: 0.72rem;
-  opacity: 0.42;
-  position: static;
-  width: auto;
-  overflow: visible;
-  color: var(--ink-soft);
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  transition: opacity 120ms ease;
-}
-
-.frame-topline .frame-sigil:hover,
-.frame-topline .frame-sigil:focus-visible {
-  opacity: 0.75;
-}
-
-/* ── Operator Chips ── */
-.operator-chip {
-  background: color-mix(in oklab, var(--active-op-color) 10%, transparent);
-  border: 1px solid color-mix(in oklab, var(--active-op-color) 24%, transparent);
-  color: var(--active-op-color);
-  font-weight: 500;
-}
-
-.operator-chip:hover {
-  background: color-mix(in oklab, var(--active-op-color) 16%, transparent);
-  color: var(--ink);
-  transform: translateY(-1px);
-}
-
-@media (max-width: 600px) {
-  .operator-chip {
-    min-height: 2.4rem;
-    padding: 0.4rem 0.7rem;
-  }
-}
-
-/* ── Spec Pills ── */
-.spec-pill {
-  color: var(--ink-soft);
+/* Handles that mostly communicate metadata should stay compact. */
+:where(.spw-component-tag, .spw-guide-chip, .frame-card-sigil, .resonance-sigil) {
+  min-height: var(--handle-min-height-compact);
+  padding-inline: 0.42rem;
+  font-family: var(--handle-meta-font);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
 }
 
 /* ==========================================================================
-   3. Hover / focus / keyboard states
+   3. Handle layout, siblings, and room seams
+   ========================================================================== */
+
+:where(.frame-topline, .frame-heading) > :where(.spec-strip, .frame-operators, .spw-component-meta) {
+  min-width: 0;
+}
+
+:where(.frame-topline, .frame-heading) > .spw-component-meta {
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+:where(.frame-topline > .frame-sigil + .spec-strip) {
+  margin-inline-start: 0.1rem;
+}
+
+:where(.frame-topline > .frame-sigil + .spw-component-meta) {
+  margin-inline-start: auto;
+}
+
+:where(.frame-operators > * + *, .spec-strip > * + *)::before {
+  content: none;
+}
+
+/* Dense seams become descriptive when metadata mode is on. */
+html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-strip > *)[data-spw-operator]::after {
+  content: attr(data-spw-operator);
+  position: absolute;
+  inset: auto auto calc(100% + 0.2rem) 50%;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.32rem;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  color: var(--handle-ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity var(--handle-duration-fast) var(--handle-ease);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-strip > *)[data-spw-operator]:is(:hover, :focus-visible)::after {
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   4. Frame sigils
+   --------------------------------------------------------------------------
+   Frame sigils are anchor handles. Hidden by default except in room-sign seams.
+   ========================================================================== */
+
+.frame-sigil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.frame-topline .frame-sigil,
+.frame-heading .frame-sigil {
+  position: static;
+  width: auto;
+  overflow: visible;
+  min-height: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  opacity: 0.42;
+  justify-content: flex-start;
+  transition:
+    opacity var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
+}
+
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+  opacity: 0.78;
+  color: var(--active-op-color, var(--teal));
+  outline: none;
+}
+
+:where(.frame-topline .frame-sigil + .spec-strip, .frame-heading .frame-sigil + .spw-component-meta) {
+  align-self: center;
+}
+
+/* ==========================================================================
+   5. Operator chips, spec pills, and component tags
+   ========================================================================== */
+
+.operator-chip {
+  background: color-mix(in oklab, var(--active-op-color, var(--teal)) 10%, transparent);
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 24%, transparent);
+  color: var(--active-op-color, var(--teal));
+  font-weight: 500;
+}
+
+.operator-chip:hover,
+.operator-chip:focus-visible {
+  background: color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
+  color: var(--ink);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.spec-pill {
+  color: var(--handle-ink-soft);
+  border-color: var(--handle-line-soft);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+}
+
+.spw-component-tag {
+  width: fit-content;
+  border-radius: var(--handle-radius-pill);
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  border-color: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  pointer-events: none;
+}
+
+.spw-guide-chip {
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-soft, #fff) 84%, transparent);
+  color: var(--handle-ink-soft);
+  border-color: var(--handle-line-soft);
+}
+
+/* Substrate-aware tags and guide chips inherit the broader linguistic system. */
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-substrate] {
+  color: var(--spw-substrate-color, var(--handle-ink-soft));
+  border-color: color-mix(in srgb, var(--spw-substrate-border, var(--handle-line-soft)) 92%, transparent);
+  background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 72%, transparent);
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before,
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  font-size: 0.9em;
+  opacity: 0.6;
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before {
+  content: attr(data-spw-role);
+  margin-right: 0.24em;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  content: attr(data-spw-stance);
+  margin-left: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   6. Hover / focus / keyboard states
    ========================================================================== */
 
 :where(
@@ -221,7 +360,11 @@ header,
   .tag,
   .pill,
   .spw-delimiter,
-  [data-spw-handle="true"]
+  .operator-chip,
+  .spw-component-tag,
+  .spw-guide-chip,
+  [data-spw-handle="true"],
+  [data-spw-charge-key]
 ):is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, transparent);
   background: var(--handle-bg-active);
@@ -229,25 +372,27 @@ header,
   outline: none;
 }
 
-:where(.spec-pill, .badge, .tag, .pill):hover {
+:where(.spec-pill, .badge, .tag, .pill, .spw-component-tag, .spw-guide-chip):hover {
   transform: translateY(-1px);
 }
 
-/* Inline tokens stay almost still */
-:where(.syntax-token, .spw-delimiter, [data-spw-charge-key]):hover {
+:where(.syntax-token, .spw-delimiter, [data-spw-charge-key], [data-spw-inline-form]):hover {
   transform: none;
 }
 
 /* ==========================================================================
-   4. Literate underline seam
+   7. Literate underline seam
+   --------------------------------------------------------------------------
+   These seams help inline semantics remain readable inside prose.
    ========================================================================== */
 
 :where(
   .syntax-token,
   .spw-delimiter,
   [data-spw-charge-key],
-  [data-spw-operator]
-):not(.operator-chip):not(.frame-sigil) {
+  [data-spw-operator],
+  [data-spw-inline-form]
+):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
   text-decoration-thickness: var(--handle-underline-thickness);
@@ -259,20 +404,22 @@ header,
   .syntax-token,
   .spw-delimiter,
   [data-spw-charge-key],
-  [data-spw-operator]
-):not(.operator-chip):not(.frame-sigil):is(:hover, :focus-visible) {
+  [data-spw-operator],
+  [data-spw-inline-form]
+):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip):is(:hover, :focus-visible) {
   text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
-/* Italic-friendly fallback seam */
-:where(em .syntax-token, em .spw-delimiter, em [data-spw-charge-key]),
-:where(i .syntax-token, i .spw-delimiter, i [data-spw-charge-key]) {
+:where(em .syntax-token, em .spw-delimiter, em [data-spw-charge-key], em [data-spw-inline-form]),
+:where(i .syntax-token, i .spw-delimiter, i [data-spw-charge-key], i [data-spw-inline-form]) {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
 
 /* ==========================================================================
-   5. Handle state semantics
+   8. Handle state semantics
+   --------------------------------------------------------------------------
+   Selection, activation, latch, bookmark, knowledge, and allocation states.
    ========================================================================== */
 
 :where([data-spw-selection="focused"]) {
@@ -332,15 +479,54 @@ header,
     var(--handle-bg);
 }
 
+/* Allocation helps later copy generation: where is this token trying to live? */
+:where([data-spw-allocation]) {
+  --handle-allocation-color: var(--spw-substrate-color, var(--active-op-color, var(--teal)));
+}
+
+:where([data-spw-allocation="inline"]) {
+  border-style: solid;
+}
+
+:where([data-spw-allocation="adjacent"]) {
+  border-style: dashed;
+}
+
+:where([data-spw-allocation="room"]) {
+  border-style: double;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation])::before {
+  content: attr(data-spw-allocation);
+  position: absolute;
+  inset: auto auto calc(100% + 0.2rem) 50%;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.28rem;
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--handle-allocation-color) 22%, transparent);
+  color: var(--handle-ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.54rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hover, :focus-visible))::before {
+  opacity: 0.92;
+}
+
 /* ==========================================================================
-   6. Gesture states
+   9. Gesture states
    ========================================================================== */
 
 :where([data-spw-form]) {
   transition:
-    filter      var(--handle-duration-base) var(--handle-settle-ease),
-    transform   var(--handle-duration-base) var(--handle-settle-ease),
-    box-shadow  var(--handle-duration-base) var(--handle-settle-ease),
+    filter var(--handle-duration-base) var(--handle-settle-ease),
+    transform var(--handle-duration-base) var(--handle-settle-ease),
+    box-shadow var(--handle-duration-base) var(--handle-settle-ease),
     border-color var(--handle-duration-base) var(--handle-settle-ease);
 }
 
@@ -352,17 +538,16 @@ header,
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 16%, transparent));
 }
 
-/* Charging shouldn't use destructive scale transforms */
-[data-spw-charge='active'],
-[data-spw-charge='sustained'],
-[data-spw-charge='manifest'] {
+[data-spw-charge="active"],
+[data-spw-charge="sustained"],
+[data-spw-charge="manifest"] {
   transform: none !important;
 }
 
 [data-spw-touch]:active,
-[data-spw-touch='tap']:active {
+[data-spw-touch="tap"]:active {
   transform: scale(0.985);
-  transition: transform 60ms var(--ease-mechanical);
+  transition: transform 60ms var(--ease-mechanical, ease);
 }
 
 :where([data-spw-gesture="active"][data-spw-form="brace"]) {
@@ -372,13 +557,19 @@ header,
 }
 
 :where([data-spw-gesture="active"][data-spw-form="block"]) {
-  box-shadow: var(--shadow-active);
+  box-shadow: var(--shadow-active, 0 4px 20px rgba(0, 0, 0, 0.10));
   transform: translateY(0.5px);
 }
 
 @keyframes spw-handle-sustain-breath {
-  0%, 100% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent); }
-  50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent);
+  }
+
+  50% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent);
+  }
 }
 
 :where([data-spw-gesture="sustained"][data-spw-form="brace"]),
@@ -396,7 +587,9 @@ header,
 }
 
 /* ==========================================================================
-   7. Operator-aware highlighting
+   10. Operator, substrate, role, and stance bias
+   --------------------------------------------------------------------------
+   This is where the file becomes more semantically integrated with the site.
    ========================================================================== */
 
 :where([data-spw-features~="operators"] [data-spw-operator],
@@ -413,58 +606,172 @@ header,
   filter: brightness(1.04);
 }
 
-:where(html[data-spw-operator-highlighting="off"]) :where(
-  [data-spw-features~="operators"] [data-spw-operator],
-  [data-spw-features~="console"] .spw-console [data-spw-operator]
-) {
-  color: inherit;
-  border-color: var(--line);
-  background: transparent;
-  filter: none;
+:where([data-spw-substrate]) {
+  --handle-line:
+    color-mix(in srgb, var(--spw-substrate-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-strong)) 72%, transparent);
+  --handle-ink:
+    var(--spw-substrate-color, var(--active-op-color, var(--teal)));
+}
+
+:where([data-spw-role="routing"], [data-spw-role="register"], [data-spw-role="reference"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-ref-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-ref-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-ref-color, var(--handle-ink));
+}
+
+:where([data-spw-role="schema"], [data-spw-role="comparison"], [data-spw-role="pipeline"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-object-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-object-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-object-color, var(--handle-ink));
+}
+
+:where([data-spw-role="probe"], [data-spw-role="lens"], [data-spw-role="telemetry"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-probe-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-probe-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-probe-color, var(--handle-ink));
+}
+
+:where([data-spw-role="projection"], [data-spw-role="surface"], [data-spw-role="control"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-surface-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-surface-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-surface-color, var(--handle-ink));
+}
+
+:where([data-spw-role="scenario"], [data-spw-role="rationale"], [data-spw-role="pragma"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-pragma-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-pragma-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-pragma-color, var(--handle-ink));
+}
+
+:where([data-spw-stance="entry"]) {
+  --handle-underline-offset: 0.18em;
+}
+
+:where([data-spw-stance="ground"]) {
+  --handle-underline-offset: 0.14em;
+}
+
+:where([data-spw-stance="exit"]) {
+  opacity: 0.86;
+}
+
+/* When metadata is shown, expose stance softly inline. */
+html[data-spw-show-semantic-metadata="on"] :where([data-spw-stance]) > :where(.spw-component-meta, .spw-component-guides)::after {
+  content: attr(data-spw-stance);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.14rem 0.34rem;
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  color: var(--handle-ink-quiet);
+  font-family: var(--handle-meta-font);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 /* ==========================================================================
-   8. Inline delimiters and brace phrases
+   11. Inline delimiters and brace phrases
    ========================================================================== */
 
-:where(.spw-delimiter) {
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-weight: 700;
+.spw-delimiter {
   padding-inline: 0.08rem;
-  cursor: help;
   border-radius: 0.18rem;
+  font-family: var(--handle-meta-font);
+  font-weight: 700;
+  cursor: help;
 }
 
-:where(.spw-delimiter--angle)  { color: var(--op-surface-color, var(--teal)); }
-:where(.spw-delimiter--circle) { color: var(--op-ref-color, rgba(60, 40, 120, 0.82)); }
-:where(.spw-delimiter--square) { color: var(--op-probe-color, var(--teal)); }
-:where(.spw-delimiter--brace)  { color: var(--op-frame-color, var(--teal)); }
+.spw-delimiter--angle {
+  color: var(--op-surface-color, var(--teal));
+}
 
-:where([data-spw-inline-form]) {
+.spw-delimiter--circle {
+  color: var(--op-ref-color, rgba(60, 40, 120, 0.82));
+}
+
+.spw-delimiter--square {
+  color: var(--op-probe-color, var(--teal));
+}
+
+.spw-delimiter--brace {
+  color: var(--op-frame-color, var(--teal));
+}
+
+[data-spw-inline-form] {
   position: relative;
   display: inline;
   border-radius: 0.2rem;
-  transition: background-color var(--handle-duration-fast) var(--handle-ease), color var(--handle-duration-fast) var(--handle-ease);
+  transition:
+    background-color var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
 }
 
-:where([data-spw-inline-form="brace"]) {
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-frame-color, var(--teal)) 14%, transparent) 72%);
+[data-spw-inline-form="brace"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-frame-color, var(--teal)) 14%, transparent) 72%
+  );
 }
 
-:where([data-spw-inline-form="angle"]) {
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-surface-color, var(--teal)) 14%, transparent) 72%);
+[data-spw-inline-form="angle"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-surface-color, var(--teal)) 14%, transparent) 72%
+  );
 }
 
-:where([data-spw-inline-form="square"]) {
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-probe-color, var(--teal)) 14%, transparent) 72%);
+[data-spw-inline-form="square"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-probe-color, var(--teal)) 14%, transparent) 72%
+  );
 }
 
-:where([data-spw-inline-form="circle"]) {
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, var(--op-ref-color, rgba(60,40,120,0.82)) 14%, transparent) 72%);
+[data-spw-inline-form="circle"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-ref-color, rgba(60, 40, 120, 0.82)) 14%, transparent) 72%
+  );
+}
+
+/* Children and sibling integration for inline learning surfaces. */
+:where([data-spw-inline-form] > .spw-delimiter:first-child) {
+  margin-inline-end: 0.04em;
+}
+
+:where([data-spw-inline-form] > .spw-delimiter:last-child) {
+  margin-inline-start: 0.04em;
+}
+
+:where([data-spw-inline-form] + [data-spw-inline-form]) {
+  margin-inline-start: 0.08em;
 }
 
 /* ==========================================================================
-   9. Swappable affordance and roomy hints
+   12. Swappable affordance and roomy hints
    ========================================================================== */
 
 :where([data-spw-swappable] .frame-sigil, [data-spw-swappable] .frame-card-sigil) {
@@ -485,29 +792,33 @@ header,
   opacity: 1;
 }
 
-:where([data-spw-hint-surface]) {
+[data-spw-hint-surface] {
   display: none;
   margin-top: 0.35rem;
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  color: var(--ink-soft);
+  font-family: var(--handle-meta-font);
   font-size: 0.64rem;
   line-height: 1.35;
   letter-spacing: 0.03em;
-  color: var(--ink-soft);
 }
 
 @container (min-width: 44rem) {
-  :where([data-spw-hint-surface][data-spw-hint-density="roomy"]) {
+  [data-spw-hint-surface][data-spw-hint-density="roomy"] {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
   }
 }
 
+:where([data-spw-hint-surface] > [data-spw-handle="true"] + [data-spw-handle="true"]) {
+  margin-inline-start: 0.1rem;
+}
+
 /* ==========================================================================
-   10. Spell breadcrumbs
+   13. Spell breadcrumbs
    ========================================================================== */
 
-:where(.spw-spell-path) {
+.spw-spell-path {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -515,9 +826,8 @@ header,
   min-width: 0;
   margin-block: 0.35rem 0.75rem;
   padding: 0.24rem 0.56rem;
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
-  color: var(--ink-soft);
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 18%, transparent);
+  border-radius: 0.42rem;
   background:
     linear-gradient(
       90deg,
@@ -525,17 +835,39 @@ header,
       transparent 48%
     ),
     color-mix(in srgb, var(--surface, #fff) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--teal, #008080) 18%, transparent);
-  border-radius: 0.42rem;
+  color: var(--ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.72rem;
 }
 
-:where(.spw-spell-path .spell-op) { color: var(--teal); font-weight: 700; }
-:where(.spw-spell-path .spell-node) { color: var(--ink); }
-:where(.spw-spell-path .spell-sep) { color: var(--line-strong); opacity: 0.78; }
-:where(.spw-spell-path .spell-current) { color: var(--pink, hsl(342 58% 42%)); border-bottom: 1px solid currentColor; }
+.spw-spell-path .spell-op {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.spw-spell-path .spell-node {
+  color: var(--ink);
+}
+
+.spw-spell-path .spell-sep {
+  color: var(--line-strong);
+  opacity: 0.78;
+}
+
+.spw-spell-path .spell-current {
+  color: var(--pink, hsl(342 58% 42%));
+  border-bottom: 1px solid currentColor;
+}
+
+/* Child combinators make the syntax easier to study later. */
+.spw-spell-path > .spell-node + .spell-sep,
+.spw-spell-path > .spell-sep + .spell-op,
+.spw-spell-path > .spell-op + .spell-node {
+  margin-inline-start: 0.02rem;
+}
 
 /* ==========================================================================
-   11. Frame metrics
+   14. Frame metrics
    ========================================================================== */
 
 :where([data-spw-features~="metrics"] .frame-metrics-bar) {
@@ -546,10 +878,12 @@ header,
   margin-top: 0.15rem;
   padding-top: 0.6rem;
   border-top: 1px dashed var(--line);
-  font-size: 0.76rem;
   color: var(--ink-soft);
+  font-size: 0.76rem;
   opacity: 0.68;
-  transition: opacity var(--handle-duration-base) var(--handle-settle-ease), color var(--handle-duration-fast) var(--handle-ease);
+  transition:
+    opacity var(--handle-duration-base) var(--handle-settle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
 }
 
 :where([data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
@@ -557,28 +891,33 @@ header,
   opacity: 1;
 }
 
-:where([data-spw-features~="metrics"] .frame-metrics-label) {
+.frame-metrics-label {
+  flex-shrink: 0;
   color: var(--teal);
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  flex-shrink: 0;
 }
 
-:where([data-spw-metric-kind]) {
-  border-radius: 999px;
+[data-spw-metric-kind] {
   padding: 0.1rem 0.36rem;
+  border-radius: var(--handle-radius-pill);
   background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
 }
 
+/* Sibling metric seams read as grouped data instead of isolated pills. */
+:where([data-spw-metric-kind] + [data-spw-metric-kind]) {
+  margin-inline-start: -0.12rem;
+}
+
 /* ==========================================================================
-   12. Guided / cognitive handles
+   15. Guided / cognitive handles
+   --------------------------------------------------------------------------
+   Makes semantic instruction legible without requiring dedicated panels.
    ========================================================================== */
 
-:where([data-spw-guided="true"]) {
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 12%, transparent);
+[data-spw-guided="true"] {
+  box-shadow: var(--handle-shadow-guided);
   background-image:
     linear-gradient(
       135deg,
@@ -587,13 +926,13 @@ header,
     );
 }
 
-:where(html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta)::after {
+html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta::after {
   content: attr(data-spw-guide-reason);
   display: inline-flex;
   align-items: center;
   padding: 0.16rem 0.4rem;
   border: 1px solid color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent);
-  border-radius: 999px;
+  border-radius: var(--handle-radius-pill);
   background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 70%, transparent);
   color: var(--ink-soft);
   font-size: 0.62rem;
@@ -601,20 +940,24 @@ header,
   text-transform: uppercase;
 }
 
-:where(html[data-spw-cognitive-handles="off"]) :is(.spw-smart-console-host, .cognitive-surface-panel) {
+html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] > .spw-component-guides {
+  display: inline-flex;
+}
+
+html[data-spw-cognitive-handles="off"] :is(.spw-smart-console-host, .cognitive-surface-panel) {
   display: none !important;
 }
 
-:where(html[data-spw-cognitive-handles="off"] [data-spw-guided="true"]) {
+html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
   box-shadow: none;
   background-image: none;
 }
 
 /* ==========================================================================
-   13. Resonance seam
+   16. Resonance seam
    ========================================================================== */
 
-:where(.resonance-header) {
+.resonance-header {
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -623,14 +966,44 @@ header,
   font-weight: 700;
 }
 
-:where(.resonance-sigil) {
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+.resonance-sigil {
   font-size: 0.8rem;
+  font-family: var(--handle-meta-font);
   opacity: 0.72;
 }
 
 /* ==========================================================================
-   14. Reduced motion
+   17. Responsive alignment
+   ========================================================================== */
+
+@container (max-width: 38rem) {
+  :where(.frame-topline, .frame-heading) {
+    align-items: stretch;
+  }
+
+  :where(.frame-topline > .spec-strip,
+         .frame-topline > .frame-operators,
+         .frame-topline > .spw-component-meta,
+         .frame-heading > .spw-component-meta) {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  :where(.frame-operators > *, .spec-strip > *, .spw-component-meta > *) {
+    flex: 0 1 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .operator-chip {
+    min-height: 2.4rem;
+    padding: 0.4rem 0.7rem;
+  }
+}
+
+/* ==========================================================================
+   18. Reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -642,8 +1015,14 @@ header,
     .tag,
     .pill,
     .frame-sigil,
+    .frame-card-sigil,
     .spw-delimiter,
+    .spw-component-tag,
+    .spw-guide-chip,
+    .persona-chip,
     [data-spw-form],
+    [data-spw-charge-key],
+    [data-spw-inline-form],
     .spw-spell-path,
     .frame-metrics-bar
   ) {

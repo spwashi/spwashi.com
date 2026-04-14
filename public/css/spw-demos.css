@@ -1,0 +1,499 @@
+/* ==========================================================================
+ * spw-demos.css
+ * --------------------------------------------------------------------------
+ * Purpose:
+ * - Documentation, lab, and pattern-library components.
+ * - Houses Specimen Indexes, Kernel Code blocks, Demo surfaces, and 
+ * Fiber Linguistic visualizers.
+ * - Entirely portable: relies on global tokens, not route-specific scoping.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Specimen Index & Cards
+   ========================================================================== */
+
+:where(.specimen-index-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-sm, 0.65rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.specimen-axis-grid) {
+  margin-bottom: var(--space-md, 1rem);
+}
+
+:where(a.specimen-index-card, div.specimen-index-card) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs, 0.3rem);
+  padding: var(--inset-element, 0.75rem);
+  color: var(--ink, #161c1d);
+  text-decoration: none;
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-component, 8px);
+  transition:
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(a.specimen-index-card:is(:hover, :focus-visible)) {
+  outline: none;
+  transform: translateY(-2px);
+  border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.05));
+}
+
+:where(.specimen-index-sigil) {
+  font-size: var(--text-size-sm, 0.9rem);
+  font-weight: 700;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.specimen-index-name) {
+  font-size: var(--text-size-sm, 0.85rem);
+  font-weight: 600;
+}
+
+:where(.specimen-index-tag) {
+  font-size: var(--text-size-xs, 0.72rem);
+  letter-spacing: 0.04em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.specimen-card) {
+  border-left: 4px solid var(--active-op-color, #008080);
+}
+
+:where(.specimen-api-tag) {
+  padding: 0.18rem 0.5rem;
+  font-size: var(--text-size-xs, 0.72rem);
+  letter-spacing: 0.04em;
+  color: var(--active-op-color, #008080);
+  border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+  border-radius: 3px;
+  user-select: none;
+}
+
+:where(.specimen-material) {
+  margin: 0 0 var(--space-sm, 0.8rem);
+  font-size: var(--text-size-sm, 0.82rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.specimen-material strong) {
+  color: var(--active-op-color, #008080);
+}
+
+/* ==========================================================================
+   2. Kernel Code Blocks
+   ========================================================================== */
+
+:where(.specimen-kernel-code) {
+  overflow-x: auto;
+  padding: var(--inset-component, 1rem 1.2rem);
+  font-size: var(--text-size-sm, 0.82rem);
+  line-height: 1.7;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.88));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-component, 8px);
+  max-width: var(--measure-code, 84ch);
+}
+
+:where(.specimen-kernel-code .sk-key) {
+  color: var(--op-frame-color, #008080);
+  font-weight: 600;
+  user-select: none;
+}
+
+:where(.specimen-kernel-code .sk-op) {
+  color: var(--op-probe-color, #4a2180);
+  font-weight: 700;
+  user-select: none;
+}
+
+:where(.specimen-kernel-code .sk-comment) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-style: italic;
+}
+
+/* ==========================================================================
+   3. Interactive Demo Blocks
+   ========================================================================== */
+
+:where(.specimen-demo) {
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-surface, 10px);
+  padding: var(--inset-component, 1rem);
+}
+
+:where(.demo-sliders) {
+  display: grid;
+  gap: var(--space-xs, 0.55rem);
+}
+
+:where(.demo-slider-row) {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm, 0.6rem);
+  font-size: var(--text-size-sm, 0.8rem);
+}
+
+:where(.demo-slider-row label) {
+  min-width: 9rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+}
+
+:where(.demo-slider-row input[type="range"], .demo-audio-controls input[type="range"]) {
+  flex: 1;
+  accent-color: var(--active-op-color, #008080);
+}
+
+:where(.demo-slider-out) {
+  min-width: 3.5rem;
+  text-align: right;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.78rem);
+  color: var(--active-op-color, #008080);
+}
+
+:where(.demo-note) {
+  margin-bottom: var(--space-sm, 0.6rem);
+}
+
+:where(.demo-color-preview) {
+  width: 100%;
+  height: 2.5rem;
+  margin-top: var(--space-sm, 0.7rem);
+  background: var(--demo-color, hsl(192 62% 44%));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-element, 5px);
+  transition: background var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.demo-code-output) {
+  margin: 0.65rem 0 0;
+  padding: var(--inset-element, 0.5rem 0.8rem);
+  overflow-x: auto;
+  white-space: pre;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.78rem);
+  color: var(--active-op-color, #008080);
+  background: var(--surface-strong, rgba(255, 255, 255, 0.88));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-element, 4px);
+  max-width: var(--measure-code, 84ch);
+}
+
+/* Intersection Observer Demo */
+:where(.demo-io-scroll-area) {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 8rem;
+  overflow-y: auto;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-element, 5px);
+  scroll-behavior: smooth;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.88));
+}
+
+:where(.demo-io-fiber) {
+  display: flex;
+  align-items: center;
+  min-height: 5rem;
+  padding: 0.5rem 0.8rem;
+  font-size: var(--text-size-xs, 0.78rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  background: color-mix(in srgb, var(--active-op-color, #008080) calc(var(--io-ratio, 10) * 1%), transparent);
+  border-bottom: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  transition: background var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.demo-io-fiber--10) { --io-ratio: 10; }
+:where(.demo-io-fiber--30) { --io-ratio: 14; }
+:where(.demo-io-fiber--50) { --io-ratio: 18; }
+:where(.demo-io-fiber--70) { --io-ratio: 22; }
+:where(.demo-io-fiber--90) { --io-ratio: 26; }
+
+:where(.demo-io-target) {
+  font-weight: 600;
+  color: var(--active-op-color, #008080);
+  border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
+}
+
+:where(.demo-io-threshold-indicator) {
+  min-height: 1.4em;
+  margin-top: var(--space-xs, 0.5rem);
+  font-size: var(--text-size-xs, 0.78rem);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  color: var(--active-op-color, #008080);
+}
+
+/* Audio Demo */
+:where(.demo-audio-controls) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 0.6rem);
+  font-size: var(--text-size-sm, 0.8rem);
+}
+
+:where(.demo-audio-controls label) {
+  min-width: 7rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.demo-audio-controls--spaced) {
+  margin-top: var(--space-xs, 0.5rem);
+}
+
+:where(.demo-audio-frequency) {
+  width: 12rem;
+}
+
+:where(.demo-audio-controls select) {
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  color: var(--ink, #161c1d);
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-element, 4px);
+}
+
+:where(.demo-audio-btn) {
+  margin-top: var(--space-sm, 0.8rem);
+}
+
+:where(.demo-audio-btn[aria-pressed="true"]) {
+  color: #fff;
+  background: var(--op-pragma-color, #883a3a);
+  border-color: var(--op-pragma-color, #883a3a);
+}
+
+:where(.demo-audio-waveform) {
+  display: block;
+  width: 100%;
+  height: 4rem;
+  margin-top: var(--space-sm, 0.6rem);
+  background: var(--surface-strong, rgba(255, 255, 255, 0.88));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-element, 5px);
+}
+
+/* Canvas Demo */
+:where(.demo-canvas-wrap canvas) {
+  display: block;
+  max-width: 100%;
+  cursor: crosshair;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-component, 6px);
+}
+
+:where(.demo-canvas-wrap canvas:focus-visible) {
+  outline: 2px solid var(--active-op-color, #008080);
+  outline-offset: 3px;
+}
+
+:where(.demo-canvas-note) {
+  margin-top: var(--space-xs, 0.5rem);
+  font-size: var(--text-size-sm, 0.8rem);
+}
+
+:where(.demo-canvas-clear) {
+  margin-top: var(--space-2xs, 0.4rem);
+}
+
+/* Filter Demo */
+:where(.demo-filter-text-wrap) {
+  overflow: hidden;
+}
+
+:where(.demo-filter-target) {
+  margin: var(--space-md, 1rem) 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--active-op-color, #008080);
+  filter: url(#f-svg-demo);
+}
+
+/* ==========================================================================
+   4. Fiber Linguistics & Palimpsest Frames
+   ========================================================================== */
+
+:where(.palimpsest-frame) {
+  position: relative;
+  height: 3.5rem;
+  margin-bottom: var(--space-lg, 1.2rem);
+  overflow: hidden;
+  border-radius: var(--shape-surface, 10px);
+  background: var(--surface-soft, rgba(255, 255, 255, 0.44));
+}
+
+:where(.palimpsest-layer) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 var(--space-md, 1rem);
+  font-size: var(--text-size-xs, 0.78rem);
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+:where(.palimpsest-layer--generation-1) {
+  opacity: 0.28;
+  font-weight: 700;
+  color: var(--active-op-color, #008080);
+  filter: url(#f-blur-soft);
+}
+
+:where(.palimpsest-layer--generation-2) {
+  top: 1.2rem;
+  opacity: 0.18;
+  letter-spacing: 0.25em;
+  color: var(--op-probe-color, #4a2180);
+}
+
+:where(.fiber-linguistics-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--space-sm, 0.8rem);
+}
+
+:where(.fiber-pair) {
+  display: grid;
+  gap: var(--space-3xs, 0.35rem);
+  padding: var(--inset-component, 1rem);
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-surface, 10px);
+}
+
+:where(.fiber-pair-title) {
+  font-size: var(--text-size-sm, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--active-op-color, #008080);
+  user-select: none;
+}
+
+:where(.fiber-pair-material) {
+  font-size: var(--text-size-sm, 0.8rem);
+  color: var(--ink, #161c1d);
+}
+
+:where(.fiber-pair-linguistic) {
+  font-size: var(--text-size-sm, 0.8rem);
+  color: var(--op-probe-color, #4a2180);
+}
+
+:where(.fiber-pair-note) {
+  margin-top: 0.2rem;
+  padding-top: 0.35rem;
+  font-size: var(--text-size-xs, 0.75rem);
+  font-style: italic;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+}
+
+:where(.fiber-pair-note a) {
+  color: var(--active-op-color, #008080);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  transition: border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.fiber-pair-note a:hover) {
+  border-color: var(--active-op-color, #008080);
+}
+
+/* ==========================================================================
+   5. Field Notes
+   ========================================================================== */
+
+:where(.field-notes-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: var(--space-sm, 0.8rem);
+}
+
+:where(.field-note) {
+  position: relative;
+  display: grid;
+  gap: var(--space-xs, 0.5rem);
+  padding: var(--inset-component, 1rem);
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-surface, 10px);
+}
+
+:where(.field-note::before) {
+  content: attr(data-note-id);
+  opacity: 0.7;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.68rem);
+  letter-spacing: 0.08em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.field-note h3) {
+  margin: 0;
+  font-size: var(--text-size-sm, 0.92rem);
+  color: var(--ink, #161c1d);
+}
+
+:where(.field-note p) {
+  margin: 0;
+  font-size: var(--text-size-sm, 0.82rem);
+  line-height: var(--site-line-height, 1.55);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.field-note-tags) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs, 0.35rem);
+}
+
+:where(.field-note-tag) {
+  padding: 0.15rem 0.45rem;
+  font-size: var(--text-size-xs, 0.68rem);
+  letter-spacing: 0.04em;
+  color: var(--active-op-color, #008080);
+  border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  transition: 
+    background var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.field-note-tag:hover) {
+  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.06));
+}
+
+/* ==========================================================================
+   6. Responsive Adjustments
+   ========================================================================== */
+
+@container (max-width: 32rem) {
+  :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 32rem) {
+  :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
+    grid-template-columns: 1fr;
+  }
+}

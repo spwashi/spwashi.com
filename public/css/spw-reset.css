@@ -1,45 +1,197 @@
+/* ==========================================================================
+   spw-reset.css
+   --------------------------------------------------------------------------
+   Purpose: Global baseline, interaction resets, and default typography.
+   Dependency: None (includes hardcoded fallbacks if tokens are missing).
+   ========================================================================== */
+
+/* ── 1. Core Box Model & Interaction Limits ── */
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height, 4rem);
+  font-size: var(--site-root-font-size, 100%);
+  /* Prevent iOS text size adjustment on orientation change */
+  -webkit-text-size-adjust: 100%;
+}
+
 /* Ensure reading regions opt into selection, but interactive UI components don't */
 *,
 *::before,
 *::after {
+  box-sizing: inherit;
   user-select: none;
   -webkit-user-select: none;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height);
-  font-size: var(--site-root-font-size, 100%);
 }
 
 html, body {
   margin: 0;
+  padding: 0;
   min-height: 100%;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  background-color: var(--bg);
+  background-color: var(--bg, #f7f4ee);
   background-image: radial-gradient(
     ellipse 80% 60% at 50% 0%,
-    color-mix(in oklab, var(--bg-deep, var(--bg)) 0%, transparent) 0%,
+    color-mix(in oklab, var(--bg-deep, var(--bg, #efebe0)) 0%, transparent) 0%,
     transparent 70%
   );
   background-attachment: fixed;
-  color: var(--ink);
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  color: var(--ink, #161c1d);
+  
+  /* Robust Monospace Stack */
+  font-family: var(--site-mono-font, 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Roboto Mono', ui-monospace, monospace);
   line-height: var(--site-line-height, 1.68);
+  font-optical-sizing: auto;
+  
+  /* Font Smoothing */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background: rgba(0, 128, 128, 0.18);
-  color: var(--ink);
+/* ── 2. Media & Objects ── */
+
+img, picture, video, canvas, svg, iframe, embed, object {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  font-style: italic; /* For alt text */
 }
+
+svg {
+  fill: currentColor;
+}
+
+/* ── 3. Typography & Text Flow ── */
+
+/* Reading regions opt back into text selection */
+article p,
+article li,
+article blockquote,
+article pre,
+article code,
+.site-lede,
+.frame-panel p,
+.frame-panel li,
+.frame-details p,
+.inline-note,
+.frame-note,
+[data-reading-region],
+[contenteditable] {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+::selection {
+  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.18));
+  color: var(--ink, #161c1d);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance; /* Prevents awkward typographic orphans */
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 1.7rem); }
+h3 { font-size: clamp(1.1rem, 3vw, 1.25rem); }
+h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--teal, #008080);
+}
+
+p {
+  margin: 0;
+  max-width: var(--reading-width, 68ch);
+  overflow-wrap: break-word; /* Prevents overflow from long URLs/strings */
+}
+
+ul, ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+/* ── 4. Links & Focus States ── */
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in oklab, currentColor 20%, transparent);
+}
+
+article a,
+.frame-panel a,
+.inline-note a,
+.site-lede a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--active-op-color, #008080) 45%, transparent);
+  font-weight: 500;
+  transition: text-decoration-color 120ms ease, color 120ms ease;
+}
+
+article a:hover,
+.frame-panel a:hover {
+  text-decoration-color: var(--active-op-color, #008080);
+  color: var(--active-op-color, #008080);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Universal, accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--teal, #008080);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── 5. Form Controls & Code ── */
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+code, pre {
+  font-family: inherit; /* Inherits the global monospace stack */
+}
+
+pre {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--surface-code, #12171b);
+  color: #f9e8bf; /* Default code color */
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+/* ── 6. Scrollbars ── */
 
 ::-webkit-scrollbar {
   width: 7px;
@@ -59,98 +211,7 @@ body {
   background: rgba(0, 128, 128, 0.40);
 }
 
-/* Reading regions opt back into text selection */
-article p,
-article li,
-article blockquote,
-article pre,
-article code,
-.site-lede,
-.frame-panel p,
-.frame-panel li,
-.frame-details p,
-.inline-note,
-.frame-note,
-[data-reading-region],
-[contenteditable] {
-  user-select: text;
-  -webkit-user-select: text;
-}
-
-a {
-  color: inherit;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
-
-article a,
-.frame-panel a,
-.inline-note a,
-.site-lede a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in oklab, var(--active-op-color) 45%, transparent);
-  font-weight: 500;
-  transition: text-decoration-color 120ms ease, color 120ms ease;
-}
-
-article a:hover,
-.frame-panel a:hover {
-  text-decoration-color: var(--active-op-color);
-  color: var(--active-op-color);
-}
-
-a:hover {
-  text-decoration-thickness: 2px;
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 3px;
-}
-
-h1, h2, h3, h4 {
-  margin: 0;
-  line-height: 1.15;
-  letter-spacing: 0;
-}
-
-h1 { font-size: 3rem; }
-h2 { font-size: 1.7rem; }
-h3 { font-size: 1rem; }
-h4 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--teal);
-}
-
-p {
-  margin: 0;
-  max-width: var(--reading-width);
-}
-
-ul, ol {
-  margin: 0;
-}
-
-code, pre,
-input, textarea, select, button {
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-}
-
-pre {
-  margin: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1rem 1.1rem;
-  border-radius: var(--radius-sm);
-  background: var(--surface-code);
-  color: #f9e8bf;
-  line-height: 1.55;
-}
+/* ── 7. Spw Specific Surface Overrides ── */
 
 body[data-spw-surface="software"] pre {
   display: block;
@@ -179,6 +240,8 @@ body[data-spw-surface="software"] .demo-panels,
 body[data-spw-surface="software"] .demo-panel {
   min-width: 0;
 }
+
+/* ── 8. Animation & Accessibility Toggles ── */
 
 html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *,
 html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *::before,

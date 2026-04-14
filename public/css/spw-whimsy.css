@@ -1,27 +1,35 @@
-/* Spw Material Surface
+/* ==========================================================================
+ * spw-whimsy.css
+ * --------------------------------------------------------------------------
+ * Spw Material Surface
  * Quiet interaction grammar for sigils, folds, and paper-like layers.
  * This file avoids decorative motion; state changes should read as
  * alignment, focus, or revealed structure.
- */
+ * ========================================================================== */
 
 :root {
-    --spw-fold-duration: 140ms;
-    --spw-fold-ease: ease;
-    --spw-paper-corner: 6px;
-    --spw-paper-focus: var(--active-op-border);
-    --spw-paper-wash: var(--active-op-bg-soft);
-    --phase-initiation: hsl(210 70% 38%);
-    --phase-resistance: hsl(0 40% 38%);
-    --phase-transformation: hsl(150 46% 30%);
-    --phase-expression: hsl(180 100% 28%);
-    --phase-return: hsl(160 52% 30%);
+    /* Route local whimsy timing through the global precision motion grammar */
+    --spw-fold-duration: var(--duration-fast, 140ms);
+    --spw-fold-ease:     var(--ease-mechanical, ease);
+    
+    /* Route local shapes and washes through the global material system */
+    --spw-paper-corner:  var(--shape-component, 6px);
+    --spw-paper-focus:   var(--active-op-border, rgba(0, 128, 128, 0.34));
+    --spw-paper-wash:    var(--active-op-bg-soft, rgba(0, 128, 128, 0.06));
+    
+    /* Route phase colors through the thematic operator matrix */
+    --phase-initiation:     var(--op-action-color, #005959);
+    --phase-resistance:     var(--op-pragma-color, #883a3a);
+    --phase-transformation: var(--op-merge-color, #277a87);
+    --phase-expression:     var(--op-stream-color, #208259);
+    --phase-return:         var(--op-baseline-color, #594d3f);
 }
 
-/* === Sigils === */
+/* ==========================================================================
+   1. Sigils & Operators
+   ========================================================================== */
 
-.frame-sigil,
-[data-spw-operator],
-.operator-chip {
+:where(.frame-sigil, [data-spw-operator], .operator-chip) {
     position: relative;
     transition:
         color var(--spw-fold-duration) var(--spw-fold-ease),
@@ -29,90 +37,82 @@
         border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.frame-sigil:hover,
-.frame-sigil:focus-visible,
-[data-spw-operator]:hover,
-[data-spw-operator]:focus-visible {
+:where(.frame-sigil:hover, .frame-sigil:focus-visible,
+       [data-spw-operator]:hover, [data-spw-operator]:focus-visible) {
     background: var(--spw-paper-wash);
-    color: var(--active-op-color);
+    color: var(--active-op-color, #008080);
 }
 
-.frame-sigil::before,
-.frame-sigil::after {
+:where(.frame-sigil::before, .frame-sigil::after) {
     content: none;
 }
 
-/* === Frames === */
+/* ==========================================================================
+   2. Frames
+   ========================================================================== */
 
-.site-frame {
+:where(.site-frame) {
     position: relative;
     transition:
         border-color var(--spw-fold-duration) var(--spw-fold-ease),
         background-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.site-frame:hover {
+:where(.site-frame:hover) {
     border-color: var(--spw-paper-focus);
 }
 
-.frame-heading {
+:where(.frame-heading) {
     display: flex;
     align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: var(--space-md, 1rem);
+    margin-bottom: var(--space-lg, 1.5rem);
     position: relative;
 }
 
-.frame-heading::after {
+:where(.frame-heading::after) {
     content: '';
     flex: 1;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
     opacity: 0.75;
+    transition: border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.site-frame:hover .frame-heading::after {
-    border-color: var(--active-op-border);
+:where(.site-frame:hover .frame-heading::after) {
+    border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
 }
 
-/* === Cards === */
+/* ==========================================================================
+   3. Cards
+   ========================================================================== */
 
-.plan-card,
-.frame-card,
-.media-focus-card {
+:where(.plan-card, .frame-card, .media-focus-card) {
     position: relative;
-}
-
-.plan-card::before,
-.frame-card::after,
-.media-focus-card::before {
-    content: none;
-}
-
-.plan-card:hover .plan-thesis,
-.plan-card:hover .plan-wonder,
-.frame-card:hover .frame-card-sigil,
-.media-focus-card:hover {
-    color: var(--ink);
-}
-
-.frame-card,
-.media-focus-card {
     transition:
         border-color var(--spw-fold-duration) var(--spw-fold-ease),
         background-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.frame-card:hover,
-.media-focus-card:hover {
-    border-color: var(--active-op-border);
+:where(.plan-card::before, .frame-card::after, .media-focus-card::before) {
+    content: none;
 }
 
-/* === Buttons and Chips === */
+:where(.plan-card:hover .plan-thesis,
+       .plan-card:hover .plan-wonder,
+       .frame-card:hover .frame-card-sigil,
+       .media-focus-card:hover) {
+    color: var(--ink, #161c1d);
+}
 
-.operator-chip,
-button,
-input[type="button"],
-input[type="submit"] {
+:where(.frame-card:hover, .media-focus-card:hover) {
+    border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
+}
+
+/* ==========================================================================
+   4. Buttons & Chips
+   ========================================================================== */
+
+:where(.operator-chip, button, input[type="button"], input[type="submit"]) {
     border-radius: var(--spw-paper-corner);
     transition:
         background-color var(--spw-fold-duration) var(--spw-fold-ease),
@@ -120,94 +120,91 @@ input[type="submit"] {
         color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.operator-chip::before,
-button::before {
+:where(.operator-chip::before, button::before) {
     content: none;
 }
 
-.operator-chip:hover,
-button:hover,
-input[type="button"]:hover,
-input[type="submit"]:hover {
-    border-color: var(--active-op-border);
+:where(.operator-chip:hover, button:hover,
+       input[type="button"]:hover, input[type="submit"]:hover) {
+    border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
     background: var(--spw-paper-wash);
 }
 
-button:active,
-.operator-chip:active {
-    border-color: var(--active-op-color);
+:where(button:active, .operator-chip:active) {
+    border-color: var(--active-op-color, #008080);
 }
 
-/* === Spec Tokens === */
+/* ==========================================================================
+   5. Spec Tokens
+   ========================================================================== */
 
-.spec-pill {
+:where(.spec-pill) {
     display: inline-block;
     padding: 0.25rem 0.65rem;
-    border: 1px solid var(--token-border);
+    border: 1px solid var(--token-border, rgba(0, 128, 128, 0.55));
     border-radius: var(--spw-paper-corner);
-    background: var(--token-bg);
-    font-size: 0.8rem;
+    background: var(--token-bg, rgba(255, 255, 255, 0.82));
+    font-size: var(--text-size-sm, 0.8rem);
     font-weight: 600;
     transition:
         background-color var(--spw-fold-duration) var(--spw-fold-ease),
         border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-.spec-pill::before {
+:where(.spec-pill::before) {
     content: none;
 }
 
-.spec-strip:hover .spec-pill {
-    border-color: var(--token-border-strong);
-    background: var(--token-bg-hover);
+:where(.spec-strip:hover .spec-pill) {
+    border-color: var(--token-border-strong, rgba(0, 128, 128, 0.8));
+    background: var(--token-bg-hover, rgba(255, 255, 255, 0.97));
 }
 
-/* === Forms === */
+/* ==========================================================================
+   6. Forms & Controls
+   ========================================================================== */
 
-input[type="radio"],
-input[type="checkbox"],
-label.settings-option,
-.settings-option {
+:where(input[type="radio"], input[type="checkbox"], label.settings-option, .settings-option) {
     cursor: pointer;
     transition:
         background-color var(--spw-fold-duration) var(--spw-fold-ease),
         border-color var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-input[type="radio"]:hover,
-input[type="checkbox"]:hover {
-    outline: 1px solid var(--active-op-border);
+:where(input[type="radio"]:hover, input[type="checkbox"]:hover) {
+    outline: 1px solid var(--active-op-border, rgba(0, 128, 128, 0.34));
     outline-offset: 2px;
+    border-radius: 2px;
 }
 
-label.settings-option:hover,
-.settings-option:hover {
-    background: var(--op-frame-bg-soft);
+:where(label.settings-option:hover, .settings-option:hover) {
+    background: var(--op-frame-bg-soft, rgba(0, 128, 128, 0.06));
 }
 
-/* === Text and Links === */
+/* ==========================================================================
+   7. Typography & Navigation Indicators
+   ========================================================================== */
 
-code {
-    font-family: 'JetBrains Mono', monospace;
+:where(code) {
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
     font-size: 0.9em;
-    background: var(--surface-code);
-    color: hsl(42 77% 82%);
+    background: var(--surface-code, #12171b);
+    color: #f9e8bf; /* Accessible code literal fallback */
     padding: 0.15em 0.35em;
     border-radius: 4px;
 }
 
-pre code {
+:where(pre code) {
     padding: 0;
     background: transparent;
     color: inherit;
 }
 
-a[href^="#"]::after {
+:where(a[href^="#"]::after) {
     content: none;
 }
 
-nav a::after,
-.breadcrumb a::before {
+:where(nav a::after, .breadcrumb a::before) {
     content: '';
     position: absolute;
     right: 0;
@@ -219,35 +216,20 @@ nav a::after,
     transition: opacity var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-nav a:hover::after,
-nav a[aria-current="page"]::after,
-.breadcrumb a:hover::before {
+:where(nav a:hover::after, nav a[aria-current="page"]::after, .breadcrumb a:hover::before) {
     opacity: 0.7;
 }
 
-/* === Role Edges === */
+/* ==========================================================================
+   8. Role Edges (Top-Border Context Hooks)
+   ========================================================================== */
 
-[data-spw-role="hub"],
-[data-spw-role="orientation"] {
-    --phase-color: var(--phase-initiation);
-}
+:where([data-spw-role="hub"], [data-spw-role="orientation"]) { --phase-color: var(--phase-initiation); }
+:where([data-spw-role="category"], [data-spw-role="schema"]) { --phase-color: var(--phase-expression); }
+:where([data-spw-role="reference"], [data-spw-role="projection"]) { --phase-color: var(--phase-return); }
+:where([data-spw-role="control"], [data-spw-role="settings"]) { --phase-color: var(--phase-resistance); }
 
-[data-spw-role="category"],
-[data-spw-role="schema"] {
-    --phase-color: var(--phase-expression);
-}
-
-[data-spw-role="reference"],
-[data-spw-role="projection"] {
-    --phase-color: var(--phase-return);
-}
-
-[data-spw-role="control"],
-[data-spw-role="settings"] {
-    --phase-color: var(--phase-resistance);
-}
-
-[data-spw-role]::before {
+:where([data-spw-role])::before {
     content: '';
     position: absolute;
     top: 0;
@@ -255,35 +237,38 @@ nav a[aria-current="page"]::after,
     width: 100%;
     border-top: 2px solid var(--phase-color, var(--active-op-border));
     opacity: 0.35;
+    transition: opacity var(--spw-fold-duration) var(--spw-fold-ease);
 }
 
-[data-spw-role]:hover::before {
+:where([data-spw-role]:hover)::before {
     opacity: 0.65;
 }
 
-/* === Footer === */
+/* ==========================================================================
+   9. Footer
+   ========================================================================== */
 
-footer {
+:where(footer) {
     position: relative;
-    margin-top: 4rem;
-    padding: 2rem 0;
-    border-top: 1px solid var(--line);
+    margin-top: var(--space-3xl, 4rem);
+    padding: var(--space-xl, 2rem) 0;
+    border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
 }
 
-footer::before {
+:where(footer::before) {
     content: none;
 }
 
-footer p {
+:where(footer p) {
     opacity: 0.75;
 }
 
-/* === Motion Policy === */
+/* ==========================================================================
+   10. Accessibility & Touch Constraints
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    :where(*, *::before, *::after) {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -291,10 +276,8 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    button,
-    .operator-chip,
-    label {
-        min-height: 2.5rem;
+    :where(button, .operator-chip, label) {
+        min-height: var(--touch-target-min, 2.75rem);
         display: flex;
         align-items: center;
     }

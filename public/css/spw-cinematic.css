@@ -1,32 +1,13 @@
 /* ==========================================================================
-   spw-cinematic.css
-   --------------------------------------------------------------------------
-   Purpose
-   - Shared motion, field, and depth physics for Spw surfaces and handles.
-   - Consumes semantic state from bus-driven charge, developmental climate,
-     component semantics, and authored HTML attributes.
-   - Serves as a seed layer for ethos: not just "animation", but the felt
-     mechanics of attention, pressure, memory, and release.
-
-   Core contract
-   - --charge                    number 0→1 (written by SpwBus / gesture systems)
-   - --spw-operator-color        resolved operator accent
-   - data-spw-charge             charging | active | sustained | manifest
-   - data-spw-gesture            charging | active | armed | committed | projecting
-   - data-spw-selection          ambient | addressable | focused | active | selected
-   - data-spw-grounded           true | false
-   - data-spw-latched            true
-   - data-spw-pinned             true
-   - data-spw-field-wonder       orientation | inquiry | comparison | memory | projection | constraint | resonance
-   - html[data-spw-developmental-climate]
-   - html[data-spw-learning-mode]
-
-   Design stance
-   - Charge should feel informative before decorative.
-   - Depth should emerge from variable contracts, not one-off flourishes.
-   - Climate biases perception and timing; it should not repaint the whole site.
-   - Grounded and latched states should feel stable, not merely dimmed.
-   ========================================================================== */
+ * spw-cinematic.css
+ * --------------------------------------------------------------------------
+ * Purpose
+ * - Shared motion, field, and depth physics for Spw surfaces and handles.
+ * - Consumes semantic state from bus-driven charge, developmental climate,
+ * component semantics, and authored HTML attributes.
+ * - Serves as a seed layer for ethos: not just "animation", but the felt
+ * mechanics of attention, pressure, memory, and release.
+ * ========================================================================== */
 
 /* ==========================================================================
    1. Typed property registration
@@ -44,12 +25,12 @@
 
 :root {
   /* Timing */
-  --cinematic-arrive-duration: var(--duration-fast, 120ms);
-  --cinematic-dwell-duration: var(--duration-base, 200ms);
-  --cinematic-release-duration: var(--duration-slow, 400ms);
+  --cinematic-arrive-duration:  var(--duration-fast, 140ms);
+  --cinematic-dwell-duration:   var(--duration-base, 220ms);
+  --cinematic-release-duration: var(--duration-slow, 480ms);
 
-  --cinematic-arrive-ease: cubic-bezier(0.22, 0, 0.0, 1);
-  --cinematic-dwell-ease: cubic-bezier(0.32, 0, 0.0, 1);
+  --cinematic-arrive-ease:  cubic-bezier(0.22, 0, 0.0, 1);
+  --cinematic-dwell-ease:   cubic-bezier(0.32, 0, 0.0, 1);
   --cinematic-release-ease: cubic-bezier(0.08, 0, 0.0, 1);
 
   /* Shared intensity */
@@ -60,34 +41,32 @@
   --cinematic-glow-scale: 1;
 
   /* Developmental climate handoff */
-  --cinematic-climate-clarity: var(--spw-developmental-clarity, 0.64);
-  --cinematic-climate-pressure: var(--spw-developmental-pressure, 0.34);
-  --cinematic-climate-atmosphere: var(--spw-developmental-atmosphere, 0.18);
-  --cinematic-climate-memory: var(--spw-developmental-memory, 0.18);
-  --cinematic-climate-resonance: var(--spw-developmental-resonance, 0.16);
-  --cinematic-climate-charge-bias: var(--spw-developmental-charge-bias, 0.24);
-  --cinematic-climate-selection-bias: var(--spw-developmental-selection-bias, 0.24);
+  --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
+  --cinematic-climate-pressure:       var(--developmental-pressure, 0.34);
+  --cinematic-climate-atmosphere:     var(--developmental-atmosphere, 0.18);
+  --cinematic-climate-memory:         var(--developmental-memory, 0.18);
+  --cinematic-climate-resonance:      var(--developmental-resonance, 0.16);
+  --cinematic-climate-charge-bias:    var(--developmental-charge-bias, 0.24);
+  --cinematic-climate-selection-bias: var(--developmental-selection-bias, 0.24);
 
   /* Default derived values */
-  --cinematic-field-opacity:
+  --cinematic-field-opacity: 
     calc((0.08 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-atmosphere) * 0.08)) * var(--cinematic-glow-scale));
-  --cinematic-field-radius:
+  --cinematic-field-radius: 
     calc((4px + (var(--charge, 0) * 18px) + (var(--cinematic-climate-resonance) * 8px)) * var(--cinematic-depth-scale));
-  --cinematic-outline-alpha:
+  --cinematic-outline-alpha: 
     calc((0.14 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-charge-bias) * 0.12)) * var(--cinematic-outline-scale));
-  --cinematic-wash-alpha:
+  --cinematic-wash-alpha: 
     calc((0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-atmosphere) * 0.04)) * var(--cinematic-wash-scale));
-  --cinematic-shadow-alpha:
+  --cinematic-shadow-alpha: 
     calc(0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-pressure) * 0.06));
 }
 
 /* ==========================================================================
    3. Learning-mode ethos
-   --------------------------------------------------------------------------
-   These modes come from developmental climate and bias motion/field feel.
    ========================================================================== */
 
-html[data-spw-learning-mode="entry"] {
+:where(html[data-spw-learning-mode="entry"]) {
   --cinematic-intensity: 0.9;
   --cinematic-depth-scale: 0.9;
   --cinematic-outline-scale: 0.88;
@@ -95,7 +74,7 @@ html[data-spw-learning-mode="entry"] {
   --cinematic-glow-scale: 0.9;
 }
 
-html[data-spw-learning-mode="stabilize"] {
+:where(html[data-spw-learning-mode="stabilize"]) {
   --cinematic-intensity: 1;
   --cinematic-depth-scale: 1.04;
   --cinematic-outline-scale: 1.06;
@@ -103,7 +82,7 @@ html[data-spw-learning-mode="stabilize"] {
   --cinematic-glow-scale: 0.94;
 }
 
-html[data-spw-learning-mode="connect"] {
+:where(html[data-spw-learning-mode="connect"]) {
   --cinematic-intensity: 1.04;
   --cinematic-depth-scale: 1;
   --cinematic-outline-scale: 0.96;
@@ -111,7 +90,7 @@ html[data-spw-learning-mode="connect"] {
   --cinematic-glow-scale: 1.08;
 }
 
-html[data-spw-learning-mode="practice"] {
+:where(html[data-spw-learning-mode="practice"]) {
   --cinematic-intensity: 0.96;
   --cinematic-depth-scale: 0.98;
   --cinematic-outline-scale: 1.08;
@@ -119,7 +98,7 @@ html[data-spw-learning-mode="practice"] {
   --cinematic-glow-scale: 0.92;
 }
 
-html[data-spw-learning-mode="publish"] {
+:where(html[data-spw-learning-mode="publish"]) {
   --cinematic-intensity: 1.08;
   --cinematic-depth-scale: 1.06;
   --cinematic-outline-scale: 1.12;
@@ -181,21 +160,21 @@ html[data-spw-learning-mode="publish"] {
    5. Operator color resolution
    ========================================================================== */
 
-[data-spw-operator="frame"]     { --spw-operator-color: var(--op-frame-color); }
-[data-spw-operator="object"]    { --spw-operator-color: var(--op-object-color); }
-[data-spw-operator="ref"]       { --spw-operator-color: var(--op-ref-color); }
-[data-spw-operator="probe"]     { --spw-operator-color: var(--op-probe-color); }
-[data-spw-operator="action"]    { --spw-operator-color: var(--op-action-color); }
-[data-spw-operator="stream"]    { --spw-operator-color: var(--op-stream-color); }
-[data-spw-operator="merge"]     { --spw-operator-color: var(--op-merge-color); }
-[data-spw-operator="binding"]   { --spw-operator-color: var(--op-binding-color); }
-[data-spw-operator="meta"]      { --spw-operator-color: var(--op-meta-color); }
-[data-spw-operator="normalize"] { --spw-operator-color: var(--op-normalize-color); }
-[data-spw-operator="pragma"]    { --spw-operator-color: var(--op-pragma-color); }
-[data-spw-operator="surface"]   { --spw-operator-color: var(--op-surface-color); }
-[data-spw-operator="layer"]     { --spw-operator-color: var(--op-layer-color); }
-[data-spw-operator="baseline"]  { --spw-operator-color: var(--op-baseline-color); }
-[data-spw-operator="topic"]     { --spw-operator-color: var(--op-topic-color, hsl(192 62% 32%)); }
+:where([data-spw-operator="frame"])     { --spw-operator-color: var(--op-frame-color, #008080); }
+:where([data-spw-operator="object"])    { --spw-operator-color: var(--op-object-color, #a67c00); }
+:where([data-spw-operator="ref"])       { --spw-operator-color: var(--op-ref-color, #1d57a3); }
+:where([data-spw-operator="probe"])     { --spw-operator-color: var(--op-probe-color, #4a2180); }
+:where([data-spw-operator="action"])    { --spw-operator-color: var(--op-action-color, #005959); }
+:where([data-spw-operator="stream"])    { --spw-operator-color: var(--op-stream-color, #208259); }
+:where([data-spw-operator="merge"])     { --spw-operator-color: var(--op-merge-color, #277a87); }
+:where([data-spw-operator="binding"])   { --spw-operator-color: var(--op-binding-color, #8f401f); }
+:where([data-spw-operator="meta"])      { --spw-operator-color: var(--op-meta-color, #324a85); }
+:where([data-spw-operator="normalize"]) { --spw-operator-color: var(--op-normalize-color, #4d7539); }
+:where([data-spw-operator="pragma"])    { --spw-operator-color: var(--op-pragma-color, #883a3a); }
+:where([data-spw-operator="surface"])   { --spw-operator-color: var(--op-surface-color, #178282); }
+:where([data-spw-operator="layer"])     { --spw-operator-color: var(--op-layer-color, #404040); }
+:where([data-spw-operator="baseline"])  { --spw-operator-color: var(--op-baseline-color, #594d3f); }
+:where([data-spw-operator="topic"])     { --spw-operator-color: var(--op-topic-color, #1f6b80); }
 
 /* ==========================================================================
    6. Shared charged field
@@ -209,36 +188,26 @@ html[data-spw-learning-mode="publish"] {
   .frame-sigil[data-spw-charge],
   .frame-card-sigil[data-spw-charge]
 ) {
-  --cinematic-field-color:
-    color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 42%, transparent);
+  --cinematic-field-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 42%, transparent);
 
-  filter:
-    drop-shadow(0 0 var(--cinematic-field-radius) color-mix(in srgb, var(--cinematic-field-color) calc(var(--cinematic-field-opacity) * 100%), transparent));
+  filter: drop-shadow(0 0 var(--cinematic-field-radius) color-mix(in srgb, var(--cinematic-field-color) calc(var(--cinematic-field-opacity) * 100%), transparent));
 
-  outline: 1px solid color-mix(
-    in srgb,
-    var(--spw-operator-color, var(--active-op-color, var(--teal))) calc(var(--cinematic-outline-alpha) * 100%),
-    transparent
-  );
+  outline: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc(var(--cinematic-outline-alpha) * 100%), transparent);
   outline-offset: calc(1px + (var(--charge, 0) * 4px));
 
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) calc((var(--charge, 0) * 18%) + 6%), transparent),
-    0 10px 26px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) calc(var(--cinematic-shadow-alpha) * 100%), transparent);
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc((var(--charge, 0) * 18%) + 6%), transparent),
+    0 10px 26px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc(var(--cinematic-shadow-alpha) * 100%), transparent);
 }
 
 :where([data-spw-form="brace"][data-spw-charge]) {
-  background-color: color-mix(
-    in srgb,
-    var(--spw-operator-color, var(--active-op-color, var(--teal))) calc(var(--cinematic-wash-alpha) * 100%),
-    transparent
-  );
+  background-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc(var(--cinematic-wash-alpha) * 100%), transparent);
 }
 
 :where([data-spw-charge="active"], [data-spw-charge="sustained"], [data-spw-charge="manifest"]) {
   filter:
-    drop-shadow(0 0 var(--cinematic-field-radius) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 26%, transparent))
-    drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 64%, white));
+    drop-shadow(0 0 var(--cinematic-field-radius) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 26%, transparent))
+    drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 64%, white));
 }
 
 :where([data-spw-charge="sustained"], [data-spw-gesture="armed"]) {
@@ -248,13 +217,13 @@ html[data-spw-learning-mode="publish"] {
 @keyframes spw-cinematic-sustain-breath {
   0%, 100% {
     filter:
-      drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 24%, transparent))
-      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 56%, white));
+      drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent))
+      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 56%, white));
   }
   50% {
     filter:
-      drop-shadow(0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 42%, transparent))
-      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 74%, white));
+      drop-shadow(0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 42%, transparent))
+      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 74%, white));
   }
 }
 
@@ -290,7 +259,7 @@ html[data-spw-learning-mode="publish"] {
       calc(var(--drag-dx) * 0.08)
       calc(var(--drag-dy) * 0.08)
       16px
-      color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 40%, transparent)
+      color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent)
     );
 }
 
@@ -299,20 +268,19 @@ html[data-spw-learning-mode="publish"] {
    ========================================================================== */
 
 :where([data-spw-selection="focused"]) {
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) calc((0.18 + var(--cinematic-climate-selection-bias) * 0.18) * 100%), transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc((0.18 + var(--cinematic-climate-selection-bias)) * 100%), transparent);
 }
 
 :where([data-spw-selection="active"]) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 22%, transparent),
-    0 8px 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 22%, transparent),
+    0 8px 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 8%, transparent);
 }
 
 :where([data-spw-selection="selected"]) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 24%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 8%, transparent);
 }
 
 /* ==========================================================================
@@ -381,14 +349,14 @@ html[data-spw-learning-mode="publish"] {
 
 :where([data-spw-pinned="true"], [data-spw-latched="true"]) {
   --charge: 0.3;
-  outline: 1px dashed color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 38%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 38%, transparent);
   outline-offset: 3px;
 }
 
 :where([data-spw-grounded="true"]) {
   opacity: calc(0.9 + (var(--cinematic-climate-memory) * 0.08));
   text-decoration: underline dotted;
-  text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 24%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent);
   text-underline-offset: 3px;
   filter: none;
 }
@@ -407,66 +375,44 @@ html[data-spw-learning-mode="publish"] {
    11. Wonder-conditioned bias
    ========================================================================== */
 
-:where([data-spw-field-wonder="orientation"]) {
-  --cinematic-wash-scale: calc(1 + (var(--cinematic-climate-atmosphere) * 0.2));
-}
-
-:where([data-spw-field-wonder="inquiry"]) {
-  --cinematic-glow-scale: calc(1 + (var(--cinematic-climate-clarity) * 0.12));
-}
-
-:where([data-spw-field-wonder="comparison"]) {
-  --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.12));
-}
-
-:where([data-spw-field-wonder="memory"]) {
-  --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-memory) * 0.16));
-}
-
-:where([data-spw-field-wonder="projection"]) {
-  --cinematic-glow-scale: calc(1 + (var(--cinematic-intensity) * 0.08));
-}
-
-:where([data-spw-field-wonder="constraint"]) {
-  --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-pressure) * 0.18));
-}
-
-:where([data-spw-field-wonder="resonance"]) {
-  --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.16));
-}
+:where([data-spw-field-wonder="orientation"]) { --cinematic-wash-scale: calc(1 + (var(--cinematic-climate-atmosphere) * 0.2)); }
+:where([data-spw-field-wonder="inquiry"])     { --cinematic-glow-scale: calc(1 + (var(--cinematic-climate-clarity) * 0.12)); }
+:where([data-spw-field-wonder="comparison"])  { --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.12)); }
+:where([data-spw-field-wonder="memory"])      { --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-memory) * 0.16)); }
+:where([data-spw-field-wonder="projection"])  { --cinematic-glow-scale: calc(1 + (var(--cinematic-intensity) * 0.08)); }
+:where([data-spw-field-wonder="constraint"])  { --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-pressure) * 0.18)); }
+:where([data-spw-field-wonder="resonance"])   { --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.16)); }
 
 /* ==========================================================================
    12. Directionality
    ========================================================================== */
 
 :where([data-spw-charge-direction="prefix"] .frame-card-sigil, [data-spw-charge-direction="prefix"] .frame-sigil) {
-  text-shadow:
-    4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 18%, transparent);
+  text-shadow: 4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 18%, transparent);
 }
 
 :where([data-spw-charge-direction="postfix"] .frame-card-sigil, [data-spw-charge-direction="postfix"] .frame-sigil) {
-  text-shadow:
-    -4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 12%, transparent);
+  text-shadow: -4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 12%, transparent);
 }
 
 /* ==========================================================================
    13. Cinematic hosts and SVG surfaces
    ========================================================================== */
 
-.cinematic-host {
+:where(.cinematic-host) {
   filter: drop-shadow(0 0 0 transparent);
   transition: filter var(--cinematic-release-duration) var(--cinematic-dwell-ease);
 }
 
-.cinematic-host:hover {
-  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent));
+:where(.cinematic-host:hover) {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent));
 }
 
-.spw-svg-surface {
+:where(.spw-svg-surface) {
   transition: transform var(--cinematic-arrive-duration) var(--cinematic-release-ease);
 }
 
-.spw-svg-surface:hover {
+:where(.spw-svg-surface:hover) {
   transform: scale(1.005);
 }
 
@@ -474,92 +420,81 @@ html[data-spw-learning-mode="publish"] {
   to { stroke-dashoffset: -40; }
 }
 
-.spw-svg-flow--animated {
+:where(.spw-svg-flow--animated) {
   animation: flow-dash 4s linear infinite;
 }
 
-:where([data-spw-charge="active"]) .spw-svg-flow--animated { animation-duration: 2.2s; }
-:where([data-spw-charge="sustained"]) .spw-svg-flow--animated { animation-duration: 1.2s; }
+:where([data-spw-charge="active"] .spw-svg-flow--animated)    { animation-duration: 2.2s; }
+:where([data-spw-charge="sustained"] .spw-svg-flow--animated) { animation-duration: 1.2s; }
 
-.filter-aberration {
+:where(.filter-aberration) {
   filter: url('#cinematic-aberration');
 }
 
 /* ==========================================================================
-   14. Reactive spine
+   14. Reactive spine (SVG Network)
    ========================================================================== */
 
-.op-node circle {
+:where(.op-node circle) {
   transition:
     opacity var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
     filter var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
     r var(--cinematic-dwell-duration) var(--cinematic-dwell-ease);
 }
 
-.op-node text {
+:where(.op-node text) {
   transition: opacity var(--cinematic-arrive-duration) var(--cinematic-arrive-ease);
 }
 
-.op-node--charged circle {
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--active-op-color, hsl(180 100% 28%)) 32%, transparent));
+:where(.op-node--charged circle) {
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--active-op-color, #008080) 32%, transparent));
   opacity: 1;
 }
 
-.op-node--charged[data-spw-charge="charging"] circle {
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color) 28%, transparent));
+:where(.op-node--charged[data-spw-charge="charging"] circle) {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent));
 }
 
-.op-node--charged[data-spw-charge="active"] circle {
-  filter:
-    drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color) 42%, transparent))
-    brightness(1.06);
+:where(.op-node--charged[data-spw-charge="active"] circle) {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06);
 }
 
-.op-node--charged[data-spw-charge="sustained"] circle {
-  filter:
-    drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color) 58%, transparent))
-    brightness(1.1);
+:where(.op-node--charged[data-spw-charge="sustained"] circle) {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 58%, transparent)) brightness(1.1);
   animation: spine-sustain 900ms var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spine-sustain {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color) 42%, transparent)) brightness(1.06);
-  }
-  50% {
-    filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color) 64%, transparent)) brightness(1.12);
-  }
+  0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06); }
+  50%      { filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color, #008080) 64%, transparent)) brightness(1.12); }
 }
 
-.op-node--frame     { --active-op-color: var(--op-frame-color, hsl(180 100% 28%)); }
-.op-node--object    { --active-op-color: var(--op-object-color, hsl(36 80% 36%)); }
-.op-node--probe     { --active-op-color: var(--op-probe-color, hsl(268 55% 42%)); }
-.op-node--ref       { --active-op-color: var(--op-ref-color, hsl(210 70% 38%)); }
-.op-node--action    { --active-op-color: var(--op-action-color, hsl(180 100% 22%)); }
-.op-node--stream    { --active-op-color: var(--op-stream-color, hsl(160 60% 32%)); }
-.op-node--surface   { --active-op-color: var(--op-surface-color, hsl(180 70% 30%)); }
-.op-node--layer     { --active-op-color: var(--op-layer-color, hsl(0 0% 40%)); }
-.op-node--baseline  { --active-op-color: var(--op-baseline-color, hsl(42 18% 30%)); }
-.op-node--binding   { --active-op-color: var(--op-binding-color, hsl(24 65% 34%)); }
-.op-node--meta      { --active-op-color: var(--op-meta-color, hsl(220 45% 36%)); }
-.op-node--merge     { --active-op-color: var(--op-merge-color, hsl(188 55% 34%)); }
-.op-node--normalize { --active-op-color: var(--op-normalize-color, hsl(95 34% 34%)); }
-.op-node--pragma    { --active-op-color: var(--op-pragma-color, hsl(0 40% 38%)); }
+:where(.op-node--frame)     { --active-op-color: var(--op-frame-color, #008080); }
+:where(.op-node--object)    { --active-op-color: var(--op-object-color, #a67c00); }
+:where(.op-node--probe)     { --active-op-color: var(--op-probe-color, #4a2180); }
+:where(.op-node--ref)       { --active-op-color: var(--op-ref-color, #1d57a3); }
+:where(.op-node--action)    { --active-op-color: var(--op-action-color, #005959); }
+:where(.op-node--stream)    { --active-op-color: var(--op-stream-color, #208259); }
+:where(.op-node--surface)   { --active-op-color: var(--op-surface-color, #178282); }
+:where(.op-node--layer)     { --active-op-color: var(--op-layer-color, #404040); }
+:where(.op-node--baseline)  { --active-op-color: var(--op-baseline-color, #594d3f); }
+:where(.op-node--binding)   { --active-op-color: var(--op-binding-color, #8f401f); }
+:where(.op-node--meta)      { --active-op-color: var(--op-meta-color, #324a85); }
+:where(.op-node--merge)     { --active-op-color: var(--op-merge-color, #277a87); }
+:where(.op-node--normalize) { --active-op-color: var(--op-normalize-color, #4d7539); }
+:where(.op-node--pragma)    { --active-op-color: var(--op-pragma-color, #883a3a); }
 
 /* ==========================================================================
    15. Parallel shimmer / resonance
    ========================================================================== */
 
-.spw-parallel-shimmer,
-[data-spw-parallel="active"] {
+:where(.spw-parallel-shimmer, [data-spw-parallel="active"]) {
   animation: spw-parallel-pulse 1.8s var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spw-parallel-pulse {
   0%, 100% { box-shadow: 0 0 0 transparent; }
-  50% {
-    box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 40%, transparent);
-  }
+  50% { box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent); }
 }
 
 @keyframes spw-resonance-breathe {
@@ -567,13 +502,13 @@ html[data-spw-learning-mode="publish"] {
   50%      { outline-offset: 6px; outline-width: 1px; }
 }
 
-[data-spw-resonance="high"] {
-  outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, var(--teal))) 60%, transparent);
+:where([data-spw-resonance="high"]) {
+  outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 60%, transparent);
   animation: spw-resonance-breathe 1100ms var(--cinematic-dwell-ease) infinite;
 }
 
-[data-spw-resonance="medium"] {
-  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, var(--teal))) 35%, transparent);
+:where([data-spw-resonance="medium"]) {
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 35%, transparent);
 }
 
 /* ==========================================================================
@@ -587,7 +522,7 @@ html[data-spw-learning-mode="publish"] {
   100% { transform: scale(1); }
 }
 
-.spw-pop-snap {
+:where(.spw-pop-snap) {
   animation: spw-pop-snap 180ms var(--cinematic-dwell-ease) forwards;
 }
 
@@ -595,39 +530,22 @@ html[data-spw-learning-mode="publish"] {
    17. Selective touch interaction
    ========================================================================== */
 
-button,
-[role="button"],
-[role="tab"],
-[data-spw-operator],
-[data-spw-wall],
-[data-spw-handle],
-[data-touch-ui],
-.operator-chip,
-.spec-pill,
-.mode-switch,
-.frame-sigil,
-.frame-card-sigil,
-.spw-objective-wall,
-.spw-subjective-wall,
-.spw-boon-wall,
-.spw-bane-wall {
+:where(
+  button, [role="button"], [role="tab"], [data-spw-operator], [data-spw-wall],
+  [data-spw-handle], [data-touch-ui], .operator-chip, .spec-pill, .mode-switch,
+  .frame-sigil, .frame-card-sigil, .spw-objective-wall, .spw-subjective-wall,
+  .spw-boon-wall, .spw-bane-wall
+) {
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
   touch-action: manipulation;
 }
 
-p,
-li,
-pre,
-code,
-blockquote,
-[data-copyable],
-[data-readable],
-.frame-panel p,
-.frame-card span,
-.inline-note,
-.frame-note {
+:where(
+  p, li, pre, code, blockquote, [data-copyable], [data-readable],
+  .frame-panel p, .frame-card span, .inline-note, .frame-note
+) {
   -webkit-user-select: text;
   user-select: text;
 }
@@ -636,17 +554,16 @@ blockquote,
    18. Copy button states
    ========================================================================== */
 
-[data-copy-button][aria-busy="true"],
-.copy-button[aria-busy="true"] {
+:where([data-copy-button][aria-busy="true"], .copy-button[aria-busy="true"]) {
   opacity: 0.7;
   pointer-events: none;
 }
 
-.copy-status {
+:where(.copy-status) {
   min-height: 1.1em;
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-  font-family: var(--site-mono-font);
+  font-size: var(--text-size-xs, 0.78rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   transition: opacity var(--duration-fast, 120ms) var(--cinematic-dwell-ease);
 }
 
@@ -656,28 +573,12 @@ blockquote,
 
 @media (prefers-reduced-motion: reduce) {
   :where(
-    [data-spw-form],
-    [data-spw-charge],
-    [data-spw-handle="true"],
-    [data-spw-affordance],
-    [data-spw-groundable="true"],
-    .spw-delimiter,
-    .operator-chip,
-    .syntax-token,
-    .spec-pill,
-    .frame-sigil,
-    .frame-card-sigil,
-    .cinematic-host,
-    .spw-svg-surface,
-    .spw-svg-flow--animated,
-    .op-node circle,
-    .op-node text,
-    .spw-parallel-shimmer,
-    [data-spw-parallel="active"],
-    [data-spw-resonance="high"],
-    [data-spw-resonance="medium"],
-    .spw-pop-snap,
-    .copy-status
+    [data-spw-form], [data-spw-charge], [data-spw-handle="true"],
+    [data-spw-affordance], [data-spw-groundable="true"], .spw-delimiter,
+    .operator-chip, .syntax-token, .spec-pill, .frame-sigil, .frame-card-sigil,
+    .cinematic-host, .spw-svg-surface, .spw-svg-flow--animated, .op-node circle,
+    .op-node text, .spw-parallel-shimmer, [data-spw-parallel="active"],
+    [data-spw-resonance="high"], [data-spw-resonance="medium"], .spw-pop-snap, .copy-status
   ) {
     animation: none !important;
     transition: none !important;

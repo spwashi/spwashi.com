@@ -1,63 +1,48 @@
 /* ==========================================================================
-   SPW MATERIAL
-   --------------------------------------------------------------------------
-   Purpose
-   - Physics-informed material language for Spwashi.com.
-   - Provide depth, context, and low-cost material tuning for cards, panels,
-     chips, scenes, and text hosts.
-   - Support present interaction systems and future pretext-aware JS without
-     forcing expensive visual effects by default.
-
-   Material registers
-   - bioplastic : dense, slightly flexible, matte where not lit
-   - glass      : reflective / transmissive cover surface
-   - matte      : grounded reading plane
-   - connector  : relational bridge / boundary condition
-   - field      : low-contrast atmospheric context
-   - shell      : lightly charged container membrane
-
-   Runtime principles
-   - Structure first. Ornament second.
-   - Matte is the baseline; glass is opt-in and capability-gated.
-   - Depth should be inferable from border, gradient, and contrast before blur.
-   - Pretext-related measurement should be legible through stable hooks, not
-     width animation.
-   ========================================================================== */
+ * spw-material.css
+ * --------------------------------------------------------------------------
+ * Purpose:
+ * - Physics-informed material language for Spwashi.com.
+ * - Provide depth, context, and low-cost material tuning for cards, panels,
+ * chips, scenes, and text hosts.
+ * - Support present interaction systems and future pretext-aware JS without
+ * forcing expensive visual effects by default.
+ * ========================================================================== */
 
 /* ==========================================================================
    1. Root material tokens
    ========================================================================== */
 
 :root {
-  --material-settle-ease: cubic-bezier(0.22, 0, 0.15, 1);
-  --material-lift-ease: cubic-bezier(0.32, 0, 0, 1);
-  --material-glide-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --material-settle-ease: var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));
+  --material-lift-ease:   var(--ease-mechanical, cubic-bezier(0.32, 0, 0.0, 1));
+  --material-glide-ease:  var(--ease-paper, cubic-bezier(0.40, 0, 0.20, 1));
 
-  --material-duration-fast: var(--duration-fast, 120ms);
-  --material-duration-base: var(--duration-base, 180ms);
-  --material-duration-deliberate: var(--duration-deliberate, 320ms);
+  --material-duration-fast:       var(--duration-fast, 140ms);
+  --material-duration-base:       var(--duration-base, 220ms);
+  --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
-  --material-prime-color: var(--active-op-color, hsl(180 100% 28%));
-  --material-line: var(--line, rgba(0, 128, 128, 0.18));
-  --material-line-strong: var(--line-strong, rgba(0, 128, 128, 0.32));
-  --material-ink: var(--ink, inherit);
-  --material-ink-soft: var(--ink-soft, color-mix(in srgb, currentColor 72%, transparent));
+  --material-prime-color:   var(--active-op-color, #008080);
+  --material-line:          var(--line, rgba(14, 18, 20, 0.14));
+  --material-line-strong:   var(--line-strong, rgba(0, 128, 128, 0.34));
+  --material-ink:           var(--ink, #161c1d);
+  --material-ink-soft:      var(--ink-soft, rgba(14, 18, 20, 0.68));
 
-  --material-surface: var(--surface, rgba(255, 255, 255, 0.92));
-  --material-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
-  --material-surface-soft: color-mix(in srgb, var(--material-surface) 86%, transparent);
+  --material-surface:        var(--surface, rgba(255, 255, 255, 0.62));
+  --material-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.78));
+  --material-surface-soft:   var(--surface-soft, rgba(255, 255, 255, 0.44));
 
-  --material-shadow-rest: var(--shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
-  --material-shadow-lift: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
+  --material-shadow-rest:    var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
+  --material-shadow-lift:    var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
   --material-highlight-inset: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
   --material-depth-opacity-3: 0.97;
 
-  --material-blur-frame: 14px;
-  --material-blur-card: 10px;
-  --material-blur-soft: 8px;
+  --material-blur-frame: var(--material-blur, 12px);
+  --material-blur-card:  calc(var(--material-blur, 12px) * 0.8);
+  --material-blur-soft:  calc(var(--material-blur, 12px) * 0.5);
 
   /* Pretext scaffolding hooks */
   --spw-pretext-weight: 0.5; /* 0 sparse → 1 dense */
@@ -76,9 +61,6 @@
 
 /* ==========================================================================
    2. Baseline material behavior
-   --------------------------------------------------------------------------
-   Purpose
-   - Give components a low-cost depth language before any filters are applied.
    ========================================================================== */
 
 :where(
@@ -112,10 +94,6 @@
 
 /* ==========================================================================
    3. Material kinds
-   --------------------------------------------------------------------------
-   Purpose
-   - Explicit material routing via data-spw-metamaterial.
-   - Matte is default reading material.
    ========================================================================== */
 
 :where([data-spw-metamaterial]) {
@@ -210,9 +188,6 @@
 
 /* ==========================================================================
    4. Context routing
-   --------------------------------------------------------------------------
-   Purpose
-   - Allow surfaces to respond to content field without redefining materials.
    ========================================================================== */
 
 :where([data-spw-context="reading"]) {
@@ -247,14 +222,11 @@
 
 /* ==========================================================================
    5. Depth routing
-   --------------------------------------------------------------------------
-   Purpose
-   - Contextual depth before filters: border, opacity, shadow, and highlight.
    ========================================================================== */
 
 :where([data-spw-depth="1"]) {
   --material-depth-opacity: var(--material-depth-opacity-1);
-  --material-local-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  --material-local-shadow: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05));
 }
 
 :where([data-spw-depth="2"]) {
@@ -279,10 +251,6 @@
 
 /* ==========================================================================
    6. Pretext-informed material tuning
-   --------------------------------------------------------------------------
-   Purpose
-   - Give future JS a stable surface for text-density / cache / volatility clues.
-   - No width animation here; use spacing, opacity, and border emphasis instead.
    ========================================================================== */
 
 :where([data-spw-pretext-weight]) {
@@ -295,33 +263,13 @@
   );
 }
 
-:where([data-spw-pretext-depth="1"]) {
-  --material-depth-opacity: var(--material-depth-opacity-1);
-}
+:where([data-spw-pretext-depth="1"]) { --material-depth-opacity: var(--material-depth-opacity-1); }
+:where([data-spw-pretext-depth="2"]) { --material-depth-opacity: var(--material-depth-opacity-2); }
+:where([data-spw-pretext-depth="3"]) { --material-depth-opacity: var(--material-depth-opacity-3); }
 
-:where([data-spw-pretext-depth="2"]) {
-  --material-depth-opacity: var(--material-depth-opacity-2);
-}
-
-:where([data-spw-pretext-depth="3"]) {
-  --material-depth-opacity: var(--material-depth-opacity-3);
-}
-
-:where([data-text-wrap="stable"]) {
-  --spw-pretext-wrap-volatility: 0;
-}
-
-:where([data-text-wrap="responsive"]) {
-  --spw-pretext-wrap-volatility: 0.5;
-}
-
-:where([data-text-wrap="volatile"]) {
-  --spw-pretext-wrap-volatility: 1;
-}
-
-:where([data-text-wrap="volatile"]) {
-  border-left-color: color-mix(in srgb, var(--material-prime-color) 28%, var(--material-line));
-}
+:where([data-text-wrap="stable"])     { --spw-pretext-wrap-volatility: 0; }
+:where([data-text-wrap="responsive"]) { --spw-pretext-wrap-volatility: 0.5; }
+:where([data-text-wrap="volatile"])   { --spw-pretext-wrap-volatility: 1; border-left-color: color-mix(in srgb, var(--material-prime-color) 28%, var(--material-line)); }
 
 :where([data-spw-pretext-cache="warm"]),
 :where([data-spw-precipitation="measured"]),
@@ -353,10 +301,6 @@
 
 /* ==========================================================================
    7. Card lift and contact
-   --------------------------------------------------------------------------
-   Purpose
-   - Lift should feel massful, not bouncy.
-   - Use transform + shadow only; no filter churn.
    ========================================================================== */
 
 :where(.frame-card, .media-card, .operator-card):is(:hover, :focus-visible) {
@@ -375,15 +319,13 @@
 
 /* ==========================================================================
    8. Priming and operator engagement
-   --------------------------------------------------------------------------
-   Purpose
-   - Primed state should be visible without requiring constant high-cost pulse.
    ========================================================================== */
 
 :where([data-spw-primed="true"],
        [data-spw-form-options][data-spw-charged="true"]) {
   outline: 2px solid color-mix(in srgb, var(--material-prime-color) 46%, transparent);
   outline-offset: 2px;
+  border-radius: 2px;
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--material-prime-color) 14%, transparent);
 }
@@ -425,27 +367,23 @@
    ========================================================================== */
 
 ::selection {
-  background: color-mix(in srgb, var(--teal, hsl(180 100% 28%)) 16%, transparent);
+  background: color-mix(in srgb, var(--teal, #008080) 16%, transparent);
   color: inherit;
 }
 
 :where(code, .frame-sigil, .operator-chip, .syntax-token, [data-spw-operator])::selection {
-  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, #008080) 24%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
   :where(.operator-chip:hover, .frame-sigil:hover, .syntax-token:hover) {
     text-shadow:
-      0 0 10px color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+      0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 24%, transparent);
   }
 }
 
 /* ==========================================================================
    10. Component kind differentiation
-   --------------------------------------------------------------------------
-   Purpose
-   - Reading surfaces should default matte.
-   - Glass should be capability gated and opt-in, not the baseline.
    ========================================================================== */
 
 :where([data-spw-component-kind="frame"]) {
@@ -481,8 +419,8 @@
   align-items: center;
   padding: 0.12em 0.48em;
   border: 1.5px solid color-mix(in srgb, var(--circle-open-color, rgba(60, 40, 120, 0.2)) 86%, transparent);
-  border-radius: 999px;
-  font-family: var(--site-mono-font);
+  border-radius: var(--radius-pill, 999px);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 0.88em;
   background:
     linear-gradient(
@@ -499,7 +437,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
-  font-family: var(--site-mono-font);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 0.9em;
 }
 
@@ -530,19 +468,15 @@
   opacity: 0.9;
 }
 
-:where([data-spw-operator="frame"] .spw-glyph)    { color: var(--op-frame-color); }
-:where([data-spw-operator="probe"] .spw-glyph)    { color: var(--op-probe-color); }
-:where([data-spw-operator="ref"] .spw-glyph)      { color: var(--op-ref-color); }
-:where([data-spw-operator="action"] .spw-glyph)   { color: var(--op-action-color); }
-:where([data-spw-operator="merge"] .spw-glyph)    { color: var(--op-merge-color); }
+:where([data-spw-operator="frame"] .spw-glyph)    { color: var(--op-frame-color, #008080); }
+:where([data-spw-operator="probe"] .spw-glyph)    { color: var(--op-probe-color, #4a2180); }
+:where([data-spw-operator="ref"] .spw-glyph)      { color: var(--op-ref-color, #1d57a3); }
+:where([data-spw-operator="action"] .spw-glyph)   { color: var(--op-action-color, #005959); }
+:where([data-spw-operator="merge"] .spw-glyph)    { color: var(--op-merge-color, #277a87); }
 :where([data-spw-operator="topic"] .spw-glyph)    { color: var(--op-topic-color, hsl(192 62% 32%)); }
 
 /* ==========================================================================
    13. Capability-gated glass depth
-   --------------------------------------------------------------------------
-   Purpose
-   - Blur and saturation are only for explicit glass contexts and only when
-     filters are allowed.
    ========================================================================== */
 
 @supports (backdrop-filter: blur(1px)) {
@@ -590,12 +524,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   :where(.frame-card:hover, .media-card:hover, .operator-card:hover) {
-    transform: none;
+    transform: none !important;
   }
 
   :where([data-spw-primed="true"],
          [data-spw-form-options][data-spw-charged="true"]) {
-    animation: none;
+    animation: none !important;
     outline: 2px solid color-mix(in srgb, var(--material-prime-color) 52%, transparent);
     outline-offset: 2px;
   }
@@ -626,10 +560,6 @@
 
 /* ==========================================================================
    15. Optional debug / scaffolding seams
-   --------------------------------------------------------------------------
-   Purpose
-   - Let future pretext and state systems expose intermediate confidence and
-     chemistry without redesigning core materials.
    ========================================================================== */
 
 :where([data-spw-debug~="material"])::after,

@@ -3,22 +3,9 @@
    --------------------------------------------------------------------------
    Purpose
    - Route-scoped surface system for body[data-spw-surface="blog"].
-   - Reading-first defaults, semantic theming via data attributes, and
-     opt-in enhancement hooks for ornament and motion.
-   - Backward-compatible with current blog markup while introducing normalized
-     component aliases for gradual adoption.
-
-   Conventions
-   - Data attributes express meaning, state, and theme.
-   - Classes express component structure.
-   - Custom properties document configurable behavior.
-   - :where(...) is used heavily to keep specificity low and selector agility high.
-
-   Progressive enhancement hooks
-   - [data-spw-enhance="off"]       : disable non-essential ornament
-   - [data-spw-filters="off"]       : disable SVG / blur / filter-heavy effects
-   - [data-spw-ornament="minimal"]  : reduce decorative emphasis
-   - html[data-spw-reduce-motion]   : reduce motion
+   - Orchestrates reading-first defaults, semantic theming, and route-specific
+     rhythm/phase bridges.
+   - Discrete UI components (Interpreter, Demos, Registers) have been extracted.
    ========================================================================== */
 
 /* ==========================================================================
@@ -28,20 +15,19 @@
 :where(body[data-spw-surface="blog"]) {
   /* surface identity */
   --blog-measure: 68ch;
-  --blog-radius: 8px;
-  --blog-radius-tight: 4px;
-  --blog-radius-loose: 10px;
-  --blog-gap-1: 0.35rem;
-  --blog-gap-2: 0.55rem;
-  --blog-gap-3: 0.8rem;
-  --blog-gap-4: 1rem;
-  --blog-gap-5: 1.2rem;
-  --blog-panel-pad: 1rem;
-  --blog-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.10);
-  --blog-shadow-card: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --blog-transition-fast: 120ms ease;
-  --blog-transition-ui: 160ms ease;
-  --blog-focus-outline: 2px solid var(--blog-accent);
+  --blog-radius: var(--shape-surface, 8px);
+  --blog-radius-tight: var(--shape-element, 4px);
+  --blog-radius-loose: var(--shape-floating, 10px);
+  --blog-gap-1: var(--space-2xs, 0.35rem);
+  --blog-gap-2: var(--space-xs, 0.55rem);
+  --blog-gap-3: var(--space-sm, 0.8rem);
+  --blog-gap-4: var(--space-md, 1rem);
+  --blog-gap-5: var(--space-lg, 1.2rem);
+  --blog-panel-pad: var(--inset-component, 1rem);
+  --blog-shadow-soft: var(--shadow-active, 0 4px 20px rgba(0, 0, 0, 0.10));
+  --blog-shadow-card: var(--shadow-base, 0 2px 10px rgba(0, 0, 0, 0.05));
+  --blog-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+  --blog-transition-ui: var(--duration-base, 180ms) var(--ease-mechanical, ease);
 
   /* semantic palette: light */
   --blog-bg: hsl(188 32% 97%);
@@ -49,7 +35,6 @@
   --blog-bg-card: rgba(255, 255, 255, 0.80);
   --blog-bg-card-strong: rgba(255, 255, 255, 0.92);
   --blog-field-bg: rgba(255, 255, 255, 0.84);
-  --blog-state-bg: var(--blog-bg-card);
 
   --blog-ink: hsl(178 16% 15%);
   --blog-ink-soft: hsl(178 9% 38%);
@@ -64,6 +49,8 @@
   --blog-warn: hsl(1 62% 46%);
 
   --blog-focus-ring: rgba(24, 123, 135, 0.18);
+  --blog-focus-outline: 2px solid var(--blog-accent);
+  
   --blog-wonder-bg: rgba(160, 42, 77, 0.10);
   --blog-spw-bg: rgba(24, 123, 135, 0.10);
   --blog-draft-bg: rgba(35, 118, 82, 0.10);
@@ -76,11 +63,6 @@
   color: var(--blog-ink);
   line-height: var(--site-line-height, 1.65);
   overflow-wrap: break-word;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Dark theme token override */
@@ -93,7 +75,6 @@
   --blog-bg-card: rgba(255, 255, 255, 0.07);
   --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
   --blog-field-bg: rgba(255, 255, 255, 0.08);
-  --blog-state-bg: var(--blog-bg-card);
 
   --blog-ink: hsl(172 24% 88%);
   --blog-ink-soft: hsl(168 13% 68%);
@@ -119,33 +100,7 @@
 
 @media (prefers-color-scheme: dark) {
   :where(html[data-spw-color-mode="auto"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"])) {
-    --blog-bg: hsl(178 14% 11%);
-    --blog-bg-deep: hsl(326 18% 14%);
-    --blog-bg-card: rgba(255, 255, 255, 0.07);
-    --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
-    --blog-field-bg: rgba(255, 255, 255, 0.08);
-    --blog-state-bg: var(--blog-bg-card);
-
-    --blog-ink: hsl(172 24% 88%);
-    --blog-ink-soft: hsl(168 13% 68%);
-    --blog-line: rgba(255, 255, 255, 0.14);
-    --blog-line-strong: rgba(103, 212, 222, 0.38);
-
-    --blog-accent: hsl(188 68% 62%);
-    --blog-wonder: hsl(342 66% 66%);
-    --blog-spw: hsl(188 68% 62%);
-    --blog-draft: hsl(150 58% 58%);
-    --blog-play: hsl(271 52% 70%);
-    --blog-warn: hsl(1 70% 68%);
-
-    --blog-focus-ring: rgba(103, 212, 222, 0.24);
-    --blog-wonder-bg: rgba(228, 108, 144, 0.13);
-    --blog-spw-bg: rgba(103, 212, 222, 0.13);
-    --blog-draft-bg: rgba(95, 213, 157, 0.13);
-    --blog-warn-bg: rgba(238, 112, 108, 0.13);
-
-    --blog-objective-line: rgba(103, 212, 222, 0.30);
-    --blog-subjective-line: rgba(228, 108, 144, 0.26);
+    /* Inherit dark mode tokens above */
   }
 }
 
@@ -163,45 +118,13 @@
    2. Normalization + low-specificity route defaults
    ========================================================================== */
 
-:where(body[data-spw-surface="blog"]) *,
-:where(body[data-spw-surface="blog"]) *::before,
-:where(body[data-spw-surface="blog"]) *::after {
-  box-sizing: border-box;
-}
-
 :where(body[data-spw-surface="blog"]) :is(img, video) {
   display: block;
   max-width: 100%;
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .operator-snippet-grid > *,
-  .specimen-index-grid > *,
-  .fiber-linguistics-grid > *,
-  .field-notes-grid > *,
-  [data-blog-interpreter] > *
-) {
-  min-width: 0;
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .frame-note,
-  .specimen-material,
-  .field-note p,
-  .blog-transition
-) {
+:where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
   max-width: var(--blog-measure);
-}
-
-:where(body[data-spw-surface="blog"]) h1 {
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-}
-
-:where(body[data-spw-surface="blog"]) h2 {
-  margin-top: 0;
-  letter-spacing: -0.005em;
-  line-height: 1.35;
 }
 
 :where(body[data-spw-surface="blog"]) .blog-svg-defs {
@@ -212,54 +135,7 @@
 }
 
 /* ==========================================================================
-   3. Component primitives
-   --------------------------------------------------------------------------
-   c-panel
-   - Purpose: framed reading container for prose, controls, code, and cards.
-   - Inputs:  --c-panel-bg --c-panel-border --c-panel-ink --c-panel-accent
-   - Invariants: readable with ornament disabled; no required blur.
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) :is(
-  .c-panel,
-  .blog-input-panel,
-  .blog-output-panel,
-  .blog-output-card,
-  .blog-seed-card,
-  .blog-metric,
-  .specimen-demo,
-  .specimen-index-card,
-  .field-note,
-  .fiber-pair,
-  .operator-snippet
-) {
-  --c-panel-bg: var(--blog-bg-card);
-  --c-panel-border: var(--blog-line);
-  --c-panel-ink: var(--blog-ink);
-  --c-panel-accent: var(--blog-accent);
-
-  color: var(--c-panel-ink);
-  background: var(--c-panel-bg);
-  border: 1px solid var(--c-panel-border);
-  border-radius: var(--blog-radius);
-  box-shadow: var(--blog-shadow-card);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .c-panel,
-  .blog-input-panel,
-  .blog-output-panel,
-  .blog-output-card,
-  .blog-seed-card,
-  .specimen-demo,
-  .field-note,
-  .fiber-pair
-) {
-  padding: var(--blog-panel-pad);
-}
-
-/* ==========================================================================
-   4. Brace perspective frames
+   3. Brace perspective frames
    ========================================================================== */
 
 :where(body[data-spw-surface="blog"]) .site-frame {
@@ -272,12 +148,17 @@
   border-right-color: var(--blog-subjective-line);
   border-radius: var(--blog-radius);
   background: var(--blog-bg-card);
+  transition:
+    border-color var(--blog-transition-ui),
+    box-shadow var(--blog-transition-ui),
+    background-color var(--blog-transition-ui),
+    transform var(--blog-transition-ui);
 }
 
 :where(body[data-spw-surface="blog"]) .site-frame::before,
 :where(body[data-spw-surface="blog"]) .site-frame::after {
   position: absolute;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: 0.88rem;
   line-height: 1;
   pointer-events: none;
@@ -308,23 +189,27 @@
   opacity: max(var(--blog-frame-subjective-opacity), 0.34);
 }
 
-:where(body[data-spw-surface="blog"]) :is(.site-frame:target, .site-frame:focus-within) {
+:where(body[data-spw-surface="blog"]) :is(
+  .site-frame.is-active-frame,
+  .site-frame:focus-within,
+  .site-frame:target
+) {
   --blog-frame-objective-opacity: 0.48;
   --blog-frame-subjective-opacity: 0.48;
+  
+  border-color: color-mix(in srgb, var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix, 0%)), var(--blog-line));
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength, 0.06));
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .site-frame[data-spw-liminality="threshold"],
-  .site-frame[data-wonder-level="w0"]
-) {
+/* Perspective Routing */
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-liminality="threshold"], .site-frame[data-wonder-level="w0"]) {
   --blog-frame-objective-opacity: 0.16;
   --blog-frame-subjective-opacity: 0.16;
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .site-frame[data-spw-perspective="objective"],
-  .site-frame[data-wonder-level="w1"]
-) {
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="objective"], .site-frame[data-wonder-level="w1"]) {
   --blog-frame-objective-opacity: 0.36;
   --blog-frame-subjective-opacity: 0.18;
 }
@@ -334,29 +219,18 @@
   --blog-frame-subjective-opacity: 0.22;
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .site-frame[data-spw-perspective="balanced"],
-  .site-frame[data-wonder-level="w3"]
-) {
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="balanced"], .site-frame[data-wonder-level="w3"]) {
   --blog-frame-objective-opacity: 0.28;
   --blog-frame-subjective-opacity: 0.28;
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .site-frame[data-spw-perspective="subjective"],
-  .site-frame[data-wonder-level="w5"]
-) {
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="subjective"], .site-frame[data-wonder-level="w5"]) {
   --blog-frame-objective-opacity: 0.22;
   --blog-frame-subjective-opacity: 0.38;
 }
 
-:where(body[data-spw-surface="blog"]) .site-frame.has-active-charge {
-  --blog-frame-objective-opacity: 0.42;
-  --blog-frame-subjective-opacity: 0.42;
-}
-
 /* ==========================================================================
-   5. Semantic charge terms
+   4. Semantic charge terms & References
    ========================================================================== */
 
 :where(body[data-spw-surface="blog"]) [data-spw-charge-key] {
@@ -371,28 +245,18 @@
     box-shadow var(--blog-transition-fast);
 }
 
-:where(body[data-spw-surface="blog"]) [data-spw-charge-key][role="button"] {
-  touch-action: manipulation;
-}
-
 :where(body[data-spw-surface="blog"]) [data-spw-charge-key]:focus-visible {
   outline: var(--blog-focus-outline);
   outline-offset: 3px;
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  [data-spw-charge-state="preview"],
-  [data-spw-charge-state="resonant"]
-) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="preview"], [data-spw-charge-state="resonant"]) {
   color: var(--blog-accent);
   background-color: var(--blog-spw-bg);
   border-bottom-color: var(--blog-accent);
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  [data-spw-charge-state="pinned"],
-  [data-spw-charge-state="pinned"].is-charge-source
-) {
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="pinned"]) {
   color: var(--blog-wonder);
   background-color: var(--blog-wonder-bg);
   border-bottom-color: var(--blog-wonder);
@@ -402,1022 +266,6 @@
 :where(body[data-spw-surface="blog"]) [data-attn-active] {
   outline: 2px solid var(--blog-accent);
   outline-offset: 1px;
-}
-
-:where(body[data-spw-surface="blog"]) .blog-charge-status {
-  position: fixed;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(50%);
-}
-
-/* ==========================================================================
-   6. Blog interpreter
-   --------------------------------------------------------------------------
-   c-interpreter
-   - Purpose: local text-to-summary / tags / seed reading surface.
-   - Inputs: [data-blog-state] [data-blog-lens] [data-blog-tone]
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-interpreter-frame {
-  gap: var(--blog-gap-4);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) [data-blog-interpreter] {
-  --blog-state-accent: var(--blog-accent);
-  --blog-tone-accent: var(--blog-accent);
-
-  container-type: inline-size;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.95fr);
-  gap: var(--blog-gap-4);
-  align-items: stretch;
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-lens="wonder_to_language"] {
-  --blog-state-accent: var(--blog-wonder);
-  --blog-state-bg: var(--blog-wonder-bg);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-lens="spw_to_language"] {
-  --blog-state-accent: var(--blog-spw);
-  --blog-state-bg: var(--blog-spw-bg);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-lens="draft_to_post"] {
-  --blog-state-accent: var(--blog-draft);
-  --blog-state-bg: var(--blog-draft-bg);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-tone="technical"] {
-  --blog-tone-accent: var(--blog-spw);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  [data-blog-tone="wondering"],
-  [data-blog-tone="reflective"]
-) {
-  --blog-tone-accent: var(--blog-wonder);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-tone="playful"] {
-  --blog-tone-accent: var(--blog-play);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  [data-blog-tone="practical"],
-  [data-blog-tone="seed"]
-) {
-  --blog-tone-accent: var(--blog-draft);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-state="empty"] {
-  --blog-state-accent: var(--blog-accent);
-  --blog-state-bg: var(--blog-bg-card);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-state="needs-input"] {
-  --blog-state-accent: var(--blog-warn);
-  --blog-state-bg: var(--blog-warn-bg);
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-state="interpreting"] {
-  --blog-state-accent: var(--blog-spw);
-  --blog-state-bg: var(--blog-spw-bg);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-input-panel,
-  .blog-output-panel
-) {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  min-width: 0;
-  background: var(--blog-state-bg, var(--blog-bg-card));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-panel {
-  border-left: 4px solid var(--blog-state-accent);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-panel {
-  border-color: var(--blog-line-strong);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  min-height: 100%;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-input-field > span,
-  .blog-output-card h3,
-  .blog-seed-card h3
-) {
-  color: var(--blog-ink-soft);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-textarea {
-  width: 100%;
-  min-height: 22rem;
-  padding: 0.9rem;
-  resize: vertical;
-  font: inherit;
-  line-height: 1.55;
-  color: var(--blog-ink);
-  background: var(--blog-field-bg);
-  border: 1px solid var(--blog-line-strong);
-  border-radius: var(--blog-radius);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-textarea::placeholder {
-  color: var(--blog-ink-soft);
-  opacity: 0.82;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-textarea:focus-visible {
-  outline: 2px solid var(--blog-state-accent);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px var(--blog-focus-ring);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-textarea[aria-invalid="true"] {
-  border-color: var(--blog-warn);
-  box-shadow: 0 0 0 3px var(--blog-warn-bg);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--blog-gap-2);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-input-status {
-  min-height: 1.4em;
-  font-size: 0.82rem;
-  color: var(--blog-state-accent, var(--blog-ink-soft));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-header {
-  display: grid;
-  gap: 0.35rem;
-  padding-left: 0.7rem;
-  border-left: 3px solid var(--blog-tone-accent, var(--blog-state-accent));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-summary {
-  margin: 0;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-panel[aria-busy="true"] {
-  cursor: progress;
-  opacity: 0.86;
-}
-
-:where(body[data-spw-surface="blog"]) [data-blog-state="interpreted"] .blog-output-panel {
-  border-color: var(--blog-state-accent);
-  box-shadow: 0 0 0 3px var(--blog-focus-ring);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-metric-grid,
-  .blog-output-grid
-) {
-  display: grid;
-  gap: 0.7rem;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric {
-  display: grid;
-  gap: 0.25rem;
-  padding: 0.7rem;
-  background: var(--blog-bg-card);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric span {
-  color: var(--blog-ink-soft);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric strong {
-  font-size: 1rem;
-  color: var(--blog-state-accent, var(--blog-ink));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-output-card,
-  .blog-seed-card
-) {
-  padding: 0.85rem;
-  background: var(--blog-state-bg, var(--blog-bg-card));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-card--wide {
-  grid-column: 1 / -1;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-chip-list,
-  .blog-output-list
-) {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  padding-left: 0;
-  list-style: none;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-chip-list li {
-  padding: 0.22rem 0.55rem;
-  font-size: 0.78rem;
-  color: var(--blog-state-accent);
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-state-accent);
-  border-radius: var(--blog-radius);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-list {
-  display: grid;
-  gap: 0.4rem;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-seed-card pre {
-  margin: 0.65rem 0 0;
-  max-width: 100%;
-  overflow: auto;
-  border: 1px solid var(--blog-line);
-  border-radius: var(--blog-radius);
-}
-
-/* ==========================================================================
-   7. Hero + theme swatches
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .blog-hero-svg {
-  display: block;
-  width: 100%;
-  max-height: 220px;
-  margin-bottom: 1rem;
-  border-radius: var(--blog-radius);
-}
-
-:where(body[data-spw-surface="blog"]) .atelier-theme-toggle {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-  touch-action: pan-y;
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-swatch, .theme-swatch) {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.45rem;
-  padding: 0.65rem 0.9rem;
-  font: inherit;
-  font-size: 0.82rem;
-  color: var(--blog-ink);
-  cursor: pointer;
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-line);
-  border-radius: var(--blog-radius);
-  transition:
-    border-color var(--blog-transition-fast),
-    box-shadow var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-swatch, .theme-swatch)[aria-pressed="true"] {
-  border-color: var(--blog-accent);
-  box-shadow: 0 0 0 3px var(--blog-focus-ring);
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-swatch__label, .theme-swatch-label) {
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-swatch__palette, .theme-swatch-palette) {
-  display: flex;
-  gap: 4px;
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-swatch__palette, .theme-swatch-palette) span {
-  display: block;
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-}
-
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-bg { background: hsl(188 32% 97%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-accent { background: hsl(188 64% 32%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-wonder { background: hsl(342 58% 38%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-ink { background: hsl(178 16% 15%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-draft { background: hsl(150 54% 30%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--light-warn { background: hsl(1 62% 46%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-bg { background: hsl(178 14% 11%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-accent { background: hsl(188 68% 62%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-wonder { background: hsl(342 66% 66%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-ink { background: hsl(172 24% 88%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-draft { background: hsl(150 58% 58%); }
-:where(body[data-spw-surface="blog"]) .theme-swatch-chip--dark-warn { background: hsl(1 70% 68%); }
-
-/* ==========================================================================
-   8. Kernel code block
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .specimen-kernel-code {
-  overflow-x: auto;
-  padding: 1rem 1.2rem;
-  font-size: 0.82rem;
-  line-height: 1.7;
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-line);
-  border-radius: var(--blog-radius);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-kernel-code .sk-key {
-  color: var(--blog-accent);
-  font-weight: 600;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-kernel-code .sk-op {
-  color: var(--blog-wonder);
-  font-weight: 700;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-kernel-code .sk-comment {
-  color: var(--blog-ink-soft);
-  font-style: italic;
-}
-
-/* ==========================================================================
-   9. Operator snippets
-   --------------------------------------------------------------------------
-   c-snippet
-   - Purpose: compact operator reference card with optional expansion panel.
-   - Inputs: data-panel-open and JS-injected controls.
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet-grid, .operator-snippet-grid) {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 0.55rem;
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet, .operator-snippet) {
-  position: relative;
-  display: grid;
-  grid-template-columns: 2.2rem 1fr;
-  grid-template-rows: auto auto;
-  align-items: baseline;
-  column-gap: 0.5rem;
-  row-gap: 0.15rem;
-  padding: 0.55rem 0.7rem;
-  transition: border-color var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet__sigil, .operator-snippet-sigil) {
-  grid-row: 1 / 3;
-  align-self: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  text-decoration: none;
-  color: var(--blog-accent);
-  transition: color var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) a.operator-snippet-sigil:hover {
-  color: var(--blog-wonder);
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet__name, .operator-snippet-name) {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--blog-ink);
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet__example, .operator-snippet-example) {
-  grid-column: 2;
-  overflow: hidden;
-  color: var(--blog-accent);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  -webkit-user-select: all;
-  user-select: all;
-}
-
-:where(body[data-spw-surface="blog"]) :is(.c-snippet__note, .operator-snippet-note) {
-  grid-column: 1 / -1;
-  margin-top: 0.2rem;
-  padding-top: 0.25rem;
-  font-size: 0.72rem;
-  line-height: 1.45;
-  color: var(--blog-ink-soft);
-  border-top: 1px solid var(--blog-line);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-toggle {
-  position: absolute;
-  right: 0.3rem;
-  bottom: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.4rem;
-  height: 1.4rem;
-  padding: 0;
-  opacity: 0;
-  border: none;
-  border-radius: 3px;
-  background: transparent;
-  color: var(--blog-ink-soft);
-  font-size: 0.7rem;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    opacity var(--blog-transition-fast),
-    background var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .operator-snippet:hover .operator-card-toggle,
-  .operator-snippet:focus-within .operator-card-toggle,
-  .operator-snippet[data-panel-open] .operator-card-toggle
-) {
-  opacity: 0.55;
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-toggle:is(:hover, :focus-visible) {
-  opacity: 1;
-  background: var(--blog-spw-bg);
-  outline: none;
-}
-
-:where(body[data-spw-surface="blog"]) .operator-snippet[data-panel-open] {
-  z-index: 10;
-  border-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel {
-  position: absolute;
-  top: calc(100% + 0.25rem);
-  left: 0;
-  right: 0;
-  z-index: 20;
-  display: grid;
-  gap: 0.4rem;
-  min-width: 13rem;
-  padding: 0.5rem 0.6rem;
-  background: var(--blog-bg-card-strong);
-  border: 1px solid var(--blog-accent);
-  border-radius: var(--blog-radius);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
-  animation: blog-panel-drop-in 110ms ease;
-}
-
-@keyframes blog-panel-drop-in {
-  from { opacity: 0; transform: translateY(-3px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-reduction {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--blog-accent);
-  -webkit-user-select: all;
-  user-select: all;
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-btn {
-  padding: 0.16rem 0.4rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--blog-accent);
-  cursor: pointer;
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-line-strong);
-  border-radius: 3px;
-  transition:
-    background var(--blog-transition-fast),
-    border-color var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-btn:is(:hover, :focus-visible) {
-  outline: none;
-  background: var(--blog-spw-bg);
-  border-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-parallel {
-  color: var(--blog-wonder);
-  border-color: rgba(160, 42, 77, 0.30);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-parallel:is(:hover, :focus-visible) {
-  background: var(--blog-wonder-bg);
-  border-color: var(--blog-wonder);
-}
-
-:where(body[data-spw-surface="blog"]) .operator-card-panel-close {
-  margin-left: auto;
-  color: var(--blog-ink-soft);
-  border-color: var(--blog-line);
-}
-
-/* ==========================================================================
-   10. Specimen index + shared specimen styles
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .specimen-index-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 0.65rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-axis-grid {
-  margin-bottom: 1rem;
-}
-
-:where(body[data-spw-surface="blog"]) :is(a.specimen-index-card, div.specimen-index-card) {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.75rem;
-  color: var(--blog-ink);
-  text-decoration: none;
-  transition:
-    border-color var(--blog-transition-fast),
-    box-shadow var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) a.specimen-index-card:is(:hover, :focus-visible) {
-  outline: none;
-  border-color: var(--blog-accent);
-  box-shadow: 0 0 0 3px var(--blog-focus-ring);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-index-sigil {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-index-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-index-tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-card {
-  border-left: 4px solid var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-api-tag {
-  padding: 0.18rem 0.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--blog-accent);
-  border: 1px solid var(--blog-line-strong);
-  border-radius: 3px;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-material {
-  margin: 0 0 0.8rem;
-  font-size: 0.82rem;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-material strong {
-  color: var(--blog-accent);
-}
-
-/* ==========================================================================
-   11. Demo blocks
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .specimen-demo {
-  background: var(--blog-bg-card);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-sliders {
-  display: grid;
-  gap: 0.55rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-slider-row label {
-  min-width: 9rem;
-  color: var(--blog-ink-soft);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .demo-slider-row input[type="range"],
-  .demo-audio-controls input[type="range"]
-) {
-  flex: 1;
-  accent-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-slider-out {
-  min-width: 3.5rem;
-  text-align: right;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-note {
-  margin-bottom: 0.6rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-color-preview {
-  width: 100%;
-  height: 2.5rem;
-  margin-top: 0.7rem;
-  background: var(--demo-color, hsl(192 62% 44%));
-  border: 1px solid var(--blog-line);
-  border-radius: 5px;
-  transition: background var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-code-output {
-  margin: 0.65rem 0 0;
-  padding: 0.5rem 0.8rem;
-  overflow-x: auto;
-  white-space: pre;
-  font-size: 0.78rem;
-  color: var(--blog-accent);
-  background: var(--blog-bg-card-strong);
-  border: 1px solid var(--blog-line);
-  border-radius: 4px;
-}
-
-/* Intersection observer demo */
-:where(body[data-spw-surface="blog"]) .demo-io-scroll-area {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  height: 8rem;
-  overflow-y: auto;
-  border: 1px solid var(--blog-line);
-  border-radius: 5px;
-  scroll-behavior: smooth;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-io-fiber {
-  display: flex;
-  align-items: center;
-  min-height: 5rem;
-  padding: 0.5rem 0.8rem;
-  font-size: 0.78rem;
-  color: var(--blog-ink-soft);
-  background: rgba(24, 123, 135, var(--io-ratio, 0.08));
-  border-bottom: 1px solid var(--blog-line);
-  transition: background var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-io-fiber--10 { --io-ratio: 0.10; }
-:where(body[data-spw-surface="blog"]) .demo-io-fiber--30 { --io-ratio: 0.14; }
-:where(body[data-spw-surface="blog"]) .demo-io-fiber--50 { --io-ratio: 0.18; }
-:where(body[data-spw-surface="blog"]) .demo-io-fiber--70 { --io-ratio: 0.22; }
-:where(body[data-spw-surface="blog"]) .demo-io-fiber--90 { --io-ratio: 0.26; }
-
-:where(body[data-spw-surface="blog"]) .demo-io-target {
-  font-weight: 600;
-  color: var(--blog-accent);
-  border-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-io-threshold-indicator {
-  min-height: 1.4em;
-  margin-top: 0.5rem;
-  font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--blog-accent);
-}
-
-/* Audio demo */
-:where(body[data-spw-surface="blog"]) .demo-audio-controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  font-size: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-controls label {
-  min-width: 7rem;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-controls--spaced {
-  margin-top: 0.5rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-frequency {
-  width: 12rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-controls select {
-  padding: 0.2rem 0.4rem;
-  font: inherit;
-  color: var(--blog-ink);
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-line);
-  border-radius: 4px;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-btn {
-  margin-top: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-btn[aria-pressed="true"] {
-  color: #fff;
-  background: var(--blog-warn);
-  border-color: var(--blog-warn);
-}
-
-:where(body[data-spw-surface="blog"]) .demo-audio-waveform {
-  display: block;
-  width: 100%;
-  height: 4rem;
-  margin-top: 0.6rem;
-  background: var(--blog-bg-card);
-  border: 1px solid var(--blog-line);
-  border-radius: 5px;
-}
-
-/* Canvas demo */
-:where(body[data-spw-surface="blog"]) .demo-canvas-wrap canvas {
-  display: block;
-  max-width: 100%;
-  cursor: crosshair;
-  border: 1px solid var(--blog-line);
-  border-radius: 6px;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-canvas-wrap canvas:focus-visible {
-  outline: var(--blog-focus-outline);
-  outline-offset: 3px;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-canvas-note {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-canvas-clear {
-  margin-top: 0.4rem;
-}
-
-/* Filter demo */
-:where(body[data-spw-surface="blog"]) .demo-filter-text-wrap {
-  overflow: hidden;
-}
-
-:where(body[data-spw-surface="blog"]) .demo-filter-target {
-  margin: 1rem 0;
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--blog-accent);
-  filter: url(#f-svg-demo);
-}
-
-/* ==========================================================================
-   12. Fiber linguistics + field notes
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .palimpsest-frame {
-  position: relative;
-  height: 3.5rem;
-  margin-bottom: 1.2rem;
-  overflow: hidden;
-  border-radius: var(--blog-radius);
-}
-
-:where(body[data-spw-surface="blog"]) .palimpsest-layer {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  padding: 0 1rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  white-space: nowrap;
-}
-
-:where(body[data-spw-surface="blog"]) .palimpsest-layer--generation-1 {
-  opacity: 0.28;
-  font-weight: 700;
-  color: var(--blog-accent);
-  filter: url(#f-blur-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .palimpsest-layer--generation-2 {
-  top: 1.2rem;
-  opacity: 0.18;
-  letter-spacing: 0.25em;
-  color: var(--blog-wonder);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-linguistics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair {
-  display: grid;
-  gap: 0.35rem;
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-material {
-  font-size: 0.8rem;
-  color: var(--blog-ink);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-linguistic {
-  font-size: 0.8rem;
-  color: var(--blog-wonder);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-note {
-  margin-top: 0.2rem;
-  padding-top: 0.35rem;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--blog-ink-soft);
-  border-top: 1px solid var(--blog-line);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-note a {
-  color: var(--blog-accent);
-  text-decoration: none;
-  border-bottom: 1px solid var(--blog-line);
-  transition: border-color var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) .fiber-pair-note a:hover {
-  border-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .field-notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  gap: 0.8rem;
-}
-
-:where(body[data-spw-surface="blog"]) .field-note {
-  position: relative;
-  display: grid;
-  gap: 0.5rem;
-}
-
-:where(body[data-spw-surface="blog"]) .field-note::before {
-  content: attr(data-note-id);
-  opacity: 0.7;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .field-note h3 {
-  margin: 0;
-  font-size: 0.92rem;
-  color: var(--blog-ink);
-}
-
-:where(body[data-spw-surface="blog"]) .field-note p {
-  margin: 0;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .field-note-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-:where(body[data-spw-surface="blog"]) .field-note-tag {
-  padding: 0.15rem 0.45rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  color: var(--blog-accent);
-  border: 1px solid rgba(24, 123, 135, 0.35);
-  border-radius: 3px;
-}
-
-/* ==========================================================================
-   13. References + content links + transitions
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .specimen-refs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1rem;
-  margin: 0 0 0.8rem;
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-ref {
-  color: var(--blog-ink-soft);
-  text-decoration: none;
-  border-bottom: 1px solid var(--blog-line);
-  transition:
-    color var(--blog-transition-fast),
-    border-color var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-ref:is(:hover, :focus-visible) {
-  color: var(--blog-accent);
-  border-color: var(--blog-accent);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-ref--mdn::before {
-  content: "docs: ";
-  opacity: 0.6;
-  color: var(--blog-ink-soft);
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-ref--internal::before {
-  content: "@ ";
-}
-
-:where(body[data-spw-surface="blog"]) .specimen-ref--spw::before {
-  content: "op: ";
-  opacity: 0.6;
-  color: var(--blog-ink-soft);
 }
 
 :where(body[data-spw-surface="blog"]) .blog-transition {
@@ -1430,197 +278,24 @@
   border-left: 2px solid var(--blog-line);
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .frame-note a,
-  .blog-transition a
-) {
+:where(body[data-spw-surface="blog"]) :is(.frame-note a, .blog-transition a) {
   color: var(--blog-accent);
   text-decoration: none;
   border-bottom: 1px solid var(--blog-line);
   transition: border-color var(--blog-transition-fast);
 }
 
-:where(body[data-spw-surface="blog"]) :is(
-  .frame-note a:hover,
-  .blog-transition a:hover
-) {
+:where(body[data-spw-surface="blog"]) :is(.frame-note a:hover, .blog-transition a:hover) {
   border-color: var(--blog-accent);
 }
 
 /* ==========================================================================
-   14. Touch semantics
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) :is(
-  .spec-pill,
-  .field-note-tag,
-  .specimen-api-tag,
-  .specimen-index-tag,
-  .blog-chip-list li,
-  .fiber-pair-title,
-  .theme-swatch-label,
-  .sk-key,
-  .sk-op
-) {
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .spec-pill,
-  .field-note-tag,
-  .specimen-api-tag,
-  .blog-chip-list li
-) {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    outline-color var(--blog-transition-fast),
-    background var(--blog-transition-fast);
-}
-
-/* ==========================================================================
-   15. Attentional register
-   --------------------------------------------------------------------------
-   Enhancement-only floating affordance. Works without blur support.
-   ========================================================================== */
-
-[data-attn-register] {
-  position: fixed;
-  left: max(1rem, env(safe-area-inset-left, 0px));
-  right: max(1rem, env(safe-area-inset-right, 0px));
-  bottom: max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
-
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  max-width: 34rem;
-  margin: 0 auto;
-  padding: 0.5rem 0.65rem;
-
-  z-index: 900;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-
-  color: var(--blog-ink, #1b2b2b);
-  background: var(--blog-bg-card-strong, rgba(255, 255, 255, 0.92));
-  border: 1px solid var(--blog-line, rgba(0, 0, 0, 0.12));
-  border-radius: 0.6rem;
-  box-shadow: var(--blog-shadow-soft, 0 4px 20px rgba(0, 0, 0, 0.1));
-
-  animation: blog-attn-slide-up 180ms ease;
-}
-
-@keyframes blog-attn-slide-up {
-  from { opacity: 0; transform: translateY(0.5rem); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-[data-attn-register] .attn-label {
-  flex-shrink: 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  color: var(--blog-ink-soft, #666);
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-[data-attn-register] .attn-terms {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  overflow: hidden;
-}
-
-[data-attn-register] .attn-chip {
-  padding: 0.12rem 0.4rem;
-  white-space: nowrap;
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.68rem;
-  color: var(--blog-accent, hsl(188 64% 32%));
-  background: transparent;
-  border: 1px solid var(--blog-accent, hsl(188 64% 32%));
-  border-radius: 3px;
-  transition: background var(--blog-transition-fast);
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-[data-attn-register] .attn-chip:is(:hover, :active) {
-  background: var(--blog-spw-bg, rgba(24, 123, 135, 0.10));
-}
-
-[data-attn-register] .attn-clear {
-  flex-shrink: 0;
-  padding: 0.12rem 0.35rem;
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.68rem;
-  color: var(--blog-ink-soft, #666);
-  background: transparent;
-  border: 1px solid var(--blog-line, rgba(0, 0, 0, 0.12));
-  border-radius: 3px;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/* Only enable blur when enhancement is allowed and filters are not disabled */
-:where(html:not([data-spw-filters="off"])) [data-attn-register] {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-/* ==========================================================================
-   16. Runtime-aligned preset + rhythm bridge
-   --------------------------------------------------------------------------
-   Purpose
-   - Bind blog surface layout to measured Pretext presets and site rhythm state.
-   - Keep route-specific behavior additive: do not replace the global pretext
-     layer; specialize it for the blog surface.
-   - Expose stable fallbacks when JS measurement has not run yet.
+   5. Runtime-aligned preset + rhythm bridge
    ========================================================================== */
 
 :where(body[data-spw-surface="blog"]) {
-  /* measured-readable widths */
-  --blog-readable-width:
-    min(
-      var(--blog-measure),
-      calc(var(--spw-preset-panel-readable-width, 42rem) * 1px)
-    );
-
-  --blog-card-readable-width:
-    min(
-      100%,
-      calc(var(--spw-preset-card-readable-width, 34rem) * 1px)
-    );
-
-  /* derived component defaults from presets */
-  --blog-card-min-height-phone:
-    var(--spw-preset-card-min-height-phone, 12rem);
-  --blog-card-min-height-tablet:
-    var(--spw-preset-card-min-height-tablet, 10rem);
-  --blog-panel-min-height-phone:
-    var(--spw-preset-panel-min-height-phone, 14rem);
-  --blog-panel-min-height-tablet:
-    var(--spw-preset-panel-min-height-tablet, 12rem);
-
-  --blog-control-min-width:
-    var(--spw-preset-control-min-width, 8.5rem);
-  --blog-control-min-height:
-    var(--spw-preset-control-min-height, 2.35rem);
-
-  --blog-caption-min-height:
-    var(--spw-preset-caption-min-height, 2rem);
-  --blog-caption-max-width:
-    var(--spw-preset-caption-max-width, 24rem);
-
-  --blog-code-readable-width:
-    min(
-      100%,
-      var(--spw-preset-code-readable-width, 48rem)
-    );
+  --blog-readable-width: min(var(--blog-measure), calc(var(--spw-preset-panel-readable-width, 42rem) * 1px));
+  --blog-card-readable-width: min(100%, calc(var(--spw-preset-card-readable-width, 34rem) * 1px));
 
   /* pretext rhythm bridge */
   --blog-pretext-line-gap-resting: 0.14rem;
@@ -1652,12 +327,6 @@
   --blog-rhythm-border-strength: 0.32;
 }
 
-:where(html[data-spw-phase="bridge"] body[data-spw-surface="blog"]) {
-  --blog-rhythm-accent-mix: 9%;
-  --blog-rhythm-shadow-strength: 0.09;
-  --blog-rhythm-border-strength: 0.28;
-}
-
 :where(html[data-spw-phase="drop"] body[data-spw-surface="blog"]) {
   --blog-rhythm-accent-mix: 15%;
   --blog-rhythm-shadow-strength: 0.14;
@@ -1665,238 +334,19 @@
 }
 
 /* ==========================================================================
-   17. Measured readable widths
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) :is(
-  .frame-note,
-  .specimen-material,
-  .field-note p,
-  .blog-transition,
-  .blog-output-summary,
-  .blog-output-list,
-  .blog-seed-card pre,
-  .blog-input-textarea,
-  .blog-output-card p,
-  .blog-output-card li
-) {
-  max-width: var(--blog-readable-width);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .blog-output-card,
-  .blog-seed-card,
-  .specimen-demo,
-  .field-note,
-  .fiber-pair
-) {
-  min-height: var(--blog-card-min-height-phone);
-}
-
-@media (min-width: 48rem) {
-  :where(body[data-spw-surface="blog"]) :is(
-    .blog-output-card,
-    .blog-seed-card,
-    .specimen-demo,
-    .field-note,
-    .fiber-pair
-  ) {
-    min-height: var(--blog-card-min-height-tablet);
-  }
-
-  :where(body[data-spw-surface="blog"]) :is(
-    .blog-input-panel,
-    .blog-output-panel
-  ) {
-    min-height: var(--blog-panel-min-height-tablet);
-  }
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .blog-input-panel,
-  .blog-output-panel
-) {
-  min-height: var(--blog-panel-min-height-phone);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .blog-seed-card pre,
-  .specimen-kernel-code,
-  .demo-code-output
-) {
-  max-width: var(--blog-code-readable-width);
-}
-
-/* ==========================================================================
-   18. Controls + mode switches consume measured presets
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) :is(
-  button,
-  .theme-swatch,
-  .c-swatch,
-  .operator-card-panel-btn,
-  .blog-input-actions > *,
-  .mode-switch button,
-  [data-mode-group][data-set-mode]
-) {
-  min-width: var(--blog-control-min-width);
-  min-height: var(--blog-control-min-height);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .mode-switch,
-  .blog-input-actions,
-  .operator-card-panel-actions
-) {
-  gap: max(0.35rem, calc(var(--spw-preset-label-line-height, 18px) * 0.02));
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .mode-switch button,
-  [data-mode-group][data-set-mode]
-) {
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--blog-radius-tight);
-  transition:
-    border-color var(--blog-transition-fast),
-    background-color var(--blog-transition-fast),
-    box-shadow var(--blog-transition-fast),
-    transform var(--blog-transition-fast);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .mode-switch button.is-selected,
-  [data-mode-group][data-set-mode].is-selected,
-  [data-mode-group][data-set-mode][aria-pressed="true"]
-) {
-  border-color: color-mix(
-    in srgb,
-    var(--blog-accent) calc(60% + var(--blog-rhythm-accent-mix)),
-    var(--blog-line)
-  );
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--blog-spw-bg) 85%, transparent) 0%,
-      color-mix(in srgb, var(--blog-bg-card) 94%, transparent) 100%
-    );
-  box-shadow:
-    0 0 0 3px var(--blog-focus-ring),
-    0 0.3rem 0.8rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength));
-}
-
-/* ==========================================================================
-   19. Site-frame rhythm + frame activation bridge
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"]) .site-frame {
-  transition:
-    border-color var(--blog-transition-ui),
-    box-shadow var(--blog-transition-ui),
-    background-color var(--blog-transition-ui),
-    transform var(--blog-transition-ui);
-}
-
-:where(body[data-spw-surface="blog"]) :is(
-  .site-frame.is-active-frame,
-  .site-frame:focus-within,
-  .site-frame:target
-) {
-  border-color: color-mix(
-    in srgb,
-    var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix)),
-    var(--blog-line)
-  );
-  box-shadow:
-    0 0 0 3px var(--blog-focus-ring),
-    0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength));
-}
-
-:where(html[data-spw-playing="on"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--blog-spw-bg) calc(18% + var(--blog-rhythm-accent-mix)), transparent) 0%,
-      var(--blog-bg-card) 100%
-    );
-}
-
-:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
-  transform: translateY(-1px);
-}
-
-:where(html[data-spw-phase="chorus"] body[data-spw-surface="blog"] .site-frame.is-active-frame) {
-  --blog-frame-objective-opacity: 0.44;
-  --blog-frame-subjective-opacity: 0.44;
-}
-
-/* ==========================================================================
-   20. Blog interpreter + metrics become more measurable
-   ========================================================================== */
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-metric {
-  min-height: calc(var(--blog-caption-min-height) + 1.75rem);
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) :is(
-  .blog-output-card,
-  .blog-seed-card
-) {
-  max-width: 100%;
-  min-width: 0;
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-output-card--wide {
-  max-width: min(100%, calc(var(--blog-card-readable-width) * 1.18));
-}
-
-:where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) .blog-chip-list li {
-  min-height: calc(var(--blog-caption-min-height) - 0.25rem);
-}
-
-/* ==========================================================================
-   21. Route-specific pretext host specialization
-   --------------------------------------------------------------------------
-   Notes
-   - The base pretext-flow host already exists in the shared surface layer.
-   - These rules only tune the blog route with richer spacing, rhythm response,
-     scaffold legibility, and measured width discipline.
+   6. Route-specific pretext host specialization
    ========================================================================== */
 
 :where(body[data-spw-surface="blog"] [data-spw-flow="pretext"]) {
   --pretext-local-pad: 0.18rem;
   --pretext-local-radius: var(--blog-radius-tight);
   --pretext-line-gap: var(--blog-pretext-line-gap-resting);
-  --pretext-line-height:
-    var(--spw-preset-body-line-height, 1.55rem);
+  --pretext-line-height: var(--spw-preset-body-line-height, 1.55rem);
 
   max-width: 100%;
   color: inherit;
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%,
-      color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%
-    );
-  border: 1px solid color-mix(
-    in srgb,
-    var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%),
-    transparent
-  );
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-lines) {
-  gap: var(--pretext-line-gap);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line) {
-  min-height: calc(var(--blog-caption-min-height) - 0.4rem);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%, color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%), transparent);
 }
 
 :where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
@@ -1907,76 +357,14 @@
   opacity: calc(0.18 + (var(--pretext-influence, 0) * 0.42));
 }
 
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="resting"]) {
-  --pretext-line-gap: var(--blog-pretext-line-gap-resting);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="approach"]) {
-  --pretext-line-gap: var(--blog-pretext-line-gap-approach);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="contact"]) {
-  --pretext-line-gap: var(--blog-pretext-line-gap-contact);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-mode="projecting"]) {
-  --pretext-line-gap: var(--blog-pretext-line-gap-projecting);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="stable"]) {
-  border-color: color-mix(in srgb, var(--blog-line) 88%, transparent);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) {
-  border-color: color-mix(in srgb, var(--blog-accent) 28%, var(--blog-line));
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-color: color-mix(in srgb, var(--blog-accent) 28%, var(--blog-line)); }
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) { 
   border-color: color-mix(in srgb, var(--blog-wonder) 30%, var(--blog-line));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent);
 }
 
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="verse"]) {
-  letter-spacing: -0.005em;
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="chorus"]) {
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--blog-accent) 22%, transparent),
-    0 0.4rem 1.1rem rgba(0, 0, 0, 0.08);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-phase="drop"]) {
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--blog-wonder) 20%, transparent),
-    0 0.55rem 1.5rem rgba(0, 0, 0, 0.12);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-density="compressed"] .pretext-flow-line-text) {
-  font-size: 0.96em;
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-kind="caption"]) {
-  max-width: min(100%, calc(var(--blog-caption-max-width) * 1px));
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-scaffold) {
-  margin-top: 0.45rem;
-  padding-top: 0.38rem;
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-size: 0.68rem;
-  line-height: 1.45;
-  color: var(--blog-ink-soft);
-  border-top: 1px dashed var(--blog-line);
-  opacity: 0.88;
-}
-
 /* ==========================================================================
-   22. Beat-aware ambient emphasis
-   --------------------------------------------------------------------------
-   Keeps the effect subtle and route-local. The rhythm controller writes
-   data onto :root, and these selectors use that state without requiring
-   additional JS in the blog surface itself.
+   7. Beat-aware ambient emphasis
    ========================================================================== */
 
 :where(html[data-spw-playing="on"][data-spw-beat="1"] body[data-spw-surface="blog"]) {
@@ -1989,76 +377,8 @@
   --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 2%);
 }
 
-:where(html[data-spw-playing="on"] body[data-spw-surface="blog"] [data-attn-register]) {
-  border-color: color-mix(
-    in srgb,
-    var(--blog-accent) calc(18% + var(--blog-rhythm-accent-mix)),
-    var(--blog-line)
-  );
-}
-
-:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"] [data-attn-register]) {
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent),
-    0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
-}
-
 /* ==========================================================================
-   23. Responsive tightening with measured controls
-   ========================================================================== */
-
-@media (max-width: 48rem) {
-  :where(body[data-spw-surface="blog"][data-spw-features~="blog-interpreter"]) [data-blog-interpreter] {
-    grid-template-columns: 1fr;
-  }
-
-  :where(body[data-spw-surface="blog"]) :is(
-    .blog-input-actions,
-    .atelier-theme-toggle,
-    .operator-card-panel-actions
-  ) {
-    align-items: stretch;
-  }
-
-  :where(body[data-spw-surface="blog"]) :is(
-    .blog-input-actions > *,
-    .atelier-theme-toggle > *,
-    .operator-card-panel-actions > *,
-    .mode-switch button,
-    [data-mode-group][data-set-mode]
-  ) {
-    width: 100%;
-    min-width: 0;
-  }
-
-  :where(body[data-spw-surface="blog"]) .blog-metric-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  :where(body[data-spw-surface="blog"]) .blog-output-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 32rem) {
-  :where(body[data-spw-surface="blog"]) .specimen-index-grid,
-  :where(body[data-spw-surface="blog"]) .fiber-linguistics-grid,
-  :where(body[data-spw-surface="blog"]) .field-notes-grid,
-  :where(body[data-spw-surface="blog"]) .operator-snippet-grid {
-    grid-template-columns: 1fr;
-  }
-
-  :where(body[data-spw-surface="blog"]) .blog-metric-grid {
-    grid-template-columns: 1fr;
-  }
-
-  :where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line) {
-    gap: 0.28em;
-  }
-}
-
-/* ==========================================================================
-   24. Reduced motion
+   8. Reduced motion
    ========================================================================== */
 
 :where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
@@ -2066,8 +386,7 @@
   .mode-switch button,
   [data-mode-group][data-set-mode],
   [data-spw-flow="pretext"],
-  [data-spw-flow="pretext"] .line-decor,
-  [data-attn-register]
+  [data-spw-flow="pretext"] .line-decor
 ) {
   transition: none;
   animation: none;

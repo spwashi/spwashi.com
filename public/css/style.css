@@ -31,10 +31,12 @@
 @import url('/public/css/spw-material.css') layer(ornament);
 @import url('/public/css/enhancements.css') layer(ornament);
 @import url('/public/css/grain-texture.css') layer(ornament);
-@import url('/public/css/spirit-phases.css') layer(ornament);
-@import url('/public/css/containers-electromagnetic.css') layer(ornament);
+@import url('/public/css/spw-electromagnetic-container.css') layer(ornament);
 @import url('/public/css/spw-whimsy.css') layer(ornament);
 @import url('/public/css/spw-cinematic.css') layer(ornament);
+@import url('/public/css/spw-developmental-climate.css') layer(ornament);
+@import url('/public/css/spw-enrichment.css') layer(ornament);
+@import url('/public/css/spw-demos.css') layer(ornament);
 @import url('/public/css/spw-wonder.css') layer(ornament);
 @import url('/public/css/spw-canvas-accents.css') layer(ornament);
 @import url('/public/css/spw-metaphysical-paper.css') layer(ornament);

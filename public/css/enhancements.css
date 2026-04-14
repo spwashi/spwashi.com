@@ -1,112 +1,141 @@
-/*
+/* ==========================================================================
+ * enhancements.css
+ * --------------------------------------------------------------------------
  * Progressive enhancement layer.
  *
  * These selectors make planned features easier to read, but they do not own
  * route structure. Removing this file should leave the pages navigable.
- */
+ * Integrated with Spw semantic tokens, surface depths, and motion grammar.
+ * ========================================================================== */
 
-.feature-map,
-.feature-ladder,
-.motif-grid,
-.capture-preset-grid {
+:where(.feature-map, .feature-ladder, .motif-grid, .capture-preset-grid) {
     display: grid;
-    gap: 1rem;
+    gap: var(--space-md, 1rem);
 }
 
-.feature-map {
+:where(.feature-map) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.feature-map--asymmetric {
+:where(.feature-map--asymmetric) {
     grid-template-columns: minmax(0, 1.25fr) repeat(2, minmax(0, 0.9fr));
 }
 
-.feature-card--primary {
+:where(.feature-card--primary) {
     grid-row: span 2;
-    background: var(--card-bg);
+    background: var(--surface, rgba(255, 255, 255, 0.68));
+    box-shadow: var(--shadow-sm, 0 2px 6px rgba(0, 0, 0, 0.05));
+    border-radius: var(--shape-surface, 10px);
 }
 
-.feature-ladder {
+:where(.feature-ladder) {
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.feature-ladder .frame-panel {
+:where(.feature-ladder .frame-panel) {
     min-height: auto;
 }
 
-.motif-grid {
+:where(.motif-grid) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.motif-card,
-.capture-preset {
+:where(.motif-card, .capture-preset) {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--card-bg);
-    box-shadow: var(--card-shadow);
+    gap: var(--space-xs, 0.5rem);
+    padding: var(--inset-component, 1rem);
+    border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+    border-radius: var(--shape-component, 8px);
+    background: var(--surface, rgba(255, 255, 255, 0.68));
+    box-shadow: var(--card-shadow, 0 1px 3px rgba(0, 0, 0, 0.05));
     overflow: hidden;
+    transition:
+        transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-.motif-card::before,
-.capture-preset::before {
+:where(.motif-card:hover, .capture-preset:hover,
+       .motif-card:focus-within, .capture-preset:focus-within) {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover, 0 4px 18px rgba(0, 0, 0, 0.09));
+    border-color: var(--card-border-hover, rgba(0, 128, 128, 0.32));
+    background: var(--surface-strong, rgba(255, 255, 255, 0.88));
+}
+
+:where(.motif-card::before, .capture-preset::before) {
     content: '';
     position: absolute;
     inset: 0 auto 0 0;
     width: 0.28rem;
-    background: var(--active-op-color);
+    background: var(--active-op-color, #008080);
     opacity: 0.5;
+    transition:
+        width var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-.motif-card > *,
-.capture-preset > * {
+:where(.motif-card:hover::before, .capture-preset:hover::before,
+       .motif-card:focus-within::before, .capture-preset:focus-within::before) {
+    width: 0.35rem;
+    opacity: 0.85;
+}
+
+:where(.motif-card > *, .capture-preset > *) {
     position: relative;
+    z-index: 1;
 }
 
-.motif-card--operator::before { background: var(--op-probe-color); }
-.motif-card--land::before { background: var(--op-ref-color); }
-.motif-card--constellation::before { background: var(--op-stream-color); }
-.motif-card--archive::before { background: var(--op-binding-color); }
+/* Operator Tints for Motif Cards */
+:where(.motif-card--operator::before)     { background: var(--op-probe-color, #4a2180); }
+:where(.motif-card--land::before)         { background: var(--op-ref-color, #1d57a3); }
+:where(.motif-card--constellation::before){ background: var(--op-stream-color, #208259); }
+:where(.motif-card--archive::before)      { background: var(--op-binding-color, #8f401f); }
 
-.capture-preset-grid {
+:where(.capture-preset-grid) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.capture-preset {
+:where(.capture-preset) {
     min-height: 9.5rem;
     justify-content: flex-end;
-    background: var(--card-bg);
 }
 
-.capture-preset--portrait { aspect-ratio: 4 / 5; }
-.capture-preset--square { aspect-ratio: 1 / 1; }
-.capture-preset--wide { aspect-ratio: 16 / 10; }
-.capture-preset--tall { aspect-ratio: 9 / 13; }
+:where(.capture-preset--portrait) { aspect-ratio: 4 / 5; }
+:where(.capture-preset--square)   { aspect-ratio: 1 / 1; }
+:where(.capture-preset--wide)     { aspect-ratio: 16 / 10; }
+:where(.capture-preset--tall)     { aspect-ratio: 9 / 13; }
+
+/* ==========================================================================
+ * Responsive Breakpoints
+ * ========================================================================== */
 
 @media (max-width: 860px) {
-    .feature-map,
-    .feature-map--asymmetric,
-    .feature-ladder,
-    .motif-grid,
-    .capture-preset-grid {
+    :where(.feature-map, .feature-map--asymmetric, .feature-ladder, .motif-grid, .capture-preset-grid) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .feature-card--primary {
+    :where(.feature-card--primary) {
         grid-row: auto;
     }
 }
 
 @media (max-width: 640px) {
-    .feature-map,
-    .feature-map--asymmetric,
-    .feature-ladder,
-    .motif-grid,
-    .capture-preset-grid {
+    :where(.feature-map, .feature-map--asymmetric, .feature-ladder, .motif-grid, .capture-preset-grid) {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+ * Reduced Motion Handlers
+ * ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    :where(.motif-card, .capture-preset, .motif-card::before, .capture-preset::before) {
+        transition: none !important;
+        transform: none !important;
     }
 }

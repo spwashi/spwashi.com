@@ -1,242 +1,427 @@
+/* ==========================================================================
+   spw-tokens.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Define primitive scales, semantic aliases, and forward-facing state
+     contracts for the Spw runtime.
+   - Establish the physics, motion, cognitive-state, material, ornament,
+     grain, and projection variables used across the site.
+   - Map color, space, and time to functional roles rather than literal values.
+   - Prepare for richer SVG, pricing, taste-adjustment, narrative interfaces,
+     and JS-managed semantic surfaces without forcing rewrites later.
+
+   Forward direction
+   - tokens should describe possibility, not just current implementation
+   - semantic physics should be composable across CSS, SVG, and JS
+   - surfaces should be themeable by artists and understandable by engineers
+   - state should remain declarative enough for copy generation and pedagogy
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Cognitive, Physics, and Runtime State Properties
+   ========================================================================== */
+
 @property --active-op-color {
-  syntax: '<color>';
+  syntax: "<color>";
   inherits: true;
   initial-value: hsl(180 100% 28%);
 }
 
 @property --charge {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: false;
   initial-value: 0;
 }
 
 /* Valence: goal-relative orientation (-1 = avoid → 0 = neutral → +1 = approach) */
 @property --spw-valence {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: false;
   initial-value: 0;
 }
 
 /* Resonance: cross-context coherence strength (0 = isolated → 1 = strongly coupled) */
 @property --spw-resonance {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: false;
   initial-value: 0;
 }
 
 /* Bias: stance axis (−1 = objective/shared-structure → +1 = subjective/situated-meaning) */
 @property --spw-bias {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
+/* Attention: spatial or contextual weight (0 = ambient → 1 = focal point) */
+@property --spw-attention {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Depth: local liftedness / material projection (0 = flat → 1 = projected) */
+@property --spw-depth {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Utility: practical / perceived leverage (0 = baseline → 1 = magnified) */
+@property --spw-utility {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Taste proximity: how closely a rendering tracks audience taste */
+@property --spw-taste-proximity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Allocation: how strongly a thing wants to occupy space or semantic emphasis */
+@property --spw-allocation {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Drift: amount of semantic deviation or modulation in play */
+@property --spw-drift {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* ==========================================================================
+   2. Primitive Scales & Semantic Aliases
+   ========================================================================== */
+
 :root {
+  /* -- Spacing Primitives -- */
+  --space-4xs: 0.0625rem;
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+  --space-4xl: 6rem;
+
+  /* -- Semantic Spacing Aliases -- */
+  --gap-inline-micro: var(--space-3xs);
+  --gap-inline-tight: var(--space-2xs);
+  --gap-inline-flow: var(--space-xs);
+  --gap-inline-breath: var(--space-sm);
+
+  --gap-block-tight: var(--space-xs);
+  --gap-block-stack: var(--space-sm);
+  --gap-block-flow: var(--space-lg);
+  --gap-block-drift: var(--space-xl);
+
+  --gap-surface: clamp(0.85rem, 1.6vw, 1.1rem);
+  --gap-panel: clamp(0.65rem, 1.2vw, 0.9rem);
+  --gap-cluster: clamp(0.35rem, 1vw, 0.6rem);
+
+  --inset-element: var(--space-2xs) var(--space-xs);
+  --inset-component: var(--space-sm) var(--space-md);
+  --inset-surface: clamp(1rem, 2vw, 1.5rem);
+  --inset-overlay: clamp(0.55rem, 2vw, 1rem);
+  --inset-console: clamp(0.75rem, 2vw, 1rem);
+  --inset-panel: clamp(0.6rem, 1.5vw, 0.9rem);
+  --inset-ritual: clamp(1.2rem, 2.4vw, 1.8rem);
+
+  /* -- Spatial Anchors -- */
   --header-height: 4rem;
   --page-width: 72rem;
-  --reading-width: 68ch;
-  --measure-compact: 32ch;
-  --measure-card: 42ch;
-  --measure-panel: 52ch;
-  --page-gutter-inline: clamp(0.75rem, 2.5vw, 1.5rem);
-  --surface-gap: clamp(0.85rem, 1.6vw, 1.1rem);
-  --surface-padding: clamp(1rem, 2vw, 1.5rem);
+  --page-width-reading: 56rem;
+  --page-width-wide: 84rem;
+  --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
+  --touch-target-min: 2.75rem;
+  --touch-target-compact: 2.25rem;
+
+  /* -- Grid Thresholds -- */
   --grid-min-compact: 12rem;
   --grid-min-card: 15rem;
   --grid-min-panel: 17rem;
   --grid-min-feature: 19rem;
-  --touch-target-min: 2.5rem;
-  --overlay-inline-inset: clamp(0.55rem, 2vw, 1rem);
-  --console-inline-inset: clamp(0.75rem, 2vw, 1rem);
-  --shell-nav-font-size: clamp(0.82rem, 0.78rem + 0.25vw, 0.95rem);
-  --shell-nav-padding-block: clamp(0.4rem, 0.35rem + 0.4vw, 0.55rem);
-  --shell-nav-padding-inline: clamp(0.5rem, 0.35rem + 0.8vw, 0.9rem);
-  --shell-nav-min-height: clamp(2.15rem, 1.9rem + 0.9vw, 2.6rem);
+  --grid-min-surface: 22rem;
+  --grid-min-reading: 28rem;
+
+  /* -- Typography Primitives -- */
+  --font-family-sans: Inter, "Segoe UI", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-family-display: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  --text-size-2xs: 0.6875rem;
+  --text-size-xs: 0.75rem;
+  --text-size-sm: 0.875rem;
+  --text-size-base: 1rem;
+  --text-size-lg: 1.125rem;
+  --text-size-xl: 1.25rem;
+  --text-size-2xl: 1.5rem;
+  --text-size-3xl: 1.875rem;
+
+  /* -- Semantic Typography Aliases -- */
+  --site-root-font-size: 100%;
+  --site-line-height: 1.68;
+  --site-line-height-tight: 1.35;
+  --site-line-height-loose: 1.82;
+
+  --site-mono-font: var(--font-family-mono);
+  --site-sans-font: var(--font-family-sans);
+  --site-display-font: var(--font-family-display);
+
+  --measure-compact: 32ch;
+  --measure-card: 42ch;
+  --measure-panel: 52ch;
+  --measure-reading: 68ch;
+  --measure-code: 84ch;
+  --measure-maximal: 96ch;
+
+  --tracking-tight: -0.02em;
+  --tracking-base: 0;
+  --tracking-wide: 0.04em;
+  --tracking-spec: 0.06em;
+
+  /* -- Pretext Formatting Rules -- */
   --pretext-width-floor: 160px;
   --pretext-phone-scale: 0.72;
   --pretext-tablet-scale: 1;
   --pretext-poster-scale: 1.38;
-
-  --site-root-font-size: 100%;
-  --site-line-height: 1.68;
-  --site-mono-font: 'JetBrains Mono', monospace;
-  --site-sans-font: Inter, 'Segoe UI', system-ui, sans-serif;
 
   --objective-brace-width: 28px;
   --subjective-brace-width: 28px;
   --brace-strip-width: var(--objective-brace-width);
   --right-strip-width: var(--subjective-brace-width);
 
+  /* -- Shape Primitives -- */
+  --radius-2xs: 3px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* -- Semantic Shape Aliases -- */
+  --shape-element: var(--radius-xs);
+  --shape-component: var(--radius-sm);
+  --shape-surface: var(--radius-md);
+  --shape-floating: var(--radius-lg);
+  --shape-cinematic: var(--radius-xl);
+
+  /* ==========================================================================
+     3. Base Color & Material System
+     ========================================================================== */
+
+  --charcoal-rgb: 14, 18, 20;
+  --charcoal-light: rgb(26, 32, 35);
+  --charcoal-dark: rgb(6, 8, 10);
+
   --bg: hsl(42 77% 82%);
   --bg-deep: hsl(44 60% 74%);
+  --bg-field: hsl(42 44% 93%);
+  --bg-ritual: hsl(40 54% 88%);
+
   --surface: rgba(255, 255, 255, 0.62);
   --surface-strong: rgba(255, 255, 255, 0.78);
   --surface-soft: rgba(255, 255, 255, 0.44);
   --surface-code: rgba(18, 23, 27, 0.96);
+  --surface-matte: rgba(247, 244, 238, 0.93);
+  --surface-panel: rgba(255, 255, 255, 0.72);
+  --surface-panel-strong: rgba(255, 255, 255, 0.84);
+  --surface-glass: rgba(255, 255, 255, 0.22);
+  --surface-shadowed: rgba(255, 255, 255, 0.56);
 
-  --ink: rgba(14, 18, 20, 0.92);
-  --ink-soft: rgba(14, 18, 20, 0.68);
-  --line: rgba(14, 18, 20, 0.14);
+  --ink-strong: rgba(var(--charcoal-rgb), 0.96);
+  --ink: rgba(var(--charcoal-rgb), 0.92);
+  --ink-soft: rgba(var(--charcoal-rgb), 0.68);
+  --ink-mid: rgba(var(--charcoal-rgb), 0.52);
+  --ink-faint: rgba(var(--charcoal-rgb), 0.32);
+  --ink-speculative: rgba(var(--charcoal-rgb), 0.18);
+  --ink-disabled: rgba(var(--charcoal-rgb), 0.24);
+
+  /* Line weight system — hierarchy through weight, not novelty */
+  --line-hair: 0.5px;
+  --line-thin: 1px;
+  --line-mid: 1.5px;
+  --line-thick: 2.5px;
+  --line-heavy: 3px;
+
+  --line: rgba(var(--charcoal-rgb), 0.14);
   --line-strong: rgba(0, 128, 128, 0.34);
-
-  --teal: hsl(180 100% 28%);
-  --teal-deep: hsl(180 100% 18%);
-  --teal-soft: rgba(0, 128, 128, 0.7);
-
-  --resonance-accent: hsl(188 68% 52%);
-  --valence-pos: hsl(160 55% 38%);
-  --valence-neg: hsl(8 65% 44%);
-
-  --token-bg: rgba(255, 255, 255, 0.82);
-  --token-bg-hover: rgba(255, 255, 255, 0.97);
-  --token-border: rgba(0, 128, 128, 0.55);
-  --token-border-strong: rgba(0, 128, 128, 0.8);
-
-  --card-bg: rgba(255, 255, 255, 0.82);
-  --card-bg-hover: rgba(255, 255, 255, 0.92);
-  --card-border-hover: rgba(0, 128, 128, 0.5);
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.03);
-  --card-shadow-hover: 0 4px 18px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
-  --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
-
-  --floating-bg: var(--surface-strong);
-  --floating-bg-warm: rgba(255, 251, 242, 0.92);
-  --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
-  --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
-
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.10);
-
-  /* ── Material system ─ */
-  --material-blur: 12px;
-  --material-saturation: 1.06;
-  --matte-surface: rgba(247, 244, 238, 0.93);
-  --matte-border: rgba(14, 18, 20, 0.09);
-
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-pill: 999px;
-
-  /* ── Topic / connector operators ─ */
-  --op-topic-color: hsl(192 62% 32%);
-  --op-topic-border: hsla(192, 62%, 32%, 0.24);
-  --op-topic-bg-soft: rgba(228, 246, 252, 0.72);
-  --connector-color: rgba(0, 128, 128, 0.32);
-
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
+  --line-matte: rgba(var(--charcoal-rgb), 0.09);
+  --line-quiet: rgba(var(--charcoal-rgb), 0.07);
 
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
-  /* ── Line weight system — hierarchy through weight, not novelty ── */
-  --line-hair:  0.5px;
-  --line-thin:  1px;
-  --line-mid:   1.5px;
-  --line-thick: 2.5px;
+  /* Material properties */
+  --material-blur: 12px;
+  --material-saturation: 1.06;
+  --material-specular: 0.22;
+  --material-transmission: 0.08;
+  --material-shadow-strength: 0.08;
+  --material-glow-strength: 0.08;
 
-  --ink-strong: rgba(22, 28, 29, 0.88);
-  --ink-mid:    rgba(22, 28, 29, 0.52);
-  --ink-faint:  rgba(22, 28, 29, 0.12);
-  --ink-speculative: rgba(22, 28, 29, 0.18);
+  --phase-paper-weight: 1;
+  --phase-glass-weight: 0;
+  --phase-metal-weight: 0;
+  --phase-density: 0.3;
+  --phase-ink-weight: 0.4;
+  --phase-fiber-weight: 0.6;
 
-  /* ── Motion grammar — articulated, not atmospheric ── */
-  /* Joint-like: directional, brief, asymmetric, cause-linked.
-     No floating, no hover breathing, no generic easing.       */
-  --ease-precise: cubic-bezier(0.2, 0, 0.12, 1);   /* crisp precision landing */
-  --ease-joint:   cubic-bezier(0.28, 0.02, 0.12, 0.98); /* hinged redirect */
-  --ease-release: cubic-bezier(0.18, 0.72, 0.18, 1);    /* controlled discharge */
+  /* ==========================================================================
+     4. Depth, Projection, and Elevation
+     ========================================================================== */
 
-  /* Touch rhythm — machine/insect acknowledgment timing */
-  --touch-acknowledge: 90ms;   /* press lands */
-  --touch-commit:      180ms;  /* state commits */
-  --touch-emit:        360ms;  /* discharge completes */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.10);
+  --shadow-projecting: 0 14px 34px rgba(0, 0, 0, 0.14);
 
-  /* ── Phase mode variables — material dominance per mode ── */
-  --phase-paper-weight:  1;
-  --phase-glass-weight:  0;
-  --phase-metal-weight:  0;
-  --phase-density:       0.3;
+  --card-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover:
+    0 4px 18px rgba(0, 0, 0, 0.09),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
-  --charcoal-rgb: 14, 18, 20;
-  --charcoal: rgb(var(--charcoal-rgb));
-  --charcoal-light: rgb(26, 32, 35);
-  --charcoal-dark: rgb(6, 8, 10);
+  --floating-bg: var(--surface-strong);
+  --floating-bg-warm: rgba(255, 251, 242, 0.92);
+  --floating-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
-  /* ── Durations ── */
-  /* Graded by felt weight of the change, not raw speed.
-     Snap for micro-feedback; deliberate for spatial shifts.     */
-  --duration-instant:   50ms;
-  --duration-snap:      90ms;   /* mechanical micro-confirm */
-  --duration-fast:     140ms;   /* quick but weighted */
-  --duration-base:     220ms;   /* standard body of motion */
-  --duration-deliberate: 360ms; /* considered spatial moves */
-  --duration-slow:     480ms;   /* full-weight reveals */
+  /* semantic projection helpers */
+  --projection-lift-xs: 1px;
+  --projection-lift-sm: 2px;
+  --projection-lift-md: 4px;
+  --projection-lift-lg: 8px;
 
-  /* ── Easing — Precision / Luxury Vehicle Character ── */
-  /*
-     Mechanical precision: deliberate initiation, weighted travel,
-     exact landing. No bounce, no drift, no decorative flourish.
-     Think soft-close cabinet, high-end seat adjustment,
-     or a chassis door finding its seal.
-  */
-  --ease-mechanical: cubic-bezier(0.32, 0, 0.0, 1);    /* crisp, no overshoot */
-  --ease-paper:      cubic-bezier(0.40, 0, 0.2, 1);    /* paper fold — slight resistance */
-  --ease-chassis:    cubic-bezier(0.22, 0, 0.0, 1);    /* heavier, decisive rest */
-  --ease-settle:     cubic-bezier(0.2, 0.8, 0.2, 1);   /* content finding place */
-  --ease-reveal:     cubic-bezier(0.0, 0, 0.0, 1);     /* sharp precision reveal */
-  --ease-pivot:      var(--ease-paper);                 /* formerly separate, now aliased */
+  --projection-scale-rest: 1;
+  --projection-scale-focus: 1.01;
+  --projection-scale-projecting: 1.03;
 
-  /* ── Crescendo Delays — Progressive Enhancement Layers ── */
-  /*
-     Each CSS layer (grammar → components → surfaces → ornament)
-     can stagger its appearance relative to structural baseline.
-     The crescendo is the felt arrival of capability, not decoration.
-     Baseline components render immediately; enhanced layers follow.
-  */
-  --crescendo-structural:    0ms;
-  --crescendo-compositional: 32ms;
-  --crescendo-component:     64ms;
-  --crescendo-surface:      100ms;
-  --crescendo-ornament:     160ms;
+  --glow-soft:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent),
+    0 0 12px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --glow-strong:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
+    0 0 22px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 
-  /* ── Named interaction timings (semantic aliases) ── */
-  --brace-settle-duration:    var(--duration-base);
-  --brace-settle-ease:        var(--ease-mechanical);
-  --pivot-arc-duration:       var(--duration-deliberate);
-  --pivot-arc-ease:           var(--ease-chassis);
-  --threshold-cross-duration: var(--duration-base);
-  --threshold-cross-ease:     var(--ease-paper);
-  --charge-release-duration:  var(--duration-fast);
-  --charge-release-ease:      var(--ease-mechanical);
-
-  /* ── Arc-discharge timing — electricity across an attentional plane ── */
-  /* Charge arrives fast (spark), dwells briefly (arc), releases slow (dissipation).
-     These are layered onto existing charge transitions for subtlety.              */
-  --arc-spark-duration:  80ms;
-  --arc-dwell-duration:  260ms;
-  --arc-dissipate-duration: 520ms;
-  --arc-spark-ease:  cubic-bezier(0.0, 0, 0.2, 1);    /* instantaneous onset */
-  --arc-dwell-ease:  cubic-bezier(0.4, 0, 0.2, 1);    /* held tension */
-  --arc-dissipate-ease: cubic-bezier(0.16, 0.8, 0.2, 1); /* slow trailing release */
+  /* Z-Index Semantic Tiers */
+  --layer-ground: 1;
+  --layer-surface: 20;
+  --layer-floating: 100;
+  --layer-docked: 900;
+  --layer-header: 1000;
+  --layer-priority: 2000;
 
   --depth-ambient: 1;
   --depth-settled: 10;
   --depth-active: 50;
   --depth-projected: 100;
+  --depth-cinematic: 140;
 
-  --z-base: 1;
-  --z-panel: 20;
-  --z-docked: 100;
-  --z-register: 900;
-  --z-header: 1000;
-  --z-modal: 2000;
+  /* ==========================================================================
+     5. Motion & Physics Grammar
+     ========================================================================== */
 
-  --active-op-color: hsl(180 100% 28%);
+  /* Durations - graded by felt weight of the change, not raw speed. */
+  --duration-instant: 50ms;
+  --duration-snap: 90ms;
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-deliberate: 360ms;
+  --duration-slow: 480ms;
+  --duration-ceremonial: 720ms;
+
+  /* Easing - precision / vehicle / material character */
+  --ease-mechanical: cubic-bezier(0.32, 0, 0, 1);
+  --ease-precise: cubic-bezier(0.20, 0, 0.12, 1);
+  --ease-joint: cubic-bezier(0.28, 0.02, 0.12, 0.98);
+  --ease-release: cubic-bezier(0.18, 0.72, 0.18, 1);
+  --ease-paper: cubic-bezier(0.40, 0, 0.20, 1);
+  --ease-chassis: cubic-bezier(0.22, 0, 0, 1);
+  --ease-settle: cubic-bezier(0.20, 0.80, 0.20, 1);
+  --ease-reveal: cubic-bezier(0, 0, 0, 1);
+  --ease-pivot: var(--ease-paper);
+  --ease-orbit: cubic-bezier(0.16, 0.84, 0.22, 1);
+
+  /* Touch rhythm */
+  --touch-acknowledge: 90ms;
+  --touch-commit: 180ms;
+  --touch-emit: 360ms;
+  --touch-recover: 520ms;
+
+  /* Crescendo Delays — Progressive Enhancement Layers */
+  --crescendo-structural: 0ms;
+  --crescendo-compositional: 32ms;
+  --crescendo-component: 64ms;
+  --crescendo-surface: 100ms;
+  --crescendo-ornament: 160ms;
+  --crescendo-grain: 200ms;
+  --crescendo-cinematic: 260ms;
+
+  /* Named Interaction Timings */
+  --brace-settle-duration: var(--duration-base);
+  --brace-settle-ease: var(--ease-mechanical);
+  --pivot-arc-duration: var(--duration-deliberate);
+  --pivot-arc-ease: var(--ease-chassis);
+  --threshold-cross-duration: var(--duration-base);
+  --threshold-cross-ease: var(--ease-paper);
+  --charge-release-duration: var(--duration-fast);
+  --charge-release-ease: var(--ease-mechanical);
+
+  /* Arc-discharge timing */
+  --arc-spark-duration: 80ms;
+  --arc-dwell-duration: 260ms;
+  --arc-dissipate-duration: 520ms;
+  --arc-spark-ease: cubic-bezier(0, 0, 0.2, 1);
+  --arc-dwell-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --arc-dissipate-ease: cubic-bezier(0.16, 0.8, 0.2, 1);
+
+  /* pricing / utility / taste motion helpers */
+  --utility-shift-duration: var(--duration-deliberate);
+  --utility-shift-ease: var(--ease-settle);
+  --taste-drift-duration: var(--duration-base);
+  --taste-drift-ease: var(--ease-joint);
+  --projection-orbit-duration: var(--duration-ceremonial);
+  --projection-orbit-ease: var(--ease-orbit);
+
+  /* ==========================================================================
+     6. Thematic Operator System
+     ========================================================================== */
+
+  /* Base accents */
+  --teal: hsl(180 100% 28%);
+  --teal-deep: hsl(180 100% 18%);
+  --teal-soft: rgba(0, 128, 128, 0.7);
+  --connector-color: rgba(0, 128, 128, 0.32);
+
+  --amber: hsl(42 92% 52%);
+  --amber-soft: hsla(42, 92%, 52%, 0.68);
+  --pink: hsl(342 58% 48%);
+  --pink-soft: hsla(342, 58%, 48%, 0.68);
+  --violet: hsl(268 55% 42%);
+  --violet-soft: hsla(268, 55%, 42%, 0.68);
+
+  /* Semantic physics */
+  --resonance-accent: hsl(188 68% 52%);
+  --valence-pos: hsl(160 55% 38%);
+  --valence-neg: hsl(8 65% 44%);
+
+  --active-op-color: var(--teal);
   --active-op-border: rgba(0, 128, 128, 0.34);
   --active-op-bg-soft: rgba(0, 128, 128, 0.06);
 
@@ -247,9 +432,14 @@
   --boon-glow: var(--objective-brace-wash);
   --bane-glow: var(--subjective-brace-wash);
 
+  /* Functional roles matrix */
   --op-frame-color: var(--teal);
   --op-frame-border: rgba(0, 128, 128, 0.32);
   --op-frame-bg-soft: rgba(0, 128, 128, 0.06);
+
+  --op-topic-color: hsl(192 62% 32%);
+  --op-topic-border: hsla(192, 62%, 32%, 0.24);
+  --op-topic-bg-soft: rgba(228, 246, 252, 0.72);
 
   --op-object-color: hsl(36 80% 36%);
   --op-object-border: hsla(36, 80%, 36%, 0.22);
@@ -302,103 +492,19 @@
   --op-surface-color: hsl(180 70% 30%);
   --op-surface-border: rgba(0, 128, 128, 0.24);
   --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
-}
 
-html[data-spw-color-mode='light'] {
-  color-scheme: light;
-}
+  /* ==========================================================================
+     7. Boonhonk / taste combinatorics
+     --------------------------------------------------------------------------
+     These support future mixers, taste handles, nuanced preference tuning,
+     and more dimensional value / operator diagrams.
+     ========================================================================== */
 
-html[data-spw-color-mode='dark'] {
-  color-scheme: dark;
-  --bg: hsl(184 14% 11%);
-  --bg-deep: hsl(184 14% 8%);
-  --surface: rgba(255, 255, 255, 0.08);
-  --surface-strong: rgba(255, 255, 255, 0.12);
-  --surface-soft: rgba(255, 255, 255, 0.06);
-  --surface-code: rgba(7, 11, 15, 0.96);
-  --ink: hsl(172 24% 88%);
-  --ink-soft: hsl(170 10% 68%);
-  --line: rgba(255, 255, 255, 0.14);
-  --line-strong: rgba(103, 212, 222, 0.34);
-  --teal: hsl(188 68% 62%);
-  --teal-deep: hsl(188 58% 34%);
-  --token-bg: rgba(255, 255, 255, 0.08);
-  --token-bg-hover: rgba(255, 255, 255, 0.12);
-  --token-border: rgba(103, 212, 222, 0.28);
-  --token-border-strong: rgba(103, 212, 222, 0.48);
-  --card-bg: rgba(255, 255, 255, 0.10);
-  --card-bg-hover: rgba(255, 255, 255, 0.16);
-  --card-border-hover: rgba(103, 212, 222, 0.32);
-  --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --matte-surface: rgba(14, 18, 22, 0.96);
-  --matte-border: rgba(255, 255, 255, 0.08);
-  --floating-bg: rgba(18, 24, 29, 0.94);
-  --floating-bg-warm: rgba(20, 24, 27, 0.94);
-  --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
-  --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.40);
-  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.20), 0 3px 12px rgba(0, 0, 0, 0.16);
-  --card-shadow-hover: 0 5px 24px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
-  --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.18);
-  --active-op-border: rgba(103, 212, 222, 0.42);
-  --objective-brace-wash: rgba(103, 212, 222, 0.08);
-  --subjective-brace-wash: rgba(228, 108, 144, 0.08);
-}
+  --boon-color: hsl(160 54% 40%);
+  --bane-color: hsl(6 58% 44%);
+  --bone-color: hsl(42 72% 48%);
+  --bonk-color: hsl(212 62% 46%);
+  --honk-color: hsl(320 52% 46%);
 
-@media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode='auto'] {
-    color-scheme: dark;
-    --bg: hsl(184 14% 11%);
-    --bg-deep: hsl(184 14% 8%);
-    --surface: rgba(255, 255, 255, 0.08);
-    --surface-strong: rgba(255, 255, 255, 0.12);
-    --surface-soft: rgba(255, 255, 255, 0.06);
-    --surface-code: rgba(7, 11, 15, 0.96);
-    --ink: hsl(172 24% 88%);
-    --ink-soft: hsl(170 10% 68%);
-    --line: rgba(255, 255, 255, 0.14);
-    --line-strong: rgba(103, 212, 222, 0.34);
-    --teal: hsl(188 68% 62%);
-    --teal-deep: hsl(188 58% 34%);
-    --token-bg: rgba(255, 255, 255, 0.08);
-    --token-bg-hover: rgba(255, 255, 255, 0.12);
-    --token-border: rgba(103, 212, 222, 0.28);
-    --token-border-strong: rgba(103, 212, 222, 0.48);
-    --card-bg: rgba(255, 255, 255, 0.06);
-    --card-bg-hover: rgba(255, 255, 255, 0.11);
-    --card-border-hover: rgba(103, 212, 222, 0.32);
-    --card-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-    --matte-surface: rgba(14, 18, 22, 0.96);
-    --matte-border: rgba(255, 255, 255, 0.08);
-    --floating-bg: rgba(18, 24, 29, 0.94);
-    --floating-bg-warm: rgba(20, 24, 27, 0.94);
-    --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
-    --shadow-active: 0 10px 30px rgba(0, 0, 0, 0.40);
-    --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.20), 0 3px 12px rgba(0, 0, 0, 0.16);
-    --card-shadow-hover: 0 5px 24px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
-    --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.18);
-    --active-op-border: rgba(103, 212, 222, 0.42);
-    --objective-brace-wash: rgba(103, 212, 222, 0.08);
-    --subjective-brace-wash: rgba(228, 108, 144, 0.08);
-  }
-}
-
-html[data-spw-high-contrast='on'] {
-  --line: rgba(14, 18, 20, 0.42);
-  --line-strong: currentColor;
-  --token-border: currentColor;
-  --token-border-strong: currentColor;
-  --card-border-hover: currentColor;
-  --active-op-border: currentColor;
-  --objective-brace-wash: transparent;
-  --subjective-brace-wash: transparent;
-}
-
-html[data-spw-color-mode='dark'][data-spw-high-contrast='on'] {
-  --line: rgba(255, 255, 255, 0.52);
-}
-
-@media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode='auto'][data-spw-high-contrast='on'] {
-    --line: rgba(255, 255, 255, 0.52);
-  }
-}
+  --boon-border: hsla(160, 54%, 40%, 0.24);
+  --bane-border: hsla(6

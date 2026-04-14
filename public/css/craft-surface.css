@@ -1,128 +1,245 @@
-/* Craft Surface
- * Author-facing topic routes for fragments, motifs, and file traditions.
- * Route-gated so it can be removed or revised without disturbing software pages.
- */
+/* ==========================================================================
+   Craft Surface
+   --------------------------------------------------------------------------
+   Author-facing topic routes for fragments, motifs, and file traditions.
+   Route-gated so it can be removed or revised without disturbing software pages.
+
+   Direction
+   - Inspire authors and invoke wonder about palettes, page systems, panels,
+     typographic layers, and how a reader might "enter a book".
+   - Keep the route materially calm enough for reading, but rich enough to
+     suggest print logic, illustration logic, and editorial hierarchy.
+   - Bias toward paper, ink, margin, caption, motif, and chapter-room feeling.
+   ========================================================================== */
 
 [data-spw-surface="craft"] {
-    --bg: hsl(42 64% 92%);
-    --bg-deep: hsl(44 54% 84%);
-    --surface: rgba(255, 255, 255, 0.78);
-    --surface-strong: rgba(255, 255, 255, 0.94);
-    --surface-soft: rgba(244, 252, 249, 0.74);
-    --ink: rgba(19, 28, 33, 0.92);
-    --ink-soft: rgba(19, 28, 33, 0.66);
-    --line: rgba(19, 28, 33, 0.14);
-    --line-strong: rgba(16, 132, 123, 0.34);
-    --craft-accent: hsl(344 62% 42%);
-    --craft-accent-soft: hsla(344, 62%, 42%, 0.10);
-    --craft-teal: hsl(176 70% 30%);
-    --craft-leaf: hsl(132 36% 36%);
-    --craft-ink-blue: hsl(205 42% 30%);
-    --craft-fold-edge: hsl(105 34% 34%);
-    --craft-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
-    --craft-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bg: hsl(38 46% 94%);
+  --bg-deep: hsl(34 34% 88%);
+  --bg-field: hsl(42 36% 96%);
+
+  --surface: rgba(255, 252, 248, 0.82);
+  --surface-strong: rgba(255, 253, 250, 0.94);
+  --surface-soft: rgba(247, 242, 235, 0.76);
+  --surface-inkwash: rgba(249, 246, 240, 0.88);
+
+  --ink: rgba(28, 24, 22, 0.92);
+  --ink-soft: rgba(28, 24, 22, 0.68);
+  --ink-faint: rgba(28, 24, 22, 0.34);
+
+  --line: rgba(56, 43, 35, 0.14);
+  --line-strong: rgba(124, 77, 55, 0.28);
+  --line-accent: rgba(116, 67, 95, 0.26);
+
+  --craft-accent: hsl(334 34% 38%);
+  --craft-accent-soft: hsla(334, 34%, 38%, 0.10);
+  --craft-rose-ink: hsl(344 30% 42%);
+  --craft-teal: hsl(186 38% 30%);
+  --craft-leaf: hsl(108 24% 38%);
+  --craft-ink-blue: hsl(212 30% 31%);
+  --craft-gold-dust: hsl(38 52% 48%);
+  --craft-fold-edge: hsl(34 24% 42%);
+  --craft-panel-shadow: 0 10px 24px rgba(74, 51, 37, 0.06);
+  --craft-panel-glow: 0 0 0 1px rgba(116, 67, 95, 0.08);
+
+  --craft-serif: Georgia, "Times New Roman", "Noto Serif", serif;
+  --craft-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --craft-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+
+  --grain-panel-fill-local: color-mix(in srgb, var(--surface-strong) 96%, #f3eadf 4%);
+  --grain-panel-shadow-local:
+    0 2px 4px rgba(49, 34, 24, 0.04),
+    0 14px 28px rgba(49, 34, 24, 0.06);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(116, 67, 95, 0.08),
+    0 0 20px rgba(116, 67, 95, 0.05);
 }
 
 html[data-spw-color-mode="dark"] [data-spw-surface="craft"] {
-    --bg: hsl(180 10% 12%);
-    --bg-deep: hsl(184 12% 9%);
-    --surface: rgba(255, 255, 255, 0.08);
-    --surface-strong: rgba(255, 255, 255, 0.12);
-    --surface-soft: rgba(255, 255, 255, 0.06);
-    --ink: hsl(170 18% 88%);
-    --ink-soft: hsl(170 10% 70%);
-    --line: rgba(255, 255, 255, 0.14);
-    --line-strong: rgba(112, 214, 205, 0.34);
-    --craft-accent: hsl(344 66% 68%);
-    --craft-accent-soft: rgba(228, 108, 144, 0.12);
-    --craft-teal: hsl(176 62% 60%);
-    --craft-leaf: hsl(132 38% 58%);
-    --craft-ink-blue: hsl(205 56% 72%);
-    --craft-fold-edge: hsl(105 32% 60%);
+  --bg: hsl(18 12% 10%);
+  --bg-deep: hsl(18 14% 7%);
+  --bg-field: hsl(22 10% 12%);
+
+  --surface: rgba(255, 248, 239, 0.08);
+  --surface-strong: rgba(255, 248, 239, 0.12);
+  --surface-soft: rgba(255, 248, 239, 0.06);
+  --surface-inkwash: rgba(24, 20, 18, 0.88);
+
+  --ink: hsl(32 26% 90%);
+  --ink-soft: hsl(30 14% 72%);
+  --ink-faint: hsla(30, 14%, 72%, 0.42);
+
+  --line: rgba(255, 240, 225, 0.12);
+  --line-strong: rgba(211, 155, 125, 0.28);
+  --line-accent: rgba(212, 136, 181, 0.22);
+
+  --craft-accent: hsl(338 54% 72%);
+  --craft-accent-soft: rgba(214, 128, 167, 0.12);
+  --craft-rose-ink: hsl(340 48% 70%);
+  --craft-teal: hsl(184 38% 62%);
+  --craft-leaf: hsl(112 24% 62%);
+  --craft-ink-blue: hsl(210 40% 72%);
+  --craft-gold-dust: hsl(39 58% 64%);
+  --craft-fold-edge: hsl(28 24% 62%);
+  --craft-panel-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  --craft-panel-glow: 0 0 0 1px rgba(214, 128, 167, 0.10);
+
+  --grain-panel-fill-local: color-mix(in srgb, rgba(255,255,255,0.10) 88%, transparent);
+  --grain-panel-shadow-local:
+    0 2px 8px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.28);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(214, 128, 167, 0.10),
+    0 0 24px rgba(214, 128, 167, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
-    html[data-spw-color-mode="auto"] [data-spw-surface="craft"] {
-        --bg: hsl(180 10% 12%);
-        --bg-deep: hsl(184 12% 9%);
-        --surface: rgba(255, 255, 255, 0.08);
-        --surface-strong: rgba(255, 255, 255, 0.12);
-        --surface-soft: rgba(255, 255, 255, 0.06);
-        --ink: hsl(170 18% 88%);
-        --ink-soft: hsl(170 10% 70%);
-        --line: rgba(255, 255, 255, 0.14);
-        --line-strong: rgba(112, 214, 205, 0.34);
-        --craft-accent: hsl(344 66% 68%);
-        --craft-accent-soft: rgba(228, 108, 144, 0.12);
-        --craft-teal: hsl(176 62% 60%);
-        --craft-leaf: hsl(132 38% 58%);
-        --craft-ink-blue: hsl(205 56% 72%);
-        --craft-fold-edge: hsl(105 32% 60%);
-    }
+  html[data-spw-color-mode="auto"] [data-spw-surface="craft"] {
+    --bg: hsl(18 12% 10%);
+    --bg-deep: hsl(18 14% 7%);
+    --bg-field: hsl(22 10% 12%);
+
+    --surface: rgba(255, 248, 239, 0.08);
+    --surface-strong: rgba(255, 248, 239, 0.12);
+    --surface-soft: rgba(255, 248, 239, 0.06);
+    --surface-inkwash: rgba(24, 20, 18, 0.88);
+
+    --ink: hsl(32 26% 90%);
+    --ink-soft: hsl(30 14% 72%);
+    --ink-faint: hsla(30, 14%, 72%, 0.42);
+
+    --line: rgba(255, 240, 225, 0.12);
+    --line-strong: rgba(211, 155, 125, 0.28);
+    --line-accent: rgba(212, 136, 181, 0.22);
+
+    --craft-accent: hsl(338 54% 72%);
+    --craft-accent-soft: rgba(214, 128, 167, 0.12);
+    --craft-rose-ink: hsl(340 48% 70%);
+    --craft-teal: hsl(184 38% 62%);
+    --craft-leaf: hsl(112 24% 62%);
+    --craft-ink-blue: hsl(210 40% 72%);
+    --craft-gold-dust: hsl(39 58% 64%);
+    --craft-fold-edge: hsl(28 24% 62%);
+    --craft-panel-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+    --craft-panel-glow: 0 0 0 1px rgba(214, 128, 167, 0.10);
+
+    --grain-panel-fill-local: color-mix(in srgb, rgba(255,255,255,0.10) 88%, transparent);
+    --grain-panel-shadow-local:
+      0 2px 8px rgba(0, 0, 0, 0.22),
+      0 18px 36px rgba(0, 0, 0, 0.28);
+    --grain-panel-glow-local:
+      0 0 0 1px rgba(214, 128, 167, 0.10),
+      0 0 24px rgba(214, 128, 167, 0.08);
+  }
 }
 
 html[data-spw-high-contrast="on"] [data-spw-surface="craft"] {
-    --line: currentColor;
-    --line-strong: currentColor;
+  --line: currentColor;
+  --line-strong: currentColor;
+  --line-accent: currentColor;
 }
 
 body[data-spw-surface="craft"] {
-    background: var(--bg);
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--craft-gold-dust) 6%, transparent), transparent 38%),
+    linear-gradient(180deg, var(--bg-field), var(--bg));
 }
 
-/* craft uses site-default JetBrains Mono; --craft-serif kept for drop-cap + caption use */
+/* craft uses site-default mono for system logic;
+   serif/display are for drop caps, quotations, and chapter-like emphasis */
 
 [data-spw-surface="craft"] h1 {
-    font-size: 2.65rem;
-    max-width: 14ch;
+  max-width: 15ch;
+  color: color-mix(in srgb, var(--ink) 88%, var(--craft-accent));
+  font-family: var(--craft-display);
+  font-size: clamp(2.3rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 [data-spw-surface="craft"] h2 {
-    font-size: 1.65rem;
+  color: color-mix(in srgb, var(--ink) 90%, var(--craft-rose-ink));
+  font-family: var(--craft-display);
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
 }
 
 [data-spw-surface="craft"] h3 {
-    font-size: 1.02rem;
+  color: color-mix(in srgb, var(--ink) 86%, var(--craft-ink-blue));
+  font-family: var(--craft-sans);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+[data-spw-surface="craft"] p,
+[data-spw-surface="craft"] li {
+  color: var(--ink);
 }
 
 [data-spw-surface="craft"] .site-frame {
-    border-radius: 8px;
-    border-color: rgba(16, 132, 123, 0.20);
-    background: var(--surface);
+  border-color: color-mix(in srgb, var(--craft-fold-edge) 24%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-accent-soft) 32%, transparent), transparent 16%),
+    var(--surface);
+  box-shadow:
+    var(--craft-panel-glow),
+    var(--craft-panel-shadow);
 }
 
 [data-spw-surface="craft"] .frame-card,
 [data-spw-surface="craft"] .operator-chip {
-    border-radius: 8px;
+  border-radius: 10px;
 }
 
+[data-spw-surface="craft"] .frame-heading,
+[data-spw-surface="craft"] .frame-topline {
+  align-items: baseline;
+}
+
+[data-spw-surface="craft"] .frame-note,
+[data-spw-surface="craft"] .inline-note {
+  color: var(--ink-soft);
+}
 
 [data-spw-surface="craft"] a:not(.operator-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card) {
-    color: var(--craft-accent);
-    text-decoration-color: hsla(344, 62%, 42%, 0.28);
-    text-underline-offset: 0.16em;
+  color: var(--craft-accent);
+  text-decoration-color: color-mix(in srgb, var(--craft-accent) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 
 [data-spw-surface="craft"] a:not(.operator-chip):not(.frame-sigil):not(.frame-card):not(.craft-file-card):hover {
-    text-decoration-color: var(--craft-accent);
+  color: color-mix(in srgb, var(--craft-accent) 82%, var(--craft-ink-blue));
+  text-decoration-color: currentColor;
 }
 
 .craft-lede {
-    font-size: 1.16rem;
-    line-height: 1.68;
-    color: var(--ink-soft);
+  max-width: 54ch;
+  color: color-mix(in srgb, var(--ink-soft) 92%, var(--craft-ink-blue));
+  font-family: var(--craft-sans);
+  font-size: 1.12rem;
+  line-height: 1.72;
 }
 
 .craft-route-grid,
 .craft-note-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
 }
 
 .craft-route-grid .frame-card {
-    min-height: 12rem;
+  min-height: 12rem;
 }
+
+/* --------------------------------------------------------------------------
+   Prompt / chapter card
+   -------------------------------------------------------------------------- */
 
 .craft-prompt-card,
 .craft-fragment,
@@ -130,298 +247,393 @@ body[data-spw-surface="craft"] {
 .craft-file-tree,
 .craft-screenshot-frame,
 .craft-callout {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--surface-strong);
-    box-shadow: none;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-strong);
+  box-shadow:
+    var(--craft-panel-glow),
+    var(--craft-panel-shadow);
 }
 
 .craft-prompt-card {
-    display: grid;
-    gap: 1rem;
-    align-content: start;
-    min-height: 16rem;
-    padding: 1.4rem;
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-height: 16rem;
+  padding: 1.4rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-gold-dust) 5%, transparent), transparent 24%),
+    var(--surface-strong);
 }
 
 .craft-prompt-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    inline-size: 0.45rem;
-    background: var(--craft-accent);
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  inline-size: 0.5rem;
+  background:
+    linear-gradient(
+      180deg,
+      var(--craft-accent),
+      color-mix(in srgb, var(--craft-accent) 52%, var(--craft-teal))
+    );
+}
+
+.craft-prompt-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 1.25rem 1rem 1.25rem;
+  border-bottom: 1px dashed color-mix(in srgb, var(--craft-fold-edge) 28%, transparent);
+  opacity: 0.42;
+  pointer-events: none;
 }
 
 .craft-prompt-card > * {
-    position: relative;
+  position: relative;
 }
 
 .craft-prompt-card h2,
 .craft-prompt-card h3 {
-    margin: 0;
+  margin: 0;
 }
 
 .craft-prompt-card ol,
 .craft-prompt-card ul {
-    display: grid;
-    gap: 0.55rem;
-    padding-inline-start: 1.25rem;
+  display: grid;
+  gap: 0.55rem;
+  padding-inline-start: 1.25rem;
 }
+
+/* --------------------------------------------------------------------------
+   Badges / link runs / motifs
+   -------------------------------------------------------------------------- */
 
 .craft-badge-row,
 .craft-link-run,
 .craft-motif-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
 }
 
 .craft-badge {
-    display: inline-flex;
-    min-height: 2rem;
-    align-items: center;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.2rem 0.75rem;
-    background: rgba(255, 255, 255, 0.72);
-    color: var(--ink-soft);
-    font-family: var(--craft-sans);
-    font-size: 0.8rem;
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--craft-fold-edge) 20%, transparent);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 62%),
+    rgba(255, 255, 255, 0.72);
+  color: var(--ink-soft);
+  font-family: var(--craft-sans);
+  font-size: 0.8rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
 .craft-ornament {
-    display: block;
-    width: min(24rem, 100%);
-    height: 2rem;
-    margin: 2rem auto;
-    color: var(--craft-teal);
+  display: block;
+  width: min(24rem, 100%);
+  height: 2rem;
+  margin: 2rem auto;
+  color: color-mix(in srgb, var(--craft-teal) 78%, var(--craft-gold-dust));
 }
 
 .craft-illustration {
-    display: grid;
-    gap: 0.75rem;
-    margin: 2rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+  margin: 2rem 0 0;
 }
 
 .craft-illustration svg,
 .craft-story-svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    background: var(--surface-strong);
-    border: 1px solid var(--line);
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--craft-fold-edge) 20%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.34), transparent 26%),
+    var(--surface-strong);
 }
 
 .craft-illustration figcaption,
 .craft-svg-card figcaption {
-    color: var(--ink-soft);
-    font-family: var(--craft-sans);
-    font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-family: var(--craft-sans);
+  font-size: 0.85rem;
 }
 
+/* --------------------------------------------------------------------------
+   Code / fragment split
+   -------------------------------------------------------------------------- */
+
 .craft-code-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.85fr);
-    gap: 1rem;
-    align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.85fr);
+  gap: 1rem;
+  align-items: stretch;
 }
 
 .craft-fragment {
-    display: grid;
-    gap: 1rem;
-    padding: 1.25rem;
-    position: relative;
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-ink-blue) 3%, transparent), transparent 24%),
+    var(--surface-strong);
 }
 
 .craft-fragment::before {
-    content: attr(data-fragment-label);
-    position: absolute;
-    inset-block-start: -0.72rem;
-    inset-inline-start: 1rem;
-    padding: 0 0.55rem;
-    background: var(--bg);
-    color: var(--ink-soft);
-    font-family: var(--craft-sans);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  content: attr(data-fragment-label);
+  position: absolute;
+  inset-block-start: -0.72rem;
+  inset-inline-start: 1rem;
+  padding: 0 0.55rem;
+  background: var(--bg);
+  color: color-mix(in srgb, var(--ink-soft) 86%, var(--craft-ink-blue));
+  font-family: var(--craft-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .craft-fragment pre {
-    min-height: 100%;
-    border-radius: 8px;
-    font-size: 0.84rem;
+  min-height: 100%;
+  border-radius: 10px;
+  font-size: 0.84rem;
 }
 
 .craft-fragment-result {
-    display: grid;
-    gap: 0.75rem;
-    align-content: center;
-    min-height: 14rem;
-    padding: 1.2rem;
-    border: 1px dashed var(--line-strong);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.76);
+  display: grid;
+  gap: 0.75rem;
+  align-content: center;
+  min-height: 14rem;
+  padding: 1.2rem;
+  border: 1px dashed color-mix(in srgb, var(--craft-teal) 26%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-teal) 4%, transparent), transparent 28%),
+    rgba(255, 255, 255, 0.76);
 }
+
+/* --------------------------------------------------------------------------
+   Typography wonder
+   -------------------------------------------------------------------------- */
 
 .craft-drop-cap::first-letter {
-    float: left;
-    padding-inline-end: 0.08em;
-    color: var(--craft-accent);
-    font-family: var(--craft-serif);
-    font-size: 3.4rem;
-    font-weight: 700;
-    line-height: 0.82;
-}
-
-.craft-motif-strip {
-    justify-content: center;
-    padding: 1rem 0;
-}
-
-.craft-motif-strip svg {
-    width: 3rem;
-    height: 3rem;
-    color: var(--craft-teal);
-}
-
-.craft-svg-showcase {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-    gap: 1rem;
-}
-
-.craft-svg-card {
-    display: grid;
-    gap: 0.85rem;
-    align-content: start;
-    padding: 1.2rem;
-}
-
-.craft-callout {
-    padding: 1.25rem;
-    border-inline-start: 0.35rem solid var(--craft-accent);
-    background: var(--surface-strong);
-    font-family: var(--craft-sans);
-}
-
-.craft-callout strong {
-    display: block;
-    margin-block-end: 0.35rem;
-    color: var(--craft-accent);
-}
-
-.craft-file-card {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 1rem;
-    align-items: start;
-    min-height: 7rem;
-    padding: 1.1rem;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--surface-strong);
-    color: inherit;
-    text-decoration: none;
-}
-
-.craft-file-card:hover {
-    border-color: var(--line-strong);
-    box-shadow: none;
-}
-
-.craft-file-card .file-ext {
-    display: inline-flex;
-    min-width: 4.2rem;
-    justify-content: center;
-    border-radius: 8px;
-    padding: 0.45rem 0.7rem;
-    background: rgba(16, 132, 123, 0.10);
-    color: var(--craft-teal);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.craft-file-card .file-desc strong {
-    display: block;
-    margin-block-end: 0.25rem;
-    font-family: var(--craft-sans);
-}
-
-.craft-file-card .file-desc span {
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-}
-
-.craft-file-tree {
-    padding: 1.2rem;
-    overflow-x: auto;
-    background: rgba(13, 21, 26, 0.94);
-    color: hsl(164 42% 90%);
-}
-
-.craft-file-tree code {
-    white-space: pre;
-}
-
-.craft-screenshot-frame {
-    display: grid;
-    gap: 0.75rem;
-    min-height: 17rem;
-    padding: 1.2rem;
-    background: var(--surface-strong);
-}
-
-.craft-page-mark {
-    justify-self: start;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.2rem 0.7rem;
-    background: rgba(255, 255, 255, 0.66);
-    color: var(--ink-soft);
-    font-family: var(--craft-sans);
-    font-size: 0.78rem;
+  float: left;
+  padding-inline-end: 0.08em;
+  color: color-mix(in srgb, var(--craft-accent) 82%, var(--craft-gold-dust));
+  font-family: var(--craft-display);
+  font-size: 3.55rem;
+  font-weight: 700;
+  line-height: 0.82;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.22);
 }
 
 .craft-sensory {
-    color: var(--craft-accent);
-    font-style: italic;
+  color: color-mix(in srgb, var(--craft-accent) 86%, var(--craft-rose-ink));
+  font-style: italic;
 }
 
+.craft-motif-strip {
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.craft-motif-strip svg {
+  width: 3rem;
+  height: 3rem;
+  color: color-mix(in srgb, var(--craft-teal) 72%, var(--craft-gold-dust));
+  filter: drop-shadow(0 2px 8px rgba(80, 57, 32, 0.08));
+}
+
+/* --------------------------------------------------------------------------
+   SVG showcase
+   -------------------------------------------------------------------------- */
+
+.craft-svg-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.craft-svg-card {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  padding: 1.2rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-gold-dust) 4%, transparent), transparent 22%),
+    var(--surface-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Callout / file cards / file tree
+   -------------------------------------------------------------------------- */
+
+.craft-callout {
+  padding: 1.25rem;
+  border-inline-start: 0.38rem solid color-mix(in srgb, var(--craft-accent) 74%, var(--craft-gold-dust));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--craft-accent-soft) 52%, transparent), transparent 30%),
+    var(--surface-strong);
+  font-family: var(--craft-sans);
+}
+
+.craft-callout strong {
+  display: block;
+  margin-block-end: 0.35rem;
+  color: color-mix(in srgb, var(--craft-accent) 90%, var(--craft-rose-ink));
+}
+
+.craft-file-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  min-height: 7rem;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-ink-blue) 2%, transparent), transparent 28%),
+    var(--surface-strong);
+  color: inherit;
+  text-decoration: none;
+  box-shadow:
+    var(--craft-panel-glow),
+    var(--craft-panel-shadow);
+  transition:
+    border-color var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease);
+}
+
+.craft-file-card:hover,
+.craft-file-card:focus-visible {
+  border-color: color-mix(in srgb, var(--craft-accent) 22%, var(--craft-teal));
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--craft-accent) 8%, transparent),
+    0 14px 28px rgba(74, 51, 37, 0.08);
+  outline: none;
+}
+
+.craft-file-card .file-ext {
+  display: inline-flex;
+  min-width: 4.2rem;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 0.45rem 0.7rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 56%),
+    color-mix(in srgb, var(--craft-teal) 10%, transparent);
+  color: color-mix(in srgb, var(--craft-teal) 80%, var(--craft-ink-blue));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.craft-file-card .file-desc strong {
+  display: block;
+  margin-block-end: 0.25rem;
+  font-family: var(--craft-sans);
+}
+
+.craft-file-card .file-desc span {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.craft-file-tree {
+  padding: 1.2rem;
+  overflow-x: auto;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 24%),
+    rgba(16, 18, 22, 0.96);
+  color: hsl(42 30% 90%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 10px 24px rgba(0,0,0,0.16);
+}
+
+.craft-file-tree code {
+  white-space: pre;
+}
+
+/* --------------------------------------------------------------------------
+   Screenshot frame / page hierarchy imagination
+   -------------------------------------------------------------------------- */
+
+.craft-screenshot-frame {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 17rem;
+  padding: 1.2rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--craft-gold-dust) 4%, transparent), transparent 22%),
+    var(--surface-strong);
+}
+
+.craft-page-mark {
+  justify-self: start;
+  border: 1px solid color-mix(in srgb, var(--craft-fold-edge) 20%, transparent);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.3), transparent 56%),
+    rgba(255, 255, 255, 0.66);
+  color: var(--ink-soft);
+  font-family: var(--craft-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 760px) {
-    [data-spw-surface="craft"] h1 {
-        font-size: 2.15rem;
-        max-width: none;
-    }
+  [data-spw-surface="craft"] h1 {
+    max-width: none;
+    font-size: 2.15rem;
+  }
 
-    .craft-code-grid {
-        grid-template-columns: 1fr;
-    }
+  .craft-code-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .craft-prompt-card,
-    .craft-screenshot-frame {
-        min-height: 0;
-    }
+  .craft-prompt-card,
+  .craft-screenshot-frame {
+    min-height: 0;
+  }
 }
 
 @media print {
-    [data-spw-surface="craft"] {
-        --bg: white;
-        --bg-deep: white;
-        --surface: white;
-        --surface-strong: white;
-        --ink: black;
-    }
+  [data-spw-surface="craft"] {
+    --bg: white;
+    --bg-deep: white;
+    --bg-field: white;
+    --surface: white;
+    --surface-strong: white;
+    --surface-soft: white;
+    --ink: black;
+    --ink-soft: rgba(0,0,0,0.7);
+    --line: rgba(0,0,0,0.18);
+  }
 
-    .craft-prompt-card,
-    .craft-fragment,
-    .craft-svg-card,
-    .craft-file-card {
-        box-shadow: none;
-    }
+  .craft-prompt-card,
+  .craft-fragment,
+  .craft-svg-card,
+  .craft-file-card,
+  .craft-callout {
+    box-shadow: none;
+  }
 }

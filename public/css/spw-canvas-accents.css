@@ -1,84 +1,91 @@
-/**
+/* ==========================================================================
+ * spw-canvas-accents.css
+ * --------------------------------------------------------------------------
  * Spw Canvas Accent Styles
- *
  * Positions the generative canvases as background layers within
- * Spw components.
- */
+ * Spw components. Integrated with global semantic tokens and motion grammar.
+ * ========================================================================== */
 
-.spw-accent-host {
+/* ─── Base Host & Canvas Configuration ──────────────────────────────────── */
+
+:where(.spw-accent-host) {
     position: relative;
     overflow: hidden !important;
-    z-index: 1;
+    z-index: 1; /* Establishes local stacking context */
+    
+    /* Default canvas behavior tokens */
+    --canvas-opacity: 0.6;
+    --canvas-blend: multiply;
 }
 
-.spw-accent-host canvas {
+:where(.spw-accent-host canvas) {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    opacity: 0.6;
-    mix-blend-mode: multiply;
-}
-
-:root[data-theme="dark"] .spw-accent-host canvas {
-    mix-blend-mode: screen;
-    opacity: 0.4;
+    opacity: var(--canvas-opacity);
+    mix-blend-mode: var(--canvas-blend);
+    transition: opacity var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
 }
 
 /* Ensure content sits above the canvas but below interaction overlays */
-.spw-accent-host > *:not(canvas) {
+:where(.spw-accent-host > *:not(canvas)) {
     position: relative;
     z-index: 2;
 }
 
 /* Hovering the host intensifies the accent via JS,
-   but we can also add a CSS transition for smooth opacity. */
-.spw-accent-host:hover canvas {
-    opacity: 0.8;
+   but we add a CSS transition for smooth opacity swelling. */
+:where(.spw-accent-host:hover canvas, .spw-accent-host:focus-within canvas) {
+    opacity: calc(var(--canvas-opacity) + 0.2);
 }
 
-/* ── Wave / Vortex / Crystal accent variants ────────────────────── */
+/* ─── Wave / Vortex / Crystal Accent Variants ───────────────────────────── */
 /* These use multiply on light, screen on dark for palette resonance */
 
-[data-spw-accent="wave"] canvas,
-[data-spw-accent="vortex"] canvas {
-    opacity: 0.55;
-    mix-blend-mode: multiply;
+:where([data-spw-accent="wave"] canvas, [data-spw-accent="vortex"] canvas) {
+    --canvas-opacity: 0.55;
 }
 
-[data-spw-accent="crystal"] canvas {
-    opacity: 0.42;
-    mix-blend-mode: multiply;
+:where([data-spw-accent="crystal"] canvas) {
+    --canvas-opacity: 0.42;
 }
 
-html[data-spw-color-mode="dark"] [data-spw-accent="wave"] canvas,
-html[data-spw-color-mode="dark"] [data-spw-accent="vortex"] canvas,
-html[data-spw-color-mode="dark"] [data-spw-accent="crystal"] canvas {
-    mix-blend-mode: screen;
-    opacity: 0.35;
+/* ─── Dark Mode & Color Scheme Logic ────────────────────────────────────── */
+
+html[data-spw-color-mode="dark"] :where(.spw-accent-host) {
+    --canvas-blend: screen;
+    --canvas-opacity: 0.35;
 }
 
 @media (prefers-color-scheme: dark) {
-    html[data-spw-color-mode="auto"] [data-spw-accent="wave"] canvas,
-    html[data-spw-color-mode="auto"] [data-spw-accent="vortex"] canvas,
-    html[data-spw-color-mode="auto"] [data-spw-accent="crystal"] canvas {
-        mix-blend-mode: screen;
-        opacity: 0.35;
+    html[data-spw-color-mode="auto"] :where(.spw-accent-host) {
+        --canvas-blend: screen;
+        --canvas-opacity: 0.35;
     }
 }
 
+/* ─── Palette Adjustments ───────────────────────────────────────────────── */
+
 /* Warm-palette accents tint slightly toward amber */
-[data-spw-accent-palette="warm"] canvas {
+:where([data-spw-accent-palette="warm"] canvas) {
     filter: saturate(1.1) hue-rotate(-8deg);
 }
 
-/* Reduced motion: static snapshot, no animation */
+/* Cool-palette accents tint slightly toward deep teal/blue */
+:where([data-spw-accent-palette="cool"] canvas) {
+    filter: saturate(1.05) hue-rotate(12deg);
+}
+
+/* ─── Motion & Accessibility Constraints ────────────────────────────────── */
+
+/* Reduced motion: static snapshot, no animation, dimmed presence */
 @media (prefers-reduced-motion: reduce) {
-    .spw-accent-host canvas {
-        animation: none;
-        opacity: 0.18;
+    :where(.spw-accent-host canvas) {
+        animation: none !important;
+        transition: none !important;
+        opacity: calc(var(--canvas-opacity) * 0.4);
     }
 }
