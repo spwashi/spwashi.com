@@ -1,22 +1,51 @@
 /* ==========================================================================
    spw-reset.css
    --------------------------------------------------------------------------
-   Purpose: Global baseline, interaction resets, and default typography.
+   Purpose:
+   - Global baseline, interaction resets, flow defaults, and default typography.
+   - Own shared reading rhythm, anchor behavior, overflow safety, and semantic
+     document flow before route/shell layers specialize the page.
    Dependency: None (includes hardcoded fallbacks if tokens are missing).
    ========================================================================== */
 
-/* ── 1. Core Box Model & Interaction Limits ── */
+/* ── 0. Shared Baseline Flow Variables ─────────────────────────────────── */
+
+:root {
+  --site-root-font-size: 100%;
+  --site-line-height: 1.68;
+
+  --reading-width: 68ch;
+  --reading-width-tight: 58ch;
+  --reading-width-wide: 82ch;
+
+  --flow-gap-2xs: 0.35rem;
+  --flow-gap-xs: 0.55rem;
+  --flow-gap-sm: 0.8rem;
+  --flow-gap-md: 1rem;
+  --flow-gap-lg: 1.4rem;
+  --flow-gap-xl: 2rem;
+  --flow-gap-2xl: 3rem;
+
+  --flow-section-gap: clamp(1.4rem, 3vw, 2.6rem);
+  --flow-stack-gap: clamp(0.9rem, 1.8vw, 1.25rem);
+  --flow-reading-gap: clamp(0.8rem, 1.6vw, 1.1rem);
+
+  --focus-ring-color: var(--teal, #008080);
+  --focus-ring-offset: 3px;
+  --selection-bg: var(--active-op-bg-soft, rgba(0, 128, 128, 0.18));
+  --selection-ink: var(--ink, #161c1d);
+}
+
+/* ── 1. Core Box Model & Interaction Limits ────────────────────────────── */
 
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height, 4rem);
   font-size: var(--site-root-font-size, 100%);
-  /* Prevent iOS text size adjustment on orientation change */
   -webkit-text-size-adjust: 100%;
 }
 
-/* Ensure reading regions opt into selection, but interactive UI components don't */
 *,
 *::before,
 *::after {
@@ -25,15 +54,21 @@ html {
   -webkit-user-select: none;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   min-height: 100%;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   background-color: var(--bg, #f7f4ee);
   background-image: radial-gradient(
     ellipse 80% 60% at 50% 0%,
@@ -42,68 +77,163 @@ body {
   );
   background-attachment: fixed;
   color: var(--ink, #161c1d);
-  
-  /* Robust Monospace Stack */
-  font-family: var(--site-mono-font, 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Roboto Mono', ui-monospace, monospace);
+
+  font-family: var(
+    --site-mono-font,
+    'JetBrains Mono',
+    'Cascadia Code',
+    'Fira Code',
+    'Roboto Mono',
+    ui-monospace,
+    monospace
+  );
   line-height: var(--site-line-height, 1.68);
   font-optical-sizing: auto;
-  
-  /* Font Smoothing */
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+
+  overflow-wrap: break-word;
 }
 
-/* ── 2. Media & Objects ── */
+/* ── 2. Document Flow Defaults ──────────────────────────────────────────── */
 
-img, picture, video, canvas, svg, iframe, embed, object {
+main,
+article,
+section,
+aside,
+nav,
+header,
+footer,
+figure,
+figcaption,
+details,
+summary,
+fieldset,
+form,
+blockquote {
+  min-width: 0;
+}
+
+main,
+article,
+section,
+aside,
+nav,
+figure,
+form {
+  display: block;
+}
+
+main > article,
+main > section,
+main > aside {
+  min-width: 0;
+}
+
+article,
+section,
+aside {
+  contain: inline-size style;
+}
+
+:where(main > article),
+:where(main > section),
+:where(main > aside),
+:where(article > section),
+:where(article > aside),
+:where(section > section),
+:where(section > aside),
+:where(aside > section),
+:where(aside > aside) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--flow-stack-gap);
+}
+
+:where(main > * + *),
+:where(article > * + *),
+:where(section > * + *),
+:where(aside > * + *),
+:where(nav > * + *),
+:where(figure > * + *) {
+  margin-block-start: 0;
+}
+
+:where(main > section + section),
+:where(main > section + nav),
+:where(main > nav + section),
+:where(main > article + section),
+:where(main > section + article),
+:where(article > section + section),
+:where(article > section + aside),
+:where(article > aside + section) {
+  margin-top: var(--flow-section-gap);
+}
+
+/* useful generic stack */
+.flow-stack,
+.reading-stack,
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--flow-stack-gap);
+  min-width: 0;
+}
+
+/* ── 3. Media & Objects ─────────────────────────────────────────────────── */
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe,
+embed,
+object {
   display: block;
   max-width: 100%;
   height: auto;
-  font-style: italic; /* For alt text */
+  font-style: italic;
 }
 
 svg {
   fill: currentColor;
 }
 
-/* ── 3. Typography & Text Flow ── */
-
-/* Reading regions opt back into text selection */
-article p,
-article li,
-article blockquote,
-article pre,
-article code,
-.site-lede,
-.frame-panel p,
-.frame-panel li,
-.frame-details p,
-.inline-note,
-.frame-note,
-[data-reading-region],
-[contenteditable] {
-  user-select: text;
-  -webkit-user-select: text;
-  cursor: text;
+iframe,
+embed,
+object {
+  width: 100%;
+  border: 0;
 }
+
+/* ── 4. Typography & Text Flow ──────────────────────────────────────────── */
 
 ::selection {
-  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.18));
-  color: var(--ink, #161c1d);
+  background: var(--selection-bg);
+  color: var(--selection-ink);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  text-wrap: balance; /* Prevents awkward typographic orphans */
+  text-wrap: balance;
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
 }
 
 h1 { font-size: clamp(2rem, 5vw, 3rem); }
 h2 { font-size: clamp(1.4rem, 4vw, 1.7rem); }
 h3 { font-size: clamp(1.1rem, 3vw, 1.25rem); }
+
 h4 {
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -111,18 +241,125 @@ h4 {
   color: var(--teal, #008080);
 }
 
-p {
-  margin: 0;
+p,
+li,
+blockquote,
+figcaption,
+dd {
   max-width: var(--reading-width, 68ch);
-  overflow-wrap: break-word; /* Prevents overflow from long URLs/strings */
+  overflow-wrap: break-word;
 }
 
-ul, ol {
+p,
+blockquote,
+figcaption,
+dd {
+  margin: 0;
+}
+
+p + p,
+p + ul,
+p + ol,
+ul + p,
+ol + p,
+blockquote + p,
+p + blockquote {
+  margin-top: var(--flow-reading-gap);
+}
+
+ul,
+ol {
   margin: 0;
   padding-left: 1.5rem;
 }
 
-/* ── 4. Links & Focus States ── */
+:where(ul, ol) {
+  display: grid;
+  gap: 0.45rem;
+}
+
+li > :where(p, ul, ol) {
+  margin-top: 0.45rem;
+}
+
+dt {
+  font-weight: 700;
+  margin: 0;
+}
+
+dd + dt {
+  margin-top: var(--flow-gap-sm);
+}
+
+blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+small {
+  font-size: 0.86em;
+}
+
+/* code-heavy or machine-readable regions */
+pre,
+code,
+kbd,
+samp {
+  font-family: inherit;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.08rem 0.35rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14,18,20,0.14)) 90%, transparent);
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--surface, rgba(255,255,255,0.72)) 92%, transparent);
+  line-height: 1.2;
+  font-size: 0.92em;
+}
+
+/* ── 5. Reading Regions & Selection Recovery ───────────────────────────── */
+
+article p,
+article li,
+article blockquote,
+article pre,
+article code,
+article kbd,
+article samp,
+.site-lede,
+.page-lede,
+.frame-panel p,
+.frame-panel li,
+.frame-details p,
+.inline-note,
+.frame-note,
+.plan-thesis,
+.plan-wonder p,
+.plan-considerations li,
+[data-reading-region],
+[data-spw-readable],
+[contenteditable] {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+article a,
+article button,
+article summary,
+article input,
+article textarea,
+article select,
+article label,
+.operator-chip,
+.frame-card,
+.frame-sigil {
+  cursor: pointer;
+}
+
+/* ── 6. Links & Focus States ────────────────────────────────────────────── */
 
 a {
   color: inherit;
@@ -134,7 +371,9 @@ a {
 article a,
 .frame-panel a,
 .inline-note a,
-.site-lede a {
+.site-lede a,
+.page-lede a,
+.frame-note a {
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
@@ -144,7 +383,10 @@ article a,
 }
 
 article a:hover,
-.frame-panel a:hover {
+.frame-panel a:hover,
+.inline-note a:hover,
+.page-lede a:hover,
+.frame-note a:hover {
   text-decoration-color: var(--active-op-color, #008080);
   color: var(--active-op-color, #008080);
 }
@@ -153,16 +395,64 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* Universal, accessible focus ring */
 :focus-visible {
-  outline: 2px solid var(--teal, #008080);
-  outline-offset: 3px;
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
   border-radius: 2px;
 }
 
-/* ── 5. Form Controls & Code ── */
+/* Improve deep-link landing behavior */
+[id] {
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+}
 
-input, button, textarea, select {
+/* ── 7. Tables, Rules, Disclosure ──────────────────────────────────────── */
+
+hr {
+  border: 0;
+  border-top: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  margin: var(--flow-gap-lg) 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  overflow-x: auto;
+}
+
+th,
+td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid color-mix(in oklab, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
+}
+
+th {
+  font-weight: 700;
+}
+
+details {
+  min-width: 0;
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ── 8. Form Controls & Code ───────────────────────────────────────────── */
+
+input,
+button,
+textarea,
+select {
   font: inherit;
   color: inherit;
   margin: 0;
@@ -175,8 +465,9 @@ button {
   padding: 0;
 }
 
-code, pre {
-  font-family: inherit; /* Inherits the global monospace stack */
+textarea {
+  resize: vertical;
+  min-height: 6rem;
 }
 
 pre {
@@ -186,12 +477,21 @@ pre {
   padding: 1rem 1.1rem;
   border-radius: var(--radius-sm, 6px);
   background: var(--surface-code, #12171b);
-  color: #f9e8bf; /* Default code color */
+  color: #f9e8bf;
   line-height: 1.55;
   tab-size: 2;
 }
 
-/* ── 6. Scrollbars ── */
+pre > code {
+  display: block;
+  min-width: max-content;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+/* ── 9. Scrollbars ─────────────────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
   width: 7px;
@@ -211,7 +511,53 @@ pre {
   background: rgba(0, 128, 128, 0.40);
 }
 
-/* ── 7. Spw Specific Surface Overrides ── */
+/* ── 10. Website Flow Safety Defaults ──────────────────────────────────── */
+
+/* Prevent flex/grid children from blowing out widths */
+:where(
+  main,
+  article,
+  section,
+  aside,
+  nav,
+  figure,
+  .site-frame,
+  .frame-grid,
+  .frame-panel,
+  .frame-card,
+  .mode-panels,
+  .mode-panel,
+  .spec-grid,
+  .plans-grid,
+  .plan-card,
+  .contact-grid,
+  .gallery-overlays,
+  .compare-sets,
+  .spec-column
+) {
+  min-width: 0;
+}
+
+/* Common interactive regions should allow vertical scroll gestures */
+:where(main, article, section, aside, .site-frame, .mode-panel, .plan-card) {
+  touch-action: pan-y;
+}
+
+/* Safer text wrapping for long symbolic strings */
+:where(
+  .frame-sigil,
+  .frame-card-sigil,
+  .operator-chip,
+  .spec-pill,
+  .plan-status,
+  .syntax-token,
+  code,
+  pre
+) {
+  overflow-wrap: anywhere;
+}
+
+/* ── 11. Surface-specific baseline bridges ─────────────────────────────── */
 
 body[data-spw-surface="software"] pre {
   display: block;
@@ -229,19 +575,7 @@ body[data-spw-surface="software"] pre > code {
   min-width: 100%;
 }
 
-body[data-spw-surface="software"] main,
-body[data-spw-surface="software"] main > article,
-body[data-spw-surface="software"] .site-frame,
-body[data-spw-surface="software"] .spec-grid,
-body[data-spw-surface="software"] .software-card,
-body[data-spw-surface="software"] .mode-panels,
-body[data-spw-surface="software"] .mode-panel,
-body[data-spw-surface="software"] .demo-panels,
-body[data-spw-surface="software"] .demo-panel {
-  min-width: 0;
-}
-
-/* ── 8. Animation & Accessibility Toggles ── */
+/* ── 12. Animation & Accessibility Toggles ─────────────────────────────── */
 
 html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *,
 html[data-spw-animation-throttling="light"]:not([data-spw-reduce-motion="on"]) *::before,
@@ -275,7 +609,7 @@ html[data-spw-reduce-motion="on"] *::after {
   html {
     scroll-behavior: auto;
   }
-  
+
   body {
     background-image: none;
   }

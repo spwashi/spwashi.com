@@ -3,25 +3,26 @@
    --------------------------------------------------------------------------
    Purpose
    - Structural component layer for reusable Spw frames, cards, panels, chips,
-     and pretext-aware text hosts.
+     metadata rails, readable stacks, and pretext-aware text hosts.
    - Provide low-cost, tunable “metamaterial” surfaces that support semantic
      instrumentation without requiring expensive filters or layout-heavy effects.
-   - Expose component contracts that future JS runtimes (especially
-     spw-pretext-physics.js) can target through documented custom properties
-     and data attributes.
+   - Expose component contracts that future JS runtimes can target through
+     documented custom properties and data attributes.
 
    Design rules
    - Reading and text flow take priority over ornament.
-   - Components should remain legible when enhancement is off.
+   - Components remain legible when enhancement is off.
    - Width / lineation changes are driven by JS measurement; CSS should not
      animate width or force expensive reflow loops.
    - Use data attributes for semantics and runtime state.
    - Keep specificity low and prefer generic, composable utilities.
+   - Support recent route HTML while remaining reusable for later surfaces.
 
    Expected collaborators
+   - /public/css/spw-reset.css
    - /public/css/spw-typography.css
    - /public/css/spw-typography-context.css
-   - /public/js/spw-pretext-physics.js
+   - route surface files
    ========================================================================== */
 
 /* ==========================================================================
@@ -32,29 +33,45 @@
   --component-gap: 0.9rem;
   --component-gap-tight: 0.55rem;
   --component-gap-loose: 1.2rem;
+  --component-gap-roomy: 1.6rem;
 
   --component-pad: 0.9rem;
   --component-pad-tight: 0.65rem;
   --component-pad-loose: 1.15rem;
+  --component-pad-roomy: 1.45rem;
 
   --component-radius: var(--radius, 12px);
   --component-radius-tight: var(--radius-sm, 8px);
+  --component-radius-loose: var(--radius-lg, 16px);
+  --component-radius-pill: 999px;
 
   --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
   --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
+  --component-border-quiet: 1px solid color-mix(in srgb, var(--line, rgba(0, 128, 128, 0.18)) 72%, transparent);
 
   --component-surface: var(--surface, rgba(255, 255, 255, 0.92));
   --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
   --component-surface-soft: color-mix(in srgb, var(--component-surface, rgba(255, 255, 255, 0.92)) 86%, transparent);
+  --component-surface-matte: color-mix(in srgb, var(--component-surface-strong, rgba(255,255,255,0.98)) 94%, var(--bg, #f7f4ee));
+  --component-surface-elevated: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.18),
+      transparent 62%
+    ),
+    var(--component-surface-strong, rgba(255,255,255,0.98));
 
   --component-shadow: var(--shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
   --component-shadow-active: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
+  --component-shadow-quiet: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.03));
 
   --component-accent: var(--active-op-color, var(--teal, #008080));
   --component-accent-soft: color-mix(in srgb, var(--component-accent, #008080) 20%, transparent);
   --component-accent-strong: color-mix(in srgb, var(--component-accent, #008080) 42%, transparent);
+  --component-accent-wash: color-mix(in srgb, var(--component-accent, #008080) 8%, transparent);
 
   --component-measure: 68ch;
+  --component-measure-tight: 58ch;
+  --component-measure-wide: 78ch;
   --component-code-measure: 84ch;
 
   --component-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
@@ -69,6 +86,10 @@
   --pretext-influence: 0;
   --pretext-direction: 0;
   --pretext-scaffold-opacity: 0.74;
+
+  --component-rail-width: 3px;
+  --component-header-min-height: 1.5rem;
+  --component-chip-height: 2rem;
 }
 
 /* ==========================================================================
@@ -82,12 +103,21 @@
   [data-spw-component-kind="surface"],
   [data-spw-component-kind="lens"],
   [data-spw-component-kind="metric"],
+  [data-spw-kind="frame"],
+  [data-spw-kind="panel"],
+  [data-spw-kind="card"],
+  [data-spw-kind="surface"],
+  [data-spw-kind="lens"],
+  [data-spw-kind="metric"],
   .site-frame,
   .frame-card,
   .media-card,
   .operator-card,
   .frame-panel,
-  .mode-panel
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
 ) {
   position: relative;
   min-width: 0;
@@ -101,7 +131,13 @@
   [data-spw-component-kind="card"] > *,
   [data-spw-component-kind="surface"] > *,
   [data-spw-component-kind="lens"] > *,
-  [data-spw-component-kind="metric"] > *
+  [data-spw-component-kind="metric"] > *,
+  [data-spw-kind="frame"] > *,
+  [data-spw-kind="panel"] > *,
+  [data-spw-kind="card"] > *,
+  [data-spw-kind="surface"] > *,
+  [data-spw-kind="lens"] > *,
+  [data-spw-kind="metric"] > *
 ) {
   position: relative;
   z-index: 1;
@@ -109,7 +145,52 @@
 }
 
 /* ==========================================================================
-   3. Bleed utilities
+   3. Slot conventions
+   ========================================================================== */
+
+:where([data-spw-slot]) {
+  min-width: 0;
+}
+
+:where([data-spw-slot="header"]) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(0.6rem, 1.6vw, 0.9rem);
+  min-width: 0;
+}
+
+:where([data-spw-slot="meta"]) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.6rem;
+  min-width: 0;
+}
+
+:where([data-spw-slot="actions"]) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.6rem;
+  min-width: 0;
+}
+
+:where([data-spw-slot="figure"]) {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+:where([data-spw-slot="caption"]) {
+  color: var(--ink-soft, rgba(0,0,0,0.6));
+  font-size: 0.88em;
+  max-inline-size: 65ch;
+}
+
+/* ==========================================================================
+   4. Bleed utilities
    ========================================================================== */
 
 :where(.spw-bleed) {
@@ -125,20 +206,20 @@
   margin-block-end: calc(var(--local-bleed-offset) * -1);
 }
 
-:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed:first-child,
-:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed-block:first-child {
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
   border-start-start-radius: inherit;
   border-start-end-radius: inherit;
 }
 
-:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed:last-child,
-:where(.site-frame, .frame-panel, .frame-card) > .spw-bleed-block:last-child {
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
   border-end-start-radius: inherit;
   border-end-end-radius: inherit;
 }
 
 /* ==========================================================================
-   4. Spatial stance utilities
+   5. Spatial stance utilities
    ========================================================================== */
 
 :where([data-spw-stance="entry"]) {
@@ -161,7 +242,7 @@
 }
 
 /* ==========================================================================
-   5. Shared card / panel shell
+   6. Shared card / panel shell
    ========================================================================== */
 
 :where(
@@ -171,10 +252,12 @@
   .software-card,
   .operator-card,
   .frame-panel,
-  .mode-panel
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
 ) {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
   align-content: start;
   gap: var(--component-gap-tight, 0.55rem);
   min-width: 0;
@@ -191,7 +274,8 @@
     background   var(--component-transition-deliberate, 260ms ease),
     border-color var(--component-transition-base, 180ms ease),
     box-shadow   var(--component-transition-deliberate, 260ms ease),
-    color        var(--component-transition-fast, 120ms ease);
+    color        var(--component-transition-fast, 120ms ease),
+    transform    var(--component-transition-fast, 120ms ease);
 }
 
 :where(
@@ -201,7 +285,10 @@
   .software-card,
   .operator-card,
   .frame-panel,
-  .mode-panel
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
 ):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--component-accent, #008080) 28%, var(--line, transparent));
 }
@@ -213,8 +300,11 @@
   .software-card,
   .operator-card,
   .frame-panel,
-  .mode-panel
-) > :last-child:is(.operator-chip, .media-card-cta, .frame-operators) {
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) > :last-child:is(.operator-chip, .media-card-cta, .frame-operators, .plan-links, [data-spw-slot="actions"]) {
   margin-top: auto;
 }
 
@@ -225,13 +315,17 @@
   .software-card,
   .operator-card,
   .frame-panel,
-  .mode-panel
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
 ) :is(
   h1, h2, h3, h4, h5, h6,
   p, ul, ol, li, blockquote,
   pre, code,
   figure, figcaption,
-  .frame-note, .frame-copy, .specimen-material, .operator-snippet-note
+  .frame-note, .frame-copy, .specimen-material, .operator-snippet-note,
+  .plan-thesis, .plan-wonder p
 ) {
   min-width: 0;
 }
@@ -240,8 +334,16 @@
   .frame-card,
   .media-card,
   .media-focus-card,
-  .software-card
-) :is(h2, h3, h4, p, ul, ol, pre, figure, figcaption) {
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) :is(
+  h2, h3, h4, p, ul, ol, pre, figure, figcaption
+) {
   margin: 0;
 }
 
@@ -249,28 +351,47 @@
   .frame-card,
   .media-card,
   .media-focus-card,
-  .software-card
-) :is(p, li, span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol)) {
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) :is(
+  p,
+  li,
+  span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
+) {
   line-height: 1.5;
   max-inline-size: 60ch;
 }
 
-/* Enhancements previously from whimsy layer */
-.frame-card, .media-focus-card, .plan-card {
+/* state-ready shell */
+.frame-card,
+.media-focus-card,
+.plan-card,
+.compare-card,
+.spec-column {
   position: relative;
-  transition: border-color var(--component-transition-fast, 140ms ease), 
-              background-color var(--component-transition-fast, 140ms ease), 
-              color var(--component-transition-fast, 140ms ease);
 }
 
-.frame-card:hover, .frame-card:focus-within, 
-.media-focus-card:hover, .media-focus-card:focus-within, 
-.plan-card:hover, .plan-card:focus-within {
+.frame-card:hover,
+.frame-card:focus-within,
+.media-focus-card:hover,
+.media-focus-card:focus-within,
+.plan-card:hover,
+.plan-card:focus-within,
+.compare-card:hover,
+.compare-card:focus-within,
+.spec-column:hover,
+.spec-column:focus-within {
   border-color: var(--active-op-border, var(--component-accent, #008080));
   background: var(--active-op-bg-soft, var(--component-surface-soft, rgba(0, 128, 128, 0.05)));
 }
 
-.frame-card-sigil, .operator-symbol {
+.frame-card-sigil,
+.operator-symbol {
   display: inline-block;
   font-weight: 700;
   transition: color var(--component-transition-fast, 140ms ease);
@@ -283,147 +404,8 @@
   color: var(--active-op-color, var(--component-accent, #008080));
 }
 
-code[data-interactive] {
-  cursor: pointer;
-  transition: background-color var(--component-transition-fast, 140ms ease), 
-              color var(--component-transition-fast, 140ms ease), 
-              outline-color var(--component-transition-fast, 140ms ease);
-}
-
-code[data-interactive]::after {
-  content: ' ={ready}';
-  color: var(--op-stream-color, var(--component-accent, #008080));
-  font-weight: 700;
-  opacity: 0;
-}
-
-code[data-interactive]:hover,
-code[data-interactive]:focus-visible {
-  outline: 1px solid var(--active-op-border, var(--component-accent, #008080));
-  outline-offset: 2px;
-}
-
-code[data-interactive]:hover::after,
-code[data-interactive]:focus-visible::after {
-  opacity: 1;
-}
-
-.settings-fieldset {
-  position: relative;
-  transition: border-color var(--component-transition-fast, 140ms ease);
-}
-
-.settings-fieldset legend {
-  font-weight: 700;
-  color: var(--ink, currentColor);
-  transition: color var(--component-transition-fast, 140ms ease);
-}
-
-.settings-fieldset:hover legend,
-.settings-fieldset:focus-within legend {
-  color: var(--op-frame-color, var(--component-accent, #008080));
-}
-
-.settings-option {
-  display: flex;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color var(--component-transition-fast, 140ms ease), 
-              border-color var(--component-transition-fast, 140ms ease);
-}
-
-.settings-option:hover,
-.settings-option:focus-within {
-  background: var(--op-frame-bg-soft, var(--component-surface-soft, rgba(0, 128, 128, 0.05)));
-}
-
-[data-status-indicator] {
-  position: relative;
-  display: inline-block;
-}
-
-[data-status-indicator]::after {
-  content: ' #';
-  color: currentColor;
-  opacity: 0;
-  transition: opacity var(--component-transition-fast, 140ms ease);
-}
-
-[data-status-indicator]:hover::after,
-[data-status-indicator]:focus-visible::after,
-[data-status-indicator][aria-current="true"]::after {
-  opacity: 0.7;
-}
-
-.breadcrumb {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.breadcrumb a {
-  position: relative;
-}
-
-.breadcrumb a::before {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: -2px;
-  left: 0;
-  border-bottom: 1px solid currentColor;
-  opacity: 0;
-  transition: opacity var(--component-transition-fast, 140ms ease);
-}
-
-.breadcrumb a:hover::before,
-.breadcrumb a:focus-visible::before,
-.breadcrumb a[aria-current="page"]::before {
-  opacity: 0.75;
-}
-
-.breadcrumb > span {
-  opacity: 0.55;
-}
-
-.empty-state {
-  padding: 3rem 1rem;
-  text-align: center;
-  opacity: 0.78;
-}
-
-.empty-state::before {
-  content: '{}';
-  display: block;
-  margin-bottom: 1rem;
-  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-size: 2rem;
-}
-
-.inline-note {
-  position: relative;
-  padding-left: 1.35rem;
-}
-
-.inline-note::before {
-  content: '~{';
-  position: absolute;
-  left: 0;
-  color: var(--op-ref-color, var(--component-accent, #008080));
-  font-weight: 700;
-}
-
-.inline-note::after {
-  content: '}';
-  color: var(--op-ref-color, var(--component-accent, #008080));
-  font-weight: 700;
-}
-
 /* ==========================================================================
-   6. Site frame
+   7. Site frame
    ========================================================================== */
 
 :where(.site-frame) {
@@ -464,7 +446,6 @@ code[data-interactive]:focus-visible::after {
   box-shadow: var(--component-shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
 }
 
-/* Site Frame Hierarchy Scaling */
 .site-frame h1 {
   font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
   font-weight: 700;
@@ -486,7 +467,8 @@ code[data-interactive]:focus-visible::after {
   letter-spacing: 0;
 }
 
-.site-lede {
+.site-lede,
+.page-lede {
   font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
   font-weight: 500;
   line-height: 1.45;
@@ -494,7 +476,7 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   7. Hero + heading thresholds
+   8. Hero + heading thresholds
    ========================================================================== */
 
 :where(.site-hero) {
@@ -510,8 +492,8 @@ code[data-interactive]:focus-visible::after {
   min-width: 0;
 }
 
-/* frame-topline is the threshold of every frame — the room sign */
 :where(.frame-topline) {
+  min-height: var(--component-header-min-height);
   margin-bottom: -0.25rem;
   padding-bottom: 0.55rem;
   border-bottom: 1px solid color-mix(in oklab, var(--component-accent, #008080) 16%, transparent);
@@ -522,8 +504,12 @@ code[data-interactive]:focus-visible::after {
   border-bottom-color: color-mix(in oklab, var(--component-accent, #008080) 32%, transparent);
 }
 
+:where(.frame-heading > h2, .frame-heading > h3) {
+  margin: 0;
+}
+
 /* ==========================================================================
-   8. Role-based frame stance
+   9. Role-based frame stance
    ========================================================================== */
 
 :where(.site-frame[data-spw-role="probe"]) {
@@ -557,9 +543,8 @@ code[data-interactive]:focus-visible::after {
 :where(.site-frame[data-spw-role="reference"]) {
   border-left-width: 2px;
   border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent, #008080) 22%, transparent));
-  /* Long-form reference frame tuning */
-  --component-measure: 74ch; 
-  --surface-gap: 1.3rem; 
+  --component-measure: 74ch;
+  --surface-gap: 1.3rem;
 }
 
 :where(.site-frame[data-spw-role="reference"] p) {
@@ -580,15 +565,56 @@ code[data-interactive]:focus-visible::after {
   border-color: color-mix(in srgb, var(--component-accent, #008080) 24%, var(--line, transparent));
 }
 
+:where(.site-frame[data-spw-role="schema"]) {
+  background-image:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent, #008080) 6%, transparent),
+      transparent 32%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
+}
+
+:where(.site-frame[data-spw-role="gallery"]) {
+  background-image:
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--component-accent, #008080) 8%, transparent),
+      transparent 30%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
+}
+
+:where(.site-frame[data-spw-role="broadcast"]) {
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent, #008080) 10%, transparent) 0,
+      transparent 28%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent, #008080) 18%, transparent) 0 4.5rem,
+      transparent 4.5rem
+    );
+}
+
 /* ==========================================================================
-   9. Metamaterial selectors
+   10. Metamaterial selectors
    ========================================================================== */
 
 :where([data-spw-metamaterial]) {
   --component-material-border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
   --component-material-bg: var(--component-surface, rgba(255, 255, 255, 0.92));
   --component-material-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
-  --component-material-line: var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   background: var(--component-material-bg);
   border: var(--component-material-border);
   box-shadow: var(--component-material-shadow);
@@ -658,7 +684,7 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   10. Pretext flow host
+   11. Pretext flow host
    ========================================================================== */
 
 :where([data-spw-flow="pretext"]) {
@@ -719,7 +745,7 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   11. Measurement-visible text routing hooks
+   12. Measurement-visible text routing hooks
    ========================================================================== */
 
 :where([data-spw-flow="pretext"][data-text-mode="resting"]) { --pretext-line-gap: 0.16rem; }
@@ -740,7 +766,7 @@ code[data-interactive]:focus-visible::after {
 :where([data-spw-flow="pretext"][data-text-width-class="xl"]) { max-inline-size: min(100%, 72rem); }
 
 /* ==========================================================================
-   12. Intermediate scaffold
+   13. Intermediate scaffold
    ========================================================================== */
 
 :where(.pretext-flow-scaffold) {
@@ -767,87 +793,78 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   13. Meaningful card utilities
+   14. Meaningful card utilities
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-density="soft"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-density="soft"] {
   --component-pad: 1rem;
   --component-gap-tight: 0.65rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-density="dense"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-density="dense"] {
   --component-pad: 0.75rem;
   --component-gap-tight: 0.4rem;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="measure"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-density="roomy"] {
+  --component-pad: 1.2rem;
+  --component-gap-tight: 0.8rem;
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-reading="measure"] {
   max-inline-size: min(100%, var(--component-measure, 68ch));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="code"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-reading="code"] {
   max-inline-size: min(100%, var(--component-code-measure, 84ch));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-reading="ambient"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-reading="ambient"] {
   color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="focused"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-attention="focused"] {
   border-color: color-mix(in srgb, var(--component-accent, #008080) 34%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, #008080) 18%, transparent), var(--component-shadow, 0 10px 24px rgba(0,0,0,0.06));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card)[data-spw-attention="held"] {
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column)[data-spw-attention="held"] {
   border-color: color-mix(in srgb, var(--component-accent, #008080) 44%, var(--line, transparent));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, #008080) 24%, transparent), var(--component-shadow-active, 0 16px 34px rgba(0,0,0,0.1));
 }
 
 /* ==========================================================================
-   14. Media + card text flow safeguards
+   15. Grouping and grid helpers
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
-  h1, h2, h3, h4, h5, h6,
-  p, ul, ol, li, blockquote,
-  pre, code,
-  figure, figcaption,
-  .frame-note,
-  .frame-copy,
-  .specimen-material,
-  .operator-snippet-note
-) {
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
+  display: grid;
+  gap: var(--component-gap, 0.9rem);
   min-width: 0;
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
-  p, li, .frame-note, .frame-copy, .specimen-material
-) {
-  max-inline-size: var(--component-measure, 68ch);
-  text-wrap: pretty;
+:where(.frame-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
 }
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel) :is(
-  pre, code, .operator-snippet-example, .operator-card-panel-reduction
-) {
-  overflow-x: auto;
-  max-inline-size: 100%;
+:where(.plans-grid) {
+  grid-template-columns: 1fr;
 }
 
-/* ==========================================================================
-   15. Nested structural quieting
-   ========================================================================== */
-
-/* When a panel or card is nested inside another structural component, 
-   quiet its border to reduce visual noise */
-:where(.site-frame, .frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card, .frame-panel, .mode-panel) {
-  --local-border-alpha: 0.4; /* Dim nested borders */
-  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.03)); /* Rely more on subtle depth than hard lines */
+:where(.frame-grid--dense) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
 }
 
-/* If heavily nested (level 3), remove the border entirely and rely on background contrast */
-:where(.site-frame) :where(.frame-panel, .mode-panel) :where(.frame-card, .media-card, .media-focus-card, .software-card) {
-  border-color: transparent;
-  background: var(--surface-strong, rgba(255, 255, 255, 0.98));
+:where(.frame-grid--media) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+:where(.frame-grid--2up) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:where(.frame-grid--3up) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 /* ==========================================================================
@@ -855,7 +872,7 @@ code[data-interactive]:focus-visible::after {
    ========================================================================== */
 
 :where(.page-index, .section-atlas) {
-  margin-block: 1.5rem;
+  margin-block: 1rem;
   padding: var(--component-pad, 0.9rem);
   background: var(--component-surface-soft, rgba(255, 255, 255, 0.8));
   border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
@@ -866,8 +883,8 @@ code[data-interactive]:focus-visible::after {
 
 :where(.page-index ul, .section-atlas ul) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 0.6rem 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.45rem 0.55rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -875,16 +892,15 @@ code[data-interactive]:focus-visible::after {
 
 :where(.page-index a, .section-atlas a) {
   display: block;
-  padding: 0.3rem 0.6rem;
-  margin-left: -0.6rem;
+  padding: 0.42rem 0.65rem;
+  margin-left: 0;
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: all var(--component-transition-fast, 120ms ease);
 }
 
-:where(.page-index a:hover, .section-atlas a:hover, 
-       .page-index a:focus-visible, .section-atlas a:focus-visible) {
+:where(.page-index a:hover, .section-atlas a:hover, .page-index a:focus-visible, .section-atlas a:focus-visible) {
   color: var(--component-accent, #008080);
   background: color-mix(in srgb, var(--component-accent, #008080) 12%, transparent);
   outline: none;
@@ -951,11 +967,13 @@ ul.frame-list > li > p {
    ========================================================================== */
 
 .spw-svg-figure,
-.image-study {
+.image-study,
+.media-frame,
+.screenshot-frame {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  margin: 1.5rem 0;
+  margin: 1.25rem 0;
   padding: var(--component-pad, 0.9rem);
   background: var(--component-surface, rgba(255, 255, 255, 0.92));
   border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
@@ -963,7 +981,7 @@ ul.frame-list > li > p {
   box-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
 }
 
-:where(.spw-svg-figure svg, .image-study img) {
+:where(.spw-svg-figure svg, .image-study img, .media-frame img, .screenshot-frame img) {
   display: block;
   max-width: 100%;
   height: auto;
@@ -984,20 +1002,30 @@ figcaption.frame-note,
 }
 
 /* ==========================================================================
-   19. Semantic Metadata & Chips (spec-strip / spec-pill)
+   19. Semantic Metadata & Chips
    ========================================================================== */
 
-.spec-strip {
+.spec-strip,
+.plan-verb-strip,
+.frame-operators,
+.page-actions,
+.card-actions,
+.section-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-block: 1rem;
+  margin-block: 0.8rem;
   align-items: center;
+  min-width: 0;
 }
 
-.spec-pill {
+.spec-pill,
+.page-chip,
+.meta-chip,
+.info-chip {
   display: inline-flex;
   align-items: center;
+  min-height: var(--component-chip-height);
   padding: 0.25rem 0.65rem;
   font-size: 0.82rem;
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
@@ -1012,14 +1040,17 @@ figcaption.frame-note,
 .spec-pill[aria-current="true"],
 .spec-pill.is-active,
 .spec-pill:hover,
-.spec-pill:focus-visible {
+.spec-pill:focus-visible,
+.page-chip:hover,
+.meta-chip:hover,
+.info-chip:hover {
   background: color-mix(in srgb, var(--component-accent, #008080) 15%, transparent);
   border-color: var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   color: var(--component-accent, #008080);
   outline: none;
 }
 
-/* Soften structural overlays when inside long-form reference frames */
+/* quiet overlays in analysis/reference contexts */
 :where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip) {
   opacity: 0.55;
   mix-blend-mode: multiply;
@@ -1032,27 +1063,261 @@ figcaption.frame-note,
   transform: scale(1);
 }
 
-/* Reflective Inline Notes */
-.inline-note[data-spw-spacing="tight"] { 
-  padding-left: 1rem; 
+/* ==========================================================================
+   20. Inline notes and prose annotations
+   ========================================================================== */
+
+.inline-note {
+  position: relative;
+  padding-left: 1.35rem;
 }
-.inline-note[data-spw-spacing="loose"] { 
-  padding-left: 2rem; 
-  margin-block: 1.5rem; 
+
+.inline-note::before {
+  content: '~{';
+  position: absolute;
+  left: 0;
+  color: var(--op-ref-color, var(--component-accent, #008080));
+  font-weight: 700;
 }
+
+.inline-note::after {
+  content: '}';
+  color: var(--op-ref-color, var(--component-accent, #008080));
+  font-weight: 700;
+}
+
+.inline-note[data-spw-spacing="tight"] {
+  padding-left: 1rem;
+}
+
+.inline-note[data-spw-spacing="loose"] {
+  padding-left: 2rem;
+  margin-block: 1.5rem;
+}
+
 .inline-note.editorial-note {
   border-left: 3px solid var(--component-accent-soft, rgba(0, 128, 128, 0.2));
   padding-left: 1.25rem;
   font-style: italic;
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
 }
+
 .inline-note.editorial-note::before,
-.inline-note.editorial-note::after { 
-  content: none; 
+.inline-note.editorial-note::after {
+  content: none;
 }
 
 /* ==========================================================================
-   20. Accessibility & Reader Utilities
+   21. Settings / breadcrumb / empty state / interactive code
+   ========================================================================== */
+
+code[data-interactive] {
+  cursor: pointer;
+  transition:
+    background-color var(--component-transition-fast, 140ms ease),
+    color var(--component-transition-fast, 140ms ease),
+    outline-color var(--component-transition-fast, 140ms ease);
+}
+
+code[data-interactive]::after {
+  content: ' ={ready}';
+  color: var(--op-stream-color, var(--component-accent, #008080));
+  font-weight: 700;
+  opacity: 0;
+}
+
+code[data-interactive]:hover,
+code[data-interactive]:focus-visible {
+  outline: 1px solid var(--active-op-border, var(--component-accent, #008080));
+  outline-offset: 2px;
+}
+
+code[data-interactive]:hover::after,
+code[data-interactive]:focus-visible::after {
+  opacity: 1;
+}
+
+.settings-fieldset {
+  position: relative;
+  transition: border-color var(--component-transition-fast, 140ms ease);
+}
+
+.settings-fieldset legend {
+  font-weight: 700;
+  color: var(--ink, currentColor);
+  transition: color var(--component-transition-fast, 140ms ease);
+}
+
+.settings-fieldset:hover legend,
+.settings-fieldset:focus-within legend {
+  color: var(--op-frame-color, var(--component-accent, #008080));
+}
+
+.settings-option {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color var(--component-transition-fast, 140ms ease),
+    border-color var(--component-transition-fast, 140ms ease);
+}
+
+.settings-option:hover,
+.settings-option:focus-within {
+  background: var(--op-frame-bg-soft, var(--component-surface-soft, rgba(0, 128, 128, 0.05)));
+}
+
+[data-status-indicator] {
+  position: relative;
+  display: inline-block;
+}
+
+[data-status-indicator]::after {
+  content: ' #';
+  color: currentColor;
+  opacity: 0;
+  transition: opacity var(--component-transition-fast, 140ms ease);
+}
+
+[data-status-indicator]:hover::after,
+[data-status-indicator]:focus-visible::after,
+[data-status-indicator][aria-current="true"]::after {
+  opacity: 0.7;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.breadcrumb a {
+  position: relative;
+}
+
+.breadcrumb a::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  border-bottom: 1px solid currentColor;
+  opacity: 0;
+  transition: opacity var(--component-transition-fast, 140ms ease);
+}
+
+.breadcrumb a:hover::before,
+.breadcrumb a:focus-visible::before,
+.breadcrumb a[aria-current="page"]::before {
+  opacity: 0.75;
+}
+
+.breadcrumb > span {
+  opacity: 0.55;
+}
+
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  opacity: 0.78;
+}
+
+.empty-state::before {
+  content: '{}';
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 2rem;
+}
+
+/* ==========================================================================
+   22. Plan-specific component bridges
+   ========================================================================== */
+
+.plan-card {
+  gap: 0.8rem;
+}
+
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.plan-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.plan-considerations,
+.plan-wonder {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+  align-items: center;
+}
+
+/* ==========================================================================
+   23. Responsive composability
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  :where(.frame-grid--3up, .frame-grid--2up) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  :where(.page-index ul, .section-atlas ul) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.frame-topline, .frame-heading, .plan-header, [data-spw-slot="header"]) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  :where(.spec-strip, .frame-operators, .plan-verb-strip, .plan-links, [data-spw-slot="meta"], [data-spw-slot="actions"]) {
+    gap: 0.4rem 0.45rem;
+  }
+
+  :where(.site-frame) {
+    --surface-padding: var(--component-pad, 0.9rem);
+  }
+}
+
+@media (max-width: 520px) {
+  :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column) {
+    padding: var(--component-pad-tight, 0.65rem);
+  }
+
+  :where(.spec-pill, .page-chip, .meta-chip, .info-chip, .plan-status) {
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   24. Accessibility & Reader Utilities
    ========================================================================== */
 
 .sr-only {
