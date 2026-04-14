@@ -1,43 +1,49 @@
-@layer reset, tokens, shell, typography, grammar, components, surfaces, handles, ornament;
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
 
 /* JetBrains Mono — site body font.
    Weights: 300 thin, 400 regular, 500 medium, 600 semi-bold, 700 bold.
    Italic 400 for oblique operator typography (probe, ref, meta operators).
-   display=swap prevents FOIT while the font loads.                                 */
+   display=swap prevents FOIT while the font loads. */
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
 
 @import url('/public/css/spw-reset.css') layer(reset);
 @import url('/public/css/spw-tokens.css') layer(tokens);
+
 @import url('/public/css/spw-shell.css') layer(shell);
+
 @import url('/public/css/spw-typography.css') layer(typography);
 @import url('/public/css/spw-typography-context.css') layer(typography);
+
 @import url('/public/css/spw-grammar.css') layer(grammar);
+
 @import url('/public/css/spw-components.css') layer(components);
 
-@import url('/public/css/spw-substrate-ecology.css') layer(surfaces);
-@import url('/public/css/spw-surfaces.css') layer(surfaces);
-@import url('/public/css/svg-surfaces.css') layer(surfaces);
-@import url('/public/css/spw-svg-personas.css') layer(surfaces);
-@import url('/public/css/craft-surface.css') layer(surfaces);
-@import url('/public/css/blog-surface.css') layer(surfaces);
-@import url('/public/css/settings-surface.css') layer(surfaces);
-@import url('/public/css/play-surface.css') layer(surfaces);
+@import url('/public/css/spw-substrate-ecology.css') layer(systems);
+@import url('/public/css/spw-surfaces.css') layer(systems);
+@import url('/public/css/svg-surfaces.css') layer(systems);
+@import url('/public/css/spw-svg-personas.css') layer(systems);
+
+@import url('/public/css/craft-surface.css') layer(routes);
+@import url('/public/css/blog-surface.css') layer(routes);
+@import url('/public/css/settings-surface.css') layer(routes);
+@import url('/public/css/play-surface.css') layer(routes);
 
 @import url('/public/css/cognitive-handles.css') layer(handles);
 @import url('/public/css/spw-handles.css') layer(handles);
 @import url('/public/css/phase-controls.css') layer(handles);
 @import url('/public/css/spw-logo.css') layer(handles);
 
-@import url('/public/css/spw-material.css') layer(ornament);
-@import url('/public/css/enhancements.css') layer(ornament);
-@import url('/public/css/grain-texture.css') layer(ornament);
-@import url('/public/css/spw-electromagnetic-container.css') layer(ornament);
+@import url('/public/css/spw-material.css') layer(effects);
+@import url('/public/css/enhancements.css') layer(effects);
+@import url('/public/css/grain-texture.css') layer(effects);
+@import url('/public/css/spw-electromagnetic-container.css') layer(effects);
+@import url('/public/css/spw-cinematic.css') layer(effects);
+@import url('/public/css/spw-developmental-climate.css') layer(effects);
+@import url('/public/css/spw-enrichment.css') layer(effects);
+@import url('/public/css/spw-demos.css') layer(effects);
+@import url('/public/css/spw-wonder.css') layer(effects);
+@import url('/public/css/spw-metaphysical-paper.css') layer(effects);
+
 @import url('/public/css/spw-whimsy.css') layer(ornament);
-@import url('/public/css/spw-cinematic.css') layer(ornament);
-@import url('/public/css/spw-developmental-climate.css') layer(ornament);
-@import url('/public/css/spw-enrichment.css') layer(ornament);
-@import url('/public/css/spw-demos.css') layer(ornament);
-@import url('/public/css/spw-wonder.css') layer(ornament);
 @import url('/public/css/spw-canvas-accents.css') layer(ornament);
-@import url('/public/css/spw-metaphysical-paper.css') layer(ornament);
 @import url('/public/css/spw-ornament.css') layer(ornament);
