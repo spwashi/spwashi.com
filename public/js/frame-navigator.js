@@ -31,7 +31,7 @@ import {
     emitSpwAction,
     getFrameMeta,
     isInputFocused
-} from '../refactor/spw-shared.js';
+} from './spw-shared.js';
 import { getSiteSettings } from './site-settings.js';
 
 const NAV_ROUTE_SELECTOR = [

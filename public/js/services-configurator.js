@@ -25,8 +25,8 @@
  *
  * Uses the same enhanced architecture pattern as boonhonk-mixer and frame-navigator.
  */
-import { bus } from '../refactor/spw-bus.js';
-import { emitSpwAction } from '../refactor/spw-shared.js';
+import { bus } from './refactor/spw-bus.js';
+import { emitSpwAction } from './refactor/spw-shared.js';
 
 // ── Dimension definitions (unchanged math) ───────────────────────────────────
 const DIMS = [

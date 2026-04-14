@@ -18,7 +18,7 @@
  *   window.spwRecipes.setDetail     — toggle between 'compact' | 'full' detail
  */
 
-import { bus } from '../refactor/spw-bus.js';
+import { bus } from './spw-bus.js';
 
 const COMPLEXITY_ATTR = 'data-spw-recipe-complexity';
 const DETAIL_ATTR = 'data-spw-recipe-detail';

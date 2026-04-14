@@ -1,4 +1,4 @@
-import { emitSpwAction } from '../refactor/spw-shared.js';
+import { emitSpwAction } from './spw-shared.js';
 
 const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
 
