@@ -161,6 +161,19 @@
   min-width: 0;
 }
 
+:where(.spw-semantic-seam) {
+  gap: 0.45rem 0.8rem;
+}
+
+:where([data-spw-slot="header"]) > :where(.spw-component-meta, .spw-component-guides) {
+  min-width: 0;
+}
+
+:where(.spw-semantic-seam > .spw-component-guides) {
+  margin-inline-start: auto;
+  justify-content: flex-end;
+}
+
 :where([data-spw-slot="meta"]) {
   display: flex;
   flex-wrap: wrap;
@@ -317,6 +330,40 @@ a.frame-card,
   color: inherit;
   text-decoration: none;
   font-weight: inherit;
+}
+
+:where(.frame-card, .frame-card > a:first-child) {
+  justify-items: start;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :is(
+  .spw-semantic-seam,
+  p,
+  ul,
+  ol,
+  figure,
+  .frame-note,
+  .frame-copy,
+  .card-sub-links,
+  span:not(.frame-card-sigil):not(.spw-component-tag):not(.spw-guide-chip)
+) {
+  justify-self: stretch;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :is(strong, h2, h3, h4, h5, h6) {
+  max-inline-size: 24ch;
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :is(
+  p,
+  .frame-note,
+  .frame-copy,
+  span:not(.frame-card-sigil):not(.spw-component-tag):not(.spw-guide-chip)
+) {
+  max-inline-size: 34ch;
+  text-wrap: pretty;
 }
 
 a.frame-card:is(:hover, :focus-visible),

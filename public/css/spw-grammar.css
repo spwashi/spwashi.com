@@ -523,17 +523,26 @@
 }
 
 /* semantic bias by interactivity / configurability */
-:where([data-spw-interactivity="controllable"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-interactivity="controllable"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-interactivity="controllable"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: var(--op-action-color);
   border-color: var(--op-action-border);
   background: var(--op-action-bg-soft);
 }
 
-:where([data-spw-inspectability="deep"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-inspectability="deep"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-inspectability="deep"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
 }
 
-:where([data-spw-config-domain="site-settings"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-config-domain="site-settings"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-config-domain="site-settings"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: var(--op-surface-color);
   border-color: var(--op-surface-border);
   background: var(--op-surface-bg-soft);
@@ -542,6 +551,7 @@
 /* meta tag bias by component kind / role */
 :where(
   [data-spw-component-kind="frame"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="frame"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
   .frame-topline > .spw-component-meta > .spw-component-tag,
   .frame-heading > .spw-component-meta > .spw-component-tag
 ) {
@@ -550,28 +560,39 @@
   background: rgba(230, 248, 248, 0.74);
 }
 
-:where([data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="card"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: hsl(210 70% 34%);
   border-color: hsla(210, 70%, 34%, 0.16);
   background: rgba(235, 244, 255, 0.72);
 }
 
 :where(
-  [data-spw-component-kind="panel"],
-  [data-spw-component-kind="surface"]
-) > .spw-component-meta > .spw-component-tag {
+  [data-spw-component-kind="panel"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="panel"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="surface"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="surface"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: hsl(36 80% 32%);
   border-color: hsla(36, 80%, 32%, 0.16);
   background: rgba(255, 248, 235, 0.76);
 }
 
-:where([data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="lens"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: hsl(268 55% 38%);
   border-color: hsla(268, 55%, 38%, 0.16);
   background: rgba(245, 238, 255, 0.78);
 }
 
-:where([data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag) {
+:where(
+  [data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-component-kind="metric"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+) {
   color: hsl(180 100% 22%);
   border-color: rgba(0, 100, 100, 0.18);
   background: rgba(230, 248, 248, 0.78);
@@ -583,7 +604,14 @@
   [data-spw-role="route"],
   [data-spw-role="artifact"],
   [data-spw-role="reference"]
-) > .spw-component-meta > .spw-component-tag {
+) > .spw-component-meta > .spw-component-tag,
+:where(
+  [data-spw-role="routing"],
+  [data-spw-role="register"],
+  [data-spw-role="route"],
+  [data-spw-role="artifact"],
+  [data-spw-role="reference"]
+) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-ref-color);
   border-color: var(--op-ref-border);
   background: var(--op-ref-bg-soft);
@@ -593,7 +621,12 @@
   [data-spw-role="schema"],
   [data-spw-role="comparison"],
   [data-spw-role="pipeline"]
-) > .spw-component-meta > .spw-component-tag {
+) > .spw-component-meta > .spw-component-tag,
+:where(
+  [data-spw-role="schema"],
+  [data-spw-role="comparison"],
+  [data-spw-role="pipeline"]
+) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-object-color);
   border-color: var(--op-object-border);
   background: var(--op-object-bg-soft);
@@ -603,7 +636,12 @@
   [data-spw-role="probe"],
   [data-spw-role="telemetry"],
   [data-spw-role="lens"]
-) > .spw-component-meta > .spw-component-tag {
+) > .spw-component-meta > .spw-component-tag,
+:where(
+  [data-spw-role="probe"],
+  [data-spw-role="telemetry"],
+  [data-spw-role="lens"]
+) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-probe-color);
   border-color: var(--op-probe-border);
   background: var(--op-probe-bg-soft);
@@ -613,7 +651,12 @@
   [data-spw-role="projection"],
   [data-spw-role="surface"],
   [data-spw-role="control"]
-) > .spw-component-meta > .spw-component-tag {
+) > .spw-component-meta > .spw-component-tag,
+:where(
+  [data-spw-role="projection"],
+  [data-spw-role="surface"],
+  [data-spw-role="control"]
+) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-surface-color);
   border-color: var(--op-surface-border);
   background: var(--op-surface-bg-soft);
@@ -622,7 +665,11 @@
 :where(
   [data-spw-role="scenario"],
   [data-spw-role="rationale"]
-) > .spw-component-meta > .spw-component-tag {
+) > .spw-component-meta > .spw-component-tag,
+:where(
+  [data-spw-role="scenario"],
+  [data-spw-role="rationale"]
+) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-pragma-color);
   border-color: var(--op-pragma-border);
   background: var(--op-pragma-bg-soft);

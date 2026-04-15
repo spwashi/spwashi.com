@@ -77,16 +77,43 @@ function collectTargets(root = document) {
   return [...targets];
 }
 
+function findStructuralMount(host) {
+  return host.querySelector?.(':scope > .frame-topline, :scope > .frame-heading, :scope > figcaption') || null;
+}
+
+function findHeaderSlot(host) {
+  return host.querySelector?.(':scope > [data-spw-slot="header"]') || null;
+}
+
+function ensureSemanticSeam(host) {
+  const existing = host.querySelector?.(':scope > .spw-semantic-seam[data-spw-generated="semantic-chrome"]');
+  if (existing) return existing;
+
+  const seam = document.createElement('div');
+  seam.className = 'spw-semantic-seam';
+  seam.dataset.spwGenerated = 'semantic-chrome';
+  seam.dataset.spwSlot = 'header';
+  seam.setAttribute('aria-hidden', 'true');
+
+  if (host.firstElementChild) {
+    host.insertBefore(seam, host.firstElementChild);
+  } else {
+    host.append(seam);
+  }
+
+  return seam;
+}
+
 function getMetaMount(host) {
-  return host.querySelector?.(':scope > .frame-topline, :scope > .frame-heading, :scope > figcaption') || host;
+  return findStructuralMount(host) || findHeaderSlot(host) || ensureSemanticSeam(host);
 }
 
 function findExistingMeta(host) {
-  return host.querySelector?.(':scope > .spw-component-meta, :scope > .frame-topline > .spw-component-meta, :scope > .frame-heading > .spw-component-meta, :scope > figcaption > .spw-component-meta') || null;
+  return host.querySelector?.(':scope > .spw-component-meta, :scope > [data-spw-slot="header"] > .spw-component-meta, :scope > .frame-topline > .spw-component-meta, :scope > .frame-heading > .spw-component-meta, :scope > figcaption > .spw-component-meta') || null;
 }
 
 function findExistingGuides(host) {
-  return host.querySelector?.(':scope > .spw-component-guides') || null;
+  return host.querySelector?.(':scope > .spw-component-guides, :scope > [data-spw-slot="header"] > .spw-component-guides') || null;
 }
 
 function createGeneratedContainer(className) {
@@ -105,11 +132,7 @@ function ensureMetaContainer(host) {
   const mount = getMetaMount(host);
   const meta = createGeneratedContainer('spw-component-meta');
 
-  if (mount === host && host.firstElementChild) {
-    host.insertBefore(meta, host.firstElementChild);
-  } else {
-    mount.append(meta);
-  }
+  mount.append(meta);
 
   return meta;
 }
@@ -122,18 +145,16 @@ function ensureGuideContainer(host) {
   const guides = createGeneratedContainer('spw-component-guides');
   const mount = getMetaMount(host);
 
-  if (mount !== host) {
+  if (mount.matches?.('.frame-topline, .frame-heading, figcaption')) {
     mount.insertAdjacentElement('afterend', guides);
   } else {
     const meta = findExistingMeta(host);
     if (meta?.nextSibling) {
-      host.insertBefore(guides, meta.nextSibling);
+      mount.insertBefore(guides, meta.nextSibling);
     } else if (meta) {
-      host.append(guides);
-    } else if (host.firstElementChild) {
-      host.insertBefore(guides, host.firstElementChild.nextSibling);
+      mount.append(guides);
     } else {
-      host.append(guides);
+      mount.append(guides);
     }
   }
 

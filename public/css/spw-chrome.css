@@ -17,7 +17,7 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--shell-header-grid-gap);
+  gap: 0.45rem var(--shell-header-grid-gap);
 
   position: sticky;
   top: 0;
@@ -58,6 +58,11 @@ html[data-spw-header-opacity="normal"] :is(.site-header, body > header) {
 
 html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   opacity: 1;
+}
+
+:where(.site-header, body > header) > .spw-semantic-seam {
+  grid-column: 1 / -1;
+  align-items: center;
 }
 
 :where(.site-header, body > header)::before {
@@ -135,11 +140,12 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
    ========================================================================== */
 
 :where(.site-header nav, body > header nav) {
-  width: min(100%, var(--page-width));
-  justify-self: stretch;
+  width: fit-content;
+  max-width: min(100%, 58rem);
+  justify-self: center;
   z-index: var(--z-base);
   position: relative;
-  margin-inline: 0;
+  margin-inline: auto;
   padding: 0.35rem 0.45rem;
   container-type: inline-size;
   min-width: 0;
@@ -239,12 +245,14 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--shell-nav-gap-block) var(--shell-nav-gap-inline);
   list-style: none;
   margin: 0;
   padding: 0.4rem 0;
   min-width: 0;
+  width: fit-content;
+  max-width: 100%;
 }
 
 :where(.site-header li, body > header li) {
@@ -438,9 +446,14 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     text-align: center;
   }
 
+  :where(.site-header, body > header) > .spw-semantic-seam {
+    align-items: flex-start;
+  }
+
   :where(.site-header nav, body > header nav) {
     grid-column: 1 / -1;
     width: 100%;
+    max-width: none;
   }
 
   :where(.site-header[data-spw-menu="closed"] nav, body > header[data-spw-menu="closed"] nav) {
