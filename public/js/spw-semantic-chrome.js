@@ -104,8 +104,17 @@ function ensureSemanticSeam(host) {
   seam.className = 'spw-semantic-seam';
   seam.dataset.spwGenerated = 'semantic-chrome';
   seam.dataset.spwSlot = 'header';
+  seam.dataset.spwEmpty = 'true';
+  seam.hidden = true;
 
-  if (host.firstElementChild) {
+  const structuralMount = findStructuralMount(host);
+  const headerSlot = findHeaderSlot(host);
+
+  if (structuralMount?.parentElement === host) {
+    structuralMount.insertAdjacentElement('afterend', seam);
+  } else if (headerSlot?.parentElement === host) {
+    headerSlot.insertAdjacentElement('afterend', seam);
+  } else if (host.firstElementChild) {
     host.insertBefore(seam, host.firstElementChild);
   } else {
     host.append(seam);
@@ -114,22 +123,32 @@ function ensureSemanticSeam(host) {
   return seam;
 }
 
-function getMetaMount(host) {
-  return findStructuralMount(host) || findHeaderSlot(host) || ensureSemanticSeam(host);
+function updateSemanticSeamState(seam) {
+  if (!(seam instanceof HTMLElement)) return;
+
+  const hasVisibleChildren = [...seam.children].some((child) => {
+    if (!(child instanceof HTMLElement) || child.hidden) return false;
+    if (child.childElementCount > 0) return true;
+    return Boolean(normalizeText(child.textContent || ''));
+  });
+
+  seam.dataset.spwEmpty = hasVisibleChildren ? 'false' : 'true';
+  seam.hidden = !hasVisibleChildren;
 }
 
 function findExistingMeta(host) {
-  return host.querySelector?.(':scope > .spw-component-meta, :scope > [data-spw-slot="header"] > .spw-component-meta, :scope > .frame-topline > .spw-component-meta, :scope > .frame-heading > .spw-component-meta, :scope > figcaption > .spw-component-meta') || null;
+  return host.querySelector?.(':scope > .spw-semantic-seam > .spw-component-meta, :scope > .spw-component-meta, :scope > [data-spw-slot="header"] > .spw-component-meta, :scope > .frame-topline > .spw-component-meta, :scope > .frame-heading > .spw-component-meta, :scope > figcaption > .spw-component-meta') || null;
 }
 
 function findExistingGuides(host) {
-  return host.querySelector?.(':scope > .spw-component-guides, :scope > [data-spw-slot="header"] > .spw-component-guides') || null;
+  return host.querySelector?.(':scope > .spw-semantic-seam > .spw-component-guides, :scope > .spw-component-guides, :scope > [data-spw-slot="header"] > .spw-component-guides') || null;
 }
 
 function createGeneratedContainer(className) {
   const node = document.createElement('div');
   node.className = className;
   node.dataset.spwGenerated = 'semantic-chrome';
+  node.hidden = true;
   return node;
 }
 
@@ -138,7 +157,7 @@ function ensureMetaContainer(host) {
   if (existing && existing.dataset.spwGenerated !== 'semantic-chrome') return existing;
   if (existing) return existing;
 
-  const mount = getMetaMount(host);
+  const mount = ensureSemanticSeam(host);
   const meta = createGeneratedContainer('spw-component-meta');
 
   mount.append(meta);
@@ -152,19 +171,13 @@ function ensureGuideContainer(host) {
   if (existing) return existing;
 
   const guides = createGeneratedContainer('spw-component-guides');
-  const mount = getMetaMount(host);
+  const mount = ensureSemanticSeam(host);
+  const meta = findExistingMeta(host);
 
-  if (mount.matches?.('.frame-topline, .frame-heading, figcaption')) {
-    mount.insertAdjacentElement('afterend', guides);
+  if (meta?.parentElement === mount && meta.nextSibling) {
+    mount.insertBefore(guides, meta.nextSibling);
   } else {
-    const meta = findExistingMeta(host);
-    if (meta?.nextSibling) {
-      mount.insertBefore(guides, meta.nextSibling);
-    } else if (meta) {
-      mount.append(guides);
-    } else {
-      mount.append(guides);
-    }
+    mount.append(guides);
   }
 
   return guides;
@@ -204,6 +217,7 @@ function createGuideChip({ kind, text, substrate = '', stance = '' }) {
 function syncChildren(container, children) {
   container.replaceChildren(...children);
   container.hidden = children.length === 0;
+  updateSemanticSeamState(container.closest('.spw-semantic-seam'));
 }
 
 function buildMetaTags(host, snapshot, stance) {

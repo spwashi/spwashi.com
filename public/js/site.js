@@ -904,10 +904,10 @@ const FEATURE_DEFS = [
     route: 'blog',
     rootMode: 'single',
     load: () => import('./spw-blog-specimens.js'),
-    mount: (mod, ctx) => {
+    mount: (mod) => {
       const fn = mod?.initBlogSpecimens;
       if (!isFn(fn)) return;
-      return fn(ctx);
+      return fn(document.querySelector('main') || document);
     },
   },
   {
@@ -1036,7 +1036,7 @@ const ENHANCEMENT_DEFS = [
   {
     id: 'component-semantics',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IDLE,
+    when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
     load: () => import('./spw-component-semantics.js'),
@@ -1049,7 +1049,7 @@ const ENHANCEMENT_DEFS = [
   {
     id: 'semantic-chrome',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IDLE,
+    when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
     load: () => import('./spw-semantic-chrome.js'),
@@ -1360,6 +1360,10 @@ async function bootSite() {
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(
     FEATURE_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
+    runtimeCtx
+  );
+  await mountImmediateLayer(
+    ENHANCEMENT_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
     runtimeCtx
   );
 

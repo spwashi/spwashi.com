@@ -1160,6 +1160,7 @@ const initSiteSettingsPage = () => {
   const getStatusNode = (root) => (
     root.querySelector('[data-site-settings-status]')
     || root.closest('.site-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
+    || document.querySelector('[data-site-settings-status]')
     || null
   );
 

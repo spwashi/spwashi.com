@@ -55,19 +55,33 @@ function initThemeSwatches(root) {
   const buttons = root.querySelectorAll('[data-theme-set]');
   if (!buttons.length) return noop;
 
+  function resolveActiveTheme() {
+    if (document.body.dataset.theme) return document.body.dataset.theme;
+
+    const colorMode = document.documentElement.dataset.spwColorMode;
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    if (colorMode === 'dark') return 'atelier-dark';
+    if (colorMode === 'light') return 'atelier-light';
+    return prefersDark ? 'atelier-dark' : 'atelier-light';
+  }
+
+  function syncPressed(activeTheme = resolveActiveTheme()) {
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.themeSet === activeTheme));
+    });
+  }
+
   function onClick(e) {
     const btn = e.target.closest('[data-theme-set]');
     if (!btn) return;
 
     const theme = btn.dataset.themeSet;
     document.body.dataset.theme = theme;
-
-    buttons.forEach((b) =>
-      b.setAttribute('aria-pressed', String(b === btn))
-    );
+    syncPressed(theme);
   }
 
   root.addEventListener('click', onClick);
+  syncPressed();
 
   return () => root.removeEventListener('click', onClick);
 }

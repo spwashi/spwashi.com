@@ -162,7 +162,16 @@
 }
 
 :where(.spw-semantic-seam) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 0.45rem 0.8rem;
+  min-width: 0;
+}
+
+:where(.spw-semantic-seam:empty, .spw-semantic-seam[hidden], .spw-semantic-seam[data-spw-empty="true"]) {
+  display: none;
 }
 
 :where([data-spw-slot="header"]) > :where(.spw-component-meta, .spw-component-guides) {
@@ -170,8 +179,8 @@
 }
 
 :where(.spw-semantic-seam > .spw-component-guides) {
-  margin-inline-start: auto;
-  justify-content: flex-end;
+  margin-inline-start: 0;
+  justify-content: flex-start;
 }
 
 :where([data-spw-slot="meta"]) {
@@ -1165,39 +1174,12 @@ figcaption.frame-note,
 
 /* quiet overlays in analysis/reference contexts */
 :where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip) {
-  opacity: 0.55;
-  mix-blend-mode: multiply;
-  transform: scale(0.96);
-  transition: opacity var(--component-transition-fast, 120ms ease), transform var(--component-transition-fast, 120ms ease);
+  opacity: 0.78;
+  transition: opacity var(--component-transition-fast, 120ms ease);
 }
 
 :where([data-spw-role="reference"], [data-spw-context="analysis"]) :is(.spw-component-meta, .spw-component-tag, .spw-guide-chip):hover {
   opacity: 1;
-  transform: scale(1);
-}
-
-html[data-spw-show-semantic-metadata="on"] body[data-spw-page-family]::after {
-  content: attr(data-spw-page-family) " · " attr(data-spw-page-role) " · " attr(data-spw-context);
-  position: fixed;
-  inset: auto var(--page-gutter, 1rem) var(--page-gutter, 1rem) auto;
-  z-index: 80;
-  max-inline-size: min(30rem, calc(100vw - 2rem));
-  padding: 0.35rem 0.7rem;
-  border: 1px solid var(--semantic-metadata-line);
-  border-radius: 999px;
-  background: var(--semantic-metadata-bg-strong);
-  box-shadow: var(--semantic-metadata-shadow);
-  color: var(--semantic-metadata-ink);
-  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-  font-size: var(--semantic-metadata-font-size);
-  letter-spacing: var(--semantic-metadata-tracking);
-  text-transform: lowercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  pointer-events: none;
-  opacity: calc(0.56 + (var(--spw-semantic-metadata-factor, 0) * 0.26));
-  backdrop-filter: blur(10px);
 }
 
 html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context])::after {
@@ -1219,14 +1201,20 @@ html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][dat
   overflow: hidden;
   text-overflow: ellipsis;
   pointer-events: none;
-  opacity: calc(0.5 + (var(--spw-semantic-metadata-factor, 0) * 0.24));
+  opacity: 0;
+  transform: translateY(2px);
   transition:
     opacity var(--component-transition-fast, 120ms ease),
     transform var(--component-transition-fast, 120ms ease),
     border-color var(--component-transition-fast, 120ms ease);
 }
 
-html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-seed]:is(:hover, :focus-within))::after {
+html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context]:is(:hover, :focus-within, :target))::after {
+  opacity: 0.82;
+  transform: translateY(0);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-seed]:is(:hover, :focus-within, :target))::after {
   content: attr(data-spw-role) " · " attr(data-spw-context) " · " attr(data-spw-category-family) " · " attr(data-spw-seed);
   opacity: 0.96;
   transform: translateY(-1px);
@@ -1260,14 +1248,14 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-card[data-spw-role][dat
 }
 
 @media (max-width: 720px) {
-  html[data-spw-show-semantic-metadata="on"] body[data-spw-page-family]::after {
-    inset: auto 0.75rem 0.75rem 0.75rem;
-    max-inline-size: none;
-  }
-
   html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context])::after {
-    inset: auto 0.7rem 0.7rem 0.7rem;
-    max-inline-size: none;
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context])::after {
+    display: none;
   }
 }
 

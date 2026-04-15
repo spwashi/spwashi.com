@@ -190,13 +190,13 @@
   --tracking-wide: 0.04em;
   --tracking-spec: 0.06em;
 
-  --semantic-metadata-font-size: 0.64rem;
-  --semantic-metadata-tracking: 0.06em;
-  --semantic-metadata-ink: color-mix(in srgb, var(--ink-soft) 90%, var(--teal, #008080) 10%);
-  --semantic-metadata-line: color-mix(in srgb, var(--line-strong) 50%, transparent);
-  --semantic-metadata-bg: color-mix(in srgb, var(--surface-strong) 90%, transparent);
-  --semantic-metadata-bg-strong: color-mix(in srgb, var(--surface-matte) 94%, transparent);
-  --semantic-metadata-shadow: 0 8px 22px rgba(14, 18, 20, 0.08);
+  --semantic-metadata-font-size: 0.58rem;
+  --semantic-metadata-tracking: 0.04em;
+  --semantic-metadata-ink: color-mix(in srgb, var(--ink) 82%, var(--teal, #008080) 18%);
+  --semantic-metadata-line: color-mix(in srgb, var(--line-strong) 42%, transparent);
+  --semantic-metadata-bg: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+  --semantic-metadata-bg-strong: color-mix(in srgb, var(--surface-matte) 96%, transparent);
+  --semantic-metadata-shadow: 0 6px 16px rgba(14, 18, 20, 0.06);
 
   /* -- Pretext Formatting Rules -- */
   --pretext-width-floor: 160px;
@@ -250,8 +250,8 @@
 
   --ink-strong: rgba(var(--charcoal-rgb), 0.96);
   --ink: rgba(var(--charcoal-rgb), 0.92);
-  --ink-soft: rgba(var(--charcoal-rgb), 0.68);
-  --ink-mid: rgba(var(--charcoal-rgb), 0.52);
+  --ink-soft: rgba(var(--charcoal-rgb), 0.74);
+  --ink-mid: rgba(var(--charcoal-rgb), 0.58);
   --ink-faint: rgba(var(--charcoal-rgb), 0.32);
   --ink-speculative: rgba(var(--charcoal-rgb), 0.18);
   --ink-disabled: rgba(var(--charcoal-rgb), 0.24);

@@ -106,7 +106,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   align-items: center;
   gap: 0.45rem;
   min-width: 0;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 74%, var(--active-op-color, var(--teal, #008080)) 26%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.72rem;
   letter-spacing: 0.05em;
@@ -123,12 +123,12 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   grid-area: indicator;
   justify-self: end;
   padding-right: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--ink-soft, rgba(14, 18, 20, 0.74));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.54;
+  opacity: 0.66;
   text-align: right;
   white-space: nowrap;
   transition:
@@ -138,7 +138,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 :where(.site-header, body > header):is(:hover, :focus-within) .header-op-indicator {
-  opacity: 0.76;
+  opacity: 0.86;
 }
 
 /* ==========================================================================
@@ -481,7 +481,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header, body > header) > .spw-semantic-seam {
-    align-items: flex-start;
+    display: none;
   }
 
   :where(.site-header nav, body > header nav) {

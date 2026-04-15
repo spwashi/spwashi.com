@@ -199,6 +199,10 @@ object {
 }
 
 svg {
+  color: inherit;
+}
+
+svg text {
   fill: currentColor;
 }
 

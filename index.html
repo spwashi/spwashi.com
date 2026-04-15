@@ -299,6 +299,39 @@
                 </p>
             </section>
         </div>
+
+        <div class="gallery-overlays home-hero-studies" role="list">
+            <figure class="image-study" role="listitem">
+                <a href="/topics/craft/">
+                    <img
+                        src="/public/images/home/abstract-wash-study-2.webp"
+                        alt="An abstract wash study that suggests paper atmosphere, quiet drift, and image-led material direction."
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                        width="1600"
+                        height="900"/>
+                </a>
+                <figcaption>
+                    <strong>Atmosphere study</strong> — color and paper can orient a route before prose finishes the sentence.
+                </figcaption>
+            </figure>
+
+            <figure class="image-study" role="listitem">
+                <a href="#media-focus">
+                    <img
+                        src="/public/images/home/papergami-study-1.webp"
+                        alt="A folded paper study that suggests signal, structure, and tactile geometry."
+                        loading="lazy"
+                        decoding="async"
+                        width="1600"
+                        height="900"/>
+                </a>
+                <figcaption>
+                    <strong>Paper signal</strong> — nearby image references should appear early enough to shape how the rest of the page is read.
+                </figcaption>
+            </figure>
+        </div>
     </section>
 
     <section
@@ -513,21 +546,92 @@
         <figure class="spw-svg-figure" aria-labelledby="operator-grammar-title">
             <svg class="spw-svg-surface spw-svg-flow-diagram cinematic-host" viewBox="0 0 944 228" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="operator-grammar-title operator-grammar-desc">
                 <title id="operator-grammar-title">Spw Operator Grammar Map</title>
-                <desc id="operator-grammar-desc">Fourteen Spw operators arranged in two rows showing the cognitive spine and supporting grammar.</desc>
-                <rect width="944" height="228" fill="var(--spw-surface-2)" rx="8"/>
-                <text x="472" y="114" fill="var(--spw-text-muted)" text-anchor="middle" font-family="monospace">SVG: Operator Flow Diagram</text>
+                <desc id="operator-grammar-desc">A working subset of Spw operators arranged in two rows to show the editor-facing reading spine and supporting grammar.</desc>
+                <rect class="spw-svg-frame" x="12" y="12" width="920" height="204" rx="22"/>
+                <path class="spw-svg-flow spw-svg-flow--animated" d="M92 72 C160 52 210 52 256 72 S362 92 420 72 S528 52 584 72 S694 92 748 72 S830 58 852 72"/>
+                <path class="spw-svg-flow" d="M92 156 C160 136 210 136 256 156 S362 176 420 156 S528 136 584 156 S694 176 748 156 S830 142 852 156"/>
+                <path class="spw-svg-flow" d="M256 88 C300 116 364 122 420 140"/>
+                <path class="spw-svg-flow" d="M584 88 C626 116 696 122 748 140"/>
+
+                <text class="spw-svg-note" x="40" y="34">editor-facing reading spine</text>
+                <text class="spw-svg-note" x="40" y="198">support grammar for qualification, binding, reflection, and revision</text>
+
+                <g>
+                    <rect class="spw-svg-node spw-svg-node--frame" x="54" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="92" y="73" text-anchor="middle">frame</text>
+                    <text class="spw-svg-note" x="92" y="98" text-anchor="middle">#&gt; orient</text>
+
+                    <rect class="spw-svg-node spw-svg-node--object" x="218" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="256" y="73" text-anchor="middle">object</text>
+                    <text class="spw-svg-note" x="256" y="98" text-anchor="middle">^ elevate</text>
+
+                    <rect class="spw-svg-node spw-svg-node--probe" x="382" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="420" y="73" text-anchor="middle">probe</text>
+                    <text class="spw-svg-note" x="420" y="98" text-anchor="middle">? inquire</text>
+
+                    <rect class="spw-svg-node spw-svg-node--ref" x="546" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="584" y="73" text-anchor="middle">ref</text>
+                    <text class="spw-svg-note" x="584" y="98" text-anchor="middle">~ relate</text>
+
+                    <rect class="spw-svg-node spw-svg-node--action" x="710" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="748" y="73" text-anchor="middle">action</text>
+                    <text class="spw-svg-note" x="748" y="98" text-anchor="middle">@ commit</text>
+
+                    <rect class="spw-svg-node spw-svg-node--stream" x="814" y="52" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="852" y="73" text-anchor="middle">surface</text>
+                    <text class="spw-svg-note" x="852" y="98" text-anchor="middle">&gt; project</text>
+                </g>
+
+                <g>
+                    <rect class="spw-svg-node spw-svg-node--layer" x="54" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="92" y="161" text-anchor="middle">layer</text>
+                    <text class="spw-svg-note" x="92" y="186" text-anchor="middle">qualify</text>
+
+                    <rect class="spw-svg-node spw-svg-node--baseline" x="218" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="256" y="161" text-anchor="middle">baseline</text>
+                    <text class="spw-svg-note" x="256" y="186" text-anchor="middle">settle</text>
+
+                    <rect class="spw-svg-node spw-svg-node--binding" x="382" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="420" y="161" text-anchor="middle">binding</text>
+                    <text class="spw-svg-note" x="420" y="186" text-anchor="middle">bind</text>
+
+                    <rect class="spw-svg-node spw-svg-node--meta" x="546" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="584" y="161" text-anchor="middle">meta</text>
+                    <text class="spw-svg-note" x="584" y="186" text-anchor="middle">reflect</text>
+
+                    <rect class="spw-svg-node spw-svg-node--merge" x="710" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="748" y="161" text-anchor="middle">merge</text>
+                    <text class="spw-svg-note" x="748" y="186" text-anchor="middle">integrate</text>
+
+                    <rect class="spw-svg-node spw-svg-node--normalize" x="814" y="140" width="76" height="34" rx="12"/>
+                    <text class="spw-svg-label" x="852" y="161" text-anchor="middle">normalize</text>
+                    <text class="spw-svg-note" x="852" y="186" text-anchor="middle">steady</text>
+                </g>
+
+                <text class="spw-svg-note" x="472" y="118" text-anchor="middle">the VS Code plugin, source text, and the site can share one readable grammar</text>
             </svg>
             <figcaption class="frame-note">
-                Fourteen operators. Top row: cognitive spine — orient, elevate, inquire, refer, act, flow, project. Bottom row: supporting grammar — qualify, settle, bind, reflect, integrate, normalize, constrain.
+                A working subset of the operator family. Top row: the reading spine for orienting, elevating, inquiring, relating, committing, and projecting. Bottom row: support grammar for qualification, settling, binding, reflection, integration, and normalization.
             </figcaption>
         </figure>
 
         <figure class="spw-svg-figure" aria-labelledby="polarity-axis-title">
-            <svg class="spw-svg-surface" viewBox="0 0 640 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="polarity-axis-title polarity-axis-desc">
+            <svg class="spw-svg-surface" viewBox="0 0 640 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="polarity-axis-title polarity-axis-desc">
                 <title id="polarity-axis-title">Brace Polarity Axis</title>
                 <desc id="polarity-axis-desc">Horizontal gradient axis from left-brace objective shared structure to right-brace subjective situated meaning.</desc>
-                <rect width="640" height="72" fill="var(--spw-surface-2)" rx="8"/>
-                <text x="320" y="36" fill="var(--spw-text-muted)" text-anchor="middle" font-family="monospace">SVG: Brace Polarity Continuum</text>
+                <rect class="spw-svg-frame" x="12" y="12" width="616" height="100" rx="20"/>
+                <path class="spw-svg-flow" d="M114 62 H526"/>
+                <circle class="spw-svg-node spw-svg-node--frame" cx="114" cy="62" r="16"/>
+                <circle class="spw-svg-node spw-svg-node--ref" cx="320" cy="62" r="13"/>
+                <circle class="spw-svg-node spw-svg-node--pragma" cx="526" cy="62" r="16"/>
+                <text class="spw-svg-label" x="74" y="50">{</text>
+                <text class="spw-svg-label" x="556" y="50">}</text>
+                <text class="spw-svg-note" x="114" y="88" text-anchor="middle">shared wall</text>
+                <text class="spw-svg-note" x="114" y="102" text-anchor="middle">plugin text / stable structure</text>
+                <text class="spw-svg-note" x="320" y="88" text-anchor="middle">translation seam</text>
+                <text class="spw-svg-note" x="320" y="102" text-anchor="middle">selection, prompting, retelling</text>
+                <text class="spw-svg-note" x="526" y="88" text-anchor="middle">situated wall</text>
+                <text class="spw-svg-note" x="526" y="102" text-anchor="middle">page reading / local consequence</text>
             </svg>
             <figcaption class="frame-note">
                 The brace is also a polarity axis. The left wall <code>{</code> leans structural and shared; the right wall <code>}</code> leans situated and felt.

@@ -49,6 +49,25 @@
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 
+:where(body[data-spw-surface="settings"] main > article) {
+  display: flex;
+  flex-direction: column;
+}
+
+:where(body[data-spw-surface="settings"] #presets) { order: 1; }
+:where(body[data-spw-surface="settings"] #runtime-preferences) { order: 2; }
+:where(body[data-spw-surface="settings"] #applied-state) { order: 3; }
+:where(body[data-spw-surface="settings"] #pwa-status) { order: 4; }
+:where(body[data-spw-surface="settings"] #runtime-map) { order: 5; }
+:where(body[data-spw-surface="settings"] #token-navigator) { order: 6; }
+:where(body[data-spw-surface="settings"] #data-structures) { order: 7; }
+:where(body[data-spw-surface="settings"] #bookmarks) { order: 8; }
+:where(body[data-spw-surface="settings"] #settings-notes) { order: 9; }
+:where(body[data-spw-surface="settings"] #curriculum-control) { order: 10; }
+:where(body[data-spw-surface="settings"] #spell-board) { order: 11; }
+:where(body[data-spw-surface="settings"] #cognitive-trace) { order: 12; }
+:where(body[data-spw-surface="settings"] #payment-settings) { order: 13; }
+
 :where(body[data-spw-surface="settings"] .site-frame.is-active-frame) {
   box-shadow: 
     0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent), 
@@ -368,5 +387,38 @@
 @media (max-width: 720px) {
   :where(body[data-spw-surface="settings"] .settings-scale-group) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(body[data-spw-surface="settings"] .site-frame) {
+    --settings-pad-inline: 0.9rem;
+    --settings-pad-block: 1rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-grid) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-fieldset) {
+    padding: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-actions) {
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-actions > *) {
+    width: 100%;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-system-map),
+  :where(body[data-spw-surface="settings"] .settings-navigator-grid),
+  :where(body[data-spw-surface="settings"] .settings-structures-grid),
+  :where(body[data-spw-surface="settings"] .settings-state-grid),
+  :where(body[data-spw-surface="settings"] .pwa-status-grid) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 }

@@ -258,30 +258,35 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 .frame-heading .frame-sigil {
   position: static;
   width: auto;
+  max-width: 100%;
   overflow: visible;
   min-height: auto;
-  padding: 0;
+  padding: 0.02rem 0 0.02rem 0.55rem;
   border: none;
+  border-inline-start: 1px solid color-mix(in srgb, currentColor 26%, transparent);
   background: transparent;
   box-shadow: none;
   color: var(--ink-soft);
   font-size: 0.72rem;
   opacity: 0.42;
   justify-content: flex-start;
+  text-align: left;
   transition:
     opacity var(--handle-duration-fast) var(--handle-ease),
-    color var(--handle-duration-fast) var(--handle-ease);
+    color var(--handle-duration-fast) var(--handle-ease),
+    border-color var(--handle-duration-fast) var(--handle-ease);
 }
 
 :where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
 :where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
   opacity: 0.78;
   color: var(--active-op-color, var(--teal));
+  border-inline-start-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
   outline: none;
 }
 
 :where(.frame-topline .frame-sigil + .spec-strip, .frame-heading .frame-sigil + .spw-component-meta) {
-  align-self: center;
+  align-self: flex-start;
 }
 
 /* ==========================================================================
@@ -313,12 +318,12 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   appearance: none;
   -webkit-appearance: none;
   width: fit-content;
-  border-radius: var(--handle-radius-pill);
-  color: var(--ink-soft);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
-  border-color: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--handle-radius-tight);
+  color: var(--ink);
+  background: var(--semantic-metadata-bg, color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent));
+  border-color: var(--semantic-metadata-line, color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent));
   pointer-events: auto;
-  cursor: help;
+  cursor: pointer;
   user-select: none;
   touch-action: manipulation;
   -webkit-touch-callout: none;
@@ -329,12 +334,12 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 .spw-guide-chip {
   appearance: none;
   -webkit-appearance: none;
-  border-radius: var(--handle-radius-pill);
-  background: color-mix(in srgb, var(--surface-soft, #fff) 84%, transparent);
-  color: var(--handle-ink-soft);
-  border-color: var(--handle-line-soft);
+  border-radius: var(--handle-radius-tight);
+  background: var(--semantic-metadata-bg, color-mix(in srgb, var(--surface-soft, #fff) 84%, transparent));
+  color: var(--semantic-metadata-ink, var(--handle-ink-soft));
+  border-color: var(--semantic-metadata-line, var(--handle-line-soft));
   pointer-events: auto;
-  cursor: help;
+  cursor: pointer;
   user-select: none;
   touch-action: manipulation;
   -webkit-touch-callout: none;
@@ -694,23 +699,6 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   opacity: 0.86;
 }
 
-/* When metadata is shown, expose stance softly inline. */
-html[data-spw-show-semantic-metadata="on"] :where([data-spw-stance]) > :where(.spw-component-meta, .spw-component-guides)::after,
-html[data-spw-show-semantic-metadata="on"] :where([data-spw-stance]) > .spw-semantic-seam > :where(.spw-component-meta, .spw-component-guides)::after {
-  content: attr(data-spw-stance);
-  display: inline-flex;
-  align-items: center;
-  padding: 0.14rem 0.34rem;
-  border-radius: var(--handle-radius-pill);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
-  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
-  color: var(--handle-ink-quiet);
-  font-family: var(--handle-meta-font);
-  font-size: 0.56rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
 /* ==========================================================================
    11. Inline delimiters and brace phrases
    ========================================================================== */
@@ -949,20 +937,6 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-stance]) > .spw-sema
     );
 }
 
-html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] .spw-component-meta::after {
-  content: attr(data-spw-guide-reason);
-  display: inline-flex;
-  align-items: center;
-  padding: 0.16rem 0.4rem;
-  border: 1px solid color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 22%, transparent);
-  border-radius: var(--handle-radius-pill);
-  background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 70%, transparent);
-  color: var(--ink-soft);
-  font-size: 0.62rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
 html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] > .spw-component-guides,
 html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] > .spw-semantic-seam > .spw-component-guides {
   display: inline-flex;
@@ -1023,6 +997,26 @@ html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
   .operator-chip {
     min-height: 2.4rem;
     padding: 0.4rem 0.7rem;
+  }
+
+  .spw-component-tag,
+  .spw-guide-chip {
+    max-inline-size: 100%;
+    padding: 0.14rem 0.34rem;
+    font-size: calc(var(--semantic-metadata-font-size, 0.58rem) - 0.02rem);
+    letter-spacing: calc(var(--semantic-metadata-tracking, 0.04em) * 0.88);
+  }
+}
+
+@media (max-width: 720px) {
+  html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
+    display: none !important;
+  }
+
+  :where(.frame-topline > .spw-component-meta > :nth-child(n + 2),
+         .frame-heading > .spw-component-meta > :nth-child(n + 2),
+         .spw-semantic-seam > .spw-component-meta > :nth-child(n + 2)) {
+    display: none;
   }
 }
 

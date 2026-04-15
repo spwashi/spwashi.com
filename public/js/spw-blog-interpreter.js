@@ -272,8 +272,10 @@ const setInterpreterState = (root, input, output, state, result = EMPTY_RESULT) 
     output.setAttribute('aria-busy', state === 'interpreting' ? 'true' : 'false');
 };
 
-export const initBlogInterpreter = () => {
-    const root = document.querySelector('[data-blog-interpreter]');
+export const initBlogInterpreter = (options = {}) => {
+    const root = options.root instanceof Element
+        ? options.root
+        : document.querySelector('[data-blog-interpreter]');
     if (!root) return null;
 
     const form = $('[data-blog-input-form]', root);
@@ -297,26 +299,37 @@ export const initBlogInterpreter = () => {
         status.textContent = 'Interpreted locally.';
     };
 
-    form.addEventListener('submit', (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
         run();
-    });
+    };
 
-    $('[data-blog-sample]', root).addEventListener('click', () => {
+    const onSample = () => {
         input.value = SAMPLE_TEXT;
         run();
-    });
+    };
 
-    $('[data-blog-clear]', root).addEventListener('click', () => {
+    const onClear = () => {
         input.value = '';
         renderResult(root, EMPTY_RESULT);
         setInterpreterState(root, input, output, 'empty');
         status.textContent = 'Cleared.';
         input.focus();
-    });
+    };
+
+    form.addEventListener('submit', onSubmit);
+    $('[data-blog-sample]', root).addEventListener('click', onSample);
+    $('[data-blog-clear]', root).addEventListener('click', onClear);
 
     renderResult(root, EMPTY_RESULT);
     setInterpreterState(root, input, output, 'empty');
 
-    return { interpret: run };
+    return {
+        interpret: run,
+        destroy() {
+            form.removeEventListener('submit', onSubmit);
+            $('[data-blog-sample]', root).removeEventListener('click', onSample);
+            $('[data-blog-clear]', root).removeEventListener('click', onClear);
+        }
+    };
 };

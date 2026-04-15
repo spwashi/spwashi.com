@@ -450,17 +450,16 @@
   align-items: center;
   width: fit-content;
   max-width: 100%;
-  padding: 0.24rem 0.5rem;
-  white-space: nowrap;
-  border: 1px solid color-mix(in srgb, var(--grammar-ink) 12%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, white 68%, transparent);
-  color: var(--grammar-ink-soft);
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
+  padding: 0.18rem 0.42rem;
+  white-space: normal;
+  border: 1px solid var(--semantic-metadata-line);
+  border-radius: var(--shape-element, 0.35rem);
+  background: var(--semantic-metadata-bg);
+  color: var(--semantic-metadata-ink);
+  font-size: var(--semantic-metadata-font-size);
+  letter-spacing: var(--semantic-metadata-tracking);
   text-transform: uppercase;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  text-wrap: pretty;
 }
 
 :where(.spw-component-meta) {
@@ -468,7 +467,7 @@
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.22rem 0.32rem;
   min-width: 0;
 }
 
@@ -481,22 +480,24 @@
   display: none;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.22rem 0.3rem;
 }
 
 :where(.spw-guide-chip) {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.18rem 0.42rem;
-  white-space: nowrap;
-  border: 1px solid var(--grammar-line);
-  border-radius: 999px;
-  background: var(--grammar-surface-strong);
-  color: var(--grammar-ink-soft);
-  font-size: 0.62rem;
-  letter-spacing: 0.05em;
+  max-width: 100%;
+  padding: 0.16rem 0.4rem;
+  white-space: normal;
+  border: 1px solid var(--semantic-metadata-line);
+  border-radius: var(--shape-element, 0.35rem);
+  background: var(--semantic-metadata-bg);
+  color: var(--semantic-metadata-ink);
+  font-size: calc(var(--semantic-metadata-font-size) - 0.01rem);
+  letter-spacing: calc(var(--semantic-metadata-tracking) * 0.92);
   text-transform: uppercase;
+  text-wrap: pretty;
 }
 
 :where(.spw-guide-chip[data-spw-guide-kind="realization"][data-spw-guide-value="conceptual"]) {
