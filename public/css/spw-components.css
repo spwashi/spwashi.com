@@ -284,13 +284,12 @@
   .media-focus-card,
   .software-card,
   .operator-card,
-  .frame-panel,
-  .mode-panel,
   .plan-card,
   .compare-card,
   .spec-column
-):is(:hover, :focus-within) {
-  border-color: color-mix(in srgb, var(--component-accent, #008080) 28%, var(--line, transparent));
+) {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
 }
 
 :where(
@@ -304,8 +303,65 @@
   .plan-card,
   .compare-card,
   .spec-column
-) > :last-child:is(.operator-chip, .media-card-cta, .frame-operators, .plan-links, [data-spw-slot="actions"]) {
+):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--component-accent, #008080) 28%, var(--line, transparent));
+}
+
+a.frame-card,
+.frame-card > a:first-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--component-gap-tight, 0.55rem);
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+a.frame-card:is(:hover, :focus-visible),
+.frame-card > a:first-child:is(:hover, :focus-visible) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.frame-card > a:first-child:last-child {
+  min-block-size: 100%;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) > :last-child:is(.operator-chip, .media-card-cta, .frame-operators, .plan-links, .card-sub-links, [data-spw-slot="actions"]) {
   margin-top: auto;
+}
+
+.card-sub-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.4rem 0.5rem;
+  min-width: 0;
+}
+
+.card-sub-links a {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.card-sub-links a:is(:hover, :focus-visible) {
+  color: var(--component-accent, #008080);
 }
 
 :where(
@@ -840,11 +896,21 @@
 :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
   display: grid;
   gap: var(--component-gap, 0.9rem);
+  align-items: stretch;
   min-width: 0;
 }
 
 :where(.frame-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li) {
+  display: grid;
+  min-width: 0;
+}
+
+:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li) > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column) {
+  height: 100%;
 }
 
 :where(.plans-grid) {

@@ -248,18 +248,18 @@
    9. Footer
    ========================================================================== */
 
-:where(footer) {
+:where(footer:not(.site-footer)) {
     position: relative;
     margin-top: var(--space-3xl, 4rem);
     padding: var(--space-xl, 2rem) 0;
     border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
 }
 
-:where(footer::before) {
+:where(footer:not(.site-footer)::before) {
     content: none;
 }
 
-:where(footer p) {
+:where(footer:not(.site-footer) p) {
     opacity: 0.75;
 }
 

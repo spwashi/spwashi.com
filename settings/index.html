@@ -109,9 +109,9 @@
 </head>
 
 <body data-spw-surface="settings" data-spw-features="operators navigator console" data-spw-route-family="editorial control panel" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-page-family="control-room" data-spw-page-modes="inspect tune compare restore" data-spw-page-seed="page_settings_settings" data-spw-page-role="control-register" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_settings_settings__site_header" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/" data-spw-context-relevance="local browser runtime including appearance only chrome calm">
-        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
+    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_settings_settings__site_header" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/" data-spw-context-relevance="local browser runtime including appearance only chrome calm" class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
@@ -1646,10 +1646,6 @@
                 </div>
             </section>
 
-            <footer>
-                <p>&copy; 2026 spwashi</p>
-            </footer>
-
             <link rel="stylesheet" href="/public/css/payment-card.css">
             <script type="module">
                 import { initPaymentSettings } from '/public/js/payment-card.js';
@@ -1657,6 +1653,25 @@
                     initPaymentSettings(document.getElementById('payment-settings-container'));
                 });
             </script>
+            <footer class="site-footer" role="contentinfo">
+                <div class="site-footer__inner">
+                    <div class="site-footer__identity">
+                        <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+                        <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+                    </div>
+                    <nav class="site-footer__nav" aria-label="Footer">
+                        <a href="/about/">About</a>
+                        <a href="/topics/software/">Software</a>
+                        <a href="/topics/craft/">Craft</a>
+                        <a href="/recipes/">Recipes</a>
+                        <a href="/play/">Play</a>
+                        <a href="/blog/">Blog</a>
+                        <a href="/services/">Services</a>
+                        <a href="/contact/">Contact</a>
+                    </nav>
+                    <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+                </div>
+            </footer>
 </body>
 
 </html>

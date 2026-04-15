@@ -21,7 +21,7 @@
    Responsibilities
    - viewport / body / safe area scaffolding
    - generic page surfaces and reading defaults
-   - site header, nav, nav toggle, footer
+   - generic page shell defaults beneath the shared site chrome
    - global side walls / brace rails
    - main / article / section / aside / figure shell defaults
    - generic cards, panels, notes, and page intro scaffolds
@@ -485,289 +485,7 @@ figure.generic-figure,
 }
 
 /* ==========================================================================
-   5. Header shell
-   --------------------------------------------------------------------------
-   The previous defaults were too aggressive and overly teal-heavy.
-   This version keeps identity while remaining usable across routes.
-   ========================================================================== */
-
-.site-header,
-body > header {
-  min-height: var(--shell-header-height);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: var(--shell-header-grid-gap);
-
-  position: sticky;
-  top: 0;
-  z-index: var(--z-header);
-
-  padding-top: max(var(--shell-header-pad-block), env(safe-area-inset-top));
-  padding-bottom: var(--shell-header-pad-block);
-  padding-left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
-  padding-right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
-
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent),
-      color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 96%, transparent)
-    );
-  box-shadow:
-    inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
-    0 2px 14px rgba(0, 0, 0, 0.05);
-
-  backdrop-filter: blur(14px) saturate(1.08);
-  -webkit-backdrop-filter: blur(14px) saturate(1.08);
-
-  transition:
-    background-color var(--shell-duration-base) var(--shell-ease),
-    box-shadow var(--shell-duration-base) var(--shell-ease),
-    border-color var(--shell-duration-base) var(--shell-ease);
-}
-
-html[data-spw-header-opacity="low"] :is(.site-header, body > header) {
-  opacity: 0.8;
-}
-
-html[data-spw-header-opacity="normal"] :is(.site-header, body > header) {
-  opacity: 0.93;
-}
-
-html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
-  opacity: 1;
-}
-
-.site-header::before,
-body > header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at top center,
-      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 5%, transparent),
-      transparent 48%
-    );
-  opacity: 0.9;
-}
-
-.site-header::after,
-body > header::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 2px;
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 58%, transparent),
-      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 72%, transparent) 50%,
-      color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 58%, transparent)
-    );
-  opacity: 0.78;
-  transition: background-color var(--shell-duration-base) var(--shell-ease);
-}
-
-/* Header sigil area */
-.header-sigil {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-width: 0;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.header-sigil a,
-.header-sigil a:visited {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* subtle header state indicator */
-.header-op-indicator {
-  padding-right: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.54;
-  text-align: right;
-  white-space: nowrap;
-  transition:
-    opacity var(--shell-duration-base) var(--shell-ease),
-    color var(--shell-duration-fast) var(--shell-ease);
-  user-select: none;
-}
-
-.site-header:is(:hover, :focus-within) .header-op-indicator,
-body > header:is(:hover, :focus-within) .header-op-indicator {
-  opacity: 0.76;
-}
-
-/* ==========================================================================
-   6. Navigation
-   ========================================================================== */
-
-.site-header nav,
-body > header nav {
-  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
-  z-index: var(--z-base);
-  position: relative;
-  margin-inline: auto;
-  container-type: inline-size;
-  min-width: 0;
-}
-
-.spw-nav-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 0.42rem;
-  min-height: var(--shell-nav-min-height);
-  margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
-  padding: 0.36rem 0.76rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  font: inherit;
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.76rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: var(--shadow-xs, 0 1px 2px rgba(0, 0, 0, 0.04));
-  transition:
-    border-color var(--shell-duration-fast) var(--shell-ease),
-    background var(--shell-duration-fast) var(--shell-ease),
-    color var(--shell-duration-fast) var(--shell-ease),
-    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
-    transform var(--shell-duration-fast) var(--shell-settle-ease);
-}
-
-.spw-nav-toggle:hover,
-.spw-nav-toggle:focus-visible {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
-    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 6%, transparent);
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
-  outline: none;
-}
-
-.spw-nav-toggle-glyph {
-  position: relative;
-  display: inline-block;
-  width: 0.9rem;
-  height: 0.65rem;
-}
-
-.spw-nav-toggle-glyph::before,
-.spw-nav-toggle-glyph::after,
-.spw-nav-toggle-glyph {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-}
-
-.spw-nav-toggle-glyph {
-  background-size: 100% 1.5px;
-  background-position: center;
-}
-
-.spw-nav-toggle-glyph::before,
-.spw-nav-toggle-glyph::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  height: 1.5px;
-  background-size: 100% 100%;
-}
-
-.spw-nav-toggle-glyph::before {
-  top: 0;
-}
-
-.spw-nav-toggle-glyph::after {
-  bottom: 0;
-}
-
-.site-header ul,
-body > header ul {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--shell-nav-gap-block) var(--shell-nav-gap-inline);
-  list-style: none;
-  margin: 0;
-  padding: 0.4rem 0;
-  min-width: 0;
-}
-
-.site-header li,
-body > header li {
-  margin: 0;
-  min-width: 0;
-}
-
-.site-header a,
-body > header a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--shell-nav-min-height);
-  min-width: 0;
-  padding: var(--shell-nav-padding-block) var(--shell-nav-padding-inline);
-  border-radius: var(--shell-nav-radius);
-  text-decoration: none;
-  font-size: var(--shell-nav-font-size);
-  font-weight: 500;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  line-height: 1.15;
-  text-align: center;
-  text-wrap: balance;
-  transition:
-    background-color var(--shell-duration-fast) var(--shell-ease),
-    color var(--shell-duration-fast) var(--shell-ease),
-    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
-    transform var(--shell-duration-fast) var(--shell-settle-ease);
-}
-
-.site-header a:hover,
-.site-header a:focus-visible,
-body > header a:hover,
-body > header a:focus-visible {
-  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
-  outline: none;
-}
-
-.site-header a[aria-current="page"],
-body > header a[aria-current="page"] {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
-    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  font-weight: 600;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
-}
-
-/* ==========================================================================
-   7. Side rails / brace walls
+   5. Side rails / brace walls
    --------------------------------------------------------------------------
    Keep these subtle. The old defaults were too assertive for generic pages.
    ========================================================================== */
@@ -859,43 +577,7 @@ body > header a[aria-current="page"] {
 }
 
 /* ==========================================================================
-   8. Footer
-   ========================================================================== */
-
-body > footer {
-  margin-top: auto;
-  min-height: var(--shell-footer-min-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding:
-    0.65rem
-    max(1rem, env(safe-area-inset-right))
-    calc(0.65rem + env(safe-area-inset-bottom))
-    max(1rem, env(safe-area-inset-left));
-  box-sizing: border-box;
-
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 84%, transparent),
-      color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent)
-    );
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-size: var(--shell-footer-font-size);
-  letter-spacing: 0.04em;
-  opacity: var(--shell-footer-opacity);
-
-  border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
-}
-
-html[data-spw-show-footer="off"] body > footer {
-  display: none;
-}
-
-/* ==========================================================================
-   9. Utility shell defaults for common authoring structures
+   6. Utility shell defaults for common authoring structures
    --------------------------------------------------------------------------
    These support a generic page with decent style depth even without route CSS.
    ========================================================================== */
@@ -985,7 +667,7 @@ html[data-spw-show-footer="off"] body > footer {
 }
 
 /* ==========================================================================
-   10. Responsive
+   7. Responsive
    ========================================================================== */
 
 @media (max-width: 980px) {
@@ -997,56 +679,6 @@ html[data-spw-show-footer="off"] body > footer {
 }
 
 @media (max-width: 720px) {
-  .site-header,
-  body > header {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.25rem;
-    padding-block: 0.35rem;
-  }
-
-  .header-sigil,
-  .header-op-indicator,
-  .spw-nav-toggle {
-    padding-inline: 1rem;
-  }
-
-  .spw-nav-toggle {
-    display: inline-flex;
-    justify-self: end;
-  }
-
-  .header-op-indicator {
-    grid-column: 1 / -1;
-    padding-top: 0.1rem;
-    text-align: center;
-    padding-right: 0;
-  }
-
-  .site-header nav,
-  body > header nav {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .site-header[data-spw-menu="closed"] nav,
-  body > header[data-spw-menu="closed"] nav {
-    display: none;
-  }
-
-  .site-header ul,
-  body > header ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.4rem), 1fr));
-    gap: 0.35rem;
-    padding-inline: var(--page-gutter-inline);
-  }
-
-  .site-header a,
-  body > header a {
-    width: 100%;
-    border-radius: var(--shell-panel-radius);
-  }
-
   .page-intro,
   .page-hero,
   .shell-hero,
@@ -1056,11 +688,6 @@ html[data-spw-show-footer="off"] body > footer {
 }
 
 @media (max-width: 600px) {
-  .spw-nav-toggle {
-    min-height: 2.6rem;
-    padding: 0.45rem 0.9rem;
-  }
-
   main {
     width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
   }
@@ -1084,15 +711,6 @@ html[data-spw-show-footer="off"] body > footer {
 }
 
 @media (max-width: 480px) {
-  .header-op-indicator {
-    display: none;
-  }
-
-  .site-header ul,
-  body > header ul {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .index-sigil,
   .row-sigil,
   .file-ext {
@@ -1107,29 +725,11 @@ html[data-spw-show-footer="off"] body > footer {
   }
 }
 
-@media (max-width: 340px) {
-  .site-header ul,
-  body > header ul {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 /* ==========================================================================
-   11. Reduced motion / low processing defaults
+   8. Reduced motion / low processing defaults
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header,
-  body > header {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .site-header,
-  body > header,
-  .spw-nav-toggle,
-  .site-header a,
-  body > header a,
   .spw-objective-wall,
   .spw-subjective-wall,
   .spw-boon-wall,
@@ -1204,27 +804,6 @@ main {
   padding-top: clamp(0.2rem, 0.8vw, 0.5rem);
 }
 
-/* Nav interior panel */
-.site-header nav,
-body > header nav {
-  padding: 0.35rem 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
-  border-radius: var(--shell-panel-radius-loose);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.14), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.4),
-    0 4px 16px rgba(0,0,0,0.04);
-}
-
-.site-header[data-spw-menu="closed"] nav,
-body > header[data-spw-menu="closed"] nav {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.10), transparent 62%),
-    color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 82%, transparent);
-}
-
 /* Fallback frame header structures */
 .frame-topline,
 .frame-heading {
@@ -1281,23 +860,7 @@ body > header[data-spw-menu="closed"] nav {
   max-width: 100%;
 }
 
-/* Avoid awkward header stacking when route CSS is thin */
-.site-header ul,
-body > header ul {
-  min-width: 0;
-}
-
-.site-header li,
-body > header li {
-  min-width: 0;
-}
-
 @media (max-width: 720px) {
-  .site-header nav,
-  body > header nav {
-    padding: 0.3rem;
-  }
-
   .frame-topline,
   .frame-heading {
     flex-direction: column;

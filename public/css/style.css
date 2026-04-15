@@ -10,6 +10,7 @@
 @import url('/public/css/spw-tokens.css') layer(tokens);
 
 @import url('/public/css/spw-shell.css') layer(shell);
+@import url('/public/css/spw-chrome.css') layer(shell);
 
 @import url('/public/css/spw-typography.css') layer(typography);
 @import url('/public/css/spw-typography-context.css') layer(typography);

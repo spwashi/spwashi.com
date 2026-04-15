@@ -133,9 +133,9 @@
     </script>
 </head>
 <body data-spw-surface="services" data-spw-features="operators navigator console" data-spw-route-family="editorial service menu" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-page-family="menu" data-spw-page-modes="read compare book contact" data-spw-page-seed="page_services_services" data-spw-page-role="service-register" data-spw-related-routes="/|/about/|/topics/software/|/play/|/settings/|/play/rpg-wednesday/|/topics/software/pretext/">
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_services_services__site_header" data-spw-related-routes="/|/about/|/topics/software/|/play/|/settings/|/play/rpg-wednesday/|/topics/software/pretext/" data-spw-context-relevance="engineer designer local semantic tooling reading layer material">
-        <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
-        <nav>
+    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_services_services__site_header" data-spw-related-routes="/|/about/|/topics/software/|/play/|/settings/|/play/rpg-wednesday/|/topics/software/pretext/" data-spw-context-relevance="engineer designer local semantic tooling reading layer material" class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
@@ -450,6 +450,24 @@
         </article>
     </main>
 
-    <footer><p>© 2026 spwashi</p></footer>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
 </body>
 </html>

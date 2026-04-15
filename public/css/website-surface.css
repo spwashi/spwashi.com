@@ -410,7 +410,7 @@
    11. Footer calm
    ========================================================================== */
 
-:where(body[data-spw-surface="website"] footer) {
+:where(body[data-spw-surface="website"] .site-footer) {
   opacity: 0.78;
 }
 

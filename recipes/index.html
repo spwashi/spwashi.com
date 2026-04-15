@@ -103,7 +103,7 @@
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_recipes_recipes__site_header" data-spw-related-routes="/|/about/|/topics/craft/|/topics/software/|/play/|/blog/|/settings/|/recipes/mise-en-place/" data-spw-context-relevance="recipes abstract culinary principles applied learning science fermentation">
-    <span class="header-sigil" aria-hidden="true">#&gt;spwashi</span>
+    <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
     <nav aria-label="Primary">
         <ul>
             <li><a href="/">Home</a></li>
@@ -170,7 +170,7 @@
         </nav>
     </section>
 
-    <nav
+    <nav aria-label="Primary"
         class="site-frame"
         id="recipes-index"
         aria-labelledby="recipes-index-title"
@@ -610,8 +610,24 @@
 
 </main>
 
-<footer role="contentinfo">
-    <p>spwashi.com — language tools, readable systems, and play</p>
+<footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
 </footer>
 
 <div class="spw-objective-wall spw-boon-wall" aria-hidden="true">
