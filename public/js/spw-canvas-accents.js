@@ -65,6 +65,7 @@ class CanvasAccent {
         this.visible = true;
         this.rafId = 0;
         this.resizeTimeout = 0;
+        this.pointerBurstTimeout = 0;
         this.destroyed = false;
         this.offs = [];
 
@@ -84,8 +85,10 @@ class CanvasAccent {
             .trim() || '#1a9999';
 
         this.handleResize = this.handleResize.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.handlePointerMove = this.handlePointerMove.bind(this);
+        this.handlePointerLeave = this.handlePointerLeave.bind(this);
+        this.handlePointerDown = this.handlePointerDown.bind(this);
+        this.handlePointerUp = this.handlePointerUp.bind(this);
         this.handleIntersect = this.handleIntersect.bind(this);
         this.animate = this.animate.bind(this);
 
@@ -96,8 +99,11 @@ class CanvasAccent {
 
     attach() {
         window.addEventListener('resize', this.handleResize);
-        this.container.addEventListener('mousemove', this.handleMouseMove);
-        this.container.addEventListener('mouseleave', this.handleMouseLeave);
+        this.container.addEventListener('pointermove', this.handlePointerMove);
+        this.container.addEventListener('pointerleave', this.handlePointerLeave);
+        this.container.addEventListener('pointercancel', this.handlePointerLeave);
+        this.container.addEventListener('pointerdown', this.handlePointerDown);
+        this.container.addEventListener('pointerup', this.handlePointerUp);
 
         this.offs.push(
             bus.on('brace:charged', (event) => {
@@ -128,8 +134,11 @@ class CanvasAccent {
         this.destroyed = true;
 
         window.removeEventListener('resize', this.handleResize);
-        this.container.removeEventListener('mousemove', this.handleMouseMove);
-        this.container.removeEventListener('mouseleave', this.handleMouseLeave);
+        this.container.removeEventListener('pointermove', this.handlePointerMove);
+        this.container.removeEventListener('pointerleave', this.handlePointerLeave);
+        this.container.removeEventListener('pointercancel', this.handlePointerLeave);
+        this.container.removeEventListener('pointerdown', this.handlePointerDown);
+        this.container.removeEventListener('pointerup', this.handlePointerUp);
 
         this.offs.forEach((off) => {
             try {
@@ -148,6 +157,11 @@ class CanvasAccent {
         if (this.resizeTimeout) {
             clearTimeout(this.resizeTimeout);
             this.resizeTimeout = 0;
+        }
+
+        if (this.pointerBurstTimeout) {
+            clearTimeout(this.pointerBurstTimeout);
+            this.pointerBurstTimeout = 0;
         }
 
         if (this.rafId) {
@@ -190,16 +204,33 @@ class CanvasAccent {
         }, 100);
     }
 
-    handleMouseMove(event) {
+    handlePointerMove(event) {
         if (this.destroyed) return;
         const rect = this.container.getBoundingClientRect();
         this.mouse.x = event.clientX - rect.left;
         this.mouse.y = event.clientY - rect.top;
     }
 
-    handleMouseLeave() {
+    handlePointerLeave() {
         this.mouse.x = -1000;
         this.mouse.y = -1000;
+        this.charge = 0;
+    }
+
+    handlePointerDown(event) {
+        this.handlePointerMove(event);
+        this.charge = Math.max(this.charge, 0.18);
+        this.burstFactor = Math.max(this.burstFactor, 0.24);
+        clearTimeout(this.pointerBurstTimeout);
+        this.pointerBurstTimeout = window.setTimeout(() => {
+            if (!this.destroyed) this.burstFactor = 0;
+            this.pointerBurstTimeout = 0;
+        }, 220);
+    }
+
+    handlePointerUp(event) {
+        this.handlePointerMove(event);
+        this.charge = 0;
     }
 
     resize() {

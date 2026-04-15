@@ -1008,6 +1008,45 @@ const REGION_DEFS = [
 
 const ENHANCEMENT_DEFS = [
   {
+    id: 'svg-filters',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.spw-svg-figure, .image-study, [data-spw-image-surface]',
+    rootMode: 'single',
+    load: () => import('./spw-svg-filters.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwSvgFilters;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'canvas-accents',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-accent]',
+    rootMode: 'single',
+    load: () => import('./spw-canvas-accents.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwCanvasAccents;
+      if (!isFn(fn)) return;
+      return fn(document.querySelector('main') || document);
+    },
+  },
+  {
+    id: 'image-metaphysics',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.image-study, .spw-svg-figure, [data-spw-image-surface], .domain-visual, .spw-scaffold',
+    rootMode: 'single',
+    load: () => import('./spw-image-metaphysics.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwImageMetaphysics;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'logo-runtime',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

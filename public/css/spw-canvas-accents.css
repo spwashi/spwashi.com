@@ -18,6 +18,10 @@
     --canvas-blend: multiply;
 }
 
+:where(.spw-accent-host[data-spw-image-prominence="hero"]) {
+    --canvas-opacity: 0.72;
+}
+
 :where(.spw-accent-host canvas) {
     position: absolute;
     inset: 0;
@@ -40,6 +44,10 @@
    but we add a CSS transition for smooth opacity swelling. */
 :where(.spw-accent-host:hover canvas, .spw-accent-host:focus-within canvas) {
     opacity: calc(var(--canvas-opacity) + 0.2);
+}
+
+:where(.spw-accent-host[data-spw-salience-state="active"] canvas) {
+    opacity: calc(var(--canvas-opacity) + 0.12);
 }
 
 /* ─── Wave / Vortex / Crystal Accent Variants ───────────────────────────── */

@@ -18,6 +18,7 @@ import {
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
 const HOLD_DURATION_MS = 480;
+const DRAG_CANCEL_DISTANCE_PX = 12;
 const HOST_SELECTOR = [
     '.spw-scaffold',
     '.image-study',
@@ -26,6 +27,27 @@ const HOST_SELECTOR = [
     '[data-spw-image-surface]'
 ].join(', ');
 const EFFECT_SEQUENCE = ['semantic', 'pixelize', 'watercolor', 'clarify'];
+const RESONANCE_BY_SUBSTRATE = Object.freeze({
+    frame: 'teal',
+    action: 'teal',
+    surface: 'teal',
+    object: 'amber',
+    pragma: 'amber',
+    probe: 'violet',
+    merge: 'violet',
+    topic: 'sea',
+    ref: 'blue',
+    baseline: 'ink'
+});
+const PALETTE_BY_RESONANCE = Object.freeze({
+    amber: 'warm',
+    rust: 'warm',
+    teal: 'cool',
+    sea: 'cool',
+    blue: 'cool',
+    violet: 'cool',
+    ink: 'cool'
+});
 
 const safeParse = (value, fallback) => {
     try {
@@ -42,6 +64,7 @@ const writeVisitedMap = (map) => {
 };
 
 const getMedium = (host) => (host.querySelector('svg') ? 'vector' : 'raster');
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 const normalizeKey = (value) => {
     try {
@@ -91,6 +114,76 @@ function getSemanticContext(host) {
             || semanticHost?.dataset.spwPhrase
             || (medium === 'vector' ? 'guide' : 'artifact')
     };
+}
+
+function getProminence(host) {
+    if (host.dataset.spwImageProminence) return host.dataset.spwImageProminence;
+    if (host.closest('.site-hero')) return 'hero';
+    if (host.matches('.topic-photo-card, .image-study, .domain-visual')) return 'feature';
+    return 'study';
+}
+
+function getResonance(host, context, prominence) {
+    if (host.dataset.spwImageResonance) return host.dataset.spwImageResonance;
+    if (prominence === 'hero' && context.substrate === 'surface') return 'teal';
+    return RESONANCE_BY_SUBSTRATE[context.substrate] || 'ink';
+}
+
+function readPointerGeometry(host, point = null) {
+    const rect = host.getBoundingClientRect();
+    const fallbackX = rect.left + rect.width / 2;
+    const fallbackY = rect.top + rect.height / 2;
+    const clientX = typeof point?.clientX === 'number' ? point.clientX : fallbackX;
+    const clientY = typeof point?.clientY === 'number' ? point.clientY : fallbackY;
+
+    return {
+        xNorm: rect.width ? clamp((clientX - rect.left) / rect.width, 0, 1) : 0.5,
+        yNorm: rect.height ? clamp((clientY - rect.top) / rect.height, 0, 1) : 0.5
+    };
+}
+
+function applyPointerState(host, point = null, { pointerDown = false, dragging = false, dragDistance = 0 } = {}) {
+    const { xNorm, yNorm } = readPointerGeometry(host, point);
+    const prominence = host.dataset.spwImageProminence || 'study';
+    const prominenceScale = prominence === 'hero'
+        ? 1
+        : (prominence === 'feature' ? 0.8 : 0.62);
+    const centerDistance = Math.min(1, Math.hypot(xNorm - 0.5, yNorm - 0.5) * 1.8);
+    const dragBoost = pointerDown ? clamp(dragDistance / 54, 0, 1) : 0;
+    const gestureBoost = dragging ? 1 : (pointerDown ? 0.72 : 0.46);
+    const energy = clamp(
+        (0.18 + centerDistance * 0.48 + dragBoost * 0.34) * prominenceScale * gestureBoost,
+        0,
+        prominence === 'hero' ? 1 : 0.8
+    );
+    const tiltX = (0.5 - yNorm) * (pointerDown ? 12 : 7.5) * prominenceScale;
+    const tiltY = (xNorm - 0.5) * (pointerDown ? 14 : 8.5) * prominenceScale;
+    const driftX = (xNorm - 0.5) * (pointerDown ? 18 : 10) * prominenceScale;
+    const driftY = (yNorm - 0.5) * (pointerDown ? 12 : 7) * prominenceScale;
+
+    host.style.setProperty('--spw-image-focus-x', `${(xNorm * 100).toFixed(2)}%`);
+    host.style.setProperty('--spw-image-focus-y', `${(yNorm * 100).toFixed(2)}%`);
+    host.style.setProperty('--spw-image-tilt-x', `${tiltX.toFixed(2)}deg`);
+    host.style.setProperty('--spw-image-tilt-y', `${tiltY.toFixed(2)}deg`);
+    host.style.setProperty('--spw-image-drift-x', `${driftX.toFixed(2)}px`);
+    host.style.setProperty('--spw-image-drift-y', `${driftY.toFixed(2)}px`);
+    host.style.setProperty('--spw-image-energy', energy.toFixed(3));
+    host.dataset.spwImageGesture = dragging ? 'drag' : (pointerDown ? 'hold' : 'hover');
+}
+
+function resetPointerState(host, { preservePreview = false } = {}) {
+    host.style.setProperty('--spw-image-focus-x', '50%');
+    host.style.setProperty('--spw-image-focus-y', '42%');
+    host.style.setProperty('--spw-image-tilt-x', '0deg');
+    host.style.setProperty('--spw-image-tilt-y', '0deg');
+    host.style.setProperty('--spw-image-drift-x', '0px');
+    host.style.setProperty('--spw-image-drift-y', '0px');
+    host.style.setProperty('--spw-image-energy', '0');
+    delete host.dataset.spwImageGesture;
+
+    if (!preservePreview) {
+        delete host.dataset.spwImagePreview;
+    }
 }
 
 function resolveSemanticEffect(context, override) {
@@ -186,6 +279,8 @@ function syncHost(host) {
     const context = getSemanticContext(host);
     const key = getSurfaceKey(host);
     const visited = Boolean(readVisitedMap()[key]);
+    const prominence = getProminence(host);
+    const resonance = getResonance(host, context, prominence);
 
     host.classList.add('spw-metaphysics-host');
     host.dataset.spwImageManaged = 'true';
@@ -195,11 +290,17 @@ function syncHost(host) {
     host.dataset.spwRealization = context.realization;
     host.dataset.spwSubstrate = context.substrate;
     host.dataset.spwPhrase = context.phrase;
+    host.dataset.spwImageProminence = prominence;
+    host.dataset.spwImageResonance = resonance;
     host.dataset.spwVisited = visited ? 'true' : 'false';
     host.dataset.spwImageEffect = resolveSemanticEffect(
         context,
         host.dataset.spwImageEffectOverride || 'semantic'
     );
+
+    if (host.dataset.spwAccent && !host.dataset.spwAccentPalette) {
+        host.dataset.spwAccentPalette = PALETTE_BY_RESONANCE[resonance] || 'cool';
+    }
 
     updateHelper(host, context, visited);
 }
@@ -232,6 +333,9 @@ function markVisited(host) {
 function registerHoldGesture(host) {
     let timer = null;
     let activated = false;
+    let pointerStart = null;
+    let activePointerId = null;
+    let dragging = false;
 
     const clearTimer = () => {
         if (timer) {
@@ -240,26 +344,44 @@ function registerHoldGesture(host) {
         }
     };
 
-    const finish = () => {
+    const finish = ({ emitReleased = false } = {}) => {
         clearTimer();
-        if (!activated) {
+        const wasActivated = activated;
+        activated = false;
+        pointerStart = null;
+        activePointerId = null;
+        dragging = false;
+
+        if (!wasActivated) {
             delete host.dataset.spwHoldState;
-            dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.RELEASED);
+            if (emitReleased) {
+                dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.RELEASED);
+            }
+            resetPointerState(host, { preservePreview: host.matches(':hover') || host.matches(':focus-within') });
             return;
         }
 
         host.dataset.spwHoldState = 'visited';
         dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.VISITED);
-        activated = false;
+        resetPointerState(host, { preservePreview: true });
     };
 
     const start = (event) => {
         if (event.target.closest('.spw-image-helper-strip')) return;
         if (event.button !== undefined && event.button !== 0) return;
+        if (event.isPrimary === false) return;
 
         activated = false;
+        dragging = false;
+        pointerStart = {
+            x: typeof event.clientX === 'number' ? event.clientX : null,
+            y: typeof event.clientY === 'number' ? event.clientY : null
+        };
+        activePointerId = typeof event.pointerId === 'number' ? event.pointerId : null;
         clearTimer();
         host.dataset.spwHoldState = 'arming';
+        host.dataset.spwImagePreview = 'on';
+        applyPointerState(host, event, { pointerDown: true, dragging: false, dragDistance: 0 });
         dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.ARMING);
         timer = window.setTimeout(() => {
             activated = true;
@@ -267,23 +389,55 @@ function registerHoldGesture(host) {
         }, HOLD_DURATION_MS);
     };
 
-    host.addEventListener('pointerdown', start);
-    host.addEventListener('pointerup', finish);
-    host.addEventListener('pointerleave', finish);
-    host.addEventListener('pointercancel', finish);
+    const move = (event) => {
+        if (activePointerId !== null && event.pointerId !== undefined && event.pointerId !== activePointerId) {
+            return;
+        }
 
-    host.addEventListener('mouseenter', () => {
         host.dataset.spwImagePreview = 'on';
+
+        let dragDistance = 0;
+        const pointerDown = Boolean(pointerStart?.x !== null && pointerStart?.y !== null);
+        if (pointerDown && typeof event.clientX === 'number' && typeof event.clientY === 'number') {
+            dragDistance = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
+        }
+
+        if (timer && dragDistance > DRAG_CANCEL_DISTANCE_PX) {
+            clearTimer();
+            delete host.dataset.spwHoldState;
+            dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.RELEASED);
+        }
+
+        dragging = pointerDown && dragDistance > DRAG_CANCEL_DISTANCE_PX * 1.35;
+        applyPointerState(host, event, { pointerDown, dragging, dragDistance });
+    };
+
+    host.addEventListener('pointerdown', start);
+    host.addEventListener('pointermove', move);
+    host.addEventListener('pointerup', () => {
+        finish({ emitReleased: true });
     });
-    host.addEventListener('mouseleave', () => {
-        delete host.dataset.spwImagePreview;
+    host.addEventListener('pointerleave', () => {
+        if (pointerStart) {
+            finish({ emitReleased: true });
+            return;
+        }
+        resetPointerState(host);
+    });
+    host.addEventListener('pointercancel', () => {
+        finish({ emitReleased: true });
+    });
+
+    host.addEventListener('pointerenter', () => {
+        host.dataset.spwImagePreview = 'on';
     });
     host.addEventListener('focusin', () => {
         host.dataset.spwImagePreview = 'on';
+        applyPointerState(host);
     });
     host.addEventListener('focusout', () => {
-        delete host.dataset.spwImagePreview;
-        finish();
+        finish({ emitReleased: true });
+        resetPointerState(host);
     });
 
     if (!host.hasAttribute('tabindex')) {
@@ -300,7 +454,7 @@ function registerHoldGesture(host) {
     host.addEventListener('keyup', (event) => {
         if (event.code !== 'Space' && event.code !== 'Enter') return;
         event.preventDefault();
-        finish();
+        finish({ emitReleased: true });
     });
 }
 
@@ -312,6 +466,7 @@ function isEligibleHost(host) {
 
 function mountHost(host) {
     ensureHelper(host);
+    resetPointerState(host, { preservePreview: true });
     registerHoldGesture(host);
     host.addEventListener(IMAGE_REFRESH_EVENT, () => {
         syncHost(host);

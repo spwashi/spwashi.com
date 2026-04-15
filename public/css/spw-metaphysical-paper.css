@@ -8,18 +8,61 @@
  */
 
 .spw-metaphysics-host {
-  --spw-image-accent: var(--spw-substrate-color, var(--teal));
+  --spw-image-accent: var(--teal);
   --spw-image-paper:
     color-mix(in srgb, var(--spw-image-accent) 7%, rgba(255, 248, 236, 0.92));
   --spw-image-line:
     color-mix(in srgb, var(--spw-image-accent) 18%, rgba(17, 18, 20, 0.14));
   --spw-image-glow:
     color-mix(in srgb, var(--spw-image-accent) 28%, rgba(255, 208, 131, 0.22));
+  --spw-image-focus-x: 50%;
+  --spw-image-focus-y: 42%;
+  --spw-image-tilt-x: 0deg;
+  --spw-image-tilt-y: 0deg;
+  --spw-image-drift-x: 0px;
+  --spw-image-drift-y: 0px;
+  --spw-image-energy: 0;
+  --spw-image-scale: 1;
 
   position: relative;
   isolation: isolate;
-  cursor: pointer;
+  cursor: grab;
   outline: none;
+  touch-action: manipulation;
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="amber"] {
+  --spw-image-accent: var(--op-object-color, #c68a22);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="violet"] {
+  --spw-image-accent: var(--op-probe-color, #6a3fb8);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="sea"] {
+  --spw-image-accent: var(--op-topic-color, #2a8c76);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="blue"] {
+  --spw-image-accent: var(--op-ref-color, #1d57a3);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="ink"] {
+  --spw-image-accent: color-mix(in srgb, var(--ink, #1f2423) 78%, var(--teal));
+}
+
+.spw-metaphysics-host[data-spw-image-gesture="drag"],
+.spw-metaphysics-host[data-spw-hold-state="arming"] {
+  cursor: grabbing;
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"] {
+  touch-action: pan-y pinch-zoom;
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"] .spw-image-helper-strip {
+  top: 0.8rem;
+  right: 0.8rem;
 }
 
 .spw-metaphysics-host:focus-visible {
@@ -38,16 +81,30 @@
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  opacity: 0.68;
+  opacity: calc(0.54 + (var(--spw-image-energy) * 0.32));
   mix-blend-mode: screen;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.14), transparent 38%),
-    radial-gradient(circle at top left, rgba(255, 243, 215, 0.12), transparent 44%);
+    radial-gradient(
+      circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 243, 215, 0.14)),
+      transparent 44%
+    );
+  transition:
+    opacity var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    background var(--duration-base, 200ms) var(--ease-mechanical, ease);
 }
 
 :where(.spw-metaphysics-host img, .spw-metaphysics-host svg) {
   position: relative;
   z-index: 0;
+  transform-origin: var(--spw-image-focus-x) var(--spw-image-focus-y);
+  transform:
+    perspective(1200px)
+    translate3d(var(--spw-image-drift-x), var(--spw-image-drift-y), 0)
+    rotateX(var(--spw-image-tilt-x))
+    rotateY(var(--spw-image-tilt-y))
+    scale(var(--spw-image-scale));
   transition:
     filter var(--duration-base, 200ms) var(--ease-mechanical, ease),
     transform var(--duration-base, 200ms) var(--ease-mechanical, ease),
@@ -70,7 +127,7 @@
   .spw-metaphysics-host:focus-within img,
   .spw-metaphysics-host:focus-within svg
 ) {
-  transform: scale(1.008);
+  --spw-image-scale: 1.008;
 }
 
 .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"] img {
@@ -79,7 +136,7 @@
 }
 
 .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"][data-spw-image-preview="on"] img {
-  transform: scale(1.014);
+  --spw-image-scale: 1.014;
   filter: saturate(0.9) contrast(1.16) brightness(1.03);
 }
 
@@ -94,7 +151,7 @@
   .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-image-preview="on"] img,
   .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-image-preview="on"] svg
 ) {
-  transform: scale(1.012);
+  --spw-image-scale: 1.012;
 }
 
 :where(
@@ -178,6 +235,21 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
     0 0 22px var(--spw-image-glow);
 }
 
+.spw-metaphysics-host[data-spw-image-prominence="hero"] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 12px 30px color-mix(in srgb, var(--spw-image-accent) 10%, rgba(0, 0, 0, 0.12));
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-image-preview="on"],
+.spw-metaphysics-host[data-spw-image-prominence="hero"]:focus-within,
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-image-gesture="drag"],
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-salience-state="active"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 20%, transparent),
+    0 16px 36px color-mix(in srgb, var(--spw-image-accent) 16%, rgba(0, 0, 0, 0.16));
+}
+
 .spw-metaphysics-host[data-spw-visited="true"]::after {
   opacity: 0.94;
   background:
@@ -198,6 +270,14 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
   .spw-metaphysics-host[data-spw-visited="true"] svg
 ) {
   box-shadow: 0 0 24px color-mix(in srgb, var(--spw-image-accent) 14%, transparent);
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-gesture="drag"] img,
+  .spw-metaphysics-host[data-spw-image-gesture="drag"] svg
+) {
+  --spw-image-scale: 1.018;
+  box-shadow: 0 14px 36px color-mix(in srgb, var(--spw-image-accent) 18%, transparent);
 }
 
 .spw-metaphysics-host[data-spw-hold-state="arming"] {
@@ -259,6 +339,24 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
       0 0 22px var(--spw-image-glow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-metaphysics-host {
+    touch-action: auto;
+  }
+
+  :where(.spw-metaphysics-host img, .spw-metaphysics-host svg) {
+    transform: none;
+    transition:
+      filter var(--duration-base, 200ms) var(--ease-mechanical, ease),
+      opacity var(--duration-base, 200ms) var(--ease-mechanical, ease),
+      box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease);
+  }
+
+  .spw-metaphysics-host::after {
+    opacity: 0.56;
   }
 }
 
