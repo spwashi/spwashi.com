@@ -133,7 +133,7 @@
                 </div>
                 <p class="spec-kicker">Math / Pure Structure</p>
                 <h1>Field theory studies arithmetic habitats where division behaves cleanly.</h1>
-                <p>The first intuitive move in field theory is to stop hearing “field” as an empty abstraction and start hearing it as an environment. In a field, addition and multiplication interact coherently, subtraction is always available, and every nonzero element has a multiplicative inverse. Once that habitat is stable, you can ask how fields grow, nest, and preserve structure.</p>
+                <p>The first intuitive move in field theory is to stop hearing “field” as an empty abstraction and start hearing it as an environment. In a field, addition and multiplication interact coherently, subtraction is always available, and every nonzero element has a multiplicative inverse. Once that habitat is stable, you can ask how fields grow, nest, and preserve structure. The quickest neighboring routes are the <a href="/topics/math/number-theory/#modular-clock">number-theory clock</a> and <a href="/topics/math/category-theory/#category-insight">category insight</a>.</p>
                 <nav class="frame-operators" aria-label="Field theory routes">
                     <a class="operator-chip" href="#field-theory-intuition">intuition first</a>
                     <a class="operator-chip" href="#prime-fields">prime fields</a>
@@ -159,8 +159,8 @@
                     <a class="frame-sigil" href="#field-theory-intuition">.intuition_first</a>
                     <h2>Intuition First</h2>
                 </div>
-                <p class="frame-note">The rationals are a familiar field. You can add, subtract, multiply, and divide by any nonzero rational and stay inside the same habitat. The integers are not a field because division leaks outside the system. This contrast is the simplest way to feel why field theory cares so much about inverses.</p>
-                <p class="frame-note">Finite fields arrive through number theory. Arithmetic modulo a prime p behaves cleanly because every nonzero residue has a multiplicative inverse. Modulo a composite number, that clean behavior can fail. That is why prime moduli are a recurring threshold.</p>
+                <p class="frame-note">The rationals are a familiar field. You can add, subtract, multiply, and divide by any nonzero rational and stay inside the same habitat. The integers are not a field because division leaks outside the system. This contrast is the simplest way to feel why field theory cares so much about inverses, and it sets up the <a href="#prime-fields">prime-field comparison</a> below.</p>
+                <p class="frame-note">Finite fields arrive through number theory. Arithmetic modulo a prime p behaves cleanly because every nonzero residue has a multiplicative inverse. Modulo a composite number, that clean behavior can fail. That is why prime moduli are a recurring threshold, and the <a href="/topics/math/number-theory/#modular-clock">modular clock</a> makes that threshold easier to see before the formal language arrives.</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
                         <h3>Field feeling</h3>
@@ -185,7 +185,7 @@
                     <a class="frame-sigil" href="#prime-fields">^"prime_fields"{</a>
                     <h2>Prime Fields</h2>
                 </div>
-                <p class="frame-note">A quick visual way to compare modular systems is to ask whether every nonzero residue can be paired with an inverse. Prime moduli say yes. Composite moduli can fail because zero divisors get in the way.</p>
+                <p class="frame-note">A quick visual way to compare modular systems is to ask whether every nonzero residue can be paired with an inverse. Prime moduli say yes. Composite moduli can fail because zero divisors get in the way. This is the short bridge back to <a href="/topics/math/number-theory/#modular-clock">number theory</a> and forward to <a href="/topics/math/category-theory/#category-insight">structure-preserving maps</a>.</p>
                 <figure class="spw-svg-figure">
                     <svg viewBox="0 0 720 320" role="img" aria-labelledby="prime-fields-title prime-fields-desc">
                         <title id="prime-fields-title">Prime fields versus composite modulus</title>
@@ -222,7 +222,7 @@
                     <a class="frame-sigil" href="#field-extensions">~"field_extensions"</a>
                     <h2>Field Extensions</h2>
                 </div>
-                <p class="frame-note">Extensions are what happen when the current field is too small for the arithmetic you want to do. Adjoining a new element changes the habitat while preserving a disciplined relationship to the smaller field inside it.</p>
+                <p class="frame-note">Extensions are what happen when the current field is too small for the arithmetic you want to do. Adjoining a new element changes the habitat while preserving a disciplined relationship to the smaller field inside it. That preserved relationship is why this section sits so naturally next to <a href="/topics/math/category-theory/#category-insight">category theory</a> and even the <a href="/topics/software/parsers/#parser-map">parser story about normalization</a>.</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
                         <h3>From Q to Q(√2)</h3>

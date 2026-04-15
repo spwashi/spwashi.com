@@ -134,7 +134,7 @@
                 </div>
                 <p class="spec-kicker">Math / Pure Structure</p>
                 <h1>Number theory is arithmetic that remembers structure.</h1>
-                <p>Addition and multiplication look familiar in number theory, but familiar operations start leaving visible fingerprints: divisibility, remainders, prime factorization, and cyclic repetition. The field is deep because the integers are simple enough to doodle and stubborn enough to keep surprising you.</p>
+                <p>Addition and multiplication look familiar in number theory, but familiar operations start leaving visible fingerprints: divisibility, remainders, prime factorization, and cyclic repetition. The field is deep because the integers are simple enough to doodle and stubborn enough to keep surprising you. If you want the nearest algebraic continuation, go next to <a href="/topics/math/field-theory/#prime-fields">field theory</a>; if you want the software-facing echo, go to <a href="/topics/software/parsers/#parser-doodles">parsers</a>.</p>
                 <nav class="frame-operators" aria-label="Number theory routes">
                     <a class="operator-chip" href="#number-theory-intuition">intuition first</a>
                     <a class="operator-chip" href="#modular-clock">modular clock</a>
@@ -160,8 +160,8 @@
                     <a class="frame-sigil" href="#number-theory-intuition">.intuition_first</a>
                     <h2>Intuition First</h2>
                 </div>
-                <p class="frame-note">A good first feeling for number theory is that integers carry more memory than real-number arithmetic suggests. Ask whether one number divides another, or what remains after division, and suddenly arithmetic stops being smooth and starts forming textures: periodicity, factor families, prime bottlenecks, and repeating cycles.</p>
-                <p class="frame-note">This is why clocks are such a useful entry point. A clock throws away full turns and remembers only the residue class. That small act of forgetting is mathematically productive. It lets you see congruence as a pattern language: two numbers can be different in the usual sense and still be the same from the perspective of a chosen modulus.</p>
+                <p class="frame-note">A good first feeling for number theory is that integers carry more memory than real-number arithmetic suggests. Ask whether one number divides another, or what remains after division, and suddenly arithmetic stops being smooth and starts forming textures: periodicity, factor families, prime bottlenecks, and repeating cycles. The <a href="#divisibility-handles">divisibility handles</a> below turn that feeling into a few reusable ideas.</p>
+                <p class="frame-note">This is why clocks are such a useful entry point. A clock throws away full turns and remembers only the residue class. That small act of forgetting is mathematically productive. It lets you see congruence as a pattern language: two numbers can be different in the usual sense and still be the same from the perspective of a chosen modulus, which is exactly the move that prepares you for <a href="/topics/math/field-theory/#prime-fields">prime fields</a>.</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
                         <h3>Prime numbers</h3>
@@ -186,7 +186,7 @@
                     <a class="frame-sigil" href="#modular-clock">^"modular_clock"{</a>
                     <h2>Portable Diagram: Multiplication On A Clock</h2>
                 </div>
-                <p class="frame-note">This SVG diagram maps each residue i to k × i (mod n). When the modulus is prime, the nonzero residues behave more cleanly; when the modulus shares factors with the multiplier, the pattern folds inward and exposes divisibility.</p>
+                <p class="frame-note">This SVG diagram maps each residue i to k × i (mod n). When the modulus is prime, the nonzero residues behave more cleanly; when the modulus shares factors with the multiplier, the pattern folds inward and exposes divisibility. That contrast is the bridge into <a href="/topics/math/field-theory/#prime-fields">field theory</a> and a useful analogy for <a href="/topics/software/parsers/#parser-memory">parser equivalence classes</a>.</p>
                 <div class="math-interactive-lab" data-math-visual="mod-clock">
                     <div class="math-diagram-controls">
                         <label class="math-control">

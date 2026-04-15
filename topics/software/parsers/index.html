@@ -135,8 +135,8 @@
                 </div>
                 <p class="spec-kicker">Software / Language Structure</p>
                 <h1>Parsers are where language dreams start paying rent.</h1>
-                <p>A parser is the moment a syntax stops being only a doodle in the margin and starts acquiring obligations. Raw text has to become tokens, trees, reusable library objects, and eventually runtime memory that can survive inspection, projection, and editing. That is why parser work feels so close to language design: every grammatical idea eventually has to choose a shape.</p>
-                <p>This route is tuned for bespoke parser thinking around Spw. The emphasis is not only on textbook parsing techniques, but on the reflective loop between <strong>syntax development</strong>, <strong>library formalization</strong>, and <strong>memory management</strong>. Those are the three pressures that make parser doodles become an actual system.</p>
+                <p>A parser is the moment a syntax stops being only a doodle in the margin and starts acquiring obligations. Raw text has to become tokens, trees, reusable library objects, and eventually runtime memory that can survive inspection, projection, and editing. That is why parser work feels so close to <a href="/topics/software/spw/">language design</a>: every grammatical idea eventually has to choose a shape.</p>
+                <p>This route is tuned for bespoke parser thinking around Spw. The emphasis is not only on textbook parsing techniques, but on the reflective loop between <strong><a href="#parser-lenses">syntax development</a></strong>, <strong><a href="#parser-map">library formalization</a></strong>, and <strong><a href="#parser-memory">memory management</a></strong>. Those are the three pressures that make parser doodles become an actual system, and they connect directly to <a href="/topics/math/complexity/#parser-budgets">complexity</a> and <a href="/topics/math/category-theory/#category-insight">category theory</a>.</p>
                 <nav class="frame-operators" aria-label="Parser routes">
                     <a class="operator-chip" href="#parser-doodles">doodle loop</a>
                     <a class="operator-chip" href="#parser-map">parser map</a>
@@ -165,19 +165,19 @@
                     <a class="frame-sigil" href="#parser-doodles">.doodle_loop</a>
                     <h2>Parser Doodles</h2>
                 </div>
-                <p class="inline-note">A bespoke parser often begins as a private sketch: “what if these marks meant this?” The interesting part comes next, when the sketch has to stabilize enough that libraries, editors, and projections can agree about the same structure.</p>
+                <p class="inline-note">A bespoke parser often begins as a private sketch: “what if these marks meant this?” The interesting part comes next, when the sketch has to stabilize enough that libraries, editors, and projections can agree about the same structure. If you want the formal vocabulary for that agreement, the nearby <a href="/topics/math/category-theory/#commuting-square">commuting square</a> is a good companion.</p>
                 <div class="spec-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_parsers__panel_1">
                         <h3>Syntax development</h3>
-                        <p>Parser work feeds syntax design back to itself. As soon as a notation is hard to tokenize, ambiguous to group, or awkward to recover from, the notation starts telling you something about its own affordances.</p>
+                        <p>Parser work feeds syntax design back to itself. As soon as a notation is hard to tokenize, ambiguous to group, or awkward to recover from, the notation starts telling you something about its own affordances, which is why this page sits so close to the <a href="/topics/software/spw/">Spw operator atlas</a>.</p>
                     </div>
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_parsers__panel_2">
                         <h3>Library formalization</h3>
-                        <p>A parser is not done when it produces a tree. The tree has to become an object model or library surface with names, invariants, and reusable transforms. That is where informal structure becomes a durable contract.</p>
+                        <p>A parser is not done when it produces a tree. The tree has to become an object model or library surface with names, invariants, and reusable transforms. That is where informal structure becomes a durable contract, and where <a href="/topics/math/category-theory/#category-insight">structure-preserving maps</a> become a practical concern instead of a distant abstraction.</p>
                     </div>
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_parsers__panel_3">
                         <h3>Memory management</h3>
-                        <p>Every parse decision has a memory shadow: retained token streams, CST nodes kept for error recovery, AST normalization passes, caches, arenas, and references held for tooling. Memory policy is part of the language design, not an afterthought.</p>
+                        <p>Every parse decision has a memory shadow: retained token streams, CST nodes kept for error recovery, AST normalization passes, caches, arenas, and references held for tooling. Memory policy is part of the language design, not an afterthought, which is why <a href="/topics/math/complexity/#parser-budgets">parser budgets</a> show up so quickly.</p>
                     </div>
                 </div>
             </section>
@@ -187,7 +187,7 @@
                     <a class="frame-sigil" href="#parser-map">^"parser_map"{</a>
                     <h2>Portable Diagram: From Marks To Memory</h2>
                 </div>
-                <p class="frame-note">This is the parser pipeline as a structural story. Characters become tokens. Tokens become a concrete syntax tree that still remembers punctuation and local grouping. That tree can be normalized into an AST or library layer. Eventually the objects you keep, discard, intern, or cache become part of the runtime memory strategy.</p>
+                <p class="frame-note">This is the parser pipeline as a structural story. Characters become tokens. Tokens become a concrete syntax tree that still remembers punctuation and local grouping. That tree can be normalized into an AST or library layer. Eventually the objects you keep, discard, intern, or cache become part of the runtime memory strategy. Read it alongside the <a href="/topics/math/category-theory/#commuting-square">commuting square</a> if you want a more compositional lens, or the <a href="/topics/math/complexity/#parser-budgets">complexity page</a> if you want the cost model.</p>
                 <figure class="spw-svg-figure">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 980 340" role="img" aria-labelledby="parser-map-title parser-map-desc">
                         <title id="parser-map-title">Parser map from characters to memory</title>
@@ -249,13 +249,13 @@
                 <h2>The Same Parser Looks Different Depending On The Pressure</h2>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="parser-lens" data-mode-panel="syntax">
-                        <p>In syntax-development mode, the parser is a question-asking instrument. Which punctuation patterns are local enough to read? Which operators can be recovered without making the grammar brittle? Where should the concrete syntax preserve authorial surface detail instead of erasing it too early?</p>
+                        <p>In syntax-development mode, the parser is a question-asking instrument. Which punctuation patterns are local enough to read? Which operators can be recovered without making the grammar brittle? Where should the concrete syntax preserve authorial surface detail instead of erasing it too early? The <a href="/topics/software/spw/">operator atlas</a> is the sibling route for that question.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="parser-lens" data-mode-panel="library" hidden>
-                        <p>In library-formalization mode, the parser is a contract factory. Trees must become typed objects, named regions, or reusable records that downstream tools can trust. This is where category-style “same shape under transformation” thinking starts becoming useful.</p>
+                        <p>In library-formalization mode, the parser is a contract factory. Trees must become typed objects, named regions, or reusable records that downstream tools can trust. This is where category-style “same shape under transformation” thinking starts becoming useful, especially if you read it next to <a href="/topics/math/category-theory/#category-insight">category insight</a>.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="parser-lens" data-mode-panel="memory" hidden>
-                        <p>In memory mode, the parser is an allocator and a retention policy. You decide which spans stay alive for diagnostics, which subtrees can be interned, where memo tables buy time, and how much duplication the system can afford before the elegant syntax starts costing too much.</p>
+                        <p>In memory mode, the parser is an allocator and a retention policy. You decide which spans stay alive for diagnostics, which subtrees can be interned, where memo tables buy time, and how much duplication the system can afford before the elegant syntax starts costing too much. The closest theory neighbor here is <a href="/topics/math/complexity/#parser-budgets">complexity</a>.</p>
                     </section>
                 </div>
                 <nav class="frame-operators" aria-label="Parser theory links">
@@ -271,7 +271,7 @@
                     <a class="frame-sigil" href="#parser-memory">~"memory_handles"</a>
                     <h2>Memory Handles</h2>
                 </div>
-                <p class="frame-note">Memory questions are usually where parser ambitions become concrete. Keeping everything makes tooling richer and costs more. Forgetting aggressively keeps parsing lean and can make repair, diagnostics, and projection worse. A useful parser design learns which traces deserve to survive.</p>
+                <p class="frame-note">Memory questions are usually where parser ambitions become concrete. Keeping everything makes tooling richer and costs more. Forgetting aggressively keeps parsing lean and can make repair, diagnostics, and projection worse. A useful parser design learns which traces deserve to survive, and that balancing act is exactly what the <a href="/topics/math/complexity/#parser-budgets">parser-budgets section</a> is about.</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
                         <h3>Backtracking</h3>

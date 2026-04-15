@@ -133,7 +133,7 @@
                 <h1>Software</h1>
                 <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                 <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
-                <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the parser field guide, complexity, category theory, and number theory.</p>
+                <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
                     <a class="operator-chip" href="#language-philosophy">language philosophy</a>
                     <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
@@ -204,7 +204,7 @@
                 <h2>Spw Syntax</h2>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source" data-spw-role="orientation">
-                        <p>Spw keeps the file readable while giving tools clearer structure to work with. The source stays visible; LSP servers, clients, and projection tools get named frames, operators, and references they can navigate. This page is the public edge of the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> runtime and design work.</p>
+                        <p>Spw keeps the file readable while giving tools clearer structure to work with. The source stays visible; LSP servers, clients, and projection tools get named frames, operators, and references they can navigate. This page is the public edge of the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> runtime and design work, and the nearby <a href="/topics/software/parsers/#parser-lenses">parser route</a> shows how those structures become concrete.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="syntax" data-spw-role="schema" hidden>
                         <pre><code>#>note
