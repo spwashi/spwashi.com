@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.4';
+const APP_VERSION = '0.3.5';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -33,11 +33,20 @@ const CORE_ROUTES = [
   '/play/rpg-wednesday/cast/',
   '/play/rpg-wednesday/arcs/',
   '/topics/',
+  '/topics/architecture/',
   '/topics/craft/',
   '/topics/craft/fragments/',
   '/topics/craft/svg/',
   '/topics/craft/files/',
+  '/topics/pedagogy/',
+  '/topics/site-design/',
+  '/topics/math/',
   '/topics/software/',
+  '/topics/software/renderers/',
+  '/topics/software/geometry/',
+  '/topics/software/lattices/',
+  '/topics/software/schedulers/',
+  '/topics/software/parsers/',
   '/topics/software/spw/',
   '/topics/software/spw/operators/frame/',
   '/topics/software/spw/operators/layer/',

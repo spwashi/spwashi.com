@@ -164,7 +164,90 @@
 }
 
 /* ==========================================================================
-   3. Pretext lab
+   3. Topic reference and study surfaces
+   ========================================================================== */
+
+:where(.topic-reference-grid, .topic-photo-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--spw-shell-panel-gap);
+}
+
+:where(.topic-reference-card) {
+  display: grid;
+  gap: 0.55rem;
+  min-height: 100%;
+  padding: var(--spw-shell-card-pad);
+  border: 1px solid var(--spw-shell-line);
+  border-radius: var(--shape-surface, 10px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.56));
+  box-shadow: var(--card-shadow);
+}
+
+:where(.topic-reference-card > h3) {
+  margin: 0;
+}
+
+:where(.topic-reference-card > p) {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+:where(.topic-reference-card > a) {
+  color: var(--active-op-color, #008080);
+  font-size: var(--text-size-xs, 0.8rem);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+:where(.topic-reference-card > a:hover, .topic-reference-card > a:focus-visible) {
+  text-decoration: underline;
+}
+
+:where(.topic-photo-card) {
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--spw-shell-line-strong) 46%, var(--spw-shell-line));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 44%),
+    var(--spw-shell-card-bg-strong);
+}
+
+:where(.topic-photo-card img) {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+:where(.topic-photo-card figcaption) {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.95rem 1rem 1.05rem;
+  color: var(--ink-soft);
+}
+
+:where(.topic-photo-card figcaption strong) {
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+:where(.topic-photo-card figcaption a) {
+  color: var(--active-op-color, #008080);
+  font-size: var(--text-size-xs, 0.8rem);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+:where(.topic-photo-card figcaption a:hover, .topic-photo-card figcaption a:focus-visible) {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   4. Pretext lab
    ========================================================================== */
 
 :where([data-spw-features~="pretext-lab"] .pretext-lab-grid,

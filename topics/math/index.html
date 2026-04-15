@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Math: Structure Beneath the Surface</title>
+    <meta name="description" content="Field notes connecting geometry, lattices, rendering, schedulers, and parser-adjacent math for readable systems.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Math: Structure Beneath the Surface"/>
+    <meta property="og:description" content="Field notes connecting geometry, lattices, rendering, schedulers, and parser-adjacent math for readable systems."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Math route on Spwashi connecting geometry, lattices, rendering, and time."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Math: Structure Beneath the Surface"/>
+    <meta name="twitter:description" content="Field notes connecting geometry, lattices, rendering, schedulers, and parser-adjacent math for readable systems."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Math route on Spwashi connecting geometry, lattices, rendering, and time."/>
+    <meta name="keywords" content="math, geometry, lattices, rendering, schedulers, parsers, structure, readable systems, order theory"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Math: Structure Beneath the Surface",
+                "description": "Field notes connecting geometry, lattices, rendering, schedulers, and parser-adjacent math for readable systems.",
+                "url": "https://spwashi.com/topics/math/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "math",
+                        "geometry",
+                        "lattices",
+                        "rendering",
+                        "schedulers",
+                        "parsers",
+                        "order theory"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "math-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "comparison constraint locality"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math" data-spw-page-role="math-register" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math__site_header" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/" data-spw-context-relevance="math geometry lattices rendering schedulers parsers structure">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a aria-current="page" href="/topics/math/">Math</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/topics/site-design/">Site Design</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>structure</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math__main_surface" data-spw-wonder="comparison constraint locality">
+        <article>
+            <section class="site-frame site-hero" id="math-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math__math_hero" data-spw-context-relevance="math geometry lattices rendering schedulers parsers structure" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#math-hero">#&gt;structure_beneath_surface</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">geometry</span>
+                        <span class="spec-pill">order theory</span>
+                        <span class="spec-pill">time</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Structure</p>
+                <h1>Math is the structure under the surface.</h1>
+                <p>This route collects the mathematical neighbors of the site’s design and software work. Some of that math is geometric, like curved space, transforms, and projection. Some is discrete, like lattices, parsers, grammars, and scheduling. The point is not to force everything into one theory. The point is to keep the structural disciplines close enough that they can inform each other.</p>
+                <nav class="frame-operators" aria-label="Math routes">
+                    <a class="operator-chip" href="/topics/software/geometry/">geometry</a>
+                    <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
+                    <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
+                    <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
+                    <a class="operator-chip" href="/topics/software/parsers/">parsers</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="math-map" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math__math_map" data-spw-context-relevance="math geometry lattices rendering schedulers parsers structure" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#math-map">^"math_map"{</a>
+                    <h2>Math Map</h2>
+                </div>
+                <p class="frame-note">These are not separate silos. They are recurring structural lenses that show up in different parts of the site and codebase.</p>
+                <figure class="spw-svg-figure">
+                    <svg viewBox="0 0 700 300" role="img" aria-labelledby="math-map-title math-map-desc">
+                        <title id="math-map-title">Map of math routes around readable systems</title>
+                        <desc id="math-map-desc">A central readable systems node connected to geometry, lattices, renderers, schedulers, and parsers.</desc>
+                        <rect x="24" y="24" width="652" height="252" rx="20" fill="rgba(255,255,255,0.82)" stroke="rgba(0,128,128,0.18)"/>
+                        <g fill="none" stroke="rgba(0,128,128,0.24)" stroke-width="2" stroke-dasharray="6 8">
+                            <path d="M350 150 L162 84"/>
+                            <path d="M350 150 L164 216"/>
+                            <path d="M350 150 L538 84"/>
+                            <path d="M350 150 L538 216"/>
+                            <path d="M350 150 L350 72"/>
+                        </g>
+                        <g stroke-width="2">
+                            <g stroke="var(--op-ref-color, #1d57a3)">
+                                <circle cx="162" cy="84" r="38" fill="rgba(29,87,163,0.08)"/>
+                                <text x="162" y="89" text-anchor="middle" font-size="15" fill="var(--ink)">geometry</text>
+                            </g>
+                            <g stroke="var(--op-object-color, #c68a22)">
+                                <circle cx="164" cy="216" r="38" fill="rgba(198,138,34,0.08)"/>
+                                <text x="164" y="221" text-anchor="middle" font-size="15" fill="var(--ink)">lattices</text>
+                            </g>
+                            <g stroke="var(--op-frame-color, #178282)">
+                                <circle cx="350" cy="72" r="34" fill="rgba(23,130,130,0.08)"/>
+                                <text x="350" y="77" text-anchor="middle" font-size="15" fill="var(--ink)">time</text>
+                            </g>
+                            <g stroke="var(--op-topic-color, #2a8c76)">
+                                <circle cx="538" cy="84" r="38" fill="rgba(42,140,118,0.08)"/>
+                                <text x="538" y="89" text-anchor="middle" font-size="15" fill="var(--ink)">renderers</text>
+                            </g>
+                            <g stroke="var(--op-probe-color, #6a3fb8)">
+                                <circle cx="538" cy="216" r="38" fill="rgba(106,63,184,0.08)"/>
+                                <text x="538" y="221" text-anchor="middle" font-size="15" fill="var(--ink)">parsers</text>
+                            </g>
+                            <g stroke="rgba(22,24,28,0.28)">
+                                <circle cx="350" cy="150" r="54" fill="rgba(255,255,255,0.92)"/>
+                                <text x="350" y="146" text-anchor="middle" font-size="18" fill="var(--ink)">readable</text>
+                                <text x="350" y="167" text-anchor="middle" font-size="18" fill="var(--ink)">systems</text>
+                            </g>
+                        </g>
+                    </svg>
+                    <figcaption class="frame-note">Geometry shapes projection. Lattices shape order and type relationships. Parsers shape meaning recovery. Renderers shape appearance. Schedulers shape time and consequence.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="math-studies" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math__math_studies" data-spw-context-relevance="math geometry lattices rendering schedulers parsers structure" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#math-studies">~"math_studies"</a>
+                    <h2>Reference Studies</h2>
+                </div>
+                <p class="frame-note">These studies are useful because they show repetition, volume, projection, and change over time without needing formal notation first.</p>
+                <div class="topic-photo-grid">
+                    <figure class="image-study topic-photo-card">
+                        <img src="/public/images/renders/papergami/papergami-cubes.webp" alt="Papergami cubes study with repeated volumes and directional shadows." loading="lazy">
+                        <figcaption>
+                            <strong>Discrete volume</strong>
+                            <span>Cubes are a quick way to think about adjacency, coordinate frames, and combinable state.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="image-study topic-photo-card">
+                        <img src="/public/images/renders/papergami/papergami-kinetic.webp" alt="Papergami kinetic study with repeated folded forms moving in sequence." loading="lazy">
+                        <figcaption>
+                            <strong>Sequential change</strong>
+                            <span>Repeated forms in motion suggest timing, phase change, and the question of what persists across a transformation.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="site-frame" id="math-routes" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math__math_routes" data-spw-context-relevance="math geometry lattices rendering schedulers parsers structure" data-spw-related-routes="/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#math-routes">&amp;["math_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Geometry</h3>
+                        <p>Curvature, projection, and the Poincaré disk as a way to think about infinite space inside finite surfaces.</p>
+                        <a href="/topics/software/geometry/">route: Geometry</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Lattices</h3>
+                        <p>Partial orders, joins, meets, and the math beneath type relationships and semantic maps.</p>
+                        <a href="/topics/software/lattices/">route: Lattices</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Renderers</h3>
+                        <p>The bridge between abstract signal and visible surface: transforms, light, type shaping, and pipelines.</p>
+                        <a href="/topics/software/renderers/">route: Renderers</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Schedulers</h3>
+                        <p>Priority, phase, and event-loop timing when math takes the form of consequence rather than shape.</p>
+                        <a href="/topics/software/schedulers/">route: Schedulers</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>Grammar and tree structure as the mathematics of turning raw text into recoverable meaning.</p>
+                        <a href="/topics/software/parsers/">route: Parsers</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

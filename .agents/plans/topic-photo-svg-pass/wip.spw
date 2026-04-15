@@ -1,0 +1,53 @@
+# wip - topic-photo-svg-pass
+# Branch: main
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/topic-photo-svg-pass/PLAN.md"
+ @topics: ~"topics/index.html"
+ @architecture: ~"topics/architecture/index.html"
+ @pedagogy: ~"topics/pedagogy/index.html"
+ @svg: ~"topics/craft/svg/index.html"
+ @site_design: ~"topics/site-design/index.html"
+ @math: ~"topics/math/index.html"
+ @surface_css: ~"public/css/spw-surfaces.css"
+ @sw: ~"sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Make the topic cluster feel more inhabited through existing-image references, stronger SVG storytelling, and two connected stub routes."
+ ~#constraint: "Use only images that already exist under public/images."
+}
+
+^["development"]{
+ lane: #topic_surface_quality
+ develops: [#visual_studies, #svg_storytelling, #site_design_stub, #math_stub, #route_connectivity]
+ review_surfaces: [@topics, @architecture, @pedagogy, @svg, @site_design, @math, @surface_css, @sw]
+}
+
+^["route_model"]{
+ atlas: "topics index as the routing overview"
+ site_design: "web surface, typography, motifs, and publishing systems"
+ math: "geometry, lattices, rendering, scheduling, and parser-adjacent structure"
+}
+
+^["risk_model"]{
+ hard_failures: [#decorative_photos, #generic_stub_copy, #broken_route_links]
+ soft_failures: [#too_many_new_patterns, #svg_as_wallpaper, #image_mismatch]
+ non_negotiables: [#public_images_only, #shared_css_not_sprawl, #static_html_readability]
+}
+
+^["validation"]{
+ checks: [#git_diff_check, #link_sanity, #sw_routes_present, #public_image_paths_only]
+}
+
+^["stream"]{
+ >>[2026-04-15 11:05] observe - The current topic atlas already has strong route cards, but architecture and pedagogy still read like sparse stubs and the SVG storytelling page can hold more semantic depth.
+ >>[2026-04-15 11:09] observe - Existing image pool is strong enough for this pass: papergami renders, home studies, and creature images already live under public/images.
+ >>[2026-04-15 11:12] decide - Keep scope bounded to the topic atlas, two existing stubs, two new stubs, one SVG-heavy craft route, and shared topic-facing CSS.
+}
+
+^["done"]{
+}
