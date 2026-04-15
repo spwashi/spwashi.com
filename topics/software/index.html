@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • Software</title>
+    <meta name="description" content="Language design and software philosophy for Spw: readable plain-text source, named structure, and deterministic projections into tools and public surfaces."/>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
@@ -16,7 +17,7 @@
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
     <meta property="og:title" content="Spwashi • Software"/>
-    <meta property="og:description" content="Software Surface"/>
+    <meta property="og:description" content="Language design and software philosophy for Spw: readable plain-text source, named structure, and deterministic projections into tools and public surfaces."/>
     <meta property="og:url" content="https://spwashi.com/topics/software/"/>
     <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
     <meta property="og:image:alt" content="Software illustrated metadata card on Spwashi."/>
@@ -24,16 +25,16 @@
     <meta property="og:image:height" content="630"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="Spwashi • Software"/>
-    <meta name="twitter:description" content="Software Surface"/>
+    <meta name="twitter:description" content="Language design and software philosophy for Spw: readable plain-text source, named structure, and deterministic projections into tools and public surfaces."/>
     <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
     <meta name="twitter:image:alt" content="Software illustrated metadata card on Spwashi."/>
-            <meta name="keywords" content="software, plain, text, interaction, grammar, projection, tool, probes, spw, syntax, orientation, based"/>
+            <meta name="keywords" content="language design, plain text software, projection systems, readable source, semantic tooling, Spw, interface grammar, local-first authoring"/>
             <script type="application/ld+json" data-spw-generated="page">
         {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
                 "name": "Spwashi • Software",
-                "description": "",
+                "description": "Language design and software philosophy for Spw: readable plain-text source, named structure, and deterministic projections into tools and public surfaces.",
                 "url": "https://spwashi.com/topics/software/",
                 "isPartOf": {
                         "@type": "WebSite",
@@ -41,14 +42,13 @@
                         "url": "https://spwashi.com/"
                 },
                 "about": [
-                        "software",
-                        "plain",
-                        "text",
-                        "interaction",
-                        "grammar",
-                        "projection",
-                        "tool",
-                        "probes"
+                        "language design",
+                        "plain text software",
+                        "projection systems",
+                        "readable source",
+                        "semantic tooling",
+                        "interface grammar",
+                        "local first authoring"
                 ],
                 "additionalProperty": [
                         {
@@ -132,8 +132,10 @@
                 <p class="spec-kicker">Software Surface</p>
                 <h1>Software</h1>
                 <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
+                <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
                 <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
+                    <a class="operator-chip" href="#language-philosophy">language philosophy</a>
                     <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
                     <a class="operator-chip" href="/topics/craft/">author craft ramp</a>
                     <a class="operator-chip" href="#spw-syntax-surface">syntax reference</a>
@@ -149,6 +151,40 @@
                     <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript reference</a>
                     <a class="operator-chip" href="https://github.com/spwashi/spw-workbench">spw-workbench</a>
                 </nav>
+            </section>
+
+            <section class="site-frame" id="language-philosophy" data-spw-role="orientation" data-spw-meaning="language design philosophy" data-spw-form="brace" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="framing" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__language_philosophy" data-spw-context-relevance="language design readable source semantic tooling projection" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#language-philosophy">#["language_philosophy"]</a>
+                    <h2>Language Design Philosophy</h2>
+                </div>
+                <p class="inline-note">The language is not trying to win by density alone. It is trying to keep source legible while giving tools clearer contracts about structure, timing, and projection.</p>
+                <div class="spec-grid">
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_1">
+                        <h3>Readable source is the primary artifact</h3>
+                        <p>The file should still work as something a person can read out loud, diff in git, annotate in an editor, or share in a chat. Tooling depth is valuable only if it grows from that durability instead of replacing it.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_2">
+                        <h3>Names create handles</h3>
+                        <p>Frames, layers, and bindings are useful because they make portions of the file addressable. Once a region has a stable name, a plugin, parser, renderer, or website can refer to the same thing without inventing a second map.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_3">
+                        <h3>Operators say intent, braces say topology</h3>
+                        <p>An operator should tell the reader what kind of semantic move is being attempted. A brace should tell the reader what kind of container or boundary is present. That split keeps the model composable and easier to generalize across tools.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_4">
+                        <h3>Projection should be deterministic</h3>
+                        <p>A projected HTML card, a plugin outline, a prompt brief, and a public guide page should all be traceable back to the same authored source. Projection is manifestation into another substrate, not silent mutation of the original text.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_5">
+                        <h3>Tooling should deepen authorship</h3>
+                        <p>The VS Code plugin, LSP client, website, and later projections are not the point by themselves. Their job is to help an author keep more structure visible, ask better questions of the text, and move between realities without losing semantic continuity.</p>
+                    </div>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_6">
+                        <h3>Human and machine readers deserve the same map</h3>
+                        <p>I want the file, plugin, and website to be different projections of one semantic field. That means a person following a heading and a tool following a frame id should be able to converge on the same unit of meaning.</p>
+                    </div>
+                </div>
             </section>
 
             <section class="site-frame" id="spw-syntax-surface" data-spw-role="schema" data-spw-meaning="reference surface" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__spw_syntax_surface" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">
