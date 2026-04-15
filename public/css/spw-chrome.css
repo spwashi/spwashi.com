@@ -308,6 +308,108 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
     inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
 }
 
+:where(.site-header[data-spw-nav-fit="tight"], body > header[data-spw-nav-fit="tight"]) {
+  --shell-nav-font-size: 0.92rem;
+  --shell-nav-gap-inline: 0.52rem;
+}
+
+:where(.site-header[data-spw-nav-fit="compressed"], body > header[data-spw-nav-fit="compressed"]) {
+  --shell-nav-font-size: 0.86rem;
+  --shell-nav-gap-inline: 0.42rem;
+  --shell-nav-padding-inline: 0.72rem;
+}
+
+.spw-route-menu-host {
+  position: relative;
+  min-width: 0;
+}
+
+.spw-route-menu {
+  position: relative;
+}
+
+.spw-route-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: var(--shell-nav-min-height);
+  padding: var(--shell-nav-padding-block) var(--shell-nav-padding-inline);
+  border-radius: var(--shell-nav-radius);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  cursor: pointer;
+  list-style: none;
+  transition:
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    color var(--shell-duration-fast) var(--shell-ease),
+    box-shadow var(--shell-duration-base) var(--shell-settle-ease);
+}
+
+.spw-route-menu-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.spw-route-menu-trigger:is(:hover, :focus-visible),
+.spw-route-menu[open] > .spw-route-menu-trigger {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+  outline: none;
+}
+
+.spw-route-menu-count,
+.spw-route-menu-link-token {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  opacity: 0.74;
+}
+
+.spw-route-menu-panel {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  z-index: calc(var(--layer-floating, 100) + 4);
+  display: grid;
+  gap: 0.35rem;
+  min-width: min(18rem, 82vw);
+  padding: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 84%, transparent);
+  border-radius: 0.95rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.42),
+    0 16px 32px rgba(0,0,0,0.08);
+}
+
+.spw-route-menu:not([open]) > .spw-route-menu-panel {
+  display: none;
+}
+
+.spw-route-menu-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.3rem;
+  padding: 0.52rem 0.7rem;
+  border-radius: 0.8rem;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  text-decoration: none;
+  transition:
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+.spw-route-menu-link:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+  outline: none;
+}
+
 /* ==========================================================================
    3. Site footer
    ========================================================================== */
@@ -507,6 +609,22 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   :where(.site-header nav a, body > header nav a) {
     width: 100%;
     border-radius: var(--shell-panel-radius);
+  }
+
+  .spw-route-menu-host {
+    grid-column: 1 / -1;
+  }
+
+  .spw-route-menu-trigger {
+    width: 100%;
+    justify-content: space-between;
+    border-radius: var(--shell-panel-radius);
+  }
+
+  .spw-route-menu-panel {
+    position: static;
+    min-width: 0;
+    margin-top: 0.35rem;
   }
 
   .site-footer__inner {

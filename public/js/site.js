@@ -1060,6 +1060,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'contextual-ui',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'main, .site-header',
+    rootMode: 'single',
+    load: () => import('./spw-contextual-ui.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwContextualUi;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'guide',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

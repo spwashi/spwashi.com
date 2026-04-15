@@ -136,6 +136,7 @@
                 <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
                 <nav class="frame-operators" aria-label="Software overview routes">
                     <a class="operator-chip" href="#language-philosophy">language philosophy</a>
+                    <a class="operator-chip" href="#semantic-fields">semantic fields</a>
                     <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
                     <a class="operator-chip" href="/topics/craft/">author craft ramp</a>
                     <a class="operator-chip" href="#spw-syntax-surface">syntax reference</a>
@@ -162,6 +163,80 @@
                     <h2>Language Design Philosophy</h2>
                 </div>
                 <p class="inline-note">The language is not trying to win by density alone. It is trying to keep source legible while giving tools clearer contracts about structure, timing, and projection.</p>
+                <div class="intent-lattice" aria-label="Language philosophy intent groups">
+                    <section class="intent-cluster" data-spw-intent="orient">
+                        <p class="intent-cluster-kicker">Orient</p>
+                        <h3>Meet the language as a readable field</h3>
+                        <ul>
+                            <li>
+                                <a href="#software-surface"><span>Re-open the software surface</span><span class="intent-token">#&gt;</span></a>
+                                <span class="intent-link-note">Start from the plain-text promise before branching into syntax or runtime detail.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/craft/"><span>Use the author craft ramp</span><span class="intent-token">.craft</span></a>
+                                <span class="intent-link-note">The surrounding craft route keeps the language tied to real publishing practice.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/spw/"><span>Move into the operator atlas</span><span class="intent-token">#spw</span></a>
+                                <span class="intent-link-note">The atlas gives the token-level map that this broader philosophy depends on.</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="intent-cluster" data-spw-intent="inspect">
+                        <p class="intent-cluster-kicker">Inspect</p>
+                        <h3>Inspect how structure stays legible</h3>
+                        <ul>
+                            <li>
+                                <a href="#spw-syntax-surface"><span>Read the syntax surface</span><span class="intent-token">^syntax</span></a>
+                                <span class="intent-link-note">The source, syntax, and surface views should remain traceable to the same file.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/parsers/#parser-lenses"><span>Follow parser lenses</span><span class="intent-token">?parse</span></a>
+                                <span class="intent-link-note">Parser work is where readable structure becomes a machine-readable contract.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/browser/"><span>Inspect browser and TypeScript constraints</span><span class="intent-token">$browser</span></a>
+                                <span class="intent-link-note">Projection only stays honest if the target substrate and runtime limits stay visible.</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="intent-cluster" data-spw-intent="commit">
+                        <p class="intent-cluster-kicker">Commit</p>
+                        <h3>Prefer actions that deepen authorship</h3>
+                        <ul>
+                            <li>
+                                <a href="#interactive-codeblocks"><span>Use the interactive codeblocks</span><span class="intent-token">@demo</span></a>
+                                <span class="intent-link-note">Interaction should clarify how source and surface relate instead of replacing the source.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/pretext/"><span>Enter the pretext lab</span><span class="intent-token">@pretext</span></a>
+                                <span class="intent-link-note">A local lab is where semantic moves can be tried without faking a polished app shell.</span>
+                            </li>
+                            <li>
+                                <a href="#spw-component-surface"><span>Inspect component commitments</span><span class="intent-token">@component</span></a>
+                                <span class="intent-link-note">Components should stay downstream of named structure, not become a second source of truth.</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="intent-cluster" data-spw-intent="project">
+                        <p class="intent-cluster-kicker">Project</p>
+                        <h3>See where the same source can manifest</h3>
+                        <ul>
+                            <li>
+                                <a href="/topics/software/renderers/"><span>Renderers</span><span class="intent-token">&gt;render</span></a>
+                                <span class="intent-link-note">Projection becomes visible when the same semantic unit appears in a different output form.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/compression/"><span>Compression</span><span class="intent-token">&gt;compress</span></a>
+                                <span class="intent-link-note">Compression pressure reveals which semantic distinctions are structurally essential.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/schedulers/"><span>Schedulers</span><span class="intent-token">&gt;time</span></a>
+                                <span class="intent-link-note">Timing and projection belong together once authored structure starts appearing in several encounters.</span>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
                 <div class="spec-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_1">
                         <h3>Readable source is the primary artifact</h3>
@@ -188,6 +263,112 @@
                         <p>I want the file, plugin, and website to be different projections of one semantic field. That means a person following a heading and a tool following a frame id should be able to converge on the same unit of meaning.</p>
                     </div>
                 </div>
+                <div class="context-edges" aria-label="Language philosophy context edges">
+                    <section class="context-edge-card" data-spw-edge="nearby">
+                        <p class="intent-cluster-kicker">Nearby Context</p>
+                        <h3>Contexts stabilizing the language</h3>
+                        <ul class="context-edge-list">
+                            <li>
+                                <a href="/topics/craft/"><span>Author craft ramp</span><span class="intent-token">.craft</span></a>
+                                <span class="context-edge-note">Readable source only matters if it continues to serve real authors and editors.</span>
+                            </li>
+                            <li>
+                                <a href="/about/website/"><span>Website field guide</span><span class="intent-token">.site</span></a>
+                                <span class="context-edge-note">The public site is one proof surface for the same language philosophy.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/spw/"><span>Operator atlas</span><span class="intent-token">.atlas</span></a>
+                                <span class="context-edge-note">Operators and braces provide the smaller contracts underneath the broader thesis.</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="context-edge-card" data-spw-edge="subsequent">
+                        <p class="intent-cluster-kicker">Subsequent Context</p>
+                        <h3>What the reader usually wants next</h3>
+                        <ul class="context-edge-list">
+                            <li>
+                                <a href="#spw-grammar-surface"><span>Grammar surface</span><span class="intent-token">#grammar</span></a>
+                                <span class="context-edge-note">After the thesis, most readers need the rules for how semantic moves combine.</span>
+                            </li>
+                            <li>
+                                <a href="#interactive-codeblocks"><span>Interactive codeblocks</span><span class="intent-token">#demo</span></a>
+                                <span class="context-edge-note">Demonstrations make projection and inspectability feel concrete.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/browser/"><span>Browser reference</span><span class="intent-token">#browser</span></a>
+                                <span class="context-edge-note">The substrate questions show up quickly once the language leaves the page.</span>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="context-edge-card" data-spw-edge="projected">
+                        <p class="intent-cluster-kicker">Projected Context</p>
+                        <h3>Where the same semantics manifest</h3>
+                        <ul class="context-edge-list">
+                            <li>
+                                <a href="/topics/software/renderers/"><span>Renderers</span><span class="intent-token">&gt;render</span></a>
+                                <span class="context-edge-note">Projection turns source into visible or interactive surfaces without severing the link back.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/compression/"><span>Compression</span><span class="intent-token">&gt;compress</span></a>
+                                <span class="context-edge-note">Compression asks which semantic distinctions must survive when surface area shrinks.</span>
+                            </li>
+                            <li>
+                                <a href="/topics/software/schedulers/"><span>Schedulers</span><span class="intent-token">&gt;time</span></a>
+                                <span class="context-edge-note">Scheduling shows how semantic structure interacts with temporal flow and delayed manifestation.</span>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </section>
+
+            <section class="site-frame" id="semantic-fields" data-spw-role="schema" data-spw-meaning="module semantics fields" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison projection locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__semantic_fields" data-spw-context-relevance="module semantics perspective potential dimension salience hydration copy" data-spw-related-routes="/|/about/website/|/topics/software/spw/|/topics/software/browser/|/tools/profile/" data-spw-module="semantic_fields" data-spw-perspective="system" data-spw-potential="ready" data-spw-dimension="syntax surface publication" data-spw-salience="near">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#semantic-fields">%[semantic_fields]</a>
+                    <h2>Perspective, Potential, Dimension, Salience</h2>
+                </div>
+                <p class="inline-note">Cards and panels can act as portable Spw modules. If the boundary is stable enough to copy, link, or hydrate later, it should also be able to declare whose view it centers, how ready it is, which dimensions dominate, and how loudly it should call attention.</p>
+                <div class="semantic-contract-grid" aria-label="Module semantics fields">
+                    <article class="semantic-contract-card" data-spw-module="field_perspective" data-spw-perspective="collaborative" data-spw-potential="ready" data-spw-dimension="routing memory" data-spw-salience="near">
+                        <span class="semantic-contract-token">perspective</span>
+                        <strong>Who or what the module centers</strong>
+                        <p>Use perspective to say whether a card is speaking from a reader view, a public field-guide voice, a collaborative room, or a system-level lens.</p>
+                    </article>
+                    <article class="semantic-contract-card" data-spw-module="field_potential" data-spw-perspective="system" data-spw-potential="emergent" data-spw-dimension="syntax surface" data-spw-salience="ambient">
+                        <span class="semantic-contract-token">potential</span>
+                        <strong>How ready the module is to do more</strong>
+                        <p>Potential distinguishes latent notes from modules that are ready to be copied, hydrated, or promoted into a stronger browser-facing component.</p>
+                    </article>
+                    <article class="semantic-contract-card" data-spw-module="field_dimension" data-spw-perspective="public" data-spw-potential="ready" data-spw-dimension="syntax gesture publication" data-spw-salience="near">
+                        <span class="semantic-contract-token">dimension</span>
+                        <strong>Which axes matter in this encounter</strong>
+                        <p>A module can bias toward syntax, gesture, memory, routing, or publication. The dimensions do not change the source; they change how the same source is read.</p>
+                    </article>
+                    <article class="semantic-contract-card" data-spw-module="field_salience" data-spw-perspective="reader" data-spw-potential="active" data-spw-dimension="surface reading" data-spw-salience="strong">
+                        <span class="semantic-contract-token">salience</span>
+                        <strong>How forcefully the module should ask for attention</strong>
+                        <p>Salience should be modulatable. A quiet card can become near or strong when focused, selected, or promoted by the current reading context.</p>
+                    </article>
+                </div>
+                <p class="inline-note">This is the shape I want for copyable and hydratable browser modules: the HTML stays legible, the module keeps its declarative fields, and the later browser runtime can read those same attributes instead of inventing a second contract.</p>
+                <pre><code>&lt;article class="frame-panel"
+  data-spw-module="parser_lens"
+  data-spw-module-copy="fragment"
+  data-spw-module-hydration="ready"
+  data-spw-perspective="system"
+  data-spw-potential="emergent"
+  data-spw-context-bias="analysis"
+  data-spw-context-projection="publication"
+  data-spw-dimension="syntax surface"
+  data-spw-salience="near"&gt;
+  ...
+&lt;/article&gt;</code></pre>
+                <p class="inline-note">Later, richer blocks can carry context gradients too. A selected <code>&lt;context&gt;#</code> bias or <code>&lt;context&gt;@</code> projection should be able to modulate the same module without requiring a rewritten component contract.</p>
+                <nav class="frame-operators" aria-label="Semantic field routes">
+                    <a class="operator-chip" href="/topics/software/browser/">browser constraints</a>
+                    <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
+                    <a class="operator-chip" href="/about/website/">website field guide</a>
+                    <a class="operator-chip" href="/tools/profile/">profile tool</a>
+                </nav>
             </section>
 
             <section class="site-frame" id="spw-syntax-surface" data-spw-role="schema" data-spw-meaning="reference surface" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__spw_syntax_surface" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">

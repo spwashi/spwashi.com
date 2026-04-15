@@ -45,6 +45,10 @@
   --website-radius-lg: var(--shape-surface, 14px);
   --website-radius-md: var(--shape-component, 8px);
   --website-radius-sm: var(--shape-element, 5px);
+
+  --spw-philosophy-panel: var(--website-panel);
+  --spw-philosophy-paper: var(--website-paper);
+  --spw-philosophy-line: var(--website-line);
 }
 
 /* ==========================================================================
@@ -404,6 +408,19 @@
 :where(body[data-spw-surface="website"] .operator-chip:hover) {
   border-color: color-mix(in srgb, var(--website-accent) 30%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--website-accent) 10%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .intent-cluster,
+       body[data-spw-surface="website"] .context-edge-card,
+       body[data-spw-surface="website"] .semantic-contract-card) {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.46),
+    0 8px 18px rgba(0,0,0,0.03);
+}
+
+:where(body[data-spw-surface="website"] .intent-token,
+       body[data-spw-surface="website"] .semantic-contract-token) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
 }
 
 /* ==========================================================================

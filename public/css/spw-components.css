@@ -212,6 +212,76 @@
 }
 
 /* ==========================================================================
+   3b. Module semantics
+   ========================================================================== */
+
+:where(
+  [data-spw-module],
+  .intent-cluster,
+  .context-edge-card,
+  .semantic-contract-card
+) {
+  --spw-perspective-weight: 0.5;
+  --spw-potential-weight: 0.5;
+  --spw-salience-weight: 0.34;
+  --spw-dimension-count: 1;
+}
+
+:where(
+  [data-spw-module],
+  .intent-cluster,
+  .context-edge-card,
+  .semantic-contract-card
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(1px + (var(--spw-potential-weight) * 3px));
+  opacity: calc(0.14 + (var(--spw-salience-weight) * 0.42));
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent, var(--teal, #008080)) calc(12% + (var(--spw-perspective-weight) * 42%)), transparent),
+      color-mix(in srgb, var(--component-accent, var(--teal, #008080)) calc(8% + (var(--spw-dimension-count) * 4%)), transparent)
+    );
+}
+
+:where(
+  [data-spw-module][data-spw-module-hydration="ready"],
+  .intent-cluster[data-spw-module-hydration="ready"],
+  .context-edge-card[data-spw-module-hydration="ready"],
+  .semantic-contract-card[data-spw-module-hydration="ready"]
+) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--teal, #008080)) calc(4% + (var(--spw-potential-weight) * 12%)), transparent),
+    var(--component-shadow-quiet);
+}
+
+:where(
+  [data-spw-module][data-spw-salience-state="active"],
+  .intent-cluster[data-spw-salience-state="active"],
+  .context-edge-card[data-spw-salience-state="active"],
+  .semantic-contract-card[data-spw-salience-state="active"]
+) {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--teal, #008080)) calc(8% + (var(--spw-salience-weight) * 14%)), transparent),
+    var(--component-shadow-active);
+}
+
+:where(
+  [data-spw-module][data-spw-context-match="active"],
+  .intent-cluster[data-spw-context-match="active"],
+  .context-edge-card[data-spw-context-match="active"],
+  .semantic-contract-card[data-spw-context-match="active"]
+) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--teal, #008080)) calc(10% + (var(--spw-context-match-weight) * 18%)), transparent),
+    var(--component-shadow);
+}
+
+/* ==========================================================================
    4. Bleed utilities
    ========================================================================== */
 

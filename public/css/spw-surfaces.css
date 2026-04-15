@@ -246,8 +246,256 @@
   text-decoration: underline;
 }
 
+:where(.topic-hero-grid) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(min(100%, 19rem), 0.95fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+
+:where(.topic-hero-copy) {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  min-width: 0;
+}
+
+:where(.site-hero .topic-photo-card) {
+  min-height: 100%;
+}
+
+:where(.site-hero .topic-photo-card[data-spw-image-prominence="hero"]) {
+  align-self: stretch;
+}
+
+:where(.site-hero .topic-photo-card[data-spw-image-prominence="hero"] img) {
+  min-height: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+:where(.site-hero .topic-photo-card[data-spw-image-shape="square"] img) {
+  aspect-ratio: 1 / 1;
+}
+
+:where(.site-hero .topic-photo-card[data-spw-image-shape="landscape"] img) {
+  aspect-ratio: 16 / 10;
+}
+
+@media (max-width: 860px) {
+  :where(.topic-hero-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.site-hero .topic-photo-card[data-spw-image-prominence="hero"] img) {
+    aspect-ratio: 16 / 10;
+  }
+}
+
 /* ==========================================================================
-   4. Pretext lab
+   4. Shared philosophy surfaces
+   ========================================================================== */
+
+:where(body[data-spw-surface="software"]) {
+  --spw-philosophy-panel:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 241, 236, 0.96));
+  --spw-philosophy-paper:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 244, 240, 0.96));
+  --spw-philosophy-line:
+    color-mix(in srgb, var(--active-op-color, #008080) 20%, var(--spw-shell-line));
+}
+
+:where(.intent-lattice) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--spw-shell-panel-gap);
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+:where(.intent-cluster) {
+  --intent-accent: var(--active-op-color, #008080);
+  display: grid;
+  gap: 0.72rem;
+  min-width: 0;
+  padding: clamp(0.95rem, 1.7vw, 1.15rem);
+  border: 1px solid color-mix(in srgb, var(--intent-accent) 22%, var(--spw-philosophy-line, var(--spw-shell-line)));
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  background: var(--spw-philosophy-panel, var(--spw-shell-card-bg-strong));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 8px 18px rgba(0, 0, 0, 0.035);
+}
+
+:where(.intent-cluster[data-spw-intent="orient"]) {
+  --intent-accent: var(--op-frame-color, #178282);
+}
+
+:where(.intent-cluster[data-spw-intent="inspect"]) {
+  --intent-accent: var(--op-probe-color, #4a2180);
+}
+
+:where(.intent-cluster[data-spw-intent="commit"]) {
+  --intent-accent: var(--op-action-color, #0c5f5f);
+}
+
+:where(.intent-cluster[data-spw-intent="project"]) {
+  --intent-accent: var(--op-surface-color, #178282);
+}
+
+:where(.intent-cluster-kicker) {
+  margin: 0;
+  color: color-mix(in srgb, var(--intent-accent) 70%, var(--ink-soft));
+  font-size: var(--text-size-xs, 0.76rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:where(.intent-cluster h3) {
+  margin: 0;
+  font-size: clamp(1rem, 1.1rem + 0.22vw, 1.18rem);
+  text-wrap: balance;
+}
+
+:where(.intent-cluster ul,
+       .context-edge-list) {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.intent-cluster li,
+       .context-edge-list li) {
+  min-width: 0;
+}
+
+:where(.intent-cluster li > a,
+       .context-edge-list li > a) {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.intent-cluster li > a:hover,
+       .intent-cluster li > a:focus-visible,
+       .context-edge-list li > a:hover,
+       .context-edge-list li > a:focus-visible) {
+  text-decoration: underline;
+}
+
+:where(.intent-token) {
+  flex: 0 0 auto;
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, currentColor 74%, var(--ink-soft));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+:where(.intent-link-note,
+       .context-edge-note) {
+  display: block;
+  margin-top: 0.24rem;
+  color: var(--ink-soft);
+  font-size: var(--text-size-sm, 0.9rem);
+  line-height: 1.5;
+}
+
+:where(.context-edges) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--spw-shell-panel-gap);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(.context-edge-card) {
+  --edge-accent: var(--active-op-color, #008080);
+  display: grid;
+  gap: 0.7rem;
+  min-width: 0;
+  padding: clamp(0.95rem, 1.7vw, 1.15rem);
+  border: 1px solid color-mix(in srgb, var(--edge-accent) 24%, var(--spw-philosophy-line, var(--spw-shell-line)));
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  background: var(--spw-philosophy-paper, var(--spw-shell-card-bg));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 10px 22px rgba(0, 0, 0, 0.035);
+}
+
+:where(.context-edge-card[data-spw-edge="nearby"]) {
+  --edge-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where(.context-edge-card[data-spw-edge="subsequent"]) {
+  --edge-accent: var(--op-probe-color, #4a2180);
+}
+
+:where(.context-edge-card[data-spw-edge="projected"]) {
+  --edge-accent: var(--op-surface-color, #178282);
+}
+
+:where(.context-edge-card h3) {
+  margin: 0;
+  font-size: clamp(1rem, 1.1rem + 0.22vw, 1.16rem);
+  text-wrap: balance;
+}
+
+:where(.semantic-contract-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--spw-shell-panel-gap);
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+:where(.semantic-contract-card) {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+  min-height: 100%;
+  padding: clamp(0.95rem, 1.7vw, 1.15rem);
+  border: 1px solid color-mix(in srgb, var(--spw-philosophy-line, var(--spw-shell-line-strong)) 70%, transparent);
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  background: var(--spw-philosophy-panel, var(--spw-shell-card-bg-strong));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 10px 18px rgba(0, 0, 0, 0.03);
+}
+
+:where(.semantic-contract-token) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--active-op-color, #008080) 6%, rgba(255, 255, 255, 0.72));
+  color: color-mix(in srgb, var(--active-op-color, #008080) 76%, var(--ink) 24%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+}
+
+:where(.semantic-contract-card strong) {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+:where(.semantic-contract-card p) {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   5. Pretext lab
    ========================================================================== */
 
 :where([data-spw-features~="pretext-lab"] .pretext-lab-grid,
@@ -763,7 +1011,7 @@
 }
 
 /* ==========================================================================
-   7. Console
+   8. Console
    ========================================================================== */
 
 :where([data-spw-features~='console'] .spw-console) {
@@ -824,10 +1072,23 @@
 }
 
 /* ==========================================================================
-   8. Responsive adjustments
+   9. Responsive adjustments
    ========================================================================== */
 
 @container (max-width: 32rem) {
+  :where(.intent-lattice,
+         .context-edges,
+         .semantic-contract-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.intent-cluster li > a,
+         .context-edge-list li > a) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
   :where([data-spw-features~='pretext-lab'] .pretext-lab-grid) {
     grid-template-columns: 1fr;
   }
