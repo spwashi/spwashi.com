@@ -70,6 +70,22 @@ const INTERACTION_DEFAULTS = Object.freeze({
   registry: { emphasis: 'indexed', interactivity: 'inspectable', inspectability: 'detailed' }
 });
 
+const STANCE_BY_LIMINALITY = Object.freeze({
+  entry: 'entry',
+  threshold: 'entry',
+  projected: 'entry',
+  approach: 'entry',
+  ground: 'ground',
+  anchored: 'ground',
+  settled: 'ground',
+  stable: 'ground',
+  realized: 'ground',
+  interactive: 'ground',
+  exit: 'exit',
+  archived: 'exit',
+  departed: 'exit'
+});
+
 function normalizeText(value = '') {
   return value.replace(/\s+/g, ' ').trim();
 }
@@ -308,6 +324,18 @@ function inferValueLayer(role, context) {
   return 'surface';
 }
 
+function inferStance(el, importance, interactivity) {
+  if (el.dataset.spwStance) return normalizeToken(el.dataset.spwStance);
+
+  const liminality = normalizeToken(el.dataset.spwLiminality || '');
+  if (liminality && STANCE_BY_LIMINALITY[liminality]) {
+    return STANCE_BY_LIMINALITY[liminality];
+  }
+
+  if (importance === 'primary' || interactivity === 'controllable') return 'entry';
+  return 'ground';
+}
+
 function setIfMissing(el, key, value) {
   if (value == null || value === '') return;
   if (!el.dataset[key]) el.dataset[key] = value;
@@ -338,6 +366,7 @@ function snapshotComponentSemantics(el, options = {}) {
   const slots = inferSlots(el);
   const affordances = inferAffordances(el, role, features);
   const valueLayer = inferValueLayer(role, context);
+  const stance = inferStance(el, importance, interactivity);
 
   return {
     kind,
@@ -359,6 +388,7 @@ function snapshotComponentSemantics(el, options = {}) {
     affordances,
     features,
     valueLayer,
+    stance,
     semanticTagged: 'true',
     semanticVersion: options.semanticVersion || '0.2'
   };
@@ -383,8 +413,10 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwInspectability', snapshot.inspectability);
   writer(el, 'spwConfigDomain', snapshot.configDomain);
   writer(el, 'spwValueLayer', snapshot.valueLayer);
+  writer(el, 'spwStance', snapshot.stance);
   writer(el, 'spwSemanticTagged', snapshot.semanticTagged);
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
+  writer(el, 'spwComponentKind', snapshot.kind);
 
   if (snapshot.configKeys.length) writer(el, 'spwConfigKeys', snapshot.configKeys.join(' '));
   if (snapshot.inspectTarget) writer(el, 'spwInspect', snapshot.inspectTarget);
@@ -452,7 +484,7 @@ export function initSpwComponentSemantics(options = {}) {
   }
 
   if (emit) {
-    bus.emit?.('spw:semantic-snapshot', {
+    const detail = {
       root,
       count: snapshots.length,
       field: summarizeSemanticField(snapshots),
@@ -476,9 +508,13 @@ export function initSpwComponentSemantics(options = {}) {
         slots: snapshot.slots,
         affordances: snapshot.affordances,
         features: snapshot.features,
-        valueLayer: snapshot.valueLayer
+        valueLayer: snapshot.valueLayer,
+        stance: snapshot.stance
       }))
-    });
+    };
+
+    bus.emit?.('semantic-snapshot', detail);
+    document.dispatchEvent(new CustomEvent('spw:component-semantics-ready', { detail }));
   }
 
   return {

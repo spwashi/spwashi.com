@@ -1149,25 +1149,38 @@ const bindSettingsReadouts = (root = document) => {
    ========================================================================== */
 
 const initSiteSettingsPage = () => {
-  const form = document.querySelector('[data-site-settings-form]');
-  if (!form || manager._initialized) return;
+  const forms = [...document.querySelectorAll('[data-site-settings-form]')];
+  const scopes = [...document.querySelectorAll('[data-site-settings-scope]')]
+    .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
+
+  if ((!forms.length && !scopes.length) || manager._initialized) return;
 
   manager._initialized = true;
 
-  const binding = bindSettingsScope(form, {
+  const getStatusNode = (root) => (
+    root.querySelector('[data-site-settings-status]')
+    || root.closest('.site-frame, section, article, aside')?.querySelector('[data-site-settings-status]')
+    || null
+  );
+
+  const bindings = [...forms, ...scopes].map((root) => bindSettingsScope(root, {
     autosave: true,
     includePresets: true,
-    statusNode: document.querySelector('[data-site-settings-status]') || null
-  });
+    statusNode: getStatusNode(root)
+  }));
+  const readouts = bindSettingsReadouts(document);
 
   initPwaStatusDisplay();
 
   return {
     cleanup() {
-      binding.cleanup();
+      bindings.forEach((binding) => binding.cleanup());
+      readouts.cleanup();
+      manager._initialized = false;
     },
     refresh() {
-      binding.refresh();
+      bindings.forEach((binding) => binding.refresh());
+      readouts.refresh();
       initPwaStatusDisplay();
     }
   };

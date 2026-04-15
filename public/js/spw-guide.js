@@ -9,7 +9,7 @@
 
 import { bus } from './spw-bus.js';
 import { getGroundedRegistry } from './spw-haptics.js';
-import { getSiteSettings } from '../legacy/site-settings.js';
+import { getSiteSettings } from './site-settings.js';
 
 const SCAFFOLD_MAP = {
     'software:Schedulers': ['pretext-probe-frame', 'browser-frame'],
