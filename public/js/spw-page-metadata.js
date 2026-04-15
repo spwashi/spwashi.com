@@ -369,6 +369,34 @@ const PAGE_METADATA_RULES = [
     },
   },
   {
+    test: (pathname) => pathMatchesPrefix(pathname, '/tools/character-sheet'),
+    meta: {
+      routeFamily: 'editorial apprenticeship workshop',
+      context: 'analysis',
+      wonder: 'projection locality consequence',
+      pageFamily: 'workshop',
+      pageModes: 'edit translate publish compare',
+      pageRole: 'mentorship-tool',
+      heroRole: 'schema',
+      heroCategoryFamily: 'workshop',
+      heroLiminality: 'entry',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/tools/midjourney'),
+    meta: {
+      routeFamily: 'editorial image lab',
+      context: 'analysis',
+      wonder: 'projection resonance locality',
+      pageFamily: 'laboratory',
+      pageModes: 'collect compare stage prompt',
+      pageRole: 'prompt-lab',
+      heroRole: 'schema',
+      heroCategoryFamily: 'workshop',
+      heroLiminality: 'entry',
+    },
+  },
+  {
     test: (pathname) => pathMatchesPrefix(pathname, '/tools/profile'),
     meta: {
       routeFamily: 'editorial profile workshop',

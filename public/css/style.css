@@ -28,12 +28,15 @@
 @import url('/public/css/home-surface.css') layer(routes);
 @import url('/public/css/contact-surface.css') layer(routes);
 @import url('/public/css/about-surface.css') layer(routes);
+@import url('/public/css/services-surface.css') layer(routes);
+@import url('/public/css/topics-surface.css') layer(routes);
 @import url('/public/css/website-surface.css') layer(routes);
 @import url('/public/css/plans-surface.css') layer(routes);
 @import url('/public/css/craft-surface.css') layer(routes);
 @import url('/public/css/blog-surface.css') layer(routes);
 @import url('/public/css/settings-surface.css') layer(routes);
 @import url('/public/css/play-surface.css') layer(routes);
+@import url('/public/css/rpg-wednesday-surface.css') layer(routes);
 
 @import url('/public/css/cognitive-handles.css') layer(handles);
 @import url('/public/css/spw-handles.css') layer(handles);

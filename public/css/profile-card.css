@@ -551,6 +551,74 @@
   gap: 0.75rem;
 }
 
+.profile-split-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.profile-section-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.profile-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.profile-preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.2rem 0 0.9rem;
+}
+
+.profile-preset-bar .profile-export-btn[aria-pressed="true"] {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 7%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--teal) 14%, transparent);
+}
+
+.profile-tool-guide {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.profile-tool-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+}
+
+.profile-tool-guide-grid > article {
+  padding: 0.8rem 0.9rem;
+  border: var(--line-thin, 1px) solid rgba(14, 18, 20, 0.1);
+  border-radius: calc(var(--profile-radius) * 0.7);
+  background: color-mix(in srgb, var(--surface-soft) 88%, white);
+}
+
+.profile-tool-guide-grid h3,
+.profile-tool-guide-grid strong {
+  margin: 0 0 0.3rem;
+}
+
+.profile-tool-guide-grid p,
+.profile-tool-guide-grid ul {
+  margin: 0;
+}
+
+.profile-example-list {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.1rem;
+}
+
 /* ==========================================================================
    10. Fields
    ========================================================================== */
@@ -875,6 +943,11 @@
   }
 
   .badge-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-split-row,
+  .profile-link-row {
     grid-template-columns: 1fr;
   }
 }

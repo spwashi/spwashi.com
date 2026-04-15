@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>Character Sheet Builder · Spwashi Tools</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <link rel="stylesheet" href="/public/css/profile-card.css">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module">
+        import { initSpwProfileTool } from '/public/js/spw-profile-tool.js';
+
+        initSpwProfileTool({
+            storageKey: 'spw-character-sheet-builder',
+            defaultProfileScriptId: 'character-sheet-default',
+        });
+    </script>
+    <link rel="canonical" href="https://spwashi.com/tools/character-sheet/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Character Sheet Builder · Spwashi Tools"/>
+    <meta property="og:description" content="Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it."/>
+    <meta property="og:url" content="https://spwashi.com/tools/character-sheet/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Character sheet builder cards and route chips on Spwashi."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Character Sheet Builder · Spwashi Tools"/>
+    <meta name="twitter:description" content="Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Character sheet builder cards and route chips on Spwashi."/>
+    <meta name="keywords" content="character sheet, mentorship, junior engineering, profile builder, local first, worldbuilding, collaboration, rpg"/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Character Sheet Builder · Spwashi Tools",
+            "description": "Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it.",
+            "url": "https://spwashi.com/tools/character-sheet/",
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Spwashi",
+                "url": "https://spwashi.com/"
+            },
+            "about": [
+                "character sheet",
+                "mentorship",
+                "junior engineering",
+                "worldbuilding",
+                "local-first"
+            ]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://spwashi.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Tools",
+                    "item": "https://spwashi.com/tools/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Character Sheet Builder",
+                    "item": "https://spwashi.com/tools/character-sheet/"
+                }
+            ]
+        }
+    </script>
+</head>
+<body data-spw-surface="tools-character-sheet" data-spw-features="operators navigator console" data-spw-route-family="editorial apprenticeship workshop" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit translate publish compare" data-spw-page-seed="page_tools_tools_character_sheet" data-spw-page-role="mentorship-tool" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/">
+    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_tools_character_sheet__site_header" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/tools/">Tools</a></li>
+                <li><a href="/tools/profile/">Profile</a></li>
+                <li><a aria-current="page" href="/tools/character-sheet/">Character</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a href="/services/">Services</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
+    </header>
+
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_tools_character_sheet__main_surface" data-spw-wonder="projection locality consequence">
+        <article>
+            <section class="site-frame site-hero" id="character-sheet-frame"
+                data-spw-role="context"
+                data-spw-form="brace"
+                data-spw-meaning="character sheet builder for mentorship-facing junior engineering applications"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_character_sheet__hero" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#character-sheet-frame">@"character_sheet"</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill" data-cluster="tool">local-only</span>
+                        <span class="spec-pill" data-cluster="tool">mentorship-facing</span>
+                        <span class="spec-pill" data-cluster="tool">publishable</span>
+                    </div>
+                </div>
+                <h1>Character Sheet Builder</h1>
+                <p class="site-lede">Turn worldbuilding into a junior engineering profile that still sounds like a person.</p>
+                <p>Start with the character because the character gives shape: tradition, party role, signature tools, quest, allies, and the settings where someone does their best work. Then translate that structure into engineering language a mentor, principal engineer, or hiring manager can actually use.</p>
+                <p>The goal is not to collapse fantasy and work into the same thing. The goal is to let one grammar reveal the other carefully, so someone can describe how they learn, collaborate, and grow without flattening their voice.</p>
+                <p class="frame-note">The strongest version is a living site: character notes, worldbuilding, engineering experiments, and recurring updates that show rhythm over time instead of a single frozen application artifact.</p>
+                <nav class="frame-operators" aria-label="Character sheet routes">
+                    <a class="operator-chip" href="#translation-map">~ translation map</a>
+                    <a class="operator-chip" href="#builder-form">^ build the card</a>
+                    <a class="operator-chip" href="#publishing-routes">@ publishing routes</a>
+                    <a class="operator-chip" href="/tools/profile/">profile builder</a>
+                    <a class="operator-chip" href="/tools/midjourney/">midjourney bench</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="translation-map"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="translation map between character-sheet concepts and engineering dimensions"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_character_sheet__translation_map" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/rpg-wednesday/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#translation-map">~"translation_map"</a>
+                    <h2>Translation Map</h2>
+                </div>
+                <div class="profile-tool-guide">
+                    <p class="inline-note">A few careful mappings go further than a full metaphor collapse. Keep enough distance that the person stays legible in both worlds.</p>
+                    <div class="profile-tool-guide-grid">
+                        <article>
+                            <strong>Species or tradition</strong>
+                            <p>What background, perspective, or way of noticing shapes this person before they ever touch a codebase?</p>
+                        </article>
+                        <article>
+                            <strong>Class and party role</strong>
+                            <p>How do they help a group move: repair, scout, synthesis, care, tooling, translation, precision, or facilitation?</p>
+                        </article>
+                        <article>
+                            <strong>Signature items</strong>
+                            <p>Translate spellbooks, kits, relics, and charms into tools, stacks, notebooks, repos, scripts, and publishing surfaces.</p>
+                        </article>
+                        <article>
+                            <strong>Quest and next arc</strong>
+                            <p>What are they trying to learn next, and what kind of mentorship would help that growth land well?</p>
+                        </article>
+                        <article>
+                            <strong>Bonds and party rhythm</strong>
+                            <p>Who do they work well with, and what collaboration cadence keeps their work durable enough to keep compounding?</p>
+                        </article>
+                        <article>
+                            <strong>Setting</strong>
+                            <p>Which environments help them do good work: calm teams, public notes, clear feedback loops, play, pair sessions, or steady production beats?</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="builder-form"
+                data-spw-role="vessel"
+                data-spw-form="brace"
+                data-spw-meaning="character sheet builder form and mentorship card preview"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_character_sheet__builder_form" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/rpg-wednesday/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#builder-form">^"build"</a>
+                    <h2>Build the Card</h2>
+                </div>
+                <p class="inline-note">Switch lenses when you want to move from imaginative language toward something a mentor or team lead can act on.</p>
+                <div class="profile-preset-bar" role="group" aria-label="Character sheet presets">
+                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-default" aria-pressed="false">@ character lens</button>
+                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-translation" aria-pressed="false">~ translation lens</button>
+                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-application" aria-pressed="false">^ application lens</button>
+                </div>
+                <div class="profile-wizard">
+                    <div class="profile-wizard-form">
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_identity">
+                            <h3>Identity</h3>
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-name">
+                                    <span class="profile-field-op">^</span> name
+                                </label>
+                                <input id="f-name" type="text" placeholder="your name or handle" autocomplete="name" spellcheck="false"/>
+                            </div>
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-role">
+                                    <span class="profile-field-op">^</span> role
+                                </label>
+                                <input id="f-role" type="text" placeholder="junior engineer in formation, systems apprentice, ..." spellcheck="false"/>
+                            </div>
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-tagline">
+                                    <span class="profile-field-op">~</span> tagline
+                                    <span class="profile-field-hint">one sentence</span>
+                                </label>
+                                <input id="f-tagline" type="text" placeholder="I turn worldbuilding, notes, and careful collaboration into readable systems." spellcheck="false"/>
+                            </div>
+                            <div class="profile-split-row">
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-status">
+                                        <span class="profile-field-op">@</span> status
+                                    </label>
+                                    <select id="f-status">
+                                        <option value="available">available</option>
+                                        <option value="consulting">consulting</option>
+                                        <option value="open">open to offers</option>
+                                        <option value="building">building</option>
+                                        <option value="looking">actively looking</option>
+                                    </select>
+                                </div>
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-sigil">
+                                        <span class="profile-field-op">#</span> operator
+                                        <span class="profile-field-hint">your stance</span>
+                                    </label>
+                                    <select id="f-sigil">
+                                        <option value="^">^ object — I build stable things</option>
+                                        <option value="~">~ relay — I connect and translate</option>
+                                        <option value="@">@ event — I make moments happen</option>
+                                        <option value="?[">?[ probe — I investigate</option>
+                                        <option value=">">> boon — I bring possibility</option>
+                                        <option value="!">! pragma — I enforce correctness</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_badges">
+                            <h3>Signals</h3>
+                            <p class="frame-note">Use badges for stack, domain, approach, context, and role. Think of them as known spells, tools, habitats, and party signals.</p>
+                            <div class="badge-input-row">
+                                <input id="badge-input" type="text" placeholder="TypeScript, note-taking, encounter design, accessibility ..." spellcheck="false"/>
+                                <select id="badge-cluster">
+                                    <option value="stack">stack</option>
+                                    <option value="domain">domain</option>
+                                    <option value="approach">approach</option>
+                                    <option value="context">context</option>
+                                    <option value="role">role</option>
+                                </select>
+                                <button id="badge-add" type="button">add</button>
+                            </div>
+                            <div class="profile-tag-strip" id="badge-strip"></div>
+                        </div>
+
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_sections">
+                            <h3>Sections</h3>
+                            <div class="profile-field">
+                                <div class="profile-section-row">
+                                    <select class="section-operator">
+                                        <option value="^">^</option>
+                                        <option value="~">~</option>
+                                        <option value="@">@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">">></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="Origin and tradition" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" placeholder="What kind of world made this character, and what does that reveal about your working perspective?" rows="3"></textarea>
+                            </div>
+                            <div class="profile-field">
+                                <div class="profile-section-row">
+                                    <select class="section-operator">
+                                        <option value="^">^</option>
+                                        <option value="~" selected>~</option>
+                                        <option value="@">@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">">></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="Party role" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" placeholder="How do you help a group move: translator, repairer, scout, synthesizer, host, builder?" rows="3"></textarea>
+                            </div>
+                            <div class="profile-field">
+                                <div class="profile-section-row">
+                                    <select class="section-operator">
+                                        <option value="^">^</option>
+                                        <option value="~">~</option>
+                                        <option value="@">@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">" selected>></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="Quest and next arc" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" placeholder="What are you learning now, and what kind of mentorship would help that next arc become real?" rows="3"></textarea>
+                            </div>
+                            <div class="profile-field">
+                                <div class="profile-section-row">
+                                    <select class="section-operator">
+                                        <option value="^">^</option>
+                                        <option value="~">~</option>
+                                        <option value="@" selected>@</option>
+                                        <option value="?[">?[</option>
+                                        <option value=">">></option>
+                                    </select>
+                                    <input class="section-heading" type="text" placeholder="Proof and world state" spellcheck="false"/>
+                                </div>
+                                <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, readings, or repeated production rhythms where the work is already visible." rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_contact">
+                            <h3>Contact and visible routes</h3>
+                            <div class="profile-field">
+                                <label class="profile-field-label" for="f-contact">
+                                    <span class="profile-field-op">~</span> contact
+                                </label>
+                                <input id="f-contact" type="text" placeholder="email, site route, or preferred contact" spellcheck="false"/>
+                            </div>
+                            <div class="profile-field">
+                                <label class="profile-field-label">
+                                    <span class="profile-field-op">~</span> links
+                                    <span class="profile-field-hint">label + URL</span>
+                                </label>
+                                <div class="profile-link-row">
+                                    <input id="link-input" type="text" placeholder="world notes" spellcheck="false"/>
+                                    <input id="link-href" type="url" placeholder="https://..." spellcheck="false"/>
+                                    <button id="link-add" type="button">add</button>
+                                </div>
+                                <div class="profile-tag-strip" id="link-strip"></div>
+                            </div>
+                        </div>
+
+                        <div class="profile-export-actions">
+                            <button class="profile-export-btn" data-export="json">copy JSON</button>
+                            <button class="profile-export-btn" data-export="spw">copy Spw seed</button>
+                            <button class="profile-export-btn" data-export="screenshot">screenshot mode</button>
+                            <button class="profile-export-btn" data-export="clear">clear</button>
+                        </div>
+                    </div>
+
+                    <div id="builder-preview">
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_preview">
+                            <div id="profile-preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="import-export"
+                data-spw-role="vessel"
+                data-spw-form="square"
+                data-spw-meaning="JSON import for character sheet profiles"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_character_sheet__import_export" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#import-export">@"import"</a>
+                    <h2>Import JSON</h2>
+                </div>
+                <p class="inline-note">Paste a saved profile JSON when you want to continue from an earlier draft or move the card to another local machine.</p>
+                <div class="profile-field">
+                    <textarea id="json-import-area" rows="6" placeholder='{"header":{"name":"..."},...}'></textarea>
+                </div>
+                <div class="profile-export-actions">
+                    <button class="profile-export-btn" id="json-import-btn">load JSON</button>
+                </div>
+            </section>
+
+            <section class="site-frame" id="publishing-routes"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-meaning="route suggestions for a living junior engineering portfolio"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_character_sheet__publishing_routes" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" data-spw-related-routes="/|/tools/profile/|/tools/midjourney/|/play/rpg-wednesday/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#publishing-routes">#"publishing_routes"</a>
+                    <h2>Publishing Routes</h2>
+                </div>
+                <div class="profile-tool-guide-grid">
+                    <article>
+                        <strong>/tools/character-sheet/</strong>
+                        <p>Your living mentorship card: update the arc, the tools, and the current quest as you learn.</p>
+                    </article>
+                    <article>
+                        <strong>/play/ or /world/ notes</strong>
+                        <p>Worldbuilding, session logs, and recurring motifs make it easier to show imagination, memory, and narrative structure.</p>
+                    </article>
+                    <article>
+                        <strong>/tools/midjourney/</strong>
+                        <p>Collect style refs, identity refs, and experiments without dumping every image into the main portfolio surface.</p>
+                    </article>
+                    <article>
+                        <strong>/tools/profile/</strong>
+                        <p>When you need the same person described in more standard professional language, use the profile builder as the formal companion surface.</p>
+                    </article>
+                </div>
+                <p class="frame-note">The point is to help talented people be recommended into teams that can extend their craft, respect their rhythm, and make their growth legible.</p>
+            </section>
+
+            <script id="character-sheet-default" type="application/json">
+                {
+                    "header": {
+                        "name": "",
+                        "role": "junior engineer in formation",
+                        "status": "available",
+                        "sigil": "~",
+                        "tagline": "I use worldbuilding, notes, and recurring production rhythms to make my learning visible."
+                    },
+                    "badges": [
+                        { "cluster": "role", "value": "mentorship applicant" },
+                        { "cluster": "approach", "value": "local-first" },
+                        { "cluster": "approach", "value": "worldbuilding" }
+                    ],
+                    "sections": [
+                        { "heading": "Origin and tradition", "body": "", "operator": "^" },
+                        { "heading": "Party role", "body": "", "operator": "~" },
+                        { "heading": "Quest and next arc", "body": "", "operator": ">" },
+                        { "heading": "Proof and world state", "body": "", "operator": "@" }
+                    ],
+                    "footer": {
+                        "contact": "",
+                        "links": []
+                    }
+                }
+            </script>
+            <script id="character-sheet-translation" type="application/json">
+                {
+                    "header": {
+                        "role": "mentorship-ready junior engineer",
+                        "status": "open",
+                        "sigil": "^",
+                        "tagline": "I translate imaginative systems into clear engineering signals a mentor or team can actually use."
+                    },
+                    "badges": [
+                        { "cluster": "role", "value": "junior engineer" },
+                        { "cluster": "approach", "value": "careful translation" },
+                        { "cluster": "context", "value": "self-published notes" }
+                    ],
+                    "sections": [
+                        { "heading": "How the character maps to work", "body": "", "operator": "~" },
+                        { "heading": "What I help a team do", "body": "", "operator": "^" },
+                        { "heading": "What I am learning next", "body": "", "operator": ">" },
+                        { "heading": "Where the work is already visible", "body": "", "operator": "@" }
+                    ]
+                }
+            </script>
+            <script id="character-sheet-application" type="application/json">
+                {
+                    "header": {
+                        "role": "junior engineering mentorship applicant",
+                        "status": "looking",
+                        "sigil": "^",
+                        "tagline": "I am looking for a team that values readable systems, steady learning, and collaborative rhythm."
+                    },
+                    "badges": [
+                        { "cluster": "role", "value": "junior engineering" },
+                        { "cluster": "approach", "value": "durable cadence" },
+                        { "cluster": "domain", "value": "interactive systems" }
+                    ],
+                    "sections": [
+                        { "heading": "What I bring now", "body": "", "operator": "^" },
+                        { "heading": "How I work with other people", "body": "", "operator": "~" },
+                        { "heading": "What mentorship would unlock", "body": "", "operator": ">" },
+                        { "heading": "Signals, links, and current practice", "body": "", "operator": "@" }
+                    ]
+                }
+            </script>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <div class="site-footer__identity">
+                <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+                <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+            </div>
+            <nav class="site-footer__nav" aria-label="Footer">
+                <a href="/about/">About</a>
+                <a href="/topics/software/">Software</a>
+                <a href="/topics/craft/">Craft</a>
+                <a href="/recipes/">Recipes</a>
+                <a href="/play/">Play</a>
+                <a href="/blog/">Blog</a>
+                <a href="/tools/">Tools</a>
+                <a href="/services/">Services</a>
+                <a href="/contact/">Contact</a>
+            </nav>
+            <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+        </div>
+    </footer>
+</body>
+</html>

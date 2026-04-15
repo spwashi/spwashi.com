@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.5';
+const APP_VERSION = '0.3.6';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -62,6 +62,10 @@ const CORE_ROUTES = [
   '/topics/software/spw/operators/normalize/',
   '/topics/software/spw/operators/pragma/',
   '/topics/software/spw/operators/surface/',
+  '/tools/',
+  '/tools/profile/',
+  '/tools/character-sheet/',
+  '/tools/midjourney/',
   OFFLINE_URL,
 ];
 

@@ -11,227 +11,11 @@
     <link rel="stylesheet" href="/public/css/profile-card.css">
     <script type="module" src="/public/js/site.js?v=0.0.2"></script>
     <script type="module">
-        import {
-            emptyProfile, renderProfileCard, profileToJSON, profileToSpw,
-            parseBadgeLine, STATUS_OPTIONS, OPERATOR_OPTIONS, BADGE_CLUSTERS
-        } from '/public/js/spw-profile-builder.js';
+        import { initSpwProfileTool } from '/public/js/spw-profile-tool.js';
 
-        const STORAGE_KEY = 'spw-profile-builder';
-        let profile = emptyProfile();
-        let saveTimer = null;
-
-        function load() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) profile = { ...emptyProfile(), ...JSON.parse(raw) };
-            } catch {}
-        }
-
-        function save() {
-            clearTimeout(saveTimer);
-            saveTimer = setTimeout(() => {
-                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); } catch {}
-            }, 500);
-        }
-
-        function update() {
-            renderProfileCard(profile, document.getElementById('profile-preview'));
-            save();
-        }
-
-        function bind() {
-            // Header fields
-            const fields = {
-                name:    document.getElementById('f-name'),
-                role:    document.getElementById('f-role'),
-                tagline: document.getElementById('f-tagline'),
-                status:  document.getElementById('f-status'),
-                sigil:   document.getElementById('f-sigil'),
-                contact: document.getElementById('f-contact'),
-            };
-
-            Object.entries(fields).forEach(([key, el]) => {
-                if (!el) return;
-                el.addEventListener('input', () => {
-                    if (key === 'contact') profile.footer.contact = el.value;
-                    else profile.header[key] = el.value;
-                    update();
-                });
-            });
-
-            // Badge input
-            const badgeInput   = document.getElementById('badge-input');
-            const badgeCluster = document.getElementById('badge-cluster');
-            const badgeAdd     = document.getElementById('badge-add');
-            const badgeStrip   = document.getElementById('badge-strip');
-
-            function addBadge() {
-                const raw = badgeInput.value.trim();
-                if (!raw) return;
-                const cluster = badgeCluster.value;
-                parseBadgeLine(raw, cluster).forEach(b => profile.badges.push(b));
-                badgeInput.value = '';
-                renderBadgeStrip();
-                update();
-            }
-
-            function renderBadgeStrip() {
-                badgeStrip.innerHTML = profile.badges.map((b, i) => `
-                    <span class="profile-tag" data-cluster="${b.cluster}">
-                        <span>${b.value}</span>
-                        <button class="profile-tag-remove" data-remove="${i}" aria-label="remove ${b.value}">×</button>
-                    </span>
-                `).join('');
-                badgeStrip.querySelectorAll('[data-remove]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        profile.badges.splice(Number(btn.dataset.remove), 1);
-                        renderBadgeStrip();
-                        update();
-                    });
-                });
-            }
-
-            badgeAdd.addEventListener('click', addBadge);
-            badgeInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') { e.preventDefault(); addBadge(); }
-            });
-
-            // Sections
-            document.querySelectorAll('.section-body').forEach((el, i) => {
-                el.addEventListener('input', () => {
-                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
-                    profile.sections[i].body = el.value;
-                    update();
-                });
-            });
-            document.querySelectorAll('.section-heading').forEach((el, i) => {
-                el.addEventListener('input', () => {
-                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
-                    profile.sections[i].heading = el.value;
-                    update();
-                });
-            });
-            document.querySelectorAll('.section-operator').forEach((el, i) => {
-                el.addEventListener('change', () => {
-                    if (!profile.sections[i]) profile.sections[i] = { heading: '', body: '', operator: '^' };
-                    profile.sections[i].operator = el.value;
-                    update();
-                });
-            });
-
-            // Links
-            const linkInput = document.getElementById('link-input');
-            const linkHref  = document.getElementById('link-href');
-            const linkAdd   = document.getElementById('link-add');
-            const linkStrip = document.getElementById('link-strip');
-
-            function addLink() {
-                const label = linkInput.value.trim();
-                const href  = linkHref.value.trim();
-                if (!label || !href) return;
-                profile.footer.links.push({ label, href });
-                linkInput.value = '';
-                linkHref.value = '';
-                renderLinkStrip();
-                update();
-            }
-
-            function renderLinkStrip() {
-                linkStrip.innerHTML = profile.footer.links.map((l, i) => `
-                    <span class="profile-tag">
-                        <span>${l.label}</span>
-                        <button class="profile-tag-remove" data-remove-link="${i}" aria-label="remove ${l.label}">×</button>
-                    </span>
-                `).join('');
-                linkStrip.querySelectorAll('[data-remove-link]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        profile.footer.links.splice(Number(btn.dataset.removeLink), 1);
-                        renderLinkStrip();
-                        update();
-                    });
-                });
-            }
-
-            linkAdd.addEventListener('click', addLink);
-            linkHref.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addLink(); } });
-
-            // Export actions
-            document.querySelectorAll('[data-export]').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    let text = '';
-                    const type = btn.dataset.export;
-                    if (type === 'json')       text = profileToJSON(profile);
-                    else if (type === 'spw')   text = profileToSpw(profile);
-                    else if (type === 'screenshot') {
-                        document.getElementById('profile-preview')
-                            .querySelector('.profile-card')
-                            ?.classList.toggle('profile-card--screenshot');
-                        return;
-                    }
-                    else if (type === 'clear') {
-                        profile = emptyProfile();
-                        populateForm();
-                        renderBadgeStrip();
-                        renderLinkStrip();
-                        update();
-                        return;
-                    }
-                    if (!text) return;
-                    const orig = btn.textContent;
-                    try {
-                        await navigator.clipboard.writeText(text);
-                        btn.textContent = '✓ copied';
-                        btn.dataset.state = 'success';
-                    } catch {
-                        btn.textContent = '! failed';
-                    }
-                    setTimeout(() => { btn.textContent = orig; delete btn.dataset.state; }, 1800);
-                });
-            });
-
-            // JSON import
-            document.getElementById('json-import-btn')?.addEventListener('click', () => {
-                const raw = document.getElementById('json-import-area').value.trim();
-                if (!raw) return;
-                try {
-                    profile = { ...emptyProfile(), ...JSON.parse(raw) };
-                    populateForm();
-                    renderBadgeStrip();
-                    renderLinkStrip();
-                    update();
-                    document.getElementById('json-import-area').value = '';
-                } catch {
-                    alert('Invalid JSON — check format and try again.');
-                }
-            });
-
-            // Populate form from loaded profile
-            function populateForm() {
-                if (fields.name)    fields.name.value    = profile.header.name    || '';
-                if (fields.role)    fields.role.value    = profile.header.role    || '';
-                if (fields.tagline) fields.tagline.value = profile.header.tagline || '';
-                if (fields.status)  fields.status.value  = profile.header.status  || 'available';
-                if (fields.sigil)   fields.sigil.value   = profile.header.sigil   || '^';
-                if (fields.contact) fields.contact.value = profile.footer.contact || '';
-                document.querySelectorAll('.section-heading').forEach((el, i) => {
-                    el.value = profile.sections[i]?.heading || '';
-                });
-                document.querySelectorAll('.section-body').forEach((el, i) => {
-                    el.value = profile.sections[i]?.body || '';
-                });
-                document.querySelectorAll('.section-operator').forEach((el, i) => {
-                    el.value = profile.sections[i]?.operator || '^';
-                });
-            }
-
-            load();
-            populateForm();
-            renderBadgeStrip();
-            renderLinkStrip();
-            update();
-        }
-
-        document.addEventListener('DOMContentLoaded', bind);
+        initSpwProfileTool({
+            storageKey: 'spw-profile-builder',
+        });
     </script>
     <link rel="canonical" href="https://spwashi.com/tools/profile/">
     <meta property="og:type" content="website"/>
@@ -322,8 +106,8 @@
         }
     </script>
 </head>
-<body data-spw-surface="tools-profile" data-spw-features="operators navigator console" data-spw-route-family="editorial profile workshop" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit inspect export compare" data-spw-page-seed="page_tools_tools_profile" data-spw-page-role="tool-surface" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/">
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_tools_profile__site_header" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/" data-spw-context-relevance="profile builder local only json extensible screenshottable build" class="site-header" role="banner">
+<body data-spw-surface="tools-profile" data-spw-features="operators navigator console" data-spw-route-family="editorial profile workshop" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit inspect export compare" data-spw-page-seed="page_tools_tools_profile" data-spw-page-role="tool-surface" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
+    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_tools_profile__site_header" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/" data-spw-context-relevance="profile builder local only json extensible screenshottable build" class="site-header" role="banner">
         <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
         <nav aria-label="Primary">
             <ul>
@@ -345,7 +129,7 @@
                 data-spw-role="context"
                 data-spw-form="brace"
                 data-spw-meaning="professional profile card wizard for laid-off engineers and peers"
-                data-spw-operator="object" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_profile__profile_builder_frame" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/">
+                data-spw-operator="object" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="workshop" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_tools_tools_profile__profile_builder_frame" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#profile-builder-frame">^"profile_builder"</a>
                     <div class="spec-strip">
@@ -362,6 +146,8 @@
                     <a class="operator-chip" href="#builder-form">^ fill in</a>
                     <a class="operator-chip" href="#builder-preview">~ preview</a>
                     <a class="operator-chip" href="#import-export">@ import / export</a>
+                    <a class="operator-chip" href="/tools/character-sheet/">@ character sheet</a>
+                    <a class="operator-chip" href="/tools/midjourney/">~ midjourney bench</a>
                     <a class="operator-chip" href="/tools/">tools index</a>
                     <a class="operator-chip" href="/services/">services</a>
                 </nav>
@@ -371,7 +157,7 @@
             <section class="site-frame" id="builder-form"
                 data-spw-role="vessel"
                 data-spw-form="brace"
-                data-spw-meaning="profile wizard — form fields that drive live card preview" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__builder_form" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/">
+                data-spw-meaning="profile wizard — form fields that drive live card preview" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__builder_form" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#builder-form">^"build"</a>
                     <h2>Build Your Card</h2>
@@ -524,7 +310,7 @@
                     </div>
 
                     <!-- Right: live preview -->
-                    <div id="builder-preview" id="profile-preview-panel">
+                    <div id="builder-preview">
                         <div class="frame-panel" style="padding:0;background:transparent;border:none" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_profile__panel_5">
                             <div id="profile-preview"></div>
                         </div>
@@ -537,7 +323,7 @@
             <section class="site-frame" id="import-export"
                 data-spw-role="vessel"
                 data-spw-form="square"
-                data-spw-meaning="JSON import — paste a saved profile to restore it" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__import_export" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/">
+                data-spw-meaning="JSON import — paste a saved profile to restore it" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__import_export" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#import-export">@"import"</a>
                     <h2>Import JSON</h2>
@@ -555,7 +341,7 @@
             <section class="site-frame" id="schema-reference"
                 data-spw-role="reference"
                 data-spw-form="square"
-                data-spw-meaning="profile card JSON schema reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__schema_reference" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/services/|/settings/">
+                data-spw-meaning="profile card JSON schema reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_tools_tools_profile__schema_reference" data-spw-context-relevance="profile builder local only json extensible screenshottable build" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#schema-reference">~"schema"</a>
                     <h2>Schema Reference</h2>
@@ -598,6 +384,7 @@
             <a href="/recipes/">Recipes</a>
             <a href="/play/">Play</a>
             <a href="/blog/">Blog</a>
+            <a href="/tools/">Tools</a>
             <a href="/services/">Services</a>
             <a href="/contact/">Contact</a>
         </nav>

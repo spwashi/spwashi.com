@@ -1,0 +1,196 @@
+/* ==========================================================================
+   rpg-wednesday-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Give /play/rpg-wednesday/ a dedicated campaign surface.
+   - Use published image references to make the route feel alive, not generic.
+   - Keep the route readable while introducing stronger mood and capture cues.
+   ========================================================================== */
+
+:where(body[data-spw-surface="rpg-wednesday"]) {
+  --rpg-accent: #5d9367;
+  --rpg-accent-soft: color-mix(in srgb, var(--rpg-accent) 12%, transparent);
+  --rpg-wonder: #b06a5b;
+  --rpg-line:
+    color-mix(in srgb, var(--rpg-accent) 20%, rgba(18, 24, 28, 0.12));
+  --rpg-paper:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(240, 245, 240, 0.93)
+    );
+  --rpg-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.88),
+      rgba(238, 244, 238, 0.94)
+    );
+  background:
+    radial-gradient(circle at top center, rgba(93, 147, 103, 0.08), transparent 32%),
+    linear-gradient(180deg, rgba(244, 247, 242, 0.98), rgba(236, 232, 224, 0.98));
+}
+
+:where(body[data-spw-surface="rpg-wednesday"]) main {
+  width: min(100%, 1160px);
+  margin-inline: auto;
+  padding-inline: var(--space-md, 1rem);
+  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"]) main > article {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .site-frame) {
+  overflow: clip;
+  border-color: var(--rpg-line);
+  background: var(--rpg-paper);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.025);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .site-hero) {
+  background:
+    radial-gradient(circle at 86% 20%, rgba(176, 106, 91, 0.12), transparent 22%),
+    radial-gradient(circle at 18% 10%, rgba(93, 147, 103, 0.08), transparent 24%),
+    var(--rpg-paper);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .mode-switch) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .mode-switch button) {
+  min-height: 2.35rem;
+  min-width: 8.5rem;
+  border-color: color-mix(in srgb, var(--rpg-accent) 28%, rgba(18, 24, 28, 0.12));
+  background: rgba(255, 255, 255, 0.88);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .mode-switch button[aria-pressed="true"]) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--rpg-accent-soft) 70%, rgba(255, 255, 255, 0.88)),
+      rgba(255, 255, 255, 0.94)
+    );
+  box-shadow:
+    0 0 0 3px rgba(93, 147, 103, 0.14),
+    0 0.3rem 0.8rem rgba(0, 0, 0, 0.08);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .campaign-mood-grid) {
+  margin-block: 0.45rem 0.2rem;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .campaign-mood-card) {
+  margin: 0;
+  border-color: color-mix(in srgb, var(--rpg-accent) 24%, rgba(18, 24, 28, 0.12));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%),
+    linear-gradient(180deg, rgba(238, 244, 238, 0.96), rgba(244, 239, 233, 0.96));
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .campaign-mood-card img) {
+  aspect-ratio: 1 / 1;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-image-surface]) {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 280px;
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--rpg-accent) 20%, rgba(18, 24, 28, 0.12));
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
+    rgba(255, 255, 255, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 8px 18px rgba(34, 22, 14, 0.05);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-image-surface] img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center 62%;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] [data-spw-image-surface] figcaption) {
+  color: rgba(31, 36, 35, 0.7);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .frame-grid) {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .frame-grid > *) {
+  grid-column: span 6;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--surface-gap, 1rem);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid > *) {
+  grid-column: auto;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset) {
+  background: var(--rpg-panel);
+  border-color: color-mix(in srgb, var(--rpg-accent) 18%, rgba(18, 24, 28, 0.12));
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .syntax-list) {
+  display: grid;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .syntax-list li) {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--rpg-accent) 18%, rgba(18, 24, 28, 0.12));
+  border-radius: 12px;
+  background: var(--rpg-panel);
+}
+
+@media (max-width: 820px) {
+  :where(body[data-spw-surface="rpg-wednesday"]) main {
+    padding-inline: 0.8rem;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .frame-grid > *) {
+    grid-column: auto;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  :where(body[data-spw-surface="rpg-wednesday"] .mode-switch button) {
+    width: 100%;
+    min-width: 0;
+  }
+}
