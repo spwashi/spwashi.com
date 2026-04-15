@@ -140,14 +140,15 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
    ========================================================================== */
 
 :where(.site-header nav, body > header nav) {
-  width: fit-content;
-  max-width: min(100%, 58rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(100%, 58rem);
   justify-self: center;
   z-index: var(--z-base);
   position: relative;
   margin-inline: auto;
   padding: 0.35rem 0.45rem;
-  container-type: inline-size;
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
   border-radius: var(--shell-panel-radius-loose);
@@ -251,7 +252,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   margin: 0;
   padding: 0.4rem 0;
   min-width: 0;
-  width: fit-content;
+  width: max-content;
   max-width: 100%;
 }
 
@@ -464,6 +465,8 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.4rem), 1fr));
     gap: 0.35rem;
+    width: 100%;
+    max-width: none;
     padding-inline: var(--page-gutter-inline);
   }
 
