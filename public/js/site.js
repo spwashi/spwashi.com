@@ -287,7 +287,10 @@ function normalizeMountHandle(result) {
 
   if (result && typeof result === 'object') {
     return {
-      cleanup: isFn(result.cleanup) ? result.cleanup : null,
+      cleanup:
+        (isFn(result.cleanup) && result.cleanup)
+        || (isFn(result.destroy) && result.destroy)
+        || null,
       refresh: isFn(result.refresh) ? result.refresh : null,
     };
   }
@@ -844,6 +847,17 @@ const CORE_DEFS = [
     },
   },
   {
+    id: 'pwa-update-handler',
+    layer: MODULE_LAYERS.CORE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: () => import('./spw-pwa-update-handler.js'),
+    mount: (mod) => {
+      const fn = mod?.initPwaUpdateHandler;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'shell-disclosure',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -875,7 +889,7 @@ const FEATURE_DEFS = [
     selector: '[data-blog-interpreter]',
     route: 'blog',
     rootMode: 'each',
-    load: () => import('./blog-interpreter.js'),
+    load: () => import('./spw-blog-interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
       if (!isFn(fn)) return;
@@ -889,11 +903,63 @@ const FEATURE_DEFS = [
     selector: '.specimen-card, #specimen-index',
     route: 'blog',
     rootMode: 'single',
-    load: () => import('./blog-specimens.js'),
+    load: () => import('./spw-blog-specimens.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initBlogSpecimens;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'attn-register',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'blog',
+    selector: '[data-blog-interpreter], #specimen-index',
+    load: () => import('./spw-attn-register.js'),
+    mount: (mod) => {
+      const fn = mod?.initAttnRegister;
+      if (!isFn(fn)) return;
+      return fn(document.querySelector('main') || document);
+    },
+  },
+  {
+    id: 'seed-cards',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: ['services', 'newyear'],
+    selector: '[data-seed-card]',
+    load: () => import('./spw-seed-card.js'),
+    mount: (mod) => {
+      const fn = mod?.initSeedCards;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'payment-cards',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'services',
+    selector: '[data-payment-card]',
+    load: () => import('./spw-payment-card.js'),
+    mount: (mod) => {
+      const fn = mod?.initPaymentCards;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
+    id: 'services-configurators',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'services',
+    selector: '[data-services-configurator]',
+    load: () => import('./spw-services-configurator.js'),
+    mount: (mod) => {
+      const fn = mod?.initServicesConfigurators;
+      if (!isFn(fn)) return;
+      return fn(document);
     },
   },
   {
@@ -907,6 +973,19 @@ const FEATURE_DEFS = [
       const fn = mod?.initSiteSettingsPage;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'payment-settings',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'settings',
+    selector: '#payment-settings-container',
+    load: () => import('./spw-payment-card.js'),
+    mount: (mod) => {
+      const fn = mod?.initPaymentSettings;
+      if (!isFn(fn)) return;
+      return fn(document.getElementById('payment-settings-container'));
     },
   },
 ];

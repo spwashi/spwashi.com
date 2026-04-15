@@ -15,7 +15,10 @@
 :where(.site-header, body > header) {
   min-height: var(--shell-header-height);
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(max-content, 1fr) fit-content(58rem) minmax(max-content, 1fr);
+  grid-template-areas:
+    "seam seam seam"
+    "sigil nav indicator";
   align-items: center;
   gap: 0.45rem var(--shell-header-grid-gap);
 
@@ -61,6 +64,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 :where(.site-header, body > header) > .spw-semantic-seam {
+  grid-area: seam;
   grid-column: 1 / -1;
   align-items: center;
 }
@@ -96,6 +100,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 .header-sigil {
+  grid-area: sigil;
   justify-self: start;
   display: inline-flex;
   align-items: center;
@@ -115,6 +120,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 .header-op-indicator {
+  grid-area: indicator;
   justify-self: end;
   padding-right: calc(var(--subjective-brace-width, 28px) + 0.75rem);
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
@@ -140,11 +146,13 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
    ========================================================================== */
 
 :where(.site-header nav, body > header nav) {
+  grid-area: nav;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: min(100%, 58rem);
-  justify-self: center;
+  width: 100%;
+  max-width: 100%;
+  justify-self: stretch;
   z-index: var(--z-base);
   position: relative;
   margin-inline: auto;
@@ -246,7 +254,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--shell-nav-gap-block) var(--shell-nav-gap-inline);
   list-style: none;
   margin: 0;
@@ -421,9 +429,32 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    4. Responsive
    ========================================================================== */
 
+@media (max-width: 980px) {
+  :where(.site-header, body > header) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "seam seam"
+      "sigil indicator"
+      "nav nav";
+  }
+
+  .header-op-indicator {
+    align-self: center;
+  }
+
+  :where(.site-header nav, body > header nav) {
+    justify-self: stretch;
+  }
+}
+
 @media (max-width: 720px) {
   :where(.site-header, body > header) {
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "seam seam"
+      "sigil toggle"
+      "indicator indicator"
+      "nav nav";
     gap: 0.25rem;
     padding-block: 0.35rem;
   }
@@ -435,11 +466,13 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   .spw-nav-toggle {
+    grid-area: toggle;
     display: inline-flex;
     justify-self: end;
   }
 
   .header-op-indicator {
+    grid-area: indicator;
     grid-column: 1 / -1;
     justify-self: center;
     padding-top: 0.1rem;
@@ -452,6 +485,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header nav, body > header nav) {
+    grid-area: nav;
     grid-column: 1 / -1;
     width: 100%;
     max-width: none;

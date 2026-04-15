@@ -18,12 +18,6 @@
     <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js?v=0.0.2"></script>
-    <script type="module">
-        import { initPwaUpdateHandler } from '/public/js/pwa-update-handler.js';
-        window.addEventListener('load', () => {
-            initPwaUpdateHandler();
-        });
-    </script>
     <link rel="canonical" href="https://spwashi.com/settings/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
@@ -1647,12 +1641,6 @@
             </section>
 
             <link rel="stylesheet" href="/public/css/payment-card.css">
-            <script type="module">
-                import { initPaymentSettings } from '/public/js/payment-card.js';
-                document.addEventListener('DOMContentLoaded', () => {
-                    initPaymentSettings(document.getElementById('payment-settings-container'));
-                });
-            </script>
             <footer class="site-footer" role="contentinfo">
                 <div class="site-footer__inner">
                     <div class="site-footer__identity">
