@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Combinatorics: Finite Structure You Can Count</title>
+    <meta name="description" content="Field notes on combinatorics, partitions, graphs, and counting patterns for visualizing pure math through finite structure.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/combinatorics/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Combinatorics: Finite Structure You Can Count"/>
+    <meta property="og:description" content="Field notes on combinatorics, partitions, graphs, and counting patterns for visualizing pure math through finite structure."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/combinatorics/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Combinatorics route on Spwashi showing grid paths, partitions, and graphs."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Combinatorics: Finite Structure You Can Count"/>
+    <meta name="twitter:description" content="Field notes on combinatorics, partitions, graphs, and counting patterns for visualizing pure math through finite structure."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Combinatorics route on Spwashi showing grid paths, partitions, and graphs."/>
+    <meta name="keywords" content="combinatorics, counting, partitions, graphs, recursion, finite structure, pure math, visualization"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Combinatorics: Finite Structure You Can Count",
+                "description": "Field notes on combinatorics, partitions, graphs, and counting patterns for visualizing pure math through finite structure.",
+                "url": "https://spwashi.com/topics/math/combinatorics/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "combinatorics",
+                        "counting",
+                        "partitions",
+                        "graphs",
+                        "recursion",
+                        "finite structure",
+                        "pure math"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "combinatorics-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "counting adjacency recursion"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Combinatorics",
+                                "item": "https://spwashi.com/topics/math/combinatorics/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_combinatorics" data-spw-page-role="combinatorics-register" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_combinatorics__site_header" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/combinatorics/">Combinatorics</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>count</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_combinatorics__main_surface" data-spw-wonder="counting adjacency recursion">
+        <article>
+            <section class="site-frame site-hero" id="combinatorics-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_hero" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#combinatorics-hero">#&gt;finite_structure_you_can_count</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">paths</span>
+                        <span class="spec-pill">partitions</span>
+                        <span class="spec-pill">graphs</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Pure Structure</p>
+                <h1>Combinatorics turns possibility into a visible arrangement.</h1>
+                <p>This route is for the side of pure math that treats finite structure as something you can count, compare, and reorganize. Combinatorics is not only about big answers; it is about learning to see recurrence, adjacency, and equivalence classes inside small examples. A handful of points, paths, or boxes can already contain the full pattern.</p>
+                <nav class="frame-operators" aria-label="Combinatorics routes">
+                    <a class="operator-chip" href="#combinatorics-intuition">intuition first</a>
+                    <a class="operator-chip" href="#combinatorics-map">counting map</a>
+                    <a class="operator-chip" href="#combinatorics-handles">visual handles</a>
+                    <a class="operator-chip" href="/topics/math/">math hub</a>
+                    <a class="operator-chip" href="/topics/math/topology/#topology-map">topology map</a>
+                    <a class="operator-chip" href="/topics/math/symmetry/#symmetry-map">symmetry map</a>
+                    <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Combinatorics sections">
+                <ul>
+                    <li><a href="#combinatorics-hero">Overview</a></li>
+                    <li><a href="#combinatorics-intuition">Intuition First</a></li>
+                    <li><a href="#combinatorics-map">Counting Map</a></li>
+                    <li><a href="#combinatorics-handles">What To Look For</a></li>
+                    <li><a href="#combinatorics-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="combinatorics-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_intuition" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#combinatorics-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">A friendly way into combinatorics is to ask ordinary questions very carefully: how many ways can you walk across a city grid, deal a hand, arrange guests, or break a number into smaller parts? The field becomes powerful because it teaches you that the same answer can wear many visual forms.</p>
+                <p class="frame-note">This is why small examples matter so much. In combinatorics, a four-node graph or a short staircase of boxes is not a toy version of the real problem. It is often the real problem in miniature. Once you can see recurrence, symmetry, or adjacency in the small case, the general argument becomes easier to trust.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Familiar picture</h3>
+                        <p>Two routes across a grid, a stack of boxes, or a friendship graph all answer the same question in different dialects of counting.</p>
+                        <a href="#combinatorics-map">anchor: counting map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>What combinatorics rewards</h3>
+                        <p>It rewards reorganizing the problem. A counting argument often becomes simple only after the objects have been redescribed.</p>
+                        <a href="#combinatorics-handles">anchor: visual handles</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Why it connects outward</h3>
+                        <p>Combinatorics shares borders with symmetry, lattices, parsing, and scheduling because all of them care about finite arrangement under constraints.</p>
+                        <a href="/topics/math/topology/#topology-intuition">next: topology intuition</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="combinatorics-map" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_map" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#combinatorics-map">^"counting_map"{</a>
+                    <h2>Three Common Counting Pictures</h2>
+                </div>
+                <p class="frame-note">Many combinatorial arguments begin by translating one problem into another picture: a path problem, a partition picture, or a graph relation.</p>
+                <figure class="spw-svg-figure">
+                    <svg viewBox="0 0 720 320" role="img" aria-labelledby="combinatorics-map-title combinatorics-map-desc">
+                        <title id="combinatorics-map-title">Combinatorics counting map</title>
+                        <desc id="combinatorics-map-desc">Three panels show lattice paths, partition boxes, and a small graph as common combinatorics pictures.</desc>
+                        <rect x="20" y="20" width="680" height="280" rx="24" fill="rgba(255,255,255,0.88)" stroke="rgba(0,128,128,0.16)"/>
+                        <line x1="246" y1="52" x2="246" y2="268" stroke="rgba(0,128,128,0.16)" stroke-width="2" stroke-dasharray="8 8"/>
+                        <line x1="474" y1="52" x2="474" y2="268" stroke="rgba(0,128,128,0.16)" stroke-width="2" stroke-dasharray="8 8"/>
+                        <text x="134" y="58" text-anchor="middle" font-size="18" fill="var(--ink)">paths</text>
+                        <text x="360" y="58" text-anchor="middle" font-size="18" fill="var(--ink)">partitions</text>
+                        <text x="586" y="58" text-anchor="middle" font-size="18" fill="var(--ink)">graphs</text>
+                        <g transform="translate(76 86)" stroke="rgba(0,128,128,0.24)" stroke-width="2">
+                            <path d="M0 0 H116 M0 29 H116 M0 58 H116 M0 87 H116 M0 116 H116"/>
+                            <path d="M0 0 V116 M29 0 V116 M58 0 V116 M87 0 V116 M116 0 V116"/>
+                            <path d="M0 116 H29 V87 H58 V58 H87 V29 H116 V0" fill="none" stroke="var(--op-frame-color, #178282)" stroke-width="4"/>
+                            <path d="M0 116 V87 H29 V58 H58 H87 V29 H116 V0" fill="none" stroke="var(--op-object-color, #c68a22)" stroke-width="4"/>
+                        </g>
+                        <g transform="translate(302 94)" fill="rgba(29,87,163,0.12)" stroke="var(--op-ref-color, #1d57a3)" stroke-width="2">
+                            <rect x="0" y="0" width="34" height="34"/>
+                            <rect x="34" y="0" width="34" height="34"/>
+                            <rect x="68" y="0" width="34" height="34"/>
+                            <rect x="102" y="0" width="34" height="34"/>
+                            <rect x="0" y="34" width="34" height="34"/>
+                            <rect x="34" y="34" width="34" height="34"/>
+                            <rect x="68" y="34" width="34" height="34"/>
+                            <rect x="0" y="68" width="34" height="34"/>
+                        </g>
+                        <g transform="translate(520 92)" stroke-width="3">
+                            <g stroke="rgba(0,128,128,0.3)">
+                                <line x1="0" y1="30" x2="66" y2="0"/>
+                                <line x1="0" y1="30" x2="66" y2="92"/>
+                                <line x1="66" y1="0" x2="132" y2="30"/>
+                                <line x1="66" y1="92" x2="132" y2="30"/>
+                                <line x1="66" y1="0" x2="66" y2="92"/>
+                            </g>
+                            <g fill="rgba(198,138,34,0.14)" stroke="var(--op-object-color, #c68a22)">
+                                <circle cx="0" cy="30" r="11"/>
+                                <circle cx="66" cy="0" r="11"/>
+                                <circle cx="66" cy="92" r="11"/>
+                                <circle cx="132" cy="30" r="11"/>
+                            </g>
+                        </g>
+                        <text x="134" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">count by tracing legal moves</text>
+                        <text x="360" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">count by stacking units into shape</text>
+                        <text x="586" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">count by naming adjacency relations</text>
+                    </svg>
+                    <figcaption class="frame-note">The strength of combinatorics is translation. A hard question often softens when it becomes a path count, a partition diagram, or a graph with a better notion of neighborhood.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="combinatorics-handles" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_handles" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#combinatorics-handles">~"visual_handles"</a>
+                    <h2>What To Look For</h2>
+                </div>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">?bijection</span>
+                        <h3>Bijection</h3>
+                        <p>If two problem pictures can be paired perfectly, counting one counts the other. This is one of combinatorics' cleanest visual tricks.</p>
+                        <a href="#combinatorics-map">anchor: counting map</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">&amp;recur</span>
+                        <h3>Recurrence</h3>
+                        <p>Small cases teach the next case. A pattern that rebuilds itself from prior states often wants a recursive picture.</p>
+                        <a href="/topics/software/schedulers/">route: schedulers</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">^partition</span>
+                        <h3>Partition</h3>
+                        <p>Boxes stacked into rows make arithmetic and combinatorial growth feel tangible. Shape becomes a way to count.</p>
+                        <a href="/topics/math/topology/#topology-map">topology anchor: deformation map</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">~graph</span>
+                        <h3>Graph</h3>
+                        <p>Sometimes the main structure is not magnitude but adjacency: who touches whom, what paths exist, and where branching occurs.</p>
+                        <a href="/topics/software/parsers/">route: parsers</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="combinatorics-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="counting adjacency recursion" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_combinatorics__combinatorics_neighbors" data-spw-context-relevance="combinatorics counting partitions graphs recursion finite structure" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/symmetry/|/topics/software/lattices/|/topics/software/parsers/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#combinatorics-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Topology</h3>
+                        <p>Finite combinatorial models often approximate continuous spaces and help make topological invariants computable.</p>
+                        <a href="/topics/math/topology/#topology-intuition">route: Topology intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Symmetry</h3>
+                        <p>Counting becomes cleaner once you account for when two arrangements are equivalent under a symmetry action.</p>
+                        <a href="/topics/math/symmetry/#symmetry-map">route: Symmetry map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Lattices</h3>
+                        <p>Subset relations, partition refinement, and decision spaces all turn combinatorial families into navigable orders.</p>
+                        <a href="/topics/software/lattices/">route: Lattices</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>Grammar trees, derivations, and ambiguity counts are combinatorial objects wearing a language coat.</p>
+                        <a href="/topics/software/parsers/">route: Parsers</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

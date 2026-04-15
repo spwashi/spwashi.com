@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.6';
+const APP_VERSION = '0.3.8';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -41,6 +41,13 @@ const CORE_ROUTES = [
   '/topics/pedagogy/',
   '/topics/site-design/',
   '/topics/math/',
+  '/topics/math/topology/',
+  '/topics/math/symmetry/',
+  '/topics/math/combinatorics/',
+  '/topics/math/number-theory/',
+  '/topics/math/field-theory/',
+  '/topics/math/category-theory/',
+  '/topics/math/complexity/',
   '/topics/software/',
   '/topics/software/renderers/',
   '/topics/software/geometry/',
@@ -77,6 +84,7 @@ const CORE_ASSETS = [
 
   '/public/js/site.js',
   '/public/js/site-settings.js',
+  '/public/js/spw-math-diagrams.js',
   '/public/js/pwa-update-handler.js',
 
   '/public/images/apple-touch-icon.png',

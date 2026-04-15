@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Category Theory: Composition Is The Joke</title>
+    <meta name="description" content="Fun, intuition-first insight into category theory through composition, commuting squares, and relationship-first thinking.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module" src="/public/js/spw-math-diagrams.js?v=0.0.1"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/category-theory/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Category Theory: Composition Is The Joke"/>
+    <meta property="og:description" content="Fun, intuition-first insight into category theory through composition, commuting squares, and relationship-first thinking."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/category-theory/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Category theory route on Spwashi with a commuting-square diagram and playful composition notes."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Category Theory: Composition Is The Joke"/>
+    <meta name="twitter:description" content="Fun, intuition-first insight into category theory through composition, commuting squares, and relationship-first thinking."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Category theory route on Spwashi with a commuting-square diagram and playful composition notes."/>
+    <meta name="keywords" content="category theory, composition, commuting square, morphisms, functors, intuition, playful math"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Category Theory: Composition Is The Joke",
+                "description": "Fun, intuition-first insight into category theory through composition, commuting squares, and relationship-first thinking.",
+                "url": "https://spwashi.com/topics/math/category-theory/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "category theory",
+                        "composition",
+                        "commuting square",
+                        "morphisms",
+                        "functors",
+                        "intuition"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "category-theory-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "composition relation play"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Category Theory",
+                                "item": "https://spwashi.com/topics/math/category-theory/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_category_theory" data-spw-page-role="category-theory-register" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_category_theory__site_header" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/category-theory/">Category Theory</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>compose</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_category_theory__main_surface" data-spw-wonder="composition relation play">
+        <article>
+            <section class="site-frame site-hero" id="category-theory-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_category_theory__hero" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#category-theory-hero">#&gt;composition_is_the_joke</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">composition</span>
+                        <span class="spec-pill">morphisms</span>
+                        <span class="spec-pill">fun insight</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Pure Structure</p>
+                <h1>Category theory gets fun when you stop asking what things are and start asking how they compose.</h1>
+                <p>The popular intimidation move is to present category theory as abstraction on abstraction. A friendlier move is to say this: category theory is about dependable ways of going from one thing to another. Objects matter, but relationships matter first. If two journeys compose to the same result, that sameness is already a story worth keeping.</p>
+                <nav class="frame-operators" aria-label="Category theory routes">
+                    <a class="operator-chip" href="#category-intuition">intuition first</a>
+                    <a class="operator-chip" href="#commuting-square">commuting square</a>
+                    <a class="operator-chip" href="#category-insight">why it feels fun</a>
+                    <a class="operator-chip" href="/topics/software/parsers/#parser-doodles">parser doodles</a>
+                    <a class="operator-chip" href="/topics/math/complexity/#complexity-intuition">complexity</a>
+                    <a class="operator-chip" href="/topics/math/number-theory/#modular-clock">number theory clock</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Category theory sections">
+                <ul>
+                    <li><a href="#category-theory-hero">Overview</a></li>
+                    <li><a href="#category-intuition">Intuition First</a></li>
+                    <li><a href="#commuting-square">Commuting Square</a></li>
+                    <li><a href="#category-insight">Why It Feels Fun</a></li>
+                    <li><a href="#category-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="category-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_category_theory__intuition" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#category-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">One route into categories is to stop thinking of them as a vocabulary test and start thinking of them as a travel discipline. You have places. You have legal ways to travel between places. You can compose journeys. Some journeys do nothing. The theory asks what must be true for that system of travel to remain coherent.</p>
+                <div class="mode-switch" role="group" aria-label="Category theory lenses">
+                    <button class="frame-sigil" type="button" data-mode-group="category-lens" data-set-mode="bridges" aria-pressed="true">.bridges</button>
+                    <button class="frame-sigil" type="button" data-mode-group="category-lens" data-set-mode="recipes" aria-pressed="false">^recipes</button>
+                    <button class="frame-sigil" type="button" data-mode-group="category-lens" data-set-mode="pipelines" aria-pressed="false">&gt;pipelines</button>
+                </div>
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="category-lens" data-mode-panel="bridges">
+                        <p>Objects are towns. Morphisms are bridges. Composition is what happens when you cross one bridge and then another without falling into the river in between. Identity is the bridge that leaves you where you already were.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="category-lens" data-mode-panel="recipes" hidden>
+                        <p>Objects are kitchen states. Morphisms are recipes that transform one state into another. Composition asks whether doing recipe A and then recipe B makes sense as one larger, dependable recipe.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="category-lens" data-mode-panel="pipelines" hidden>
+                        <p>Objects are file or memory states. Morphisms are parser passes, schema transforms, or library adapters. Composition matters because tools are only as reliable as the transformations they can safely chain.</p>
+                    </section>
+                </div>
+            </section>
+
+            <section class="site-frame" id="commuting-square" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_category_theory__square" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#commuting-square">^"commuting_square"{</a>
+                    <h2>Portable Diagram: Two Journeys, One Result</h2>
+                </div>
+                <p class="frame-note">A commuting square says that going across then down means the same thing as going down then across. The square is fun because it captures equivalence of process, not only shape.</p>
+                <div class="math-interactive-lab" data-math-visual="commuting-square">
+                    <div class="math-toggle-row" role="group" aria-label="Commuting-square path">
+                        <button class="frame-sigil" type="button" data-category-path="upper" aria-pressed="false">top then right</button>
+                        <button class="frame-sigil" type="button" data-category-path="lower" aria-pressed="false">left then down</button>
+                        <button class="frame-sigil" type="button" data-category-path="both" aria-pressed="true">both paths</button>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 320" role="img" aria-labelledby="category-square-title category-square-desc">
+                            <title id="category-square-title">Commuting square</title>
+                            <desc id="category-square-desc">A square of four objects connected by arrows, with two different composite paths between the upper-left and lower-right objects.</desc>
+                            <rect x="20" y="20" width="680" height="280" rx="24" fill="rgba(255,255,255,0.88)" stroke="rgba(0,128,128,0.16)"/>
+                            <g fill="rgba(255,255,255,0.94)" stroke="rgba(22,24,28,0.2)" stroke-width="2">
+                                <circle cx="180" cy="104" r="34"/>
+                                <circle cx="540" cy="104" r="34"/>
+                                <circle cx="180" cy="228" r="34"/>
+                                <circle cx="540" cy="228" r="34"/>
+                            </g>
+                            <g font-size="16" fill="var(--ink)">
+                                <text x="180" y="109" text-anchor="middle">Syntax</text>
+                                <text x="540" y="109" text-anchor="middle">AST</text>
+                                <text x="180" y="233" text-anchor="middle">Schema</text>
+                                <text x="540" y="233" text-anchor="middle">Library</text>
+                            </g>
+                            <g fill="none" stroke-width="5" stroke-linecap="round">
+                                <path data-segment="upper" data-segment-state="active" d="M 216 104 H 504" stroke="var(--op-frame-color, #178282)"/>
+                                <path data-segment="upper" data-segment-state="active" d="M 540 140 V 192" stroke="var(--op-frame-color, #178282)"/>
+                                <path data-segment="lower" data-segment-state="active" d="M 180 140 V 192" stroke="var(--op-object-color, #c68a22)"/>
+                                <path data-segment="lower" data-segment-state="active" d="M 216 228 H 504" stroke="var(--op-object-color, #c68a22)"/>
+                            </g>
+                            <g fill="var(--ink-soft)" font-size="15">
+                                <text x="360" y="92" text-anchor="middle">f</text>
+                                <text x="560" y="170" text-anchor="middle">h</text>
+                                <text x="160" y="170" text-anchor="middle">g</text>
+                                <text x="360" y="216" text-anchor="middle">k</text>
+                            </g>
+                        </svg>
+                        <figcaption class="frame-note">The labels here are intentionally concrete: you can read the square as parser stages, schema transitions, or library transforms. Category theory becomes friendlier when the square names a real workflow.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">A commuting square is fun because two different journeys count as one result.</p>
+                </div>
+            </section>
+
+            <section class="site-frame" id="category-insight" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_category_theory__insight" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#category-insight">~"why_it_feels_fun"</a>
+                    <h2>Why It Feels Fun Here</h2>
+                </div>
+                <p class="frame-note">On this site, categories become lively when they stop pretending to be disconnected from toolmaking. A bespoke parser is a morphism-rich artifact. Library formalization is partly about preserving structure across adapters and transforms. Memory management is not only resource accounting; it is also a question of which transformations preserve identity, ownership, and retrievability.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>Parser doodles naturally produce categories: token streams, parse trees, ASTs, normalized libraries, and the maps between them.</p>
+                        <a href="/topics/software/parsers/#parser-doodles">route: Parser doodles</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Complexity</h3>
+                        <p>Compositional elegance still has to pay a cost. Complexity asks what happens to time and memory when those morphisms scale.</p>
+                        <a href="/topics/math/complexity/#growth-curves">route: Growth curves</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Field Theory</h3>
+                        <p>Functor-like preservation and structure-preserving maps become more meaningful when algebraic systems are already in view.</p>
+                        <a href="/topics/math/field-theory/#field-extensions">route: Field extensions</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="category-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="composition relation play" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_category_theory__neighbors" data-spw-context-relevance="category theory composition commuting square morphisms functors intuition" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/complexity/|/topics/math/field-theory/|/topics/software/parsers/|/topics/software/spw/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#category-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>If you like categories as process diagrams, parsers are a nearby playground full of composable transforms and normal forms.</p>
+                        <a href="/topics/software/parsers/#parser-map">route: Parser map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Complexity</h3>
+                        <p>Abstract relationships are satisfying, but complexity reminds you that composition still spends time and memory.</p>
+                        <a href="/topics/math/complexity/#complexity-intuition">route: Complexity intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Number Theory</h3>
+                        <p>Arithmetic structure becomes another source of good examples once you start tracking preserved operations and legal maps.</p>
+                        <a href="/topics/math/number-theory/#modular-clock">route: Number theory clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Spw Operator Atlas</h3>
+                        <p>Operator composition, reference flow, and surface projection are all easier to discuss once composition itself is a first-class habit.</p>
+                        <a href="/topics/software/spw/">route: Operator atlas</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

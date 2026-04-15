@@ -1,0 +1,111 @@
+# wip - pure-math-routes
+# Branch: main
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/pure-math-routes/PLAN.md"
+ @math_hub: ~"topics/math/index.html"
+ @topology: ~"topics/math/topology/index.html"
+ @symmetry: ~"topics/math/symmetry/index.html"
+ @combinatorics: ~"topics/math/combinatorics/index.html"
+ @topics_atlas: ~"topics/index.html"
+ @topics_css: ~"public/css/topics-surface.css"
+ @sw: ~"sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Give the existing math hub a few pure-math subroutes that make abstract structure easier to visualize through short field-guide pages."
+ ~#taste: "expressive clarity"
+}
+
+^["development"]{
+ lane: #topic_surface_quality
+ ladder: #service
+ develops: [#pure_math_routes, #diagrammatic_legibility, #route_discoverability]
+ review_surfaces: [@plan, @math_hub, @topology, @symmetry, @combinatorics, @topics_atlas, @topics_css, @sw]
+ snippet_routes: [#example, #query, #route]
+}
+
+^["concept_index"]{
+ primary: [#topology, #symmetry, #combinatorics]
+ surfaces: [#topics, #html, #css, #service_worker]
+ tensions: [#purity_vs_software, #diagram_vs_copy, #discoverability]
+ transfers: [#page, #route, #field_guide]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the math hub before widening claims",
+  "< ship one route-sized visual concept at a time",
+  "$ record where pure math stops sounding like software metaphor",
+  "^ fold route truth back into the hub and atlas",
+  "% keep static readability stable while adding diagrams",
+ ]
+ gates: [#preview_truth, #route_clarity, #claim_discipline]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_math_hub]
+ parallelizable: [#route_copy, #css_tuning]
+ shared_hot_files: ["topics/math/index.html", "public/css/topics-surface.css"]
+ merge_risks: [#hub_copy_drift, #css_scope_drift]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@topics_css]
+ carries: [#review_notes, #route_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #legibility, #preview, #trust]
+ questions: [#what_is_pure_math_here, #what_is_visualized, #what_neighbors_matter]
+ qualities: [#clarity, #rhythm, #containment]
+}
+
+^["risk_model"]{
+ hard_failures: [#software_drift, #broken_route_links]
+ soft_failures: [#diagram_wallpaper, #overgrown_css]
+ non_negotiables: [#static_html, #shared_css, #mobile_readability]
+}
+
+^["validation"]{
+ hypotheses: [#pure_math_hub_broadens_scope, #svg_diagrams_improve_scanability]
+ negative_controls: [#existing_routes_stay_intact, #shared_nav_stays_intact]
+ demo_path: ["/topics/math/", "/topics/math/topology/", "/topics/math/symmetry/", "/topics/math/combinatorics/", "/topics/"]
+}
+
+^["stream"]{
+ >>[2026-04-15 12:22] observe — The existing math hub is strong as a software-adjacent register but it does not yet branch into pure-math routes of its own.
+ >>[2026-04-15 12:25] decide — Keep the pure-math cluster small and visual: topology for deformation, symmetry for invariants, combinatorics for finite arrangement.
+ >>[2026-04-15 12:28] taste — The pages need compact field-guide energy rather than textbook density; each route should teach one visual habit of attention.
+}
+
+^["open"]{
+ ?[hub_balance]: "How much of the current software-neighbor framing should remain once pure-math subroutes exist?"
+}
+
+^["commits"]{
+ ~[1]: "#[math] — plan pure-math route expansion"
+ ~[2]: "&[math] — add pure-math field-guide routes"
+ ~[3]: ".[topics] — wire hub discoverability and shared visual language"
+ ~[4]: "![math] — verify static hygiene and route coverage"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@66b78359e0129f530be7e31853098bc4fdd76998"
+ ~#rebased_at: "2026-04-15 12:25"
+ ~#hygiene_split: "none"
+ ~#files_hot: "topics/math/index.html public/css/topics-surface.css"
+ ~#next_commit: "2"
+ ~#open_count: "1"
+ ~#last_stream: "2026-04-15 12:28 taste"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

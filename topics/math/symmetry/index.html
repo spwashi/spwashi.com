@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Symmetry: Actions, Orbits, Invariants</title>
+    <meta name="description" content="Field notes on symmetry, group actions, orbits, reflections, and invariants for visualizing pure math.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/symmetry/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Symmetry: Actions, Orbits, Invariants"/>
+    <meta property="og:description" content="Field notes on symmetry, group actions, orbits, reflections, and invariants for visualizing pure math."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/symmetry/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Symmetry route on Spwashi showing rotations, reflections, orbits, and invariants."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Symmetry: Actions, Orbits, Invariants"/>
+    <meta name="twitter:description" content="Field notes on symmetry, group actions, orbits, reflections, and invariants for visualizing pure math."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Symmetry route on Spwashi showing rotations, reflections, orbits, and invariants."/>
+    <meta name="keywords" content="symmetry, group actions, orbit, invariant, reflection, rotation, pure math, visualization"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Symmetry: Actions, Orbits, Invariants",
+                "description": "Field notes on symmetry, group actions, orbits, reflections, and invariants for visualizing pure math.",
+                "url": "https://spwashi.com/topics/math/symmetry/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "symmetry",
+                        "group actions",
+                        "orbit",
+                        "invariant",
+                        "reflection",
+                        "rotation",
+                        "pure math"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "symmetry-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "invariance repetition transformation"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Symmetry",
+                                "item": "https://spwashi.com/topics/math/symmetry/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_symmetry" data-spw-page-role="symmetry-register" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_symmetry__site_header" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/symmetry/">Symmetry</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>orbit</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_symmetry__main_surface" data-spw-wonder="invariance repetition transformation">
+        <article>
+            <section class="site-frame site-hero" id="symmetry-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_symmetry__symmetry_hero" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#symmetry-hero">#&gt;actions_orbits_invariants</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">rotation</span>
+                        <span class="spec-pill">reflection</span>
+                        <span class="spec-pill">invariance</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Pure Structure</p>
+                <h1>Symmetry is the study of changes that leave something essential unchanged.</h1>
+                <p>This is a route for seeing algebra spatially. Instead of treating symmetry as a checklist of balanced shapes, it helps to see a symmetry as an action: a transformation you can apply, compose, repeat, and compare. The visual question becomes simple and powerful: what moves, what stays fixed, and what collection of motions counts as the same structure?</p>
+                <nav class="frame-operators" aria-label="Symmetry routes">
+                    <a class="operator-chip" href="#symmetry-intuition">intuition first</a>
+                    <a class="operator-chip" href="#symmetry-map">action map</a>
+                    <a class="operator-chip" href="#symmetry-handles">visual handles</a>
+                    <a class="operator-chip" href="/topics/math/">math hub</a>
+                    <a class="operator-chip" href="/topics/math/topology/#topology-map">topology deformation map</a>
+                    <a class="operator-chip" href="/topics/math/combinatorics/#combinatorics-map">combinatorics map</a>
+                    <a class="operator-chip" href="/topics/software/geometry/">geometry</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Symmetry sections">
+                <ul>
+                    <li><a href="#symmetry-hero">Overview</a></li>
+                    <li><a href="#symmetry-intuition">Intuition First</a></li>
+                    <li><a href="#symmetry-map">Action Map</a></li>
+                    <li><a href="#symmetry-handles">What To Look For</a></li>
+                    <li><a href="#symmetry-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="symmetry-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_symmetry__symmetry_intuition" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#symmetry-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">A gentle textbook entry into symmetry begins with familiar objects: a snowflake, a tiled floor, a playing card, or a folded paper cutout. Each example teaches the same core idea. Certain motions can be performed without changing the pattern you care about. Those motions are the true subject, not only the finished shape.</p>
+                <p class="frame-note">This is where algebra quietly enters. The legal motions can be composed. Doing one rotation and then another is still part of the system. A reflection followed by a rotation is another meaningful move. Once you start treating transformations themselves as the object of study, symmetry stops being decoration and becomes structure.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Familiar picture</h3>
+                        <p>Turn a coin, rotate a hexagon, or fold a paper heart across a mirror line. Each example teaches a different kind of legal move.</p>
+                        <a href="#symmetry-map">anchor: action map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>What symmetry keeps</h3>
+                        <p>The arrangement may move, but the important relation stays put: the whole figure still matches itself after the transformation.</p>
+                        <a href="#symmetry-handles">anchor: visual handles</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Why it matters</h3>
+                        <p>Symmetry is one of the fastest ways to reduce complexity. It tells you when many apparently different cases are really one case in disguise.</p>
+                        <a href="/topics/math/combinatorics/#combinatorics-intuition">next: combinatorics intuition</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="symmetry-map" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_symmetry__symmetry_map" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#symmetry-map">^"action_map"{</a>
+                    <h2>How An Action Generates A Pattern</h2>
+                </div>
+                <p class="frame-note">One way to visualize symmetry is to watch a single marked point travel through the positions allowed by a transformation family. That trace is an orbit.</p>
+                <figure class="spw-svg-figure">
+                    <svg viewBox="0 0 720 320" role="img" aria-labelledby="symmetry-map-title symmetry-map-desc">
+                        <title id="symmetry-map-title">Symmetry action map</title>
+                        <desc id="symmetry-map-desc">A left panel shows rotational orbit positions around a center, while a right panel shows reflection across a vertical axis.</desc>
+                        <rect x="20" y="20" width="680" height="280" rx="24" fill="rgba(255,255,255,0.88)" stroke="rgba(0,128,128,0.16)"/>
+                        <line x1="360" y1="54" x2="360" y2="266" stroke="rgba(0,128,128,0.18)" stroke-width="2" stroke-dasharray="8 8"/>
+                        <text x="190" y="58" text-anchor="middle" font-size="18" fill="var(--ink)">rotation orbit</text>
+                        <text x="530" y="58" text-anchor="middle" font-size="18" fill="var(--ink)">reflection axis</text>
+                        <g transform="translate(190 158)">
+                            <circle cx="0" cy="0" r="82" fill="none" stroke="rgba(0,128,128,0.18)" stroke-width="2" stroke-dasharray="8 8"/>
+                            <polygon points="0,-52 45,-26 45,26 0,52 -45,26 -45,-26" fill="rgba(23,130,130,0.08)" stroke="var(--op-frame-color, #178282)" stroke-width="3"/>
+                            <g fill="var(--op-probe-color, #6a3fb8)">
+                                <circle cx="0" cy="-82" r="8"/>
+                                <circle cx="71" cy="-41" r="8"/>
+                                <circle cx="71" cy="41" r="8"/>
+                                <circle cx="0" cy="82" r="8"/>
+                                <circle cx="-71" cy="41" r="8"/>
+                                <circle cx="-71" cy="-41" r="8"/>
+                            </g>
+                            <path d="M -4 -102 A 102 102 0 0 1 88 -42" fill="none" stroke="var(--op-object-color, #c68a22)" stroke-width="3"/>
+                            <polygon points="88,-42 77,-42 84,-33" fill="var(--op-object-color, #c68a22)"/>
+                            <circle cx="0" cy="0" r="6" fill="var(--op-ref-color, #1d57a3)"/>
+                        </g>
+                        <g transform="translate(530 158)">
+                            <line x1="0" y1="-84" x2="0" y2="84" stroke="var(--op-object-color, #c68a22)" stroke-width="3" stroke-dasharray="7 7"/>
+                            <polygon points="-72,-24 -22,-56 -30,18" fill="rgba(29,87,163,0.1)" stroke="var(--op-ref-color, #1d57a3)" stroke-width="3"/>
+                            <polygon points="72,-24 22,-56 30,18" fill="rgba(29,87,163,0.1)" stroke="var(--op-ref-color, #1d57a3)" stroke-width="3"/>
+                            <circle cx="0" cy="46" r="12" fill="rgba(198,138,34,0.14)" stroke="var(--op-object-color, #c68a22)" stroke-width="3"/>
+                        </g>
+                        <text x="190" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">a marked point visits every allowed position</text>
+                        <text x="530" y="264" text-anchor="middle" font-size="14" fill="var(--ink-soft)">mirror symmetry preserves distance to the axis</text>
+                    </svg>
+                    <figcaption class="frame-note">The same visual object becomes more mathematical once you start naming its legal moves. Orbit, fixed point, and invariant are ways to speak about those moves with precision.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="symmetry-handles" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_symmetry__symmetry_handles" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#symmetry-handles">~"visual_handles"</a>
+                    <h2>What To Look For</h2>
+                </div>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">@action</span>
+                        <h3>Action</h3>
+                        <p>A symmetry is not only a static property. It is a legal move that can be applied to a space, shape, or set.</p>
+                        <a href="#symmetry-map">anchor: action map</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">*orbit</span>
+                        <h3>Orbit</h3>
+                        <p>Follow one point through all allowed moves. The resulting trace is often the fastest route to understanding the whole action.</p>
+                        <a href="/topics/math/combinatorics/#combinatorics-map">combinatorics anchor: counting map</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">^fixed</span>
+                        <h3>Fixed Point</h3>
+                        <p>Some points do not move under a chosen action. Their stillness often reveals the organizing axis or center.</p>
+                        <a href="/topics/math/topology/#topology-intuition">topology anchor: intuition</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">%invariant</span>
+                        <h3>Invariant</h3>
+                        <p>The deepest question is what survives every legal move: distance to an axis, adjacency pattern, orientation class, or some algebraic signature.</p>
+                        <a href="/topics/software/renderers/">route: renderers</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="symmetry-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="invariance repetition transformation" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_symmetry__symmetry_neighbors" data-spw-context-relevance="symmetry group actions orbit invariant reflection rotation" data-spw-related-routes="/topics/math/|/topics/math/topology/|/topics/math/combinatorics/|/topics/software/geometry/|/topics/software/renderers/|/topics/site-design/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#symmetry-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Topology</h3>
+                        <p>Topology asks what survives deformation. Symmetry asks what survives a chosen action. Together they train different senses of invariance.</p>
+                        <a href="/topics/math/topology/#topology-map">route: Topology map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Combinatorics</h3>
+                        <p>Group actions on finite sets naturally produce orbits, quotient counts, and elegant counting arguments.</p>
+                        <a href="/topics/math/combinatorics/#combinatorics-intuition">route: Combinatorics intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Geometry</h3>
+                        <p>Geometric figures often provide the first intuition for symmetry, especially when rotations and reflections can be seen directly.</p>
+                        <a href="/topics/software/geometry/">route: Geometry</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Renderers</h3>
+                        <p>Rendering pipelines rely on repeated transforms and invariant relationships between model, view, and projection spaces.</p>
+                        <a href="/topics/software/renderers/">route: Renderers</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

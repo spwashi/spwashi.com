@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Number Theory: Arithmetic With Memory</title>
+    <meta name="description" content="Intuition-first field notes on primes, residues, divisibility, and congruence, with a portable interactive number-theory clock.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module" src="/public/js/spw-math-diagrams.js?v=0.0.1"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/number-theory/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Number Theory: Arithmetic With Memory"/>
+    <meta property="og:description" content="Intuition-first field notes on primes, residues, divisibility, and congruence, with a portable interactive number-theory clock."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/number-theory/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Number theory route on Spwashi with modular arithmetic and divisibility diagrams."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Number Theory: Arithmetic With Memory"/>
+    <meta name="twitter:description" content="Intuition-first field notes on primes, residues, divisibility, and congruence, with a portable interactive number-theory clock."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Number theory route on Spwashi with modular arithmetic and divisibility diagrams."/>
+    <meta name="keywords" content="number theory, primes, congruence, modular arithmetic, divisibility, residues, portable interactive math"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Number Theory: Arithmetic With Memory",
+                "description": "Intuition-first field notes on primes, residues, divisibility, and congruence, with a portable interactive number-theory clock.",
+                "url": "https://spwashi.com/topics/math/number-theory/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "number theory",
+                        "primes",
+                        "congruence",
+                        "modular arithmetic",
+                        "divisibility",
+                        "residues"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "number-theory-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "residue divisibility recurrence"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Number Theory",
+                                "item": "https://spwashi.com/topics/math/number-theory/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_number_theory" data-spw-page-role="number-theory-register" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_number_theory__site_header" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/number-theory/">Number Theory</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>mod</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_number_theory__main_surface" data-spw-wonder="residue divisibility recurrence">
+        <article>
+            <section class="site-frame site-hero" id="number-theory-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_number_theory__hero" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#number-theory-hero">#&gt;arithmetic_with_memory</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">primes</span>
+                        <span class="spec-pill">congruence</span>
+                        <span class="spec-pill">divisibility</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Pure Structure</p>
+                <h1>Number theory is arithmetic that remembers structure.</h1>
+                <p>Addition and multiplication look familiar in number theory, but familiar operations start leaving visible fingerprints: divisibility, remainders, prime factorization, and cyclic repetition. The field is deep because the integers are simple enough to doodle and stubborn enough to keep surprising you.</p>
+                <nav class="frame-operators" aria-label="Number theory routes">
+                    <a class="operator-chip" href="#number-theory-intuition">intuition first</a>
+                    <a class="operator-chip" href="#modular-clock">modular clock</a>
+                    <a class="operator-chip" href="#divisibility-handles">divisibility handles</a>
+                    <a class="operator-chip" href="/topics/math/field-theory/#prime-fields">field theory</a>
+                    <a class="operator-chip" href="/topics/math/combinatorics/#combinatorics-intuition">combinatorics</a>
+                    <a class="operator-chip" href="/topics/math/category-theory/#category-insight">category insight</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Number theory sections">
+                <ul>
+                    <li><a href="#number-theory-hero">Overview</a></li>
+                    <li><a href="#number-theory-intuition">Intuition First</a></li>
+                    <li><a href="#modular-clock">Modular Clock</a></li>
+                    <li><a href="#divisibility-handles">Divisibility Handles</a></li>
+                    <li><a href="#number-theory-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="number-theory-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__intuition" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#number-theory-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">A good first feeling for number theory is that integers carry more memory than real-number arithmetic suggests. Ask whether one number divides another, or what remains after division, and suddenly arithmetic stops being smooth and starts forming textures: periodicity, factor families, prime bottlenecks, and repeating cycles.</p>
+                <p class="frame-note">This is why clocks are such a useful entry point. A clock throws away full turns and remembers only the residue class. That small act of forgetting is mathematically productive. It lets you see congruence as a pattern language: two numbers can be different in the usual sense and still be the same from the perspective of a chosen modulus.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Prime numbers</h3>
+                        <p>Primes act like structural atoms. They are not the only important objects, but many later patterns depend on how integers break into prime pieces.</p>
+                        <a href="#divisibility-handles">anchor: divisibility handles</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Congruence</h3>
+                        <p>Saying two numbers are congruent modulo n means they land in the same residue class after division by n.</p>
+                        <a href="#modular-clock">anchor: modular clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Field bridge</h3>
+                        <p>Prime moduli are special because modular arithmetic modulo p behaves cleanly enough to form a field.</p>
+                        <a href="/topics/math/field-theory/#prime-fields">next: prime fields</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="modular-clock" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__modular_clock" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#modular-clock">^"modular_clock"{</a>
+                    <h2>Portable Diagram: Multiplication On A Clock</h2>
+                </div>
+                <p class="frame-note">This SVG diagram maps each residue i to k × i (mod n). When the modulus is prime, the nonzero residues behave more cleanly; when the modulus shares factors with the multiplier, the pattern folds inward and exposes divisibility.</p>
+                <div class="math-interactive-lab" data-math-visual="mod-clock">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>modulus <output data-output="modulus">12</output></span>
+                            <input data-control="modulus" type="range" min="5" max="18" value="12">
+                        </label>
+                        <label class="math-control">
+                            <span>multiplier <output data-output="multiplier">5</output></span>
+                            <input data-control="multiplier" type="range" min="2" max="11" value="5">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 620 380" role="img" aria-labelledby="number-clock-title number-clock-desc">
+                            <title id="number-clock-title">Modular multiplication clock</title>
+                            <desc id="number-clock-desc">A modular arithmetic clock diagram that updates when the modulus and multiplier controls move.</desc>
+                        </svg>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default picture as multiplication by 5 on a 12-hour clock. The diagram still shows the basic idea: modular arithmetic turns numbers into recurring positions.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move the controls to compare prime and composite moduli.</p>
+                </div>
+            </section>
+
+            <section class="site-frame" id="divisibility-handles" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_number_theory__handles" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#divisibility-handles">~"visual_handles"</a>
+                    <h2>Divisibility Handles</h2>
+                </div>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">?prime</span>
+                        <h3>Prime</h3>
+                        <p>A prime is a number with no nontrivial divisors. In number theory, primes often mark the points where arithmetic becomes cleaner or more rigid.</p>
+                        <a href="/topics/math/field-theory/#prime-fields">field theory anchor: prime fields</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">~gcd</span>
+                        <h3>Greatest Common Divisor</h3>
+                        <p>The gcd tells you how much two numbers overlap structurally. In the modular clock, it controls whether the pattern permutes or collapses.</p>
+                        <a href="#modular-clock">anchor: modular clock</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">^residue</span>
+                        <h3>Residue Class</h3>
+                        <p>Residues are arithmetic positions remembered after full turns are forgotten. They are the central visual objects in modular arithmetic.</p>
+                        <a href="/topics/math/category-theory/#commuting-square">category anchor: composition square</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">&amp;euclid</span>
+                        <h3>Euclidean Habit</h3>
+                        <p>The Euclidean algorithm is a way of thinking, not only a procedure: keep dividing, keep tracking remainders, and structure eventually appears.</p>
+                        <a href="/topics/math/complexity/#complexity-intuition">complexity anchor: growth intuition</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="number-theory-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="residue divisibility recurrence" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_number_theory__neighbors" data-spw-context-relevance="number theory primes congruence modular arithmetic divisibility residues" data-spw-related-routes="/topics/math/|/topics/math/field-theory/|/topics/math/combinatorics/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#number-theory-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Field Theory</h3>
+                        <p>Finite fields often begin with modular arithmetic modulo a prime. Number theory supplies the raw material that field theory organizes.</p>
+                        <a href="/topics/math/field-theory/#prime-fields">route: Prime fields</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Combinatorics</h3>
+                        <p>Residue classes, partitions, and finite counting arguments often overlap, especially when periodicity or recurrence matters.</p>
+                        <a href="/topics/math/combinatorics/#combinatorics-intuition">route: Combinatorics intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Category Theory</h3>
+                        <p>Category language can make arithmetic feel less isolated by treating operations and preserved structure as first-class relationships.</p>
+                        <a href="/topics/math/category-theory/#category-insight">route: Category insight</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>Even bespoke parser design benefits from number-theoretic habits: small generators, repeating states, and residue-like equivalence classes.</p>
+                        <a href="/topics/software/parsers/#parser-doodles">route: Parser doodles</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

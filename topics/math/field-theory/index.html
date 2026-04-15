@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Field Theory: Arithmetic Habitats</title>
+    <meta name="description" content="Intuition-first notes on fields, prime fields, inverses, and extensions, with bridges to number theory and structure-preserving maps.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/field-theory/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Field Theory: Arithmetic Habitats"/>
+    <meta property="og:description" content="Intuition-first notes on fields, prime fields, inverses, and extensions, with bridges to number theory and structure-preserving maps."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/field-theory/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Field theory route on Spwashi with prime fields and extension diagrams."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Field Theory: Arithmetic Habitats"/>
+    <meta name="twitter:description" content="Intuition-first notes on fields, prime fields, inverses, and extensions, with bridges to number theory and structure-preserving maps."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Field theory route on Spwashi with prime fields and extension diagrams."/>
+    <meta name="keywords" content="field theory, prime fields, finite fields, inverses, extensions, algebra, number theory">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Field Theory: Arithmetic Habitats",
+                "description": "Intuition-first notes on fields, prime fields, inverses, and extensions, with bridges to number theory and structure-preserving maps.",
+                "url": "https://spwashi.com/topics/math/field-theory/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "field theory",
+                        "prime fields",
+                        "finite fields",
+                        "inverses",
+                        "extensions",
+                        "algebra"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "field-theory-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "inverse extension arithmetic"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Field Theory",
+                                "item": "https://spwashi.com/topics/math/field-theory/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_field_theory" data-spw-page-role="field-theory-register" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_field_theory__site_header" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/field-theory/">Field Theory</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>inverse</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_field_theory__main_surface" data-spw-wonder="inverse extension arithmetic">
+        <article>
+            <section class="site-frame site-hero" id="field-theory-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_field_theory__hero" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#field-theory-hero">#&gt;arithmetic_habitats</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">inverses</span>
+                        <span class="spec-pill">prime fields</span>
+                        <span class="spec-pill">extensions</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Pure Structure</p>
+                <h1>Field theory studies arithmetic habitats where division behaves cleanly.</h1>
+                <p>The first intuitive move in field theory is to stop hearing “field” as an empty abstraction and start hearing it as an environment. In a field, addition and multiplication interact coherently, subtraction is always available, and every nonzero element has a multiplicative inverse. Once that habitat is stable, you can ask how fields grow, nest, and preserve structure.</p>
+                <nav class="frame-operators" aria-label="Field theory routes">
+                    <a class="operator-chip" href="#field-theory-intuition">intuition first</a>
+                    <a class="operator-chip" href="#prime-fields">prime fields</a>
+                    <a class="operator-chip" href="#field-extensions">field extensions</a>
+                    <a class="operator-chip" href="/topics/math/number-theory/#modular-clock">number theory clock</a>
+                    <a class="operator-chip" href="/topics/math/category-theory/#category-insight">category insight</a>
+                    <a class="operator-chip" href="/topics/software/geometry/">geometry</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Field theory sections">
+                <ul>
+                    <li><a href="#field-theory-hero">Overview</a></li>
+                    <li><a href="#field-theory-intuition">Intuition First</a></li>
+                    <li><a href="#prime-fields">Prime Fields</a></li>
+                    <li><a href="#field-extensions">Field Extensions</a></li>
+                    <li><a href="#field-theory-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="field-theory-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_field_theory__intuition" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#field-theory-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">The rationals are a familiar field. You can add, subtract, multiply, and divide by any nonzero rational and stay inside the same habitat. The integers are not a field because division leaks outside the system. This contrast is the simplest way to feel why field theory cares so much about inverses.</p>
+                <p class="frame-note">Finite fields arrive through number theory. Arithmetic modulo a prime p behaves cleanly because every nonzero residue has a multiplicative inverse. Modulo a composite number, that clean behavior can fail. That is why prime moduli are a recurring threshold.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Field feeling</h3>
+                        <p>A field is not “all arithmetic.” It is a controlled habitat where division behaves, except at zero.</p>
+                        <a href="#prime-fields">anchor: prime fields</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Number theory bridge</h3>
+                        <p>Prime residues give one of the most approachable examples of finite fields.</p>
+                        <a href="/topics/math/number-theory/#modular-clock">route: Number theory clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Category bridge</h3>
+                        <p>Once fields are stable as objects, structure-preserving maps between them become a new source of insight.</p>
+                        <a href="/topics/math/category-theory/#commuting-square">route: Commuting square</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="prime-fields" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_field_theory__prime_fields" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#prime-fields">^"prime_fields"{</a>
+                    <h2>Prime Fields</h2>
+                </div>
+                <p class="frame-note">A quick visual way to compare modular systems is to ask whether every nonzero residue can be paired with an inverse. Prime moduli say yes. Composite moduli can fail because zero divisors get in the way.</p>
+                <figure class="spw-svg-figure">
+                    <svg viewBox="0 0 720 320" role="img" aria-labelledby="prime-fields-title prime-fields-desc">
+                        <title id="prime-fields-title">Prime fields versus composite modulus</title>
+                        <desc id="prime-fields-desc">Three small modular arithmetic panels compare a prime modulus, another prime modulus, and a composite modulus where inverses fail.</desc>
+                        <rect x="20" y="20" width="680" height="280" rx="24" fill="rgba(255,255,255,0.88)" stroke="rgba(0,128,128,0.16)"/>
+                        <line x1="246" y1="54" x2="246" y2="266" stroke="rgba(0,128,128,0.16)" stroke-width="2" stroke-dasharray="8 8"/>
+                        <line x1="474" y1="54" x2="474" y2="266" stroke="rgba(0,128,128,0.16)" stroke-width="2" stroke-dasharray="8 8"/>
+                        <text x="133" y="58" text-anchor="middle" fill="var(--ink)" font-size="18">mod 5</text>
+                        <text x="360" y="58" text-anchor="middle" fill="var(--ink)" font-size="18">mod 7</text>
+                        <text x="586" y="58" text-anchor="middle" fill="var(--ink)" font-size="18">mod 6</text>
+                        <g fill="rgba(23,130,130,0.1)" stroke="var(--op-frame-color, #178282)" stroke-width="2">
+                            <circle cx="133" cy="118" r="56"/>
+                            <circle cx="360" cy="118" r="56"/>
+                        </g>
+                        <g fill="rgba(198,138,34,0.1)" stroke="var(--op-object-color, #c68a22)" stroke-width="2">
+                            <circle cx="586" cy="118" r="56"/>
+                        </g>
+                        <text x="133" y="124" text-anchor="middle" fill="var(--ink)">all nonzero</text>
+                        <text x="133" y="144" text-anchor="middle" fill="var(--ink)">have inverses</text>
+                        <text x="360" y="124" text-anchor="middle" fill="var(--ink)">all nonzero</text>
+                        <text x="360" y="144" text-anchor="middle" fill="var(--ink)">have inverses</text>
+                        <text x="586" y="124" text-anchor="middle" fill="var(--ink)">2 × 3 ≡ 0</text>
+                        <text x="586" y="144" text-anchor="middle" fill="var(--ink)">zero divisors</text>
+                        <text x="133" y="232" text-anchor="middle" fill="var(--ink-soft)" font-size="14">prime modulus → field</text>
+                        <text x="360" y="232" text-anchor="middle" fill="var(--ink-soft)" font-size="14">prime modulus → field</text>
+                        <text x="586" y="232" text-anchor="middle" fill="var(--ink-soft)" font-size="14">composite modulus → not a field</text>
+                    </svg>
+                    <figcaption class="frame-note">This is the shortest bridge from number theory into field theory: prime moduli produce a clean arithmetic habitat, while composite moduli can break the inverse structure.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="field-extensions" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_field_theory__extensions" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#field-extensions">~"field_extensions"</a>
+                    <h2>Field Extensions</h2>
+                </div>
+                <p class="frame-note">Extensions are what happen when the current field is too small for the arithmetic you want to do. Adjoining a new element changes the habitat while preserving a disciplined relationship to the smaller field inside it.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>From Q to Q(√2)</h3>
+                        <p>The rationals do not contain √2. Adjoining it creates a larger field that remembers the rationals inside it.</p>
+                        <a href="/topics/math/category-theory/#category-insight">category route: preserved structure</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Finite-field towers</h3>
+                        <p>Finite fields often grow in powers of a prime, creating nested habitats with richer arithmetic and geometric behavior.</p>
+                        <a href="/topics/math/number-theory/#modular-clock">number theory route: modular clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Why extensions matter</h3>
+                        <p>They are the answer to “what arithmetic do I need that my current system cannot yet express?”</p>
+                        <a href="/topics/software/geometry/">route: Geometry</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="field-theory-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="inverse extension arithmetic" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_field_theory__neighbors" data-spw-context-relevance="field theory prime fields finite fields inverses extensions algebra" data-spw-related-routes="/topics/math/|/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/parsers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#field-theory-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Number Theory</h3>
+                        <p>Number theory provides the cleanest entry to finite fields through modular arithmetic and prime residues.</p>
+                        <a href="/topics/math/number-theory/#modular-clock">route: Number theory clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Category Theory</h3>
+                        <p>Once fields are stable objects, structure-preserving maps and extensions start sounding category-theoretic almost immediately.</p>
+                        <a href="/topics/math/category-theory/#commuting-square">route: Commuting square</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Complexity</h3>
+                        <p>Algebraic structure may simplify a problem or move it into a richer habitat, but complexity keeps asking what that move costs.</p>
+                        <a href="/topics/math/complexity/#complexity-intuition">route: Complexity intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Geometry</h3>
+                        <p>Coordinate systems, transformations, and many geometric formalisms lean on the arithmetic habitats that fields provide.</p>
+                        <a href="/topics/software/geometry/">route: Geometry</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

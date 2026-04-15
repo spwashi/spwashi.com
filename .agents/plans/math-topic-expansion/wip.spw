@@ -1,0 +1,93 @@
+# wip - math-topic-expansion
+# Branch: main
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/math-topic-expansion/PLAN.md"
+ @math_hub: ~"topics/math/index.html"
+ @topics: ~"topics/index.html"
+ @software: ~"topics/software/index.html"
+ @parsers: ~"topics/software/parsers/index.html"
+ @complexity: ~"topics/math/complexity/index.html"
+ @field_theory: ~"topics/math/field-theory/index.html"
+ @number_theory: ~"topics/math/number-theory/index.html"
+ @category_theory: ~"topics/math/category-theory/index.html"
+ @topics_css: ~"public/css/topics-surface.css"
+ @math_diagrams: ~"public/js/spw-math-diagrams.js"
+ @sw: ~"sw.js"
+}
+
+^["intent"]{
+ ~#goal: "Expand the math/theory topic cluster with new routes and portable interactive diagrams while upgrading the existing parsers page."
+ ~#taste: "playful clarity"
+}
+
+^["development"]{
+ lane: #topic_surface_quality
+ ladder: #service
+ develops: [#math_routes, #parser_depth, #portable_diagrams, #cross_linking]
+ review_surfaces: [@plan, @math_hub, @parsers, @complexity, @field_theory, @number_theory, @category_theory, @topics_css, @math_diagrams, @sw]
+ snippet_routes: [#route, #diagram, #anchor]
+}
+
+^["concept_index"]{
+ primary: [#parsers, #complexity, #field_theory, #number_theory, #category_theory]
+ surfaces: [#topics, #software, #svg, #js, #css]
+ tensions: [#intuition_vs_formalism, #interactivity_vs_portability, #scope_drift]
+ transfers: [#page, #diagram, #field_guide]
+}
+
+^["parallel_work"]{
+ critical_path: [#math_hub_wiring]
+ parallelizable: [#route_copy, #diagram_runtime]
+ shared_hot_files: ["topics/math/index.html", "public/css/topics-surface.css", "sw.js"]
+ merge_risks: [#local_worktree_drift, #shared_css_scope]
+ handoff_artifacts: [@plan]
+}
+
+^["risk_model"]{
+ hard_failures: [#route_orphans, #interactive_requires_js]
+ soft_failures: [#category_jargon, #parser_stub_survives]
+ non_negotiables: [#portable_svg, #static_html, #leave_unrelated_edits_alone]
+}
+
+^["validation"]{
+ hypotheses: [#math_cluster_becomes_navigable, #portable_diagrams_help_intuition]
+ negative_controls: [#existing_nav_intact, #non_feature_files_untouched]
+ demo_path: ["/topics/math/", "/topics/math/number-theory/", "/topics/math/category-theory/", "/topics/math/complexity/", "/topics/math/field-theory/", "/topics/software/parsers/", "/topics/"]
+}
+
+^["stream"]{
+ >>[2026-04-15 13:06] observe — The current parsers route is still a stub, while the math hub now has enough structure to support several more theory pages.
+ >>[2026-04-15 13:09] decide — Put complexity, field theory, number theory, and category theory under the math cluster; upgrade parsers in place under software.
+ >>[2026-04-15 13:12] taste — The interactive pieces should feel like portable study aids, not mini-apps; SVG with light DOM updates is the right scale.
+}
+
+^["open"]{
+ ?[complexity_home]: "Should complexity live as a math route, a software route, or both via cross-linking?"
+}
+
+^["commits"]{
+ ~[1]: "#[math] — plan theory route expansion"
+ ~[2]: "&[math] — add number theory, field theory, category theory, and complexity routes"
+ ~[3]: "&[software] — deepen parser route and cross-link theory neighbors"
+ ~[4]: ".[topics] — add portable math diagram runtime and shared topic styling"
+ ~[5]: "![math] — verify static hygiene and route coverage"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@66b78359e0129f530be7e31853098bc4fdd76998"
+ ~#rebased_at: "2026-04-15 13:09"
+ ~#hygiene_split: "unrelated local drift present; leave untouched"
+ ~#files_hot: "topics/math/index.html public/css/topics-surface.css sw.js topics/software/parsers/index.html"
+ ~#next_commit: "2"
+ ~#open_count: "1"
+ ~#last_stream: "2026-04-15 13:12 taste"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

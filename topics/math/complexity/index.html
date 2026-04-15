@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Complexity: Growth, Reduction, Budget</title>
+    <meta name="description" content="Intuition-first notes on complexity through growth curves, reduction thinking, parser budgets, and memory tradeoffs.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/complexity/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Complexity: Growth, Reduction, Budget"/>
+    <meta property="og:description" content="Intuition-first notes on complexity through growth curves, reduction thinking, parser budgets, and memory tradeoffs."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/complexity/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta property="og:image:alt" content="Complexity route on Spwashi with growth curves and parser budget notes."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Complexity: Growth, Reduction, Budget"/>
+    <meta name="twitter:description" content="Intuition-first notes on complexity through growth curves, reduction thinking, parser budgets, and memory tradeoffs."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
+    <meta name="twitter:image:alt" content="Complexity route on Spwashi with growth curves and parser budget notes."/>
+    <meta name="keywords" content="complexity, algorithms, growth rates, reductions, memory, parsing, theory">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Complexity: Growth, Reduction, Budget",
+                "description": "Intuition-first notes on complexity through growth curves, reduction thinking, parser budgets, and memory tradeoffs.",
+                "url": "https://spwashi.com/topics/math/complexity/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "complexity",
+                        "algorithms",
+                        "growth rates",
+                        "reductions",
+                        "memory",
+                        "parsing"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "complexity-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "growth constraint budget"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Complexity",
+                                "item": "https://spwashi.com/topics/math/complexity/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_complexity" data-spw-page-role="complexity-register" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_complexity__site_header" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/complexity/">Complexity</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>budget</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_complexity__main_surface" data-spw-wonder="growth constraint budget">
+        <article>
+            <section class="site-frame site-hero" id="complexity-hero" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_complexity__hero" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#complexity-hero">#&gt;growth_reduction_budget</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">growth</span>
+                        <span class="spec-pill">memory</span>
+                        <span class="spec-pill">reductions</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Math / Theory Neighbor</p>
+                <h1>Complexity is what your good local idea costs once it has to scale.</h1>
+                <p>Complexity theory becomes intuitive when you treat it as a budgeting discipline. Small examples can feel harmless. Complexity asks what happens when input size keeps growing, when memory starts to bind, when backtracking blooms, and when one problem can be translated into another. It is where elegant thought meets resource reality.</p>
+                <nav class="frame-operators" aria-label="Complexity routes">
+                    <a class="operator-chip" href="#complexity-intuition">intuition first</a>
+                    <a class="operator-chip" href="#growth-curves">growth curves</a>
+                    <a class="operator-chip" href="#parser-budgets">parser budgets</a>
+                    <a class="operator-chip" href="/topics/software/parsers/#parser-doodles">parser doodles</a>
+                    <a class="operator-chip" href="/topics/math/category-theory/#category-insight">category insight</a>
+                    <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
+                </nav>
+            </section>
+
+            <nav class="page-index" aria-label="Complexity sections">
+                <ul>
+                    <li><a href="#complexity-hero">Overview</a></li>
+                    <li><a href="#complexity-intuition">Intuition First</a></li>
+                    <li><a href="#growth-curves">Growth Curves</a></li>
+                    <li><a href="#parser-budgets">Parser Budgets</a></li>
+                    <li><a href="#complexity-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="complexity-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_complexity__intuition" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#complexity-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">The easiest way to feel complexity is to imagine your doodle surviving contact with scale. A parser that feels fine on ten lines may choke on ten thousand. A memory strategy that looks elegant in a notebook may turn into hidden retention and duplication. Complexity is the discipline of caring about those futures before they surprise you.</p>
+                <div class="mode-switch" role="group" aria-label="Complexity lenses">
+                    <button class="frame-sigil" type="button" data-mode-group="complexity-lens" data-set-mode="time" aria-pressed="true">.time</button>
+                    <button class="frame-sigil" type="button" data-mode-group="complexity-lens" data-set-mode="space" aria-pressed="false">^space</button>
+                    <button class="frame-sigil" type="button" data-mode-group="complexity-lens" data-set-mode="reductions" aria-pressed="false">~reductions</button>
+                </div>
+                <div class="mode-panels">
+                    <section class="mode-panel" data-mode-group="complexity-lens" data-mode-panel="time">
+                        <p>Time complexity asks how much longer the work takes as the input grows. The key intuition is not only speed, but curve shape: linear, logarithmic, quadratic, exponential, or worse.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="complexity-lens" data-mode-panel="space" hidden>
+                        <p>Space complexity asks how much memory the process needs while it runs. Memoization, caches, and retained parse states all buy time by spending memory.</p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="complexity-lens" data-mode-panel="reductions" hidden>
+                        <p>Reduction thinking compares problems by translation. If problem A can be turned into problem B without losing the essential burden, then solving B teaches you something about A.</p>
+                    </section>
+                </div>
+            </section>
+
+            <section class="site-frame" id="growth-curves" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_complexity__growth_curves" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#growth-curves">^"growth_curves"{</a>
+                    <h2>Growth Curves</h2>
+                </div>
+                <p class="frame-note">Most of the emotional difference in complexity comes from curve shape, not constant factors. A slightly steeper curve may feel harmless until scale turns it into a wall.</p>
+                <figure class="spw-svg-figure">
+                    <svg viewBox="0 0 720 320" role="img" aria-labelledby="complexity-curves-title complexity-curves-desc">
+                        <title id="complexity-curves-title">Complexity growth curves</title>
+                        <desc id="complexity-curves-desc">A chart comparing logarithmic, linear, quadratic, and exponential growth over increasing input sizes.</desc>
+                        <rect x="20" y="20" width="680" height="280" rx="24" fill="rgba(255,255,255,0.88)" stroke="rgba(0,128,128,0.16)"/>
+                        <line x1="90" y1="250" x2="640" y2="250" stroke="rgba(0,128,128,0.18)" stroke-width="2"/>
+                        <line x1="90" y1="250" x2="90" y2="60" stroke="rgba(0,128,128,0.18)" stroke-width="2"/>
+                        <path d="M 90 225 C 190 210 320 182 640 150" fill="none" stroke="var(--op-topic-color, #2a8c76)" stroke-width="4"/>
+                        <path d="M 90 232 C 200 218 360 170 640 104" fill="none" stroke="var(--op-frame-color, #178282)" stroke-width="4"/>
+                        <path d="M 90 238 C 220 232 360 198 640 70" fill="none" stroke="var(--op-object-color, #c68a22)" stroke-width="4"/>
+                        <path d="M 90 242 C 200 240 290 220 360 170 C 420 128 500 62 640 38" fill="none" stroke="var(--op-probe-color, #6a3fb8)" stroke-width="4"/>
+                        <text x="640" y="154" text-anchor="end" fill="var(--op-topic-color, #2a8c76)" font-size="15">log n</text>
+                        <text x="640" y="108" text-anchor="end" fill="var(--op-frame-color, #178282)" font-size="15">n</text>
+                        <text x="640" y="74" text-anchor="end" fill="var(--op-object-color, #c68a22)" font-size="15">n²</text>
+                        <text x="640" y="42" text-anchor="end" fill="var(--op-probe-color, #6a3fb8)" font-size="15">2ⁿ</text>
+                        <text x="365" y="284" text-anchor="middle" fill="var(--ink-soft)">input size</text>
+                        <text x="44" y="155" text-anchor="middle" fill="var(--ink-soft)" transform="rotate(-90 44 155)">cost</text>
+                    </svg>
+                    <figcaption class="frame-note">Complexity is often felt as curve shape. The later sections connect that feeling back to parser design and memory management rather than leaving it as a detached graph.</figcaption>
+                </figure>
+            </section>
+
+            <section class="site-frame" id="parser-budgets" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_complexity__parser_budgets" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#parser-budgets">~"parser_budgets"</a>
+                    <h2>Parsers, Libraries, Memory</h2>
+                </div>
+                <p class="frame-note">This route is here partly because of bespoke parser dreams. Once parser work becomes exploratory, complexity questions show up immediately: how much backtracking is tolerable, where memoization helps, when normalized library states should be retained, and how memory policy shapes the kinds of interactive syntax experiments you can afford.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Backtracking</h3>
+                        <p>Exploratory grammars can quietly spend time by revisiting too many branches. Complexity makes that branching visible as a future cost.</p>
+                        <a href="/topics/software/parsers/#parser-map">route: Parser map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Memoization</h3>
+                        <p>Memoization buys time by keeping partial results. It is also a memory-management decision, not only a performance trick.</p>
+                        <a href="/topics/software/parsers/#parser-lenses">route: Parser lenses</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Normalization</h3>
+                        <p>Library formalization is partly about reducing future work by making later passes simpler, more uniform, and more composable.</p>
+                        <a href="/topics/math/category-theory/#category-insight">route: Category insight</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="complexity-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_complexity__neighbors" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#complexity-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Parsers</h3>
+                        <p>If the complexity page feels abstract, go to parsers. The parser route is where growth, branching, and memory retention start touching concrete design choices.</p>
+                        <a href="/topics/software/parsers/#parser-doodles">route: Parser doodles</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Category Theory</h3>
+                        <p>Composition is elegant. Complexity asks what that elegance costs once composed transforms have to run at real scale.</p>
+                        <a href="/topics/math/category-theory/#commuting-square">route: Commuting square</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Combinatorics</h3>
+                        <p>Counting branches, paths, and configurations is one of the simplest ways to build intuition for why complexity grows.</p>
+                        <a href="/topics/math/combinatorics/#combinatorics-map">route: Counting map</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Schedulers</h3>
+                        <p>Schedulers translate abstract resource bounds into timing and consequence on a live system.</p>
+                        <a href="/topics/software/schedulers/">route: Schedulers</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>
