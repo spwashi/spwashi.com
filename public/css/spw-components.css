@@ -1063,6 +1063,101 @@ figcaption.frame-note,
   transform: scale(1);
 }
 
+html[data-spw-show-semantic-metadata="on"] body[data-spw-page-family]::after {
+  content: attr(data-spw-page-family) " · " attr(data-spw-page-role) " · " attr(data-spw-context);
+  position: fixed;
+  inset: auto var(--page-gutter, 1rem) var(--page-gutter, 1rem) auto;
+  z-index: 80;
+  max-inline-size: min(30rem, calc(100vw - 2rem));
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--semantic-metadata-line);
+  border-radius: 999px;
+  background: var(--semantic-metadata-bg-strong);
+  box-shadow: var(--semantic-metadata-shadow);
+  color: var(--semantic-metadata-ink);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--semantic-metadata-font-size);
+  letter-spacing: var(--semantic-metadata-tracking);
+  text-transform: lowercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: calc(0.56 + (var(--spw-semantic-metadata-factor, 0) * 0.26));
+  backdrop-filter: blur(10px);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context])::after {
+  content: attr(data-spw-role) " · " attr(data-spw-context) " · " attr(data-spw-category-family);
+  position: absolute;
+  inset: auto 0.9rem 0.9rem auto;
+  z-index: 2;
+  max-inline-size: min(28rem, calc(100% - 2rem));
+  padding: 0.18rem 0.42rem;
+  border: 1px solid var(--semantic-metadata-line);
+  border-radius: 999px;
+  background: var(--semantic-metadata-bg);
+  color: var(--semantic-metadata-ink);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: calc(var(--semantic-metadata-font-size) - 0.04rem);
+  letter-spacing: calc(var(--semantic-metadata-tracking) * 0.9);
+  text-transform: lowercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: calc(0.5 + (var(--spw-semantic-metadata-factor, 0) * 0.24));
+  transition:
+    opacity var(--component-transition-fast, 120ms ease),
+    transform var(--component-transition-fast, 120ms ease),
+    border-color var(--component-transition-fast, 120ms ease);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-seed]:is(:hover, :focus-within))::after {
+  content: attr(data-spw-role) " · " attr(data-spw-context) " · " attr(data-spw-category-family) " · " attr(data-spw-seed);
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.frame-card[data-spw-role][data-spw-kind])::after {
+  content: attr(data-spw-kind) " · " attr(data-spw-role);
+  position: absolute;
+  inset: 0.7rem 0.7rem auto auto;
+  z-index: 2;
+  padding: 0.14rem 0.38rem;
+  border: 1px solid var(--semantic-metadata-line);
+  border-radius: 999px;
+  background: var(--semantic-metadata-bg);
+  color: var(--semantic-metadata-ink);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: calc(var(--semantic-metadata-font-size) - 0.08rem);
+  letter-spacing: calc(var(--semantic-metadata-tracking) * 0.8);
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(2px);
+  transition:
+    opacity var(--component-transition-fast, 120ms ease),
+    transform var(--component-transition-fast, 120ms ease);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.frame-card[data-spw-role][data-spw-kind]:is(:hover, :focus-within))::after {
+  opacity: 0.92;
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  html[data-spw-show-semantic-metadata="on"] body[data-spw-page-family]::after {
+    inset: auto 0.75rem 0.75rem 0.75rem;
+    max-inline-size: none;
+  }
+
+  html[data-spw-show-semantic-metadata="on"] :where(.site-frame[data-spw-role][data-spw-context])::after {
+    inset: auto 0.7rem 0.7rem 0.7rem;
+    max-inline-size: none;
+  }
+}
+
 /* ==========================================================================
    20. Inline notes and prose annotations
    ========================================================================== */

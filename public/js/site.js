@@ -219,30 +219,93 @@ function readSet(...values) {
 const SITE_NAME = 'Spwashi';
 const DEFAULT_OG_IMAGE = 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg';
 const DEFAULT_OG_IMAGE_ALT = 'Illustrated Spwashi field card showing readable systems, structural surfaces, and playful semantic materials.';
+const ASSET_PATH_RE = /\.(?:avif|css|gif|ico|jpe?g|js|json|mjs|cjs|map|pdf|png|svg|txt|webmanifest|webp|xml)$/i;
+const NOISY_HASHES = new Set(['#main-content', '#top']);
 const CONTEXT_STOP_WORDS = new Set([
+  'a',
+  'all',
+  'an',
+  'and',
   'about',
   'again',
+  'after',
+  'are',
+  'as',
   'blog',
+  'but',
+  'can',
   'card',
+  'choose',
   'contact',
   'domain',
+  'each',
+  'first',
+  'for',
   'frame',
+  'from',
+  'get',
+  'gets',
   'guide',
+  'have',
   'home',
+  'here',
   'index',
+  'into',
+  'its',
+  'just',
+  'kind',
+  'kinds',
+  'many',
+  'more',
+  'not',
+  'now',
+  'of',
+  'once',
+  'one',
+  'or',
   'page',
+  'pages',
+  'paid',
+  'public',
   'register',
   'route',
   'routes',
   'section',
   'services',
   'settings',
+  'some',
   'site',
+  'stay',
+  'still',
   'spwashi',
   'surface',
+  'surfaces',
+  'systems',
+  'that',
+  'the',
+  'their',
+  'them',
+  'then',
+  'there',
+  'these',
+  'they',
+  'this',
   'tools',
   'topic',
   'topics',
+  'through',
+  'use',
+  'using',
+  'want',
+  'what',
+  'when',
+  'where',
+  'which',
+  'with',
+  'without',
+  'you',
+  'your',
+  'matches',
 ]);
 
 const PAGE_METADATA_RULES = [
@@ -688,13 +751,20 @@ function inferPageRole(pathname, surface) {
   return `${surface || 'page'}-surface`;
 }
 
+function isLikelyAssetPath(pathname = '') {
+  return ASSET_PATH_RE.test(pathname);
+}
+
 function normalizeInternalHref(rawHref) {
   if (!rawHref || /^(mailto:|tel:|javascript:)/i.test(rawHref)) return '';
-  if (rawHref.startsWith('#')) return rawHref;
+  if (rawHref.startsWith('#')) {
+    return NOISY_HASHES.has(rawHref.toLowerCase()) ? '' : rawHref;
+  }
 
   try {
     const url = new URL(rawHref, window.location.origin);
     if (url.origin !== window.location.origin) return '';
+    if (isLikelyAssetPath(url.pathname)) return '';
     return `${url.pathname}${url.hash}`;
   } catch {
     return '';
