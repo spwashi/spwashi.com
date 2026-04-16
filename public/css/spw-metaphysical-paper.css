@@ -236,6 +236,8 @@
   z-index: 2;
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 0.4rem;
   max-width: calc(100% - 1.3rem);
   pointer-events: none;
@@ -283,6 +285,9 @@
   font-size: 0.64rem;
   letter-spacing: 0.04em;
   white-space: nowrap;
+  max-width: min(100%, 12rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 html[data-spw-show-semantic-metadata="off"] .spw-image-memory {

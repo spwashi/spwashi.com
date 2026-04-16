@@ -1082,6 +1082,62 @@ a.frame-card:is(:hover, :focus-visible),
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+:where(
+  .frame-grid[data-spw-layout="media-prose"],
+  .frame-grid:has(> :is(.spw-scaffold, [data-spw-image-surface], .image-study, .spw-svg-figure, .media-frame, .screenshot-frame):first-child):has(> :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"])):not(:has(> :nth-child(3)))
+) {
+  --spw-media-rail-min: 16rem;
+  --spw-media-rail-max: 22rem;
+  --spw-media-prose-seam:
+    color-mix(in srgb, var(--component-accent, #008080) 16%, var(--line, rgba(14, 18, 20, 0.14)));
+  grid-template-columns:
+    minmax(min(100%, var(--spw-media-rail-min)), var(--spw-media-rail-max))
+    minmax(0, 1fr);
+  align-items: stretch;
+  column-gap: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+:where(
+  .frame-grid[data-spw-layout="media-prose"],
+  .frame-grid:has(> :is(.spw-scaffold, [data-spw-image-surface], .image-study, .spw-svg-figure, .media-frame, .screenshot-frame):first-child):has(> :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"])):not(:has(> :nth-child(3)))
+) > :first-child:is(.spw-scaffold, [data-spw-image-surface], .image-study, .spw-svg-figure, .media-frame, .screenshot-frame) {
+  width: min(100%, var(--spw-media-rail-max, 22rem));
+  max-width: 100%;
+  min-width: 0;
+  justify-self: center;
+  align-self: start;
+  margin: 0;
+}
+
+:where(
+  .frame-grid[data-spw-layout="media-prose"],
+  .frame-grid:has(> :is(.spw-scaffold, [data-spw-image-surface], .image-study, .spw-svg-figure, .media-frame, .screenshot-frame):first-child):has(> :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"])):not(:has(> :nth-child(3)))
+) > :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"]) {
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
+  align-self: stretch;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"]) > :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"]) {
+  border-inline-start: 1px solid var(--spw-media-prose-seam, rgba(14, 18, 20, 0.12));
+  padding-inline-start: calc(var(--component-pad, 0.9rem) + 0.35rem);
+}
+
+@media (max-width: 820px) {
+  :where(
+    .frame-grid[data-spw-layout="media-prose"],
+    .frame-grid:has(> :is(.spw-scaffold, [data-spw-image-surface], .image-study, .spw-svg-figure, .media-frame, .screenshot-frame):first-child):has(> :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"])):not(:has(> :nth-child(3)))
+  ) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.frame-grid[data-spw-layout="media-prose"]) > :nth-child(2):is(.frame-panel, .mode-panel, .frame-card, .site-frame, [data-spw-kind="panel"], [data-spw-kind="card"]) {
+    border-inline-start: 0;
+    padding-inline-start: var(--component-pad, 0.9rem);
+  }
+}
+
 /* ==========================================================================
    16. Page Index Navigation & Local Atlas
    ========================================================================== */
