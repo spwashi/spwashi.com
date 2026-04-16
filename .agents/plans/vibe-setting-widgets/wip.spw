@@ -1,0 +1,116 @@
+# wip — vibe-setting-widgets
+# Branch: feature/vibe-setting-widgets
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/vibe-setting-widgets/PLAN.md"
+ @settings: ~"settings/index.html"
+ @settings_runtime: ~"public/js/site-settings.js"
+ @settings_surface: ~"public/css/settings-surface.css"
+ @shared_surface: ~"public/css/spw-surfaces.css"
+ @home: ~"index.html"
+ @software: ~"topics/software/index.html"
+ @math: ~"topics/math/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Turn settings into an intuitive experience surface and reuse that same variant-card language as small sitewide vibe widgets."
+ ~#taste: "clarity first, then wonder: controls should feel inviting and legible rather than like a hidden debug panel."
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #page
+ develops: [#interaction_design, #settings_wiring, #copy_rhythm]
+ review_surfaces: [@plan, @settings, @settings_runtime, @shared_surface]
+ snippet_routes: [#variant_card, #live_feedback, #portable_trigger]
+}
+
+^["concept_index"]{
+ primary: [#vibe_widgets, #settings_feedback]
+ surfaces: [#settings_page, #home, #software_hub, #math_hub]
+ tensions: [#discoverability, #honest_controls, #page_order]
+ transfers: [#language, #page, #widget, #settings]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? start from the live settings wiring instead of inventing a second state model",
+  "< reduce the cognitive jump between /settings/ and route-local controls",
+  "$ preserve one reusable widget grammar that can be copied to other pages later",
+  "^ keep the copy explicit enough that interaction reads as invitation, not trickery",
+  "% verify the reordered settings route still supports deeper inspection after the quick-start layer",
+ ]
+ gates: [#portable_truth, #active_state_legibility, #ordering_clarity]
+}
+
+^["parallel_work"]{
+ critical_path: [#settings_model, #settings_page_order]
+ parallelizable: [#shared_widget_styles, #flagship_copy]
+ shared_hot_files: ["public/js/site-settings.js", "settings/index.html", "public/css/spw-surfaces.css"]
+ merge_risks: [#large_html_surface, #shared_css_drift]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@home, @software, @math]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #preview, #trust]
+ questions: [#what_to_show_first, #what_is_reversible, #how_state_reads_in_context]
+ qualities: [#clarity, #rhythm, #expressiveness]
+}
+
+^["risk_model"]{
+ hard_failures: [#trigger_scope_breakage, #out_of_sync_widgets]
+ soft_failures: [#decorative_feedback_only, #settings_page_still_reads_as_registry]
+ recoveries: [#global_readout_sync, #fallback_to_existing_fields]
+ non_negotiables: [#local_persistence, #accessible_controls, #existing_presets_hold]
+}
+
+^["validation"]{
+ hypotheses: [#portable_widgets_drive_settings, #reordered_page_feels_more_intuitive]
+ negative_controls: [#fieldsets_keep_working, #non_widget_pages_stay_stable]
+ demo_path: [#/settings, #/, #/topics/software/, #/topics/math/]
+}
+
+^["stream"]{
+ >>[2026-04-15 23:35] observe — the normalized settings model already supports global readouts, but declarative trigger controls are still effectively treated as scope-local behavior.
+ >>[2026-04-15 23:38] observe — `/settings/` currently orders technical maps and registries too close to the top, which makes the page feel like inspection-first instead of experience-first.
+ >>[2026-04-15 23:40] decide — center this pass on a reusable variant-widget pattern that can live on `/settings/` and on flagship routes without inventing a second control vocabulary.
+ >>[2026-04-15 23:42] hygiene — base ref recorded as main@81d5e5205d70; unrelated local edits exist in play/shared-css files and will be avoided.
+ >>[2026-04-15 23:43] taste — the widget copy should read like an invitation to shape the site, not like a hidden settings lab.
+ >>[2026-04-15 23:45] revise — user feedback confirms the current settings page order feels off, so the plan now explicitly prioritizes route order and quick-start clarity before ornament.
+}
+
+^["open"]{
+ ?[settings_order]: "How much of the deeper inspection material should move down versus stay visible near the top?"
+}
+
+^["commits"]{
+ ~[1]: "#[vibe-setting-widgets] — record the plan artifacts and hygiene baseline"
+ ~[2]: "&[vibe-setting-widgets] — make declarative setting widgets portable and stateful across route surfaces"
+ ~[3]: "&[vibe-setting-widgets] — reorder /settings/ around start-here feedback and reusable variant cards"
+ ~[4]: ".[vibe-setting-widgets] — seed mini vibe widgets on flagship routes and align the copy"
+ ~[5]: "![vibe-setting-widgets] — verify runtime wiring, markup integrity, and active-state behavior"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@81d5e5205d70"
+ ~#rebased_at: ""
+ ~#hygiene_split: "avoid unrelated uncommitted edits already present in play/shared-css files"
+ ~#files_hot: ""
+ ~#next_commit: "1"
+ ~#open_count: "1"
+ ~#last_stream: "2026-04-15 23:45"
+ ~#taste_debt: "watch whether the widget language becomes too ornamental if too many settings appear at once"
+}
+
+^["done"]{
+}
