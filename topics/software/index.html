@@ -136,6 +136,15 @@
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
                         <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
+                        <div class="wonder-memory-strip" data-site-settings-scope data-spw-memory-anchor="software spw parsers renderers number-theory category-theory">
+                            <p class="wonder-memory-copy">Wonder memory lets the last route you touched keep tinting palette squares and nearby structure. Keep it local, let it echo around this software surface, or let it resonate sitewide here and in <a href="/settings/#runtime-preferences">settings</a>.</p>
+                            <div class="wonder-memory-actions" role="group" aria-label="Wonder memory controls">
+                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">keep local</button>
+                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">echo nearby</button>
+                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">resonate sitewide</button>
+                                <span class="spec-pill">wonder memory: <span data-settings-state="wonderMemory">nearby</span></span>
+                            </div>
+                        </div>
                         <nav class="frame-operators" aria-label="Software overview routes">
                             <a class="operator-chip" href="#language-philosophy">language philosophy</a>
                             <a class="operator-chip" href="#semantic-fields">semantic fields</a>

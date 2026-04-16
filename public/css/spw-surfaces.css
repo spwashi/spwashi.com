@@ -260,6 +260,50 @@
   min-width: 0;
 }
 
+:where(.wonder-memory-strip) {
+  display: grid;
+  gap: 0.65rem;
+  margin-block: 0.2rem 0.35rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px dashed color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 28%, transparent);
+  border-radius: calc(var(--shape-surface, 10px) - 2px);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 10%, rgba(255, 255, 255, 0.92)) 0%,
+      rgba(255, 255, 255, 0.9) 58%,
+      color-mix(in srgb, var(--delight-color, var(--op-object-color, #c68a22)) 8%, rgba(255, 255, 255, 0.94)) 100%
+    );
+}
+
+:where(.wonder-memory-copy) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-sm, 0.92rem);
+  line-height: 1.55;
+  max-inline-size: 68ch;
+}
+
+:where(.wonder-memory-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+:where(.wonder-memory-actions .operator-chip[data-site-setting-active="true"]) {
+  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 12%, rgba(255, 255, 255, 0.92));
+  border-color: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 44%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 16%, transparent),
+    0 0 16px color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 12%, transparent);
+  color: var(--wonder-accent-color, var(--active-op-color, #008080));
+}
+
+:where(.wonder-memory-actions .spec-pill) {
+  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 8%, rgba(255, 255, 255, 0.92));
+}
+
 :where(.site-hero .topic-photo-card) {
   min-height: 100%;
 }

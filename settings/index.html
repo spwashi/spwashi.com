@@ -260,6 +260,7 @@
                             <li><code>--enhancement-factor</code></li>
                             <li><code>--infospace-factor</code></li>
                             <li><code>--operator-saturation-factor</code></li>
+                            <li><code>--spw-wonder-memory-strength</code></li>
                         </ul>
                         <a class="operator-chip" href="#runtime-preferences">? semantic controls</a>
                     </article>
@@ -343,6 +344,10 @@
                         <strong data-settings-state="semanticDensity">minimal</strong>
                     </article>
                     <article class="settings-state-card">
+                        <span class="settings-state-label">wonder memory</span>
+                        <strong data-settings-state="wonderMemory">nearby</strong>
+                    </article>
+                    <article class="settings-state-card">
                         <span class="settings-state-label">enhancement level</span>
                         <strong data-settings-state="enhancementLevel">minimal</strong>
                     </article>
@@ -365,7 +370,7 @@
             <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-form="brace"
                 data-spw-form-options="brace,block" data-spw-meaning="runtime preference controls"
                 data-spw-inspect="runtime_preferences"
-                data-spw-inspect-fields="colorMode,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
+                data-spw-inspect-fields="colorMode,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,wonderMemory,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
                     <h2>Runtime Preferences</h2>
@@ -755,7 +760,8 @@
                         <summary class="settings-category-header">Semantic Detail</summary>
                         <p class="frame-note">
                             These controls tune how much the site explains itself: density, operator presentation,
-                            metadata, handles, relation, and nesting.
+                            metadata, handles, relation, nesting, and whether recent wonder stays local or keeps
+                            echoing through nearby surfaces.
                         </p>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
@@ -874,6 +880,22 @@
                                 <label class="settings-option">
                                     <input type="radio" name="relationalVisualization" value="on">
                                     <span class="settings-option-copy"><strong>On</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Wonder memory</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="wonderMemory" value="off">
+                                    <span class="settings-option-copy"><strong>Off</strong><span>Keep image and path effects local to the current interaction.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="wonderMemory" value="nearby" checked>
+                                    <span class="settings-option-copy"><strong>Nearby</strong><span>Let recent paths tint palette squares, hero images, and nearby chips.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="wonderMemory" value="sitewide">
+                                    <span class="settings-option-copy"><strong>Sitewide</strong><span>Carry the last route into matched cards, guidance seams, and neighboring page structure.</span></span>
                                 </label>
                             </fieldset>
 

@@ -1,0 +1,73 @@
+# wip - palette-resonance
+# Branch: main
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/palette-resonance/PLAN.md"
+ @palette: ~"public/js/spw-accent-palette.js"
+ @canvas: ~"public/js/spw-canvas-accents.js"
+ @canvas_css: ~"public/css/spw-canvas-accents.css"
+ @software: ~"topics/software/index.html"
+ @parsers: ~"topics/software/parsers/index.html"
+ @math: ~"topics/math/index.html"
+}
+
+^["intent"]{
+ ~#goal: "Make image accents feel specific to each image by sampling palette, accepting manual override hints, and lightly tracking recent route/operator selections."
+ ~#taste: "semantic atmosphere"
+}
+
+^["development"]{
+ lane: #topic_surface_quality
+ ladder: #service
+ develops: [#palette_resonance, #image_specific_accents, #path_biased_interaction]
+ review_surfaces: [@palette, @canvas, @canvas_css, @software, @parsers, @math]
+}
+
+^["concept_index"]{
+ primary: [#palette, #resonance, #anchor, #operator, #canvas]
+ tensions: [#wonder_vs_noise, #image_truth_vs_manual_override, #local_palette_vs_recent_path]
+ transfers: [#software, #parsers, #math]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? keep the image as the first palette authority",
+  "< let manual override steer without replacing image truth entirely",
+  "$ make recent-path influence subtle enough to read as mood, not recolor",
+  "^ preserve calm fallback for non-image hosts",
+  "% prefer a small HTML override vocabulary over bespoke JS branches"
+ ]
+}
+
+^["stream"]{
+ >>[2026-04-15 17:07] observe — Existing canvas accents are lively but palette-static; they do not yet know anything about the underlying image or anchored route family.
+ >>[2026-04-15 17:15] decide — Add one new `resonance` archetype and make the shared palette builder image-aware so older accent types can also inherit better color truth.
+ >>[2026-04-15 17:20] taste — The effect should read like hovering swatches and semantic wake, not confetti.
+ >>[2026-04-15 17:43] implement — Split palette inference into a helper so the renderer stays under the file-size guard while still supporting image sampling, manual overrides, and recent-path bias.
+}
+
+^["open"]{
+ ?[path_bias]: "How strong can recent-path influence be before the accent stops feeling image-led?"
+}
+
+^["commits"]{
+ ~[1]: "#[images] — plan palette resonance accent"
+ ~[2]: "&[canvas] — add image-aware resonance accent runtime"
+ ~[3]: ".[topics] — tune hero figures with semantic palette overrides"
+ ~[4]: "![images] — verify static and runtime hygiene"
+}
+
+^["cache"]{
+ ~#status: "implementing"
+ ~#base_ref: "main@346e9446d284eaa78f6eed9aaa4a9a1da1ef0aa1"
+ ~#files_hot: "public/js/spw-accent-palette.js public/js/spw-canvas-accents.js public/css/spw-canvas-accents.css"
+ ~#next_commit: "3"
+ ~#open_count: "1"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

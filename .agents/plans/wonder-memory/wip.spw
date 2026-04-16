@@ -1,0 +1,116 @@
+# wip — wonder-memory
+# Branch: feature/wonder-memory
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/wonder-memory/PLAN.md"
+ @pattern: ~".spw/patterns/literate-ui.spw"
+ @settings: ~"public/js/site-settings.js"
+ @palette: ~"public/js/spw-accent-palette.js"
+ @accents: ~"public/js/spw-canvas-accents.js"
+ @memory: ~"public/js/spw-wonder-memory.js"
+}
+
+^["intent"]{
+ ~#goal: "Turn recent route/operator selection into a deliberate wonder-memory that can persist through image accents, nearby ornaments, and copy-level controls."
+ ~#taste: "expressiveness through shared state, with controls that stay legible and intentional."
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #service
+ develops: [#interaction_design, #settings_wiring, #page_rhythm]
+ review_surfaces: [@plan, @settings, @palette, @accents]
+ snippet_routes: [#settings_trigger, #recent_path, #hero_copy]
+}
+
+^["concept_index"]{
+ primary: [#wonder_memory]
+ surfaces: [#settings, #palette_resonance, #hero_controls, #structural_ornament]
+ tensions: [#discoverability, #opacity, #scope]
+ transfers: [#language, #page, #image, #navigation]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread settings, palette, and route copy before widening the interaction claim",
+  "< ship one declarative setting path that can be reused outside /settings",
+  "$ record where wonder memory reads as guidance instead of garnish",
+  "^ fold the clearer control language back into route copy and ornament",
+  "% keep existing presets and local persistence stable while adding the new state",
+ ]
+ gates: [#shared_state_truth, #copy_legibility, #recent_path_visibility]
+}
+
+^["parallel_work"]{
+ critical_path: [#settings_model]
+ parallelizable: [#route_copy, #ornament_tuning]
+ shared_hot_files: ["public/js/site-settings.js", "public/js/spw-canvas-accents.js"]
+ merge_risks: [#large_runtime_files, #copy_drift]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@pattern]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #preview, #legibility, #trust]
+ questions: [#what_persists, #what_matches, #what_the_user_can_control]
+ qualities: [#clarity, #rhythm, #expressiveness]
+}
+
+^["risk_model"]{
+ hard_failures: [#invalid_setting_state, #stale_recent_path]
+ soft_failures: [#ornament_without_copy, #copy_without_visible_effect]
+ recoveries: [#settings_normalization, #state_reset]
+ non_negotiables: [#local_persistence, #accessible_controls, #reversible_state]
+}
+
+^["validation"]{
+ hypotheses: [#settings_drive_runtime, #recent_path_colors_drive_wonder]
+ negative_controls: [#existing_presets_hold, #nonparticipating_pages_stay_stable]
+ demo_path: [#settings_to_software_to_parsers_to_math]
+}
+
+^["stream"]{
+ >>[2026-04-15 22:26] observe — settings are already centralized in public/js/site-settings.js, which is the right place to add a normalized wonder-memory model instead of inventing page-local state.
+ >>[2026-04-15 22:27] observe — palette resonance already tracks recent route/operator clicks in public/js/spw-accent-palette.js, but the memory does not yet drive shared ornament or explicit controls.
+ >>[2026-04-15 22:28] decide — use a first slice centered on wonder memory: one new setting, declarative route-local triggers, and matched ornament states on flagship pages.
+ >>[2026-04-15 22:29] hygiene — base ref recorded as main@346e944; unrelated uncommitted worktree edits exist outside scope and will be avoided.
+ >>[2026-04-15 22:29] taste — the control language should read like guidance in the page copy, not like a hidden debug console.
+ >>[2026-04-15 22:42] decide — use concrete mode names (`off`, `nearby`, `sitewide`) so the setting reads clearly in both `/settings/` and route-local control strips.
+ >>[2026-04-15 22:49] implement — wired wonder-memory through public/js/site-settings.js, including presets, derived modifiers, root datasets/variables, and declarative `data-site-setting-set` triggers that work outside `/settings/`.
+ >>[2026-04-15 22:53] implement — added public/js/spw-wonder-memory.js so recent-path resonance can tint matched cards, links, and hero figures without overloading the canvas renderer.
+ >>[2026-04-15 22:57] implement — added wonder-memory control strips and explanatory copy to software, parser, and math heroes, plus a first-class field/readout on the settings page.
+ >>[2026-04-15 23:00] verify — node --check passed for site-settings.js, spw-accent-palette.js, spw-canvas-accents.js, and spw-wonder-memory.js; git diff --check passed.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[wonder-memory] — add normalized wonder-memory settings state, presets, and declarative trigger wiring"
+ ~[2]: "&[wonder-memory] — connect recent-path wonder memory to resonance palettes and structural ornament state"
+ ~[3]: ".[wonder-memory] — add flagship route copy and local controls that explain and exercise the feature"
+ ~[4]: "![wonder-memory] — validate wiring, links, and runtime syntax"
+}
+
+^["cache"]{
+ ~#status: "verified"
+ ~#base_ref: "main@346e944"
+ ~#rebased_at: ""
+ ~#hygiene_split: "avoid unrelated local drift already present in worktree"
+ ~#files_hot: "public/js/site-settings.js, public/js/spw-accent-palette.js, public/js/spw-canvas-accents.js, public/js/spw-wonder-memory.js"
+ ~#next_commit: "4"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-15 23:00"
+ ~#taste_debt: "watch whether nearby/sitewide needs even clearer in-situ copy after real mobile use"
+}
+
+^["done"]{
+}

@@ -50,6 +50,9 @@
  * 5. Field validation hints
  *    <div data-site-setting-errors="colorMode"></div>
  *
+ * 6. Declarative trigger controls
+ *    <button type="button" data-site-setting-set="wonderMemory:sitewide">Resonate sitewide</button>
+ *
  * Validation model
  * - validateSetting(name, value): validate a single field
  * - validatePartialSettings(partial): validate a partial payload
@@ -149,6 +152,24 @@ const HEADER_OPACITY_VALUE = Object.freeze({
   low: '0.76',
   normal: '0.9',
   high: '1'
+});
+
+const WONDER_MEMORY_PROFILE = Object.freeze({
+  off: Object.freeze({
+    strength: 0,
+    ttlMs: 0,
+    reach: 0
+  }),
+  nearby: Object.freeze({
+    strength: 0.56,
+    ttlMs: 28000,
+    reach: 0.54
+  }),
+  sitewide: Object.freeze({
+    strength: 0.92,
+    ttlMs: 96000,
+    reach: 1
+  })
 });
 
 const DEVELOPMENTAL_CLIMATES = Object.freeze({
@@ -269,6 +290,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   showSemanticMetadata: 'off',
   operatorHighlighting: 'off',
   relationalVisualization: 'off',
+  wonderMemory: 'nearby',
   developmentalIndicators: 'off',
   depthIndicators: 'off',
 
@@ -322,6 +344,7 @@ const SETTING_OPTIONS = Object.freeze({
   showSemanticMetadata: new Set(['off', 'on']),
   operatorHighlighting: new Set(['off', 'on']),
   relationalVisualization: new Set(['off', 'on']),
+  wonderMemory: new Set(['off', 'nearby', 'sitewide']),
   developmentalIndicators: new Set(['off', 'on']),
   depthIndicators: new Set(['off', 'on']),
 
@@ -351,6 +374,7 @@ const PRESETS = Object.freeze({
     developmentalIndicators: 'off',
     depthIndicators: 'off',
     relationalVisualization: 'off',
+    wonderMemory: 'nearby',
     showSpecPills: 'off',
     enhancementLevel: 'minimal',
     infospaceComplexity: 'simple',
@@ -376,6 +400,7 @@ const PRESETS = Object.freeze({
     developmentalIndicators: 'on',
     showSpecPills: 'on',
     relationalVisualization: 'on',
+    wonderMemory: 'sitewide',
     enhancementLevel: 'rich',
     infospaceComplexity: 'adaptive',
     dimensionalBreadcrumbs: 'on',
@@ -397,6 +422,7 @@ const PRESETS = Object.freeze({
     showSpecPills: 'on',
     developmentalIndicators: 'on',
     relationalVisualization: 'on',
+    wonderMemory: 'sitewide',
     implementationMutations: 'on',
     grainIntensity: 'none',
     debugMode: 'on',
@@ -418,6 +444,7 @@ const PRESETS = Object.freeze({
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
     developmentalIndicators: 'on',
+    wonderMemory: 'off',
     navigatorDisplay: 'full',
     consoleDisplay: 'collapsed',
     busDiagnostics: 'basic',
@@ -568,6 +595,10 @@ const getDevelopmentalClimateDefinition = (settings) => (
   DEVELOPMENTAL_CLIMATES[settings.currentDevelopmentalClimate] || DEVELOPMENTAL_CLIMATES.orient
 );
 
+const getWonderMemoryProfile = (settings) => (
+  WONDER_MEMORY_PROFILE[settings.wonderMemory] || WONDER_MEMORY_PROFILE.nearby
+);
+
 const deriveArchitecturalModifiers = (settings) => {
   const climate = getDevelopmentalClimateDefinition(settings);
   const motionScale = getMotionScale(settings);
@@ -579,6 +610,7 @@ const deriveArchitecturalModifiers = (settings) => {
   const cognitiveFactor = settings.cognitiveHandles === 'on' ? 1 : 0;
   const relationalFactor = settings.relationalVisualization === 'on' ? 1 : 0;
   const metadataFactor = settings.showSemanticMetadata === 'on' ? 1 : 0;
+  const wonderProfile = getWonderMemoryProfile(settings);
 
   const ecology = {
     clarity: clampNumber(climate.clarity * enhancementFactor, 0, 1),
@@ -627,6 +659,12 @@ const deriveArchitecturalModifiers = (settings) => {
       cognitiveFactor,
       relationalFactor,
       metadataFactor
+    }),
+    wonder: Object.freeze({
+      mode: settings.wonderMemory,
+      strength: wonderProfile.strength,
+      ttlMs: wonderProfile.ttlMs,
+      reach: wonderProfile.reach
     })
   });
 };
@@ -694,6 +732,7 @@ class SiteSettingsManager {
     this.root.dataset.spwShowSemanticMetadata = normalized.showSemanticMetadata;
     this.root.dataset.spwOperatorHighlighting = normalized.operatorHighlighting;
     this.root.dataset.spwRelationalVisualization = normalized.relationalVisualization;
+    this.root.dataset.spwWonderMemory = normalized.wonderMemory;
     this.root.dataset.spwDevelopmentalIndicators = normalized.developmentalIndicators;
     this.root.dataset.spwDepthIndicators = normalized.depthIndicators;
 
@@ -726,6 +765,9 @@ class SiteSettingsManager {
     this.root.style.setProperty('--spw-cognitive-handle-factor', String(modifiers.semantic.cognitiveFactor));
     this.root.style.setProperty('--spw-relational-factor', String(modifiers.semantic.relationalFactor));
     this.root.style.setProperty('--spw-semantic-metadata-factor', String(modifiers.semantic.metadataFactor));
+    this.root.style.setProperty('--spw-wonder-memory-strength', String(modifiers.wonder.strength));
+    this.root.style.setProperty('--spw-wonder-memory-ttl-ms', `${modifiers.wonder.ttlMs}`);
+    this.root.style.setProperty('--spw-wonder-memory-reach', String(modifiers.wonder.reach));
 
     this.root.style.setProperty('--spw-developmental-clarity', String(modifiers.ecology.clarity));
     this.root.style.setProperty('--spw-developmental-pressure', String(modifiers.ecology.pressure));
@@ -785,7 +827,11 @@ const manager = new SiteSettingsManager();
 
 const getSiteSettings = () => manager.get();
 const getSiteSettingModifiers = (settings) => manager.getModifiers(settings);
-const applySiteSettings = (settings) => manager.apply(settings);
+const applySiteSettings = (settings) => {
+  const applied = manager.apply(settings);
+  initSiteSettingsBindings();
+  return applied;
+};
 const saveSiteSettings = (nextSettings) => manager.save(nextSettings);
 const resetSiteSettings = () => manager.reset();
 const shouldUseViewportActivation = () => manager.shouldUseViewportActivation();
@@ -856,6 +902,49 @@ const writeSettingsToScope = (root, settings) => {
   syncSettingsReadouts(root, normalized);
 };
 
+const humanizeSettingName = (name = '') => (
+  String(name)
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/[_-]+/g, ' ')
+    .trim()
+    .toLowerCase()
+);
+
+const parseSettingTrigger = (value = '') => {
+  const [name = '', option = ''] = String(value).split(':');
+  const normalizedName = name.trim();
+  const normalizedOption = option.trim();
+
+  if (!normalizedName || !normalizedOption) return null;
+
+  return {
+    name: normalizedName,
+    value: normalizedOption
+  };
+};
+
+const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
+  const normalized = normalizeSiteSettings(settings);
+
+  root.querySelectorAll?.('[data-site-setting-set]').forEach((node) => {
+    const trigger = parseSettingTrigger(node.getAttribute('data-site-setting-set'));
+    if (!trigger || !isKnownSetting(trigger.name)) return;
+
+    const isActive = normalized[trigger.name] === trigger.value;
+    node.dataset.siteSettingActive = isActive ? 'true' : 'false';
+
+    if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
+      node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    } else if (node instanceof HTMLAnchorElement) {
+      if (isActive) {
+        node.setAttribute('aria-current', 'true');
+      } else {
+        node.removeAttribute('aria-current');
+      }
+    }
+  });
+};
+
 const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => {
   const normalized = normalizeSiteSettings(settings);
 
@@ -870,6 +959,8 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
     if (!key || !isKnownSetting(key)) return;
     node.textContent = normalized[key] ?? '—';
   });
+
+  syncSettingTriggers(root, normalized);
 };
 
 const writeFieldError = (root, name, message = '') => {
@@ -1081,6 +1172,35 @@ const bindSettingsScope = (root, options = {}) => {
     });
   }
 
+  const triggerHandlers = [];
+  root.querySelectorAll('[data-site-setting-set]').forEach((control) => {
+    const handler = (event) => {
+      const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
+      if (!trigger) return;
+
+      if (control instanceof HTMLAnchorElement) {
+        event.preventDefault();
+      }
+
+      const validation = validateSetting(trigger.name, trigger.value);
+      if (!validation.valid) {
+        setStatus(`Invalid ${humanizeSettingName(trigger.name)} option.`, 'info');
+        return;
+      }
+
+      const saved = saveSiteSettings({ [trigger.name]: trigger.value });
+      syncFromStore(saved);
+      setStatus(
+        `${humanizeSettingName(trigger.name)} → ${trigger.value}.`,
+        'success'
+      );
+      onSaved?.(saved, trigger);
+    };
+
+    control.addEventListener('click', handler);
+    triggerHandlers.push(() => control.removeEventListener('click', handler));
+  });
+
   const resetButton = root.querySelector('[data-site-settings-reset]');
   const handleReset = () => {
     const settings = resetSiteSettings();
@@ -1108,6 +1228,7 @@ const bindSettingsScope = (root, options = {}) => {
       }
       resetButton?.removeEventListener('click', handleReset);
       presetHandlers.forEach((cleanup) => cleanup());
+      triggerHandlers.forEach((cleanup) => cleanup());
       off?.();
     },
     refresh() {
@@ -1148,7 +1269,7 @@ const bindSettingsReadouts = (root = document) => {
    The dedicated settings page is now just one bound scope.
    ========================================================================== */
 
-const initSiteSettingsPage = () => {
+const initSiteSettingsBindings = () => {
   const forms = [...document.querySelectorAll('[data-site-settings-form]')];
   const scopes = [...document.querySelectorAll('[data-site-settings-scope]')]
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
@@ -1186,6 +1307,8 @@ const initSiteSettingsPage = () => {
     }
   };
 };
+
+const initSiteSettingsPage = () => initSiteSettingsBindings();
 
 /* ==========================================================================
    10. PWA status
@@ -1271,6 +1394,7 @@ if (typeof window !== 'undefined') {
     bindSettingsReadouts,
     presets: PRESETS,
     describePreset: (name) => manager.describePreset(name),
+    initBindings: initSiteSettingsBindings,
     manager
   };
 }
@@ -1294,6 +1418,7 @@ export {
   getSettingValue,
   getSiteSettingModifiers,
   getSiteSettings,
+  initSiteSettingsBindings,
   initSiteSettingsPage,
   normalizeSiteSettings,
   resetSiteSettings,

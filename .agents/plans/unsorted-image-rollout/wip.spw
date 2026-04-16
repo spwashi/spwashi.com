@@ -1,0 +1,85 @@
+# wip - unsorted-image-rollout
+# Branch: main
+# Started: 2026-04-15
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/unsorted-image-rollout/PLAN.md"
+ @home: ~"index.html"
+ @topics: ~"topics/index.html"
+ @software: ~"topics/software/index.html"
+ @surfaces: ~"public/css/spw-surfaces.css"
+ @topics_css: ~"public/css/topics-surface.css"
+ @home_css: ~"public/css/home-surface.css"
+}
+
+^["intent"]{
+ ~#goal: "Make the site's most visible routes feel more wonder-bearing by threading curated images from 00.unsorted into heroes, cards, and route-facing captions."
+ ~#taste: "editorial wonder with screenshot discipline"
+}
+
+^["development"]{
+ lane: #topic_surface_quality
+ ladder: #service
+ develops: [#illustrated_cards, #hero_discoverability, #image_copy_alignment]
+ review_surfaces: [@home, @topics, @software, @surfaces, @topics_css, @home_css]
+ image_sources: ["00.unsorted/hero-images", "00.unsorted/items", "00.unsorted/tiles", "00.unsorted/aesthetics", "00.unsorted/ChatGPT"]
+}
+
+^["concept_index"]{
+ primary: [#hero, #card, #caption, #render, #discoverability]
+ tensions: [#wonder_vs_noise, #decoration_vs_meaning, #screenshot_vs_readability]
+ transfers: [#home, #atlas, #software]
+}
+
+^["selection"]{
+ chosen: [
+  "/00.unsorted/hero-images/spwashi_hero_image_for_a_boonhonk_website_25e1cdef-ac4c-43ac-bcfc-140642865ff5.png",
+  "/00.unsorted/hero-images/spwashi_hero_image_for_a_boonhonk_website_6f23ac95-6953-40cc-9591-590011149af6.png",
+  "/00.unsorted/items/spwashi_glowing_boonhonk_machine_gearin_up_to_blort_some_bap_55fcbbd0-246c-431b-97f5-f38ea1035bda.png",
+  "/00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_0.png",
+  "/00.unsorted/tiles/spwashi_cozy_background_for_a_library_CMS_elegant_and_inviting_6361412f-0420-48c7-b54e-5de5f15bbbd8.png",
+  "/00.unsorted/aesthetics/spwashi_background_image_for_a_website_--chaos_20_--ar_34_--p_e1d037e7-1258-46cc-b86d-e261cf886b84_0.png",
+  "/00.unsorted/ChatGPT/ChatGPT Image Apr 15, 2026, 06_31_40 PM.png"
+ ]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? choose images that imply the route's mental motion",
+  "< let captions point outward into nearby sections and routes",
+  "$ keep card hierarchy readable even after adding figures",
+  "^ use shared CSS before page-local overrides",
+  "% stop before the atlas turns into a gallery dump"
+ ]
+}
+
+^["stream"]{
+ >>[2026-04-15 16:12] observe — The site already has strong image interaction runtime, but many high-level cards and heroes still read as text-first surfaces.
+ >>[2026-04-15 16:21] decide — Focus on the home page, the topics atlas, and the software hub so the first screenshot surfaces change meaningfully.
+ >>[2026-04-15 16:29] choose — Favor the mushroom-house hero, machine cabinet, algorithm tile, library stack, aurora sea, band portrait, and a ChatGPT parchment diagram.
+ >>[2026-04-15 16:48] fix — Mobile effect parity matters first: raster watercolor now uses a CSS-native wash path, and pixelize gets an explicit grid/scale treatment so all images show a visible state on dense screens.
+}
+
+^["open"]{
+ ?[image_density]: "How many atlas cards can become illustrated before the route scan gets slower instead of richer?"
+}
+
+^["commits"]{
+ ~[1]: "#[plan] — map unsorted image rollout"
+ ~[2]: "&[surface] — add illustrated hero and card image treatment"
+ ~[3]: ".[content] — weave curated renders into home and topic hubs"
+ ~[4]: "![verify] — check static hygiene"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main"
+ ~#files_hot: "index.html topics/index.html topics/software/index.html public/css/spw-surfaces.css"
+ ~#next_commit: "2"
+ ~#open_count: "1"
+}
+
+^["done"]{
+}

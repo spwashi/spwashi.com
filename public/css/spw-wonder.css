@@ -157,11 +157,34 @@
   .site-frame[data-spw-wonder-state="resonant"],
   .frame-panel[data-spw-wonder-state="resonant"],
   .frame-card[data-spw-wonder-state="resonant"],
-  .mode-panel[data-spw-wonder-state="resonant"]
+  .mode-panel[data-spw-wonder-state="resonant"],
+  .intent-cluster[data-spw-wonder-state="resonant"],
+  .context-edge-card[data-spw-wonder-state="resonant"],
+  .topic-photo-card[data-spw-wonder-state="resonant"],
+  .math-lens-card[data-spw-wonder-state="resonant"]
 ) {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
     0 0 20px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+}
+
+:where(
+  .intent-cluster[data-spw-wonder-state="resonant"],
+  .context-edge-card[data-spw-wonder-state="resonant"],
+  .topic-photo-card[data-spw-wonder-state="resonant"],
+  .math-lens-card[data-spw-wonder-state="resonant"]
+) {
+  color: inherit !important;
+  animation: none;
+}
+
+:where(
+  .intent-cluster[data-spw-wonder-state="resonant"] .intent-cluster-kicker,
+  .context-edge-card[data-spw-wonder-state="resonant"] .intent-cluster-kicker,
+  .topic-photo-card[data-spw-wonder-state="resonant"] figcaption strong,
+  .math-lens-card[data-spw-wonder-state="resonant"] .frame-card-sigil
+) {
+  color: var(--wonder-accent-color) !important;
 }
 
 /* ==========================================================================
