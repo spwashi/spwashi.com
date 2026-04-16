@@ -460,6 +460,25 @@ const PRESETS = Object.freeze({
   }
 });
 
+const SETTING_VALUE_LABELS = Object.freeze({
+  colorMode: Object.freeze({
+    auto: 'Adaptive',
+    light: 'Light',
+    dark: 'Dark'
+  }),
+  paletteResonance: Object.freeze({
+    route: 'Context-led',
+    craft: 'Craft-led',
+    software: 'Software-led',
+    math: 'Math-led'
+  }),
+  wonderMemory: Object.freeze({
+    off: 'Focused',
+    nearby: 'Connected',
+    sitewide: 'Immersive'
+  })
+});
+
 /* ==========================================================================
    2. Storage & normalization
    ========================================================================== */
@@ -952,6 +971,11 @@ const humanizeSettingName = (name = '') => (
     .toLowerCase()
 );
 
+const describeSettingValue = (name, value) => (
+  SETTING_VALUE_LABELS[name]?.[value]
+  || String(value ?? '—')
+);
+
 const parseSettingTrigger = (value = '') => {
   const [name = '', option = ''] = String(value).split(':');
   const normalizedName = name.trim();
@@ -965,7 +989,7 @@ const parseSettingTrigger = (value = '') => {
   };
 };
 
-const STANDALONE_SETTINGS_HINT = 'Tap a chip to tune this browser-local setting. The active choice stays lit.';
+const STANDALONE_SETTINGS_HINT = 'Choose a mode to update this browser-local setting. The active option stays highlighted.';
 
 const primeSettingTriggerControl = (node) => {
   if (!(node instanceof HTMLElement)) return;
@@ -1068,7 +1092,7 @@ const applySettingTrigger = (trigger, options = {}) => {
   syncSettingsReadouts(document, saved);
   writeSettingsStatus(
     statusNode,
-    `${humanizeSettingName(trigger.name)} → ${trigger.value}.`,
+    `${humanizeSettingName(trigger.name)} → ${describeSettingValue(trigger.name, trigger.value)}.`,
     'success'
   );
   onSaved?.(saved, trigger);
@@ -1094,13 +1118,13 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
   root.querySelectorAll?.('[data-settings-state]').forEach((node) => {
     const key = node.getAttribute('data-settings-state');
     if (!key || !isKnownSetting(key)) return;
-    node.textContent = normalized[key] ?? '—';
+    node.textContent = describeSettingValue(key, normalized[key]);
   });
 
   root.querySelectorAll?.('[data-site-setting-value]').forEach((node) => {
     const key = node.getAttribute('data-site-setting-value');
     if (!key || !isKnownSetting(key)) return;
-    node.textContent = normalized[key] ?? '—';
+    node.textContent = describeSettingValue(key, normalized[key]);
   });
 
   syncSettingTriggers(root, normalized);

@@ -268,7 +268,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   background: transparent;
   box-shadow: none;
   color: var(--ink-soft);
-  font-size: 0.72rem;
+  font-size: var(--text-size-label, 0.76rem);
   opacity: 0.42;
   justify-content: flex-start;
   text-align: left;
@@ -295,6 +295,19 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    ========================================================================== */
 
 .operator-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: max(2.15rem, var(--touch-target-compact, 2.25rem));
+  padding: 0.28rem 0.72rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--shape-control, 0.78rem);
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1.08;
+  font-size: var(--text-size-chip, 0.82rem);
   background: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, transparent);
   color: color-mix(in oklab, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
@@ -313,6 +326,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
   border-color: var(--handle-line-soft);
   background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
 }
 
 .spw-component-tag {

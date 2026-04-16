@@ -2,9 +2,9 @@ const DEFAULT_PALETTE_RESONANCE = 'route';
 
 const PALETTE_RESONANCE_TOKENS = Object.freeze({
   route: Object.freeze([]),
-  craft: Object.freeze(['craft', 'site-design', 'svg', 'fragments']),
-  software: Object.freeze(['software', 'spw', 'parsers', 'renderers']),
-  math: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory'])
+  craft: Object.freeze(['craft', 'site-design', 'svg', 'fragments', 'website', 'services', 'contact']),
+  software: Object.freeze(['software', 'spw', 'parsers', 'renderers', 'browser', 'compression', 'schedulers', 'lattices']),
+  math: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory', 'complexity', 'symmetry', 'topology', 'combinatorics'])
 });
 
 const PALETTE_RESONANCE_SWATCHES = Object.freeze({

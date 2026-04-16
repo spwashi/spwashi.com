@@ -61,9 +61,9 @@
     0 16px 36px rgba(0, 0, 0, 0.09),
     0 4px 14px rgba(0, 0, 0, 0.05);
 
-  --website-radius-lg: var(--shape-surface, 14px);
-  --website-radius-md: var(--shape-component, 8px);
-  --website-radius-sm: var(--shape-element, 5px);
+  --website-radius-lg: var(--shape-surface, 10px);
+  --website-radius-md: var(--shape-component, 6px);
+  --website-radius-sm: var(--shape-element, 4px);
 
   --ink: var(--website-ink);
   --ink-soft: var(--website-ink-soft);
@@ -372,7 +372,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 :where(body[data-spw-surface="website"] .spw-svg-figure figcaption) {
   margin-top: 0.65rem;
   color: var(--website-ink-soft);
-  font-size: 0.9rem;
+  font-size: var(--text-size-sm, 0.9rem);
 }
 
 :where(body[data-spw-surface="website"] .feature-ladder) {
@@ -501,7 +501,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 
 :where(body[data-spw-surface="website"] code) {
   padding: 0.08rem 0.28rem;
-  border-radius: 4px;
+  border-radius: var(--website-radius-sm);
   background: color-mix(in srgb, var(--website-accent) 8%, transparent);
   color: color-mix(in srgb, var(--website-accent) 70%, var(--website-ink) 30%);
 }

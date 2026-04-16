@@ -40,10 +40,10 @@
   --component-pad-loose: 1.15rem;
   --component-pad-roomy: 1.45rem;
 
-  --component-radius: var(--radius, 12px);
-  --component-radius-tight: var(--radius-sm, 8px);
-  --component-radius-loose: var(--radius-lg, 16px);
-  --component-radius-pill: 999px;
+  --component-radius: var(--shape-surface, 10px);
+  --component-radius-tight: var(--shape-component, 6px);
+  --component-radius-loose: var(--shape-floating, 16px);
+  --component-radius-pill: var(--shape-control, 0.78rem);
 
   --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
   --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
@@ -1320,14 +1320,16 @@ figcaption.frame-note,
 .info-chip {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: var(--component-chip-height);
-  padding: 0.25rem 0.65rem;
-  font-size: 0.82rem;
+  padding: 0.28rem 0.68rem;
+  font-size: var(--text-size-chip, 0.82rem);
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   color: var(--ink, currentColor);
   background: var(--component-surface-soft, rgba(255, 255, 255, 0.8));
   border: 1px solid var(--component-border, rgba(0, 128, 128, 0.18));
-  border-radius: 999px;
+  border-radius: var(--component-radius-pill);
+  line-height: 1.08;
   transition: all var(--component-transition-fast, 120ms ease);
   white-space: nowrap;
 }

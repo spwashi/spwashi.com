@@ -136,12 +136,12 @@
                 <p class="spec-kicker">Local Configuration</p>
                 <h1 id="settings-title">Settings</h1>
                 <p class="settings-note">Preferences are stored in this browser only. Nothing syncs, nothing tracks.</p>
-                <p class="settings-start-note">Start with the quick variants below if you want to feel the site shift immediately. Tap a chip to switch the browser-local setting, watch the lit choice stay active, then use the status line and current-vibe cards to confirm what changed.</p>
+                <p class="settings-start-note">Start with the quick variants below if you want an immediate shift in atmosphere. Choose the state you want, watch the active option stay highlighted, then use the status line and current-vibe cards to confirm the result.</p>
                 <nav class="settings-hero-actions" aria-label="Settings sections">
                     <a class="operator-chip" href="#presets">start here</a>
-                    <a class="operator-chip" href="#applied-state">current vibe</a>
+                    <a class="operator-chip" href="#applied-state">current state</a>
                     <a class="operator-chip" href="#runtime-preferences">fine-tune everything</a>
-                    <a class="operator-chip" href="#runtime-map">inspect the runtime</a>
+                    <a class="operator-chip" href="#runtime-map">runtime map</a>
                 </nav>
             </section>
             <!-- Quick Presets -->
@@ -151,15 +151,15 @@
                     <h2>Start Here</h2>
                 </div>
                 <p class="frame-note">
-                    These are the highest-leverage adjustments: a preset if you want an instant whole-site mood, then a few small variant cards if you want to shape the experience more deliberately before opening the full register below.
+                    These are the highest-leverage adjustments: choose a preset if you want a complete starting point, then refine the experience with the smaller state cards before opening the full register below.
                 </p>
                 <div class="vibe-widget-grid settings-quickstart-grid">
                     <article class="vibe-widget vibe-widget--feature" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Quick presets</p>
-                            <h3 class="vibe-widget-title">Choose a whole-site mood</h3>
+                            <h3 class="vibe-widget-title">Choose a whole-site starting point</h3>
                         </div>
-                        <p class="vibe-widget-copy">Presets apply bundled architectural choices, then you can keep shaping the details with the smaller variant cards beside them.</p>
+                        <p class="vibe-widget-copy">Presets apply a coherent baseline, then you can refine the details with the state cards beside them.</p>
                         <div class="settings-presets" data-settings-presets>
                             <button class="settings-preset-btn" type="button" data-preset="hearth">
                                 <strong>Hearth</strong>
@@ -184,9 +184,9 @@
                     <article class="vibe-widget" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Current tone</p>
-                            <h3 class="vibe-widget-title">Read the active vibe</h3>
+                            <h3 class="vibe-widget-title">Read the active state</h3>
                         </div>
-                        <p class="vibe-widget-copy">This is the quick feedback loop: the current mode should stay legible while you experiment.</p>
+                        <p class="vibe-widget-copy">This is the fast feedback loop: the current state should stay legible while you experiment.</p>
                         <div class="palette-probe-swatches" aria-hidden="true">
                             <span class="palette-probe-chip"></span>
                             <span class="palette-probe-chip"></span>
@@ -206,38 +206,38 @@
                             <p class="vibe-widget-kicker">Theme</p>
                             <h3 class="vibe-widget-title">Choose the light level</h3>
                         </div>
-                        <p class="vibe-widget-copy">Use auto if you want the site to follow the device, or pin a mode if you want a stable atmosphere.</p>
+                        <p class="vibe-widget-copy">Use the adaptive mode if you want the site to follow the device, or pin a mode if you want a stable atmosphere.</p>
                         <div class="vibe-widget-actions" role="group" aria-label="Color mode variants">
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">follow system</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">hold light</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">hold dark</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
                         </div>
                     </article>
 
                     <article class="vibe-widget" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Resonance dimension</p>
-                            <h3 class="vibe-widget-title">Choose which dimension should lead</h3>
+                            <h3 class="vibe-widget-title">Choose the guiding perspective</h3>
                         </div>
-                        <p class="vibe-widget-copy">This is more than color. It biases which dimension nearby cards, images, and ornament should prioritize: route adjacency, material craft, software operations, or mathematical structure.</p>
+                        <p class="vibe-widget-copy">This setting changes the perspective that nearby cards, images, and ornament should privilege: context, craft, software, or mathematics.</p>
                         <div class="vibe-widget-actions" role="group" aria-label="Dimensional resonance variants">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">follow route</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">material craft</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">operational software</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">structural math</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
                         </div>
                     </article>
 
                     <article class="vibe-widget" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Memory</p>
-                            <h3 class="vibe-widget-title">Decide how long wonder should linger</h3>
+                            <h3 class="vibe-widget-title">Choose how much continuity should carry forward</h3>
                         </div>
-                        <p class="vibe-widget-copy">Keep interaction traces local, let them echo nearby, or let them keep tinting the site as you roam between images and topics.</p>
+                        <p class="vibe-widget-copy">Keep the experience focused on the current page, let nearby surfaces pick up the thread, or make the whole site feel cumulative.</p>
                         <div class="vibe-widget-actions" role="group" aria-label="Wonder memory variants">
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">keep local</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">echo nearby</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">resonate sitewide</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
                         </div>
                     </article>
                 </div>

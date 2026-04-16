@@ -56,12 +56,12 @@
 
   /* Nav */
   --shell-nav-min-height: max(2.5rem, var(--touch-target-min, 2.75rem));
-  --shell-nav-font-size: 0.84rem;
-  --shell-nav-padding-inline: 0.82rem;
-  --shell-nav-padding-block: 0.42rem;
-  --shell-nav-gap-inline: 0.72rem;
+  --shell-nav-font-size: var(--text-size-nav, 0.88rem);
+  --shell-nav-padding-inline: clamp(0.72rem, 1.3vw, 0.92rem);
+  --shell-nav-padding-block: 0.38rem;
+  --shell-nav-gap-inline: 0.58rem;
   --shell-nav-gap-block: 0.4rem;
-  --shell-nav-radius: var(--radius-pill, 999px);
+  --shell-nav-radius: var(--shape-control, 0.78rem);
 
   /* Generic surface shell */
   --shell-panel-radius: var(--shape-surface, 10px);
@@ -102,7 +102,7 @@
 
   /* Footer */
   --shell-footer-min-height: 3.5rem;
-  --shell-footer-font-size: 0.8rem;
+  --shell-footer-font-size: var(--text-size-sm, 0.92rem);
   --shell-footer-opacity: 0.92;
 
   /* Rails / walls */

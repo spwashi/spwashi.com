@@ -159,14 +159,17 @@
   --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-family-display: "Inter", "Segoe UI", system-ui, sans-serif;
 
-  --text-size-2xs: 0.6875rem;
-  --text-size-xs: 0.75rem;
-  --text-size-sm: 0.875rem;
-  --text-size-base: 1rem;
-  --text-size-lg: 1.125rem;
-  --text-size-xl: 1.25rem;
-  --text-size-2xl: 1.5rem;
-  --text-size-3xl: 1.875rem;
+  --text-size-2xs: clamp(0.69rem, 0.67rem + 0.05vw, 0.74rem);
+  --text-size-xs: clamp(0.76rem, 0.73rem + 0.08vw, 0.82rem);
+  --text-size-sm: clamp(0.88rem, 0.84rem + 0.1vw, 0.95rem);
+  --text-size-base: clamp(1rem, 0.98rem + 0.12vw, 1.06rem);
+  --text-size-lg: clamp(1.1rem, 1.04rem + 0.2vw, 1.22rem);
+  --text-size-xl: clamp(1.22rem, 1.12rem + 0.36vw, 1.42rem);
+  --text-size-2xl: clamp(1.46rem, 1.28rem + 0.7vw, 1.86rem);
+  --text-size-3xl: clamp(1.82rem, 1.52rem + 1.1vw, 2.45rem);
+  --text-size-chip: clamp(0.76rem, 0.72rem + 0.1vw, 0.84rem);
+  --text-size-nav: clamp(0.79rem, 0.75rem + 0.14vw, 0.9rem);
+  --text-size-label: clamp(0.72rem, 0.69rem + 0.08vw, 0.8rem);
 
   /* -- Semantic Typography Aliases -- */
   --site-root-font-size: 100%;
@@ -221,6 +224,7 @@
   /* -- Semantic Shape Aliases -- */
   --shape-element: var(--radius-xs);
   --shape-component: var(--radius-sm);
+  --shape-control: clamp(0.62rem, 0.56rem + 0.18vw, 0.78rem);
   --shape-surface: var(--radius-md);
   --shape-floating: var(--radius-lg);
   --shape-cinematic: var(--radius-xl);
@@ -519,6 +523,94 @@
   --bone-border: hsla(42, 72%, 48%, 0.24);
   --bonk-border: hsla(212, 62%, 46%, 0.24);
   --honk-border: hsla(320, 52%, 46%, 0.24);
+}
+
+html[data-spw-color-mode="dark"] {
+  --bg: hsl(214 18% 10%);
+  --bg-deep: hsl(214 22% 7%);
+  --bg-field: hsl(214 15% 13%);
+  --bg-ritual: hsl(216 14% 15%);
+
+  --surface: rgba(18, 24, 28, 0.78);
+  --surface-strong: rgba(25, 32, 37, 0.92);
+  --surface-soft: rgba(18, 24, 28, 0.58);
+  --surface-code: rgba(10, 14, 17, 0.98);
+  --surface-matte: rgba(24, 30, 35, 0.96);
+  --surface-panel: rgba(24, 31, 36, 0.9);
+  --surface-panel-strong: rgba(30, 38, 44, 0.95);
+  --surface-glass: rgba(255, 255, 255, 0.08);
+  --surface-shadowed: rgba(20, 26, 31, 0.72);
+
+  --ink-strong: rgba(236, 241, 238, 0.96);
+  --ink: rgba(228, 235, 232, 0.92);
+  --ink-soft: rgba(190, 202, 198, 0.78);
+  --ink-mid: rgba(190, 202, 198, 0.6);
+  --ink-faint: rgba(190, 202, 198, 0.36);
+  --ink-speculative: rgba(190, 202, 198, 0.18);
+  --ink-disabled: rgba(190, 202, 198, 0.24);
+
+  --line: rgba(215, 226, 222, 0.12);
+  --line-strong: rgba(118, 194, 181, 0.28);
+  --line-matte: rgba(215, 226, 222, 0.09);
+  --line-quiet: rgba(215, 226, 222, 0.06);
+
+  --card-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.22),
+    0 10px 24px rgba(0, 0, 0, 0.18);
+  --card-shadow-hover:
+    0 6px 20px rgba(0, 0, 0, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.16);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --floating-bg: rgba(25, 31, 36, 0.94);
+  --floating-bg-warm: rgba(34, 29, 25, 0.94);
+  --floating-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.32),
+    0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] {
+    --bg: hsl(214 18% 10%);
+    --bg-deep: hsl(214 22% 7%);
+    --bg-field: hsl(214 15% 13%);
+    --bg-ritual: hsl(216 14% 15%);
+
+    --surface: rgba(18, 24, 28, 0.78);
+    --surface-strong: rgba(25, 32, 37, 0.92);
+    --surface-soft: rgba(18, 24, 28, 0.58);
+    --surface-code: rgba(10, 14, 17, 0.98);
+    --surface-matte: rgba(24, 30, 35, 0.96);
+    --surface-panel: rgba(24, 31, 36, 0.9);
+    --surface-panel-strong: rgba(30, 38, 44, 0.95);
+    --surface-glass: rgba(255, 255, 255, 0.08);
+    --surface-shadowed: rgba(20, 26, 31, 0.72);
+
+    --ink-strong: rgba(236, 241, 238, 0.96);
+    --ink: rgba(228, 235, 232, 0.92);
+    --ink-soft: rgba(190, 202, 198, 0.78);
+    --ink-mid: rgba(190, 202, 198, 0.6);
+    --ink-faint: rgba(190, 202, 198, 0.36);
+    --ink-speculative: rgba(190, 202, 198, 0.18);
+    --ink-disabled: rgba(190, 202, 198, 0.24);
+
+    --line: rgba(215, 226, 222, 0.12);
+    --line-strong: rgba(118, 194, 181, 0.28);
+    --line-matte: rgba(215, 226, 222, 0.09);
+    --line-quiet: rgba(215, 226, 222, 0.06);
+
+    --card-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.22),
+      0 10px 24px rgba(0, 0, 0, 0.18);
+    --card-shadow-hover:
+      0 6px 20px rgba(0, 0, 0, 0.28),
+      0 2px 8px rgba(0, 0, 0, 0.16);
+    --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --floating-bg: rgba(25, 31, 36, 0.94);
+    --floating-bg-warm: rgba(34, 29, 25, 0.94);
+    --floating-shadow:
+      0 10px 36px rgba(0, 0, 0, 0.32),
+      0 2px 10px rgba(0, 0, 0, 0.18);
+  }
 }
 
 /* ==========================================================================

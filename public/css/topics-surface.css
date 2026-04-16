@@ -314,7 +314,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
 :where(body[data-spw-surface="topics"] .spw-svg-figure svg) {
   width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: var(--shape-surface, 10px);
   background: var(--topics-svg-bg);
 }
 
@@ -363,7 +363,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
 
 :where(body[data-spw-surface="topics"] .math-lens-card a:last-child) {
   margin-top: auto;
-  font-size: 0.82rem;
+  font-size: var(--text-size-chip, 0.82rem);
   letter-spacing: 0.04em;
   text-decoration: none;
 }
@@ -389,11 +389,11 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   gap: 0.45rem;
   padding: 0.8rem 0.9rem;
   border: 1px solid color-mix(in srgb, var(--topics-line-strong) 30%, var(--topics-line));
-  border-radius: 12px;
+  border-radius: var(--shape-surface, 10px);
   background: var(--topics-panel-muted);
   box-shadow: var(--topics-card-shadow);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.85rem;
+  font-size: var(--text-size-sm, 0.85rem);
   color: var(--ink-soft, rgba(0,0,0,0.7));
 }
 
@@ -405,7 +405,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
 }
 
 :where(body[data-spw-surface="topics"] .math-control output) {
-  font-size: 1rem;
+  font-size: var(--text-size-base, 1rem);
   color: var(--ink, #1f2423);
 }
 
@@ -417,9 +417,10 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   width: 100%;
   padding: 0.55rem 0.7rem;
   border: 1px solid color-mix(in srgb, var(--topics-line-strong) 36%, var(--topics-line));
-  border-radius: 10px;
+  border-radius: var(--shape-control, 0.78rem);
   background: var(--topics-input-bg);
   color: var(--topics-ink);
+  font: inherit;
 }
 
 :where(body[data-spw-surface="topics"] .math-diagram-status) {
@@ -427,7 +428,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   padding: 0.9rem 1rem;
   border-left: 3px solid color-mix(in srgb, var(--topics-accent) 64%, var(--topics-warm));
   background: var(--topics-status-bg);
-  border-radius: 12px;
+  border-radius: var(--shape-surface, 10px);
   color: var(--ink-soft, rgba(0,0,0,0.72));
 }
 
@@ -438,7 +439,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
 }
 
 :where(body[data-spw-surface="topics"] .math-toggle-row button) {
-  border-radius: 999px;
+  border-radius: var(--shape-control, 0.78rem);
 }
 
 :where(body[data-spw-surface="topics"] .math-toggle-row button[aria-pressed="true"]) {
