@@ -621,6 +621,32 @@ const applyPaletteResonanceSwatches = (root, settings) => {
   }
 };
 
+const setDatasetEntries = (root, entries = {}) => {
+  if (!(root instanceof HTMLElement)) return;
+
+  Object.entries(entries).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      delete root.dataset[key];
+      return;
+    }
+
+    root.dataset[key] = String(value);
+  });
+};
+
+const setStyleProperties = (root, entries = {}) => {
+  if (!(root instanceof HTMLElement)) return;
+
+  Object.entries(entries).forEach(([name, value]) => {
+    if (value === undefined || value === null || value === '') {
+      root.style.removeProperty(name);
+      return;
+    }
+
+    root.style.setProperty(name, String(value));
+  });
+};
+
 const deriveArchitecturalModifiers = (settings) => {
   const climate = getDevelopmentalClimateDefinition(settings);
   const motionScale = getMotionScale(settings);
@@ -715,92 +741,84 @@ class SiteSettingsManager {
     const modifiers = this.getModifiers(normalized);
     const climate = modifiers.climate;
 
-    this.root.dataset.spwNavigator = normalized.navigatorDisplay;
-    this.root.dataset.spwConsole = normalized.consoleDisplay;
-    this.root.dataset.spwViewportActivation = normalized.viewportActivation;
+    setDatasetEntries(this.root, {
+      spwNavigator: normalized.navigatorDisplay,
+      spwConsole: normalized.consoleDisplay,
+      spwViewportActivation: normalized.viewportActivation,
+      spwReduceMotion: normalized.reduceMotion,
+      spwHighContrast: normalized.highContrast,
+      spwFontSize: normalized.fontSize,
+      spwColorMode: normalized.colorMode,
+      spwPaletteResonance: normalized.paletteResonance,
+      spwOperatorSaturation: normalized.operatorSaturation,
+      spwAnimationIntensity: normalized.animationIntensity,
+      spwDebugMode: normalized.debugMode,
+      spwShowFrameMetadata: normalized.showFrameMetadata,
+      spwVerboseLogging: normalized.verboseLogging,
+      spwFontSizeScale: normalized.fontSizeScale,
+      spwLineSpacing: normalized.lineSpacing,
+      spwMonospaceVariant: normalized.monospaceVariant,
+      spwShowFooter: normalized.showFooter,
+      spwHeaderOpacity: normalized.headerOpacity,
+      spwShowSpecPills: normalized.showSpecPills,
+      spwAnimationThrottling: normalized.animationThrottling,
+      spwImageLazyLoading: normalized.imageLazyLoading,
+      spwEnhancementLevel: normalized.enhancementLevel,
+      spwSemanticDensity: normalized.semanticDensity,
+      spwOperatorPresentation: normalized.operatorPresentation,
+      spwInfospaceComplexity: normalized.infospaceComplexity,
+      spwCognitiveHandles: normalized.cognitiveHandles,
+      spwDimensionalBreadcrumbs: normalized.dimensionalBreadcrumbs,
+      spwFractalNesting: normalized.fractalNesting,
+      spwImplementationMutations: normalized.implementationMutations,
+      spwShowSemanticMetadata: normalized.showSemanticMetadata,
+      spwOperatorHighlighting: normalized.operatorHighlighting,
+      spwRelationalVisualization: normalized.relationalVisualization,
+      spwWonderMemory: normalized.wonderMemory,
+      spwDevelopmentalIndicators: normalized.developmentalIndicators,
+      spwDepthIndicators: normalized.depthIndicators,
+      spwDevelopmentalClimate: normalized.currentDevelopmentalClimate,
+      spwDevelopmentalLabel: climate.label,
+      spwLearningMode: climate.learningMode,
+      spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
+      spwGrainIntensity: normalized.grainIntensity
+    });
 
-    this.root.dataset.spwReduceMotion = normalized.reduceMotion;
-    this.root.dataset.spwHighContrast = normalized.highContrast;
-    this.root.dataset.spwFontSize = normalized.fontSize;
-
-    this.root.dataset.spwColorMode = normalized.colorMode;
-    this.root.dataset.spwPaletteResonance = normalized.paletteResonance;
-    this.root.dataset.spwOperatorSaturation = normalized.operatorSaturation;
-    this.root.dataset.spwAnimationIntensity = normalized.animationIntensity;
-
-    this.root.dataset.spwDebugMode = normalized.debugMode;
-    this.root.dataset.spwShowFrameMetadata = normalized.showFrameMetadata;
-    this.root.dataset.spwVerboseLogging = normalized.verboseLogging;
-
-    this.root.dataset.spwFontSizeScale = normalized.fontSizeScale;
-    this.root.dataset.spwLineSpacing = normalized.lineSpacing;
-    this.root.dataset.spwMonospaceVariant = normalized.monospaceVariant;
-
-    this.root.dataset.spwShowFooter = normalized.showFooter;
-    this.root.dataset.spwHeaderOpacity = normalized.headerOpacity;
-    this.root.dataset.spwShowSpecPills = normalized.showSpecPills;
-
-    this.root.dataset.spwAnimationThrottling = normalized.animationThrottling;
-    this.root.dataset.spwImageLazyLoading = normalized.imageLazyLoading;
-
-    this.root.dataset.spwEnhancementLevel = normalized.enhancementLevel;
-    this.root.dataset.spwSemanticDensity = normalized.semanticDensity;
-    this.root.dataset.spwOperatorPresentation = normalized.operatorPresentation;
-    this.root.dataset.spwInfospaceComplexity = normalized.infospaceComplexity;
-    this.root.dataset.spwCognitiveHandles = normalized.cognitiveHandles;
-    this.root.dataset.spwDimensionalBreadcrumbs = normalized.dimensionalBreadcrumbs;
-    this.root.dataset.spwFractalNesting = normalized.fractalNesting;
-    this.root.dataset.spwImplementationMutations = normalized.implementationMutations;
-
-    this.root.dataset.spwShowSemanticMetadata = normalized.showSemanticMetadata;
-    this.root.dataset.spwOperatorHighlighting = normalized.operatorHighlighting;
-    this.root.dataset.spwRelationalVisualization = normalized.relationalVisualization;
-    this.root.dataset.spwWonderMemory = normalized.wonderMemory;
-    this.root.dataset.spwDevelopmentalIndicators = normalized.developmentalIndicators;
-    this.root.dataset.spwDepthIndicators = normalized.depthIndicators;
-
-    this.root.dataset.spwDevelopmentalClimate = normalized.currentDevelopmentalClimate;
-    this.root.dataset.spwDevelopmentalLabel = climate.label;
-    this.root.dataset.spwLearningMode = climate.learningMode;
-    this.root.dataset.spwDevelopmentalClimateAutoCycle = normalized.developmentalClimateAutoCycle;
-
-    this.root.dataset.spwGrainIntensity = normalized.grainIntensity;
-
-    this.root.style.setProperty('--font-size-scale', `${normalized.fontSizeScale}%`);
-    this.root.style.setProperty('--site-root-font-size', modifiers.typography.rootFontSize);
-    this.root.style.setProperty('--site-line-height', modifiers.typography.lineHeight);
-    this.root.style.setProperty('--site-mono-font', modifiers.typography.monoFont);
-    this.root.style.setProperty('--site-header-opacity', modifiers.typography.headerOpacity);
-
-    this.root.style.setProperty('--duration-instant', modifiers.motion.instant);
-    this.root.style.setProperty('--duration-fast', modifiers.motion.fast);
-    this.root.style.setProperty('--duration-base', modifiers.motion.base);
-    this.root.style.setProperty('--duration-slow', modifiers.motion.slow);
-    this.root.style.setProperty('--spw-motion-scale', String(modifiers.motion.scale));
-
-    this.root.style.setProperty('--grain-opacity', modifiers.grain.opacity);
-
-    this.root.style.setProperty('--spw-semantic-density-factor', String(modifiers.semantic.densityFactor));
-    this.root.style.setProperty('--spw-enhancement-factor', String(modifiers.semantic.enhancementFactor));
-    this.root.style.setProperty('--spw-infospace-factor', String(modifiers.semantic.infospaceFactor));
-    this.root.style.setProperty('--spw-operator-presentation-factor', String(modifiers.semantic.operatorPresentationFactor));
-    this.root.style.setProperty('--spw-operator-saturation-factor', String(modifiers.semantic.operatorSaturationFactor));
-    this.root.style.setProperty('--spw-cognitive-handle-factor', String(modifiers.semantic.cognitiveFactor));
-    this.root.style.setProperty('--spw-relational-factor', String(modifiers.semantic.relationalFactor));
-    this.root.style.setProperty('--spw-semantic-metadata-factor', String(modifiers.semantic.metadataFactor));
-    this.root.style.setProperty('--spw-wonder-memory-strength', String(modifiers.wonder.strength));
-    this.root.style.setProperty('--spw-wonder-memory-ttl-ms', `${modifiers.wonder.ttlMs}`);
-    this.root.style.setProperty('--spw-wonder-memory-reach', String(modifiers.wonder.reach));
+    setStyleProperties(this.root, {
+      '--font-size-scale': `${normalized.fontSizeScale}%`,
+      '--site-root-font-size': modifiers.typography.rootFontSize,
+      '--site-line-height': modifiers.typography.lineHeight,
+      '--site-mono-font': modifiers.typography.monoFont,
+      '--site-header-opacity': modifiers.typography.headerOpacity,
+      '--duration-instant': modifiers.motion.instant,
+      '--duration-fast': modifiers.motion.fast,
+      '--duration-base': modifiers.motion.base,
+      '--duration-slow': modifiers.motion.slow,
+      '--spw-motion-scale': modifiers.motion.scale,
+      '--grain-opacity': modifiers.grain.opacity,
+      '--spw-semantic-density-factor': modifiers.semantic.densityFactor,
+      '--spw-enhancement-factor': modifiers.semantic.enhancementFactor,
+      '--spw-infospace-factor': modifiers.semantic.infospaceFactor,
+      '--spw-operator-presentation-factor': modifiers.semantic.operatorPresentationFactor,
+      '--spw-operator-saturation-factor': modifiers.semantic.operatorSaturationFactor,
+      '--spw-cognitive-handle-factor': modifiers.semantic.cognitiveFactor,
+      '--spw-relational-factor': modifiers.semantic.relationalFactor,
+      '--spw-semantic-metadata-factor': modifiers.semantic.metadataFactor,
+      '--spw-wonder-memory-strength': modifiers.wonder.strength,
+      '--spw-wonder-memory-ttl-ms': modifiers.wonder.ttlMs,
+      '--spw-wonder-memory-reach': modifiers.wonder.reach
+    });
     applyPaletteResonanceSwatches(this.root, normalized);
-
-    this.root.style.setProperty('--spw-developmental-clarity', String(modifiers.ecology.clarity));
-    this.root.style.setProperty('--spw-developmental-pressure', String(modifiers.ecology.pressure));
-    this.root.style.setProperty('--spw-developmental-atmosphere', String(modifiers.ecology.atmosphere));
-    this.root.style.setProperty('--spw-developmental-memory', String(modifiers.ecology.memory));
-    this.root.style.setProperty('--spw-developmental-resonance', String(modifiers.ecology.resonance));
-    this.root.style.setProperty('--spw-developmental-charge-bias', String(modifiers.ecology.chargeBias));
-    this.root.style.setProperty('--spw-developmental-selection-bias', String(modifiers.ecology.selectionBias));
-    this.root.style.setProperty('--spw-surface-permeability-base', String(modifiers.ecology.permeabilityBase));
+    setStyleProperties(this.root, {
+      '--spw-developmental-clarity': modifiers.ecology.clarity,
+      '--spw-developmental-pressure': modifiers.ecology.pressure,
+      '--spw-developmental-atmosphere': modifiers.ecology.atmosphere,
+      '--spw-developmental-memory': modifiers.ecology.memory,
+      '--spw-developmental-resonance': modifiers.ecology.resonance,
+      '--spw-developmental-charge-bias': modifiers.ecology.chargeBias,
+      '--spw-developmental-selection-bias': modifiers.ecology.selectionBias,
+      '--spw-surface-permeability-base': modifiers.ecology.permeabilityBase
+    });
 
     applyImageLoadingPreference(normalized);
 
@@ -947,6 +965,60 @@ const parseSettingTrigger = (value = '') => {
   };
 };
 
+const STANDALONE_SETTINGS_HINT = 'Tap a chip to tune this browser-local setting. The active choice stays lit.';
+
+const primeSettingTriggerControl = (node) => {
+  if (!(node instanceof HTMLElement)) return;
+
+  if (!(node instanceof HTMLButtonElement)) {
+    node.setAttribute('role', 'button');
+  }
+
+  if (
+    !(node instanceof HTMLButtonElement)
+    && !(node instanceof HTMLAnchorElement)
+    && !node.hasAttribute('tabindex')
+  ) {
+    node.setAttribute('tabindex', '0');
+  }
+};
+
+const setSettingTriggerState = (node, isActive) => {
+  if (!(node instanceof HTMLElement)) return;
+
+  node.dataset.siteSettingActive = isActive ? 'true' : 'false';
+
+  if (node instanceof HTMLAnchorElement) {
+    node.removeAttribute('aria-current');
+  }
+
+  if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
+    node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  }
+};
+
+const resolveSettingTriggerControl = (source, root = document) => {
+  const origin = source instanceof Event ? source.target : source;
+  if (!(origin instanceof Element)) return null;
+
+  const control = origin.closest('[data-site-setting-set]');
+  if (!(control instanceof HTMLElement)) return null;
+  if (root instanceof HTMLElement && !root.contains(control)) return null;
+
+  return control;
+};
+
+const activateSettingTriggerFromKeyboard = (event, control) => {
+  if (!(control instanceof HTMLElement)) return false;
+  if (event.defaultPrevented || (event.key !== 'Enter' && event.key !== ' ')) return false;
+  if (control instanceof HTMLButtonElement) return false;
+  if (control.getAttribute('role') !== 'button') return false;
+
+  event.preventDefault();
+  control.click();
+  return true;
+};
+
 const writeSettingsStatus = (statusNode, message = '', type = 'info') => {
   if (!(statusNode instanceof HTMLElement)) return;
   statusNode.textContent = message;
@@ -1009,19 +1081,10 @@ const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
   root.querySelectorAll?.('[data-site-setting-set]').forEach((node) => {
     const trigger = parseSettingTrigger(node.getAttribute('data-site-setting-set'));
     if (!trigger || !isKnownSetting(trigger.name)) return;
+    primeSettingTriggerControl(node);
 
     const isActive = normalized[trigger.name] === trigger.value;
-    node.dataset.siteSettingActive = isActive ? 'true' : 'false';
-
-    if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
-      node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    } else if (node instanceof HTMLAnchorElement) {
-      if (isActive) {
-        node.setAttribute('aria-current', 'true');
-      } else {
-        node.removeAttribute('aria-current');
-      }
-    }
+    setSettingTriggerState(node, isActive);
   });
 };
 
@@ -1212,6 +1275,11 @@ const bindSettingsScope = (root, options = {}) => {
     debounceTimer = setTimeout(saveScope, debounceMs);
   };
 
+  const handleTriggerKeydown = (event) => {
+    const control = resolveSettingTriggerControl(event, root);
+    activateSettingTriggerFromKeyboard(event, control);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     saveScope();
@@ -1219,6 +1287,7 @@ const bindSettingsScope = (root, options = {}) => {
 
   const controls = root.querySelectorAll('input[name], select[name], textarea[name]');
   controls.forEach((field) => field.addEventListener('change', handleChange));
+  root.addEventListener('keydown', handleTriggerKeydown);
 
   if (root.matches('form')) {
     root.addEventListener('submit', handleSubmit);
@@ -1287,13 +1356,17 @@ const bindSettingsScope = (root, options = {}) => {
 
   syncFromStore();
   if (statusNode && !statusNode.textContent) {
-    setStatus('Settings are stored locally in this browser.', 'info');
+    const defaultMessage = root.querySelector('[data-site-setting-set]')
+      ? STANDALONE_SETTINGS_HINT
+      : 'Settings are stored locally in this browser.';
+    setStatus(defaultMessage, 'info');
   }
 
   return {
     cleanup() {
       clearTimeout(debounceTimer);
       controls.forEach((field) => field.removeEventListener('change', handleChange));
+      root.removeEventListener('keydown', handleTriggerKeydown);
       if (root.matches('form')) {
         root.removeEventListener('submit', handleSubmit);
       }
@@ -1339,11 +1412,26 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
     });
   };
 
+  const handleKeydown = (event) => {
+    const control = resolveSettingTriggerControl(event, root);
+    if (!(control instanceof HTMLElement)) return;
+    if (control.closest('[data-site-settings-form], [data-site-settings-scope]')) return;
+    activateSettingTriggerFromKeyboard(event, control);
+  };
+
   root.addEventListener('click', handleClick);
+  root.addEventListener('keydown', handleKeydown);
+
+  root.querySelectorAll('[data-site-settings-status]').forEach((statusNode) => {
+    if (!statusNode.textContent?.trim()) {
+      writeSettingsStatus(statusNode, STANDALONE_SETTINGS_HINT, 'info');
+    }
+  });
 
   return {
     cleanup() {
       root.removeEventListener('click', handleClick);
+      root.removeEventListener('keydown', handleKeydown);
     },
     refresh() {
       syncSettingsReadouts(document);

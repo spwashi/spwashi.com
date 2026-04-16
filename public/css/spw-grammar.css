@@ -598,78 +598,36 @@
   background: rgba(230, 248, 248, 0.78);
 }
 
-:where(
-  [data-spw-role="routing"],
-  [data-spw-role="register"],
-  [data-spw-role="route"],
-  [data-spw-role="artifact"],
-  [data-spw-role="reference"]
-) > .spw-component-meta > .spw-component-tag,
-:where(
-  [data-spw-role="routing"],
-  [data-spw-role="register"],
-  [data-spw-role="route"],
-  [data-spw-role="artifact"],
-  [data-spw-role="reference"]
-) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
+:where([data-spw-role-cluster="reference"]) > .spw-component-meta > .spw-component-tag,
+:where([data-spw-role-cluster="reference"]) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-ref-color);
   border-color: var(--op-ref-border);
   background: var(--op-ref-bg-soft);
 }
 
-:where(
-  [data-spw-role="schema"],
-  [data-spw-role="comparison"],
-  [data-spw-role="pipeline"]
-) > .spw-component-meta > .spw-component-tag,
-:where(
-  [data-spw-role="schema"],
-  [data-spw-role="comparison"],
-  [data-spw-role="pipeline"]
-) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
+:where([data-spw-role-cluster="schema"]) > .spw-component-meta > .spw-component-tag,
+:where([data-spw-role-cluster="schema"]) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-object-color);
   border-color: var(--op-object-border);
   background: var(--op-object-bg-soft);
 }
 
-:where(
-  [data-spw-role="probe"],
-  [data-spw-role="telemetry"],
-  [data-spw-role="lens"]
-) > .spw-component-meta > .spw-component-tag,
-:where(
-  [data-spw-role="probe"],
-  [data-spw-role="telemetry"],
-  [data-spw-role="lens"]
-) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
+:where([data-spw-role-cluster="probe"]) > .spw-component-meta > .spw-component-tag,
+:where([data-spw-role-cluster="probe"]) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-probe-color);
   border-color: var(--op-probe-border);
   background: var(--op-probe-bg-soft);
 }
 
-:where(
-  [data-spw-role="projection"],
-  [data-spw-role="surface"],
-  [data-spw-role="control"]
-) > .spw-component-meta > .spw-component-tag,
-:where(
-  [data-spw-role="projection"],
-  [data-spw-role="surface"],
-  [data-spw-role="control"]
-) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
+:where([data-spw-role-cluster="surface"]) > .spw-component-meta > .spw-component-tag,
+:where([data-spw-role-cluster="surface"]) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-surface-color);
   border-color: var(--op-surface-border);
   background: var(--op-surface-bg-soft);
 }
 
-:where(
-  [data-spw-role="scenario"],
-  [data-spw-role="rationale"]
-) > .spw-component-meta > .spw-component-tag,
-:where(
-  [data-spw-role="scenario"],
-  [data-spw-role="rationale"]
-) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
+:where([data-spw-role-cluster="pragma"]) > .spw-component-meta > .spw-component-tag,
+:where([data-spw-role-cluster="pragma"]) > .spw-semantic-seam > .spw-component-meta > .spw-component-tag {
   color: var(--op-pragma-color);
   border-color: var(--op-pragma-border);
   background: var(--op-pragma-bg-soft);

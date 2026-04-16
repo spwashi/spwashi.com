@@ -88,6 +88,11 @@
  >>[2026-04-16 13:26] decide — sequence the pass as static HTML landmark normalization first, then runtime inference for repeated ids/ARIA relationships and metadata defaults, then a small CSS simplification for semantic display rules.
  >>[2026-04-16 13:28] hygiene — base ref recorded as main@9511b53; preserve the existing uncommitted settings/resonance follow-up and avoid unrelated runtime/css drift unless the semantic cleanup directly overlaps it.
  >>[2026-04-16 13:30] taste — the goal is not to strip the site down to generic HTML, but to make the semantic language feel intentional instead of over-serialized.
+ >>[2026-04-16 14:01] implement — added skip links plus stable `main#main-content` targets across the public HTML routes, then labeled each main landmark from its visible page heading so the top-level reading order is explicit even before runtime enhancement.
+ >>[2026-04-16 14:08] implement — `spw-page-metadata.js` now derives region heading ids, `aria-labelledby` links, `role="group"` for anonymous card/panel divs, and a reduced `role-cluster` contract so authored pages do not need to restate family semantics everywhere.
+ >>[2026-04-16 14:16] implement — moved repeated role-family selector groups in `spw-handles.css`, `spw-grammar.css`, and `spw-ornament.css` onto `data-spw-role-cluster`, making the runtime the canonical translator from detailed role names to style families.
+ >>[2026-04-16 14:22] implement — `site-settings.js` now primes declarative setting triggers with button semantics, keyboard activation, and shared active-state wiring while the root apply path uses grouped dataset/style helpers instead of a long run of one-off assignments.
+ >>[2026-04-16 14:25] validate — `git diff --check`, `node --check public/js/site-settings.js`, `node --check public/js/spw-page-metadata.js`, and audits for skip links plus `main[aria-labelledby]` all passed.
 }
 
 ^["open"]{
@@ -102,15 +107,15 @@
 }
 
 ^["cache"]{
- ~#status: "planning"
+ ~#status: "implementing"
  ~#base_ref: "main@9511b53"
  ~#rebased_at: ""
  ~#hygiene_split: "preserve the open settings/resonance follow-up; integrate only overlapping HTML files and avoid unrelated JS/CSS drift"
  ~#files_hot: "about/website/index.html, settings/index.html, topics/math/index.html, topics/site-design/index.html, topics/software/index.html, topics/software/parsers/index.html, topics/software/spw/operators/*/index.html, public/js/spw-page-metadata.js, public/js/spw-semantic-chrome.js, public/css/spw-components.css"
- ~#next_commit: "1"
+ ~#next_commit: "2"
  ~#open_count: "0"
- ~#last_stream: "2026-04-16 13:30"
- ~#taste_debt: "watch whether runtime-inferred metadata still leaves too much page-specific ledger text in the authored HTML after the first normalization pass"
+ ~#last_stream: "2026-04-16 14:25"
+ ~#taste_debt: "the next cleanup can decide whether section-level labels should become more authored in HTML or stay runtime-derived; the current pass keeps the static contract strongest at the page landmark level"
 }
 
 ^["done"]{

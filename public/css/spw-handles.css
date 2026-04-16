@@ -641,7 +641,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     var(--spw-substrate-color, var(--active-op-color, var(--teal)));
 }
 
-:where([data-spw-role="routing"], [data-spw-role="register"], [data-spw-role="reference"]) {
+:where([data-spw-role-cluster="reference"]) {
   --handle-line:
     color-mix(in srgb, var(--op-ref-border, var(--handle-line)) 92%, transparent);
   --handle-bg:
@@ -650,7 +650,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     var(--op-ref-color, var(--handle-ink));
 }
 
-:where([data-spw-role="schema"], [data-spw-role="comparison"], [data-spw-role="pipeline"]) {
+:where([data-spw-role-cluster="schema"]) {
   --handle-line:
     color-mix(in srgb, var(--op-object-border, var(--handle-line)) 92%, transparent);
   --handle-bg:
@@ -659,7 +659,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     var(--op-object-color, var(--handle-ink));
 }
 
-:where([data-spw-role="probe"], [data-spw-role="lens"], [data-spw-role="telemetry"]) {
+:where([data-spw-role-cluster="probe"]) {
   --handle-line:
     color-mix(in srgb, var(--op-probe-border, var(--handle-line)) 92%, transparent);
   --handle-bg:
@@ -668,7 +668,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     var(--op-probe-color, var(--handle-ink));
 }
 
-:where([data-spw-role="projection"], [data-spw-role="surface"], [data-spw-role="control"]) {
+:where([data-spw-role-cluster="surface"]) {
   --handle-line:
     color-mix(in srgb, var(--op-surface-border, var(--handle-line)) 92%, transparent);
   --handle-bg:
@@ -677,7 +677,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     var(--op-surface-color, var(--handle-ink));
 }
 
-:where([data-spw-role="scenario"], [data-spw-role="rationale"], [data-spw-role="pragma"]) {
+:where([data-spw-role-cluster="pragma"]) {
   --handle-line:
     color-mix(in srgb, var(--op-pragma-border, var(--handle-line)) 92%, transparent);
   --handle-bg:

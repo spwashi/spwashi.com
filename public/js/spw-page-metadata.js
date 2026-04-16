@@ -3,6 +3,25 @@ const DEFAULT_OG_IMAGE = 'https://spwashi.com/public/images/assets/illustrations
 const DEFAULT_OG_IMAGE_ALT = 'Illustrated Spwashi field card showing readable systems, structural surfaces, and playful semantic materials.';
 const ASSET_PATH_RE = /\.(?:avif|css|gif|ico|jpe?g|js|json|mjs|cjs|map|pdf|png|svg|txt|webmanifest|webp|xml)$/i;
 const NOISY_HASHES = new Set(['#main-content', '#top']);
+const ROLE_CLUSTER_BY_ROLE = Object.freeze({
+  routing: 'reference',
+  register: 'reference',
+  route: 'reference',
+  artifact: 'reference',
+  reference: 'reference',
+  schema: 'schema',
+  comparison: 'schema',
+  pipeline: 'schema',
+  probe: 'probe',
+  telemetry: 'probe',
+  lens: 'probe',
+  projection: 'surface',
+  surface: 'surface',
+  control: 'surface',
+  scenario: 'pragma',
+  rationale: 'pragma',
+  pragma: 'pragma',
+});
 const CONTEXT_STOP_WORDS = new Set([
   'a',
   'all',
@@ -511,6 +530,24 @@ function titleizeSegment(segment) {
     .join(' ');
 }
 
+function ensureId(el, fallback) {
+  if (!(el instanceof Element)) return '';
+  if (el.id) return el.id;
+
+  const normalized = normalizeToken(fallback || el.textContent || 'section');
+  if (!normalized) return '';
+
+  let candidate = normalized;
+  let index = 2;
+  while (document.getElementById(candidate)) {
+    candidate = `${normalized}-${index}`;
+    index += 1;
+  }
+
+  el.id = candidate;
+  return candidate;
+}
+
 function stripSiteName(title) {
   return String(title || '')
     .replace(/^\s*Spwashi\s*[•·|-]\s*/i, '')
@@ -535,6 +572,10 @@ function inferContextFromSurface(surface, pathname) {
   if (surface === 'tools') return 'analysis';
   if (surface === 'topics') return pathname.includes('/craft/') ? 'publishing' : 'analysis';
   return pathname === '/' ? 'orientation' : 'reading';
+}
+
+function inferRoleCluster(role) {
+  return ROLE_CLUSTER_BY_ROLE[normalizeToken(role)] || '';
 }
 
 function inferWonderFromContext(context) {
@@ -963,6 +1004,59 @@ function inferRegionContext(el, body = document.body) {
   );
 }
 
+function findRegionHeading(el) {
+  if (!(el instanceof Element)) return null;
+  return el.querySelector('h1, h2, h3, h4, h5, h6');
+}
+
+function ensureMainLandmark(main = safeQuery('main')) {
+  if (!(main instanceof HTMLElement)) return null;
+  if (!main.id) main.id = 'main-content';
+  if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+  return main;
+}
+
+function normalizeRegionAccessibility(pageMeta, { body = document.body } = {}) {
+  const main = ensureMainLandmark(safeQuery('main'));
+  const mainHeading = main ? findRegionHeading(main) : null;
+
+  if (main && mainHeading && !main.hasAttribute('aria-labelledby') && !main.getAttribute('aria-label')) {
+    const mainSeed = body?.dataset?.spwPageSeed || pageMeta?.pageSeed || 'page';
+    main.setAttribute('aria-labelledby', ensureId(mainHeading, `${mainSeed}-main-title`));
+  }
+
+  collectRegions(document).forEach((el, index) => {
+    const role = el.dataset.spwRole || inferRegionRole(el);
+    const kind = el.dataset.spwKind || inferRegionKind(el);
+    const roleCluster = inferRoleCluster(role);
+    if (roleCluster) setDataIfMissing(el, 'spwRoleCluster', roleCluster);
+
+    const heading = findRegionHeading(el);
+    if (heading && !el.hasAttribute('aria-labelledby') && !el.getAttribute('aria-label')) {
+      const labelBase = el.id || el.dataset.spwSeed || deriveRegionSeed(el, pageMeta, index) || kind || 'region';
+      el.setAttribute('aria-labelledby', ensureId(heading, `${labelBase}-title`));
+    }
+
+    if (!el.hasAttribute('role') && el.tagName === 'DIV' && (kind === 'panel' || kind === 'card')) {
+      el.setAttribute('role', 'group');
+    }
+  });
+
+  safeQueryAll('nav').forEach((nav, index) => {
+    if (nav.getAttribute('aria-label') || nav.hasAttribute('aria-labelledby')) return;
+
+    const closestRegion = nav.closest('.site-frame, .frame-panel, .frame-card, [data-spw-kind], [data-spw-role]');
+    const heading = findRegionHeading(closestRegion);
+    if (!heading) return;
+
+    const headingId = ensureId(
+      heading,
+      `${closestRegion?.id || closestRegion?.dataset?.spwSeed || pageMeta?.pageSeed || 'nav'}-nav-title-${index + 1}`
+    );
+    nav.setAttribute('aria-labelledby', headingId);
+  });
+}
+
 function deriveRegionSeed(el, pageMeta, index) {
   const raw =
     el.id
@@ -979,6 +1073,7 @@ function normalizeShellMetadata(pageMeta, { body = document.body } = {}) {
   if (header) {
     setDataIfMissing(header, 'spwKind', 'shell');
     setDataIfMissing(header, 'spwRole', 'routing');
+    setDataIfMissing(header, 'spwRoleCluster', inferRoleCluster('routing'));
     setDataIfMissing(header, 'spwContext', 'routing');
     setDataIfMissing(header, 'spwCategoryFamily', 'portal');
     setDataIfMissing(header, 'spwSeed', `${pageMeta.pageSeed}__site_header`);
@@ -994,6 +1089,7 @@ function normalizeShellMetadata(pageMeta, { body = document.body } = {}) {
 
   setDataIfMissing(hero, 'spwKind', 'frame');
   setDataIfMissing(hero, 'spwRole', pageMeta.heroRole || 'orientation');
+  setDataIfMissing(hero, 'spwRoleCluster', inferRoleCluster(pageMeta.heroRole || 'orientation'));
   setDataIfMissing(hero, 'spwContext', pageMeta.context);
   setDataIfMissing(hero, 'spwWonder', pageMeta.wonder);
   setDataIfMissing(hero, 'spwAffordance', inferAffordance(pageMeta.heroRole || 'orientation', 'frame', hero, body));
@@ -1026,6 +1122,7 @@ function normalizeRegionMetadata(pageMeta, { body = document.body } = {}) {
     setDataIfMissing(el, 'spwPromptability', inferPromptability(el));
     setDataIfMissing(el, 'spwAffordance', inferAffordance(role, kind, el, body));
     setDataIfMissing(el, 'spwConsequence', inferConsequence(role, kind));
+    setDataIfMissing(el, 'spwRoleCluster', inferRoleCluster(role));
     setDataIfMissing(el, 'spwCategoryFamily', inferCategoryFamily(role, kind, pageMeta, el));
     setDataIfMissing(el, 'spwCollectability', inferCollectability(kind, el));
     setDataIfMissing(el, 'spwLocality', inferLocality(kind, el));
@@ -1066,10 +1163,12 @@ export function normalizeDocumentMetadata() {
   }
 
   const pageMeta = resolvePageMetadata({ body, main });
+  ensureMainLandmark(main);
   applyPageMetadata(pageMeta, body);
   normalizeHeadMetadata(pageMeta, { body, main });
   normalizeShellMetadata(pageMeta, { body });
   normalizeRegionMetadata(pageMeta, { body });
+  normalizeRegionAccessibility(pageMeta, { body });
 
   return {
     pageMeta,

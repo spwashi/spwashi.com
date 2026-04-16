@@ -550,23 +550,23 @@
    Lets ornament echo room semantics without owning layout.
    ========================================================================== */
 
-:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role="routing"] {
+:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role-cluster="reference"] {
   --ornament-local-accent: var(--op-ref-color);
 }
 
-:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role="schema"] {
+:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role-cluster="schema"] {
   --ornament-local-accent: var(--op-object-color);
 }
 
-:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role="probe"] {
+:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role-cluster="probe"] {
   --ornament-local-accent: var(--op-probe-color);
 }
 
-:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role="surface"] {
+:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role-cluster="surface"] {
   --ornament-local-accent: var(--op-surface-color, var(--teal));
 }
 
-:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role="pragma"] {
+:where(.spw-ornament-host, .spw-ornament-ribbon, .spw-ornament-kicker)[data-spw-role-cluster="pragma"] {
   --ornament-local-accent: var(--op-pragma-color, var(--ink-soft));
 }
 
