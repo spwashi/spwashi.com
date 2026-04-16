@@ -1,0 +1,115 @@
+# wip — site-color-tuning
+# Branch: main
+# Started: 2026-04-16
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/site-color-tuning/PLAN.md"
+ @tokens: ~"public/css/spw-tokens.css"
+ @material: ~"public/css/spw-material.css"
+ @shared_surface: ~"public/css/spw-surfaces.css"
+ @image_surface: ~"public/css/spw-metaphysical-paper.css"
+ @home: ~"public/css/home-surface.css"
+ @topics: ~"public/css/topics-surface.css"
+ @website: ~"public/css/website-surface.css"
+ @settings: ~"public/css/settings-surface.css"
+}
+
+^["intent"]{
+ ~#goal: "Tune the shared palette so light and dark themes feel authored at the token level, then soften the loudest route-local overrides so the site reads as one system."
+ ~#taste: "layering and expressiveness: preserve route identity while making shared surfaces feel less paper-white and more intentionally related."
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #surface
+ develops: [#color_system, #theme_balance, #route_identity]
+ review_surfaces: [@plan, @tokens, @material, @shared_surface, @topics, @website]
+ snippet_routes: [#palette_balance, #material_mix, #route_dialect]
+}
+
+^["concept_index"]{
+ primary: [#shared_palette, #route_dialects]
+ surfaces: [#tokens, #materials, #shared_cards, #home, #topics, #website, #settings]
+ tensions: [#warmth_bias, #white_fallbacks, #theme_coherence]
+ transfers: [#token, #surface, #route, #image]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the token and shared surface layers before blaming any single route",
+  "< move the base palette first so route tuning becomes smaller and more honest",
+  "$ keep operator families distinct even while narrowing the overall contrast spread",
+  "^ remove literal white/light assumptions where shared tokens can carry the relationship",
+  "% preserve each route's character without turning the site into isolated color islands",
+ ]
+ gates: [#theme_legibility, #shared_surface_coherence, #route_identity]
+}
+
+^["parallel_work"]{
+ critical_path: [#shared_tokens, #material_relationships]
+ parallelizable: [#route_surface_tuning, #image_surface_alignment]
+ shared_hot_files: ["public/css/spw-tokens.css", "public/css/spw-surfaces.css", "public/css/settings-surface.css"]
+ merge_risks: [#dirty_worktree, #shared_css_drift, #route_overcorrection]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@home, @topics, @website, @settings]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#legibility, #feedback, #preview, #trust]
+ questions: [#what_is_shared, #what_is_route_specific, #what_is_too_literal]
+ qualities: [#clarity, #layering, #expressiveness]
+}
+
+^["risk_model"]{
+ hard_failures: [#contrast_regression, #flattened_route_identity]
+ soft_failures: [#base_improves_but_routes_still_fight, #dark_mode_stays_patchy]
+ recoveries: [#favor_token_driven_mixes, #keep_route_tuning_narrow]
+ non_negotiables: [#theme_legibility, #operator_distinction, #no_unrelated_runtime_changes]
+}
+
+^["validation"]{
+ hypotheses: [#shared_surfaces_stop_leaking_white, #light_and_dark_feel_related]
+ negative_controls: [#route_accents_remain_distinct, #settings_resonance_copy_is_unchanged]
+ demo_path: [#/, #/topics/, #/about/website/, #/settings/]
+}
+
+^["stream"]{
+ >>[2026-04-16 11:02] observe — the base token layer is still very warm and paper-heavy, which forces route surfaces to compensate with their own local palettes instead of inheriting a stable system.
+ >>[2026-04-16 11:05] observe — shared materials, shell cards, and image helper chrome still mix against literal white and warm-light fallbacks, so theme changes never fully propagate.
+ >>[2026-04-16 11:08] observe — `home`, `topics`, `website`, and `settings` each re-author surface colors in a different dialect; the issue is less "bad route colors" than weak shared balance.
+ >>[2026-04-16 11:10] decide — sequence the pass as shared tokens and material surfaces first, then only the route surfaces whose local gradients and panel mixes still overpower the new base.
+ >>[2026-04-16 11:12] hygiene — base ref recorded as main@761b833; preserve the existing uncommitted settings/resonance follow-up and avoid unrelated drift in `public/css/services-surface.css`, `public/css/spw-chrome.css`, and `public/js/spw-spells.js`.
+ >>[2026-04-16 11:14] taste — this should read as a calmer, more dimensional palette, not a generic desaturation pass.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[site-color-tuning] — record the plan artifacts and hygiene baseline"
+ ~[2]: "&[site-color-tuning] — rebalance shared tokens and material-led color relationships"
+ ~[3]: "&[site-color-tuning] — tune flagship route surfaces around the rebalanced base palette"
+ ~[4]: "![site-color-tuning] — verify CSS integrity and inspect remaining literal color leaks"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@761b833"
+ ~#rebased_at: ""
+ ~#hygiene_split: "avoid unrelated local drift; only touch scoped CSS layers while preserving the open settings/resonance follow-up"
+ ~#files_hot: "public/css/spw-tokens.css, public/css/spw-material.css, public/css/spw-surfaces.css, public/css/spw-metaphysical-paper.css, public/css/home-surface.css, public/css/topics-surface.css, public/css/website-surface.css, public/css/settings-surface.css"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-16 11:14"
+ ~#taste_debt: "watch for route-local gradients that still look more literal than token-driven after the shared pass lands"
+}
+
+^["done"]{
+}
