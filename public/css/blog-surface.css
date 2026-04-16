@@ -599,10 +599,86 @@
   background: color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent);
 }
 
+:where(body[data-spw-surface="blog"] .specimen-refs) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: var(--blog-gap-3);
+}
+
+:where(body[data-spw-surface="blog"] .specimen-ref) {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"] :is(.specimen-kernel-code, .blog-seed-card pre, .demo-code-output, .operator-snippet-example)) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+:where(body[data-spw-surface="blog"] .blog-seed-card pre) {
+  margin: 0;
+}
+
+:where(body[data-spw-surface="blog"] .operator-snippet-example) {
+  display: block;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+:where(body[data-spw-surface="blog"] .demo-audio-frequency,
+       body[data-spw-surface="blog"] .demo-audio-controls select) {
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"] .demo-canvas-wrap canvas) {
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+:where(body[data-spw-surface="blog"] .demo-filter-target) {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 760px) {
+  :where(body[data-spw-surface="blog"]) {
+    --blog-panel-pad: 0.85rem;
+    --blog-gap-4: 0.82rem;
+  }
+
   :where(body[data-spw-surface="blog"] main) {
     padding-inline: 0.8rem;
     padding-block-start: 0.8rem;
+  }
+
+  :where(body[data-spw-surface="blog"] main > article) {
+    gap: 0.85rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline,
+         body[data-spw-surface="blog"] .frame-heading) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline) {
+    min-height: 0;
+    margin-bottom: 0;
+    padding-bottom: 0.45rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline > :is(.spec-strip, .frame-operators, .spw-component-meta),
+         body[data-spw-surface="blog"] .frame-heading > .spw-component-meta) {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  :where(body[data-spw-surface="blog"] .spw-semantic-seam) {
+    display: none;
   }
 
   :where(body[data-spw-surface="blog"] .page-index ul,
@@ -622,6 +698,47 @@
 
   :where(body[data-spw-surface="blog"] .blog-input-actions > *) {
     width: 100%;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row,
+         body[data-spw-surface="blog"] .demo-audio-controls) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.42rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row label,
+         body[data-spw-surface="blog"] .demo-audio-controls label) {
+    min-width: 0;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-out) {
+    min-width: 0;
+    text-align: left;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row input[type="range"],
+         body[data-spw-surface="blog"] .demo-audio-controls input[type="range"],
+         body[data-spw-surface="blog"] .demo-audio-controls select) {
+    width: 100%;
+  }
+
+  :where(body[data-spw-surface="blog"] .blog-input-status) {
+    font-size: 0.82rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .specimen-kernel-code,
+         body[data-spw-surface="blog"] .blog-seed-card pre,
+         body[data-spw-surface="blog"] .demo-code-output) {
+    font-size: 0.74rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-filter-target) {
+    font-size: clamp(1.35rem, 8vw, 1.9rem);
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-audio-waveform) {
+    height: 3.5rem;
   }
 
   :where(body[data-spw-surface="blog"] .page-index a,
