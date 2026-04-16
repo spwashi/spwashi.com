@@ -877,6 +877,110 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   margin-inline-start: 0.02rem;
 }
 
+.spell-visual {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.48rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.spell-board-content {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.spell-visual--compact {
+  gap: 0.3rem 0.36rem;
+}
+
+.spell-ingredient {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: 0.08rem;
+  min-height: 2rem;
+  padding: 0.26rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 20%, transparent);
+  border-radius: 0.42rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 68%),
+    color-mix(in srgb, var(--surface, #fff) 94%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.1;
+}
+
+.spell-ingredient-prefix,
+.spell-ingredient-postfix {
+  color: var(--teal, #008080);
+  font-weight: 700;
+}
+
+.spell-ingredient-nucleus {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spell-ledger {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.spell-register-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem 0.42rem;
+  min-width: 0;
+}
+
+.spell-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.16rem 0.46rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 74%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+}
+
+.spell-note {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.spell-source {
+  margin: 0;
+  padding: 0.72rem 0.84rem;
+  border-radius: 0.48rem;
+  background: color-mix(in srgb, var(--surface-code, rgba(18, 23, 30, 0.94)) 90%, transparent);
+  color: color-mix(in srgb, white 90%, var(--teal, #008080) 10%);
+  overflow: auto;
+}
+
+.spell-source code {
+  display: block;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.spell-source--compact {
+  max-block-size: 12rem;
+  padding: 0.56rem 0.68rem;
+}
+
+.spell-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
 /* ==========================================================================
    14. Frame metrics
    ========================================================================== */

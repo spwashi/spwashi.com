@@ -61,11 +61,24 @@
     --canvas-opacity: 0.42;
 }
 
+:where([data-spw-accent="resonance"]) {
+    --canvas-opacity: calc(0.44 + (var(--spw-accent-strength, 0.86) * 0.18));
+    --canvas-blend: soft-light;
+}
+
+:where([data-spw-accent="resonance"] canvas) {
+    filter: saturate(1.08);
+}
+
 /* ─── Dark Mode & Color Scheme Logic ────────────────────────────────────── */
 
 html[data-spw-color-mode="dark"] :where(.spw-accent-host) {
     --canvas-blend: screen;
     --canvas-opacity: 0.35;
+}
+
+html[data-spw-color-mode="dark"] :where([data-spw-accent="resonance"]) {
+    --canvas-opacity: calc(0.3 + (var(--spw-accent-strength, 0.86) * 0.14));
 }
 
 @media (prefers-color-scheme: dark) {

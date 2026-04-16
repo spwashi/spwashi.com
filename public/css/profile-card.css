@@ -665,7 +665,11 @@
 
 .profile-field input,
 .profile-field textarea,
-.profile-field select {
+.profile-field select,
+.badge-input-row input,
+.badge-input-row select,
+.profile-link-row input,
+.profile-link-row select {
   width: 100%;
   box-sizing: border-box;
   padding: 0.4rem 0.6rem;
@@ -673,6 +677,7 @@
   border-radius: calc(var(--profile-radius) * 0.6);
   background: var(--surface, rgba(255, 255, 255, 0.62));
   color: var(--profile-ink);
+  color-scheme: light;
   outline: none;
   font-family: var(--site-mono-font, monospace);
   font-size: 0.82rem;
@@ -684,13 +689,21 @@
 
 .profile-field input:hover,
 .profile-field textarea:hover,
-.profile-field select:hover {
+.profile-field select:hover,
+.badge-input-row input:hover,
+.badge-input-row select:hover,
+.profile-link-row input:hover,
+.profile-link-row select:hover {
   border-color: color-mix(in srgb, var(--profile-accent) 24%, transparent);
 }
 
 .profile-field input:focus,
 .profile-field textarea:focus,
-.profile-field select:focus {
+.profile-field select:focus,
+.badge-input-row input:focus,
+.badge-input-row select:focus,
+.profile-link-row input:focus,
+.profile-link-row select:focus {
   border-color: var(--teal);
   box-shadow: var(--profile-shadow-focus);
 }
@@ -723,6 +736,17 @@
   padding-right: 1.8rem;
 }
 
+.badge-input-row select,
+.profile-link-row select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='rgba(14,18,20,0.4)'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  padding-right: 1.8rem;
+}
+
 /* ==========================================================================
    11. Badge input row and actions
    ========================================================================== */
@@ -740,6 +764,7 @@
 }
 
 .badge-input-row button,
+.profile-link-row button,
 .profile-add-btn,
 .profile-section-add-btn,
 .profile-export-btn {
@@ -758,6 +783,7 @@
 }
 
 .badge-input-row button,
+.profile-link-row button,
 .profile-add-btn,
 .profile-section-add-btn {
   padding: 0.38rem 0.6rem;
@@ -768,9 +794,11 @@
 }
 
 .badge-input-row button:hover,
+.profile-link-row button:hover,
 .profile-add-btn:hover,
 .profile-section-add-btn:hover,
 .badge-input-row button:focus-visible,
+.profile-link-row button:focus-visible,
 .profile-add-btn:focus-visible,
 .profile-section-add-btn:focus-visible {
   border-color: var(--teal);
@@ -967,6 +995,8 @@
   .profile-field select,
   .profile-tag,
   .profile-tag-remove,
+  .badge-input-row button,
+  .profile-link-row button,
   .profile-add-btn,
   .profile-section-add-btn,
   .profile-export-btn {

@@ -167,6 +167,9 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0.45rem 0.8rem;
+  width: fit-content;
+  max-width: 100%;
+  align-self: flex-start;
   min-width: 0;
 }
 
@@ -479,11 +482,31 @@ a.frame-card:is(:hover, :focus-visible),
 }
 
 .card-sub-links a {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: 0.22rem;
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   text-decoration: none;
   font-size: 0.84rem;
   font-weight: 500;
   line-height: 1.35;
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::before,
+.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.76em;
+  color: color-mix(in srgb, var(--component-accent, #008080) 58%, transparent);
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::before {
+  content: attr(data-spw-nav-prefix);
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+  content: attr(data-spw-nav-postfix);
 }
 
 .card-sub-links a:is(:hover, :focus-visible) {
@@ -1083,7 +1106,10 @@ a.frame-card:is(:hover, :focus-visible),
 }
 
 :where(.page-index a, .section-atlas a) {
-  display: block;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.3rem;
   padding: 0.42rem 0.65rem;
   margin-left: 0;
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
@@ -1092,10 +1118,31 @@ a.frame-card:is(:hover, :focus-visible),
   transition: all var(--component-transition-fast, 120ms ease);
 }
 
+:where(.page-index a, .section-atlas a)[data-spw-nav-tokenized="true"]::before,
+:where(.page-index a, .section-atlas a)[data-spw-nav-tokenized="true"]::after {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.76em;
+  color: color-mix(in srgb, var(--component-accent, #008080) 56%, transparent);
+}
+
+:where(.page-index a, .section-atlas a)[data-spw-nav-tokenized="true"]::before {
+  content: attr(data-spw-nav-prefix);
+}
+
+:where(.page-index a, .section-atlas a)[data-spw-nav-tokenized="true"]::after {
+  content: attr(data-spw-nav-postfix);
+  justify-self: end;
+}
+
 :where(.page-index a:hover, .section-atlas a:hover, .page-index a:focus-visible, .section-atlas a:focus-visible) {
   color: var(--component-accent, #008080);
   background: color-mix(in srgb, var(--component-accent, #008080) 12%, transparent);
   outline: none;
+}
+
+:where(.page-index a[data-spw-grounded="true"], .section-atlas a[data-spw-grounded="true"], .card-sub-links a[data-spw-grounded="true"]) {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background: color-mix(in srgb, var(--component-accent, #008080) 8%, transparent);
 }
 
 :where(.page-index a[aria-current="true"], .page-index a:target) {
