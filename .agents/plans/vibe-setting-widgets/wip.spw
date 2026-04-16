@@ -91,6 +91,10 @@
  >>[2026-04-16 00:12] implement — rebuilt the top of `/settings/` into a quick-start surface with presets, current-vibe feedback, and immediate color/palette/memory variants, then reordered the deeper inspection sections below it via route CSS.
  >>[2026-04-16 00:16] implement — replaced the older one-purpose strips on home, software, and math with portable vibe widgets that expose current state plus a few tailored variants.
  >>[2026-04-16 00:18] verify — node --check passed for public/js/site-settings.js and git diff --check passed after the settings/widget rollout.
+ >>[2026-04-16 10:41] revise — removed the CSS `order` workaround from the settings route and moved the sections into the intended DOM sequence so architecture, reading order, and visual order now agree.
+ >>[2026-04-16 10:46] implement — expanded palette-resonance tokens and rewrote the user-facing copy as dimensional resonance: route adjacency, material craft, operational software, and structural math.
+ >>[2026-04-16 10:49] implement — improved learnability by priming status lines with a chip-interaction hint and aligning the resonance wording across settings, home, software, math, and design-offer surfaces.
+ >>[2026-04-16 10:51] verify — node --check still passes for public/js/site-settings.js, and git diff --check passes after the DOM reorder and resonance copy pass.
 }
 
 ^["open"]{
@@ -109,11 +113,11 @@
  ~#base_ref: "main@81d5e5205d70"
  ~#rebased_at: ""
  ~#hygiene_split: "avoid unrelated uncommitted edits already present in play/shared-css files"
- ~#files_hot: "public/js/site-settings.js, public/css/spw-surfaces.css, public/css/settings-surface.css, settings/index.html, index.html, topics/software/index.html, topics/math/index.html"
+ ~#files_hot: "public/js/site-settings.js, public/js/spw-palette-resonance.js, public/css/spw-surfaces.css, public/css/settings-surface.css, settings/index.html, index.html, topics/software/index.html, topics/math/index.html, topics/site-design/index.html, about/website/index.html"
  ~#next_commit: "2"
  ~#open_count: "0"
- ~#last_stream: "2026-04-16 00:18"
- ~#taste_debt: "watch whether additional pages should adopt the widget grammar or whether the flagship-route set is the right density"
+ ~#last_stream: "2026-04-16 10:51"
+ ~#taste_debt: "watch whether route/math/software labels need a richer visible state label than the raw `route|craft|software|math` slugs"
 }
 
 ^["done"]{

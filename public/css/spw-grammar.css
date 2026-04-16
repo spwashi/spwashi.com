@@ -1108,17 +1108,25 @@
 :where(.spw-topic, [data-spw-topic]) {
   display: inline;
   min-width: 0;
-  padding: 0.08em 0.32em;
-  border: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.24));
-  border-radius: 3px;
-  background: var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72));
+  padding: 0 0.18em 0.05em;
+  border: 0;
+  border-bottom: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.3));
+  border-radius: 0.22rem;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 58%,
+      color-mix(in srgb, var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 72%, transparent) 58% 100%
+    );
   color: var(--op-topic-color, hsl(192 62% 32%));
   font-family: var(--grammar-mono-font);
-  font-size: 0.87em;
+  font-size: 0.89em;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  user-select: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-user-select: text;
+  user-select: text;
   transition:
     background var(--grammar-duration-base) var(--grammar-ease-mechanical),
     border-color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
@@ -1127,36 +1135,53 @@
     outline-offset var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
-:where(.spw-topic::before) {
+:where(.spw-topic, [data-spw-topic])::before {
   content: "<";
-  opacity: 0.52;
-  font-weight: 300;
+  opacity: 0.34;
+  font-weight: 400;
 }
 
-:where(.spw-topic::after) {
+:where(.spw-topic, [data-spw-topic])::after {
   content: ">";
-  opacity: 0.52;
-  font-weight: 300;
+  opacity: 0.34;
+  font-weight: 400;
 }
 
 :where(.spw-topic:hover, [data-spw-topic]:hover) {
-  background: color-mix(in srgb, var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 60%, rgba(255, 255, 255, 0.3));
-  border-color: color-mix(in srgb, var(--op-topic-border, hsla(192, 62%, 32%, 0.24)) 70%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 48%,
+      color-mix(in srgb, var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 88%, rgba(255, 255, 255, 0.36)) 48% 100%
+    );
+  border-color: color-mix(in srgb, var(--op-topic-border, hsla(192, 62%, 32%, 0.24)) 82%, transparent);
   color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 85%, black);
 }
 
 :where(.spw-topic--highlighted) {
-  background: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 14%, rgba(255, 255, 255, 0.6));
-  border-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 42%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 12%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 44%,
+      color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 14%, rgba(255, 255, 255, 0.66)) 44% 100%
+    );
+  border-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 52%, transparent);
+  box-shadow: inset 0 -0.08em 0 color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 10%, transparent);
 }
 
 :where(.spw-topic--active) {
   outline: 2px solid color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 32%, transparent);
   outline-offset: 2px;
-  background: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 20%, rgba(255, 255, 255, 0.7));
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 38%,
+      color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 18%, rgba(255, 255, 255, 0.74)) 38% 100%
+    );
   border-color: var(--op-topic-color, hsl(192 62% 32%));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 18%, transparent);
+  box-shadow:
+    inset 0 -0.08em 0 color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 28%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 14%, transparent);
 }
 
 :where(.spw-topic-popover, .spw-semantic-popover) {

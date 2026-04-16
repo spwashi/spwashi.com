@@ -1,0 +1,322 @@
+/* ==========================================================================
+   recipes-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Give /recipes/ a distinct route identity instead of relying on the
+     generic shell.
+   - Bias the page toward handled warmth, denser registry rhythm, and a
+     slightly more inventory-like feel without turning it into a dashboard.
+   ========================================================================== */
+
+:where(body[data-spw-surface="recipes"]) {
+  --recipes-accent: #2d7a72;
+  --recipes-ember: #a86132;
+  --recipes-gold: #c59752;
+  --recipes-ink: rgba(28, 24, 20, 0.94);
+  --recipes-ink-soft: rgba(28, 24, 20, 0.72);
+  --recipes-surface: rgba(255, 252, 247, 0.82);
+  --recipes-surface-strong: rgba(255, 253, 249, 0.92);
+  --recipes-surface-soft: rgba(255, 248, 239, 0.6);
+  --recipes-line: color-mix(in srgb, var(--recipes-accent) 20%, rgba(40, 28, 20, 0.12));
+  --recipes-line-strong: color-mix(in srgb, var(--recipes-ember) 28%, var(--recipes-accent));
+  --recipes-accent-soft: color-mix(in srgb, var(--recipes-accent) 10%, transparent);
+  --recipes-shadow:
+    0 12px 28px rgba(44, 28, 17, 0.06),
+    0 2px 8px rgba(44, 28, 17, 0.035);
+  --recipes-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--recipes-accent-soft) 60%, transparent),
+      transparent 18%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--recipes-surface-strong) 98%, hsl(38 42% 95%)),
+      color-mix(in srgb, var(--recipes-surface) 96%, hsl(32 32% 92%))
+    );
+  --recipes-panel:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, rgba(255, 255, 255, 0.72) 88%, transparent),
+      color-mix(in srgb, var(--recipes-surface-strong) 94%, hsl(34 30% 93%))
+    );
+  --recipes-panel-warm:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--recipes-surface-strong) 92%, hsl(32 72% 96%)),
+      color-mix(in srgb, var(--recipes-surface) 92%, hsl(28 44% 91%))
+    );
+
+  --ink: var(--recipes-ink);
+  --ink-soft: var(--recipes-ink-soft);
+  --line: var(--recipes-line);
+  --line-strong: var(--recipes-line-strong);
+  --surface: var(--recipes-surface);
+  --surface-strong: var(--recipes-surface-strong);
+  --surface-soft: var(--recipes-surface-soft);
+  --active-op-color: var(--recipes-accent);
+  --active-op-border: color-mix(in srgb, var(--recipes-accent) 28%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--recipes-accent) 8%, transparent);
+
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--recipes-gold) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--recipes-accent) 6%, transparent), transparent 22%),
+    linear-gradient(180deg, hsl(38 48% 97%), hsl(34 34% 92%));
+  color: var(--recipes-ink);
+}
+
+html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
+  --recipes-accent: #8dc4ba;
+  --recipes-ember: #d39a6b;
+  --recipes-gold: #d2b06d;
+  --recipes-ink: rgba(240, 235, 227, 0.94);
+  --recipes-ink-soft: rgba(212, 205, 193, 0.76);
+  --recipes-surface: rgba(24, 20, 18, 0.82);
+  --recipes-surface-strong: rgba(31, 27, 24, 0.92);
+  --recipes-surface-soft: rgba(24, 20, 18, 0.62);
+  --recipes-line: color-mix(in srgb, var(--recipes-accent) 18%, rgba(240, 235, 227, 0.12));
+  --recipes-line-strong: color-mix(in srgb, var(--recipes-ember) 32%, var(--recipes-accent));
+  --recipes-accent-soft: color-mix(in srgb, var(--recipes-accent) 12%, transparent);
+  --recipes-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.18);
+  --recipes-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--recipes-accent) 8%, rgba(30, 24, 22, 0.98)),
+      rgba(24, 20, 18, 0.96) 36%,
+      rgba(18, 15, 14, 0.98)
+    );
+  --recipes-panel:
+    linear-gradient(180deg, rgba(34, 29, 26, 0.96), rgba(24, 20, 18, 0.98));
+  --recipes-panel-warm:
+    linear-gradient(180deg, rgba(44, 34, 29, 0.96), rgba(27, 22, 20, 0.98));
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--recipes-gold) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--recipes-accent) 8%, transparent), transparent 22%),
+    linear-gradient(180deg, rgba(20, 17, 15, 0.99), rgba(13, 11, 10, 0.99));
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(body[data-spw-surface="recipes"]) {
+    --recipes-accent: #8dc4ba;
+    --recipes-ember: #d39a6b;
+    --recipes-gold: #d2b06d;
+    --recipes-ink: rgba(240, 235, 227, 0.94);
+    --recipes-ink-soft: rgba(212, 205, 193, 0.76);
+    --recipes-surface: rgba(24, 20, 18, 0.82);
+    --recipes-surface-strong: rgba(31, 27, 24, 0.92);
+    --recipes-surface-soft: rgba(24, 20, 18, 0.62);
+    --recipes-line: color-mix(in srgb, var(--recipes-accent) 18%, rgba(240, 235, 227, 0.12));
+    --recipes-line-strong: color-mix(in srgb, var(--recipes-ember) 32%, var(--recipes-accent));
+    --recipes-accent-soft: color-mix(in srgb, var(--recipes-accent) 12%, transparent);
+    --recipes-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.28),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    --recipes-paper:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--recipes-accent) 8%, rgba(30, 24, 22, 0.98)),
+        rgba(24, 20, 18, 0.96) 36%,
+        rgba(18, 15, 14, 0.98)
+      );
+    --recipes-panel:
+      linear-gradient(180deg, rgba(34, 29, 26, 0.96), rgba(24, 20, 18, 0.98));
+    --recipes-panel-warm:
+      linear-gradient(180deg, rgba(44, 34, 29, 0.96), rgba(27, 22, 20, 0.98));
+    background:
+      radial-gradient(circle at top center, color-mix(in srgb, var(--recipes-gold) 10%, transparent), transparent 28%),
+      radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--recipes-accent) 8%, transparent), transparent 22%),
+      linear-gradient(180deg, rgba(20, 17, 15, 0.99), rgba(13, 11, 10, 0.99));
+  }
+}
+
+:where(body[data-spw-surface="recipes"]) main {
+  width: min(100%, 1160px);
+  margin-inline: auto;
+  padding-inline: var(--space-md, 1rem);
+  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
+}
+
+:where(body[data-spw-surface="recipes"] main > article) {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+:where(body[data-spw-surface="recipes"] article > .site-frame) {
+  position: relative;
+  overflow: clip;
+  border-color: var(--recipes-line);
+  background: var(--recipes-paper);
+  box-shadow: var(--recipes-shadow);
+}
+
+:where(body[data-spw-surface="recipes"] article > .site-frame)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--recipes-accent) 8%, transparent), transparent 30%),
+    radial-gradient(circle at bottom right, color-mix(in srgb, var(--recipes-ember) 6%, transparent), transparent 26%);
+  opacity: 0.82;
+}
+
+:where(body[data-spw-surface="recipes"] article > .site-frame > *) {
+  position: relative;
+  z-index: 1;
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field) {
+  gap: clamp(0.85rem, 1.8vw, 1.15rem);
+  padding-top: clamp(1rem, 2vw, 1.35rem);
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--recipes-ember) 14%, transparent), transparent 24%),
+    radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--recipes-accent) 10%, transparent), transparent 26%),
+    var(--recipes-paper);
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field h1) {
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field > :is(p, .frame-note)) {
+  max-width: 66ch;
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field .spec-strip) {
+  gap: 0.35rem;
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field .spec-pill) {
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 30%, var(--recipes-line));
+  background: color-mix(in srgb, var(--recipes-surface-strong) 94%, transparent);
+}
+
+:where(body[data-spw-surface="recipes"] #recipe-field .frame-operators) {
+  gap: 0.45rem 0.55rem;
+}
+
+:where(body[data-spw-surface="recipes"] .recipe-hero-study) {
+  margin: 0;
+  background: var(--recipes-panel);
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 40%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] .recipe-hero-study img) {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+:where(body[data-spw-surface="recipes"] .recipe-hero-study figcaption strong) {
+  color: color-mix(in srgb, var(--recipes-ink) 86%, var(--recipes-accent));
+}
+
+@media (min-width: 70rem) {
+  :where(body[data-spw-surface="recipes"] #recipe-field) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(0.85rem, 1.8vw, 1.2rem) clamp(0.95rem, 2vw, 1.35rem);
+    align-items: start;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field .frame-topline) {
+    grid-column: 1 / -1;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field h1) {
+    grid-column: 1 / span 6;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field > p:nth-of-type(1)) {
+    grid-column: 1 / span 6;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field > p:nth-of-type(2)) {
+    grid-column: 1 / span 6;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field > p:nth-of-type(3)) {
+    grid-column: 1 / span 6;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field .recipe-hero-study) {
+    grid-column: 8 / -1;
+    grid-row: 2 / span 4;
+    align-self: stretch;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field .frame-operators) {
+    grid-column: 1 / span 7;
+    margin-top: 0.1rem;
+  }
+}
+
+:where(body[data-spw-surface="recipes"] #recipes-index) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--recipes-accent-soft) 42%, transparent), transparent 22%),
+    var(--recipes-paper);
+}
+
+:where(body[data-spw-surface="recipes"] #recipes-index .frame-list) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.6rem 0.7rem;
+  padding: 0;
+  list-style: none;
+}
+
+:where(body[data-spw-surface="recipes"] #recipes-index .frame-list li) {
+  margin: 0;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid color-mix(in srgb, var(--recipes-line-strong) 28%, var(--recipes-line));
+  border-radius: var(--shape-surface, 10px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 64%),
+    color-mix(in srgb, var(--recipes-surface-strong) 94%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+:where(body[data-spw-surface="recipes"] #recipes-index .frame-list a) {
+  color: color-mix(in srgb, var(--recipes-ink) 82%, var(--recipes-accent));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  text-decoration: none;
+}
+
+:where(body[data-spw-surface="recipes"] #recipes-index .frame-list a:hover,
+       body[data-spw-surface="recipes"] #recipes-index .frame-list a:focus-visible) {
+  text-decoration: underline;
+}
+
+:where(body[data-spw-surface="recipes"] #principle-register .frame-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1rem);
+}
+
+:where(body[data-spw-surface="recipes"] #principle-register .frame-card) {
+  background: var(--recipes-panel);
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 28%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] #principle-register .frame-card:nth-child(3n + 2)) {
+  background: var(--recipes-panel-warm);
+}
+
+:where(body[data-spw-surface="recipes"] .frame-note,
+       body[data-spw-surface="recipes"] .inline-note,
+       body[data-spw-surface="recipes"] .frame-card span:last-child,
+       body[data-spw-surface="recipes"] .frame-card p) {
+  color: var(--recipes-ink-soft);
+}
+
+:where(body[data-spw-surface="recipes"] .frame-card strong,
+       body[data-spw-surface="recipes"] h2,
+       body[data-spw-surface="recipes"] h3) {
+  color: color-mix(in srgb, var(--recipes-ink) 88%, var(--recipes-accent));
+}

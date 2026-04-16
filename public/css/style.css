@@ -35,6 +35,7 @@
 @import url('/public/css/craft-surface.css') layer(routes);
 @import url('/public/css/blog-surface.css') layer(routes);
 @import url('/public/css/settings-surface.css') layer(routes);
+@import url('/public/css/recipes-surface.css') layer(routes);
 @import url('/public/css/play-surface.css') layer(routes);
 @import url('/public/css/rpg-wednesday-surface.css') layer(routes);
 

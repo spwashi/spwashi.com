@@ -173,28 +173,33 @@
 }
 
 .spw-metaphysics-host[data-spw-image-effect="watercolor"]::after {
-  opacity: calc(0.7 + (var(--spw-image-energy) * 0.26));
+  opacity: calc(0.74 + (var(--spw-image-energy) * 0.24));
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.18), transparent 42%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.16), transparent 40%),
     radial-gradient(
       circle at 18% 20%,
-      color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 243, 215, 0.16)),
-      transparent 28%
+      color-mix(in srgb, var(--spw-image-accent) 10%, rgba(255, 243, 215, 0.2)),
+      transparent 26%
     ),
     radial-gradient(
       circle at 78% 72%,
-      color-mix(in srgb, var(--spw-image-accent) 10%, rgba(255, 243, 215, 0.12)),
-      transparent 32%
+      color-mix(in srgb, var(--spw-image-accent) 8%, rgba(255, 243, 215, 0.16)),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 46% 42%,
+      rgba(255, 247, 232, 0.16),
+      transparent 44%
     ),
     radial-gradient(
       circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
-      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 243, 215, 0.16)),
+      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 243, 215, 0.18)),
       transparent 48%
     );
 }
 
 .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"] img {
-  filter: blur(0.9px) saturate(0.92) contrast(1.02) brightness(1.02);
+  filter: saturate(0.96) contrast(1.04) brightness(1.03);
 }
 
 .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="vector"] svg {
@@ -205,8 +210,8 @@
   .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"][data-spw-image-preview="on"] img,
   .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"]:focus-within img
 ) {
-  --spw-image-scale: 1.018;
-  filter: blur(1.2px) saturate(0.96) contrast(1.04) brightness(1.03);
+  --spw-image-scale: 1.014;
+  filter: saturate(1) contrast(1.06) brightness(1.04);
 }
 
 :where(
