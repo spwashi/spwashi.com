@@ -55,14 +55,14 @@
 }
 
 :where(body[data-spw-surface="settings"] #presets) { order: 1; }
-:where(body[data-spw-surface="settings"] #runtime-preferences) { order: 2; }
-:where(body[data-spw-surface="settings"] #applied-state) { order: 3; }
-:where(body[data-spw-surface="settings"] #pwa-status) { order: 4; }
-:where(body[data-spw-surface="settings"] #runtime-map) { order: 5; }
-:where(body[data-spw-surface="settings"] #token-navigator) { order: 6; }
-:where(body[data-spw-surface="settings"] #data-structures) { order: 7; }
-:where(body[data-spw-surface="settings"] #bookmarks) { order: 8; }
-:where(body[data-spw-surface="settings"] #settings-notes) { order: 9; }
+:where(body[data-spw-surface="settings"] #applied-state) { order: 2; }
+:where(body[data-spw-surface="settings"] #runtime-preferences) { order: 3; }
+:where(body[data-spw-surface="settings"] #settings-notes) { order: 4; }
+:where(body[data-spw-surface="settings"] #pwa-status) { order: 5; }
+:where(body[data-spw-surface="settings"] #bookmarks) { order: 6; }
+:where(body[data-spw-surface="settings"] #runtime-map) { order: 7; }
+:where(body[data-spw-surface="settings"] #token-navigator) { order: 8; }
+:where(body[data-spw-surface="settings"] #data-structures) { order: 9; }
 :where(body[data-spw-surface="settings"] #curriculum-control) { order: 10; }
 :where(body[data-spw-surface="settings"] #spell-board) { order: 11; }
 :where(body[data-spw-surface="settings"] #cognitive-trace) { order: 12; }
@@ -77,6 +77,31 @@
 :where(body[data-spw-surface="settings"] h2) {
   font-size: clamp(1.2rem, 3vw, 1.45rem);
   letter-spacing: -0.01em;
+}
+
+:where(body[data-spw-surface="settings"] .settings-start-note) {
+  max-inline-size: 66ch;
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid) {
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid .vibe-widget-status) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid .spec-pill) {
+  background: color-mix(in srgb, var(--settings-accent) 8%, var(--surface-strong, rgba(255, 255, 255, 0.92)));
+}
+
+:where(body[data-spw-surface="settings"] .settings-hero-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+  margin-top: var(--space-md, 1rem);
 }
 
 /* ==========================================================================
@@ -206,6 +231,14 @@
   background: color-mix(in srgb, var(--op-probe-color, #4a2180) 12%, transparent);
   color: var(--op-probe-color, #4a2180);
   border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 30%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-preset-btn.is-applied) {
+  border-color: color-mix(in srgb, var(--settings-accent) 64%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.94)));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 16%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
 }
 
 /* ==========================================================================

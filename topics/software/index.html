@@ -136,15 +136,48 @@
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
                         <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
-                        <div class="wonder-memory-strip" data-site-settings-scope data-spw-memory-anchor="software spw parsers renderers number-theory category-theory">
-                            <p class="wonder-memory-copy">Wonder memory lets the last route you touched keep tinting palette squares and nearby structure. Keep it local, let it echo around this software surface, or let it resonate sitewide here and in <a href="/settings/#runtime-preferences">settings</a>.</p>
-                            <div class="wonder-memory-actions" role="group" aria-label="Wonder memory controls">
-                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">keep local</button>
-                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">echo nearby</button>
-                                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">resonate sitewide</button>
-                                <span class="spec-pill">wonder memory: <span data-settings-state="wonderMemory">nearby</span></span>
-                            </div>
+                        <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel>
+                            <article class="vibe-widget">
+                                <div class="vibe-widget-header">
+                                    <p class="vibe-widget-kicker">Tailor this field</p>
+                                    <h2 class="vibe-widget-title">Keep the software mood legible</h2>
+                                </div>
+                                <p class="vibe-widget-copy">These settings change the way parser weather, adjacent theory links, and nearby structural cards behave while you read. For the full surface, open <a href="/settings/#presets">settings</a>.</p>
+                                <div class="vibe-widget-meta">
+                                    <span class="spec-pill">palette: <span class="vibe-widget-state" data-settings-state="paletteResonance">route</span></span>
+                                    <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
+                                    <span class="spec-pill">theme: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                                </div>
+                            </article>
+
+                            <article class="vibe-widget">
+                                <div class="vibe-widget-header">
+                                    <p class="vibe-widget-kicker">Wonder memory</p>
+                                    <h2 class="vibe-widget-title">Decide how long parser echoes linger</h2>
+                                </div>
+                                <p class="vibe-widget-copy">Keep it local, let it echo around this software surface, or let it carry into complexity, number theory, and category theory.</p>
+                                <div class="vibe-widget-actions" role="group" aria-label="Software wonder memory variants">
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">keep local</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">echo nearby</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">resonate sitewide</button>
+                                </div>
+                            </article>
+
+                            <article class="vibe-widget">
+                                <div class="vibe-widget-header">
+                                    <p class="vibe-widget-kicker">Palette</p>
+                                    <h2 class="vibe-widget-title">Choose what family colors the cards</h2>
+                                </div>
+                                <p class="vibe-widget-copy">Follow the current route or deliberately lean toward software cool, craft warmth, or math contrast while you compare pages.</p>
+                                <div class="vibe-widget-actions" role="group" aria-label="Software palette resonance variants">
+                                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">follow route</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">borrow craft</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">borrow software</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">borrow math</button>
+                                </div>
+                            </article>
                         </div>
+                        <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
                         <nav class="frame-operators" aria-label="Software overview routes">
                             <a class="operator-chip" href="#language-philosophy">language philosophy</a>
                             <a class="operator-chip" href="#semantic-fields">semantic fields</a>

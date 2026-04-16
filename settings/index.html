@@ -134,38 +134,110 @@
                 <p class="spec-kicker">Local Configuration</p>
                 <h1>Settings</h1>
                 <p class="settings-note">Preferences are stored in this browser only. Nothing syncs, nothing tracks.</p>
+                <p class="settings-start-note">Start with the quick variants below if you want to feel the site shift immediately. The deeper maps and registries are still here, but they now come after the fast path.</p>
+                <nav class="settings-hero-actions" aria-label="Settings sections">
+                    <a class="operator-chip" href="#presets">start here</a>
+                    <a class="operator-chip" href="#applied-state">current vibe</a>
+                    <a class="operator-chip" href="#runtime-preferences">fine-tune everything</a>
+                    <a class="operator-chip" href="#runtime-map">inspect the runtime</a>
+                </nav>
             </section>
             <!-- Quick Presets -->
             <section class="site-frame" id="presets" data-site-settings-scope data-spw-role="control" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="tune" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="state" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__presets" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
                 <div class="frame-heading">
-                    <a class="frame-sigil" href="#presets">^"quick_presets"{</a>
-                    <h2>Quick Presets</h2>
+                    <a class="frame-sigil" href="#presets">^"quick_start"{</a>
+                    <h2>Start Here</h2>
                 </div>
                 <p class="frame-note">
-                    Presets apply named bundles from the site settings manager. These are architectural moods, not
-                    separate modes.
+                    These are the highest-leverage adjustments: a preset if you want an instant whole-site mood, then a few small variant cards if you want to shape the experience more deliberately before opening the full register below.
                 </p>
-                <div class="settings-presets" data-settings-presets>
-                    <button class="settings-preset-btn" type="button" data-preset="hearth">
-                        <strong>Hearth</strong>
-                        <span>Quiet defaults. Minimal enhancement, simple infospace, low grain, and stable
-                            orientation.</span>
-                    </button>
-                    <button class="settings-preset-btn" type="button" data-preset="loom">
-                        <strong>Loom</strong>
-                        <span>Richer semantic weave. Stronger operator color, active handles, richer density, and
-                            adaptive infospace.</span>
-                    </button>
-                    <button class="settings-preset-btn" type="button" data-preset="workshop">
-                        <strong>Workshop</strong>
-                        <span>Developer-facing inspection. Expanded console, metadata visibility, richer semantics, and
-                            implementation focus.</span>
-                    </button>
-                    <button class="settings-preset-btn" type="button" data-preset="access">
-                        <strong>Access</strong>
-                        <span>High contrast, reduced motion, larger type, looser spacing, and stronger guidance
-                            cues.</span>
-                    </button>
+                <div class="vibe-widget-grid settings-quickstart-grid">
+                    <article class="vibe-widget vibe-widget--feature" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Quick presets</p>
+                            <h3 class="vibe-widget-title">Choose a whole-site mood</h3>
+                        </div>
+                        <p class="vibe-widget-copy">Presets apply bundled architectural choices, then you can keep shaping the details with the smaller variant cards beside them.</p>
+                        <div class="settings-presets" data-settings-presets>
+                            <button class="settings-preset-btn" type="button" data-preset="hearth">
+                                <strong>Hearth</strong>
+                                <span>Quiet defaults. Minimal enhancement, simple infospace, low grain, and stable orientation.</span>
+                            </button>
+                            <button class="settings-preset-btn" type="button" data-preset="loom">
+                                <strong>Loom</strong>
+                                <span>Richer semantic weave. Stronger operator color, active handles, richer density, and adaptive infospace.</span>
+                            </button>
+                            <button class="settings-preset-btn" type="button" data-preset="workshop">
+                                <strong>Workshop</strong>
+                                <span>Developer-facing inspection. Expanded console, metadata visibility, richer semantics, and implementation focus.</span>
+                            </button>
+                            <button class="settings-preset-btn" type="button" data-preset="access">
+                                <strong>Access</strong>
+                                <span>High contrast, reduced motion, larger type, looser spacing, and stronger guidance cues.</span>
+                            </button>
+                        </div>
+                        <span class="settings-status vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
+                    </article>
+
+                    <article class="vibe-widget" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Current tone</p>
+                            <h3 class="vibe-widget-title">Read the active vibe</h3>
+                        </div>
+                        <p class="vibe-widget-copy">This is the quick feedback loop: the current mode should stay legible while you experiment.</p>
+                        <div class="palette-probe-swatches" aria-hidden="true">
+                            <span class="palette-probe-chip"></span>
+                            <span class="palette-probe-chip"></span>
+                            <span class="palette-probe-chip"></span>
+                            <span class="palette-probe-chip"></span>
+                        </div>
+                        <div class="vibe-widget-meta">
+                            <span class="spec-pill">theme: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                            <span class="spec-pill">palette: <span class="vibe-widget-state" data-settings-state="paletteResonance">route</span></span>
+                            <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
+                            <span class="spec-pill">climate: <span class="vibe-widget-state" data-settings-state="currentDevelopmentalClimate">orient</span></span>
+                        </div>
+                    </article>
+
+                    <article class="vibe-widget" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Theme</p>
+                            <h3 class="vibe-widget-title">Choose the light level</h3>
+                        </div>
+                        <p class="vibe-widget-copy">Use auto if you want the site to follow the device, or pin a mode if you want a stable atmosphere.</p>
+                        <div class="vibe-widget-actions" role="group" aria-label="Color mode variants">
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">follow system</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">hold light</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">hold dark</button>
+                        </div>
+                    </article>
+
+                    <article class="vibe-widget" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Palette</p>
+                            <h3 class="vibe-widget-title">Bias the resonance family</h3>
+                        </div>
+                        <p class="vibe-widget-copy">Palette resonance changes how cards, images, and ornament lean while you move through different parts of the site.</p>
+                        <div class="vibe-widget-actions" role="group" aria-label="Palette resonance variants">
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">follow route</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">borrow craft</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">borrow software</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">borrow math</button>
+                        </div>
+                    </article>
+
+                    <article class="vibe-widget" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Memory</p>
+                            <h3 class="vibe-widget-title">Decide how long wonder should linger</h3>
+                        </div>
+                        <p class="vibe-widget-copy">Keep interaction traces local, let them echo nearby, or let them keep tinting the site as you roam between images and topics.</p>
+                        <div class="vibe-widget-actions" role="group" aria-label="Wonder memory variants">
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">keep local</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">echo nearby</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">resonate sitewide</button>
+                        </div>
+                    </article>
                 </div>
             </section>
             <section class="site-frame" id="runtime-map" data-spw-role="schema" data-spw-form="brace" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_map" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
@@ -331,7 +403,7 @@
                     <h2>Applied State</h2>
                 </div>
                 <p class="frame-note">
-                    A readable local summary of what the runtime is currently expressing.
+                    A readable local summary of what the runtime is currently expressing. It should update immediately while you experiment with the quick-start cards above.
                 </p>
 
                 <div class="settings-state-grid" data-settings-state-grid>
@@ -380,8 +452,7 @@
                     <h2>Runtime Preferences</h2>
                 </div>
                 <p class="frame-note">
-                    Start here. Presets and the controls below are the settings most likely to matter in everyday use;
-                    the maps further down explain the machinery only if you want to inspect it.
+                    Use this register when the quick-start cards are not enough. These controls expose the full local settings model; the maps further down explain the machinery only if you want to inspect it.
                 </p>
 
                 <form class="settings-form" data-site-settings-form>

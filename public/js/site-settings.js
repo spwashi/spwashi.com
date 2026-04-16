@@ -947,6 +947,62 @@ const parseSettingTrigger = (value = '') => {
   };
 };
 
+const writeSettingsStatus = (statusNode, message = '', type = 'info') => {
+  if (!(statusNode instanceof HTMLElement)) return;
+  statusNode.textContent = message;
+  statusNode.dataset.status = type;
+};
+
+const resolveStandaloneStatusNode = (node) => {
+  if (!(node instanceof HTMLElement)) return null;
+
+  const containers = [
+    node.closest('[data-site-settings-panel]'),
+    node.closest('.vibe-widget'),
+    node.closest('.site-frame'),
+    node.closest('section, article, aside')
+  ].filter(Boolean);
+
+  for (const container of containers) {
+    const statusNode = container.querySelector?.('[data-site-settings-status]');
+    if (statusNode) return statusNode;
+  }
+
+  return null;
+};
+
+const applySettingTrigger = (trigger, options = {}) => {
+  const {
+    statusNode = null,
+    onSaved = null
+  } = options;
+
+  if (!trigger || !isKnownSetting(trigger.name)) {
+    writeSettingsStatus(statusNode, 'Unknown setting control.', 'info');
+    return null;
+  }
+
+  const validation = validateSetting(trigger.name, trigger.value);
+  if (!validation.valid) {
+    writeSettingsStatus(
+      statusNode,
+      `Invalid ${humanizeSettingName(trigger.name)} option.`,
+      'info'
+    );
+    return null;
+  }
+
+  const saved = saveSiteSettings({ [trigger.name]: trigger.value });
+  syncSettingsReadouts(document, saved);
+  writeSettingsStatus(
+    statusNode,
+    `${humanizeSettingName(trigger.name)} → ${trigger.value}.`,
+    'success'
+  );
+  onSaved?.(saved, trigger);
+  return saved;
+};
+
 const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
   const normalized = normalizeSiteSettings(settings);
 
@@ -1121,9 +1177,7 @@ const bindSettingsScope = (root, options = {}) => {
   let debounceTimer = null;
 
   const setStatus = (message, type = 'info') => {
-    if (!statusNode) return;
-    statusNode.textContent = message;
-    statusNode.dataset.status = type;
+    writeSettingsStatus(statusNode, message, type);
   };
 
   const syncFromStore = (settings = getSiteSettings()) => {
@@ -1206,19 +1260,12 @@ const bindSettingsScope = (root, options = {}) => {
         event.preventDefault();
       }
 
-      const validation = validateSetting(trigger.name, trigger.value);
-      if (!validation.valid) {
-        setStatus(`Invalid ${humanizeSettingName(trigger.name)} option.`, 'info');
-        return;
-      }
-
-      const saved = saveSiteSettings({ [trigger.name]: trigger.value });
+      const saved = applySettingTrigger(trigger, {
+        statusNode,
+        onSaved
+      });
+      if (!saved) return;
       syncFromStore(saved);
-      setStatus(
-        `${humanizeSettingName(trigger.name)} → ${trigger.value}.`,
-        'success'
-      );
-      onSaved?.(saved, trigger);
     };
 
     control.addEventListener('click', handler);
@@ -1262,6 +1309,48 @@ const bindSettingsScope = (root, options = {}) => {
   };
 };
 
+const bindStandaloneSettingTriggers = (root = document, options = {}) => {
+  if (!(root instanceof HTMLElement) && root !== document) {
+    return { cleanup() {}, refresh() {} };
+  }
+
+  const {
+    onSaved = null
+  } = options;
+
+  const handleClick = (event) => {
+    const control = event.target instanceof Element
+      ? event.target.closest('[data-site-setting-set]')
+      : null;
+
+    if (!(control instanceof HTMLElement)) return;
+    if (control.closest('[data-site-settings-form], [data-site-settings-scope]')) return;
+
+    const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
+    if (!trigger) return;
+
+    if (control instanceof HTMLAnchorElement) {
+      event.preventDefault();
+    }
+
+    applySettingTrigger(trigger, {
+      statusNode: resolveStandaloneStatusNode(control),
+      onSaved
+    });
+  };
+
+  root.addEventListener('click', handleClick);
+
+  return {
+    cleanup() {
+      root.removeEventListener('click', handleClick);
+    },
+    refresh() {
+      syncSettingsReadouts(document);
+    }
+  };
+};
+
 const bindSettingsReadouts = (root = document) => {
   if (!(root instanceof HTMLElement) && root !== document) {
     return { cleanup() {}, refresh() {} };
@@ -1297,8 +1386,13 @@ const initSiteSettingsBindings = () => {
   const forms = [...document.querySelectorAll('[data-site-settings-form]')];
   const scopes = [...document.querySelectorAll('[data-site-settings-scope]')]
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
+  const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set]')]
+    .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
+  const hasReadouts = Boolean(
+    document.querySelector('[data-settings-state], [data-site-setting-value]')
+  );
 
-  if ((!forms.length && !scopes.length) || manager._initialized) return;
+  if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || manager._initialized) return;
 
   manager._initialized = true;
 
@@ -1314,6 +1408,7 @@ const initSiteSettingsBindings = () => {
     includePresets: true,
     statusNode: getStatusNode(root)
   }));
+  const triggers = bindStandaloneSettingTriggers(document);
   const readouts = bindSettingsReadouts(document);
 
   initPwaStatusDisplay();
@@ -1321,11 +1416,13 @@ const initSiteSettingsBindings = () => {
   return {
     cleanup() {
       bindings.forEach((binding) => binding.cleanup());
+      triggers.cleanup();
       readouts.cleanup();
       manager._initialized = false;
     },
     refresh() {
       bindings.forEach((binding) => binding.refresh());
+      triggers.refresh();
       readouts.refresh();
       initPwaStatusDisplay();
     }
@@ -1415,6 +1512,7 @@ if (typeof window !== 'undefined') {
     sanitizePartialSettings,
     bindSettingsScope,
     bindSettingsField,
+    bindStandaloneSettingTriggers,
     bindSettingsReadouts,
     presets: PRESETS,
     describePreset: (name) => manager.describePreset(name),
@@ -1437,6 +1535,7 @@ export {
   bindSettingsField,
   bindSettingsReadouts,
   bindSettingsScope,
+  bindStandaloneSettingTriggers,
   collectSettingsFromScope,
   emitSettingsChange,
   getSettingValue,

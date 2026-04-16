@@ -86,10 +86,14 @@
  >>[2026-04-15 23:42] hygiene — base ref recorded as main@81d5e5205d70; unrelated local edits exist in play/shared-css files and will be avoided.
  >>[2026-04-15 23:43] taste — the widget copy should read like an invitation to shape the site, not like a hidden settings lab.
  >>[2026-04-15 23:45] revise — user feedback confirms the current settings page order feels off, so the plan now explicitly prioritizes route order and quick-start clarity before ornament.
+ >>[2026-04-16 00:02] implement — added shared `vibe-widget` surface classes so the same mini-card grammar can live on `/settings/`, `/`, `/topics/software/`, and `/topics/math/`.
+ >>[2026-04-16 00:07] implement — widened `public/js/site-settings.js` just enough to support standalone `data-site-setting-set` controls, active-state syncing, and local status feedback outside scoped settings forms.
+ >>[2026-04-16 00:12] implement — rebuilt the top of `/settings/` into a quick-start surface with presets, current-vibe feedback, and immediate color/palette/memory variants, then reordered the deeper inspection sections below it via route CSS.
+ >>[2026-04-16 00:16] implement — replaced the older one-purpose strips on home, software, and math with portable vibe widgets that expose current state plus a few tailored variants.
+ >>[2026-04-16 00:18] verify — node --check passed for public/js/site-settings.js and git diff --check passed after the settings/widget rollout.
 }
 
 ^["open"]{
- ?[settings_order]: "How much of the deeper inspection material should move down versus stay visible near the top?"
 }
 
 ^["commits"]{
@@ -101,15 +105,15 @@
 }
 
 ^["cache"]{
- ~#status: "planning"
+ ~#status: "verified"
  ~#base_ref: "main@81d5e5205d70"
  ~#rebased_at: ""
  ~#hygiene_split: "avoid unrelated uncommitted edits already present in play/shared-css files"
- ~#files_hot: ""
- ~#next_commit: "1"
- ~#open_count: "1"
- ~#last_stream: "2026-04-15 23:45"
- ~#taste_debt: "watch whether the widget language becomes too ornamental if too many settings appear at once"
+ ~#files_hot: "public/js/site-settings.js, public/css/spw-surfaces.css, public/css/settings-surface.css, settings/index.html, index.html, topics/software/index.html, topics/math/index.html"
+ ~#next_commit: "2"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-16 00:18"
+ ~#taste_debt: "watch whether additional pages should adopt the widget grammar or whether the flagship-route set is the right density"
 }
 
 ^["done"]{
