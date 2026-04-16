@@ -359,7 +359,7 @@
 
 :where(.frame-sigil[data-spw-charge="sustained"],
        .operator-chip[data-spw-charge="sustained"]) {
-  transform: scale(0.97) translateY(1px);
+  transform: none;
 }
 
 /* ==========================================================================
@@ -377,8 +377,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   :where(.operator-chip:hover, .frame-sigil:hover, .syntax-token:hover) {
-    text-shadow:
-      0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 24%, transparent);
+    text-shadow: none;
   }
 }
 

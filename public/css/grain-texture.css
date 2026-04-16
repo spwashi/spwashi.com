@@ -935,7 +935,7 @@ html[data-spw-high-contrast="on"] {
   [data-spw-charge="active"],
   [data-spw-charge="sustained"]
 )::before {
-  opacity: calc(var(--grain-surface-opacity) * 0.88);
+  opacity: calc(var(--grain-surface-opacity) * 0.68);
 }
 
 :where(
@@ -946,8 +946,7 @@ html[data-spw-high-contrast="on"] {
 )::after {
   box-shadow:
     var(--grain-panel-inset-highlight),
-    var(--grain-panel-shadow-local),
-    var(--grain-panel-glow-local);
+    var(--grain-panel-shadow-local);
 }
 
 :where(

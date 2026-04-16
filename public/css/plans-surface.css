@@ -21,15 +21,15 @@
   --plans-bg-deep: hsl(38 24% 89%);
   --plans-bg-field: hsl(44 28% 97%);
 
-  --plans-surface: rgba(255, 252, 248, 0.86);
-  --plans-surface-strong: rgba(255, 253, 250, 0.95);
-  --plans-surface-soft: rgba(247, 242, 235, 0.74);
-  --plans-surface-matte: rgba(248, 245, 239, 0.96);
+  --plans-surface: rgba(255, 252, 248, 0.92);
+  --plans-surface-strong: rgba(255, 253, 250, 0.98);
+  --plans-surface-soft: rgba(247, 242, 235, 0.84);
+  --plans-surface-matte: rgba(248, 245, 239, 0.98);
 
   --plans-ink: rgba(24, 22, 20, 0.96);
-  --plans-ink-soft: rgba(24, 22, 20, 0.72);
-  --plans-ink-mid: rgba(24, 22, 20, 0.56);
-  --plans-ink-faint: rgba(24, 22, 20, 0.34);
+  --plans-ink-soft: rgba(24, 22, 20, 0.82);
+  --plans-ink-mid: rgba(24, 22, 20, 0.68);
+  --plans-ink-faint: rgba(24, 22, 20, 0.48);
 
   --plans-line: rgba(56, 43, 35, 0.14);
   --plans-line-strong: rgba(98, 76, 64, 0.24);
@@ -289,7 +289,7 @@ body[data-spw-surface="plans"] {
 }
 
 [data-spw-surface="plans"] #plans-index .frame-list li {
-  color: var(--plans-ink-soft);
+  color: var(--plans-ink-mid);
 }
 
 [data-spw-surface="plans"] #plans-index .frame-list a {
@@ -321,11 +321,11 @@ body[data-spw-surface="plans"] {
   border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
   border-radius: 12px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
-    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-strong) 97%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 6px 16px rgba(34, 22, 14, 0.04);
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 5px 14px rgba(34, 22, 14, 0.035);
 }
 
 [data-spw-surface="plans"] #verb-register .frame-panel::before {
@@ -367,11 +367,11 @@ body[data-spw-surface="plans"] {
   border-radius: 14px;
   padding: 1.15rem 1.15rem 1.2rem;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
-    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-strong) 97%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 8px 18px rgba(34, 22, 14, 0.04);
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 6px 16px rgba(34, 22, 14, 0.038);
   transition:
     border-color var(--duration-base, 220ms) var(--ease-mechanical, ease),
     box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease),
@@ -515,8 +515,8 @@ body[data-spw-surface="plans"] {
   border: 1px solid color-mix(in srgb, var(--plans-line) 90%, transparent);
   border-radius: 10px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
-    color-mix(in srgb, var(--plans-surface-matte) 95%, transparent);
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-matte) 97%, transparent);
 }
 
 [data-spw-surface="plans"] .plan-considerations {
@@ -545,12 +545,12 @@ body[data-spw-surface="plans"] {
 
 [data-spw-surface="plans"] .plan-considerations li {
   margin: 0.45rem 0;
-  color: var(--plans-ink-soft);
+  color: var(--plans-ink-mid);
 }
 
 [data-spw-surface="plans"] .plan-wonder p {
   margin: 0;
-  color: var(--plans-ink-soft);
+  color: var(--plans-ink-mid);
   line-height: 1.58;
 }
 
@@ -585,11 +585,11 @@ body[data-spw-surface="plans"] {
   border-color: color-mix(in srgb, var(--plans-line) 96%, transparent);
   border-radius: 12px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
-    color-mix(in srgb, var(--plans-surface-strong) 95%, transparent);
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-strong) 97%, transparent);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 6px 16px rgba(34, 22, 14, 0.04);
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 5px 14px rgba(34, 22, 14, 0.035);
 }
 
 [data-spw-surface="plans"] #plan-relationships .frame-panel h3,
@@ -600,7 +600,7 @@ body[data-spw-surface="plans"] {
 [data-spw-surface="plans"] #plan-relationships .frame-panel p,
 [data-spw-surface="plans"] #plan-discovery .frame-panel p,
 [data-spw-surface="plans"] #plan-discovery .frame-panel li {
-  color: var(--plans-ink-soft);
+  color: var(--plans-ink-mid);
 }
 
 /* ==========================================================================

@@ -45,7 +45,7 @@ header,
 
 :root {
   --handle-min-height: max(2.2rem, var(--touch-target-min, 2.2rem));
-  --handle-min-height-compact: 1.72rem;
+  --handle-min-height-compact: 1.64rem;
   --handle-baseline-offset: 0.08em;
 
   --handle-radius: var(--shape-component, 0.42rem);
@@ -62,8 +62,9 @@ header,
   --handle-bg: var(--surface-strong, rgba(255, 255, 255, 0.82));
   --handle-bg-soft: color-mix(in srgb, var(--handle-bg) 82%, transparent);
   --handle-bg-active:
-    color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, var(--handle-bg));
-  --handle-bg-selected: var(--active-op-color, var(--teal));
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, var(--handle-bg));
+  --handle-bg-selected:
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 90%, var(--active-op-color, var(--teal)) 10%);
 
   --handle-ink: var(--active-op-color, var(--teal));
   --handle-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.62));
@@ -78,8 +79,8 @@ header,
 
   --handle-shadow-rest: var(--shadow-xs, 0 1px 3px rgba(0, 0, 0, 0.06));
   --handle-shadow-focus:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
-    0 4px 12px rgba(0, 0, 0, 0.035);
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent),
+    0 3px 10px rgba(0, 0, 0, 0.025);
   --handle-shadow-latched:
     inset 0 1px 0 rgba(255, 255, 255, 0.34),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
@@ -258,6 +259,8 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 .frame-topline .frame-sigil,
 .frame-heading .frame-sigil {
   position: static;
+  display: inline-flex;
+  inline-size: fit-content;
   width: auto;
   max-width: 100%;
   overflow: visible;
@@ -272,6 +275,9 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   opacity: 0.42;
   justify-content: flex-start;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition:
     opacity var(--handle-duration-fast) var(--handle-ease),
     color var(--handle-duration-fast) var(--handle-ease),
@@ -318,7 +324,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 .operator-chip:focus-visible {
   background: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
   color: var(--ink);
-  transform: translateY(-1px);
+  transform: none;
   outline: none;
 }
 
@@ -415,7 +421,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 }
 
 :where(.spec-pill, .badge, .tag, .pill):hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 :where(.syntax-token, .spw-delimiter, [data-spw-charge-key], [data-spw-inline-form]):hover {
@@ -467,16 +473,28 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 }
 
 :where(
-  .frame-sigil.is-selected,
-  .frame-sigil[aria-pressed="true"],
   .operator-chip[aria-current="page"],
   [data-spw-selection="active"],
   [data-spw-selection="selected"]
 ) {
   background: var(--handle-bg-selected);
-  border-color: var(--handle-bg-selected);
-  color: #fff;
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 2px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent);
+}
+
+:where(
+  .frame-sigil.is-selected,
+  .frame-sigil[aria-pressed="true"]
+) {
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 2px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 5%, transparent);
 }
 
 :where([data-spw-latched="true"]) {
@@ -556,6 +574,45 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation])::before
 
 html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hover, :focus-visible))::before {
   opacity: 0.92;
+}
+
+.mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.48rem;
+  min-width: 0;
+}
+
+.mode-switch .frame-sigil {
+  position: relative;
+  top: auto;
+  left: auto;
+  display: inline-flex;
+  inline-size: auto;
+  width: auto;
+  max-width: 100%;
+  min-height: 2.1rem;
+  padding: 0.24rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  border-radius: var(--shape-control, 0.68rem);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 95%, transparent);
+  box-shadow: none;
+  opacity: 1;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
+  font-size: var(--text-size-chip, 0.84rem);
+  line-height: 1.08;
+}
+
+.mode-switch .frame-sigil:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
 /* ==========================================================================
@@ -1112,6 +1169,11 @@ html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
   .operator-chip {
     min-height: 2.4rem;
     padding: 0.4rem 0.7rem;
+  }
+
+  .mode-switch .frame-sigil {
+    min-height: 1.98rem;
+    padding-inline: 0.62rem;
   }
 
   .spw-component-tag,

@@ -10,11 +10,11 @@
 .spw-metaphysics-host {
   --spw-image-accent: var(--teal);
   --spw-image-paper:
-    color-mix(in srgb, var(--spw-image-accent) 7%, rgba(255, 248, 236, 0.92));
+    color-mix(in srgb, var(--spw-image-accent) 5%, rgba(255, 248, 236, 0.94));
   --spw-image-line:
     color-mix(in srgb, var(--spw-image-accent) 18%, rgba(17, 18, 20, 0.14));
   --spw-image-glow:
-    color-mix(in srgb, var(--spw-image-accent) 28%, rgba(255, 208, 131, 0.22));
+    color-mix(in srgb, var(--spw-image-accent) 18%, rgba(255, 208, 131, 0.12));
   --spw-image-focus-x: 50%;
   --spw-image-focus-y: 42%;
   --spw-image-tilt-x: 0deg;
@@ -132,8 +132,8 @@
 
 .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"] img {
   image-rendering: pixelated;
-  --spw-image-scale: 1.038;
-  filter: saturate(0.82) contrast(1.18) brightness(1.03);
+  --spw-image-scale: 1.014;
+  filter: saturate(0.9) contrast(1.12) brightness(1.01);
 }
 
 .spw-metaphysics-host[data-spw-image-effect="pixelize"]::after {
@@ -142,13 +142,13 @@
     linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 40%),
     repeating-linear-gradient(
       90deg,
-      color-mix(in srgb, var(--spw-image-accent) 8%, transparent) 0 1px,
-      transparent 1px 11px
+      color-mix(in srgb, var(--spw-image-accent) 10%, transparent) 0 1px,
+      transparent 1px 8px
     ),
     repeating-linear-gradient(
       180deg,
-      color-mix(in srgb, var(--spw-image-accent) 8%, transparent) 0 1px,
-      transparent 1px 11px
+      color-mix(in srgb, var(--spw-image-accent) 10%, transparent) 0 1px,
+      transparent 1px 8px
     ),
     radial-gradient(
       circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
@@ -161,8 +161,8 @@
   .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"][data-spw-image-preview="on"] img,
   .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"]:focus-within img
 ) {
-  --spw-image-scale: 1.06;
-  filter: saturate(0.88) contrast(1.22) brightness(1.05);
+  --spw-image-scale: 1.024;
+  filter: saturate(0.96) contrast(1.14) brightness(1.03);
 }
 
 .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="vector"] svg {
@@ -203,7 +203,10 @@
 }
 
 .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="vector"] svg {
-  filter: url("#watercolor-blur") saturate(0.95) contrast(0.98);
+  filter:
+    saturate(0.97)
+    contrast(1)
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.08));
 }
 
 :where(
@@ -255,9 +258,9 @@
   padding: 0.18rem 0.48rem;
   box-sizing: border-box;
   border: 1px solid var(--spw-image-line);
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-radius: calc(var(--shape-control, 0.68rem) - 1px);
+  background: color-mix(in srgb, var(--spw-image-paper) 94%, rgba(255, 255, 255, 0.82));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .spw-image-helper {
@@ -280,8 +283,8 @@
   border-color: color-mix(in srgb, var(--spw-image-accent) 42%, transparent);
   background:
     color-mix(in srgb, var(--spw-image-paper) 92%, rgba(17, 18, 20, 0.08));
-  transform: translateY(-1px);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 18%, transparent);
+  transform: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 18%, transparent);
 }
 
 .spw-image-memory {
@@ -304,13 +307,13 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
 .spw-metaphysics-host[data-spw-visited="true"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
-    0 0 22px var(--spw-image-glow);
+    0 8px 20px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
 }
 
 .spw-metaphysics-host[data-spw-image-prominence="hero"] {
   box-shadow:
     var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.42)),
-    0 12px 30px color-mix(in srgb, var(--spw-image-accent) 10%, rgba(0, 0, 0, 0.12));
+    0 8px 22px color-mix(in srgb, var(--spw-image-accent) 7%, rgba(0, 0, 0, 0.1));
 }
 
 .spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-image-preview="on"],
@@ -319,7 +322,7 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
 .spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-salience-state="active"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 20%, transparent),
-    0 16px 36px color-mix(in srgb, var(--spw-image-accent) 16%, rgba(0, 0, 0, 0.16));
+    0 10px 24px color-mix(in srgb, var(--spw-image-accent) 10%, rgba(0, 0, 0, 0.12));
 }
 
 .spw-metaphysics-host[data-spw-visited="true"]::after {
@@ -341,7 +344,7 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
   .spw-metaphysics-host[data-spw-visited="true"] img,
   .spw-metaphysics-host[data-spw-visited="true"] svg
 ) {
-  box-shadow: 0 0 24px color-mix(in srgb, var(--spw-image-accent) 14%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
 }
 
 :where(
@@ -349,13 +352,13 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
   .spw-metaphysics-host[data-spw-image-gesture="drag"] svg
 ) {
   --spw-image-scale: 1.018;
-  box-shadow: 0 14px 36px color-mix(in srgb, var(--spw-image-accent) 18%, transparent);
+  box-shadow: 0 10px 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
 }
 
 .spw-metaphysics-host[data-spw-hold-state="arming"] {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
-    0 0 30px color-mix(in srgb, var(--spw-image-accent) 20%, transparent);
+    0 0 12px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
 }
 
 .spw-metaphysics-host[data-spw-hold-state="arming"] .spw-image-helper {
@@ -404,13 +407,13 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
   55% {
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 26%, transparent),
-      0 0 38px color-mix(in srgb, var(--spw-image-accent) 22%, transparent);
+      0 0 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
   }
 
   100% {
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
-      0 0 22px var(--spw-image-glow);
+      0 8px 20px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
   }
 }
 

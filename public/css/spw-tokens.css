@@ -167,9 +167,9 @@
   --text-size-xl: clamp(1.22rem, 1.12rem + 0.36vw, 1.42rem);
   --text-size-2xl: clamp(1.46rem, 1.28rem + 0.7vw, 1.86rem);
   --text-size-3xl: clamp(1.82rem, 1.52rem + 1.1vw, 2.45rem);
-  --text-size-chip: clamp(0.76rem, 0.72rem + 0.1vw, 0.84rem);
-  --text-size-nav: clamp(0.79rem, 0.75rem + 0.14vw, 0.9rem);
-  --text-size-label: clamp(0.72rem, 0.69rem + 0.08vw, 0.8rem);
+  --text-size-chip: clamp(0.78rem, 0.75rem + 0.08vw, 0.86rem);
+  --text-size-nav: clamp(0.82rem, 0.79rem + 0.12vw, 0.92rem);
+  --text-size-label: clamp(0.74rem, 0.71rem + 0.08vw, 0.81rem);
 
   /* -- Semantic Typography Aliases -- */
   --site-root-font-size: 100%;
@@ -215,16 +215,16 @@
   /* -- Shape Primitives -- */
   --radius-2xs: 3px;
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
   --radius-pill: 999px;
 
   /* -- Semantic Shape Aliases -- */
   --shape-element: var(--radius-xs);
   --shape-component: var(--radius-sm);
-  --shape-control: clamp(0.62rem, 0.56rem + 0.18vw, 0.78rem);
+  --shape-control: clamp(0.54rem, 0.5rem + 0.14vw, 0.68rem);
   --shape-surface: var(--radius-md);
   --shape-floating: var(--radius-lg);
   --shape-cinematic: var(--radius-xl);
@@ -242,22 +242,22 @@
   --bg-field: hsl(42 44% 93%);
   --bg-ritual: hsl(40 54% 88%);
 
-  --surface: rgba(255, 255, 255, 0.62);
-  --surface-strong: rgba(255, 255, 255, 0.78);
-  --surface-soft: rgba(255, 255, 255, 0.44);
+  --surface: rgba(255, 255, 255, 0.76);
+  --surface-strong: rgba(255, 255, 255, 0.9);
+  --surface-soft: rgba(255, 255, 255, 0.58);
   --surface-code: rgba(18, 23, 27, 0.96);
   --surface-matte: rgba(247, 244, 238, 0.93);
-  --surface-panel: rgba(255, 255, 255, 0.72);
-  --surface-panel-strong: rgba(255, 255, 255, 0.84);
+  --surface-panel: rgba(255, 255, 255, 0.82);
+  --surface-panel-strong: rgba(255, 255, 255, 0.92);
   --surface-glass: rgba(255, 255, 255, 0.22);
-  --surface-shadowed: rgba(255, 255, 255, 0.56);
+  --surface-shadowed: rgba(255, 255, 255, 0.68);
 
   --ink-strong: rgba(var(--charcoal-rgb), 0.96);
   --ink: rgba(var(--charcoal-rgb), 0.92);
-  --ink-soft: rgba(var(--charcoal-rgb), 0.74);
-  --ink-mid: rgba(var(--charcoal-rgb), 0.58);
-  --ink-faint: rgba(var(--charcoal-rgb), 0.32);
-  --ink-speculative: rgba(var(--charcoal-rgb), 0.18);
+  --ink-soft: rgba(var(--charcoal-rgb), 0.8);
+  --ink-mid: rgba(var(--charcoal-rgb), 0.68);
+  --ink-faint: rgba(var(--charcoal-rgb), 0.42);
+  --ink-speculative: rgba(var(--charcoal-rgb), 0.24);
   --ink-disabled: rgba(var(--charcoal-rgb), 0.24);
 
   /* Line weight system — hierarchy through weight, not novelty */
@@ -275,8 +275,8 @@
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
   /* Material properties */
-  --material-blur: 12px;
-  --material-saturation: 1.06;
+  --material-blur: 6px;
+  --material-saturation: 1.02;
   --material-specular: 0.22;
   --material-transmission: 0.08;
   --material-shadow-strength: 0.08;

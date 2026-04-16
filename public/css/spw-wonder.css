@@ -32,12 +32,12 @@
   --spw-wonder-ease-mechanical: var(--ease-mechanical, ease);
 
   --spw-wonder-ring:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 28%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--wonder-accent-color) 10%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 20%, transparent),
+    0 6px 14px color-mix(in srgb, var(--wonder-accent-color) 8%, transparent);
 
   --spw-delight-ring:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 28%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--delight-color) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 22%, transparent),
+    0 6px 14px color-mix(in srgb, var(--delight-color) 8%, transparent);
 }
 
 /* ==========================================================================
@@ -148,9 +148,9 @@
 [data-spw-wonder-state="accented"],
 [data-spw-wonder-state="resonant"] {
   z-index: 50;
-  color: var(--wonder-accent-color) !important;
-  border-color: var(--wonder-accent-color) !important;
-  animation: spw-wonder-glow 1.4s var(--spw-wonder-ease) infinite;
+  color: color-mix(in srgb, var(--wonder-accent-color) 72%, currentColor) !important;
+  border-color: color-mix(in srgb, var(--wonder-accent-color) 36%, transparent) !important;
+  animation: none;
 }
 
 :where(
@@ -164,8 +164,8 @@
   .math-lens-card[data-spw-wonder-state="resonant"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 18%, transparent),
-    0 0 20px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 14%, transparent),
+    0 6px 18px color-mix(in srgb, var(--wonder-accent-color) 7%, transparent);
 }
 
 :where(
@@ -242,12 +242,12 @@
   [data-spw-charge]
 )[data-spw-charge="sustained"] {
   background:
-    color-mix(in srgb, var(--delight-color) 14%, transparent);
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 92%, var(--delight-color) 8%);
   border-color:
-    color-mix(in srgb, var(--delight-color) 42%, transparent);
+    color-mix(in srgb, var(--delight-color) 28%, transparent);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 22%, transparent),
-    0 0 10px color-mix(in srgb, var(--delight-color) 10%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--delight-color) 14%, transparent),
+    0 4px 12px color-mix(in srgb, var(--delight-color) 6%, transparent);
 }
 
 :where(
@@ -274,7 +274,9 @@
 [data-spw-form="brace"][data-spw-charge="sustained"]::after,
 [data-spw-form="brace"][data-spw-wonder-state="resonant"]::before,
 [data-spw-form="brace"][data-spw-wonder-state="resonant"]::after {
-  animation: brace-threshold-pulse 2s var(--spw-wonder-ease) infinite;
+  animation: none;
+  opacity: 0.42;
+  filter: none;
 }
 
 @keyframes brace-threshold-pulse {
@@ -298,8 +300,8 @@
   .mode-panel[data-spw-charge="sustained"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 22%, transparent),
-    0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 16%, transparent),
+    0 8px 18px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 6%, transparent);
 }
 
 /* ==========================================================================
@@ -620,8 +622,8 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 
 [data-spw-visited="true"] {
   outline: 1px solid var(--delight-color) !important;
-  box-shadow: 0 0 15px var(--delight-color, #008080) !important;
-  filter: drop-shadow(0 0 8px var(--delight-color, #008080)) brightness(1.05) !important;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--delight-color, #008080) 10%, transparent) !important;
+  filter: none !important;
   transition:
     box-shadow 1s var(--spw-wonder-ease),
     filter 1s var(--spw-wonder-ease),
@@ -663,8 +665,8 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   .spw-metaphysics-host[data-spw-charge="sustained"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
-    0 0 20px color-mix(in srgb, var(--delight-color) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 14%, transparent),
+    0 8px 18px color-mix(in srgb, var(--delight-color) 6%, transparent);
 }
 
 /* ==========================================================================
@@ -678,15 +680,15 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   .frame-topline .frame-sigil[data-spw-wonder-state="accented"],
   .frame-heading .frame-sigil[data-spw-wonder-state="accented"]
 ) {
-  color: var(--wonder-accent-color);
-  text-shadow: 0 0 8px color-mix(in srgb, var(--wonder-accent-color) 24%, transparent);
+  color: color-mix(in srgb, var(--wonder-accent-color) 78%, currentColor);
+  text-shadow: none;
 }
 
 :where(
   .frame-topline .spec-strip [data-spw-charge="preview"],
   .frame-operators [data-spw-charge="preview"]
 ) {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 /* ==========================================================================

@@ -74,7 +74,7 @@
     color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.82)) 90%, transparent);
   --ornament-glow:
     0 0 0 1px color-mix(in srgb, var(--ornament-accent) 18%, transparent),
-    0 0 16px color-mix(in srgb, var(--ornament-accent) 12%, transparent);
+    0 2px 8px color-mix(in srgb, var(--ornament-accent) 8%, transparent);
 
   --ornament-sequence-font-size: 0.95rem;
   --ornament-sequence-letter-spacing: 0.1em;

@@ -91,7 +91,7 @@
 
 :where(body[data-spw-surface="services"] #services-frame .spec-pill) {
   border-color: color-mix(in srgb, var(--services-accent) 18%, transparent);
-  background: color-mix(in srgb, rgba(255, 255, 255, 0.92) 94%, var(--services-accent) 6%);
+  background: color-mix(in srgb, rgba(255, 255, 255, 0.96) 95%, var(--services-accent) 5%);
   color: color-mix(in srgb, var(--ink, #1f2423) 82%, var(--services-accent-cool) 18%);
 }
 
@@ -127,8 +127,8 @@
 }
 
 :where(body[data-spw-surface="services"] .svc-svg.is-resolved .svc-center) {
-  filter: drop-shadow(0 0 18px var(--accent));
-  animation: services-resolve-pulse 2s ease-in-out infinite alternate;
+  filter: none;
+  animation: none;
 }
 
 @keyframes services-resolve-pulse {
@@ -182,5 +182,10 @@
     min-height: 1.72rem;
     padding: 0.16rem 0.5rem;
     font-size: 0.74rem;
+  }
+
+  :where(body[data-spw-surface="services"] #what-i-do .frame-grid,
+         body[data-spw-surface="services"] #social-context .frame-grid) {
+    grid-template-columns: 1fr;
   }
 }

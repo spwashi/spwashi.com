@@ -204,6 +204,41 @@
         </div>
         <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
 
+        <div class="palette-probe" data-site-settings-scope>
+            <div class="palette-probe-header">
+                <div>
+                    <p class="palette-probe-kicker">Color paths</p>
+                    <h2 class="palette-probe-title">Stumble into a palette, then follow where it feels coherent.</h2>
+                </div>
+                <div class="palette-probe-swatches" aria-hidden="true">
+                    <span class="palette-probe-chip"></span>
+                    <span class="palette-probe-chip"></span>
+                    <span class="palette-probe-chip"></span>
+                    <span class="palette-probe-chip"></span>
+                </div>
+            </div>
+            <p class="palette-probe-copy">Current dimension: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory is <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>, and color mode is <span class="palette-probe-state" data-settings-state="colorMode">auto</span>.</p>
+            <div class="palette-probe-actions" aria-label="Homepage palette resonance choices">
+                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
+                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
+                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
+                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
+            </div>
+            <div class="palette-probe-paths" aria-label="Nearby route paths">
+                <a class="operator-chip" href="/topics/craft/" data-spw-operator="object">craft warmth</a>
+                <a class="operator-chip" href="/topics/software/" data-spw-operator="ref">software cool</a>
+                <a class="operator-chip" href="/recipes/" data-spw-operator="surface">substrate amber</a>
+                <a class="operator-chip" href="/play/" data-spw-operator="action">play signal</a>
+            </div>
+            <div class="palette-probe-actions" aria-label="Supporting homepage display settings">
+                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected</button>
+                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
+                <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
+            </div>
+            <p class="palette-probe-copy">The practical aim is simple: a visitor should be able to discover a good path by color, not only by taxonomy. For the full browser-local register, open <a href="/settings/#runtime-preferences">runtime preferences</a>.</p>
+        </div>
+
         <nav
             class="page-index"
             aria-label="Home sections"
@@ -230,6 +265,16 @@
                 <li><a href="#constellation-frame">Constellation</a></li>
             </ul>
         </nav>
+
+        <div class="wonder-memory-strip" data-site-settings-scope data-spw-memory-anchor="home craft software recipes play palette wonder colors">
+            <p class="wonder-memory-copy">Happy paths on this site can start with a temperature instead of a category: follow warmer material routes into <a href="/topics/craft/">craft</a> or <a href="/recipes/">recipes</a>, cooler structural routes into <a href="/topics/software/">software</a>, or more social energy into <a href="/play/">play</a>. Wonder memory decides whether that feeling stays local or starts echoing.</p>
+            <div class="wonder-memory-actions" role="group" aria-label="Homepage wonder memory controls">
+                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused</button>
+                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected</button>
+                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                <span class="spec-pill">wonder memory: <span data-settings-state="wonderMemory">nearby</span></span>
+            </div>
+        </div>
 
         <p class="spw-spirit-sequence" aria-hidden="true">
             <span data-op="probe">?</span>
