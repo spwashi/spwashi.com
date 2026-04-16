@@ -963,6 +963,19 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'rpg-wednesday',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'rpg-wednesday',
+    selector: 'main',
+    load: () => import('./rpg-wednesday.js'),
+    mount: (mod) => {
+      const fn = mod?.initRpgWednesday;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'settings-page',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

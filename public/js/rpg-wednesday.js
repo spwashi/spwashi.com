@@ -1,6 +1,7 @@
 import { emitSpwAction } from './spw-shared.js';
 
 const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
+const RPG_ROUTE_RE = /^(?:\/rpg\/?$|\/play\/rpg-wednesday(?:\/|$))/;
 
 const DEFAULT_STATE = {
     scene: '',
@@ -184,6 +185,135 @@ const previewText = (value, fallback = DASH_VALUE, maxLength = 64) => {
     return normalized.length > maxLength ? `${normalized.slice(0, maxLength - 1)}…` : normalized;
 };
 
+const buildRpgModeDescriptor = () => {
+    const path = window.location.pathname.replace(/\/+$/, '/') || '/';
+
+    if (path === '/play/rpg-wednesday/sessions/') {
+        return {
+            pill: 'session memory',
+            title: 'RPG Mode',
+            note: 'Write dated events first, then revise cast and world entries only after details recur enough to hold weight.'
+        };
+    }
+
+    if (path === '/play/rpg-wednesday/cast/') {
+        return {
+            pill: 'cast memory',
+            title: 'RPG Mode',
+            note: 'Update the character card when the sheet changes, then move stable versions into cast memory once the canon is ready to keep.'
+        };
+    }
+
+    if (path === '/play/rpg-wednesday/world/') {
+        return {
+            pill: 'world register',
+            title: 'RPG Mode',
+            note: 'Keep setting notes downstream of play. Log the event, update the character card if it changed, then let lore settle into the world register.'
+        };
+    }
+
+    if (path === '/play/rpg-wednesday/arcs/') {
+        return {
+            pill: 'arc pressure',
+            title: 'RPG Mode',
+            note: 'Arcs should emerge from repeated session pressure. Update the dated record first, then let character and cast changes follow the pattern.'
+        };
+    }
+
+    if (path === '/rpg/') {
+        return {
+            pill: 'quick portal',
+            title: 'RPG Mode',
+            note: 'This short route is the fast way back into RPG Wednesday when you want to update a character card, log a session, or re-enter the topic cluster.'
+        };
+    }
+
+    return {
+        pill: 'campaign surface',
+        title: 'RPG Mode',
+        note: 'Character sheets are the best first artifact. Update the card when canon changes, then move stable versions into cast memory or session recap surfaces.'
+    };
+};
+
+const ensureRpgModeWidget = () => {
+    if (document.querySelector('[data-rpg-mode-widget]')) return;
+
+    const article = document.querySelector('main article');
+    if (!article) return;
+
+    const hero = article.querySelector('.site-hero');
+    const descriptor = buildRpgModeDescriptor();
+    const hasLocalKit = Boolean(document.querySelector('[data-rpg-gameplay-kit], #local-gameplay-kit'));
+    const actions = createElement('div', {
+        className: 'frame-operators',
+        'data-spw-slot': 'actions',
+        'aria-label': 'RPG mode actions'
+    }, [
+        createElement('a', {
+            className: 'operator-chip',
+            href: '/tools/character-sheet/',
+            text: '@ update character card'
+        }),
+        createElement('a', {
+            className: 'operator-chip',
+            href: '/play/rpg-wednesday/cast/',
+            text: '~ cast register'
+        }),
+        createElement('a', {
+            className: 'operator-chip',
+            href: hasLocalKit ? '#local-gameplay-kit' : '/play/rpg-wednesday/sessions/',
+            text: hasLocalKit ? '@ local kit' : '@ session log'
+        }),
+        createElement('a', {
+            className: 'operator-chip',
+            href: '/topics/',
+            text: '? topics atlas'
+        })
+    ]);
+
+    const widget = createElement('aside', {
+        className: 'site-frame rpg-mode-widget',
+        'data-rpg-mode-widget': 'true',
+        'data-spw-kind': 'frame',
+        'data-spw-role': 'guidance',
+        'data-spw-context': 'play',
+        'data-spw-category-family': 'portal',
+        'data-spw-affordance': 'navigate',
+        'data-spw-seed': 'page_play_play_rpg_wednesday__rpg_mode_widget'
+    }, [
+        createElement('div', { className: 'frame-heading' }, [
+            createElement('a', {
+                className: 'frame-sigil',
+                href: '/rpg/',
+                text: '#"rpg_mode"'
+            }),
+            createElement('h2', { text: descriptor.title })
+        ]),
+        createElement('div', { className: 'spec-strip' }, [
+            createElement('span', { className: 'spec-pill', text: descriptor.pill }),
+            createElement('span', { className: 'spec-pill', text: 'character updates' }),
+            createElement('span', { className: 'spec-pill', text: 'fast entry' })
+        ]),
+        createElement('div', { className: 'rpg-mode-widget__body' }, [
+            createElement('div', { className: 'rpg-mode-widget__copy' }, [
+                createElement('p', { text: descriptor.note }),
+                createElement('p', {
+                    className: 'frame-note',
+                    text: 'Use the builder when a sheet changes. Use sessions for dated truth. Use cast once a character has enough recurrence to deserve memory.'
+                })
+            ]),
+            actions
+        ])
+    ]);
+
+    if (hero && hero.parentElement === article) {
+        hero.insertAdjacentElement('afterend', widget);
+        return;
+    }
+
+    article.prepend(widget);
+};
+
 const getActiveActor = (state) => (
     state.initiative.find((actor) => actor.id === state.activeInitiativeId) || null
 );
@@ -279,9 +409,11 @@ const copyText = async (text) => {
 };
 
 export const initRpgWednesday = () => {
-    if (!/^\/play\/rpg-wednesday(?:\/|$)/.test(window.location.pathname)) return null;
+    if (!RPG_ROUTE_RE.test(window.location.pathname)) return null;
+    ensureRpgModeWidget();
+
     const section = document.querySelector('[data-rpg-gameplay-kit]');
-    if (!section || section.dataset.rpgHydrated === 'true') return null;
+    if (!section || section.dataset.rpgHydrated === 'true') return { storageKey: STORAGE_KEY };
 
     const storage = createStorage();
     let state = storage.read();

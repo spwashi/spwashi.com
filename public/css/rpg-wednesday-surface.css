@@ -87,6 +87,42 @@
   margin-block: 0.45rem 0.2rem;
 }
 
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget) {
+  display: grid;
+  gap: 0.8rem;
+  padding: clamp(0.9rem, 1.8vw, 1.1rem);
+  border-color: color-mix(in srgb, var(--rpg-accent) 24%, rgba(18, 24, 28, 0.12));
+  background:
+    radial-gradient(circle at top right, rgba(176, 106, 91, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(242, 246, 242, 0.94));
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget__body) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.9fr);
+  gap: 0.9rem 1rem;
+  align-items: start;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget__copy) {
+  display: grid;
+  gap: 0.45rem;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget__copy p) {
+  margin: 0;
+  max-inline-size: 62ch;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .frame-operators) {
+  margin-top: 0;
+  align-content: start;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .spec-strip) {
+  justify-content: flex-start;
+}
+
 :where(body[data-spw-surface="rpg-wednesday"] .campaign-mood-card) {
   margin: 0;
   border-color: color-mix(in srgb, var(--rpg-accent) 24%, rgba(18, 24, 28, 0.12));
@@ -139,8 +175,8 @@
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {
-  grid-template-columns: auto 1fr;
-  align-items: start;
+  grid-template-columns: minmax(min(100%, 17rem), 20rem) minmax(0, 1fr);
+  align-items: stretch;
   gap: var(--surface-gap, 1rem);
 }
 
@@ -148,9 +184,76 @@
   grid-column: auto;
 }
 
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character [data-spw-image-surface]) {
+  width: min(100%, 20rem);
+  max-width: 20rem;
+  justify-self: center;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-panel) {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-character-actions) {
+  margin-top: 0.1rem;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-md, 1rem);
+}
+
 :where(body[data-spw-surface="rpg-wednesday"] .capture-preset) {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-width: 0;
+  min-height: 100%;
+  padding: 0.9rem;
   background: var(--rpg-panel);
   border-color: color-mix(in srgb, var(--rpg-accent) 18%, rgba(18, 24, 28, 0.12));
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset::before) {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--rpg-capture-aspect, 4 / 5);
+  border: 1px solid color-mix(in srgb, var(--rpg-accent) 18%, rgba(18, 24, 28, 0.12));
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(235, 242, 236, 0.78)),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(25% - 1px),
+      rgba(93, 147, 103, 0.06) calc(25% - 1px),
+      rgba(93, 147, 103, 0.06) 25%
+    );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset--portrait) {
+  --rpg-capture-aspect: 4 / 5;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset--square) {
+  --rpg-capture-aspect: 1 / 1;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset--wide) {
+  --rpg-capture-aspect: 16 / 9;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset--tall) {
+  --rpg-capture-aspect: 9 / 16;
+}
+
+:where(body[data-spw-surface="rpg-wednesday"] .capture-preset .frame-card-sigil) {
+  justify-self: start;
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] .syntax-list) {
@@ -183,8 +286,16 @@
     grid-column: auto;
   }
 
+  :where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget__body) {
+    grid-template-columns: 1fr;
+  }
+
   :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {
     grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character [data-spw-image-surface]) {
+    max-width: min(100%, 20rem);
   }
 }
 
