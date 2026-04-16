@@ -35,13 +35,14 @@
 
 ^["selection"]{
  chosen: [
-  "/00.unsorted/hero-images/spwashi_hero_image_for_a_boonhonk_website_25e1cdef-ac4c-43ac-bcfc-140642865ff5.png",
-  "/00.unsorted/hero-images/spwashi_hero_image_for_a_boonhonk_website_6f23ac95-6953-40cc-9591-590011149af6.png",
   "/00.unsorted/items/spwashi_glowing_boonhonk_machine_gearin_up_to_blort_some_bap_55fcbbd0-246c-431b-97f5-f38ea1035bda.png",
   "/00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_0.png",
+  "/00.unsorted/tiles/spwashi_algorithms_--chaos_20_--tile_--profile_3q5khel_--hd_-_bff081de-a68e-4184-b2ac-fb1f4ba8e9ab_1.png",
+  "/00.unsorted/tiles/spwashi_RPG_wednesday_glowing_hype_for_boonhonk_--chaos_20_--_5cec7ecf-8f9f-4949-a5bb-d82cbbd62f67_1.png",
   "/00.unsorted/tiles/spwashi_cozy_background_for_a_library_CMS_elegant_and_inviting_6361412f-0420-48c7-b54e-5de5f15bbbd8.png",
   "/00.unsorted/aesthetics/spwashi_background_image_for_a_website_--chaos_20_--ar_34_--p_e1d037e7-1258-46cc-b86d-e261cf886b84_0.png",
-  "/00.unsorted/ChatGPT/ChatGPT Image Apr 15, 2026, 06_31_40 PM.png"
+  "/00.unsorted/aesthetics/spwashi_background_image_for_a_website_--chaos_20_--ar_34_--p_e1d037e7-1258-46cc-b86d-e261cf886b84_1.png",
+  "/00.unsorted/ChatGPT/ChatGPT Image Apr 15, 2026, 07_14_28 PM.png"
  ]
 }
 
@@ -60,6 +61,8 @@
  >>[2026-04-15 16:21] decide — Focus on the home page, the topics atlas, and the software hub so the first screenshot surfaces change meaningfully.
  >>[2026-04-15 16:29] choose — Favor the mushroom-house hero, machine cabinet, algorithm tile, library stack, aurora sea, band portrait, and a ChatGPT parchment diagram.
  >>[2026-04-15 16:48] fix — Mobile effect parity matters first: raster watercolor now uses a CSS-native wash path, and pixelize gets an explicit grid/scale treatment so all images show a visible state on dense screens.
+ >>[2026-04-15 18:07] implement — Added a shared illustrated-card treatment, rewired the topics hero into an image-backed atlas surface, refreshed the home hero studies, and swapped the software hero to parser-specific imagery.
+ >>[2026-04-15 18:12] align — Used the content blob, library stack, algorithm field, RPG tile, and tide backgrounds so captions and card copy point outward into routes instead of acting like loose decoration.
 }
 
 ^["open"]{
@@ -74,10 +77,10 @@
 }
 
 ^["cache"]{
- ~#status: "planning"
+ ~#status: "implementation"
  ~#base_ref: "main"
- ~#files_hot: "index.html topics/index.html topics/software/index.html public/css/spw-surfaces.css"
- ~#next_commit: "2"
+ ~#files_hot: "index.html topics/index.html topics/software/index.html public/css/spw-surfaces.css public/css/topics-surface.css public/css/home-surface.css"
+ ~#next_commit: "3"
  ~#open_count: "1"
 }
 

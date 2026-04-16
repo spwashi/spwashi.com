@@ -553,6 +553,18 @@ body[data-spw-surface="home"] {
   color: color-mix(in srgb, var(--home-accent) 84%, var(--home-ink-soft));
 }
 
+[data-spw-surface="home"] .frame-card--illustrated .frame-card-media {
+  border-bottom-color: color-mix(in srgb, var(--home-accent) 26%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), transparent 42%),
+    color-mix(in srgb, var(--home-surface-strong) 84%, var(--home-accent-soft));
+}
+
+[data-spw-surface="home"] .frame-card--illustrated .frame-card-media::after {
+  background:
+    linear-gradient(180deg, transparent, rgba(245, 241, 233, 0.18) 52%, rgba(245, 241, 233, 0.5));
+}
+
 /* ==========================================================================
    9. Image studies / media focus / constellation
    ========================================================================== */
@@ -631,6 +643,19 @@ body[data-spw-surface="home"] {
 
 [data-spw-surface="home"] .image-study figcaption {
   color: var(--home-ink-soft);
+}
+
+[data-spw-surface="home"] .image-study figcaption a,
+[data-spw-surface="home"] .media-focus-content a {
+  color: color-mix(in srgb, var(--home-accent) 84%, var(--home-accent-2));
+  text-decoration: none;
+}
+
+[data-spw-surface="home"] .image-study figcaption a:hover,
+[data-spw-surface="home"] .image-study figcaption a:focus-visible,
+[data-spw-surface="home"] .media-focus-content a:hover,
+[data-spw-surface="home"] .media-focus-content a:focus-visible {
+  text-decoration: underline;
 }
 
 [data-spw-surface="home"] .image-study figcaption strong,

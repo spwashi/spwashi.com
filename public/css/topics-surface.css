@@ -124,6 +124,26 @@
   filter: saturate(1.04) contrast(1.02);
 }
 
+:where(body[data-spw-surface="topics"] .frame-card--illustrated) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 240, 235, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 10px 20px rgba(0, 0, 0, 0.04);
+}
+
+:where(body[data-spw-surface="topics"] .frame-card--illustrated .frame-card-media) {
+  border-bottom-color: color-mix(in srgb, var(--topics-line-strong) 34%, var(--topics-line));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 46%),
+    color-mix(in srgb, rgba(243, 240, 235, 0.92) 90%, var(--topics-accent-soft));
+}
+
+:where(body[data-spw-surface="topics"] .frame-card--illustrated .frame-card-media::after) {
+  background:
+    linear-gradient(180deg, transparent, rgba(245, 242, 237, 0.18) 52%, rgba(245, 242, 237, 0.52));
+}
+
 :where(body[data-spw-surface="topics"] .spw-svg-figure) {
   margin: 0;
   background:
