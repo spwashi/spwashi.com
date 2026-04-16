@@ -182,12 +182,12 @@ function initModClock(root) {
     const divisor = gcd(modulus, multiplier);
     if (divisor === 1) {
       status.textContent = isPrime(modulus)
-        ? `Because gcd(${multiplier}, ${modulus}) = 1, the map permutes all residues. Since ${modulus} is prime, the nonzero residues also form a finite field under multiplication.`
-        : `Because gcd(${multiplier}, ${modulus}) = 1, multiplication by ${multiplier} permutes the residues. Composite moduli still show orderly cycles, but they do not have the same field behavior as prime moduli.`;
+        ? `Every mark moves, but nothing collapses: multiplication by ${multiplier} simply permutes the residues mod ${modulus}. Because ${modulus} is prime, the nonzero residues keep a clean inverse structure as well.`
+        : `Every mark still moves to its own destination because gcd(${multiplier}, ${modulus}) = 1, but mod ${modulus} is composite overall. The picture stays orderly here without gaining the full field behavior that prime moduli support.`;
       return;
     }
 
-    status.textContent = `Because gcd(${multiplier}, ${modulus}) = ${divisor}, the chords collapse into repeated sectors. The overlap is a visual clue that divisibility is constraining the arithmetic.`;
+    status.textContent = `Some marks now collapse into the same sectors because gcd(${multiplier}, ${modulus}) = ${divisor}. That overlap is divisibility made visible: the motion is still there, but shared factors keep different residues from staying distinct.`;
   }
 
   modulusInput.addEventListener('input', render);
@@ -202,9 +202,9 @@ function initCategorySquare(root) {
   if (!buttons.length || !status || !segments.length) return;
 
   const states = {
-    upper: 'The upper path composes f and h. One local journey becomes a single composite arrow.',
-    lower: 'The lower path composes g and k. Commutativity says this different route lands in the same place.',
-    both: 'A commuting square is fun because two different journeys count as one result. Category theory keeps its attention on that sameness of composition.',
+    upper: 'Follow the top path first: one local change feeds the next. Category theory remembers that this whole walk can be treated as a single composite move.',
+    lower: 'Follow the side path first: the intermediate object changes, but the promised destination should still agree with the other route.',
+    both: 'The real invariant is the end result. A commuting square is satisfying because two different journeys are identified as one dependable composite effect.',
   };
 
   function setState(nextState) {

@@ -196,7 +196,7 @@
                     <a class="frame-sigil" href="#growth-curves">^"growth_curves"{</a>
                     <h2>Growth Curves</h2>
                 </div>
-                <p class="frame-note">Most of the emotional difference in complexity comes from curve shape, not constant factors. A slightly steeper curve may feel harmless until scale turns it into a wall. If you want a route where those curves stop being abstract, jump from here to the <a href="/topics/software/parsers/#parser-map">parser map</a>.</p>
+                <p class="frame-note">Most of the emotional difference in complexity comes from curve shape, not constant factors. A slightly steeper curve may feel harmless until scale turns it into a wall. The intuition grammar here is: what is growing, what still looks cheap at small size, where the wall first appears, and what design habit might postpone it. If you want a route where those curves stop being abstract, jump from here to the <a href="/topics/software/parsers/#parser-map">parser map</a>.</p>
                 <figure class="spw-svg-figure">
                     <svg viewBox="0 0 720 320" role="img" aria-labelledby="complexity-curves-title complexity-curves-desc">
                         <title id="complexity-curves-title">Complexity growth curves</title>
@@ -215,8 +215,30 @@
                         <text x="365" y="284" text-anchor="middle" fill="var(--ink-soft)">input size</text>
                         <text x="44" y="155" text-anchor="middle" fill="var(--ink-soft)" transform="rotate(-90 44 155)">cost</text>
                     </svg>
-                    <figcaption class="frame-note">Complexity is often felt as curve shape. The later sections connect that feeling back to parser design and memory management rather than leaving it as a detached graph.</figcaption>
+                    <figcaption class="frame-note">Complexity is often felt as curve shape. The later sections connect that feeling back to parser design and memory management rather than leaving it as a detached graph. The main semantic move is simple: a curve is a picture of how quickly your luck runs out.</figcaption>
                 </figure>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>What changes</h3>
+                        <p>Input size grows. The picture asks how the required time or memory grows with it.</p>
+                        <a href="#growth-curves">anchor: growth curves</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>What stays deceptive</h3>
+                        <p>At small sizes, several curves can feel almost interchangeable. The danger is that scale eventually exposes the difference.</p>
+                        <a href="#complexity-intuition">anchor: intuition first</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Where the wall appears</h3>
+                        <p>Quadratic and exponential growth are not just “bigger.” They are the place where a playful system becomes expensive or impossible.</p>
+                        <a href="#parser-budgets">next: parser budgets</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Where it leads</h3>
+                        <p>This chart matters because parser experiments, memoization, and retained state all turn abstract curve shape into concrete design pressure.</p>
+                        <a href="/topics/software/parsers/#parser-memory">route: parser memory</a>
+                    </article>
+                </div>
             </section>
 
             <section class="site-frame" id="parser-budgets" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth constraint budget" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_complexity__parser_budgets" data-spw-context-relevance="complexity algorithms growth rates reductions memory parsing" data-spw-related-routes="/topics/math/|/topics/software/parsers/|/topics/math/category-theory/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/software/schedulers/">

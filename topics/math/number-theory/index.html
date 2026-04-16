@@ -199,7 +199,7 @@
                     <a class="frame-sigil" href="#modular-clock">^"modular_clock"{</a>
                     <h2>Portable Diagram: Multiplication On A Clock</h2>
                 </div>
-                <p class="frame-note">This SVG diagram maps each residue i to k × i (mod n). When the modulus is prime, the nonzero residues behave more cleanly; when the modulus shares factors with the multiplier, the pattern folds inward and exposes divisibility. That contrast is the bridge into <a href="/topics/math/field-theory/#prime-fields">field theory</a> and a useful analogy for <a href="/topics/software/parsers/#parser-memory">parser equivalence classes</a>.</p>
+                <p class="frame-note">This SVG diagram maps each residue i to k × i (mod n). To read it intuitively, watch four things at once: what moves, what stays fixed, where different residues collapse onto the same destination, and which patterns only appear because divisibility is quietly organizing the picture. That contrast is the bridge into <a href="/topics/math/field-theory/#prime-fields">field theory</a> and a useful analogy for <a href="/topics/software/parsers/#parser-memory">parser equivalence classes</a>.</p>
                 <div class="math-interactive-lab" data-math-visual="mod-clock">
                     <div class="math-diagram-controls">
                         <label class="math-control">
@@ -216,9 +216,31 @@
                             <title id="number-clock-title">Modular multiplication clock</title>
                             <desc id="number-clock-desc">A modular arithmetic clock diagram that updates when the modulus and multiplier controls move.</desc>
                         </svg>
-                        <figcaption class="frame-note">If the controls are unavailable, read the default picture as multiplication by 5 on a 12-hour clock. The diagram still shows the basic idea: modular arithmetic turns numbers into recurring positions.</figcaption>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default picture as multiplication by 5 on a 12-hour clock. The diagram still shows the basic idea: one operation keeps moving the marks, the clock face stays fixed, and shared factors show up as visible folding.</figcaption>
                     </figure>
                     <p class="math-diagram-status" data-role="status">Move the controls to compare prime and composite moduli.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>Each residue travels to a new position under multiplication by the chosen factor.</p>
+                            <a href="#modular-clock">anchor: modular clock</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays fixed</h3>
+                            <p>The modulus keeps the clock face stable. Only the routing of positions changes inside that fixed habitat.</p>
+                            <a href="#number-theory-intuition">anchor: intuition first</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What collapses</h3>
+                            <p>When the multiplier shares factors with the modulus, several residues land in the same sector. That collapse is divisibility made visible.</p>
+                            <a href="#divisibility-handles">next: divisibility handles</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Prime moduli behave more cleanly, which is why this picture naturally hands off to finite fields and inverses.</p>
+                            <a href="/topics/math/field-theory/#prime-fields">route: prime fields</a>
+                        </article>
+                    </div>
                 </div>
             </section>
 

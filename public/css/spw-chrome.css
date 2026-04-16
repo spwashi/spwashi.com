@@ -535,8 +535,8 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   right: 0;
   z-index: calc(var(--layer-floating, 100) + 4);
   display: grid;
-  gap: 0.28rem;
-  min-width: min(19rem, 88vw);
+  gap: 0.34rem;
+  min-width: min(22rem, 90vw);
   padding: 0.48rem;
   border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 84%, transparent);
   border-radius: var(--shell-panel-radius);
@@ -554,10 +554,10 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 .spw-route-menu-link {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.75rem;
-  min-height: 2.2rem;
+  min-height: 2.8rem;
   padding: 0.46rem 0.7rem;
   border-radius: var(--shell-panel-radius-tight);
   color: var(--ink, rgba(14, 18, 20, 0.92));
@@ -568,6 +568,28 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
     background-color var(--shell-duration-fast) var(--shell-ease),
     box-shadow var(--shell-duration-base) var(--shell-settle-ease),
     transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+.spw-route-menu-link-copy {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.spw-route-menu-link-label {
+  font-weight: 600;
+}
+
+.spw-route-menu-link-note {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-label, 0.76rem);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.spw-route-menu-link-token {
+  align-self: center;
+  text-align: right;
 }
 
 .spw-route-menu-link:is(:hover, :focus-visible) {
@@ -651,12 +673,16 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   border-radius: var(--shell-panel-radius);
 }
 
-:where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-panel, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-panel) {
-  position: static;
-  min-width: 0;
-  margin-top: 0.35rem;
-  padding: 0.35rem;
-}
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-panel, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-panel) {
+    position: static;
+    min-width: 0;
+    margin-top: 0.35rem;
+    padding: 0.35rem;
+  }
+
+  .spw-route-menu-link {
+    min-height: 0;
+  }
 
 /* ==========================================================================
    3. Site footer

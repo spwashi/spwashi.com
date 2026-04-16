@@ -115,10 +115,11 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/topics/">Topics</a></li>
-                <li><a aria-current="page" href="/topics/math/">Math</a></li>
                 <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/topics/site-design/">Site Design</a></li>
-                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/topics/math/">Math</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/about/domains/lore.land/">lore.land</a></li>
+                <li><a href="/settings/">Settings</a></li>
             </ul>
         </nav>
         <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>structure</span>
@@ -138,7 +139,7 @@
                         </div>
                         <p class="spec-kicker">Math / Structure</p>
                         <h1 id="math-title">Math is the structure under the surface.</h1>
-                        <p>This route now branches in two directions. One branch is pure math made approachable through intuition-first pages on <a href="/topics/math/topology/#topology-intuition">topology</a>, <a href="/topics/math/symmetry/#symmetry-intuition">symmetry</a>, <a href="/topics/math/combinatorics/#combinatorics-intuition">combinatorics</a>, <a href="/topics/math/number-theory/#modular-clock">number theory</a>, <a href="/topics/math/field-theory/#prime-fields">field theory</a>, <a href="/topics/math/category-theory/#commuting-square">category theory</a>, and <a href="/topics/math/complexity/#parser-budgets">complexity</a>. The other branch stays close to the rest of the site’s software and design work: <a href="/topics/software/geometry/#poincare-model">geometry</a>, <a href="/topics/software/lattices/">lattices</a>, <a href="/topics/software/renderers/">renderers</a>, <a href="/topics/software/schedulers/">schedulers</a>, and <a href="/topics/software/parsers/#parser-map">parsers</a>. The point is not to force everything into one theory. The point is to keep the structural disciplines close enough that they can inform each other.</p>
+                        <p>This route now branches in two directions. One branch is pure math made approachable through intuition-first pages on <a href="/topics/math/topology/#topology-intuition">topology</a>, <a href="/topics/math/symmetry/#symmetry-intuition">symmetry</a>, <a href="/topics/math/combinatorics/#combinatorics-intuition">combinatorics</a>, <a href="/topics/math/number-theory/#modular-clock">number theory</a>, <a href="/topics/math/field-theory/#prime-fields">field theory</a>, <a href="/topics/math/category-theory/#commuting-square">category theory</a>, and <a href="/topics/math/complexity/#parser-budgets">complexity</a>. The other branch stays close to the rest of the site’s software and design work: <a href="/topics/software/geometry/#poincare-model">geometry</a>, <a href="/topics/software/lattices/">lattices</a>, <a href="/topics/software/renderers/">renderers</a>, <a href="/topics/software/schedulers/">schedulers</a>, and <a href="/topics/software/parsers/#parser-map">parsers</a>. The point is not to force everything into one theory. The point is to keep the structural disciplines close enough that they can inform each other, especially when too many ideas are arriving at once and you need a calmer surface for pattern recognition. These pages are also part of a larger teaching goal: if authors are going to approach computation, ebooks, or <a href="/about/domains/lore.land/">lore surfaces</a>, the structure has to feel less hostile first.</p>
                         <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel>
                             <article class="vibe-widget">
                                 <div class="vibe-widget-header">
@@ -183,6 +184,7 @@
                         <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
                         <nav class="frame-operators" aria-label="Math routes">
                             <a class="operator-chip" href="#pure-math-routes">pure math routes</a>
+                            <a class="operator-chip" href="#math-reading-grammar">reading grammar</a>
                             <a class="operator-chip" href="/topics/math/topology/#topology-intuition">topology intuition</a>
                             <a class="operator-chip" href="/topics/math/number-theory/#modular-clock">number theory clock</a>
                             <a class="operator-chip" href="/topics/math/category-theory/#category-insight">category insight</a>
@@ -205,6 +207,7 @@
                 <ul>
                     <li><a href="#math-hero">Overview</a></li>
                     <li><a href="#math-map">Math Map</a></li>
+                    <li><a href="#math-reading-grammar">Reading Grammar</a></li>
                     <li><a href="#pure-math-routes">Pure Math Routes</a></li>
                     <li><a href="#math-studies">Reference Studies</a></li>
                     <li><a href="#math-routes">Software Neighbors</a></li>
@@ -261,12 +264,42 @@
                 </figure>
             </section>
 
+            <section class="site-frame" id="math-reading-grammar" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math__reading_grammar" data-spw-context-relevance="math intuition invariants collapse composition diagram semantics" data-spw-related-routes="/topics/math/number-theory/|/topics/math/category-theory/|/topics/math/field-theory/|/topics/math/complexity/|/about/domains/lore.land/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#math-reading-grammar">.reading_grammar</a>
+                    <h2>How These Math Visuals Want To Be Read</h2>
+                </div>
+                <p class="frame-note">When a math page feels abstract, it usually helps to ask the same four questions. What is changing? What stays invariant? What gets identified or collapsed? Where does this picture point next? Those questions are the public-facing semantics for the diagrams on this site, and they are also the kind of metaphor scaffolding that could later feed <a href="/about/domains/lore.land/">lore.land</a> if computation starts being narrated as a more universal kind of magic. They are useful not only for engineers, but for authors who need the structure behind a system before they can turn it into story, lore, or ebook form.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>What changes</h3>
+                        <p>Track the legal move first: a residue travels, a curve steepens, a point deforms, or a transformation acts on a shape.</p>
+                        <a href="/topics/math/number-theory/#modular-clock">see: modular clock</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>What stays invariant</h3>
+                        <p>The most useful diagrams reveal what survives the motion: a modulus, a composite result, an orbit pattern, or a structural law.</p>
+                        <a href="/topics/math/category-theory/#commuting-square">see: commuting square</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>What gets identified</h3>
+                        <p>Many fields become friendly once you notice where different-looking cases collapse into one equivalence class or one shared bottleneck.</p>
+                        <a href="/topics/math/field-theory/#prime-fields">see: prime fields</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Where it leads next</h3>
+                        <p>These are not static posters. Each visual is meant to hand you off to another route: parser budgets, field extensions, topology handles, or blog-sized explanations later.</p>
+                        <a href="/topics/math/complexity/#growth-curves">see: growth curves</a>
+                    </article>
+                </div>
+            </section>
+
             <section class="site-frame" id="pure-math-routes" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math__pure_math_routes" data-spw-context-relevance="math topology symmetry combinatorics number theory field theory category theory complexity intuition pure structure" data-spw-related-routes="/|/topics/math/topology/|/topics/math/symmetry/|/topics/math/combinatorics/|/topics/math/number-theory/|/topics/math/field-theory/|/topics/math/category-theory/|/topics/math/complexity/|/topics/software/geometry/|/topics/software/lattices/|/topics/software/renderers/|/topics/software/schedulers/|/topics/software/parsers/|/topics/architecture/|/topics/site-design/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#pure-math-routes">#&gt;pure_math_routes</a>
                     <h2>Pure Math Routes</h2>
                 </div>
-                <p class="frame-note">These pages are deliberately more textbook-like than the older route stubs. They use familiar pictures, internal anchors, and short diagrams so you can build intuition before worrying about formalism. <a href="/topics/math/number-theory/#modular-clock">Number theory</a> and <a href="/topics/math/category-theory/#commuting-square">category theory</a> include portable interactive diagrams, and the newer routes cross-reference the <a href="/topics/software/parsers/#parser-lenses">parser field guide</a> and software pages when the ideas touch implementation.</p>
+                <p class="frame-note">These pages are deliberately more textbook-like than the older route stubs. They use familiar pictures, internal anchors, and short diagrams so you can build intuition before worrying about formalism. <a href="/topics/math/number-theory/#modular-clock">Number theory</a> and <a href="/topics/math/category-theory/#commuting-square">category theory</a> include portable interactive diagrams, and the newer routes cross-reference the <a href="/topics/software/parsers/#parser-lenses">parser field guide</a> and software pages when the ideas touch implementation. The shared reading grammar is simple: notice the move, notice the invariant, notice the collapse, then follow the neighboring route.</p>
                 <div class="math-lens-grid">
                     <article class="math-lens-card">
                         <span class="frame-card-sigil">~topology</span>
@@ -409,13 +442,15 @@
         </div>
         <nav class="site-footer__nav" aria-label="Footer">
             <a href="/about/">About</a>
+            <a href="/topics/">Topics</a>
             <a href="/topics/software/">Software</a>
+            <a href="/topics/math/">Math</a>
             <a href="/topics/craft/">Craft</a>
-            <a href="/recipes/">Recipes</a>
-            <a href="/play/">Play</a>
+            <a href="/about/website/">Website</a>
             <a href="/blog/">Blog</a>
-            <a href="/services/">Services</a>
+            <a href="/about/domains/lore.land/">lore.land</a>
             <a href="/contact/">Contact</a>
+            <a href="/settings/">Settings</a>
         </nav>
         <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
     </div>

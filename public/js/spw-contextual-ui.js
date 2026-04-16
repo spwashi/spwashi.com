@@ -32,14 +32,21 @@ const MODULE_SELECTOR = [
 ].join(', ');
 
 const TOP_ROUTE_REGISTRY = Object.freeze([
-  { href: '/', label: 'Home', token: '#>home' },
-  { href: '/about/', label: 'About', token: '.about' },
-  { href: '/topics/', label: 'Topics', token: '<topics>' },
-  { href: '/services/', label: 'Services', token: '@services' },
-  { href: '/tools/', label: 'Tools', token: '^tools' },
-  { href: '/play/', label: 'Play', token: '~play' },
-  { href: '/blog/', label: 'Blog', token: '*blog' },
-  { href: '/settings/', label: 'Settings', token: '=settings' },
+  { href: '/', label: 'Home', token: '#>home', note: 'Channel summary, active routes, and nearby materials.' },
+  { href: '/about/', label: 'About', token: '.about', note: 'Practice, direction, and the wider Spwashi constellation.' },
+  { href: '/topics/', label: 'Topics', token: '<topics>', note: 'The atlas across software, math, craft, and design.' },
+  { href: '/topics/software/', label: 'Software', token: '^software', note: 'spw-workbench, parsers, renderers, and language tools.' },
+  { href: '/topics/math/', label: 'Math', token: '~math', note: 'Intuition routes for invariants, collapse, and structure.' },
+  { href: '/topics/craft/', label: 'Craft', token: '@craft', note: 'Process art, fragments, and gentle ramps into making on the web.' },
+  { href: '/topics/site-design/', label: 'Site Design', token: '#design', note: 'Typography, motifs, and page systems for premium-feeling surfaces.' },
+  { href: '/about/website/', label: 'Website', token: '>website', note: 'A field guide nudging authors toward HTML and illustrators toward CSS.' },
+  { href: '/blog/', label: 'Blog', token: '*blog', note: 'Working threads, copy drafts, and public process.' },
+  { href: '/about/domains/lore.land/', label: 'lore.land', token: '*lore', note: 'A public bridge from notes into ebooks, lore, and narrative surfaces.' },
+  { href: '/recipes/', label: 'Recipes', token: '.recipes', note: 'Kitchen structure, hospitality, and another route into process.' },
+  { href: '/play/', label: 'Play', token: '~play', note: 'RPG Wednesday, experiments, and looser systems.' },
+  { href: '/tools/', label: 'Tools', token: '^tools', note: 'Utilities, profiles, and reusable helpers.' },
+  { href: '/services/', label: 'Services', token: '@services', note: 'Ways to collaborate on readable systems and publishing surfaces.' },
+  { href: '/settings/', label: 'Settings', token: '=settings', note: 'Tune the browser-local reading atmosphere.' },
 ]);
 
 const PERSPECTIVE_WEIGHTS = Object.freeze({
@@ -474,15 +481,27 @@ function updateRouteMenu() {
       link.href = route.href;
       link.className = 'spw-route-menu-link';
 
+      const copy = document.createElement('span');
+      copy.className = 'spw-route-menu-link-copy';
+
       const title = document.createElement('span');
       title.className = 'spw-route-menu-link-label';
       title.textContent = route.label;
+
+      copy.append(title);
+
+      if (route.note) {
+        const note = document.createElement('span');
+        note.className = 'spw-route-menu-link-note';
+        note.textContent = route.note;
+        copy.append(note);
+      }
 
       const token = document.createElement('span');
       token.className = 'spw-route-menu-link-token';
       token.textContent = route.token;
 
-      link.append(title, token);
+      link.append(copy, token);
       return link;
     })
   );
