@@ -1,3 +1,8 @@
+import {
+    DEFAULT_PALETTE_RESONANCE,
+    getPaletteResonanceTokens
+} from './spw-palette-resonance.js';
+
 /**
  * Spw Accent Palette
  *
@@ -75,6 +80,15 @@ export const getWonderMemoryReach = () => {
     if (getWonderMemoryMode() === 'off') return 0;
     return readRootSettingNumber('--spw-wonder-memory-reach', 0.54, 0, 2);
 };
+
+export const getPaletteResonanceMode = () => {
+    if (typeof document === 'undefined') return DEFAULT_PALETTE_RESONANCE;
+    return document.documentElement.dataset.spwPaletteResonance || DEFAULT_PALETTE_RESONANCE;
+};
+
+export const getActivePaletteResonanceTokens = () => (
+    getPaletteResonanceTokens(getPaletteResonanceMode())
+);
 
 function colorDistance(a, b) {
     return Math.hypot(a.r - b.r, a.g - b.g, a.b - b.b);

@@ -22,9 +22,33 @@
   --spw-shell-soft-bg:        var(--surface-soft, rgba(255, 255, 255, 0.44));
   --spw-shell-card-bg:        var(--surface, rgba(255, 255, 255, 0.68));
   --spw-shell-card-bg-strong: var(--surface-strong, rgba(255, 255, 255, 0.74));
+  --spw-shell-panel-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-shell-card-bg-strong) 92%, transparent),
+      color-mix(in srgb, var(--spw-shell-card-bg) 92%, transparent)
+    );
+  --spw-shell-panel-bg-strong:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-panel-strong, var(--spw-shell-card-bg-strong)) 94%, transparent),
+      color-mix(in srgb, var(--surface-panel, var(--spw-shell-card-bg)) 94%, transparent)
+    );
+  --spw-shell-sheen: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 22%, transparent);
+  --spw-shell-overlay:
+    linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 24%, transparent) 52%,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 48%, transparent)
+    );
 
   --spw-shell-line:        var(--line, rgba(14, 18, 20, 0.14));
   --spw-shell-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
+  --spw-palette-probe-1: var(--active-op-color, #008080);
+  --spw-palette-probe-2: var(--op-object-color, #c68a22);
+  --spw-palette-probe-3: var(--op-ref-color, #1d57a3);
+  --spw-palette-probe-4: var(--op-probe-color, #6a3fb8);
 }
 
 /* Generic shell card/panel rhythm */
@@ -180,8 +204,7 @@
   padding: var(--spw-shell-card-pad);
   border: 1px solid var(--spw-shell-line);
   border-radius: var(--shape-surface, 10px);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.56));
+  background: var(--spw-shell-panel-bg);
   box-shadow: var(--card-shadow);
 }
 
@@ -212,7 +235,7 @@
   overflow: hidden;
   border-color: color-mix(in srgb, var(--spw-shell-line-strong) 46%, var(--spw-shell-line));
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 44%),
+    linear-gradient(180deg, var(--spw-shell-sheen), transparent 44%),
     var(--spw-shell-card-bg-strong);
 }
 
@@ -261,7 +284,7 @@
   border-radius: calc(var(--component-radius-tight, 8px) - 1px) calc(var(--component-radius-tight, 8px) - 1px) 0 0;
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, var(--spw-shell-line, rgba(0, 0, 0, 0.08)));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 44%),
+    linear-gradient(180deg, var(--spw-shell-sheen), transparent 44%),
     color-mix(in srgb, var(--component-surface-strong, rgba(255, 255, 255, 0.98)) 90%, var(--component-accent, #008080));
 }
 
@@ -271,8 +294,7 @@
   inset: auto 0 0;
   min-height: 34%;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.22) 52%, rgba(255, 255, 255, 0.48));
+  background: var(--spw-shell-overlay);
 }
 
 :where(.frame-card-media img) {
@@ -327,9 +349,9 @@
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 10%, rgba(255, 255, 255, 0.92)) 0%,
-      rgba(255, 255, 255, 0.9) 58%,
-      color-mix(in srgb, var(--delight-color, var(--op-object-color, #c68a22)) 8%, rgba(255, 255, 255, 0.94)) 100%
+      color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 10%, var(--surface-strong, rgba(255, 255, 255, 0.92))) 0%,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 94%, transparent) 58%,
+      color-mix(in srgb, var(--delight-color, var(--op-object-color, #c68a22)) 8%, var(--surface-panel-strong, rgba(255, 255, 255, 0.94))) 100%
     );
 }
 
@@ -349,7 +371,7 @@
 }
 
 :where(.wonder-memory-actions .operator-chip[data-site-setting-active="true"]) {
-  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 12%, rgba(255, 255, 255, 0.92));
+  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 12%, var(--surface-strong, rgba(255, 255, 255, 0.92)));
   border-color: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 44%, transparent);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 16%, transparent),
@@ -358,7 +380,151 @@
 }
 
 :where(.wonder-memory-actions .spec-pill) {
-  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 8%, rgba(255, 255, 255, 0.92));
+  background: color-mix(in srgb, var(--wonder-accent-color, var(--active-op-color, #008080)) 8%, var(--surface-strong, rgba(255, 255, 255, 0.92)));
+}
+
+:where(.palette-probe) {
+  display: grid;
+  gap: 0.72rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 18%, var(--spw-shell-line));
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  background:
+    linear-gradient(140deg, color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 10%, var(--surface-strong, rgba(255, 255, 255, 0.92))), transparent 62%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--spw-palette-probe-2, var(--op-object-color, #c68a22)) 12%, transparent), transparent 24%),
+    var(--spw-shell-panel-bg-strong);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(.palette-probe-header) {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+:where(.palette-probe-header > div) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.palette-probe-kicker) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.8rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.palette-probe-title) {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  line-height: 1.18;
+}
+
+:where(.palette-probe-copy) {
+  margin: 0;
+  color: var(--ink-soft);
+  max-inline-size: 70ch;
+}
+
+:where(.palette-probe-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+:where(.palette-probe-actions [data-site-setting-active="true"],
+       .palette-probe-actions [data-spw-palette-probe-active="true"]) {
+  background: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 12%, var(--surface-strong, rgba(255, 255, 255, 0.92)));
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 38%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 14%, transparent),
+    0 0 16px color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 10%, transparent);
+}
+
+:where(.palette-probe-swatches) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.36rem;
+  align-items: center;
+}
+
+:where(.palette-probe-chip) {
+  inline-size: 1rem;
+  block-size: 1rem;
+  border-radius: 0.32rem;
+  border: 1px solid color-mix(in srgb, var(--spw-palette-probe-1, var(--spw-shell-line)) 16%, var(--spw-shell-line));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 18%, transparent);
+}
+
+:where(.palette-probe-chip:nth-child(1)) { background: var(--spw-palette-probe-1, var(--active-op-color, #008080)); }
+:where(.palette-probe-chip:nth-child(2)) { background: var(--spw-palette-probe-2, var(--op-object-color, #c68a22)); }
+:where(.palette-probe-chip:nth-child(3)) { background: var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3)); }
+:where(.palette-probe-chip:nth-child(4)) { background: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8)); }
+
+:where(.palette-probe-state) {
+  color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 74%, var(--ink) 26%);
+  font-weight: 600;
+}
+
+:where(.market-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--spw-shell-panel-gap);
+}
+
+:where(.market-card) {
+  position: relative;
+  display: grid;
+  gap: 0.58rem;
+  min-height: 100%;
+  overflow: clip;
+  padding: var(--spw-shell-card-pad);
+  border: 1px solid color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 16%, var(--spw-shell-line));
+  border-radius: var(--shape-surface, 10px);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 7%, transparent), transparent 34%),
+    var(--spw-shell-panel-bg-strong);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(.market-card::before) {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  block-size: 0.22rem;
+  background:
+    linear-gradient(
+      90deg,
+      var(--spw-palette-probe-1, var(--active-op-color, #008080)),
+      var(--spw-palette-probe-2, var(--op-object-color, #c68a22)),
+      var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3)),
+      var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8))
+    );
+  opacity: 0.76;
+}
+
+:where(.market-card > *) {
+  position: relative;
+  z-index: 1;
+}
+
+:where(.market-card p) {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+:where(.market-card h3) {
+  margin: 0;
+  color: var(--ink);
+}
+
+:where(.market-card .operator-chip) {
+  margin-top: auto;
 }
 
 :where(.site-hero .topic-photo-card) {
@@ -398,9 +564,17 @@
 
 :where(body[data-spw-surface="software"]) {
   --spw-philosophy-panel:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(244, 241, 236, 0.96));
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 94%, transparent),
+      color-mix(in srgb, var(--surface-panel, rgba(244, 241, 236, 0.96)) 94%, transparent)
+    );
   --spw-philosophy-paper:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 244, 240, 0.96));
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.96)) 96%, transparent),
+      color-mix(in srgb, var(--surface-panel-strong, rgba(246, 244, 240, 0.96)) 96%, transparent)
+    );
   --spw-philosophy-line:
     color-mix(in srgb, var(--active-op-color, #008080) 20%, var(--spw-shell-line));
 }
@@ -421,9 +595,7 @@
   border: 1px solid color-mix(in srgb, var(--intent-accent) 22%, var(--spw-philosophy-line, var(--spw-shell-line)));
   border-radius: calc(var(--shape-surface, 10px) - 1px);
   background: var(--spw-philosophy-panel, var(--spw-shell-card-bg-strong));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 8px 18px rgba(0, 0, 0, 0.035);
+  box-shadow: var(--card-highlight), var(--card-shadow);
 }
 
 :where(.intent-cluster[data-spw-intent="orient"]) {
@@ -525,9 +697,7 @@
   border: 1px solid color-mix(in srgb, var(--edge-accent) 24%, var(--spw-philosophy-line, var(--spw-shell-line)));
   border-radius: calc(var(--shape-surface, 10px) - 1px);
   background: var(--spw-philosophy-paper, var(--spw-shell-card-bg));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 10px 22px rgba(0, 0, 0, 0.035);
+  box-shadow: var(--card-highlight), var(--card-shadow);
 }
 
 :where(.context-edge-card[data-spw-edge="nearby"]) {
@@ -564,9 +734,7 @@
   border: 1px solid color-mix(in srgb, var(--spw-philosophy-line, var(--spw-shell-line-strong)) 70%, transparent);
   border-radius: calc(var(--shape-surface, 10px) - 1px);
   background: var(--spw-philosophy-panel, var(--spw-shell-card-bg-strong));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 10px 18px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--card-highlight), var(--card-shadow);
 }
 
 :where(.semantic-contract-token) {
@@ -578,7 +746,7 @@
   padding: 0.22rem 0.55rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--active-op-color, #008080) 6%, rgba(255, 255, 255, 0.72));
+  background: color-mix(in srgb, var(--active-op-color, #008080) 6%, var(--surface-strong, rgba(255, 255, 255, 0.72)));
   color: color-mix(in srgb, var(--active-op-color, #008080) 76%, var(--ink) 24%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76rem;

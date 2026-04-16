@@ -279,7 +279,7 @@
 
 .spw-image-memory {
   color: var(--ink-soft);
-  background: color-mix(in srgb, rgba(255, 255, 255, 0.86) 88%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.86)) 88%, transparent);
   font-size: 0.64rem;
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -299,7 +299,7 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory {
 
 .spw-metaphysics-host[data-spw-image-prominence="hero"] {
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.42)),
     0 12px 30px color-mix(in srgb, var(--spw-image-accent) 10%, rgba(0, 0, 0, 0.12));
 }
 

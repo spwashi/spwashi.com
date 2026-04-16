@@ -1,6 +1,7 @@
 /** Spw Canvas Accents - shared canvas ornament for image-bearing and structural surfaces. */
 import { bus } from './spw-bus.js';
 import {
+    getActivePaletteResonanceTokens,
     getActiveRecentPathMemory,
     inferAnchorTokens,
     initRecentPathTracker,
@@ -260,6 +261,11 @@ class CanvasAccent {
         if (this.resonanceModes.includes('image')) append(this.imagePalette);
         if (this.resonanceModes.includes('anchor')) {
             append(resolveAccentTokenColors([...this.anchorTokens, this.anchorOperator], this.colors));
+        }
+
+        const paletteProbeTokens = getActivePaletteResonanceTokens();
+        if ((this.resonanceModes.includes('probe') || this.resonanceModes.includes('palette')) && paletteProbeTokens.length) {
+            append(resolveAccentTokenColors(paletteProbeTokens, this.colors));
         }
 
         const recentPath = getActiveRecentPathMemory();

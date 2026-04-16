@@ -9,27 +9,187 @@
 
 :where(body[data-spw-surface="topics"]) {
   --topics-accent: #2a504b;
-  --topics-accent-soft: color-mix(in srgb, var(--topics-accent) 12%, transparent);
   --topics-warm: #9e592b;
+  --topics-ink: rgba(24, 30, 29, 0.94);
+  --topics-ink-soft: rgba(24, 30, 29, 0.72);
+  --topics-surface: rgba(255, 255, 255, 0.72);
+  --topics-surface-strong: rgba(255, 255, 255, 0.86);
+  --topics-surface-soft: rgba(255, 255, 255, 0.52);
+  --topics-surface-panel: rgba(255, 255, 255, 0.8);
+  --topics-surface-panel-strong: rgba(255, 255, 255, 0.9);
+  --topics-accent-soft: color-mix(in srgb, var(--topics-accent) 12%, transparent);
   --topics-line:
     color-mix(in srgb, var(--topics-accent) 18%, rgba(18, 24, 28, 0.12));
   --topics-line-strong:
     color-mix(in srgb, var(--topics-warm) 22%, var(--topics-accent));
+  --topics-sheen: rgba(255, 255, 255, 0.24);
+  --topics-sheen-soft: rgba(255, 255, 255, 0.14);
+  --topics-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.025);
+  --topics-card-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 10px 20px rgba(0, 0, 0, 0.04);
   --topics-paper:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.95),
-      rgba(245, 244, 240, 0.93)
+      color-mix(in srgb, var(--topics-accent) 3%, var(--topics-surface-strong)),
+      color-mix(in srgb, var(--topics-surface-strong) 96%, hsl(44 24% 95%))
     );
   --topics-panel:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.88),
-      rgba(243, 240, 235, 0.94)
+      var(--topics-surface-panel-strong),
+      color-mix(in srgb, var(--topics-surface-panel) 96%, hsl(40 20% 92%))
     );
+  --topics-panel-muted:
+    linear-gradient(
+      180deg,
+      var(--topics-surface-panel-strong),
+      color-mix(in srgb, var(--topics-surface-panel) 94%, hsl(42 18% 91%))
+    );
+  --topics-panel-violet:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--topics-surface-panel-strong) 90%, hsl(274 44% 97%)),
+      color-mix(in srgb, var(--topics-surface-panel) 90%, hsl(280 26% 94%))
+    );
+  --topics-panel-warm:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--topics-surface-panel-strong) 90%, hsl(28 60% 97%)),
+      color-mix(in srgb, var(--topics-surface-panel) 90%, hsl(32 34% 92%))
+    );
+  --topics-input-bg: color-mix(in srgb, var(--topics-surface-strong) 96%, transparent);
+  --topics-status-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--topics-surface-strong) 92%, transparent),
+      color-mix(in srgb, var(--topics-surface) 92%, hsl(35 20% 91%))
+    );
+  --topics-svg-bg:
+    radial-gradient(circle at top center, rgba(42, 80, 75, 0.04), transparent 34%),
+    color-mix(in srgb, var(--topics-surface-strong) 84%, transparent);
+
+  --ink: var(--topics-ink);
+  --ink-soft: var(--topics-ink-soft);
+  --line: var(--topics-line);
+  --line-strong: var(--topics-line-strong);
+  --surface: var(--topics-surface);
+  --surface-strong: var(--topics-surface-strong);
+  --surface-soft: var(--topics-surface-soft);
+  --surface-panel: var(--topics-surface-panel);
+  --surface-panel-strong: var(--topics-surface-panel-strong);
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.4);
   background:
     radial-gradient(circle at top center, rgba(42, 80, 75, 0.05), transparent 34%),
     linear-gradient(180deg, rgba(248, 247, 244, 0.98), rgba(239, 236, 229, 0.98));
+  color: var(--topics-ink);
+}
+
+html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
+  --topics-accent: #86beb5;
+  --topics-warm: #d0a06e;
+  --topics-ink: rgba(235, 240, 238, 0.94);
+  --topics-ink-soft: rgba(202, 212, 208, 0.76);
+  --topics-surface: rgba(18, 23, 26, 0.82);
+  --topics-surface-strong: rgba(25, 31, 34, 0.92);
+  --topics-surface-soft: rgba(18, 23, 26, 0.58);
+  --topics-surface-panel: rgba(24, 30, 33, 0.92);
+  --topics-surface-panel-strong: rgba(30, 37, 40, 0.96);
+  --topics-accent-soft: color-mix(in srgb, var(--topics-accent) 14%, transparent);
+  --topics-line:
+    color-mix(in srgb, var(--topics-accent) 18%, rgba(226, 234, 231, 0.1));
+  --topics-line-strong:
+    color-mix(in srgb, var(--topics-warm) 28%, var(--topics-accent));
+  --topics-sheen: rgba(255, 255, 255, 0.06);
+  --topics-sheen-soft: rgba(255, 255, 255, 0.04);
+  --topics-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.18);
+  --topics-card-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 24px rgba(0, 0, 0, 0.22);
+  --topics-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--topics-accent) 6%, rgba(17, 22, 24, 0.97)),
+      rgba(18, 23, 26, 0.95) 38%,
+      rgba(14, 18, 20, 0.98)
+    );
+  --topics-panel:
+    linear-gradient(180deg, rgba(30, 37, 40, 0.96), rgba(21, 26, 29, 0.98));
+  --topics-panel-muted:
+    linear-gradient(180deg, rgba(28, 34, 37, 0.96), rgba(19, 24, 27, 0.98));
+  --topics-panel-violet:
+    linear-gradient(180deg, rgba(42, 35, 49, 0.96), rgba(27, 24, 35, 0.98));
+  --topics-panel-warm:
+    linear-gradient(180deg, rgba(45, 38, 31, 0.96), rgba(28, 23, 20, 0.98));
+  --topics-input-bg: rgba(21, 27, 30, 0.96);
+  --topics-status-bg:
+    linear-gradient(180deg, rgba(28, 33, 36, 0.95), rgba(18, 23, 26, 0.98));
+  --topics-svg-bg:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--topics-accent) 8%, transparent), transparent 34%),
+    color-mix(in srgb, var(--topics-surface-strong) 92%, rgba(12, 15, 18, 0.98));
+  --card-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--topics-accent) 8%, transparent), transparent 34%),
+    linear-gradient(180deg, rgba(13, 17, 19, 0.99), rgba(10, 13, 15, 0.99));
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(body[data-spw-surface="topics"]) {
+    --topics-accent: #86beb5;
+    --topics-warm: #d0a06e;
+    --topics-ink: rgba(235, 240, 238, 0.94);
+    --topics-ink-soft: rgba(202, 212, 208, 0.76);
+    --topics-surface: rgba(18, 23, 26, 0.82);
+    --topics-surface-strong: rgba(25, 31, 34, 0.92);
+    --topics-surface-soft: rgba(18, 23, 26, 0.58);
+    --topics-surface-panel: rgba(24, 30, 33, 0.92);
+    --topics-surface-panel-strong: rgba(30, 37, 40, 0.96);
+    --topics-accent-soft: color-mix(in srgb, var(--topics-accent) 14%, transparent);
+    --topics-line:
+      color-mix(in srgb, var(--topics-accent) 18%, rgba(226, 234, 231, 0.1));
+    --topics-line-strong:
+      color-mix(in srgb, var(--topics-warm) 28%, var(--topics-accent));
+    --topics-sheen: rgba(255, 255, 255, 0.06);
+    --topics-sheen-soft: rgba(255, 255, 255, 0.04);
+    --topics-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.28),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    --topics-card-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 12px 24px rgba(0, 0, 0, 0.22);
+    --topics-paper:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--topics-accent) 6%, rgba(17, 22, 24, 0.97)),
+        rgba(18, 23, 26, 0.95) 38%,
+        rgba(14, 18, 20, 0.98)
+      );
+    --topics-panel:
+      linear-gradient(180deg, rgba(30, 37, 40, 0.96), rgba(21, 26, 29, 0.98));
+    --topics-panel-muted:
+      linear-gradient(180deg, rgba(28, 34, 37, 0.96), rgba(19, 24, 27, 0.98));
+    --topics-panel-violet:
+      linear-gradient(180deg, rgba(42, 35, 49, 0.96), rgba(27, 24, 35, 0.98));
+    --topics-panel-warm:
+      linear-gradient(180deg, rgba(45, 38, 31, 0.96), rgba(28, 23, 20, 0.98));
+    --topics-input-bg: rgba(21, 27, 30, 0.96);
+    --topics-status-bg:
+      linear-gradient(180deg, rgba(28, 33, 36, 0.95), rgba(18, 23, 26, 0.98));
+    --topics-svg-bg:
+      radial-gradient(circle at top center, color-mix(in srgb, var(--topics-accent) 8%, transparent), transparent 34%),
+      color-mix(in srgb, var(--topics-surface-strong) 92%, rgba(12, 15, 18, 0.98));
+    --card-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    background:
+      radial-gradient(circle at top center, color-mix(in srgb, var(--topics-accent) 8%, transparent), transparent 34%),
+      linear-gradient(180deg, rgba(13, 17, 19, 0.99), rgba(10, 13, 15, 0.99));
+  }
 }
 
 :where(body[data-spw-surface="topics"]) main {
@@ -48,9 +208,7 @@
   overflow: clip;
   border-color: var(--topics-line);
   background: var(--topics-paper);
-  box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.05),
-    0 2px 8px rgba(0, 0, 0, 0.025);
+  box-shadow: var(--topics-shadow);
 }
 
 :where(body[data-spw-surface="topics"] article > .site-frame)::before {
@@ -85,8 +243,8 @@
 :where(body[data-spw-surface="topics"] .site-hero[data-spw-image-hero="true"] .topic-photo-card) {
   margin: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 44%),
-    linear-gradient(180deg, rgba(24, 35, 31, 0.08), rgba(255, 255, 255, 0.9));
+    linear-gradient(180deg, var(--topics-sheen), transparent 44%),
+    linear-gradient(180deg, color-mix(in srgb, var(--topics-accent) 8%, transparent), var(--topics-panel));
 }
 
 :where(body[data-spw-surface="topics"] .site-hero[data-spw-image-hero="true"] .topic-photo-card[data-spw-image-prominence="hero"] figcaption) {
@@ -100,11 +258,8 @@
 :where(body[data-spw-surface="topics"] .topic-reference-card,
        body[data-spw-surface="topics"] .topic-photo-card) {
   border-color: color-mix(in srgb, var(--topics-line-strong) 42%, var(--topics-line));
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(243, 240, 235, 0.94));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 10px 20px rgba(0, 0, 0, 0.04);
+  background: var(--topics-panel);
+  box-shadow: var(--topics-card-shadow);
 }
 
 :where(body[data-spw-surface="topics"] .topic-reference-card > h3,
@@ -124,43 +279,43 @@
   filter: saturate(1.04) contrast(1.02);
 }
 
+:where(body[data-spw-surface="topics"] .palette-probe) {
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--topics-accent)) 20%, var(--topics-line));
+}
+
+:where(body[data-spw-surface="topics"] .market-card) {
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--topics-accent)) 18%, var(--topics-line));
+}
+
 :where(body[data-spw-surface="topics"] .frame-card--illustrated) {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 240, 235, 0.96));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 10px 20px rgba(0, 0, 0, 0.04);
+  background: var(--topics-panel-muted);
+  box-shadow: var(--topics-card-shadow);
 }
 
 :where(body[data-spw-surface="topics"] .frame-card--illustrated .frame-card-media) {
   border-bottom-color: color-mix(in srgb, var(--topics-line-strong) 34%, var(--topics-line));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 46%),
-    color-mix(in srgb, rgba(243, 240, 235, 0.92) 90%, var(--topics-accent-soft));
+    linear-gradient(180deg, var(--topics-sheen), transparent 46%),
+    color-mix(in srgb, var(--topics-surface-panel-strong) 90%, var(--topics-accent-soft));
 }
 
 :where(body[data-spw-surface="topics"] .frame-card--illustrated .frame-card-media::after) {
   background:
-    linear-gradient(180deg, transparent, rgba(245, 242, 237, 0.18) 52%, rgba(245, 242, 237, 0.52));
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--topics-surface-strong) 18%, transparent) 52%, color-mix(in srgb, var(--topics-surface-strong) 52%, transparent));
 }
 
 :where(body[data-spw-surface="topics"] .spw-svg-figure) {
   margin: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(243, 240, 235, 0.94));
+  background: var(--topics-panel);
   border-color: color-mix(in srgb, var(--topics-line-strong) 34%, var(--topics-line));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 10px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--topics-card-shadow);
 }
 
 :where(body[data-spw-surface="topics"] .spw-svg-figure svg) {
   width: 100%;
   height: auto;
   border-radius: 12px;
-  background:
-    radial-gradient(circle at top center, rgba(42, 80, 75, 0.04), transparent 34%),
-    rgba(255, 255, 255, 0.72);
+  background: var(--topics-svg-bg);
 }
 
 :where(body[data-spw-surface="topics"] .math-lens-grid) {
@@ -176,21 +331,16 @@
   padding: clamp(0.95rem, 1.8vw, 1.2rem);
   border: 1px solid color-mix(in srgb, var(--topics-line-strong) 36%, var(--topics-line));
   border-radius: var(--shape-surface, 12px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 241, 235, 0.96));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 10px 20px rgba(0, 0, 0, 0.04);
+  background: var(--topics-panel-muted);
+  box-shadow: var(--topics-card-shadow);
 }
 
 :where(body[data-spw-surface="topics"] .math-lens-card:nth-child(2)) {
-  background:
-    linear-gradient(180deg, rgba(252, 249, 255, 0.94), rgba(244, 239, 248, 0.98));
+  background: var(--topics-panel-violet);
 }
 
 :where(body[data-spw-surface="topics"] .math-lens-card:nth-child(3)) {
-  background:
-    linear-gradient(180deg, rgba(255, 250, 244, 0.94), rgba(247, 241, 235, 0.98));
+  background: var(--topics-panel-warm);
 }
 
 :where(body[data-spw-surface="topics"] .math-lens-card .frame-card-sigil) {
@@ -240,11 +390,8 @@
   padding: 0.8rem 0.9rem;
   border: 1px solid color-mix(in srgb, var(--topics-line-strong) 30%, var(--topics-line));
   border-radius: 12px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,241,236,0.96));
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.42),
-    0 8px 18px rgba(0,0,0,0.03);
+  background: var(--topics-panel-muted);
+  box-shadow: var(--topics-card-shadow);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.85rem;
   color: var(--ink-soft, rgba(0,0,0,0.7));
@@ -271,15 +418,15 @@
   padding: 0.55rem 0.7rem;
   border: 1px solid color-mix(in srgb, var(--topics-line-strong) 36%, var(--topics-line));
   border-radius: 10px;
-  background: rgba(255,255,255,0.9);
+  background: var(--topics-input-bg);
+  color: var(--topics-ink);
 }
 
 :where(body[data-spw-surface="topics"] .math-diagram-status) {
   margin: 0;
   padding: 0.9rem 1rem;
   border-left: 3px solid color-mix(in srgb, var(--topics-accent) 64%, var(--topics-warm));
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.82), rgba(244,240,234,0.94));
+  background: var(--topics-status-bg);
   border-radius: 12px;
   color: var(--ink-soft, rgba(0,0,0,0.72));
 }
@@ -295,7 +442,7 @@
 }
 
 :where(body[data-spw-surface="topics"] .math-toggle-row button[aria-pressed="true"]) {
-  background: color-mix(in srgb, var(--topics-accent) 20%, rgba(255,255,255,0.94));
+  background: color-mix(in srgb, var(--topics-accent) 20%, var(--topics-surface-strong));
   border-color: color-mix(in srgb, var(--topics-accent) 42%, var(--topics-line));
   color: var(--ink, #1f2423);
 }

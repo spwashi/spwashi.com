@@ -68,6 +68,11 @@
  */
 
 import { bus } from './spw-bus.js';
+import {
+  DEFAULT_PALETTE_RESONANCE,
+  PALETTE_RESONANCE_OPTIONS,
+  getPaletteResonanceSwatches
+} from './spw-palette-resonance.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 
@@ -260,6 +265,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   fontSize: 'normal',
 
   colorMode: 'auto',
+  paletteResonance: DEFAULT_PALETTE_RESONANCE,
   operatorSaturation: 'normal',
   animationIntensity: 'normal',
 
@@ -314,6 +320,7 @@ const SETTING_OPTIONS = Object.freeze({
   fontSize: new Set(['small', 'normal', 'large']),
 
   colorMode: new Set(['auto', 'light', 'dark']),
+  paletteResonance: new Set(PALETTE_RESONANCE_OPTIONS),
   operatorSaturation: new Set(['muted', 'normal', 'vibrant']),
   animationIntensity: new Set(['reduced', 'normal', 'enhanced']),
 
@@ -599,6 +606,21 @@ const getWonderMemoryProfile = (settings) => (
   WONDER_MEMORY_PROFILE[settings.wonderMemory] || WONDER_MEMORY_PROFILE.nearby
 );
 
+const applyPaletteResonanceSwatches = (root, settings) => {
+  const swatches = getPaletteResonanceSwatches(settings.paletteResonance);
+
+  for (let index = 0; index < 4; index += 1) {
+    const value = swatches[index];
+    const name = `--spw-palette-probe-${index + 1}`;
+
+    if (value) {
+      root.style.setProperty(name, value);
+    } else {
+      root.style.removeProperty(name);
+    }
+  }
+};
+
 const deriveArchitecturalModifiers = (settings) => {
   const climate = getDevelopmentalClimateDefinition(settings);
   const motionScale = getMotionScale(settings);
@@ -702,6 +724,7 @@ class SiteSettingsManager {
     this.root.dataset.spwFontSize = normalized.fontSize;
 
     this.root.dataset.spwColorMode = normalized.colorMode;
+    this.root.dataset.spwPaletteResonance = normalized.paletteResonance;
     this.root.dataset.spwOperatorSaturation = normalized.operatorSaturation;
     this.root.dataset.spwAnimationIntensity = normalized.animationIntensity;
 
@@ -768,6 +791,7 @@ class SiteSettingsManager {
     this.root.style.setProperty('--spw-wonder-memory-strength', String(modifiers.wonder.strength));
     this.root.style.setProperty('--spw-wonder-memory-ttl-ms', `${modifiers.wonder.ttlMs}`);
     this.root.style.setProperty('--spw-wonder-memory-reach', String(modifiers.wonder.reach));
+    applyPaletteResonanceSwatches(this.root, normalized);
 
     this.root.style.setProperty('--spw-developmental-clarity', String(modifiers.ecology.clarity));
     this.root.style.setProperty('--spw-developmental-pressure', String(modifiers.ecology.pressure));

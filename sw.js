@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.9';
+const APP_VERSION = '0.3.10';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -84,6 +84,7 @@ const CORE_ASSETS = [
 
   '/public/js/site.js',
   '/public/js/site-settings.js',
+  '/public/js/spw-palette-resonance.js',
   '/public/js/spw-math-diagrams.js',
   '/public/js/spw-contextual-ui.js',
   '/public/js/spw-image-metaphysics.js',
