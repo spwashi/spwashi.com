@@ -26,6 +26,10 @@ const DESTINATION_LABELS = Object.freeze({
 let initialized = false;
 let cleanupCallbacks = [];
 
+function isCompactSpellDockViewport() {
+  return window.matchMedia('(max-width: 720px)').matches;
+}
+
 function getGroundedEntries() {
   const registry = getGroundedRegistry();
   const couplings = getGroundedCouplings();
@@ -240,11 +244,13 @@ function ensureSpellDock() {
 function updateSpellDock(model) {
   const dock = ensureSpellDock();
   if (!dock) return;
+  const compactViewport = isCompactSpellDockViewport();
 
   const count = dock.querySelector('.spw-spell-dock-count');
   const label = dock.querySelector('.spw-spell-dock-label');
   const body = dock.querySelector('.spw-spell-dock-body');
 
+  dock.dataset.spwViewport = compactViewport ? 'compact' : 'default';
   if (count) count.textContent = String(model.entries.length);
   if (label) {
     label.textContent = model.entries.length
@@ -261,11 +267,26 @@ function updateSpellDock(model) {
     return;
   }
 
-  const preview = model.entries.slice(-4).map(renderSpellAtom).join('');
-  const destinations = model.destinationCounts.map(([key, countValue]) => {
+  const preview = model.entries
+    .slice(-(compactViewport ? 3 : 4))
+    .map(renderSpellAtom)
+    .join('');
+  const destinationCounts = compactViewport
+    ? model.destinationCounts.slice(0, 2)
+    : model.destinationCounts;
+  const destinations = destinationCounts.map(([key, countValue]) => {
     const labelValue = DESTINATION_LABELS[key] || key;
     return `<span class="spell-register">${escapeHtml(labelValue)} · ${countValue}</span>`;
   }).join('');
+
+  if (compactViewport) {
+    body.innerHTML = `
+      <div class="spell-visual spell-visual--compact">${preview}</div>
+      <div class="spell-register-strip">${destinations}</div>
+      <p class="spell-note spell-note--compact">Collected navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
+    `;
+    return;
+  }
 
   body.innerHTML = `
     <div class="spell-visual spell-visual--compact">${preview}</div>
@@ -409,18 +430,23 @@ export function initSpwSpells() {
     bus.on('spell:checkpoint-restored', renderAllSpellSurfaces),
   ];
 
+  const handleResize = () => {
+    renderAllSpellSurfaces();
+  };
   const handleStorage = (event) => {
     if (!event.key || event.key.startsWith('spw-grounded') || event.key.startsWith('spw-coupling')) {
       renderAllSpellSurfaces();
     }
   };
 
+  window.addEventListener('resize', handleResize);
   window.addEventListener('storage', handleStorage);
 
   return {
     cleanup() {
       cleanupCallbacks.forEach((off) => off?.());
       cleanupCallbacks = [];
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('storage', handleStorage);
       initialized = false;
     },

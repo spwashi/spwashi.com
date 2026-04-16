@@ -91,12 +91,8 @@
 
 :where(body[data-spw-surface="services"] #services-frame .spec-pill) {
   border-color: color-mix(in srgb, var(--services-accent) 18%, transparent);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--services-accent) 9%, rgba(255, 255, 255, 0.85)),
-      rgba(255, 255, 255, 0.88)
-    );
+  background: color-mix(in srgb, rgba(255, 255, 255, 0.92) 94%, var(--services-accent) 6%);
+  color: color-mix(in srgb, var(--ink, #1f2423) 82%, var(--services-accent-cool) 18%);
 }
 
 :where(body[data-spw-surface="services"] .frame-panel) {
@@ -153,5 +149,38 @@
   :where(body[data-spw-surface="services"] #services-frame) {
     min-height: 0;
     background-position: center right;
+  }
+}
+
+@media (max-width: 640px) {
+  :where(body[data-spw-surface="services"] #services-frame) {
+    padding-inline: 0.9rem;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(250, 247, 241, 0.97) 0%,
+        rgba(250, 247, 241, 0.94) 46%,
+        rgba(250, 247, 241, 0.88) 100%
+      ),
+      radial-gradient(
+        circle at 82% 18%,
+        color-mix(in srgb, var(--services-accent) 18%, transparent),
+        transparent 28%
+      ),
+      url('/public/images/services/studio-house-hero.webp') center/cover no-repeat;
+  }
+
+  :where(body[data-spw-surface="services"] #services-frame :is(.frame-topline, h1, p, nav)) {
+    max-width: 100%;
+  }
+
+  :where(body[data-spw-surface="services"] #services-frame .spec-strip) {
+    gap: 0.34rem 0.42rem;
+  }
+
+  :where(body[data-spw-surface="services"] #services-frame .spec-pill) {
+    min-height: 1.72rem;
+    padding: 0.16rem 0.5rem;
+    font-size: 0.74rem;
   }
 }

@@ -355,9 +355,7 @@
 
 :where([data-spw-grounded="true"]) {
   opacity: calc(0.9 + (var(--cinematic-climate-memory) * 0.08));
-  text-decoration: underline dotted;
-  text-decoration-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent);
-  text-underline-offset: 3px;
+  text-decoration: none;
   filter: none;
 }
 
