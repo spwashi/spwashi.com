@@ -1,20 +1,27 @@
 ---
 name: spw-operator-lattice
-description: Query Spw files by operator/brace/label combinatorics, snapshot runtime memory lattices, and iterate probe loops for emergent publishing and dialect tuning.
+description: Inspect and relate Spw operator usage across the spwashi.com site. Use for querying `.spw` files, HTML `data-spw-*` patterns, route semantics, and operator-driven cross-link structures.
 ---
 
-# Mounted Skill: spw-operator-lattice
+# Spw Operator Lattice for spwashi.com
 
-Canonical skill:
-`.spw/_workbench/.agents/skills/spw-operator-lattice/SKILL.md`
+Read first:
 
-This skill remains mounted from the workbench because its commands depend on
-the workbench parser/runtime surface.
+- `../_shared/site-workflow.md`
+- `../_shared/site-vs-workbench.md`
 
-Use these translations in this repo:
-- `npm run spw:...` -> `npm --prefix .spw/_workbench run spw:...`
-- `bash .agents/skills/spw-operator-lattice/scripts/...` ->
-  `bash .spw/_workbench/.agents/skills/spw-operator-lattice/scripts/...`
+## Default Workflow
 
-Mounted references:
-`.spw/_workbench/.agents/skills/spw-operator-lattice/references/`
+1. Pick the surface to inspect:
+   - `.spw` files
+   - HTML operator chips and anchors
+   - JS or CSS data-attribute contracts
+2. Query with `rg` first; only reach for workbench tooling if the question truly needs parser-aware analysis.
+3. Compare authored operator language to runtime/operator styling language.
+4. Record mismatches as editor-facing `.spw` notes when they affect future development.
+
+## Typical Questions
+
+- Which operators cluster around a route family?
+- Where do public metaphors drift from runtime semantics?
+- Which handles, chips, or attributes imply the same concept with different names?

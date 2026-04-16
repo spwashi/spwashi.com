@@ -1,17 +1,30 @@
 ---
 name: spw-ontology-workbench
-description: Build and iterate ontologies and domain models in Spw for computational linguistics, geometry, and materials science. Use when modeling concepts/relations, creating example corpora, or mapping domains into Spw.
+description: Build and refine site-facing ontologies in `.spw` for routes, interactions, semantic families, and editor inspection. Use when modeling concepts and relations that should stay inspectable beyond prose.
 ---
 
-# Mounted Skill: spw-ontology-workbench
+# Spw Ontology Workbench for spwashi.com
 
-Canonical skill:
-`.spw/_workbench/.agents/skills/spw-ontology-workbench/SKILL.md`
+Read first:
 
-Use the mounted workbench ontology workflow as canon. In this repo, prefer
-site-local ontology surfaces under `.spw/` while citing the mounted workbench
-for shared conventions, examples, and assets.
+- `../_shared/site-workflow.md`
+- `../_shared/site-vs-workbench.md`
 
-Mounted assets and references:
-- `.spw/_workbench/.agents/skills/spw-ontology-workbench/assets/`
-- `.spw/_workbench/.agents/skills/spw-ontology-workbench/references/`
+## Default Workflow
+
+1. Identify the domain boundary: route taxonomy, component roles, settings state, image semantics, or concept families.
+2. Separate authored language from inferred runtime language.
+3. Write or update `.spw` files that expose:
+   - entities
+   - relations
+   - invariants
+   - open seams
+4. Keep the ontology inspectable in the editor; do not bury it only in JS constants or CSS selectors.
+5. Use `.spw/_workbench` theory assets as references when useful, but keep the site ontology honest to the public system it describes.
+
+## Good Outputs
+
+- review bundles under `.spw/reviews/`
+- route/topic maps
+- state-flow or lifecycle notes
+- semantic family registries

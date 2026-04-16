@@ -1,20 +1,36 @@
 ---
 name: spw-css-dom-lab
-description: Design and run small, reversible UI experiments using modern CSS and DOM APIs in this repo. Use for "CSS as query language", runtime philosophy experiments, interaction prototypes, and instrumented UX hypotheses.
+description: Design and run small, reversible UI experiments for the spwashi.com site using HTML, CSS, and DOM APIs. Use for interaction prototypes, visual grammar tests, and stateful surface experiments without introducing build tooling.
 ---
 
-# Mounted Skill: spw-css-dom-lab
+# Spw CSS + DOM Lab for spwashi.com
 
-Canonical skill:
-`.spw/_workbench/.agents/skills/spw-css-dom-lab/SKILL.md`
+Read first:
 
-Use the mounted workbench skill as canon. For this repo, treat the site as the
-experiment target and the workbench as the tool/provider surface.
+- `../_shared/site-workflow.md`
+- `../_shared/site-vs-workbench.md`
 
-Command substitutions:
-- `npm run <script>` -> `npm --prefix .spw/_workbench run <script>`
-- `node --import tsx scripts/...` -> `node --import tsx .spw/_workbench/scripts/...`
-- `bash .agents/skills/.../scripts/...` -> `bash .spw/_workbench/.agents/skills/.../scripts/...`
+## Default Workflow
 
-Mounted references:
-`.spw/_workbench/.agents/skills/spw-css-dom-lab/references/`
+1. Name the hypothesis in plain language: what should feel more learnable, vivid, or inspectable?
+2. Start with HTML/CSS; add JS only if the experiment needs state, timing, sampling, or pointer logic.
+3. Keep the experiment reversible:
+   - isolate it to one selector family or data attribute
+   - avoid one-off inline styles
+   - prefer progressive enhancement over mandatory runtime behavior
+4. Test the experiment against both desktop reading and touch interaction assumptions.
+5. If the pattern survives, fold it back into shared tokens, surfaces, or runtime utilities instead of leaving it as a page trick.
+
+## Good Targets
+
+- menus, chips, and settings widgets
+- hero figures and image ornaments
+- page-index discoverability
+- palette, wonder-memory, and resonance controls
+- structural ornaments that teach state
+
+## Validation
+
+- `git diff --check`
+- `node --check` on touched JS files
+- targeted `rg` checks for the experiment's selectors or data attributes

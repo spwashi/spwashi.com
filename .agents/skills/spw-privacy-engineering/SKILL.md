@@ -1,20 +1,32 @@
 ---
 name: spw-privacy-engineering
-description: Do privacy-centric engineering reviews and implement mitigations (data inventory, threat modeling, logging/retention, access controls). Use for PII handling, enterprise privacy posture, and secure-by-default design.
+description: Audit privacy and data-handling risks in the spwashi.com site. Use for local storage, service worker state, embeds, analytics snippets, asset metadata, and disclosure of browser-resident behavior.
 ---
 
-# Mounted Skill: spw-privacy-engineering
+# Spw Privacy Engineering for spwashi.com
 
-Canonical skill:
-`.spw/_workbench/.agents/skills/spw-privacy-engineering/SKILL.md`
+Read first:
 
-Use the mounted workbench skill as the review method. For this repo, focus on
-public-site risks, `.spw` artifact disclosure, and any installed-workbench
-boundary where data or logs could leak across surfaces.
+- `../_shared/site-workflow.md`
+- `../_shared/site-vs-workbench.md`
 
-Command substitutions:
-- `npm run <script>` -> `npm --prefix .spw/_workbench run <script>`
-- `bash .agents/skills/.../scripts/...` -> `bash .spw/_workbench/.agents/skills/.../scripts/...`
+## Default Workflow
 
-Mounted references:
-`.spw/_workbench/.agents/skills/spw-privacy-engineering/references/`
+1. Inventory browser-visible data flows:
+   - localStorage/sessionStorage
+   - service worker caches
+   - analytics or third-party embeds
+   - image or media metadata
+2. Identify what is stored, for how long, and whether the user can understand or clear it.
+3. Prefer private-by-default behavior:
+   - short retention
+   - explicit naming
+   - easy reset paths
+4. If a feature is mostly ornamental, question whether it needs persistence at all.
+
+## Good Outputs
+
+- concise data inventory
+- retention and disclosure fixes
+- settings copy clarifications
+- reduced or normalized storage/state behavior

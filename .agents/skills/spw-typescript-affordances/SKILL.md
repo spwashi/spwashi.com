@@ -1,20 +1,31 @@
 ---
 name: spw-typescript-affordances
-description: Apply TypeScript language and compiler affordances in this repo to improve safety and ergonomics (narrowing, unions, satisfies, generics, inference). Use for typing/design requests and "lean on TS" refactors.
+description: Apply TypeScript thinking where it helps the spwashi.com repo without forcing the site into a TypeScript build. Use for mounted workbench code, typed helper scripts, and safer state-shape design in plain JS modules.
 ---
 
-# Mounted Skill: spw-typescript-affordances
+# Spw TypeScript Affordances for spwashi.com
 
-Canonical skill:
-`.spw/_workbench/.agents/skills/spw-typescript-affordances/SKILL.md`
+Read first:
 
-This repo mounts the workbench TypeScript skill for discoverability. Use the
-canonical workbench skill as the method, but only apply it where this repo
-actually contains TypeScript-bearing surfaces or mounted workbench code.
+- `../_shared/site-workflow.md`
+- `../_shared/site-vs-workbench.md`
 
-Command substitutions:
-- `npm run <script>` -> `npm --prefix .spw/_workbench run <script>`
-- `bash .agents/skills/.../scripts/...` -> `bash .spw/_workbench/.agents/skills/.../scripts/...`
+## Default Workflow
 
-Mounted references:
-`.spw/_workbench/.agents/skills/spw-typescript-affordances/references/`
+1. Confirm the target actually benefits from typing:
+   - mounted workbench scripts or TS files
+   - complex JS state objects
+   - event/detail payloads
+   - configuration registries
+2. Do not introduce a new TS build path for route code just because types would be nice.
+3. In plain JS, prefer TS-inspired discipline:
+   - normalization functions
+   - closed string sets
+   - JSDoc typedefs where they reduce ambiguity
+   - explicit shape checks at boundaries
+4. If the edit belongs upstream in `.spw/_workbench`, say so and patch the right surface intentionally.
+
+## Validation
+
+- `node --check` for edited JS
+- workbench-side type or script checks only when workbench files changed
