@@ -1,0 +1,117 @@
+# wip — semantic-html-normalization
+# Branch: main
+# Started: 2026-04-16
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/semantic-html-normalization/PLAN.md"
+ @home: ~"index.html"
+ @website: ~"about/website/index.html"
+ @settings: ~"settings/index.html"
+ @topics_math: ~"topics/math/index.html"
+ @parsers: ~"topics/software/parsers/index.html"
+ @operator_ref: ~"topics/software/spw/operators/ref/index.html"
+ @page_metadata: ~"public/js/spw-page-metadata.js"
+ @semantic_chrome: ~"public/js/spw-semantic-chrome.js"
+ @components_css: ~"public/css/spw-components.css"
+}
+
+^["intent"]{
+ ~#goal: "Normalize the authored HTML semantics across as many routes as practical, then let the runtime infer more of the repeated region bookkeeping instead of requiring every page to hand-author it."
+ ~#taste: "clarity and layering: the site should keep its rich semantic language without making every HTML page carry an exhausting metadata ledger."
+}
+
+^["development"]{
+ lane: #execution_truth
+ ladder: #page
+ develops: [#html_semantics, #runtime_inference, #semantic_contract]
+ review_surfaces: [@plan, @page_metadata, @semantic_chrome, @components_css]
+ snippet_routes: [#landmarks, #aria_relationships, #metadata_reduction]
+}
+
+^["concept_index"]{
+ primary: [#landmark_normalization, #metadata_consolidation]
+ surfaces: [#html_routes, #page_runtime, #semantic_chrome, #metadata_display]
+ tensions: [#attribute_sprawl, #a11y_consistency, #genre_preservation]
+ transfers: [#page, #region, #runtime, #css]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? reread the repeated HTML families before declaring any attribute redundant",
+  "< normalize the static landmark skeleton first so runtime behavior sits on honest HTML",
+  "$ let the runtime infer repeated bookkeeping instead of copying it page by page",
+  "^ keep the semantic vocabulary meaningful by preserving the attributes that actually drive behavior",
+  "% prefer one canonical region contract over parallel HTML, CSS, and JS guesses",
+ ]
+ gates: [#landmark_consistency, #id_safety, #semantic_contract_clarity]
+}
+
+^["parallel_work"]{
+ critical_path: [#html_landmarks, #page_metadata_runtime]
+ parallelizable: [#html_family_passes, #css_cleanup]
+ shared_hot_files: ["public/js/spw-page-metadata.js", "public/css/spw-components.css", "about/website/index.html", "settings/index.html", "topics/math/index.html", "topics/software/index.html"]
+ merge_risks: [#dirty_worktree_overlap, #duplicate_ids, #over_inference]
+ handoff_artifacts: [@plan]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@home, @website, @settings, @topics_math, @parsers, @operator_ref]
+ carries: [#review_notes, #source_map]
+}
+
+^["interaction_depth"]{
+ subjects: [#navigation, #feedback, #legibility, #trust]
+ questions: [#what_must_be_authored, #what_can_be_inferred, #what_counts_as_semantic_noise]
+ qualities: [#clarity, #a11y, #layering]
+}
+
+^["risk_model"]{
+ hard_failures: [#broken_skip_targets, #duplicate_region_ids]
+ soft_failures: [#authored_metadata_still_verbose, #runtime_and_html_disagree]
+ recoveries: [#mechanical_html_pass, #derive_only_when_missing]
+ non_negotiables: [#keyboard_access, #html_without_js_stays_readable, #existing_interactions_hold]
+}
+
+^["validation"]{
+ hypotheses: [#routes_share_one_semantic_skeleton, #runtime_can_infer_more_metadata]
+ negative_controls: [#copy_unchanged, #settings_and_image_behaviors_unchanged]
+ demo_path: [#/, #/about/website/, #/settings/, #/topics/math/, #/topics/software/parsers/, #/topics/software/spw/operators/ref/]
+}
+
+^["stream"]{
+ >>[2026-04-16 13:12] observe — the HTML pages already share a strong structural skeleton, but many routes still omit the same top-level affordances: skip links, `main#main-content`, and stable section labels.
+ >>[2026-04-16 13:18] observe — the heaviest repeated metadata (`seed`, `related-routes`, `context-relevance`, `promptability`, `collectability`, `locality`, `consequence`) is often hand-authored even though `spw-page-metadata.js` can infer much of it when missing.
+ >>[2026-04-16 13:23] observe — CSS and JS mostly depend on a smaller core contract: `kind`, `role`, `surface`, `context`, `wonder`, `category-family`, `form`, and a few interaction-specific attributes.
+ >>[2026-04-16 13:26] decide — sequence the pass as static HTML landmark normalization first, then runtime inference for repeated ids/ARIA relationships and metadata defaults, then a small CSS simplification for semantic display rules.
+ >>[2026-04-16 13:28] hygiene — base ref recorded as main@9511b53; preserve the existing uncommitted settings/resonance follow-up and avoid unrelated runtime/css drift unless the semantic cleanup directly overlaps it.
+ >>[2026-04-16 13:30] taste — the goal is not to strip the site down to generic HTML, but to make the semantic language feel intentional instead of over-serialized.
+}
+
+^["open"]{
+}
+
+^["commits"]{
+ ~[1]: "#[semantic-html-normalization] — record the plan artifacts and hygiene baseline"
+ ~[2]: "&[semantic-html-normalization] — normalize route landmarks, skip targets, and top-level page semantics across HTML families"
+ ~[3]: "&[semantic-html-normalization] — derive repeated region ids and ARIA relationships from the page-metadata runtime"
+ ~[4]: ".[semantic-html-normalization] — simplify semantic display rules and document the reduced authored contract"
+ ~[5]: "![semantic-html-normalization] — verify markup integrity, metadata inference, and accessibility-oriented selectors"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@9511b53"
+ ~#rebased_at: ""
+ ~#hygiene_split: "preserve the open settings/resonance follow-up; integrate only overlapping HTML files and avoid unrelated JS/CSS drift"
+ ~#files_hot: "about/website/index.html, settings/index.html, topics/math/index.html, topics/site-design/index.html, topics/software/index.html, topics/software/parsers/index.html, topics/software/spw/operators/*/index.html, public/js/spw-page-metadata.js, public/js/spw-semantic-chrome.js, public/css/spw-components.css"
+ ~#next_commit: "1"
+ ~#open_count: "0"
+ ~#last_stream: "2026-04-16 13:30"
+ ~#taste_debt: "watch whether runtime-inferred metadata still leaves too much page-specific ledger text in the authored HTML after the first normalization pass"
+}
+
+^["done"]{
+}
