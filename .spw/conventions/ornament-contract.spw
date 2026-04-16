@@ -1,0 +1,195 @@
+# Ornament Contract
+#
+# How visual ornaments read semantic state and field state to express
+# the site's identity. Covers the guide badge redesign, collectibility
+# ornaments, deviation visibility, and the runtime exposure contract.
+
+#>spw_ornament_contract
+#:model #!ornament
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "An ornament is a visual expression of semantic or field state — not a decoration. An ornament that cannot be falsified (that looks the same regardless of state) is not an ornament; it is styling. The ornament contract specifies which state signals each ornament class reads, what visual change that state produces, and what the visitor can learn from the change."
+ naive_shape: "The current guide badge reads: 'I am an operator — here is my name.' It does not show whether that operator is warm in the current field, whether it has been explicitly collected, or whether the current session deviates from the default for this component."
+ updated_shape: "A badge should read: 'I am an operator. My current field state is [warm/resonant/collected/default]. My contribution to the attentional field when you address me is [this token set].'"
+}
+
+^"ornament_classes"{
+ ~#note: "Each ornament class has a declared state source, a visual expression range, and an inspectable rationale."
+
+ guide_badge: {
+  definition: "A small inline mark (operator chip, frame sigil, spec pill) that identifies a semantic element and expresses its current field state."
+  state_source: {
+   semantic: ["data-spw-role", "data-spw-kind", "data-spw-operator"]
+   field: ["data-spw-wonder-state", "data-spw-field-wonder", "data-spw-memory-match"]
+   collection: ["data-spw-collected", "data-spw-collection-strength"]
+   deviation: ["data-spw-deviation" (whether this component's state deviates from authored default)]
+  }
+  visual_range: {
+   default: "Calm at rest. Operator color at default intensity. No field indicators."
+   browsing: "Slight color shift. Token preview on hover (which tokens would be emitted)."
+   resonant: "Operator color brightened by field bias. --wonder-accent-color bleeds into border or background wash."
+   collected: "Stable accent mark (dot, corner fill, or persistent color wash) that does not decay. Distinguishable from resonance."
+   non_default: "Subtle deviation marker — a change from the default state that persists and is inspectable."
+  }
+  interaction_contract: {
+   hover: "Preview the badge's token set. Show current field strength for each token."
+   focus: "Same as hover for keyboard users."
+   tap_or_click: "If currently browsing: escalate to inspecting. If inspecting: offer to collect (pin) the badge's tokens."
+   long_press_or_held_focus: "Enter collecting interaction context. Emit full token set at σ₀ = 1.0."
+   escape: "Return to browsing context. Discharge any pinned charge without saving to collection."
+  }
+  accessibility: "role='button' with aria-pressed for collected state. aria-label includes current field state when non-default."
+ }
+
+ field_wash: {
+  definition: "A subtle color overlay on a region or feature that expresses the current field charge intensity in that area."
+  state_source: "F(region) = mean of component-level field values within the region."
+  visual_range: "Transparent (no field) → light wash at operator resonance color (low field) → stronger wash (high field). Never opaque — the content remains primary."
+  css_contract: "--spw-region-field-intensity (0.0–1.0) on the region element. Ornament CSS reads this to set background-color alpha."
+  note: "The field wash is the most ambient ornament — it does not require interaction to be present. It should be subtle enough that calm-at-rest is not disrupted."
+ }
+
+ collection_mark: {
+  definition: "A persistent visual indicator that the visitor has explicitly collected a token or component."
+  state_source: "data-spw-collected='true' and data-spw-collection-strength (0.0–1.0) on the component or a containing register element."
+  visual_range: "Small permanent accent: a dot, a filled corner, a stable color wash — distinguishable from the decaying resonance wash. Does not pulse or animate after collection."
+  decay_expression: "Collection strength decays from 1.0 toward σ_min over time. The ornament could express this as a gradual fade without ever reaching invisible."
+  inspection: "Hover reveals collection timestamp and token list. This is the key affordance for 'what have I collected.'"
+ }
+
+ deviation_badge: {
+  definition: "An indicator that a setting, state, or field configuration deviates from the authored or session default."
+  state_source: "The deviation register (see attention-field.spw ^'collectibility'.'deviation_register')."
+  visual_range: "A subtle persistent mark near the affected control or settings surface — a small dot, a changed border style, a color different from default. Not alarming; informational."
+  purpose: "Addresses the original problem: it is hard to recall which changes deviate from the default. The deviation badge makes this visible without requiring memory."
+  inspection: "Hover or focus reveals: what the default was, what the current value is, when it was changed."
+  clear_affordance: "An explicit gesture (double-tap, or a reset icon on the badge) restores the default."
+ }
+
+ wonder_trail: {
+  definition: "A subtle persistent trace on frame sigils and page-index links showing that the visitor has attended to this location in this session."
+  state_source: "data-spw-wonder-state='resonant'|'accented' + data-spw-memory-match. Also session history."
+  visual_range: "Faint color accent (at --wonder-accent-color alpha 0.15–0.35) on visited/resonant links and sigils. Stronger for recently visited; faded but present for earlier."
+  note: "The wonder trail is the session-scoped navigation memory. It is not the same as explicit collection — the visitor did not choose it, but it reflects their actual path."
+ }
+}
+
+^"runtime_exposure_contract"{
+ ~#note: "What data attributes and CSS custom properties the runtime must expose for ornaments to work. This is the contract between JS modules and CSS ornament layers."
+
+ root_level: {
+  css_vars: [
+   "--wonder-accent-color: <color>   primary active accent from recent field state",
+   "--delight-color: <color>          secondary accent",
+   "--spw-wonder-memory-color: <color>   canonical field primary (same as above, stable name)",
+   "--spw-wonder-memory-alt-color: <color>",
+   "--spw-field-entropy: <0–1>        attentional entropy H(page) / log₂(N), normalized",
+  ]
+  data_attrs: [
+   "html[data-spw-wonder-memory-state='active|inactive']",
+   "html[data-spw-wonder-memory-wonder='orientation|resonance|inquiry|...']",
+   "html[data-spw-deviation-count='N']   count of non-default settings/state",
+   "html[data-spw-page-state='booting|interactive|hydrated|region-enhanced|enhanced']",
+  ]
+ }
+
+ component_level: {
+  data_attrs: [
+   "data-spw-wonder-state='resonant|accented|default'",
+   "data-spw-field-wonder='orientation|resonance|...'",
+   "data-spw-memory-match='token1 token2 ...'",
+   "data-spw-collected='true|false'",
+   "data-spw-collection-strength='0.0–1.0'",
+   "data-spw-interaction-context='reading|browsing|inspecting|collecting|comparing'",
+   "data-spw-deviation='true|false'   for settings/state components",
+  ]
+  css_vars_on_element: [
+   "--wonder-accent-color: <color>   (per-component override when resonant)",
+   "--delight-color: <color>",
+   "--spw-field-intensity: <0–1>   sampled field strength at this component",
+  ]
+ }
+
+ gaps: {
+  missing_exposure: [
+   "No CSS var currently exposes per-component field intensity (F(b) normalized).",
+   "No data attribute currently marks interaction context — ornaments cannot know if the visitor is inspecting vs. browsing.",
+   "No deviation register is surfaced to CSS or to any ornament layer.",
+   "No explicit collection state (data-spw-collected) exists in the current runtime.",
+  ]
+  implication: "These gaps mean ornaments that want to show resonance, collection, or deviation state must implement their own state tracking rather than reading a canonical attribute."
+ }
+}
+
+^"guide_badge_redesign"{
+ ~#note: "From 'show and explain' to 'show field state.' The shape of the interaction that was naively spec'd."
+
+ old_spec: {
+  shape: "Tap badge → see operator name + description. Static informational."
+  problem_1: "Does not show whether this badge is warm in the current field."
+  problem_2: "Does not allow explicit collection — no 'hold onto this' affordance."
+  problem_3: "Does not show deviation from default."
+  problem_4: "All badges look the same regardless of what the visitor has been attending to."
+ }
+
+ new_spec: {
+  at_rest: "Badge shows operator sigil and name at calm default. Operator color is semantic, not decorative."
+  on_hover_or_focus: {
+   resonant_state: "If data-spw-wonder-state is 'resonant' or 'accented': badge brightens, shows field wonder type, shows matching token list on hover."
+   default_state: "Token preview only — which tokens this badge would emit if collected."
+  }
+  on_tap_or_click: {
+   first_tap: "Escalate to inspecting context — emit full token set at σ₀ = 0.8. Show expanded description."
+   second_tap_while_inspecting: "Offer collection affordance. Confirm to pin."
+  }
+  collected_state: "Stable accent mark that does not decay. Distinct from resonance wash. Collection strength visible on hover."
+  deviation_state: "If this component's settings/state deviate from default: subtle deviation mark visible alongside the badge. Inspectable."
+  release: "Escape or re-tap while collected: release the collection. Field returns to decay-only."
+ }
+
+ badge_state_machine: {
+  states: ["default", "browsing", "inspecting", "collected", "resonant", "resonant+collected"]
+  transitions: {
+   "default → browsing": "hover or focus"
+   "browsing → inspecting": "tap or click"
+   "inspecting → collected": "second tap / explicit collect"
+   "any → default": "escape or blur + no collection"
+   "any → resonant": "field charge rises above threshold for this badge's tokens"
+   "resonant → resonant+collected": "explicit collect while resonant"
+  }
+ }
+}
+
+^"ornament_vocabulary"{
+ ~#note: "The set of visual forms that ornaments may use — and what each form is reserved for."
+ color_wash: "A transparent tint. Reserved for field intensity and resonance. Never for static decoration."
+ corner_dot: "A small filled circle in a corner. Reserved for explicit collection state."
+ border_shift: "A change in border color or weight. Reserved for deviation-from-default."
+ accent_bar: "A narrow colored line at an edge. Reserved for region-level field intensity gradient."
+ opacity_pulse: "A single slow pulse. Reserved for a just-collected signal. Does not loop."
+ stable_accent: "A persistent color change (saturation increase, hue shift). Reserved for collected state."
+ fade_trail: "A gradually fading color. Reserved for wonder trail (session path memory)."
+ note: "An ornament that uses a visual form outside its reserved meaning creates visual noise. Each form should be recognizable as its own signal."
+}
+
+^"cross_references"{
+ @attention_field: ~"./attention-field.spw"
+ @page_model: ~"../surfaces/page-model.spw"
+ @site_semantics: ~"./site-semantics.spw"
+ @style_development: ~"./style-development.spw"
+ @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+ @wonder_memory_runtime: ~"../../public/js/spw-wonder-memory.js"
+ @accent_palette_runtime: ~"../../public/js/spw-accent-palette.js"
+ @settings_runtime: ~"../../public/js/site-settings.js"
+ @runtime_audit_seams: ~"../reviews/runtime-audit/seams.spw"
+ @runtime_audit_settings: ~"../reviews/runtime-audit/settings-state.spw"
+}
+
+^"open_questions"{
+ ?["Should the ornament vocabulary be enforced by a CSS design token layer, or is it a convention that only lives in this document?"]{ #:open }
+ ?["What visual form should express 'this badge's wonder type is currently the dominant active type on this page'?"]{ #:open }
+ ?["Is the two-tap collection pattern too many steps for a mobile visitor? What is the minimum interaction that earns a meaningful collection?"]{ #:open }
+ ?["Should the deviation badge be opt-in (the visitor must enable it) or always visible?"]{ #:open }
+ ?["How should the guide badge communicate its token set in a way that is legible to a visitor who does not know the token vocabulary yet?"]{ #:open }
+}

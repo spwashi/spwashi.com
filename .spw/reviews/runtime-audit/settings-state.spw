@@ -1,0 +1,119 @@
+# runtime-audit / settings-state
+# Canonical settings flow, drift points, and browser-local state seams.
+
+#>runtime_audit_settings_state
+#:review #!surface
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "site-settings.js is the closest thing this application has to a canonical browser-local state manager."
+ benefit: "It already normalizes storage, derives architectural modifiers, applies datasets/CSS variables, and binds page-local widgets through one model."
+ risk: "The contract weakens whenever a module writes localStorage directly or emits settings:changed with a non-canonical payload shape."
+}
+
+^"roots"{
+ @settings: ~"../../../public/js/site-settings.js"
+ @brace_pivots: ~"../../../public/js/spw-brace-pivots.js"
+ @bus: ~"../../../public/js/spw-bus.js"
+ @wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
+ @accent_palette: ~"../../../public/js/spw-accent-palette.js"
+ @runtime: ~"../../../public/js/site.js"
+}
+
+^"canonical_state_path"{
+ stream: ?<
+  "storage.get() / normalizeSiteSettings()",
+  "deriveArchitecturalModifiers()",
+  "manager.apply() -> root datasets and CSS custom properties",
+  "applyPaletteResonanceSwatches() and applyImageLoadingPreference()",
+  "manager.save() / manager.reset()",
+  "bus.emit('settings:changed', applied_settings)",
+  "bindSettingsScope() / bindStandaloneSettingTriggers() / bindSettingsReadouts() react to the full normalized object",
+  "downstream systems such as wonder-memory and bus diagnostics read the resulting field"
+ >[reg=stream]
+}
+
+^"canonical_invariants"{
+ "The storage key should be owned by site-settings.js, even if other modules can request mutations."
+ "settings:changed should carry a full normalized settings object, not an ad hoc partial shape."
+ "Any module that changes settings should go through saveSiteSettings() or an equivalent manager entrypoint."
+ "Bindings and PWA status listeners should return cleanup if the runtime expects modules to be restart-safe."
+}
+
+^"drift_points"{
+ brace_pivots_bypass_manager: {
+  path: @brace_pivots
+  behavior: "Reads and writes localStorage('spw-site-settings') directly, then emits settings:changed with { key, value }."
+  consequence: "Skips normalization, skips derived modifier application, and violates the full-object event contract assumed elsewhere."
+ }
+ apply_without_cleanup: {
+  path: @settings
+  behavior: "applySiteSettings() applies state and initializes bindings, but it returns only the normalized settings object."
+  consequence: "site.js cannot retain cleanup for settings bindings even though it mounts settings as a core module."
+ }
+ pwa_status_one_way_init: {
+  path: @settings
+  behavior: "initPwaStatusDisplay() guards on _pwaInitialized and adds online/offline listeners without paired cleanup."
+  consequence: "Good enough for one page life, but not symmetrical with destroyRuntime()."
+ }
+ bus_assumes_full_settings: {
+  path: @bus
+  behavior: "The bus constructor listens for settings:changed and immediately reads busHistorySize and busMirrorToConsole from the event detail."
+  consequence: "A partial event payload silently falls back or mis-describes state."
+ }
+}
+
+^"downstream_consumers"{
+ wonder_memory: {
+  path: @wonder_memory
+  reads: ["--spw-wonder-memory-strength", "--spw-wonder-memory-ttl-ms", "--spw-wonder-memory-reach"]
+  nature: "Consuming CSS-variable truth from the manager is a good seam."
+ }
+ accent_palette: {
+  path: @accent_palette
+  reads: ["palette resonance", "recent path memory", "root CSS vars"]
+  nature: "Also mostly a good seam as long as the settings manager remains the single writer."
+ }
+ bus: {
+  path: @bus
+  reads: ["busHistorySize", "busMirrorToConsole"]
+  nature: "The bus uses settings as runtime diagnostics input and therefore depends on event-shape stability."
+ }
+}
+
+^"brand_expression_contract"{
+ ~#note: "Some settings are not preference storage — they are brand expression surfaces. The distinction matters for how strictly the canonical path should be enforced and how the settings UI should present them."
+ brand_expression_surfaces: {
+  accent_palette: {
+   path: @accent_palette
+   nature: "User-visible palette resonance is the most personal brand expression surface on the site. A visitor who picks a resonance is choosing how the site's color vocabulary meets their own."
+   required_path: "Palette resonance writes must flow through the settings manager so the full accent system (CSS vars, ornament tinting, palette-derived affordances) updates in one synchronized step."
+   current_risk: "brace-pivots writes localStorage directly. The accent system receives a partial update; the manager's normalization and derived modifier application are skipped."
+  }
+  wonder_memory: {
+   path: @wonder_memory
+   nature: "Wonder memory strength and reach are not diagnostic toggles — they are the tunable depth of the site's relational recollection. A visitor who adjusts these is tuning how much the site remembers their attention."
+   required_path: "Wonder memory parameters should be mutable only through the manager so that CSS variable derivation and downstream behavior remain consistent with the normalized settings field."
+   note: "CSS-variable consumption is currently a good seam here. The risk is in future write paths that might bypass the manager under the same pattern as brace-pivots."
+  }
+ }
+ event_shape_as_brand_signal: {
+  claim: "The settings:changed event is not only a plumbing message — it is the moment when the site's most user-facing brand expression updates."
+  consequence: "A partial payload silently corrupts accent palette, wonder memory, and bus behavior in a single event. Brand expression surfaces are left partially stale."
+  desired: "settings:changed should carry a canonical, full normalized object. Downstream brand expression consumers should treat a non-canonical shape as a diagnosable error, not a silent fallback."
+ }
+ brand_invariants: [
+  "Palette resonance, wonder memory parameters, and architectural modifiers are brand expression surfaces — they should be presented and documented differently from diagnostic or technical settings.",
+  "Every write to a brand expression surface must pass through the canonical manager so all downstream consumers update atomically.",
+  "The settings:changed event shape is a public contract for brand expression. It should be as stable as any other public API.",
+  "On destroyRuntime(), brand expression surfaces should return to authored defaults — not persist session mutations that the visitor did not explicitly request to preserve."
+ ]
+}
+
+^"inspection_prompts"{
+ ?["Which modules should mutate settings, and which should only reflect them?"]{ ~#sources: [@settings, @brace_pivots, @bus] }
+ ?["Should settings writes be modeled as commands on manager/window.spwSettings rather than direct localStorage edits?"]{ ~#sources: [@settings, @brace_pivots] }
+ ?["If destroyRuntime() stays public, which settings-related listeners must become cleanup-safe?"]{ ~#sources: [@runtime, @settings] }
+ ?["Which settings writes, if bypassed, would cause a visitor to see an incoherent brand expression (wrong accent color, absent wonder memory depth, conflicting palette)?"]{ ~#sources: [@settings, @brace_pivots, @accent_palette] }
+ ?["Should wonder memory and palette resonance be documented as brand expression settings — distinct from diagnostic or technical preferences — with their own section in the settings UI?"]{ ~#sources: [@settings, @wonder_memory, @accent_palette] }
+}

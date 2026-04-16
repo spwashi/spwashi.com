@@ -25,6 +25,10 @@
   @style_development: ~"./conventions/style-development.spw"
   @asset_management: ~"./conventions/asset-management.spw"
   @assets: ~"./assets.spw"
+  @reviews: ~"./reviews/index.spw"
+  @page_model: ~"./surfaces/page-model.spw"
+  @attention_field: ~"./conventions/attention-field.spw"
+  @ornament_contract: ~"./conventions/ornament-contract.spw"
   @philosophy: ~"./philosophy/index.spw"
   @graph: ~"./graph.spw"
   @surfaces: ~"./surfaces.spw"
@@ -60,6 +64,8 @@
   site_semantics: [@conventions, @site_semantics]
   style_development: [@style_development, @site_semantics]
   philosophy: [@philosophy, @graph]
+  reviews: [@reviews, @site_semantics]
+  interaction_model: [@page_model, @attention_field, @ornament_contract, @site_semantics]
   public_routes: [@surfaces, @surface_registry]
 }
 
@@ -74,6 +80,10 @@
   conventions: @conventions
   site_semantics: @site_semantics
   style_development: @style_development
+  reviews: @reviews
+  page_model: @page_model
+  attention_field: @attention_field
+  ornament_contract: @ornament_contract
   philosophy: @philosophy
   graph: @graph
   public_surfaces: @surfaces

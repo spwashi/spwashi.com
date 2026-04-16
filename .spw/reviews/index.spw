@@ -1,0 +1,26 @@
+# Reviews Index
+#
+# Local review and audit surfaces for spwashi.com.
+
+#>spw_site_reviews
+#:index #!surface
+#:layer #!pragmatics
+
+^"intent"{
+ ~#goal: "Provide a stable entrypoint for site-local audits, architecture reviews, and semantic/runtime inspection notes."
+ ~#use: "Open this when you want review material that is more durable than chat output and more inspectable than a one-off plan stream."
+}
+
+^"roots"{
+ @runtime_audit: ~"./runtime-audit/index.spw"
+}
+
+^"dispatch"{
+ runtime_audit: @runtime_audit
+}
+
+^"invariant"{
+ "Review surfaces should cite real repo files and real runtime contracts.",
+ "A review note should separate ontology, seams, and lifecycles instead of collapsing them into one prose block.",
+ "Site-local review notes stay under .spw/ so they are easy to inspect in editors alongside the public HTML and JS."
+}

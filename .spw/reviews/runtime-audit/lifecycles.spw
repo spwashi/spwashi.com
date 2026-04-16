@@ -1,0 +1,171 @@
+# runtime-audit / lifecycles
+# Page, region, module, and teardown sequencing in the current application.
+
+#>runtime_audit_lifecycles
+#:review #!surface
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "The runtime advertises a thoughtful lifecycle model, but not every module fully honors it."
+ benefit: "The explicit page states, region states, and mount-handle normalization in site.js are a strong architectural base."
+ risk: "When semantic enrichment or settings bindings do not obey the same cleanup/reinit contract, the lifecycle story becomes only partially true."
+}
+
+^"roots"{
+ @runtime: ~"../../../public/js/site.js"
+ @settings: ~"../../../public/js/site-settings.js"
+ @contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
+ @semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
+ @component_semantics: ~"../../../public/js/spw-component-semantics.js"
+}
+
+^"declared_page_lifecycle"{
+ states: [
+  "booting",
+  "interactive",
+  "hydrated",
+  "region-enhanced",
+  "enhanced"
+ ]
+ source: @runtime
+ note: "These are declared in site.js and then written onto html[data-spw-page-state]."
+}
+
+^"declared_region_lifecycle"{
+ states: [
+  "queued",
+  "primed",
+  "hydrating",
+  "interactive",
+  "enhanced",
+  "settling"
+ ]
+ source: @runtime
+ note: "These are used both for site-managed regions and module-root state during mountDefinition()."
+}
+
+^"actual_boot_sequence"{
+ stream: ?<
+  "whenDocumentReady()",
+  "normalizeDocumentMetadata()",
+  "createRuntimeContext()",
+  "set page state -> booting",
+  "primeRegions()",
+  "mount immediate core defs",
+  "mount immediate feature defs",
+  "mount immediate enhancement defs",
+  "set page state -> interactive",
+  "mount visible features",
+  "mount interaction features",
+  "set page state -> hydrated",
+  "mount region layer",
+  "set page state -> region-enhanced",
+  "queue idle enhancements",
+  "window load -> refreshRuntime()"
+ >[reg=stream]
+}
+
+^"module_contract"{
+ expected_shape: {
+  load: "returns a module namespace"
+  mount: "returns cleanup fn, { cleanup, refresh }, or void"
+  normalize: "site.js wraps the result through normalizeMountHandle()"
+  record: "the registry stores status, cleanup, refresh, root, mountedAt, and error"
+ }
+ good_properties: [
+  "The mount contract is small and uniform.",
+  "The registry can distinguish mounted and failed records.",
+  "Core / feature / region / enhancement layers are explicit."
+ ]
+}
+
+^"lifecycle_risks"{
+ stale_region_profiles: {
+  issue: "primeRegions() runs before immediate enhancement modules such as component semantics and semantic chrome."
+  effect: "Early region harmony and region-profile consumers can read pre-enrichment semantics."
+  files: [@runtime, @component_semantics]
+ }
+ delayed_truth: {
+  issue: "refreshRuntime() is deferred until window load before the field is recomputed with later semantics."
+  effect: "The runtime eventually corrects itself, but only after the page is already interactive."
+  files: [@runtime]
+ }
+ partial_cleanup: {
+  issue: "Some modules return proper cleanup handles, but the settings pathway currently does not preserve its binding cleanup through applySiteSettings()."
+  effect: "destroyRuntime() is architecturally stronger than some module implementations."
+  files: [@runtime, @settings]
+ }
+ reinit_gap: {
+  issue: "spw-contextual-ui guards against repeat init with a dataset flag but does not clear that flag in cleanup."
+  effect: "A second boot can silently skip a module even after runtime destroy."
+  files: [@contextual_ui]
+ }
+}
+
+^"teardown_contract"{
+ runtime_destroy: {
+  path: @runtime
+  responsibilities: [
+   "registry.cleanupAll()",
+   "disconnect observers",
+   "clear timers",
+   "run cleanup stack",
+   "clear ctx.regions",
+   "remove page-state / harmony / tempo datasets from html"
+  ]
+ }
+ missing_symmetry: [
+  "Not every module clears the datasets or global listeners it writes.",
+  "Not every module exposes a true cleanup handle even when it binds listeners."
+ ]
+}
+
+^"brand_arrival"{
+ ~#note: "Brand identity has its own lifecycle. The question is not only 'when is the page interactive?' but 'when does the page feel like itself?' — when does the semantic grammar become legible enough to prime the visitor's curiosity and orientation."
+ thesis: "The site's distinctive voice is carried by semantic enrichment layers that mount in sequence. Until those layers complete, the page can be interactive but not yet coherent as a brand surface."
+ timing_vocabulary: {
+  note: "The timing vocabulary from design-whimsy.spw (practice_settle: 100ms, threshold_reveal: 300ms, full_express: 600ms) describes interaction depth. Module mounting should be legible through the same lens: some brand expression arrives instantly; some is revealed; some is fully expressed only at enhancement."
+  see: ~"../../conventions/design-whimsy.spw"
+ }
+ semantic_arrival_by_state: {
+  booting_to_interactive: {
+   semantic_state: "Shell visible; datasets from authored HTML present; operator colors may be default (not enriched)."
+   brand_risk: "A visitor who reaches this state and stops here sees a brand-neutral surface. Slow networks make this the remembered first impression. Authored data-spw-* should carry enough identity to feel intentional even without JS enrichment."
+  }
+  interactive_to_hydrated: {
+   semantic_state: "Core modules mounted; settings applied; palette resonance visible; wonder memory reach configured."
+   brand_opportunity: "This is the earliest moment when user-selected brand expression should be visually present. Palette resonance and wonder memory reach arriving here feels like the site recognizing the visitor."
+  }
+  hydrated_to_region_enhanced: {
+   semantic_state: "Region harmony set; operator color tokens resolved from enriched roles."
+   brand_risk: "If region harmony is based on stale primeRegions() output, operator colors and role-derived visual grammar may express the wrong semantic character until refreshRuntime() corrects at window load. The visitor reads a visual vocabulary that conflicts with the authored intent."
+   desired: "Either delay role-derived CSS until component semantics has enriched, or treat refreshRuntime() as the canonical brand-ready moment and design any intermediate state accordingly."
+  }
+  region_enhanced_to_enhanced: {
+   semantic_state: "Component semantics, semantic chrome, and contextual UI all mounted. Semantic vocabulary is fully coherent."
+   brand_note: "This is the state in which the site can most clearly prime wonder — the operator atlas, brace perspective, and alchemical vocabulary are all legible and ready to reward inspection."
+  }
+ }
+ brand_invariants: [
+  "A visitor should never encounter an operator color that conflicts with the semantic role of the component it is coloring.",
+  "Authored data-spw-perspective should be visually present by the time the visitor can interact with the brace surface.",
+  "User-driven palette resonance and wonder memory should arrive by 'interactive' at the latest — before the visitor starts exploring.",
+  "The transition from interactive to enhanced should feel like depth becoming available, not like corrections arriving late."
+ ]
+}
+
+^"inspection_paths"{
+ first_read: [
+  "~\"../../../public/js/site.js\" for page/region state declarations and boot order",
+  "~\"../../../public/js/site-settings.js\" for settings init/bind cleanup behavior",
+  "~\"../../../public/js/spw-contextual-ui.js\" for a concrete reinit edge case"
+ ]
+ questions: [
+  "When does semantic truth become stable enough for downstream consumers?",
+  "Which datasets are runtime projections and should be removed on cleanup?",
+  "Which modules should be restart-safe because the runtime publicly exposes destroyRuntime()?",
+  "At which page state would a first-time visitor say 'this site has a distinctive voice'?",
+  "If window load fires very late, which brand expressions are missing until then — and does that matter for the visitor's first impression?",
+  "Should role-critical CSS variables be seeded from authored HTML datasets so the semantic vocabulary is present before JS runs?"
+ ]
+}

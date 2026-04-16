@@ -1,0 +1,142 @@
+# runtime-audit / ontology
+# How the application currently names pages, regions, components, and roles.
+
+#>runtime_audit_ontology
+#:review #!semantics
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "The application does not have one semantic authority. It currently has several partially overlapping ontology engines: authored HTML data-spw-* fields, spw-page-metadata.js, site.js region profiling, spw-component-semantics.js, and spw-contextual-ui.js."
+ consequence: "A term such as `register`, `control`, or `artifact` can carry a different meaning depending on which layer is reading it."
+ why_it_matters: "When ontology splits, CSS state, JS enhancement routing, accessibility hints, and editor-facing semantics stop describing the same object."
+}
+
+^"sources"{
+ @page_metadata: ~"../../../public/js/spw-page-metadata.js"
+ @runtime: ~"../../../public/js/site.js"
+ @component_semantics: ~"../../../public/js/spw-component-semantics.js"
+ @contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
+ @site: ~"../../site.spw"
+}
+
+^"entity_map"{
+ page: "A route-level semantic surface. Usually carried by body datasets plus main and the first hero frame."
+ region: "A profiled unit in site.js. Built from PAGE_METADATA_REGION_SELECTOR and assigned harmony, tempo, and density."
+ component: "A reusable semantic target in spw-component-semantics.js. Receives kind, role, form, substrate, affordances, stance, and valueLayer."
+ module: "A contextual-ui target. Receives perspective, potential, dimensions, salience, and module-specific weights."
+ role: "The strongest overloaded term in the current model. Used by metadata normalization, region profiling, component semantics, and CSS."
+ role_cluster: "A grouping layer in spw-page-metadata.js that flattens some roles together for styling and accessibility."
+ harmony: "A site.js abstraction for region behavior: indexed, structured, measured, responsive, anchored, editorial, modular, ambient."
+ value_layer: "A spw-component-semantics.js abstraction for the kind of thing being carried: state, structure, path, memory, surface."
+}
+
+^"authority_layers"{
+ authored_html: {
+  owner: "page authors"
+  truth: "Explicit data-spw-* attributes in HTML"
+  strengths: ["page-local intention", "stable across no-JS reading", "best place for meaning that should not be guessed"]
+  risks: ["attribute sprawl", "manual duplication", "inconsistent semantics across routes"]
+ }
+ page_metadata: {
+  path: @page_metadata
+  role: "Normalize shell/page defaults, infer accessibility labels, infer role clusters, and fill missing route semantics."
+  strengths: ["good for canonical page-level defaults", "good for ARIA normalization", "good for shell metadata"]
+  risks: ["duplicates role inference logic found elsewhere", "can flatten nuanced authored semantics into broad clusters"]
+ }
+ region_profiler: {
+  path: @runtime
+  functions: ["inferRegionRole()", "inferRegionHarmony()", "buildRegionProfile()", "applyRegionProfile()"]
+  role: "Turns regions into runtime state for harmony, tempo, density, and enhancement ordering."
+  strengths: ["connects semantics to lifecycle", "gives CSS a calm set of region-facing signals"]
+  risks: ["profiles too early in boot", "maintains its own role semantics separate from component semantics"]
+ }
+ component_semantics: {
+  path: @component_semantics
+  role: "Build a richer reusable semantic snapshot for components: role, meaning, form, substrate, phrase, affordances, stance, value layer."
+  strengths: ["closest thing to a full semantic schema", "most detailed editor/runtime vocabulary"]
+  risks: ["not clearly canonical relative to page_metadata and site.js", "can overwrite inferred meaning after other layers already read the DOM"]
+ }
+ contextual_ui: {
+  path: @contextual_ui
+  role: "Adds module-facing semantics like perspective, potential, dimensions, salience, context bias, and route discovery."
+  strengths: ["good for interaction tuning", "good for cross-page route discoverability"]
+  risks: ["adds another ontology vocabulary without an explicit bridge back to role/value_layer/harmony"]
+ }
+}
+
+^"drift_register"{
+ register: {
+  page_metadata: "register -> role_cluster reference"
+  runtime: "register-like text usually becomes role reference -> harmony measured"
+  component_semantics: "register-like text becomes role registry -> collectible + collect-recall + memory"
+  consequence: "The same semantic noun can mean plain reference in one layer and memory-bearing registry in another."
+ }
+ control: {
+  page_metadata: "control -> role_cluster surface"
+  runtime: "control -> harmony responsive"
+  component_semantics: "control -> substrate action + instruction phrase + state value layer"
+  consequence: "Control is partly a surface cluster, partly a runtime tempo hint, and partly a stateful action substrate."
+ }
+ artifact: {
+  page_metadata: "artifact -> role_cluster reference"
+  runtime: "artifact is mostly invisible; kind card often drives modular harmony"
+  component_semantics: "artifact -> surface/publishing semantics"
+  consequence: "Artifact can be read as outward reference, modular card, or publishing surface depending on the layer."
+ }
+ projection: {
+  page_metadata: "projection -> role_cluster surface"
+  contextual_ui: "projection affects perspective/dimensions"
+  component_semantics: "projection is not a first-class default role table entry"
+  consequence: "Projection is a present concept, but not fully modeled through the richer snapshot vocabulary."
+ }
+}
+
+^"desired_invariants"{
+ "One layer should be canonical for semantic role truth. Other layers should derive from it, not reinterpret the same text heuristics independently."
+ "Role -> role_cluster should be a declared mapping, not an accidental side effect of parallel heuristics."
+ "A role should preserve its meaning monotonically as it flows into harmony, value layer, affordances, and module salience."
+ "If a concept like `register` is memory-bearing, every downstream projection should preserve that distinction unless it intentionally collapses it."
+ "Authored semantics should beat guessed semantics everywhere."
+}
+
+^"counterexamples"{
+ register_counterexample: "A frame called `register` is treated as `reference` during region priming, then later as `registry` by component semantics; CSS and downstream modules disagree about what kind of thing it is."
+ control_counterexample: "A settings widget is surfaced as `control` in one layer but visually clustered with general publishing surfaces in another, so the reader cannot tell whether the region is inspectable prose or a state mutation surface."
+ projection_counterexample: "A projection surface gets contextual-ui dimensions like `surface gesture`, but the richer component ontology has no explicit projection defaults, so downstream consumers must guess again."
+}
+
+^"brand_expression_stakes"{
+ ~#note: "Each vocabulary that diverges between authority layers is also a visual grammar that diverges. Ontology drift is a brand coherence risk."
+ operator_color_tokens: {
+  claim: "Operator color tokens (--op-*-color) are a brand asset. Their semantic anchor is the canonical role and kind the site has committed to expressing."
+  risk: "If role inference diverges between page_metadata and component_semantics, the same component can receive different color tokens across pages or rendering contexts. The visitor learns a visual vocabulary that the site does not consistently honor."
+  desired: "One canonical role authority ensures --op-frame-color, --op-probe-color, --op-action-color, etc. express the same vocabulary the visitor has learned to read."
+ }
+ role_derived_visual_grammar: {
+  claim: "Role is the primary semantic input for any visual grammar that signals frame character — harmony, accent, color tone, or other orientation cues. A developmental or phase concept attached to role only works if the role itself is stable and canonical."
+  risk: "Phase or character concepts that have been sketched in conventions but not yet integrated into runtime semantics cannot be coherently expressed in UI. Stale role inference means that even future integration work starts from an incoherent base."
+  desired: "Before role-derived visual character is designed, role should be a canonical enum from one authority, not an inferred string from several parallel heuristics. That is the prerequisite for any expressive mapping of role to felt visual quality."
+  note: "This is not a claim that phase or character concepts should be abandoned — it is a claim that they depend on ontology health as a precondition."
+  see: ~"../../conventions/design-whimsy.spw"
+ }
+ brace_perspective_as_brand: {
+  claim: "The objective/subjective brace axis is the site's most distinctive visual grammar. It requires data-spw-perspective to survive authored HTML, region profiling, component semantics, and semantic chrome without being silently overwritten."
+  risk: "If any authority layer re-infers perspective from heuristics rather than preserving authored intent, the brace perspective gesture is erased — the visitor sees a balanced wash where an objective or subjective lean was intended."
+  desired: "Perspective should be treated as authored truth (like role) and preserved monotonically downstream. No layer should re-derive it if an authored value is present."
+  see: ~"../../conventions/site-semantics.spw"
+ }
+ inspectable_restraint_as_invariant: {
+  claim: "Inspectability is not only good engineering — it is the primary brand quality called 'inspectable restraint' in the style conventions."
+  consequence: "If a semantic authority layer cannot be queried for its reasoning (because it operates through implicit heuristics rather than declared mappings), the brand quality fails. A visitor inspecting the DOM should be able to read the semantic story."
+  desired: "The canonical semantic authority should expose its reasoning as data-spw-* attributes, not only as side effects on CSS or downstream modules."
+  see: ~"../../conventions/style-development.spw"
+ }
+}
+
+^"editor_questions"{
+ ?["Which semantic nouns should become canonical enums rather than inferred prose heuristics?"]{ ~#sources: [@page_metadata, @runtime, @component_semantics] }
+ ?["Should `register` survive as a separate role from `reference`, or is the distinction only visual right now?"]{ ~#sources: [@runtime, @component_semantics] }
+ ?["What is the minimal declared bridge from role -> role_cluster -> harmony -> value_layer?"]{ ~#sources: [@page_metadata, @runtime, @component_semantics] }
+ ?["Which semantic concepts (role, kind, form, perspective) are stable enough to be brand-committed — meaning they should never be silently overwritten by any authority layer?"]{ ~#sources: [@page_metadata, @runtime, @component_semantics] }
+ ?["If a first-time visitor inspects a frame element and reads its data-spw-* attributes, do those attributes tell a coherent story about what kind of frame it is?"]{ ~#sources: [@component_semantics, @contextual_ui] }
+}

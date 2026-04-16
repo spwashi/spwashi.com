@@ -17,6 +17,7 @@
  @conventions: ~"./conventions/index.spw"
  @site_semantics: ~"./conventions/site-semantics.spw"
  @site: ~"./site.spw"
+ @reviews: ~"./reviews/index.spw"
  @domains: ~"./domains.spw"
  @surfaces: ~"./surfaces.spw"
  @workbench: ~"./_workbench/.spw/index.spw"
@@ -35,6 +36,7 @@
  about: ~"../about/index.html"
  play: ~"../play/index.html"
  software: ~"../topics/software/index.html"
+ reviews: @reviews
  domains: @domains
  surfaces: @surfaces
  site: @site
