@@ -53,6 +53,10 @@ function uniqueByKey(items = []) {
   });
 }
 
+const GENERIC_KIND_TEXTS = new Set(['component', 'frame', 'surface', 'panel', 'card']);
+const GENERIC_CONTEXT_TEXTS = new Set(['analysis', 'reading', 'routing', 'settings', 'play', 'publishing', 'orientation']);
+const GENERIC_ROLE_TEXTS = new Set(['reference', 'orientation', 'routing', 'context', 'vessel']);
+
 function uniqueByText(items = []) {
   const seen = new Set();
   return items.filter((item) => {
@@ -85,7 +89,14 @@ function collectTargets(root = document) {
     if (node instanceof HTMLElement) targets.add(node);
   });
 
-  return [...targets];
+  return [...targets].filter((node) => !shouldSkipTarget(node));
+}
+
+function shouldSkipTarget(host) {
+  if (!(host instanceof HTMLElement)) return true;
+  if (host.matches('main[data-spw-kind="surface"], article[data-spw-kind="surface"]')) return true;
+  if (host.matches('.site-header, body > header, nav[data-spw-kind="shell"]')) return true;
+  return false;
 }
 
 function findStructuralMount(host) {
@@ -223,11 +234,12 @@ function syncChildren(container, children) {
 function buildMetaTags(host, snapshot, stance) {
   const tags = [];
   const kindText = humanizeToken(snapshot.kind);
+  const roleText = humanizeToken(snapshot.role);
   const contextText = humanizeToken(snapshot.context);
   const configText = humanizeToken(snapshot.configDomain);
   const valueLayerText = humanizeToken(snapshot.valueLayer);
 
-  if (kindText && kindText !== 'component') {
+  if (kindText && !GENERIC_KIND_TEXTS.has(kindText)) {
     tags.push({
       kind: 'kind',
       text: kindText,
@@ -238,7 +250,18 @@ function buildMetaTags(host, snapshot, stance) {
     });
   }
 
-  if (contextText) {
+  if (roleText && !GENERIC_ROLE_TEXTS.has(roleText)) {
+    tags.push({
+      kind: 'role',
+      text: roleText,
+      role: snapshot.role,
+      substrate: snapshot.substrate,
+      stance,
+      title: normalizeText(snapshot.role),
+    });
+  }
+
+  if (contextText && !GENERIC_CONTEXT_TEXTS.has(contextText)) {
     tags.push({
       kind: 'context',
       text: contextText,

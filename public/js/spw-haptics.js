@@ -29,6 +29,7 @@ import { bus } from './spw-bus.js';
 const STORAGE_KEY = 'spw-grounded-registry';
 const CHECKPOINT_PREFIX = 'spw-checkpoint:';
 const COUPLING_KEY = (path = window.location.pathname) => `spw-coupling:${path}`;
+const GLOBAL_COUPLING_KEY = 'spw-coupling:global';
 
 const GROUND_SELECTORS = [
   '.operator-chip',
@@ -201,6 +202,9 @@ export function groundElement(el, overrides = {}) {
   writeCoupling(detail.key, {
     text: detail.text,
     label: detail.label,
+    expression: detail.expression,
+    prefix: detail.prefix,
+    postfix: detail.postfix,
     substrate: detail.substrate,
     context: detail.context,
     wonder: detail.wonder,
@@ -209,6 +213,8 @@ export function groundElement(el, overrides = {}) {
     kind: detail.kind,
     phrase: detail.phrase,
     realization: detail.realization,
+    destination: detail.destination,
+    href: detail.href,
     groundedAt: Date.now(),
     source: detail.source || 'manual'
   });
@@ -323,7 +329,11 @@ export function getGroundedRegistry() {
   }
 }
 
-function getStoredCouplings() {
+function isGlobalKey(key = '') {
+  return String(key).startsWith('global:') || String(key).startsWith('shared:');
+}
+
+function getPathCouplings() {
   try {
     const parsed = JSON.parse(localStorage.getItem(COUPLING_KEY()) || '{}');
     return parsed && typeof parsed === 'object' ? parsed : {};
@@ -332,8 +342,32 @@ function getStoredCouplings() {
   }
 }
 
-function setStoredCouplings(value) {
+function getGlobalCouplings() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(GLOBAL_COUPLING_KEY) || '{}');
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function getStoredCouplings() {
+  return {
+    ...getGlobalCouplings(),
+    ...getPathCouplings(),
+  };
+}
+
+export function getGroundedCouplings() {
+  return getStoredCouplings();
+}
+
+function setPathCouplings(value) {
   localStorage.setItem(COUPLING_KEY(), JSON.stringify(value));
+}
+
+function setGlobalCouplings(value) {
+  localStorage.setItem(GLOBAL_COUPLING_KEY, JSON.stringify(value));
 }
 
 function addToRegistry(key) {
@@ -350,15 +384,29 @@ function removeFromRegistry(key) {
 }
 
 function writeCoupling(key, value) {
-  const couplings = getStoredCouplings();
+  if (isGlobalKey(key)) {
+    const couplings = getGlobalCouplings();
+    couplings[key] = value;
+    setGlobalCouplings(couplings);
+    return;
+  }
+
+  const couplings = getPathCouplings();
   couplings[key] = value;
-  setStoredCouplings(couplings);
+  setPathCouplings(couplings);
 }
 
 function removeCoupling(key) {
-  const couplings = getStoredCouplings();
+  if (isGlobalKey(key)) {
+    const couplings = getGlobalCouplings();
+    delete couplings[key];
+    setGlobalCouplings(couplings);
+    return;
+  }
+
+  const couplings = getPathCouplings();
   delete couplings[key];
-  setStoredCouplings(couplings);
+  setPathCouplings(couplings);
 }
 
 function restoreGroundedState(root = document) {
@@ -396,7 +444,10 @@ export function saveCheckpoint(event) {
   const name = event?.detail?.name || `checkpoint_${Date.now()}`;
   const payload = {
     registry: getGroundedRegistry(),
-    couplings: getStoredCouplings(),
+    couplings: {
+      global: getGlobalCouplings(),
+      path: getPathCouplings(),
+    },
     savedAt: Date.now(),
     path: window.location.pathname
   };
@@ -419,12 +470,11 @@ export function restoreCheckpoint(name) {
   try {
     const parsed = JSON.parse(raw);
     const registry = Array.isArray(parsed?.registry) ? parsed.registry : [];
-    const couplings = parsed?.couplings && typeof parsed.couplings === 'object'
-      ? parsed.couplings
-      : {};
+    const couplings = resolveCheckpointCouplings(parsed?.couplings);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(registry));
-    setStoredCouplings(couplings);
+    setGlobalCouplings(couplings.global);
+    setPathCouplings(couplings.path);
 
     document.querySelectorAll('[data-spw-grounded="true"]').forEach(clearGroundedState);
     restoreGroundedState(document);
@@ -444,6 +494,7 @@ export function restoreCheckpoint(name) {
 export function resetHaptics() {
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(COUPLING_KEY());
+  localStorage.removeItem(GLOBAL_COUPLING_KEY);
 
   document.querySelectorAll('[data-spw-grounded="true"]').forEach((el) => {
     clearGroundedState(el);
@@ -464,6 +515,21 @@ function buildSemanticDetail(el, overrides = {}) {
     key,
     text,
     label,
+    expression:
+      overrides.expression
+      ?? el.dataset.spwGroundExpression
+      ?? el.dataset.spwNavExpression
+      ?? label,
+    prefix:
+      overrides.prefix
+      ?? el.dataset.spwGroundPrefix
+      ?? el.dataset.spwNavPrefix
+      ?? null,
+    postfix:
+      overrides.postfix
+      ?? el.dataset.spwGroundPostfix
+      ?? el.dataset.spwNavPostfix
+      ?? null,
     grounded: isGrounded(el),
     substrate:
       overrides.substrate
@@ -509,6 +575,14 @@ function buildSemanticDetail(el, overrides = {}) {
       overrides.group
       ?? el.dataset.spwGroundGroup
       ?? null,
+    destination:
+      overrides.destination
+      ?? el.dataset.spwNavDestination
+      ?? null,
+    href:
+      overrides.href
+      ?? (el instanceof HTMLAnchorElement ? el.getAttribute('href') : null)
+      ?? null,
     source: overrides.source || 'manual',
     passive: Boolean(overrides.passive),
     fieldRootId: fieldRoot?.id || null
@@ -535,6 +609,7 @@ function getElementKey(el) {
     || el.id;
 
   if (explicit) {
+    if (isGlobalKey(explicit)) return explicit;
     return `${window.location.pathname}:${explicit}`;
   }
 
@@ -596,4 +671,38 @@ function animateSettle(el, className) {
 
   el.classList.add(className);
   window.setTimeout(() => el.classList.remove(className), 200);
+}
+
+function resolveCheckpointCouplings(source) {
+  if (!source || typeof source !== 'object') {
+    return { global: {}, path: {} };
+  }
+
+  if (
+    source.global && typeof source.global === 'object'
+    || source.path && typeof source.path === 'object'
+  ) {
+    return {
+      global: source.global && typeof source.global === 'object' ? source.global : {},
+      path: source.path && typeof source.path === 'object' ? source.path : {},
+    };
+  }
+
+  const legacy = {};
+  Object.entries(source).forEach(([key, value]) => {
+    legacy[key] = value;
+  });
+
+  const global = {};
+  const path = {};
+
+  Object.entries(legacy).forEach(([key, value]) => {
+    if (isGlobalKey(key)) {
+      global[key] = value;
+    } else {
+      path[key] = value;
+    }
+  });
+
+  return { global, path };
 }

@@ -1,226 +1,109 @@
-import {
-  emitSpwAction,
-  matchesMaxWidth,
-  getPageSurface
-} from './spw-shared.js';
+import { emitSpwAction } from './spw-shared.js';
 
-const MOBILE_BREAKPOINT_PX = 720;
-const DISCLOSURE_STORAGE_KEY = 'spw-shell-disclosure-memory';
+const MODES = Object.freeze({
+  INLINE: 'inline',
+  TOGGLE: 'toggle'
+});
 
 const PHASES = Object.freeze({
   RESTING: 'resting',
-  WARMING: 'warming',
-  OPEN: 'open',
-  SETTLING: 'settling'
+  APPROACH: 'approach',
+  CONTACT: 'contact',
+  PROJECTING: 'projecting'
 });
 
 const DEFAULTS = Object.freeze({
-  mobileBreakpointPx: MOBILE_BREAKPOINT_PX,
-  warmDurationMs: 140,
-  settleDurationMs: 220,
-  hoverIntentMs: 70,
-  memoryTtlMs: 1000 * 60 * 20,
-  openPressure: 0.72,
-  warmPressure: 0.36,
-  closePressure: 0.18
+  narrowBreakpointPx: 720,
+  midBreakpointPx: 980,
+  compressedRatio: 1.08
 });
 
-const SURFACE_BIAS = Object.freeze({
-  settings: 0.2,
-  blog: 0.1,
-  about: 0.08,
-  plans: 0.12,
-  contact: 0.04,
-  services: 0.16,
-  play: 0,
-  default: 0.06
-});
-
-const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-
-const isMobileShell = (breakpoint = MOBILE_BREAKPOINT_PX) => matchesMaxWidth(breakpoint);
-
-function now() {
-  return Date.now();
+function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
+  if (width < 420) return 'compact';
+  if (width < config.narrowBreakpointPx) return 'narrow';
+  if (width < config.midBreakpointPx) return 'mid';
+  if (width < 1280) return 'regular';
+  return 'wide';
 }
 
-function readDisclosureMemory() {
-  try {
-    const raw = localStorage.getItem(DISCLOSURE_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object') return null;
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-function writeDisclosureMemory(payload) {
-  try {
-    localStorage.setItem(DISCLOSURE_STORAGE_KEY, JSON.stringify(payload));
-  } catch {
-    /* non-fatal */
-  }
-}
-
-function getSurfaceBias() {
-  const surface = getPageSurface?.() || document.body?.dataset?.spwSurface || 'default';
-  return SURFACE_BIAS[surface] ?? SURFACE_BIAS.default;
-}
-
-function getNavigatorBias() {
-  const navigatorMode = document.documentElement.dataset.spwNavigator || 'quiet';
-  if (navigatorMode === 'full') return 0.22;
-  if (navigatorMode === 'hidden') return -0.28;
-  return 0;
-}
-
-function getAccessibilityBias() {
-  const reduceMotion = document.documentElement.dataset.spwReduceMotion === 'on';
-  const highContrast = document.documentElement.dataset.spwHighContrast === 'on';
-  return (reduceMotion ? -0.06 : 0) + (highContrast ? 0.08 : 0);
+function getPointerMode() {
+  if (window.matchMedia('(pointer: coarse)').matches) return 'coarse';
+  return 'fine';
 }
 
 function createState(config) {
   return {
-    phase: PHASES.RESTING,
-    pressure: 0,
+    config,
+    mode: MODES.INLINE,
+    pointerMode: getPointerMode(),
     userIntentOpen: false,
     pointerInsideHeader: false,
-    focusInsideHeader: false,
-    hoverTimer: 0,
-    settleTimer: 0,
-    warmTimer: 0,
-    memory: readDisclosureMemory(),
-    config
+    focusInsideHeader: false
   };
 }
 
-function computeBasePressure(state) {
-  let pressure = 0;
-
-  pressure += getSurfaceBias();
-  pressure += getNavigatorBias();
-  pressure += getAccessibilityBias();
-
-  if (state.userIntentOpen) pressure += 0.62;
-  if (state.pointerInsideHeader) pressure += 0.16;
-  if (state.focusInsideHeader) pressure += 0.34;
-
-  const memory = state.memory;
-  if (memory?.open && typeof memory.at === 'number') {
-    const age = now() - memory.at;
-    if (age < state.config.memoryTtlMs) {
-      pressure += 0.12;
-    }
-  }
-
-  return clamp(pressure, 0, 1);
+function computeNavRatio(header, nav, navList) {
+  const navWidth = nav.clientWidth || Math.max(header.clientWidth * 0.58, 1);
+  if (!navWidth) return 1;
+  return navList.scrollWidth / navWidth;
 }
 
-function setCssHormoneState(header, state) {
-  header.dataset.spwMenuPhase = state.phase;
-  header.dataset.spwMenuHormone = String(Math.round(state.pressure * 100));
-  header.style.setProperty('--shell-disclosure-pressure', state.pressure.toFixed(3));
+function resolveMenuMode(header, nav, navList, state) {
+  const html = document.documentElement;
+  const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  const pointer = html.dataset.spwPointerMode || getPointerMode();
+  const ratio = computeNavRatio(header, nav, navList);
+  const navFit = header.dataset.spwNavFit || 'roomy';
+
+  if (tier === 'compact' || tier === 'narrow') {
+    return MODES.TOGGLE;
+  }
+
+  if (tier === 'mid' && (pointer === 'coarse' || navFit === 'compressed' || ratio > state.config.compressedRatio)) {
+    return MODES.TOGGLE;
+  }
+
+  return MODES.INLINE;
+}
+
+function resolveMenuPhase(state, open) {
+  if (state.mode === MODES.TOGGLE && open) return PHASES.PROJECTING;
+  if (state.focusInsideHeader) return PHASES.CONTACT;
+  if (state.pointerInsideHeader && state.pointerMode === 'fine') return PHASES.APPROACH;
+  return PHASES.RESTING;
 }
 
 function applyMenuState(header, nav, toggle, state, open, source = 'system') {
-  const nextPhase = open
-    ? (state.phase === PHASES.WARMING ? PHASES.WARMING : PHASES.OPEN)
-    : (state.phase === PHASES.SETTLING ? PHASES.SETTLING : PHASES.RESTING);
-
+  header.dataset.spwMenuMode = state.mode;
   header.dataset.spwMenu = open ? 'open' : 'closed';
   header.dataset.spwMenuSource = source;
+  header.dataset.spwMenuPhase = resolveMenuPhase(state, open);
+
+  nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
+  toggle.hidden = state.mode !== MODES.TOGGLE;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  nav.hidden = isMobileShell(state.config.mobileBreakpointPx) ? !open : false;
+  toggle.setAttribute('aria-hidden', state.mode === MODES.TOGGLE ? 'false' : 'true');
+}
 
-  state.phase = nextPhase;
-  setCssHormoneState(header, state);
+function syncDisclosure(header, nav, navList, toggle, state, source = 'sync') {
+  state.pointerMode = getPointerMode();
+  const previousMode = state.mode;
+  state.mode = resolveMenuMode(header, nav, navList, state);
 
-  if (source === 'user') {
-    emitSpwAction(
-      open ? '@shell.open' : '@shell.close',
-      open ? 'Navigation links expanded.' : 'Navigation links collapsed.'
-    );
+  if (previousMode === MODES.INLINE && state.mode === MODES.TOGGLE) {
+    state.userIntentOpen = false;
   }
-}
 
-function clearTimers(state) {
-  window.clearTimeout(state.hoverTimer);
-  window.clearTimeout(state.settleTimer);
-  window.clearTimeout(state.warmTimer);
-  state.hoverTimer = 0;
-  state.settleTimer = 0;
-  state.warmTimer = 0;
-}
-
-function persistState(state, isOpen) {
-  state.memory = {
-    open: Boolean(isOpen),
-    at: now()
-  };
-  writeDisclosureMemory(state.memory);
-}
-
-function syncDisclosure(header, nav, toggle, state, source = 'sync') {
-  const mobile = isMobileShell(state.config.mobileBreakpointPx);
-  state.pressure = computeBasePressure(state);
-
-  if (!mobile) {
-    state.phase = PHASES.OPEN;
+  if (state.mode === MODES.INLINE) {
     applyMenuState(header, nav, toggle, state, true, source);
     return;
   }
 
-  if (state.pressure >= state.config.openPressure) {
-    state.phase = PHASES.OPEN;
-    applyMenuState(header, nav, toggle, state, true, source);
-    return;
-  }
-
-  if (state.pressure >= state.config.warmPressure) {
-    state.phase = PHASES.WARMING;
-    setCssHormoneState(header, state);
-
-    if (header.dataset.spwMenu !== 'open') {
-      window.clearTimeout(state.warmTimer);
-      state.warmTimer = window.setTimeout(() => {
-        if (computeBasePressure(state) >= state.config.openPressure - 0.08) {
-          state.phase = PHASES.OPEN;
-          applyMenuState(header, nav, toggle, state, true, 'hormone');
-        } else {
-          state.phase = PHASES.WARMING;
-          setCssHormoneState(header, state);
-        }
-      }, state.config.warmDurationMs);
-    }
-    return;
-  }
-
-  if (header.dataset.spwMenu === 'open' && state.pressure > state.config.closePressure) {
-    state.phase = PHASES.SETTLING;
-    setCssHormoneState(header, state);
-
-    window.clearTimeout(state.settleTimer);
-    state.settleTimer = window.setTimeout(() => {
-      if (computeBasePressure(state) <= state.config.closePressure) {
-        state.phase = PHASES.RESTING;
-        applyMenuState(header, nav, toggle, state, false, 'hormone');
-      } else {
-        syncDisclosure(header, nav, toggle, state, 'rebound');
-      }
-    }, state.config.settleDurationMs);
-    return;
-  }
-
-  state.phase = PHASES.RESTING;
-  applyMenuState(header, nav, toggle, state, false, source);
+  applyMenuState(header, nav, toggle, state, state.userIntentOpen, source);
 }
 
 export function initSpwShellDisclosure(options = {}) {
   const config = { ...DEFAULTS, ...options };
-
   const header = document.querySelector('body > header, .site-header');
   const nav = header?.querySelector('nav');
   const navList = nav?.querySelector('ul');
@@ -237,6 +120,7 @@ export function initSpwShellDisclosure(options = {}) {
     toggle = document.createElement('button');
     toggle.className = 'spw-nav-toggle';
     toggle.type = 'button';
+    toggle.hidden = true;
     toggle.setAttribute('aria-controls', nav.id);
     toggle.setAttribute('aria-label', 'Toggle navigation menu');
     toggle.innerHTML = `
@@ -253,94 +137,89 @@ export function initSpwShellDisclosure(options = {}) {
   }
 
   const state = createState(config);
-
   header.dataset.spwMenu = 'closed';
+  header.dataset.spwMenuMode = MODES.INLINE;
   header.dataset.spwMenuPhase = PHASES.RESTING;
   header.dataset.spwMenuSource = 'init';
-  header.dataset.spwShellHormone = 'on';
-  setCssHormoneState(header, state);
 
   const handleToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    state.userIntentOpen = header.dataset.spwMenu !== 'open';
-    state.phase = state.userIntentOpen ? PHASES.OPEN : PHASES.SETTLING;
-    persistState(state, state.userIntentOpen);
-    syncDisclosure(header, nav, toggle, state, 'user');
+    if (state.mode !== MODES.TOGGLE) return;
+
+    state.userIntentOpen = !state.userIntentOpen;
+    syncDisclosure(header, nav, navList, toggle, state, 'user');
+
+    emitSpwAction(
+      state.userIntentOpen ? '@shell.open' : '@shell.close',
+      state.userIntentOpen ? 'Navigation links expanded.' : 'Navigation links collapsed.'
+    );
   };
 
   const handleTogglePointerDown = (event) => {
     event.stopPropagation();
   };
 
-  const handlePointerEnter = () => {
+  const handlePointerEnter = (event) => {
+    if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     state.pointerInsideHeader = true;
-    window.clearTimeout(state.hoverTimer);
-    state.hoverTimer = window.setTimeout(() => {
-      syncDisclosure(header, nav, toggle, state, 'hover');
-    }, state.config.hoverIntentMs);
+    syncDisclosure(header, nav, navList, toggle, state, 'pointer');
   };
 
-  const handlePointerLeave = () => {
+  const handlePointerLeave = (event) => {
+    if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     state.pointerInsideHeader = false;
-    syncDisclosure(header, nav, toggle, state, 'leave');
+    syncDisclosure(header, nav, navList, toggle, state, 'pointer');
   };
 
   const handleFocusIn = () => {
     state.focusInsideHeader = true;
-    syncDisclosure(header, nav, toggle, state, 'focus');
+    syncDisclosure(header, nav, navList, toggle, state, 'focus');
   };
 
   const handleFocusOut = () => {
     const active = document.activeElement;
     state.focusInsideHeader = !!active && header.contains(active);
-    syncDisclosure(header, nav, toggle, state, 'blur');
+    syncDisclosure(header, nav, navList, toggle, state, 'blur');
+  };
+
+  const closeToggleMenu = (source = 'system') => {
+    if (state.mode !== MODES.TOGGLE || !state.userIntentOpen) return;
+    state.userIntentOpen = false;
+    syncDisclosure(header, nav, navList, toggle, state, source);
   };
 
   const handleNavClick = (event) => {
     const link = event.target.closest('a[href]');
-    if (!link || !isMobileShell(state.config.mobileBreakpointPx)) return;
-
-    state.userIntentOpen = false;
-    persistState(state, false);
-    syncDisclosure(header, nav, toggle, state, 'user');
+    if (!link) return;
+    closeToggleMenu('user');
   };
 
   const handleDocumentClick = (event) => {
-    if (!isMobileShell(state.config.mobileBreakpointPx)) return;
-    if (header.dataset.spwMenu !== 'open') return;
+    if (state.mode !== MODES.TOGGLE) return;
+    if (!state.userIntentOpen) return;
     if (header.contains(event.target)) return;
-
-    state.userIntentOpen = false;
-    persistState(state, false);
-    syncDisclosure(header, nav, toggle, state, 'outside');
+    closeToggleMenu('outside');
   };
 
   const handleDocumentKeydown = (event) => {
     if (event.key !== 'Escape') return;
-    if (!isMobileShell(state.config.mobileBreakpointPx)) return;
-    if (header.dataset.spwMenu !== 'open') return;
-
-    state.userIntentOpen = false;
-    persistState(state, false);
-    syncDisclosure(header, nav, toggle, state, 'user');
+    if (state.mode !== MODES.TOGGLE || !state.userIntentOpen) return;
+    closeToggleMenu('user');
     toggle.focus();
   };
 
   const handleResize = () => {
-    syncDisclosure(header, nav, toggle, state, 'resize');
+    syncDisclosure(header, nav, navList, toggle, state, 'resize');
   };
 
   const handleHashChange = () => {
-    if (!isMobileShell(state.config.mobileBreakpointPx)) return;
-    state.userIntentOpen = false;
-    persistState(state, false);
-    syncDisclosure(header, nav, toggle, state, 'hash');
+    closeToggleMenu('hash');
   };
 
   const handleSettingsChanged = () => {
-    syncDisclosure(header, nav, toggle, state, 'settings');
+    syncDisclosure(header, nav, navList, toggle, state, 'settings');
   };
 
   toggle.addEventListener('click', handleToggle);
@@ -353,15 +232,15 @@ export function initSpwShellDisclosure(options = {}) {
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('keydown', handleDocumentKeydown);
   window.addEventListener('resize', handleResize, { passive: true });
+  window.addEventListener('orientationchange', handleResize);
   window.addEventListener('hashchange', handleHashChange);
   document.addEventListener('spw:settings-changed', handleSettingsChanged);
   document.addEventListener('spw:frame-change', handleSettingsChanged);
 
-  syncDisclosure(header, nav, toggle, state, 'init');
+  syncDisclosure(header, nav, navList, toggle, state, 'init');
 
   return {
     cleanup() {
-      clearTimers(state);
       toggle.removeEventListener('click', handleToggle);
       toggle.removeEventListener('pointerdown', handleTogglePointerDown);
       header.removeEventListener('pointerenter', handlePointerEnter);
@@ -372,15 +251,19 @@ export function initSpwShellDisclosure(options = {}) {
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('keydown', handleDocumentKeydown);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
       window.removeEventListener('hashchange', handleHashChange);
       document.removeEventListener('spw:settings-changed', handleSettingsChanged);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       delete header.dataset.spwShellDisclosureInit;
-      delete header.dataset.spwShellHormone;
+      delete header.dataset.spwMenuMode;
+      delete header.dataset.spwMenu;
+      delete header.dataset.spwMenuPhase;
+      delete header.dataset.spwMenuSource;
     },
     refresh(nextOptions = {}) {
       state.config = { ...state.config, ...nextOptions };
-      syncDisclosure(header, nav, toggle, state, 'refresh');
+      syncDisclosure(header, nav, navList, toggle, state, 'refresh');
     }
   };
 }

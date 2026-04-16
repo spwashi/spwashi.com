@@ -70,30 +70,25 @@ export function initSpwExperiential() {
 function initSpellBreadcrumbs() {
   const header = document.querySelector('header');
   if (!header) return;
+  const traceHost = ensureHeaderTraceHost(header);
 
-  let pathBar = header.querySelector('.spw-spell-path');
+  let pathBar = traceHost.querySelector('.spw-spell-path');
   if (!pathBar) {
     pathBar = document.createElement('div');
     pathBar.className = 'spw-spell-path';
     pathBar.setAttribute('aria-label', 'Spw Location Spell');
-
-    const nav = header.querySelector('nav');
-    if (nav) {
-      nav.after(pathBar);
-    } else {
-      header.appendChild(pathBar);
-    }
+    traceHost.appendChild(pathBar);
   }
 
   runtime.pathBar = pathBar;
 
-  let headerMemo = header.querySelector('.spw-experience-memo');
+  let headerMemo = traceHost.querySelector('.spw-experience-memo');
   if (!headerMemo) {
     headerMemo = document.createElement('div');
     headerMemo.className = 'spw-experience-memo';
     headerMemo.setAttribute('aria-live', 'polite');
     headerMemo.hidden = true;
-    pathBar.after(headerMemo);
+    traceHost.appendChild(headerMemo);
   }
 
   runtime.headerMemo = headerMemo;
@@ -108,6 +103,23 @@ function initSpellBreadcrumbs() {
   document.addEventListener('brace:swapped', update);
 
   renderBreadcrumbSpell();
+}
+
+function ensureHeaderTraceHost(header) {
+  let host = header.querySelector('.spw-header-trace');
+  if (host) return host;
+
+  host = document.createElement('div');
+  host.className = 'spw-header-trace';
+
+  const nav = header.querySelector('nav');
+  if (nav?.after) {
+    nav.after(host);
+  } else {
+    header.appendChild(host);
+  }
+
+  return host;
 }
 
 function renderBreadcrumbSpell() {

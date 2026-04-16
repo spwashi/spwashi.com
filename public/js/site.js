@@ -1112,6 +1112,71 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'navigation-spells',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'header nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
+    rootMode: 'single',
+    load: () => import('./spw-navigation-spells.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwNavigationSpells;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'operators',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.frame-sigil, .frame-card-sigil, .syntax-token',
+    rootMode: 'single',
+    load: () => import('./spw-operators.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwOperators;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'haptics',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-groundable=\"true\"], .operator-chip, .syntax-token, .frame-sigil',
+    rootMode: 'single',
+    load: () => import('./spw-haptics.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwHaptics;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'experiential',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'header, main',
+    rootMode: 'single',
+    load: () => import('./spw-experiential.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwExperiential;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'spells',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.spell-board-content, header',
+    rootMode: 'single',
+    load: () => import('./spw-spells.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwSpells;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'guide',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

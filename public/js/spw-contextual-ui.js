@@ -32,11 +32,11 @@ const MODULE_SELECTOR = [
 ].join(', ');
 
 const TOP_ROUTE_REGISTRY = Object.freeze([
-  { href: '/', label: 'Home', token: '#>' },
+  { href: '/', label: 'Home', token: '#>home' },
   { href: '/about/', label: 'About', token: '.about' },
-  { href: '/topics/', label: 'Topics', token: '#topics' },
+  { href: '/topics/', label: 'Topics', token: '<topics>' },
   { href: '/services/', label: 'Services', token: '@services' },
-  { href: '/tools/', label: 'Tools', token: '?tools' },
+  { href: '/tools/', label: 'Tools', token: '^tools' },
   { href: '/play/', label: 'Play', token: '~play' },
   { href: '/blog/', label: 'Blog', token: '*blog' },
   { href: '/settings/', label: 'Settings', token: '=settings' },
@@ -342,7 +342,33 @@ function closeRouteMenus(except = null) {
   document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
     if (except && menu === except) return;
     menu.open = false;
+    syncRouteMenuMode(menu);
   });
+}
+
+function applyRouteMenuPretext(details) {
+  details.dataset.spwFlow = 'pretext';
+  details.dataset.textKind = 'ledger';
+  details.dataset.textDensity = 'soft';
+  details.dataset.textMeasure = 'tight';
+  details.dataset.textProjection = 'indent';
+  details.dataset.textOrnament = 'none';
+  details.dataset.textWrap = 'responsive';
+  details.dataset.textPhase = 'ambient';
+}
+
+function syncRouteMenuMode(details) {
+  if (!details) return;
+  const phase = details.open
+    ? 'projecting'
+    : details.matches(':focus-within')
+      ? 'contact'
+      : details.dataset.spwRouteHover === 'on'
+        ? 'approach'
+        : 'resting';
+
+  details.dataset.textMode = phase;
+  details.dataset.spwRouteState = phase;
 }
 
 function createRouteMenu(hostHeader, navList) {
@@ -354,10 +380,10 @@ function createRouteMenu(hostHeader, navList) {
 
   const details = document.createElement('details');
   details.className = 'spw-route-menu';
+  applyRouteMenuPretext(details);
 
   const summary = document.createElement('summary');
   summary.className = 'spw-route-menu-trigger';
-  summary.setAttribute('role', 'button');
   summary.setAttribute('aria-label', 'Show additional top-level routes');
 
   const label = document.createElement('span');
@@ -370,7 +396,6 @@ function createRouteMenu(hostHeader, navList) {
 
   const panel = document.createElement('div');
   panel.className = 'spw-route-menu-panel';
-  panel.setAttribute('role', 'menu');
   panel.setAttribute('aria-label', 'Additional top-level routes');
 
   details.append(summary, panel);
@@ -379,13 +404,36 @@ function createRouteMenu(hostHeader, navList) {
 
   details.addEventListener('toggle', () => {
     if (details.open) closeRouteMenus(details);
+    syncRouteMenuMode(details);
   });
 
   panel.addEventListener('click', () => {
     details.open = false;
+    syncRouteMenuMode(details);
+  });
+
+  details.addEventListener('pointerenter', (event) => {
+    if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+    details.dataset.spwRouteHover = 'on';
+    syncRouteMenuMode(details);
+  });
+
+  details.addEventListener('pointerleave', (event) => {
+    if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+    details.dataset.spwRouteHover = 'off';
+    syncRouteMenuMode(details);
+  });
+
+  details.addEventListener('focusin', () => {
+    syncRouteMenuMode(details);
+  });
+
+  details.addEventListener('focusout', () => {
+    window.setTimeout(() => syncRouteMenuMode(details), 0);
   });
 
   hostHeader.dataset.spwRouteDiscovery = 'on';
+  syncRouteMenuMode(details);
   return host;
 }
 
@@ -411,7 +459,11 @@ function updateRouteMenu() {
   const label = host.querySelector('.spw-route-menu-label');
   const count = host.querySelector('.spw-route-menu-count');
   const panel = host.querySelector('.spw-route-menu-panel');
-  const compact = HTML.dataset.spwViewportTier === 'compact' || HTML.dataset.spwPointerMode === 'coarse';
+  const compact = (
+    HTML.dataset.spwViewportTier === 'compact'
+    || HTML.dataset.spwPointerMode === 'coarse'
+    || header.dataset.spwMenuMode === 'toggle'
+  );
 
   label.textContent = compact ? 'routes' : 'more';
   count.textContent = `+${missingRoutes.length}`;
@@ -421,7 +473,6 @@ function updateRouteMenu() {
       const link = document.createElement('a');
       link.href = route.href;
       link.className = 'spw-route-menu-link';
-      link.setAttribute('role', 'menuitem');
 
       const title = document.createElement('span');
       title.className = 'spw-route-menu-link-label';
@@ -435,6 +486,8 @@ function updateRouteMenu() {
       return link;
     })
   );
+
+  syncRouteMenuMode(details);
 }
 
 function updateHeaderFit() {
