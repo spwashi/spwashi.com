@@ -241,3 +241,137 @@ Add or update a plan under `.agents/plans/<slug>/` when:
 - Rename or move CSS files without updating the `@import` in `style.css`.
 - Bypass `public/js/site-settings.js` with direct localStorage writes for canonical settings.
 - Introduce one-off `data-spw-*` names when an existing family already fits.
+
+---
+
+## Attention Architecture
+
+Progressive-enhancement system for section-context awareness and operator resonance. Centralizes mobile navigation and conceptual linking.
+
+### Section-context handle
+
+Mobile-first sticky chip that surfaces the current visible section by reading `data-spw-operator` and heading text.
+
+**Files:** `public/js/spw-attention-architecture.js`, `public/css/spw-chrome.css`
+
+**HTML contract:**
+
+```html
+<a class="spw-section-handle"
+   href="#main-content"
+   data-spw-handle-state="hidden"
+   aria-label="Jump to top of current section">
+    <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+    <span class="spw-section-handle__label">section</span>
+</a>
+```
+
+**Behavior:**
+- Hidden by default on desktop; visible on mobile/narrow screens when scrollY > 240px
+- IntersectionObserver tracks all sections matching `main section[data-spw-kind], main article[data-spw-kind], main section[id], main article[id]`
+- JS updates handle label from section heading, aria-label, or id
+- Progressive enhancement: degrades to static "return to top" anchor if JS unavailable
+
+**Integration:** add the `.spw-section-handle` element early in `<body>` on routes with long sectioned content (blog, about, topics).
+
+### Resonance probe
+
+Pinned operator focus/hover state that sets `html[data-spw-resonance-probe="operator-name"]` to trigger soft echo glow on matching operators across the page.
+
+**Files:** `public/js/spw-attention-architecture.js`, `public/css/spw-wonder.css`
+
+**Behavior:**
+- `focusin` on any `[data-spw-operator]` immediately pins that operator
+- `mouseover` with 260ms delay allows hovering without committing
+- `focusout` and `mouseleave` clear the pin
+- CSS `:has()` selector (with `@supports`) applies `--spw-resonance` to matching operators
+
+**CSS contract** in `spw-wonder.css`:
+```css
+:where([data-spw-operator]) {
+  box-shadow: var(--spw-local-shadow, none),
+    0 0 0 calc(1px * var(--spw-resonance, 0)) 
+    color-mix(in srgb, var(--spw-operator-color, ...) 42%, transparent);
+}
+```
+
+---
+
+## Page Layout Variants
+
+Desktop-aware layout system with flex/grid containers for better space utilization.
+
+**Files:** `public/css/spw-shell.css`, `public/css/spw-tokens.css`
+
+**Variants** via `data-spw-layout` on `<body>` or `main`:
+
+- `reading`: narrower column (default `--page-width-reading`)
+- `wide`: moderate expansion (`--page-width-wide`)
+- `atlas`: maximum breathing room (`--page-width-atlas`)
+- `split`: two-column grid on ≥72rem, gutter rail on the right
+
+**Gutter rail** (.spw-gutter-rail):
+- Only renders on `split` layout at desktop breakpoints
+- Positioned as secondary column with gap `--attention-rail-gap`
+- Can hold secondary navigation, asides, or observational content
+
+**Setup:** 
+1. Add `data-spw-layout="wide"|"atlas"|"split"` to page `<body>`
+2. On `split` layout, add `.spw-gutter-rail` element inside `<main>` or as flex sibling
+
+---
+
+## Conceptual Resonance
+
+CSS-only operator linking via `:has()` selector. Creates soft visual echo when any instance of an operator is focused/hovered.
+
+**Files:** `public/css/spw-wonder.css`
+
+**Mechanism:**
+```css
+:where(main, body):has(:where([data-spw-operator="frame"]:is(:hover, :focus-visible)))
+  :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+}
+```
+
+Covers 7 operators: frame, object, probe, ref, action, stream, surface.
+
+**Physics tokens** in `spw-tokens.css`:
+- `--attention-field-radius`: decay multiplier (0.4 default)
+- `--attention-field-decay`: cascade falloff (0.65 default)
+- `--attention-echo-duration`: animation duration (480ms)
+
+---
+
+## JSON Hydration Contract
+
+Progressive enhancement pattern for async data loading with skeleton UI and error states.
+
+**Files:** `public/css/spw-components.css` (section 24)
+
+**HTML contract:**
+
+```html
+<!-- Loading state -->
+<div data-spw-hydration="loading">
+  <div class="spw-skeleton" data-spw-skeleton-role="heading"></div>
+</div>
+
+<!-- Ready state -->
+<div data-spw-hydration="ready">
+  <!-- actual content -->
+</div>
+
+<!-- Error state -->
+<div data-spw-hydration="error" aria-label="Failed to load data"></div>
+```
+
+**CSS states:**
+- `[data-spw-hydration="loading"]`: shimmer overlay
+- `[data-spw-hydration="ready"]`: fade-in settle animation
+- `[data-spw-hydration="error"]`: error hint glyph
+
+**Skeleton roles:** `heading`, `line`, `card` (different sizing)
+
+**Integration:** Use this pattern for client-side JSON data sources (topic filters, topic discovery, runtime maps).
