@@ -20,10 +20,13 @@
  *
  * To add a new toast type: extend ToastManager.show() and add a new maybeShow* handler.
  */
+import { shouldDisableServiceWorkerInDevelopment } from './spw-runtime-environment.js';
+
 const APP_THEME_COLOR = '#1a9999';
 const UPDATE_CHECK_INTERVAL = 30 * 60 * 1000;
 const DISMISS_INSTALL_KEY = 'spw-pwa-install-dismissed';
 const DISMISS_IOS_HINT_KEY = 'spw-pwa-ios-hint-dismissed';
+const DEV_RELOAD_GUARD_KEY = 'spw-pwa-dev-reload-guard';
 
 let deferredInstallPrompt = null;
 let reloadOnControllerChange = false;
@@ -292,6 +295,7 @@ const maybeShowUpdatePrompt = (registration) => {
 };
 
 const maybeShowInstallPrompt = () => {
+    if (shouldDisableServiceWorkerInDevelopment()) return;
     if (!initialized) return;
     if (isStandalone()) return;
     if (toastManager.current) return;
@@ -332,11 +336,64 @@ const maybeShowInstallPrompt = () => {
     }
 };
 
-const initPwaUpdateHandler = () => {
+const disableServiceWorkerForLocalDevelopment = async () => {
+    document.documentElement.dataset.spwPwaMode = 'development';
+
+    if (!('serviceWorker' in navigator)) return;
+
+    const hadController = Boolean(navigator.serviceWorker.controller);
+
+    try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map((registration) => registration.unregister().catch(noop)));
+    } catch (error) {
+        console.warn('[Spw PWA] Failed to unregister local service workers (non-fatal)', error);
+    }
+
+    if ('caches' in window) {
+        try {
+            const cacheNames = await caches.keys();
+            await Promise.all(cacheNames.map((name) => caches.delete(name).catch(noop)));
+        } catch (error) {
+            console.warn('[Spw PWA] Failed to clear local development caches (non-fatal)', error);
+        }
+    }
+
+    try {
+        if (hadController && !window.sessionStorage.getItem(DEV_RELOAD_GUARD_KEY)) {
+            window.sessionStorage.setItem(DEV_RELOAD_GUARD_KEY, '1');
+            window.location.reload();
+            return;
+        }
+
+        if (!hadController) {
+            window.sessionStorage.removeItem(DEV_RELOAD_GUARD_KEY);
+        }
+    } catch {
+        // Session storage is optional here; failure should not block local dev.
+    }
+};
+
+const initPwaUpdateHandler = async () => {
     if (initialized) return;
     initialized = true;
 
     ensurePwaHeadLinks();
+
+    if (shouldDisableServiceWorkerInDevelopment()) {
+        await disableServiceWorkerForLocalDevelopment();
+        window.spwPwa = {
+            init: initPwaUpdateHandler,
+            showInstallPrompt: noop,
+            showUpdatePrompt: noop,
+            dismissAll: () => toastManager.dismiss(),
+            isStandalone,
+            mode: 'development',
+            serviceWorkerEnabled: false
+        };
+        return;
+    }
+
     maybeShowInstallPrompt();
 
     if (!('serviceWorker' in navigator)) return;
@@ -388,7 +445,9 @@ const initPwaUpdateHandler = () => {
         showInstallPrompt: maybeShowInstallPrompt,
         showUpdatePrompt: (reg) => maybeShowUpdatePrompt(reg || navigator.serviceWorker?.getRegistration()),
         dismissAll: () => toastManager.dismiss(),
-        isStandalone
+        isStandalone,
+        mode: 'production',
+        serviceWorkerEnabled: true
     };
 };
 

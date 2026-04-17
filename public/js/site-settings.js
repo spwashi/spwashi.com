@@ -73,6 +73,7 @@ import {
   PALETTE_RESONANCE_OPTIONS,
   getPaletteResonanceSwatches
 } from './spw-palette-resonance.js';
+import { shouldDisableServiceWorkerInDevelopment } from './spw-runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 
@@ -1702,7 +1703,16 @@ const initPwaStatusDisplay = () => {
   installEl.textContent = isStandalone ? 'Installed' : 'Browser tab';
   installEl.dataset.status = isStandalone ? 'active' : 'inactive';
 
-  if (navigator.serviceWorker?.controller) {
+  if (shouldDisableServiceWorkerInDevelopment()) {
+    if (swEl) {
+      swEl.textContent = 'Disabled in local dev';
+      swEl.dataset.status = 'inactive';
+    }
+    if (cacheEl) {
+      cacheEl.textContent = 'Bypassed';
+      cacheEl.dataset.status = 'inactive';
+    }
+  } else if (navigator.serviceWorker?.controller) {
     swEl.textContent = 'Active';
     swEl.dataset.status = 'active';
   } else if (navigator.serviceWorker) {
@@ -1720,7 +1730,9 @@ const initPwaStatusDisplay = () => {
     swEl.dataset.status = 'error';
   }
 
-  if ('caches' in window) {
+  if (shouldDisableServiceWorkerInDevelopment()) {
+    // Local development intentionally bypasses cache-backed PWA behavior.
+  } else if ('caches' in window) {
     caches.keys().then((names) => {
       const count = names.length;
       cacheEl.textContent = count > 0 ? `${count} cache${count > 1 ? 's' : ''}` : 'Empty';
