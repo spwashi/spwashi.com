@@ -301,30 +301,49 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    ========================================================================== */
 
 .operator-chip {
+  --operator-chip-border-width: 1px;
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
+  --operator-chip-border: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, transparent);
+  --operator-chip-ink: color-mix(in oklab, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --operator-chip-shadow: none;
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
+  --operator-chip-hover-border: var(--operator-chip-border);
+  --operator-chip-hover-ink: var(--ink);
+  --operator-chip-hover-shadow: var(--operator-chip-shadow);
+  --operator-chip-hover-lift: 0px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.3rem;
   min-height: max(2.15rem, var(--touch-target-compact, 2.25rem));
   padding: 0.28rem 0.72rem;
-  border-width: 1px;
+  border-width: var(--operator-chip-border-width);
   border-style: solid;
   border-radius: var(--shape-control, 0.78rem);
   white-space: nowrap;
   text-decoration: none;
   line-height: 1.08;
   font-size: var(--text-size-chip, 0.82rem);
-  background: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
-  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, transparent);
-  color: color-mix(in oklab, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  background: var(--operator-chip-bg);
+  border-color: var(--operator-chip-border);
+  color: var(--operator-chip-ink);
   font-weight: 500;
+  box-shadow: var(--operator-chip-shadow);
+  transition:
+    background-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    border-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    transform var(--handle-duration-fast, 140ms) var(--handle-ease, ease);
 }
 
 .operator-chip:hover,
 .operator-chip:focus-visible {
-  background: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
-  color: var(--ink);
-  transform: none;
+  background: var(--operator-chip-hover-bg);
+  border-color: var(--operator-chip-hover-border);
+  color: var(--operator-chip-hover-ink);
+  box-shadow: var(--operator-chip-hover-shadow);
+  transform: translateY(var(--operator-chip-hover-lift));
   outline: none;
 }
 
@@ -587,7 +606,29 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   min-width: 0;
 }
 
+/* Shared mode-switch state lives here; routes should specialize with the
+   --mode-switch-* variables instead of re-describing pressed/hover logic. */
 .mode-switch .frame-sigil {
+  --mode-switch-border-width: 1px;
+  --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 97%, var(--active-op-color, var(--teal)) 3%);
+  --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  --mode-switch-idle-ink: color-mix(in srgb, var(--active-op-color, var(--teal)) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-idle-shadow: none;
+  --mode-switch-idle-weight: 500;
+  --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
+  --mode-switch-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  --mode-switch-hover-ink: var(--ink, rgba(14, 18, 20, 0.92));
+  --mode-switch-hover-shadow: var(--mode-switch-idle-shadow);
+  --mode-switch-hover-lift: 0px;
+  --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 78%, var(--active-op-color, var(--teal)) 22%);
+  --mode-switch-active-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 52%, transparent);
+  --mode-switch-active-ink: color-mix(in srgb, var(--active-op-color, var(--teal)) 96%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-active-weight: 600;
+  --mode-switch-active-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
+    0 3px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  --mode-switch-active-lift: 0px;
   position: relative;
   top: auto;
   left: auto;
@@ -597,47 +638,57 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   max-width: 100%;
   min-height: 2.1rem;
   padding: 0.24rem 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  border: var(--mode-switch-border-width) solid var(--mode-switch-idle-border);
   border-radius: var(--shape-control, 0.68rem);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 97%, var(--active-op-color, var(--teal)) 3%);
-  box-shadow: none;
+  background: var(--mode-switch-idle-bg);
+  box-shadow: var(--mode-switch-idle-shadow);
   opacity: 1;
   justify-content: center;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
-  font-weight: 500;
+  color: var(--mode-switch-idle-ink);
+  font-weight: var(--mode-switch-idle-weight);
   font-size: var(--text-size-chip, 0.84rem);
   line-height: 1.08;
+  transition:
+    background-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    border-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    transform var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
+    font-weight var(--handle-duration-fast, 140ms) var(--handle-ease, ease);
 }
 
 .mode-switch .frame-sigil:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background: var(--mode-switch-hover-bg);
+  border-color: var(--mode-switch-hover-border);
+  color: var(--mode-switch-hover-ink);
+  box-shadow: var(--mode-switch-hover-shadow);
   opacity: 1;
+  transform: translateY(var(--mode-switch-hover-lift));
 }
 
 /* Explicit selected state must come after the base .mode-switch .frame-sigil rule to win cascade. */
 .mode-switch .frame-sigil[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 78%, var(--active-op-color, var(--teal)) 22%);
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 52%, transparent);
-  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 96%, var(--ink, rgba(14, 18, 20, 0.92)));
-  font-weight: 600;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.36),
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
-    0 3px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  background: var(--mode-switch-active-bg);
+  border-color: var(--mode-switch-active-border);
+  color: var(--mode-switch-active-ink);
+  font-weight: var(--mode-switch-active-weight);
+  box-shadow: var(--mode-switch-active-shadow);
   opacity: 1;
+  transform: translateY(var(--mode-switch-active-lift));
 }
 
 .mode-switch .frame-sigil[aria-pressed="false"] {
   opacity: 1;
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 96%, var(--active-op-color, var(--teal)) 4%);
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
-  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, var(--ink, rgba(14, 18, 20, 0.92)) 58%);
+  background: var(--mode-switch-idle-bg);
+  border-color: var(--mode-switch-idle-border);
+  color: var(--mode-switch-idle-ink);
+  box-shadow: var(--mode-switch-idle-shadow);
+  font-weight: var(--mode-switch-idle-weight);
+  transform: none;
 }
 
 .mode-switch .frame-sigil[aria-pressed="false"]:is(:hover, :focus-visible) {

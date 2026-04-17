@@ -264,6 +264,10 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   margin-inline: auto;
   padding: 0.42rem 0.52rem;
   min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   border: 1.5px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
   border-radius: var(--shell-panel-radius-loose);
   background:
@@ -411,12 +415,9 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   margin: 0;
   padding: 0.48rem 0;
   min-width: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
 }
 
 :where(.site-header li, body > header li) {
