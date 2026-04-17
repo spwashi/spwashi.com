@@ -34,6 +34,7 @@ const MODULE_SELECTOR = [
 const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/', label: 'Home', token: '#>home', note: 'Channel summary, active routes, and nearby materials.' },
   { href: '/about/', label: 'About', token: '.about', note: 'Practice, direction, and the wider Spwashi constellation.' },
+  { href: '/design/', label: 'Design', token: '#>design', note: 'Team communication, rendering-context tests, and route circuits.' },
   { href: '/topics/', label: 'Topics', token: '<topics>', note: 'The atlas across software, math, craft, and design.' },
   { href: '/topics/software/', label: 'Software', token: '^software', note: 'spw-workbench, parsers, renderers, and language tools.' },
   { href: '/topics/math/', label: 'Math', token: '~math', note: 'Intuition routes for invariants, collapse, and structure.' },

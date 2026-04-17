@@ -309,6 +309,17 @@
   --line-matte: rgba(var(--charcoal-rgb), 0.09);
   --line-quiet: rgba(var(--charcoal-rgb), 0.07);
 
+  --spw-shell-chrome-accent:
+    color-mix(in oklab, var(--teal, #008080) 68%, var(--ink-strong, rgba(var(--charcoal-rgb), 0.96)) 32%);
+  --spw-shell-chrome-line:
+    color-mix(in oklab, var(--spw-shell-chrome-accent) 18%, var(--line, rgba(var(--charcoal-rgb), 0.14)) 82%);
+  --spw-shell-chrome-ink:
+    color-mix(in oklab, var(--ink, rgba(var(--charcoal-rgb), 0.92)) 84%, var(--spw-shell-chrome-accent) 16%);
+  --spw-shell-chrome-fill:
+    color-mix(in oklab, var(--surface-strong, rgba(255, 255, 255, 0.9)) 93%, var(--spw-shell-chrome-accent) 7%);
+  --spw-shell-chrome-fill-strong:
+    color-mix(in oklab, var(--surface-strong, rgba(255, 255, 255, 0.9)) 88%, var(--spw-shell-chrome-accent) 12%);
+
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
   /* Material properties */

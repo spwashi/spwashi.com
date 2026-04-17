@@ -13,6 +13,15 @@
    ========================================================================== */
 
 :where(.site-header, body > header) {
+  --spw-shell-chrome-accent-local:
+    var(--spw-shell-chrome-accent, color-mix(in oklab, var(--teal, #008080) 68%, var(--ink, rgba(14, 18, 20, 0.92)) 32%));
+  --spw-shell-chrome-line-local:
+    var(--spw-shell-chrome-line, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%));
+  --active-op-color: var(--spw-shell-chrome-accent-local);
+  --shell-panel-bg:
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 96%, var(--spw-shell-chrome-accent-local) 4%);
+  --shell-panel-bg-soft:
+    color-mix(in oklab, var(--surface, rgba(255,255,255,0.62)) 98%, var(--spw-shell-chrome-accent-local) 2%);
   min-height: var(--shell-header-height);
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
@@ -85,10 +94,10 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   background:
     radial-gradient(
       circle at top center,
-      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 5%, transparent),
+      color-mix(in oklab, var(--spw-shell-chrome-accent-local) 3%, transparent),
       transparent 48%
     );
-  opacity: 0.4;
+  opacity: 0.26;
 }
 
 :where(.site-header, body > header)::after {
@@ -103,7 +112,7 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
       color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 72%, transparent) 50%,
       color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 58%, transparent)
     );
-  opacity: 0.46;
+  opacity: 0.34;
   transition: background-color var(--shell-duration-base) var(--shell-ease);
 }
 
@@ -255,16 +264,20 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   margin-inline: auto;
   padding: 0.32rem 0.4rem;
   min-width: 0;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 84%, transparent);
   border-radius: var(--shell-panel-radius-loose);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.28),
     0 3px 10px rgba(0,0,0,0.024);
 }
 
+:where(.site-header nav[hidden], body > header nav[hidden]) {
+  display: none !important;
+}
+
 :where(.site-header[data-spw-menu="closed"] nav, body > header[data-spw-menu="closed"] nav) {
-  background: color-mix(in srgb, var(--surface, rgba(255,255,255,0.62)) 88%, transparent);
+  background: color-mix(in oklab, var(--surface, rgba(255,255,255,0.62)) 92%, var(--spw-shell-chrome-accent-local) 8%);
 }
 
 :where(.site-header[data-spw-menu-phase="approach"] nav, body > header[data-spw-menu-phase="approach"] nav) {
@@ -298,12 +311,12 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   min-height: var(--shell-nav-min-height);
   margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
   padding: 0.36rem 0.76rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, var(--line, rgba(14,18,20,0.14)) 84%);
   border-radius: var(--shape-control, 0.78rem);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 97%, var(--active-op-color, var(--teal, #008080)) 3%);
-  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, var(--ink, rgba(14, 18, 20, 0.92)) 78%);
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-chrome-accent-local) 2%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--spw-shell-chrome-accent-local) 18%);
   font: inherit;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-label, 0.76rem);
@@ -324,30 +337,30 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 .spw-nav-toggle:hover,
 .spw-nav-toggle:focus-visible {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 28%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-chrome-accent-local) 8%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, transparent),
     0 3px 8px rgba(0, 0, 0, 0.024);
   outline: none;
 }
 
 .spw-nav-toggle[aria-expanded="true"] {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 82%, var(--active-op-color, var(--teal, #008080)) 18%);
-  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--ink, rgba(14, 18, 20, 0.92)) 52%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 88%, var(--spw-shell-chrome-accent-local) 12%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--spw-shell-chrome-accent-local) 28%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent),
-    0 4px 10px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, rgba(0, 0, 0, 0.08));
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, transparent),
+    0 4px 10px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 6%, rgba(0, 0, 0, 0.08));
 }
 
 :where(.site-header[data-spw-menu-phase="contact"] .spw-nav-toggle, body > header[data-spw-menu-phase="contact"] .spw-nav-toggle),
 :where(.site-header[data-spw-menu-phase="projecting"] .spw-nav-toggle, body > header[data-spw-menu-phase="projecting"] .spw-nav-toggle) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-chrome-accent-local) 8%);
 }
 
 .spw-nav-toggle-glyph {
@@ -445,17 +458,17 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 :where(.site-header nav a, body > header nav a):is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 93%, var(--spw-shell-chrome-accent-local) 7%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
   outline: none;
 }
 
 :where(.site-header nav a[aria-current="page"], body > header nav a[aria-current="page"]) {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 86%, var(--active-op-color, var(--teal, #008080)) 14%);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-weight: 600;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent);
 }
 
 :where(.site-header nav a[data-spw-grounded="true"], body > header nav a[data-spw-grounded="true"]) {
@@ -491,24 +504,24 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   --pretext-rail-width: 0px;
   --pretext-edge-opacity: 0;
   --pretext-outline-width: 0px;
-  --pretext-rail-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 30%, transparent);
+  --pretext-rail-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent);
   --pretext-surface-wash: transparent;
   --pretext-rail-glow: 0 0 0 transparent;
 }
 
 .spw-route-menu[data-spw-flow="pretext"][data-text-mode="approach"] {
   --pretext-rail-width: 1px;
-  --pretext-surface-wash: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--active-op-color, var(--teal, #008080)) 6%);
+  --pretext-surface-wash: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 95%, var(--spw-shell-chrome-accent-local) 5%);
 }
 
 .spw-route-menu[data-spw-flow="pretext"][data-text-mode="contact"] {
   --pretext-rail-width: 2px;
-  --pretext-surface-wash: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+  --pretext-surface-wash: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 93%, var(--spw-shell-chrome-accent-local) 7%);
 }
 
 .spw-route-menu[data-spw-flow="pretext"][data-text-mode="projecting"] {
   --pretext-rail-width: 2px;
-  --pretext-surface-wash: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  --pretext-surface-wash: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 91%, var(--spw-shell-chrome-accent-local) 9%);
 }
 
 .spw-route-menu-trigger {
@@ -537,10 +550,10 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 .spw-route-menu-trigger:is(:hover, :focus-visible),
 .spw-route-menu[open] > .spw-route-menu-trigger {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 93%, var(--spw-shell-chrome-accent-local) 7%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
   outline: none;
 }
 
@@ -617,12 +630,13 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 }
 
 .spw-route-menu-link:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
   outline: none;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) {
+  --spw-shell-mobile-accent: var(--spw-shell-chrome-accent-local);
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "seam seam"
@@ -639,10 +653,19 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   padding-inline: 1rem;
 }
 
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil {
+  grid-row: 1;
+  grid-column: 1;
+}
+
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-nav-toggle {
   grid-area: toggle;
+  grid-row: 1;
+  grid-column: 2;
   display: inline-flex;
+  margin-inline-end: 0;
   justify-self: end;
+  align-self: start;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]):not(:has(> .spw-semantic-seam:not([hidden]):not([data-spw-empty="true"]))) {
@@ -650,11 +673,12 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
     "sigil toggle"
     "indicator indicator"
     "nav nav"
-    "trace trace trace";
+    "trace trace";
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-op-indicator {
   grid-area: indicator;
+  grid-row: 2;
   grid-column: 1 / -1;
   justify-self: center;
   padding-top: 0.1rem;
@@ -668,12 +692,20 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) {
   grid-area: nav;
+  grid-row: 3;
   grid-column: 1 / -1;
   width: 100%;
   max-width: none;
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-mobile-accent) 2%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    0 4px 12px rgba(0,0,0,0.028);
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-header-trace {
+  grid-row: 4;
+  grid-column: 1 / -1;
   grid-template-columns: 1fr;
 }
 
@@ -692,7 +724,37 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a) {
   width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
   border-radius: var(--shell-panel-radius);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 99%, var(--spw-shell-mobile-accent) 1%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 94%, var(--spw-shell-mobile-accent) 6%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip)::before,
+:where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip)::after {
+  content: none;
+  display: none;
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a):is(:hover, :focus-visible) {
+  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-mobile-accent) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-mobile-accent) 8%, transparent);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav a[aria-current="page"], body > header[data-spw-menu-mode="toggle"] nav a[aria-current="page"]) {
+  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-mobile-accent) 8%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--spw-shell-mobile-accent) 16%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-mobile-accent) 10%, transparent);
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-host, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-host) {
@@ -701,20 +763,34 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger) {
   width: 100%;
+  box-sizing: border-box;
   justify-content: space-between;
   border-radius: var(--shell-panel-radius);
+  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-mobile-accent) 2%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 90%, var(--spw-shell-mobile-accent) 10%);
 }
 
-  :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-panel, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-panel) {
-    position: static;
-    min-width: 0;
-    margin-top: 0.35rem;
-    padding: 0.35rem;
-  }
+:where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger):is(:hover, :focus-visible),
+:where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu[open] > .spw-route-menu-trigger, body > header[data-spw-menu-mode="toggle"] .spw-route-menu[open] > .spw-route-menu-trigger) {
+  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 20%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-mobile-accent) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
 
-  .spw-route-menu-link {
-    min-height: 0;
-  }
+:where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-panel, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-panel) {
+  position: static;
+  min-width: 0;
+  margin-top: 0.35rem;
+  padding: 0.35rem;
+  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
+  background:
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 99%, var(--spw-shell-mobile-accent) 1%);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-link, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-link) {
+  min-height: 0;
+}
 
 /* ==========================================================================
    3. Site footer
@@ -858,6 +934,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 @media (max-width: 720px) {
   :where(.site-header, body > header) {
+    min-height: auto;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "seam seam"
@@ -865,6 +942,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
       "indicator indicator"
       "nav nav"
       "trace trace";
+    align-content: start;
     gap: 0.25rem;
     padding-block: 0.35rem;
   }
@@ -878,6 +956,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   .spw-nav-toggle {
     grid-area: toggle;
     display: inline-flex;
+    margin-inline-end: 0;
     justify-self: end;
   }
 
@@ -1066,6 +1145,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    ========================================================================== */
 
 .spw-section-handle {
+  --active-op-color: var(--spw-shell-chrome-accent, var(--teal, #008080));
   position: fixed;
   left: 50%;
   bottom: calc(var(--attention-handle-offset, 1rem) + env(safe-area-inset-bottom));
