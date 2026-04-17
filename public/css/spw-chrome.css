@@ -21,7 +21,8 @@
     "sigil nav indicator"
     "trace trace trace";
   align-items: center;
-  gap: 0.45rem var(--shell-header-grid-gap);
+  row-gap: 0.45rem;
+  column-gap: var(--shell-header-grid-gap);
 
   position: sticky;
   top: 0;
@@ -68,6 +69,12 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   grid-area: seam;
   grid-column: 1 / -1;
   align-items: center;
+}
+
+:where(.site-header, body > header):not(:has(> .spw-semantic-seam:not([hidden]):not([data-spw-empty="true"]))) {
+  grid-template-areas:
+    "sigil nav indicator"
+    "trace trace trace";
 }
 
 :where(.site-header, body > header)::before {
@@ -291,17 +298,22 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   min-height: var(--shell-nav-min-height);
   margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
   padding: 0.36rem 0.76rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
   border-radius: var(--shape-control, 0.78rem);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 96%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 97%, var(--active-op-color, var(--teal, #008080)) 3%);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, var(--ink, rgba(14, 18, 20, 0.92)) 78%);
   font: inherit;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-label, 0.76rem);
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.022);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 2px 6px rgba(0, 0, 0, 0.022);
   transition:
     border-color var(--shell-duration-fast) var(--shell-ease),
     background var(--shell-duration-fast) var(--shell-ease),
@@ -312,18 +324,30 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
 
 .spw-nav-toggle:hover,
 .spw-nav-toggle:focus-visible {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent),
     0 3px 8px rgba(0, 0, 0, 0.024);
   outline: none;
 }
 
+.spw-nav-toggle[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 82%, var(--active-op-color, var(--teal, #008080)) 18%);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--ink, rgba(14, 18, 20, 0.92)) 52%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent),
+    0 4px 10px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, rgba(0, 0, 0, 0.08));
+}
+
 :where(.site-header[data-spw-menu-phase="contact"] .spw-nav-toggle, body > header[data-spw-menu-phase="contact"] .spw-nav-toggle),
 :where(.site-header[data-spw-menu-phase="projecting"] .spw-nav-toggle, body > header[data-spw-menu-phase="projecting"] .spw-nav-toggle) {
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 91%, var(--active-op-color, var(--teal, #008080)) 9%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
 }
 
 .spw-nav-toggle-glyph {
@@ -619,6 +643,14 @@ html[data-spw-header-opacity="high"] :is(.site-header, body > header) {
   grid-area: toggle;
   display: inline-flex;
   justify-self: end;
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]):not(:has(> .spw-semantic-seam:not([hidden]):not([data-spw-empty="true"]))) {
+  grid-template-areas:
+    "sigil toggle"
+    "indicator indicator"
+    "nav nav"
+    "trace trace trace";
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-op-indicator {
@@ -924,6 +956,10 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 @media (max-width: 600px) {
+  :where(.site-header, body > header) {
+    padding-top: max(0.12rem, env(safe-area-inset-top));
+  }
+
   .spw-nav-toggle {
     min-height: 2.6rem;
     padding: 0.45rem 0.9rem;

@@ -199,8 +199,8 @@ main {
    different uses of horizontal space on wide screens. Reading is the default.
    "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;
    "split" is reading-column + rail for reading routes with navigation context. */
-:where(body[data-spw-layout="reading"], main[data-spw-layout="reading"]) main,
-:where(body[data-spw-layout="reading"]) main {
+:where(body[data-spw-layout="reading"]) main,
+main[data-spw-layout="reading"] {
   max-width: var(--page-width-reading);
 }
 
@@ -226,8 +226,10 @@ main[data-spw-layout="atlas"] {
     align-items: start;
   }
 
-  :where(body[data-spw-layout="split"]) main > :where(article, section.spw-main-column) {
+  :where(body[data-spw-layout="split"]) main > :not(.spw-gutter-rail),
+  main[data-spw-layout="split"] > :not(.spw-gutter-rail) {
     grid-column: 1;
+    min-width: 0;
   }
 
   :where(body[data-spw-layout="split"]) main > .spw-gutter-rail,
