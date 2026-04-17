@@ -27,6 +27,24 @@ const HOST_SELECTOR = [
     '[data-spw-image-surface]'
 ].join(', ');
 const EFFECT_SEQUENCE = ['semantic', 'pixelize', 'watercolor', 'clarify'];
+const EFFECT_META = Object.freeze({
+    semantic: {
+        label: 'semantic',
+        note: 'follow the surface meaning'
+    },
+    pixelize: {
+        label: 'pixel',
+        note: 'show the lattice and sampled edges'
+    },
+    watercolor: {
+        label: 'wash',
+        note: 'pool color into a softer paper field'
+    },
+    clarify: {
+        label: 'settle',
+        note: 'resolve edges and calm the surface'
+    }
+});
 const RESONANCE_BY_SUBSTRATE = Object.freeze({
     frame: 'teal',
     action: 'teal',
@@ -205,42 +223,58 @@ function resolveSemanticEffect(context, override) {
 }
 
 function getEffectLabel(effect) {
-    switch (effect) {
-    case 'pixelize':
-        return 'pixel';
-    case 'watercolor':
-        return 'wash';
-    case 'clarify':
-        return 'settle';
-    default:
-        return 'semantic';
-    }
+    return EFFECT_META[effect]?.label || EFFECT_META.semantic.label;
 }
 
-function getMemoryLabel(_host, context, visited) {
-    if (visited) return '. visited';
+function getMemoryState(host, context, visited) {
+    const override = host.dataset.spwImageEffectOverride || 'semantic';
+    const logic = visited ? 'visited' : (override === 'semantic' ? 'auto' : 'manual');
+    const detail = document.documentElement.dataset.spwShowSemanticMetadata === 'on'
+        ? `${context.realization} · ${context.phrase}`
+        : (visited
+            ? 'return surface'
+            : (override === 'semantic' ? 'meaning-led' : 'override active'));
 
-    if (document.documentElement.dataset.spwShowSemanticMetadata === 'on') {
-        return `${context.realization} · ${context.phrase}`;
-    }
-
-    return '';
+    return { logic, detail };
 }
 
 function updateHelper(host, context, visited) {
     const button = host.querySelector('.spw-image-helper');
     const memory = host.querySelector('.spw-image-memory');
-    if (!button || !memory) return;
+    const strip = host.querySelector('.spw-image-helper-strip');
+    const eyebrow = host.querySelector('.spw-image-helper__eyebrow');
+    const value = host.querySelector('.spw-image-helper__value');
+    const memoryLogic = host.querySelector('.spw-image-memory__logic');
+    const memoryValue = host.querySelector('.spw-image-memory__value');
+    if (!button || !memory || !eyebrow || !value || !memoryLogic || !memoryValue) return;
 
     const override = host.dataset.spwImageEffectOverride || 'semantic';
     const effect = host.dataset.spwImageEffect || resolveSemanticEffect(context, override);
+    const displayEffect = override === 'semantic' ? effect : override;
+    const effectLabel = getEffectLabel(displayEffect);
+    const effectNote = EFFECT_META[displayEffect]?.note || EFFECT_META.semantic.note;
+    const overrideState = override === 'semantic' ? 'auto' : 'manual';
+    const memoryState = getMemoryState(host, context, visited);
 
-    button.textContent = `! ${getEffectLabel(override === 'semantic' ? effect : override)}`;
-    button.setAttribute('aria-label', `Cycle image treatment. Current treatment: ${getEffectLabel(effect)}. Hold the surface to mark it visited.`);
-    button.title = `Current treatment: ${getEffectLabel(effect)}. Click to cycle. Hold the surface to mark it visited.`;
+    if (strip) {
+        strip.dataset.spwEffect = displayEffect;
+        strip.dataset.spwOverrideState = overrideState;
+        strip.dataset.spwVisited = visited ? 'true' : 'false';
+    }
+
+    eyebrow.textContent = `render · ${overrideState}`;
+    value.textContent = effectLabel;
+    button.dataset.spwEffect = displayEffect;
+    button.dataset.spwOverrideState = overrideState;
+    button.dataset.spwVisited = visited ? 'true' : 'false';
+    button.setAttribute('aria-label', `Cycle image treatment. Current treatment: ${effectLabel}. ${overrideState === 'auto' ? 'Semantic auto mode.' : 'Manual override.'} Hold the surface to mark it visited.`);
+    button.title = `Current treatment: ${effectLabel}. ${effectNote}. ${overrideState === 'auto' ? 'Semantic auto mode.' : 'Manual override.'} Click to cycle. Hold the surface to mark it visited.`;
     button.setAttribute('aria-pressed', override === 'semantic' ? 'false' : 'true');
 
-    memory.textContent = getMemoryLabel(host, context, visited);
+    memory.dataset.spwOverrideState = overrideState;
+    memory.dataset.spwVisited = visited ? 'true' : 'false';
+    memoryLogic.textContent = memoryState.logic;
+    memoryValue.textContent = memoryState.detail;
 }
 
 function ensureHelper(host) {
@@ -254,9 +288,34 @@ function ensureHelper(host) {
     button.type = 'button';
     button.dataset.spwOperator = 'pragma';
 
+    const eyebrow = document.createElement('span');
+    eyebrow.className = 'spw-image-helper__eyebrow';
+
+    const value = document.createElement('span');
+    value.className = 'spw-image-helper__value';
+
+    const track = document.createElement('span');
+    track.className = 'spw-image-helper__track';
+    track.setAttribute('aria-hidden', 'true');
+    EFFECT_SEQUENCE.forEach((effect) => {
+        const stop = document.createElement('span');
+        stop.className = 'spw-image-helper__stop';
+        stop.dataset.spwEffectStop = effect;
+        track.append(stop);
+    });
+
     const memory = document.createElement('span');
     memory.className = 'spw-image-memory';
     memory.dataset.spwOperator = 'baseline';
+
+    const memoryLogic = document.createElement('span');
+    memoryLogic.className = 'spw-image-memory__logic';
+
+    const memoryValue = document.createElement('span');
+    memoryValue.className = 'spw-image-memory__value';
+
+    button.append(eyebrow, value, track);
+    memory.append(memoryLogic, memoryValue);
 
     button.addEventListener('pointerdown', (event) => {
         event.stopPropagation();
