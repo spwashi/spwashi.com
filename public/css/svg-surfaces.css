@@ -141,6 +141,81 @@
     letter-spacing: 0.02em;
 }
 
+/* ─── Rail companion ────────────────────────────────────────────────────── */
+/*
+ * A host can declare a rail companion via data-spw-svg-companion="rail" on
+ * the <figure>. At ≥720px the figure becomes a two-column grid: the SVG is
+ * primary, the .spw-svg-rail sibling holds register entries (legend chips,
+ * focused-node descriptors). Below 720px the rail collapses back into flow.
+ * The rail is for peripheral register, never primary content or navigation.
+ */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
+    display: grid;
+    gap: var(--space-sm, 0.6rem);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "surface"
+        "rail"
+        "caption";
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > :where(.spw-svg-surface, svg) {
+    grid-area: surface;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
+    grid-area: rail;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > figcaption {
+    grid-area: caption;
+}
+
+.spw-svg-rail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs, 0.36rem);
+    align-content: start;
+    margin: 0;
+    padding: 0;
+    color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-xs, 0.78rem);
+    line-height: 1.3;
+}
+
+.spw-svg-rail > * {
+    margin: 0;
+}
+
+@media (min-width: 720px) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
+        grid-template-columns: minmax(0, 1fr) min(20%, 14rem);
+        grid-template-areas:
+            "surface rail"
+            "caption caption";
+        align-items: start;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        position: sticky;
+        top: calc(var(--site-header-height, 4rem) + 1rem);
+        max-height: calc(100vh - var(--site-header-height, 4rem) - 2rem);
+        overflow-y: auto;
+    }
+}
+
+@media (min-width: 72rem) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
+        grid-template-columns: minmax(0, 1fr) min(28%, 18rem);
+        gap: var(--space-md, 1rem);
+    }
+}
+
 /* ─── Responsive & Accessibility ────────────────────────────────────────── */
 
 @media (max-width: 700px) {

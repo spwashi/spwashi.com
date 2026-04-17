@@ -121,6 +121,61 @@ function countMatches(source, pattern) {
   return [...source.matchAll(pattern)].length;
 }
 
+function extractSvgHosts(html) {
+  const hosts = [];
+  const svgPattern = /<svg\b([^>]*)>/gi;
+
+  for (const match of html.matchAll(svgPattern)) {
+    const attrs = parseAttributes(match[1] || '');
+    const classList = splitList(attrs.class);
+    const hasSurfaceClass = classList.includes('spw-svg-surface');
+    const surfaceVariant = classList
+      .filter((name) => name.startsWith('spw-svg-surface--'))
+      .map((name) => name.replace('spw-svg-surface--', ''))[0] || null;
+
+    const figureHead = html.slice(0, match.index);
+    const figureOpen = figureHead.lastIndexOf('<figure');
+    const figureClose = figureHead.lastIndexOf('</figure');
+    let figureAttrs = null;
+    if (figureOpen >= 0 && figureOpen > figureClose) {
+      const figureTag = html.slice(figureOpen, figureHead.indexOf('>', figureOpen) + 1);
+      const tagAttrs = figureTag.match(/<figure\b([^>]*)>/i);
+      if (tagAttrs) figureAttrs = parseAttributes(tagAttrs[1] || '');
+    }
+
+    const figureClasses = figureAttrs ? splitList(figureAttrs.class) : [];
+    const hasFigureContract = figureClasses.includes('spw-svg-figure');
+    const hostId = figureAttrs?.['data-spw-svg-host'] || attrs['data-spw-svg-host'] || null;
+
+    hosts.push({
+      class: attrs.class || null,
+      companion: figureAttrs?.['data-spw-svg-companion']
+        || attrs['data-spw-svg-companion']
+        || null,
+      hasDesc: /aria-describedby|\bid=["'][^"']*desc/.test(match[1] || '')
+        || /aria-labelledby=["'][^"']*desc/.test(match[1] || ''),
+      hasFigureContract,
+      hasSurfaceClass,
+      hasTitle: /aria-labelledby/.test(match[1] || ''),
+      hostId,
+      kind: figureAttrs?.['data-spw-svg-kind']
+        || attrs['data-spw-svg-kind']
+        || null,
+      motion: figureAttrs?.['data-spw-svg-motion']
+        || attrs['data-spw-svg-motion']
+        || null,
+      role: attrs.role || null,
+      scale: figureAttrs?.['data-spw-svg-scale']
+        || attrs['data-spw-svg-scale']
+        || null,
+      surfaceVariant,
+      viewBox: attrs.viewBox || attrs.viewbox || null,
+    });
+  }
+
+  return hosts;
+}
+
 function extractRuntimeArrayLiteral(source, arrayName) {
   const marker = `const ${arrayName} = [`;
   const startIndex = source.indexOf(marker);
@@ -416,6 +471,7 @@ async function parseRouteFile(absoluteFilePath) {
     svg: {
       featureEnabled: splitList(bodyAttributes?.['data-spw-features']).includes('svg-surfaces'),
       figureCount: countMatches(html, /\bclass=["'][^"']*\bspw-svg-figure\b[^"']*["']/gi),
+      hosts: extractSvgHosts(html),
       inlineCount: countMatches(html, /<svg\b/gi),
       surfaceCount: countMatches(html, /\bclass=["'][^"']*\bspw-svg-surface\b[^"']*["']/gi),
     },
@@ -454,12 +510,24 @@ function buildSvgSpecMaps(routes, svgAssets) {
     .map((route) => ({
       featureEnabled: route.svg.featureEnabled,
       figureCount: route.svg.figureCount,
+      hostCount: route.svg.hosts.length,
       inlineCount: route.svg.inlineCount,
       route: route.route,
       surface: route.surface,
       surfaceCount: route.svg.surfaceCount,
       title: route.title,
     }));
+
+  const svgHosts = [];
+  for (const route of routes) {
+    for (const host of route.svg.hosts) {
+      svgHosts.push({
+        ...host,
+        route: route.route,
+        surface: route.surface,
+      });
+    }
+  }
 
   const specRoutes = routes
     .filter((route) => route.spec.stripCount > 0 || route.spec.pillCount > 0 || route.spec.gridCount > 0 || route.spec.kickerCount > 0)
@@ -476,6 +544,7 @@ function buildSvgSpecMaps(routes, svgAssets) {
   return {
     specRoutes,
     svgAssets,
+    svgHosts,
     svgRoutes,
   };
 }

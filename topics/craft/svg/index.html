@@ -108,8 +108,16 @@
         }
     </script>
 </head>
-<body data-spw-surface="craft" data-spw-features="operators navigator console svg-surfaces" data-spw-route-family="editorial craft studio" data-spw-context="publishing" data-spw-wonder="projection resonance comparison" data-spw-page-family="studio" data-spw-page-modes="reading inspect make publish" data-spw-page-seed="page_topics_topics_craft_svg" data-spw-page-role="craft-register" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/craft/|/topics/site-design/|/topics/software/renderers/|/play/|/blog/|/settings/">
+<body data-spw-surface="craft" data-spw-features="operators navigator console svg-surfaces" data-spw-route-family="editorial craft studio" data-spw-context="publishing" data-spw-wonder="projection resonance comparison" data-spw-page-family="studio" data-spw-page-modes="reading inspect make publish" data-spw-page-seed="page_topics_topics_craft_svg" data-spw-page-role="craft-register" data-spw-section-handle-desktop="auto" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/craft/|/topics/site-design/|/topics/software/renderers/|/play/|/blog/|/settings/">
 <a class="skip-link" href="#main-content">Skip to content</a>
+
+<a class="spw-section-handle"
+   href="#main-content"
+   data-spw-handle-state="hidden"
+   aria-label="Jump to top of current section">
+    <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+    <span class="spw-section-handle__label">section</span>
+</a>
 
     <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_craft_svg__site_header" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/craft/|/topics/site-design/|/topics/software/renderers/|/play/|/blog/|/settings/" data-spw-context-relevance="svg storytelling motifs illustrator handoff ideas inspectable marks" class="site-header" role="banner">
         <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
@@ -141,8 +149,14 @@
                 <p class="spec-kicker">SVG Storytelling</p>
                 <h1 id="svg-title">A motif can be a tiny machine for memory.</h1>
                 <p class="craft-lede">SVG is useful because a mark can stay crisp, reusable, and editable. The goal is not to replace an illustrator. The goal is to give an illustrator a small system to inhabit.</p>
-                <figure class="craft-illustration">
-                    <svg class="craft-story-svg" viewBox="0 0 720 360" role="img" aria-labelledby="story-svg-title story-svg-desc">
+                <figure class="spw-svg-figure craft-illustration"
+                        data-spw-svg-host="craft-story"
+                        data-spw-svg-kind="addressable-illustration"
+                        data-spw-svg-scale="narrow-wide"
+                        data-spw-svg-motion="static"
+                        data-spw-svg-companion="rail"
+                        data-spw-operator="frame">
+                    <svg class="spw-svg-surface spw-svg-surface--craft-story craft-story-svg" viewBox="0 0 720 360" role="img" aria-labelledby="story-svg-title story-svg-desc">
                         <title id="story-svg-title">A motif kit translated from an open book into reusable publishing marks</title>
                         <desc id="story-svg-desc">An open book surrounded by guide lines, motif marks, and labeled outputs for cover glyphs, chapter dividers, margin creatures, and map tokens.</desc>
                         <defs>
@@ -190,16 +204,16 @@
                             <path d="M340 214C426 238 486 256 560 274"/>
                         </g>
 
-                        <g fill="var(--craft-accent)">
+                        <g id="craft-story-mark-glyph" data-spw-operator="frame" fill="var(--craft-accent)">
                             <path d="M202 240a34 34 0 1 1 18-30l60 60-15 15-18-18-11 11-15-15-11 11-20-20a34 34 0 0 1-16 4Zm-16-30a13 13 0 1 0 0-26 13 13 0 0 0 0 26Z"/>
                         </g>
-                        <g fill="var(--craft-leaf)">
+                        <g id="craft-story-mark-creature" data-spw-operator="object" fill="var(--craft-leaf)">
                             <path d="M332 150c20-40 56-45 84-34-8 34-34 58-77 51l-20 36-12-7 25-46Z"/>
                         </g>
-                        <g fill="var(--craft-teal)">
+                        <g id="craft-story-mark-divider" data-spw-operator="stream" fill="var(--craft-teal)">
                             <path d="M498 222c-35 0-63-28-63-63 0-23 13-44 32-55-5 15-4 31 3 46 16 33 53 50 88 41-9 20-28 31-60 31Z"/>
                         </g>
-                        <g fill="var(--craft-gold)">
+                        <g id="craft-story-mark-token" data-spw-operator="probe" fill="var(--craft-gold-dust)">
                             <circle cx="360" cy="236" r="9"/>
                             <circle cx="396" cy="248" r="6"/>
                             <circle cx="330" cy="256" r="5"/>
@@ -225,6 +239,12 @@
                             </g>
                         </g>
                     </svg>
+                    <aside class="spw-svg-rail" aria-label="Motif kit register">
+                        <a class="operator-chip" data-spw-operator="frame" href="#craft-story-mark-glyph">cover glyph</a>
+                        <a class="operator-chip" data-spw-operator="stream" href="#craft-story-mark-divider">chapter divider</a>
+                        <a class="operator-chip" data-spw-operator="object" href="#craft-story-mark-creature">margin creature</a>
+                        <a class="operator-chip" data-spw-operator="probe" href="#craft-story-mark-token">map token</a>
+                    </aside>
                     <figcaption>One motif kit can become cover art, chapter marks, margin signs, map tokens, and screenshot prompts.</figcaption>
                 </figure>
                 <nav class="frame-operators" aria-label="SVG neighboring routes">
@@ -264,16 +284,31 @@
                     <h2>What To Ask An Illustrator For</h2>
                 </div>
                 <div class="craft-svg-showcase">
-                    <figure class="craft-svg-card">
-                        <svg viewBox="0 0 120 120" role="img" aria-label="Cover glyph sample"><path fill="var(--craft-accent)" d="M60 10 88 62 60 110 32 62 60 10Zm0 28L47 62l13 24 13-24-13-24Z"/></svg>
+                    <figure class="spw-svg-figure craft-svg-card"
+                            data-spw-svg-host="craft-glyph"
+                            data-spw-svg-kind="illustration"
+                            data-spw-svg-scale="compact"
+                            data-spw-svg-motion="static"
+                            data-spw-operator="frame">
+                        <svg class="spw-svg-surface spw-svg-surface--craft-card" viewBox="0 0 120 120" role="img" aria-label="Cover glyph sample"><path fill="var(--craft-accent)" d="M60 10 88 62 60 110 32 62 60 10Zm0 28L47 62l13 24 13-24-13-24Z"/></svg>
                         <figcaption>Cover glyph: the mark readers remember before the title.</figcaption>
                     </figure>
-                    <figure class="craft-svg-card">
-                        <svg viewBox="0 0 120 120" role="img" aria-label="Chapter divider sample"><path fill="var(--craft-teal)" d="M15 60c20-24 40-24 60 0 10 12 20 12 30 0-20 30-45 32-70 6-7-7-14-9-20-6Z"/></svg>
+                    <figure class="spw-svg-figure craft-svg-card"
+                            data-spw-svg-host="craft-divider"
+                            data-spw-svg-kind="illustration"
+                            data-spw-svg-scale="compact"
+                            data-spw-svg-motion="static"
+                            data-spw-operator="stream">
+                        <svg class="spw-svg-surface spw-svg-surface--craft-card" viewBox="0 0 120 120" role="img" aria-label="Chapter divider sample"><path fill="var(--craft-teal)" d="M15 60c20-24 40-24 60 0 10 12 20 12 30 0-20 30-45 32-70 6-7-7-14-9-20-6Z"/></svg>
                         <figcaption>Chapter divider: a rhythm mark between emotional rooms.</figcaption>
                     </figure>
-                    <figure class="craft-svg-card">
-                        <svg viewBox="0 0 120 120" role="img" aria-label="Margin creature sample"><path fill="var(--craft-leaf)" d="M60 20c20 0 36 16 36 36 0 26-36 44-36 44S24 82 24 56c0-20 16-36 36-36Zm0 18a18 18 0 0 0-18 18c0 10 8 21 18 29 10-8 18-19 18-29a18 18 0 0 0-18-18Z"/></svg>
+                    <figure class="spw-svg-figure craft-svg-card"
+                            data-spw-svg-host="craft-creature"
+                            data-spw-svg-kind="illustration"
+                            data-spw-svg-scale="compact"
+                            data-spw-svg-motion="static"
+                            data-spw-operator="object">
+                        <svg class="spw-svg-surface spw-svg-surface--craft-card" viewBox="0 0 120 120" role="img" aria-label="Margin creature sample"><path fill="var(--craft-leaf)" d="M60 20c20 0 36 16 36 36 0 26-36 44-36 44S24 82 24 56c0-20 16-36 36-36Zm0 18a18 18 0 0 0-18 18c0 10 8 21 18 29 10-8 18-19 18-29a18 18 0 0 0-18-18Z"/></svg>
                         <figcaption>Margin creature: a small guide that can recur beside clues.</figcaption>
                     </figure>
                 </div>

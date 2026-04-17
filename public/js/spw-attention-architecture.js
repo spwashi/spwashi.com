@@ -18,7 +18,7 @@
  */
 
 const HANDLE_SELECTOR = '.spw-section-handle';
-const OPERATOR_SECTION_SELECTOR = 'main section[data-spw-kind], main article[data-spw-kind], main aside[data-spw-kind], main section[id], main article[id]';
+const OPERATOR_SECTION_SELECTOR = 'main section[data-spw-kind], main article[data-spw-kind], main aside[data-spw-kind], main section[id], main article[id], main [data-spw-svg-host]';
 const PROBE_ATTR = 'data-spw-resonance-probe';
 const HANDLE_STATE_ATTR = 'data-spw-handle-state';
 const HANDLE_LABEL_ATTR = 'data-spw-section-handle-label';
@@ -32,13 +32,20 @@ function setHandleState(handle, state) {
 
 function describeSection(section) {
   if (!section) return null;
+  const svgHostId = section.getAttribute('data-spw-svg-host');
   const operator =
     section.getAttribute('data-spw-operator') ||
     section.getAttribute('data-spw-role') ||
     section.getAttribute('data-spw-kind') ||
+    (svgHostId ? 'svg' : '') ||
     '';
   const heading = section.querySelector(':scope > :where(h1, h2, h3, .page-kicker, .frame-topline)');
+  const svgLabel = svgHostId
+    ? section.querySelector(':scope > svg > title')?.textContent
+      || svgHostId.replace(/[-_]+/g, ' ')
+    : '';
   const labelSource =
+    svgLabel ||
     (heading && heading.textContent) ||
     section.getAttribute('aria-label') ||
     section.getAttribute('data-spw-label') ||
