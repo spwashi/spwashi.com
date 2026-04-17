@@ -727,3 +727,83 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
     filter: none !important;
   }
 }
+
+/* ==========================================================================
+   Conceptual resonance
+   --------------------------------------------------------------------------
+   When a visitor hovers or focuses an operator chip, the page identifies
+   elements that share the same operator and lifts them with a soft echo.
+   This makes composition visible: hover "^syntax" and every `^` chip on
+   the page breathes with the same color signature. Attentional model,
+   not decoration — the hover teaches the grammar.
+
+   Driven by `:has()` so no JS is required for the baseline case. A future
+   JS enhancement can pin a resonance-probe on `<html>` to hold the echo
+   while the user explores related reading.
+   ========================================================================== */
+
+@supports selector(:has(*)) {
+  :where(main, body):has(:where([data-spw-operator="frame"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="object"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="probe"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="ref"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="action"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="stream"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+  :where(main, body):has(:where([data-spw-operator="surface"]:is(:hover, :focus-visible)))
+    :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+  }
+
+  /* The visual effect of resonance: a subtle operator-tinted border glow.
+     Low opacity — the point is peripheral awareness, not demand. */
+  :where([data-spw-operator]) {
+    transition:
+      box-shadow var(--attention-echo-duration, 480ms) var(--ease-settle, ease),
+      border-color var(--attention-echo-duration, 480ms) var(--ease-settle, ease);
+  }
+
+  :where([data-spw-operator]:not(:hover):not(:focus-visible))[style*="--spw-resonance"],
+  :where([data-spw-operator]) {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 calc(1px * var(--spw-resonance, 0))
+        color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 42%, transparent);
+  }
+}
+
+/* Pinned resonance: when JS (or a future interaction) places
+   [data-spw-resonance-probe] on <html>, it acts as a sustained probe
+   across the whole page for that operator family. */
+html[data-spw-resonance-probe="frame"] :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="object"] :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="probe"] :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="ref"] :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="action"] :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="stream"] :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
+html[data-spw-resonance-probe="surface"] :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * var(--attention-field-decay, 0.65) + 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-operator]) {
+    transition: none !important;
+  }
+}

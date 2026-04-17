@@ -163,9 +163,25 @@
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-wide: 84rem;
+  --page-width-atlas: 104rem;
   --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
   --touch-target-min: 2.75rem;
   --touch-target-compact: 2.25rem;
+
+  /* -- Attention Architecture --
+     These govern layout variants, mobile handle positions, and the radius
+     at which a focused element can radiate resonance to same-concept peers. */
+  --attention-rail-width: clamp(14rem, 18vw, 20rem);
+  --attention-rail-gap: clamp(1rem, 2vw, 1.5rem);
+  --attention-handle-offset: clamp(0.55rem, 2vw, 1rem);
+  --attention-field-radius: 0.4;
+  --attention-field-decay: 0.65;
+  --attention-echo-duration: 480ms;
+
+  /* Hydration tiers: for routes that will load JSON-backed content */
+  --hydration-skeleton-bg: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.08)) 6%, transparent);
+  --hydration-skeleton-shimmer: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+  --hydration-skeleton-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 60%, transparent);
 
   /* -- Grid Thresholds -- */
   --grid-min-compact: 12rem;

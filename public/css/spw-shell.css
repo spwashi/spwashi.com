@@ -195,6 +195,71 @@ main {
   touch-action: pan-y;
 }
 
+/* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
+   different uses of horizontal space on wide screens. Reading is the default.
+   "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;
+   "split" is reading-column + rail for reading routes with navigation context. */
+:where(body[data-spw-layout="reading"], main[data-spw-layout="reading"]) main,
+:where(body[data-spw-layout="reading"]) main {
+  max-width: var(--page-width-reading);
+}
+
+:where(body[data-spw-layout="wide"]) main,
+main[data-spw-layout="wide"] {
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width-wide));
+}
+
+:where(body[data-spw-layout="atlas"]) main,
+main[data-spw-layout="atlas"] {
+  width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width-atlas));
+}
+
+/* Split layouts place a narrower reading column next to a rail for
+   related-routes, quick-jumps, or locally-collected items. */
+@media (min-width: 72rem) {
+  :where(body[data-spw-layout="split"]) main,
+  main[data-spw-layout="split"] {
+    width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width-wide));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--attention-rail-width);
+    column-gap: var(--attention-rail-gap);
+    align-items: start;
+  }
+
+  :where(body[data-spw-layout="split"]) main > :where(article, section.spw-main-column) {
+    grid-column: 1;
+  }
+
+  :where(body[data-spw-layout="split"]) main > .spw-gutter-rail,
+  main[data-spw-layout="split"] > .spw-gutter-rail {
+    grid-column: 2;
+    grid-row: 1 / span 99;
+    position: sticky;
+    top: calc(var(--header-height) + 1rem);
+    align-self: start;
+    max-height: calc(100dvh - var(--header-height) - 2rem);
+    overflow-y: auto;
+  }
+}
+
+/* Gutter rail: auxiliary content that lives beside reading on wide screens
+   and collapses into the document flow on narrow ones. */
+.spw-gutter-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-surface);
+  font-size: var(--text-size-sm);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+@media (max-width: 72rem) {
+  .spw-gutter-rail {
+    order: 99;
+    border-top: 1px solid var(--line, rgba(0, 128, 128, 0.18));
+    padding-top: var(--gap-surface);
+  }
+}
+
 main > article {
   display: flex;
   flex-direction: column;

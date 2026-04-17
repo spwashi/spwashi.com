@@ -1015,3 +1015,104 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   4. Section-context handle (mobile + narrow viewports)
+   --------------------------------------------------------------------------
+   A slim sticky chip that surfaces "where you are" as a visitor scrolls
+   through a long page. The handle reads the current section's heading and
+   exposes a tap target that jumps back to the page index or top.
+
+   Progressive enhancement: the element is rendered when a route opts in
+   via <spw-section-handle> markup; the JS runtime (if present) updates its
+   contents from IntersectionObserver. Without JS it remains a stable
+   breadcrumb-style affordance.
+   ========================================================================== */
+
+.spw-section-handle {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--attention-handle-offset, 1rem) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: var(--z-floating, 100);
+
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: var(--touch-target-compact, 2.25rem);
+  max-width: calc(100vw - 2rem);
+  padding: 0.36rem 0.8rem;
+
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.38) inset,
+    0 6px 18px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, rgba(0, 0, 0, 0.08));
+
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.78rem);
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 240ms var(--ease-settle, ease),
+    transform 240ms var(--ease-settle, ease),
+    border-color 240ms var(--ease-settle, ease);
+}
+
+.spw-section-handle[data-spw-handle-state="visible"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.spw-section-handle[data-spw-handle-state="hidden"] {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(6px);
+}
+
+.spw-section-handle .spw-section-handle__op {
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 82%, var(--ink));
+  font-weight: 600;
+}
+
+.spw-section-handle .spw-section-handle__label {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-weight: 500;
+  max-width: min(40ch, 64vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spw-section-handle:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 52%, transparent);
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .spw-section-handle {
+    display: inline-flex;
+  }
+}
+
+html[data-spw-section-handle="off"] .spw-section-handle {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-section-handle {
+    transition: none !important;
+  }
+}

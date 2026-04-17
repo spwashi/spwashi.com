@@ -1138,6 +1138,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'attention-architecture',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.spw-section-handle, [data-spw-operator]',
+    rootMode: 'single',
+    load: () => import('./spw-attention-architecture.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwAttentionArchitecture;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

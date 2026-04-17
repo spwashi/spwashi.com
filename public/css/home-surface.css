@@ -200,6 +200,20 @@ body[data-spw-surface="home"] {
   color: color-mix(in srgb, var(--home-ink-soft) 90%, var(--home-accent));
 }
 
+/* Mode-specific operator tints: each lens button wears its semantic color. */
+[data-spw-surface="home"] .mode-switch .frame-sigil[data-set-mode="surface"] {
+  --active-op-color: var(--home-accent);
+}
+[data-spw-surface="home"] .mode-switch .frame-sigil[data-set-mode="syntax"] {
+  --active-op-color: var(--home-accent-3);
+}
+[data-spw-surface="home"] .mode-switch .frame-sigil[data-set-mode="artifacts"] {
+  --active-op-color: var(--home-accent-2);
+}
+[data-spw-surface="home"] .mode-switch .frame-sigil[data-set-mode="website"] {
+  --active-op-color: var(--op-ref-color, hsl(210 70% 38%));
+}
+
 [data-spw-surface="home"] .frame-note,
 [data-spw-surface="home"] .inline-note {
   color: var(--home-ink-soft);

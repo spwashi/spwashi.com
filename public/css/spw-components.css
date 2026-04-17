@@ -1699,7 +1699,124 @@ code[data-interactive]:focus-visible::after {
 }
 
 /* ==========================================================================
-   24. Accessibility & Reader Utilities
+   24. Hydration contract for JSON-backed content
+   --------------------------------------------------------------------------
+   Routes that will progressively load JSON (collectibles, topics, recipes,
+   blog index, RPG inventory) carry this contract:
+
+     <section data-spw-source="/topics/index.json"
+              data-spw-hydration="idle|loading|ready|error"
+              data-spw-source-template="topic-card">
+       <!-- server-authored fallback lives here; client replaces after hydrate -->
+     </section>
+
+   - `idle`:    no request yet; fallback is fully readable
+   - `loading`: request in flight; show skeletons for placeholder cards
+   - `ready`:   JSON applied; skeletons fade, real content settles in
+   - `error`:   render server fallback + non-blocking error hint
+
+   The CSS only provides the visual contract — the JS loader writes the state.
+   ========================================================================== */
+
+:where([data-spw-hydration="loading"]) {
+  position: relative;
+}
+
+:where([data-spw-hydration="loading"])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    var(--hydration-skeleton-shimmer, rgba(0, 128, 128, 0.06)) 45%,
+    transparent 85%
+  );
+  background-size: 220% 100%;
+  animation: spw-hydration-shimmer 1800ms linear infinite;
+  opacity: 0.7;
+  border-radius: inherit;
+}
+
+:where(.spw-skeleton, [data-spw-skeleton]) {
+  display: block;
+  min-height: 0.85em;
+  border-radius: var(--shape-control, 0.6rem);
+  background: var(--hydration-skeleton-bg, rgba(14, 18, 20, 0.06));
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hydration-skeleton-shimmer, rgba(0, 128, 128, 0.14)) 50%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  background-position: -120% 0;
+  animation: spw-hydration-skeleton 1600ms linear infinite;
+  color: transparent;
+  user-select: none;
+}
+
+:where(.spw-skeleton[data-spw-skeleton-role="heading"]) {
+  height: 1.4em;
+  width: min(100%, 16ch);
+}
+
+:where(.spw-skeleton[data-spw-skeleton-role="line"]) {
+  height: 0.85em;
+  width: min(100%, 36ch);
+  margin-block: 0.25rem;
+}
+
+:where(.spw-skeleton[data-spw-skeleton-role="card"]) {
+  height: clamp(6rem, 12vw, 8rem);
+  width: 100%;
+}
+
+:where([data-spw-hydration="ready"] .spw-skeleton),
+:where([data-spw-hydration="ready"] [data-spw-skeleton]) {
+  animation: spw-hydration-settle 220ms var(--ease-settle, ease) forwards;
+}
+
+:where([data-spw-hydration="error"])::before {
+  content: attr(data-spw-hydration-error, "Content could not be loaded — showing saved version.");
+  display: block;
+  margin-bottom: 0.55rem;
+  padding: 0.32rem 0.65rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--amber, #ffaa00) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--amber, #ffaa00) 38%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.04em;
+}
+
+@keyframes spw-hydration-shimmer {
+  from { background-position: 220% 0; }
+  to   { background-position: -120% 0; }
+}
+
+@keyframes spw-hydration-skeleton {
+  from { background-position: -120% 0; }
+  to   { background-position: 220% 0; }
+}
+
+@keyframes spw-hydration-settle {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-hydration="loading"])::after,
+  :where(.spw-skeleton, [data-spw-skeleton]) {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   25. Accessibility & Reader Utilities
    ========================================================================== */
 
 .sr-only {
