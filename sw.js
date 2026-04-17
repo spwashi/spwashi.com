@@ -8,13 +8,21 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.11';
+const CACHE_SCHEMA_VERSION = 'v2';
+const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
-  core: `spw-core-${APP_VERSION}`,
-  pages: `spw-pages-${APP_VERSION}`,
-  assets: `spw-assets-${APP_VERSION}`,
+  core: `${CACHE_NAMESPACE}-core`,
+  pages: `${CACHE_NAMESPACE}-pages`,
+  assets: `${CACHE_NAMESPACE}-assets`,
 };
+
+const LEGACY_CACHE_PREFIXES = [
+  'spw-core',
+  'spw-pages',
+  'spw-assets',
+  'spw-v',
+];
 
 const OFFLINE_URL = '/offline/';
 const FALLBACK_IMAGE_URL = '/public/images/icon-192.png';
@@ -127,11 +135,13 @@ self.addEventListener('install', (event) => {
       const failed = results.filter((result) => result.status === 'rejected');
       if (failed.length) {
         console.warn(
-          `[SW ${APP_VERSION}] Partial precache failure: ${failed.length}/${PRECACHE_URLS.length}`
+          `[SW ${CACHE_SCHEMA_VERSION}] Partial precache failure: ${failed.length}/${PRECACHE_URLS.length}`
         );
       } else {
-        console.log(`[SW ${APP_VERSION}] Precache complete`);
+        console.log(`[SW ${CACHE_SCHEMA_VERSION}] Precache complete`);
       }
+
+      await pruneCacheEntries(CACHE.core, PRECACHE_URLS);
 
       self.skipWaiting();
     })()
@@ -146,7 +156,7 @@ self.addEventListener('activate', (event) => {
 
       await Promise.all(
         names
-          .filter((name) => !keep.has(name))
+          .filter((name) => isManagedCacheName(name) && !keep.has(name))
           .map((name) => caches.delete(name))
       );
 
@@ -155,9 +165,9 @@ self.addEventListener('activate', (event) => {
       }
 
       await self.clients.claim();
-      console.log(`[SW ${APP_VERSION}] Activated`);
+      console.log(`[SW ${CACHE_SCHEMA_VERSION}] Activated`);
     })().catch(async (error) => {
-      console.warn(`[SW ${APP_VERSION}] Activate failed`, error);
+      console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Activate failed`, error);
       await self.clients.claim();
     })
   );
@@ -181,7 +191,12 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (isStaticAssetRequest(request, url)) {
+  if (isShellAssetRequest(request, url)) {
+    event.respondWith(networkFirst(request, CACHE.assets));
+    return;
+  }
+
+  if (isMediaAssetRequest(request, url)) {
     event.respondWith(staleWhileRevalidate(event, request, CACHE.assets));
     return;
   }
@@ -215,9 +230,23 @@ function shouldHandleRequest(request) {
   return true;
 }
 
-function isStaticAssetRequest(request, url) {
+function isShellAssetRequest(request, url) {
+  if (['style', 'script', 'worker'].includes(request.destination)) {
+    return true;
+  }
+
+  return (
+    url.pathname === '/manifest.webmanifest' ||
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.json') ||
+    url.pathname.endsWith('.webmanifest')
+  );
+}
+
+function isMediaAssetRequest(request, url) {
   if (
-    ['style', 'script', 'image', 'font', 'audio', 'video'].includes(request.destination)
+    ['image', 'font', 'audio', 'video'].includes(request.destination)
   ) {
     return true;
   }
@@ -225,9 +254,6 @@ function isStaticAssetRequest(request, url) {
   return (
     url.pathname.startsWith('/public/') ||
     url.pathname === '/favicon.ico' ||
-    url.pathname.endsWith('.css') ||
-    url.pathname.endsWith('.js') ||
-    url.pathname.endsWith('.json') ||
     url.pathname.endsWith('.svg') ||
     url.pathname.endsWith('.png') ||
     url.pathname.endsWith('.jpg') ||
@@ -361,7 +387,7 @@ async function cacheResponse(cacheName, request, response) {
     const cache = await caches.open(cacheName);
     await cache.put(normalizeCacheKey(request), response);
   } catch (error) {
-    console.warn(`[SW ${APP_VERSION}] Cache put failed`, error);
+    console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Cache put failed`, error);
   }
 }
 
@@ -383,7 +409,32 @@ function isCacheableResponse(response) {
   if (!response) return false;
   if (!response.ok) return false;
   if (response.type === 'opaque') return false;
+  const cacheControl = response.headers.get('cache-control') || '';
+  if (/\bno-store\b/i.test(cacheControl)) return false;
   return true;
+}
+
+async function pruneCacheEntries(cacheName, allowlistUrls) {
+  try {
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
+    const allowlist = new Set(
+      allowlistUrls.map((url) => new URL(url, self.location.origin).href)
+    );
+
+    await Promise.all(
+      requests
+        .filter((request) => !allowlist.has(request.url))
+        .map((request) => cache.delete(request))
+    );
+  } catch (error) {
+    console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Cache prune failed`, error);
+  }
+}
+
+function isManagedCacheName(name) {
+  return name.startsWith(CACHE_NAMESPACE)
+    || LEGACY_CACHE_PREFIXES.some((prefix) => name.startsWith(prefix));
 }
 
 function isCacheableHtmlResponse(response) {

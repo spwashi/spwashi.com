@@ -86,6 +86,11 @@
  >>[2026-04-09 19:44] implement — Added a canonical root `sw.js`, kept `/public/sw.js` as a compatibility wrapper, and switched the shell logic to navigation-aware caching with an explicit offline route.
  >>[2026-04-09 19:45] implement — Replaced manifest version polling with service-worker lifecycle handling, contextual install prompts, and generated install icon assets from existing site artwork.
  >>[2026-04-09 19:51] verify — `node --check` passed for `sw.js` and `public/js/pwa-update-handler.js`; `python3 -m json.tool manifest.webmanifest` passed; generated icons match declared sizes; local static-server HEAD checks returned `200` for `/sw.js`, `/manifest.webmanifest`, `/offline/`, `/public/images/icon-192.png`, `/about/`, and `301` for `/about`.
+ >>[2026-04-17 16:45] observe — Shell assets are still served stale-while-revalidate, so updates can require an extra reload even after a waiting worker activates.
+ >>[2026-04-17 16:45] observe — Cache naming still depends on a manual app-version bump, which is the wrong lever for a hand-authored static site with no build step.
+ >>[2026-04-17 16:45] decide — Move CSS/JS/manifest into a network-first shell path, stabilize cache namespaces by schema instead of deploy version, and register the worker with `updateViaCache: "none"` so offline stays possible while updates arrive promptly.
+ >>[2026-04-17 16:53] observe — The manifest still declares `orientation: any`, which makes the installed Android shell rotate too eagerly for a reading-first site.
+ >>[2026-04-17 16:53] decide — Lock the installed shell to `portrait-primary`; wide and landscape exploration can still happen in the normal browser surface without fighting phone orientation preferences.
 }
 
 ^["open"]{

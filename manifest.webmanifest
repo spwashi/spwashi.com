@@ -10,7 +10,7 @@
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
   "version": "0.2.3",
-  "orientation": "any",
+  "orientation": "portrait-primary",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
   "icons": [

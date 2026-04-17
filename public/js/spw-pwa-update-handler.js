@@ -294,6 +294,31 @@ const maybeShowUpdatePrompt = (registration) => {
     });
 };
 
+const attachUpdateTriggers = (registration) => {
+    if (!registration) return noop;
+
+    let disposed = false;
+    const trigger = () => {
+        if (disposed) return;
+        registration.update().catch(noop);
+    };
+
+    const onVisible = () => {
+        if (document.visibilityState === 'visible') {
+            trigger();
+        }
+    };
+
+    window.addEventListener('online', trigger);
+    document.addEventListener('visibilitychange', onVisible);
+
+    return () => {
+        disposed = true;
+        window.removeEventListener('online', trigger);
+        document.removeEventListener('visibilitychange', onVisible);
+    };
+};
+
 const maybeShowInstallPrompt = () => {
     if (shouldDisableServiceWorkerInDevelopment()) return;
     if (!initialized) return;
@@ -406,12 +431,13 @@ const initPwaUpdateHandler = async () => {
     });
 
     // Register + watch
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
         .then((registration) => {
             console.log('[Spw PWA] Service Worker registered successfully');
             watchServiceWorker(registration);
             maybeShowUpdatePrompt(registration);
             maybeShowInstallPrompt();
+            attachUpdateTriggers(registration);
 
             // Periodic background update check
             setInterval(() => {
