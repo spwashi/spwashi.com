@@ -1,0 +1,203 @@
+# Wonder Vocabulary
+#
+# An expanded vocabulary for motivating attention into wonder into action.
+# Words in the site's copy are tokens that participate in the attention field;
+# choosing the right word is a design act, not just a writing act.
+
+#>spw_wonder_vocabulary
+#:model #!vocabulary
+#:layer #!pragmatics
+
+@attention_field: ~"./attention-field.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@site_semantics: ~"./site-semantics.spw"
+@style_development: ~"./style-development.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@approach_topography: ~"../surfaces/approach-topography.spw"
+@page_model: ~"../surfaces/page-model.spw"
+
+thesis: .{
+ claim = `Every word in the visible copy is a token. The word chosen motivates a specific kind of attention and can bias what the visitor wonders about next. Copy is not prose around the interface — copy is the interface's receptor surface.`
+ corollary = `A site that repeats the same seven operator words will teach those seven and then plateau. A site that chooses its words with care earns a combinatoric vocabulary in which the visitor can notice new arrangements without being taught each one.`
+ stakes = `Non-coding visitors will only wonder about C-style grammar if the surrounding copy gives them permission. The vocabulary is the permission.`
+}[reg=facet]
+
+current_wonder_types: .{
+ note = `The seven wonder types inferred from operator use. These are stable and should remain addressable.`
+ orientation = `Where am I? What region am I in?`
+ constraint = `What are the rules here? What can and cannot happen?`
+ memory = `What is being carried? What persists from before?`
+ resonance = `What matches? What responds to what I just touched?`
+ inquiry = `What could be asked here? What is the open question?`
+ projection = `What is being referenced? What points elsewhere?`
+ comparison = `What differs? What is being held in contrast?`
+}[reg=facet]
+
+expanded_vocabulary: .{
+ note = `A larger vocabulary that extends the seven. Each word is a candidate token with a specific intent, interaction feel, and CSS-potential expression.`
+ arrival = .{
+  intent = `The moment the visitor reaches a place that rewards the motion of getting there.`
+  interaction = `A felt event, not a click. Arrival is recognized after it happens.`
+  css_potential = `settled accent, stable typography, inspectable depth`
+  pairs_with = #[approach, return][reg=set]
+ }[reg=facet]
+ approach = .{
+  intent = `The developing distance between the visitor and a feature — not yet there, but resolving.`
+  interaction = `Scroll, navigation, hover-with-dwell. Progressive disclosure.`
+  css_potential = `gradient sharpening, saturation growth, typography weight increase with scroll depth`
+  pairs_with = #[arrival, distance][reg=set]
+ }[reg=facet]
+ recognition = .{
+  intent = `The visitor sees something they have seen before, and the page registers the meeting.`
+  interaction = `Wonder trail mark, visited-state accent, memory-match ornament.`
+  css_potential = `--spw-wonder-memory-color, faint accent on known paths`
+  pairs_with = #[memory, return][reg=set]
+ }[reg=facet]
+ return = .{
+  intent = `The visitor moves back toward something prior — not as undoing, but as integration.`
+  interaction = `Legible path back, deviation register visible, ground affordance reachable.`
+  css_potential = `persistent chrome, trail accent, breadcrumb weight`
+  pairs_with = #[arrival, recognition][reg=set]
+ }[reg=facet]
+ dwell = .{
+  intent = `The visitor stays with a thing long enough for it to develop.`
+  interaction = `Dwell-proportional charge accumulation. No explicit click required.`
+  css_potential = `slow accent bloom, subtle pulse, delayed ornament reveal`
+  pairs_with = #[reading, notice][reg=set]
+ }[reg=facet]
+ pivot = .{
+  intent = `The visitor turns from one thing to a related thing without leaving the region.`
+  interaction = `Adjacent card, sibling link, lateral navigation.`
+  css_potential = `horizontal motion, sibling-reveal animation, register-shared accent`
+  pairs_with = #[compare, wander][reg=set]
+ }[reg=facet]
+ settle = .{
+  intent = `The visitor has chosen to stop moving and inhabit.`
+  interaction = `Reading state, no active charge emission, ambient field preserved.`
+  css_potential = `calm-at-rest tokens, reduced motion, baseline palette`
+  pairs_with = #[arrival, dwell][reg=set]
+ }[reg=facet]
+ wander = .{
+  intent = `The visitor is moving without a clear destination — exploring.`
+  interaction = `Multiple low-commitment hovers, path variance, no deep inspection yet.`
+  css_potential = `ambient substrate, low-saturation state, invitation-mode chrome`
+  pairs_with = #[pivot, notice][reg=set]
+ }[reg=facet]
+ notice = .{
+  intent = `Something caught the visitor's eye without them seeking it.`
+  interaction = `Peripheral resonance, field wash from an adjacent component, unearned accent.`
+  css_potential = `field intensity bleed, low-threshold wonder state, accent without interaction history`
+  pairs_with = #[wander, recognize][reg=set]
+ }[reg=facet]
+ trace = .{
+  intent = `The visitor is following a deliberate path through the page.`
+  interaction = `Sequential frame traversal, keyboard navigation, anchor-to-anchor motion.`
+  css_potential = `breadcrumb accumulation, visited-state mark, path highlight`
+  pairs_with = #[return, dwell][reg=set]
+ }[reg=facet]
+ inhabit = .{
+  intent = `The visitor has taken up residence in a feature long enough for it to become theirs.`
+  interaction = `Settings deviation, collection gesture, explicit pin.`
+  css_potential = `stable accent, persistent deviation mark, named ownership`
+  pairs_with = #[settle, collect][reg=set]
+ }[reg=facet]
+ release = .{
+  intent = `The visitor lets go of a held state — uncollects, un-pins, reverts.`
+  interaction = `Escape gesture, explicit reset, return to authored default.`
+  css_potential = `accent fade, deviation mark clearing, baseline restoration animation`
+  pairs_with = #[return, settle][reg=set]
+ }[reg=facet]
+ threshold = .{
+  intent = `A visible or felt boundary between states, regions, or orientations.`
+  interaction = `Scroll across a section break, cross into a new region, enter a new route.`
+  css_potential = `brace wash shift, crease weight change, palette rotation`
+  pairs_with = #[approach, arrival][reg=set]
+ }[reg=facet]
+}[reg=facet]
+
+copy_as_receptor_surface: .{
+ note = `The words in the copy are not just prose — they register tokens in the attention field.`
+ principle = `Every noun and verb in a visible frame contributes to that frame's token set. A frame that uses the word 'constraint' will resonate with other frames using 'constraint' via register diffusion.`
+ implications = #[
+  `A page can be tuned by changing its copy vocabulary without changing its code.`,
+  `Synonyms are not equivalent — 'arrival' and 'destination' may register different fields.`,
+  `Repeating a rare word across pages creates a long-distance resonance channel.`,
+  `Overused words (the, and, is) should be ignored by the receptor model, but operator-adjacent words should be weighted.`
+ ][reg=set]
+ authoring_discipline = `When writing a frame's prose, ask: what tokens am I depositing into the field? Is there a word that would serve the approach better than the default one?`
+}[reg=facet]
+
+non_coding_author_angle: .{
+ note = `Why should a non-coding visitor wonder about C-style grammar at all?`
+ reframe = `C-style braces, brackets, and parentheses are already in natural language — as dashes, clauses, asides, footnotes. The question is not 'why learn code' but 'why do these shapes recur across so many human sign systems?'`
+ entry_points = .{
+  punctuation = `The comma is a soft brace. The em-dash is a container. The footnote is a projection operator.`
+  music = `A phrase has an opening and a closing gesture. Repetition marks are braces. A coda is a closing-orientation frame.`
+  cooking = `A recipe is a stream of ingredients, a set of steps, and a facet of context. The grammar is the same — the register types are different.`
+  gardening = `A bed is a container. A seed is an emission. The season is a decay parameter. The garden itself is a register.`
+  library_science = `A catalog is a receptor surface. A call number is a token. A shelf is a region. The patron's path is a trace.`
+ }[reg=facet]
+ invitation = `The site should make the C-style grammar feel like a recognition, not a foreign import. The visitor should think: 'this is how I already think about X; I did not know there was a name for it.'`
+}[reg=facet]
+
+combinatoric_wonder: .{
+ note = `The combinatoric infinity of wonder into genre through CSS tokens and operator metaphysics.`
+ mechanism = `Wonder types + operator tokens + role values + copy words combine to produce the page's genre. Any one alone is small; the combination produces the irreducible felt character.`
+ examples = .{
+  recipes_genre = `arrival + dwell + substrate + kitchen-palette + culinary nouns = a recipes genre that is legible as both food and pedagogy`
+  operator_atlas_genre = `approach + recognition + inspect + operator-palette + grammar nouns = a software surface that teaches by letting the reader notice structure`
+  play_genre = `wander + pivot + notice + game-palette + play nouns = a sessions surface that invites return without demanding commitment`
+  about_genre = `settle + inhabit + threshold + identity-palette + register nouns = an about surface that is a place, not a biography`
+ }[reg=facet]
+ scaling_consequence = `With N wonder types, M operator tokens, P role values, and Q copy words, the expressible genre space is roughly N·M·P·Q — growing multiplicatively rather than additively. Each new token added to the vocabulary expands the whole space, not just its own row.`
+}[reg=facet]
+
+audience_translations: .{
+ note = `Which vocabulary words land with which audience. This is not segmentation — it is knowing which door each person finds.`
+ engineer_doors = #[
+  constraint,
+  register,
+  receptor,
+  threshold,
+  trace,
+  pivot,
+  `inspect`,
+  `collect`
+ ][reg=set]
+ illustrator_doors = #[
+  substrate,
+  figure,
+  wash,
+  gradient,
+  dwell,
+  notice,
+  arrival,
+  `the opposing brace feels like a negative-space mark`
+ ][reg=set]
+ librarian_doors = #[
+  catalog,
+  register,
+  recognition,
+  return,
+  trace,
+  inhabit,
+  threshold,
+  `the wonder trail is a reading history made visible`
+ ][reg=set]
+ shared_doors = #[
+  wonder,
+  approach,
+  arrival,
+  dwell,
+  settle,
+  threshold
+ ][reg=set]
+}[reg=facet]
+
+open_questions: #[
+ .{ ask = `Which of the expanded vocabulary words should become data-spw-* tokens, and which should remain copy-only?` },
+ .{ ask = `Should the word list be finite and curated, or open and organically extended as copy is written?` },
+ .{ ask = `What is the right weight for a copy-derived token compared to an authored data-spw token?` },
+ .{ ask = `Can the audience doors be surfaced as a wonder-trail overlay — showing which words the visitor has already encountered?` },
+ .{ ask = `Does the combinatoric space need any explicit pruning, or is the natural decay of the field enough to keep it navigable?` }
+][reg=set]

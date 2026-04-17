@@ -15,8 +15,11 @@
 @assets: ~"./assets.spw"
 @reviews: ~"./reviews/index.spw"
 @page_model: ~"./surfaces/page-model.spw"
+@approach_topography: ~"./surfaces/approach-topography.spw"
+@product_lines: ~"./surfaces/product-lines.spw"
 @attention_field: ~"./conventions/attention-field.spw"
 @ornament_contract: ~"./conventions/ornament-contract.spw"
+@wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @philosophy: ~"./philosophy/index.spw"
 @graph: ~"./graph.spw"
 @surfaces: ~"./surfaces.spw"
@@ -61,6 +64,7 @@ translations: .{
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
+ approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
 
@@ -77,8 +81,11 @@ dispatch: .{
  style_development = @style_development
  reviews = @reviews
  page_model = @page_model
+ approach_topography = @approach_topography
+ product_lines = @product_lines
  attention_field = @attention_field
  ornament_contract = @ornament_contract
+ wonder_vocabulary = @wonder_vocabulary
  philosophy = @philosophy
  graph = @graph
  public_surfaces = @surfaces

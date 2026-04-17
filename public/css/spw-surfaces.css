@@ -1549,3 +1549,83 @@
     gap: 0.5rem;
   }
 }
+
+:where(.site-deviation-surface) {
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--paper-wash, rgba(250, 248, 244, 0.6)) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink, #2a2a2a) 10%, transparent);
+  min-height: 2.2rem;
+  font-size: 0.88rem;
+}
+
+:where(.site-deviation-surface[data-deviation-state='default']) {
+  opacity: 0.76;
+}
+
+:where(.site-deviation-surface[data-deviation-state='deviated']) {
+  border-color: color-mix(in srgb, var(--wonder-accent-color, #a55) 40%, transparent);
+  background: color-mix(in srgb, var(--wonder-accent-color, #a55) 6%, var(--paper-wash, rgba(250, 248, 244, 0.6)));
+}
+
+:where(.site-deviation-empty) {
+  display: block;
+  font-style: italic;
+  color: color-mix(in srgb, var(--ink, #2a2a2a) 68%, transparent);
+}
+
+:where(.site-deviation-entries) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.site-deviation-entry) {
+  display: grid;
+  grid-template-columns: minmax(6rem, 10rem) 1fr auto;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.25rem 0.1rem;
+  border-bottom: 1px dashed color-mix(in srgb, var(--ink, #2a2a2a) 8%, transparent);
+}
+
+:where(.site-deviation-entry:last-child) {
+  border-bottom: none;
+}
+
+:where(.site-deviation-name) {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+:where(.site-deviation-change) {
+  font-family: var(--site-mono-font, ui-monospace, monospace);
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--ink, #2a2a2a) 82%, transparent);
+}
+
+:where(.site-deviation-reset) {
+  border: 1px solid color-mix(in srgb, var(--ink, #2a2a2a) 20%, transparent);
+  background: transparent;
+  border-radius: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+  transition: background var(--duration-fast, 120ms) ease, border-color var(--duration-fast, 120ms) ease;
+}
+
+:where(.site-deviation-reset:hover, .site-deviation-reset:focus-visible) {
+  border-color: color-mix(in srgb, var(--wonder-accent-color, #a55) 55%, transparent);
+  background: color-mix(in srgb, var(--wonder-accent-color, #a55) 10%, transparent);
+}
+
+:where(html[data-spw-deviation-state='deviated']) [data-site-deviation-count] {
+  color: color-mix(in srgb, var(--wonder-accent-color, #a55) 75%, var(--ink, #2a2a2a));
+  font-weight: 600;
+}

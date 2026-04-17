@@ -40,8 +40,8 @@ composition_hierarchy: .{
   definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose.`
   semantic_identity = #[`feature-role`, `feature-kind`, `purpose description`][reg=set]
   field_role = `Features are the primary attractor units. When a visitor's attention enters a feature, the feature's tokens enter the wonder field.`
-  html_contract = `Currently unnamed in markup — proposed: data-spw-feature='name' on the outermost element of a functional cluster.`
-  gap = `No current data attribute or JS model names features as a distinct level. Components and regions exist; features are implicit.`
+  html_contract = `data-spw-feature='name' on the outermost element of a functional cluster. Selected high-traffic routes now author this explicitly; coverage is still partial.`
+  gap = `Feature naming now exists in markup, but there is no sitewide JS model yet and many routes still rely on implicit clustering.`
  }[reg=facet]
  component = .{
   definition = `A reusable semantic element that participates in the attentional grammar.`
@@ -148,7 +148,7 @@ tunable_parameters: .{
 }[reg=facet]
 
 open_questions: #[
- .{ ask = `Should features be authored explicitly (data-spw-feature='name') or inferred from component clustering?` },
+ .{ ask = `What heuristic decides when a region shell should also carry a feature name versus only its inner clusters?` },
  .{ ask = `What is the right granularity for a gradient anchor — should it be a region, a feature, or a component?` },
  .{ ask = `How should the attentional topography be made inspectable — as a visible overlay, as data attributes, or as a separate inspect mode?` },
  .{ ask = `If a page has multiple attractors, how should the visitor be signaled that escape paths exist?` },

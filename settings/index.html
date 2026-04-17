@@ -137,7 +137,7 @@
                 <h1 id="settings-title">Settings</h1>
                 <p class="settings-note">Preferences are stored in this browser only. Nothing syncs, nothing tracks.</p>
                 <p class="settings-start-note">Start with the quick variants below if you want an immediate shift in atmosphere. Choose the state you want, watch the active option stay highlighted, then use the status line and current-vibe cards to confirm the result.</p>
-                <nav class="settings-hero-actions" aria-label="Settings sections">
+                <nav class="settings-hero-actions" aria-label="Settings sections" data-spw-feature="settings-section-index">
                     <a class="operator-chip" href="#presets">start here</a>
                     <a class="operator-chip" href="#applied-state">current state</a>
                     <a class="operator-chip" href="#runtime-preferences">fine-tune everything</a>
@@ -153,7 +153,7 @@
                 <p class="frame-note">
                     These are the highest-leverage adjustments: choose a preset if you want a complete starting point, then refine the experience with the smaller state cards before opening the full register below.
                 </p>
-                <div class="vibe-widget-grid settings-quickstart-grid">
+                <div class="vibe-widget-grid settings-quickstart-grid" data-spw-feature="settings-quickstart">
                     <article class="vibe-widget vibe-widget--feature" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Quick presets</p>
@@ -199,6 +199,18 @@
                             <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
                             <span class="spec-pill">climate: <span class="vibe-widget-state" data-settings-state="currentDevelopmentalClimate">orient</span></span>
                         </div>
+                    </article>
+
+                    <article class="vibe-widget" data-site-settings-panel>
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Deviation register</p>
+                            <h3 class="vibe-widget-title">What differs from the authored default</h3>
+                        </div>
+                        <p class="vibe-widget-copy">A persistent record of your adjustments. Every setting that deviates from the authored default is listed here and can be reset individually.</p>
+                        <div class="vibe-widget-meta">
+                            <span class="spec-pill">deviations: <span class="vibe-widget-state" data-site-deviation-count>0</span></span>
+                        </div>
+                        <div class="site-deviation-surface" data-site-deviation-list="resettable" aria-live="polite"></div>
                     </article>
 
                     <article class="vibe-widget" data-site-settings-panel>
@@ -251,7 +263,7 @@
                     A readable local summary of what the runtime is currently expressing. It should update immediately while you experiment with the quick-start cards above.
                 </p>
 
-                <div class="settings-state-grid" data-settings-state-grid>
+                <div class="settings-state-grid" data-settings-state-grid data-spw-feature="settings-applied-state">
                     <article class="settings-state-card">
                         <span class="settings-state-label">developmental climate</span>
                         <strong data-settings-state="currentDevelopmentalClimate">orient</strong>
@@ -300,7 +312,7 @@
                     Use this register when the quick-start cards are not enough. These controls expose the full local settings model; the maps further down explain the machinery only if you want to inspect it.
                 </p>
 
-                <form class="settings-form" data-site-settings-form>
+                <form class="settings-form" data-site-settings-form data-spw-feature="settings-runtime-form">
 
                     <!-- Appearance -->
                     <details class="settings-category" open>
@@ -977,7 +989,7 @@
                         </div>
                     </details>
 
-                    <div class="settings-actions">
+                    <div class="settings-actions" data-spw-feature="settings-form-actions">
                         <button class="operator-chip" type="submit">@ save settings</button>
                         <button class="operator-chip" type="button" data-site-settings-reset>! reset hearth
                             defaults</button>
@@ -991,7 +1003,7 @@
                     <a class="frame-sigil" href="#settings-notes">~"settings_notes"</a>
                     <h2>Notes</h2>
                 </div>
-                <div class="frame-grid">
+                <div class="frame-grid" data-spw-feature="settings-notes-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="settings" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_settings_settings__panel_1">
                         <h3>Why quiet by default?</h3>
                         <p>The map and console are inspection tools that should not compete with the page content.</p>
@@ -1026,7 +1038,7 @@
                     <a class="frame-sigil" href="#pwa-status">~"pwa_status"</a>
                     <h2>App Status</h2>
                 </div>
-                <div class="pwa-status-grid" data-pwa-status>
+                <div class="pwa-status-grid" data-pwa-status data-spw-feature="settings-pwa-status">
                     <div class="pwa-status-card">
                         <span class="pwa-status-label">Install</span>
                         <span class="pwa-status-value" data-pwa-install-status>Checking...</span>
@@ -1056,7 +1068,7 @@
                 </div>
                 <p class="frame-note">Components you've 'pinned' by holding them for >420ms appear here as a local
                     collection spell.</p>
-                <div class="bookmark-registry" data-spw-bookmarks-root>
+                <div class="bookmark-registry" data-spw-bookmarks-root data-spw-feature="settings-bookmarks">
                     <p class="inline-note">Hold any component with a brace form (like a card or section) to pin it here.
                     </p>
                 </div>
@@ -1073,7 +1085,7 @@
                     document datasets, and CSS custom properties that other surfaces read.
                 </p>
 
-                <div class="settings-system-map">
+                <div class="settings-system-map" data-spw-feature="settings-runtime-map">
                     <article class="settings-map-card">
                         <h3>1. Stored Settings</h3>
                         <p>Local values are normalized against the site settings registry before they are applied.</p>

@@ -20,8 +20,8 @@
    ========================================================================== */
 
 :root {
-  --wonder-accent-color: var(--amber, #ffbf00);
-  --delight-color: var(--teal, #008080);
+  --wonder-accent-color: var(--spw-wonder-accent-base-color, var(--amber, #ffbf00));
+  --delight-color: var(--spw-delight-base-color, var(--teal, #008080));
 
   --spw-wonder-duration-fast: var(--duration-fast, 120ms);
   --spw-wonder-duration-base: var(--duration-base, 200ms);
@@ -610,7 +610,10 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   .spw-svg-surface,
   .spw-metaphysics-host
 ) {
-  --wonder-accent-color: color-mix(in srgb, var(--amber, #ffbf00) 72%, white);
+  --wonder-accent-color: var(
+    --spw-wonder-accent-emphasis-color,
+    color-mix(in srgb, var(--amber, #ffbf00) 72%, white)
+  );
 }
 
 /* ==========================================================================

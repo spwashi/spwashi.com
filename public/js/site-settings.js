@@ -570,6 +570,23 @@ const sanitizePartialSettings = (partial = {}) => {
   return next;
 };
 
+const listDeviations = (settings = normalizeSiteSettings(storage.get())) => {
+  const normalized = normalizeSiteSettings(settings);
+  const deviations = [];
+
+  Object.keys(DEFAULT_SITE_SETTINGS).forEach((key) => {
+    if (normalized[key] !== DEFAULT_SITE_SETTINGS[key]) {
+      deviations.push({
+        name: key,
+        default: DEFAULT_SITE_SETTINGS[key],
+        current: normalized[key]
+      });
+    }
+  });
+
+  return deviations;
+};
+
 /* ==========================================================================
    4. Pure helpers
    ========================================================================== */
@@ -759,6 +776,8 @@ class SiteSettingsManager {
     const normalized = normalizeSiteSettings(settings);
     const modifiers = this.getModifiers(normalized);
     const climate = modifiers.climate;
+    const deviations = listDeviations(normalized);
+    const deviationNames = deviations.map((entry) => entry.name);
 
     setDatasetEntries(this.root, {
       spwNavigator: normalized.navigatorDisplay,
@@ -800,7 +819,10 @@ class SiteSettingsManager {
       spwDevelopmentalLabel: climate.label,
       spwLearningMode: climate.learningMode,
       spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
-      spwGrainIntensity: normalized.grainIntensity
+      spwGrainIntensity: normalized.grainIntensity,
+      spwDeviationCount: String(deviations.length),
+      spwDeviations: deviationNames.join(' ') || null,
+      spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
     });
 
     setStyleProperties(this.root, {
@@ -836,7 +858,8 @@ class SiteSettingsManager {
       '--spw-developmental-resonance': modifiers.ecology.resonance,
       '--spw-developmental-charge-bias': modifiers.ecology.chargeBias,
       '--spw-developmental-selection-bias': modifiers.ecology.selectionBias,
-      '--spw-surface-permeability-base': modifiers.ecology.permeabilityBase
+      '--spw-surface-permeability-base': modifiers.ecology.permeabilityBase,
+      '--spw-deviation-count': deviations.length
     });
 
     applyImageLoadingPreference(normalized);
@@ -844,12 +867,18 @@ class SiteSettingsManager {
     return normalized;
   }
 
+  listDeviations(settings = this.get()) {
+    return listDeviations(settings);
+  }
+
   save(nextSettings = {}) {
     const current = this.get();
     const merged = normalizeSiteSettings({ ...current, ...sanitizePartialSettings(nextSettings) });
     storage.set(merged);
     const applied = this.apply(merged);
+    const deviations = listDeviations(applied);
     bus.emit('settings:changed', applied);
+    bus.emit('settings:deviations-changed', { deviations, count: deviations.length });
     return applied;
   }
 
@@ -857,6 +886,7 @@ class SiteSettingsManager {
     storage.clear();
     const applied = this.apply(DEFAULT_SITE_SETTINGS);
     bus.emit('settings:changed', applied);
+    bus.emit('settings:deviations-changed', { deviations: [], count: 0 });
     return applied;
   }
 
@@ -904,6 +934,22 @@ const emitSettingsChange = (settings) => {
 const getSettingValue = (name, settings = getSiteSettings()) => {
   if (!isKnownSetting(name)) return undefined;
   return normalizeSiteSettings(settings)[name];
+};
+
+const getSiteSettingDeviations = (settings) => listDeviations(settings ?? getSiteSettings());
+
+const describeDeviation = ({ name, default: defaultValue, current }) => ({
+  name,
+  humanName: humanizeSettingName(name),
+  default: defaultValue,
+  defaultLabel: describeSettingValue(name, defaultValue),
+  current,
+  currentLabel: describeSettingValue(name, current)
+});
+
+const resetSingleSetting = (name) => {
+  if (!isKnownSetting(name)) return null;
+  return saveSiteSettings({ [name]: DEFAULT_SITE_SETTINGS[name] });
 };
 
 /* ==========================================================================
@@ -1470,6 +1516,7 @@ const bindSettingsReadouts = (root = document) => {
 
   const sync = (settings = getSiteSettings()) => {
     syncSettingsReadouts(root, settings);
+    syncDeviationReadouts(root, settings);
   };
 
   sync();
@@ -1488,6 +1535,94 @@ const bindSettingsReadouts = (root = document) => {
   };
 };
 
+const syncDeviationReadouts = (root = document, settings = getSiteSettings()) => {
+  const deviations = listDeviations(settings);
+  const described = deviations.map(describeDeviation);
+
+  root.querySelectorAll?.('[data-site-deviation-count]').forEach((node) => {
+    node.textContent = String(described.length);
+    node.dataset.deviationState = described.length > 0 ? 'deviated' : 'default';
+  });
+
+  root.querySelectorAll?.('[data-site-deviation-list]').forEach((host) => {
+    host.replaceChildren();
+    host.dataset.deviationState = described.length > 0 ? 'deviated' : 'default';
+
+    if (!described.length) {
+      const empty = document.createElement('span');
+      empty.className = 'site-deviation-empty';
+      empty.textContent = 'All settings match the authored default.';
+      host.appendChild(empty);
+      return;
+    }
+
+    const list = document.createElement('ul');
+    list.className = 'site-deviation-entries';
+
+    described.forEach((entry) => {
+      const item = document.createElement('li');
+      item.className = 'site-deviation-entry';
+      item.dataset.deviationName = entry.name;
+
+      const name = document.createElement('span');
+      name.className = 'site-deviation-name';
+      name.textContent = entry.humanName;
+
+      const change = document.createElement('span');
+      change.className = 'site-deviation-change';
+      change.textContent = `${entry.defaultLabel} → ${entry.currentLabel}`;
+
+      item.append(name, change);
+
+      if (host.dataset.siteDeviationList === 'resettable') {
+        const reset = document.createElement('button');
+        reset.type = 'button';
+        reset.className = 'site-deviation-reset';
+        reset.textContent = 'reset';
+        reset.setAttribute('data-site-deviation-reset', entry.name);
+        item.appendChild(reset);
+      }
+
+      list.appendChild(item);
+    });
+
+    host.appendChild(list);
+  });
+};
+
+const bindDeviationControls = (root = document) => {
+  if (!(root instanceof HTMLElement) && root !== document) {
+    return { cleanup() {}, refresh() {} };
+  }
+
+  const handleClick = (event) => {
+    const target = event.target instanceof Element
+      ? event.target.closest('[data-site-deviation-reset]')
+      : null;
+    if (!(target instanceof HTMLElement)) return;
+    const name = target.getAttribute('data-site-deviation-reset');
+    if (!name) return;
+    resetSingleSetting(name);
+  };
+
+  root.addEventListener('click', handleClick);
+  syncDeviationReadouts(root);
+
+  const off = bus.on?.('settings:changed', (event) => {
+    syncDeviationReadouts(root, event.detail);
+  });
+
+  return {
+    cleanup() {
+      root.removeEventListener('click', handleClick);
+      off?.();
+    },
+    refresh() {
+      syncDeviationReadouts(root);
+    }
+  };
+};
+
 /* ==========================================================================
    9. Settings page UI
    --------------------------------------------------------------------------
@@ -1501,7 +1636,7 @@ const initSiteSettingsBindings = () => {
   const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set]')]
     .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
   const hasReadouts = Boolean(
-    document.querySelector('[data-settings-state], [data-site-setting-value]')
+    document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list]')
   );
 
   if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || manager._initialized) return;
@@ -1522,6 +1657,7 @@ const initSiteSettingsBindings = () => {
   }));
   const triggers = bindStandaloneSettingTriggers(document);
   const readouts = bindSettingsReadouts(document);
+  const deviationControls = bindDeviationControls(document);
 
   initPwaStatusDisplay();
 
@@ -1530,12 +1666,14 @@ const initSiteSettingsBindings = () => {
       bindings.forEach((binding) => binding.cleanup());
       triggers.cleanup();
       readouts.cleanup();
+      deviationControls.cleanup();
       manager._initialized = false;
     },
     refresh() {
       bindings.forEach((binding) => binding.refresh());
       triggers.refresh();
       readouts.refresh();
+      deviationControls.refresh();
       initPwaStatusDisplay();
     }
   };
@@ -1618,6 +1756,7 @@ if (typeof window !== 'undefined') {
     getValue: getSettingValue,
     save: saveSiteSettings,
     reset: resetSiteSettings,
+    resetOne: resetSingleSetting,
     apply: applySiteSettings,
     validateSetting,
     validatePartialSettings,
@@ -1626,6 +1765,9 @@ if (typeof window !== 'undefined') {
     bindSettingsField,
     bindStandaloneSettingTriggers,
     bindSettingsReadouts,
+    bindDeviationControls,
+    listDeviations: getSiteSettingDeviations,
+    describeDeviation,
     presets: PRESETS,
     describePreset: (name) => manager.describePreset(name),
     initBindings: initSiteSettingsBindings,
@@ -1644,22 +1786,27 @@ export {
   SETTING_OPTIONS,
   SITE_SETTINGS_KEY,
   applySiteSettings,
+  bindDeviationControls,
   bindSettingsField,
   bindSettingsReadouts,
   bindSettingsScope,
   bindStandaloneSettingTriggers,
   collectSettingsFromScope,
+  describeDeviation,
   emitSettingsChange,
   getSettingValue,
+  getSiteSettingDeviations,
   getSiteSettingModifiers,
   getSiteSettings,
   initSiteSettingsBindings,
   initSiteSettingsPage,
   normalizeSiteSettings,
+  resetSingleSetting,
   resetSiteSettings,
   sanitizePartialSettings,
   saveSiteSettings,
   shouldUseViewportActivation,
+  syncDeviationReadouts,
   syncSettingsReadouts,
   validatePartialSettings,
   validateSetting,

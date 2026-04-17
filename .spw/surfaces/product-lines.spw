@@ -1,0 +1,135 @@
+# Product Lines
+#
+# Features becoming narrativized product lines becoming collectibles.
+# Stub proliferation relieves design pressure by letting a route exist
+# before it earns a full feature. Audience register clarifies who each
+# product line is for.
+
+#>spw_product_lines
+#:model #!narrative
+#:layer #!pragmatics
+
+@page_model: ~"./page-model.spw"
+@approach_topography: ~"./approach-topography.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@wonder_vocabulary: ~"../conventions/wonder-vocabulary.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+
+thesis: .{
+ claim = `A product line is a feature that has been named long enough and narrated clearly enough that its instances become collectible. Without narrative, a feature is a fixture; with narrative, a feature is an edition.`
+ corollary = `Stubs are how product lines begin. A stub is a route that exists before its feature earns depth — it holds the name, sets the distance signal, and relieves pressure on the authoring calendar.`
+}[reg=facet]
+
+product_lines: .{
+ note = `Named lines in their current state. Each can be stubbed before it is filled.`
+ recipes = .{
+  pitch = `Culinary forms through a learning-science lens. Each recipe is a lesson in cognition — how flavor builds structure, how substitution teaches variables, how timing teaches causality.`
+  feature_shape = `Per-recipe card: ingredients as a set, steps as a stream, context as a facet, pedagogical note as a liminal layer.`
+  collectible_unit = `The recipe itself, its substitution matrix, its pedagogical note, its seasonal variant.`
+  audience_primary = illustrator
+  audience_bridge = `engineers read it as a DSL; librarians read it as a catalog entry`
+  current_state = `Route exists at /recipes; markup is naive; needs hero, substrate, and first three cards.`
+ }[reg=facet]
+ seed_cards = .{
+  pitch = `Configurable, screenshottable cards for rates, asks, and offerings. The same card shape serves 'my hourly rate is X' and 'I need groceries this week'.`
+  feature_shape = `A single card component with slots for header, body, badges, footer. Configurable accent and palette. Exportable as image.`
+  collectible_unit = `A specific seed card instance — an edition with timestamp and context.`
+  audience_primary = shared
+  audience_bridge = `engineers collect the template; illustrators collect the aesthetic; librarians collect the provenance`
+  current_state = `Planned but not routed. Needs dedicated surface at /seed-cards or similar.`
+ }[reg=facet]
+ rpg_character_sheet = .{
+  pitch = `A professional profile authored as a character sheet. Abilities and skills map to real skills; items and features link to underlying documents. The Spwashi Lego — one card schema reused with different contents.`
+  feature_shape = `Character sheet card with header (identity), badges (current state), sections (abilities, inventory, history), footer (contact).`
+  collectible_unit = `The sheet as a whole; individual abilities as sub-cards; linked documents as expansions.`
+  audience_primary = engineer
+  audience_bridge = `illustrators collect the card aesthetics; librarians collect the linked-document graph`
+  current_state = `Conceptual. Needs route and first sheet.`
+ }[reg=facet]
+ operator_atlas = .{
+  pitch = `Each Spw operator as an entry with interaction, metaphysics, brace physics, and prefix/postfix symmetry. The atlas is the site's most-earned feature — visitors find it by approach.`
+  feature_shape = `One route per operator; consistent frame set; runtime-interactive examples.`
+  collectible_unit = `An operator entry; a specific brace treatment; a cross-operator symmetry.`
+  audience_primary = engineer
+  audience_bridge = `illustrators collect the symbolic feel; librarians collect the taxonomy`
+  current_state = `Strongest existing product line. Expansion target: more operators, more symmetry cross-references.`
+ }[reg=facet]
+ domain_cards = .{
+  pitch = `Each side-domain (newyear.life, brainstorm.monster, clit.video) gets a card on the main site that sets distance and rewards arrival at the domain itself.`
+  feature_shape = `Card with pitch, state, and outbound link. Linked domain treats the card as its opening-brace orientation.`
+  collectible_unit = `The domain card; the domain's signature concept; the annual edition (for newyear.life).`
+  audience_primary = shared
+  audience_bridge = `engineers see the infrastructure; illustrators see the aesthetic range; librarians see the register graph`
+  current_state = `Conceptual. Each domain needs at least a stub card on spwashi.com.`
+ }[reg=facet]
+ play_sessions = .{
+  pitch = `RPG Wednesday and other play routes as sessions — each session has local state, table register, and trace artifacts.`
+  feature_shape = `Session index with date, table, register; individual session pages as threshold frames.`
+  collectible_unit = `A session; a character moment; a table artifact.`
+  audience_primary = shared
+  current_state = `Route exists; needs consistent session card shape and collectible policy.`
+ }[reg=facet]
+}[reg=facet]
+
+stub_strategy: .{
+ note = `Stubs relieve design pressure and let a route participate in the approach topography before its feature is authored.`
+ principle = `A stub is a frame with a distance signal, a felt purpose, and a return path — nothing more. It is not an apology; it is an opening-orientation brace held open.`
+ stub_contract = #[
+  `hero or banner that sets the region's character`,
+  `one sentence naming the felt purpose`,
+  `placeholder for the earned depth that is coming`,
+  `legible return path to the parent surface`,
+  `a wonder trail mark so the stub is remembered across visits`
+ ][reg=set]
+ value = `Stubs allow the site's graph to grow faster than its feature backlog. The visitor learns the shape of the site before the site finishes filling itself in.`
+ caution = `A stub that never earns depth becomes a broken promise. Each stub should have a named future state — not a deadline, but a condition of arrival.`
+}[reg=facet]
+
+audience_register: .{
+ note = `Three primary audiences. Each has preferred doors, but the site should stay simultaneously legible to all three.`
+ engineer = .{
+  profile = `Experienced software engineer; reads code fluently; appreciates semantic density and grammar.`
+  doors = #[operator_atlas, rpg_character_sheet, seed_cards][reg=set]
+  reads_for = `structure, symmetry, runtime behavior, grammar as metaphysics`
+  served_by = `data-spw-* attributes visible in inspector; operator pages with runtime-interactive examples; semantic density earning visual weight`
+ }[reg=facet]
+ illustrator = .{
+  profile = `Passionate multimodal artist; reads aesthetic and material language fluently; values substrate and composition.`
+  doors = #[recipes, domain_cards, seed_cards][reg=set]
+  reads_for = `substrate, figure, palette, the opposing-brace orientation as negative space, motion through gradient`
+  served_by = `paper grain, ornament restraint, motion that carries meaning, palette that distinguishes regions`
+ }[reg=facet]
+ librarian = .{
+  profile = `Community anchor in library and information sciences; reads catalog and register fluently; values provenance and recall.`
+  doors = #[operator_atlas, play_sessions, domain_cards][reg=set]
+  reads_for = `taxonomy, cross-reference, wonder trail as reading history, recognition across sessions`
+  served_by = `stable registers, visible deviation, persistent wonder trail, linked-document graph`
+ }[reg=facet]
+ simultaneous_legibility = `No surface should speak to only one audience. The test: can each audience find a door on the same page? If yes, the page has simultaneous legibility. If no, the page needs more substrate or another door.`
+}[reg=facet]
+
+narrativization: .{
+ note = `How a feature becomes a product line, and a product line becomes a collectible.`
+ progression = .{
+  feature = `A cluster of components that together serve one interaction purpose. No narrative yet; just utility.`
+  named_line = `The feature acquires a name, a voice, and a recurring frame shape. Instances begin to accumulate.`
+  narrated_line = `The line gains a story — why it exists, who it serves, what it promises. Instances become episodes.`
+  edition = `A specific instance becomes collectible — timestamp, signature, palette. The visitor can hold one.`
+  collection = `Multiple editions accrue. The visitor has their own copy of the line, distinct from the authored default.`
+ }[reg=facet]
+ signal_that_a_feature_is_ready_to_narrativize = #[
+  `visitors return to it across sessions`,
+  `it has accumulated three or more instances with a shared shape`,
+  `copy naturally refers to the feature by name`,
+  `the feature earns a route of its own rather than living inside a parent route`
+ ][reg=set]
+}[reg=facet]
+
+open_questions: #[
+ .{ ask = `Which product lines should have a shared card component and which deserve bespoke shape?` },
+ .{ ask = `What is the right moment to promote a feature from unnamed to named line — is it instance count, visitor return, or author intent?` },
+ .{ ask = `Should stubs be marked visually so visitors recognize the state, or should they read as full pages by default?` },
+ .{ ask = `How do collectible editions persist — localStorage only, or should there be an export format?` },
+ .{ ask = `Is there a product line that would serve all three audiences equally, or is simultaneous legibility always a bridge rather than a shared door?` }
+][reg=set]

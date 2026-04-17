@@ -775,3 +775,174 @@
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   N. Reserved ornament vocabulary
+   --------------------------------------------------------------------------
+   These selectors are the concrete shadow of the ornament contract
+   (ornament-contract.spw). Each visual form is reserved for a single
+   semantic meaning so that the grammar stays diagnosable:
+
+     color_wash     → field intensity / resonance
+     corner_dot     → explicit collection state
+     border_shift   → deviation from authored default
+     accent_bar     → region-level field intensity gradient
+     opacity_pulse  → just-collected signal
+     stable_accent  → persistent collected state (paired with corner_dot)
+     fade_trail     → wonder trail (session attention history)
+
+   An element opts in via data attributes or utility classes; writing the
+   runtime attribute alone is enough to activate the ornament.
+   ========================================================================== */
+
+:where(.ornament-color-wash, [data-spw-ornament~='color-wash']) {
+  position: relative;
+}
+
+:where(.ornament-color-wash, [data-spw-ornament~='color-wash'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: color-mix(
+    in srgb,
+    var(--wonder-accent-color, transparent)
+      calc(var(--spw-field-intensity, 0) * 24%),
+    transparent
+  );
+  opacity: var(--spw-field-intensity, 0);
+  transition: opacity var(--ornament-duration-base, 180ms) var(--ornament-ease, ease),
+    background-color var(--ornament-duration-base, 180ms) var(--ornament-ease, ease);
+}
+
+:where([data-spw-collected='true']) {
+  --ornament-collection-dot-size: 0.42rem;
+}
+
+:where(.ornament-corner-dot, [data-spw-ornament~='corner-dot'], [data-spw-collected='true']) {
+  position: relative;
+}
+
+:where(
+  .ornament-corner-dot,
+  [data-spw-ornament~='corner-dot'],
+  [data-spw-collected='true']
+)::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--ornament-pad-1, 0.12rem) * -1);
+  right: calc(var(--ornament-pad-1, 0.12rem) * -1);
+  width: var(--ornament-collection-dot-size, 0.38rem);
+  height: var(--ornament-collection-dot-size, 0.38rem);
+  border-radius: 999px;
+  background: color-mix(
+    in srgb,
+    var(--wonder-accent-color, currentColor) 70%,
+    var(--delight-color, currentColor)
+  );
+  opacity: calc(0.55 + var(--spw-collection-strength, 0.6) * 0.45);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink, #2a2a2a) 14%, transparent);
+  pointer-events: none;
+}
+
+:where([data-spw-collected='false'], [data-spw-collected=''])::before {
+  display: none;
+}
+
+:where(.ornament-border-shift, [data-spw-ornament~='border-shift'], [data-spw-deviation='true']) {
+  border-color: color-mix(
+    in srgb,
+    var(--wonder-accent-color, currentColor) 48%,
+    var(--line, transparent)
+  );
+  box-shadow: inset 0 0 0 1px color-mix(
+    in srgb,
+    var(--wonder-accent-color, currentColor) 18%,
+    transparent
+  );
+}
+
+:where(.ornament-accent-bar, [data-spw-ornament~='accent-bar']) {
+  position: relative;
+}
+
+:where(.ornament-accent-bar, [data-spw-ornament~='accent-bar'])::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: var(--ornament-line-strong-width, 1.5px);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(
+      in srgb,
+      var(--wonder-accent-color, currentColor)
+        calc(var(--spw-region-field-intensity, 0) * 80%),
+      transparent
+    ) 50%,
+    transparent 100%
+  );
+  opacity: calc(0.35 + var(--spw-region-field-intensity, 0) * 0.55);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@keyframes spw-ornament-opacity-pulse {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+:where(.ornament-opacity-pulse, [data-spw-ornament~='opacity-pulse']) {
+  position: relative;
+}
+
+:where(.ornament-opacity-pulse, [data-spw-ornament~='opacity-pulse'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: color-mix(
+    in srgb,
+    var(--wonder-accent-color, currentColor) 24%,
+    transparent
+  );
+  animation: spw-ornament-opacity-pulse var(--ornament-duration-deliberate, 320ms)
+    var(--ornament-settle-ease, ease-out) 1;
+}
+
+:where(.ornament-stable-accent, [data-spw-ornament~='stable-accent']) {
+  color: color-mix(
+    in srgb,
+    var(--wonder-accent-color, currentColor)
+      calc(40% + var(--spw-collection-strength, 0.6) * 25%),
+    currentColor
+  );
+}
+
+:where(.ornament-fade-trail, [data-spw-ornament~='fade-trail'], [data-spw-wonder-state='resonant'] a:visited) {
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--spw-wonder-memory-color, var(--wonder-accent-color, currentColor))
+      calc(30% + var(--spw-field-intensity, 0) * 40%),
+    transparent
+  );
+}
+
+/* Interaction-context ornament intensity — these read the canonical
+   data-spw-interaction-context value established in page-model.spw. */
+:where([data-spw-interaction-context='reading'])   { --spw-field-intensity: 0.12; }
+:where([data-spw-interaction-context='browsing'])  { --spw-field-intensity: 0.28; }
+:where([data-spw-interaction-context='inspecting']) { --spw-field-intensity: 0.6; }
+:where([data-spw-interaction-context='collecting']) { --spw-field-intensity: 0.88; }
+:where([data-spw-interaction-context='comparing'])  { --spw-field-intensity: 0.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ornament-opacity-pulse, [data-spw-ornament~='opacity-pulse'])::after {
+    animation: none;
+    opacity: 0;
+  }
+}

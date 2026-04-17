@@ -1099,6 +1099,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'guide-badge',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.operator-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
+    rootMode: 'single',
+    load: () => import('./spw-guide-badge.js'),
+    mount: (mod) => {
+      const fn = mod?.initGuideBadges;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'semantic-chrome',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

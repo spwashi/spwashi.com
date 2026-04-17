@@ -1,0 +1,178 @@
+# Approach Topography
+#
+# Scene development through motion as a design principle. Drawn from
+# the prairie-walk reflection: distant things develop as you move toward
+# them, ambient substrate carries the journey, arrival is a felt event.
+
+#>spw_approach_topography
+#:model #!motion
+#:layer #!pragmatics
+
+@page_model: ~"./page-model.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+
+thesis: .{
+ claim = `A page should develop as the visitor moves through it. The far should become near; the near should reward arrival; the ambient should hold the journey. Visual hierarchy is not a static arrangement — it is the topography of an approach.`
+ metaphor = `Walking through a prairie: distant features resolve gradually; grasses, breeze, and shadow are substrate, not focus; reaching a specific rise or tree is a felt arrival; the light itself carries time.`
+ consequence = `A page without approach topography flattens into a scrollable list. A page with it rewards the act of moving through it — the visitor learns something about their own motion by the end.`
+}[reg=facet]
+
+approach_phases: .{
+ note = `Four phases of approach. Each phase has a different visual grammar and a different relationship to attention.`
+ distant = .{
+  role = `Orientation signal. What is over there? What kind of place am I moving toward?`
+  visual_forms = #[
+   `hero or banner image at top of page`,
+   `large operator sigil or frame sigil that announces the region's character`,
+   `single sentence that names the page's felt purpose`
+  ][reg=set]
+  attention_mode = `scanning, low-commitment, forming expectation`
+  current_gap = `Most routes beyond the home and operator atlas lack a distance signal. The visitor arrives already inside without an approach.`
+ }[reg=facet]
+ approaching = .{
+  role = `Development. As the visitor scrolls or navigates, the distant feature becomes more resolved, more specific, more textured.`
+  visual_forms = #[
+   `progressive disclosure of detail`,
+   `sharpening of typography weight as depth increases`,
+   `ambient substrate (grain, subtle pattern) remaining present but quiet`,
+   `operator chips and frame sigils gaining color saturation as they become addressable`
+  ][reg=set]
+  attention_mode = `committing gradually, building context, recognizing structure`
+ }[reg=facet]
+ arrival = .{
+  role = `A felt event. The visitor reaches a specific frame, card, image, or section that rewards the motion of getting there.`
+  visual_forms = #[
+   `an image at the bottom of a long page that rewards the scroll`,
+   `a card whose contents were previewed distantly and are now inspectable`,
+   `a named anchor that the approach set up as destination`,
+   `an interactive affordance (collect, inspect, pivot) that only makes sense here`
+  ][reg=set]
+  attention_mode = `settled, inspecting, willing to dwell`
+  current_strength = `The /topics/software/spw route already does this well — operator pages reward the approach.`
+ }[reg=facet]
+ return = .{
+  role = `The visitor has been somewhere and is now going back — not through the back button, but through a legible path.`
+  visual_forms = #[
+   `a wonder trail (visited sigils and links remain marked)`,
+   `the deviation register visible as a persistent chrome signal`,
+   `a ground affordance (.) reachable from any depth`,
+   `a breadcrumb that is truly a trail, not just a URL path`
+  ][reg=set]
+  attention_mode = `integrating, carrying something away, settling`
+ }[reg=facet]
+}[reg=facet]
+
+substrate_and_figure: .{
+ note = `The prairie is grasses, breeze, wildlife, light — substrate that holds the walk. The deer or distant tree is figure. A page needs both; most current routes are figure without substrate.`
+ substrate_vocabulary = #[
+  `paper grain (already in style conventions)`,
+  `quiet pattern passes that carry region character without naming themselves`,
+  `subtle light gradients that imply time of day or depth`,
+  `ambient motion that does not demand attention but sustains the page's breath`,
+  `ornament field wash at low intensity (see ornament-contract.spw)`
+ ][reg=set]
+ figure_vocabulary = #[
+  `hero or banner imagery`,
+  `operator sigils at heading weight`,
+  `frame title with semantic color`,
+  `interactive card with stable accent`,
+  `chart, diagram, or illustration that rewards inspection`
+ ][reg=set]
+ discipline = `Figure should never be alone. A frame without substrate reads as a broken or un-designed region. Substrate without figure reads as empty atmosphere. The ratio tunes the region's density.`
+}[reg=facet]
+
+opposing_brace_orientation: .{
+ note = `Selecting the opposing brace — { vs } or < vs > — is a choice about which side of a boundary you inhabit. The design implication: every frame has two faces, and the visitor is always in relation to one of them.`
+ opening_orientation = .{
+  feel = `entering, encountering, the outside approaching the inside`
+  design_expression = `heading weight, first frame of a region, objective brace wash, left crease`
+  voice = `This is where you arrive. This is the category of thing you are entering.`
+ }[reg=facet]
+ closing_orientation = .{
+  feel = `departing, having-inhabited, the inside releasing to the outside`
+  design_expression = `footer line, closing sigil, subjective brace wash, right crease, final card before section break`
+  voice = `This is what you take with you. This is what the region has become for you.`
+ }[reg=facet]
+ invariant = `Both orientations should be addressable in the same surface. A page that only projects the opening face teaches entry but not departure. A page that only projects the closing face feels like a summary without a threshold.`
+ see = @site_semantics
+}[reg=facet]
+
+visual_hierarchy_as_motion: .{
+ note = `Hierarchy is felt through development, not through static rank. Three size tiers on a page is not a hierarchy unless the tiers participate in an approach.`
+ principles = #[
+  `A tier's weight should earn its salience by rewarding arrival at it.`,
+  `Mid-level salience (subheadings, card titles) should carry the approach — they are the path's waypoints.`,
+  `Ambient salience (body text, substrate patterns) should hold the journey without competing with waypoints.`,
+  `A hero image at the top sets distance; an image at the bottom rewards arrival; images mid-page should anchor a specific waypoint.`
+ ][reg=set]
+ inline_vs_block_discipline = .{
+  note = `Inline elements flow with reading; block elements arrest it. A flub where a block element behaves inline (or vice versa) breaks the approach rhythm.`
+  common_flubs = #[
+   `an operator chip that wraps mid-sentence when it should have broken the line`,
+   `a frame sigil inline with body copy when it should have stood alone as a waypoint`,
+   `a card inside a paragraph flow when it deserved its own threshold`,
+   `a hero image rendered inline with text, losing its distance signal`
+  ][reg=set]
+  remedy = `An element's display value is a hierarchy claim. If a mark should be a waypoint, it should block. If it should be part of the reading current, it should inline.`
+ }[reg=facet]
+}[reg=facet]
+
+lighting_and_shadow: .{
+ note = `On the prairie, light carried time. On a page, light is contrast and the gradient between tokens. Shadow is what separates a card from its substrate without drawing a border.`
+ css_vocabulary = #[
+  `--paper-wash (substrate tint)`,
+  `--ink (body reading weight)`,
+  `--op-*-color (semantic salience)`,
+  `--wonder-accent-color (field-state light)`,
+  `--delight-color (secondary field light)`,
+  `--crease-weight (electromagnetic-container shadow edge)`
+ ][reg=set]
+ tunable_gradients = #[
+  `reading contrast — body text against substrate`,
+  `semantic contrast — operator color against neutral tokens`,
+  `field contrast — resonant components against ambient ones`,
+  `depth contrast — closer cards against deeper substrate`
+ ][reg=set]
+ invariant = `Every contrast should be diagnosable. A shadow that separates a card from its substrate should be traceable to a named token. If a shadow exists without a token, it is visual noise, not lighting.`
+}[reg=facet]
+
+pwa_approach_notes: .{
+ note = `A PWA is a site that survives reloads, offline moments, and return visits. The approach topography should hold across these transitions.`
+ observations = #[
+  `Returning to the PWA after a closed session should feel like returning to a place, not reopening a document.`,
+  `The wonder trail and deviation register should persist across PWA relaunches — the visitor's prior attention is part of the approach for their next visit.`,
+  `Offline state should not erase semantic identity. Authored data-spw-* attributes carry enough meaning that the page reads even without the enrichment layer.`,
+  `Stub pages (see product-lines.spw) become especially valuable in a PWA — each stub can be an installable waypoint without requiring a full feature to exist there first.`
+ ][reg=set]
+}[reg=facet]
+
+current_route_observations: .{
+ note = `Specific routes that currently under-serve the approach topography.`
+ recipes = .{
+  issue = `Naive or outdated markup into styles leaves large gaps in the region. No distance signal; figure without substrate in several sections.`
+  direction = `Recipes is a candidate for a hero banner (ingredient photography or abstract culinary form), a sharpened approach (first card as the dish's felt character), and better substrate (paper grain, grain pattern, kitchen-surface palette). See product-lines.spw for how recipes becomes a product line.`
+ }[reg=facet]
+ pages_needing_hero = #[
+  `/recipes route`,
+  `/about routes beyond the index`,
+  `/play routes beyond the index`,
+  `interior /topics pages that start inside without an approach`
+ ][reg=set]
+ pages_with_strong_approach = #[
+  `/index (constellation frame sets distance)`,
+  `/topics/software/spw operator atlas (approach → arrival at each operator)`,
+  `/topics/software/pretext (lab surface has genuine depth development)`
+ ][reg=set]
+}[reg=facet]
+
+open_questions: #[
+ .{ ask = `Which routes would benefit most from a banner image that sets distance — and what is the minimum cost way to author one?` },
+ .{ ask = `How should the closing-brace orientation be visually distinguished from the opening one without becoming ornamental?` },
+ .{ ask = `Is the substrate:figure ratio tunable per region, or is it a global design variable?` },
+ .{ ask = `What is the right way to express arrival — is it a change in salience, a change in color temperature, or a change in interaction affordance?` },
+ .{ ask = `Should the PWA offline state expose a different approach topography, or the same one with degraded enrichment?` }
+][reg=set]

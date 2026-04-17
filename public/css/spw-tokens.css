@@ -96,6 +96,27 @@
   initial-value: 0;
 }
 
+/* Field intensity: per-component attention-field strength (0 = ambient → 1 = resonant) */
+@property --spw-field-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Field entropy: page-level token distribution entropy (0 = focused → 1 = dispersed) */
+@property --spw-field-entropy {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Collection strength: how firmly a token is pinned (0 = decayed → 1 = fresh) */
+@property --spw-collection-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* ==========================================================================
    2. Primitive Scales & Semantic Aliases
    ========================================================================== */
@@ -976,4 +997,74 @@ html[data-spw-color-mode="dark"] {
   --semantic-test-fixture-min: 0.18;
   --semantic-test-fixture-mid: 0.42;
   --semantic-test-fixture-max: 0.78;
+}
+
+/* ==========================================================================
+   17. Attention-field tokens
+   --------------------------------------------------------------------------
+   These tokens make the attention-field model (attention-field.spw) and the
+   ornament contract (ornament-contract.spw) addressable from CSS. Components
+   may set per-element variants; root defaults keep untreated elements quiet.
+   ========================================================================== */
+
+:root {
+  /* Tunable parameters from attention-field.spw mathematics */
+  --spw-field-spatial-decay: 1.5;
+  --spw-field-bias-sensitivity: 2;
+  --spw-collection-floor: 0.3;
+
+  /* Canonical wonder palette inputs for shared ornament and runtime accents */
+  --spw-wonder-accent-base-color: var(--amber, #ffbf00);
+  --spw-delight-base-color: var(--teal, #008080);
+  --spw-wonder-accent-emphasis-color: color-mix(
+    in srgb,
+    var(--spw-wonder-accent-base-color) 72%,
+    white
+  );
+
+  /* Wonder-memory runtime defaults — site-settings.js refines these at boot,
+     but components reading them pre-settings still get a sane baseline. */
+  --spw-wonder-memory-strength: 0.56;
+  --spw-wonder-memory-ttl-ms: 28000;
+  --spw-wonder-memory-reach: 0.54;
+
+  /* Session memory colors — runtime may override per-wonder type */
+  --spw-wonder-memory-color: color-mix(
+    in srgb,
+    var(--wonder-accent-color, #ffbf00) 62%,
+    var(--delight-color, #008080)
+  );
+  --spw-wonder-memory-alt-color: color-mix(
+    in srgb,
+    var(--delight-color, #008080) 58%,
+    var(--wonder-accent-color, #ffbf00)
+  );
+
+  /* Region-level field aggregate (runtime may write per-region) */
+  --spw-region-field-intensity: 0;
+
+  /* Deviation signal — settings-applied runtime surfaces count here */
+  --spw-deviation-count: 0;
+
+  /* Crease weight — used by electromagnetic-container shadow edges */
+  --crease-weight: 1px;
+
+  /* Thresholds — where ornaments should visibly respond */
+  --spw-field-resonance-threshold: 0.42;
+  --spw-field-accent-threshold: 0.62;
+}
+
+/* When a component declares itself resonant, give ornaments a stable signal
+   regardless of whether the runtime has written --spw-field-intensity yet. */
+:where([data-spw-wonder-state='resonant']) {
+  --spw-field-intensity: 0.72;
+}
+
+:where([data-spw-wonder-state='accented']) {
+  --spw-field-intensity: 0.52;
+}
+
+/* Explicit collection pins field intensity above its decay floor */
+:where([data-spw-collected='true']) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), var(--spw-collection-floor));
 }

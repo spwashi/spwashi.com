@@ -139,7 +139,7 @@
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
                         <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
-                        <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel>
+                        <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel data-spw-feature="software-quick-tune">
                             <article class="vibe-widget">
                                 <div class="vibe-widget-header">
                                     <p class="vibe-widget-kicker">Tailor this field</p>
@@ -181,7 +181,7 @@
                             </article>
                         </div>
                         <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
-                        <nav class="frame-operators" aria-label="Software overview routes">
+                        <nav class="frame-operators" aria-label="Software overview routes" data-spw-feature="software-overview-routes">
                             <a class="operator-chip" href="#language-philosophy">language philosophy</a>
                             <a class="operator-chip" href="#semantic-fields">semantic fields</a>
                             <a class="operator-chip" href="/topics/software/spw/">Spw operator atlas</a>
@@ -219,7 +219,7 @@
                     <h2>Language Design Philosophy</h2>
                 </div>
                 <p class="inline-note">The language is not trying to win by density alone. It is trying to keep source legible while giving tools clearer contracts about structure, timing, and projection.</p>
-                <div class="intent-lattice" aria-label="Language philosophy intent groups">
+                <div class="intent-lattice" aria-label="Language philosophy intent groups" data-spw-feature="software-intent-lattice">
                     <section class="intent-cluster" data-spw-intent="orient">
                         <p class="intent-cluster-kicker">Orient</p>
                         <h3>Meet the language as a readable field</h3>
@@ -293,7 +293,7 @@
                         </ul>
                     </section>
                 </div>
-                <div class="spec-grid">
+                <div class="spec-grid" data-spw-feature="software-principles-grid">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__language_philosophy_panel_1">
                         <h3>Readable source is the primary artifact</h3>
                         <p>The file should still work as something a person can read out loud, diff in git, annotate in an editor, or share in a chat. Tooling depth is valuable only if it grows from that durability instead of replacing it.</p>
@@ -319,7 +319,7 @@
                         <p>I want the file, plugin, and website to be different projections of one semantic field. That means a person following a heading and a tool following a frame id should be able to converge on the same unit of meaning.</p>
                     </div>
                 </div>
-                <div class="context-edges" aria-label="Language philosophy context edges">
+                <div class="context-edges" aria-label="Language philosophy context edges" data-spw-feature="software-context-edges">
                     <section class="context-edge-card" data-spw-edge="nearby">
                         <p class="intent-cluster-kicker">Nearby Context</p>
                         <h3>Contexts stabilizing the language</h3>
@@ -383,7 +383,7 @@
                     <h2>Perspective, Potential, Dimension, Salience</h2>
                 </div>
                 <p class="inline-note">Cards and panels can act as portable Spw modules. If the boundary is stable enough to copy, link, or hydrate later, it should also be able to declare whose view it centers, how ready it is, which dimensions dominate, and how loudly it should call attention.</p>
-                <div class="semantic-contract-grid" aria-label="Module semantics fields">
+                <div class="semantic-contract-grid" aria-label="Module semantics fields" data-spw-feature="software-semantic-contracts">
                     <article class="semantic-contract-card" data-spw-module="field_perspective" data-spw-perspective="collaborative" data-spw-potential="ready" data-spw-dimension="routing memory" data-spw-salience="near">
                         <span class="semantic-contract-token">perspective</span>
                         <strong>Who or what the module centers</strong>
@@ -439,7 +439,7 @@
                 </div>
                 <p class="spec-kicker">Public Reference Surface</p>
                 <h2>Spw Syntax</h2>
-                <div class="mode-panels">
+                <div class="mode-panels" data-spw-feature="software-syntax-lens">
                     <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="source" data-spw-role="orientation">
                         <p>Spw keeps the file readable while giving tools clearer structure to work with. The source stays visible; LSP servers, clients, and projection tools get named frames, operators, and references they can navigate. This page is the public edge of the deeper <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a> runtime and design work, and the nearby <a href="/topics/software/parsers/#parser-lenses">parser route</a> shows how those structures become concrete.</p>
                     </section>
@@ -754,7 +754,7 @@ Files should remain legible.
                     <h2>Spw-backed Components</h2>
                 </div>
                 <p class="inline-note">The target is not a parser bolted onto every page. It is a progressive component system where authored Spw blocks, semantic HTML, shared registers, and small scripts agree about structure.</p>
-                <div class="feature-ladder">
+                <div class="feature-ladder" data-spw-feature="software-component-ladder">
                     <div class="frame-panel" data-spw-form="circle" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_1">
                         <h3>Semantic host</h3>
                         <p>HTML landmarks, headings, lists, controls, and figures remain the accessibility baseline. Components enrich that host instead of replacing it.</p>
@@ -783,7 +783,7 @@ Files should remain legible.
                     <a class="frame-sigil" href="#pretext-probe-frame">&gt;pretext_probe</a>
                     <h2>External Probe: Pretext.js</h2>
                 </div>
-                <div class="frame-grid">
+                <div class="frame-grid" data-spw-feature="software-pretext-probe">
                     <a class="frame-card" href="/topics/software/pretext/" data-spw-role="route" data-spw-meaning="lab route" data-spw-kind="card" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_software__card_1">
                         <span class="frame-card-sigil">#&gt;pretext_field_lab</span>
                         <strong>Pretext Field Lab</strong>
@@ -802,7 +802,7 @@ Files should remain legible.
                     <a class="frame-sigil" href="#obsidian-homage-frame">@obsidian_application</a>
                     <h2>Applying to Obsidian with Spw in mind</h2>
                 </div>
-                <div class="domain-grid">
+                <div class="domain-grid" data-spw-feature="software-obsidian-fit">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_7">
                         <h3>Plain text stays</h3>
                         <p>Files remain portable and human-readable. Spw does not replace the trust model of readable files; it adds structure around them.</p>
