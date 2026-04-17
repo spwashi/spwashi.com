@@ -1,0 +1,19 @@
+# spellbook-utility
+# Narrow the spellbook toward replayable outcomes.
+
+^["stream"]{
+ >>[2026-04-17] observe - The current spellboard in `public/js/spw-spells.js` is mostly a serialization layer: grounded tokens become a readable snippet, prefix counts, destination counts, and compact previews. It is inspectable, but it does not yet reduce the cost of resuming work.
+ >>[2026-04-17] observe - `public/js/spw-haptics.js` already has the strongest primitive needed for a useful spell: `saveCheckpoint()` and `restoreCheckpoint(name)`. The runtime can already recover a grounded registry and couplings; the spellbook simply does not surface that recovery path.
+ >>[2026-04-17] observe - `public/js/spw-experiential.js` already stores pinned frames in `spw-pins` and renders them as a readable ledger. The next useful move is not better ledger styling but replay: treat those pins as a working set that can be resumed in sequence.
+ >>[2026-04-17] decide - The spellbook should be defined as the inspectable catalog of proven macros, not the place where arbitrary new incantations are authored.
+ >>[2026-04-17] decide - The first useful spells are `restore_checkpoint` and `resume_pins` because both sit on top of existing persisted state and produce immediate, legible outcomes.
+ >>[2026-04-17] taste - A spell should feel like recovering working memory, not entering a command. The right comparison is a good editor shortcut or a "restore tabs" action, not a parser demo.
+}
+
+^["open"]{
+ ?[checkpoint_inventory]: "What is the smallest helper surface needed in `spw-haptics.js` to enumerate saved checkpoints with name, savedAt, count, and path?"
+ ?[resume_pins_shape]: "Should `resume_pins` mean a guided next/previous sequence, a temporary page-local register, or a lightweight overlay that lists the pinned frames in navigable order?"
+ ?[spellboard_copy]: "How explicit should the board be about utility language ('restore state', 'resume working set') versus retaining the full spell metaphor in labels?"
+ ?[spell_discovery]: "Where should first discovery happen: in `/settings/`, in the header dock once data exists, or through subtle console/runtime feedback after a save/pin event?"
+ ?[reversibility]: "What is the minimal reset/back-out path after each spell so the feature feels safe to try repeatedly?"
+}
