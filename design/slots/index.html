@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Universal Slots</title>
+    <meta name="description" content="A design hub utility covering the universal slots used in component architecture across the Spwashi site.">
+    
+    <link rel="canonical" href="https://spwashi.com/design/slots/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Universal Slots"/>
+    <meta property="og:description" content="A design hub utility covering the universal slots used in component architecture across the Spwashi site."/>
+    <meta property="og:url" content="https://spwashi.com/design/slots/"/>
+    
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spwashi.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Design", "item": "https://spwashi.com/design/" },
+                { "@type": "ListItem", "position": 3, "name": "Slots", "item": "https://spwashi.com/design/slots/" }
+            ]
+        }
+    </script>
+
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console themes field-guide inspectability promptability"
+    data-spw-route-family="editorial design systems"
+    data-spw-context="analysis"
+    data-spw-wonder="projection orientation locality"
+    data-spw-page-family="spec"
+    data-spw-page-modes="reading inspect compare design"
+    data-spw-page-seed="page_design_slots"
+    data-spw-page-role="design-reference"
+    data-spw-layout="reading"
+    data-spw-related-routes="/design/|/topics/site-design/|/design/materials/|/design/affordance/|/design/density/">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#>spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a aria-current="page" href="/design/">Design</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>slots</span>
+    </header>
+
+    <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
+        <article>
+            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="/design/">#>design</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">component anatomy</span>
+                        <span class="spec-pill">html constraints</span>
+                    </div>
+                </div>
+
+                <p class="spec-kicker">Component Options / Dom Structure</p>
+                <h1>Universal Slots</h1>
+
+                <p class="site-lede">
+                    Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.frame-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
+                </p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="header"]</h3>
+                        <p>Used for the component's identifying marker, sigil, title, or top-level pill row. It anchors the component and provides identity before interaction.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="meta"]</h3>
+                        <p>For secondary information directly beneath the header—timestamps, provenance hints, and contextual breadcrumbs.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="figure"]</h3>
+                        <p>The primary visual container, whether for a raster image study or a runtime SVG rendering surface.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="body"]</h3>
+                        <p>The container for prose, lists, and structurally dense readable content. Handled by a <code>max-inline-size</code> measure.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="actions"]</h3>
+                        <p>Holds operator chips, buttons, and outbound links, usually sitting at the bottom boundary before references.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>[data-spw-slot="footer"]</h3>
+                        <p>For terminal metadata, reference traces, or system-level output.</p>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <p>Spwashi is the creator identity; this site is one of the surfaces around the work.</p>
+            <nav class="site-footer__nav" aria-label="Footer">
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/design/">Design</a>
+                <a href="/topics/">Topics</a>
+                <a href="/blog/">Blog</a>
+                <a href="/settings/">Settings</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

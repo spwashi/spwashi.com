@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Component Glossary</title>
+    <meta name="description" content="A design hub utility covering the structural vocabulary of Spwashi components.">
+    
+    <link rel="canonical" href="https://spwashi.com/design/components/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Component Glossary"/>
+    <meta property="og:description" content="A design hub utility covering the structural vocabulary of Spwashi components."/>
+    <meta property="og:url" content="https://spwashi.com/design/components/"/>
+    
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spwashi.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Design", "item": "https://spwashi.com/design/" },
+                { "@type": "ListItem", "position": 3, "name": "Components", "item": "https://spwashi.com/design/components/" }
+            ]
+        }
+    </script>
+
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console themes field-guide inspectability promptability"
+    data-spw-route-family="editorial design systems"
+    data-spw-context="analysis"
+    data-spw-wonder="projection orientation locality"
+    data-spw-page-family="spec"
+    data-spw-page-modes="reading inspect compare design"
+    data-spw-page-seed="page_design_components"
+    data-spw-page-role="design-reference"
+    data-spw-layout="wide"
+    data-spw-related-routes="/design/|/topics/site-design/|/design/palettes/|/design/slots/">
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#>spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a aria-current="page" href="/design/">Design</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>components</span>
+    </header>
+
+    <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
+        <article>
+            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="/design/">#>design</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">structural vocabulary</span>
+                        <span class="spec-pill">blocks</span>
+                    </div>
+                </div>
+
+                <p class="spec-kicker">Component Options / Vocabulary</p>
+                <h1>Component Glossary</h1>
+
+                <p class="site-lede">
+                    A registry of the primary CSS abstractions used across the Spwashi architecture. Not every component needs an arbitrary name; reusing these patterns keeps the site legible to the renderer and accessible for inspection.
+                </p>
+
+                <div class="frame-grid frame-grid--2up">
+                    <article class="frame-panel">
+                        <p class="frame-note">macro layout wrapper</p>
+                        <h3>.site-frame</h3>
+                        <p>The primary block-level section element <code>&lt;section class="site-frame"&gt;</code>. These define large vertical stopping points down the scroll. They often host <code>id</code> attributes and <code>data-spw-*</code> rendering attributes to bias their local contents.</p>
+                        <ul class="spw-list-plain">
+                            <li>Supports <code>.frame-heading</code> and <code>.frame-topline</code> composition.</li>
+                        </ul>
+                    </article>
+
+                    <article class="frame-panel" data-spw-metamaterial="glass">
+                        <p class="frame-note">primary legible surface</p>
+                        <h3>.frame-card</h3>
+                        <p>The standard semi-transparent or material card. It usually implies <code>backdrop-filter</code> blur (when acting as glass) or warm opacity (when acting as paper). It serves as an isolated thought space.</p>
+                        <p><a class="operator-chip" href="#">Sample affordance</a></p>
+                    </article>
+
+                    <article class="frame-panel" data-spw-metamaterial="matte">
+                        <p class="frame-note">sub-surface blocks</p>
+                        <h3>.frame-panel</h3>
+                        <p>A flatter, more structural tile. Commonly placed inside a <code>.frame-grid</code> to form reference tables or multi-column indices like this one.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">the functional unit</p>
+                        <h3>.operator-chip</h3>
+                        <p>The standard <a class="operator-chip operator-chip--demo" href="#">~chip format</a> for interactions, anchors, state toggles, and metadata hints. Operator chips dynamically adjust color based on `data-spw-operator` syntax (e.g. <code>#&gt;</code> teal frames vs <code>?</code> violet probes).</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">diagrams & vectors</p>
+                        <h3>.spw-svg-figure</h3>
+                        <p>The host wrapper for inline SVGs. Contains a scoped viewBox and exposes data attributes necessary to tie the SVG stroke/flow lines to the page's color resonance (e.g. inheriting the <code>--craft-accent</code> token).</p>
+                    </article>
+                    
+                    <article class="frame-panel">
+                        <p class="frame-note">the text renderer output</p>
+                        <h3>.pretext-flow</h3>
+                        <p>A readable annotation surface that handles text posture, wrapping, and cache volatility. Often accompanied by <code>.pretext-flow-lines</code> to split syntax decorators (like `#&gt;` or `%`) from the prose.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">grid systems</p>
+                        <h3>.frame-grid</h3>
+                        <p>The robust CSS Grid layout class that handles most interior spacing. Can be modified with variants like <code>.frame-grid--dense</code> or <code>.frame-grid--2up</code> for semantic breakpoints.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">hero image wrapping</p>
+                        <h3>.image-study</h3>
+                        <p>Usually combined with <code>.topic-photo-card</code>. Provides a rich frame for surfacing screenshots or artwork, complete with accent palettes and responsive projection hints.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="data-attribute-decoration" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#data-attribute-decoration">^"data_attribute_decoration"</a>
+                    <h2>Data Attribute Distinction</h2>
+                </div>
+                
+                <p class="frame-note">We rarely invent new CSS classes for state or variations. Instead, we stack <code>data-spw-*</code> attributes onto the base components defined above. This makes the surface readable to CSS selectors without bloating the HTML with ad-hoc BEM modifiers.</p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel" data-spw-metamaterial="paper" data-spw-context="reading" data-spw-affordance="read">
+                        <h3>Example 1: Paper Article</h3>
+                        <p>By declaring <code>[data-spw-metamaterial="paper"]</code> and <code>[data-spw-affordance="read"]</code> on a block, the component becomes opaque, warm, and static. It tells the browser (and the reader) to settle in for uninterrupted prose reading rather than active interaction.</p>
+                        <div class="code-block-wrapper">
+<pre><code>&lt;article class="frame-card"
+  data-spw-metamaterial="paper"
+  data-spw-context="reading"
+  data-spw-affordance="read"&gt;</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-panel" data-spw-metamaterial="glass" data-spw-context="analysis" data-spw-affordance="inspect">
+                        <h3>Example 2: Inspectable Glass Tool</h3>
+                        <p>Using <code>[data-spw-metamaterial="glass"]</code> yields a translucent blur effect. Combined with <code>[data-spw-affordance="inspect"]</code>, the block invites hover, ready to reveal contextual traces, metadata borders, or deeper layered hints.</p>
+                        <div class="code-block-wrapper">
+<pre><code>&lt;aside class="frame-card"
+  data-spw-metamaterial="glass"
+  data-spw-context="analysis"
+  data-spw-affordance="inspect"&gt;</code></pre>
+                        </div>
+                    </article>
+                    
+                    <article class="frame-panel" data-spw-metamaterial="field" data-spw-context="signal" data-spw-affordance="tune">
+                        <h3>Example 3: Active Input Field</h3>
+                        <p>When an area contains active widgets or tests, tagging it with <code>[data-spw-metamaterial="field"]</code> sets high contrast bounds, while <code>[data-spw-affordance="tune"]</code> prepares the component to visibly react to direct manipulation.</p>
+                        <div class="code-block-wrapper">
+<pre><code>&lt;div class="frame-panel"
+  data-spw-metamaterial="field"
+  data-spw-context="signal"
+  data-spw-affordance="tune"&gt;</code></pre>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <p>Spwashi is the creator identity; this site is one of the surfaces around the work.</p>
+            <nav class="site-footer__nav" aria-label="Footer">
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/design/">Design</a>
+                <a href="/topics/">Topics</a>
+                <a href="/blog/">Blog</a>
+                <a href="/settings/">Settings</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

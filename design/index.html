@@ -188,7 +188,10 @@
                 <nav class="frame-operators" aria-label="Design hub routes">
                     <a class="operator-chip" href="#design-circuits">~ circuits</a>
                     <a class="operator-chip" href="#context-stack"># context stack</a>
+                    <a class="operator-chip" href="/design/components/">* component glossary</a>
+                    <a class="operator-chip" href="/design/palettes/">^ palettes & colors</a>
                     <a class="operator-chip" href="#rendering-contexts">^ rendering tests</a>
+                    <a class="operator-chip" href="#component-anatomy">^ component options</a>
                     <a class="operator-chip" href="#mobile-interactions">? mobile interaction</a>
                     <a class="operator-chip" href="#team-prompts">@ team prompts</a>
                     <a class="operator-chip" href="/about/website/">website field guide</a>
@@ -239,6 +242,18 @@
                         <h3>Architecture</h3>
                         <p>The route for deciding whether a distinction is durable enough to become a named contract instead of a one-off local fix.</p>
                         <p><a class="operator-chip" href="/topics/architecture/">open architecture</a></p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <h3>Palettes & Color Grammar</h3>
+                        <p>The spectral families, theme handles, and resonant color tests mapped out as a design space.</p>
+                        <p><a class="operator-chip" href="/design/palettes/">open palettes</a></p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <h3>Component Glossary</h3>
+                        <p>The established structural vocabulary of CSS classes and wrappers used across the Spwashi runtime.</p>
+                        <p><a class="operator-chip" href="/design/components/">open glossary</a></p>
                     </article>
                 </div>
             </section>
@@ -408,6 +423,66 @@
                 </div>
             </section>
 
+            <section class="site-frame" id="component-anatomy" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="projection" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__anatomy" data-spw-context-relevance="component anatomy slots structure options utilities">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#component-anatomy">^"component_options"</a>
+                    <h2>Component Option Register</h2>
+                </div>
+                <p class="frame-note">A utility to break down how surface options relate to underlying structures. Instead of asking "what should it look like", a design team can ask "what materials and states map to its purpose?"</p>
+
+                <div class="frame-grid frame-grid--2up">
+                    <article class="frame-panel">
+                        <p class="frame-note">structural constraints</p>
+                        <h3><a href="/design/slots/">The Universal Slots</a></h3>
+                        <p>Components expect a standard slot sequence. Reusing semantic slots keeps the DOM inspectable.</p>
+                        <ul>
+                            <li><strong>header</strong>: Sigil, title, context pills</li>
+                            <li><strong>meta</strong>: Timestamps, provenance, hints</li>
+                            <li><strong>figure</strong>: Primary image or runtime SVG</li>
+                            <li><strong>body</strong>: The prose and readable content</li>
+                            <li><strong>actions</strong>: Operator chips and outbound links</li>
+                            <li><strong>footer</strong>: Reference data and terminal trails</li>
+                        </ul>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">environmental response</p>
+                        <h3><a href="/design/density/">Density & Measure</a></h3>
+                        <p>Spacing scales smoothly when driven by density keys rather than generic padding tokens.</p>
+                        <ul>
+                            <li><strong>dense</strong>: High information per inch</li>
+                            <li><strong>soft</strong>: The default, comfortable breathing room</li>
+                            <li><strong>roomy</strong>: Expansive bounds for hero blocks</li>
+                            <li><strong>ambient</strong>: Fades out horizontal boundaries entirely</li>
+                        </ul>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">rendering physics</p>
+                        <h3><a href="/design/materials/">Metamaterial Attributes</a></h3>
+                        <p>How the surface responds to the scroll canvas beneath it.</p>
+                        <ul>
+                            <li><strong>paper</strong>: Opaque, warm, reads as a stationary document</li>
+                            <li><strong>glass</strong>: Translucent blur, feels layered and lightweight</li>
+                            <li><strong>matte</strong>: Flat, low-contrast, stays out of the way</li>
+                            <li><strong>field</strong>: High-contrast, interactive staging environment</li>
+                        </ul>
+                    </article>
+                    
+                    <article class="frame-panel">
+                        <p class="frame-note">interaction language</p>
+                        <h3><a href="/design/affordance/">State & Affordance</a></h3>
+                        <p>How a block communicates what you can do to it before you interact.</p>
+                        <ul>
+                            <li><strong>read</strong>: Stable layout with no hover lifts</li>
+                            <li><strong>tune</strong>: Contains active form controls or sliders</li>
+                            <li><strong>inspect</strong>: Reacts to hover with more structural hints</li>
+                            <li><strong>orient</strong>: Anchors the page flow</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
             <section class="site-frame" id="mobile-interactions" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="interaction" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__mobile_interactions" data-spw-context-relevance="mobile interaction header rail controls badges">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#mobile-interactions">?["mobile_interactions"]</a>
@@ -477,6 +552,7 @@
                     <li><a href="#design-circuits">Circuits</a></li>
                     <li><a href="#context-stack">Context Stack</a></li>
                     <li><a href="#rendering-contexts">Rendering Tests</a></li>
+                    <li><a href="#component-anatomy">Component Options</a></li>
                     <li><a href="#mobile-interactions">Mobile</a></li>
                     <li><a href="#team-prompts">Prompts</a></li>
                 </ul>
@@ -495,6 +571,8 @@
                 <p><a class="operator-chip" href="/topics/site-design/">site design</a></p>
                 <p><a class="operator-chip" href="/topics/software/pretext/">pretext physics</a></p>
                 <p><a class="operator-chip" href="/topics/software/renderers/">renderers</a></p>
+                <p><a class="operator-chip" href="/design/components/">component glossary</a></p>
+                <p><a class="operator-chip" href="/design/palettes/">palettes & color grammar</a></p>
                 <p><a class="operator-chip" href="/settings/#runtime-preferences">settings</a></p>
             </section>
 
