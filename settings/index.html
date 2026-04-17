@@ -281,6 +281,18 @@
                         <strong data-settings-state="paletteResonance">route</strong>
                     </article>
                     <article class="settings-state-card">
+                        <span class="settings-state-label">base metamaterial</span>
+                        <strong data-settings-state="baseMetamaterial">glass</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">base affordance</span>
+                        <strong data-settings-state="baseAffordance">read</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">component density</span>
+                        <strong data-settings-state="componentDensity">soft</strong>
+                    </article>
+                    <article class="settings-state-card">
                         <span class="settings-state-label">enhancement level</span>
                         <strong data-settings-state="enhancementLevel">minimal</strong>
                     </article>
@@ -303,7 +315,7 @@
             <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-form="brace"
                 data-spw-form-options="brace,block" data-spw-meaning="runtime preference controls"
                 data-spw-inspect="runtime_preferences"
-                data-spw-inspect-fields="colorMode,paletteResonance,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,wonderMemory,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
+                data-spw-inspect-fields="colorMode,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,wonderMemory,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
                     <h2>Runtime Preferences</h2>
@@ -386,6 +398,63 @@
                                 <label class="settings-option">
                                     <input type="radio" name="animationIntensity" value="enhanced">
                                     <span class="settings-option-copy"><strong>Enhanced</strong></span>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </details>
+
+                    <!-- Interface Physics -->
+                    <details class="settings-category">
+                        <summary class="settings-category-header">Interface Physics</summary>
+                        <p class="frame-note">
+                            Tune the default structural attributes for components across the site. These settings manage the baseline material, affordance rules, and spacing cadence.
+                        </p>
+                        <div class="settings-grid">
+                            <fieldset class="settings-fieldset">
+                                <legend>Base metamaterial</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseMetamaterial" value="glass" checked>
+                                    <span class="settings-option-copy"><strong>Glass</strong><span>Translucent and responsive.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseMetamaterial" value="paper">
+                                    <span class="settings-option-copy"><strong>Paper</strong><span>Opaque and warm.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseMetamaterial" value="matte">
+                                    <span class="settings-option-copy"><strong>Matte</strong><span>Flat and recessive.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Base affordance</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseAffordance" value="read" checked>
+                                    <span class="settings-option-copy"><strong>Read</strong><span>Stable, inactive layout.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseAffordance" value="tune">
+                                    <span class="settings-option-copy"><strong>Tune</strong><span>Interactive state ready.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="baseAffordance" value="inspect">
+                                    <span class="settings-option-copy"><strong>Inspect</strong><span>Hover-reactive traces.</span></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Component density</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="componentDensity" value="soft" checked>
+                                    <span class="settings-option-copy"><strong>Soft</strong><span>Comfortable breathing room.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="componentDensity" value="dense">
+                                    <span class="settings-option-copy"><strong>Dense</strong><span>Tightly packed lists.</span></span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="componentDensity" value="roomy">
+                                    <span class="settings-option-copy"><strong>Roomy</strong><span>Expansive hero spacing.</span></span>
                                 </label>
                             </fieldset>
                         </div>

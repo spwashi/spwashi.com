@@ -267,6 +267,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
 
   colorMode: 'auto',
   paletteResonance: DEFAULT_PALETTE_RESONANCE,
+  baseMetamaterial: 'glass',
+  baseAffordance: 'read',
+  componentDensity: 'soft',
   operatorSaturation: 'normal',
   animationIntensity: 'normal',
 
@@ -322,6 +325,9 @@ const SETTING_OPTIONS = Object.freeze({
 
   colorMode: new Set(['auto', 'light', 'dark']),
   paletteResonance: new Set(PALETTE_RESONANCE_OPTIONS),
+  baseMetamaterial: new Set(['paper', 'glass', 'matte', 'field']),
+  baseAffordance: new Set(['read', 'tune', 'inspect', 'orient']),
+  componentDensity: new Set(['dense', 'soft', 'roomy']),
   operatorSaturation: new Set(['muted', 'normal', 'vibrant']),
   animationIntensity: new Set(['reduced', 'normal', 'enhanced']),
 
@@ -789,6 +795,9 @@ class SiteSettingsManager {
       spwFontSize: normalized.fontSize,
       spwColorMode: normalized.colorMode,
       spwPaletteResonance: normalized.paletteResonance,
+      spwBaseMetamaterial: normalized.baseMetamaterial,
+      spwBaseAffordance: normalized.baseAffordance,
+      spwComponentDensity: normalized.componentDensity,
       spwOperatorSaturation: normalized.operatorSaturation,
       spwAnimationIntensity: normalized.animationIntensity,
       spwDebugMode: normalized.debugMode,
