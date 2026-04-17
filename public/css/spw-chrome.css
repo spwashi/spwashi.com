@@ -875,7 +875,8 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.45rem 0.55rem;
+  align-content: start;
+  gap: 0.4rem 0.45rem;
   min-width: 0;
 }
 
@@ -883,24 +884,30 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   display: inline-flex;
   align-items: center;
   min-height: 2.1rem;
-  padding: 0.24rem 0.64rem;
+  padding: 0.28rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
   border-radius: var(--shell-nav-radius);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-size: var(--text-size-label, 0.76rem);
+  font-size: var(--text-size-chip, 0.82rem);
   font-weight: 500;
   letter-spacing: 0.02em;
   text-decoration: none;
   transition:
     background-color var(--shell-duration-fast) var(--shell-ease),
+    border-color var(--shell-duration-fast) var(--shell-ease),
     color var(--shell-duration-fast) var(--shell-ease),
-    box-shadow var(--shell-duration-base) var(--shell-settle-ease);
+    box-shadow var(--shell-duration-base) var(--shell-settle-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
 .site-footer__nav a:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, var(--surface-strong, rgba(255,255,255,0.78)));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
   outline: none;
+  transform: translateY(-1px);
 }
 
 .site-footer__legal {
@@ -1224,6 +1231,16 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   .spw-section-handle {
     display: inline-flex;
   }
+}
+
+/*
+ * Desktop opt-in: pages with many inline SVG hosts can declare
+ * data-spw-section-handle-desktop="auto" on <html> or <body> to keep the
+ * handle visible above the mobile breakpoint so long-display readers gain
+ * "you are inside SVG X" orientation.
+ */
+:is(html, body)[data-spw-section-handle-desktop="auto"] .spw-section-handle {
+  display: inline-flex;
 }
 
 html[data-spw-section-handle="off"] .spw-section-handle {

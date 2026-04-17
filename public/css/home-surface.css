@@ -162,11 +162,11 @@ body[data-spw-surface="home"] {
 }
 
 [data-spw-surface="home"] main {
-  gap: clamp(1.15rem, 2.6vw, 1.6rem);
+  gap: clamp(1.4rem, 2.8vw, 2rem);
 }
 
 [data-spw-surface="home"] main > section + section {
-  margin-top: clamp(0.15rem, 0.6vw, 0.4rem);
+  margin-top: clamp(0.25rem, 0.8vw, 0.6rem);
 }
 
 /* ==========================================================================
@@ -197,7 +197,7 @@ body[data-spw-surface="home"] {
 }
 
 [data-spw-surface="home"] .frame-sigil {
-  color: color-mix(in srgb, var(--home-ink-soft) 90%, var(--home-accent));
+  color: color-mix(in srgb, var(--home-ink-mid) 72%, var(--home-accent) 28%);
 }
 
 /* Home owns the lens palette; shared handles own idle/hover/pressed behavior. */
@@ -312,13 +312,13 @@ body[data-spw-surface="home"] {
 }
 
 [data-spw-surface="home"] #home-title {
-  max-width: 15ch;
+  max-width: 22ch;
   color: color-mix(in srgb, var(--home-ink) 90%, var(--home-accent-2));
   font-family: var(--craft-display, var(--site-display-font));
   font-size: clamp(2.35rem, 4.5vw, 3.25rem);
   font-weight: 600;
   letter-spacing: -0.025em;
-  line-height: 1.02;
+  line-height: 1.05;
   text-wrap: balance;
 }
 
@@ -524,6 +524,7 @@ body[data-spw-surface="home"] {
 
 [data-spw-surface="home"] .frame-operators {
   gap: 0.65rem 0.75rem;
+  margin-top: 0.35rem;
 }
 
 [data-spw-surface="home"] .operator-chip {
@@ -806,6 +807,22 @@ body[data-spw-surface="home"] {
 }
 
 /* ==========================================================================
+   11b. Grid alignment — prevent orphan items in multi-column layouts
+   ========================================================================== */
+
+[data-spw-surface="home"] #site-category-atlas .frame-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-spw-surface="home"] #website-register .frame-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+[data-spw-surface="home"] #operator-pivot-field .compare-sets {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ==========================================================================
    12. Responsive
    ========================================================================== */
 
@@ -823,6 +840,15 @@ body[data-spw-surface="home"] {
   [data-spw-surface="home"] .frame-grid--media {
     grid-template-columns: 1fr;
   }
+
+  [data-spw-surface="home"] #site-category-atlas .frame-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-spw-surface="home"] #website-register .frame-grid,
+  [data-spw-surface="home"] #operator-pivot-field .compare-sets {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 520px) {
@@ -833,6 +859,10 @@ body[data-spw-surface="home"] {
 
   [data-spw-surface="home"] .page-index a {
     padding: 0.6rem 0.72rem;
+  }
+
+  [data-spw-surface="home"] #site-category-atlas .frame-grid {
+    grid-template-columns: 1fr;
   }
 }
 

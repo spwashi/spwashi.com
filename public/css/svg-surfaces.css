@@ -105,7 +105,7 @@
     stroke-width: var(--line-mid, 1.5px);
     stroke-linecap: round;
     stroke-dasharray: 5 9;
-    opacity: 0.42;
+    opacity: 0.58;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
@@ -123,7 +123,7 @@
 
 [data-spw-features~="svg-surfaces"] .spw-svg-note {
     fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
-    font-size: var(--text-size-xs, 0.68rem);
+    font-size: var(--text-size-xs, 0.72rem);
     letter-spacing: 0.03em;
 }
 
