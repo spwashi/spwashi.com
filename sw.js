@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const APP_VERSION = '0.3.10';
+const APP_VERSION = '0.3.11';
 
 const CACHE = {
   core: `spw-core-${APP_VERSION}`,
@@ -99,6 +99,17 @@ const CORE_ASSETS = [
   '/public/images/icon-512.png',
   '/public/images/icon-maskable-512.png',
   '/public/images/favicon.svg',
+  '/public/images/routes/about-attention-register-hero.webp',
+  '/public/images/routes/blog-thread-laboratory-hero.webp',
+  '/public/images/routes/blog-thread-laboratory-square.webp',
+  '/public/images/routes/craft-fragment-studio-hero.webp',
+  '/public/images/routes/craft-fragment-studio-square.webp',
+  '/public/images/routes/math-signal-field-square.webp',
+  '/public/images/routes/site-design-resonance-hero.webp',
+  '/public/images/routes/software-parser-weather-square.webp',
+  '/public/images/routes/topics-atlas-register-square.webp',
+  '/public/images/routes/website-field-instrument-hero.webp',
+  '/public/images/routes/website-field-instrument-square.webp',
   '/favicon.ico',
 ];
 
