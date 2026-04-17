@@ -123,10 +123,11 @@ function countMatches(source, pattern) {
 
 function extractSvgHosts(html) {
   const hosts = [];
-  const svgPattern = /<svg\b([^>]*)>/gi;
+  const svgPattern = /<svg\b([^>]*)>([\s\S]*?)<\/svg>/gi;
 
   for (const match of html.matchAll(svgPattern)) {
     const attrs = parseAttributes(match[1] || '');
+    const svgInner = match[2] || '';
     const classList = splitList(attrs.class);
     const hasSurfaceClass = classList.includes('spw-svg-surface');
     const surfaceVariant = classList
@@ -152,11 +153,10 @@ function extractSvgHosts(html) {
       companion: figureAttrs?.['data-spw-svg-companion']
         || attrs['data-spw-svg-companion']
         || null,
-      hasDesc: /aria-describedby|\bid=["'][^"']*desc/.test(match[1] || '')
-        || /aria-labelledby=["'][^"']*desc/.test(match[1] || ''),
+      hasDesc: /<desc\b/i.test(svgInner),
       hasFigureContract,
       hasSurfaceClass,
-      hasTitle: /aria-labelledby/.test(match[1] || ''),
+      hasTitle: /<title\b/i.test(svgInner),
       hostId,
       kind: figureAttrs?.['data-spw-svg-kind']
         || attrs['data-spw-svg-kind']
