@@ -1,26 +1,23 @@
-# Reviews Index
-#
-# Local review and audit surfaces for spwashi.com.
+# reviews
+# Local review entrypoint for site-facing audits and editor study surfaces.
 
-#>spw_site_reviews
-#:index #!surface
+#>spw_reviews_index
+#:index #!review
 #:layer #!pragmatics
 
-^"intent"{
- ~#goal: "Provide a stable entrypoint for site-local audits, architecture reviews, and semantic/runtime inspection notes."
- ~#use: "Open this when you want review material that is more durable than chat output and more inspectable than a one-off plan stream."
-}
+@runtime_audit: ~"./runtime-audit/index.spw"
 
-^"roots"{
- @runtime_audit: ~"./runtime-audit/index.spw"
-}
+intent: .{
+ goal = `Keep review surfaces grouped and easy to traverse in an editor.`
+ scope = `Runtime, ontology, seams, lifecycle, and state-flow audits that belong to the public site rather than the mounted workbench.`
+}[reg=facet]
 
-^"dispatch"{
- runtime_audit: @runtime_audit
-}
+dispatch: .{
+ runtime_audit = @runtime_audit
+}[reg=facet]
 
-^"invariant"{
- "Review surfaces should cite real repo files and real runtime contracts.",
- "A review note should separate ontology, seams, and lifecycles instead of collapsing them into one prose block.",
- "Site-local review notes stay under .spw/ so they are easy to inspect in editors alongside the public HTML and JS."
-}
+invariants: #[
+ `Every review bundle should expose a stable entrypoint.`,
+ `Review surfaces should stay inspectable without requiring the runtime to execute.`,
+ `A review document should point back to the code it criticizes, not only restate prose findings.`
+][reg=set]

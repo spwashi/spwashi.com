@@ -7,91 +7,53 @@
 #:registry #!surfaces
 #:layer #!pragmatics
 
-^"roots"{
-  @site: ~"./site.spw"
-  @domains: ~"./domains.spw"
-  @conventions: ~"./conventions/index.spw"
-  @site_semantics: ~"./conventions/site-semantics.spw"
-  @canon_surfaces: ~"./_workbench/.spw/surfaces/index.spw"
-  @canon_domains: ~"./_workbench/.spw/surfaces/domains.spw"
-  @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
-  @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
-  @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
-}
+@site: ~"./site.spw"
+@domains: ~"./domains.spw"
+@conventions: ~"./conventions/index.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@canon_surfaces: ~"./_workbench/.spw/surfaces/index.spw"
+@canon_domains: ~"./_workbench/.spw/surfaces/domains.spw"
+@literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
+@symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+@ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
 
-^"public_routes"{
-  index: {
-    ~#path: "../index.html"
-    ~#role: "hub"
-    ~#bridge: "entry surface into the wider grammar"
-  }
-  about: {
-    ~#path: "../about/index.html"
-    ~#role: "identity register"
-    ~#bridge: "public register of domains, trajectory, and adjacent surfaces"
-  }
-  website_field_guide: {
-    ~#path: "../about/website/index.html"
-    ~#role: "media field guide"
-    ~#bridge: "public translation layer for the site's PWA shell, frame navigation, Spw surfaces, Pretext lab, and cognitive-surface direction"
-  }
-  contact: {
-    ~#path: "../contact/index.html"
-    ~#role: "contact route"
-    ~#bridge: "direct path for conversation and collaboration"
-  }
-  software: {
-    ~#path: "../topics/software/index.html"
-    ~#role: "grammar surface"
-    ~#bridge: "public syntax, interaction grammar, and workbench-facing translation layer"
-  }
-  spw_operator_atlas: {
-    ~#path: "../topics/software/spw/index.html"
-    ~#role: "operator atlas"
-    ~#bridge: "one public route per operator, translating Spw grammar into interaction semantics, brace physics, and inspectable metaphysics"
-  }
-  pretext: {
-    ~#path: "../topics/software/pretext/index.html"
-    ~#role: "probe surface"
-    ~#bridge: "live lab that projects grammar into a concrete device-oriented interface"
-  }
-  play: {
-    ~#path: "../play/index.html"
-    ~#role: "world surface"
-    ~#bridge: "creative and game-facing routes shaped by the same operator logic"
-  }
-  rpg_wednesday: {
-    ~#path: "../play/rpg-wednesday/index.html"
-    ~#role: "local gameplay surface"
-    ~#bridge: "table-facing RPG route with private localStorage registers for scene, initiative, clocks, notes, and session seeds"
-  }
-}
+public_routes: .{
+ index = .{ path = ~"../index.html", role = hub, bridge = `entry surface into the wider grammar` }[reg=facet]
+ about = .{ path = ~"../about/index.html", role = `identity register`, bridge = `public register of domains, trajectory, and adjacent surfaces` }[reg=facet]
+ website_field_guide = .{ path = ~"../about/website/index.html", role = `media field guide`, bridge = `public translation layer for the site's PWA shell, frame navigation, Spw surfaces, Pretext lab, and cognitive-surface direction` }[reg=facet]
+ contact = .{ path = ~"../contact/index.html", role = `contact route`, bridge = `direct path for conversation and collaboration` }[reg=facet]
+ software = .{ path = ~"../topics/software/index.html", role = `grammar surface`, bridge = `public syntax, interaction grammar, and workbench-facing translation layer` }[reg=facet]
+ spw_operator_atlas = .{ path = ~"../topics/software/spw/index.html", role = `operator atlas`, bridge = `one public route per operator, translating Spw grammar into interaction semantics, brace physics, and inspectable metaphysics` }[reg=facet]
+ pretext = .{ path = ~"../topics/software/pretext/index.html", role = `probe surface`, bridge = `live lab that projects grammar into a concrete device-oriented interface` }[reg=facet]
+ play = .{ path = ~"../play/index.html", role = `world surface`, bridge = `creative and game-facing routes shaped by the same operator logic` }[reg=facet]
+ rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `local gameplay surface`, bridge = `table-facing RPG route with private localStorage registers for scene, initiative, clocks, notes, and session seeds` }[reg=facet]
+}[reg=facet]
 
-^"canon_alignment"{
-  software: [@literate_ui, @symmetry_ui, @ocean_ux]
-  spw_operator_atlas: [@literate_ui, @symmetry_ui, @site_semantics]
-  pretext: [@literate_ui, @ocean_ux]
-  domains: [@canon_domains]
-  site_contract: [@site, @domains, @conventions, @site_semantics]
-}
+canon_alignment: .{
+ software = #[@literate_ui, @symmetry_ui, @ocean_ux][reg=set]
+ spw_operator_atlas = #[@literate_ui, @symmetry_ui, @site_semantics][reg=set]
+ pretext = #[@literate_ui, @ocean_ux][reg=set]
+ domains = #[@canon_domains][reg=set]
+ site_contract = #[@site, @domains, @conventions, @site_semantics][reg=set]
+}[reg=facet]
 
-^"integration_contract"{
-  local_role: "This registry names what the public site actually publishes."
-  canon_role: "Installed workbench surfaces remain deeper references and reusable machinery."
-  routing_rule: "Public routes belong here first, then cite canon surfaces that inform them."
-}
+integration_contract: .{
+ local_role = `This registry names what the public site actually publishes.`
+ canon_role = `Installed workbench surfaces remain deeper references and reusable machinery.`
+ routing_rule = `Public routes belong here first, then cite canon surfaces that inform them.`
+}[reg=facet]
 
-^"dispatch"{
-  site: @site
-  domains: @domains
-  conventions: @conventions
-  semantics: @site_semantics
-  canon_surfaces: @canon_surfaces
-  canon_domains: @canon_domains
-}
+dispatch: .{
+ site = @site
+ domains = @domains
+ conventions = @conventions
+ semantics = @site_semantics
+ canon_surfaces = @canon_surfaces
+ canon_domains = @canon_domains
+}[reg=facet]
 
-^"invariant"{
-  "The site publishes routes; the workbench publishes canon and machinery.",
-  "Every public surface should have a readable local description before deeper canon references.",
-  "Surface naming should stay stable enough to support query, selection, and screenshot reuse."
-}
+invariants: #[
+ `The site publishes routes; the workbench publishes canon and machinery.`,
+ `Every public surface should have a readable local description before deeper canon references.`,
+ `Surface naming should stay stable enough to support query, selection, and screenshot reuse.`
+][reg=set]

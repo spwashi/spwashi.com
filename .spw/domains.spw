@@ -2,65 +2,82 @@
 #
 # Local registry of surfaces that orbit spwashi.com.
 # Status reflects what currently exists, not what is planned.
-# Observations, not declarations, but now cross-referenced to installed canon.
 
 #>spw_site_domains
 #:registry #!domains
 #:layer #!pragmatics
 
-^"active_surfaces"{
-  # Land cluster live skeleton pages under about/domains/.
-  "boon.land":  { ~#status: "active-skeleton", ~#role: "realm", ~#valence: "+1 arrival/benefit", ~#hosted: "about/domains/boon.land/" }
-  "bane.land":  { ~#status: "active-skeleton", ~#role: "realm", ~#valence: "-1 departure/cost",  ~#hosted: "about/domains/bane.land/" }
-  "bone.land":  { ~#status: "active-skeleton", ~#role: "realm", ~#valence: "0 structure/carrier", ~#hosted: "about/domains/bone.land/" }
-  "bonk.land":  { ~#status: "active-skeleton", ~#role: "realm", ~#valence: "@ collision/event",   ~#hosted: "about/domains/bonk.land/" }
-  "honk.land":  { ~#status: "active-skeleton", ~#role: "realm", ~#valence: "~ signal/relay",      ~#hosted: "about/domains/honk.land/" }
+@surfaces: ~"./surfaces.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@canon: ~"./_workbench/.spw/index.spw"
+@naming: ~"./_workbench/.spw/conventions/naming.spw"
+@selection: ~"./_workbench/.spw/conventions/selection.spw"
+@surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
+@valence_architecture: ~"./_workbench/docs/theory/spw/valence-architecture.spw"
 
-  # Secondary surfaces linked from about, not hosted here.
-  "factshift.com":   { ~#status: "linked", ~#role: "engine",    ~#note: "physics engine for narrative under transformation" }
-  "lore.land":       { ~#status: "linked", ~#role: "book",      ~#note: "installable-book PWA; home terrain for Boof" }
-  "rskrules.com":    { ~#status: "linked", ~#role: "secondary", ~#note: "secondary domain" }
-  "tealstripesvibes.com": { ~#status: "linked", ~#role: "secondary" }
-}
+active_surfaces: .{
+ `boon.land` = .{ status = `active-skeleton`, role = realm, valence = `+1 arrival/benefit`, hosted = `about/domains/boon.land/` }[reg=facet]
+ `bane.land` = .{ status = `active-skeleton`, role = realm, valence = `-1 departure/cost`, hosted = `about/domains/bane.land/` }[reg=facet]
+ `bone.land` = .{ status = `active-skeleton`, role = realm, valence = `0 structure/carrier`, hosted = `about/domains/bone.land/` }[reg=facet]
+ `bonk.land` = .{ status = `active-skeleton`, role = realm, valence = `@ collision/event`, hosted = `about/domains/bonk.land/` }[reg=facet]
+ `honk.land` = .{ status = `active-skeleton`, role = realm, valence = `~ signal/relay`, hosted = `about/domains/honk.land/` }[reg=facet]
+ `factshift.com` = .{ status = linked, role = engine, note = `physics engine for narrative under transformation` }[reg=facet]
+ `lore.land` = .{ status = linked, role = book, note = `installable-book PWA; home terrain for Boof` }[reg=facet]
+ `rskrules.com` = .{ status = linked, role = secondary, note = `secondary domain` }[reg=facet]
+ `tealstripesvibes.com` = .{ status = linked, role = secondary }[reg=facet]
+}[reg=facet]
 
-^"workbench_crossrefs"{
-  @surfaces: ~"./surfaces.spw"
-  @site_semantics: ~"./conventions/site-semantics.spw"
-  @canon: ~"./_workbench/.spw/index.spw"
-  @naming: ~"./_workbench/.spw/conventions/naming.spw"
-  @selection: ~"./_workbench/.spw/conventions/selection.spw"
-  @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
-  @valence_architecture: ~"./_workbench/docs/theory/spw/valence-architecture.spw"
-}
+workbench_crossrefs: .{
+ surfaces = @surfaces
+ site_semantics = @site_semantics
+ canon = @canon
+ naming = @naming
+ selection = @selection
+ surface_registry = @surface_registry
+ valence_architecture = @valence_architecture
+}[reg=facet]
 
-^"translation_contract"{
-  boonhonk_cluster: "The local land cluster pages stay public-facing and compressed; deeper valence theory now lives in the installed workbench."
-  site_registry: "The local surfaces.spw registry keeps route ownership on the site side of the boundary."
-  citation_rule: "Domain semantics should point to installed canon surfaces when they need deeper explanation."
-}
+translation_contract: .{
+ boonhonk_cluster = `The local land-cluster pages stay public-facing and compressed; deeper valence theory lives in the installed workbench.`
+ site_registry = `The local surfaces.spw registry keeps route ownership on the site side of the boundary.`
+ citation_rule = `Domain semantics should point to installed canon surfaces when they need deeper explanation.`
+}[reg=facet]
 
-^"non_sensitive_unlinked"{
-  # Active in the workbench portfolio but not yet linked from spwashi.com
-  "spwashi.dev":       { ~#role: "workshop",             ~#brief: "parser, runtime, LSP, and workbench tools" }
-  "spwashi.ai":        { ~#role: "lab",                  ~#brief: "AI-assisted generative systems" }
-  "spwashi.design":    { ~#role: "studio",               ~#brief: "design systems, interaction craft, visual language" }
-  "spwashi.ink":       { ~#role: "press",                ~#brief: "publishing imprint for ebooks and durable editions" }
-  "boonhonk.ing":      { ~#role: "engine",               ~#brief: "genre hybridization and biome construction" }
-  "boof.land":         { ~#role: "character-realm",      ~#brief: "Boof the dog, protagonist and lore carrier" }
-  "factshift.center":  { ~#role: "observatory",          ~#brief: "fact dynamics analytics and atlas" }
-  "spw.quest":         { ~#role: "guide",                ~#brief: "paced learning path into Spw and the boonhonk realms" }
-  "wap.christmas":     { ~#role: "seasonal",             ~#brief: "Wondering About Pi with a holiday shell" }
-  "wap.mom":           { ~#role: "nurture",              ~#brief: "Wondering About Pi through care and domestic encouragement" }
-  "brainstorm.monster":{ ~#role: "collective-ideation",  ~#brief: "group concept development with hibernate behavior" }
-  "trope.wiki":        { ~#role: "taxonomy",             ~#brief: "narrative structure reference and long-horizon probe" }
-}
+non_sensitive_unlinked: .{
+ `spwashi.dev` = .{ role = workshop, brief = `parser, runtime, LSP, and workbench tools` }[reg=facet]
+ `spwashi.ai` = .{ role = lab, brief = `AI-assisted generative systems` }[reg=facet]
+ `spwashi.design` = .{ role = studio, brief = `design systems, interaction craft, visual language` }[reg=facet]
+ `spwashi.ink` = .{ role = press, brief = `publishing imprint for ebooks and durable editions` }[reg=facet]
+ `boonhonk.ing` = .{ role = engine, brief = `genre hybridization and biome construction` }[reg=facet]
+ `boof.land` = .{ role = `character-realm`, brief = `Boof the dog, protagonist and lore carrier` }[reg=facet]
+ `factshift.center` = .{ role = observatory, brief = `fact dynamics analytics and atlas` }[reg=facet]
+ `spw.quest` = .{ role = guide, brief = `paced learning path into Spw and the boonhonk realms` }[reg=facet]
+ `wap.christmas` = .{ role = seasonal, brief = `Wondering About Pi with a holiday shell` }[reg=facet]
+ `wap.mom` = .{ role = nurture, brief = `Wondering About Pi through care and domestic encouragement` }[reg=facet]
+ `brainstorm.monster` = .{ role = `collective-ideation`, brief = `group concept development with hibernate behavior` }[reg=facet]
+ `trope.wiki` = .{ role = taxonomy, brief = `narrative structure reference and long-horizon probe` }[reg=facet]
+}[reg=facet]
 
-^"dormant"{
-  ~#note: "Listed in workbench portfolio but not yet routed or under active development."
-  ~#surfaces: ["spwashi.art", "spwashi.media", "spwashi.college", "spwashi.org", "spwashi.network", "spwashi.pro", "spwashi.biz", "spwashi.store", "spwashi.work", "spwashi.space", "spwashi.click", "spw.rest", "boonbanebone.com"]
-}
+dormant: .{
+ note = `Listed in the workbench portfolio but not yet routed or under active development.`
+ surfaces = #[
+  `spwashi.art`,
+  `spwashi.media`,
+  `spwashi.college`,
+  `spwashi.org`,
+  `spwashi.network`,
+  `spwashi.pro`,
+  `spwashi.biz`,
+  `spwashi.store`,
+  `spwashi.work`,
+  `spwashi.space`,
+  `spwashi.click`,
+  `spw.rest`,
+  `boonbanebone.com`
+ ][reg=set]
+}[reg=facet]
 
-^"sensitive_excluded"{
-  ~#note: "Not linked from public surfaces. Privacy-preserving architecture required before activation."
-  ~#surfaces: ["sexymath4adults.com", "clit.video"]
-}
+sensitive_excluded: .{
+ note = `Not linked from public surfaces. Privacy-preserving architecture required before activation.`
+ surfaces = #[`sexymath4adults.com`, `clit.video`][reg=set]
+}[reg=facet]

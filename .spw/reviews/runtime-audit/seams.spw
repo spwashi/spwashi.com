@@ -5,134 +5,145 @@
 #:review #!surface
 #:layer #!pragmatics
 
-^"thesis"{
- claim: "The application's seams are real and mostly well-intentioned, but several are implicit rather than declared."
- consequence: "The codebase often behaves as if two neighboring modules share a contract when they are really just writing to the same datasets."
-}
+@runtime: ~"../../../public/js/site.js"
+@page_metadata: ~"../../../public/js/spw-page-metadata.js"
+@component_semantics: ~"../../../public/js/spw-component-semantics.js"
+@semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
+@contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
+@settings: ~"../../../public/js/site-settings.js"
+@brace_pivots: ~"../../../public/js/spw-brace-pivots.js"
+@wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
+@accent_palette: ~"../../../public/js/spw-accent-palette.js"
 
-^"roots"{
- @runtime: ~"../../../public/js/site.js"
- @page_metadata: ~"../../../public/js/spw-page-metadata.js"
- @component_semantics: ~"../../../public/js/spw-component-semantics.js"
- @semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
- @contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
- @settings: ~"../../../public/js/site-settings.js"
- @wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
- @accent_palette: ~"../../../public/js/spw-accent-palette.js"
-}
+thesis: .{
+ claim = `The application's seams are real and mostly well-intentioned, but several are implicit rather than declared.`
+ consequence = `The codebase often behaves as if two neighboring modules share a contract when they are really just writing to the same datasets.`
+}[reg=facet]
 
-^"handoff_stream"{
- authored_html: ?<
-  "page HTML authors explicit data-spw-* fields",
-  "spw-page-metadata.js normalizes page shell, landmarks, and missing route metadata",
-  "site.js collects regions and assigns region state, harmony, tempo, and density",
-  "spw-component-semantics.js snapshots richer component semantics onto datasets",
-  "spw-semantic-chrome.js projects those semantics into helper controls / meta tags",
-  "spw-contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context",
-  "site-settings.js and wonder-memory / accent systems bias the resulting field with browser-local state"
- >[reg=stream]
-}
+handoff_stream: ?<
+ `page HTML authors explicit data-spw-* fields`,
+ `spw-page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
+ `site.js collects regions and assigns region state, harmony, tempo, and density`,
+ `spw-component-semantics.js snapshots richer component semantics onto datasets`,
+ `spw-semantic-chrome.js projects those semantics into helper controls and meta tags`,
+ `spw-contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context`,
+ `site-settings.js and wonder-memory / accent systems bias the resulting field with browser-local state`
+>[reg=stream]
 
-^"seam_catalog"{
- authored_to_metadata: {
-  contract: "Missing page/shell semantics may be filled automatically, but authored semantics should survive."
-  files: [@page_metadata]
-  stable: "Good for main landmarks, nav labeling, role clusters, shell defaults."
-  fragile: "Role inference is heuristic and duplicated elsewhere."
- }
- metadata_to_regions: {
-  contract: "Region collection and profiling should only run after meaningful role/context truth exists."
-  files: [@page_metadata, @runtime]
-  stable: "Shared selector surface through PAGE_METADATA_REGION_SELECTOR."
-  fragile: "Region priming currently runs before later semantic enrichers have mounted."
- }
- regions_to_component_semantics: {
-  contract: "Component semantics should refine or confirm region truth, not silently invalidate earlier profiling."
-  files: [@runtime, @component_semantics]
-  stable: "Both speak in data-spw-* datasets and root-scoped enhancement."
-  fragile: "They infer role independently."
- }
- component_semantics_to_semantic_chrome: {
-  contract: "semantic-chrome should behave like a projection layer over a stable semantic snapshot."
-  files: [@component_semantics, @semantic_chrome]
-  stable: "semantic-chrome reads snapshotComponentSemantics() directly, which is a strong seam."
-  fragile: "The underlying snapshot itself is not yet canonical relative to page metadata and region profiling."
- }
- component_semantics_to_contextual_ui: {
-  contract: "Module-facing dimensions should extend component semantics rather than fork a parallel ontology."
-  files: [@component_semantics, @contextual_ui]
-  stable: "Both are root-scoped enrichers and mostly operate through datasets/CSS variables."
-  fragile: "contextual-ui introduces perspective/potential/dimensions without an explicit bridge to role/value_layer/harmony."
- }
- settings_to_ornament: {
-  contract: "Browser-local state should flow through one normalized manager into CSS vars, bus events, and ornament systems."
-  files: [@settings, @wonder_memory, @accent_palette]
-  stable: "site-settings.js is already close to a canonical bridge."
-  fragile: "At least one writer still bypasses it."
- }
-}
+seam_catalog: .{
+ authored_to_metadata = .{
+  contract = `Missing page/shell semantics may be filled automatically, but authored semantics should survive.`
+  files = #[@page_metadata][reg=set]
+  stable = `Good for main landmarks, nav labeling, role clusters, and shell defaults.`
+  fragile = `Role inference is heuristic and duplicated elsewhere.`
+ }[reg=facet]
+ metadata_to_regions = .{
+  contract = `Region collection and profiling should only run after meaningful role/context truth exists.`
+  files = #[@page_metadata, @runtime][reg=set]
+  stable = `Shared selector surface through PAGE_METADATA_REGION_SELECTOR.`
+  fragile = `Region priming currently runs before later semantic enrichers have mounted.`
+ }[reg=facet]
+ regions_to_component_semantics = .{
+  contract = `Component semantics should refine or confirm region truth, not silently invalidate earlier profiling.`
+  files = #[@runtime, @component_semantics][reg=set]
+  stable = `Both speak in data-spw-* datasets and root-scoped enhancement.`
+  fragile = `They infer role independently.`
+ }[reg=facet]
+ component_semantics_to_semantic_chrome = .{
+  contract = `semantic-chrome should behave like a projection layer over a stable semantic snapshot.`
+  files = #[@component_semantics, @semantic_chrome][reg=set]
+  stable = `semantic-chrome reads snapshotComponentSemantics() directly, which is a strong seam.`
+  fragile = `The underlying snapshot itself is not yet canonical relative to page metadata and region profiling.`
+ }[reg=facet]
+ component_semantics_to_contextual_ui = .{
+  contract = `Module-facing dimensions should extend component semantics rather than fork a parallel ontology.`
+  files = #[@component_semantics, @contextual_ui][reg=set]
+  stable = `Both are root-scoped enrichers and mostly operate through datasets and CSS variables.`
+  fragile = `contextual-ui introduces perspective, potential, and dimensions without an explicit bridge to role, value_layer, or harmony.`
+ }[reg=facet]
+ settings_to_ornament = .{
+  contract = `Browser-local state should flow through one normalized manager into CSS vars, bus events, and ornament systems.`
+  files = #[@settings, @wonder_memory, @accent_palette][reg=set]
+  stable = `site-settings.js is already close to a canonical bridge.`
+  fragile = `At least one writer still bypasses it.`
+ }[reg=facet]
+}[reg=facet]
 
-^"implicit_contracts"{
- shared_datasets: [
-  "Multiple modules assume data-spw-role, data-spw-context, data-spw-kind, and data-spw-wonder mean the same thing even when they are inferred separately.",
-  "contextual-ui assumes module targets can safely receive persistent data-spw-module*, data-spw-perspective-resolved, and inline CSS variables without an explicit teardown schema.",
-  "region profiling assumes region roles are trustworthy before component semantics runs."
- ]
- shared_events: [
-  "settings:changed is treated as a full normalized settings object by the main settings layer and by the bus diagnostics behavior.",
-  "spw:regions-primed looks like a stable downstream seam but currently fires before later enrichers have had a chance to reshape the field."
- ]
-}
+implicit_contracts: .{
+ shared_datasets = #[
+  `Multiple modules assume data-spw-role, data-spw-context, data-spw-kind, and data-spw-wonder mean the same thing even when they are inferred separately.`,
+  `contextual-ui assumes module targets can safely receive persistent data-spw-module*, data-spw-perspective-resolved, and inline CSS variables without an explicit teardown schema.`,
+  `Region profiling assumes region roles are trustworthy before component semantics runs.`
+ ][reg=set]
+ shared_events = #[
+  `settings:changed is treated as a full normalized settings object by the main settings layer and by the bus diagnostics behavior.`,
+  `spw:regions-primed looks like a stable downstream seam but currently fires before later enrichers have had a chance to reshape the field.`
+ ][reg=set]
+}[reg=facet]
 
-^"where_the_seams_are_good"{
- "spw-component-semantics.js -> spw-semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.",
- "site.js module records and normalized mount handles give the runtime a strong cleanup shape when modules actually return cleanup handles.",
- "spw-page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement."
-}
+where_the_seams_are_good: #[
+ `spw-component-semantics.js -> spw-semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
+ `site.js module records and normalized mount handles give the runtime a strong cleanup shape when modules actually return cleanup handles.`,
+ `spw-page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`
+][reg=set]
 
-^"where_the_seams_are_soft"{
- "Role inference exists in both site.js and spw-page-metadata.js with nearly the same heuristics but no shared helper."
- "The move from role to harmony in site.js and role to valueLayer/affordances in component semantics is conceptually related but not declared as one bridge."
- "contextual-ui writes long-lived dataset state but does not currently advertise which of those writes are transient lifecycle projection versus canonical semantic identity."
-}
+where_the_seams_are_soft: #[
+ `Role inference exists in both site.js and spw-page-metadata.js with nearly the same heuristics but no shared helper.`,
+ `The move from role to harmony in site.js and role to valueLayer or affordances in component semantics is conceptually related but not declared as one bridge.`,
+ `contextual-ui writes long-lived dataset state but does not currently advertise which of those writes are transient lifecycle projection versus canonical semantic identity.`
+][reg=set]
 
-^"brand_expression_pathways"{
- ~#note: "Some seams are not only runtime handoffs — they are channels through which brand expression reaches the visitor. A soft seam in a brand-carrying channel means the visitor may receive an incoherent or degraded expression of the site's identity."
- operator_color_channel: {
-  from: "canonical role (from the semantic authority layer)"
-  through: ["data-spw-role on elements", "CSS --op-*-color tokens"]
-  to: "operator chip color and sigil color — the primary typographic brand asset"
-  brand_stake: "If role diverges between authority layers, operator color assignment becomes arbitrary rather than semantic. The visitor learns a false vocabulary."
-  current_risk: "Role is inferred independently by page_metadata and component_semantics with no declared shared helper."
- }
- brace_perspective_channel: {
-  from: "authored data-spw-perspective (objective / balanced / subjective)"
-  through: ["component_semantics snapshot", "semantic_chrome projection", "--objective-brace-wash / --subjective-brace-wash"]
-  to: "visible brace perspective wash — the site's most novel visual grammar"
-  brand_stake: "If authored perspective is overwritten at any seam, the gesture becomes invisible. A visitor who has learned to read the objective/subjective axis encounters a silent betrayal."
-  current_risk: "No seam currently declares perspective as authored truth that must survive enrichment."
-  see: ~"../../conventions/site-semantics.spw"
- }
- accent_palette_channel: {
-  from: "user settings (palette resonance choice)"
-  through: ["site-settings.js manager", "accent-palette module", "root CSS custom properties"]
-  to: "visible palette accent colors site-wide — the most personal brand expression surface"
-  brand_stake: "When brace-pivots bypasses the manager, palette resonance does not flow through the canonical channel. The brand expression surface the user is engaging with only partially updates."
-  current_risk: "spw-brace-pivots.js writes localStorage('spw-site-settings') directly and emits a partial settings:changed payload."
- }
- wonder_memory_channel: {
-  from: "user settings (wonder memory strength and reach)"
-  through: ["site-settings.js manager", "--spw-wonder-memory-* CSS variables", "wonder-memory module"]
-  to: "the tunable intensity of the site's most identity-forward interaction feature"
-  brand_stake: "Wonder memory is not a diagnostic preference — it controls the depth of the site's relational recollection. A seam that bypasses the manager fragments this expression."
-  current_risk: "Wonder memory currently reads CSS variables well; the risk is in potential future writes that skip normalization."
- }
-}
+brand_expression_pathways: .{
+ operator_color_channel = .{
+  from = `canonical role from the semantic authority layer`
+  through = #[
+   `data-spw-role on elements`,
+   `CSS --op-*-color tokens`
+  ][reg=set]
+  to = `operator chip color and sigil color — the primary typographic brand asset`
+  brand_stake = `If role diverges between authority layers, operator color assignment becomes arbitrary rather than semantic. The visitor learns a false vocabulary.`
+  current_risk = `Role is inferred independently by page_metadata and component_semantics with no declared shared helper.`
+ }[reg=facet]
+ brace_perspective_channel = .{
+  from = `authored data-spw-perspective (objective / balanced / subjective)`
+  through = #[
+   `component_semantics snapshot`,
+   `semantic_chrome projection`,
+   `--objective-brace-wash / --subjective-brace-wash`
+  ][reg=set]
+  to = `visible brace perspective wash — the site's most novel visual grammar`
+  brand_stake = `If authored perspective is overwritten at any seam, the gesture becomes invisible. A visitor who has learned to read the objective/subjective axis encounters a silent betrayal.`
+  current_risk = `No seam currently declares perspective as authored truth that must survive enrichment.`
+  see = ~"../../conventions/site-semantics.spw"
+ }[reg=facet]
+ accent_palette_channel = .{
+  from = `user settings (palette resonance choice)`
+  through = #[
+   `site-settings.js manager`,
+   `accent-palette module`,
+   `root CSS custom properties`
+  ][reg=set]
+  to = `visible palette accent colors site-wide — the most personal brand expression surface`
+  brand_stake = `When brace-pivots bypasses the manager, palette resonance does not flow through the canonical channel. The brand expression surface the user is engaging with only partially updates.`
+  current_risk = `spw-brace-pivots.js writes localStorage('spw-site-settings') directly and emits a partial settings:changed payload.`
+ }[reg=facet]
+ wonder_memory_channel = .{
+  from = `user settings (wonder memory strength and reach)`
+  through = #[
+   `site-settings.js manager`,
+   `--spw-wonder-memory-* CSS variables`,
+   `wonder-memory module`
+  ][reg=set]
+  to = `the tunable intensity of the site's most identity-forward interaction feature`
+  brand_stake = `Wonder memory is not a diagnostic preference — it controls the depth of the site's relational recollection. A seam that bypasses the manager fragments this expression.`
+  current_risk = `Wonder memory currently reads CSS variables well; the risk is in potential future writes that skip normalization.`
+ }[reg=facet]
+}[reg=facet]
 
-^"inspection_prompts"{
- ?["Which datasets are authored truth, and which ones should be cleared on destroy?"]{ ~#sources: [@runtime, @contextual_ui, @settings] }
- ?["Which seams are import-based contracts, and which are merely shared mutations on the same DOM nodes?"]{ ~#sources: [@component_semantics, @semantic_chrome, @contextual_ui] }
- ?["What would change if role inference lived in exactly one helper shared by page metadata, region profiling, and component semantics?"]{ ~#sources: [@page_metadata, @runtime, @component_semantics] }
- ?["For each of the four brand expression pathways, is the seam declared or implicit? What is the first step to making it a contract?"]{ ~#sources: [@component_semantics, @semantic_chrome, @settings, @runtime] }
- ?["If a user picks a palette resonance via a brace pivot, does the full brand expression surface update (accent colors, CSS variables, ornaments) or only part of it?"]{ ~#sources: [@brace_pivots, @settings, @accent_palette] }
-}
+inspection_prompts: #[
+ .{ ask = `Which datasets are authored truth, and which ones should be cleared on destroy?`, sources = #[@runtime, @contextual_ui, @settings][reg=set] },
+ .{ ask = `Which seams are import-based contracts, and which are merely shared mutations on the same DOM nodes?`, sources = #[@component_semantics, @semantic_chrome, @contextual_ui][reg=set] },
+ .{ ask = `What would change if role inference lived in exactly one helper shared by page metadata, region profiling, and component semantics?`, sources = #[@page_metadata, @runtime, @component_semantics][reg=set] },
+ .{ ask = `For each of the four brand expression pathways, is the seam declared or implicit? What is the first step to making it a contract?`, sources = #[@component_semantics, @semantic_chrome, @settings, @runtime][reg=set] },
+ .{ ask = `If a user picks a palette resonance via a brace pivot, does the full brand expression surface update (accent colors, CSS variables, ornaments) or only part of it?`, sources = #[@brace_pivots, @settings, @accent_palette][reg=set] }
+][reg=set]

@@ -8,150 +8,149 @@
 #:model #!structure
 #:layer #!pragmatics
 
-^"thesis"{
- claim: "A page is a nested field of attentional possibility, not a flat sequence of content blocks. Its structure can be described top-down as a composition tree and can be described bottom-up as a gradient field. Both descriptions are simultaneously true."
- corollary: "The composition tree tells you what a page contains. The gradient field tells you how attention moves through it. A well-designed page has a topography that rewards deliberate traversal."
- gap: "The current site describes routes as path + role + bridge, and components as kind + form + role + liminality + selection. The structural level between route and component — the feature, and the interaction context within a feature — is currently unnamed and therefore hard to design or audit."
-}
+@site_semantics: ~"../conventions/site-semantics.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+@site: ~"../site.spw"
 
-^"composition_hierarchy"{
- ~#note: "Each level is a named unit with its own semantic identity, attentional weight, and participation in the gradient field."
+thesis: .{
+ claim = `A page is a nested field of attentional possibility, not a flat sequence of content blocks. Its structure can be described top-down as a composition tree and bottom-up as a gradient field. Both descriptions are simultaneously true.`
+ corollary = `The composition tree tells you what a page contains. The gradient field tells you how attention moves through it. A well-designed page has a topography that rewards deliberate traversal.`
+ gap = `The current site describes routes as path + role + bridge, and components as kind + form + role + liminality + selection. The structural level between route and component — the feature, and the interaction context within a feature — is currently unnamed and therefore hard to design or audit.`
+}[reg=facet]
 
- page: {
-  definition: "A routable surface. Has a URL, a semantic role, and a shell. The outermost gradient field anchor."
-  semantic_identity: ["role", "context", "liminality at entry"]
-  field_role: "Sets the root attentional baseline. Determines which wonder types are available at all."
-  html_contract: "body[data-spw-role] and main carry the page-level semantic truth."
- }
+composition_hierarchy: .{
+ note = `Each level is a named unit with its own semantic identity, attentional weight, and participation in the gradient field.`
+ page = .{
+  definition = `A routable surface. Has a URL, a semantic role, and a shell. The outermost gradient field anchor.`
+  semantic_identity = #[role, context, `liminality at entry`][reg=set]
+  field_role = `Sets the root attentional baseline. Determines which wonder types are available at all.`
+  html_contract = `body[data-spw-role] and main carry the page-level semantic truth.`
+ }[reg=facet]
+ region = .{
+  definition = `A profiled sub-surface within a page. Has harmony, tempo, density, and a region role. Boundary is a layout boundary.`
+  semantic_identity = #[harmony, tempo, density, `region-role`][reg=set]
+  field_role = `Acts as a local field anchor. Interactions within a region raise that region's field charge and can bias nearby regions through register diffusion.`
+  html_contract = `Sections or divs selected by PAGE_METADATA_REGION_SELECTOR. Assigned by site.js primeRegions().`
+  note = `Regions are the granularity at which attentional topography is most actionable — their harmony value is already a design-facing signal.`
+ }[reg=facet]
+ feature = .{
+  definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose.`
+  semantic_identity = #[`feature-role`, `feature-kind`, `purpose description`][reg=set]
+  field_role = `Features are the primary attractor units. When a visitor's attention enters a feature, the feature's tokens enter the wonder field.`
+  html_contract = `Currently unnamed in markup — proposed: data-spw-feature='name' on the outermost element of a functional cluster.`
+  gap = `No current data attribute or JS model names features as a distinct level. Components and regions exist; features are implicit.`
+ }[reg=facet]
+ component = .{
+  definition = `A reusable semantic element that participates in the attentional grammar.`
+  semantic_identity = #[kind, form, role, liminality, selection, value_layer][reg=set]
+  field_role = `Components are the primary resonance targets. They expose receptors via tokens inferred from role, kind, text, href, and manual anchors and respond when field charge matches their receptors.`
+  html_contract = `data-spw-* attributes. Enriched by spw-component-semantics.js.`
+  examples = #[
+   `.operator-chip`,
+   `.frame-sigil`,
+   `.spec-pill`,
+   `.intent-cluster`,
+   `.math-lens-card`,
+   `.topic-photo-card`
+  ][reg=set]
+ }[reg=facet]
+ interaction_context = .{
+  definition = `The mode in which a component is currently being engaged. Determines which affordances are available, which tokens are emitted into the field, and which interactions are permitted.`
+  modes = .{
+   reading = `Passive attention. Dwell time accumulates charge on nearby tokens without explicit emission.`
+   browsing = `Light hover or focus. Emits the component's primary token at low strength.`
+   inspecting = `Sustained focus or explicit inspect gesture. Emits all tokens at full strength and deepens liminality.`
+   collecting = `Explicit pin or collection gesture. Pins the component's tokens into the persistent collection register.`
+   comparing = `Two or more components held in focus simultaneously. Emits the symmetric difference of their token sets as a comparison signal.`
+  }[reg=facet]
+  html_contract = `data-spw-interaction-context='reading|browsing|inspecting|collecting|comparing'. Currently set by JS; could be inferred from interaction patterns.`
+  note = `This is the level at which guide-badge interaction should be specified. A badge in a collecting context behaves differently from one in a browsing context.`
+ }[reg=facet]
+}[reg=facet]
 
- region: {
-  definition: "A profiled sub-surface within a page. Has harmony, tempo, density, and a region role. Boundary is a layout boundary."
-  semantic_identity: ["harmony", "tempo", "density", "region-role"]
-  field_role: "Acts as a local field anchor. Interactions within a region raise that region's field charge and can bias nearby regions through register diffusion."
-  html_contract: "Sections or divs selected by PAGE_METADATA_REGION_SELECTOR. Assigned by site.js primeRegions()."
-  note: "Regions are the granularity at which attentional topography is most actionable — their harmony value is already a design-facing signal."
- }
+data_flow: .{
+ note = `How semantic information moves through the composition hierarchy — from authored HTML to rendered field state.`
+ authored_to_inferred = .{
+  direction = ?< page, region, feature, component >[reg=stream]
+  mechanism = `Authored data-spw-* attributes are the truth source. Inference fills gaps: region profiling infers harmony from role, component semantics infers value_layer from kind + role.`
+  risk = `Inference that runs before the authoritative layer is settled produces stale fields.`
+ }[reg=facet]
+ inferred_to_projected = .{
+  direction = ?< component, semantic_chrome, contextual_ui >[reg=stream]
+  mechanism = `Enriched component snapshots are projected into helper controls, meta tags, and module-facing dimensions.`
+  risk = `Projection layers that add vocabulary without bridging back to component semantics produce ontology drift.`
+ }[reg=facet]
+ projected_to_field = .{
+  direction = ?< interaction_contexts, wonder_field, resonance_targets >[reg=stream]
+  mechanism = `User interaction with a component in a given context emits tokens into the wonder field. The field diffuses through register membership to bias other components.`
+  current_shape = `wonder-memory.js: recent path memory -> token matching -> data-spw-wonder-state / --wonder-accent-color`
+  gap = `No concept of interaction-context strength, receptor affinity, or multi-signal superposition is yet modeled in the runtime.`
+ }[reg=facet]
+ field_to_display = .{
+  direction = ?< field_state, ornaments, visible_bias >[reg=stream]
+  mechanism = `CSS custom properties (--wonder-accent-color, --delight-color) drive ornament color. data-spw-wonder-state drives ornament visibility.`
+  gap = `Ornaments do not currently have a declared contract for which field signals they read. Each module writes its own CSS vars without a shared schema.`
+ }[reg=facet]
+}[reg=facet]
 
- feature: {
-  definition: "A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose. Examples: the hero feature, the navigation feature, the settings feature, the explore feature, a recipe feature, a math-lens cluster."
-  semantic_identity: ["feature-role", "feature-kind", "purpose description"]
-  field_role: "Features are the primary attractor units. When a visitor's attention enters a feature, the feature's tokens enter the wonder field."
-  html_contract: "Currently unnamed in markup — a gap in the current model. Proposed: data-spw-feature='name' on the outermost element of a functional cluster."
-  gap: "No current data attribute or JS model names features as a distinct level. Components and regions exist; features are implicit."
- }
+attentional_topography: .{
+ note = `The page as a landscape. Topographic terms describe attention movement, not visual layout.`
+ peaks = .{
+  definition = `Regions or features with high intrinsic attentional weight — content or affordances that attract attention independent of current field state.`
+  sources = #[
+   `operator atlas entries (high conceptual density)`,
+   `interactive widgets (action affordance)`,
+   `hero frames (entry orientation)`
+  ][reg=set]
+  design_consequence = `Peaks should earn their prominence through semantic density, not visual noise. A peak that attracts attention but does not reward it creates cognitive debt.`
+ }[reg=facet]
+ paths = .{
+  definition = `Traversal sequences the visitor traces through the page. A path is a circuit if it returns to a prior state; a trail if it does not.`
+  role = `Paths are how attentional topography becomes experiential. A well-designed path guides the visitor toward earned depth.`
+  accumulation = `Each step on a path leaves a charge deposit in the field. After several steps, the field shape becomes idiosyncratic to the visitor's specific circuit.`
+ }[reg=facet]
+ attractors = .{
+  definition = `Features or frames that, once entered, tend to keep attention. Characterized by high out-link density, deep liminality availability, and high receptor surface area.`
+  examples = #[
+   `an operator page with multiple sub-operators`,
+   `a math lens card with interactive tuning`,
+   `a settings surface with many variables`
+  ][reg=set]
+  caution = `An attractor that does not permit escape is a trap, not a feature.`
+ }[reg=facet]
+ valleys = .{
+  definition = `Low-salience regions. Ambient content that is present but not being addressed.`
+  role = `Valleys provide rest and contrast. A page without valleys is exhausting. A page all valley is inert.`
+  field_role = `Valley regions should be reachable by the field but should not independently radiate charge.`
+ }[reg=facet]
+ gradients = .{
+  definition = `Continuous transitions between topographic states. A gradient may have optional visible boundaries.`
+  types = .{
+   semantic_density = `How much information is packed per unit of visual area.`
+   resonance_gradient = `Strength of wonder-field signal across the page. Peaks where recently interacted tokens are matched; valleys where no matching.`
+   liminality_gradient = `Depth of engagement that has been reached in each region. Can be authored or earned.`
+   charge_gradient = `Accumulated brace or container charge across the page. Follows the electromagnetic container model.`
+  }[reg=facet]
+  boundary_optionality = `A gradient can exist without a visible boundary. The boundary is a design choice — it can make the gradient inspectable or leave it felt-but-unnamed.`
+ }[reg=facet]
+}[reg=facet]
 
- component: {
-  definition: "A reusable semantic element that participates in the attentional grammar. Has kind, form, role, liminality, and selection state."
-  semantic_identity: ["kind", "form", "role", "liminality", "selection", "value_layer"]
-  field_role: "Components are the primary resonance targets. They expose receptors (via tokens inferred from role, kind, text, href, and manual anchors) and respond when field charge matches their receptors."
-  html_contract: "data-spw-* attributes. Enriched by spw-component-semantics.js."
-  examples: [".operator-chip", ".frame-sigil", ".spec-pill", ".intent-cluster", ".math-lens-card", ".topic-photo-card"]
- }
+tunable_parameters: .{
+ note = `Parameters that should be explicitly tunable at the page, region, or feature level.`
+ peak_weight = `data-spw-attentional-weight (0.0–2.0) on any region or feature. Scales how strongly it contributes to the field.`
+ decay_rate = `data-spw-decay-rate or CSS --spw-field-decay-rate. How quickly this region's charge falls off.`
+ receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`
+ gradient_boundary = `data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked.`
+ liminality_floor = `data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at.`
+}[reg=facet]
 
- interaction_context: {
-  definition: "The mode in which a component is currently being engaged. Determines which affordances are available, which tokens are emitted into the field, and which interactions are permitted."
-  modes: {
-   reading: "Passive attention. Dwell time accumulates charge on nearby tokens without explicit emission."
-   browsing: "Light hover or focus. Emits the component's primary token at low strength."
-   inspecting: "Sustained focus or explicit inspect gesture. Emits all tokens at full strength; deepens liminality."
-   collecting: "Explicit pin or collection gesture. Pins the component's tokens into the persistent collection register."
-   comparing: "Two or more components held in focus simultaneously. Emits the symmetric difference of their token sets as a comparison signal."
-  }
-  html_contract: "data-spw-interaction-context='reading|browsing|inspecting|collecting|comparing'. Currently set by JS; could be inferred from interaction patterns."
-  note: "This is the level at which 'guide badge' interaction should be specified. A badge in a collecting context behaves differently from one in a browsing context."
- }
-}
-
-^"data_flow"{
- ~#note: "How semantic information moves through the composition hierarchy — from authored HTML to rendered field state."
-
- authored_to_inferred: {
-  direction: "page → region → feature → component"
-  mechanism: "Authored data-spw-* attributes are the truth source. Inference fills gaps: region profiling infers harmony from role, component semantics infers value_layer from kind + role."
-  risk: "Inference that runs before the authoritative layer is settled produces stale fields. (The current stale_region_profiles finding.)"
- }
-
- inferred_to_projected: {
-  direction: "component → semantic chrome → contextual UI"
-  mechanism: "Enriched component snapshots are projected into helper controls, meta tags, and module-facing dimensions."
-  risk: "Projection layers that add vocabulary without bridging back to component semantics produce ontology drift."
- }
-
- projected_to_field: {
-  direction: "interaction contexts → wonder field → resonance targets"
-  mechanism: "User interaction with a component in a given context emits tokens into the wonder field. The field diffuses through register membership to bias other components."
-  current_shape: "wonder-memory.js: recent path memory → token matching → data-spw-wonder-state / --wonder-accent-color."
-  gap: "No concept of interaction context strength, receptor affinity, or multi-signal superposition."
- }
-
- field_to_display: {
-  direction: "field state → ornaments → visible bias"
-  mechanism: "CSS custom properties (--wonder-accent-color, --delight-color) drive ornament color. data-spw-wonder-state drives ornament visibility."
-  gap: "Ornaments do not currently have a declared contract for which field signals they read. Each module writes its own CSS vars without a shared schema."
- }
-}
-
-^"attentional_topography"{
- ~#note: "The page as a landscape. Topographic terms describe attention movement, not visual layout."
-
- peaks: {
-  definition: "Regions or features with high intrinsic attentional weight — content or affordances that attract attention independent of current field state."
-  sources: ["operator atlas entries (high conceptual density)", "interactive widgets (action affordance)", "hero frames (entry orientation)"]
-  design_consequence: "Peaks should earn their prominence through semantic density, not visual noise. A peak that attracts attention but does not reward it creates cognitive debt."
- }
-
- paths: {
-  definition: "Traversal sequences the visitor traces through the page. A path is a circuit if it returns to a prior state; a trail if it does not."
-  role: "Paths are how attentional topography becomes experiential. A well-designed path guides the visitor toward earned depth."
-  accumulation: "Each step on a path leaves a charge deposit in the field. After several steps, the field shape becomes idiosyncratic to the visitor's specific circuit."
- }
-
- attractors: {
-  definition: "Features or frames that, once entered, tend to keep attention. Characterized by high out-link density, deep liminality availability, and high receptor surface area."
-  examples: ["an operator page with multiple sub-operators", "a math lens card with interactive tuning", "a settings surface with many variables"]
-  caution: "An attractor that does not permit escape (no ground path, no return affordance) is a trap, not a feature."
- }
-
- valleys: {
-  definition: "Low-salience regions. Ambient content that is present but not being addressed."
-  role: "Valleys provide rest and contrast. A page without valleys is exhausting. A page all valley is inert."
-  field_role: "Valley regions should be reachable by the field (can be biased by wonder memory) but should not independently radiate charge."
- }
-
- gradients: {
-  definition: "Continuous transitions between topographic states. A gradient may have optional visible boundaries."
-  types: {
-   semantic_density: "How much information is packed per unit of visual area. Can be high-density with legibility or high-density without — the latter is noise."
-   resonance_gradient: "Strength of wonder field signal across the page. Peaks where recently interacted tokens are matched; valleys where no matching."
-   liminality_gradient: "Depth of engagement that has been reached in each region. Can be authored (this region starts deep) or earned (the visitor has gone deep here)."
-   charge_gradient: "Accumulated brace/container charge across the page. Follows the electromagnetic container model."
-  }
-  boundary_optionality: "A gradient can exist without a visible boundary. The boundary is a design choice — it can make the gradient inspectable or leave it felt-but-unnamed. Both are valid."
- }
-}
-
-^"tunable_parameters"{
- ~#note: "Parameters that should be explicitly tunable at the page, region, or feature level."
- peak_weight: "data-spw-attentional-weight (0.0–2.0) on any region or feature. Scales how strongly it contributes to the field."
- decay_rate: "data-spw-decay-rate or CSS --spw-field-decay-rate. How quickly this region's charge falls off."
- receptor_breadth: "data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component."
- gradient_boundary: "data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked."
- liminality_floor: "data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at."
-}
-
-^"open_questions"{
- ?["Should features be authored explicitly (data-spw-feature='name') or inferred from component clustering?"]{ #:open }
- ?["What is the right granularity for a gradient anchor — should it be a region, a feature, or a component?"]{ #:open }
- ?["How should the attentional topography be made inspectable — as a visible overlay, as data attributes, or as a separate inspect mode?"]{ #:open }
- ?["If a page has multiple attractors, how should the visitor be signaled that escape paths exist?"]{ #:open }
- ?["What mathematical structure best describes the superposition of a resonance gradient and a liminality gradient?"]{ #:open }
-}
-
-^"roots"{
- @site_semantics: ~"../conventions/site-semantics.spw"
- @attention_field: ~"../conventions/attention-field.spw"
- @ornament_contract: ~"../conventions/ornament-contract.spw"
- @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
- @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
- @site: ~"../site.spw"
-}
+open_questions: #[
+ .{ ask = `Should features be authored explicitly (data-spw-feature='name') or inferred from component clustering?` },
+ .{ ask = `What is the right granularity for a gradient anchor — should it be a region, a feature, or a component?` },
+ .{ ask = `How should the attentional topography be made inspectable — as a visible overlay, as data attributes, or as a separate inspect mode?` },
+ .{ ask = `If a page has multiple attractors, how should the visitor be signaled that escape paths exist?` },
+ .{ ask = `What mathematical structure best describes the superposition of a resonance gradient and a liminality gradient?` }
+][reg=set]

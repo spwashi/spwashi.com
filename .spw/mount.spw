@@ -1,68 +1,82 @@
 # Mount
 #
 # Local mount bridge for spwashi.com into the installed spw-workbench canon.
-#
+
 #>spw_mount
 #:mount
 
-^"workbench"{
-  @root: ~"./_workbench"
-  @canon: ~"./_workbench/.spw/index.spw"
-  @workspace: ~"./_workbench/.spw/workspace.spw"
-  @mount: ~"./_workbench/.spw/mount.spw"
-  version: "0.3.0"
-  @spec: ~"./_workbench/lib/spw-v0.3.0/"
-  @seed: ~"./_workbench/packages/spw-seed/"
-  @runtime: ~"./_workbench/packages/spw-runtime/"
-  @cli: ~"./_workbench/packages/spw-cli/"
-  @lsp: ~"./_workbench/packages/spw-lsp/"
-}
+@root: ~"./_workbench"
+@canon: ~"./_workbench/.spw/index.spw"
+@workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_mount: ~"./_workbench/.spw/mount.spw"
+@spec: ~"./_workbench/lib/spw-v0.3.0/"
+@seed: ~"./_workbench/packages/spw-seed/"
+@runtime: ~"./_workbench/packages/spw-runtime/"
+@cli: ~"./_workbench/packages/spw-cli/"
+@lsp: ~"./_workbench/packages/spw-lsp/"
+@index: ~"./index.spw"
+@workspace: ~"./workspace.spw"
+@conventions: ~"./conventions/index.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@site: ~"./site.spw"
+@domains: ~"./domains.spw"
+@surfaces: ~"./surfaces.spw"
+@software_surface: ~"../topics/software/index.html"
+@pretext_surface: ~"../topics/software/pretext/index.html"
 
-^"site_bridge"{
-  @index: ~"./index.spw"
-  @workspace: ~"./workspace.spw"
-  @conventions: ~"./conventions/index.spw"
-  @site_semantics: ~"./conventions/site-semantics.spw"
-  @site: ~"./site.spw"
-  @domains: ~"./domains.spw"
-  @surfaces: ~"./surfaces.spw"
-  @software_surface: ~"../topics/software/index.html"
-  @pretext_surface: ~"../topics/software/pretext/index.html"
-}
+workbench: .{
+ version = `0.3.0`
+ canon = @canon
+ workspace = @workbench_workspace
+ mount = @workbench_mount
+ packages = #[@spec, @seed, @runtime, @cli, @lsp][reg=set]
+}[reg=facet]
 
-^"engage"{
-  canon_surfaces: [
-    "conventions.selection",
-    "conventions.naming",
-    "conventions.submodule",
-    "patterns.literate-ui",
-    "applications.symmetry.ui",
-    "biome.ocean.ux",
-    "surfaces.index",
-    "surfaces.domains"
-  ]
-  local_surfaces: ["site", "domains", "surfaces", "conventions", "site_semantics"]
-}
+site_bridge: .{
+ index = @index
+ workspace = @workspace
+ conventions = @conventions
+ semantics = @site_semantics
+ site = @site
+ domains = @domains
+ surfaces = @surfaces
+ software_surface = @software_surface
+ pretext_surface = @pretext_surface
+}[reg=facet]
 
-^"resolve"{
-  paths: [
-    ~"./_workbench/.spw/index.spw",
-    ~"./_workbench/.spw/mount.spw",
-    ~"./_workbench/.spw/workspace.spw",
-    ~"./_workbench/lib/spw-v0.3.0/",
-    ~"./_workbench/packages/spw-seed/",
-    ~"./_workbench/packages/spw-runtime/",
-    ~"./_workbench/packages/spw-cli/",
-    ~"./_workbench/packages/spw-lsp/",
-    ~"./conventions/index.spw",
-    ~"./conventions/site-semantics.spw",
-    ~"./site.spw",
-    ~"./domains.spw",
-    ~"./surfaces.spw"
-  ]
-}
+engage: .{
+ canon_surfaces = #[
+  `conventions.selection`,
+  `conventions.naming`,
+  `conventions.submodule`,
+  `patterns.literate-ui`,
+  `applications.symmetry.ui`,
+  `biome.ocean.ux`,
+  `surfaces.index`,
+  `surfaces.domains`
+ ][reg=set]
+ local_surfaces = #[site, domains, surfaces, conventions, site_semantics][reg=set]
+}[reg=facet]
 
-^"invariant"{
-  "Local mount.spw is a bridge, not a replacement for the imported canon mount.",
-  "Imported package and .spw roots should resolve from here without path guessing."
-}
+resolve: .{
+ paths = #[
+  @canon,
+  @workbench_mount,
+  @workbench_workspace,
+  @spec,
+  @seed,
+  @runtime,
+  @cli,
+  @lsp,
+  @conventions,
+  @site_semantics,
+  @site,
+  @domains,
+  @surfaces
+ ][reg=set]
+}[reg=facet]
+
+invariants: #[
+ `Local mount.spw is a bridge, not a replacement for the imported canon mount.`,
+ `Imported package and .spw roots should resolve from here without path guessing.`
+][reg=set]

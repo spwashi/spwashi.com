@@ -7,36 +7,34 @@
 #:index #!conventions
 #:layer #!pragmatics
 
-^"roots"{
-  @spw: ~".."
-  @site_semantics: ~"./site-semantics.spw"
-  @style_development: ~"./style-development.spw"
-  @design_whimsy: ~"./design-whimsy.spw"
-  @cognitive_navigation: ~"./cognitive-navigation.spw"
-  @electromagnetic_containers: ~"./electromagnetic-containers.spw"
-  @precipitates_projections: ~"./precipitates-and-projections.spw"
-  @asset_management: ~"./asset-management.spw"
-  @operator_semantics: ~"./operator-semantics.spw"
-  @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
-  @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
-  @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
-}
+@spw: ~".."
+@site_semantics: ~"./site-semantics.spw"
+@style_development: ~"./style-development.spw"
+@design_whimsy: ~"./design-whimsy.spw"
+@cognitive_navigation: ~"./cognitive-navigation.spw"
+@electromagnetic_containers: ~"./electromagnetic-containers.spw"
+@precipitates_projections: ~"./precipitates-and-projections.spw"
+@asset_management: ~"./asset-management.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
+@workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
+@workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
 
-^"dispatch"{
-  semantics: @site_semantics
-  style: @style_development
-  assets: @asset_management
-  operators: @operator_semantics
-  cognition: @cognitive_navigation
-  containers: @electromagnetic_containers
-  versioning: @precipitates_projections
-  selection: @workbench_selection
-  naming: @workbench_naming
-  submodule: @workbench_submodule
-}
+dispatch: .{
+ semantics = @site_semantics
+ style = @style_development
+ assets = @asset_management
+ operators = @operator_semantics
+ cognition = @cognitive_navigation
+ containers = @electromagnetic_containers
+ versioning = @precipitates_projections
+ selection = @workbench_selection
+ naming = @workbench_naming
+ submodule = @workbench_submodule
+}[reg=facet]
 
-^"invariant"{
-  "Local conventions translate installed canon into site-facing authoring rules.",
-  "Site-specific semantics belong here; imported conventions stay cited rather than copied.",
-  "The local bridge should stay small enough to read in one sitting."
-}
+invariants: #[
+ `Local conventions translate installed canon into site-facing authoring rules.`,
+ `Site-specific semantics belong here; imported conventions stay cited rather than copied.`,
+ `The local bridge should stay small enough to read in one sitting.`
+][reg=set]

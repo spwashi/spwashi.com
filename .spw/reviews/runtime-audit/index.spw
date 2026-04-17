@@ -5,101 +5,94 @@
 #:review #!surface
 #:layer #!pragmatics
 
-^"intent"{
- ~#goal: "Translate the runtime review into inspectable .spw surfaces so ontology drift and lifecycle seams can be studied in an editor."
- ~#scope: "Focus on the current spwashi.com runtime: semantic metadata, region profiling, enhancement ordering, settings/state flow, and reinitialization behavior."
- ~#entry: "Start here, then open ontology.spw, seams.spw, lifecycles.spw, and settings-state.spw as needed."
-}
+@spw: ~"../../index.spw"
+@site: ~"../../site.spw"
+@runtime: ~"../../../public/js/site.js"
+@page_metadata: ~"../../../public/js/spw-page-metadata.js"
+@component_semantics: ~"../../../public/js/spw-component-semantics.js"
+@semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
+@contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
+@settings: ~"../../../public/js/site-settings.js"
+@brace_pivots: ~"../../../public/js/spw-brace-pivots.js"
+@bus: ~"../../../public/js/spw-bus.js"
+@wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
+@accent_palette: ~"../../../public/js/spw-accent-palette.js"
+@ontology: ~"./ontology.spw"
+@seams: ~"./seams.spw"
+@lifecycles: ~"./lifecycles.spw"
+@settings_state: ~"./settings-state.spw"
 
-^"roots"{
- @spw: ~"../../index.spw"
- @site: ~"../../site.spw"
- @runtime: ~"../../../public/js/site.js"
- @page_metadata: ~"../../../public/js/spw-page-metadata.js"
- @component_semantics: ~"../../../public/js/spw-component-semantics.js"
- @semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
- @contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
- @settings: ~"../../../public/js/site-settings.js"
- @brace_pivots: ~"../../../public/js/spw-brace-pivots.js"
- @bus: ~"../../../public/js/spw-bus.js"
- @wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
- @accent_palette: ~"../../../public/js/spw-accent-palette.js"
- @ontology: ~"./ontology.spw"
- @seams: ~"./seams.spw"
- @lifecycles: ~"./lifecycles.spw"
- @settings_state: ~"./settings-state.spw"
-}
+intent: .{
+ goal = `Translate the runtime review into inspectable .spw surfaces so ontology drift and lifecycle seams can be studied in an editor.`
+ scope = `Focus on the current spwashi.com runtime: semantic metadata, region profiling, enhancement ordering, settings/state flow, and reinitialization behavior.`
+ entry = `Start here, then open ontology.spw, seams.spw, lifecycles.spw, and settings-state.spw as needed.`
+}[reg=facet]
 
-^"dispatch"{
- ontology: @ontology
- seams: @seams
- lifecycles: @lifecycles
- settings_state: @settings_state
- runtime: @runtime
- page_metadata: @page_metadata
- component_semantics: @component_semantics
- contextual_ui: @contextual_ui
- settings: @settings
- brace_pivots: @brace_pivots
- bus: @bus
-}
+dispatch: .{
+ ontology = @ontology
+ seams = @seams
+ lifecycles = @lifecycles
+ settings_state = @settings_state
+ runtime = @runtime
+ page_metadata = @page_metadata
+ component_semantics = @component_semantics
+ contextual_ui = @contextual_ui
+ settings = @settings
+ brace_pivots = @brace_pivots
+ bus = @bus
+}[reg=facet]
 
-^"finding_index"{
- high: [
-  "#settings_cleanup_contract",
-  "#role_drift_between_layers"
- ]
- medium: [
-  "#stale_region_profiles",
-  "#brace_pivots_bypass_manager",
-  "#contextual_ui_not_reinit_safe"
- ]
- brand: [
-  "#ontology_breaks_visual_grammar",
-  "#role_derived_color_vocabulary_depends_on_stale_regions",
-  "#brand_arrival_timing",
-  "#accent_palette_as_brand_surface"
- ]
-}
+finding_index: .{
+ high = #[
+  #settings_cleanup_contract,
+  #role_drift_between_layers
+ ][reg=set]
+ medium = #[
+  #stale_region_profiles,
+  #brace_pivots_bypass_manager,
+  #contextual_ui_not_reinit_safe
+ ][reg=set]
+ brand = #[
+  #ontology_breaks_visual_grammar,
+  #role_derived_color_vocabulary_depends_on_stale_regions,
+  #brand_arrival_timing,
+  #accent_palette_as_brand_surface
+ ][reg=set]
+}[reg=facet]
 
-^"inspection_order"{
- 1: "Open ontology.spw first if the question is 'what does this application think a thing is?'"
- 2: "Open seams.spw next if the question is 'where does one layer hand off to another?'"
- 3: "Open lifecycles.spw when the question is 'when does each layer become true and when does it clean up?'"
- 4: "Open settings-state.spw when the question is 'which path is canonical for browser-local state and where does it split?'"
-}
+inspection_order: ?< @ontology, @seams, @lifecycles, @settings_state >[reg=stream]
 
-^"topic_summary"{
- ontology: "The site currently has multiple semantic authorities for role, context, and category meaning."
- seams: "The handoff points between authored HTML, metadata normalization, region profiling, component semantics, and contextual UI are real but under-specified."
- lifecycles: "The runtime exposes a clean boot/destroy story, but some modules only partially obey that contract."
- settings_state: "The settings manager is close to canonical, but at least one module still bypasses it and one event contract is shape-fragile."
-}
+topic_summary: .{
+ ontology = `The site currently has multiple semantic authorities for role, context, and category meaning.`
+ seams = `The handoff points between authored HTML, metadata normalization, region profiling, component semantics, and contextual UI are real but under-specified.`
+ lifecycles = `The runtime exposes a clean boot/destroy story, but some modules only partially obey that contract.`
+ settings_state = `The settings manager is close to canonical, but at least one module still bypasses it and one event contract is shape-fragile.`
+}[reg=facet]
 
-^"editor_prompts"{
- ?["If I rename or redefine `register`, which files disagree first?"]{ ~#see: @ontology }
- ?["At what moment does a region become semantically trustworthy for downstream modules?"]{ ~#see: @lifecycles }
- ?["Which datasets are authored truth, and which are runtime projections that should be cleared on destroy?"]{ ~#see: @seams }
- ?["Which settings writes are canonical, and which ones still happen around the manager?"]{ ~#see: @settings_state }
- ?["If a visitor's first screen load shows the wrong spirit phase accent because region priming ran before component semantics, which brand commitment has been violated?"]{ ~#see: @lifecycles }
- ?["If the accent palette is driven by a direct localStorage write that bypasses normalization, what brand expression is the user actually controlling?"]{ ~#see: @settings_state }
-}
+editor_prompts: #[
+ .{ ask = `If I rename or redefine register, which files disagree first?`, see = @ontology },
+ .{ ask = `At what moment does a region become semantically trustworthy for downstream modules?`, see = @lifecycles },
+ .{ ask = `Which datasets are authored truth, and which are runtime projections that should be cleared on destroy?`, see = @seams },
+ .{ ask = `Which settings writes are canonical, and which ones still happen around the manager?`, see = @settings_state },
+ .{ ask = `If a visitor's first screen load shows the wrong spirit phase accent because region priming ran before component semantics, which brand commitment has been violated?`, see = @lifecycles },
+ .{ ask = `If the accent palette is driven by a direct localStorage write that bypasses normalization, what brand expression is the user actually controlling?`, see = @settings_state }
+][reg=set]
 
-^"brand_coherence"{
- ~#note: "Brand identity on this site is not visual polish. It is the legibility of Spw's semantic grammar through every interaction and presentation surface."
- thesis: "Ontology drift, seam fragility, lifecycle ordering problems, and settings bypass are not only runtime correctness issues — each is a place where the site's distinctive voice can be silenced or garbled."
- vocabulary: {
-  calm_at_rest: ~"../../conventions/style-development.spw"
-  summoned_delight: ~"../../conventions/style-development.spw"
-  subvocalized_wonder: ~"../../conventions/style-development.spw"
-  operator_physics: ~"../../conventions/operator-semantics.spw"
-  brace_perspective: ~"../../conventions/site-semantics.spw"
- }
- stakes: [
-  "Operator color tokens are a brand asset; their semantic backing is role and kind; ontology drift severs the semantic vocabulary from its visual expression.",
-  "The objective/subjective brace axis is the site's most novel visual gesture; it requires data-spw-perspective to survive through authored HTML, component semantics, and semantic chrome.",
-  "The site's capacity to prime subvocalized wonder — curiosity about an operator, a brace, a phase — depends on the semantic vocabulary being coherent; incoherent semantics produce visual noise rather than felt orientation.",
-  "User-driven palette resonance and wonder memory are brand expression surfaces that should be served by the canonical settings path, not bypassed by direct localStorage writes.",
-  "The calm at rest / summoned delight rhythm is timed by the lifecycle — if brand-identifying enrichment arrives late or incoherently, the visitor's first impression is a brand-neutral surface."
- ]
-}
+brand_coherence: .{
+ note = `Brand identity on this site is not visual polish. It is the legibility of Spw's semantic grammar through every interaction and presentation surface.`
+ thesis = `Ontology drift, seam fragility, lifecycle ordering problems, and settings bypass are not only runtime correctness issues — each is a place where the site's distinctive voice can be silenced or garbled.`
+ vocabulary = .{
+  calm_at_rest = ~"../../conventions/style-development.spw"
+  summoned_delight = ~"../../conventions/style-development.spw"
+  subvocalized_wonder = ~"../../conventions/style-development.spw"
+  operator_physics = ~"../../conventions/operator-semantics.spw"
+  brace_perspective = ~"../../conventions/site-semantics.spw"
+ }[reg=facet]
+ stakes = #[
+  `Operator color tokens are a brand asset; their semantic backing is role and kind; ontology drift severs the semantic vocabulary from its visual expression.`,
+  `The objective/subjective brace axis is the site's most novel visual gesture; it requires data-spw-perspective to survive through authored HTML, component semantics, and semantic chrome.`,
+  `The site's capacity to prime subvocalized wonder — curiosity about an operator, a brace, a phase — depends on the semantic vocabulary being coherent; incoherent semantics produce visual noise rather than felt orientation.`,
+  `User-driven palette resonance and wonder memory are brand expression surfaces that should be served by the canonical settings path, not bypassed by direct localStorage writes.`,
+  `The calm at rest / summoned delight rhythm is timed by the lifecycle — if brand-identifying enrichment arrives late or incoherently, the visitor's first impression is a brand-neutral surface.`
+ ][reg=set]
+}[reg=facet]

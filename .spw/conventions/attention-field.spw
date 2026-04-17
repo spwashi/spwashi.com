@@ -1,188 +1,168 @@
 # Attention Field
 #
 # The field model for resonance, collectibility, and attentional bias.
-# Covers: the local-hormonal baseline, its limitations, the register-diffusion
+# Covers the local-hormonal baseline, its limitations, the register-diffusion
 # alternative, formal mathematics, and tunable parameters.
 
 #>spw_attention_field
 #:model #!field
 #:layer #!pragmatics
 
-^"thesis"{
- claim: "Attentional interaction on a page can be modeled as a diffusive field — like hormonal signaling in tissue rather than like explicit wiring. When the visitor attends to something, a signal is released into the semantic neighborhood. Nearby components that share receptors respond proportionally. The signal decays over time and distance."
- why_this_model: "The metaphor captures something the click/event model does not: that attention has weight, direction, and neighborhood effects. Hovering near a concept for a moment should do something different from navigating directly to it. The quality of attention matters, not only its occurrence."
- limitation: "The fully continuous local-hormonal model is O(n²) in components — computing pairwise semantic distances at runtime is not scalable. The register-diffusion model is a tractable approximation that preserves the neighborhood structure."
-}
+@page_model: ~"../surfaces/page-model.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@site_semantics: ~"./site-semantics.spw"
+@wonder_memory_runtime: ~"../../public/js/spw-wonder-memory.js"
+@accent_palette_runtime: ~"../../public/js/spw-accent-palette.js"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 
-^"local_hormonal_model"{
- ~#note: "The conceptually complete model. Use as a design target; implement via register diffusion."
+thesis: .{
+ claim = `Attentional interaction on a page can be modeled as a diffusive field — like hormonal signaling in tissue rather than like explicit wiring.`
+ why_this_model = `The metaphor captures something the click/event model does not: attention has weight, direction, and neighborhood effects. Hovering near a concept for a moment should do something different from navigating directly to it.`
+ limitation = `The fully continuous local-hormonal model is O(n²) in components. The register-diffusion model is a tractable approximation that preserves the neighborhood structure.`
+}[reg=facet]
 
- analogy: "Hormones are released at a source and diffuse through tissue. Cells that express matching receptors respond; distant or unmatched cells do not. Signal strength falls off with distance and time. Multiple hormones can be active simultaneously and combine synergistically or antagonistically."
+local_hormonal_model: .{
+ note = `The conceptually complete model. Use as a design target; implement via register diffusion.`
+ analogy = `Hormones are released at a source and diffuse through tissue. Cells that express matching receptors respond; distant or unmatched cells do not. Signal strength falls off with distance and time.`
+ semantic_space = .{
+  definition = `A metric space over page components, where distance is measured by token similarity.`
+  distance_function = `Jaccard distance: d(a,b) = 1 − |T(a) ∩ T(b)| / |T(a) ∪ T(b)|`
+  token_set = `T(c) = normalized tokens associated with component c: role, kind, text fragments, href path segments, manual anchors, and explicit charge keys.`
+  note = `Components in the same region with the same role are close; components on different surfaces with no shared vocabulary are distant.`
+ }[reg=facet]
+ signal_emission = .{
+  definition = `When a visitor interacts with component a in interaction context k, a signal is emitted with initial strength σ₀(k).`
+  context_strengths = .{
+   reading = `σ₀ = 0.2 (dwell-proportional)`
+   browsing = `σ₀ = 0.4`
+   inspecting = `σ₀ = 0.8`
+   collecting = `σ₀ = 1.0 (explicit, does not decay below a floor)`
+   comparing = `σ₀ = 0.6 per component in the comparison set`
+  }[reg=facet]
+ }[reg=facet]
+ temporal_decay = .{
+  function = `σ(Δt) = σ₀ · exp(−Δt / τ)`
+  parameter_τ = `Current wonder-memory TTL ≈ 28 seconds -> τ ≈ 40s`
+  collecting_floor = `Collected signals decay to a floor σ_min > 0 rather than to zero.`
+  note = `τ should be tunable per context.`
+ }[reg=facet]
+ spatial_influence = .{
+  function = `I(a→b, Δt) = σ(Δt) · r(b, T(a)) · exp(−α · d(a,b))`
+  terms = .{
+   sigma = `current signal strength from a, decayed by elapsed time`
+   receptor = `receptor affinity of b for token set T(a)`
+   decay = `influence falls off with semantic distance; α controls how steeply`
+   alpha = `spatial decay rate`
+  }[reg=facet]
+ }[reg=facet]
+ total_field = .{
+  function = `F(b) = Σᵢ I(aᵢ→b, Δtᵢ)`
+  normalization = `bias(b) = tanh(β · F(b))`
+  parameter_beta = `Bias sensitivity. Large β = sharp transitions; small β = gradual.`
+ }[reg=facet]
+ receptor_affinity = .{
+  r_function = `r(b, T) = Σ_{t ∈ T ∩ T(b)} w(t, b) / |T ∪ T(b)|`
+  weight_function = `w(t, b) = base_weight(t) · specificity(t, b)`
+  base_weight = `Operator tokens outweigh generic text tokens. Role tokens outweigh kind tokens. Manual anchors carry the highest weight.`
+  specificity = `Tokens that appear on only a few components carry more specificity.`
+ }[reg=facet]
+}[reg=facet]
 
- semantic_space: {
-  definition: "A metric space over page components, where distance is measured by token similarity."
-  distance_function: "Jaccard distance: d(a,b) = 1 − |T(a) ∩ T(b)| / |T(a) ∪ T(b)|"
-  token_set: "T(c) = the set of normalized tokens associated with component c: role, kind, text fragments, href path segments, manual anchors (data-spw-memory-anchor), and explicit charge keys."
-  note: "Jaccard distance gives 0 when components share all tokens, 1 when they share none. Components in the same region with the same role are close; components on different surfaces with no shared vocabulary are distant."
- }
+register_diffusion_model: .{
+ note = `The scalable approximation. Preserves neighborhood structure via shared register membership.`
+ motivation = `Computing d(a,b) for all pairs of components is O(n²). Register diffusion replaces continuous distance with discrete membership in named token registers.`
+ registers = .{
+  definition = `For each token t, a register R_t holds all components that carry t and a charge value C_t that decays over time.`
+  charge_update = `When a visitor interacts with component a, increment C_t by σ₀(context) for each t ∈ T(a).`
+  charge_decay = `C_t(time) = C_t(time_last) · exp(−(time − time_last) / τ)`
+  component_field = `F(b) = Σ_{t ∈ T(b)} w(t, b) · C_t(time)`
+ }[reg=facet]
+ complexity = .{
+  per_interaction = `O(|T(a)|) to update registers`
+  per_display_update = `O(|T(b)|) per component b to sample the field`
+  total = `Linear in component count times mean token count per render cycle`
+  tradeoff = `Register diffusion loses fine-grained distance within a register, but the trade is acceptable when registers are semantically cohesive.`
+ }[reg=facet]
+ register_types = .{
+  operator_registers = `One register per operator token.`
+  role_registers = `One register per role value from data-spw-role.`
+  wonder_registers = `One register per wonder type inferred by inferWonderFromOperation.`
+  anchor_registers = `One register per manual anchor token.`
+  charge_key_registers = `One register per data-spw-charge-key value.`
+ }[reg=facet]
+ superposition = .{
+  note = `Multiple registers can be active simultaneously.`
+  combination = `Additive by default; future antagonistic register pairs could model cognitive disambiguation.`
+ }[reg=facet]
+}[reg=facet]
 
- signal_emission: {
-  definition: "When a visitor interacts with component a in interaction context k, a signal is emitted with initial strength σ₀(k)."
-  context_strengths: {
-   reading: "σ₀ = 0.2 (dwell-proportional; one 'reading unit' per N seconds of dwell)"
-   browsing: "σ₀ = 0.4"
-   inspecting: "σ₀ = 0.8"
-   collecting: "σ₀ = 1.0 (explicit, does not decay below a floor)"
-   comparing: "σ₀ = 0.6 per component in the comparison set"
-  }
- }
+collectibility: .{
+ note = `Explicit collection is a persistent, floor-bounded version of the implicit field signal.`
+ implicit_collection = .{
+  mechanism = `Every interaction passively charges registers.`
+  limitation = `Implicit collection decays quickly; the visitor cannot hold something interesting for long without re-interacting.`
+ }[reg=facet]
+ explicit_collection = .{
+  mechanism = `A collecting interaction writes the component's tokens to a persistent collection register stored in localStorage.`
+  decay_floor = `Collected tokens decay to σ_min = 0.3 rather than to zero.`
+  capacity = `Collection should be finite and bounded.`
+  inspection = `The collection register should be visibly inspectable.`
+ }[reg=facet]
+ collectible_units = .{
+  most_natural = #[
+   `Operator tokens — smallest atomic units with felt physics`,
+   `Wonder types — the felt qualities`,
+   `Role values that recur across pages`,
+   `Charge-key phrases declared by the author`,
+   `Open-question fragments as discrete units of inquiry`
+  ][reg=set]
+  less_resolved = #[
+   `Frame sigil names (#>name)`,
+   `Liminality values`
+  ][reg=set]
+ }[reg=facet]
+ deviation_register = .{
+  definition = `A persistent record of which settings and field states deviate from the page's authored defaults.`
+  purpose = `The deviation register makes non-default state visible without requiring the visitor to remember it.`
+  contents = #[
+   `(setting_key, default_value, current_value, changed_at)`,
+   `(token, collection_strength)`,
+   `(register_id, current_charge)`
+  ][reg=set]
+  display_contract = `The deviation register should be a first-class readable object, not inferred from scattered localStorage keys.`
+  html_contract = `html[data-spw-deviation-count] may carry a simple count; a dedicated inspect surface should show the full register.`
+ }[reg=facet]
+}[reg=facet]
 
- temporal_decay: {
-  function: "σ(Δt) = σ₀ · exp(−Δt / τ)"
-  parameter_τ: "Decay half-life. Current wonder memory TTL ≈ 28 seconds → τ ≈ 40s (τ = TTL / ln 2)."
-  collecting_floor: "Collected signals decay to a floor σ_min > 0 rather than to zero. The collection is persistent; only its intensity fades."
-  note: "τ should be tunable per-context: browsing signals might decay faster than inspecting signals."
- }
+mathematics: .{
+ note = `Design-facing formulations. Actual implementations may use approximations, lookup tables, or precomputed indexes.`
+ token_similarity = `sim(a,b) = |T(a) ∩ T(b)| / |T(a) ∪ T(b)|`
+ token_distance = `d(a,b) = 1 − sim(a,b)`
+ temporal_decay = `σ(Δt) = σ₀ · exp(−Δt / τ)`
+ spatial_influence = `I(a→b) = σ(Δt) · r(b, T(a)) · exp(−α · d(a,b))`
+ total_field = `F(b) = Σᵢ I(aᵢ→b, Δtᵢ)`
+ display_bias = `bias(b) = tanh(β · F(b))`
+ register_field = `F(b) = Σ_{t ∈ T(b)} w(t,b) · C_t`
+ receptor_affinity = `r(b, T) = Σ_{t ∈ T ∩ T(b)} w(t,b) / |T ∪ T(b)|`
+ wonder_entropy = `H(page) = −Σ_t p(t) · log₂ p(t)`
+ resonance_depth = `D(b) = F(b) / max_F`
+}[reg=facet]
 
- spatial_influence: {
-  function: "I(a→b, Δt) = σ(Δt) · r(b, T(a)) · exp(−α · d(a,b))"
-  terms: {
-   "σ(Δt)": "current signal strength from a, decayed by elapsed time"
-   "r(b, T(a))": "receptor affinity of b for the token set T(a) — how strongly b responds to signals from a"
-   "exp(−α · d(a,b))": "spatial decay — influence falls off with semantic distance; α controls how steeply"
-   α: "spatial decay rate. Small α = wide-range influence; large α = tightly local. Tunable per region."
-  }
- }
+tunable_parameters: .{
+ tau = .{ default = `~40s`, meaning = `Signal half-life`, css_var = `--spw-wonder-memory-ttl-ms` }[reg=facet]
+ alpha = .{ default = `1.5`, meaning = `Spatial decay rate`, css_var = `--spw-field-spatial-decay` }[reg=facet]
+ beta = .{ default = `2.0`, meaning = `Bias sensitivity`, css_var = `--spw-field-bias-sensitivity` }[reg=facet]
+ sigma_min = .{ default = `0.3`, meaning = `Collection floor strength`, css_var = `--spw-collection-floor` }[reg=facet]
+ wonder_memory_strength = .{ default = `0.56`, meaning = `Global multiplier on all field signals`, css_var = `--spw-wonder-memory-strength` }[reg=facet]
+ wonder_memory_reach = .{ default = `0.54`, meaning = `How broadly influence spreads`, css_var = `--spw-wonder-memory-reach` }[reg=facet]
+}[reg=facet]
 
- total_field: {
-  function: "F(b) = Σᵢ I(aᵢ→b, Δtᵢ)   for all recent interactions aᵢ"
-  normalization: "bias(b) = tanh(β · F(b))   bounded to (−1, 1) for display use"
-  parameter_β: "Bias sensitivity. Large β = sharp transitions; small β = gradual. Tunable per surface."
-  note: "tanh is preferred over sigmoid here because it is symmetric around 0 — it admits both positive bias (resonance) and negative bias (contrast / counter-resonance)."
- }
-
- receptor_affinity: {
-  r_function: "r(b, T) = Σ_{t ∈ T ∩ T(b)} w(t, b) / |T ∪ T(b)|"
-  weight_function: "w(t, b) = base_weight(t) · specificity(t, b)"
-  base_weight: "Operator tokens outweigh generic text tokens. Role tokens outweigh kind tokens. Manual anchors (data-spw-memory-anchor) have highest weight."
-  specificity: "A token that appears on only a few components is more specific (higher weight) than one that appears everywhere."
- }
-}
-
-^"register_diffusion_model"{
- ~#note: "The scalable approximation. Preserves neighborhood structure via shared register membership."
-
- motivation: "Computing d(a,b) for all pairs of components is O(n²). For a page with hundreds of components this is prohibitive at interaction time. Register diffusion replaces continuous distance with discrete membership in named token registers."
-
- registers: {
-  definition: "For each token t, a register R_t holds all components that carry t and a charge value C_t that decays over time."
-  charge_update: "When a visitor interacts with component a: for each t ∈ T(a), increment C_t by σ₀(context)."
-  charge_decay: "C_t(time) = C_t(time_last) · exp(−(time − time_last) / τ)"
-  component_field: "F(b) = Σ_{t ∈ T(b)} w(t, b) · C_t(time)"
- }
-
- complexity: {
-  per_interaction: "O(|T(a)|) to update registers — proportional to the token count of the interacted component, typically small."
-  per_display_update: "O(|T(b)|) per component b to sample the field — proportional to b's token count."
-  total: "O(|components| · mean_token_count) per render cycle, which is linear and manageable."
-  tradeoff: "Register diffusion loses fine-grained distance within a register (all members of R_t are treated as equidistant). This is acceptable when registers are semantically cohesive."
- }
-
- register_types: {
-  operator_registers: "One register per operator token (frame, probe, ref, action, pragma, baseline, object, stream, merge, binding, meta, normalize, surface, topic). Components with matching operator chips are register members."
-  role_registers: "One register per role value (register, probe, reference, projection, control, artifact, surface, metric). Membership from data-spw-role."
-  wonder_registers: "One register per wonder type (orientation, constraint, memory, resonance, inquiry, projection, comparison). Membership inferred by inferWonderFromOperation."
-  anchor_registers: "One register per manual anchor token (data-spw-memory-anchor, data-spw-accent-anchor). Highest-weight membership."
-  charge_key_registers: "One register per data-spw-charge-key value. Author-declared semantic recurrence."
- }
-
- superposition: {
-  note: "Multiple registers can be simultaneously charged. The total field at a component is the superposition of all register contributions, weighted by receptor affinity."
-  combination: "Additive by default. Future: antagonistic registers (register pairs that suppress each other when both are charged) could model cognitive disambiguation."
- }
-}
-
-^"collectibility"{
- ~#note: "Explicit collection is a persistent, floor-bounded version of the implicit field signal."
-
- implicit_collection: {
-  mechanism: "Every interaction passively charges registers. The visitor collects nothing explicitly; the field records what they have attended to."
-  limitation: "Implicit collection decays quickly (current TTL ≈ 28s). The visitor cannot 'hold' something they found interesting for more than half a minute without re-interacting."
- }
-
- explicit_collection: {
-  mechanism: "A collecting interaction (pin, explicit badge tap, keyboard shortcut) writes the component's tokens to a persistent collection register — a named set of (token, weight, timestamp) triples stored in localStorage."
-  decay_floor: "Collected tokens decay to σ_min = 0.3 (rather than 0) — they remain present in the field but at lower intensity until explicitly cleared."
-  capacity: "Collection should be finite and bounded. A full collection register should require the visitor to make choices — this scarcity is semantically meaningful."
-  inspection: "The collection register should be visibly inspectable — the visitor should be able to see what they have collected and why components are biased."
- }
-
- collectible_units: {
-  most_natural: [
-   "Operator tokens (frame, probe, ref, action) — smallest atomic unit with felt physics",
-   "Wonder types (orientation, resonance, inquiry, projection, comparison, memory, constraint) — the 7 felt qualities",
-   "Role values (register, reference, control, artifact, projection) — recur across pages",
-   "Charge key phrases (data-spw-charge-key) — author-declared semantic recurrence",
-   "Open question fragments ?['...'] — discrete units of inquiry that can accumulate",
-  ]
-  less_resolved: [
-   "Frame sigil names (#>name) — visited locations; currently tracked passively by wonder memory",
-   "Liminality values — more useful as gradient parameters than collectibles",
-  ]
- }
-
- deviation_register: {
-  definition: "A persistent record of which settings and field states deviate from the page's authored defaults."
-  purpose: "The original problem: it is hard to recall which changes deviate from the default. The deviation register makes this visible without requiring the visitor to remember."
-  contents: [
-   "(setting_key, default_value, current_value, changed_at) for each non-default setting",
-   "(token, collection_strength) for each explicitly collected token",
-   "(register_id, current_charge) for each currently elevated register",
-  ]
-  display_contract: "The deviation register should be readable by any ornament that needs to show 'this is non-default.' It should be a first-class readable object, not inferred from scattered localStorage keys."
-  html_contract: "html[data-spw-deviation-count] could carry a simple count. A dedicated inspect surface should show the full register."
- }
-}
-
-^"mathematics"{
- ~#note: "Design-facing formulations. These are not implementation prescriptions — actual implementations may use approximations, lookup tables, or precomputed indexes."
-
- token_similarity: "sim(a,b) = |T(a) ∩ T(b)| / |T(a) ∪ T(b)|   (Jaccard similarity, range [0,1])"
- token_distance: "d(a,b) = 1 − sim(a,b)   (Jaccard distance, range [0,1])"
- temporal_decay: "σ(Δt) = σ₀ · exp(−Δt / τ)   where τ = half_life / ln(2)"
- spatial_influence: "I(a→b) = σ(Δt) · r(b, T(a)) · exp(−α · d(a,b))"
- total_field: "F(b) = Σᵢ I(aᵢ→b, Δtᵢ)"
- display_bias: "bias(b) = tanh(β · F(b))   ∈ (−1, 1)"
- register_field: "F(b) = Σ_{t ∈ T(b)} w(t,b) · C_t   (register-diffusion approximation)"
- receptor_affinity: "r(b, T) = Σ_{t ∈ T ∩ T(b)} w(t,b) / |T ∪ T(b)|"
- wonder_entropy: "H(page) = −Σ_t p(t) · log₂ p(t)   where p(t) = C_t / Σ C_t   (attentional entropy — spread of active field charge)"
- resonance_depth: "D(b) = F(b) / max_F   (normalized field depth at component b)"
-}
-
-^"tunable_parameters"{
- τ: { default: "~40s (current TTL/ln2)", meaning: "Signal half-life. Longer τ = longer-lasting resonance.", css_var: "--spw-wonder-memory-ttl-ms" }
- α: { default: "1.5 (suggested)", meaning: "Spatial decay rate. Large α = tightly local influence.", css_var: "--spw-field-spatial-decay" }
- β: { default: "2.0 (suggested)", meaning: "Bias sensitivity. Large β = sharper resonance visible distinction.", css_var: "--spw-field-bias-sensitivity" }
- σ_min: { default: "0.3", meaning: "Collection floor strength. Collected tokens stay present at this level.", css_var: "--spw-collection-floor" }
- wonder_memory_strength: { default: "0.56 (current)", meaning: "Global multiplier on all field signals.", css_var: "--spw-wonder-memory-strength" }
- wonder_memory_reach: { default: "0.54 (current)", meaning: "Controls how broadly influence spreads (inverse of α).", css_var: "--spw-wonder-memory-reach" }
-}
-
-^"open_questions"{
- ?["Should the Jaccard distance be weighted — giving operator tokens more distance-contribution than text tokens?"]{ #:open }
- ?["Is there a meaningful antagonistic register pair — two wonder types that suppress each other?"]{ #:open }
- ?["Should the wonder entropy H(page) be displayed to the visitor as an attentional density indicator?"]{ #:open }
- ?["What is the right capacity for the explicit collection register — and should overflow force a choice, or silently evict the lowest-strength entry?"]{ #:open }
- ?["Can the field model support multi-user superposition — two visitors whose fields overlap on the same page?"]{ #:open }
- ?["At what bias threshold should the field visibly change ornament state — 0.3? 0.5? Should this be tunable per ornament?"]{ #:open }
-}
-
-^"roots"{
- @page_model: ~"../surfaces/page-model.spw"
- @ornament_contract: ~"./ornament-contract.spw"
- @site_semantics: ~"./site-semantics.spw"
- @wonder_memory_runtime: ~"../../public/js/spw-wonder-memory.js"
- @accent_palette_runtime: ~"../../public/js/spw-accent-palette.js"
- @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
- @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
-}
+open_questions: #[
+ .{ ask = `Should the Jaccard distance be weighted, giving operator tokens more distance contribution than text tokens?` },
+ .{ ask = `Is there a meaningful antagonistic register pair — two wonder types that suppress each other?` },
+ .{ ask = `Should wonder entropy H(page) be displayed as an attentional density indicator?` },
+ .{ ask = `What is the right capacity for the explicit collection register, and should overflow force a choice or silently evict the lowest-strength entry?` },
+ .{ ask = `Can the field model support multi-user superposition — two visitors whose fields overlap on the same page?` },
+ .{ ask = `At what bias threshold should the field visibly change ornament state, and should this be tunable per ornament?` }
+][reg=set]

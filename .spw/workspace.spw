@@ -1,51 +1,49 @@
 # Workspace
 #
 # Local workspace manifest for the site bridge and installed workbench canon.
-#
+
 #>spw_workspace
 #:workspace
 
-^"roots"{
-  @index: ~"./index.spw"
-  @mount: ~"./mount.spw"
-  @conventions: ~"./conventions/index.spw"
-  @site_semantics: ~"./conventions/site-semantics.spw"
-  @site: ~"./site.spw"
-  @domains: ~"./domains.spw"
-  @surfaces: ~"./surfaces.spw"
-  @workbench: ~"./_workbench/.spw"
-  @workbench_index: ~"./_workbench/.spw/index.spw"
-  @workbench_mount: ~"./_workbench/.spw/mount.spw"
-  @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
-  @spw: ~"."
-}
+@index: ~"./index.spw"
+@mount: ~"./mount.spw"
+@conventions: ~"./conventions/index.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@site: ~"./site.spw"
+@domains: ~"./domains.spw"
+@surfaces: ~"./surfaces.spw"
+@workbench: ~"./_workbench/.spw"
+@workbench_index: ~"./_workbench/.spw/index.spw"
+@workbench_mount: ~"./_workbench/.spw/mount.spw"
+@workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@spw: ~"."
 
-^"settings"{
-  ~#language: "spw"
-  ~#dialect: "v0.3.0"
-  ~#profile: "site-bridge"
-}
+settings: .{
+ language = spw
+ dialect = `v0.3.0`
+ profile = `site-bridge`
+}[reg=facet]
 
-^"lsp"{
-  ~#roots: [
-    ~"./",
-    ~"./index.spw",
-    ~"./mount.spw",
-    ~"./conventions",
-    ~"./conventions/index.spw",
-    ~"./conventions/site-semantics.spw",
-    ~"./site.spw",
-    ~"./domains.spw",
-    ~"./surfaces.spw",
-    ~"./_workbench/.spw",
-    ~"./_workbench/.spw/index.spw",
-    ~"./_workbench/.spw/mount.spw",
-    ~"./_workbench/.spw/workspace.spw"
-  ]
-}
+lsp: .{
+ roots = #[
+  ~"./",
+  @index,
+  @mount,
+  ~"./conventions",
+  @conventions,
+  @site_semantics,
+  @site,
+  @domains,
+  @surfaces,
+  @workbench,
+  @workbench_index,
+  @workbench_mount,
+  @workbench_workspace
+ ][reg=set]
+}[reg=facet]
 
-^"invariant"{
-  "Workspace discovery should expose both local bridge surfaces and imported canon surfaces.",
-  "Local conventions and surface registries should resolve without needing path folklore.",
-  "Site-local planning remains narrow even when the imported workbench is broad."
-}
+invariants: #[
+ `Workspace discovery should expose both local bridge surfaces and imported canon surfaces.`,
+ `Local conventions and surface registries should resolve without needing path folklore.`,
+ `Site-local planning remains narrow even when the imported workbench is broad.`
+][reg=set]

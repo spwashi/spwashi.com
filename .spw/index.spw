@@ -1,50 +1,49 @@
 # Spw Site Index
 #
-# Root entrypoint for this site local bridge into the installed Spw workbench.
+# Root entrypoint for this site-local bridge into the installed Spw workbench.
 
 #>spw_site_index
 #:index #!canon
 #:layer #!pragmatics
 
-^"intent"{
- ~#goal: "Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon."
-}
+@spw: ~"."
+@mount: ~"./mount.spw"
+@workspace: ~"./workspace.spw"
+@conventions: ~"./conventions/index.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@site: ~"./site.spw"
+@reviews: ~"./reviews/index.spw"
+@domains: ~"./domains.spw"
+@surfaces: ~"./surfaces.spw"
+@workbench: ~"./_workbench/.spw/index.spw"
+@workbench_mount: ~"./_workbench/.spw/mount.spw"
+@workbench_workspace: ~"./_workbench/.spw/workspace.spw"
 
-^"roots"{
- @spw: ~"."
- @mount: ~"./mount.spw"
- @workspace: ~"./workspace.spw"
- @conventions: ~"./conventions/index.spw"
- @site_semantics: ~"./conventions/site-semantics.spw"
- @site: ~"./site.spw"
- @reviews: ~"./reviews/index.spw"
- @domains: ~"./domains.spw"
- @surfaces: ~"./surfaces.spw"
- @workbench: ~"./_workbench/.spw/index.spw"
- @workbench_mount: ~"./_workbench/.spw/mount.spw"
- @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
-}
+intent: .{
+ goal = `Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon.`
+ stance = `Keep the local bridge thin, site-oriented, and easy to reread before or after a publishing pass.`
+}[reg=facet]
 
-^"dispatch"{
- mount: @mount
- workspace: @workspace
- conventions: @conventions
- semantics: @site_semantics
- workbench: @workbench
- workbench_mount: @workbench_mount
- workbench_workspace: @workbench_workspace
- about: ~"../about/index.html"
- play: ~"../play/index.html"
- software: ~"../topics/software/index.html"
- reviews: @reviews
- domains: @domains
- surfaces: @surfaces
- site: @site
-}
+dispatch: .{
+ mount = @mount
+ workspace = @workspace
+ conventions = @conventions
+ semantics = @site_semantics
+ workbench = @workbench
+ workbench_mount = @workbench_mount
+ workbench_workspace = @workbench_workspace
+ about = ~"../about/index.html"
+ play = ~"../play/index.html"
+ software = ~"../topics/software/index.html"
+ reviews = @reviews
+ domains = @domains
+ surfaces = @surfaces
+ site = @site
+}[reg=facet]
 
-^"invariant"{
-  "The local .spw directory stays thin and site-oriented.",
-  "Local conventions and surfaces describe the site's own canon boundary.",
-  "Imported canon lives under ./_workbench/.spw and remains the deeper source of truth.",
-  "Site surfaces should cite installed workbench paths that actually exist.",
-}
+invariants: #[
+ `The local .spw directory stays thin and site-oriented.`,
+ `Local conventions and surfaces describe the site's own canon boundary.`,
+ `Imported canon lives under ./_workbench/.spw and remains the deeper source of truth.`,
+ `Site surfaces should cite installed workbench paths that actually exist.`
+][reg=set]
