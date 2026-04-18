@@ -119,29 +119,154 @@
                 </p>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-context="reading">
                         <h3>Testing Global Contexts</h3>
-                        <p>Change the environment mode using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
+                        <p>Change the light level and theme family using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
                         
-                        <div class="theme-handle-test">
+                        <div class="theme-handle-test" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light Mode</button>
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark Mode</button>
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive Mode</button>
                         </div>
+                        <div class="theme-pack-chooser" role="group" aria-label="Palette lab theme pack variants" style="margin-top: 0.85rem;">
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Neutral paper</span>
+                                    <span class="theme-pack-swatch__tone">default</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Oxide ledger</span>
+                                    <span class="theme-pack-swatch__tone">warm</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Electric studio</span>
+                                    <span class="theme-pack-swatch__tone">signal</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Ritual vellum</span>
+                                    <span class="theme-pack-swatch__tone">ceremonial</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Copper brace</span>
+                                    <span class="theme-pack-swatch__tone">forged</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Glass console</span>
+                                    <span class="theme-pack-swatch__tone">cool</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                        </div>
+                        <p class="frame-note" style="margin-top: 1rem;">Auto mode uses <code>prefers-color-scheme</code> to match your system preference.</p>
                     </article>
                     
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-context="analysis">
                         <h3>Palette Resonance Dials</h3>
                         <p>The <code>data-spw-palette-resonance</code> attribute biases the active accent tokens (like <code>--active-op-color</code>).</p>
-                        <div class="theme-handle-test">
+                        <div class="theme-handle-test" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
                             <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
                             <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
                             <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
                         </div>
+                        <p class="frame-note" style="margin-top: 1rem;">Current theme pack: <strong data-settings-state="themePack">neutral paper</strong>.</p>
+                        <p class="frame-note" style="margin-top: 1rem;">This affects how operators glow and how the "resonance" probe identifies conceptual links.</p>
                     </article>
                 </div>
             </section>
+
+            <section class="site-frame" id="environment-synchronization" data-spw-role="sync" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#environment-synchronization">^"environment_synchronization"</a>
+                    <h2>Environment Synchronization</h2>
+                </div>
+                <p class="frame-note">Key tokens are mapped to the <code>html</code> element's <code>data-spw-color-mode</code>. In "Auto" mode, these adapt dynamically without a page refresh.</p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel sync-specimen" style="border-left: 4px solid var(--ink);">
+                        <h4>Current Ink</h4>
+                        <p><code>--ink</code></p>
+                        <p class="frame-note">Primary text and contrast color.</p>
+                    </article>
+                    <article class="frame-panel sync-specimen" style="border-left: 4px solid var(--surface);">
+                        <h4>Current Surface</h4>
+                        <p><code>--surface</code></p>
+                        <p class="frame-note">Base material background color.</p>
+                    </article>
+                    <article class="frame-panel sync-specimen" style="border-left: 4px solid var(--line);">
+                        <h4>Current Line</h4>
+                        <p><code>--line</code></p>
+                        <p class="frame-note">Structural border and separator color.</p>
+                    </article>
+                    <article class="frame-panel sync-specimen" style="border-left: 4px solid var(--active-op-color);">
+                        <h4>Active Accent</h4>
+                        <p><code>--active-op-color</code></p>
+                        <p class="frame-note">Resonance-driven signature color.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="spectral-resonance-mapping" data-spw-role="mapping" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#spectral-resonance-mapping">&lt;"spectral_resonance_mapping"</a>
+                    <h2>Spectral Resonance Mapping</h2>
+                </div>
+                <p class="frame-note">Resonance modes are semantic biases that shift the site's accent colors toward specific "spectral families." This allows different routes to carry a distinct visual weight.</p>
+
+                <div class="panel-grid">
+                    <article class="frame-panel" data-spw-palette-resonance="route" style="border-top: 4px solid var(--op-ref-color);">
+                        <h4>Route Resonance</h4>
+                        <p>The fallback mode. Accents are tied to the specific route family (e.g. blue for editorial, teal for home).</p>
+                    </article>
+                    <article class="frame-panel" data-spw-palette-resonance="craft" style="border-top: 4px solid var(--op-action-color);">
+                        <h4>Craft Resonance</h4>
+                        <p>Biases towards building and making. Accents use higher saturation teals and ambers.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-palette-resonance="software" style="border-top: 4px solid var(--op-frame-color);">
+                        <h4>Software Resonance</h4>
+                        <p>A technical, high-contrast mode. Accents are anchored in structural teals and diagnostic violets.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-palette-resonance="math" style="border-top: 4px solid var(--op-probe-color);">
+                        <h4>Math Resonance</h4>
+                        <p>An abstract, inquiry-driven mode. Uses deep violets and contrastive oranges to highlight relations.</p>
+                    </article>
+                </div>
+            </section>
+
+
             
             <section class="site-frame">
                 <div class="frame-heading">
@@ -166,29 +291,38 @@
                 </div>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="palette-projection" data-spw-role="projection" data-spw-kind="frame" data-spw-context="ritual">
                 <div class="frame-heading">
-                    <a class="frame-sigil" href="#image-studies">^"palette_surfaces"</a>
-                    <h2>Surfacing Palettes on Components</h2>
+                    <a class="frame-sigil" href="#palette-projection">^"palette_projection"</a>
+                    <h2>Palette Projection Registry</h2>
                 </div>
-                <p class="frame-note">We use attributes like <code>data-spw-accent-palette="cool"</code> along with <code>data-spw-accent-colors</code> to define how images interact with the surrounding structural bounds.</p>
-                
-                <figure class="image-study topic-photo-card" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#144a59, #cfa16d, #365b8c, #d4d1c3" data-spw-accent-anchor="design website pretext renderers mobile" data-spw-operator="frame">
-                    <img src="/public/images/routes/site-design-resonance-hero.webp" alt="A readable surface study displaying cool and metallic shades." width="1600" height="960">
-                    <figcaption>
-                        <strong>Image Context Projection</strong>
-                        <span>The surrounding layout frame reads the <code>data-spw-accent-palette</code> hint to project a complementary mood.</span>
-                    </figcaption>
-                </figure>
-                
-                <figure class="image-study topic-photo-card" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-resonance="image focal" data-spw-accent-colors="#C05C3B, #EAD7B6, #4C3C3B" data-spw-operator="topic">
-                    <img src="/public/images/routes/site-architecture-home-portal.webp" alt="Warmly lit architectural study." width="1600" height="960">
-                    <figcaption>
-                        <strong>Warm Anchor</strong>
-                        <span>Different images can carry entirely different color models to the components wrapping them through attributes.</span>
-                    </figcaption>
-                </figure>
+                <p class="frame-note">When an image is surface-promoted, we extract a spectral signature and project it onto the surrounding frame. This ensures that the structural bounds of the site feel connected to the content being displayed.</p>
+                             <div class="panel-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));">
+                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-colors="#144a59, #cfa16d, #365b8c, #d4d1c3" style="display: flex; flex-direction: column; width: 100%; min-width: 0;">
+                        <img src="/public/images/routes/site-design-resonance-hero.webp" alt="A readable surface study displaying cool and metallic shades." width="1600" height="960" style="width: 100%; height: auto; min-height: 200px; background: var(--surface-soft);">
+                        <figcaption class="study-summary" style="width: 100%; min-width: 0; padding: 1.2rem;">
+                            <div class="meta-cluster">
+                                <span class="spec-pill">cool resonance</span>
+                                <code>#144a59, #cfa16d, #365b8c, #d4d1c3</code>
+                            </div>
+                            <p style="margin-top: 0.5rem;">Extraction biases background glares and SVG stroke rendering through <code>--active-op-color</code>.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-colors="#C05C3B, #EAD7B6, #4C3C3B" style="display: flex; flex-direction: column; width: 100%; min-width: 0;">
+                        <img src="/public/images/routes/site-architecture-home-portal.webp" alt="Warmly lit architectural study." width="1600" height="960" style="width: 100%; height: auto; min-height: 200px; background: var(--surface-soft);">
+                        <figcaption class="study-summary" style="width: 100%; min-width: 0; padding: 1.2rem;">
+                            <div class="meta-cluster">
+                                <span class="spec-pill">warm anchor</span>
+                                <code>#C05C3B, #EAD7B6, #4C3C3B</code>
+                            </div>
+                            <p style="margin-top: 0.5rem;">Extraction shifts <code>--surface</code> bias toward sun-bleached cream, grounding the image in the paper material.</p>
+                        </figcaption>
+                    </figure>
+                </div>
             </section>
+
+
         </article>
     </main>
 

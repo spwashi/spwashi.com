@@ -70,7 +70,7 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame">
+            <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip">
@@ -140,6 +140,191 @@
                     </article>
                 </div>
             </section>
+
+            <section class="site-frame" id="interactive-physics-lab" data-spw-role="lab" data-spw-kind="frame" data-spw-context="ritual">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#interactive-physics-lab">@ "interactive_physics_lab"</a>
+                    <h2>Interactive Physics Lab</h2>
+                </div>
+                <p class="frame-note">Use the controls below to project different physical states onto this specimen. These buttons communicate with the site-level <code>SiteSettingsManager</code> through <code>data-site-setting-set</code> attributes.</p>
+
+                <div class="lab-container frame-grid frame-grid--split">
+                    <div class="lab-controls">
+                        <div class="control-group">
+                            <h4>Physical Density</h4>
+                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="operator-chip" data-site-setting-set="componentDensity:compact">Compact</button>
+                                <button class="operator-chip" data-site-setting-set="componentDensity:roomy">Roomy</button>
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top: 1rem;">
+                            <h4>Operator Resonance</h4>
+                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="operator-chip" data-site-setting-set="resonanceIntensity:0.2">Low</button>
+                                <button class="operator-chip" data-site-setting-set="resonanceIntensity:1.0">High</button>
+                            </div>
+                        </div>
+                        <div class="control-group" style="margin-top: 1rem;">
+                            <h4>Material Kind</h4>
+                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="operator-chip" data-site-setting-set="metamaterial:glass">Glass</button>
+                                <button class="operator-chip" data-site-setting-set="metamaterial:paper">Paper</button>
+                                <button class="operator-chip" data-site-setting-set="metamaterial:matte">Matte</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lab-specimen" data-spw-feature="physics-lab-specimen">
+                        <article class="frame-card" data-spw-metamaterial="glass" data-spw-depth="2" data-spw-charge="idle">
+                            <header class="frame-topline">
+                                <span class="frame-sigil">#&gt;</span>
+                                <span class="spec-pill">active specimen</span>
+                            </header>
+                            <div class="frame-heading">
+                                <h3>Physics Response Test</h3>
+                            </div>
+                            <p>This card responds to global density and resonance intensity settings. Try toggling the buttons to see the spatial grammar adjust.</p>
+                            <p>The <code>data-site-setting-set</code> attribute allows any element to act as a remote control for the Spw runtime physics engine.</p>
+                            <footer class="frame-actions">
+                                <button class="operator-chip" data-spw-operator="action">@tune</button>
+                            </footer>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="site-frame" id="operator-intent-registry" data-spw-role="registry" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#operator-intent-registry">? "operator_intent_registry"</a>
+                    <h2>Operator Intent Registry</h2>
+                </div>
+                <p class="frame-note">Operators are the primary semantic markers in Spw. Each one carries a specific functional intent and a "wonder" category that drives sensory feedback (haptics, sound, and resonance).</p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <table class="operator-intent-table">
+                        <thead>
+                            <tr>
+                                <th>Op</th>
+                                <th>Type</th>
+                                <th>Wonder</th>
+                                <th>Intent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="frame">#&gt;</span></td>
+                                <td>frame</td>
+                                <td>orientation</td>
+                                <td>orient a stable structural unit</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="object">^</span></td>
+                                <td>object</td>
+                                <td>memory</td>
+                                <td>hold an inspectable structure</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="probe">?</span></td>
+                                <td>probe</td>
+                                <td>inquiry</td>
+                                <td>open an investigation or inquiry</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="ref">~</span></td>
+                                <td>ref</td>
+                                <td>resonance</td>
+                                <td>point without forcing structural change</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="action">@</span></td>
+                                <td>action</td>
+                                <td>projection</td>
+                                <td>commit a local change or effect</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="topic">&lt;</span></td>
+                                <td>topic</td>
+                                <td>resonance</td>
+                                <td>name or relate a conceptual cluster</td>
+                            </tr>
+                            <tr>
+                                <td><span class="operator-chip" data-spw-operator="stream">*</span></td>
+                                <td>stream</td>
+                                <td>resonance</td>
+                                <td>connect to an event-like flow</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="site-frame" id="component-anatomy-slots" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#component-anatomy-slots">^"component_anatomy_slots"</a>
+                    <h2>Slot-Based Composition</h2>
+                </div>
+                <p class="frame-note">Most Spw components follow a strictly ordered slot contract. This consistency allows the runtime to reliably find sub-elements for animations, metadata projections, and accessibility labels.</p>
+
+                <div class="anatomy-visualizer frame-grid frame-grid--2up">
+                    <article class="frame-card" data-spw-overlay="fade-bottom">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">#&gt;</span>
+                            <span class="spec-pill">header / topline slot</span>
+                        </header>
+                        <div class="frame-heading">
+                            <h3>Component Body Slot</h3>
+                        </div>
+                        <p>The primary content area for prose, data, or media controls. It handles text-wrap and local density.</p>
+                        <figure class="frame-figure" style="background: var(--surface-strong); border: 1px dashed var(--line); height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                            <span class="frame-note">figure / media slot</span>
+                        </figure>
+                        <footer class="frame-actions" style="margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 0.5rem;">
+                            <span class="frame-note">actions / footer slot</span>
+                        </footer>
+                    </article>
+
+                    <div class="anatomy-legend">
+                        <ol class="spw-list-numbered">
+                            <li><strong>Header:</strong> Navigation, sigils, and mode switches.</li>
+                            <li><strong>Meta:</strong> Contextual pills, timestamps, or status hints.</li>
+                            <li><strong>Body:</strong> The core legible content.</li>
+                            <li><strong>Figure:</strong> Images, SVG diagrams, or canvases.</li>
+                            <li><strong>Actions:</strong> Primary interaction chips or commit handles.</li>
+                            <li><strong>Footer:</strong> Secondary metadata or citation links.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="brace-grammar-specimens" data-spw-role="grammar" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#brace-grammar-specimens">^"brace_grammar_specimens"</a>
+                    <h2>Brace Grammar Forms</h2>
+                </div>
+                <p class="frame-note">The Spw language uses brace delimiters to anchor specific semantic intentions. We project these into HTML using <code>data-spw-form="brace"</code>.</p>
+
+                <div class="frame-grid frame-grid--2up">
+                    <article class="frame-panel" data-spw-form="brace" data-spw-brace="objective">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">^</span>
+                            <span class="spec-pill">objective form</span>
+                        </header>
+                        <p>Objective braces <code>^"concept"</code> imply a stable, shared truth or a schema definition. The visual grammar uses a hard vertical rail and a more technical posture.</p>
+                        <code>data-spw-brace="objective"</code>
+                    </article>
+
+                    <article class="frame-panel" data-spw-form="brace" data-spw-brace="subjective">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">%</span>
+                            <span class="spec-pill">subjective form</span>
+                        </header>
+                        <p>Subjective braces <code>%"opinion"</code> imply a personal trace, a poetic deviation, or a temporary state. The visual grammar suggests a more fluid, organic connection.</p>
+                        <code>data-spw-brace="subjective"</code>
+                    </article>
+                </div>
+            </section>
+
 
             <section class="site-frame" id="data-attribute-decoration" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality">
                 <div class="frame-heading">
