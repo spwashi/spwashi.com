@@ -34,8 +34,8 @@
     transition: opacity var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
 }
 
-/* Ensure content sits above the canvas but below interaction overlays */
-:where(.spw-accent-host > *:not(canvas)) {
+/* Flow children sit above the canvas; explicit overlays own their own geometry. */
+:where(.spw-accent-host > *:not(canvas):not([data-spw-overlay])) {
     position: relative;
     z-index: 2;
 }

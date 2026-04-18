@@ -74,6 +74,15 @@
   }
 }
 
+^"overlay_contract"{
+  definition: "An overlay child is a surface element that pins to a host edge or local viewport position instead of participating in the host's normal flow."
+  html_contract: "Use data-spw-overlay on direct children that own their own placement inside a host."
+  host_rule: "Parent normalization rules may lift flow children above substrate layers, but they should exclude [data-spw-overlay] rather than silently resetting overlay geometry."
+  layering_rule: "Higher cascade layers may intensify, decorate, or sequence a surface; they should not reclassify layout roles that lower layers or runtime mounts declare explicitly."
+  examples: ["image hint strip", "image treatment controls", "overlay state inspector", "restore chips pinned to a host edge"]
+  counterexample: "A shared host rule forces position: relative onto every child, so an opted-in overlay starts animating between flow and edge-pinned geometry."
+}
+
 ^"interaction_states"{
   ambient: "Present but not yet being addressed."
   addressable: "Available through route, hover, focus, sigil, or keypath."

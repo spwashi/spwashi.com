@@ -514,6 +514,9 @@ function mountTarget(target) {
             ? 'spw-state-block--overlay'
             : 'spw-state-block--inline'
     );
+    if (placement === 'overlay') {
+        inspector.dataset.spwOverlay = 'inspector';
+    }
 
     if (placement === 'overlay') {
         target.append(inspector);
@@ -532,6 +535,9 @@ function mountTarget(target) {
     restore.dataset.spwStateRestore = target.dataset.spwInspectId;
     restore.hidden = true;
     restore.textContent = '$ reopen_state';
+    if (placement === 'overlay') {
+        restore.dataset.spwOverlay = 'restore';
+    }
     restore.addEventListener('click', (event) => {
         event.preventDefault();
         event.stopPropagation();

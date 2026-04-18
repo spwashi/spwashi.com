@@ -282,6 +282,7 @@ function ensureHelper(host) {
 
     const strip = document.createElement('div');
     strip.className = 'spw-image-helper-strip';
+    strip.dataset.spwOverlay = 'controls';
 
     const button = document.createElement('button');
     button.className = 'spw-image-helper';
