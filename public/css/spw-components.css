@@ -1058,6 +1058,19 @@ a.frame-card:is(:hover, :focus-visible),
   min-width: 0;
 }
 
+:where(
+  .frame-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
+  .contact-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
+  .compare-sets > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
+  .spec-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
+  .directory-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column)
+) {
+  min-width: 0;
+  width: 100%;
+  justify-self: stretch;
+  align-self: stretch;
+}
+
 :where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li) > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column) {
   height: 100%;
 }

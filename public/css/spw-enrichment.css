@@ -17,8 +17,6 @@
  */
 :where(
     [data-spw-swipe="container"],
-    .spec-strip,
-    .frame-operators,
     .operator-snippet-grid--horizontal,
     .media-card-grid--horizontal
 ) {
@@ -44,9 +42,7 @@
     padding-bottom: var(--space-xs, 0.5rem); /* Safe area for hidden scrollbars */
 }
 
-:where([data-spw-swipe="container"])::-webkit-scrollbar,
-:where(.spec-strip)::-webkit-scrollbar,
-:where(.frame-operators)::-webkit-scrollbar {
+:where([data-spw-swipe="container"])::-webkit-scrollbar {
     display: none; /* Safari/Chrome */
 }
 
@@ -56,8 +52,7 @@
 
 :where(
     [data-spw-swipe="item"],
-    .spec-strip > .spec-pill,
-    .frame-operators > .operator-chip
+    [data-spw-swipe="container"] > *
 ) {
     scroll-snap-align: start;
     scroll-margin-inline-start: var(--page-gutter, 1.5rem);
