@@ -97,6 +97,12 @@ brand_expression_contract: .{
    required_path = `Palette resonance writes must flow through the settings manager so the full accent system (CSS vars, ornament tinting, palette-derived affordances) updates in one synchronized step.`
    current_risk = `brace-pivots writes localStorage directly. The accent system receives a partial update; the manager's normalization and derived modifier application are skipped.`
   }[reg=facet]
+  theme_pack = .{
+   path = @settings
+   nature = `Theme pack is the color-family layer of brand expression. It should answer which chromatic world the site is speaking in, while color mode answers luminance posture and palette resonance answers semantic bias.`
+   required_path = `Theme pack writes must flow through the canonical manager so root datasets, shared tokens, chooser readouts, and downstream palette-aware surfaces stay synchronized.`
+   note = `Palette chooser surfaces should be canonical settings controls, not dead display chrome. If a visitor clicks a pack, the root state should actually change.`
+  }[reg=facet]
   wonder_memory = .{
    path = @wonder_memory
    nature = `Wonder memory strength and reach are not diagnostic toggles — they are the tunable depth of the site's relational recollection. A visitor who adjusts these is tuning how much the site remembers their attention.`
@@ -110,7 +116,8 @@ brand_expression_contract: .{
   desired = `settings:changed should carry a canonical, full normalized object. Downstream brand expression consumers should treat a non-canonical shape as a diagnosable error, not a silent fallback.`
  }[reg=facet]
  brand_invariants = #[
-  `Palette resonance, wonder memory parameters, and architectural modifiers are brand expression surfaces — they should be presented and documented differently from diagnostic or technical settings.`,
+  `Palette resonance, theme pack, wonder memory parameters, and architectural modifiers are brand expression surfaces — they should be presented and documented differently from diagnostic or technical settings.`,
+  `Theme pack should stay canonical, globally readable, and explicitly distinct from light/dark mode.`,
   `Every write to a brand expression surface must pass through the canonical manager so all downstream consumers update atomically.`,
   `The settings:changed event shape is a public contract for brand expression. It should be as stable as any other public API.`,
   `On destroyRuntime(), brand expression surfaces should return to authored defaults — not persist session mutations that the visitor did not explicitly request to preserve.`

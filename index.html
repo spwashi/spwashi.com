@@ -178,7 +178,8 @@
                 </div>
                 <p class="vibe-widget-copy">These choices stay in this browser, and they carry into the image accents, cards, and route surfaces you open next. The full register lives on <a href="/settings/#presets">settings</a>.</p>
                 <div class="vibe-widget-meta">
-                    <span class="spec-pill">theme: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                    <span class="spec-pill">mode: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                    <span class="spec-pill">pack: <span class="vibe-widget-state" data-settings-state="themePack">neutral paper</span></span>
                     <span class="spec-pill">palette: <span class="vibe-widget-state" data-settings-state="paletteResonance">route</span></span>
                     <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
                 </div>
@@ -201,13 +202,21 @@
             <article class="vibe-widget">
                 <div class="vibe-widget-header">
                     <p class="vibe-widget-kicker">Theme</p>
-                    <h2 class="vibe-widget-title">Hold the light level</h2>
+                    <h2 class="vibe-widget-title">Hold the light level and family</h2>
                 </div>
-                <p class="vibe-widget-copy">Leave it adaptive or pin the reading atmosphere before you wander into deeper topics.</p>
+                <p class="vibe-widget-copy">Leave it adaptive or pin both the reading atmosphere and color family before you wander into deeper topics.</p>
                 <div class="vibe-widget-actions" role="group" aria-label="Homepage color mode variants">
                     <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
                     <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
                     <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
+                </div>
+                <div class="theme-pack-chip-row" role="group" aria-label="Homepage theme pack variants">
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
                 </div>
             </article>
         </div>
@@ -219,14 +228,16 @@
                     <p class="palette-probe-kicker">Color paths</p>
                     <h2 class="palette-probe-title">Stumble into a palette, then follow where it feels coherent.</h2>
                 </div>
-                <div class="palette-probe-swatches" aria-hidden="true">
-                    <span class="palette-probe-chip"></span>
-                    <span class="palette-probe-chip"></span>
-                    <span class="palette-probe-chip"></span>
-                    <span class="palette-probe-chip"></span>
+                <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Homepage theme pack choices">
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
+                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
                 </div>
             </div>
-            <p class="palette-probe-copy">Current dimension: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory is <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>, and color mode is <span class="palette-probe-state" data-settings-state="colorMode">auto</span>.</p>
+            <p class="palette-probe-copy">Current pack: <span class="palette-probe-state" data-settings-state="themePack">neutral paper</span>. Current dimension: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory is <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>, and color mode is <span class="palette-probe-state" data-settings-state="colorMode">auto</span>.</p>
             <div class="palette-probe-actions" aria-label="Homepage palette resonance choices">
                 <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
                 <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>

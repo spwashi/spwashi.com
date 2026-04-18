@@ -76,6 +76,14 @@ import {
 import { shouldDisableServiceWorkerInDevelopment } from './spw-runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
+const THEME_PACK_OPTIONS = Object.freeze([
+  'neutral-paper',
+  'oxide-ledger',
+  'electric-studio',
+  'ritual-vellum',
+  'copper-brace',
+  'glass-console'
+]);
 
 /* ==========================================================================
    1. Static registries
@@ -266,6 +274,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   fontSize: 'normal',
 
   colorMode: 'auto',
+  themePack: 'neutral-paper',
   paletteResonance: DEFAULT_PALETTE_RESONANCE,
   baseMetamaterial: 'glass',
   baseAffordance: 'read',
@@ -324,6 +333,7 @@ const SETTING_OPTIONS = Object.freeze({
   fontSize: new Set(['small', 'normal', 'large']),
 
   colorMode: new Set(['auto', 'light', 'dark']),
+  themePack: new Set(THEME_PACK_OPTIONS),
   paletteResonance: new Set(PALETTE_RESONANCE_OPTIONS),
   baseMetamaterial: new Set(['paper', 'glass', 'matte', 'field']),
   baseAffordance: new Set(['read', 'tune', 'inspect', 'orient']),
@@ -378,6 +388,7 @@ const PRESETS = Object.freeze({
     navigatorDisplay: 'quiet',
     consoleDisplay: 'hidden',
     colorMode: 'auto',
+    themePack: 'neutral-paper',
     operatorSaturation: 'normal',
     animationIntensity: 'normal',
     grainIntensity: 'none',
@@ -406,6 +417,7 @@ const PRESETS = Object.freeze({
     currentDevelopmentalClimate: 'weave',
     semanticDensity: 'rich',
     grainIntensity: 'moderate',
+    themePack: 'electric-studio',
     operatorSaturation: 'vibrant',
     animationIntensity: 'enhanced',
     operatorHighlighting: 'on',
@@ -429,6 +441,7 @@ const PRESETS = Object.freeze({
     currentDevelopmentalClimate: 'anchor',
     navigatorDisplay: 'full',
     consoleDisplay: 'expanded',
+    themePack: 'glass-console',
     semanticDensity: 'rich',
     operatorHighlighting: 'on',
     cognitiveHandles: 'on',
@@ -449,6 +462,7 @@ const PRESETS = Object.freeze({
     currentDevelopmentalClimate: 'anchor',
     highContrast: 'on',
     reduceMotion: 'on',
+    themePack: 'neutral-paper',
     fontSize: 'large',
     fontSizeScale: '120',
     lineSpacing: 'loose',
@@ -472,6 +486,14 @@ const SETTING_VALUE_LABELS = Object.freeze({
     auto: 'Adaptive',
     light: 'Light',
     dark: 'Dark'
+  }),
+  themePack: Object.freeze({
+    'neutral-paper': 'Neutral paper',
+    'oxide-ledger': 'Oxide ledger',
+    'electric-studio': 'Electric studio',
+    'ritual-vellum': 'Ritual vellum',
+    'copper-brace': 'Copper brace',
+    'glass-console': 'Glass console'
   }),
   paletteResonance: Object.freeze({
     route: 'Context-led',
@@ -794,6 +816,7 @@ class SiteSettingsManager {
       spwHighContrast: normalized.highContrast,
       spwFontSize: normalized.fontSize,
       spwColorMode: normalized.colorMode,
+      spwThemePack: normalized.themePack,
       spwPaletteResonance: normalized.paletteResonance,
       spwBaseMetamaterial: normalized.baseMetamaterial,
       spwBaseAffordance: normalized.baseAffordance,

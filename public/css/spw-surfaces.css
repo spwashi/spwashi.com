@@ -593,6 +593,163 @@
 :where(.palette-probe-chip:nth-child(3)) { background: var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3)); }
 :where(.palette-probe-chip:nth-child(4)) { background: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8)); }
 
+:where(.theme-pack-chip-row) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.44rem;
+  align-items: center;
+}
+
+:where(.theme-pack-chip-btn) {
+  --theme-pack-preview-light: linear-gradient(135deg, #fff7ec 0%, #f2e4cf 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #232a30 0%, #11161a 100%);
+  appearance: none;
+  inline-size: 1.55rem;
+  block-size: 1.55rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 30%, var(--spw-shell-line));
+  border-radius: 0.48rem;
+  background:
+    var(--theme-pack-preview-light) top / 100% 50% no-repeat,
+    var(--theme-pack-preview-dark) bottom / 100% 50% no-repeat;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 4px 12px rgba(17, 18, 20, 0.08);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(.theme-pack-chip-btn:is(:hover, :focus-visible)) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 28%, var(--line-strong));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 6px 14px rgba(17, 18, 20, 0.12);
+}
+
+:where(.theme-pack-chip-btn[data-site-setting-active="true"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 54%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent),
+    0 8px 16px rgba(17, 18, 20, 0.14);
+}
+
+:where(.theme-pack-chooser) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+  gap: 0.7rem;
+}
+
+:where(.theme-pack-swatch) {
+  --theme-pack-preview-light: linear-gradient(135deg, #fff7ec 0%, #f2e4cf 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #232a30 0%, #11161a 100%);
+  appearance: none;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.82rem 0.88rem 0.9rem;
+  text-align: left;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 18%, var(--spw-shell-line));
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--surface-strong) 88%, transparent), transparent 60%),
+    var(--spw-shell-panel-bg-strong);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(.theme-pack-swatch:is(:hover, :focus-visible)) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 30%, var(--line-strong));
+}
+
+:where(.theme-pack-swatch[data-site-setting-active="true"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 50%, transparent);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--active-op-color, #008080) 10%, var(--surface-strong)) 0%, transparent 66%),
+    var(--spw-shell-panel-bg-strong);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 16%, transparent),
+    var(--card-highlight),
+    var(--card-shadow);
+}
+
+:where(.theme-pack-swatch__header) {
+  display: grid;
+  gap: 0.18rem;
+}
+
+:where(.theme-pack-swatch__label) {
+  color: var(--ink);
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.16;
+}
+
+:where(.theme-pack-swatch__tone) {
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.8rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:where(.theme-pack-swatch__palettes) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.theme-pack-swatch__palette) {
+  min-block-size: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 12%, transparent);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+:where(.theme-pack-swatch__palette[data-theme-pack-variant="light"]) {
+  background: var(--theme-pack-preview-light);
+}
+
+:where(.theme-pack-swatch__palette[data-theme-pack-variant="dark"]) {
+  background: var(--theme-pack-preview-dark);
+}
+
+:where([data-theme-pack-preview="neutral-paper"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #f7efdc 0%, #efe5ce 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #1d2429 0%, #0f1418 100%);
+}
+
+:where([data-theme-pack-preview="oxide-ledger"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #f6e8d4 0%, #ceb184 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #382821 0%, #17110d 100%);
+}
+
+:where([data-theme-pack-preview="electric-studio"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #e6f4ff 0%, #74b8ff 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #10182a 0%, #2c45a5 100%);
+}
+
+:where([data-theme-pack-preview="ritual-vellum"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #f6ecdd 0%, #caa7c7 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #261a2d 0%, #5f3358 100%);
+}
+
+:where([data-theme-pack-preview="copper-brace"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #fae7d7 0%, #cb7a41 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #291912 0%, #6c462d 100%);
+}
+
+:where([data-theme-pack-preview="glass-console"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #edf5fb 0%, #9bc2de 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #141d24 0%, #2b4f69 100%);
+}
+
 :where(.palette-probe-state) {
   color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 74%, var(--ink) 26%);
   font-weight: 600;

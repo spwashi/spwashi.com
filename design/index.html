@@ -271,14 +271,16 @@
                             <p class="palette-probe-kicker">Global Context</p>
                             <h3 class="palette-probe-title">Bias the environment first, then judge whether the local variants still make sense.</h3>
                         </div>
-                        <div class="palette-probe-swatches" aria-hidden="true">
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
+                        <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Design hub theme pack choices">
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
                         </div>
                     </div>
-                    <p class="palette-probe-copy">Current mode: <span class="palette-probe-state" data-settings-state="colorMode">auto</span>. Palette resonance: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory: <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>.</p>
+                    <p class="palette-probe-copy">Current mode: <span class="palette-probe-state" data-settings-state="colorMode">auto</span>. Theme pack: <span class="palette-probe-state" data-settings-state="themePack">neutral paper</span>. Palette resonance: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory: <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>.</p>
                     <div class="palette-probe-actions" aria-label="Design hub palette choices">
                         <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
                         <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
@@ -298,8 +300,8 @@
                     <article class="frame-panel">
                         <p class="frame-note">Layer 1</p>
                         <h3>Global / Root</h3>
-                        <p>Use this for environment-wide posture: theme, palette resonance, enhancement level, wonder memory, semantic density, and anything that should feel continuous as a person moves between routes.</p>
-                        <p><code>html[data-spw-color-mode]</code>, <code>html[data-spw-palette-resonance]</code>, and the settings model belong here.</p>
+                        <p>Use this for environment-wide posture: mode, theme pack, palette resonance, enhancement level, wonder memory, semantic density, and anything that should feel continuous as a person moves between routes.</p>
+                        <p><code>html[data-spw-color-mode]</code>, <code>html[data-spw-theme-pack]</code>, <code>html[data-spw-palette-resonance]</code>, and the settings model belong here.</p>
                     </article>
 
                     <article class="frame-panel">

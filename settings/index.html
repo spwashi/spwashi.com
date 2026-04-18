@@ -187,14 +187,17 @@
                             <h3 class="vibe-widget-title">Read the active state</h3>
                         </div>
                         <p class="vibe-widget-copy">This is the fast feedback loop: the current state should stay legible while you experiment.</p>
-                        <div class="palette-probe-swatches" aria-hidden="true">
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
-                            <span class="palette-probe-chip"></span>
+                        <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Current tone theme pack choices">
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
+                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
                         </div>
                         <div class="vibe-widget-meta">
-                            <span class="spec-pill">theme: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                            <span class="spec-pill">mode: <span class="vibe-widget-state" data-settings-state="colorMode">auto</span></span>
+                            <span class="spec-pill">pack: <span class="vibe-widget-state" data-settings-state="themePack">neutral paper</span></span>
                             <span class="spec-pill">palette: <span class="vibe-widget-state" data-settings-state="paletteResonance">route</span></span>
                             <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
                             <span class="spec-pill">climate: <span class="vibe-widget-state" data-settings-state="currentDevelopmentalClimate">orient</span></span>
@@ -216,13 +219,75 @@
                     <article class="vibe-widget" data-site-settings-panel>
                         <div class="vibe-widget-header">
                             <p class="vibe-widget-kicker">Theme</p>
-                            <h3 class="vibe-widget-title">Choose the light level</h3>
+                            <h3 class="vibe-widget-title">Choose light level and color family</h3>
                         </div>
-                        <p class="vibe-widget-copy">Use the adaptive mode if you want the site to follow the device, or pin a mode if you want a stable atmosphere.</p>
+                        <p class="vibe-widget-copy">Use the adaptive mode if you want the site to follow the device, or pin a mode and family if you want a stable atmosphere with a clearer chromatic identity.</p>
                         <div class="vibe-widget-actions" role="group" aria-label="Color mode variants">
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
+                        </div>
+                        <div class="theme-pack-chooser" role="group" aria-label="Theme pack variants">
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Neutral paper</span>
+                                    <span class="theme-pack-swatch__tone">default</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Oxide ledger</span>
+                                    <span class="theme-pack-swatch__tone">warm</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Electric studio</span>
+                                    <span class="theme-pack-swatch__tone">signal</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Ritual vellum</span>
+                                    <span class="theme-pack-swatch__tone">ceremonial</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Copper brace</span>
+                                    <span class="theme-pack-swatch__tone">forged</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
+                            <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console">
+                                <span class="theme-pack-swatch__header">
+                                    <span class="theme-pack-swatch__label">Glass console</span>
+                                    <span class="theme-pack-swatch__tone">cool</span>
+                                </span>
+                                <span class="theme-pack-swatch__palettes" aria-hidden="true">
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="light"></span>
+                                    <span class="theme-pack-swatch__palette" data-theme-pack-variant="dark"></span>
+                                </span>
+                            </button>
                         </div>
                     </article>
 
@@ -301,6 +366,10 @@
                         <strong data-settings-state="colorMode">auto</strong>
                     </article>
                     <article class="settings-state-card">
+                        <span class="settings-state-label">theme pack</span>
+                        <strong data-settings-state="themePack">neutral paper</strong>
+                    </article>
+                    <article class="settings-state-card">
                         <span class="settings-state-label">line spacing</span>
                         <strong data-settings-state="lineSpacing">normal</strong>
                     </article>
@@ -315,7 +384,7 @@
             <section class="site-frame" id="runtime-preferences" data-spw-role="settings" data-spw-form="brace"
                 data-spw-form-options="brace,block" data-spw-meaning="runtime preference controls"
                 data-spw-inspect="runtime_preferences"
-                data-spw-inspect-fields="colorMode,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,wonderMemory,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
+                data-spw-inspect-fields="colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,currentDevelopmentalClimate,wonderMemory,busDiagnostics" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_preferences" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#runtime-preferences">^"runtime_preferences"{</a>
                     <h2>Runtime Preferences</h2>
@@ -346,6 +415,52 @@
                                 <label class="settings-option">
                                     <input type="radio" name="colorMode" value="dark">
                                     <span class="settings-option-copy"><strong>Dark</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Theme pack</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="neutral-paper" checked>
+                                    <span class="settings-option-copy">
+                                        <strong>Neutral paper</strong>
+                                        <span>Calm default paper and operator balance.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="oxide-ledger">
+                                    <span class="settings-option-copy">
+                                        <strong>Oxide ledger</strong>
+                                        <span>Warmer copper, moss, and ledger-like contrast.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="electric-studio">
+                                    <span class="settings-option-copy">
+                                        <strong>Electric studio</strong>
+                                        <span>Signal blues, bright cyan, and charged violet.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="ritual-vellum">
+                                    <span class="settings-option-copy">
+                                        <strong>Ritual vellum</strong>
+                                        <span>Vellum paper, plum resonance, and brass accents.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="copper-brace">
+                                    <span class="settings-option-copy">
+                                        <strong>Copper brace</strong>
+                                        <span>Forged warmth with teal brace edges.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="themePack" value="glass-console">
+                                    <span class="settings-option-copy">
+                                        <strong>Glass console</strong>
+                                        <span>Icy panels, cool shell chrome, and console depth.</span>
+                                    </span>
                                 </label>
                             </fieldset>
 

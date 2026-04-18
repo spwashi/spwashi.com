@@ -678,6 +678,446 @@ html[data-spw-color-mode="dark"] {
   }
 }
 
+html[data-spw-theme-pack] {
+  --theme-pack-neutral-paper: 0;
+  --theme-pack-oxide-ledger: 0;
+  --theme-pack-electric-studio: 0;
+  --theme-pack-ritual-vellum: 0;
+  --theme-pack-copper-brace: 0;
+  --theme-pack-glass-console: 0;
+}
+
+html[data-spw-theme-pack="neutral-paper"] {
+  --theme-pack-neutral-paper: 1;
+  --theme-surface-phrase: "paper-oxide";
+  --theme-boundary-phrase: "soft-brace";
+  --theme-fixture-phrase: "indexed-rail";
+  --theme-ornament-phrase: "quiet-sigil";
+  --theme-cinematic-phrase: "ambient-grain";
+}
+
+html[data-spw-theme-pack="oxide-ledger"] {
+  --theme-pack-oxide-ledger: 1;
+  --bg: hsl(34 54% 90%);
+  --bg-deep: hsl(30 38% 76%);
+  --bg-field: hsl(38 34% 95%);
+  --bg-ritual: hsl(32 44% 91%);
+  --surface: rgba(255, 249, 243, 0.8);
+  --surface-strong: rgba(255, 250, 245, 0.92);
+  --surface-soft: rgba(251, 242, 233, 0.62);
+  --surface-matte: rgba(247, 239, 231, 0.94);
+  --surface-panel: rgba(255, 249, 244, 0.84);
+  --surface-panel-strong: rgba(255, 251, 247, 0.94);
+  --line: rgba(76, 56, 40, 0.14);
+  --line-strong: rgba(112, 93, 66, 0.28);
+  --teal: hsl(166 32% 28%);
+  --amber: hsl(24 74% 46%);
+  --violet: hsl(344 34% 40%);
+  --connector-color: rgba(74, 102, 92, 0.34);
+  --active-op-color: var(--teal);
+  --active-op-border: rgba(74, 102, 92, 0.34);
+  --active-op-bg-soft: rgba(74, 102, 92, 0.08);
+  --objective-brace-color: hsl(166 32% 28%);
+  --subjective-brace-color: hsl(340 30% 38%);
+  --op-topic-color: hsl(156 28% 34%);
+  --op-object-color: hsl(24 74% 46%);
+  --op-ref-color: hsl(214 42% 39%);
+  --op-probe-color: hsl(344 34% 40%);
+  --op-action-color: hsl(174 36% 24%);
+  --focus-ring: 0 0 0 3px rgba(140, 104, 71, 0.22);
+  --theme-surface-phrase: "oxide-ledger";
+  --theme-boundary-phrase: "ledger-brace";
+  --theme-fixture-phrase: "moss-tab";
+  --theme-ornament-phrase: "oxide-grain";
+  --theme-cinematic-phrase: "warm-index";
+}
+
+html[data-spw-theme-pack="electric-studio"] {
+  --theme-pack-electric-studio: 1;
+  --bg: hsl(208 72% 92%);
+  --bg-deep: hsl(214 64% 78%);
+  --bg-field: hsl(204 46% 97%);
+  --bg-ritual: hsl(214 56% 90%);
+  --surface: rgba(250, 252, 255, 0.8);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-soft: rgba(235, 244, 255, 0.62);
+  --surface-matte: rgba(241, 247, 255, 0.94);
+  --surface-panel: rgba(250, 253, 255, 0.84);
+  --surface-panel-strong: rgba(252, 254, 255, 0.94);
+  --line: rgba(22, 56, 92, 0.14);
+  --line-strong: rgba(40, 133, 224, 0.28);
+  --teal: hsl(186 88% 39%);
+  --amber: hsl(38 100% 52%);
+  --violet: hsl(268 72% 54%);
+  --connector-color: rgba(34, 160, 214, 0.34);
+  --active-op-color: var(--teal);
+  --active-op-border: rgba(34, 160, 214, 0.36);
+  --active-op-bg-soft: rgba(34, 160, 214, 0.08);
+  --objective-brace-color: hsl(198 82% 38%);
+  --subjective-brace-color: hsl(322 66% 44%);
+  --op-topic-color: hsl(184 78% 34%);
+  --op-object-color: hsl(38 92% 46%);
+  --op-ref-color: hsl(218 78% 46%);
+  --op-probe-color: hsl(268 72% 54%);
+  --op-action-color: hsl(194 92% 34%);
+  --focus-ring: 0 0 0 3px rgba(47, 145, 235, 0.2);
+  --theme-surface-phrase: "electric-studio";
+  --theme-boundary-phrase: "signal-brace";
+  --theme-fixture-phrase: "console-tab";
+  --theme-ornament-phrase: "charged-grid";
+  --theme-cinematic-phrase: "neon-draft";
+}
+
+html[data-spw-theme-pack="ritual-vellum"] {
+  --theme-pack-ritual-vellum: 1;
+  --bg: hsl(38 58% 92%);
+  --bg-deep: hsl(32 36% 78%);
+  --bg-field: hsl(42 42% 96%);
+  --bg-ritual: hsl(30 48% 90%);
+  --surface: rgba(255, 251, 246, 0.8);
+  --surface-strong: rgba(255, 253, 249, 0.93);
+  --surface-soft: rgba(247, 238, 229, 0.62);
+  --surface-matte: rgba(247, 241, 233, 0.95);
+  --surface-panel: rgba(255, 251, 246, 0.86);
+  --surface-panel-strong: rgba(255, 253, 249, 0.95);
+  --line: rgba(78, 54, 46, 0.14);
+  --line-strong: rgba(116, 84, 116, 0.26);
+  --teal: hsl(176 42% 30%);
+  --amber: hsl(42 78% 46%);
+  --violet: hsl(310 34% 38%);
+  --connector-color: rgba(88, 64, 96, 0.28);
+  --active-op-color: var(--teal);
+  --active-op-border: rgba(88, 64, 96, 0.3);
+  --active-op-bg-soft: rgba(88, 64, 96, 0.08);
+  --objective-brace-color: hsl(176 42% 30%);
+  --subjective-brace-color: hsl(312 30% 38%);
+  --op-topic-color: hsl(160 36% 34%);
+  --op-object-color: hsl(40 74% 42%);
+  --op-ref-color: hsl(226 46% 42%);
+  --op-probe-color: hsl(310 34% 38%);
+  --op-action-color: hsl(184 40% 26%);
+  --focus-ring: 0 0 0 3px rgba(130, 94, 122, 0.2);
+  --theme-surface-phrase: "ritual-vellum";
+  --theme-boundary-phrase: "ceremonial-brace";
+  --theme-fixture-phrase: "seal-index";
+  --theme-ornament-phrase: "vellum-bloom";
+  --theme-cinematic-phrase: "liturgy-grain";
+}
+
+html[data-spw-theme-pack="copper-brace"] {
+  --theme-pack-copper-brace: 1;
+  --bg: hsl(28 60% 90%);
+  --bg-deep: hsl(24 48% 76%);
+  --bg-field: hsl(34 42% 95%);
+  --bg-ritual: hsl(26 54% 88%);
+  --surface: rgba(255, 248, 241, 0.8);
+  --surface-strong: rgba(255, 250, 245, 0.93);
+  --surface-soft: rgba(246, 233, 222, 0.62);
+  --surface-matte: rgba(245, 236, 227, 0.95);
+  --surface-panel: rgba(255, 248, 241, 0.86);
+  --surface-panel-strong: rgba(255, 251, 246, 0.95);
+  --line: rgba(92, 60, 40, 0.15);
+  --line-strong: rgba(168, 92, 48, 0.28);
+  --teal: hsl(186 52% 28%);
+  --amber: hsl(24 82% 48%);
+  --violet: hsl(258 30% 42%);
+  --connector-color: rgba(36, 118, 124, 0.32);
+  --active-op-color: var(--teal);
+  --active-op-border: rgba(36, 118, 124, 0.34);
+  --active-op-bg-soft: rgba(36, 118, 124, 0.08);
+  --objective-brace-color: hsl(186 52% 28%);
+  --subjective-brace-color: hsl(8 52% 42%);
+  --op-topic-color: hsl(182 44% 32%);
+  --op-object-color: hsl(24 82% 48%);
+  --op-ref-color: hsl(206 50% 42%);
+  --op-probe-color: hsl(258 30% 42%);
+  --op-action-color: hsl(188 56% 24%);
+  --focus-ring: 0 0 0 3px rgba(172, 102, 60, 0.22);
+  --theme-surface-phrase: "copper-brace";
+  --theme-boundary-phrase: "forged-brace";
+  --theme-fixture-phrase: "clamped-rail";
+  --theme-ornament-phrase: "patina-spark";
+  --theme-cinematic-phrase: "forge-glow";
+}
+
+html[data-spw-theme-pack="glass-console"] {
+  --theme-pack-glass-console: 1;
+  --bg: hsl(205 34% 93%);
+  --bg-deep: hsl(210 28% 80%);
+  --bg-field: hsl(205 26% 97%);
+  --bg-ritual: hsl(214 28% 90%);
+  --surface: rgba(245, 249, 253, 0.78);
+  --surface-strong: rgba(250, 252, 255, 0.92);
+  --surface-soft: rgba(228, 237, 247, 0.58);
+  --surface-matte: rgba(236, 242, 249, 0.94);
+  --surface-panel: rgba(244, 249, 253, 0.84);
+  --surface-panel-strong: rgba(248, 252, 255, 0.94);
+  --line: rgba(34, 58, 82, 0.14);
+  --line-strong: rgba(76, 146, 194, 0.24);
+  --teal: hsl(188 66% 30%);
+  --amber: hsl(36 72% 50%);
+  --violet: hsl(248 42% 46%);
+  --connector-color: rgba(52, 140, 170, 0.32);
+  --active-op-color: var(--teal);
+  --active-op-border: rgba(52, 140, 170, 0.34);
+  --active-op-bg-soft: rgba(52, 140, 170, 0.08);
+  --objective-brace-color: hsl(192 62% 30%);
+  --subjective-brace-color: hsl(248 36% 40%);
+  --op-topic-color: hsl(190 54% 34%);
+  --op-object-color: hsl(34 68% 44%);
+  --op-ref-color: hsl(212 62% 44%);
+  --op-probe-color: hsl(248 42% 46%);
+  --op-action-color: hsl(188 70% 26%);
+  --focus-ring: 0 0 0 3px rgba(72, 138, 186, 0.2);
+  --theme-surface-phrase: "glass-console";
+  --theme-boundary-phrase: "scanline-brace";
+  --theme-fixture-phrase: "frosted-rail";
+  --theme-ornament-phrase: "console-halo";
+  --theme-cinematic-phrase: "cold-bloom";
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="oxide-ledger"] {
+  --bg: hsl(24 14% 10%);
+  --bg-deep: hsl(20 16% 7%);
+  --bg-field: hsl(26 16% 13%);
+  --bg-ritual: hsl(22 18% 15%);
+  --surface: rgba(29, 23, 19, 0.8);
+  --surface-strong: rgba(36, 29, 24, 0.92);
+  --surface-soft: rgba(29, 23, 19, 0.58);
+  --surface-matte: rgba(42, 33, 28, 0.95);
+  --surface-panel: rgba(35, 28, 23, 0.9);
+  --surface-panel-strong: rgba(42, 34, 28, 0.95);
+  --line: rgba(236, 218, 199, 0.12);
+  --line-strong: rgba(140, 132, 102, 0.3);
+  --teal: hsl(162 28% 58%);
+  --amber: hsl(28 74% 60%);
+  --violet: hsl(346 40% 68%);
+  --op-topic-color: hsl(158 28% 62%);
+  --op-object-color: hsl(28 74% 62%);
+  --op-ref-color: hsl(214 50% 68%);
+  --op-probe-color: hsl(346 40% 68%);
+  --op-action-color: hsl(168 32% 54%);
+  --focus-ring: 0 0 0 3px rgba(180, 136, 94, 0.22);
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="electric-studio"] {
+  --bg: hsl(222 26% 10%);
+  --bg-deep: hsl(228 30% 7%);
+  --bg-field: hsl(220 22% 13%);
+  --bg-ritual: hsl(228 18% 15%);
+  --surface: rgba(16, 22, 31, 0.8);
+  --surface-strong: rgba(22, 30, 40, 0.92);
+  --surface-soft: rgba(16, 22, 31, 0.58);
+  --surface-matte: rgba(24, 32, 43, 0.95);
+  --surface-panel: rgba(21, 29, 39, 0.9);
+  --surface-panel-strong: rgba(27, 36, 48, 0.95);
+  --line: rgba(223, 234, 252, 0.12);
+  --line-strong: rgba(82, 170, 255, 0.32);
+  --teal: hsl(188 88% 60%);
+  --amber: hsl(38 100% 64%);
+  --violet: hsl(270 84% 72%);
+  --op-topic-color: hsl(188 80% 62%);
+  --op-object-color: hsl(38 100% 64%);
+  --op-ref-color: hsl(214 90% 70%);
+  --op-probe-color: hsl(270 84% 72%);
+  --op-action-color: hsl(192 92% 58%);
+  --focus-ring: 0 0 0 3px rgba(76, 160, 255, 0.24);
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="ritual-vellum"] {
+  --bg: hsl(300 12% 10%);
+  --bg-deep: hsl(306 16% 8%);
+  --bg-field: hsl(292 12% 14%);
+  --bg-ritual: hsl(324 10% 16%);
+  --surface: rgba(29, 23, 30, 0.8);
+  --surface-strong: rgba(36, 28, 38, 0.92);
+  --surface-soft: rgba(29, 23, 30, 0.58);
+  --surface-matte: rgba(41, 32, 43, 0.95);
+  --surface-panel: rgba(35, 28, 37, 0.9);
+  --surface-panel-strong: rgba(41, 33, 44, 0.95);
+  --line: rgba(232, 224, 217, 0.12);
+  --line-strong: rgba(168, 118, 150, 0.3);
+  --teal: hsl(174 42% 58%);
+  --amber: hsl(42 78% 64%);
+  --violet: hsl(312 42% 72%);
+  --op-topic-color: hsl(166 34% 62%);
+  --op-object-color: hsl(42 78% 62%);
+  --op-ref-color: hsl(220 52% 70%);
+  --op-probe-color: hsl(312 42% 72%);
+  --op-action-color: hsl(184 44% 58%);
+  --focus-ring: 0 0 0 3px rgba(170, 118, 160, 0.22);
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
+  --bg: hsl(20 16% 10%);
+  --bg-deep: hsl(18 18% 7%);
+  --bg-field: hsl(24 14% 13%);
+  --bg-ritual: hsl(16 16% 15%);
+  --surface: rgba(31, 22, 18, 0.8);
+  --surface-strong: rgba(39, 28, 23, 0.92);
+  --surface-soft: rgba(31, 22, 18, 0.58);
+  --surface-matte: rgba(45, 33, 28, 0.95);
+  --surface-panel: rgba(38, 27, 22, 0.9);
+  --surface-panel-strong: rgba(45, 34, 28, 0.95);
+  --line: rgba(237, 223, 214, 0.12);
+  --line-strong: rgba(192, 110, 62, 0.32);
+  --teal: hsl(188 60% 60%);
+  --amber: hsl(24 82% 62%);
+  --violet: hsl(258 38% 72%);
+  --op-topic-color: hsl(182 48% 62%);
+  --op-object-color: hsl(24 82% 64%);
+  --op-ref-color: hsl(204 60% 70%);
+  --op-probe-color: hsl(258 38% 72%);
+  --op-action-color: hsl(190 64% 60%);
+  --focus-ring: 0 0 0 3px rgba(194, 112, 62, 0.24);
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
+  --bg: hsl(210 22% 9%);
+  --bg-deep: hsl(214 26% 6%);
+  --bg-field: hsl(210 18% 13%);
+  --bg-ritual: hsl(220 16% 15%);
+  --surface: rgba(16, 22, 28, 0.8);
+  --surface-strong: rgba(23, 30, 37, 0.92);
+  --surface-soft: rgba(16, 22, 28, 0.58);
+  --surface-matte: rgba(27, 35, 43, 0.95);
+  --surface-panel: rgba(22, 29, 36, 0.9);
+  --surface-panel-strong: rgba(28, 36, 44, 0.95);
+  --line: rgba(224, 235, 244, 0.12);
+  --line-strong: rgba(112, 180, 224, 0.32);
+  --teal: hsl(188 72% 62%);
+  --amber: hsl(36 72% 62%);
+  --violet: hsl(248 56% 74%);
+  --op-topic-color: hsl(188 60% 64%);
+  --op-object-color: hsl(36 68% 64%);
+  --op-ref-color: hsl(214 72% 72%);
+  --op-probe-color: hsl(248 56% 74%);
+  --op-action-color: hsl(190 76% 60%);
+  --focus-ring: 0 0 0 3px rgba(102, 170, 214, 0.24);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="oxide-ledger"] {
+    --bg: hsl(24 14% 10%);
+    --bg-deep: hsl(20 16% 7%);
+    --bg-field: hsl(26 16% 13%);
+    --bg-ritual: hsl(22 18% 15%);
+    --surface: rgba(29, 23, 19, 0.8);
+    --surface-strong: rgba(36, 29, 24, 0.92);
+    --surface-soft: rgba(29, 23, 19, 0.58);
+    --surface-matte: rgba(42, 33, 28, 0.95);
+    --surface-panel: rgba(35, 28, 23, 0.9);
+    --surface-panel-strong: rgba(42, 34, 28, 0.95);
+    --line: rgba(236, 218, 199, 0.12);
+    --line-strong: rgba(140, 132, 102, 0.3);
+    --teal: hsl(162 28% 58%);
+    --amber: hsl(28 74% 60%);
+    --violet: hsl(346 40% 68%);
+    --op-topic-color: hsl(158 28% 62%);
+    --op-object-color: hsl(28 74% 62%);
+    --op-ref-color: hsl(214 50% 68%);
+    --op-probe-color: hsl(346 40% 68%);
+    --op-action-color: hsl(168 32% 54%);
+    --focus-ring: 0 0 0 3px rgba(180, 136, 94, 0.22);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="electric-studio"] {
+    --bg: hsl(222 26% 10%);
+    --bg-deep: hsl(228 30% 7%);
+    --bg-field: hsl(220 22% 13%);
+    --bg-ritual: hsl(228 18% 15%);
+    --surface: rgba(16, 22, 31, 0.8);
+    --surface-strong: rgba(22, 30, 40, 0.92);
+    --surface-soft: rgba(16, 22, 31, 0.58);
+    --surface-matte: rgba(24, 32, 43, 0.95);
+    --surface-panel: rgba(21, 29, 39, 0.9);
+    --surface-panel-strong: rgba(27, 36, 48, 0.95);
+    --line: rgba(223, 234, 252, 0.12);
+    --line-strong: rgba(82, 170, 255, 0.32);
+    --teal: hsl(188 88% 60%);
+    --amber: hsl(38 100% 64%);
+    --violet: hsl(270 84% 72%);
+    --op-topic-color: hsl(188 80% 62%);
+    --op-object-color: hsl(38 100% 64%);
+    --op-ref-color: hsl(214 90% 70%);
+    --op-probe-color: hsl(270 84% 72%);
+    --op-action-color: hsl(192 92% 58%);
+    --focus-ring: 0 0 0 3px rgba(76, 160, 255, 0.24);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="ritual-vellum"] {
+    --bg: hsl(300 12% 10%);
+    --bg-deep: hsl(306 16% 8%);
+    --bg-field: hsl(292 12% 14%);
+    --bg-ritual: hsl(324 10% 16%);
+    --surface: rgba(29, 23, 30, 0.8);
+    --surface-strong: rgba(36, 28, 38, 0.92);
+    --surface-soft: rgba(29, 23, 30, 0.58);
+    --surface-matte: rgba(41, 32, 43, 0.95);
+    --surface-panel: rgba(35, 28, 37, 0.9);
+    --surface-panel-strong: rgba(41, 33, 44, 0.95);
+    --line: rgba(232, 224, 217, 0.12);
+    --line-strong: rgba(168, 118, 150, 0.3);
+    --teal: hsl(174 42% 58%);
+    --amber: hsl(42 78% 64%);
+    --violet: hsl(312 42% 72%);
+    --op-topic-color: hsl(166 34% 62%);
+    --op-object-color: hsl(42 78% 62%);
+    --op-ref-color: hsl(220 52% 70%);
+    --op-probe-color: hsl(312 42% 72%);
+    --op-action-color: hsl(184 44% 58%);
+    --focus-ring: 0 0 0 3px rgba(170, 118, 160, 0.22);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="copper-brace"] {
+    --bg: hsl(20 16% 10%);
+    --bg-deep: hsl(18 18% 7%);
+    --bg-field: hsl(24 14% 13%);
+    --bg-ritual: hsl(16 16% 15%);
+    --surface: rgba(31, 22, 18, 0.8);
+    --surface-strong: rgba(39, 28, 23, 0.92);
+    --surface-soft: rgba(31, 22, 18, 0.58);
+    --surface-matte: rgba(45, 33, 28, 0.95);
+    --surface-panel: rgba(38, 27, 22, 0.9);
+    --surface-panel-strong: rgba(45, 34, 28, 0.95);
+    --line: rgba(237, 223, 214, 0.12);
+    --line-strong: rgba(192, 110, 62, 0.32);
+    --teal: hsl(188 60% 60%);
+    --amber: hsl(24 82% 62%);
+    --violet: hsl(258 38% 72%);
+    --op-topic-color: hsl(182 48% 62%);
+    --op-object-color: hsl(24 82% 64%);
+    --op-ref-color: hsl(204 60% 70%);
+    --op-probe-color: hsl(258 38% 72%);
+    --op-action-color: hsl(190 64% 60%);
+    --focus-ring: 0 0 0 3px rgba(194, 112, 62, 0.24);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="glass-console"] {
+    --bg: hsl(210 22% 9%);
+    --bg-deep: hsl(214 26% 6%);
+    --bg-field: hsl(210 18% 13%);
+    --bg-ritual: hsl(220 16% 15%);
+    --surface: rgba(16, 22, 28, 0.8);
+    --surface-strong: rgba(23, 30, 37, 0.92);
+    --surface-soft: rgba(16, 22, 28, 0.58);
+    --surface-matte: rgba(27, 35, 43, 0.95);
+    --surface-panel: rgba(22, 29, 36, 0.9);
+    --surface-panel-strong: rgba(28, 36, 44, 0.95);
+    --line: rgba(224, 235, 244, 0.12);
+    --line-strong: rgba(112, 180, 224, 0.32);
+    --teal: hsl(188 72% 62%);
+    --amber: hsl(36 72% 62%);
+    --violet: hsl(248 56% 74%);
+    --op-topic-color: hsl(188 60% 64%);
+    --op-object-color: hsl(36 68% 64%);
+    --op-ref-color: hsl(214 72% 72%);
+    --op-probe-color: hsl(248 56% 74%);
+    --op-action-color: hsl(190 76% 60%);
+    --focus-ring: 0 0 0 3px rgba(102, 170, 214, 0.24);
+  }
+}
+
 /* ==========================================================================
    8. Palette balance, thematic granularity, and artist-facing texture handles
    --------------------------------------------------------------------------
