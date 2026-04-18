@@ -11,6 +11,8 @@ const DEFAULT_STATE = {
     activeInitiativeId: null,
     clocks: [],
     notes: '',
+    characterBeat: '',
+    canonCandidates: '',
     seeds: '',
     updatedAt: ''
 };
@@ -45,6 +47,8 @@ const normalizeState = (value) => {
         objective: typeof input.objective === 'string' ? input.objective : '',
         party: typeof input.party === 'string' ? input.party : '',
         notes: typeof input.notes === 'string' ? input.notes : '',
+        characterBeat: typeof input.characterBeat === 'string' ? input.characterBeat : '',
+        canonCandidates: typeof input.canonCandidates === 'string' ? input.canonCandidates : '',
         seeds: typeof input.seeds === 'string' ? input.seeds : '',
         updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : ''
     };
@@ -364,8 +368,16 @@ const buildSessionBrief = (state) => {
         });
     }
 
+    if (cleanLine(state.characterBeat)) {
+        lines.push('', 'Character beat:', state.characterBeat.trim());
+    }
+
+    if (cleanLine(state.canonCandidates)) {
+        lines.push('', 'Canon candidates:', state.canonCandidates.trim());
+    }
+
     if (cleanLine(state.seeds)) {
-        lines.push('', 'Session seeds:', state.seeds.trim());
+        lines.push('', 'Session recap seeds:', state.seeds.trim());
     }
 
     lines.push('', 'Private scratch notes are not included in this brief.');
@@ -474,9 +486,25 @@ export const initRpgWednesday = () => {
         placeholder: 'Private notes, rulings, loose details, reminders'
     });
 
+    const { field: characterBeatField, input: characterBeatInput } = createField({
+        id: 'rpg-character-beat',
+        label: 'Character beat / fallout',
+        value: state.characterBeat,
+        rows: 4,
+        placeholder: 'What changed in a person? What now feels heavier, stranger, or newly possible?'
+    });
+
+    const { field: canonCandidatesField, input: canonCandidatesInput } = createField({
+        id: 'rpg-canon-candidates',
+        label: 'Canon candidates',
+        value: state.canonCandidates,
+        rows: 4,
+        placeholder: 'Names, places, items, rules, or promises worth promoting into cast or world memory'
+    });
+
     const { field: seedsField, input: seedsInput } = createField({
         id: 'rpg-seeds',
-        label: 'Session log seeds',
+        label: 'Session recap seeds',
         value: state.seeds,
         rows: 5,
         placeholder: 'Moments worth turning into a public recap later'
@@ -556,6 +584,8 @@ export const initRpgWednesday = () => {
         state.objective = objectiveInput.value;
         state.party = partyInput.value;
         state.notes = notesInput.value;
+        state.characterBeat = characterBeatInput.value;
+        state.canonCandidates = canonCandidatesInput.value;
         state.seeds = seedsInput.value;
     };
 
@@ -766,7 +796,7 @@ export const initRpgWednesday = () => {
     };
 
     const debouncedTextSave = debounce(() => save('updated local gameplay text'), 400);
-    [sceneInput, objectiveInput, partyInput, notesInput, seedsInput].forEach((input) => {
+    [sceneInput, objectiveInput, partyInput, notesInput, characterBeatInput, canonCandidatesInput, seedsInput].forEach((input) => {
         input.addEventListener('input', () => {
             syncTextState();
             debouncedTextSave();
@@ -836,7 +866,7 @@ export const initRpgWednesday = () => {
         createElement('h3', { text: 'Table Brief' }),
         createElement('p', {
             className: 'frame-note',
-            text: 'A copyable play-state summary for session recaps or player handoffs. Private scratch notes stay out of this generated text.'
+            text: 'A copyable play-state summary for session recaps or player handoffs. Character beats and canon candidates are included; private scratch notes stay out.'
         }),
         briefOutput,
         createElement('div', { className: 'rpg-gameplay-actions' }, [copyBriefButton])
@@ -884,6 +914,8 @@ export const initRpgWednesday = () => {
         objectiveInput.value = state.objective;
         partyInput.value = state.party;
         notesInput.value = state.notes;
+        characterBeatInput.value = state.characterBeat;
+        canonCandidatesInput.value = state.canonCandidates;
         seedsInput.value = state.seeds;
         save('imported local gameplay state');
         renderInitiative();
@@ -900,6 +932,8 @@ export const initRpgWednesday = () => {
         objectiveInput.value = '';
         partyInput.value = '';
         notesInput.value = '';
+        characterBeatInput.value = '';
+        canonCandidatesInput.value = '';
         seedsInput.value = '';
         status.textContent = 'local gameplay state cleared';
         renderInitiative();
@@ -928,8 +962,14 @@ export const initRpgWednesday = () => {
             initiativePanel,
             clocksPanel,
             createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
-                createElement('h3', { text: 'Private Notes' }),
+                createElement('h3', { text: 'Notes and handoff' }),
+                createElement('p', {
+                    className: 'frame-note',
+                    text: 'Scratch notes stay private. Character beats and canon candidates are the lanes most likely to move into cast, world, or session memory.'
+                }),
                 notesField,
+                characterBeatField,
+                canonCandidatesField,
                 seedsField
             ]),
             briefPanel

@@ -8,7 +8,7 @@
 
 ^["thesis"]{
  claim: "A public campaign page can become useful at the table if it adds a local, private gameplay register without pretending local notes are published canon."
- why: "The static route remains the shared source of orientation. localStorage becomes the personal table layer for scene state, initiative, clocks, notes, and seeds."
+ why: "The static route remains the shared source of orientation. localStorage becomes the personal table layer for scene state, initiative, clocks, scratch notes, character beats, canon candidates, and recap seeds."
 }
 
 ^["storage_contract"]{
@@ -25,7 +25,9 @@
  initiative: "ordered actor list with active cursor"
  clocks: "small progress counters for tension, danger, projects, or countdowns"
  notes: "scratch notes for private table use"
- seeds: "session-log prompts that may later become published recap material"
+ character_beat: "what changed in a person, relationship, or self-understanding during play"
+ canon_candidates: "names, places, items, rules, or promises that may deserve promotion into cast or world memory"
+ seeds: "session recap prompts that may later become published campaign memory"
 }
 
 ^["ui_contract"]{
