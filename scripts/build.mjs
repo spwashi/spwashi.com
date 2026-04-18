@@ -10,7 +10,8 @@
  *   2. Copy tracked source files into dist/, skipping build-internal and
  *      non-deploy paths
  *   3. Write a .nojekyll so GitHub Pages does not strip underscore dirs
- *   4. Regenerate the design catalog into dist/design/catalog/
+ *   4. Generate dist/sitemap.xml from tracked route canonicals
+ *   5. Regenerate the design catalog into dist/design/catalog/
  *
  * Zero deps.
  */
@@ -256,6 +257,9 @@ async function main() {
   await copyRepo(trackedPaths);
 
   await fs.writeFile(path.join(DIST_DIR, '.nojekyll'), '');
+
+  console.log('[build] generating dist/sitemap.xml');
+  runNodeScript('scripts/generate-sitemap.mjs', ['--out', path.join(DIST_DIR, 'sitemap.xml')]);
 
   console.log('[build] regenerating design catalog into dist/design/catalog/');
   runNodeScript('scripts/generate-design-catalog.mjs', ['--out', path.join(DIST_DIR, 'design', 'catalog')]);

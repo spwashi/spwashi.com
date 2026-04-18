@@ -56,6 +56,7 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run build` | Produces `dist/` — copy of the tracked deployable site surface with the design catalog regenerated and a `.nojekyll` marker. |
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
+| `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
 | `npm run check` | Validates the site (pre-existing). |
 
 **Deploy:** `.github/workflows/deploy.yml` runs `npm run build` and publishes `dist/` to GitHub Pages on push to `main`. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review.

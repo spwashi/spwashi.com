@@ -33,10 +33,10 @@
 }
 
 ^["concept_index"]{
- primary: [#scripts_first_typescript, #typed_catalog_schema, #typed_manifest_schema, #browser_contract_hardening, #phased_migration, #composable_chunk, #named_release, #familiar_hash]
- surfaces: [#build_export, #design_catalog, #route_manifest, #dev_server, #runtime_registry, #settings_model, #page_metadata, #operator_registry, #layered_output, #whitelabel_variant]
- tensions: [#type_safety_vs_build_weight, #jsdoc_vs_ts_files, #site_vs_workbench, #scripts_vs_browser_first, #incrementalism_vs_cleanup, #opaque_hash_vs_familiar_identity, #forked_branding_vs_layered_whitelabel]
- transfers: [#schema, #normalization, #closed_string_set, #runtime_contract, #documentation_surface, #editor_inspection, #chunk_identity, #release_identity, #hash_provenance]
+ primary: [#scripts_first_typescript, #typed_catalog_schema, #typed_manifest_schema, #browser_contract_hardening, #phased_migration, #composable_chunk, #named_release, #familiar_hash, #cache_identity, #route_asset_manifest]
+ surfaces: [#build_export, #design_catalog, #route_manifest, #sitemap_surface, #dev_server, #runtime_registry, #settings_model, #page_metadata, #operator_registry, #layered_output, #whitelabel_variant, #service_worker]
+ tensions: [#type_safety_vs_build_weight, #jsdoc_vs_ts_files, #site_vs_workbench, #scripts_vs_browser_first, #incrementalism_vs_cleanup, #opaque_hash_vs_familiar_identity, #forked_branding_vs_layered_whitelabel, #manual_query_bumps_vs_generated_hashes, #global_css_vs_route_chunking]
+ transfers: [#schema, #normalization, #closed_string_set, #runtime_contract, #documentation_surface, #editor_inspection, #chunk_identity, #release_identity, #hash_provenance, #precache_manifest, #route_css_ownership]
 }
 
 ^["recursive_improvement"]{
@@ -82,9 +82,9 @@
  }
  chunk_release_semantics: {
   order: "3"
-  goal: "Define composable chunk and layer identities so future whitelabel builds can carry both deterministic hashes and human-familiar release traditions."
+  goal: "Define composable chunk and layer identities so future whitelabel builds can carry both deterministic hashes and human-familiar release traditions, while route caches learn from generated asset manifests instead of handwritten lists."
   files: [@build, @catalog, @contracts, @pkg]
-  outputs: ["typed chunk manifest", "typed layer manifest", "release identity schema", "hash provenance policy"]
+  outputs: ["typed chunk manifest", "typed layer manifest", "release identity schema", "hash provenance policy", "route-to-asset manifest", "precache manifest policy"]
   success: "Build output identity becomes explainable as layered composition rather than opaque file churn."
  }
  runtime_hardening: {
@@ -213,6 +213,11 @@
  >>[2026-04-18 22:28] observe — if named releases or familiar hashes matter culturally, the build needs typed release and chunk metadata instead of treating hashes as an afterthought bolted onto file names.
  >>[2026-04-18 22:30] decide — chunk and layer semantics should be typed before any sophisticated release-hash policy is introduced.
  >>[2026-04-18 22:32] decide — named releases and deterministic hashes should coexist: one for human continuity, one for content truth.
+ >>[2026-04-19 00:40] observe — service-worker coverage is currently hand-maintained and smaller than the sitemap surface. That drift argues for generated precache manifests rather than more manual route lists.
+ >>[2026-04-19 00:42] observe — most routes still point at /public/css/style.css?v=0.0.2 and /public/js/site.js?v=0.0.2, which makes cache invalidation coarse and manual.
+ >>[2026-04-19 00:44] observe — style.css already expresses a semantic layer stack, but it imports every route stylesheet. CSS compilation should preserve that layer order while splitting route ownership more honestly.
+ >>[2026-04-19 00:46] observe — site.js already mounts behavior through route/selector-gated dynamic imports, so JS chunk preparation should start by manifesting those seams rather than replacing them.
+ >>[2026-04-19 00:48] decide — generated asset identity and route-asset manifests should land before any serious CSS or TS compile pipeline.
 }
 
 ^["open"]{
@@ -228,6 +233,9 @@
  ?[release_tradition]: "How should named releases relate to deterministic content hashes — alias, annotation, channel, or parallel identity?"
  ?[whitelabel_boundary]: "Which differences between whitelabel variants belong in declared overlays and which require distinct chunks?"
  ?[familiar_hash]: "What makes a hash 'familiar' in this repo context — stable chunk naming, partial hash aliases, semantic hash labels, or remembered release handles?"
+ ?[cache_policy]: "Which routes and assets deserve precache guarantees, and which should stay network-led with cache assist?"
+ ?[css_split_rule]: "Should CSS chunk by route family, feature family, or layer family first?"
+ ?[ts_browser_trigger]: "Which browser modules would actually benefit from TS compile beyond JSDoc and extracted contracts?"
 }
 
 ^["commits"]{

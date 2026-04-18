@@ -40,6 +40,10 @@ const ATTR_RE = /([a-zA-Z][a-zA-Z0-9_:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s/>]
 const VAR_RE = /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g;
 const MAX_INCLUDE_DEPTH = 8;
 
+function cloneRegex(pattern) {
+  return new RegExp(pattern.source, pattern.flags);
+}
+
 function htmlEscape(value) {
   return String(value ?? '').replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -48,9 +52,9 @@ function htmlEscape(value) {
 
 function parseAttrs(attrString) {
   const out = {};
-  ATTR_RE.lastIndex = 0;
+  const attrRe = cloneRegex(ATTR_RE);
   let match;
-  while ((match = ATTR_RE.exec(attrString)) !== null) {
+  while ((match = attrRe.exec(attrString)) !== null) {
     const name = match[1];
     const value = match[2] ?? match[3] ?? match[4] ?? '';
     out[name] = value;
@@ -84,9 +88,9 @@ async function expandIncludes(text, scopeVars, depth, seen, warnings) {
   }
   const parts = [];
   let lastIndex = 0;
-  SPW_INCLUDE_RE.lastIndex = 0;
+  const includeRe = cloneRegex(SPW_INCLUDE_RE);
   let match;
-  while ((match = SPW_INCLUDE_RE.exec(text)) !== null) {
+  while ((match = includeRe.exec(text)) !== null) {
     parts.push(text.slice(lastIndex, match.index));
     const rawAttrs = parseAttrs(match[1]);
     const attrs = {};
@@ -134,7 +138,7 @@ async function expandIncludes(text, scopeVars, depth, seen, warnings) {
 
 function substituteVars(text, vars, warnings) {
   const unknown = new Set();
-  const out = text.replace(VAR_RE, (_m, key) => {
+  const out = text.replace(cloneRegex(VAR_RE), (_m, key) => {
     if (Object.prototype.hasOwnProperty.call(vars, key)) {
       return htmlEscape(vars[key]);
     }
@@ -147,7 +151,7 @@ function substituteVars(text, vars, warnings) {
 
 function interpolateValue(text, vars, warnings) {
   const unknown = new Set();
-  const out = text.replace(VAR_RE, (_m, key) => {
+  const out = text.replace(cloneRegex(VAR_RE), (_m, key) => {
     if (Object.prototype.hasOwnProperty.call(vars, key)) {
       return String(vars[key] ?? '');
     }
