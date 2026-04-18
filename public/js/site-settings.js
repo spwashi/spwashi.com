@@ -289,6 +289,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   fontSizeScale: '100',
   lineSpacing: 'normal',
   monospaceVariant: 'jetbrains',
+  typesettingMode: 'default',
 
   showFooter: 'on',
   headerOpacity: 'normal',
@@ -348,6 +349,7 @@ const SETTING_OPTIONS = Object.freeze({
   fontSizeScale: new Set(['80', '90', '100', '110', '120']),
   lineSpacing: new Set(['compact', 'normal', 'loose']),
   monospaceVariant: new Set(['system', 'jetbrains', 'courier']),
+  typesettingMode: new Set(['default', 'editorial']),
 
   showFooter: new Set(['on', 'off']),
   headerOpacity: new Set(['low', 'normal', 'high']),
@@ -411,7 +413,8 @@ const PRESETS = Object.freeze({
     highContrast: 'off',
     busDiagnostics: 'off',
     busMirrorToConsole: 'off',
-    busHistorySize: '100'
+    busHistorySize: '100',
+    typesettingMode: 'default'
   },
   loom: {
     currentDevelopmentalClimate: 'weave',
@@ -435,7 +438,8 @@ const PRESETS = Object.freeze({
     consoleDisplay: 'collapsed',
     busDiagnostics: 'basic',
     busMirrorToConsole: 'off',
-    busHistorySize: '250'
+    busHistorySize: '250',
+    typesettingMode: 'editorial'
   },
   workshop: {
     currentDevelopmentalClimate: 'anchor',
@@ -456,7 +460,8 @@ const PRESETS = Object.freeze({
     showFrameMetadata: 'on',
     busDiagnostics: 'verbose',
     busMirrorToConsole: 'on',
-    busHistorySize: '500'
+    busHistorySize: '500',
+    typesettingMode: 'default'
   },
   access: {
     currentDevelopmentalClimate: 'anchor',
@@ -477,7 +482,8 @@ const PRESETS = Object.freeze({
     consoleDisplay: 'collapsed',
     busDiagnostics: 'basic',
     busMirrorToConsole: 'off',
-    busHistorySize: '100'
+    busHistorySize: '100',
+    typesettingMode: 'default'
   }
 });
 
@@ -829,6 +835,7 @@ class SiteSettingsManager {
       spwFontSizeScale: normalized.fontSizeScale,
       spwLineSpacing: normalized.lineSpacing,
       spwMonospaceVariant: normalized.monospaceVariant,
+      spwTypeset: normalized.typesettingMode,
       spwShowFooter: normalized.showFooter,
       spwHeaderOpacity: normalized.headerOpacity,
       spwShowSpecPills: normalized.showSpecPills,

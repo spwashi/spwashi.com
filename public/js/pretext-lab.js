@@ -16,6 +16,7 @@ The layout learns to breathe.`
 import { loadPretext } from '/public/js/pretext-utils.js';
 
 const DEMO_FONT = '16px system-ui';
+const SANDBOX_MIN_WIDTH = 100;
 let initialized = false;
 
 const readCssNumber = (name, fallback) => {
@@ -58,12 +59,50 @@ const initPretextLab = async () => {
         }
     };
 
+    const sandboxContainer = document.querySelector('#pretext-sandbox-container');
+    const sandboxLines = document.querySelector('#pretext-sandbox-lines');
+    const sandboxHandle = document.querySelector('#pretext-sandbox-handle');
+    const inspectOverlay = document.querySelector('#pretext-inspect-overlay');
+    const inspectBody = document.querySelector('#pretext-inspect-body');
+    const inspectClose = document.querySelector('#pretext-inspect-close');
+
+
     const setStatus = (message, isError = false) => {
         status.textContent = message;
         status.classList.toggle('pretext-status-error', isError);
     };
 
-    const renderLines = (container, lines) => {
+    const inspectLine = (line) => {
+        if (!inspectOverlay || !inspectBody) return;
+        inspectBody.replaceChildren();
+
+        const segments = line.segments || [];
+        if (!segments.length) {
+            const empty = document.createElement('p');
+            empty.textContent = 'No visual segments array present on line object.';
+            empty.className = 'frame-note';
+            inspectBody.append(empty);
+        } else {
+            segments.forEach((seg, i) => {
+                const div = document.createElement('div');
+                div.className = 'inspect-segment';
+
+                const meta = document.createElement('span');
+                meta.className = 'inspect-segment-meta';
+                meta.textContent = `[${i}] ${Math.round(seg.width)}px`;
+
+                const text = document.createElement('code');
+                text.className = 'inspect-segment-text';
+                text.textContent = seg.text || ' ';
+
+                div.append(meta, text);
+                inspectBody.append(div);
+            });
+        }
+        inspectOverlay.hidden = false;
+    };
+
+    const renderLines = (container, lines, isInteractive = false) => {
         if (!container) return;
         container.replaceChildren();
 
@@ -78,6 +117,12 @@ const initPretextLab = async () => {
         lines.forEach((line, index) => {
             const row = document.createElement('div');
             row.className = 'pretext-line';
+
+            if (isInteractive) {
+                row.style.cursor = 'pointer';
+                row.addEventListener('click', () => inspectLine(line));
+                row.title = 'Click to inspect segments';
+            }
 
             const label = document.createElement('span');
             label.className = 'pretext-line-index';
@@ -119,6 +164,29 @@ const initPretextLab = async () => {
     let pretext;
     let prepared;
     let lastKey = '';
+
+    const setSandboxWidth = (nextWidth, rerender = true) => {
+        if (!sandboxContainer || !sandboxLines) return;
+
+        const rect = sandboxContainer.getBoundingClientRect();
+        const maxWidth = Math.max(SANDBOX_MIN_WIDTH, Math.round(rect.width || sandboxLines.getBoundingClientRect().width || SANDBOX_MIN_WIDTH));
+        const width = Math.max(SANDBOX_MIN_WIDTH, Math.min(maxWidth, Math.round(nextWidth)));
+
+        sandboxLines.style.width = `${width}px`;
+
+        if (sandboxHandle) {
+            sandboxHandle.setAttribute('aria-valuemin', String(SANDBOX_MIN_WIDTH));
+            sandboxHandle.setAttribute('aria-valuemax', String(maxWidth));
+            sandboxHandle.setAttribute('aria-valuenow', String(width));
+            sandboxHandle.setAttribute('aria-valuetext', `${width} pixels`);
+        }
+
+        if (!rerender || !prepared || !pretext) return;
+
+        const lineHeight = Number(lineHeightInput.value);
+        const result = pretext.layoutWithLines(prepared, width, lineHeight);
+        renderLines(sandboxLines, result.lines, true);
+    };
 
     const prepareHandle = () => {
         const nextKey = JSON.stringify({
@@ -162,6 +230,13 @@ const initPretextLab = async () => {
                 renderLines(preview, result.lines);
             });
 
+            if (sandboxLines) {
+                const sandboxWidth = sandboxLines.getBoundingClientRect().width || baseWidth;
+                setSandboxWidth(sandboxWidth, false);
+                const sandboxResult = pretext.layoutWithLines(prepared, sandboxWidth, lineHeight);
+                renderLines(sandboxLines, sandboxResult.lines, true);
+            }
+
             widestWidth.textContent = `${Math.round(maxWidth)}px`;
             setStatus('Prepared once. Layout recalculates instantly as widths change.');
         } catch (error) {
@@ -192,6 +267,66 @@ const initPretextLab = async () => {
         lastKey = '';
         update();
     });
+
+    if (inspectClose) {
+        inspectClose.addEventListener('click', () => {
+            inspectOverlay.hidden = true;
+        });
+    }
+
+    let isDragging = false;
+    if (sandboxHandle && sandboxContainer && sandboxLines) {
+        sandboxHandle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.style.cursor = 'ew-resize';
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = sandboxContainer.getBoundingClientRect();
+            const newWidth = e.clientX - rect.left;
+            setSandboxWidth(newWidth);
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = '';
+            }
+        });
+
+        sandboxHandle.addEventListener('keydown', (event) => {
+            const currentWidth = sandboxLines.getBoundingClientRect().width || Number(sandboxHandle.getAttribute('aria-valuenow')) || SANDBOX_MIN_WIDTH;
+            const step = event.shiftKey ? 48 : 16;
+
+            let nextWidth = currentWidth;
+
+            switch (event.key) {
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                nextWidth = currentWidth - step;
+                break;
+            case 'ArrowRight':
+            case 'ArrowUp':
+                nextWidth = currentWidth + step;
+                break;
+            case 'Home':
+                nextWidth = SANDBOX_MIN_WIDTH;
+                break;
+            case 'End': {
+                const rect = sandboxContainer.getBoundingClientRect();
+                nextWidth = rect.width || currentWidth;
+                break;
+            }
+            default:
+                return;
+            }
+
+            event.preventDefault();
+            setSandboxWidth(nextWidth);
+        });
+    }
 
     try {
         if (document.fonts?.ready) {

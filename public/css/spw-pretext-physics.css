@@ -510,3 +510,158 @@
     --pretext-line-shift: 0px;
   }
 }
+
+/* ==========================================================================
+   18. Pretext Sandbox and Inspector
+   ========================================================================== */
+
+:where(.pretext-sandbox-area) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 1.5rem 1rem 2rem 1rem;
+  border-radius: var(--shape-surface, 10px);
+  background: var(--paper, #fff);
+  border: 1px solid var(--border-soft, rgba(14,18,20,0.1));
+}
+
+:where(.pretext-sandbox) {
+  position: relative;
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border-soft, rgba(14,18,20,0.1));
+}
+
+:where(.pretext-sandbox-lines) {
+  position: relative;
+  width: 100%;
+  min-height: 4rem;
+}
+
+:where(.pretext-sandbox-handle) {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 20px;
+  bottom: 0;
+  cursor: ew-resize;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+:where(.pretext-sandbox-handle::after) {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 24px;
+  background: var(--op-frame-color, #008080);
+  border-radius: 2px;
+  transition: transform var(--duration-fast);
+}
+
+:where(.pretext-sandbox-handle:hover::after, .pretext-sandbox-handle:active::after) {
+  transform: scaleY(1.4);
+  background: var(--op-action-color, #0e5e5e);
+}
+
+:where(.pretext-sandbox-ruler) {
+  position: relative;
+  height: 1.5rem;
+  width: 100%;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+}
+
+:where(.ruler-mark) {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+:where(.ruler-mark::before) {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 4px;
+  background: var(--ink-soft);
+}
+
+:where(.pretext-inspect-overlay) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--paper, #fff) 96%, transparent);
+  border-radius: inherit;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  animation: fadeIn var(--duration-base) var(--ease-mechanical);
+}
+
+:where(.inspect-header) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+:where(.inspect-label) {
+  font-family: var(--site-mono-font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--op-probe-color, #4a2180);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:where(.inspect-close) {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+:where(.inspect-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+:where(.inspect-segment) {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  background: var(--surface-soft);
+  border-radius: var(--radius-sm);
+  align-items: baseline;
+}
+
+:where(.inspect-segment-meta) {
+  font-family: var(--site-mono-font);
+  font-size: 0.7rem;
+  color: var(--op-meta-color, #324a85);
+  font-weight: 600;
+}
+
+:where(.inspect-segment-text) {
+  font-size: 0.9rem;
+}

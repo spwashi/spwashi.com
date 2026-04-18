@@ -60,8 +60,12 @@
   letter-spacing: -0.01em;
 }
 
-:where(body[data-spw-surface="settings"] .settings-start-note) {
+:where(body[data-spw-surface="settings"] .settings-prose) {
   max-inline-size: 66ch;
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-start-note) {
   margin: 0;
   color: var(--ink-soft, rgba(14, 18, 20, 0.7));
 }

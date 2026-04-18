@@ -150,7 +150,7 @@
     </header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_pretext__main_surface" data-spw-wonder="comparison constraint locality" id="main-content" tabindex="-1" aria-labelledby="pretext-title">
         <article>
-            <section class="site-frame site-hero" id="pretext-field-lab" data-spw-role="probe" data-spw-form="brace" data-spw-form-options="brace,block,angle" data-spw-swappable="# data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_pretext__pretext_field_lab" data-spw-context-relevance="pretext field lab tasteful flow magic measuring text" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">,?,^,>" data-spw-liminality="entry" data-spw-meaning="tool observatory" data-spw-inspect="pretext_field_lab" data-spw-inspect-mode-group="pretext-lens">
+            <section class="site-frame site-hero" id="pretext-field-lab" data-spw-role="probe" data-spw-form="brace" data-spw-form-options="brace,block,angle" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="memory" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_pretext__pretext_field_lab" data-spw-context-relevance="pretext field lab tasteful flow magic measuring text" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/" data-spw-meaning="tool observatory" data-spw-inspect="pretext_field_lab">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#pretext-field-lab">#&gt;pretext_field_lab</a>
                     <div class="mode-switch" role="group" aria-label="Pretext Field Lab views">
@@ -274,6 +274,36 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                             <li><span class="source-name">Layout phase</span> reruns when widths change.</li>
                             <li><span class="source-name">Rendering</span> shows the actual lines returned by the library.</li>
                         </ul>
+                    </div>
+
+                    <div class="frame-panel pretext-sandbox-panel" data-spw-role="probe" data-spw-meaning="resizable sandbox" data-spw-kind="panel" data-spw-context="analysis">
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Interactive Ruler</p>
+                            <h3 class="vibe-widget-title">Live Sandbox</h3>
+                        </div>
+                        <p class="frame-note">Drag the handle or use the arrow keys to feel the 0ms reflow. Click any line to inspect its segments.</p>
+
+                        <div class="pretext-sandbox-area">
+                            <div class="pretext-sandbox" id="pretext-sandbox-container">
+                                <div class="pretext-sandbox-lines" id="pretext-sandbox-lines" data-spw-flow="pretext" data-text-kind="prose" data-text-density="soft" data-text-mode="contact" data-text-wrap="volatile"></div>
+                                <div class="pretext-sandbox-handle" id="pretext-sandbox-handle" role="slider" tabindex="0" aria-label="Resize sandbox" aria-orientation="horizontal" aria-controls="pretext-sandbox-lines" aria-valuemin="100" aria-valuenow="100" aria-valuemax="100" aria-valuetext="100 pixels" title="Drag to resize"></div>
+                            </div>
+                            <div class="pretext-sandbox-ruler" aria-hidden="true">
+                                <div class="ruler-mark" style="left: 0%"><span>0</span></div>
+                                <div class="ruler-mark" style="left: 25%"><span>25%</span></div>
+                                <div class="ruler-mark" style="left: 50%"><span>50%</span></div>
+                                <div class="ruler-mark" style="left: 75%"><span>75%</span></div>
+                                <div class="ruler-mark" style="left: 100%"><span>max</span></div>
+                            </div>
+                        </div>
+
+                        <div class="pretext-inspect-overlay" id="pretext-inspect-overlay" hidden>
+                            <div class="inspect-header">
+                                <span class="inspect-label">Line Segments</span>
+                                <button class="inspect-close" id="pretext-inspect-close" type="button" aria-label="Close line segment inspector">×</button>
+                            </div>
+                            <div class="inspect-body" id="pretext-inspect-body"></div>
+                        </div>
                     </div>
                 </div>
 

@@ -135,8 +135,10 @@
                 </div>
                 <p class="spec-kicker">Local Configuration</p>
                 <h1 id="settings-title">Settings</h1>
-                <p class="settings-note">Preferences are stored in this browser only. Nothing syncs, nothing tracks.</p>
-                <p class="settings-start-note">Start with the quick variants below if you want an immediate shift in atmosphere. Choose the state you want, watch the active option stay highlighted, then use the status line and current-vibe cards to confirm the result.</p>
+                <div class="focus-lens-container prose settings-prose" data-spw-typeset-surface="editorial" data-spw-focus-lens="editorial">
+                    <p class="settings-note"><span class="drop-cap">P</span>references are stored in this browser only. Nothing syncs, nothing tracks.</p>
+                    <p class="settings-start-note">Start with the quick variants below if you want an immediate shift in atmosphere. Choose the state you want, watch the active option stay highlighted, then use the status line and current-vibe cards to confirm the result. Typeset mode only affects editorial-capable reading surfaces, not every page shell or control.</p>
+                </div>
                 <nav class="settings-hero-actions" aria-label="Settings sections" data-spw-feature="settings-section-index">
                     <a class="operator-chip" href="#presets">start here</a>
                     <a class="operator-chip" href="#applied-state">current state</a>
@@ -372,6 +374,10 @@
                     <article class="settings-state-card">
                         <span class="settings-state-label">line spacing</span>
                         <strong data-settings-state="lineSpacing">normal</strong>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">typeset mode</span>
+                        <strong data-settings-state="typesettingMode">default</strong>
                     </article>
                     <article class="settings-state-card">
                         <span class="settings-state-label">bus diagnostics</span>
@@ -645,6 +651,24 @@
                                 <label class="settings-option">
                                     <input type="radio" name="monospaceVariant" value="courier">
                                     <span class="settings-option-copy"><strong>Courier</strong></span>
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="settings-fieldset">
+                                <legend>Typeset mode</legend>
+                                <label class="settings-option">
+                                    <input type="radio" name="typesettingMode" value="default" checked>
+                                    <span class="settings-option-copy">
+                                        <strong>Default</strong>
+                                        <span>Standard screen-optimized layout across the site.</span>
+                                    </span>
+                                </label>
+                                <label class="settings-option">
+                                    <input type="radio" name="typesettingMode" value="editorial">
+                                    <span class="settings-option-copy">
+                                        <strong>Editorial</strong>
+                                        <span>Applies to editorial-capable reading surfaces: focus lenses, pull quotes, variable optical sizing, and drop caps.</span>
+                                    </span>
                                 </label>
                             </fieldset>
                         </div>
