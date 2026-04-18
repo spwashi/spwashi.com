@@ -71,6 +71,46 @@
   multi_language_hosting: "When the site frames another language through Spw, it is exercising this spatial capacity: seeing the structural relationships in that language that are usually left implicit."
 }
 
+^"learning_science_alignment"{
+  ~#note: "Mapping cognitive surface properties to established Learning Science principles."
+  signaling: {
+    principle: "People learn better when cues highlight essential material."
+    spw_alignment: "Operator resonance and handle brightness serve as attentional signals, directing the practitioner to the most significant semantic nodes."
+  }
+  dual_coding: {
+    principle: "Learning is enhanced when information is presented through both verbal and visual channels."
+    spw_alignment: "The pairing of Spw topic labels (verbal) with image studies and symbolic sigils (visual) creates a multi-modal anchor for abstract concepts."
+  }
+  spatial_contiguity: {
+    principle: "People learn better when related words and visuals are physically close."
+    spw_alignment: "Field Labs and braced operators keep the explanation and the experiment on the same visual plane, reducing cognitive load."
+  }
+  segmenting: {
+    principle: "Learning is more effective when concepts are presented in user-paced segments."
+    spw_alignment: "The liminality depth system allows the visitor to peel back layers of detail at their own pace, moving from orientation to deep inspection."
+  }
+  coherence: {
+    principle: "People learn better when extraneous material is excluded."
+    spw_alignment: "Coherence is maintained through semantic ornament — decorative elements that carry structural meaning rather than just visual noise."
+  }
+  worked_examples_and_fading: {
+    principle: "Learners benefit from seeing solved examples before independent performance, with support gradually withdrawn."
+    spw_alignment: "Syntax references, operator pages, and field labs show a complete semantic example first, then invite the visitor to manipulate a smaller live surface or continue into a more open-ended route."
+  }
+  retrieval_practice: {
+    principle: "Memory strengthens when learners reconstruct a pattern rather than merely re-read it."
+    spw_alignment: "Revisitable routes reuse the same semantic questions, operator families, and reading grammars so a later page asks for recall instead of presenting an entirely new frame each time."
+  }
+  interleaving_and_transfer: {
+    principle: "Learning becomes more durable when related families are compared and revisited in alternating contexts."
+    spw_alignment: "Software, math, craft, and pedagogy stay cross-linked as neighboring surfaces, making comparison part of navigation rather than an optional afterthought."
+  }
+  metacognition: {
+    principle: "Learners improve when they can inspect their current strategy, state, or level of confidence."
+    spw_alignment: "Telemetry panels, learning-mode labels, and visible route grammar make the surface inspectable enough that a practitioner can notice how they are approaching the material."
+  }
+}
+
 ^"open_questions"{
   ?["What is the minimum surface design that qualifies as cognitive rather than interactive?"]{ #:open }
   ?["How does the cognitive surface model relate to constructivist pedagogy — is the site a learning environment?"]{ #:open }

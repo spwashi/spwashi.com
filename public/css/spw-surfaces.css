@@ -1781,3 +1781,95 @@
   color: color-mix(in srgb, var(--wonder-accent-color, #a55) 75%, var(--ink, #2a2a2a));
   font-weight: 600;
 }
+
+/* ==========================================================================
+   25. Learning Science Principle Highlights
+   ========================================================================== */
+
+:where(.spw-principle-card) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block: 1.8rem;
+  padding: 1.25rem 1.4rem;
+  border-left: 4px solid var(--op-probe-color, #6a3fb8);
+  border-radius: 0 var(--shape-surface, 10px) var(--shape-surface, 10px) 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--op-probe-color, #6a3fb8) 8%, transparent), transparent 40%),
+    var(--surface-soft, rgba(255, 255, 255, 0.44));
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.05));
+  transition: transform var(--duration-base) var(--ease-mechanical);
+}
+
+:where(.spw-principle-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin-block: 1.4rem 0;
+}
+
+:where(.spw-principle-card--compact) {
+  min-block-size: 100%;
+  margin-block: 0;
+  padding: 1rem 1.1rem;
+}
+
+:where(.spw-principle-card:hover) {
+  transform: translateX(4px);
+}
+
+:where(.spw-principle-kicker) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.72rem);
+  font-weight: 700;
+  color: var(--op-probe-color, #6a3fb8);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+:where(.spw-principle-kicker::before) {
+  content: "?";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.14rem;
+  height: 1.14rem;
+  border-radius: 50%;
+  background: var(--op-probe-color, #6a3fb8);
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--op-probe-color, #6a3fb8) 32%, transparent);
+}
+
+:where(.spw-principle-card p) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-sm, 0.92rem);
+  line-height: var(--site-line-height, 1.55);
+}
+
+:where(.spw-principle-card strong) {
+  color: var(--ink);
+}
+
+:where(.spw-principle-card__meta) {
+  margin: auto 0 0;
+  padding-top: 0.15rem;
+  font-size: var(--text-size-xs, 0.78rem);
+  color: color-mix(in srgb, var(--ink-soft, #4a4a4a) 88%, transparent);
+}
+
+:where(.spw-principle-card__meta a) {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 40%, transparent);
+  text-underline-offset: 0.16em;
+}
+
+:where(.spw-principle-card__meta a:hover, .spw-principle-card__meta a:focus-visible) {
+  color: var(--ink, #2a2a2a);
+}
