@@ -189,6 +189,39 @@
     margin: 0;
 }
 
+/* Mobile: rail scrolls horizontally instead of wrapping — keeps SVG full-width */
+@media (max-width: 719px) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: var(--space-xs, 0.48rem);
+        /* Fade edges to hint at scroll */
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            black 1rem,
+            black calc(100% - 1rem),
+            transparent 100%
+        );
+    }
+
+    .spw-svg-rail::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Larger touch targets on mobile for rail chips */
+    .spw-svg-rail > * {
+        min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+        display: flex;
+        align-items: center;
+    }
+}
+
 @media (min-width: 720px) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
         grid-template-columns: minmax(0, 1fr) min(20%, 14rem);

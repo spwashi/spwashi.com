@@ -183,6 +183,23 @@
   --hydration-skeleton-shimmer: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
   --hydration-skeleton-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 60%, transparent);
 
+  /* -- Overlay Primitives -- */
+  --overlay-dir-bottom: 180deg;
+  --overlay-dir-top: 0deg;
+  --overlay-dir-right: 90deg;
+  --overlay-dir-left: 270deg;
+  --overlay-opacity-min: 0.18;
+  --overlay-opacity-mid: 0.38;
+  --overlay-opacity-max: 0.82;
+  --overlay-layer-color: var(--surface-strong, #ffffff);
+
+  --overlay-gradient-fade-bottom: linear-gradient(
+    var(--overlay-dir-bottom),
+    transparent,
+    color-mix(in srgb, var(--overlay-layer-color) 24%, transparent) 52%,
+    color-mix(in srgb, var(--overlay-layer-color) 48%, transparent)
+  );
+
   /* -- Grid Thresholds -- */
   --grid-min-compact: 12rem;
   --grid-min-card: 15rem;

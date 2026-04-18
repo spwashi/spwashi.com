@@ -35,13 +35,8 @@
       color-mix(in srgb, var(--surface-panel, var(--spw-shell-card-bg)) 94%, transparent)
     );
   --spw-shell-sheen: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 22%, transparent);
-  --spw-shell-overlay:
-    linear-gradient(
-      180deg,
-      transparent,
-      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 24%, transparent) 52%,
-      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 48%, transparent)
-    );
+  --spw-shell-overlay: var(--overlay-gradient-fade-bottom);
+
 
   --spw-shell-line:        var(--line, rgba(14, 18, 20, 0.14));
   --spw-shell-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));

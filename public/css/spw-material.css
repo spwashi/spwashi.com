@@ -58,7 +58,6 @@
   --spw-context-clarity: 0.6;
   --spw-context-atmosphere: 0.2;
 }
-
 /* ==========================================================================
    2. Baseline material behavior
    ========================================================================== */
@@ -580,4 +579,87 @@
   letter-spacing: 0.03em;
   color: color-mix(in srgb, var(--material-ink-soft) 88%, transparent);
   opacity: 0.78;
+}
+
+/* ==========================================================================
+   16. Semantic Overlay Registry
+   --------------------------------------------------------------------------
+   Standardized overlay layers for material depth and semantic decoration.
+   Supports declarative application via [data-spw-overlay] and automated
+   projection via :has() logic.
+   ========================================================================== */
+
+/* Host must establish a local stacking context */
+:where([data-spw-overlay]) {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Universal Overlay Contract
+   - ::before is reserved for Substrate (texture, grain, base washes)
+   - ::after  is reserved for Ornament (fades, glares, semantic hints)
+*/
+:where([data-spw-overlay])::before,
+:where([data-spw-overlay])::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layer: Bottom Fade
+   Used primarily for media grounding and readable captioning over images.
+*/
+:where([data-spw-overlay~="fade-bottom"])::after {
+  inset: auto 0 0;
+  min-height: 38%;
+  background: var(--overlay-gradient-fade-bottom);
+  opacity: var(--overlay-opacity-mid, 0.38);
+}
+
+/* Layer: Top Fade
+   Provides a subtle landing ledge for headers or upper-edge navigation.
+*/
+:where([data-spw-overlay~="fade-top"])::after {
+  inset: 0 0 auto;
+  min-height: 24%;
+  background: linear-gradient(
+    var(--overlay-dir-top),
+    transparent,
+    color-mix(in srgb, var(--overlay-layer-color) 18%, transparent)
+  );
+}
+
+/* Layer: Scrim
+   Universal dark wash for modal backgrounding or focus isolation.
+*/
+:where([data-spw-overlay~="scrim-dark"])::before {
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* ─── Automated Content-Aware Overlays ──────────────────────────────────── */
+
+@supports selector(:has(*)) {
+  /*
+    Media Awareness:
+    Any surface-like container that holds media gets a baseline grounding
+    fade unless it explicitly opts out or defines its own overlay.
+  */
+  :where(
+    .frame-card:has(img, video, canvas, .frame-card-media):not([data-spw-overlay]),
+    .site-frame:has(img, video, canvas):not([data-spw-overlay])
+  )::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    min-height: 34%;
+    pointer-events: none;
+    background: var(--overlay-gradient-fade-bottom);
+    opacity: 0.28;
+    z-index: 1;
+    border-radius: inherit;
+  }
 }

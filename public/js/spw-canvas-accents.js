@@ -40,6 +40,10 @@ function ensureSharedListeners() {
         notifyRecentPathChange();
     });
 }
+export function getCanvasAccentInstance(container) {
+    return INSTANCE_MAP.get(container) || null;
+}
+
 export function initSpwCanvasAccents(root = document) {
     ensureSharedListeners();
     const created = [];
@@ -93,6 +97,14 @@ class CanvasAccent {
         this.destroyed = false;
         this.offs = [];
         this.imageLoadHandler = null;
+
+        // Brush mode properties
+        this.brushMode = false;
+        this.brushSize = 6;
+        this.brushOpacity = 0.8;
+        this.brushFlowAware = true;
+        this.brushColor = null; // null = use palette; string = user-selected swatch
+        this.pathBuffer = [];
 
         this.palette = container.dataset.spwAccentPalette || 'full';
         this.count = this.readCount();
@@ -402,6 +414,48 @@ class CanvasAccent {
         }
     }
 
+    emitAlongPath(pathSegment, options = {}) {
+        const { pressure = 0.5, size = this.brushSize, opacity = this.brushOpacity } = options;
+        // If user selected a swatch, use it; otherwise paint from the full image palette
+        const paletteEntries = this.brushColor
+            ? [this.brushColor]
+            : (this.resolvedPalette.length ? this.resolvedPalette : this.fallbackPalette());
+
+        if (!Array.isArray(pathSegment) || pathSegment.length === 0) return;
+
+        // Emit ~4-8 particles per path point, scaled by pressure
+        const particlesPerPoint = Math.max(2, Math.floor(3 + pressure * 4));
+
+        pathSegment.forEach((point, idx) => {
+            // Vary emission slightly along path
+            const particlesToEmit = idx === 0 ? particlesPerPoint : Math.floor(particlesPerPoint * 0.6);
+
+            for (let i = 0; i < particlesToEmit; i += 1) {
+                const angle = this.brushFlowAware ? this.flowAngle(point.x, point.y) : (Math.random() * Math.PI * 2);
+                const spreadAngle = angle + (Math.random() - 0.5) * 0.6;
+                const spreadDist = 2 + Math.random() * 4;
+
+                const particleSize = size * (0.6 + 0.4 * pressure) * (0.8 + Math.random() * 0.4);
+                const particleSpeed = (0.3 + pressure * 0.4 + Math.random() * 0.2);
+
+                this.particles.push({
+                    x: point.x + Math.cos(spreadAngle) * spreadDist,
+                    y: point.y + Math.sin(spreadAngle) * spreadDist,
+                    age: 0,
+                    maxAge: 1200 + Math.floor(Math.random() * 400),
+                    speed: particleSpeed,
+                    size: particleSize,
+                    spin: (Math.random() - 0.5) * 0.08,
+                    rotation: Math.random() * Math.PI,
+                    color: paletteEntries[Math.floor(Math.random() * paletteEntries.length)],
+                    isBrush: true,
+                    trailPoints: [{ x: point.x, y: point.y, age: 0 }],
+                    brushOpacity: opacity,
+                });
+            }
+        });
+    }
+
     flowAngle(x, y) {
         const cx = this.width / 2;
         const cy = this.height / 2;
@@ -431,13 +485,26 @@ class CanvasAccent {
             particle.age += 1;
             particle.rotation += particle.spin * (1 + this.charge * 2);
 
+            // Update trail points for brush particles
+            if (particle.isBrush && particle.trailPoints) {
+                if (particle.trailPoints.length < 12) {
+                    particle.trailPoints.push({ x: particle.x, y: particle.y, age: particle.age });
+                } else {
+                    particle.trailPoints.shift();
+                    particle.trailPoints.push({ x: particle.x, y: particle.y, age: particle.age });
+                }
+            }
+
             const alpha = this.type === 'resonance'
                 ? Math.sin((particle.age / particle.maxAge) * Math.PI) * 0.2 * (0.82 + this.charge * 0.62) * this.resonanceStrength
                 : Math.sin((particle.age / particle.maxAge) * Math.PI)
                     * (this.type === 'crystal' ? 0.22 : 0.16)
                     * (0.6 + this.charge * 0.5);
 
-            if (this.type === 'crystal') {
+            // Render brush particle with trail
+            if (particle.isBrush && particle.trailPoints) {
+                this.drawBrushParticle(particle, alpha);
+            } else if (this.type === 'crystal') {
                 const size = particle.size;
                 ctx.fillStyle = withAlpha(particle.color, alpha);
                 ctx.fillRect(particle.x - size * 0.5, particle.y - size * 0.5, size, size);
@@ -469,6 +536,11 @@ class CanvasAccent {
     }
 
     recycleParticleIfNeeded(particle) {
+        // Brush particles fade out naturally, don't recycle to spiral
+        if (particle.isBrush) {
+            return;
+        }
+
         if (
             particle.age <= particle.maxAge &&
             particle.x >= -20 && particle.x <= this.width + 20 &&
@@ -488,6 +560,26 @@ class CanvasAccent {
         particle.color = this.resolvedPalette[Math.floor(Math.random() * this.resolvedPalette.length)] || particle.color;
     }
 
+    setBrushMode(enabled) {
+        this.brushMode = Boolean(enabled);
+    }
+
+    setBrushSize(size) {
+        this.brushSize = Math.max(2, Math.min(size, 20));
+    }
+
+    setBrushOpacity(opacity) {
+        this.brushOpacity = Math.max(0.1, Math.min(opacity, 1.0));
+    }
+
+    setBrushFlowAware(flowAware) {
+        this.brushFlowAware = Boolean(flowAware);
+    }
+
+    clearPathBuffer() {
+        this.pathBuffer = [];
+    }
+
     drawResonanceParticle(particle, alpha) {
         const ctx = this.ctx;
         const size = particle.size * (1 + this.charge * 0.35);
@@ -501,6 +593,44 @@ class CanvasAccent {
         ctx.lineWidth = 0.8;
         ctx.strokeRect(-size / 2, -size / 2, size, size);
         ctx.restore();
+    }
+
+    drawBrushParticle(particle, alpha) {
+        const ctx = this.ctx;
+        const trailAlpha = (particle.brushOpacity || 0.8) * alpha;
+
+        if (!particle.trailPoints || particle.trailPoints.length < 2) {
+            // Fallback: draw as small circle if no trail
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
+            ctx.fillStyle = withAlpha(particle.color, trailAlpha);
+            ctx.fill();
+            return;
+        }
+
+        // Draw smooth trail via quadraticCurveTo
+        const trail = particle.trailPoints;
+        ctx.strokeStyle = withAlpha(particle.color, trailAlpha);
+        ctx.lineWidth = particle.size * 0.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(trail[0].x, trail[0].y);
+
+        for (let i = 1; i < trail.length - 1; i += 1) {
+            const xc = (trail[i].x + trail[i + 1].x) / 2;
+            const yc = (trail[i].y + trail[i + 1].y) / 2;
+            ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
+        }
+
+        if (trail.length > 1) {
+            const last = trail[trail.length - 1];
+            const prev = trail[trail.length - 2];
+            ctx.quadraticCurveTo(prev.x, prev.y, last.x, last.y);
+        }
+
+        ctx.stroke();
     }
 
     burst() {

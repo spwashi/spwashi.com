@@ -15,6 +15,7 @@ import {
     IMAGE_REFRESH_EVENT,
     IMAGE_REFRESH_REASONS
 } from './spw-interaction-loop.js';
+import { getCanvasAccentInstance } from './spw-canvas-accents.js';
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
 const HOLD_DURATION_MS = 480;
@@ -66,6 +67,8 @@ const PALETTE_BY_RESONANCE = Object.freeze({
     violet: 'cool',
     ink: 'cool'
 });
+
+const HOST_BRUSH_STATE = new WeakMap();
 
 const safeParse = (value, fallback) => {
     try {
@@ -280,10 +283,60 @@ function updateHelper(host, context, visited) {
 function ensureHelper(host) {
     if (host.querySelector('.spw-image-helper-strip')) return;
 
+    const openControls = () => { host.dataset.spwControlsOpen = 'true'; };
+    const closeControls = () => { delete host.dataset.spwControlsOpen; };
+
+    // Hint — a breathing accent line at the bottom edge. Signals interactivity.
+    const hint = document.createElement('button');
+    hint.className = 'spw-image-hint';
+    hint.dataset.spwOverlay = 'hint';
+    hint.setAttribute('aria-label', 'Open image controls');
+    hint.addEventListener('pointerdown', (e) => e.stopPropagation());
+    hint.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openControls(); });
+    host.append(hint);
+
+    // Escape closes the strip
+    host.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeControls(); });
+
+    // Control strip — slides up from bottom when opened
     const strip = document.createElement('div');
     strip.className = 'spw-image-helper-strip';
     strip.dataset.spwOverlay = 'controls';
 
+    // Palette swatches — show image's extracted colors
+    const swatchRow = document.createElement('div');
+    swatchRow.className = 'spw-image-palette-swatches';
+    swatchRow.setAttribute('aria-label', 'Image palette — click to set brush color');
+    strip.append(swatchRow);
+
+    // Populate swatches from the accent instance once available
+    const refreshSwatches = () => {
+        const accent = getCanvasAccentInstance(host);
+        const palette = accent?.resolvedPalette || [];
+        swatchRow.innerHTML = '';
+        palette.slice(0, 5).forEach((color, i) => {
+            const swatch = document.createElement('button');
+            swatch.className = 'spw-image-palette-swatch';
+            swatch.style.setProperty('--swatch-color', color);
+            swatch.setAttribute('aria-label', `Brush color ${i + 1}`);
+            if (i === 0) swatch.dataset.active = 'true';
+            swatch.addEventListener('pointerdown', (e) => e.stopPropagation());
+            swatch.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                swatchRow.querySelectorAll('.spw-image-palette-swatch').forEach(s => delete s.dataset.active);
+                swatch.dataset.active = 'true';
+                const state = HOST_BRUSH_STATE.get(host) || { enabled: false, brushSize: 8, brushOpacity: 0.8 };
+                state.brushColor = color;
+                HOST_BRUSH_STATE.set(host, state);
+                if (accent) accent.brushColor = color;
+            });
+            swatchRow.append(swatch);
+        });
+    };
+    // Refresh swatches on image load (palette resolved async)
+    host.addEventListener(IMAGE_REFRESH_EVENT, refreshSwatches, { passive: true });
+
+    // Effect button
     const button = document.createElement('button');
     button.className = 'spw-image-helper';
     button.type = 'button';
@@ -318,20 +371,51 @@ function ensureHelper(host) {
     button.append(eyebrow, value, track);
     memory.append(memoryLogic, memoryValue);
 
-    button.addEventListener('pointerdown', (event) => {
-        event.stopPropagation();
-    });
-    button.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
+    button.addEventListener('pointerdown', (e) => e.stopPropagation());
+    button.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
         const current = host.dataset.spwImageEffectOverride || 'semantic';
         const nextIndex = (EFFECT_SEQUENCE.indexOf(current) + 1) % EFFECT_SEQUENCE.length;
         host.dataset.spwImageEffectOverride = EFFECT_SEQUENCE[nextIndex];
         dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.EFFECT);
     });
 
-    strip.append(button, memory);
+    // Brush toggle
+    const brushToggle = document.createElement('button');
+    brushToggle.className = 'spw-image-brush-toggle';
+    brushToggle.type = 'button';
+    brushToggle.dataset.spwOperator = 'object';
+    brushToggle.textContent = 'paint';
+    brushToggle.setAttribute('aria-label', 'Toggle brush painting mode');
+    brushToggle.setAttribute('title', 'Drag to paint with the image\'s own colors');
+
+    brushToggle.addEventListener('pointerdown', (e) => e.stopPropagation());
+    brushToggle.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const state = HOST_BRUSH_STATE.get(host) || { enabled: false, brushSize: 8, brushOpacity: 0.8 };
+        state.enabled = !state.enabled;
+        HOST_BRUSH_STATE.set(host, state);
+        brushToggle.dataset.spwBrushActive = state.enabled ? 'true' : 'false';
+        host.dataset.spwBrushMode = state.enabled ? 'true' : 'false';
+        const accent = getCanvasAccentInstance(host);
+        if (accent) {
+            accent.setBrushMode(state.enabled);
+            accent.setBrushSize(state.brushSize || 8);
+            accent.setBrushOpacity(state.brushOpacity || 0.8);
+        }
+        refreshSwatches();
+    });
+
+    // Close button
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'spw-image-strip-close';
+    closeBtn.type = 'button';
+    closeBtn.textContent = '×';
+    closeBtn.setAttribute('aria-label', 'Close image controls');
+    closeBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+    closeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closeControls(); });
+
+    strip.append(button, brushToggle, memory, closeBtn);
     host.append(strip);
 }
 
@@ -396,11 +480,56 @@ function registerHoldGesture(host) {
     let pointerStart = null;
     let activePointerId = null;
     let dragging = false;
+    let pathBuffer = [];
+    let brushPressureTrail = [];
 
     const clearTimer = () => {
         if (timer) {
             window.clearTimeout(timer);
             timer = null;
+        }
+    };
+
+    const emitBrushParticles = (event, dragDistance) => {
+        const brushState = HOST_BRUSH_STATE.get(host) || { enabled: false };
+        if (!brushState.enabled) return;
+
+        const accent = getCanvasAccentInstance(host);
+        if (!accent) return;
+
+        const rect = host.getBoundingClientRect();
+        const x = typeof event.clientX === 'number' ? event.clientX - rect.left : 0;
+        const y = typeof event.clientY === 'number' ? event.clientY - rect.top : 0;
+
+        // Add to path buffer (sample every 4px or so)
+        const now = performance.now();
+        const lastPoint = pathBuffer[pathBuffer.length - 1];
+        const shouldAddPoint = !lastPoint || Math.hypot(x - lastPoint.x, y - lastPoint.y) > 3;
+
+        if (shouldAddPoint) {
+            pathBuffer.push({ x, y, time: now });
+            lastPathPointTime = now;
+        }
+
+        // Emit particles from buffered path segment
+        if (pathBuffer.length >= 2) {
+            const pressure = Math.min(dragDistance / 60, 1.0);
+            const brushSize = brushState.brushSize || 8;
+            const brushOpacity = brushState.brushOpacity || 0.8;
+
+            // Emit every 2nd point to throttle emission rate
+            const segmentStart = Math.max(0, pathBuffer.length - 3);
+            const segment = pathBuffer.slice(segmentStart);
+
+            accent.emitAlongPath(segment, {
+                pressure,
+                size: brushSize,
+                opacity: brushOpacity
+            });
+
+            // Remember pressure for trail visualization
+            brushPressureTrail.push(pressure);
+            if (brushPressureTrail.length > 30) brushPressureTrail.shift();
         }
     };
 
@@ -411,6 +540,26 @@ function registerHoldGesture(host) {
         pointerStart = null;
         activePointerId = null;
         dragging = false;
+
+        // Emit canvas:painted event if brush was active
+        const brushState = HOST_BRUSH_STATE.get(host) || { enabled: false };
+        if (brushState.enabled && pathBuffer.length > 0) {
+            const brushPressure = brushPressureTrail.length > 0
+                ? brushPressureTrail.reduce((a, b) => a + b) / brushPressureTrail.length
+                : 0.5;
+
+            bus.emit('canvas:painted', {
+                reason: 'brush',
+                pressure: brushPressure,
+                trailLength: pathBuffer.length,
+                color: host.dataset.spwImageResonance || 'teal',
+                archetype: host.dataset.spwAccent || 'wave',
+                flowAware: true
+            }, { element: host });
+        }
+
+        pathBuffer = [];
+        brushPressureTrail = [];
 
         if (!wasActivated) {
             delete host.dataset.spwHoldState;
@@ -438,6 +587,9 @@ function registerHoldGesture(host) {
             y: typeof event.clientY === 'number' ? event.clientY : null
         };
         activePointerId = typeof event.pointerId === 'number' ? event.pointerId : null;
+        pathBuffer = [];
+        brushPressureTrail = [];
+
         clearTimer();
         host.dataset.spwHoldState = 'arming';
         host.dataset.spwImagePreview = 'on';
@@ -457,7 +609,7 @@ function registerHoldGesture(host) {
         host.dataset.spwImagePreview = 'on';
 
         let dragDistance = 0;
-        const pointerDown = Boolean(pointerStart?.x !== null && pointerStart?.y !== null);
+        const pointerDown = Boolean(pointerStart !== null && pointerStart?.x !== null && pointerStart?.y !== null);
         if (pointerDown && typeof event.clientX === 'number' && typeof event.clientY === 'number') {
             dragDistance = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
         }
@@ -470,6 +622,11 @@ function registerHoldGesture(host) {
 
         dragging = pointerDown && dragDistance > DRAG_CANCEL_DISTANCE_PX * 1.35;
         applyPointerState(host, event, { pointerDown, dragging, dragDistance });
+
+        // Emit brush particles if in brush mode
+        if (dragging) {
+            emitBrushParticles(event, dragDistance);
+        }
     };
 
     host.addEventListener('pointerdown', start);
