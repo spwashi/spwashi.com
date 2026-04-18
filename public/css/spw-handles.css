@@ -131,9 +131,9 @@ header,
   .spw-guide-chip,
   .persona-chip,
   [data-spw-handle="true"],
-  [data-spw-charge-key],
-  [data-spw-inline-form],
-  [data-spw-operator]
+  [data-spw-charge-key]:not(.site-frame):not(.frame-card),
+  [data-spw-inline-form]:not(.site-frame):not(.frame-card),
+  [data-spw-operator]:not(.site-frame):not(.frame-card)
 ) {
   position: relative;
   display: inline-flex;
@@ -171,7 +171,7 @@ header,
   [data-spw-charge-key],
   [data-spw-operator],
   [data-spw-inline-form]
-):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
+):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip):not(.site-frame):not(.frame-card) {
   min-height: auto;
   padding-inline: var(--handle-pad-inline-inline);
   padding-block: var(--handle-pad-block-inline);

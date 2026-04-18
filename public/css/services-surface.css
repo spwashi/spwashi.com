@@ -189,3 +189,8 @@
     grid-template-columns: 1fr;
   }
 }
+
+:where(body[data-spw-surface="services"] #services-frame .frame-list > li) {
+  display: list-item;
+  flex-direction: unset;
+}
