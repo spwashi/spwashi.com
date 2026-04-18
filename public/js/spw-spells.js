@@ -8,7 +8,7 @@
 
 import { bus } from './spw-bus.js';
 import { detectOperator, getOperatorDefinition } from './spw-shared.js';
-import { getGroundedCouplings, getGroundedRegistry } from './spw-haptics.js';
+import { getGroundedCouplings, getGroundedRegistry, restoreCheckpoint } from './spw-haptics.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',
@@ -21,6 +21,13 @@ const DESTINATION_LABELS = Object.freeze({
   scope: 'scope entries',
   settle: 'local returns',
   lens: 'topic lenses',
+});
+const SPELL_BUNDLE_PREFIX = 'spw-checkpoint:';
+const bundleDateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
 });
 
 let initialized = false;
@@ -352,9 +359,73 @@ function renderSpellBoard(board, model) {
         = clear_spell
       </button>
     </div>
+    ${buildSavedBundlesUI()}
   `;
 
   bindSpellActions(board);
+}
+
+function buildSavedBundlesUI() {
+  try {
+    const bundles = listSpellBundles();
+    if (!bundles.length) return '';
+    return `
+      <div class="spell-bundle-bank">
+        <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without re-collecting the whole path.</p>
+        <div class="spell-bundle-grid">
+          ${bundles.map((bundle) => `
+            <article class="spell-bundle-card">
+              <div class="spell-bundle-card__header">
+                <strong class="spell-bundle-card__title">${escapeHtml(bundle.name)}</strong>
+                <span class="spell-register">working set</span>
+              </div>
+              <p class="spell-bundle-card__meta">${escapeHtml(formatSpellBundleMeta(bundle))}</p>
+              <div class="spell-actions spell-actions--bundles">
+                <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref">
+                  ~ restore "${escapeHtml(bundle.name)}"
+                </button>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } catch {
+    return '';
+  }
+}
+
+function listSpellBundles() {
+  return Object.keys(localStorage)
+    .filter((key) => key.startsWith(SPELL_BUNDLE_PREFIX))
+    .map((key) => {
+      const name = key.slice(SPELL_BUNDLE_PREFIX.length);
+      const parsed = parseSpellBundle(localStorage.getItem(key));
+      return {
+        name,
+        count: Array.isArray(parsed?.registry) ? parsed.registry.length : 0,
+        path: parsed?.path || '',
+        savedAt: Number(parsed?.savedAt || 0),
+      };
+    })
+    .sort((a, b) => b.savedAt - a.savedAt);
+}
+
+function parseSpellBundle(raw) {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function formatSpellBundleMeta(bundle) {
+  const parts = [];
+  if (bundle.count) parts.push(`${bundle.count} grounded`);
+  if (bundle.path) parts.push(bundle.path);
+  if (bundle.savedAt) parts.push(bundleDateFormatter.format(bundle.savedAt));
+  return parts.join(' · ') || 'Saved working set';
 }
 
 function renderSpellAtom(entry) {
@@ -378,6 +449,15 @@ function bindSpellActions(root) {
       if (action === SPELL_ACTION.RESET) window.spwSpells?.reset(button);
     });
   });
+
+  root.querySelectorAll('[data-spw-spell-restore]').forEach((button) => {
+    if (button.dataset.spwSpellBound === 'true') return;
+    button.dataset.spwSpellBound = 'true';
+    button.addEventListener('click', () => {
+      const bundleName = button.dataset.spwSpellRestore;
+      window.spwSpells?.restore(bundleName, button);
+    });
+  });
 }
 
 function registerSpellActions() {
@@ -393,8 +473,17 @@ function registerSpellActions() {
       }
     },
     checkpoint(button) {
-      bus.emit('spell:checkpoint', { name: `spell_${Date.now()}` });
-      if (button instanceof HTMLElement) button.textContent = '! checkpointed';
+      const name = window.prompt('Save working set as:', `Working Set - ${new Date().toLocaleDateString()}`);
+      if (!name) return;
+      bus.emit('spell:checkpoint', { name });
+      if (button instanceof HTMLElement) button.textContent = `! saved: ${name}`;
+      renderAllSpellSurfaces();
+    },
+    restore(name, button) {
+      if (!name) return;
+      if (restoreCheckpoint(name) && button instanceof HTMLElement) {
+        button.textContent = '~ restored';
+      }
     },
     reset(button) {
       bus.emit('spell:reset', { source: 'spell-board' });
@@ -427,6 +516,7 @@ export function initSpwSpells() {
     bus.on('spell:reset', renderAllSpellSurfaces),
     bus.on('spell:grounded', renderAllSpellSurfaces),
     bus.on('spell:ungrounded', renderAllSpellSurfaces),
+    bus.on('spell:checkpoint-saved', renderAllSpellSurfaces),
     bus.on('spell:checkpoint-restored', renderAllSpellSurfaces),
   ];
 
@@ -434,7 +524,12 @@ export function initSpwSpells() {
     renderAllSpellSurfaces();
   };
   const handleStorage = (event) => {
-    if (!event.key || event.key.startsWith('spw-grounded') || event.key.startsWith('spw-coupling')) {
+    if (
+      !event.key
+      || event.key.startsWith('spw-grounded')
+      || event.key.startsWith('spw-coupling')
+      || event.key.startsWith(SPELL_BUNDLE_PREFIX)
+    ) {
       renderAllSpellSurfaces();
     }
   };

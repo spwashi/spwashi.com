@@ -16,9 +16,16 @@
  * Interaction vocabulary:
  *   - data-spw-interaction-context: reading | browsing | inspecting | collecting
  *   - data-spw-collected:           true | (absent)
+ *   - data-spw-collection-intention: study | revisit | build | refer | support
  *   - data-spw-collection-strength: 0.3–1.0
  *
  * Collections persist in localStorage and are emitted on the bus.
+ *
+ * Interaction rule:
+ *   - Click once to inspect.
+ *   - Click again to collect with a default intention.
+ *   - Click while already collected to release quickly.
+ *   - Shift+click while collected to cycle intention without releasing.
  */
 
 import { bus } from './spw-bus.js';
@@ -33,10 +40,19 @@ const AMBIENT_SELECTOR = [
 ].join(', ');
 
 const COLLECTIBLE_ATTR = 'data-spw-guide-badge';
+const COLLECTION_CONTROL_SELECTOR = '[data-spw-collection-action]';
+const COLLECTION_STATUS_SELECTOR = '[data-spw-collection-status]';
 
 const INITIAL_COLLECTION_STRENGTH = 0.9;
 const COLLECTION_FLOOR = 0.3;
 const DECAY_HALF_LIFE_MS = 96_000;
+const COLLECTION_INTENTIONS = Object.freeze([
+  'study',
+  'revisit',
+  'build',
+  'refer',
+  'support',
+]);
 
 const store = {
   read() {
@@ -79,14 +95,16 @@ function setContext(element, context) {
   element.dataset.spwInteractionContext = context;
 }
 
-function markCollected(element, strength) {
+function markCollected(element, strength, intention = COLLECTION_INTENTIONS[0]) {
   element.dataset.spwCollected = 'true';
+  element.dataset.spwCollectionIntention = intention;
   element.dataset.spwCollectionStrength = strength.toFixed(2);
   element.setAttribute('aria-pressed', 'true');
 }
 
 function unmarkCollected(element) {
   delete element.dataset.spwCollected;
+  delete element.dataset.spwCollectionIntention;
   delete element.dataset.spwCollectionStrength;
   if (element.hasAttribute('aria-pressed')) {
     element.setAttribute('aria-pressed', 'false');
@@ -103,6 +121,26 @@ export function getCollection() {
   return store.read();
 }
 
+function buildCollectionStatusMessage() {
+  const entries = store.read();
+  if (!entries.length) {
+    return 'No guide collections stored in this browser yet.';
+  }
+
+  const todayCount = entries.filter((entry) => Number(entry.collectedAt || 0) >= startOfTodayMs()).length;
+  if (!todayCount) {
+    return `${entries.length} collected total in this browser.`;
+  }
+
+  return `${entries.length} collected total · ${todayCount} added today.`;
+}
+
+function renderCollectionStatus(root = document) {
+  root.querySelectorAll(COLLECTION_STATUS_SELECTOR).forEach((element) => {
+    element.textContent = buildCollectionStatusMessage();
+  });
+}
+
 function restoreCollection(root) {
   const entries = store.read();
   if (!entries.length) return;
@@ -115,22 +153,24 @@ function restoreCollection(root) {
     if (!id) return;
     const entry = byId.get(id);
     if (!entry) return;
-    markCollected(element, decayedStrength(entry.collectedAt));
+    markCollected(element, decayedStrength(entry.collectedAt), entry.intention || COLLECTION_INTENTIONS[0]);
   });
 }
 
-function collect(element) {
+function collect(element, intention = COLLECTION_INTENTIONS[0]) {
   const id = badgeId(element);
   if (!id) return null;
 
   const entries = store.read();
   const existing = entries.findIndex((entry) => entry.id === id);
+  const existingEntry = existing >= 0 ? entries[existing] : null;
   const record = {
     id,
     operator: element.dataset.spwOperator || null,
     role: element.dataset.spwRole || null,
     label: (element.textContent || '').trim().slice(0, 80),
-    collectedAt: Date.now()
+    collectedAt: Number(existingEntry?.collectedAt || Date.now()),
+    intention
   };
 
   if (existing >= 0) {
@@ -140,8 +180,9 @@ function collect(element) {
   }
 
   store.write(entries);
-  markCollected(element, INITIAL_COLLECTION_STRENGTH);
+  markCollected(element, INITIAL_COLLECTION_STRENGTH, intention);
   bus.emit?.('guide-badge:collected', record);
+  renderCollectionStatus(document);
   return record;
 }
 
@@ -153,6 +194,58 @@ function release(element) {
   store.write(entries);
   unmarkCollected(element);
   bus.emit?.('guide-badge:released', { id });
+  renderCollectionStatus(document);
+}
+
+function getCurrentIntention(element) {
+  if (element.dataset.spwCollected !== 'true') return null;
+  return element.dataset.spwCollectionIntention || COLLECTION_INTENTIONS[0];
+}
+
+function getNextIntention(currentIntention) {
+  const currentIndex = COLLECTION_INTENTIONS.indexOf(currentIntention);
+  if (currentIndex < 0) return COLLECTION_INTENTIONS[0];
+  return COLLECTION_INTENTIONS[currentIndex + 1] || null;
+}
+
+function defaultIntentionForElement(element) {
+  const preferred = element.dataset.spwCollectionDefault || '';
+  return COLLECTION_INTENTIONS.includes(preferred)
+    ? preferred
+    : COLLECTION_INTENTIONS[0];
+}
+
+function clearCollectionWhere(predicate, scope = 'filtered') {
+  const entries = store.read();
+  const removedIds = [];
+  const remaining = entries.filter((entry) => {
+    const shouldClear = predicate(entry);
+    if (shouldClear) removedIds.push(entry.id);
+    return !shouldClear;
+  });
+
+  if (!removedIds.length) return 0;
+
+  store.write(remaining);
+
+  document.querySelectorAll('[data-spw-collected="true"]').forEach((element) => {
+    const id = badgeId(element);
+    if (id && removedIds.includes(id)) unmarkCollected(element);
+  });
+
+  bus.emit?.('guide-badge:cleared', {
+    count: removedIds.length,
+    scope,
+  });
+  renderCollectionStatus(document);
+
+  return removedIds.length;
+}
+
+function startOfTodayMs() {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  return now.getTime();
 }
 
 function attachAmbient(element) {
@@ -201,11 +294,17 @@ function attachCollectible(element) {
     if (event.defaultPrevented) return;
 
     const ctx = element.dataset.spwInteractionContext;
+    const currentIntention = getCurrentIntention(element);
 
-    if (element.dataset.spwCollected === 'true') {
+    if (currentIntention) {
       event.preventDefault();
-      release(element);
-      setContext(element, 'browsing');
+      if (event.shiftKey) {
+        const nextIntention = getNextIntention(currentIntention) || COLLECTION_INTENTIONS[0];
+        collect(element, nextIntention);
+      } else {
+        release(element);
+        setContext(element, 'browsing');
+      }
       return;
     }
 
@@ -217,7 +316,7 @@ function attachCollectible(element) {
 
     event.preventDefault();
     setContext(element, 'collecting');
-    collect(element);
+    collect(element, defaultIntentionForElement(element));
     setContext(element, 'inspecting');
   };
 
@@ -244,6 +343,29 @@ function attach(element) {
   return isCollectible(element) ? attachCollectible(element) : attachAmbient(element);
 }
 
+function attachCollectionControl(element) {
+  if (element.dataset.spwGuideBadgeControlBound === 'true') return () => {};
+  element.dataset.spwGuideBadgeControlBound = 'true';
+
+  const onClick = () => {
+    const action = element.dataset.spwCollectionAction;
+    if (action === 'clear-all') {
+      window.spwGuideBadge?.clearAll();
+      return;
+    }
+    if (action === 'clear-today') {
+      window.spwGuideBadge?.clearToday();
+    }
+  };
+
+  element.addEventListener('click', onClick);
+
+  return () => {
+    element.removeEventListener('click', onClick);
+    delete element.dataset.spwGuideBadgeControlBound;
+  };
+}
+
 export function initGuideBadges(root = document) {
   const cleanups = [];
   const seen = new WeakSet();
@@ -256,16 +378,26 @@ export function initGuideBadges(root = document) {
 
   root.querySelectorAll(AMBIENT_SELECTOR).forEach(bind);
   root.querySelectorAll(`[${COLLECTIBLE_ATTR}]`).forEach(bind);
+  root.querySelectorAll(COLLECTION_CONTROL_SELECTOR).forEach((element) => {
+    cleanups.push(attachCollectionControl(element));
+  });
 
   restoreCollection(root);
+  renderCollectionStatus(root);
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
         if (!(node instanceof Element)) return;
+        if (node.matches?.(COLLECTION_CONTROL_SELECTOR)) {
+          cleanups.push(attachCollectionControl(node));
+        }
         if (node.matches?.(AMBIENT_SELECTOR) || node.hasAttribute?.(COLLECTIBLE_ATTR)) {
           bind(node);
         }
+        node.querySelectorAll?.(COLLECTION_CONTROL_SELECTOR).forEach((element) => {
+          cleanups.push(attachCollectionControl(element));
+        });
         node.querySelectorAll?.(`${AMBIENT_SELECTOR}, [${COLLECTIBLE_ATTR}]`).forEach(bind);
       });
     });
@@ -285,10 +417,27 @@ if (typeof window !== 'undefined') {
   window.spwGuideBadge = {
     init: initGuideBadges,
     getCollection,
+    uncollect: release,
+    release,
+    clearAll() {
+      const count = clearCollectionWhere(() => true, 'all');
+      if (!count) {
+        bus.emit?.('guide-badge:cleared', { count: 0, scope: 'all' });
+      }
+    },
     clear() {
-      store.write([]);
-      document.querySelectorAll('[data-spw-collected="true"]').forEach(unmarkCollected);
-      bus.emit?.('guide-badge:cleared', {});
+      window.spwGuideBadge.clearAll();
+    },
+    clearToday() {
+      return clearCollectionWhere(
+        (entry) => Number(entry.collectedAt || 0) >= startOfTodayMs(),
+        'today'
+      );
+    },
+    clearSince(timestamp) {
+      const since = Number(timestamp);
+      if (!Number.isFinite(since)) return 0;
+      return clearCollectionWhere((entry) => Number(entry.collectedAt || 0) >= since, 'since');
     }
   };
 }

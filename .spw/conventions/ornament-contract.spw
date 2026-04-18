@@ -32,7 +32,7 @@ ornament_classes: .{
   state_source = .{
    semantic = #[`data-spw-role`, `data-spw-kind`, `data-spw-operator`][reg=set]
    field = #[`data-spw-wonder-state`, `data-spw-field-wonder`, `data-spw-memory-match`][reg=set]
-   collection = #[`data-spw-collected`, `data-spw-collection-strength`][reg=set]
+   collection = #[`data-spw-collected`, `data-spw-collection-intention`, `data-spw-collection-strength`][reg=set]
    deviation = #[`data-spw-deviation`][reg=set]
   }[reg=facet]
   visual_range = .{
@@ -60,8 +60,8 @@ ornament_classes: .{
  }[reg=facet]
  collection_mark = .{
   definition = `A persistent visual indicator that the visitor has explicitly collected a token or component.`
-  state_source = `data-spw-collected='true' and data-spw-collection-strength (0.0–1.0).`
-  visual_range = `Small permanent accent — dot, filled corner, or stable wash — distinct from decaying resonance.`
+  state_source = `data-spw-collected='true', data-spw-collection-intention='study|revisit|build|refer|support', and data-spw-collection-strength (0.0–1.0).`
+  visual_range = `Small permanent accent — dot, filled corner, or stable wash — distinct from decaying resonance. Intention may subtly tint the accent without replacing the base collected signal.`
   decay_expression = `Collection strength may gradually fade without reaching invisible.`
   inspection = `Hover reveals collection timestamp and token list.`
  }[reg=facet]
@@ -104,6 +104,7 @@ runtime_exposure_contract: .{
    `data-spw-field-wonder='orientation|resonance|...'`,
    `data-spw-memory-match='token1 token2 ...'`,
    `data-spw-collected='true|false'`,
+   `data-spw-collection-intention='study|revisit|build|refer|support'`,
    `data-spw-collection-strength='0.0–1.0'`,
    `data-spw-interaction-context='reading|browsing|inspecting|collecting|comparing'`,
    `data-spw-deviation='true|false'`
@@ -146,7 +147,7 @@ guide_badge_redesign: .{
    first_tap = `Escalate to inspecting context and emit full token set at σ₀ = 0.8.`
    second_tap_while_inspecting = `Offer collection affordance and confirm pin.`
   }[reg=facet]
-  collected_state = `Stable accent mark distinct from resonance wash.`
+  collected_state = `Stable accent mark distinct from resonance wash. Collection intention remains inspectable without requiring a separate reward system.`
   deviation_state = `If settings or state deviate from default, surface a subtle inspectable deviation mark.`
   release = `Escape or re-tap while collected releases the collection and returns the field to decay-only.`
  }[reg=facet]

@@ -820,6 +820,26 @@
   --ornament-collection-dot-size: 0.42rem;
 }
 
+:where([data-spw-collection-intention='study']) {
+  --spw-collection-intention-color: var(--op-probe-color, #4a2180);
+}
+
+:where([data-spw-collection-intention='revisit']) {
+  --spw-collection-intention-color: var(--op-topic-color, #2f8f6b);
+}
+
+:where([data-spw-collection-intention='build']) {
+  --spw-collection-intention-color: var(--op-action-color, #005959);
+}
+
+:where([data-spw-collection-intention='refer']) {
+  --spw-collection-intention-color: var(--op-ref-color, #1d57a3);
+}
+
+:where([data-spw-collection-intention='support']) {
+  --spw-collection-intention-color: var(--op-object-color, #bd7f23);
+}
+
 :where(.ornament-corner-dot, [data-spw-ornament~='corner-dot'], [data-spw-collected='true']) {
   position: relative;
 }
@@ -838,7 +858,7 @@
   border-radius: 999px;
   background: color-mix(
     in srgb,
-    var(--wonder-accent-color, currentColor) 70%,
+    var(--spw-collection-intention-color, var(--wonder-accent-color, currentColor)) 70%,
     var(--delight-color, currentColor)
   );
   opacity: calc(0.55 + var(--spw-collection-strength, 0.6) * 0.45);

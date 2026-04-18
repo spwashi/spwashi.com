@@ -1129,6 +1129,48 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   gap: 0.42rem;
 }
 
+.spell-actions--bundles {
+  margin-top: 0.1rem;
+}
+
+.spell-bundle-bank {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.spell-bundle-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.spell-bundle-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.72rem 0.84rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 78%, transparent);
+  border-radius: 0.56rem;
+  background: color-mix(in srgb, var(--surface, #fff) 94%, transparent);
+}
+
+.spell-bundle-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.spell-bundle-card__title {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: 0.82rem;
+}
+
+.spell-bundle-card__meta {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
 /* ==========================================================================
    14. Frame metrics
    ========================================================================== */
