@@ -136,16 +136,16 @@ function runGit(args) {
   return result.stdout;
 }
 
-function listTrackedRepoPaths() {
-  return runGit(['ls-files', '-z'])
+function listSourceRepoPaths() {
+  return runGit(['ls-files', '-c', '-o', '--exclude-standard', '-z'])
     .split('\0')
     .map((item) => item.trim())
     .filter(Boolean)
     .filter((repoPath) => !shouldExcludeRepoPath(repoPath));
 }
 
-async function checkTrackedImageRedundancy(trackedPaths) {
-  const imagePaths = trackedPaths.filter((repoPath) => {
+async function checkImageRedundancy(sourcePaths) {
+  const imagePaths = sourcePaths.filter((repoPath) => {
     if (!repoPath.startsWith('public/images/')) return false;
     return IMAGE_EXTENSIONS.has(path.posix.extname(repoPath).toLowerCase());
   });
@@ -183,7 +183,7 @@ async function checkTrackedImageRedundancy(trackedPaths) {
 function logDuplicateImages(duplicateGroups) {
   if (!duplicateGroups.length) return;
 
-  console.warn(`[build] duplicate tracked images detected (${duplicateGroups.length} groups)`);
+  console.warn(`[build] duplicate images detected (${duplicateGroups.length} groups)`);
   for (const group of duplicateGroups.slice(0, 8)) {
     console.warn(`[build]   ${group.join(' | ')}`);
   }
@@ -211,24 +211,24 @@ async function copyTrackedPath(repoPath) {
   }
 }
 
-async function copyRepo(trackedPaths) {
+async function copyRepo(sourcePaths) {
   let nextIndex = 0;
   let completed = 0;
 
   async function worker() {
-    while (nextIndex < trackedPaths.length) {
-      const repoPath = trackedPaths[nextIndex];
+    while (nextIndex < sourcePaths.length) {
+      const repoPath = sourcePaths[nextIndex];
       nextIndex += 1;
       await copyTrackedPath(repoPath);
       completed += 1;
 
-      if (completed % COPY_PROGRESS_INTERVAL === 0 || completed === trackedPaths.length) {
-        console.log(`[build] copied ${completed}/${trackedPaths.length} tracked files`);
+      if (completed % COPY_PROGRESS_INTERVAL === 0 || completed === sourcePaths.length) {
+        console.log(`[build] copied ${completed}/${sourcePaths.length} files`);
       }
     }
   }
 
-  const workerCount = Math.min(COPY_CONCURRENCY, trackedPaths.length);
+  const workerCount = Math.min(COPY_CONCURRENCY, sourcePaths.length);
   await Promise.all(Array.from({ length: workerCount }, () => worker()));
 }
 
@@ -244,17 +244,17 @@ function runNodeScript(scriptRelPath, args = []) {
 
 async function main() {
   const startedAt = Date.now();
-  const trackedPaths = listTrackedRepoPaths();
+  const sourcePaths = listSourceRepoPaths();
 
   console.log(`[build] cleaning ${relRepo(DIST_DIR)}/`);
   await rmrf(DIST_DIR);
   await fs.mkdir(DIST_DIR, { recursive: true });
 
-  console.log('[build] checking tracked image redundancy');
-  logDuplicateImages(await checkTrackedImageRedundancy(trackedPaths));
+  console.log('[build] checking image redundancy');
+  logDuplicateImages(await checkImageRedundancy(sourcePaths));
 
   console.log('[build] copying source tree to dist/');
-  await copyRepo(trackedPaths);
+  await copyRepo(sourcePaths);
 
   await fs.writeFile(path.join(DIST_DIR, '.nojekyll'), '');
 

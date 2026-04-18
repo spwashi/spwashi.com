@@ -91,8 +91,8 @@ function shouldExcludeRepoPath(repoPath) {
   return false;
 }
 
-function listTrackedRouteFiles() {
-  return runGit(['ls-files', '-z'])
+function listSourceRouteFiles() {
+  return runGit(['ls-files', '-c', '-o', '--exclude-standard', '-z'])
     .split('\0')
     .map((item) => item.trim())
     .filter(Boolean)
@@ -142,7 +142,7 @@ async function collectUrls(routeFiles) {
 
 async function main() {
   const outputPath = parseOutPath(process.argv.slice(2));
-  const routeFiles = listTrackedRouteFiles();
+  const routeFiles = listSourceRouteFiles();
   const urls = await collectUrls(routeFiles);
   const xml = buildSitemapXml(urls);
 
@@ -150,7 +150,7 @@ async function main() {
   await fs.writeFile(outputPath, xml, 'utf8');
 
   console.log(`[sitemap] wrote ${relRepo(outputPath)}`);
-  console.log(`[sitemap] ${urls.length} urls from ${routeFiles.length} tracked routes`);
+  console.log(`[sitemap] ${urls.length} urls from ${routeFiles.length} routes`);
 }
 
 main().catch((error) => {
