@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="/public/css/seed-card.css">
     <link rel="stylesheet" href="/public/css/payment-card.css">
     <link rel="stylesheet" href="/public/css/services-configurator.css">
+    <link rel="stylesheet" href="/public/css/care-intake.css">
+    <script type="module">
+      import { mount } from '/public/js/care-intake.js';
+      document.addEventListener('DOMContentLoaded', () => {
+        const root = document.querySelector('[data-care-intake]');
+        if (root) mount(root);
+      });
+    </script>
     <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
     <script type="module" src="/public/js/site.js?v=0.0.2"></script>
     <link rel="canonical" href="https://spwashi.com/services/">
@@ -142,9 +150,9 @@
                 <h1 id="services-title">Services</h1>
                 <p class="site-lede">I craft systems that reveal their own architecture — pages that think, remember, and teach.</p>
 
-                <p>Every system I build rests on three quiet layers: a <strong>reading layer</strong> that makes meaning self-evident, a <strong>material layer</strong> where CSS becomes responsive physics, and a <strong>semantic contract layer</strong> that lets other tools and other minds read, extend, and trust the work without explanation.</p>
+                <p>I build systems, not just surfaces. A modern website shouldn't break when a trending tool updates. Every project I deliver rests on three unbreakable layers: a <strong>reading layer</strong> that search engines and screen readers parse perfectly, a <strong>material layer</strong> of responsive physics, and a <strong>semantic contract layer</strong> that lets other minds trust the work.</p>
 
-                <p>More than a decade shaping frontend systems, developer tooling, content platforms, and product architecture. The evidence lives in the grammar surface, the public workbench, and the Wednesday table where collaboration under uncertainty is practiced in real time.</p>
+                <p>I spent 15 years as a Software Engineer, leading teams and architecting systems with a compensation scaling from $150k to $184k/yr. Now, I bring that exact caliber of staff-level engineering—combined with professional illustration—directly to creators, authors, and independent business owners. Inexperienced engineers will copy my surfaces, but they cannot replicate the deep structural reliability of a system engineered with a decade and a half of practice.</p>
 
                 <nav class="frame-operators" aria-label="Services routes">
                     <a class="operator-chip" href="#services-card">^ services card</a>
@@ -153,6 +161,7 @@
                     <a class="operator-chip" href="#what-i-do">^ what I do</a>
                     <a class="operator-chip" href="#social-context">~ how I work</a>
                     <a class="operator-chip" href="#ask-card">( ask card</a>
+                    <a class="operator-chip" href="#care-intake">~ care intake</a>
                     <a class="operator-chip" href="#support">$ support</a>
                     <a class="operator-chip" href="/topics/software/">software surface</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
@@ -204,26 +213,26 @@
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_1">
                         <figure class="panel-image"><img src="/public/images/assets/illustrations/pretext-physics.png" alt="Pretext physics" width="420" height="280"></figure>
-                        <h3>Frontend systems</h3>
-                        <p>Architecture that begins with the reading layer and works downward. Pages that feel trustworthy because they announce their own state, remember their own history, and respond with intention rather than surprise.</p>
+                        <h3>Interactive Book Covers</h3>
+                        <p>Combining illustration with responsive web physics. Traditional book covers are static; an interactive cover is a lightweight, performant canvas that responds to touch, scroll, and device orientation. Priced competitively to give independent authors a magical, memorable storefront presence.</p>
                     </div>
 
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_2">
                         <figure class="panel-image"><img src="/public/images/assets/illustrations/semantic-phases.png" alt="Semantic phases" width="420" height="280"></figure>
-                        <h3>Language &amp; grammar tooling</h3>
-                        <p>Parsers, contracts, and visible structure. I make the invisible rules of a system legible — so they can be discussed, extended, and handed on without friction. Pretext.js is the clearest example: it reads prose and writes responsive physics.</p>
+                        <h3>Ebook Formatting &amp; Typography</h3>
+                        <p>Semantically perfect, beautifully typeset digital books that flow flawlessly on any reader. This is where 15 years of learning to code pays off for authors: no broken chapters, no bloated markup, just pure, accessible reading layers engineered to professional publishing standards.</p>
                     </div>
 
                     <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_3">
                         <figure class="panel-image"><img src="/public/images/renders/papergami/papergami-architecture.webp" alt="Papergami architecture study with layered folded forms and warm structural shadows." width="420" height="280"></figure>
-                        <h3>Product architecture</h3>
-                        <p>Honest scoping, clear trade-offs, and decisions that survive quarters without documentation. I work at the staff level — where the conversation is about what to exclude as much as what to include.</p>
+                        <h3>General Web Services</h3>
+                        <p>For independent business owners who need systems, not just websites. From custom web applications to robust landing pages, I build local-first frontend systems that announce their own state, remember their history, and never break unexpectedly.</p>
                     </div>
 
                     <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_4">
                         <figure class="panel-image"><img src="/public/images/play/rpg-wednesday/sticker-canon-field-study.webp" alt="Glowing RPG Wednesday study with green ritual light, sigils, and table-mood symbols." width="420" height="280"></figure>
-                        <h3>Play &amp; facilitation</h3>
-                        <p>RPG Wednesday is the clearest window into how I think with others. A fantastical scenario reveals how someone navigates fictional tools, ambiguity, and shared stakes toward collaboration. Those same patterns shape documentation, onboarding, and interfaces.</p>
+                        <h3>Consulting &amp; Systems Design</h3>
+                        <p>Honest scoping, clear trade-offs, and architectural decisions that survive quarters without documentation. Bringing staff-level rigor to smaller teams and ambitious independent projects, focusing on what to exclude as much as what to include.</p>
                     </div>
                 </div>
             </section>
@@ -319,38 +328,145 @@
 
                 <div class="frame-grid">
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_10">
-                        <h3><span class="spec-pill" data-cluster="tier">Fast</span> $700</h3>
-                        <p>A focused, high-signal website delivered with clarity and speed. One clear scope, one clean execution.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Creator Packages</span> $400–$1,500</h3>
+                        <p>High-signal deliverables priced competitively for independent authors and illustrative projects.</p>
                         <ul class="frame-list">
-                            <li>One-time engagement</li>
-                            <li>Defined deliverable</li>
-                            <li>Best when you know exactly what you need</li>
+                            <li><strong>$400+ Ebook Formatting:</strong> Semantic perfection.</li>
+                            <li><strong>$800+ Interactive Covers:</strong> Drawn and coded to move.</li>
+                            <li><strong>$1,500+ Static Portfolios:</strong> Fast, unbreakable foundations.</li>
                         </ul>
                     </div>
 
                     <div class="frame-panel" data-spw-brace="objective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_11">
-                        <h3><span class="spec-pill" data-cluster="tier">Standard</span> $200<span class="spec-pill" data-cluster="trait">/mo</span></h3>
-                        <p>Ongoing partnership with iterative refinement. A professional digital presence that evolves with you over a 12-month horizon.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Business Web</span> $3,500–$8,000</h3>
+                        <p>Ongoing partnerships, custom applications, and robust digital storefronts designed for longevity and performance.</p>
                         <ul class="frame-list">
-                            <li>Monthly updates and improvements</li>
-                            <li>Consistent quality and attention</li>
-                            <li>Best for growing, living projects</li>
+                            <li>Iterative system design for established brands</li>
+                            <li>Feature-rich applications, tooling, or product UI</li>
+                            <li>Responsive, semantic frontend physics</li>
                         </ul>
-                        <p class="frame-note">ChatGPT Pro is $100/mo. Claude Max is $200/mo. This is the cost of the engineer who actually uses them.</p>
+                        <p class="frame-note">You are securing the time of a $184k/yr senior engineer who intuitively understands the difference between a prototype and production code.</p>
                     </div>
 
                     <div class="frame-panel" data-spw-brace="subjective" data-spw-kind="panel" data-spw-role="reference" data-spw-context="routing" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_services_services__panel_12">
-                        <h3><span class="spec-pill" data-cluster="tier">Premium</span> $5,000</h3>
-                        <p>Full-scope architecture and system design. The kind of foundation that compounds value over years.</p>
+                        <h3><span class="spec-pill" data-cluster="tier">Staff-Level</span> $15,000+</h3>
+                        <p>Full-scope architectural design, technical diligence, and deep architectural foundations scaling across products.</p>
                         <ul class="frame-list">
-                            <li>Complete system thinking</li>
-                            <li>Upgrades available outside production season</li>
-                            <li>Production season: October – New Year</li>
+                            <li>Complete system thinking integrating multiple domains</li>
+                            <li>Retainer-based or extensive fixed-bid projects</li>
+                            <li>CTO-as-a-service advisory</li>
                         </ul>
                     </div>
                 </div>
 
                 <p class="frame-note">Still unsure? The configurator above is the fastest way to see which path feels right. Or simply begin a conversation — the field is only scaffolding; the real clarity lives in dialogue.</p>
+            </section>
+
+            <!-- CARE INTAKE — a gift for anyone considering therapy -->
+            <section
+                class="site-frame"
+                id="care-intake"
+                data-spw-role="vessel"
+                data-spw-form="brace"
+                data-spw-meaning="reflective intake form for people considering therapy"
+                data-spw-operator="ref"
+                data-spw-kind="frame"
+                data-spw-context="reflection"
+                data-spw-wonder="orientation consequence"
+                data-spw-affordance="act"
+                data-spw-liminality="settled"
+                data-spw-category-family="nook"
+                data-spw-locality="medium"
+                data-spw-consequence="memory"
+                data-spw-promptability="ambient"
+                data-spw-collectability="none"
+                data-spw-seed="page_services_services__care_intake">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#care-intake">~"care_intake"</a>
+                    <h2>Care Intake</h2>
+                </div>
+
+                <p class="inline-note">A thinking aid for anyone considering therapy — not a diagnostic tool, and not a commitment to anything. Your answers stay on your device. When you're done, generate a care profile you can screenshot and bring to a first conversation.</p>
+
+                <div class="care-intake-form" data-care-intake>
+
+                    <div class="care-step">
+                        <label class="care-step-label" id="label-situation">what's going on</label>
+                        <p class="care-step-hint">Select everything that resonates. More than one is fine.</p>
+                        <div class="care-chips" role="group" aria-labelledby="label-situation">
+                            <button class="care-chip" data-care-key="situation" data-care-val="anxiety"       data-care-multi="true" aria-pressed="false">anxiety or worry</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="low-mood"      data-care-multi="true" aria-pressed="false">low mood</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="relationships" data-care-multi="true" aria-pressed="false">relationship difficulty</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="transition"    data-care-multi="true" aria-pressed="false">a big life change</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="grief"         data-care-multi="true" aria-pressed="false">grief or loss</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="burnout"       data-care-multi="true" aria-pressed="false">burnout or exhaustion</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="past"          data-care-multi="true" aria-pressed="false">something from the past</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="self"          data-care-multi="true" aria-pressed="false">understanding myself</button>
+                            <button class="care-chip" data-care-key="situation" data-care-val="uncertain"     data-care-multi="true" aria-pressed="false">not sure yet</button>
+                        </div>
+                    </div>
+
+                    <div class="care-step">
+                        <label class="care-step-label" id="label-support">what kind of support</label>
+                        <p class="care-step-hint">What would actually feel helpful?</p>
+                        <div class="care-chips" role="group" aria-labelledby="label-support">
+                            <button class="care-chip" data-care-key="support" data-care-val="listen"        data-care-multi="true" aria-pressed="false">someone to listen</button>
+                            <button class="care-chip" data-care-key="support" data-care-val="tools"         data-care-multi="true" aria-pressed="false">practical tools</button>
+                            <button class="care-chip" data-care-key="support" data-care-val="patterns"      data-care-multi="true" aria-pressed="false">understanding my patterns</button>
+                            <button class="care-chip" data-care-key="support" data-care-val="past"          data-care-multi="true" aria-pressed="false">working with the past</button>
+                            <button class="care-chip" data-care-key="support" data-care-val="present"       data-care-multi="true" aria-pressed="false">staying present-focused</button>
+                            <button class="care-chip" data-care-key="support" data-care-val="relationships" data-care-multi="true" aria-pressed="false">relationship help</button>
+                        </div>
+                    </div>
+
+                    <div class="care-step">
+                        <label class="care-step-label" id="label-format">setting</label>
+                        <p class="care-step-hint">Who would be in the room, and how?</p>
+                        <div class="care-chips" role="group" aria-labelledby="label-format">
+                            <button class="care-chip" data-care-key="format" data-care-val="individual" aria-pressed="false">individual</button>
+                            <button class="care-chip" data-care-key="format" data-care-val="couples"    aria-pressed="false">couples</button>
+                            <button class="care-chip" data-care-key="format" data-care-val="family"     aria-pressed="false">family</button>
+                            <button class="care-chip" data-care-key="format" data-care-val="open"       aria-pressed="false">open to anything</button>
+                        </div>
+                        <div class="care-chips" style="margin-top: 0.4rem;" role="group" aria-label="In-person or telehealth">
+                            <button class="care-chip" data-care-key="medium" data-care-val="in-person"  aria-pressed="false">in-person</button>
+                            <button class="care-chip" data-care-key="medium" data-care-val="telehealth" aria-pressed="false">telehealth</button>
+                            <button class="care-chip" data-care-key="medium" data-care-val="either"     aria-pressed="false">either works</button>
+                        </div>
+                    </div>
+
+                    <div class="care-step">
+                        <label class="care-step-label" id="label-readiness">where you are with this</label>
+                        <div class="care-chips" role="group" aria-labelledby="label-readiness">
+                            <button class="care-chip" data-care-key="readiness" data-care-val="ready"     aria-pressed="false">ready to start</button>
+                            <button class="care-chip" data-care-key="readiness" data-care-val="thinking"  aria-pressed="false">still thinking it through</button>
+                            <button class="care-chip" data-care-key="readiness" data-care-val="skeptical" aria-pressed="false">skeptical but curious</button>
+                            <button class="care-chip" data-care-key="readiness" data-care-val="suggested" aria-pressed="false">someone suggested it</button>
+                        </div>
+                    </div>
+
+                    <div class="care-step">
+                        <label class="care-step-label" for="care-note">one thing you'd want a therapist to know</label>
+                        <p class="care-step-hint">Optional. Anything that would help them understand where you're coming from.</p>
+                        <textarea
+                            id="care-note"
+                            class="care-textarea"
+                            data-care-key="note"
+                            rows="3"
+                            placeholder="Write anything — or leave this blank."
+                            aria-label="One thing you'd want a therapist to know"></textarea>
+                    </div>
+
+                    <div class="care-form-actions">
+                        <button class="operator-chip" data-care-generate disabled>@ generate care profile</button>
+                        <button class="operator-chip" data-care-reset style="opacity: 0.68;">~ clear</button>
+                    </div>
+
+                    <div data-care-output hidden></div>
+
+                </div>
+
+                <p class="frame-note">Nothing you fill in here is sent anywhere. Your answers live in your browser's localStorage until you clear them. The profile card is yours to screenshot, save, or share however you want.</p>
             </section>
 
             <!-- ASK CARD & SUPPORT — kept honest, dignified, and tasteful -->
