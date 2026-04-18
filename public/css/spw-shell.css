@@ -268,8 +268,13 @@ main[data-spw-layout="atlas"] {
 main > article {
   display: flex;
   flex-direction: column;
-  gap: var(--page-stack-gap);
+  gap: var(--page-section-gap);
   touch-action: pan-y;
+}
+
+/* Gap handles section separation; prevent typography flow from double-spacing */
+main > article > * {
+  margin-block-start: 0;
 }
 
 main > :where(section, aside, nav, article, figure) + :where(section, aside, nav, article, figure) {
@@ -309,7 +314,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .site-hero {
   position: relative;
   display: grid;
-  gap: clamp(0.55rem, 1.6vw, 0.9rem);
+  gap: clamp(0.85rem, 1.8vw, 1.2rem);
   padding: var(--shell-hero-pad-block) var(--shell-hero-pad-inline);
   border: 1px solid var(--shell-panel-line);
   border-radius: var(--shell-panel-radius-loose);
@@ -874,73 +879,8 @@ main {
   padding-top: clamp(0.2rem, 0.8vw, 0.5rem);
 }
 
-/* Fallback frame header structures */
-.frame-topline,
-.frame-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.55rem 0.8rem;
-  min-width: 0;
-}
-
-.frame-topline {
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 88%, transparent);
-}
-
-.frame-sigil {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.7rem;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.frame-sigil:hover,
-.frame-sigil:focus-visible {
-  color: var(--active-op-color, var(--teal, #008080));
-  outline: none;
-}
-
-.spec-strip,
-.frame-operators {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem 0.55rem;
-  min-width: 0;
-}
-
-.spec-strip {
-  justify-content: flex-end;
-}
-
-.frame-operators {
-  margin-top: 0.2rem;
-}
-
-.frame-topline .spec-pill,
-.frame-operators .operator-chip {
-  max-width: 100%;
-}
-
-@media (max-width: 720px) {
-  .frame-topline,
-  .frame-heading {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .spec-strip {
-    justify-content: flex-start;
-  }
-}
+/* Frame header structures are owned by the components layer (spw-components.css).
+   No shell-layer fallbacks needed — components always overrides shell in cascade. */
 
 /* ==========================================================================
    12. A few targeted compatibility bridges

@@ -614,8 +614,8 @@ a.frame-card:is(:hover, :focus-visible),
    ========================================================================== */
 
 :where(.site-frame) {
-  --surface-gap: var(--surface-gap, var(--component-gap, 0.9rem));
-  --surface-padding: var(--surface-padding, var(--component-pad-loose, 1.15rem));
+  --surface-gap: var(--component-gap, 0.9rem);
+  --surface-padding: clamp(1.15rem, 2.5vw, 1.75rem);
 
   display: flex;
   flex-direction: column;
@@ -659,24 +659,24 @@ a.frame-card:is(:hover, :focus-visible),
 }
 
 .site-frame h2 {
-  font-size: clamp(1.05rem, 0.9rem + 1vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.1rem, 0.9rem + 1.1vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .site-frame h3 {
   font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
   font-weight: 600;
   line-height: 1.3;
-  letter-spacing: 0;
+  letter-spacing: -0.005em;
 }
 
 .site-lede,
 .page-lede {
   font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.58;
   opacity: 1;
 }
 
@@ -685,7 +685,7 @@ a.frame-card:is(:hover, :focus-visible),
    ========================================================================== */
 
 :where(.site-hero) {
-  gap: 1.1rem;
+  gap: clamp(1.1rem, 2vw, 1.5rem);
 }
 
 :where(.frame-topline, .frame-heading) {

@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • Component Glossary</title>
-    <meta name="description" content="A design hub utility covering the structural vocabulary of Spwashi components.">
+    <meta name="description" content="A design hub utility covering the structural vocabulary of Spwashi components — frames, cards, chips, strips, annotations, metamaterial states, and slot composition.">
     
     <link rel="canonical" href="https://spwashi.com/design/components/">
     <meta property="og:type" content="website"/>
@@ -86,6 +86,19 @@
                     A registry of the primary CSS abstractions used across the Spwashi architecture. Not every component needs an arbitrary name; reusing these patterns keeps the site legible to the renderer and accessible for inspection.
                 </p>
 
+                <nav class="frame-operators" aria-label="Component sections" style="margin-block: 1.5rem;">
+                    <a class="operator-chip" href="#structural-vocabulary">#&gt;blocks</a>
+                    <a class="operator-chip" href="#frame-internals">#&gt;frame internals</a>
+                    <a class="operator-chip" href="#chips-strips">#&gt;chips &amp; strips</a>
+                    <a class="operator-chip" href="#metamaterial-states">#&gt;material states</a>
+                    <a class="operator-chip" href="#inline-annotations">#&gt;inline notes</a>
+                    <a class="operator-chip" href="#interactive-physics-lab">#&gt;physics lab</a>
+                    <a class="operator-chip" href="#operator-intent-registry">#&gt;operators</a>
+                    <a class="operator-chip" href="#component-anatomy-slots">#&gt;anatomy</a>
+                    <a class="operator-chip" href="#brace-grammar-specimens">#&gt;braces</a>
+                    <a class="operator-chip" href="#data-attribute-decoration">#&gt;data attrs</a>
+                </nav>
+
                 <div class="frame-grid frame-grid--2up">
                     <article class="frame-panel">
                         <p class="frame-note">macro layout wrapper</p>
@@ -138,6 +151,270 @@
                         <h3>.image-study</h3>
                         <p>Usually combined with <code>.topic-photo-card</code>. Provides a rich frame for surfacing screenshots or artwork, complete with accent palettes and responsive projection hints.</p>
                     </article>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 Frame Internals: heading, topline, sigil, note, actions
+                 ============================================================ -->
+            <section class="site-frame" id="frame-internals" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#frame-internals">#&gt;"frame_internals"</a>
+                    <h2>Frame Internals</h2>
+                </div>
+                <p class="frame-note">Every <code>.site-frame</code> or <code>.frame-card</code> is composed from a fixed set of named slots. These are the sub-components available inside any frame-level container.</p>
+
+                <div class="frame-grid frame-grid--dense">
+
+                    <article class="frame-panel">
+                        <p class="frame-note">topline slot</p>
+                        <h3>.frame-topline</h3>
+                        <p>The compact header row sitting above the heading. Hosts sigils, pills, breadcrumbs, or mode switches. Rendered as a flex row with tight gap.</p>
+                        <div class="frame-topline" style="margin-top: 0.75rem; border: 1px dashed var(--line); border-radius: var(--component-radius-tight); padding: 0.4rem 0.6rem;">
+                            <span class="frame-sigil">#&gt;</span>
+                            <div class="spec-strip">
+                                <span class="spec-pill">live specimen</span>
+                                <span class="spec-pill">topline</span>
+                            </div>
+                        </div>
+                        <div class="code-block-wrapper" style="margin-top: 0.5rem;">
+<pre><code>&lt;div class="frame-topline"&gt;
+  &lt;a class="frame-sigil" href="#id"&gt;#&gt;label&lt;/a&gt;
+  &lt;div class="spec-strip"&gt;
+    &lt;span class="spec-pill"&gt;pill&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">heading slot</p>
+                        <h3>.frame-heading</h3>
+                        <p>The primary heading wrapper inside a frame. Contains <code>h1</code>–<code>h3</code> and an optional sigil anchor. Adds appropriate vertical rhythm and max-width capping.</p>
+                        <div style="margin-top: 0.75rem; border: 1px dashed var(--line); border-radius: var(--component-radius-tight); padding: 0.4rem 0.6rem;">
+                            <div class="frame-heading">
+                                <a class="frame-sigil" href="#frame-internals">^"heading_slot"</a>
+                                <h4 style="margin: 0;">Section Title</h4>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">anchor sigil</p>
+                        <h3>.frame-sigil</h3>
+                        <p>A small monospaced anchor that links to the section's own <code>id</code>. Visually marks the operator prefix (e.g. <code>#&gt;</code>, <code>^</code>, <code>?</code>) and gets colored by the operator token system.</p>
+                        <p style="margin-top: 0.5rem;">
+                            <a class="frame-sigil" href="#frame-internals">#&gt;"this_section"</a>
+                            &nbsp;&nbsp;
+                            <a class="frame-sigil" href="#operator-intent-registry">?"probe_section"</a>
+                            &nbsp;&nbsp;
+                            <a class="frame-sigil" href="#component-anatomy-slots">^"object_section"</a>
+                        </p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">contextual annotation</p>
+                        <h3>.frame-note</h3>
+                        <p>A subdued <code>p</code>-level label used for role clarifiers, context hints, or sub-captions. Renders at a smaller size with reduced opacity.</p>
+                        <p class="frame-note" style="margin-top: 0.5rem; border: 1px dashed var(--line); padding: 0.25rem 0.5rem; border-radius: 4px;">↑ this text is a live .frame-note specimen</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">action row slot</p>
+                        <h3>.frame-actions</h3>
+                        <p>The footer action row for a frame or card. Hosts operator chips and primary commit actions. Sits at the bottom of the card slot order.</p>
+                        <footer class="frame-actions" style="margin-top: 0.75rem; border-top: 1px solid var(--line); padding-top: 0.5rem;">
+                            <button class="operator-chip" data-spw-operator="action">@commit</button>
+                            <button class="operator-chip" data-spw-operator="probe">?inspect</button>
+                        </footer>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">operator navigation row</p>
+                        <h3>.frame-operators</h3>
+                        <p>A horizontal run of operator chips — commonly placed after a section's main content as its navigation footer. Distinct from <code>.frame-actions</code> in that it navigates rather than commits.</p>
+                        <nav class="frame-operators" aria-label="Demo" style="margin-top: 0.75rem;">
+                            <a class="operator-chip" href="/design/">#&gt;design</a>
+                            <a class="operator-chip" href="/topics/">~topics</a>
+                        </nav>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 Chips & Strips: spec-pill, spec-strip, meta-chip, info-chip
+                 ============================================================ -->
+            <section class="site-frame" id="chips-strips" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#chips-strips">#&gt;"chips_strips"</a>
+                    <h2>Chips &amp; Strips</h2>
+                </div>
+                <p class="frame-note">Inline labels, status badges, and horizontal runs of metadata. These are the smallest named vocabulary units.</p>
+
+                <div class="frame-grid frame-grid--dense">
+
+                    <article class="frame-panel">
+                        <p class="frame-note">metadata label</p>
+                        <h3>.spec-pill</h3>
+                        <p>A small rounded badge used to annotate content type, status, or topic. Used inside <code>.spec-strip</code> for horizontal runs.</p>
+                        <p style="margin-top: 0.75rem; display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                            <span class="spec-pill">reading</span>
+                            <span class="spec-pill">analysis</span>
+                            <span class="spec-pill is-active" aria-current="true">active</span>
+                        </p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">horizontal pill run</p>
+                        <h3>.spec-strip</h3>
+                        <p>A flex row of spec-pills. Used in toplines, frame headings, and card headers to annotate context without taking layout space.</p>
+                        <div class="spec-strip" style="margin-top: 0.75rem;">
+                            <span class="spec-pill">structural</span>
+                            <span class="spec-pill">vocabulary</span>
+                            <span class="spec-pill">blocks</span>
+                        </div>
+                        <div class="code-block-wrapper" style="margin-top: 0.5rem;">
+<pre><code>&lt;div class="spec-strip"&gt;
+  &lt;span class="spec-pill"&gt;label&lt;/span&gt;
+  &lt;span class="spec-pill"&gt;label&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">contextual kicker</p>
+                        <h3>.spec-kicker</h3>
+                        <p>An all-caps label above the main <code>h1</code> on hero sections. Sets tone and topic family without competing with the heading hierarchy.</p>
+                        <p class="spec-kicker" style="margin-top: 0.75rem;">Component Type / Context</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">action verb strip</p>
+                        <h3>.plan-verb-strip</h3>
+                        <p>A strip variant focused on action verbs rather than labels. Used on planning and services pages where the reader needs to scan verbs quickly.</p>
+                        <div class="plan-verb-strip" style="margin-top: 0.75rem;">
+                            <span class="spec-pill">design</span>
+                            <span class="spec-pill">build</span>
+                            <span class="spec-pill">ship</span>
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">inline metadata badge</p>
+                        <h3>.meta-chip &amp; .info-chip</h3>
+                        <p>Contextual badges for inline use within prose or cards. <code>.meta-chip</code> carries content metadata (dates, counts); <code>.info-chip</code> signals supplemental information.</p>
+                        <p style="margin-top: 0.75rem; display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;">
+                            <span class="meta-chip">2026-04</span>
+                            <span class="info-chip">draft</span>
+                            <span class="page-chip">~reference</span>
+                        </p>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 Metamaterial States: glass / paper / matte / field side by side
+                 ============================================================ -->
+            <section class="site-frame" id="metamaterial-states" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#metamaterial-states">^"metamaterial_states"</a>
+                    <h2>Metamaterial States</h2>
+                </div>
+                <p class="frame-note">Any <code>.frame-card</code> or <code>.frame-panel</code> can receive a <code>data-spw-metamaterial</code> attribute to shift its visual posture. These are the four primary states.</p>
+
+                <div class="frame-grid frame-grid--2up">
+
+                    <article class="frame-card" data-spw-metamaterial="glass">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">#&gt;</span>
+                            <div class="spec-strip"><span class="spec-pill">glass</span></div>
+                        </header>
+                        <div class="frame-heading"><h3>Glass</h3></div>
+                        <p>Translucent with <code>backdrop-filter: blur</code>. Default interactive surface. Implies legibility over background content.</p>
+                        <div class="code-block-wrapper">
+<pre><code>data-spw-metamaterial="glass"</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-card" data-spw-metamaterial="paper">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">#&gt;</span>
+                            <div class="spec-strip"><span class="spec-pill">paper</span></div>
+                        </header>
+                        <div class="frame-heading"><h3>Paper</h3></div>
+                        <p>Warm opaque surface. Signals a reading posture — settled, uninterrupted. No blur, no transparency.</p>
+                        <div class="code-block-wrapper">
+<pre><code>data-spw-metamaterial="paper"</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-card" data-spw-metamaterial="matte">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">#&gt;</span>
+                            <div class="spec-strip"><span class="spec-pill">matte</span></div>
+                        </header>
+                        <div class="frame-heading"><h3>Matte</h3></div>
+                        <p>Flat, structural. Used for reference grids and documentation panels. Reduced shadow and border emphasis.</p>
+                        <div class="code-block-wrapper">
+<pre><code>data-spw-metamaterial="matte"</code></pre>
+                        </div>
+                    </article>
+
+                    <article class="frame-card" data-spw-metamaterial="field">
+                        <header class="frame-topline">
+                            <span class="frame-sigil">#&gt;</span>
+                            <div class="spec-strip"><span class="spec-pill">field</span></div>
+                        </header>
+                        <div class="frame-heading"><h3>Field</h3></div>
+                        <p>High-contrast bounded zone for active widgets, inputs, and tunable controls. Visible boundary, ready to react.</p>
+                        <div class="code-block-wrapper">
+<pre><code>data-spw-metamaterial="field"</code></pre>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 Inline Annotations: inline-note, editorial-note
+                 ============================================================ -->
+            <section class="site-frame" id="inline-annotations" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#inline-annotations">~"inline_annotations"</a>
+                    <h2>Inline Annotations</h2>
+                </div>
+                <p class="frame-note">Prose-level sidenotes and callouts that don't require a card or panel. These live inside content flow without breaking the reading rhythm.</p>
+
+                <div class="frame-grid frame-grid--dense">
+
+                    <article class="frame-panel">
+                        <p class="frame-note">sidenote</p>
+                        <h3>.inline-note</h3>
+                        <p>A bordered aside with a <code>::before</code> marker. Used to highlight caveats, implementation details, or process notes without interrupting the main argument.</p>
+                        <div class="inline-note" style="margin-top: 0.75rem;">
+                            This is a live <code>.inline-note</code> specimen. It gets a left-border marker and reduced-opacity prose styling. Use for caveats or technical asides.
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">editorial callout</p>
+                        <h3>.inline-note.editorial-note</h3>
+                        <p>A variant of <code>.inline-note</code> for editorial voice — opinions, author perspective, or contextual framing. Distinct tone from the neutral sidenote.</p>
+                        <div class="inline-note editorial-note" style="margin-top: 0.75rem;">
+                            This is an <code>.editorial-note</code>. It carries a slightly different visual register to signal that the text is the author's voice, not instructional content.
+                        </div>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">spacing variants</p>
+                        <h3>.inline-note spacing</h3>
+                        <p>Both spacing variants control the note's block padding via the <code>data-spw-spacing</code> attribute:</p>
+                        <div class="inline-note" data-spw-spacing="tight" style="margin-top: 0.5rem;"><code>data-spw-spacing="tight"</code> — minimal padding</div>
+                        <div class="inline-note" data-spw-spacing="loose" style="margin-top: 0.5rem;"><code>data-spw-spacing="loose"</code> — generous padding</div>
+                    </article>
+
                 </div>
             </section>
 
