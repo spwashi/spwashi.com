@@ -1,0 +1,255 @@
+# wip - typescript-integration
+# Branch: main
+# Started: 2026-04-18
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/typescript-integration/PLAN.md"
+ @site: ~".spw/site.spw"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @build: ~"scripts/build.mjs"
+ @catalog: ~"scripts/generate-design-catalog.mjs"
+ @contracts: ~"scripts/site-contracts.mjs"
+ @dev_server: ~"scripts/dev-server.mjs"
+ @runtime: ~"public/js/site.js"
+ @settings: ~"public/js/site-settings.js"
+ @metadata: ~"public/js/spw-page-metadata.js"
+ @shared: ~"public/js/spw-shared.js"
+ @pkg: ~"package.json"
+}
+
+^["intent"]{
+ ~#goal: "Introduce TypeScript as a contract language for the site's build/export path, design-catalog documentation, route/runtime manifests, composable chunk and layer semantics, and the largest registry-shaped runtime surfaces without forcing the public site into a browser-first bundler workflow."
+ ~#taste: "typed where it clarifies, hand-authored where it breathes"
+}
+
+^["development"]{
+ lane: #contract_hardening
+ ladder: #tooling_to_runtime
+ develops: [#scripts_first_typescript, #typed_catalog, #typed_manifest, #runtime_registry_shape, #settings_contracts, #chunk_layer_identity, #release_traditions]
+ review_surfaces: [@plan, @site, @semantics, @build, @catalog, @contracts, @dev_server, @runtime, @settings, @metadata, @shared]
+}
+
+^["concept_index"]{
+ primary: [#scripts_first_typescript, #typed_catalog_schema, #typed_manifest_schema, #browser_contract_hardening, #phased_migration, #composable_chunk, #named_release, #familiar_hash]
+ surfaces: [#build_export, #design_catalog, #route_manifest, #dev_server, #runtime_registry, #settings_model, #page_metadata, #operator_registry, #layered_output, #whitelabel_variant]
+ tensions: [#type_safety_vs_build_weight, #jsdoc_vs_ts_files, #site_vs_workbench, #scripts_vs_browser_first, #incrementalism_vs_cleanup, #opaque_hash_vs_familiar_identity, #forked_branding_vs_layered_whitelabel]
+ transfers: [#schema, #normalization, #closed_string_set, #runtime_contract, #documentation_surface, #editor_inspection, #chunk_identity, #release_identity, #hash_provenance]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? identify which repo surfaces already behave like schemas but are only implicitly typed",
+  "< type the Node-side pipelines that already publish site truth",
+  "$ extract reusable schema modules for catalog, manifest, and build output",
+  "$ define chunk and layer identities before defining hash rituals",
+  "^ harden large browser registries with JSDoc typedefs and normalization",
+  "% convert only the surfaces that keep paying rent",
+  "& delay any browser compile step until a specific runtime seam justifies it"
+ ]
+ gates: [#typed_catalog_truth, #typed_manifest_truth, #script_project_scope, #runtime_migration_cost, #site_model_preservation, #chunk_boundary_truth, #release_identity_clarity]
+}
+
+^["parallel_work"]{
+ critical_path: [#script_project_scope, #catalog_schema_extraction, #manifest_schema_extraction, #execution_strategy, #runtime_contract_targets, #chunk_layer_schema, #release_identity_schema]
+ parallelizable: [#settings_shape_inventory, #runtime_registry_inventory, #validation_contract_design, #whitelabel_variant_inventory]
+ shared_hot_files: ["scripts/build.mjs", "scripts/generate-design-catalog.mjs", "scripts/site-contracts.mjs", "scripts/dev-server.mjs", "public/js/site.js", "public/js/site-settings.js", "public/js/spw-page-metadata.js", "public/js/spw-shared.js", "package.json"]
+ merge_risks: [#tooling_churn, #config_scope_bleed, #premature_browser_compile, #unstable_chunk_ids, #brand_fork_drift]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@site, @semantics, @style_development]
+ carries: [#migration_map, #risk_model, #phase_register, #typed_surface_policy]
+}
+
+^["phase_register"]{
+ foundation: {
+  order: "1"
+  goal: "Create a TypeScript project boundary that targets repo-local scripts without dragging the browser runtime into the same config."
+  files: [@pkg, @build, @catalog, @contracts, @dev_server]
+  outputs: ["scoped TS config", "execution strategy decision", "typed shared script schemas"]
+  success: "Node-side tooling can be typechecked with minimal repo-wide noise."
+ }
+ documentation: {
+  order: "2"
+  goal: "Make the design catalog and route/runtime manifest outputs explicitly typed so attribute/token documentation gains a trustworthy schema."
+  files: [@catalog, @contracts, @build]
+  outputs: ["typed catalog records", "typed token/attribute maps", "typed route manifest structures"]
+  success: "The build/export path and contract docs agree on stable shapes."
+ }
+ chunk_release_semantics: {
+  order: "3"
+  goal: "Define composable chunk and layer identities so future whitelabel builds can carry both deterministic hashes and human-familiar release traditions."
+  files: [@build, @catalog, @contracts, @pkg]
+  outputs: ["typed chunk manifest", "typed layer manifest", "release identity schema", "hash provenance policy"]
+  success: "Build output identity becomes explainable as layered composition rather than opaque file churn."
+ }
+ runtime_hardening: {
+  order: "4"
+  goal: "Harden the largest browser registries with JSDoc typedefs, closed sets, and extracted contract helpers before broad .ts conversion."
+  files: [@runtime, @settings, @metadata, @shared]
+  outputs: ["registry typedefs", "normalized settings shapes", "explicit module and metadata contracts"]
+  success: "The riskiest browser-side shapes become legible without requiring a full runtime compile path."
+ }
+ optional_browser_typescript: {
+  order: "5"
+  goal: "Adopt a minimal browser-side TS path only if specific modules keep outgrowing JS-plus-JSDoc."
+  files: [@runtime, @settings, @metadata, @shared]
+  outputs: ["selected .ts modules", "minimal compile path", "preserved HTML entrypoint model"]
+  success: "Typed browser modules exist only where the extra machinery is clearly justified."
+ }
+}
+
+^["typed_surface_policy"]{
+ convert_early: {
+  targets: [@build, @catalog, @contracts, @dev_server]
+  reason: "These files already behave like data pipelines, parsers, and contract publishers."
+ }
+ extract_early: {
+  targets: ["chunk manifest types", "layer manifest types", "release identity types", "hash provenance helpers"]
+  reason: "Whitelabel-ready composition depends on explicit output identity, not only safer syntax."
+ }
+ harden_in_js_first: {
+  targets: [@runtime, @settings, @metadata, @shared]
+  reason: "These are large behavior-heavy files where contract extraction is safer than wholesale conversion."
+ }
+ avoid_for_now: {
+  surfaces: ["route HTML", "most small DOM-first modules", ".spw/_workbench TS config reuse"]
+  reason: "These surfaces either do not benefit enough from TypeScript yet or would distort the site's architecture."
+ }
+}
+
+^["invariants"]{
+ `The site stays hand-authored at the route level unless a separate explicit decision changes that.`,
+ `The first TypeScript boundary is repo-local Node tooling, not the public browser runtime.`,
+ `The design catalog remains the primary documentation seam for data attributes and CSS tokens; TypeScript should type its schema rather than replace its role.`,
+ `Composable chunks and layers must be declared semantically before their hashes become operationally important.`,
+ `Named releases and deterministic content hashes are complementary identities, not substitutes for one another.`,
+ `Whitelabel variants should compose from declared layers and chunks rather than from long-lived file forks.`,
+ `The workbench TypeScript setup is reference context, not default site build canon.`,
+ `No browser compile step is introduced only because types would be nice.`
+}
+
+^["migration_map"]{
+ script_shapes: [
+  "catalog attribute record",
+  "catalog token record",
+  "catalog CSS file record",
+  "route manifest entry",
+  "runtime module definition",
+  "build copy/filter rule",
+  "build result summary",
+  "chunk manifest entry",
+  "layer manifest entry",
+  "release identity record",
+  "hash provenance record"
+ ]
+ browser_shapes: [
+  "site.js module definition",
+  "region lifecycle record",
+  "settings payload",
+  "derived architectural modifiers",
+  "page metadata registry entry",
+  "operator definition"
+ ]
+ handoff_rule: "Type shared contracts first, then decide whether the owning behavior file still needs conversion."
+}
+
+^["risk_model"]{
+ hard_failures: [
+  "A repo-wide TS config floods unrelated files with noise before the intended migration target is stable.",
+  "The site starts inheriting workbench build assumptions and loses its local architecture.",
+  "Hash or release traditions harden before chunk and layer semantics exist, making output identity noisy and brittle."
+ ]
+ soft_failures: [
+  "The migration converts behavior-heavy browser files too early and spends energy on syntax churn instead of contract clarity.",
+  "A browser compile step arrives before the script/data pipeline is typed and justified.",
+  "The catalog and manifest gain TS wrappers but their underlying schema seams stay implicit.",
+  "Whitelabeling is treated as a naming pass instead of a layered composition system.",
+  "Only opaque hashes are preserved, so familiar named release traditions have nowhere to live."
+ ]
+ recoveries: [
+  "Scope TS to scripts first.",
+  "Extract shared schemas before converting behavior files.",
+  "Use JSDoc and normalization in browser JS until a stronger signal appears.",
+  "Define stable chunk ids and layer ids before optimizing hashing strategy."
+ ]
+ non_negotiables: [
+  "Do not force template generation onto authored routes as part of TypeScript adoption.",
+  "Do not adopt a browser bundler first just to make TypeScript available.",
+  "Do not let the documentation of tokens and data attributes drift away from the catalog surface that already scans them.",
+  "Do not make whitelabel output depend on manual file forks when chunk/layer composition can express the difference."
+ ]
+}
+
+^["validation"]{
+ hypotheses: [
+  "Typing the script pipeline will clarify the site's documentation and contract surfaces faster than converting browser files first.",
+  "JSDoc plus extracted contract helpers will catch more browser-shape ambiguity than a broad, early .ts conversion of large runtime files.",
+  "Stable chunk ids plus layer semantics will make future content hashes and named releases easier to reason about during whitelabel exports."
+ ]
+ negative_controls: [
+  "Existing route HTML remains hand-authored.",
+  "Existing build, catalog, and check commands remain the public validation loop.",
+  "Small DOM-first modules do not need immediate conversion.",
+  "A no-op rebuild should not churn output identities once chunk semantics are in place."
+ ]
+ demo_path: ["npm run build", "npm run catalog", "npm run check", "no-op rebuild hash stability check after chunk semantics land", "manual smoke on /, /settings/, and one design or topic route after runtime-contract changes"]
+}
+
+^["stream"]{
+ >>[2026-04-18 22:10] observe — the repo already has a static build entrypoint in scripts/build.mjs, so TypeScript integration no longer needs to invent a build surface before it can add typed contracts.
+ >>[2026-04-18 22:12] observe — generate-design-catalog.mjs already performs the documentation work for data-spw-* attributes and CSS tokens by scanning CSS, HTML, JS, and .spw surfaces. This makes the catalog schema the highest-value early TS seam.
+ >>[2026-04-18 22:14] observe — site-contracts.mjs already parses authored HTML and staged runtime definitions into a route/runtime manifest. It is a natural second schema target next to the catalog.
+ >>[2026-04-18 22:16] observe — the largest browser-side complexity still lives in site.js and site-settings.js. These files need contract hardening, but they are risky first-conversion targets because behavior and lifecycle concerns are dense.
+ >>[2026-04-18 22:18] decide — scripts-first TypeScript is the preferred migration order: build, catalog, manifest, then browser registries.
+ >>[2026-04-18 22:20] decide — treat JSDoc plus extracted contract helpers as the default first move for large browser runtime files instead of immediate .ts conversion.
+ >>[2026-04-18 22:22] decide — the workbench TS setup remains reference context only; the site should define its own narrower project boundary.
+ >>[2026-04-18 22:24] taste — typed contracts should make the repo feel more inspectable and compositional, not more framework-shaped. The right feeling is denser legibility, not industrial ceremony.
+ >>[2026-04-18 22:26] observe — future whitelabeling will care less about one monolithic build artifact and more about composable output layers whose identities remain legible across variants.
+ >>[2026-04-18 22:28] observe — if named releases or familiar hashes matter culturally, the build needs typed release and chunk metadata instead of treating hashes as an afterthought bolted onto file names.
+ >>[2026-04-18 22:30] decide — chunk and layer semantics should be typed before any sophisticated release-hash policy is introduced.
+ >>[2026-04-18 22:32] decide — named releases and deterministic hashes should coexist: one for human continuity, one for content truth.
+}
+
+^["open"]{
+ ?[execution_strategy]: "Should script-side TypeScript run through compiled output, a thin TS execution path for Node, or a hybrid that keeps deploy-time dependencies minimal?"
+ ?[schema_home]: "Where should shared catalog/manifest/build types live so they are reusable across scripts without becoming a fake application layer?"
+ ?[catalog_contract]: "Which design-catalog record types are stable enough to become explicit exported contracts first — attribute entries, token entries, CSS file entries, or all three together?"
+ ?[manifest_contract]: "How much of the route/runtime manifest should be typed at once — route entry only, runtime definitions only, or the entire generated document shape?"
+ ?[browser_boundary]: "Which runtime contract extractions pay off before any .ts conversion — module definition registry, settings payloads, page metadata entries, or operator definitions?"
+ ?[validation_scope]: "What is the narrowest useful TS validation command that proves the migration is real without turning every repo surface into a type target?"
+ ?[docs_seam]: "Should the design catalog remain the only generated documentation surface for tokens and attributes, or should the typed catalog schema also feed other inspectable outputs later?"
+ ?[conversion_threshold]: "What evidence should trigger Phase 4 for browser-side TS — repeated shape bugs, contract duplication, or a new runtime module family that clearly wants typed composition?"
+ ?[chunk_policy]: "What are the first stable chunk families for this repo — shell, semantics, brand, route cluster, runtime, or some other layer vocabulary?"
+ ?[release_tradition]: "How should named releases relate to deterministic content hashes — alias, annotation, channel, or parallel identity?"
+ ?[whitelabel_boundary]: "Which differences between whitelabel variants belong in declared overlays and which require distinct chunks?"
+ ?[familiar_hash]: "What makes a hash 'familiar' in this repo context — stable chunk naming, partial hash aliases, semantic hash labels, or remembered release handles?"
+}
+
+^["commits"]{
+ ~[1]: "#[plan] — add granular TypeScript integration plan and WIP ontology"
+ ~[2]: ".[ts] — scope TypeScript to repo-local scripts and define shared script schemas"
+ ~[3]: "&[catalog] — type the design-catalog pipeline and its attribute/token contracts"
+ ~[4]: "&[manifest] — type route/runtime manifest generation and build-facing contract seams"
+ ~[5]: "&[release] — define chunk/layer identity and named-release/hash provenance contracts"
+ ~[6]: ".[runtime] — harden browser registries with JSDoc typedefs and extracted contracts"
+ ~[7]: "![ts] — verify script validation loop, chunk identity stability, and browser-runtime boundaries"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@869d97af68d67278e2bbd1181bd00defff24b30c"
+ ~#hygiene_split: "none"
+ ~#files_hot: "scripts/build.mjs, scripts/generate-design-catalog.mjs, scripts/site-contracts.mjs, scripts/dev-server.mjs, public/js/site.js, public/js/site-settings.js, public/js/spw-page-metadata.js, public/js/spw-shared.js, package.json"
+ ~#next_commit: "1"
+ ~#open_count: "12"
+ ~#last_stream: "decide"
+ ~#taste_debt: "Do not let TypeScript adoption turn the site into a generic toolchain project. The density gain should come from sharper contracts, layered output identity, and better documentation seams, not from copying an app-stack ritual."
+}
+
+^["done"]{
+}
