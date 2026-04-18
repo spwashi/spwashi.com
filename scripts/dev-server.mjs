@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import process from 'node:process';
 
+import { renderTemplate } from './template.mjs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -12,16 +14,22 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 4173;
 const RELOAD_ENDPOINT = '/__spw/live-reload';
-const SUPPORTS_RECURSIVE_WATCH = process.platform === 'darwin' || process.platform === 'win32';
 
 const IGNORED_SEGMENTS = new Set([
   '.agents',
   '.git',
+  '.github',
   '.idea',
-  '.spw',
   '00.unsorted',
+  'dist',
   'node_modules',
 ]);
+
+const IGNORED_PREFIXES = [
+  '.spw/_workbench',
+  'public/images/renders/_raw',
+  'public/images/renders/_raw-2x2',
+];
 
 const MIME_TYPES = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -155,8 +163,10 @@ function shouldIgnorePath(targetPath) {
   const relativePath = path.relative(ROOT_DIR, targetPath);
   if (!relativePath || relativePath.startsWith('..')) return false;
 
+  const normalizedPath = toPosixPath(relativePath);
   const segments = relativePath.split(path.sep);
   if (segments.some((segment) => IGNORED_SEGMENTS.has(segment))) return true;
+  if (IGNORED_PREFIXES.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`))) return true;
 
   const baseName = path.basename(targetPath);
   return baseName === '.DS_Store' || baseName.endsWith('~');
@@ -318,23 +328,6 @@ async function watchTree(directoryPath) {
   }
 }
 
-function watchRecursively(directoryPath) {
-  if (watcherRegistry.has(directoryPath)) return;
-
-  const watcher = watchFs(directoryPath, { recursive: true }, (_eventType, fileName) => {
-    if (!fileName) return;
-    const nextPath = path.resolve(directoryPath, String(fileName));
-    if (shouldIgnorePath(nextPath)) return;
-    scheduleChangeBroadcast(toBrowserPath(nextPath));
-  });
-
-  watcher.on('error', (error) => {
-    console.warn(`[dev] Recursive watcher error at ${toBrowserPath(directoryPath)}: ${error.message}`);
-  });
-
-  watcherRegistry.set(directoryPath, watcher);
-}
-
 function closeWatchers() {
   for (const watcher of watcherRegistry.values()) {
     watcher.close();
@@ -343,11 +336,6 @@ function closeWatchers() {
 }
 
 async function startWatchers() {
-  if (SUPPORTS_RECURSIVE_WATCH) {
-    watchRecursively(ROOT_DIR);
-    return;
-  }
-
   await watchTree(ROOT_DIR);
 }
 
@@ -356,8 +344,15 @@ async function sendFile(request, response, filePath) {
   const contentType = MIME_TYPES.get(extension) || 'application/octet-stream';
 
   if (extension === '.html') {
-    const html = await fs.readFile(filePath, 'utf8');
-    const body = injectLiveReload(html);
+    const source = await fs.readFile(filePath, 'utf8');
+    let rendered = source;
+    try {
+      const result = await renderTemplate(source, { sourceLabel: toBrowserPath(filePath) });
+      rendered = result.output;
+    } catch (error) {
+      console.warn(`[dev] template render failed for ${toBrowserPath(filePath)}: ${error.message}`);
+    }
+    const body = injectLiveReload(rendered);
     response.writeHead(200, {
       'Cache-Control': 'no-store',
       'Content-Length': Buffer.byteLength(body),

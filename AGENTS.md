@@ -17,7 +17,7 @@
   - progressive-enhancement JS only when HTML/CSS cannot carry the behavior
   - `.spw` files when the concept or contract matters beyond one patch
 - Prefer minimal, surgical edits that preserve the existing hand-written HTML structure.
-- Keep pages framework-free unless explicitly requested; do not introduce build tooling or dependencies by default.
+- Keep pages framework-free unless explicitly requested; do not introduce runtime frameworks or client-side dependencies. A local-only build pipeline (`scripts/build.mjs`) and zero-dep introspection scripts are permitted — see the **Build pipeline** section below.
 - Preserve existing copy, links, analytics snippets, and metadata unless the task requires changing them.
 - If work spans multiple routes or shared layers, add or update a plan under `.agents/plans/<slug>/`.
 - If a new reusable semantic family, runtime state, or sitewide contract is introduced, update the relevant `.spw` surface and wire it into `.spw/site.spw` when needed.
@@ -43,6 +43,24 @@
 
 ## Scope
 - These instructions apply to the entire repository unless a nested `AGENTS.md` overrides them.
+
+---
+
+## Build pipeline
+
+As of 2026-04, the site publishes through a local build step rather than serving the repo directly. This is a deliberate deviation from the earlier "no build tooling" rule, driven by the need for traceability (design catalog), HTML composition, and a proper dev/publish separation.
+
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Local dev server (live reload, CSS hot-swap) serving the **source** tree. |
+| `npm run build` | Produces `dist/` — copy of the tracked deployable site surface with the design catalog regenerated and a `.nojekyll` marker. |
+| `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
+| `npm run manifest` | Regenerates the route runtime manifest. |
+| `npm run check` | Validates the site (pre-existing). |
+
+**Deploy:** `.github/workflows/deploy.yml` runs `npm run build` and publishes `dist/` to GitHub Pages on push to `main`. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review.
+
+**Design catalog:** `design/catalog/index.html` is a generated cross-reference of every site-facing `data-spw-*` attribute, custom-property token, CSS file, and `.spw` philosophy doc, with orphan detection. It excludes the installed workbench/tooling subtrees. See `scripts/generate-design-catalog.mjs`.
 
 ---
 
@@ -235,7 +253,7 @@ Add or update a plan under `.agents/plans/<slug>/` when:
 
 ### Do not
 - Modify `style.css` layer declaration order.
-- Add build tooling or npm dependencies.
+- Add client-side frameworks or runtime npm dependencies (the local-only build pipeline is fine — see the Build pipeline section).
 - Use `!important` outside the `ornament` layer.
 - Add inline styles except for JS-driven dynamic values.
 - Rename or move CSS files without updating the `@import` in `style.css`.
