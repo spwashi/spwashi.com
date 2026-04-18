@@ -1,12 +1,15 @@
 /**
  * Services Configurator (Enhanced)
  *
- * Weighted-field service tier resolver — four dimensions resolve to Fast / Standard / Premium.
+ * Weighted-field service tier resolver — four dimensions resolve to the
+ * creator / business / staff-level service registers.
  * Now dramatically more impressive while remaining dead-simple for first-time users.
  *
  * Core philosophy (exactly as requested):
- * • Easiest path = most reasonable defaults (loads resolved to Standard — the sweet spot for most visitors)
- * • Premium depth = optional power-user interactions (drag nodes, keyboard, shareable links, fine-tune sliders, export as Spw seed)
+ * • Easiest path = most reasonable defaults (loads resolved to Business Web — the
+ *   sweet spot for most visitors)
+ * • Deeper exploration = optional power-user interactions (drag nodes, keyboard,
+ *   shareable links, fine-tune sliders, export as Spw seed)
  * • Visual impact = cinematic SVG with subtle filters, live glows, smooth spring-like polygon animation, particle burst on resolution
  * • Lots of options = hidden advanced panel, “Inspire me” suggestions, lockable dimensions, real-time tier probability readout
  *
@@ -14,7 +17,7 @@
  * All original math, tiers, dimensions, and DOM classes are unchanged.
  *
  * New premium features:
- * • Default state resolves cleanly to Standard on load
+ * • Default state resolves cleanly to Business Web on load
  * • Drag nodes for continuous 0–1 values (premium mode)
  * • Keyboard: ←→ to select dimension, ↑↓ or Space to step, R to randomize
  * • “Inspire me” button with 6 curated configurations
@@ -47,7 +50,7 @@ const DIMS = [
         id: 'scope',
         label: 'scope',
         note: 'how much ground?',
-        home: '/services/#what-i-do',
+        home: '/services/systems/',
         steps: [
             { label: 'focused', value: 0, hint: 'one clear deliverable' },
             { label: 'growing', value: 0.5, hint: 'evolving scope' },
@@ -59,7 +62,7 @@ const DIMS = [
         id: 'depth',
         label: 'depth',
         note: 'how deep?',
-        home: '/services/#what-i-do',
+        home: '/services/systems/#staff',
         steps: [
             { label: 'surface', value: 0, hint: 'implementation layer' },
             { label: 'system', value: 0.5, hint: 'architecture involved' },
@@ -71,7 +74,7 @@ const DIMS = [
         id: 'tenure',
         label: 'tenure',
         note: 'project or partnership?',
-        home: '/services/#social-context',
+        home: '/services/ecosystem/',
         steps: [
             { label: 'project', value: 0, hint: 'defined beginning and end' },
             { label: 'season', value: 0.5, hint: 'several months' },
@@ -81,28 +84,40 @@ const DIMS = [
     },
 ];
 
-// ── Tier definitions (unchanged) ─────────────────────────────────────────────
+// ── Tier definitions ─────────────────────────────────────────────
 const TIERS = {
     fast: {
-        label: 'Fast',
-        price: '$700',
-        note: 'Scoped. Shipped.',
+        label: 'Creator Packages',
+        price: '$400–$1,500',
+        note: 'Covers. Formatting. Focus.',
         accent: 'hsl(188 72% 34%)',
-        paymentNote: 'One-time payment',
+        paymentNote: 'Priced competitively for authors and independent creatives.',
+        primaryHref: '/services/creator/',
+        primaryLabel: 'open creator work',
+        secondaryHref: '/services/#pricing',
+        secondaryLabel: 'review pricing',
     },
     standard: {
-        label: 'Standard',
-        price: '$200/mo',
-        note: 'Ongoing. Iterative.',
+        label: 'Business Web',
+        price: '$3,500–$8,000',
+        note: 'Web systems. Applications.',
         accent: 'hsl(36 72% 42%)',
-        paymentNote: '12-month engagement',
+        paymentNote: 'Engineered web services built for longevity.',
+        primaryHref: '/services/systems/',
+        primaryLabel: 'open systems work',
+        secondaryHref: '/services/#custom-quote',
+        secondaryLabel: 'request hybrid quote',
     },
     premium: {
-        label: 'Premium',
-        price: '$5,000',
+        label: 'Staff-Level Consulting',
+        price: '$15k or $150/hr',
         note: 'Full scope. Architecture.',
         accent: 'hsl(268 58% 42%)',
-        paymentNote: 'Outside production season',
+        paymentNote: 'Senior engineering rigor for complex problems.',
+        primaryHref: '/services/systems/#staff',
+        primaryLabel: 'open staff advisory',
+        secondaryHref: '/services/#custom-quote',
+        secondaryLabel: 'request hybrid quote',
     },
 };
 
@@ -149,7 +164,7 @@ class ServicesConfigurator {
         this.topTierFn = topTier;
         this.maxSteps = 10;
 
-        // Reasonable defaults — loads resolved to Standard (most common sweet spot)
+        // Reasonable defaults — loads resolved to Business Web (most common sweet spot)
         this.vals = {
             time: 0.33,   // months
             scope: 0.5,   // growing
@@ -348,12 +363,12 @@ class ServicesConfigurator {
         actions.className = 'svc-cta__actions';
 
         primary.className = 'svc-cta__btn svc-cta__btn--primary';
-        primary.href = '#ask-card';
-        primary.textContent = 'continue to ask card';
+        primary.href = '/services/systems/';
+        primary.textContent = 'open systems work';
 
         secondary.className = 'svc-cta__btn svc-cta__btn--secondary';
-        secondary.href = '#pricing';
-        secondary.textContent = 'review pricing';
+        secondary.href = '/services/#custom-quote';
+        secondary.textContent = 'request hybrid quote';
 
         actions.append(primary, secondary);
         el.append(title, note, reasoning, utility, actions);
@@ -366,7 +381,11 @@ class ServicesConfigurator {
                 title.textContent = `${tier.label} looks like the current fit.`;
                 note.textContent = `${tier.price} · ${tier.note}`;
                 reasoning.textContent = `Time, scope, depth, and tenure are currently leaning toward ${tier.label.toLowerCase()}.`;
-                utility.textContent = tier.paymentNote || 'Use the pricing section and ask card to turn this into a concrete next step.';
+                utility.textContent = tier.paymentNote || 'Use the matching service route or a custom quote to turn this into a concrete next step.';
+                primary.href = tier.primaryHref || '/services/';
+                primary.textContent = tier.primaryLabel || 'open matching route';
+                secondary.href = tier.secondaryHref || '/services/#custom-quote';
+                secondary.textContent = tier.secondaryLabel || 'request hybrid quote';
             },
             hide: () => {
                 el.hidden = true;
