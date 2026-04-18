@@ -1,0 +1,139 @@
+# wip - site-source-layout
+# Branch: main
+# Started: 2026-04-18
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/site-source-layout/PLAN.md"
+ @site_model: ~".spw/site.spw"
+ @surface_registry: ~".spw/surfaces.spw"
+ @agents_md: ~"AGENTS.md"
+ @build: ~"scripts/build.mjs"
+ @dev_server: ~"scripts/dev-server.mjs"
+ @template: ~"scripts/template.mjs"
+ @sitemap: ~"scripts/generate-sitemap.mjs"
+ @catalog: ~"scripts/generate-design-catalog.mjs"
+ @contracts: ~"scripts/site-contracts.mjs"
+ @pkg: ~"package.json"
+ @partials: ~"_partials"
+ @home: ~"index.html"
+ @public: ~"public"
+}
+
+^["intent"]{
+ ~#goal: "Reshape the repo around site/ as the authored website source tree, keep dist/ as generated deploy output, and keep scripts/.spw/.agents at the repo root so public source stops competing with project-control surfaces."
+ ~#taste: "clear boundaries, site-first naming, no fake framework ceremony"
+}
+
+^["development"]{
+ lane: #repo_clarity
+ ladder: #infrastructure
+ develops: [#site_source_root, #dist_boundary, #non_routable_authoring, #path_contracts]
+ review_surfaces: [@plan, @site_model, @surface_registry, @agents_md, @build, @dev_server, @template, @sitemap, @catalog, @contracts]
+}
+
+^["concept_index"]{
+ primary: [#site_over_src, #public_source_tree, #generated_output_boundary, #templates_inside_site, #phased_migration]
+ surfaces: [#routes, #shared_assets, #partials, #service_worker, #manifest, #build_pipeline, #dev_server, #catalog, #route_contracts, #spw_references]
+ tensions: [#clarity_vs_churn, #move_first_vs_path_first, #site_vs_repo_root, #docs_vs_public_content, #source_root_vs_public_url]
+ transfers: [#source_root, #path_resolution, #non_routable_directory, #deployment_parity, #inspection_surface]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? name the public boundary before moving files",
+  "< abstract site-root path logic in scripts before broad renames",
+  "$ move only publishable source into site/",
+  "^ restore build/dev/check parity before cleanup flourishes",
+  "% update .spw and agent-facing references after the new boundary is real",
+  "& add docs/ only if maintainer docs truly need their own home"
+ ]
+ gates: [#build_parity, #route_parity, #catalog_parity, #inspection_parity]
+}
+
+^["parallel_work"]{
+ critical_path: [#path_abstraction, #public_source_move, #build_dev_validation, #inspectable_reference_update]
+ parallelizable: [#template_home_decision, #docs_surface_decision, #path_helper_extraction]
+ shared_hot_files: ["scripts/build.mjs", "scripts/dev-server.mjs", "scripts/template.mjs", "scripts/generate-sitemap.mjs", "scripts/generate-design-catalog.mjs", "scripts/site-contracts.mjs", "AGENTS.md", ".spw/site.spw", ".spw/surfaces.spw"]
+ merge_risks: [#dirty_worktree, #broad_rename_patch, #mixed_root_assumptions]
+}
+
+^["supporting_documents"]{
+ must_ship: [@plan]
+ helpful: [@site_model, @surface_registry, @agents_md]
+ carries: [#migration_map, #path_inventory, #risk_register, #validation_loop]
+}
+
+^["phase_register"]{
+ path_abstraction: {
+  order: "1"
+  goal: "Teach the scripts that repo root and public site source root are different concepts before any broad move lands."
+  files: [@build, @dev_server, @template, @sitemap, @catalog, @contracts]
+  success: "The pipeline can resolve a dedicated site source directory without changing public URLs."
+ }
+ source_move: {
+  order: "2"
+  goal: "Move routes, partials, public assets, manifest, service worker, and other authored site files into site/."
+  files: [@partials, @home, @public]
+  success: "The public website lives under one source root."
+ }
+ parity_restore: {
+  order: "3"
+  goal: "Reconfirm build, dev, sitemap, catalog, and contract validation after the move."
+  files: [@build, @dev_server, @sitemap, @catalog, @contracts, @pkg]
+  success: "dist output and local serving preserve current route and asset behavior."
+ }
+ reference_update: {
+  order: "4"
+  goal: "Retarget inspectable and agent-facing references so future edits follow the new source root."
+  files: [@site_model, @surface_registry, @agents_md]
+  success: "Humans and tools both point at site/... rather than stale repo-root routes."
+ }
+}
+
+^["validation"]{
+ hypotheses: [
+  "site/ will make the repo easier to read without changing the public site model.",
+  "Path abstraction before moves will produce a cleaner migration than a pure rename-first patch.",
+  "Keeping templates and partials inside site/ will make the source boundary more legible than leaving them in scripts/ or repo root."
+ ]
+ negative_controls: [
+  "Public URLs remain unchanged.",
+  "dist/ remains the only generated deploy surface.",
+  "scripts/ stays at repo root.",
+  ".spw/ and .agents/ remain non-public repo surfaces."
+ ]
+ demo_path: ["npm run dev", "npm run build", "npm run check", "/", "/about/", "/blog/", "/topics/software/spw/operators/frame/", "/public/css/style.css", "/public/js/site.js", "/manifest.webmanifest", "/sw.js"]
+}
+
+^["stream"]{
+ >>[2026-04-18 09:40] observe — the repo root currently mixes public routes, shared assets, build tooling, agent notes, and editor-facing .spw surfaces, which makes the authored site boundary visually weak.
+ >>[2026-04-18 09:44] observe — build.mjs, dev-server.mjs, template.mjs, generate-sitemap.mjs, generate-design-catalog.mjs, and site-contracts.mjs all currently assume the repo root is also the public site source root.
+ >>[2026-04-18 09:47] decide — prefer site/ over src/ because the authored files are still website-shaped rather than compile-first application input.
+ >>[2026-04-18 09:50] decide — templates and partials belong inside the site source tree as non-routable authoring surfaces, starting with site/_partials/ and only adding site/_templates/ if full-page shells become a real seam.
+ >>[2026-04-18 09:53] decide — docs/ is optional and should stay reserved for maintainer documentation rather than public routes or template fragments.
+ >>[2026-04-18 09:57] risk — the current worktree already carries uncommitted edits in scripts/build.mjs and scripts/generate-sitemap.mjs, so migration work needs integration discipline rather than clean-slate rewrites.
+ >>[2026-04-18 10:00] decide — migrate in phases: path abstraction first, then source move, then parity validation, then .spw and AGENTS reference updates.
+}
+
+^["open"]{
+ ~[1]: "Should generate-design-catalog.mjs treat site/ as the primary public scan root while still reading .spw philosophy files from the repo root?"
+ ~[2]: "Does site/_templates/ provide immediate value, or should the repo stay with site/_partials/ until a real page-shell seam appears?"
+ ~[3]: "Should the scripts share a small path helper module once site-root logic exists in more than two places?"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main"
+ ~#rebased_at: ""
+ ~#hygiene_split: "existing uncommitted edits in scripts/build.mjs and scripts/generate-sitemap.mjs must be preserved during implementation"
+ ~#files_hot: "scripts/build.mjs, scripts/dev-server.mjs, scripts/template.mjs, scripts/generate-sitemap.mjs, scripts/generate-design-catalog.mjs, scripts/site-contracts.mjs, AGENTS.md, .spw/site.spw, .spw/surfaces.spw"
+ ~#next_commit: "1"
+ ~#open_count: "3"
+ ~#last_stream: "2026-04-18 10:00"
+ ~#taste_debt: "current repo root still overexposes public routes relative to project-control surfaces"
+}
+
+^["done"]{
+}
