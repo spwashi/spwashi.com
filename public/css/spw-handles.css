@@ -114,6 +114,7 @@ header,
    2. Shared handle primitive
    --------------------------------------------------------------------------
    The handle primitive is intentionally broad. Specific nouns bias from here.
+   Raw semantic attributes only get handle treatment on inline-capable tags.
    ========================================================================== */
 
 :where(
@@ -131,9 +132,7 @@ header,
   .spw-guide-chip,
   .persona-chip,
   [data-spw-handle="true"],
-  [data-spw-charge-key]:not(.site-frame):not(.frame-card),
-  [data-spw-inline-form]:not(.site-frame):not(.frame-card),
-  [data-spw-operator]:not(.site-frame):not(.frame-card)
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ) {
   position: relative;
   display: inline-flex;
@@ -168,10 +167,8 @@ header,
 :where(
   .syntax-token,
   .spw-delimiter,
-  [data-spw-charge-key],
-  [data-spw-operator],
-  [data-spw-inline-form]
-):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip):not(.site-frame):not(.frame-card) {
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
   min-height: auto;
   padding-inline: var(--handle-pad-inline-inline);
   padding-block: var(--handle-pad-block-inline);
@@ -431,7 +428,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
   .spw-delimiter,
   .operator-chip,
   [data-spw-handle="true"],
-  [data-spw-charge-key]
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, transparent);
   background: var(--handle-bg-active);
@@ -443,7 +440,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
   transform: none;
 }
 
-:where(.syntax-token, .spw-delimiter, [data-spw-charge-key], [data-spw-inline-form]):hover {
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):hover {
   transform: none;
 }
 
@@ -456,8 +457,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 :where(
   .syntax-token,
   .spw-delimiter,
-  [data-spw-charge-key],
-  [data-spw-inline-form]
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
@@ -469,14 +469,13 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 :where(
   .syntax-token,
   .spw-delimiter,
-  [data-spw-charge-key],
-  [data-spw-inline-form]
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip):is(:hover, :focus-visible) {
   text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
-:where(em .syntax-token, em .spw-delimiter, em [data-spw-charge-key], em [data-spw-inline-form]),
-:where(i .syntax-token, i .spw-delimiter, i [data-spw-charge-key], i [data-spw-inline-form]) {
+:where(em .syntax-token, em .spw-delimiter, em :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])),
+:where(i .syntax-token, i .spw-delimiter, i :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])) {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }

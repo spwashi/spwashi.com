@@ -320,13 +320,6 @@
   margin-top: 0.08rem;
 }
 
-:where(.topic-hero-grid) {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(min(100%, 19rem), 0.95fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
-  align-items: stretch;
-}
-
 :where(.topic-hero-copy) {
   display: grid;
   gap: 0.75rem;
@@ -840,10 +833,6 @@
 }
 
 @media (max-width: 860px) {
-  :where(.topic-hero-grid) {
-    grid-template-columns: 1fr;
-  }
-
   :where(.vibe-widget--feature) {
     grid-column: auto;
   }

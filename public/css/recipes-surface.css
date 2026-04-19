@@ -187,25 +187,26 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   text-wrap: balance;
 }
 
-:where(body[data-spw-surface="recipes"] #recipe-field > :is(p, .frame-note)) {
+:where(body[data-spw-surface="recipes"] #recipe-field .recipe-hero-copy > :is(p, .frame-note)) {
   max-width: 66ch;
 }
 
-:where(body[data-spw-surface="recipes"] #recipe-field > :is(.frame-topline, h1, p, .frame-note, figure, nav)) {
+:where(body[data-spw-surface="recipes"] #recipe-field > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"])) {
   min-width: 0;
 }
 
-:where(body[data-spw-surface="recipes"] #recipe-field .spec-strip) {
+:where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="header"] .spec-strip) {
   gap: 0.35rem;
 }
 
-:where(body[data-spw-surface="recipes"] #recipe-field .spec-pill) {
+:where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="header"] .spec-pill) {
   border-color: color-mix(in srgb, var(--recipes-line-strong) 30%, var(--recipes-line));
   background: color-mix(in srgb, var(--recipes-surface-strong) 94%, transparent);
 }
 
-:where(body[data-spw-surface="recipes"] #recipe-field .frame-operators) {
+:where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="actions"].frame-operators) {
   gap: 0.45rem 0.55rem;
+  margin-top: 0.1rem;
 }
 
 :where(body[data-spw-surface="recipes"] .recipe-hero-study) {
@@ -227,68 +228,18 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
 }
 
 @media (min-width: 70rem) {
-  :where(body[data-spw-surface="recipes"] #recipe-field) {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(0.85rem, 1.8vw, 1.2rem) clamp(0.95rem, 2vw, 1.35rem);
-    align-items: start;
-    align-content: start;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field > canvas) {
-    position: absolute;
-    inset: 0;
+  :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="figure"].recipe-hero-study) {
     width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field .frame-topline) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field h1) {
-    grid-column: 1 / span 6;
-    grid-row: 2;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field > .frame-note) {
-    grid-column: 1 / span 6;
-    grid-row: 3;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field > p:nth-of-type(2)) {
-    grid-column: 1 / span 6;
-    grid-row: 4;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field > p:nth-of-type(3)) {
-    grid-column: 1 / span 6;
-    grid-row: 5;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field .recipe-hero-study) {
-    grid-column: 8 / -1;
-    grid-row: 2 / span 3;
-    align-self: stretch;
-    width: 100%;
-  }
-
-  :where(body[data-spw-surface="recipes"] #recipe-field .frame-operators) {
-    grid-column: 1 / span 7;
-    grid-row: 6;
-    margin-top: 0.1rem;
   }
 }
 
 @media (max-width: 54rem) {
-  :where(body[data-spw-surface="recipes"] #recipe-field .frame-topline) {
+  :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="header"].frame-topline) {
     display: grid;
     gap: 0.7rem;
   }
 
-  :where(body[data-spw-surface="recipes"] #recipe-field .spec-strip) {
+  :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="header"] .spec-strip) {
     justify-content: flex-start;
   }
 }
