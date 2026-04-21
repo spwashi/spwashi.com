@@ -38,7 +38,25 @@ const SPW_PAGE_RE = /<spw-page\b([^>]*?)(?:\/>|>\s*<\/spw-page>)/i;
 const SPW_INCLUDE_RE = /<spw-include\b([^>]*?)(?:\/>|>\s*<\/spw-include>)/gi;
 const ATTR_RE = /([a-zA-Z][a-zA-Z0-9_:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s/>]+))/g;
 const VAR_RE = /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g;
+const HTML_OPEN_RE = /<html\b([^>]*)>/i;
+const BODY_OPEN_RE = /<body\b([^>]*)>/i;
+const HEAD_CLOSE_RE = /<\/head>/i;
+const PAGE_JSON_LD_RE = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*data-spw-generated=["']page["'][^>]*>([\s\S]*?)<\/script>/i;
 const MAX_INCLUDE_DEPTH = 8;
+
+const DERIVED_META_FIELDS = [
+  { attr: 'data-spw-surface', metaName: 'spw:surface', propertyName: 'spwSurface' },
+  { attr: 'data-spw-features', metaName: 'spw:features', propertyName: 'spwFeatures' },
+  { attr: 'data-spw-route-family', metaName: 'spw:route-family', propertyName: 'spwRouteFamily' },
+  { attr: 'data-spw-context', metaName: 'spw:context', propertyName: 'spwContext' },
+  { attr: 'data-spw-wonder', metaName: 'spw:wonder', propertyName: 'spwWonder' },
+  { attr: 'data-spw-page-family', metaName: 'spw:page-family', propertyName: 'spwPageFamily' },
+  { attr: 'data-spw-page-modes', metaName: 'spw:page-modes', propertyName: 'spwPageModes' },
+  { attr: 'data-spw-page-role', metaName: 'spw:page-role', propertyName: 'spwPageRole' },
+  { attr: 'data-spw-page-seed', metaName: 'spw:page-seed', propertyName: 'spwPageSeed' },
+  { attr: 'data-spw-related-routes', metaName: 'spw:related-routes', propertyName: 'spwRelatedRoutes' },
+  { attr: 'data-spw-layout', metaName: 'spw:layout', propertyName: 'spwLayout' },
+];
 
 function cloneRegex(pattern) {
   return new RegExp(pattern.source, pattern.flags);
@@ -166,19 +184,147 @@ function shouldProcess(text) {
   return /<spw-page\b/i.test(text) || /<spw-include\b/i.test(text);
 }
 
+function escapeJsonForScript(value) {
+  return JSON.stringify(value, null, 8).replace(/</g, '\\u003c');
+}
+
+function normalizeContent(value) {
+  return String(value ?? '').trim().replace(/\s+/g, ' ');
+}
+
+function parseDocumentSemanticMeta(source) {
+  const htmlMatch = source.match(HTML_OPEN_RE);
+  const bodyMatch = source.match(BODY_OPEN_RE);
+  if (!bodyMatch) return [];
+
+  const htmlAttrs = htmlMatch ? parseAttrs(htmlMatch[1]) : {};
+  const bodyAttrs = parseAttrs(bodyMatch[1]);
+  const entries = [];
+
+  for (const field of DERIVED_META_FIELDS) {
+    const rawValue = bodyAttrs[field.attr];
+    const value = normalizeContent(rawValue);
+    if (!value) continue;
+    entries.push({
+      metaName: field.metaName,
+      propertyName: field.propertyName,
+      value,
+    });
+  }
+
+  const lang = normalizeContent(htmlAttrs.lang);
+  if (lang) {
+    entries.push({
+      property: 'og:locale',
+      value: lang.toLowerCase() === 'en' ? 'en_US' : lang,
+    });
+    entries.push({
+      metaName: 'spw:lang',
+      propertyName: 'spwLang',
+      value: lang,
+    });
+  }
+
+  return entries;
+}
+
+function hasMetaTag(headHtml, { metaName, property }) {
+  if (metaName) {
+    const pattern = new RegExp(`<meta\\b[^>]*\\bname=["']${metaName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i');
+    return pattern.test(headHtml);
+  }
+  if (property) {
+    const pattern = new RegExp(`<meta\\b[^>]*\\bproperty=["']${property.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i');
+    return pattern.test(headHtml);
+  }
+  return false;
+}
+
+function injectDerivedMetaTags(source, entries) {
+  if (!entries.length || !HEAD_CLOSE_RE.test(source)) return source;
+
+  const headCloseMatch = source.match(HEAD_CLOSE_RE);
+  if (!headCloseMatch || headCloseMatch.index == null) return source;
+
+  const headSegment = source.slice(0, headCloseMatch.index);
+  const derivedTags = entries
+    .filter((entry) => !hasMetaTag(headSegment, entry))
+    .map((entry) => {
+      if (entry.property) {
+        return `    <meta property="${entry.property}" content="${htmlEscape(entry.value)}"/>`;
+      }
+      return `    <meta name="${entry.metaName}" content="${htmlEscape(entry.value)}"/>`;
+    });
+
+  if (!derivedTags.length) return source;
+
+  return source.replace(HEAD_CLOSE_RE, `${derivedTags.join('\n')}\n</head>`);
+}
+
+function enrichPageJsonLd(source, entries, warnings) {
+  if (!entries.length) return source;
+
+  return source.replace(PAGE_JSON_LD_RE, (fullMatch, jsonSource) => {
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonSource.trim());
+    } catch (error) {
+      warnings.push(`unable to parse page json-ld for metadata enrichment: ${error.message}`);
+      return fullMatch;
+    }
+
+    const additionalProperty = Array.isArray(parsed.additionalProperty) ? [...parsed.additionalProperty] : [];
+    const knownNames = new Set(
+      additionalProperty
+        .map((item) => (item && typeof item.name === 'string' ? item.name : null))
+        .filter(Boolean),
+    );
+
+    let changed = false;
+    for (const entry of entries) {
+      if (!entry.propertyName || knownNames.has(entry.propertyName)) continue;
+      additionalProperty.push({
+        '@type': 'PropertyValue',
+        name: entry.propertyName,
+        value: entry.value,
+      });
+      knownNames.add(entry.propertyName);
+      changed = true;
+    }
+
+    if (!changed) return fullMatch;
+
+    parsed.additionalProperty = additionalProperty;
+    return fullMatch.replace(jsonSource, `\n${escapeJsonForScript(parsed)}\n`);
+  });
+}
+
+function enhanceHtmlMetadata(source, warnings) {
+  if (!/<html\b/i.test(source) || !/<head\b/i.test(source) || !/<body\b/i.test(source)) {
+    return source;
+  }
+
+  const entries = parseDocumentSemanticMeta(source);
+  if (!entries.length) return source;
+
+  let output = injectDerivedMetaTags(source, entries);
+  output = enrichPageJsonLd(output, entries, warnings);
+  return output;
+}
+
 /**
  * Render a template source string to HTML.
  * Returns `{ output, vars, warnings }`. If the source is not a template,
  * `output === source` unchanged.
  */
 export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) {
-  if (!shouldProcess(source)) {
-    return { output: source, vars: {}, warnings: [] };
-  }
   const warnings = [];
+  if (!shouldProcess(source)) {
+    return { output: enhanceHtmlMetadata(source, warnings), vars: {}, warnings };
+  }
   const { vars, rest } = extractPageVars(source);
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
-  const output = substituteVars(expanded, vars, warnings);
+  const output = enhanceHtmlMetadata(substituteVars(expanded, vars, warnings), warnings);
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);
