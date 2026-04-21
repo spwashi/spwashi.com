@@ -156,6 +156,11 @@ tunable_parameters: .{
  sigma_min = .{ default = `0.3`, meaning = `Collection floor strength`, css_var = `--spw-collection-floor` }[reg=facet]
  wonder_memory_strength = .{ default = `0.56`, meaning = `Global multiplier on all field signals`, css_var = `--spw-wonder-memory-strength` }[reg=facet]
  wonder_memory_reach = .{ default = `0.54`, meaning = `How broadly influence spreads`, css_var = `--spw-wonder-memory-reach` }[reg=facet]
+ field_resonance_profile = .{
+  default = `field`
+  meaning = `User-facing discrete control over how far resonance travels and how quickly it decays.`
+  css_vars = `--attention-field-radius, --attention-field-decay, --attention-echo-duration, --spw-wonder-memory-reach`
+ }[reg=facet]
 }[reg=facet]
 
 open_questions: #[

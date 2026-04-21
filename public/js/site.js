@@ -1138,6 +1138,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'design-experiments',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-design-experiments-root]',
+    rootMode: 'single',
+    load: () => import('./design-experiments.js'),
+    mount: (mod) => {
+      const fn = mod?.initDesignExperiments;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'attention-architecture',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

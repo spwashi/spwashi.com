@@ -48,6 +48,8 @@ const CORE_ROUTES = [
   '/topics/craft/files/',
   '/topics/pedagogy/',
   '/design/website/',
+  '/design/experiments/css/',
+  '/design/experiments/svg/',
   '/topics/math/',
   '/topics/math/topology/',
   '/topics/math/symmetry/',
@@ -89,9 +91,11 @@ const CORE_ASSETS = [
 
   '/public/css/style.css',
   '/public/css/enhancements.css',
+  '/public/css/design-experiments.css',
 
   '/public/js/site.js',
   '/public/js/site-settings.js',
+  '/public/js/design-experiments.js',
   '/public/js/spw-palette-resonance.js',
   '/public/js/spw-math-diagrams.js',
   '/public/js/spw-contextual-ui.js',

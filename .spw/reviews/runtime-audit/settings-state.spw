@@ -109,6 +109,12 @@ brand_expression_contract: .{
    required_path = `Wonder memory parameters should be mutable only through the manager so that CSS variable derivation and downstream behavior remain consistent with the normalized settings field.`
    note = `CSS-variable consumption is currently a good seam here. The risk is in future write paths that might bypass the manager under the same pattern as brace-pivots.`
   }[reg=facet]
+  structural_grammar_profiles = .{
+   path = @settings
+   nature = `Contour profile, stroke profile, and field resonance are structural brand expression surfaces. They do not merely recolor the site; they retune how its edges, lines, and resonant carryover feel.`
+   required_path = `These grammar profiles should be mutated only through the canonical manager so that cards, SVG, wonder carryover, and settings readouts stay synchronized.`
+   note = `The design experiment routes are a good public home for these settings, but they should remain root-level runtime state rather than page-local lab memory.`
+  }[reg=facet]
  }[reg=facet]
  event_shape_as_brand_signal = .{
   claim = `The settings:changed event is not only a plumbing message — it is the moment when the site's most user-facing brand expression updates.`
@@ -116,7 +122,8 @@ brand_expression_contract: .{
   desired = `settings:changed should carry a canonical, full normalized object. Downstream brand expression consumers should treat a non-canonical shape as a diagnosable error, not a silent fallback.`
  }[reg=facet]
  brand_invariants = #[
-  `Palette resonance, theme pack, wonder memory parameters, and architectural modifiers are brand expression surfaces — they should be presented and documented differently from diagnostic or technical settings.`,
+ `Palette resonance, theme pack, wonder memory parameters, and architectural modifiers are brand expression surfaces — they should be presented and documented differently from diagnostic or technical settings.`,
+  `Contour profile, stroke profile, and field resonance are structural brand expression surfaces and should remain canonical root settings rather than experiment-local storage.`,
   `Theme pack should stay canonical, globally readable, and explicitly distinct from light/dark mode.`,
   `Every write to a brand expression surface must pass through the canonical manager so all downstream consumers update atomically.`,
   `The settings:changed event shape is a public contract for brand expression. It should be as stable as any other public API.`,

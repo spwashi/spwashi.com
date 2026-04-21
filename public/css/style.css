@@ -44,6 +44,7 @@
 @import url('/public/css/play-surface.css') layer(routes);
 @import url('/public/css/rpg-wednesday-surface.css') layer(routes);
 @import url('/public/css/tools-budgeting-surface.css') layer(routes);
+@import url('/public/css/design-experiments.css') layer(routes);
 
 @import url('/public/css/cognitive-handles.css') layer(handles);
 @import url('/public/css/spw-handles.css') layer(handles);

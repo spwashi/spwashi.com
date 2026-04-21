@@ -411,6 +411,7 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
   <title>Spwashi • Design Catalog</title>
   <meta name="description" content="Traceability catalog: data-spw-* attributes, CSS clusters, tokens, and philosophy docs, cross-referenced across the site-facing surfaces.">
   <meta name="robots" content="noindex">
+  <script type="module" src="/public/js/site.js?v=0.0.2"></script>
   <link rel="stylesheet" href="/public/css/style.css">
   <link rel="stylesheet" href="/design/catalog/catalog.css">
 </head>
@@ -421,6 +422,7 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
   data-spw-context="analysis"
   data-spw-wonder="traceability"
   data-spw-page-family="design"
+  data-spw-page-modes="inspect trace browse"
   data-spw-page-role="catalog"
   data-spw-layout="atlas">
 <main class="catalog-main">

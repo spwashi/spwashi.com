@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • SVG Experiments</title>
+    <meta name="description" content="A live SVG grammar lab for path weight, label spacing, and wonder-field carryover on Spwashi.">
+    <link rel="canonical" href="https://spwashi.com/design/experiments/svg/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • SVG Experiments"/>
+    <meta property="og:description" content="A live SVG grammar lab for path weight, label spacing, and wonder-field carryover on Spwashi."/>
+    <meta property="og:url" content="https://spwashi.com/design/experiments/svg/"/>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spwashi.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Design", "item": "https://spwashi.com/design/" },
+                { "@type": "ListItem", "position": 3, "name": "SVG Experiments", "item": "https://spwashi.com/design/experiments/svg/" }
+            ]
+        }
+    </script>
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console themes inspectability promptability svg-surfaces"
+    data-spw-route-family="design experiments systems"
+    data-spw-context="analysis"
+    data-spw-wonder="projection resonance locality"
+    data-spw-page-family="experiment-lab"
+    data-spw-page-modes="inspect tune compare carry"
+    data-spw-page-seed="page_design_experiments_svg"
+    data-spw-page-role="design-lab"
+    data-spw-layout="wide"
+    data-spw-related-routes="/design/|/design/website/|/design/experiments/css/|/settings/|/topics/software/renderers/">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a aria-current="page" href="/design/">Design</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/settings/">Settings</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>svg experiments</span>
+    </header>
+
+    <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
+        <article data-design-experiments-root data-spw-feature="design-experiments">
+            <section class="site-frame site-hero design-experiment-hero" id="svg-experiments" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="analysis">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="/design/">#&gt;design</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">path grammar</span>
+                        <span class="spec-pill">label grammar</span>
+                        <span class="spec-pill">shared field</span>
+                    </div>
+                </div>
+
+                <p class="spec-kicker">Design / Experiments / SVG</p>
+                <h1>SVG experiments should make the structure more legible, not escape the site's grammar.</h1>
+
+                <p>
+                    This route reuses the same contour, stroke, field, and wonder-memory settings from the CSS lab.
+                    The point is to feel when those values become diagram language: frame edge radius, path cadence,
+                    label spacing, and how much the graphic feels carried by the surrounding surface.
+                </p>
+
+                <nav class="design-experiment-actions" aria-label="Experiment routes">
+                    <a class="operator-chip" href="#diagram-bundles">~ bundles</a>
+                    <a class="operator-chip" href="#svg-specimens">^ specimens</a>
+                    <a class="operator-chip" href="#svg-token-register">? token register</a>
+                    <a class="operator-chip" href="/design/experiments/css/">open CSS experiments</a>
+                    <a class="operator-chip" href="/topics/software/renderers/">open renderers</a>
+                </nav>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="diagram-bundles" data-site-settings-scope data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#diagram-bundles">@ "svg_bundle_register"</a>
+                    <h2>Pick A Diagram Posture</h2>
+                </div>
+                <p class="frame-note">
+                    SVG is using the same root settings as the rest of the site, so a bundle here is also a bundle for nearby HTML cards and operators.
+                </p>
+
+                <div class="design-bundle-grid">
+                    <button
+                        class="design-bundle-btn"
+                        type="button"
+                        data-design-setting-bundle="contourProfile:tight;strokeProfile:hairline;fieldResonance:local;wonderMemory:off"
+                        data-design-bundle-label="Draft posture">
+                        <strong>Draft posture</strong>
+                        <span>Sharper edges, fine paths, and a local field that keeps the graphic analytical.</span>
+                    </button>
+                    <button
+                        class="design-bundle-btn"
+                        type="button"
+                        data-design-setting-bundle="contourProfile:balanced;strokeProfile:structural;fieldResonance:field;wonderMemory:nearby"
+                        data-design-bundle-label="Diagram posture">
+                        <strong>Diagram posture</strong>
+                        <span>The middle register: enough stroke authority to read, enough carryover to connect.</span>
+                    </button>
+                    <button
+                        class="design-bundle-btn"
+                        type="button"
+                        data-design-setting-bundle="contourProfile:soft;strokeProfile:bold;fieldResonance:choral;wonderMemory:sitewide"
+                        data-design-bundle-label="Orbit posture">
+                        <strong>Orbit posture</strong>
+                        <span>Broader edges, heavier paths, and wonder that keeps echoing after you leave the diagram.</span>
+                    </button>
+                </div>
+
+                <div class="design-experiment-state">
+                    <span class="spec-pill">contour: <span data-settings-state="contourProfile">Balanced</span></span>
+                    <span class="spec-pill">stroke: <span data-settings-state="strokeProfile">Structural</span></span>
+                    <span class="spec-pill">field: <span data-settings-state="fieldResonance">Field</span></span>
+                    <span class="spec-pill">memory: <span data-settings-state="wonderMemory">Connected</span></span>
+                </div>
+
+                <div class="design-specimen-grid">
+                    <article class="design-axis-card">
+                        <h3>Contour</h3>
+                        <p>Changes frame radius and how diagram hosts meet the page shell.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Contour profile choices">
+                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:tight">Tight</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:balanced">Balanced</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="contourProfile:soft">Soft</button>
+                        </div>
+                    </article>
+
+                    <article class="design-axis-card">
+                        <h3>Stroke</h3>
+                        <p>Controls path weight, node stroke, and how assertive the diagram feels.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Stroke profile choices">
+                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:hairline">Hairline</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:structural">Structural</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="strokeProfile:bold">Bold</button>
+                        </div>
+                    </article>
+
+                    <article class="design-axis-card">
+                        <h3>Field</h3>
+                        <p>Changes how much the diagram feels locally bounded versus carried into surrounding chips and links.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Field resonance choices">
+                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:local">Local</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:field">Field</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="fieldResonance:choral">Choral</button>
+                        </div>
+                    </article>
+
+                    <article class="design-axis-card">
+                        <h3>Wonder Memory</h3>
+                        <p>Uses the existing site memory setting so diagram traces can stay focused, nearby, or sitewide.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Wonder memory choices">
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                        </div>
+                    </article>
+                </div>
+
+                <p class="design-experiment-status" data-site-settings-status>These controls save locally and affect later routes.</p>
+                <div class="design-experiment-toolbar">
+                    <button class="operator-chip" type="button" data-site-settings-reset>reset authored defaults</button>
+                    <a class="operator-chip" href="/design/experiments/css/">compare against CSS</a>
+                    <a class="operator-chip" href="/settings/">inspect current runtime</a>
+                </div>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="svg-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#svg-specimens">^ "svg_specimens"</a>
+                    <h2>Diagram Surface Carryover</h2>
+                </div>
+                <p class="frame-note">
+                    The same grammar now affects path cadence, label spacing, and host contour. This is where SVG stops being an exception and becomes part of the same system.
+                </p>
+
+                <div class="design-specimen-grid design-specimen-grid--wide">
+                    <figure class="spw-svg-figure design-svg-stage" aria-labelledby="diagram-figure-title">
+                        <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 520" role="img" aria-labelledby="diagram-figure-title diagram-figure-desc">
+                            <title id="diagram-figure-title">Diagram posture specimen</title>
+                            <desc id="diagram-figure-desc">A staged diagram showing authored seed, contour grammar, stroke grammar, field resonance, and route carryover.</desc>
+
+                            <rect class="spw-svg-frame design-svg-frame-rect" x="18" y="18" width="924" height="484"></rect>
+                            <rect class="spw-svg-frame design-svg-frame-rect" x="52" y="72" width="856" height="382"></rect>
+
+                            <path class="spw-svg-flow spw-svg-flow--animated" d="M154 162 C238 126 304 124 388 162 S530 228 614 196 748 134 830 164"></path>
+                            <path class="spw-svg-flow spw-svg-flow--animated" d="M154 338 C236 370 318 368 402 330 S550 246 632 280 748 370 830 340"></path>
+                            <path class="spw-svg-flow" d="M230 252 H730"></path>
+
+                            <g class="op-node--frame">
+                                <rect class="spw-svg-node spw-svg-node--frame design-svg-node-rect" x="94" y="128" width="152" height="70"></rect>
+                                <text class="spw-svg-label" x="118" y="169">#&gt;authored_seed</text>
+                                <text class="spw-svg-note" x="118" y="190">base surface intent</text>
+                            </g>
+
+                            <g class="op-node--probe">
+                                <rect class="spw-svg-node spw-svg-node--probe design-svg-node-rect" x="314" y="124" width="182" height="78"></rect>
+                                <text class="spw-svg-label" x="338" y="168">? contour_profile</text>
+                                <text class="spw-svg-note" x="338" y="191">tight | balanced | soft</text>
+                            </g>
+
+                            <g class="op-node--binding">
+                                <rect class="spw-svg-node spw-svg-node--binding design-svg-node-rect" x="560" y="120" width="176" height="84"></rect>
+                                <text class="spw-svg-label" x="584" y="166">= stroke_profile</text>
+                                <text class="spw-svg-note" x="584" y="190">hairline | structural | bold</text>
+                            </g>
+
+                            <g class="op-node--surface">
+                                <rect class="spw-svg-node spw-svg-node--surface design-svg-node-rect" x="212" y="286" width="198" height="84"></rect>
+                                <text class="spw-svg-label" x="236" y="332">&gt; field_resonance</text>
+                                <text class="spw-svg-note" x="236" y="356">local | field | choral</text>
+                            </g>
+
+                            <g class="op-node--stream">
+                                <rect class="spw-svg-node spw-svg-node--stream design-svg-node-rect" x="542" y="286" width="224" height="84"></rect>
+                                <text class="spw-svg-label" x="566" y="332">* route_carryover</text>
+                                <text class="spw-svg-note" x="566" y="356">wonder memory persists</text>
+                            </g>
+
+                            <text class="spw-svg-note" x="76" y="56">diagram host responds to contour, stroke, and field settings from the same root state as the rest of the site</text>
+                            <text class="spw-svg-note" x="724" y="480">follow the tuned state into nearby routes</text>
+                        </svg>
+
+                        <figcaption>
+                            <p>The outer frame responds most clearly to contour profile. The paths and node seams respond most clearly to stroke profile. The felt carryover into neighboring links depends on field resonance plus wonder memory.</p>
+                        </figcaption>
+                    </figure>
+
+                    <div class="design-css-rail">
+                        <div class="design-svg-legend" aria-label="Diagram legend">
+                            <span class="spec-pill">frame = authored stance</span>
+                            <span class="spec-pill">probe = contour choice</span>
+                            <span class="spec-pill">binding = stroke choice</span>
+                            <span class="spec-pill">surface = field breadth</span>
+                            <span class="spec-pill">stream = route carryover</span>
+                        </div>
+
+                        <div class="design-svg-note-grid">
+                            <article class="design-reading-card">
+                                <h3>Read the host</h3>
+                                <p>If the diagram feels disconnected, inspect host contour first. SVG should not sit outside the site's surface family.</p>
+                            </article>
+                            <article class="design-reading-card">
+                                <h3>Read the path cadence</h3>
+                                <p>Dash cadence and line weight should change the felt rigor of the graphic without forcing a different ontology.</p>
+                            </article>
+                            <article class="design-reading-card">
+                                <h3>Read the carryover</h3>
+                                <p>Leave this page after tuning and see whether nearby routes still feel like the same instrument.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="svg-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#svg-token-register">? "svg_token_register"</a>
+                    <h2>Current Diagram Token Register</h2>
+                </div>
+                <p class="frame-note">
+                    These values are read from the root after the current settings have been applied.
+                </p>
+
+                <div class="design-token-grid">
+                    <article class="design-token-card">
+                        <h3><code>--spw-svg-stroke-scale</code></h3>
+                        <p>Multiplier applied to frame, node, and path stroke width.</p>
+                        <code class="design-token-value" data-design-token-value="--spw-svg-stroke-scale">1</code>
+                        <div class="design-token-meter" data-design-token-meter="--spw-svg-stroke-scale" data-design-token-max="1.5"></div>
+                    </article>
+                    <article class="design-token-card">
+                        <h3><code>--spw-svg-flow-dash</code></h3>
+                        <p>Dash cadence length for active flows.</p>
+                        <code class="design-token-value" data-design-token-value="--spw-svg-flow-dash">5</code>
+                        <div class="design-token-meter" data-design-token-meter="--spw-svg-flow-dash" data-design-token-max="10"></div>
+                    </article>
+                    <article class="design-token-card">
+                        <h3><code>--spw-svg-flow-gap</code></h3>
+                        <p>Gap between dashed segments.</p>
+                        <code class="design-token-value" data-design-token-value="--spw-svg-flow-gap">9</code>
+                        <div class="design-token-meter" data-design-token-meter="--spw-svg-flow-gap" data-design-token-max="12"></div>
+                    </article>
+                    <article class="design-token-card">
+                        <h3><code>--spw-svg-label-spacing</code></h3>
+                        <p>Letter spacing used by diagram labels.</p>
+                        <code class="design-token-value" data-design-token-value="--spw-svg-label-spacing">0.04em</code>
+                        <div class="design-token-meter" data-design-token-meter="--spw-svg-label-spacing" data-design-token-max="0.08"></div>
+                    </article>
+                    <article class="design-token-card">
+                        <h3><code>--line-thick</code></h3>
+                        <p>Structural node and seam weight.</p>
+                        <code class="design-token-value" data-design-token-value="--line-thick">2.5px</code>
+                        <div class="design-token-meter" data-design-token-meter="--line-thick" data-design-token-max="4"></div>
+                    </article>
+                    <article class="design-token-card">
+                        <h3><code>--attention-field-decay</code></h3>
+                        <p>How quickly resonance falls off from matching surfaces.</p>
+                        <code class="design-token-value" data-design-token-value="--attention-field-decay">0.65</code>
+                        <div class="design-token-meter" data-design-token-meter="--attention-field-decay" data-design-token-max="1"></div>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <p>Spwashi is the creator identity; this site is one of the surfaces around the work.</p>
+            <nav class="site-footer__nav" aria-label="Footer">
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/design/">Design</a>
+                <a href="/topics/">Topics</a>
+                <a href="/blog/">Blog</a>
+                <a href="/settings/">Settings</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

@@ -321,6 +321,12 @@
   --line-thick: 2.5px;
   --line-heavy: 3px;
 
+  /* Diagram-facing structural helpers */
+  --spw-svg-stroke-scale: 1;
+  --spw-svg-flow-dash: 5;
+  --spw-svg-flow-gap: 9;
+  --spw-svg-label-spacing: 0.04em;
+
   --line: rgba(var(--charcoal-rgb), 0.14);
   --line-strong: rgba(0, 128, 128, 0.34);
   --line-matte: rgba(var(--charcoal-rgb), 0.09);

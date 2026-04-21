@@ -186,6 +186,102 @@ const WONDER_MEMORY_PROFILE = Object.freeze({
   })
 });
 
+const CONTOUR_PROFILE = Object.freeze({
+  tight: Object.freeze({
+    shapeElement: '3px',
+    shapeComponent: '4px',
+    shapeSurface: '7px',
+    shapeFloating: '11px',
+    edgeSoftness: 0.16,
+    materialBlurPx: 4
+  }),
+  balanced: Object.freeze({
+    shapeElement: '4px',
+    shapeComponent: '5px',
+    shapeSurface: '8px',
+    shapeFloating: '12px',
+    edgeSoftness: 0.24,
+    materialBlurPx: 6
+  }),
+  soft: Object.freeze({
+    shapeElement: '6px',
+    shapeComponent: '8px',
+    shapeSurface: '12px',
+    shapeFloating: '18px',
+    edgeSoftness: 0.36,
+    materialBlurPx: 9
+  })
+});
+
+const FIELD_RESONANCE_PROFILE = Object.freeze({
+  local: Object.freeze({
+    attentionFieldRadius: 0.24,
+    attentionFieldDecay: 0.56,
+    attentionEchoDurationMs: 360,
+    regionFieldIntensity: 0.12,
+    materialBlurScale: 0.88,
+    wonderStrengthScale: 0.84,
+    wonderReachScale: 0.82
+  }),
+  field: Object.freeze({
+    attentionFieldRadius: 0.4,
+    attentionFieldDecay: 0.65,
+    attentionEchoDurationMs: 480,
+    regionFieldIntensity: 0.22,
+    materialBlurScale: 1,
+    wonderStrengthScale: 1,
+    wonderReachScale: 1
+  }),
+  choral: Object.freeze({
+    attentionFieldRadius: 0.72,
+    attentionFieldDecay: 0.8,
+    attentionEchoDurationMs: 620,
+    regionFieldIntensity: 0.42,
+    materialBlurScale: 1.18,
+    wonderStrengthScale: 1.18,
+    wonderReachScale: 1.24
+  })
+});
+
+const STROKE_PROFILE = Object.freeze({
+  hairline: Object.freeze({
+    lineMid: '1.15px',
+    lineThick: '2px',
+    lineHeavy: '2.5px',
+    boundaryRailWidth: '1px',
+    boundaryRailWidthStrong: '2px',
+    fixtureAnnotationWeight: 0.24,
+    svgStrokeScale: 0.9,
+    svgFlowDash: '4',
+    svgFlowGap: '11',
+    svgLabelSpacing: '0.06em'
+  }),
+  structural: Object.freeze({
+    lineMid: '1.5px',
+    lineThick: '2.5px',
+    lineHeavy: '3px',
+    boundaryRailWidth: '1px',
+    boundaryRailWidthStrong: '3px',
+    fixtureAnnotationWeight: 0.34,
+    svgStrokeScale: 1,
+    svgFlowDash: '5',
+    svgFlowGap: '9',
+    svgLabelSpacing: '0.04em'
+  }),
+  bold: Object.freeze({
+    lineMid: '1.85px',
+    lineThick: '3.2px',
+    lineHeavy: '3.8px',
+    boundaryRailWidth: '1.5px',
+    boundaryRailWidthStrong: '4px',
+    fixtureAnnotationWeight: 0.46,
+    svgStrokeScale: 1.12,
+    svgFlowDash: '7',
+    svgFlowGap: '7',
+    svgLabelSpacing: '0.02em'
+  })
+});
+
 const DEVELOPMENTAL_CLIMATES = Object.freeze({
   orient: Object.freeze({
     id: 'orient',
@@ -281,6 +377,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   componentDensity: 'soft',
   operatorSaturation: 'normal',
   animationIntensity: 'normal',
+  contourProfile: 'balanced',
+  strokeProfile: 'structural',
+  fieldResonance: 'field',
 
   debugMode: 'off',
   showFrameMetadata: 'off',
@@ -341,6 +440,9 @@ const SETTING_OPTIONS = Object.freeze({
   componentDensity: new Set(['dense', 'soft', 'roomy']),
   operatorSaturation: new Set(['muted', 'normal', 'vibrant']),
   animationIntensity: new Set(['reduced', 'normal', 'enhanced']),
+  contourProfile: new Set(['tight', 'balanced', 'soft']),
+  strokeProfile: new Set(['hairline', 'structural', 'bold']),
+  fieldResonance: new Set(['local', 'field', 'choral']),
 
   debugMode: new Set(['off', 'on']),
   showFrameMetadata: new Set(['off', 'on']),
@@ -393,6 +495,9 @@ const PRESETS = Object.freeze({
     themePack: 'neutral-paper',
     operatorSaturation: 'normal',
     animationIntensity: 'normal',
+    contourProfile: 'balanced',
+    strokeProfile: 'structural',
+    fieldResonance: 'local',
     grainIntensity: 'none',
     semanticDensity: 'minimal',
     operatorHighlighting: 'off',
@@ -423,6 +528,9 @@ const PRESETS = Object.freeze({
     themePack: 'electric-studio',
     operatorSaturation: 'vibrant',
     animationIntensity: 'enhanced',
+    contourProfile: 'soft',
+    strokeProfile: 'structural',
+    fieldResonance: 'choral',
     operatorHighlighting: 'on',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -447,6 +555,9 @@ const PRESETS = Object.freeze({
     consoleDisplay: 'expanded',
     themePack: 'glass-console',
     semanticDensity: 'rich',
+    contourProfile: 'tight',
+    strokeProfile: 'bold',
+    fieldResonance: 'field',
     operatorHighlighting: 'on',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -473,6 +584,9 @@ const PRESETS = Object.freeze({
     lineSpacing: 'loose',
     animationIntensity: 'reduced',
     animationThrottling: 'heavy',
+    contourProfile: 'balanced',
+    strokeProfile: 'bold',
+    fieldResonance: 'local',
     grainIntensity: 'none',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -506,6 +620,21 @@ const SETTING_VALUE_LABELS = Object.freeze({
     craft: 'Craft-led',
     software: 'Software-led',
     math: 'Math-led'
+  }),
+  contourProfile: Object.freeze({
+    tight: 'Tight',
+    balanced: 'Balanced',
+    soft: 'Soft'
+  }),
+  strokeProfile: Object.freeze({
+    hairline: 'Hairline',
+    structural: 'Structural',
+    bold: 'Bold'
+  }),
+  fieldResonance: Object.freeze({
+    local: 'Local',
+    field: 'Field',
+    choral: 'Choral'
   }),
   wonderMemory: Object.freeze({
     off: 'Focused',
@@ -730,6 +859,14 @@ const deriveArchitecturalModifiers = (settings) => {
   const relationalFactor = settings.relationalVisualization === 'on' ? 1 : 0;
   const metadataFactor = settings.showSemanticMetadata === 'on' ? 1 : 0;
   const wonderProfile = getWonderMemoryProfile(settings);
+  const contourProfile = CONTOUR_PROFILE[settings.contourProfile] || CONTOUR_PROFILE.balanced;
+  const strokeProfile = STROKE_PROFILE[settings.strokeProfile] || STROKE_PROFILE.structural;
+  const fieldResonance = FIELD_RESONANCE_PROFILE[settings.fieldResonance] || FIELD_RESONANCE_PROFILE.field;
+  const resolvedMaterialBlur = `${clampNumber(
+    contourProfile.materialBlurPx * fieldResonance.materialBlurScale,
+    2,
+    16
+  )}px`;
 
   const ecology = {
     clarity: clampNumber(climate.clarity * enhancementFactor, 0, 1),
@@ -779,11 +916,37 @@ const deriveArchitecturalModifiers = (settings) => {
       relationalFactor,
       metadataFactor
     }),
+    contour: Object.freeze({
+      shapeElement: contourProfile.shapeElement,
+      shapeComponent: contourProfile.shapeComponent,
+      shapeSurface: contourProfile.shapeSurface,
+      shapeFloating: contourProfile.shapeFloating,
+      edgeSoftness: contourProfile.edgeSoftness,
+      materialBlur: resolvedMaterialBlur
+    }),
+    stroke: Object.freeze({
+      lineMid: strokeProfile.lineMid,
+      lineThick: strokeProfile.lineThick,
+      lineHeavy: strokeProfile.lineHeavy,
+      boundaryRailWidth: strokeProfile.boundaryRailWidth,
+      boundaryRailWidthStrong: strokeProfile.boundaryRailWidthStrong,
+      fixtureAnnotationWeight: strokeProfile.fixtureAnnotationWeight,
+      svgStrokeScale: strokeProfile.svgStrokeScale,
+      svgFlowDash: strokeProfile.svgFlowDash,
+      svgFlowGap: strokeProfile.svgFlowGap,
+      svgLabelSpacing: strokeProfile.svgLabelSpacing
+    }),
+    field: Object.freeze({
+      radius: fieldResonance.attentionFieldRadius,
+      decay: fieldResonance.attentionFieldDecay,
+      echoDuration: `${fieldResonance.attentionEchoDurationMs}ms`,
+      regionFieldIntensity: fieldResonance.regionFieldIntensity
+    }),
     wonder: Object.freeze({
       mode: settings.wonderMemory,
-      strength: wonderProfile.strength,
+      strength: clampNumber(wonderProfile.strength * fieldResonance.wonderStrengthScale, 0, 2),
       ttlMs: wonderProfile.ttlMs,
-      reach: wonderProfile.reach
+      reach: clampNumber(wonderProfile.reach * fieldResonance.wonderReachScale, 0, 2)
     })
   });
 };
@@ -829,6 +992,9 @@ class SiteSettingsManager {
       spwComponentDensity: normalized.componentDensity,
       spwOperatorSaturation: normalized.operatorSaturation,
       spwAnimationIntensity: normalized.animationIntensity,
+      spwContourProfile: normalized.contourProfile,
+      spwStrokeProfile: normalized.strokeProfile,
+      spwFieldResonance: normalized.fieldResonance,
       spwDebugMode: normalized.debugMode,
       spwShowFrameMetadata: normalized.showFrameMetadata,
       spwVerboseLogging: normalized.verboseLogging,
@@ -885,6 +1051,26 @@ class SiteSettingsManager {
       '--spw-cognitive-handle-factor': modifiers.semantic.cognitiveFactor,
       '--spw-relational-factor': modifiers.semantic.relationalFactor,
       '--spw-semantic-metadata-factor': modifiers.semantic.metadataFactor,
+      '--shape-element': modifiers.contour.shapeElement,
+      '--shape-component': modifiers.contour.shapeComponent,
+      '--shape-surface': modifiers.contour.shapeSurface,
+      '--shape-floating': modifiers.contour.shapeFloating,
+      '--edge-softness': modifiers.contour.edgeSoftness,
+      '--material-blur': modifiers.contour.materialBlur,
+      '--line-mid': modifiers.stroke.lineMid,
+      '--line-thick': modifiers.stroke.lineThick,
+      '--line-heavy': modifiers.stroke.lineHeavy,
+      '--boundary-rail-width': modifiers.stroke.boundaryRailWidth,
+      '--boundary-rail-width-strong': modifiers.stroke.boundaryRailWidthStrong,
+      '--fixture-annotation-weight': modifiers.stroke.fixtureAnnotationWeight,
+      '--spw-svg-stroke-scale': modifiers.stroke.svgStrokeScale,
+      '--spw-svg-flow-dash': modifiers.stroke.svgFlowDash,
+      '--spw-svg-flow-gap': modifiers.stroke.svgFlowGap,
+      '--spw-svg-label-spacing': modifiers.stroke.svgLabelSpacing,
+      '--attention-field-radius': modifiers.field.radius,
+      '--attention-field-decay': modifiers.field.decay,
+      '--attention-echo-duration': modifiers.field.echoDuration,
+      '--spw-region-field-intensity': modifiers.field.regionFieldIntensity,
       '--spw-wonder-memory-strength': modifiers.wonder.strength,
       '--spw-wonder-memory-ttl-ms': modifiers.wonder.ttlMs,
       '--spw-wonder-memory-reach': modifiers.wonder.reach
