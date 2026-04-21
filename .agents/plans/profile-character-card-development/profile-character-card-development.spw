@@ -1,0 +1,110 @@
+# profile-character-card-development
+# Distilled semantic note for one shared card substrate projected through
+# profile, character, translation, and cast lenses.
+
+#>profile_character_card_development
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "The site's profile card, character sheet card, and future cast card should be understood as one card family with multiple lenses, not as unrelated tools that happen to share a renderer."
+ why: "The renderer and CSS already behave like a shared substrate. The missing piece is doctrine: what remains stable across the family, what changes by lens, how card development relates to notes, blobs, session memory, and public routes, and why cards are editorially useful beyond being export artifacts."
+}
+
+^["substrate"]{
+ definition: "A compact identity surface that can travel between contexts without losing its core structure."
+ stable_parts: [
+  "header",
+  "badges or clusters",
+  "sections",
+  "footer or links",
+  "development state",
+  "editorial hook"
+ ]
+ rule: "The substrate stays shared even when the projection context changes."
+}
+
+^["lenses"]{
+ profile: "Public/professional articulation of a person, their stance, and their fit."
+ character: "Imaginative articulation of a role, pressure, tradition, or world position."
+ translation: "A comparative lens for moving carefully between imaginative and professional language."
+ cast: "Campaign-memory reference for recurring RPG Wednesday figures."
+ rule: "Lens changes the projection and rhetoric, not the existence of the substrate."
+}
+
+^["distinctions"]{
+ profile_card: "Audience-facing and proof-aware."
+ character_card: "Pressure-facing and role-aware."
+ cast_card: "Recurrence-facing and canon-aware."
+ translation_card: "Bridge-facing and comparison-aware."
+ counterexample: "Treating every card as a résumé with fantasy flavor, or every character card as a résumé in disguise."
+}
+
+^["editorial_utility"]{
+ definition: "A card is a compact editorial reference for recurring identity."
+ jobs: [
+  "support route ledes and summaries",
+  "anchor repeated references across surfaces",
+  "preserve stance or pressure while prose changes",
+  "supply sidebar, related-surface, or callout material",
+  "reduce the need to restate a figure from scratch on every route",
+  "support future hired authors with a stable local briefing surface"
+ ]
+ rule: "A card should make writing easier by keeping a stable local identity model available."
+ counterexample: "A card looks polished but gives a writer no better handle on how to summarize or reuse the figure elsewhere."
+}
+
+^["author_handoff"]{
+ definition: "A card can serve as a compact briefing surface for collaborators or hired authors."
+ jobs: [
+  "state the active lens",
+  "preserve core identity and pressure",
+  "mark proof versus unresolvedness",
+  "protect voice and terminology from flattening",
+  "reduce onboarding cost for recurring figures"
+ ]
+ rule: "A card should shorten onboarding without pretending to replace route context or a full editorial brief."
+ counterexample: "An author receives only a card, no route goal or assignment context, and mistakes the card for a complete writing specification."
+}
+
+^["development_model"]{
+ steps: [
+  "residue or notes accumulate",
+  "a stable identity pattern becomes visible",
+  "a card is drafted under one lens",
+  "the card is revised for clarity, pressure, proof, or translation",
+  "the card becomes reusable in a route, export, or register"
+ ]
+ rule: "A card is a development surface before it is an export artifact."
+}
+
+^["source_seams"]{
+ blog_blob: "May sharpen a profile card by preserving reflective language, glosses, and public-facing articulation."
+ rpg_session_note: "May sharpen a cast card by preserving recurring beats, canon candidates, and consequences."
+ direct_authoring: "Some cards can still be authored directly in the tool without another intermediate object."
+}
+
+^["shared_semantics"]{
+ candidate_fields: [
+  "family",
+  "lens",
+  "status",
+  "development_state",
+  "relation_edges",
+  "editorial_role",
+  "summary_line",
+  "author_brief",
+  "voice_guard"
+ ]
+ note: "These fields clarify projection context and maturity without requiring separate renderers."
+}
+
+^["invariants"]{
+ "One card family can support multiple lenses without becoming conceptually vague.",
+ "Lens clarifies projection context rather than collapsing person, character, and cast into one audience.",
+ "Development state should reflect revision and maturity, not gamified progress.",
+ "Editorial utility should remain concrete: a card must help prose, summaries, or references travel.",
+ "Author utility should remain bounded: a card is a briefing aid, not a full assignment replacement.",
+ "Cast-card promotion should be earned by recurrence and narrative weight.",
+ "The shared renderer should remain coherent across routes."
+}
