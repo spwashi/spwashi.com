@@ -11,6 +11,7 @@ The deeper goal is to establish the blog as the public writing pipeline for the 
 - Raw input becomes a structured draft.
 - Spw operators can act as temporary scaffolds for thought without replacing prose.
 - Wonder stays present as a serious input, not decoration.
+- Some interpreted drafts should mature into durable blog blobs before they become posts.
 - Structured drafts can later become hand-written static posts.
 - The interpreter explains what it inferred instead of pretending to know.
 - The privacy boundary stays obvious: local interpretation first, no network dependency by default.
@@ -100,8 +101,16 @@ Draft lifecycle:
 3. Notice the inferred lens: wonder, Spw scaffold, or draft.
 4. Review the suggested title, summary, tags, questions, and outline.
 5. Copy the Spw seed into a planning or draft surface.
-6. Manually create a post route when the text is ready.
-7. Let only some drafts become posts; the route is allowed to be occasional.
+6. If the material remains alive after first review, promote it into a blog blob as the durable intermediate object.
+7. Revisit the blob as language, structure, and translation seams sharpen.
+8. Manually create a post route when the text is ready.
+9. Let only some drafts become posts; the route is allowed to be occasional.
+
+Intermediate object rule:
+
+- The seed is a compact next-step transport object.
+- The blog blob is a revisitable editorial body with identity, active lenses, unresolved questions, and possible projections.
+- A finished post is a public route artifact, not the only meaningful writing state.
 
 ## UX Requirements
 
@@ -143,6 +152,7 @@ Craft guard:
 - Do not touch unrelated `.spw/conventions/*` changes.
 - Avoid turning the blog into a dashboard; every output should help the next writing step.
 - Preserve the translation direction: wonder and Spw enter, readable language leaves.
+- Keep room for blobs to carry translation seams, glosses, and alternative framings before rhetoric hardens into final prose.
 
 ## Commit Plan
 
@@ -165,7 +175,8 @@ Fuzz strategy:
 
 ## Dependencies
 
-none
+- `.agents/plans/blog-blob-spw/PLAN.md` — defines the durable intermediate object between interpreter seed and post.
+- `.agents/plans/copy-localization/PLAN.md` — defines how blobs and later posts can preserve translation seams for future locale work.
 
 ## Failure Modes
 
@@ -203,6 +214,7 @@ Demo sequence:
 ## Open Questions
 
 - Should future published posts be hand-authored HTML only, or should Spw seeds become the canonical source?
+- Should the interpreter eventually emit a blog-blob scaffold in addition to the compact seed?
 - Should draft text ever persist locally, or should v1 intentionally avoid storage?
 - Should interpretation eventually support multiple lenses, such as `reader`, `editor`, `engineer`, and `publisher`?
 - Which kinds of wonder belong here, and which should remain private notes?

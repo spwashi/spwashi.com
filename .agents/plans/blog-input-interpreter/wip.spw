@@ -54,6 +54,7 @@
   "interpret locally",
   "review suggested structure",
   "copy Spw seed",
+  "promote live material into a blog blob when it needs durable revision space",
   "manually create post route when ready"
  ]
  future_routes: ["blog/YYYY-MM-DD-slug/index.html", "blog/YYYY-MM-DD-slug/post.spw"]
@@ -70,7 +71,7 @@
 ^["interaction_depth"]{
  subjects: [#pasted_text, #draft_signal, #reader_questions, #wonder_signal, #spw_scaffold]
  questions: [#what_is_this_about, #what_wonder_remains, #which_operator_gives_shape, #what_sentence_would_help, #what_sections_exist]
- qualities: [#clarity, #privacy, #incremental_value, #translation]
+ qualities: [#clarity, #privacy, #incremental_value, #translation, #blob_readiness]
 }
 
 ^["risk_model"]{
@@ -92,6 +93,7 @@
  >>[2026-04-10 07:22] revise - expanded plan from simple route into blog/publishing system: content model, privacy boundary, lifecycle, UX contract, PWA cache, and future post shape.
  >>[2026-04-10 07:28] implement - added blog route, local interpreter module, feature loader, scoped styles, PWA cache entries, manifest shortcut, Blog nav, and 2026 footers.
  >>[2026-04-10 07:38] refine - reframed the blog as an occasional synthesis surface where Spw and wonder become readable language.
+ >>[2026-04-21 10:43] connect - linked the interpreter lifecycle to the new blog-blob intermediate object and localization seam so seed and post are no longer the only modeled states.
 }
 
 ^["open"]{

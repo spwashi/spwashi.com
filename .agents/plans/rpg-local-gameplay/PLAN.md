@@ -4,7 +4,7 @@ Make the RPG Wednesday pages useful during gameplay through local-only browser s
 
 ## Goal
 
-RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current scene, party, initiative, clocks, quick notes, and session log seeds directly on the published pages without requiring a backend or build pipeline.
+RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current scene, party, initiative, clocks, quick notes, and session log seeds directly on the published pages without requiring a backend or build pipeline. Those seeds should be able to mature into RPG session notes before they harden into public session pages, cast memory, world memory, or arc records.
 
 Taste note: improve usefulness and trust. The feature should feel like a quiet table tool, not an app takeover; local data must be clearly local and easy to export or clear.
 
@@ -50,11 +50,14 @@ The canonical running version lives in `wip.spw`.
 
 ## Dependencies
 
-None for runtime execution. The existing PWA changes in the worktree also touch `sw.js` and `manifest.webmanifest`, so commit boundaries should be checked before staging.
+- `.agents/plans/rpg-session-notes/PLAN.md` — defines the durable intermediate object between gameplay capture and the public session ledger.
+
+None for runtime execution beyond the note above. The existing PWA changes in the worktree also touch `sw.js` and `manifest.webmanifest`, so commit boundaries should be checked before staging.
 
 ## Failure Modes
 
 - **Hard**: localStorage is unavailable and the kit silently fails.
+- **Hard**: recap seeds remain too thin to promote into session notes or public ledger entries, so campaign memory fragments instead of accumulating.
 - **Soft**: the kit feels too heavy for a campaign page or creates confusion about whether local notes are published.
 - **Non-negotiable**: no local gameplay data leaves the browser; the page remains readable without JavaScript; export/clear paths are visible.
 

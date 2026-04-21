@@ -25,7 +25,9 @@
  interpretation: "@local_heuristics"
  editorial_review: "?wonder + ?questions + ^outline"
  portable_seed: "^draft_seed"
+ durable_middle_state: ">blog_blob_when_material_stays_live"
  publication: ">manual_static_post_when_ready"
+ rule: "The seed points to the next move; the blob holds a revisitable editorial body before publication."
 }
 
 ^"future_post_shape"{
@@ -33,4 +35,9 @@
  source: "optional post.spw"
  anchors: ["#>post_frame", "^summary", "~related_surfaces", "?open_questions"]
  rule: "manual authoring remains canonical until a generator is explicitly designed"
+}
+
+^"translation_seam"{
+ role: "A future blob may preserve glosses, alternate phrasings, and unresolved operator vocabulary before prose stabilizes."
+ counterexample: "Waiting until the final post is frozen, then discovering translation questions too late to preserve the original conceptual options."
 }
