@@ -90,6 +90,58 @@
   margin-top: var(--space-md, 1rem);
 }
 
+:where(body[data-spw-surface="settings"] .settings-shortcuts) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card) {
+  display: grid;
+  gap: 0.28rem;
+  min-height: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--settings-accent) 16%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, var(--settings-accent-soft));
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  transition:
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card strong) {
+  color: var(--ink-strong, #090b0c);
+  font-size: var(--text-size-sm, 0.95rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card > span:last-child) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-kicker) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--settings-accent) 44%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+  outline: none;
+  transform: translateY(-1px);
+}
+
 /* ==========================================================================
    3. Settings Forms & Categories
    ========================================================================== */
@@ -102,12 +154,18 @@
   background: transparent;
   border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
   margin-bottom: var(--space-sm, 0.75rem);
+  scroll-margin-top: calc(var(--shell-header-height, 4rem) + 1rem);
   transition: border-color var(--duration-base, 180ms) var(--ease-mechanical, ease);
 }
 
 :where(body[data-spw-surface="settings"] .settings-category[open]) {
   border-color: var(--line-strong, rgba(0, 128, 128, 0.34));
   background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--settings-accent-soft));
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[data-settings-targeted="true"]) {
+  border-color: color-mix(in srgb, var(--settings-accent) 58%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--settings-accent) 14%, transparent);
 }
 
 :where(body[data-spw-surface="settings"] .settings-category-header) {

@@ -1905,7 +1905,68 @@ const initSiteSettingsBindings = () => {
   };
 };
 
-const initSiteSettingsPage = () => initSiteSettingsBindings();
+const syncSettingsCategoryTarget = () => {
+  const targeted = [...document.querySelectorAll('.settings-category[data-settings-targeted="true"]')];
+  targeted.forEach((node) => delete node.dataset.settingsTargeted);
+
+  if (!window.location.hash) return;
+
+  let target = null;
+  try {
+    target = document.querySelector(window.location.hash);
+  } catch {
+    target = null;
+  }
+
+  if (!(target instanceof HTMLElement)) return;
+
+  const category = target.matches('.settings-category')
+    ? target
+    : target.closest('.settings-category');
+
+  if (!(category instanceof HTMLDetailsElement)) return;
+
+  category.open = true;
+  category.dataset.settingsTargeted = 'true';
+};
+
+const initSettingsCategoryRouting = () => {
+  if (manager._settingsCategoryRouting) return manager._settingsCategoryRouting;
+
+  const handleHashChange = () => {
+    window.requestAnimationFrame(() => {
+      syncSettingsCategoryTarget();
+    });
+  };
+
+  manager._settingsCategoryRouting = {
+    cleanup() {
+      window.removeEventListener('hashchange', handleHashChange);
+      manager._settingsCategoryRouting = null;
+    }
+  };
+
+  window.addEventListener('hashchange', handleHashChange);
+  handleHashChange();
+
+  return manager._settingsCategoryRouting;
+};
+
+const initSiteSettingsPage = () => {
+  const bindings = initSiteSettingsBindings();
+  const routing = initSettingsCategoryRouting();
+
+  return {
+    cleanup() {
+      bindings?.cleanup?.();
+      routing?.cleanup?.();
+    },
+    refresh() {
+      bindings?.refresh?.();
+      syncSettingsCategoryTarget();
+    }
+  };
+};
 
 /* ==========================================================================
    10. PWA status

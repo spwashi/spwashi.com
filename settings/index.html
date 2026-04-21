@@ -413,11 +413,43 @@
                 <p class="frame-note">
                     Use this register when the quick-start cards are not enough. These controls expose the full local settings model; the maps further down explain the machinery only if you want to inspect it.
                 </p>
+                <div class="settings-shortcuts" data-spw-feature="settings-shortcuts">
+                    <a class="settings-shortcut-card" href="#appearance-settings">
+                        <span class="settings-shortcut-kicker">Start with atmosphere</span>
+                        <strong>Appearance</strong>
+                        <span>Color mode, theme pack, grain, and base surface feel.</span>
+                    </a>
+                    <a class="settings-shortcut-card" href="#typography-settings">
+                        <span class="settings-shortcut-kicker">Reading comfort</span>
+                        <strong>Typography</strong>
+                        <span>Type size, line spacing, and editorial reading mode.</span>
+                    </a>
+                    <a class="settings-shortcut-card" href="#accessibility-settings">
+                        <span class="settings-shortcut-kicker">Reduce friction</span>
+                        <strong>Accessibility</strong>
+                        <span>Motion, contrast, and stronger guidance cues.</span>
+                    </a>
+                    <a class="settings-shortcut-card" href="#chrome-settings">
+                        <span class="settings-shortcut-kicker">Quiet the shell</span>
+                        <strong>Interface Chrome</strong>
+                        <span>Header, footer, spec pills, and viewport activation.</span>
+                    </a>
+                    <a class="settings-shortcut-card" href="#semantic-settings">
+                        <span class="settings-shortcut-kicker">Explain the system</span>
+                        <strong>Semantic Detail</strong>
+                        <span>Metadata, handles, wonder memory, and relation cues.</span>
+                    </a>
+                    <a class="settings-shortcut-card" href="#runtime-diagnostics-settings">
+                        <span class="settings-shortcut-kicker">Inspect the machinery</span>
+                        <strong>Runtime Diagnostics</strong>
+                        <span>Console, traces, and bus-facing power-user controls.</span>
+                    </a>
+                </div>
 
                 <form class="settings-form" data-site-settings-form data-spw-feature="settings-runtime-form">
 
                     <!-- Appearance -->
-                    <details class="settings-category" open>
+                    <details class="settings-category" id="appearance-settings" open>
                         <summary class="settings-category-header">Appearance</summary>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
@@ -597,7 +629,7 @@
                     </details>
 
                     <!-- Typography -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="typography-settings">
                         <summary class="settings-category-header">Typography</summary>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
@@ -690,7 +722,7 @@
                     </details>
 
                     <!-- Accessibility -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="accessibility-settings">
                         <summary class="settings-category-header">Accessibility</summary>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
@@ -740,7 +772,7 @@
                     </details>
 
                     <!-- Interface Chrome -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="chrome-settings">
                         <summary class="settings-category-header">Interface Chrome</summary>
                         <div class="settings-grid">
                             <fieldset class="settings-fieldset">
@@ -844,7 +876,7 @@
                     </details>
 
                     <!-- Developmental Climate -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="climate-settings">
                         <summary class="settings-category-header">Developmental Climate</summary>
                         <p class="frame-note">
                             Climate changes how a surface leans as a learning system: entry, stabilization, relation,
@@ -911,7 +943,7 @@
                     </details>
 
                     <!-- Semantic Detail -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="semantic-settings">
                         <summary class="settings-category-header">Semantic Detail</summary>
                         <p class="frame-note">
                             These controls tune how much the site explains itself: density, operator presentation,
@@ -1155,7 +1187,7 @@
                     </details>
 
                     <!-- Internal Runtime / Bus -->
-                    <details class="settings-category">
+                    <details class="settings-category" id="runtime-diagnostics-settings">
                         <summary class="settings-category-header">Internal Runtime / Bus</summary>
                         <p class="frame-note">
                             Power-user diagnostics for runtime coordination. These do not change canonical event
@@ -1540,27 +1572,7 @@
             </section>
 
             <link rel="stylesheet" href="/public/css/payment-card.css">
-            <footer class="site-footer" role="contentinfo">
-                <div class="site-footer__inner">
-                    <div class="site-footer__identity">
-                        <a class="site-footer__brand" href="/">#&gt;spwashi</a>
-                        <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
-                    </div>
-        <nav class="site-footer__nav" aria-label="Footer">
-            <a href="/about/">About</a>
-            <a href="/topics/">Topics</a>
-            <a href="/topics/software/">Software</a>
-            <a href="/topics/math/">Math</a>
-            <a href="/topics/craft/">Craft</a>
-            <a href="/about/website/">Website</a>
-            <a href="/blog/">Blog</a>
-            <a href="/about/domains/lore.land/">lore.land</a>
-            <a href="/contact/">Contact</a>
-            <a href="/settings/">Settings</a>
-        </nav>
-                    <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
-                </div>
-            </footer>
+            <spw-include src="site-footer"></spw-include>
 </body>
 
 </html>
