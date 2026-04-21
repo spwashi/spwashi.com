@@ -1,0 +1,87 @@
+# blog-blob-spw
+# Distilled semantic note for a blog blob as a durable intermediate object
+# between local interpretation and published posts.
+
+#>blog_blob
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "A blog blob is a durable intermediate writing object: more bounded than a note, less finalized than a post, and semantically rich enough to revisit, translate, and project."
+ why: "The current blog model moves from raw input to local interpretation to seed to eventual post. That is useful, but it compresses too much editorial life into the gap between seed and publication. A blob gives that middle state an inspectable identity."
+}
+
+^["distinction"]{
+ note: "The blob exists because note, seed, draft, and post are not the same thing."
+ note_raw: "A raw note may still be ambient capture with no clear boundary."
+ seed: "A seed is a compact push toward a next move."
+ blob: "A blob is a revisitable body with internal charge and multiple possible futures."
+ post: "A post is a public projection whose rhetorical shape has stabilized enough to publish."
+}
+
+^["properties"]{
+ boundedness: "A blob has enough identity to be named and addressed."
+ unresolvedness: "A blob may still contain open questions, unstable wording, and competing lenses."
+ portability: "A blob should be portable across planning, translation, and publication surfaces."
+ inspectability: "A blob should expose what is active inside it: claim fragments, questions, source shards, and possible projections."
+ optionality: "A blob is available when helpful; it is not mandatory for every post."
+}
+
+^["holds"]{
+ candidate_fields: [
+  "provisional title",
+  "active lens or lenses",
+  "claim fragments",
+  "open questions",
+  "source shards or excerpts",
+  "Spw operator hints",
+  "possible route or domain relations",
+  "projection candidates",
+  "status markers such as live, cooling, or projected"
+ ]
+ rule: "The blob should hold enough semantic structure to support later editorial and translation choices without pretending to be final prose."
+}
+
+^["lifecycle"]{
+ raw_input: "@paste_or_capture"
+ interpretation: "@local_reading"
+ seed: "^draft_seed"
+ promotion: ">blog_blob"
+ projection: [">post", ">route_section", ">translation_surface", ">private_residue"]
+ rule: "Promotion into a blob happens when material remains alive after initial interpretation and deserves a durable middle state."
+}
+
+^["translation_value"]{
+ claim: "A blob may be a better translation seam than a finished post."
+ because: [
+  "it can preserve unresolved terms before rhetoric hardens",
+  "it can hold locale-specific glosses and alternate framings",
+  "it can separate literal understanding from public-facing restatement",
+  "it can keep operator and brace vocabulary questions visible"
+ ]
+ counterexample: "Waiting until final English prose is frozen, then attempting direct translation with no preserved seam for terminology or framing choices."
+}
+
+^["candidate_shape"]{
+ rule: "The shape should be inspectable and lightweight, not an executable runtime contract."
+ identity: .{ id = `stable semantic name`, title = `provisional or current title` }[reg=facet]
+ state: .{ status = `live|cooling|projected`, lenses = #[`wonder`, `spw`, `draft`, `translation`][reg=set] }[reg=facet]
+ contents: .{
+  claims = #[`active thought fragments`][reg=set]
+  questions = #[`unresolved editorial or conceptual questions`][reg=set]
+  shards = #[`quotations, fragments, or observations worth retaining`][reg=set]
+ }[reg=facet]
+ relations: .{
+  possible_posts = #[`future public projections`][reg=set]
+  related_routes = #[`topic or domain surfaces`][reg=set]
+  translation_notes = #[`glosses or locale seams`][reg=set]
+ }[reg=facet]
+}
+
+^["invariants"]{
+ "A blob is not just an untidy draft; it is a named intermediate object with editorial value.",
+ "A blob preserves unresolvedness without collapsing into vagueness.",
+ "A blob should make later projection easier, not bureaucratically harder.",
+ "Blob semantics should remain legible in plain language, not only in Spw doctrine.",
+ "A blob can feed localization and translation work without becoming the browser-facing format."
+}

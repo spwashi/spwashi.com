@@ -1,0 +1,104 @@
+# Copy Localization
+#
+# Local convention for translating site copy across locales while preserving
+# authored HTML structure and making Spw-specific translation seams inspectable.
+
+#>copy_localization
+#:semantics #!conventions
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "Localization on this site should be an authored projection from canonical copy units into locale-specific public language, not a late-stage string-replacement layer. The route HTML remains the structural source of truth, while translation policy, glosses, and unresolved seams stay inspectable through site-local conventions."
+ why: "This site is concept-heavy, tone-sensitive, and Spw-adjacent. A generic i18n table would preserve keys but lose the reasons certain phrases exist, why some operator terms should stay literal, and where a translation must become a restatement instead of a direct substitution."
+}
+
+^"core_entities"{
+ source_locale: "The canonical authoring locale for a copy unit. For the current site this is English, but the model should name the fact explicitly rather than assuming it implicitly."
+ locale: "A published language edition such as en or es."
+ copy_unit: "A stable authored unit of translatable text addressed by semantic id rather than by raw string value."
+ translation_projection: "The locale-specific emitted form of a copy unit as it appears in published HTML."
+ gloss: "A note that explains a term, operator, or phrase whose semantic role cannot be preserved by a direct translation alone."
+ term_policy: "A locale-scoped decision about whether a Spw term is preserved, translated, transliterated, or paired with a gloss."
+}
+
+^"authoring_truth"{
+ rule: "Route HTML remains the source of page structure, reading order, and semantic grouping."
+ consequence: "Localization should bind into existing headings, paragraphs, labels, and metadata fields; it should not force route structure into opaque external blobs."
+ copy_rule: "Translatable content may be addressed from HTML by stable copy-unit ids, but the surrounding markup remains hand-authored and reviewable."
+}
+
+^"copy_unit_shape"{
+ rule: "A copy unit should preserve enough context that tone, rhythm, and conceptual framing can survive translation."
+ preferred_units: [
+  "metadata fields such as title, description, and social summary",
+  "shared chrome labels such as navigation and footer copy",
+  "section kickers, headings, and summaries",
+  "paragraph or multi-sentence blocks where rhetoric matters",
+  "call-to-action labels when wording changes invitation or force"
+ ]
+ avoid: [
+  "splitting prose into tiny fragments only because a generic i18n system prefers it",
+  "using raw English text as the identifier",
+  "collapsing a whole page into one monolithic translation blob that blocks partial rollout"
+ ]
+}
+
+^"route_strategy"{
+ source_rule: "The current unprefixed route tree may remain the source-locale publication surface during initial rollout."
+ locale_rule: "Additional published locales should use explicit locale-prefixed routes such as /es/... so canonical and alternate relationships stay legible."
+ future_option: "If the site later decides that all locales should be prefixed uniformly, that should be a deliberate migration plan rather than an accidental side effect of the first localization pass."
+}
+
+^"spw_translation_role"{
+ rule: "Spw should carry translation semantics, not emitted UI runtime."
+ holds: [
+  "operator glosses",
+  "brace vocabulary bridges",
+  "term policy by locale",
+  "literal versus public-facing restatements",
+  "notes on culturally local metaphors or seams",
+  "translation questions that remain unresolved"
+ ]
+ does_not_hold: [
+  "the browser-facing runtime for translation lookup",
+  "the only persisted copy source for published pages"
+ ]
+}
+
+^"term_policy_for_spw"{
+ thesis: "Not every Spw term should be translated the same way."
+ classes: {
+  preserve: "Keep the source form because the term functions as a proper semantic token or branded operator."
+  translate: "Render directly in the locale because the term is ordinary site language rather than canon vocabulary."
+  pair_with_gloss: "Keep the source token and add a local-language explanation where comprehension would otherwise suffer."
+  restate: "Replace the literal source phrase with a locally natural expression that preserves the role better than a direct translation would."
+ }
+ counterexample: "Every operator term remains in English by default, forcing non-English pages to carry untranslated conceptual load without explanation."
+}
+
+^"build_contract"{
+ rule: "Localization is resolved at build time into plain static HTML per locale."
+ required_behaviors: [
+  "emit locale-specific HTML documents",
+  "write correct html lang values",
+  "emit canonical and alternate-language metadata only for published locale variants",
+  "fail loudly when a required translation projection is missing for a route being published"
+ ]
+ non_goal: "No client-side translation framework or runtime locale negotiation is required for the public site."
+}
+
+^"seo_contract"{
+ canonical: "Each published locale page should canonically reference itself unless a different deliberate rule is declared."
+ alternates: "Published sibling locales should be linked with hreflang metadata."
+ honesty_rule: "Do not emit alternate-language references for routes that do not yet exist."
+ sitemap_rule: "The sitemap should describe only published locale URLs and their real alternate relationships."
+}
+
+^"invariants"{
+ "Localization must preserve authored HTML structure rather than replacing it with an opaque content layer.",
+ "Copy-unit ids are semantic and stable; they do not derive from raw English wording.",
+ "Spw translation notes exist to preserve semantic rigor, not to become a client-side translation runtime.",
+ "Locale expansion is additive and explicit; missing required projections should fail authoring or build checks.",
+ "Operator and brace vocabulary may require per-locale glosses or restatements rather than frozen literal carryover.",
+ "Published output remains static HTML, CSS, and JS."
+}

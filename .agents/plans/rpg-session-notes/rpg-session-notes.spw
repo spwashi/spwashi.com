@@ -1,0 +1,84 @@
+# rpg-session-notes
+# Distilled semantic note for an RPG session note as a durable intermediate
+# object between local gameplay capture and the published session ledger.
+
+#>rpg_session_note
+#:semantics #!surface
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "An RPG session note is a durable intermediate campaign-memory object: more structured than immediate table capture, less finalized than the published session page, and useful as the promotion seam for canon, cast, world, and arc updates."
+ why: "The current RPG Wednesday surfaces already distinguish local gameplay state from public campaign pages. A session note gives the middle state a name so table residue can be reviewed before it hardens into public memory."
+}
+
+^["distinction"]{
+ gameplay_seed: "Immediate local capture during or right after play."
+ session_note: "A revisitable note for one session, rich enough to promote later."
+ public_session_page: "The dated campaign-ledger entry visible on the public site."
+ canon_candidate: "A fact, name, place, item, or promise that may deserve promotion."
+ arc_record: "A cross-session pattern named only after repetition becomes visible."
+}
+
+^["properties"]{
+ event_bound: "A session note is tied to one play event or one immediate recollection window."
+ unresolved: "It may still contain uncertainty, contradiction, and private shorthand."
+ promotable: "It should expose what can move into public recap, cast, world, or arc surfaces."
+ grounded: "It stays answerable to what happened at the table rather than drifting into generalized lore."
+ optional: "It is available when useful and skippable when the public session page can be written directly."
+}
+
+^["holds"]{
+ candidate_fields: [
+  "session date or provisional id",
+  "recap fragments",
+  "character beats",
+  "canon candidates",
+  "turning points",
+  "next-session pressure",
+  "open questions",
+  "relations to cast, world, or arcs"
+ ]
+ rule: "The session note should hold enough material to support promotion decisions without pretending all of it is public canon."
+}
+
+^["lifecycle"]{
+ play: "@session_happens"
+ capture: "@local_gameplay_seed"
+ promotion_seam: ">rpg_session_note"
+ projection: [">public_session_page", ">cast_update", ">world_update", ">arc_evidence", ">private_residue"]
+ rule: "Promotion into a session note happens when the session deserves durable review before public publication or canon updates."
+}
+
+^["relationship_to_blog_blob"]{
+ claim: "A session note is the campaign-memory sibling to the blog blob, not the same object."
+ session_note_role: "Bound to one play event and optimized for campaign memory."
+ blog_blob_role: "Optimized for editorial prose, reflective synthesis, and later publication or translation."
+ bridge: "A session note may feed a blog blob when a play event generates reflection worth public writing."
+ counterexample: "Treating every session note as if it were already a blog-post draft."
+}
+
+^["candidate_shape"]{
+ identity: .{ id = `stable session name or date`, date = `session anchor` }[reg=facet]
+ recap: .{
+  fragments = #[`what happened`][reg=set]
+  turning_points = #[`where the session pivoted`][reg=set]
+ }[reg=facet]
+ consequences: .{
+  beats = #[`character or relationship changes`][reg=set]
+  pressures = #[`what loads into the next session`][reg=set]
+  canon = #[`possible canon candidates`][reg=set]
+ }[reg=facet]
+ relations: .{
+  cast = #[`people implicated`][reg=set]
+  world = #[`places, factions, or rules touched`][reg=set]
+  arcs = #[`possible recurring threads`][reg=set]
+ }[reg=facet]
+}
+
+^["invariants"]{
+ "A session note must remain grounded in actual play.",
+ "A session note preserves uncertainty until canon is ready.",
+ "A session note should make promotion into public and campaign-memory surfaces easier, not harder.",
+ "Session-note semantics must remain distinct from blog-blob semantics.",
+ "The public session ledger must still work without session-note bureaucracy."
+}

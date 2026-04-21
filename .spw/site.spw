@@ -12,6 +12,7 @@
 @site_semantics: ~"./conventions/site-semantics.spw"
 @style_development: ~"./conventions/style-development.spw"
 @asset_management: ~"./conventions/asset-management.spw"
+@copy_localization: ~"./conventions/copy-localization.spw"
 @assets: ~"./assets.spw"
 @reviews: ~"./reviews/index.spw"
 @page_model: ~"./surfaces/page-model.spw"
@@ -60,6 +61,7 @@ translations: .{
  labels_and_tokens = #[@naming, @selection][reg=set]
  installation = #[@submodule, @mount][reg=set]
  site_semantics = #[@conventions, @site_semantics][reg=set]
+ localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
  style_development = #[@style_development, @site_semantics][reg=set]
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
@@ -78,6 +80,7 @@ integration_contract: .{
 dispatch: .{
  conventions = @conventions
  site_semantics = @site_semantics
+ localization = @copy_localization
  style_development = @style_development
  reviews = @reviews
  page_model = @page_model
