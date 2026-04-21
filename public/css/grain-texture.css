@@ -310,11 +310,6 @@ body::before {
   filter: contrast(var(--grain-body-contrast));
 }
 
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* optional atmosphere veil for future JS */
 body::after {
   content: "";
