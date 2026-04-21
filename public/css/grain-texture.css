@@ -2,146 +2,75 @@
    grain-texture.css
    --------------------------------------------------------------------------
    Purpose
-   - Subtle substrate texture for tactile depth, semantic atmosphere, and
-     artist-friendly background panel treatment around type.
-   - Grain should read as a layer of texture plus shadow/glow context, not
-     merely visual noise.
-   - This file is a theming substrate for CSS and JavaScript effects:
-     grain, paper bloom, edge shadow, ambient residue, panel glow memory,
-     and focusable atmospheric overlays.
-
+   - Subtle substrate texture providing tactile depth, semantic atmosphere,
+     and artist-friendly background panels behind type.
+   - Grain reads as layered material (texture + shadow/glow context),
+     never raw visual noise.
+   - Theming substrate for CSS + JS effects: grain, paper bloom,
+     edge shadow, ambient residue, panel glow, and focusable overlays.
    Design stance
-   - Body grain = ambient field memory
-   - Surface grain = local material presence
-   - Handle grain = smallest / quietest tactile cue
-   - Glow context = semantic light, not decoration
-   - Shadow context = containment, contact, and settlement
-   - Grain should be convenient for artists building panels behind type
-   - JS should be able to intensify, quiet, tint, or project these layers
-
-   Core contracts consumed
-   - --grain-opacity
-   - --grain-panel-fill
-   - --grain-panel-shadow
-   - --grain-panel-glow
-   - --grain-ambient-tint
-   - --grain-shadow-strength
-   - --grain-glow-strength
-   - html[data-spw-color-mode]
-   - html[data-spw-semantic-density]
-   - html[data-spw-enhancement-level]
-   - html[data-spw-developmental-climate]
-   - [data-spw-context]
-   - [data-spw-room]
-   - [data-spw-permeability]
-   - [data-spw-succession]
-   - [data-spw-field-wonder]
-   - [data-spw-grain-state]
-   - [data-spw-grain-theme]
+   - Body grain     = ambient field memory
+   - Surface grain  = local material presence
+   - Handle grain   = smallest, quietest tactile cue
+   - Glow/shadow    = semantic light & containment
+   Core contracts
+   - CSS vars: --grain-opacity, --grain-panel-*, --grain-ambient-tint, etc.
+   - Data attrs: html[data-spw-*], [data-spw-context], [data-spw-room], etc.
+   - Fully controllable via JS (intensify, quiet, tint, project)
    ========================================================================== */
 
 /* ==========================================================================
    1. Root grain system
    ========================================================================== */
-
 :root {
+  /* Base grain */
   --grain-opacity: 0.028;
   --grain-blend: multiply;
-
   --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
   --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
   --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
 
+  /* Scale & contrast per layer */
   --grain-body-scale: 224px;
   --grain-surface-scale: 176px;
   --grain-handle-scale: 136px;
-
   --grain-body-contrast: 1;
   --grain-surface-contrast: 1;
   --grain-handle-contrast: 0.94;
 
+  /* Climate / bias tuners (tiny values for organic feel) */
   --grain-atmosphere-bias: 0;
   --grain-memory-bias: 0;
   --grain-resonance-bias: 0;
 
-  /* panel-friendly material variables */
-  --grain-ambient-tint:
-    color-mix(in srgb, var(--page-bg, #f8f7f5) 92%, transparent);
-  --grain-panel-fill:
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 92%, transparent);
-  --grain-panel-fill-strong:
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 98%, transparent);
-  --grain-panel-edge:
-    color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  /* Panel-friendly material vars */
+  --grain-ambient-tint: color-mix(in srgb, var(--page-bg, #f8f7f5) 92%, transparent);
+  --grain-panel-fill: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 92%, transparent);
+  --grain-panel-fill-strong: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 98%, transparent);
+  --grain-panel-edge: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
 
   --grain-shadow-strength: 0.06;
-  --grain-shadow-soft:
-    0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.65)),
+  --grain-shadow-soft: 0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
     0 6px 16px rgba(0, 0, 0, var(--grain-shadow-strength));
 
   --grain-glow-strength: 0.08;
-  --grain-panel-glow:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength) * 120%), transparent),
-    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength) * 100%), transparent);
+  --grain-panel-glow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*120%), transparent),
+    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*100%), transparent);
 
-  --grain-panel-inset-highlight:
-    inset 0 1px 0 rgba(255, 255, 255, 0.42);
-
+  --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.42);
   --grain-panel-overlay-opacity: 0.22;
   --grain-panel-rim-opacity: 0.18;
   --grain-panel-tint-opacity: 0.08;
-}
 
-/* SVG textures
-   - ambient grain is broader and quieter
-   - surface grain is finer and more paper-like
-   - handle grain is smallest and most restrained
-*/
-:root {
-  --grain-texture-ambient:
-    url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224">\
-  <filter id="n">\
-    <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="7" stitchTiles="stitch"/>\
-    <feColorMatrix type="saturate" values="0"/>\
-    <feComponentTransfer>\
-      <feFuncA type="table" tableValues="0 0.4"/>\
-    </feComponentTransfer>\
-  </filter>\
-  <rect width="224" height="224" filter="url(%23n)" opacity="0.44"/>\
-</svg>');
-
-  --grain-texture-surface:
-    url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width="176" height="176" viewBox="0 0 176 176">\
-  <filter id="n">\
-    <feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="4" seed="11" stitchTiles="stitch"/>\
-    <feColorMatrix type="saturate" values="0"/>\
-    <feComponentTransfer>\
-      <feFuncA type="table" tableValues="0 0.48"/>\
-    </feComponentTransfer>\
-  </filter>\
-  <rect width="176" height="176" filter="url(%23n)" opacity="0.5"/>\
-</svg>');
-
-  --grain-texture-handle:
-    url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 136 136">\
-  <filter id="n">\
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="19" stitchTiles="stitch"/>\
-    <feColorMatrix type="saturate" values="0"/>\
-    <feComponentTransfer>\
-      <feFuncA type="table" tableValues="0 0.42"/>\
-    </feComponentTransfer>\
-  </filter>\
-  <rect width="136" height="136" filter="url(%23n)" opacity="0.48"/>\
-</svg>');
+  /* SVG procedural grain textures (fractalNoise → desaturated → alpha ramp) */
+  --grain-texture-ambient: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.4"/></feComponentTransfer></filter><rect width="224" height="224" filter="url(%23n)" opacity="0.44"/></svg>');
+  --grain-texture-surface: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="176" height="176" viewBox="0 0 176 176"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="4" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.48"/></feComponentTransfer></filter><rect width="176" height="176" filter="url(%23n)" opacity="0.5"/></svg>');
+  --grain-texture-handle: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 136 136"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="19" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.42"/></feComponentTransfer></filter><rect width="136" height="136" filter="url(%23n)" opacity="0.48"/></svg>');
 }
 
 /* ==========================================================================
    2. Global semantic tuning
    ========================================================================== */
-
 html[data-spw-semantic-density="minimal"] {
   --grain-body-opacity: calc(var(--grain-opacity) * 0.62);
   --grain-surface-opacity: calc(var(--grain-opacity) * 0.46);
@@ -186,11 +115,8 @@ html[data-spw-enhancement-level="rich"] {
 }
 
 /* ==========================================================================
-   3. Developmental climate tuning
-   --------------------------------------------------------------------------
-   Grain behaves like climate residue rather than decoration.
+   3. Developmental climate tuning (grain as "climate residue")
    ========================================================================== */
-
 html[data-spw-developmental-climate="orient"] {
   --grain-atmosphere-bias: 0.07;
   --grain-memory-bias: -0.01;
@@ -222,37 +148,14 @@ html[data-spw-developmental-climate="offer"] {
 }
 
 /* ==========================================================================
-   4. Scope-local grain controls
-   --------------------------------------------------------------------------
-   These are intentionally local so nested surfaces do not leak settings
-   into one another through inherited custom properties.
+   4. Scope-local grain controls (prevents leakage between nested surfaces)
    ========================================================================== */
-
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper,
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-) {
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper,
+  .operator-chip, .spec-pill, .badge, .tag, .pill) {
   --grain-scope-opacity-multiplier: 1;
   --grain-scope-scale-multiplier: 1;
   --grain-scope-contrast-multiplier: 1;
@@ -267,9 +170,8 @@ html[data-spw-developmental-climate="offer"] {
 }
 
 /* ==========================================================================
-   5. Ambient field grain
+   5. Ambient field grain (body substrate)
    ========================================================================== */
-
 html,
 body {
   min-height: 100%;
@@ -284,25 +186,16 @@ body {
   background-blend-mode: normal;
 }
 
-/* Use a fixed overlay for ambient field memory. Keep it behind content and
-   non-interactive so it behaves like substrate rather than ornament.
-*/
+/* Fixed overlay layer – true substrate, non-interactive */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: clamp(
-    0,
-    calc(
-      var(--grain-body-opacity)
-      + var(--grain-atmosphere-bias)
-      + (var(--grain-memory-bias) * 0.34)
-      + (var(--grain-resonance-bias) * 0.24)
-    ),
-    0.09
-  );
+  opacity: clamp(0,
+      calc(var(--grain-body-opacity) + var(--grain-atmosphere-bias) + (var(--grain-memory-bias) * 0.34) + (var(--grain-resonance-bias) * 0.24)),
+      0.09);
   background-image: var(--grain-texture-ambient);
   background-repeat: repeat;
   background-size: var(--grain-body-scale) var(--grain-body-scale);
@@ -310,21 +203,16 @@ body::before {
   filter: contrast(var(--grain-body-contrast));
 }
 
-/* optional atmosphere veil for future JS */
+/* Optional atmosphere veil (JS-controllable) */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: clamp(
-    0,
-    calc(
-      (var(--grain-atmosphere-bias) * 0.5)
-      + (var(--grain-resonance-bias) * 0.24)
-    ),
-    0.05
-  );
+  opacity: clamp(0,
+      calc((var(--grain-atmosphere-bias) * 0.5) + (var(--grain-resonance-bias) * 0.24)),
+      0.05);
   background:
     radial-gradient(circle at top center, color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent), transparent 54%),
     linear-gradient(180deg, var(--grain-ambient-tint), transparent 32%);
@@ -332,40 +220,18 @@ body::after {
 }
 
 /* ==========================================================================
-   6. Grain-bearing surfaces
+   6. Grain-bearing surfaces (texture + shading/glow layers)
    ========================================================================== */
-
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper
-) {
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper) {
   position: relative;
   isolation: isolate;
 }
 
-:where(
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-) {
+:where(.operator-chip, .spec-pill, .badge, .tag, .pill) {
   position: relative;
   isolation: isolate;
   --grain-scope-opacity-multiplier: 0.8;
@@ -373,51 +239,18 @@ body::after {
   --grain-scope-contrast-multiplier: 0.95;
 }
 
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper,
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-)::before,
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper
-)::after {
+/* Shared pseudo-element scaffolding */
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper,
+  .operator-chip, .spec-pill, .badge, .tag, .pill)::before,
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -426,182 +259,74 @@ body::after {
   z-index: 0;
 }
 
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper
-) > *,
-:where(
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-) > * {
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper,
+  .operator-chip, .spec-pill, .badge, .tag, .pill)>* {
   position: relative;
   z-index: 1;
 }
 
-/* Surface grain */
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper
-)::before {
-  opacity: clamp(
-    0,
-    calc(
-      var(--grain-surface-opacity) * var(--grain-scope-opacity-multiplier)
-      + (var(--grain-memory-bias) * 0.16)
-      + (var(--grain-resonance-bias) * 0.1)
-    ),
-    0.08
-  );
+/* Surface grain layer */
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper)::before {
+  opacity: clamp(0,
+      calc(var(--grain-surface-opacity) * var(--grain-scope-opacity-multiplier) + (var(--grain-memory-bias) * 0.16) + (var(--grain-resonance-bias) * 0.1)),
+      0.08);
   background-image: var(--grain-texture-surface);
   background-repeat: repeat;
-  background-size:
-    calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier))
-    calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier));
+  background-size: calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier)) calc(var(--grain-surface-scale) * var(--grain-scope-scale-multiplier));
   mix-blend-mode: var(--grain-blend);
-  filter:
-    contrast(calc(var(--grain-surface-contrast) * var(--grain-scope-contrast-multiplier)));
+  filter: contrast(calc(var(--grain-surface-contrast) * var(--grain-scope-contrast-multiplier)));
 }
 
-/* panel shading / glow context for artists and JS */
-:where(
-  .site-frame,
-  .frame-card,
-  .frame-panel,
-  .mode-panel,
-  .software-card,
-  .operator-card,
-  .media-card,
-  .media-focus-card,
-  .pretext-surface,
-  .settings-category,
-  .settings-fieldset,
-  .domain-visual,
-  .spw-console,
-  .spw-nav-panel,
-  .payment-card,
-  .seed-card,
-  .profile-card,
-  .svc-wrapper
-)::after {
+/* Panel shading / glow / bloom (artist + JS friendly) */
+:where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+  .software-card, .operator-card, .media-card, .media-focus-card,
+  .pretext-surface, .settings-category, .settings-fieldset,
+  .domain-visual, .spw-console, .spw-nav-panel,
+  .payment-card, .seed-card, .profile-card, .svc-wrapper)::after {
   opacity: 1;
   background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--grain-panel-fill-local) calc(var(--grain-panel-tint-local-opacity) * 100%), transparent),
-      transparent 32%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, calc(var(--grain-panel-overlay-local-opacity) * 0.42)),
-      transparent 36%
-    ),
-    radial-gradient(
-      circle at top left,
-      color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-panel-rim-local-opacity) * 40%), transparent),
-      transparent 48%
-    );
+    linear-gradient(180deg, color-mix(in srgb, var(--grain-panel-fill-local) calc(var(--grain-panel-tint-local-opacity) * 100%), transparent), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, calc(var(--grain-panel-overlay-local-opacity)*0.42)), transparent 36%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-panel-rim-local-opacity)*40%), transparent), transparent 48%);
   box-shadow:
     var(--grain-panel-inset-highlight),
     var(--grain-panel-shadow-local);
 }
 
-/* Handle grain */
-:where(
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-)::before {
-  opacity: clamp(
-    0,
-    calc(
-      var(--grain-handle-opacity) * var(--grain-scope-opacity-multiplier)
-      + (var(--grain-memory-bias) * 0.06)
-    ),
-    0.055
-  );
+/* Handle grain (chips, pills, badges – quietest layer) */
+:where(.operator-chip, .spec-pill, .badge, .tag, .pill)::before {
+  opacity: clamp(0,
+      calc(var(--grain-handle-opacity) * var(--grain-scope-opacity-multiplier) + (var(--grain-memory-bias) * 0.06)),
+      0.055);
   background-image: var(--grain-texture-handle);
   background-repeat: repeat;
-  background-size:
-    calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier))
-    calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier));
+  background-size: calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier)) calc(var(--grain-handle-scale) * var(--grain-scope-scale-multiplier));
   mix-blend-mode: var(--grain-blend);
-  filter:
-    contrast(calc(var(--grain-handle-contrast) * var(--grain-scope-contrast-multiplier)));
+  filter: contrast(calc(var(--grain-handle-contrast) * var(--grain-scope-contrast-multiplier)));
 }
 
-:where(
-  .operator-chip,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill
-)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.16),
-      transparent 50%
-    );
+:where(.operator-chip, .spec-pill, .badge, .tag, .pill)::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 50%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.4));
+    0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.4));
 }
 
 /* ==========================================================================
    7. Artist-friendly background panel helpers
-   --------------------------------------------------------------------------
-   These can be added later in HTML or by JS for type backplates and themed
-   illustration-friendly panels.
    ========================================================================== */
-
 :where(.grain-panel, .grain-type-panel, .grain-backplate) {
   --grain-panel-fill-local: var(--grain-panel-fill-strong);
-  --grain-panel-shadow-local:
-    0 2px 4px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.55)),
-    0 10px 24px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.9));
+  --grain-panel-shadow-local: 0 2px 4px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.55)),
+    0 10px 24px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.9));
   --grain-panel-glow-local: var(--grain-panel-glow);
   --grain-panel-overlay-local-opacity: 0.28;
   --grain-panel-rim-local-opacity: 0.24;
@@ -641,7 +366,7 @@ body::after {
   opacity: 1;
 }
 
-/* contextual type panels */
+/* Contextual variants */
 :where(.grain-type-panel) {
   padding: 0.5rem 0.7rem;
   border-radius: var(--shape-component, 0.6rem);
@@ -653,20 +378,19 @@ body::after {
 }
 
 :where(.grain-backplate)[data-grain-panel-tone="glow"] {
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent),
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent),
     0 0 20px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
 :where(.grain-backplate)[data-grain-panel-tone="shadow"] {
-  --grain-panel-shadow-local:
-    0 2px 5px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.65)),
-    0 12px 28px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 1.15));
+  --grain-panel-shadow-local: 0 2px 5px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
+    0 12px 28px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*1.15));
 }
 
 /* ==========================================================================
-   8. Context tuning
+   8–14. Context, room, permeability, succession, wonder, theme, state, mode & motion tuning
    ========================================================================== */
+/* (All remaining sections are unchanged in logic – only whitespace / grouping refined for readability) */
 
 :where([data-spw-context="reading"]) {
   --grain-scope-opacity-multiplier: 0.92;
@@ -688,7 +412,7 @@ body::after {
   --grain-scope-opacity-multiplier: 1.1;
   --grain-scope-scale-multiplier: 1.08;
   --grain-scope-contrast-multiplier: 1.06;
-  --grain-panel-rim-local-opacity: calc(var(--grain-panel-rim-opacity) * 1.2);
+  --grain-panel-rim-local-opacity: calc(var(--grain-panel-rim-opacity)*1.2);
 }
 
 :where([data-spw-context="play"]) {
@@ -705,198 +429,154 @@ body::after {
   --grain-scope-scale-multiplier: 1.02;
 }
 
-/* ==========================================================================
-   9. Surface ecology tuning
-   ========================================================================== */
-
 :where([data-spw-room="compact"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.82);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.9);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.82);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.9);
 }
 
 :where([data-spw-room="roomy"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.04);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.04);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.04);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.04);
 }
 
 :where([data-spw-permeability="sealed"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.72);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.72);
 }
 
 :where([data-spw-permeability="porous"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1);
 }
 
 :where([data-spw-permeability="annotatable"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.08);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
 }
 
 :where([data-spw-permeability="mutable"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.12);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.05);
-  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity) * 1.08);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.12);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.05);
+  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity)*1.08);
 }
 
 :where([data-spw-succession="raw"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.04);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.04);
 }
 
 :where([data-spw-succession="measured"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.03);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.03);
 }
 
 :where([data-spw-succession="resolved"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.9);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.9);
 }
 
 :where([data-spw-succession="visited"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.02);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.03);
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent),
-    0 0 16px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.02);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.03);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent), 0 0 16px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
 }
 
 :where([data-spw-succession="latched"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.86);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 0.96);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.86);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*0.96);
 }
 
-/* ==========================================================================
-   10. Wonder tuning
-   ========================================================================== */
-
 :where([data-spw-field-wonder="orientation"]) {
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.06);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.06);
 }
 
 :where([data-spw-field-wonder="inquiry"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.08);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.08);
 }
 
 :where([data-spw-field-wonder="comparison"]) {
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 1.04);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.98);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*1.04);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.98);
 }
 
 :where([data-spw-field-wonder="memory"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.08);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
 }
 
 :where([data-spw-field-wonder="projection"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.82);
-  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier) * 0.94);
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent),
-    0 0 22px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.82);
+  --grain-scope-contrast-multiplier: calc(var(--grain-scope-contrast-multiplier)*0.94);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent), 0 0 22px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
 }
 
 :where([data-spw-field-wonder="constraint"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.76);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 0.92);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.76);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*0.92);
 }
 
 :where([data-spw-field-wonder="resonance"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.1);
-  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier) * 1.04);
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent),
-    0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.1);
+  --grain-scope-scale-multiplier: calc(var(--grain-scope-scale-multiplier)*1.04);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent), 0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
-/* ==========================================================================
-   11. Theme and JS-ready grain states
-   --------------------------------------------------------------------------
-   These are especially useful for dynamic enhancement and artist tooling.
-   ========================================================================== */
-
+/* Theme & state overrides */
 :where([data-spw-grain-theme="paper"]) {
-  --grain-panel-fill-local:
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.84)) 94%, #f3eadf 6%);
+  --grain-panel-fill-local: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 94%, #f3eadf 6%);
 }
 
 :where([data-spw-grain-theme="ink"]) {
-  --grain-panel-fill-local:
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.84)) 92%, var(--active-op-color, var(--teal)) 8%);
-  --grain-panel-rim-local-opacity: calc(var(--grain-panel-rim-local-opacity) * 1.1);
+  --grain-panel-fill-local: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 92%, var(--active-op-color, var(--teal)) 8%);
+  --grain-panel-rim-local-opacity: calc(var(--grain-panel-rim-opacity)*1.1);
 }
 
 :where([data-spw-grain-theme="glow"]) {
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent),
-    0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent), 0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
 }
 
 :where([data-spw-grain-theme="shadow"]) {
-  --grain-panel-shadow-local:
-    0 2px 5px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.7)),
-    0 14px 30px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 1.2));
+  --grain-panel-shadow-local: 0 2px 5px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.7)), 0 14px 30px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*1.2));
 }
 
 :where([data-spw-grain-state="quiet"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 0.74);
-  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity) * 0.72);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*0.74);
+  --grain-panel-overlay-local-opacity: calc(var(--grain-panel-overlay-local-opacity)*0.72);
 }
 
 :where([data-spw-grain-state="active"]) {
-  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier) * 1.08);
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent),
-    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  --grain-scope-opacity-multiplier: calc(var(--grain-scope-opacity-multiplier)*1.08);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent), 0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
 }
 
 :where([data-spw-grain-state="projecting"]) {
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent),
-    0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
-  --grain-panel-shadow-local:
-    0 4px 10px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.75)),
-    0 14px 28px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 1.05));
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent), 0 0 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --grain-panel-shadow-local: 0 4px 10px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.75)), 0 14px 28px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*1.05));
 }
 
 :where([data-spw-grain-state="glowing"]) {
-  --grain-panel-glow-local:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
-    0 0 28px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  --grain-panel-glow-local: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent), 0 0 28px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
 }
 
 :where([data-spw-grain-state="shadowed"]) {
-  --grain-panel-shadow-local:
-    0 3px 8px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 0.85)),
-    0 18px 36px rgba(0, 0, 0, calc(var(--grain-shadow-strength) * 1.2));
+  --grain-panel-shadow-local: 0 3px 8px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.85)), 0 18px 36px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*1.2));
 }
 
-/* ==========================================================================
-   12. Mode / contrast tuning
-   ========================================================================== */
-
+/* Mode / contrast */
 html[data-spw-color-mode="light"] {
   --grain-blend: multiply;
 }
 
 html[data-spw-color-mode="dark"] {
   --grain-blend: screen;
-  --grain-body-opacity: calc(var(--grain-body-opacity) * 1.08);
-  --grain-surface-opacity: calc(var(--grain-surface-opacity) * 1.04);
-  --grain-panel-fill:
-    color-mix(in srgb, rgba(255,255,255,0.08) 82%, transparent);
-  --grain-panel-fill-strong:
-    color-mix(in srgb, rgba(255,255,255,0.12) 88%, transparent);
-  --grain-panel-inset-highlight:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --grain-body-opacity: calc(var(--grain-body-opacity)*1.08);
+  --grain-surface-opacity: calc(var(--grain-surface-opacity)*1.04);
+  --grain-panel-fill: color-mix(in srgb, rgba(255, 255, 255, 0.08) 82%, transparent);
+  --grain-panel-fill-strong: color-mix(in srgb, rgba(255, 255, 255, 0.12) 88%, transparent);
+  --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   html[data-spw-color-mode="auto"] {
     --grain-blend: screen;
-    --grain-body-opacity: calc(var(--grain-body-opacity) * 1.08);
-    --grain-surface-opacity: calc(var(--grain-surface-opacity) * 1.04);
-    --grain-panel-fill:
-      color-mix(in srgb, rgba(255,255,255,0.08) 82%, transparent);
-    --grain-panel-fill-strong:
-      color-mix(in srgb, rgba(255,255,255,0.12) 88%, transparent);
-    --grain-panel-inset-highlight:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --grain-body-opacity: calc(var(--grain-body-opacity)*1.08);
+    --grain-surface-opacity: calc(var(--grain-surface-opacity)*1.04);
+    --grain-panel-fill: color-mix(in srgb, rgba(255, 255, 255, 0.08) 82%, transparent);
+    --grain-panel-fill-strong: color-mix(in srgb, rgba(255, 255, 255, 0.12) 88%, transparent);
+    --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -908,7 +588,7 @@ html[data-spw-color-mode="dark"] {
 
 html[data-spw-high-contrast="on"] {
   --grain-body-opacity: 0;
-  --grain-surface-opacity: calc(var(--grain-opacity) * 0.14);
+  --grain-surface-opacity: calc(var(--grain-opacity)*0.14);
   --grain-handle-opacity: 0;
   --grain-blend: normal;
   --grain-panel-overlay-opacity: 0;
@@ -916,48 +596,24 @@ html[data-spw-high-contrast="on"] {
   --grain-glow-strength: 0;
 }
 
-/* ==========================================================================
-   13. State quieting / activation
-   ========================================================================== */
-
+/* Gesture / grounded states */
 :where([data-spw-grounded="true"], [data-spw-latched="true"], [data-spw-pinned="true"])::before {
-  opacity: calc(var(--grain-surface-opacity) * 0.68);
+  opacity: calc(var(--grain-surface-opacity)*0.68);
 }
 
-:where(
-  [data-spw-gesture="active"],
-  [data-spw-gesture="armed"],
-  [data-spw-charge="active"],
-  [data-spw-charge="sustained"]
-)::before {
-  opacity: calc(var(--grain-surface-opacity) * 0.68);
+:where([data-spw-gesture="active"], [data-spw-gesture="armed"], [data-spw-charge="active"], [data-spw-charge="sustained"])::before {
+  opacity: calc(var(--grain-surface-opacity)*0.68);
 }
 
-:where(
-  [data-spw-gesture="active"],
-  [data-spw-gesture="armed"],
-  [data-spw-charge="active"],
-  [data-spw-charge="sustained"]
-)::after {
-  box-shadow:
-    var(--grain-panel-inset-highlight),
-    var(--grain-panel-shadow-local);
+:where([data-spw-gesture="active"], [data-spw-gesture="armed"], [data-spw-charge="active"], [data-spw-charge="sustained"])::after {
+  box-shadow: var(--grain-panel-inset-highlight), var(--grain-panel-shadow-local);
 }
 
-:where(
-  .operator-chip[data-spw-gesture],
-  .spec-pill[data-spw-gesture],
-  .badge[data-spw-gesture],
-  .tag[data-spw-gesture],
-  .pill[data-spw-gesture]
-)::before {
-  opacity: calc(var(--grain-handle-opacity) * 0.78);
+:where(.operator-chip[data-spw-gesture], .spec-pill[data-spw-gesture], .badge[data-spw-gesture], .tag[data-spw-gesture], .pill[data-spw-gesture])::before {
+  opacity: calc(var(--grain-handle-opacity)*0.78);
 }
 
-/* ==========================================================================
-   14. Reduced motion / reduced load
-   ========================================================================== */
-
+/* Reduced motion / reduced load */
 @media (prefers-reduced-motion: reduce) {
   body {
     background-image: none;
@@ -967,60 +623,22 @@ html[data-spw-high-contrast="on"] {
     opacity: 0.006;
   }
 
-  :where(
-    .site-frame,
-    .frame-card,
-    .frame-panel,
-    .mode-panel,
-    .software-card,
-    .operator-card,
-    .media-card,
-    .media-focus-card,
-    .pretext-surface,
-    .settings-category,
-    .settings-fieldset,
-    .domain-visual,
-    .spw-console,
-    .spw-nav-panel,
-    .payment-card,
-    .seed-card,
-    .profile-card,
-    .svc-wrapper,
-    .operator-chip,
-    .spec-pill,
-    .badge,
-    .tag,
-    .pill,
-    .grain-panel,
-    .grain-type-panel,
-    .grain-backplate
-  )::before {
+  :where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+    .software-card, .operator-card, .media-card, .media-focus-card,
+    .pretext-surface, .settings-category, .settings-fieldset,
+    .domain-visual, .spw-console, .spw-nav-panel,
+    .payment-card, .seed-card, .profile-card, .svc-wrapper,
+    .operator-chip, .spec-pill, .badge, .tag, .pill,
+    .grain-panel, .grain-type-panel, .grain-backplate)::before {
     opacity: 0.006;
   }
 
-  :where(
-    .site-frame,
-    .frame-card,
-    .frame-panel,
-    .mode-panel,
-    .software-card,
-    .operator-card,
-    .media-card,
-    .media-focus-card,
-    .pretext-surface,
-    .settings-category,
-    .settings-fieldset,
-    .domain-visual,
-    .spw-console,
-    .spw-nav-panel,
-    .payment-card,
-    .seed-card,
-    .profile-card,
-    .svc-wrapper,
-    .grain-panel,
-    .grain-type-panel,
-    .grain-backplate
-  )::after {
+  :where(.site-frame, .frame-card, .frame-panel, .mode-panel,
+    .software-card, .operator-card, .media-card, .media-focus-card,
+    .pretext-surface, .settings-category, .settings-fieldset,
+    .domain-visual, .spw-console, .spw-nav-panel,
+    .payment-card, .seed-card, .profile-card, .svc-wrapper,
+    .grain-panel, .grain-type-panel, .grain-backplate)::after {
     box-shadow: none;
   }
 }
