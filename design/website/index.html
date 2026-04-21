@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi • Website"
+    description="A design-facing entry for the website as a publishing surface: readable HTML, thresholds, interaction, accessibility, and the deeper website field guide."
+    canonical="https://spwashi.com/design/website/"
+    og_title="Spwashi • Website"
+    og_description="A design-facing entry for the website as a publishing surface: readable HTML, thresholds, interaction, accessibility, and the deeper website field guide."
+    og_image="https://spwashi.com/public/images/routes/website-field-instrument-og.jpg"
+    og_image_alt="A layered website instrument made of threshold light, orbital traces, and structural frames."
+></spw-page>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="canonical" href="{{canonical}}">
+    <spw-include src="social-meta"></spw-include>
+    <meta name="keywords" content="website, publishing surface, readable html, interaction design, accessibility, local-first web, inspectable structure"/>
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console field-guide inspectability"
+    data-spw-route-family="editorial design observatory"
+    data-spw-context="analysis"
+    data-spw-wonder="projection orientation locality"
+    data-spw-page-family="field-guide"
+    data-spw-page-modes="reading inspect compare design"
+    data-spw-page-role="design-register"
+    data-spw-page-seed="page_design_website"
+    data-spw-related-routes="/|/design/|/about/website/|/design/interaction-design/|/design/accessibility/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/design/">Design</a></li>
+                <li><a aria-current="page" href="/design/website/">Website</a></li>
+                <li><a href="/about/website/">Field guide</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>website</span>
+    </header>
+
+    <main id="main-content" tabindex="-1" aria-labelledby="website-title">
+        <article>
+            <section class="site-frame site-hero" id="website-hero" data-spw-kind="frame" data-spw-role="orientation">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#website-hero">#&gt;website</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">publishing surface</span>
+                        <span class="spec-pill">readable html</span>
+                        <span class="spec-pill">interaction</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Design / Website</p>
+                <h1 id="website-title">Website</h1>
+                <p>This route is the cleaner design-facing entry for the website as a publishing surface. The point is not only that a website exists, but that it can act as a readable instrument: visible thresholds, inspectable structure, deliberate navigation, and enough interaction to teach the surface without overwhelming it.</p>
+                <p>The deeper system write-up still lives at the <a href="/about/website/">website field guide</a>. This page is the shorter route for design categorization and for linking into the neighboring interaction and accessibility surfaces.</p>
+                <nav class="frame-operators" aria-label="Website routes">
+                    <a class="operator-chip" href="/about/website/">website field guide</a>
+                    <a class="operator-chip" href="/design/interaction-design/">interaction design</a>
+                    <a class="operator-chip" href="/design/accessibility/">accessibility</a>
+                    <a class="operator-chip" href="/design/">design hub</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="website-questions" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#website-questions">~"website_questions"</a>
+                    <h2>What this page should help answer</h2>
+                </div>
+                <ul>
+                    <li>What makes a website feel like a publishing surface instead of a generic shell.</li>
+                    <li>How structure, navigation, and interaction can stay readable instead of disappearing behind presentation.</li>
+                    <li>Which nearby routes hold the more specific discussions: field-guide rationale, interaction design, or accessibility.</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <div class="site-footer__identity">
+                <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+                <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

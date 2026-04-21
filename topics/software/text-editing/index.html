@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Text Editing</title>
+    <meta name="description" content="A software topic hub for text editing: editor history, note-taking history, current application contexts, and practical references for comparing editor families.">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <style>
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+            gap: 0.75rem;
+        }
+        .ref-card {
+            display: grid;
+            gap: 0.45rem;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .ref-card-sigil {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+        .ref-links {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            margin-top: 0.35rem;
+        }
+        .ref-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+        }
+        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
+    </style>
+    <link rel="canonical" href="https://spwashi.com/topics/software/text-editing/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Text Editing"/>
+    <meta property="og:description" content="A software topic hub for text editing: editor history, note-taking history, current application contexts, and practical references for comparing editor families."/>
+    <meta property="og:url" content="https://spwashi.com/topics/software/text-editing/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/routes/software-parser-weather-og.jpg"/>
+    <meta property="og:image:alt" content="A dense software weather collage of parser circles, fibers, symbols, and measured structure."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Text Editing"/>
+    <meta name="twitter:description" content="A software topic hub for text editing: editor history, note-taking history, current application contexts, and practical references for comparing editor families."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/software-parser-weather-og.jpg"/>
+    <meta name="twitter:image:alt" content="A dense software weather collage of parser circles, fibers, symbols, and measured structure."/>
+    <meta name="keywords" content="text editing, note taking, obsidian, editor history, writing tools, markdown, local-first authoring, software history"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Text Editing",
+                "description": "A software topic hub for text editing: editor history, note-taking history, current application contexts, and practical references for comparing editor families.",
+                "url": "https://spwashi.com/topics/software/text-editing/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "text editing",
+                        "note taking",
+                        "obsidian",
+                        "editor history",
+                        "markdown",
+                        "writing tools",
+                        "local first authoring"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "software"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "curriculum"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "topic-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "comparison locality projection"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Software",
+                                "item": "https://spwashi.com/topics/software/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Text Editing",
+                                "item": "https://spwashi.com/topics/software/text-editing/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison locality projection" data-spw-page-family="curriculum" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_software_text_editing" data-spw-page-role="topic-register" data-spw-related-routes="/|/topics/|/topics/software/|/topics/software/parsers/|/topics/software/browser/|/topics/craft/|/blog/|/about/website/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_software_text_editing__site_header" data-spw-related-routes="/|/topics/|/topics/software/|/topics/software/parsers/|/topics/software/browser/|/topics/craft/|/blog/|/about/website/" data-spw-context-relevance="text editing note taking editor history obsidian writing tools" class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a aria-current="page" href="/topics/software/text-editing/">Text editing</a></li>
+                <li><a href="/blog/">Blog</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>editing</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_text_editing__main_surface" data-spw-wonder="comparison locality projection" id="main-content" tabindex="-1" aria-labelledby="text-editing-title">
+        <article>
+            <section class="site-frame site-hero" id="text-editing-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality projection" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_text_editing__hero" data-spw-context-relevance="text editing note taking editor history obsidian writing tools" data-spw-related-routes="/|/topics/|/topics/software/|/topics/software/parsers/|/topics/software/browser/|/topics/craft/|/blog/|/about/website/">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#text-editing-hero">#&gt;text_editing</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">editor lineage</span>
+                        <span class="spec-pill">note-taking history</span>
+                        <span class="spec-pill">application contexts</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Software / Writing Tools</p>
+                <h1 id="text-editing-title">Text Editing</h1>
+                <p>Text editing is the broader field underneath note-taking apps, documentation tools, IDEs, knowledge bases, and writing software. This route is meant to be useful when you need to compare editor families, understand the tradeoffs between source visibility and interface convenience, or place a modern tool inside a longer lineage.</p>
+                <p><a href="/topics/knowledge-bases/">Obsidian</a> is one current product context that sharpens those questions, but it is not the topic by itself. The topic is the larger history of editing surfaces, file formats, note systems, and the changing boundary between raw text and projected structure.</p>
+                <nav class="frame-operators" aria-label="Text editing routes">
+                    <a class="operator-chip" href="#current-context">current context</a>
+                    <a class="operator-chip" href="/topics/knowledge-bases/">knowledge bases</a>
+                    <a class="operator-chip" href="/topics/software/text-editing/note-taking/">note-taking history</a>
+                    <a class="operator-chip" href="/topics/software/text-editing/history/">editor history</a>
+                    <a class="operator-chip" href="/topics/software/">← software</a>
+                    <a class="operator-chip" href="/about/website/">website field guide</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="current-context" data-spw-role="scenario" data-spw-meaning="current application context" data-spw-form="square" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison locality projection" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_text_editing__current_context" data-spw-context-relevance="obsidian markdown local first note taking editor history" data-spw-related-routes="/|/topics/software/|/about/website/|/blog/|/topics/software/browser/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#current-context">@current_context</a>
+                    <h2>Current Application Context</h2>
+                </div>
+                <p class="inline-note">This route should work as a reference surface, not just a mood board: define the category, point to useful starting documents, and clarify which adjacent routes answer which questions.</p>
+                <div class="ref-grid">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">obsidian</span>
+                        <h3>Current product example</h3>
+                        <p><a href="https://obsidian.md/about" target="_blank" rel="noopener">Obsidian’s current public position</a> is unusually clear: durable local files, privacy, customization, and independence. Their <a href="https://help.obsidian.md/obsidian" target="_blank" rel="noopener">help docs</a> also describe the app plainly as both a Markdown editor and a knowledge-base app. That combination makes it useful as one current benchmark for local-first writing tools, especially the narrower category of <a href="/topics/knowledge-bases/markdown/">Markdown knowledge bases</a>.</p>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">bridge</span>
+                        <h3>Questions this route should answer</h3>
+                        <p>What counts as an editor family? Which features belong to files versus application layers? When does an editor become a knowledge base, an IDE, or a publishing surface? Those are the comparisons this route should make easier.</p>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">scope</span>
+                        <h3>Boundary of the page</h3>
+                        <p>This page is the parent overview. The narrower cases live on the knowledge-base, note-taking-history, and editor-history routes so the distinctions stay explicit rather than collapsing into one bucket.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="route-map" data-spw-role="routing" data-spw-meaning="subtopic routes" data-spw-form="square" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="comparison locality projection" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_software_text_editing__route_map" data-spw-context-relevance="text editing note taking history routes" data-spw-related-routes="/|/topics/software/|/topics/software/text-editing/note-taking/|/topics/software/text-editing/history/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#route-map">~"route_map"</a>
+                    <h2>Begin Here</h2>
+                </div>
+                <div class="ref-grid">
+                    <a class="ref-card" href="/topics/knowledge-bases/" data-spw-form="square">
+                        <span class="ref-card-sigil">^kb</span>
+                        <h3>Knowledge bases</h3>
+                        <p>Linked-note systems, vault-like structures, research archives, and the broader category where accumulated notes become a navigable memory surface.</p>
+                    </a>
+                    <a class="ref-card" href="/topics/software/text-editing/note-taking/" data-spw-form="square">
+                        <span class="ref-card-sigil">^notes</span>
+                        <h3>Note-taking history</h3>
+                        <p>Commonplace books, slip-boxes, linked notes, and why private capture systems keep reappearing whenever writers need durable intermediate structure.</p>
+                    </a>
+                    <a class="ref-card" href="/topics/software/text-editing/history/" data-spw-form="square">
+                        <span class="ref-card-sigil">@editors</span>
+                        <h3>Editor history</h3>
+                        <p>Line editors, screen editors, visual editors, and the recurring tradeoff between raw source visibility and approachable interfaces.</p>
+                    </a>
+                    <a class="ref-card" href="/topics/software/browser/" data-spw-form="square">
+                        <span class="ref-card-sigil">>platform</span>
+                        <h3>Browser + TypeScript</h3>
+                        <p>The runtime and platform side of the same question: if text becomes structured and interactive, what contracts do the browser and editor surface need?</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="site-frame" id="reference-points" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#reference-points">~"reference_points"</a>
+                    <h2>Reference points</h2>
+                </div>
+                <div class="ref-grid">
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">ed</span>
+                        <h3><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ed.html" target="_blank" rel="noopener">POSIX ed</a></h3>
+                        <p>A durable reference for line editing and command-first document manipulation.</p>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">vi</span>
+                        <h3><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/vi.html" target="_blank" rel="noopener">POSIX vi</a></h3>
+                        <p>Useful when you want a stable standard reference for modal screen editing rather than a product marketing page.</p>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">vim</span>
+                        <h3><a href="https://vimhelp.org/usr_toc.txt.html" target="_blank" rel="noopener">Vim user manual</a></h3>
+                        <p>A practical reference for the long-lived modal editing lineage that grew out of vi.</p>
+                    </div>
+                    <div class="ref-card" data-spw-form="square">
+                        <span class="ref-card-sigil">emacs</span>
+                        <h3><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" target="_blank" rel="noopener">GNU Emacs manual</a></h3>
+                        <p>A complementary reference for programmable editor culture and text editing as an extensible environment.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+        <div class="site-footer__identity">
+            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+            <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/topics/software/">Software</a>
+            <a href="/topics/craft/">Craft</a>
+            <a href="/recipes/">Recipes</a>
+            <a href="/play/">Play</a>
+            <a href="/blog/">Blog</a>
+            <a href="/services/">Services</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
+    </div>
+</footer>
+</body>
+</html>

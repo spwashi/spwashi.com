@@ -145,7 +145,7 @@
                         <h1 id="software-title">Software</h1>
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
-                        <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the Obsidian application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
+                        <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the text-editing application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
                         <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel data-spw-feature="software-quick-tune">
                             <article class="vibe-widget">
                                 <div class="vibe-widget-header">
@@ -457,7 +457,7 @@
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="source" aria-pressed="true">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="syntax" aria-pressed="false">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="surface" aria-pressed="false">&gt;surface</button>
-                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="obsidian" aria-pressed="false">@obsidian</button>
+                        <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="text-editing" aria-pressed="false">@text_editing</button>
                     </div>
                 </div>
                 <p class="spec-kicker">Public Reference Surface</p>
@@ -479,12 +479,13 @@
                     <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="surface" data-spw-role="projection" hidden>
                         <p>The key idea is projection: one authored source can be read as plain text, syntax, metadata, or an interactive surface without breaking the link between those views.</p>
                     </section>
-                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="obsidian" data-spw-role="scenario" hidden>
-                        <p>I am currently applying to Obsidian, and this is the connective idea: plain-text files can gain navigable semantics for editors, LSP clients, plugins, and learning surfaces while remaining human-readable.</p>
+                    <section class="mode-panel" data-mode-group="syntax-lens" data-mode-panel="text-editing" data-spw-role="scenario" hidden>
+                        <p>This is the connective idea I want to test inside text-editing applications broadly, including <a href="/topics/knowledge-bases/markdown/">Obsidian</a>: plain-text files can gain navigable semantics for editors, LSP clients, plugins, and learning surfaces while remaining human-readable.</p>
                     </section>
                 </div>
                 <nav class="frame-operators" aria-label="Software routes">
                     <a class="operator-chip" aria-current="page" href="/topics/software/">software surface</a>
+                    <a class="operator-chip" href="/topics/software/text-editing/">text editing</a>
                     <a class="operator-chip" href="/topics/software/spw/">operator atlas</a>
                     <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
                     <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
@@ -820,12 +821,13 @@ Files should remain legible.
                 <p class="inline-note">This is an external-library probe, but it follows the same pattern as the rest of the page: source first, then measurable projection.</p>
             </section>
 
-            <section class="site-frame" id="obsidian-homage-frame" data-spw-role="scenario" data-spw-meaning="application context" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__obsidian_homage_frame" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">
+            <section class="site-frame" id="text-editing-application-frame" data-spw-role="scenario" data-spw-meaning="application context" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__text_editing_application_frame" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/|/topics/software/text-editing/">
                 <div class="frame-heading">
-                    <a class="frame-sigil" href="#obsidian-homage-frame">@obsidian_application</a>
-                    <h2>Applying to Obsidian with Spw in mind</h2>
+                    <a class="frame-sigil" href="#text-editing-application-frame">@text_editing_application</a>
+                    <h2>Text editing applications with Spw in mind</h2>
                 </div>
-                <div class="domain-grid" data-spw-feature="software-obsidian-fit">
+                <p class="inline-note">A current reason this matters is <a href="/topics/knowledge-bases/markdown/">Obsidian</a>, but the broader utility is larger than one company: the same plain-text and projection questions show up across note-taking, editing, plugins, and teaching surfaces.</p>
+                <div class="domain-grid" data-spw-feature="software-text-editing-fit">
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_7">
                         <h3>Plain text stays</h3>
                         <p>Files remain portable and human-readable. Spw does not replace the trust model of readable files; it adds structure around them.</p>
@@ -851,6 +853,11 @@ Files should remain legible.
                         <p>The interface becomes part of the learning model: interaction reveals structure, supports reflection, and keeps plain text connected to the lesson.</p>
                     </div>
                 </div>
+                <nav class="frame-operators" aria-label="Text editing routes">
+                    <a class="operator-chip" href="/topics/software/text-editing/">text editing hub</a>
+                    <a class="operator-chip" href="/topics/software/text-editing/note-taking/">note-taking history</a>
+                    <a class="operator-chip" href="/topics/software/text-editing/history/">editor history</a>
+                </nav>
             </section>
 
             <section class="site-frame" id="design-influences-frame" data-spw-role="reference" data-spw-meaning="design sources" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__design_influences_frame" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">

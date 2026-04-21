@@ -47,7 +47,7 @@ const CORE_ROUTES = [
   '/topics/craft/svg/',
   '/topics/craft/files/',
   '/topics/pedagogy/',
-  '/topics/site-design/',
+  '/design/website/',
   '/topics/math/',
   '/topics/math/topology/',
   '/topics/math/symmetry/',

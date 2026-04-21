@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spwashi • Markdown Knowledge Bases</title>
+    <meta name="description" content="A topic page about Markdown syntax: headings, lists, links, emphasis, code, block structure, and the references that clarify how Markdown is specified today.">
+    <link rel="canonical" href="https://spwashi.com/topics/knowledge-bases/markdown/">
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body
+    data-spw-surface="topics"
+    data-spw-features="operators metrics navigator"
+    data-spw-route-family="topics software editorial systems"
+    data-spw-context="analysis"
+    data-spw-wonder="comparison locality projection"
+    data-spw-page-family="topic"
+    data-spw-page-modes="reading inspect compare"
+    data-spw-page-role="topic-register"
+    data-spw-page-seed="page_topics_knowledge_bases_markdown"
+    data-spw-related-routes="/|/topics/|/topics/knowledge-bases/|/topics/software/text-editing/|/blog/|/about/website/">
+    <header class="site-header" role="banner">
+        <div class="site-header__inner">
+            <a class="site-title" href="/">Spwashi</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="/about/">about</a>
+                <a href="/blog/">blog</a>
+                <a href="/topics/">topics</a>
+                <a href="/settings/">settings</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="site-frame site-hero" data-spw-kind="frame" data-spw-role="orientation">
+            <div class="frame-topline">
+                <span class="frame-sigil">#&gt;markdown_knowledge_bases</span>
+                <span class="frame-kind">topic stub</span>
+            </div>
+            <h1>Markdown Syntax</h1>
+            <p>This page is mainly about Markdown itself: the plain-text syntax for headings, paragraphs, lists, links, emphasis, code, blockquotes, and other lightweight document structure.</p>
+            <p>The core practical question is simple: which parts of a document are plain Markdown syntax, and which parts are conventions or app-specific extensions layered on top? That distinction matters whenever a file needs to stay portable across editors, renderers, and products.</p>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline">
+                <span class="frame-sigil">?pressure</span>
+                <span class="frame-kind">syntax scope</span>
+            </div>
+            <h2>What belongs to core Markdown</h2>
+            <p>Markdown began as a readable plain-text format for structured documents. The original project emphasized readability in source form, while CommonMark later provided a stronger specification so implementations could behave more consistently.</p>
+            <ul>
+                <li>Block structure: headings, paragraphs, lists, blockquotes, code blocks, and thematic breaks.</li>
+                <li>Inline structure: emphasis, strong emphasis, inline code, links, and images.</li>
+                <li>Portability questions: where implementations agree, and where extensions or ambiguity start to matter.</li>
+            </ul>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <span class="frame-sigil">^syntax</span>
+                <span class="frame-kind">syntax starter</span>
+            </div>
+            <h2>Syntax starter</h2>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Headings</h3>
+                    <p>ATX headings use leading `#` marks. The number of `#` characters indicates depth.</p>
+                    <pre><code># Heading 1
+## Heading 2
+### Heading 3</code></pre>
+                </div>
+                <div class="frame-panel">
+                    <h3>Emphasis and strong emphasis</h3>
+                    <p>Single `*` or `_` typically marks emphasis. Double markers typically mark strong emphasis.</p>
+                    <pre><code>*emphasis*
+**strong**
+_emphasis_
+__strong__</code></pre>
+                </div>
+                <div class="frame-panel">
+                    <h3>Links and images</h3>
+                    <p>Links use brackets plus parentheses. Images add a leading exclamation mark.</p>
+                    <pre><code>[CommonMark](https://commonmark.org/)
+![Alt text](/path/image.png)</code></pre>
+                </div>
+                <div class="frame-panel">
+                    <h3>Inline code and fenced code blocks</h3>
+                    <p>Backticks mark inline code. Triple backticks usually fence code blocks in modern Markdown implementations.</p>
+                    <pre><code>`inline code`
+
+```js
+console.log("code block");
+```</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <span class="frame-sigil">@blocks</span>
+                <span class="frame-kind">block forms</span>
+            </div>
+            <h2>Common block forms</h2>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Paragraphs</h3>
+                    <p>Paragraphs are separated by blank lines. Markdown generally treats plain wrapped lines as part of the same paragraph until a blank line or another block form appears.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Lists</h3>
+                    <p>Unordered lists usually use `-`, `*`, or `+`. Ordered lists usually use `1.` style markers. Nesting behavior can vary if indentation is sloppy.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Blockquotes</h3>
+                    <p>Blockquotes begin with `>`. They can contain multiple paragraphs and, in many implementations, nested structures such as lists or code blocks.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Thematic breaks</h3>
+                    <p>Three or more matching markers such as `---`, `***`, or `___` usually produce a thematic break.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <span class="frame-sigil">~interop</span>
+                <span class="frame-kind">interoperability note</span>
+            </div>
+            <h2>Where ambiguity starts</h2>
+            <p>The original Markdown project was influential, but not fully unambiguous as a formal specification. That is one reason CommonMark matters: it gives a stronger, testable description of how Markdown should parse.</p>
+            <p>In practice, syntax questions often break into three layers:</p>
+            <ul>
+                <li>Original Markdown behavior as described by John Gruber.</li>
+                <li>CommonMark behavior as a stronger modern reference point.</li>
+                <li>Implementation-specific extensions such as tables, task lists, footnotes, wiki links, callouts, or math blocks.</li>
+            </ul>
+            <p>If you want portability, write toward the shared core first and treat extensions as optional rather than assumed.</p>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <span class="frame-sigil">~refs</span>
+                <span class="frame-kind">starting references</span>
+            </div>
+            <h2>Starting references</h2>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3><a href="https://commonmark.org/" target="_blank" rel="noopener">CommonMark</a></h3>
+                    <p>Start here if you need the current, testable description of core Markdown behavior and a path to the formal spec.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3><a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown project page</a></h3>
+                    <p>Useful for the original framing: readable plain text first, then conversion to structurally valid HTML.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3><a href="https://commonmark.org/help/" target="_blank" rel="noopener">CommonMark help</a></h3>
+                    <p>A quick reference and tutorial-style entry point when you need examples more than specification detail.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3><a href="/topics/knowledge-bases/">Knowledge bases</a></h3>
+                    <p>Use the broader page when the question shifts from Markdown syntax to note systems, linked working memory, or product categories.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <p><a href="/">Spwashi</a> is a personal site by <a href="/about/">Spencer Salazar Wanski</a>.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/public/js/main.js"></script>
+</body>
+</html>

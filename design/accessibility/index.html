@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi • Accessibility"
+    description="A design-facing page for accessibility and a11y: keyboard access, focus, naming, announcements, semantics, and practical references for inclusive web behavior."
+    canonical="https://spwashi.com/design/accessibility/"
+    og_title="Spwashi • Accessibility"
+    og_description="A design-facing page for accessibility and a11y: keyboard access, focus, naming, announcements, semantics, and practical references for inclusive web behavior."
+    og_image="https://spwashi.com/public/images/routes/site-design-resonance-og.jpg"
+    og_image_alt="A readable surface study blending threshold architecture, orbital traces, and structural design grammar."
+></spw-page>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="canonical" href="{{canonical}}">
+    <spw-include src="social-meta"></spw-include>
+    <meta name="keywords" content="accessibility, a11y, keyboard access, semantics, live regions, focus, inclusive web behavior"/>
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="topics"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="editorial design field-guide"
+    data-spw-context="analysis"
+    data-spw-wonder="projection orientation locality"
+    data-spw-page-family="field-guide"
+    data-spw-page-modes="reading inspect compare design"
+    data-spw-page-role="design-register"
+    data-spw-page-seed="page_design_accessibility"
+    data-spw-related-routes="/|/design/|/design/website/|/design/interaction-design/|/about/website/|/topics/software/browser/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/design/">Design</a></li>
+                <li><a href="/design/website/">Website</a></li>
+                <li><a aria-current="page" href="/design/accessibility/">Accessibility</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>a11y</span>
+    </header>
+
+    <main id="main-content" tabindex="-1" aria-labelledby="accessibility-title">
+        <article>
+            <section class="site-frame site-hero" id="accessibility-hero" data-spw-kind="frame" data-spw-role="orientation">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#accessibility-hero">#&gt;accessibility</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">keyboard</span>
+                        <span class="spec-pill">semantics</span>
+                        <span class="spec-pill">announcements</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Design / A11y</p>
+                <h1 id="accessibility-title">Accessibility</h1>
+                <p>Accessibility is the discipline that keeps a site usable across different bodies, tools, input methods, and perceptual conditions. On the web, that means more than passing audits. It means preserving meaning and operability when the user tabs instead of clicks, zooms instead of scans, or listens instead of looks.</p>
+                <p>The basic standard is simple to state: content should be perceivable, operable, understandable, and robust. The practical work is more concrete: correct semantics, keyboard access, visible focus, stable names, careful announcements, and restraint about custom widgets.</p>
+                <nav class="frame-operators" aria-label="Accessibility routes">
+                    <a class="operator-chip" href="/design/website/">website</a>
+                    <a class="operator-chip" href="/design/interaction-design/">interaction design</a>
+                    <a class="operator-chip" href="/about/website/#interaction-register">website interaction register</a>
+                    <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="a11y-questions" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#a11y-questions">~"a11y_questions"</a>
+                    <h2>What this page should help answer</h2>
+                </div>
+                <ul>
+                    <li>Can the whole surface be used from a keyboard without guesswork or traps.</li>
+                    <li>Do names, labels, headings, and landmarks expose the right structure to assistive technology.</li>
+                    <li>Do dynamic changes announce themselves appropriately without becoming noisy.</li>
+                    <li>When should native HTML be preferred over custom scripted controls.</li>
+                </ul>
+            </section>
+
+            <section class="site-frame" id="working-checks" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#working-checks">^"working_checks"</a>
+                    <h2>Working checks</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Keyboard first</h3>
+                        <p>If something can be clicked, it should also be reachable and usable from the keyboard. Focus order should follow document logic, not visual improvisation.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Native semantics first</h3>
+                        <p>Use real buttons, links, headings, lists, and form controls before reaching for ARIA. ARIA is a repair tool, not a replacement for HTML.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Visible focus and state</h3>
+                        <p>Focus should be easy to find. Expanded, selected, disabled, and loading states should be conveyed clearly in text, semantics, and styling together.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Announce only what matters</h3>
+                        <p>Use live regions and status messaging carefully. Important changes should be announced; minor churn should not constantly interrupt the user.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="reference-points" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#reference-points">~"reference_points"</a>
+                    <h2>Reference points</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility" target="_blank" rel="noopener">MDN accessibility</a></h3>
+                        <p>A strong practical hub for web accessibility concepts, guides, and references.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://www.w3.org/2004/09/wai-nav/intro/wcag" target="_blank" rel="noopener">WCAG overview</a></h3>
+                        <p>Use this when the question becomes standards language, conformance vocabulary, or the larger framework behind web accessibility work.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener">ARIA Authoring Practices Guide</a></h3>
+                        <p>Critical when a design pattern turns into a custom widget and needs specific keyboard and semantics guidance.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noopener">MDN: ARIA live regions</a></h3>
+                        <p>Useful whenever the page updates dynamically and you need to decide how screen readers should hear that change.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <div class="site-footer__identity">
+                <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+                <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

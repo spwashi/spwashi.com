@@ -39,7 +39,7 @@ const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/topics/software/', label: 'Software', token: '^software', note: 'spw-workbench, parsers, renderers, and language tools.' },
   { href: '/topics/math/', label: 'Math', token: '~math', note: 'Intuition routes for invariants, collapse, and structure.' },
   { href: '/topics/craft/', label: 'Craft', token: '@craft', note: 'Process art, fragments, and gentle ramps into making on the web.' },
-  { href: '/topics/site-design/', label: 'Site Design', token: '#design', note: 'Typography, motifs, and page systems for premium-feeling surfaces.' },
+  { href: '/design/website/', label: 'Website Design', token: '#design', note: 'Readable publishing surfaces, thresholds, and page systems for premium-feeling sites.' },
   { href: '/about/website/', label: 'Website', token: '>website', note: 'A field guide nudging authors toward HTML and illustrators toward CSS.' },
   { href: '/blog/', label: 'Blog', token: '*blog', note: 'Working threads, copy drafts, and public process.' },
   { href: '/about/domains/lore.land/', label: 'lore.land', token: '*lore', note: 'A public bridge from notes into ebooks, lore, and narrative surfaces.' },

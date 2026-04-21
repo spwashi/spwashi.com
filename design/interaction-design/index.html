@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi • Interaction Design"
+    description="A design-facing page for interaction design: affordances, state change, feedback, focus, progressive enhancement, and practical web behavior references."
+    canonical="https://spwashi.com/design/interaction-design/"
+    og_title="Spwashi • Interaction Design"
+    og_description="A design-facing page for interaction design: affordances, state change, feedback, focus, progressive enhancement, and practical web behavior references."
+    og_image="https://spwashi.com/public/images/routes/site-design-resonance-og.jpg"
+    og_image_alt="A readable surface study blending threshold architecture, orbital traces, and structural design grammar."
+></spw-page>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="canonical" href="{{canonical}}">
+    <spw-include src="social-meta"></spw-include>
+    <meta name="keywords" content="interaction design, affordances, state change, feedback, focus, progressive enhancement, web behavior"/>
+    <script defer data-domain="spwashi.com" src="https://plausible.io/js/script.js"></script>
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+</head>
+<body
+    data-spw-surface="topics"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="editorial design field-guide"
+    data-spw-context="analysis"
+    data-spw-wonder="projection orientation locality"
+    data-spw-page-family="field-guide"
+    data-spw-page-modes="reading inspect compare design"
+    data-spw-page-role="design-register"
+    data-spw-page-seed="page_design_interaction_design"
+    data-spw-related-routes="/|/design/|/design/website/|/design/accessibility/|/about/website/|/topics/software/browser/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" role="banner">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/design/">Design</a></li>
+                <li><a href="/design/website/">Website</a></li>
+                <li><a aria-current="page" href="/design/interaction-design/">Interaction design</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>interaction</span>
+    </header>
+
+    <main id="main-content" tabindex="-1" aria-labelledby="interaction-design-title">
+        <article>
+            <section class="site-frame site-hero" id="interaction-design-hero" data-spw-kind="frame" data-spw-role="orientation">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#interaction-design-hero">?["interaction_design"]</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">affordances</span>
+                        <span class="spec-pill">state change</span>
+                        <span class="spec-pill">feedback</span>
+                    </div>
+                </div>
+                <p class="spec-kicker">Design / Behavior</p>
+                <h1 id="interaction-design-title">Interaction Design</h1>
+                <p>This page is for the behavior layer of the site: what changes when a person hovers, tabs, clicks, opens, closes, tunes, or revisits a surface. The useful question is not only whether an interaction looks nice. It is whether the interaction makes structure clearer, consequences legible, and next actions easier to infer.</p>
+                <p>Good interaction design reduces ambiguity. A control should say what it is, what state it is in, what will happen next, and how to recover if the user changes their mind.</p>
+                <nav class="frame-operators" aria-label="Interaction design routes">
+                    <a class="operator-chip" href="/design/website/">website</a>
+                    <a class="operator-chip" href="/design/accessibility/">accessibility</a>
+                    <a class="operator-chip" href="/about/website/#interaction-register">website interaction register</a>
+                    <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="interaction-questions" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#interaction-questions">~"interaction_questions"</a>
+                    <h2>What this page should help answer</h2>
+                </div>
+                <ul>
+                    <li>What should be visible before interaction, and what can wait until focus, hover, or expansion.</li>
+                    <li>How to make state changes legible: open versus closed, selected versus unselected, saved versus unsaved.</li>
+                    <li>When motion, color, or ornament help explain behavior, and when they only add noise.</li>
+                    <li>How progressive enhancement changes the design boundary: what still works as plain HTML, and what requires JavaScript.</li>
+                </ul>
+            </section>
+
+            <section class="site-frame" id="working-principles" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#working-principles">^"working_principles"</a>
+                    <h2>Working principles</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Affordance before flourish</h3>
+                        <p>A control should read like a control before any animation or decorative treatment is added. If the user cannot identify the action, the styling is premature.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>State should persist in more than one channel</h3>
+                        <p>Do not rely on color alone. Labels, pressed state, expanded state, focus treatment, and region visibility should reinforce each other.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Feedback should match consequence</h3>
+                        <p>A small local change can use subtle feedback. Navigation, destructive actions, and async changes need clearer acknowledgment.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Recovery matters</h3>
+                        <p>Users should be able to back out, close, reset, or re-find where they were without having to reconstruct the interface from scratch.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="reference-points" data-spw-kind="frame" data-spw-role="reference">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#reference-points">~"reference_points"</a>
+                    <h2>Reference points</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener">ARIA Authoring Practices Guide</a></h3>
+                        <p>Useful when a pattern becomes widget-like and needs explicit roles, states, keyboard behavior, and tested examples.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://www.w3.org/WAI/ARIA/apg/practices/" target="_blank" rel="noopener">APG practices</a></h3>
+                        <p>Use this when the question is about keyboard interaction, landmarks, names, descriptions, or widget semantics rather than pure visual behavior.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Keyboard" target="_blank" rel="noopener">MDN: Keyboard accessible</a></h3>
+                        <p>A concise reference for the minimum behavioral discipline that interactive components need on the web.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3><a href="/about/website/#interaction-register">Website interaction register</a></h3>
+                        <p>The local site-facing reference for how this repo currently thinks about shell behavior, tuneable surfaces, and named interactions.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="site-footer__inner">
+            <div class="site-footer__identity">
+                <a class="site-footer__brand" href="/">#&gt;spwashi</a>
+                <p class="site-footer__summary">Readable systems, language tools, and local-first publishing surfaces.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
