@@ -34,6 +34,7 @@ const OPERATOR_INFO = Object.freeze({
   '%':  { type: 'normalize', label: 'normalize', intent: 'scale into comparability', wonder: 'constraint' },
   '!':  { type: 'pragma', label: 'pragma', intent: 'apply a runtime hint or force', wonder: 'constraint' },
   '>':  { type: 'surface', label: 'surface', intent: 'project a rendered encounter', wonder: 'projection' },
+  '<':  { type: 'topic', label: 'topic', intent: 'scope a topical boundary', wonder: 'orientation' },
 
   frame: { type: 'frame', label: 'frame', intent: 'orient a stable unit', wonder: 'orientation' },
   layer: { type: 'layer', label: 'layer', intent: 'qualify interpretation', wonder: 'constraint' },
@@ -49,6 +50,7 @@ const OPERATOR_INFO = Object.freeze({
   normalize: { type: 'normalize', label: 'normalize', intent: 'scale into comparability', wonder: 'constraint' },
   pragma: { type: 'pragma', label: 'pragma', intent: 'apply a runtime hint or force', wonder: 'constraint' },
   surface: { type: 'surface', label: 'surface', intent: 'project a rendered encounter', wonder: 'projection' },
+  topic: { type: 'topic', label: 'topic', intent: 'scope a topical boundary', wonder: 'orientation' },
 });
 
 const runtime = {
@@ -759,6 +761,11 @@ function extractSigil(target) {
 }
 
 function inferOperatorInfoFromText(target) {
+  const explicit = target.dataset.spwOperator || target.closest('[data-spw-operator]')?.dataset.spwOperator || '';
+  if (explicit && OPERATOR_INFO[explicit]) {
+    return OPERATOR_INFO[explicit];
+  }
+
   const sigil = extractSigil(target);
   return OPERATOR_INFO[sigil] || null;
 }
@@ -772,11 +779,14 @@ function normalizeAffordances(detailAffordances, target) {
   if (attrs) return attrs.split(/\s+/).filter(Boolean);
 
   const out = [];
+  const opInfo = inferOperatorInfoFromText(target);
   if (target.matches('a[href], .operator-chip[href], .frame-sigil[href]')) out.push('navigate');
+  if (opInfo?.type === 'probe') out.push('explore');
+  if (opInfo?.type === 'pragma' || opInfo?.type === 'action') out.push('commit');
   if (target.closest('[data-spw-swappable]') || target.hasAttribute('data-spw-swappable')) out.push('swap');
   if (target.matches('.site-frame, .frame-card, .frame-panel, .frame-sigil, .frame-card-sigil')) out.push('pin');
   if (!out.length) out.push('hint');
-  return out;
+  return [...new Set(out)];
 }
 
 function inferTargetKind(target) {
@@ -790,6 +800,8 @@ function inferTargetKind(target) {
 }
 
 function inferWonder(target) {
+  const opInfo = inferOperatorInfoFromText(target);
+  if (opInfo?.wonder) return opInfo.wonder;
   if (target.matches('.spw-delimiter')) return 'orientation';
   if (target.matches('.operator-chip')) return 'inquiry';
   if (target.matches('.frame-sigil, .frame-card-sigil')) return 'memory';

@@ -33,7 +33,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '#>',
     intent: 'orient',
     interaction: 'activate or inspect a named frame',
-    family: 'structural'
+    family: 'structural',
+    speech: 'anchor',
+    reversibility: 'returnable'
   },
   {
     pattern: /^#:/,
@@ -42,7 +44,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '#:',
     intent: 'qualify',
     interaction: 'inspect the interpretive layer or runtime constraint',
-    family: 'structural'
+    family: 'structural',
+    speech: 'qualifier',
+    reversibility: 'inspectable'
   },
   {
     pattern: /^\./,
@@ -51,7 +55,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '.',
     intent: 'settle',
     interaction: 'return to the local baseline, member, or default lens',
-    family: 'grounding'
+    family: 'grounding',
+    speech: 'ground',
+    reversibility: 'recoverable'
   },
   {
     pattern: /^\^/,
@@ -60,7 +66,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '^',
     intent: 'elevate',
     interaction: 'open or inspect structured content',
-    family: 'structural'
+    family: 'structural',
+    speech: 'noun',
+    reversibility: 'inspectable'
   },
   {
     pattern: /^~/,
@@ -69,7 +77,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '~',
     intent: 'refer',
     interaction: 'resolve a reference without forcing commitment',
-    family: 'relational'
+    family: 'relational',
+    speech: 'pointer',
+    reversibility: 'deferrable'
   },
   {
     pattern: /^\?/,
@@ -78,7 +88,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '?',
     intent: 'inquire',
     interaction: 'ask, filter, or reveal an exploratory lens',
-    family: 'inquiry'
+    family: 'inquiry',
+    speech: 'question',
+    reversibility: 'reversible'
   },
   {
     pattern: /^@/,
@@ -87,7 +99,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '@',
     intent: 'act',
     interaction: 'commit a local action or projection',
-    family: 'operative'
+    family: 'operative',
+    speech: 'verb',
+    reversibility: 'committing'
   },
   {
     pattern: /^\*/,
@@ -96,7 +110,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '*',
     intent: 'flow',
     interaction: 'connect to dynamic or event-like content',
-    family: 'relational'
+    family: 'relational',
+    speech: 'flow',
+    reversibility: 'replayable'
   },
   {
     pattern: /^&/,
@@ -105,7 +121,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '&',
     intent: 'integrate',
     interaction: 'overlay, compare, or combine fields',
-    family: 'relational'
+    family: 'relational',
+    speech: 'junction',
+    reversibility: 'revisable'
   },
   {
     pattern: /^=/,
@@ -114,7 +132,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '=',
     intent: 'bind',
     interaction: 'name, pin, or categorize a local value',
-    family: 'grounding'
+    family: 'grounding',
+    speech: 'assignment',
+    reversibility: 'sticky'
   },
   {
     pattern: /^\$/,
@@ -123,7 +143,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '$',
     intent: 'reflect',
     interaction: 'inspect the medium, trace, or register itself',
-    family: 'reflective'
+    family: 'reflective',
+    speech: 'aside',
+    reversibility: 'reversible'
   },
   {
     pattern: /^%/,
@@ -132,7 +154,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '%',
     intent: 'scale',
     interaction: 'compare, normalize, or adjust salience',
-    family: 'reflective'
+    family: 'reflective',
+    speech: 'adverb',
+    reversibility: 'revisable'
   },
   {
     pattern: /^!/,
@@ -141,7 +165,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '!',
     intent: 'constrain',
     interaction: 'apply or inspect a runtime force or constraint',
-    family: 'operative'
+    family: 'operative',
+    speech: 'constraint',
+    reversibility: 'constraining'
   },
   {
     pattern: /^>/,
@@ -150,7 +176,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '>',
     intent: 'project',
     interaction: 'move into or inspect a rendered projection',
-    family: 'projective'
+    family: 'projective',
+    speech: 'projection',
+    reversibility: 'projected'
   },
   {
     pattern: /^</,
@@ -159,7 +187,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     prefix: '<',
     intent: 'scope',
     interaction: 'enter or define a topical boundary — <topic> or (scene) <> (scene)',
-    family: 'scoping'
+    family: 'scoping',
+    speech: 'subject',
+    reversibility: 'scoping'
   }
 ]);
 

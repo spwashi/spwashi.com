@@ -19,25 +19,35 @@
 //   !pragma    pragma — encodes a runtime constraint or hint
 //   >surface   surface — a projected or rendered view
 
-import { detectOperator } from './spw-shared.js';
+import { detectOperator, detectOperatorFromElement } from './spw-shared.js';
 
 let initialized = false;
 
 // Attach data-spw-operator and a descriptive title to each matching sigil.
+const applyOperatorMetadata = (element, op) => {
+    if (!(element instanceof HTMLElement) || !op) return;
+
+    element.dataset.spwOperator = element.dataset.spwOperator || op.type;
+    element.dataset.spwOperatorIntent = op.intent;
+    element.dataset.spwOperatorInteraction = op.interaction;
+    element.dataset.spwOperatorFamily = op.family;
+    element.dataset.spwOperatorSpeech = op.speech;
+    element.dataset.spwOperatorReversibility = op.reversibility;
+
+    if (!element.title) {
+        element.title = `${op.label}: ${op.interaction}`;
+    }
+};
+
 const annotateSignals = () => {
     const sigils = Array.from(
-        document.querySelectorAll('.frame-sigil, .frame-card-sigil, .syntax-token')
+        document.querySelectorAll('.frame-sigil, .frame-card-sigil, .syntax-token, .operator-chip, .spw-spell-button, .spw-spell-shell, .spw-spell-link')
     );
 
     for (const sigil of sigils) {
         const text = sigil.textContent.trim();
-        const op = detectOperator(text);
-        if (op && !sigil.dataset.spwOperator) {
-            sigil.dataset.spwOperator = op.type;
-            sigil.dataset.spwOperatorIntent = op.intent;
-            sigil.dataset.spwOperatorInteraction = op.interaction;
-            if (!sigil.title) sigil.title = `${op.label}: ${op.interaction}`;
-        }
+        const op = detectOperatorFromElement(sigil) || detectOperator(text);
+        applyOperatorMetadata(sigil, op);
     }
 };
 

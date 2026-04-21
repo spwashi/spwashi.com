@@ -13,7 +13,7 @@
 
 /* Establish vertical rhythm for standard prose content */
 :where(.prose, article, .frame-copy, .frame-note) {
-  --flow-space: var(--space-md, 1rem);
+  --flow-space: var(--spw-flow-space, var(--space-md, 1rem));
 }
 
 :where(.prose > * + *, article > * + *, .frame-copy > * + *) {
@@ -39,7 +39,7 @@
   letter-spacing: -0.02em;
   text-wrap: balance;
   /* Ensure headings clear preceding content slightly more than standard flow */
-  margin-block-start: calc(var(--flow-space, 1rem) * 1.5);
+  margin-block-start: calc(var(--flow-space, 1rem) * var(--spw-heading-flow-space-multiplier, 1.5));
 }
 
 :where(h1:first-child, h2:first-child, h3:first-child) {

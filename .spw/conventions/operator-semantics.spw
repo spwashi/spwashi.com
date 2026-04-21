@@ -35,6 +35,14 @@
     "{}": "brace — contain, place in bounded region with inside/outside"
   }
 
+  button_speech_and_reversibility: {
+    runtime_rule: "When a visible control starts with an operator, the runtime should expose its operator family, speech role, and reversibility as inspectable data attributes."
+    "#": "Anchor speech. The # family names or stabilizes a structure so it can be returned to."
+    "?": "Question speech. A probe should open a reversible lens, filter, or inquiry path without forcing commitment."
+    "!": "Constraint speech. A pragma should announce a stronger local force, reset, or rule that has visible consequence."
+    note: "Question and constraint should not feel interchangeable even when both are rendered as compact chips."
+  }
+
   physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."
 }
 

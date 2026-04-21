@@ -30,15 +30,15 @@
    ========================================================================== */
 
 :root {
-  --component-gap: 0.9rem;
-  --component-gap-tight: 0.55rem;
-  --component-gap-loose: 1.2rem;
-  --component-gap-roomy: 1.6rem;
+  --component-gap: var(--spw-component-gap, 0.9rem);
+  --component-gap-tight: var(--spw-component-gap-tight, 0.55rem);
+  --component-gap-loose: var(--spw-component-gap-loose, 1.2rem);
+  --component-gap-roomy: var(--spw-component-gap-roomy, 1.6rem);
 
-  --component-pad: 0.9rem;
-  --component-pad-tight: 0.65rem;
-  --component-pad-loose: 1.15rem;
-  --component-pad-roomy: 1.45rem;
+  --component-pad: var(--spw-component-pad, 0.9rem);
+  --component-pad-tight: var(--spw-component-pad-tight, 0.65rem);
+  --component-pad-loose: var(--spw-component-pad-loose, 1.15rem);
+  --component-pad-roomy: var(--spw-component-pad-roomy, 1.45rem);
 
   --component-radius: var(--shape-surface, 10px);
   --component-radius-tight: var(--shape-component, 6px);
@@ -74,8 +74,8 @@
   --component-measure-wide: 78ch;
   --component-code-measure: 84ch;
 
-  --component-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
-  --component-transition-base: var(--duration-base, 180ms) var(--ease-mechanical, ease);
+  --component-transition-fast: var(--spw-control-transition-fast, var(--duration-fast, 120ms) var(--ease-mechanical, ease));
+  --component-transition-base: var(--spw-control-transition-base, var(--duration-base, 180ms) var(--ease-mechanical, ease));
   --component-transition-deliberate: var(--duration-deliberate, 260ms) var(--ease-mechanical, ease);
 
   --pretext-line-gap: 0.18rem;
@@ -89,7 +89,7 @@
 
   --component-rail-width: 3px;
   --component-header-min-height: 1.5rem;
-  --component-chip-height: 2rem;
+  --component-chip-height: var(--spw-control-min-height, 2rem);
 }
 
 /* ==========================================================================
@@ -157,7 +157,7 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: clamp(0.6rem, 1.6vw, 0.9rem);
+  gap: var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
   min-width: 0;
 }
 
@@ -166,7 +166,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 0.45rem 0.8rem;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.8rem);
   width: fit-content;
   max-width: 100%;
   align-self: flex-start;
@@ -190,7 +190,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem 0.6rem;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   min-width: 0;
 }
 
@@ -198,7 +198,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem 0.6rem;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   min-width: 0;
 }
 
@@ -614,8 +614,8 @@ a.frame-card:is(:hover, :focus-visible),
    ========================================================================== */
 
 :where(.site-frame) {
-  --surface-gap: var(--component-gap, 0.9rem);
-  --surface-padding: clamp(1.15rem, 2.5vw, 1.75rem);
+  --surface-gap: var(--spw-surface-gap, var(--component-gap, 0.9rem));
+  --surface-padding: var(--spw-surface-padding, clamp(1.15rem, 2.5vw, 1.75rem));
 
   display: flex;
   flex-direction: column;
@@ -685,7 +685,7 @@ a.frame-card:is(:hover, :focus-visible),
    ========================================================================== */
 
 :where(.site-hero) {
-  gap: clamp(1.1rem, 2vw, 1.5rem);
+  gap: var(--spw-hero-gap, clamp(1.1rem, 2vw, 1.5rem));
 }
 
 /* Explicit hero slots are easier to extend than child-order selectors. */
@@ -1768,7 +1768,7 @@ code[data-interactive]:focus-visible::after {
   }
 
   :where(.spec-strip, .frame-operators, .plan-verb-strip, .plan-links, [data-spw-slot="meta"], [data-spw-slot="actions"]) {
-    gap: 0.4rem 0.45rem;
+    gap: var(--spw-slot-gap-tight, 0.4rem 0.45rem);
   }
 
   :where(.site-frame) {

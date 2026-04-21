@@ -262,13 +262,14 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   max-width: 100%;
   overflow: visible;
   min-height: auto;
-  padding: 0.02rem 0 0.02rem 0.55rem;
+  padding: 0.02rem 0 0.02rem var(--spw-frame-sigil-padding-inline-start, 0.55rem);
   border: none;
   border-inline-start: 1px solid color-mix(in srgb, currentColor 26%, transparent);
   background: transparent;
   box-shadow: none;
   color: var(--ink-soft);
   font-size: var(--text-size-label, 0.76rem);
+  line-height: var(--spw-frame-sigil-line-height, 1.04);
   opacity: 0.42;
   justify-content: flex-start;
   text-align: left;
@@ -299,6 +300,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 
 .operator-chip {
   --operator-chip-border-width: 1px;
+  --operator-chip-border-style: solid;
   --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
   --operator-chip-border: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, transparent);
   --operator-chip-ink: color-mix(in oklab, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
@@ -311,15 +313,15 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
-  min-height: max(2.15rem, var(--touch-target-compact, 2.25rem));
-  padding: 0.28rem 0.72rem;
+  gap: var(--spw-control-gap, 0.28rem);
+  min-height: var(--spw-control-min-height, max(2.15rem, var(--touch-target-compact, 2.25rem)));
+  padding: var(--spw-control-padding-block, 0.28rem) var(--spw-control-padding-inline, 0.72rem);
   border-width: var(--operator-chip-border-width);
-  border-style: solid;
-  border-radius: var(--shape-control, 0.78rem);
+  border-style: var(--operator-chip-border-style);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
   white-space: nowrap;
   text-decoration: none;
-  line-height: 1.08;
+  line-height: var(--spw-control-line-height, 1.08);
   font-size: var(--text-size-chip, 0.82rem);
   background: var(--operator-chip-bg);
   border-color: var(--operator-chip-border);
@@ -327,11 +329,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   font-weight: 500;
   box-shadow: var(--operator-chip-shadow);
   transition:
-    background-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    border-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    transform var(--handle-duration-fast, 140ms) var(--handle-ease, ease);
+    background-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    border-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    box-shadow var(--spw-control-transition-base, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
 }
 
 .operator-chip:hover,
@@ -342,6 +344,23 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   box-shadow: var(--operator-chip-hover-shadow);
   transform: translateY(var(--operator-chip-hover-lift));
   outline: none;
+}
+
+/* Probe and pragma chips should not feel interchangeable.
+   Probe stays open/reversible; pragma reads as a stronger local constraint. */
+.operator-chip[data-spw-operator="probe"] {
+  --operator-chip-border-style: dashed;
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%);
+  --operator-chip-border: color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent);
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%);
+}
+
+.operator-chip[data-spw-operator="pragma"] {
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%);
+  --operator-chip-border: color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent);
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%);
+  --operator-chip-hover-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
 }
 
 .spec-pill {
@@ -601,7 +620,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 0.48rem;
+  gap: calc(var(--spw-control-gap, 0.28rem) + 0.16rem);
   min-width: 0;
 }
 
@@ -635,10 +654,10 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   inline-size: auto;
   width: auto;
   max-width: 100%;
-  min-height: 2.1rem;
-  padding: 0.24rem 0.72rem;
+  min-height: calc(var(--spw-control-min-height, 2.1rem) - 0.04rem);
+  padding: var(--spw-control-padding-block, 0.24rem) var(--spw-control-padding-inline, 0.72rem);
   border: var(--mode-switch-border-width) solid var(--mode-switch-idle-border);
-  border-radius: var(--shape-control, 0.68rem);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.68rem));
   background: var(--mode-switch-idle-bg);
   box-shadow: var(--mode-switch-idle-shadow);
   opacity: 1;
@@ -650,14 +669,14 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   color: var(--mode-switch-idle-ink);
   font-weight: var(--mode-switch-idle-weight);
   font-size: var(--text-size-chip, 0.84rem);
-  line-height: 1.08;
+  line-height: var(--spw-control-line-height, 1.08);
   transition:
-    background-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    border-color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    color var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    transform var(--handle-duration-fast, 140ms) var(--handle-ease, ease),
-    font-weight var(--handle-duration-fast, 140ms) var(--handle-ease, ease);
+    background-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    border-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    box-shadow var(--spw-control-transition-base, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    font-weight var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
 }
 
 .mode-switch .frame-sigil:is(:hover, :focus-visible) {
@@ -1478,13 +1497,13 @@ html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
 
 @media (max-width: 600px) {
   .operator-chip {
-    min-height: 2.4rem;
-    padding: 0.4rem 0.7rem;
+    min-height: var(--spw-control-min-height, 2.02rem);
+    padding: var(--spw-control-padding-block, 0.2rem) var(--spw-control-padding-inline, 0.6rem);
   }
 
   .mode-switch .frame-sigil {
-    min-height: 1.98rem;
-    padding-inline: 0.62rem;
+    min-height: calc(var(--spw-control-min-height, 2.02rem) - 0.06rem);
+    padding-inline: var(--spw-control-padding-inline, 0.6rem);
   }
 
   .spw-component-tag,

@@ -135,6 +135,35 @@
   --space-3xl: 4.5rem;
   --space-4xl: 6rem;
 
+  /* Shared density + control rhythm
+     Shared layers should spend these root variables instead of re-inflating
+     mobile padding or control height ad hoc. */
+  --spw-flow-space: 1rem;
+  --spw-heading-flow-space-multiplier: 1.5;
+  --spw-component-gap: 0.9rem;
+  --spw-component-gap-tight: 0.55rem;
+  --spw-component-gap-loose: 1.2rem;
+  --spw-component-gap-roomy: 1.6rem;
+  --spw-component-pad: 0.9rem;
+  --spw-component-pad-tight: 0.65rem;
+  --spw-component-pad-loose: 1.15rem;
+  --spw-component-pad-roomy: 1.45rem;
+  --spw-surface-gap: 0.9rem;
+  --spw-surface-padding: clamp(1.15rem, 2.5vw, 1.75rem);
+  --spw-slot-gap: clamp(0.6rem, 1.6vw, 0.9rem);
+  --spw-slot-gap-tight: 0.45rem 0.6rem;
+  --spw-hero-gap: clamp(1.1rem, 2vw, 1.5rem);
+  --spw-control-gap: 0.28rem;
+  --spw-control-min-height: 2.15rem;
+  --spw-control-padding-block: 0.26rem;
+  --spw-control-padding-inline: 0.68rem;
+  --spw-control-line-height: 1.04;
+  --spw-control-radius: var(--shape-control, 0.78rem);
+  --spw-control-transition-fast: var(--duration-snap, 90ms) var(--ease-mechanical, ease);
+  --spw-control-transition-base: var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+  --spw-frame-sigil-padding-inline-start: 0.52rem;
+  --spw-frame-sigil-line-height: 1.04;
+
   /* -- Semantic Spacing Aliases -- */
   --gap-inline-micro: var(--space-3xs);
   --gap-inline-tight: var(--space-2xs);
@@ -146,16 +175,16 @@
   --gap-block-flow: var(--space-lg);
   --gap-block-drift: var(--space-xl);
 
-  --gap-surface: clamp(0.85rem, 1.6vw, 1.1rem);
+  --gap-surface: var(--spw-surface-gap, clamp(0.85rem, 1.6vw, 1.1rem));
   --gap-panel: clamp(0.65rem, 1.2vw, 0.9rem);
   --gap-cluster: clamp(0.35rem, 1vw, 0.6rem);
 
   --inset-element: var(--space-2xs) var(--space-xs);
-  --inset-component: var(--space-sm) var(--space-md);
-  --inset-surface: clamp(1rem, 2vw, 1.5rem);
+  --inset-component: var(--spw-component-pad, var(--space-sm)) calc(var(--spw-component-pad, var(--space-sm)) + 0.12rem);
+  --inset-surface: var(--spw-surface-padding, clamp(1rem, 2vw, 1.5rem));
   --inset-overlay: clamp(0.55rem, 2vw, 1rem);
   --inset-console: clamp(0.75rem, 2vw, 1rem);
-  --inset-panel: clamp(0.6rem, 1.5vw, 0.9rem);
+  --inset-panel: var(--spw-component-pad-tight, clamp(0.6rem, 1.5vw, 0.9rem));
   --inset-ritual: clamp(1.2rem, 2.4vw, 1.8rem);
 
   /* -- Spatial Anchors -- */
@@ -166,7 +195,7 @@
   --page-width-atlas: 104rem;
   --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
   --touch-target-min: 2.75rem;
-  --touch-target-compact: 2.25rem;
+  --touch-target-compact: 2.15rem;
 
   /* -- Attention Architecture --
      These govern layout variants, mobile handle positions, and the radius
@@ -594,6 +623,105 @@
   --bone-border: hsla(42, 72%, 48%, 0.24);
   --bonk-border: hsla(212, 62%, 46%, 0.24);
   --honk-border: hsla(320, 52%, 46%, 0.24);
+}
+
+html[data-spw-component-density="dense"] {
+  --spw-flow-space: 0.9rem;
+  --spw-component-gap: 0.8rem;
+  --spw-component-gap-tight: 0.42rem;
+  --spw-component-gap-loose: 1rem;
+  --spw-component-gap-roomy: 1.28rem;
+  --spw-component-pad: 0.78rem;
+  --spw-component-pad-tight: 0.56rem;
+  --spw-component-pad-loose: 0.92rem;
+  --spw-component-pad-roomy: 1.12rem;
+  --spw-surface-gap: 0.8rem;
+  --spw-surface-padding: clamp(1rem, 2.1vw, 1.35rem);
+  --spw-control-min-height: 2.05rem;
+  --spw-control-padding-block: 0.22rem;
+  --spw-control-padding-inline: 0.62rem;
+  --spw-frame-sigil-padding-inline-start: 0.46rem;
+}
+
+html[data-spw-component-density="roomy"] {
+  --spw-flow-space: 1.08rem;
+  --spw-component-gap: 1rem;
+  --spw-component-gap-tight: 0.66rem;
+  --spw-component-gap-loose: 1.3rem;
+  --spw-component-gap-roomy: 1.72rem;
+  --spw-component-pad: 1rem;
+  --spw-component-pad-tight: 0.74rem;
+  --spw-component-pad-loose: 1.24rem;
+  --spw-component-pad-roomy: 1.56rem;
+  --spw-surface-gap: 1rem;
+  --spw-surface-padding: clamp(1.25rem, 2.7vw, 1.9rem);
+  --spw-control-min-height: 2.22rem;
+  --spw-control-padding-block: 0.3rem;
+  --spw-control-padding-inline: 0.76rem;
+  --spw-frame-sigil-padding-inline-start: 0.58rem;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --spw-surface-padding: clamp(0.98rem, 2.4vw, 1.3rem);
+    --spw-hero-gap: 1rem;
+    --spw-slot-gap: 0.72rem;
+  }
+}
+
+/* Mobile vertical: reduce top-down drift before route surfaces add their own spacing. */
+@media (max-width: 760px) {
+  :root {
+    --spw-flow-space: 0.88rem;
+    --spw-heading-flow-space-multiplier: 1.32;
+    --spw-component-gap: 0.78rem;
+    --spw-component-gap-tight: 0.4rem;
+    --spw-component-gap-loose: 0.96rem;
+    --spw-component-gap-roomy: 1.2rem;
+    --spw-component-pad: 0.76rem;
+    --spw-component-pad-tight: 0.56rem;
+    --spw-component-pad-loose: 0.92rem;
+    --spw-component-pad-roomy: 1.08rem;
+    --spw-surface-gap: 0.78rem;
+    --spw-surface-padding: 0.82rem;
+    --spw-slot-gap: 0.56rem;
+    --spw-slot-gap-tight: 0.34rem 0.46rem;
+    --spw-hero-gap: 0.92rem;
+    --touch-target-compact: 2.08rem;
+    --spw-control-min-height: 2.02rem;
+    --spw-control-padding-block: 0.2rem;
+    --spw-control-padding-inline: 0.6rem;
+    --spw-control-gap: 0.24rem;
+    --spw-frame-sigil-padding-inline-start: 0.42rem;
+  }
+}
+
+/* Narrow-wide / short viewports need even less vertical ceremony. */
+@media (max-width: 760px) and (orientation: landscape), (max-width: 640px) and (max-height: 520px) {
+  :root {
+    --spw-flow-space: 0.8rem;
+    --spw-component-gap: 0.72rem;
+    --spw-component-gap-tight: 0.36rem;
+    --spw-component-pad: 0.7rem;
+    --spw-component-pad-tight: 0.5rem;
+    --spw-surface-gap: 0.72rem;
+    --spw-surface-padding: 0.72rem;
+    --touch-target-compact: 1.98rem;
+    --spw-control-min-height: 1.96rem;
+    --spw-control-padding-block: 0.18rem;
+    --spw-control-padding-inline: 0.56rem;
+    --spw-frame-sigil-padding-inline-start: 0.36rem;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --spw-flow-space: 0.78rem;
+    --spw-surface-padding: 0.68rem;
+    --spw-component-pad: 0.68rem;
+    --spw-control-padding-inline: 0.54rem;
+    --spw-control-gap: 0.22rem;
+  }
 }
 
 html[data-spw-color-mode="dark"] {
