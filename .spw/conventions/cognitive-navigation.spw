@@ -217,7 +217,7 @@
   ~#note: "Shows your current position in multidimensional space."
 
   structure: "depth:level / abstraction:level / phase:phase / scale:level"
-  rendering: "inline breadcrumb with clickable segments"
+  rendering: "inline breadcrumb with clickable segments and a shell-state control"
   example_paths: [
     "home / concept / initiation / full",
     "plans / plan-card / expression / detailed",
@@ -229,7 +229,54 @@
     click_segment: "jump to that position in that dimension"
     hover_segment: "preview what that position contains"
     context_menu: "show alternative paths through dimensions"
+    shell_segment: "the breadcrumb may include a shell-state control that focuses or toggles the menu field without hiding the rest of the trail"
   }
+}
+
+^"shell_disclosure_physics"{
+  ~#note: "The header menu is an inspectable shell field, not just a hamburger icon."
+
+  thesis: "Shell disclosure should expose its operational physics through stable data attributes, visible copy, and custom events so a reader can inspect how the route field is behaving."
+
+  state_axes: {
+    mode: "inline | toggle"
+    phase: "resting | approach | contact | projecting | settling"
+    pressure: "calm | tight | compressed | crowded"
+    topology: "inline-ribbon | stacked-field | drawer-field"
+    intent: "survey | condense | contact | project | settle"
+  }
+
+  html_contract: [
+    "header, nav, and toggle mirror shell datasets so CSS and debugging tools can observe the same state",
+    "the toggle copy should expose state and return hints rather than acting as a silent glyph",
+    "a shell-state custom event should carry the current snapshot for other modules such as breadcrumbs"
+  ]
+
+  motion_contract: [
+    "timed motion should be derived from changed shell axes rather than one-off flourish flags",
+    "transform and opacity should carry explanatory motion before layout-affecting properties do",
+    "motion should stay local to the route field, toggle, and breadcrumb trace so shell cues do not leak across the page"
+  ]
+
+  event_contract: [
+    "spw:shell-menu-state emits the current shell snapshot",
+    "spw:shell-menu-intent requests toggle | open | close | settle | focus without requiring direct module coupling"
+  ]
+}
+
+^"ornamental_reversibility"{
+  ~#note: "Wonder is welcome only when the path back out stays obvious."
+
+  rule: "Any ornamental shell state must advertise how it settles."
+  return_paths: [
+    "toggle press",
+    "Escape",
+    "route choice",
+    "hash transition",
+    "outside click when the field is projected"
+  ]
+  breadcrumb_rule: "If the breadcrumb reflects shell state, it should also expose a return path instead of only amplifying the ornament."
+  falsify: "If a menu glow, phase change, or breadcrumb embellishment remains after attention has left and there is no visible or inspectable way to settle it, the effect is not valid shell physics."
 }
 
 ^"accessibility_of_handles"{
@@ -269,7 +316,11 @@
     { name: "data-cognitive-anchor", meaning: "mark anchor points for understanding" },
     { name: "data-dimensional-link", meaning: "mark links that navigate dimensions" },
     { name: "data-dimensional-breadcrumb", meaning: "mark breadcrumb showing position" },
-    { name: "data-dimensional-label='path'", meaning: "text representation of dimensional position" }
+    { name: "data-dimensional-label='path'", meaning: "text representation of dimensional position" },
+    { name: "data-spw-menu-phase='resting|approach|contact|projecting|settling'", meaning: "current shell contact phase" },
+    { name: "data-spw-menu-pressure='calm|tight|compressed|crowded'", meaning: "how strongly the route field is being compressed" },
+    { name: "data-spw-menu-topology='inline-ribbon|stacked-field|drawer-field'", meaning: "the current geometric projection of the menu" },
+    { name: "data-spw-menu-reversible='true|false'", meaning: "whether the current shell ornament explicitly advertises return paths" }
   ]
 }
 
@@ -313,6 +364,7 @@
   "Color coding should be consistent across all dimensions (blue=entry, violet=concept, rose=instance, green=relation)"
   "Handles should feel like they're part of the content, not overlaid on it."
   "Navigation should be reversible: you should always be able to go back."
+  "Ornamental shell states should disclose how they settle before they ask for attention."
   "The breadcrumb should always show where you are in multidimensional space."
   "Cognitive anchors should mark important concepts you might want to return to."
   "Foldable content should respect cognitive load: show entry level by default, detail on demand."

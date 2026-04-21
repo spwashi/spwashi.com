@@ -16,6 +16,8 @@
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
 const BOOKMARKS_KEY = 'spw-pins';
+const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
+const SHELL_MENU_STATE_EVENT = 'spw:shell-menu-state';
 
 const OPERATOR_INFO = Object.freeze({
   '#>': { type: 'frame', label: 'frame', intent: 'orient a stable unit', wonder: 'orientation' },
@@ -53,14 +55,36 @@ const runtime = {
   pathBar: null,
   headerMemo: null,
   lastMemoTimeout: null,
+  shellSnapshot: null,
 };
 
 export function initSpwExperiential() {
+  if (document.documentElement.dataset.spwExperientialInit === 'true') {
+    renderBreadcrumbSpell();
+    syncExperientialSurface();
+    return {
+      cleanup() {},
+      refresh() {
+        renderBreadcrumbSpell();
+        syncExperientialSurface();
+      },
+    };
+  }
+
+  document.documentElement.dataset.spwExperientialInit = 'true';
   initSpellBreadcrumbs();
   initContextualMemos();
   initOperatorLearning();
   initBookmarkRegistry();
   syncExperientialSurface();
+
+  return {
+    cleanup() {},
+    refresh() {
+      renderBreadcrumbSpell();
+      syncExperientialSurface();
+    },
+  };
 }
 
 /* ==========================================================================
@@ -74,10 +98,15 @@ function initSpellBreadcrumbs() {
 
   let pathBar = traceHost.querySelector('.spw-spell-path');
   if (!pathBar) {
-    pathBar = document.createElement('div');
+    pathBar = document.createElement('nav');
     pathBar.className = 'spw-spell-path';
-    pathBar.setAttribute('aria-label', 'Spw Location Spell');
+    pathBar.setAttribute('aria-label', 'Cognitive breadcrumb and shell trace');
     traceHost.appendChild(pathBar);
+  }
+
+  if (pathBar.dataset.spwBreadcrumbBound !== 'true') {
+    pathBar.addEventListener('click', onBreadcrumbAction);
+    pathBar.dataset.spwBreadcrumbBound = 'true';
   }
 
   runtime.pathBar = pathBar;
@@ -101,6 +130,7 @@ function initSpellBreadcrumbs() {
   document.addEventListener('spw:mode-change', update);
   document.addEventListener('brace:committed', update);
   document.addEventListener('brace:swapped', update);
+  document.addEventListener(SHELL_MENU_STATE_EVENT, update);
 
   renderBreadcrumbSpell();
 }
@@ -129,6 +159,8 @@ function renderBreadcrumbSpell() {
   const url = new URL(window.location.href);
   const surface = document.body?.dataset.spwSurface || 'root';
   const routeParts = url.pathname.split('/').filter(Boolean);
+  const shellSnapshot = readShellSnapshot();
+  runtime.shellSnapshot = shellSnapshot;
 
   const activeFrame =
     document.querySelector('.site-frame.is-active-frame')
@@ -141,34 +173,251 @@ function renderBreadcrumbSpell() {
 
   const activeModeButton = document.querySelector('[data-mode-group][data-set-mode][aria-pressed="true"]');
   const activeMode = activeModeButton?.dataset.setMode || null;
+  const activeModeSelector = ensureStableId(activeModeButton, 'spw-mode');
+  const items = [];
 
-  const tokens = [];
-  tokens.push(nodeToken('spell-op', '#>'));
-  tokens.push(nodeToken('spell-node', 'spwashi'));
-  tokens.push(nodeToken('spell-op', '#:surface'));
-  tokens.push(nodeToken('spell-node', `!${surface}`));
+  items.push(renderBreadcrumbLink({
+    kind: 'home',
+    href: '/',
+    token: '#>',
+    label: 'spwashi',
+    current: url.pathname === '/' && !activeFrameSigil,
+  }));
 
+  items.push(renderBreadcrumbLink({
+    kind: 'surface',
+    href: url.pathname,
+    token: '#:surface',
+    label: `!${surface}`,
+    current: routeParts.length === 0 && !activeFrameSigil && !activeMode,
+  }));
+
+  let cumulativePath = '';
   routeParts.forEach((part, index) => {
+    cumulativePath += `/${part}`;
     const isLast = index === routeParts.length - 1 && !activeFrameSigil && !activeMode;
-    tokens.push(nodeToken('spell-op', '~'));
-    tokens.push(nodeToken(isLast ? 'spell-node spell-current' : 'spell-node', `"${part}"`));
+    items.push(renderBreadcrumbLink({
+      kind: 'route',
+      href: `${cumulativePath}/`,
+      token: '~',
+      label: humanizePathPart(part),
+      current: isLast,
+    }));
   });
 
-  if (activeFrameSigil) {
-    tokens.push(nodeToken('spell-sep', '→'));
-    tokens.push(nodeToken('spell-node spell-current', activeFrameSigil));
+  if (activeFrameSigil && url.hash) {
+    items.push(renderBreadcrumbLink({
+      kind: 'frame',
+      href: `${url.pathname}${url.hash}`,
+      token: '#>',
+      label: activeFrameSigil,
+      current: !activeMode,
+    }));
   }
 
-  if (activeMode) {
-    tokens.push(nodeToken('spell-sep', '·'));
-    tokens.push(nodeToken('spell-node', `[${activeMode}]`));
+  if (activeMode && activeModeSelector) {
+    items.push(renderBreadcrumbButton({
+      kind: 'mode',
+      action: 'focus-mode',
+      token: '[]',
+      label: humanizePathPart(activeMode),
+      current: true,
+      selector: activeModeSelector,
+    }));
   }
 
-  pathBar.innerHTML = tokens.join(' ');
+  const meaning = describeBreadcrumbMeaning({
+    surface,
+    activeFrameSigil,
+    activeMode,
+    shellSnapshot,
+  });
+
+  pathBar.dataset.spwBreadcrumbSurface = surface;
+  pathBar.dataset.spwBreadcrumbDepth = String(items.length);
+  pathBar.dataset.spwBreadcrumbFrame = activeFrameSigil ? 'active' : 'route';
+  pathBar.dataset.spwBreadcrumbMode = activeMode ? 'active' : 'ambient';
+  pathBar.dataset.spwBreadcrumbMenuState = shellSnapshot.state;
+  pathBar.dataset.spwBreadcrumbMenuMode = shellSnapshot.mode;
+  pathBar.dataset.spwBreadcrumbMenuChanged = shellSnapshot.changedAxes.join(' ') || 'none';
+  pathBar.dataset.spwBreadcrumbMenuClarity = shellSnapshot.clarity;
+  pathBar.dataset.spwBreadcrumbMenuPhase = shellSnapshot.phase;
+  pathBar.dataset.spwBreadcrumbMenuTopology = shellSnapshot.topology;
+  pathBar.dataset.spwBreadcrumbMenuPressure = shellSnapshot.pressure;
+  pathBar.dataset.spwBreadcrumbMenuIntent = shellSnapshot.intent;
+  pathBar.dataset.spwBreadcrumbReversible = shellSnapshot.reversible ? 'true' : 'false';
+
+  pathBar.innerHTML = `
+    <div class="spw-spell-path__header">
+      <span class="spw-spell-path__title">cognitive path</span>
+      ${renderShellControl(shellSnapshot)}
+    </div>
+    <ol class="spw-spell-trail" aria-label="Current cognitive breadcrumb">
+      ${items.join('')}
+    </ol>
+    <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
+  `;
 }
 
-function nodeToken(className, text) {
-  return `<span class="${className}">${escapeHtml(text)}</span>`;
+function renderBreadcrumbLink({ kind, href, token, label, current = false }) {
+  return `
+    <li class="spw-spell-crumb" data-spw-crumb-kind="${escapeAttribute(kind)}" ${current ? 'data-spw-current="true"' : ''}>
+      <a class="spw-spell-link" href="${escapeAttribute(href)}">
+        <span class="spw-spell-token">${escapeHtml(token)}</span>
+        <span class="spw-spell-label">${escapeHtml(label)}</span>
+      </a>
+    </li>
+  `;
+}
+
+function renderBreadcrumbButton({ kind, action, token, label, current = false, selector = '' }) {
+  return `
+    <li class="spw-spell-crumb" data-spw-crumb-kind="${escapeAttribute(kind)}" ${current ? 'data-spw-current="true"' : ''}>
+      <button
+        class="spw-spell-button"
+        type="button"
+        data-spw-breadcrumb-action="${escapeAttribute(action)}"
+        ${selector ? `data-spw-breadcrumb-selector="${escapeAttribute(selector)}"` : ''}>
+        <span class="spw-spell-token">${escapeHtml(token)}</span>
+        <span class="spw-spell-label">${escapeHtml(label)}</span>
+      </button>
+    </li>
+  `;
+}
+
+function renderShellControl(shellSnapshot) {
+  const action = shellSnapshot.mode === 'toggle' ? 'toggle-menu' : 'focus-nav';
+  const label = `${humanizePathPart(shellSnapshot.topology)} · ${shellSnapshot.state}`;
+  const pressed = shellSnapshot.mode === 'toggle' && shellSnapshot.state === 'open';
+
+  return `
+    <button
+      class="spw-spell-shell"
+      type="button"
+      data-spw-breadcrumb-action="${escapeAttribute(action)}"
+      aria-pressed="${pressed ? 'true' : 'false'}"
+      aria-label="${escapeAttribute(`Shell menu ${label}. ${shellSnapshot.returnHint}.`)}">
+      <span class="spw-spell-shell-token">!menu</span>
+      <span class="spw-spell-shell-state">${escapeHtml(label)}</span>
+    </button>
+  `;
+}
+
+function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shellSnapshot }) {
+  const parts = [
+    `surface ${surface}`,
+    activeFrameSigil ? `frame ${stripWhitespace(activeFrameSigil)}` : 'frame route-level',
+    activeMode ? `mode ${humanizePathPart(activeMode)}` : 'mode ambient',
+    `menu ${humanizePathPart(shellSnapshot.topology)} ${shellSnapshot.state}`,
+  ];
+
+  if (shellSnapshot.reversible) {
+    parts.push(`return via ${shellSnapshot.returnHint}`);
+  }
+
+  return parts.join(' · ');
+}
+
+function readShellSnapshot() {
+  const header = document.querySelector('body > header, .site-header');
+  if (!(header instanceof HTMLElement)) {
+    return {
+      mode: 'inline',
+      state: 'open',
+      phase: 'resting',
+      topology: 'inline-ribbon',
+      pressure: 'calm',
+      intent: 'survey',
+      clarity: 'steady',
+      changedAxes: [],
+      returnHint: 'hash or route',
+      reversible: true,
+    };
+  }
+
+  return {
+    mode: header.dataset.spwMenuMode || 'inline',
+    state: header.dataset.spwMenu || 'open',
+    phase: header.dataset.spwMenuPhase || 'resting',
+    topology: header.dataset.spwMenuTopology || 'inline-ribbon',
+    pressure: header.dataset.spwMenuPressure || 'calm',
+    intent: header.dataset.spwMenuIntent || 'survey',
+    clarity: header.dataset.spwMenuClarity || 'steady',
+    changedAxes: (header.dataset.spwMenuChanged || '')
+      .split(/\s+/)
+      .filter((value) => value && value !== 'none'),
+    returnHint: (header.dataset.spwMenuReturnPaths || 'toggle route').replace(/\s+/g, ', '),
+    reversible: header.dataset.spwMenuReversible !== 'false',
+  };
+}
+
+function onBreadcrumbAction(event) {
+  const control = event.target instanceof Element
+    ? event.target.closest('[data-spw-breadcrumb-action]')
+    : null;
+
+  if (!(control instanceof HTMLElement)) return;
+
+  switch (control.dataset.spwBreadcrumbAction) {
+    case 'focus-mode': {
+      const selector = control.dataset.spwBreadcrumbSelector;
+      if (!selector) return;
+      const modeControl = document.querySelector(selector);
+      if (modeControl instanceof HTMLElement) {
+        modeControl.focus();
+        modeControl.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+      break;
+    }
+    case 'toggle-menu':
+      document.dispatchEvent(new CustomEvent(SHELL_MENU_INTENT_EVENT, {
+        detail: {
+          intent: 'toggle',
+          source: 'breadcrumb',
+          focusToggle: true,
+        },
+      }));
+      break;
+    case 'focus-nav':
+      document.dispatchEvent(new CustomEvent(SHELL_MENU_INTENT_EVENT, {
+        detail: {
+          intent: 'focus',
+          source: 'breadcrumb',
+          open: false,
+        },
+      }));
+      break;
+    default:
+      break;
+  }
+}
+
+function ensureStableId(element, prefix) {
+  if (!(element instanceof HTMLElement)) return '';
+  if (!element.id) {
+    const seed = element.dataset.setMode || element.textContent || prefix;
+    element.id = `${prefix}-${slugify(seed)}`;
+  }
+  return `#${element.id}`;
+}
+
+function slugify(value = '') {
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function humanizePathPart(value = '') {
+  return String(value)
+    .replace(/^!/, '')
+    .replace(/[_-]+/g, ' ')
+    .trim();
+}
+
+function stripWhitespace(value = '') {
+  return String(value).replace(/\s+/g, ' ').trim();
 }
 
 /* ==========================================================================

@@ -979,10 +979,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    ========================================================================== */
 
 .spw-spell-path {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.22rem;
+  display: grid;
+  gap: 0.38rem;
   min-width: 0;
   margin-block: 0.35rem 0.75rem;
   padding: 0.24rem 0.56rem;
@@ -998,32 +996,224 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   color: var(--ink-soft);
   font-family: var(--handle-meta-font);
   font-size: 0.72rem;
+  contain: paint style;
+  isolation: isolate;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
 }
 
-.spw-spell-path .spell-op {
+.spw-spell-path[data-spw-breadcrumb-reversible="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+.spw-spell-path__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.56rem;
+  flex-wrap: wrap;
+}
+
+.spw-spell-path__title {
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-spell-shell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-height: 1.9rem;
+  padding: 0.2rem 0.52rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 20%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font: inherit;
+  contain: paint style;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.spw-spell-shell:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--teal, #008080) 34%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-shell-token {
   color: var(--teal);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.spw-spell-path .spell-node {
-  color: var(--ink);
+.spw-spell-shell-state {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
 }
 
-.spw-spell-path .spell-sep {
+.spw-spell-trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.36rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.spw-spell-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.spw-spell-crumb:not(:last-child)::after {
+  content: "→";
+  margin-inline-start: 0.18rem;
   color: var(--line-strong);
-  opacity: 0.78;
+  opacity: 0.72;
 }
 
-.spw-spell-path .spell-current {
-  color: var(--pink, hsl(342 58% 42%));
-  border-bottom: 1px solid currentColor;
+.spw-spell-link,
+.spw-spell-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  min-height: 1.9rem;
+  min-width: 0;
+  padding: 0.16rem 0.44rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font: inherit;
+  text-decoration: none;
+  contain: paint style;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
 }
 
-/* Child combinators make the syntax easier to study later. */
-.spw-spell-path > .spell-node + .spell-sep,
-.spw-spell-path > .spell-sep + .spell-op,
-.spw-spell-path > .spell-op + .spell-node {
-  margin-inline-start: 0.02rem;
+.spw-spell-link:is(:hover, :focus-visible),
+.spw-spell-button:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--teal, #008080) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--teal, #008080) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-crumb[data-spw-current="true"] .spw-spell-link,
+.spw-spell-crumb[data-spw-current="true"] .spw-spell-button {
+  border-color: color-mix(in srgb, var(--pink, hsl(342 58% 42%)) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--pink, hsl(342 58% 42%)) 6%);
+}
+
+.spw-spell-token {
+  color: var(--teal);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.spw-spell-label {
+  min-width: 0;
+  color: var(--ink);
+  text-wrap: nowrap;
+}
+
+.spw-spell-meaning {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.66rem;
+  line-height: 1.45;
+}
+
+@keyframes spw-breadcrumb-shell-project {
+  0% {
+    opacity: 0.74;
+    transform: translateY(-0.14rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spw-breadcrumb-shell-settle {
+  0% {
+    opacity: 0.78;
+    transform: translateY(0.08rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spw-breadcrumb-copy-clarify {
+  0% {
+    opacity: 0.68;
+    transform: translateY(-0.08rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The breadcrumb and shell expose the same settle/open physics as the header. */
+.spw-spell-path[data-spw-breadcrumb-menu-state="open"] {
+  border-color: color-mix(in srgb, var(--teal, #008080) 26%, transparent);
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-clarity="project"] {
+  animation: spw-breadcrumb-shell-project 220ms ease-out;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-clarity="settle"] {
+  animation: spw-breadcrumb-shell-settle 180ms ease-out;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-state="open"] .spw-spell-shell {
+  border-color: color-mix(in srgb, var(--teal, #008080) 28%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-state="closed"][data-spw-breadcrumb-reversible="true"] {
+  border-style: solid;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-phase="settling"][data-spw-breadcrumb-reversible="true"] .spw-spell-shell-state,
+.spw-spell-path[data-spw-breadcrumb-menu-mode="toggle"][data-spw-breadcrumb-reversible="true"] .spw-spell-shell-state {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.16rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="state"] .spw-spell-shell,
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="mode"] .spw-spell-shell,
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="phase"] .spw-spell-meaning {
+  animation: spw-breadcrumb-copy-clarify 180ms ease-out;
 }
 
 .spell-visual {
@@ -1340,6 +1530,10 @@ html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
     [data-spw-charge-key],
     [data-spw-inline-form],
     .spw-spell-path,
+    .spw-spell-shell,
+    .spw-spell-link,
+    .spw-spell-button,
+    .spw-spell-meaning,
     .frame-metrics-bar
   ) {
     animation: none !important;
