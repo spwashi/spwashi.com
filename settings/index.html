@@ -128,15 +128,15 @@
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#settings-surface">#&gt;settings_surface</a>
                     <div class="spec-strip">
-                        <span class="spec-pill">local-only</span>
+                        <span class="spec-pill">browser prefs</span>
                         <span class="spec-pill">runtime chrome</span>
                         <span class="spec-pill">calm defaults</span>
                     </div>
                 </div>
-                <p class="spec-kicker">Local Configuration</p>
+                <p class="spec-kicker">Preferences</p>
                 <h1 id="settings-title">Settings</h1>
                 <div class="focus-lens-container prose settings-prose" data-spw-typeset-surface="editorial" data-spw-focus-lens="editorial">
-                    <p class="settings-note"><span class="drop-cap">P</span>references are stored in this browser only. Nothing syncs, nothing tracks.</p>
+                    <p class="settings-note"><span class="drop-cap">P</span>references are saved in this browser. For reset paths and a full clear, see <a href="#stored-data">saved data</a>.</p>
                     <p class="settings-start-note">Start with the quick variants below if you want an immediate shift in atmosphere. Choose the state you want, watch the active option stay highlighted, then use the status line and current-vibe cards to confirm the result. Typeset mode only affects editorial-capable reading surfaces, not every page shell or control.</p>
                 </div>
                 <nav class="settings-hero-actions" aria-label="Settings sections" data-spw-feature="settings-section-index">
@@ -1280,10 +1280,11 @@
                         <p>Hash links, clicks, focus, hover, map selection, console controls, and mode switches. The
                             viewport setting only controls scroll-driven activation.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="settings" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_settings_settings__panel_5">
-                        <h3>Hidden chrome?</h3>
-                        <p>Return to <a href="/settings/">/settings/</a> from the header or direct URL and choose quiet
-                            or full display again.</p>
+                    <div class="frame-panel" id="stored-data" data-spw-kind="panel" data-spw-role="reference" data-spw-context="settings" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_settings_settings__panel_5">
+                        <h3>Saved data and reset?</h3>
+                        <p>Preferences, pinned frames, guide collections, and saved visits stay in this browser. Use
+                            <code>reset hearth</code>, <code>Clear visits</code>, or the collection clear controls
+                            below when you want a clean slate. For a full wipe, clear the site data in your browser.</p>
                     </div>
                 </div>
             </section>
@@ -1321,7 +1322,7 @@
                     <a class="frame-sigil" href="#bookmarks">?[pinned_registers]{</a>
                     <h2>Bookmarked Frames</h2>
                 </div>
-                <p class="frame-note">Components you've 'pinned' by holding them for >420ms appear here as a local
+                <p class="frame-note">Components you've 'pinned' by holding them for >420ms appear here as a saved
                     collection spell.</p>
                 <div class="bookmark-registry" data-spw-bookmarks-root data-spw-feature="settings-bookmarks">
                     <p class="inline-note">Hold any component with a brace form (like a card or section) to pin it here.
@@ -1334,7 +1335,7 @@
                     <a class="frame-sigil" href="#guide-collections">~"guide_collections"</a>
                     <h2>Guide Collections</h2>
                 </div>
-                <p class="inline-note">Collected guide badges stay local to this browser. Click a collected badge again to release it quickly, or use these bulk controls when you want a clean slate.</p>
+                <p class="inline-note">Collected guide badges stay in this browser. Click a collected badge again to release it quickly, or use these bulk controls for a clean slate.</p>
                 <div class="button-group">
                     <button class="operator-chip" type="button" data-spw-collection-action="clear-today">
                         <span class="log-op">~</span> clear_today
@@ -1343,7 +1344,7 @@
                         <span class="log-op">!</span> clear_all
                     </button>
                 </div>
-                <p class="frame-note" data-spw-collection-status>Collections are local to this browser.</p>
+                <p class="frame-note" data-spw-collection-status>Collections are saved in this browser.</p>
             </section>
 
             <section class="site-frame" id="runtime-map" data-spw-role="schema" data-spw-form="brace" data-spw-kind="frame" data-spw-context="settings" data-spw-wonder="comparison constraint locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="specimen" data-spw-locality="medium" data-spw-consequence="model" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_settings_settings__runtime_map" data-spw-context-relevance="local browser runtime including appearance only chrome calm" data-spw-related-routes="/|/about/|/about/plans/|/topics/software/|/topics/craft/|/play/|/blog/|/about/website/">
@@ -1360,7 +1361,7 @@
                 <div class="settings-system-map" data-spw-feature="settings-runtime-map">
                     <article class="settings-map-card">
                         <h3>1. Stored Settings</h3>
-                        <p>Local values are normalized against the site settings registry before they are applied.</p>
+                        <p>Saved values are normalized against the site settings registry before they are applied.</p>
                         <code>DEFAULT_SITE_SETTINGS → normalizeSiteSettings()</code>
                     </article>
 
@@ -1467,7 +1468,7 @@
                 <div class="settings-structures-grid">
                     <article class="settings-structure-card">
                         <h3>Defaults</h3>
-                        <p>Canonical local fallback values for the full runtime settings model.</p>
+                        <p>Canonical fallback values for the full runtime settings model.</p>
                         <code>DEFAULT_SITE_SETTINGS</code>
                     </article>
 

@@ -1261,7 +1261,7 @@ const parseSettingTrigger = (value = '') => {
   };
 };
 
-const STANDALONE_SETTINGS_HINT = 'Choose a mode to update this browser-local setting. The active option stays highlighted.';
+const STANDALONE_SETTINGS_HINT = 'Choose a mode to update this preference. The active option stays highlighted.';
 
 const primeSettingTriggerControl = (node) => {
   if (!(node instanceof HTMLElement)) return;
@@ -1654,7 +1654,7 @@ const bindSettingsScope = (root, options = {}) => {
   if (statusNode && !statusNode.textContent) {
     const defaultMessage = root.querySelector('[data-site-setting-set]')
       ? STANDALONE_SETTINGS_HINT
-      : 'Settings are stored locally in this browser.';
+      : 'Preferences are saved in this browser.';
     setStatus(defaultMessage, 'info');
   }
 

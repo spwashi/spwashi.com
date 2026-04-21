@@ -4,43 +4,32 @@
             <a class="site-footer__brand" href="/">#&gt;spwashi</a>
             <p class="site-footer__summary">{ Spwashi }. I [build software] and [make art].</p>
             <div class="site-footer__settings" data-site-settings-scope data-spw-feature="footer-settings">
-                <p class="site-footer__settings-title">Browser-local atmosphere</p>
                 <p class="site-footer__settings-copy">
-                    This browser is reading the site through <strong data-settings-state="themePack">neutral paper</strong>,
-                    <span data-settings-state="colorMode">auto</span> light, and
-                    <span data-settings-state="wonderMemory">nearby</span> wonder memory. Nothing syncs or tracks.
+                    Preferences:
+                    <strong data-settings-state="themePack">neutral paper</strong> ·
+                    <span data-settings-state="colorMode">auto</span> ·
+                    <span data-settings-state="wonderMemory">nearby</span>.
                 </p>
                 <div class="site-footer__settings-actions" aria-label="Footer settings quick actions">
-                    <button class="operator-chip" type="button" data-preset="hearth">Hearth</button>
-                    <button class="operator-chip" type="button" data-preset="loom">Loom</button>
-                    <button class="operator-chip" type="button" data-preset="access">Access</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="hearth">Hearth</button>
+                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="access">Access</button>
                 </div>
-                <nav class="site-footer__settings-nav" aria-label="Settings shortcuts">
-                    <a href="/settings/#presets">Presets</a>
-                    <a href="/settings/#appearance-settings">Appearance</a>
-                    <a href="/settings/#accessibility-settings">Accessibility</a>
-                    <a href="/settings/#chrome-settings">Chrome</a>
-                </nav>
-                <p class="site-footer__settings-status" data-site-settings-status role="status" aria-live="polite"></p>
+                <p class="site-footer__settings-meta">
+                    <button class="site-footer__settings-link" type="button" data-spw-groundable="false" data-spw-memory-action="clear-grounded">Clear visits</button>
+                    <a class="site-footer__settings-link" href="/settings/#stored-data" data-spw-groundable="false">Saved data</a>
+                    <a class="site-footer__settings-link" href="/settings/" data-spw-groundable="false">Settings</a>
+                </p>
+                <p class="site-footer__settings-status" data-site-settings-status data-spw-memory-status role="status" aria-live="polite"></p>
             </div>
         </div>
         <nav class="site-footer__nav" aria-label="Footer">
-            <a href="/">Home</a>
             <a href="/about/">About</a>
-            <a href="/design/">Design</a>
             <a href="/topics/">Topics</a>
             <a href="/topics/software/">Software</a>
-            <a href="/topics/math/">Math</a>
             <a href="/topics/craft/">Craft</a>
-            <a href="/recipes/">Recipes</a>
             <a href="/play/">Play</a>
             <a href="/tools/">Tools</a>
-            <a href="/services/">Services</a>
-            <a href="/about/website/">Website</a>
             <a href="/blog/">Blog</a>
-            <a href="/about/domains/lore.land/">lore.land</a>
             <a href="/contact/">Contact</a>
             <a href="/settings/">Settings</a>
         </nav>

@@ -230,6 +230,7 @@ export function ungroundElement(el, overrides = {}) {
   const detail = buildSemanticDetail(el, overrides);
 
   el.dataset.spwGrounded = 'false';
+  delete el.dataset.spwVisited;
   delete el.dataset.spwGroundedIn;
   delete el.dataset.spwGroundedWonder;
   if (el.dataset.spwSuccession === 'latched') {
@@ -269,6 +270,7 @@ function applyGroundedState(el, coupling = null) {
 
 function clearGroundedState(el) {
   el.dataset.spwGrounded = 'false';
+  delete el.dataset.spwVisited;
   delete el.dataset.spwGroundedIn;
   delete el.dataset.spwGroundedWonder;
   if (el.dataset.spwSuccession === 'latched') {

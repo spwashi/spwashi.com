@@ -112,6 +112,21 @@
   opacity: 0.6;
 }
 
+:where(a:any-link) {
+  --spw-link-visited-color:
+    color-mix(in oklab, var(--ink, #161c1d) 68%, var(--active-op-color, #008080) 32%);
+  --spw-link-grounded-color:
+    color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
+}
+
+:where(a:visited):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+  color: var(--spw-link-visited-color);
+}
+
+:where(a[data-spw-grounded='true']):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+  color: var(--spw-link-grounded-color);
+}
+
 /* ==========================================================================
    4. Monospace Alignment
    ========================================================================== */

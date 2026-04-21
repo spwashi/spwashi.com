@@ -1265,8 +1265,12 @@ a.frame-card:is(:hover, :focus-visible),
 }
 
 :where(.page-index a[data-spw-grounded="true"], .section-atlas a[data-spw-grounded="true"], .card-sub-links a[data-spw-grounded="true"]) {
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--component-accent, #008080) 18%);
   background: color-mix(in srgb, var(--component-accent, #008080) 8%, transparent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--component-accent, #008080) 22%, transparent);
+  text-underline-offset: 0.14rem;
 }
 
 :where(.page-index a[aria-current="true"], .page-index a:target) {

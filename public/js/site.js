@@ -1203,6 +1203,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'local-memory-controls',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-memory-action]',
+    rootMode: 'single',
+    load: () => import('./spw-local-memory-controls.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwLocalMemoryControls;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'experiential',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
