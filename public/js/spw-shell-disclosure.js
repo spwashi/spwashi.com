@@ -48,10 +48,25 @@ const CLARITIES = Object.freeze({
   SETTLE: 'settle',
 });
 
+const SCROLL_BANDS = Object.freeze({
+  TOP: 'top',
+  LIFTED: 'lifted',
+  DEEP: 'deep',
+});
+
+const SCROLL_DIRECTIONS = Object.freeze({
+  UP: 'up',
+  DOWN: 'down',
+  STILL: 'still',
+});
+
 const DEFAULTS = Object.freeze({
   narrowBreakpointPx: 720,
   midBreakpointPx: 980,
   compressedRatio: 1.08,
+  scrollLiftPx: 18,
+  scrollDeepPx: 132,
+  scrollDirectionDeadzonePx: 4,
 });
 
 function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
@@ -67,7 +82,24 @@ function getPointerMode() {
   return 'fine';
 }
 
+function getScrollY() {
+  return Math.max(window.scrollY || window.pageYOffset || 0, 0);
+}
+
+function resolveScrollBand(scrollY, config = DEFAULTS) {
+  if (scrollY <= config.scrollLiftPx) return SCROLL_BANDS.TOP;
+  if (scrollY < config.scrollDeepPx) return SCROLL_BANDS.LIFTED;
+  return SCROLL_BANDS.DEEP;
+}
+
+function resolveScrollDirection(nextScrollY, previousScrollY, config = DEFAULTS) {
+  if (nextScrollY > previousScrollY + config.scrollDirectionDeadzonePx) return SCROLL_DIRECTIONS.DOWN;
+  if (nextScrollY < previousScrollY - config.scrollDirectionDeadzonePx) return SCROLL_DIRECTIONS.UP;
+  return SCROLL_DIRECTIONS.STILL;
+}
+
 function createState(config) {
+  const scrollY = getScrollY();
   return {
     config,
     mode: MODES.INLINE,
@@ -75,6 +107,10 @@ function createState(config) {
     userIntentOpen: false,
     pointerInsideHeader: false,
     focusInsideHeader: false,
+    scrollY,
+    scrollBand: resolveScrollBand(scrollY, config),
+    scrollDirection: SCROLL_DIRECTIONS.STILL,
+    scrollRaf: 0,
     lastTransitionSource: 'init',
     snapshot: null,
   };
@@ -274,6 +310,30 @@ function writeMenuDatasets(el, snapshot, role) {
   el.dataset.spwMenuReturnPaths = snapshot.returnPaths.join(' ');
 }
 
+function writeScrollDatasets(header, state) {
+  if (!(header instanceof HTMLElement)) return;
+  header.dataset.spwShellScroll = state.scrollBand;
+  header.dataset.spwShellScrollDirection = state.scrollDirection;
+  header.classList.toggle('is-scrolled', state.scrollBand !== SCROLL_BANDS.TOP);
+}
+
+function syncScrollState(header, state, nextScrollY = getScrollY()) {
+  const direction = resolveScrollDirection(nextScrollY, state.scrollY, state.config);
+  const band = resolveScrollBand(nextScrollY, state.config);
+  if (
+    header.dataset.spwShellScroll === band
+    && header.dataset.spwShellScrollDirection === direction
+  ) {
+    state.scrollY = nextScrollY;
+    return;
+  }
+
+  state.scrollY = nextScrollY;
+  state.scrollBand = band;
+  state.scrollDirection = direction;
+  writeScrollDatasets(header, state);
+}
+
 function describeToggleState(snapshot) {
   if (snapshot.state === 'open') return `${snapshot.topology} open`;
   if (snapshot.pressure === PRESSURES.CALM) return 'survey routes';
@@ -423,6 +483,7 @@ export function initSpwShellDisclosure(options = {}) {
   header.dataset.spwMenuMode = MODES.INLINE;
   header.dataset.spwMenuPhase = PHASES.RESTING;
   header.dataset.spwMenuSource = 'init';
+  syncScrollState(header, state, state.scrollY);
 
   const closeToggleMenu = (source = 'system') => {
     if (state.mode !== MODES.TOGGLE || !state.userIntentOpen) return;
@@ -497,7 +558,16 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleResize = () => {
+    syncScrollState(header, state);
     syncDisclosure(header, nav, navList, toggle, state, 'resize');
+  };
+
+  const handleScroll = () => {
+    if (state.scrollRaf) return;
+    state.scrollRaf = window.requestAnimationFrame(() => {
+      state.scrollRaf = 0;
+      syncScrollState(header, state);
+    });
   };
 
   const handleHashChange = () => {
@@ -505,6 +575,7 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleSettingsChanged = () => {
+    syncScrollState(header, state);
     syncDisclosure(header, nav, navList, toggle, state, 'settings');
   };
 
@@ -562,6 +633,7 @@ export function initSpwShellDisclosure(options = {}) {
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('keydown', handleDocumentKeydown);
   document.addEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
   window.addEventListener('orientationchange', handleResize);
   window.addEventListener('hashchange', handleHashChange);
@@ -587,13 +659,21 @@ export function initSpwShellDisclosure(options = {}) {
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('keydown', handleDocumentKeydown);
       document.removeEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
       window.removeEventListener('hashchange', handleHashChange);
       document.removeEventListener('spw:settings-changed', handleSettingsChanged);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       navObserver.disconnect();
+      if (state.scrollRaf) {
+        window.cancelAnimationFrame(state.scrollRaf);
+        state.scrollRaf = 0;
+      }
       delete header.dataset.spwShellDisclosureInit;
+      delete header.dataset.spwShellScroll;
+      delete header.dataset.spwShellScrollDirection;
+      header.classList.remove('is-scrolled');
       delete header.dataset.spwMenu;
       delete header.dataset.spwMenuChanged;
       delete header.dataset.spwMenuClarity;
@@ -614,6 +694,7 @@ export function initSpwShellDisclosure(options = {}) {
     },
     refresh(nextOptions = {}) {
       state.config = { ...state.config, ...nextOptions };
+      syncScrollState(header, state);
       syncDisclosure(header, nav, navList, toggle, state, 'refresh');
     },
   };
