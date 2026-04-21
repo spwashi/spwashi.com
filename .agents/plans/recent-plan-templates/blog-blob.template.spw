@@ -1,0 +1,42 @@
+# blog-blob template
+# Starter shape for a durable intermediate editorial object.
+
+#>blog_blob_template
+#:semantics #!template
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "A blog blob is a revisitable editorial body between seed and post."
+ why: "Replace with the specific writing flow or route this blob supports."
+}
+
+^["identity"]{
+ id: "blob.id.here"
+ title: "Provisional title"
+ status: "live"
+ lenses: #[`wonder`, `spw`, `draft`, `translation`][reg=set]
+}
+
+^["contents"]{
+ claims: #[`active thought fragment`][reg=set]
+ questions: #[`what still needs to sharpen`][reg=set]
+ shards: #[`quotes, fragments, observations`][reg=set]
+}
+
+^["relations"]{
+ possible_posts: #[`future projection`][reg=set]
+ related_routes: #[`supporting route`][reg=set]
+ translation_notes: #[`gloss or framing seam`][reg=set]
+}
+
+^["promotion"]{
+ source: "@draft_seed"
+ middle_state: ">blog_blob"
+ outputs: #[`post`, `route section`, `translation surface`, `private residue`][reg=set]
+}
+
+^["invariants"]{
+ "A blob is not just an untidy draft.",
+ "The blob preserves unresolvedness without collapsing into vagueness.",
+ "The blob should make later projection easier."
+}

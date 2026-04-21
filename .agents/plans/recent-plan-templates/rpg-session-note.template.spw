@@ -1,0 +1,47 @@
+# rpg-session-note template
+# Starter shape for campaign-memory notes between table capture and public recap.
+
+#>rpg_session_note_template
+#:semantics #!template
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "A session note is a durable campaign-memory object between gameplay capture and the public ledger."
+ why: "Replace with the specific campaign, route, or table workflow this note supports."
+}
+
+^["identity"]{
+ id: "session-YYYY-MM-DD"
+ date: "YYYY-MM-DD"
+ status: "live"
+}
+
+^["recap"]{
+ fragments: #[`what happened`][reg=set]
+ turning_points: #[`where the session pivoted`][reg=set]
+ pressures: #[`what loads the next session`][reg=set]
+}
+
+^["consequences"]{
+ beats: #[`character change`][reg=set]
+ canon: #[`possible canon candidate`][reg=set]
+ open_questions: #[`what is unresolved`][reg=set]
+}
+
+^["relations"]{
+ cast: #[`recurring figures`][reg=set]
+ world: #[`places, factions, rules`][reg=set]
+ arcs: #[`possible recurring threads`][reg=set]
+}
+
+^["promotion"]{
+ source: "@local_gameplay_seed"
+ middle_state: ">rpg_session_note"
+ outputs: #[`public session page`, `cast update`, `world update`, `arc evidence`, `private residue`][reg=set]
+}
+
+^["invariants"]{
+ "The note stays grounded in actual play.",
+ "Uncertainty can remain visible until canon is ready.",
+ "The note should support promotion rather than replace the public ledger."
+}

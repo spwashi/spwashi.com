@@ -1,0 +1,20 @@
+# recent-plan-templates
+# Starter templates for the most recently introduced planning concepts.
+
+#>recent_plan_templates
+#:index #!templates
+#:layer #!pragmatics
+
+@copy_localization: ~"./copy-localization.template.spw"
+@blog_blob: ~"./blog-blob.template.spw"
+@rpg_session_note: ~"./rpg-session-note.template.spw"
+@profile_character_card: ~"./profile-character-card-development.template.spw"
+
+dispatch: .{
+ copy_localization = @copy_localization
+ blog_blob = @blog_blob
+ rpg_session_note = @rpg_session_note
+ profile_character_card = @profile_character_card
+}[reg=facet]
+
+note: "These templates are starting points for new planning artifacts, not canonical semantics."

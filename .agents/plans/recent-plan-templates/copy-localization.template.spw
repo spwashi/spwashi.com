@@ -1,0 +1,41 @@
+# copy-localization template
+# Starter shape for locale-aware copy planning and translation-seam notes.
+
+#>copy_localization_template
+#:semantics #!template
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "Localization here should preserve authored structure while making translation seams inspectable."
+ why: "Replace with the specific route, surface, or content family this plan covers."
+}
+
+^["scope"]{
+ source_locale: "en"
+ target_locales: #[`locale-a`, `locale-b`][reg=set]
+ surfaces: #[`route`, `shared chrome`, `metadata`, `glosses`][reg=set]
+}
+
+^["copy_units"]{
+ rule: "Describe the intended unit size for translation."
+ ids: #[`route.section.role`, `route.summary.line`][reg=set]
+ risks: #[`over-fragmentation`, `missing glosses`, `late canonical rewrites`][reg=set]
+}
+
+^["term_policy"]{
+ preserve: #[`terms that should stay literal`][reg=set]
+ gloss: #[`terms that need explanation`][reg=set]
+ restate: #[`phrases that should become locally natural`][reg=set]
+}
+
+^["build_contract"]{
+ inputs: #[`source html`, `locale payload`, `translation notes`][reg=set]
+ outputs: #[`static locale html`, `canonical`, `hreflang`][reg=set]
+ failures: #[`missing required projection`, `dishonest alternates`][reg=set]
+}
+
+^["invariants"]{
+ "Authored HTML remains the structural source of truth.",
+ "Translation seams stay explicit and inspectable.",
+ "Published output remains static HTML, CSS, and JS."
+}

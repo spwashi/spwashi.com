@@ -1,0 +1,51 @@
+# profile-character-card-development template
+# Starter shape for one card substrate projected through multiple lenses.
+
+#>profile_character_card_development_template
+#:semantics #!template
+#:layer #!pragmatics
+
+^["thesis"]{
+ claim: "One shared card substrate can support profile, character, translation, and cast lenses."
+ why: "Replace with the specific route family, tool, or card workflow being refined."
+}
+
+^["substrate"]{
+ stable_parts: #[
+  `header`,
+  `badges or clusters`,
+  `sections`,
+  `footer or links`,
+  `development state`,
+  `editorial hook`
+ ][reg=set]
+}
+
+^["lens"]{
+ family: "profile-card"
+ active: "profile"
+ editorial_role: "summary anchor"
+ summary_line: "Short identity line here."
+ author_brief: "What a collaborator needs to preserve."
+ voice_guard: "What must not be flattened."
+}
+
+^["development"]{
+ state: "draft"
+ source_seams: #[`direct authoring`, `blog blob`, `rpg session note`][reg=set]
+ promotion_paths: #[`route card`, `sidebar`, `cast reference`, `export`][reg=set]
+}
+
+^["distinctions"]{
+ profile_card: "Audience-facing and proof-aware."
+ character_card: "Pressure-facing and role-aware."
+ cast_card: "Recurrence-facing and canon-aware."
+ translation_card: "Bridge-facing and comparison-aware."
+}
+
+^["invariants"]{
+ "The substrate stays shared across lenses.",
+ "Lens changes projection context, not card family existence.",
+ "Cards should help editorial reuse and future author handoff.",
+ "A card is a briefing aid, not a full assignment brief."
+}
