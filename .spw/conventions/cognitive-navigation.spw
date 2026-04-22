@@ -242,7 +242,7 @@
     mode: "inline | toggle"
     phase: "resting | approach | contact | projecting | settling"
     pressure: "calm | tight | compressed | crowded"
-    topology: "inline-ribbon | stacked-field | drawer-field"
+    topology: "inline-ribbon | stacked-field | drawer-field | screen-field"
     intent: "survey | condense | contact | project | settle"
   }
 
@@ -261,6 +261,34 @@
   event_contract: [
     "spw:shell-menu-state emits the current shell snapshot",
     "spw:shell-menu-intent requests toggle | open | close | settle | focus without requiring direct module coupling"
+  ]
+}
+
+^"page_locomotion_handle"{
+  ~#note: "The sticky section handle can project into a reversible locomotion field rather than only a single breadcrumb chip."
+
+  thesis: "Long-form routes should expose explicit top / previous / current / next / bottom travel when their section structure is already meaningful in markup."
+
+  state_axes: {
+    handle_state: "hidden | visible"
+    handle_phase: "settled | traveling"
+    section_state: "active | previous | next | rest"
+    page_phase: "settled | traveling"
+  }
+
+  html_contract: [
+    "the fallback .spw-section-handle remains valid without JS",
+    "the enhanced locomotion field mirrors current section label, token, availability, and travel phase through data attributes",
+    "html and body reflect current section id, index, count, and edge so other modules can react without querying the locomotion UI directly"
+  ]
+
+  motion_contract: [
+    "traveling state should clarify that the page is reorienting, then settle once the new section is active",
+    "active section hierarchy should be expressed through shared surface contrast rather than a route-local special case"
+  ]
+
+  event_contract: [
+    "spw:section-locomotion-state emits the current section snapshot for inspectors and future shell couplings"
   ]
 }
 
@@ -319,8 +347,18 @@
     { name: "data-dimensional-label='path'", meaning: "text representation of dimensional position" },
     { name: "data-spw-menu-phase='resting|approach|contact|projecting|settling'", meaning: "current shell contact phase" },
     { name: "data-spw-menu-pressure='calm|tight|compressed|crowded'", meaning: "how strongly the route field is being compressed" },
-    { name: "data-spw-menu-topology='inline-ribbon|stacked-field|drawer-field'", meaning: "the current geometric projection of the menu" },
-    { name: "data-spw-menu-reversible='true|false'", meaning: "whether the current shell ornament explicitly advertises return paths" }
+    { name: "data-spw-menu-topology='inline-ribbon|stacked-field|drawer-field|screen-field'", meaning: "the current geometric projection of the menu" },
+    { name: "data-spw-menu-reversible='true|false'", meaning: "whether the current shell ornament explicitly advertises return paths" },
+    { name: "data-spw-shell-menu-lock='true'", meaning: "root-level scroll lock while the screen-field menu is projected" },
+    { name: "data-spw-handle-state='hidden|visible'", meaning: "whether the page locomotion field is currently surfaced" },
+    { name: "data-spw-handle-phase='settled|traveling'", meaning: "whether the locomotion field is resting or actively reorienting the page" },
+    { name: "data-spw-handle-availability='top prev current next bottom'", meaning: "which locomotion moves are currently available" },
+    { name: "data-spw-section-state='active|previous|next|rest'", meaning: "current relation of a section to the reader's location" },
+    { name: "data-spw-page-section-current='id'", meaning: "current active section id on html/body" },
+    { name: "data-spw-page-section-index='n'", meaning: "1-based current section index on html/body" },
+    { name: "data-spw-page-section-count='n'", meaning: "number of locomotion sections on the page" },
+    { name: "data-spw-page-section-phase='settled|traveling'", meaning: "page-level locomotion phase published beyond the control itself" },
+    { name: "data-spw-page-section-edge='top|middle|bottom'", meaning: "whether the active section is at the start, middle, or end of the sequence" }
   ]
 }
 

@@ -45,6 +45,7 @@
     display: grid;
     gap: var(--space-sm, 0.6rem);
     margin: 0;
+    container-type: inline-size;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface {
@@ -57,6 +58,11 @@
     background: var(--surface, #ffffff);
     box-shadow: var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05));
     color: var(--ink, #161c1d);
+    transition:
+        border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+        box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease),
+        color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+        background var(--duration-base, 200ms) var(--ease-mechanical, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface text {
@@ -125,6 +131,9 @@
     fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
     font-size: var(--text-size-xs, 0.72rem);
     letter-spacing: calc(var(--spw-svg-label-spacing, 0.04em) * 0.75);
+    transition:
+        fill var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+        opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
 }
 
 /* ─── Operator Grammar Flow Diagram ─────────────────────────────────────── */
@@ -185,6 +194,37 @@
     line-height: 1.3;
 }
 
+.spw-metaphysics-host[data-spw-contrast-state="raised"] .spw-svg-surface {
+    border-color: color-mix(in srgb, var(--spw-image-accent, var(--active-op-color, #008080)) 18%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        0 8px 18px color-mix(in srgb, var(--spw-image-accent, var(--active-op-color, #008080)) 8%, transparent);
+    color: color-mix(in srgb, var(--ink, #161c1d) 88%, var(--spw-image-accent, var(--active-op-color, #008080)));
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="focused"] .spw-svg-surface {
+    border-color: color-mix(in srgb, var(--spw-image-accent, var(--active-op-color, #008080)) 24%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--spw-image-accent, var(--active-op-color, #008080)) 5%, transparent), transparent 48%),
+        var(--surface, #ffffff);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 10px 24px color-mix(in srgb, var(--spw-image-accent, var(--active-op-color, #008080)) 12%, transparent);
+    color: color-mix(in srgb, var(--ink, #161c1d) 82%, var(--spw-image-accent, var(--active-op-color, #008080)));
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="focused"] .spw-svg-note {
+    fill: color-mix(in srgb, var(--ink, #161c1d) 74%, var(--spw-image-accent, var(--active-op-color, #008080)));
+}
+
+.spw-metaphysics-host[data-spw-image-state="primed"] .spw-svg-flow {
+    opacity: 0.68;
+}
+
+.spw-metaphysics-host[data-spw-image-state="engaged"] .spw-svg-flow {
+    opacity: 0.82;
+}
+
 .spw-svg-rail > * {
     margin: 0;
 }
@@ -208,6 +248,7 @@
             black calc(100% - 1rem),
             transparent 100%
         );
+        scroll-snap-type: x proximity;
     }
 
     .spw-svg-rail::-webkit-scrollbar {
@@ -219,6 +260,7 @@
         min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
         display: flex;
         align-items: center;
+        scroll-snap-align: start;
     }
 }
 
@@ -239,6 +281,24 @@
         top: calc(var(--shell-header-height, var(--header-height, 4rem)) + 1rem);
         max-height: calc(100dvh - var(--shell-header-height, var(--header-height, 4rem)) - 2rem);
         overflow-y: auto;
+    }
+}
+
+@container (max-width: 30rem) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-surface {
+        border-radius: var(--shape-component, 8px);
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-label {
+        font-size: 0.8rem;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-note {
+        font-size: 0.62rem;
+    }
+
+    .spw-svg-rail {
+        gap: 0.28rem;
     }
 }
 

@@ -29,6 +29,7 @@ const TOPOLOGIES = Object.freeze({
   INLINE_RIBBON: 'inline-ribbon',
   STACKED_FIELD: 'stacked-field',
   DRAWER_FIELD: 'drawer-field',
+  SCREEN_FIELD: 'screen-field',
 });
 
 const INTENTS = Object.freeze({
@@ -171,7 +172,8 @@ function resolveMenuPressure({ mode, ratio, navFit, tier, pointer }) {
 
 function resolveMenuTopology(mode, pressure, tier) {
   if (mode === MODES.INLINE) return TOPOLOGIES.INLINE_RIBBON;
-  if (tier === 'compact' || pressure === PRESSURES.CROWDED) return TOPOLOGIES.DRAWER_FIELD;
+  if (tier === 'compact' || tier === 'narrow') return TOPOLOGIES.SCREEN_FIELD;
+  if (pressure === PRESSURES.CROWDED) return TOPOLOGIES.DRAWER_FIELD;
   return TOPOLOGIES.STACKED_FIELD;
 }
 
@@ -315,6 +317,25 @@ function writeScrollDatasets(header, state) {
   header.dataset.spwShellScroll = state.scrollBand;
   header.dataset.spwShellScrollDirection = state.scrollDirection;
   header.classList.toggle('is-scrolled', state.scrollBand !== SCROLL_BANDS.TOP);
+  syncShellOffset(header);
+}
+
+function syncShellOffset(header) {
+  if (!(header instanceof HTMLElement)) return;
+  const offset = Math.max(0, Math.round(header.getBoundingClientRect().bottom));
+  document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset}px`);
+}
+
+function syncShellLock(snapshot) {
+  const shouldLock = snapshot.mode === MODES.TOGGLE
+    && snapshot.state === 'open'
+    && snapshot.topology === TOPOLOGIES.SCREEN_FIELD;
+
+  [document.documentElement, document.body].forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (shouldLock) node.dataset.spwShellMenuLock = 'true';
+    else delete node.dataset.spwShellMenuLock;
+  });
 }
 
 function syncScrollState(header, state, nextScrollY = getScrollY()) {
@@ -336,6 +357,7 @@ function syncScrollState(header, state, nextScrollY = getScrollY()) {
 
 function describeToggleState(snapshot) {
   if (snapshot.state === 'open') return `${snapshot.topology} open`;
+  if (snapshot.topology === TOPOLOGIES.SCREEN_FIELD) return 'screen routes';
   if (snapshot.pressure === PRESSURES.CALM) return 'survey routes';
   if (snapshot.pressure === PRESSURES.TIGHT) return 'tight routes';
   if (snapshot.pressure === PRESSURES.COMPRESSED) return 'condensed routes';
@@ -343,7 +365,9 @@ function describeToggleState(snapshot) {
 }
 
 function describeToggleMeta(snapshot) {
-  if (snapshot.state === 'open') return 'Esc settles';
+  if (snapshot.state === 'open') {
+    return snapshot.topology === TOPOLOGIES.SCREEN_FIELD ? 'Esc · route · outside' : 'Esc settles';
+  }
   if (snapshot.overflowRouteCount > 0) return `+${snapshot.overflowRouteCount} more`;
   return `${snapshot.totalRouteCount} routes`;
 }
@@ -384,6 +408,7 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   const snapshot = buildMenuSnapshot(header, nav, navList, state, open, source);
   snapshot.changedAxes = collectChangedAxes(state.snapshot, snapshot);
   snapshot.clarity = resolveMenuClarity(snapshot, snapshot.changedAxes);
+  syncShellOffset(header);
 
   header.dataset.spwMenu = snapshot.state;
   header.dataset.spwMenuMode = snapshot.mode;
@@ -400,6 +425,7 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   writeMenuDatasets(nav, snapshot, 'nav');
   writeMenuDatasets(toggle, snapshot, 'toggle');
   syncToggleCopy(toggle, snapshot);
+  syncShellLock(snapshot);
 
   state.lastTransitionSource = source;
   state.snapshot = snapshot;
@@ -691,6 +717,9 @@ export function initSpwShellDisclosure(options = {}) {
       delete header.dataset.spwMenuSource;
       delete header.dataset.spwMenuTopology;
       delete header.dataset.spwMenuViewport;
+      delete document.documentElement.dataset.spwShellMenuLock;
+      delete document.body.dataset.spwShellMenuLock;
+      document.documentElement.style.removeProperty('--spw-shell-menu-offset');
     },
     refresh(nextOptions = {}) {
       state.config = { ...state.config, ...nextOptions };

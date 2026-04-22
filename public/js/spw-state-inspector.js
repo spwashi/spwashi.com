@@ -236,6 +236,24 @@ function readImageFields(target) {
             interactive: true
         },
         {
+            key: 'state',
+            value: target.dataset.spwImageState || 'settled',
+            source: 'image-state',
+            interactive: false
+        },
+        {
+            key: 'contrast',
+            value: target.dataset.spwContrastState || 'rest',
+            source: 'image-contrast',
+            interactive: false
+        },
+        {
+            key: 'layout',
+            value: target.dataset.spwImageLayout || 'balanced',
+            source: 'image-layout',
+            interactive: false
+        },
+        {
             key: 'visited',
             value: target.dataset.spwVisited === 'true' ? 'true' : 'false',
             source: 'image-visited',

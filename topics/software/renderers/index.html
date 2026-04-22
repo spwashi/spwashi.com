@@ -13,55 +13,6 @@
     <link rel="stylesheet" href="/public/css/spw-cinematic.css">
     <link rel="stylesheet" href="/public/css/spw-enrichment.css">
     <script type="module" src="/public/js/site.js?v=0.0.2"></script>
-    <style>
-        .ref-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-            gap: 0.75rem;
-        }
-        .ref-card {
-            display: grid;
-            gap: 0.45rem;
-            padding: 1rem;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            background: var(--surface);
-        }
-        .ref-card-sigil {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--teal);
-        }
-        .ref-terms {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.28rem;
-            list-style: none;
-            padding: 0;
-            margin: 0.5rem 0;
-        }
-        .ref-terms li {
-            padding: 0.1rem 0.38rem;
-            border: 1px solid var(--line-strong);
-            border-radius: 3px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--teal);
-        }
-        .ref-links {
-            display: flex;
-            gap: 0.8rem;
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-        }
-        .ref-links a {
-            color: var(--ink-soft);
-            text-decoration: none;
-            border-bottom: 1px solid var(--line);
-        }
-        .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
-    </style>
     <link rel="canonical" href="https://spwashi.com/topics/software/renderers/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
@@ -244,8 +195,8 @@
                     <text x="10" y="165" font-size="6.5" fill="var(--ink-soft)" font-style="italic">The matrix is the spell: shared state that rotates the world around the observer.</text>
                 </svg>
 
-                <div class="ref-grid" style="margin-top:1rem">
-                    <div class="ref-card" data-spw-accent="lattice">
+                <div class="frame-grid ref-grid" data-spw-density="dense" style="margin-top:1rem">
+                    <article class="frame-panel ref-card" data-spw-accent="lattice">
                         <span class="ref-card-sigil">matrix</span>
                         <h3>Transformations</h3>
                         <p>The <code>DOMMatrix</code> interface represents 4x4 matrices, enabling translation, rotation, and scaling in a single operation. This is the underlying math of CSS <code>transform</code> and Canvas <code>setTransform</code>.</p>
@@ -254,8 +205,8 @@
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMMatrix" target="_blank">mdn: DOMMatrix</a>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Transformations" target="_blank">mdn: Canvas Transforms</a>
                         </div>
-                    </div>
-                    <div class="ref-card">
+                    </article>
+                    <article class="frame-panel ref-card">
                         <span class="ref-card-sigil">curve</span>
                         <h3>Bézier and Paths</h3>
                         <p>Vector rendering relies on cubic and quadratic Bézier curves. The algorithm recursively interpolates between control points to create smooth, scalable arcs—the foundation of all modern typography.</p>
@@ -264,7 +215,7 @@
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo" target="_blank">mdn: bezierCurveTo</a>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d" target="_blank">mdn: SVG Path 'd'</a>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="frame-code-enrichment" data-spw-form="block" style="margin-top:1.5rem">
@@ -297,8 +248,8 @@
                 <h2>Text Shaping and Type Systems</h2>
                 <p class="inline-note">Type is more than a list of glyphs. Text shaping converts a sequence of characters into a sequence of glyphs with precise optical positions, handling ligatures, kerning, and script-specific reordering.</p>
                 
-                <div class="ref-grid">
-                    <div class="ref-card">
+                <div class="frame-grid ref-grid" data-spw-density="soft">
+                    <article class="frame-panel ref-card">
                         <span class="ref-card-sigil">shaping</span>
                         <h3>The Shaping Pipeline</h3>
                         <p>Browsers use engines like HarfBuzz to resolve complex scripts. Understanding <code>font-variant</code> and <code>text-rendering</code> allows engineers to balance legibility with performance on high-density displays.</p>
@@ -307,7 +258,7 @@
                             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-rendering" target="_blank">mdn: text-rendering</a>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFace_API" target="_blank">mdn: FontFace API</a>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </section>
 
@@ -317,7 +268,7 @@
                     <h2>Semantic Delimiters</h2>
                 </div>
                 <p class="inline-note">Beyond the brace, Spw uses circles, angles, and squares to differentiate between relationships, projections, and collections.</p>
-                <div class="spec-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem;">
+                <div class="spec-grid" data-spw-density="dense">
                     <div class="frame-panel" data-spw-form="angle" data-spw-selection="navigation" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_renderers__panel_1">
                         <h3>Angle &lt;&gt;</h3>
                         <p>Used for priming and navigation. It represents a directed projection or a "pointing" toward a future state.</p>
@@ -345,8 +296,8 @@
                 <h2>GPU Accelerated Pipelines</h2>
                 <p class="inline-note">Modern renderers offload rasterization to the GPU. This is a leap from CPU-bound scan-line algorithms to massively parallel fragment shaders. The "cinematic" feel of the modern web is often a function of how effectively we use the graphics pipeline without clogging the memory bus.</p>
                 
-                <div class="ref-grid">
-                    <div class="ref-card">
+                <div class="frame-grid ref-grid" data-spw-density="soft">
+                    <article class="frame-panel ref-card">
                         <span class="ref-card-sigil">shader</span>
                         <h3>Vertex and Fragment Shaders</h3>
                         <p>Shaders are small programs run on every vertex or pixel. They represent the "atmospheric" layer of rendering—controlling lighting, grain, and displacement with physical accuracy.</p>
@@ -355,7 +306,7 @@
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API" target="_blank">mdn: WebGPU API</a>
                             <a href="https://www.w3.org/TR/webgpu/" target="_blank">spec: WebGPU</a>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </section>
         </article>

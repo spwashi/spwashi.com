@@ -35,18 +35,29 @@
     color-mix(in srgb, var(--spw-image-accent) 20%, rgba(17, 18, 20, 0.14));
   --spw-image-helper-ink:
     color-mix(in srgb, var(--spw-image-accent) 68%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 24%, var(--ink-mid, rgba(14, 18, 20, 0.64)));
+  --spw-image-memory-ink:
+    color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 88%, var(--spw-image-accent));
   --spw-image-helper-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.26),
     0 8px 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
   --spw-image-helper-lift-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
     0 10px 22px color-mix(in srgb, var(--spw-image-accent) 14%, transparent);
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--spw-image-accent));
+  --spw-image-caption-shadow: 0 1px 0 rgba(255, 255, 255, 0.14);
 
   position: relative;
   isolation: isolate;
   cursor: grab;
   outline: none;
   touch-action: manipulation;
+  container-type: inline-size;
+  transition:
+    box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease);
 }
 
 .spw-metaphysics-host[data-spw-image-resonance="amber"] {
@@ -129,6 +140,46 @@
 .spw-metaphysics-host figcaption {
   position: relative;
   z-index: 1;
+  color: var(--spw-image-caption-ink);
+  text-shadow: var(--spw-image-caption-shadow);
+  transition:
+    color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    text-shadow var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="raised"] {
+  --spw-image-helper-border:
+    color-mix(in srgb, var(--spw-image-accent) 28%, rgba(17, 18, 20, 0.14));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 34%, var(--ink-mid, rgba(14, 18, 20, 0.64)));
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.94)) 74%, var(--spw-image-accent));
+  --spw-image-caption-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 10px color-mix(in srgb, var(--spw-image-accent) 6%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="focused"] {
+  --spw-image-helper-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 80%, rgba(17, 18, 20, 0.14));
+  --spw-image-helper-bg-strong:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 74%, rgba(17, 18, 20, 0.18));
+  --spw-image-helper-border:
+    color-mix(in srgb, var(--spw-image-accent) 36%, rgba(17, 18, 20, 0.18));
+  --spw-image-helper-ink:
+    color-mix(in srgb, var(--spw-image-accent) 76%, var(--ink, rgba(14, 18, 20, 0.96)));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 46%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --spw-image-memory-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.94)) 74%, var(--spw-image-accent));
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.96)) 68%, var(--spw-image-accent));
+  --spw-image-caption-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 14px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
 }
 
 .spw-metaphysics-host[data-spw-medium="raster"] img {
@@ -311,6 +362,15 @@
   cursor: pointer;
 }
 
+.spw-metaphysics-host[data-spw-image-state="primed"] .spw-image-hint {
+  width: 3.4rem;
+  opacity: 0.96;
+}
+
+.spw-metaphysics-host[data-spw-image-input="coarse"] .spw-image-hint {
+  height: 4px;
+}
+
 .spw-metaphysics-host[data-spw-controls-open="true"] .spw-image-hint {
   width: 100%;
   opacity: 0;
@@ -404,7 +464,7 @@
 .spw-image-helper__eyebrow {
   grid-area: eyebrow;
   align-self: end;
-  color: var(--ink-mid);
+  color: var(--spw-image-helper-secondary-ink, var(--ink-mid));
   font-size: 0.56rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -473,14 +533,14 @@
 }
 
 .spw-image-memory__logic {
-  color: var(--ink-mid);
+  color: var(--spw-image-helper-secondary-ink, var(--ink-mid));
   font-size: 0.56rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .spw-image-memory__value {
-  color: var(--ink-soft);
+  color: var(--spw-image-memory-ink, var(--ink-soft));
   font-size: 0.68rem;
   white-space: nowrap;
   overflow: hidden;
@@ -534,6 +594,7 @@
  */
 .spw-image-palette-swatches {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.3rem;
   align-items: center;
   flex: 1;
@@ -752,6 +813,39 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
     rgba(255, 255, 255, 0.4);
 }
 
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-helper-strip {
+  gap: 0.3rem;
+  padding-inline: 0.56rem;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-palette-swatches {
+  flex: 1 1 100%;
+  order: 1;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-helper {
+  min-width: 0;
+  flex: 1 1 8rem;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-memory {
+  order: 4;
+  flex: 1 1 100%;
+  max-width: none;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-strip-close {
+  order: 3;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"][data-spw-image-input="coarse"] :where(
+  .spw-image-helper,
+  .spw-image-memory,
+  .spw-image-brush-toggle
+) {
+  min-height: max(2.3rem, var(--touch-target-compact, 2.15rem));
+}
+
 
 @media (max-width: 48rem) {
   .spw-metaphysics-host {
@@ -778,6 +872,10 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
 
   .spw-image-memory__value {
     font-size: 0.64rem;
+  }
+
+  .spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-memory__value {
+    white-space: normal;
   }
 
   .spw-metaphysics-host[data-spw-image-effect="pixelize"]::after {
@@ -820,6 +918,27 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
         color-mix(in srgb, var(--spw-image-accent) 18%, rgba(255, 243, 215, 0.18)),
         transparent 52%
       );
+  }
+}
+
+@container (max-width: 28rem) {
+  .spw-image-helper-strip {
+    gap: 0.3rem;
+    padding-inline: 0.54rem;
+  }
+
+  .spw-image-helper {
+    min-width: 0;
+    flex: 1 1 8rem;
+  }
+
+  .spw-image-memory {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .spw-image-memory__value {
+    white-space: normal;
   }
 }
 

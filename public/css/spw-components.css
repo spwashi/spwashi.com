@@ -486,6 +486,27 @@ a.frame-card:is(:hover, :focus-visible),
   min-width: 0;
 }
 
+:where(main > section[id], main > article > section[id], main > section[data-spw-section-index], main > article > section[data-spw-section-index]) {
+  scroll-margin-top: calc(var(--shell-header-height) + 1.1rem);
+}
+
+:where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
+  transition:
+    box-shadow var(--component-transition-deliberate, 260ms ease),
+    border-color var(--component-transition-deliberate, 260ms ease),
+    transform var(--component-transition-deliberate, 260ms ease);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 12%, transparent),
+    var(--component-shadow-active);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) :where(h1, h2, h3) {
+  color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent, var(--teal, #008080)) 10%);
+}
+
 .card-sub-links a {
   display: inline-grid;
   grid-auto-flow: column;
@@ -1135,18 +1156,47 @@ a.frame-card:is(:hover, :focus-visible),
    15. Grouping and grid helpers
    ========================================================================== */
 
-:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-base: 15rem;
+  --spw-grid-min-mid: 14.5rem;
+  --spw-grid-min-narrow: 13.5rem;
+  --spw-grid-min-compact: 12rem;
+  --spw-grid-gap-base: var(--component-gap, 0.9rem);
+  --spw-grid-gap-mid: 0.84rem;
+  --spw-grid-gap-narrow: 0.74rem;
+  --spw-grid-gap-compact: 0.66rem;
+  --spw-grid-component-pad-base: 0.9rem;
+  --spw-grid-component-pad-mid: 0.86rem;
+  --spw-grid-component-pad-narrow: 0.8rem;
+  --spw-grid-component-pad-compact: 0.72rem;
+  --spw-grid-component-gap-tight-base: 0.55rem;
+  --spw-grid-component-gap-tight-mid: 0.48rem;
+  --spw-grid-component-gap-tight-narrow: 0.45rem;
+  --spw-grid-component-gap-tight-compact: 0.42rem;
+  --spw-grid-min-active: var(--spw-grid-min-base);
+  --spw-grid-gap-active: var(--spw-grid-gap-base);
+  --spw-grid-component-pad-active: var(--spw-grid-component-pad-base);
+  --spw-grid-component-gap-tight-active: var(--spw-grid-component-gap-tight-base);
+  --component-pad: var(--spw-grid-component-pad-active);
+  --component-gap-tight: var(--spw-grid-component-gap-tight-active);
   display: grid;
-  gap: var(--component-gap, 0.9rem);
+  gap: var(--spw-grid-gap-active);
   align-items: stretch;
   min-width: 0;
 }
 
-:where(.frame-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid) {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+:where(.frame-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active)), 1fr));
 }
 
-:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li) {
+:where(.ref-grid) {
+  --spw-grid-min-base: 17rem;
+  --spw-grid-min-mid: 16rem;
+  --spw-grid-min-narrow: 14.5rem;
+  --spw-grid-min-compact: 12.75rem;
+}
+
+:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) {
   display: grid;
   min-width: 0;
 }
@@ -1156,7 +1206,8 @@ a.frame-card:is(:hover, :focus-visible),
   .contact-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
   .compare-sets > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
   .spec-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
-  .directory-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column)
+  .directory-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column),
+  .ref-grid > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column, .ref-card)
 ) {
   min-width: 0;
   width: 100%;
@@ -1164,7 +1215,7 @@ a.frame-card:is(:hover, :focus-visible),
   align-self: stretch;
 }
 
-:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li) > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column) {
+:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) > :is(.frame-card, .software-card, .frame-panel, .plan-card, .spec-column, .ref-card) {
   height: 100%;
 }
 
@@ -1172,8 +1223,62 @@ a.frame-card:is(:hover, :focus-visible),
   grid-template-columns: 1fr;
 }
 
-:where(.frame-grid--dense) {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+:where(.frame-grid--dense, .ref-grid--dense),
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="dense"] {
+  --spw-grid-min-base: 13.75rem;
+  --spw-grid-min-mid: 13.2rem;
+  --spw-grid-min-narrow: 12.4rem;
+  --spw-grid-min-compact: 11.5rem;
+  --spw-grid-gap-base: 0.78rem;
+  --spw-grid-gap-mid: 0.74rem;
+  --spw-grid-gap-narrow: 0.68rem;
+  --spw-grid-gap-compact: 0.62rem;
+  --spw-grid-component-pad-base: 0.78rem;
+  --spw-grid-component-pad-mid: 0.76rem;
+  --spw-grid-component-pad-narrow: 0.72rem;
+  --spw-grid-component-pad-compact: 0.68rem;
+  --spw-grid-component-gap-tight-base: 0.42rem;
+  --spw-grid-component-gap-tight-mid: 0.4rem;
+  --spw-grid-component-gap-tight-narrow: 0.38rem;
+  --spw-grid-component-gap-tight-compact: 0.36rem;
+}
+
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="soft"] {
+  --spw-grid-min-base: 15.5rem;
+  --spw-grid-min-mid: 15rem;
+  --spw-grid-min-narrow: 14rem;
+  --spw-grid-min-compact: 12.5rem;
+  --spw-grid-gap-base: 0.88rem;
+  --spw-grid-gap-mid: 0.82rem;
+  --spw-grid-gap-narrow: 0.76rem;
+  --spw-grid-gap-compact: 0.68rem;
+  --spw-grid-component-pad-base: 0.88rem;
+  --spw-grid-component-pad-mid: 0.84rem;
+  --spw-grid-component-pad-narrow: 0.78rem;
+  --spw-grid-component-pad-compact: 0.72rem;
+  --spw-grid-component-gap-tight-base: 0.5rem;
+  --spw-grid-component-gap-tight-mid: 0.46rem;
+  --spw-grid-component-gap-tight-narrow: 0.42rem;
+  --spw-grid-component-gap-tight-compact: 0.38rem;
+}
+
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="roomy"] {
+  --spw-grid-min-base: 17rem;
+  --spw-grid-min-mid: 16.25rem;
+  --spw-grid-min-narrow: 15rem;
+  --spw-grid-min-compact: 13rem;
+  --spw-grid-gap-base: 1rem;
+  --spw-grid-gap-mid: 0.92rem;
+  --spw-grid-gap-narrow: 0.82rem;
+  --spw-grid-gap-compact: 0.72rem;
+  --spw-grid-component-pad-base: 1rem;
+  --spw-grid-component-pad-mid: 0.94rem;
+  --spw-grid-component-pad-narrow: 0.84rem;
+  --spw-grid-component-pad-compact: 0.76rem;
+  --spw-grid-component-gap-tight-base: 0.6rem;
+  --spw-grid-component-gap-tight-mid: 0.52rem;
+  --spw-grid-component-gap-tight-narrow: 0.46rem;
+  --spw-grid-component-gap-tight-compact: 0.4rem;
 }
 
 :where(.frame-grid--media) {
@@ -1186,6 +1291,79 @@ a.frame-card:is(:hover, :focus-visible),
 
 :where(.frame-grid--3up) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+html[data-spw-viewport-tier="mid"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-mid);
+  --spw-grid-gap-active: var(--spw-grid-gap-mid);
+  --spw-grid-component-pad-active: var(--spw-grid-component-pad-mid);
+  --spw-grid-component-gap-tight-active: var(--spw-grid-component-gap-tight-mid);
+}
+
+html[data-spw-viewport-tier="narrow"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-narrow);
+  --spw-grid-gap-active: var(--spw-grid-gap-narrow);
+  --spw-grid-component-pad-active: var(--spw-grid-component-pad-narrow);
+  --spw-grid-component-gap-tight-active: var(--spw-grid-component-gap-tight-narrow);
+}
+
+html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-compact);
+  --spw-grid-gap-active: var(--spw-grid-gap-compact);
+  --spw-grid-component-pad-active: var(--spw-grid-component-pad-compact);
+  --spw-grid-component-gap-tight-active: var(--spw-grid-component-gap-tight-compact);
+}
+
+:where(.ref-card) {
+  gap: var(--component-gap-tight, 0.45rem);
+}
+
+:where(.ref-card-sigil) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.92rem);
+  font-weight: 700;
+  color: var(--component-accent, var(--teal, #008080));
+}
+
+:where(.ref-terms) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.45rem 0 0;
+}
+
+:where(.ref-terms li) {
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-control, 0.78rem);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 78%, var(--ink, rgba(14, 18, 20, 0.92)) 22%);
+}
+
+:where(.ref-links) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
+  margin-top: auto;
+  padding-top: 0.2rem;
+  font-size: var(--text-size-xs, 0.8rem);
+}
+
+:where(.ref-links a, a.ref-link) {
+  width: fit-content;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 92%, transparent);
+}
+
+:where(.ref-links a, a.ref-link):is(:hover, :focus-visible) {
+  color: var(--component-accent, var(--teal, #008080));
+  border-color: color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 44%, transparent);
+  outline: none;
 }
 
 /* Keep media-prose explicit so small markup changes do not silently re-layout a grid. */
@@ -1790,13 +1968,17 @@ code[data-interactive]:focus-visible::after {
    23. Responsive composability
    ========================================================================== */
 
-@media (max-width: 900px) {
-  :where(.frame-grid--3up, .frame-grid--2up) {
-    grid-template-columns: 1fr;
+@media (max-width: 980px) {
+  :where(.frame-grid--3up) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 760px) {
+  :where(.frame-grid--3up, .frame-grid--2up) {
+    grid-template-columns: 1fr;
+  }
+
   :where(.page-index ul, .section-atlas ul) {
     grid-template-columns: 1fr;
   }

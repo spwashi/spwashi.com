@@ -145,6 +145,7 @@ tunable_parameters: .{
  receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`
  gradient_boundary = `data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked.`
  liminality_floor = `data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at.`
+ grid_density = `data-spw-density on a grid cluster can tune track measure, gap, and child padding together. Dense/soft/roomy are layout-level hints, not only component-level posture.`
 }[reg=facet]
 
 open_questions: #[
