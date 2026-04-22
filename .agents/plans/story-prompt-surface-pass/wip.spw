@@ -1,0 +1,24 @@
+#>story_prompt_surface_pass
+#:phase .weave
+#:layer #!route_cluster
+
+^"public_goal"{
+ summary: "Make flagship routes feel like distinct literate surfaces with visible promptability, playful direct wiring, and stronger visual specificity."
+}
+
+^"feature_register"{
+ shared_promptability = #["frame copy", "wonder block", "direct wiring", "route-specific CTA"][reg=set]
+ route_cluster = #["design", "design/components", "recipes", "blog", "about"][reg=set]
+ image_pool = #[
+  "public/images/renders/unsorted-curation/library-craft-register.webp",
+  "public/images/renders/unsorted-curation/orbital-thread-field.webp",
+  "public/images/renders/unsorted-curation/algorithm-lattice-0.webp",
+  "public/images/renders/unsorted-curation/website-atlas-weather-1.webp"
+ ][reg=set]
+}
+
+^"guardrails"{
+ promptability = "visible only where the route is genuinely useful as a prompt or filming surface"
+ copy = "denser, more directional, less registry-like by default"
+ route_difference = "each touched page should earn a distinct emotional and operational reason to exist"
+}

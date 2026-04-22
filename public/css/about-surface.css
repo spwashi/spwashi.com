@@ -73,6 +73,9 @@
   --subjective-brace-color: color-mix(in srgb, var(--about-accent-3) 82%, black 6%);
   --objective-brace-wash: color-mix(in srgb, var(--about-accent) 10%, transparent);
   --subjective-brace-wash: color-mix(in srgb, var(--about-accent-3) 8%, transparent);
+  --spw-prompt-block-bg: var(--about-surface-strong);
+  --spw-prompt-block-line: color-mix(in srgb, var(--about-accent) 22%, var(--about-line));
+  --spw-prompt-block-ink: var(--about-ink);
 
   color: var(--about-ink);
 }
@@ -258,6 +261,26 @@ body[data-spw-surface="about"] {
 
 [data-spw-surface="about"] #about-frame a:not(.operator-chip):not(.frame-sigil) {
   color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
+}
+
+[data-spw-surface="about"] #typography-register {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-2) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 86% 18%, color-mix(in srgb, var(--about-accent) 7%, transparent), transparent 24%),
+    var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #typography-register .demo-control-group,
+[data-spw-surface="about"] #typography-register .trope-box {
+  border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 76%, transparent), transparent 28%),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] #typography-register .context-readout > span {
+  border-color: color-mix(in srgb, var(--about-accent) 16%, var(--about-line));
+  background: color-mix(in srgb, var(--about-surface-strong) 96%, transparent);
 }
 
 /* ==========================================================================

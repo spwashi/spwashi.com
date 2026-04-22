@@ -37,10 +37,11 @@ composition_hierarchy: .{
   note = `Regions are the granularity at which attentional topography is most actionable — their harmony value is already a design-facing signal.`
  }[reg=facet]
  feature = .{
-  definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose.`
+ definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose.`
   semantic_identity = #[`feature-role`, `feature-kind`, `purpose description`][reg=set]
   field_role = `Features are the primary attractor units. When a visitor's attention enters a feature, the feature's tokens enter the wonder field.`
   html_contract = `data-spw-feature='name' on the outermost element of a functional cluster. Selected high-traffic routes now author this explicitly; coverage is still partial.`
+  note = `Prompt decks, trope boxes, and direct-wiring demo banks are feature-level attractors: they bundle copy, controls, and nearby routes into one replayable unit instead of scattering affordances across a whole page.`
   gap = `Feature naming now exists in markup, but there is no sitewide JS model yet and many routes still rely on implicit clustering.`
  }[reg=facet]
  component = .{
@@ -146,6 +147,7 @@ tunable_parameters: .{
  gradient_boundary = `data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked.`
  liminality_floor = `data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at.`
  grid_density = `data-spw-density on a grid cluster can tune track measure, gap, and child padding together. Dense/soft/roomy are layout-level hints, not only component-level posture.`
+  promptability = `data-spw-promptability='visible|latent|ambient'. Visible promptability should earn concrete copy or direct wiring, not merely add chrome.`
 }[reg=facet]
 
 open_questions: #[

@@ -61,6 +61,10 @@
     0 16px 36px rgba(0, 0, 0, 0.09),
     0 4px 14px rgba(0, 0, 0, 0.05);
 
+  --spw-prompt-block-bg: var(--website-panel);
+  --spw-prompt-block-line: color-mix(in srgb, var(--website-accent) 24%, var(--website-line));
+  --spw-prompt-block-ink: var(--website-ink);
+
   --website-radius-lg: var(--shape-surface, 10px);
   --website-radius-md: var(--shape-component, 6px);
   --website-radius-sm: var(--shape-element, 4px);
@@ -427,6 +431,26 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--op-surface-color, #178282) 10%, transparent);
   pointer-events: none;
   opacity: 0.84;
+}
+
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab)) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--website-accent) 9%, transparent), transparent 30%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--op-ref-color, #1d57a3) 8%, transparent), transparent 24%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab) .demo-control-group),
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab) .trope-box) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, var(--website-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--website-accent) 6%, transparent), transparent 30%),
+    var(--website-panel);
+}
+
+:where(body[data-spw-surface="website"] .context-readout > span) {
+  border-color: color-mix(in srgb, var(--website-accent) 16%, var(--website-line));
+  background: color-mix(in srgb, var(--website-surface-strong) 96%, transparent);
 }
 
 /* ==========================================================================

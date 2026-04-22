@@ -46,6 +46,9 @@
       color-mix(in srgb, var(--recipes-surface-strong) 92%, hsl(32 72% 96%)),
       color-mix(in srgb, var(--recipes-surface) 92%, hsl(28 44% 91%))
     );
+  --spw-prompt-block-bg: var(--recipes-panel);
+  --spw-prompt-block-line: color-mix(in srgb, var(--recipes-line-strong) 34%, var(--recipes-line));
+  --spw-prompt-block-ink: var(--recipes-ink);
 
   --ink: var(--recipes-ink);
   --ink-soft: var(--recipes-ink-soft);
@@ -248,6 +251,26 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--recipes-accent-soft) 42%, transparent), transparent 22%),
     var(--recipes-paper);
+}
+
+:where(body[data-spw-surface="recipes"] #prompt-kitchen) {
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--recipes-gold) 12%, transparent), transparent 24%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--recipes-accent) 10%, transparent), transparent 28%),
+    var(--recipes-paper);
+}
+
+:where(body[data-spw-surface="recipes"] #prompt-kitchen .demo-control-group),
+:where(body[data-spw-surface="recipes"] #prompt-kitchen .trope-box) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--recipes-ember) 5%, transparent), transparent 30%),
+    var(--recipes-panel-warm);
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 22%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] #prompt-kitchen .context-readout > span) {
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 20%, var(--recipes-line));
+  background: color-mix(in srgb, var(--recipes-surface-strong) 95%, transparent);
 }
 
 :where(body[data-spw-surface="recipes"] #recipes-index .frame-list) {

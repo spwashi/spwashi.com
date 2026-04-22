@@ -70,12 +70,13 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame">
+            <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame" data-spw-promptability="visible">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip">
                         <span class="spec-pill">structural vocabulary</span>
-                        <span class="spec-pill">blocks</span>
+                        <span class="spec-pill">live specimens</span>
+                        <span class="spec-pill">direct wiring</span>
                     </div>
                 </div>
 
@@ -83,10 +84,22 @@
                 <h1>Component Glossary</h1>
 
                 <p class="site-lede">
-                    A registry of the primary CSS abstractions used across the Spwashi architecture. Not every component needs an arbitrary name; reusing these patterns keeps the site legible to the renderer and accessible for inspection.
+                    This is the page to bumble through when a route feels almost right but the structure is still fuzzy. Every specimen below is here to be touched, compared, re-staged, and wired back into a real page.
                 </p>
 
-                <nav class="frame-operators" aria-label="Component sections" style="margin-block: 1.5rem;">
+                <p class="frame-note">
+                    Change a setting, inspect the slot order, then carry the result back to <a href="/design/">the design hub</a>,
+                    <a href="/blog/">the blog laboratory</a>, <a href="/recipes/">recipes</a>, or <a href="/about/">about</a>.
+                </p>
+
+                <div class="context-readout" aria-label="Current component glossary context">
+                    <span>theme <strong data-settings-state="themePack">neutral paper</strong></span>
+                    <span>mode <strong data-settings-state="colorMode">auto</strong></span>
+                    <span>density <strong data-settings-state="componentDensity">soft</strong></span>
+                    <span>metadata <strong data-settings-state="showSemanticMetadata">off</strong></span>
+                </div>
+
+                <nav class="frame-operators" aria-label="Component sections">
                     <a class="operator-chip" href="#structural-vocabulary">#&gt;blocks</a>
                     <a class="operator-chip" href="#frame-internals">#&gt;frame internals</a>
                     <a class="operator-chip" href="#chips-strips">#&gt;chips &amp; strips</a>
@@ -97,6 +110,7 @@
                     <a class="operator-chip" href="#component-anatomy-slots">#&gt;anatomy</a>
                     <a class="operator-chip" href="#brace-grammar-specimens">#&gt;braces</a>
                     <a class="operator-chip" href="#data-attribute-decoration">#&gt;data attrs</a>
+                    <a class="operator-chip" href="/settings/#runtime-preferences">@ settings</a>
                 </nav>
 
                 <div class="frame-grid frame-grid--2up">
@@ -418,36 +432,62 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="interactive-physics-lab" data-spw-role="lab" data-spw-kind="frame" data-spw-context="ritual">
+            <section class="site-frame" id="interactive-physics-lab" data-spw-role="lab" data-spw-kind="frame" data-spw-context="ritual" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="component_physics_specimen" data-spw-prompt-teaser="Reveal a compact seed for the current component posture and settings.">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#interactive-physics-lab">@ "interactive_physics_lab"</a>
-                    <h2>Interactive Physics Lab</h2>
+                    <h2>Live Composition Playground</h2>
                 </div>
-                <p class="frame-note">Use the controls below to project different physical states onto this specimen. These buttons communicate with the site-level <code>SiteSettingsManager</code> through <code>data-site-setting-set</code> attributes.</p>
+                <p class="frame-note">This is the most direct-wired surface on the page. Nudge the room, watch the specimen respond, then decide whether the route wants to feel denser, calmer, sharper, or more explicitly inspectable.</p>
+
+                <div class="context-readout" aria-label="Current playground settings">
+                    <span>theme <strong data-settings-state="themePack">neutral paper</strong></span>
+                    <span>density <strong data-settings-state="componentDensity">soft</strong></span>
+                    <span>memory <strong data-settings-state="wonderMemory">nearby</strong></span>
+                    <span>metadata <strong data-settings-state="showSemanticMetadata">off</strong></span>
+                </div>
 
                 <div class="lab-container frame-grid frame-grid--split">
                     <div class="lab-controls">
-                        <div class="control-group">
-                            <h4>Physical Density</h4>
-                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                <button class="operator-chip" data-site-setting-set="componentDensity:compact">Compact</button>
-                                <button class="operator-chip" data-site-setting-set="componentDensity:roomy">Roomy</button>
-                            </div>
-                        </div>
-                        <div class="control-group" style="margin-top: 1rem;">
-                            <h4>Operator Resonance</h4>
-                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                <button class="operator-chip" data-site-setting-set="resonanceIntensity:0.2">Low</button>
-                                <button class="operator-chip" data-site-setting-set="resonanceIntensity:1.0">High</button>
-                            </div>
-                        </div>
-                        <div class="control-group" style="margin-top: 1rem;">
-                            <h4>Material Kind</h4>
-                            <div class="operator-row" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                <button class="operator-chip" data-site-setting-set="metamaterial:glass">Glass</button>
-                                <button class="operator-chip" data-site-setting-set="metamaterial:paper">Paper</button>
-                                <button class="operator-chip" data-site-setting-set="metamaterial:matte">Matte</button>
-                            </div>
+                        <div class="demo-control-bank">
+                            <section class="demo-control-group">
+                                <h4>Scene</h4>
+                                <p class="frame-note">Jump to a meaningful room before tweaking local states.</p>
+                                <div class="demo-control-row">
+                                    <button class="operator-chip" data-preset="hearth">Cozy</button>
+                                    <button class="operator-chip" data-preset="loom">Loom</button>
+                                    <button class="operator-chip" data-preset="access">Readable</button>
+                                </div>
+                            </section>
+
+                            <section class="demo-control-group">
+                                <h4>Physical Density</h4>
+                                <p class="frame-note">Compact flow versus more breathing room.</p>
+                                <div class="demo-control-row">
+                                    <button class="operator-chip" data-site-setting-set="componentDensity:dense">Dense</button>
+                                    <button class="operator-chip" data-site-setting-set="componentDensity:soft">Soft</button>
+                                    <button class="operator-chip" data-site-setting-set="componentDensity:roomy">Roomy</button>
+                                </div>
+                            </section>
+
+                            <section class="demo-control-group">
+                                <h4>Operator Resonance</h4>
+                                <p class="frame-note">Decide how loudly related operators should echo.</p>
+                                <div class="demo-control-row">
+                                    <button class="operator-chip" data-site-setting-set="fieldResonance:local">Local</button>
+                                    <button class="operator-chip" data-site-setting-set="fieldResonance:field">Field</button>
+                                    <button class="operator-chip" data-site-setting-set="fieldResonance:choral">Choral</button>
+                                </div>
+                            </section>
+
+                            <section class="demo-control-group">
+                                <h4>Material Kind</h4>
+                                <p class="frame-note">Treat the specimen as glass, paper, or matte support.</p>
+                                <div class="demo-control-row">
+                                    <button class="operator-chip" data-site-setting-set="baseMetamaterial:glass">Glass</button>
+                                    <button class="operator-chip" data-site-setting-set="baseMetamaterial:paper">Paper</button>
+                                    <button class="operator-chip" data-site-setting-set="baseMetamaterial:matte">Matte</button>
+                                </div>
+                            </section>
                         </div>
                     </div>
 
@@ -460,10 +500,11 @@
                             <div class="frame-heading">
                                 <h3>Physics Response Test</h3>
                             </div>
-                            <p>This card responds to global density and resonance intensity settings. Try toggling the buttons to see the spatial grammar adjust.</p>
-                            <p>The <code>data-site-setting-set</code> attribute allows any element to act as a remote control for the Spw runtime physics engine.</p>
+                            <p>This specimen responds to the same settings that shape the rest of the site. The point is not only to see a card move. The point is to judge whether the interaction still means the same thing after the environment changes.</p>
+                            <p>The <code>data-site-setting-set</code> and <code>data-preset</code> attributes let an ordinary button act like a remote handle for the runtime. That keeps the demos declarative enough for later passes to extend without inventing a new widget language.</p>
                             <footer class="frame-actions">
                                 <button class="operator-chip" data-spw-operator="action">@tune</button>
+                                <a class="operator-chip" href="/design/#promptability-studio">~ design hub</a>
                             </footer>
                         </article>
                     </div>
@@ -649,18 +690,6 @@
         </article>
     </main>
 
-    <footer class="site-footer" role="contentinfo">
-        <div class="site-footer__inner">
-            <p>{ Spwashi }. I [build software] and [make art].</p>
-            <nav class="site-footer__nav" aria-label="Footer">
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
-                <a href="/design/">Design</a>
-                <a href="/topics/">Topics</a>
-                <a href="/blog/">Blog</a>
-                <a href="/settings/">Settings</a>
-            </nav>
-        </div>
-    </footer>
+    <spw-include src="site-footer"></spw-include>
 </body>
 </html>

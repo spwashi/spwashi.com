@@ -58,6 +58,9 @@
 
   --blog-objective-line: rgba(24, 123, 135, 0.26);
   --blog-subjective-line: rgba(160, 42, 77, 0.20);
+  --spw-prompt-block-bg: var(--blog-bg-card-strong);
+  --spw-prompt-block-line: color-mix(in srgb, var(--blog-accent) 24%, var(--blog-line));
+  --spw-prompt-block-ink: var(--blog-ink);
 
   background-color: var(--blog-bg);
   color: var(--blog-ink);
@@ -162,6 +165,26 @@
 
 :where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
   max-width: var(--blog-measure);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues) {
+  background:
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--blog-wonder) 11%, transparent), transparent 24%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--blog-accent) 8%, transparent), transparent 28%),
+    var(--blog-bg-card);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .demo-control-group),
+:where(body[data-spw-surface="blog"] #recording-cues .trope-box) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 72%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--blog-accent) 7%, transparent), transparent 28%),
+    var(--blog-bg-card-strong);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .context-readout > span) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--blog-bg-card-strong) 96%, transparent);
 }
 
 :where(body[data-spw-surface="blog"]) .blog-svg-defs {

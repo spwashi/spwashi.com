@@ -481,19 +481,69 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
    - .wonder-action[aria-pressed]
    ========================================================================== */
 
+.frame-prompt-copy {
+  position: absolute;
+  inset: 0.9rem 0.9rem auto auto;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-height: 1.95rem;
+  padding: 0.2rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 92%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 84%, var(--ink, currentColor));
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  line-height: 1;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+  transition:
+    transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease-mechanical),
+    box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    border-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    background-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical);
+}
+
+.frame-prompt-copy:is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 16%, transparent),
+    0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
 .spw-wonder-block {
+  --spw-prompt-block-bg: var(--surface-panel, var(--surface-code, #12171b));
+  --spw-prompt-block-ink: var(--ink, var(--teal-soft, #1a9999));
+  --spw-prompt-block-line:
+    color-mix(in srgb, var(--active-op-color, var(--line-strong, #008080)) 28%, transparent);
+  --spw-prompt-block-quiet:
+    color-mix(in srgb, var(--ink-soft, currentColor) 84%, transparent);
   position: relative;
   overflow: hidden;
   margin: 1.5rem 0;
-  padding: 1rem;
-  border: 1px solid var(--line-strong, #008080);
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--spw-prompt-block-line);
   border-radius: var(--shape-surface, 4px);
-  background: var(--surface-code, #12171b);
-  color: var(--teal-soft, #1a9999);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 8%, transparent),
+      transparent 30%
+    ),
+    var(--spw-prompt-block-bg);
+  color: var(--spw-prompt-block-ink);
   font-family: var(--site-mono-font, monospace);
   font-size: 0.82rem;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    border-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    background-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical);
 }
 
 .spw-wonder-block[data-spw-wonder-block-state="thinking"] {
@@ -511,22 +561,35 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 
 .wonder-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.6rem;
   padding-bottom: 0.4rem;
-  border-bottom: 1px solid rgba(26, 153, 153, 0.2);
+  gap: 0.45rem 0.7rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--spw-prompt-block-line) 88%, transparent);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
+.wonder-title {
+  color: color-mix(in srgb, var(--spw-prompt-block-ink) 82%, var(--active-op-color, var(--teal-soft, #1a9999)));
+  font-weight: 700;
+}
+
+.wonder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
 .wonder-action {
   padding: 2px 8px;
-  border: 1px solid var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 42%, transparent);
   border-radius: 2px;
   background: none;
-  color: var(--teal-soft);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 84%, var(--spw-prompt-block-ink));
   cursor: pointer;
   font-size: 0.65rem;
   transition:
@@ -538,18 +601,31 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 .wonder-action:hover,
 .wonder-action:focus-visible,
 .wonder-action[aria-pressed="true"] {
-  background: var(--teal-soft);
-  color: var(--charcoal-dark);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal-soft, #1a9999)) 14%, transparent);
+  color: var(--spw-prompt-block-ink);
 }
 
 .wonder-body {
-  line-height: 1.4;
-  font-style: italic;
-  opacity: 0.85;
+  line-height: 1.52;
+  opacity: 0.9;
+  color: var(--spw-prompt-block-quiet);
+  text-wrap: pretty;
+}
+
+.spw-wonder-block[data-spw-wonder-block-state="idle"] .wonder-body {
+  font-style: normal;
+  opacity: 0.78;
 }
 
 .wonder-body[data-spw-charge="settled"] {
   opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .frame-prompt-copy {
+    position: static;
+    margin-top: 0.2rem;
+  }
 }
 
 /* ==========================================================================

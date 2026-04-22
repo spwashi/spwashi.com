@@ -3,9 +3,9 @@ import { serializeLatticeToSpw } from './spw-lattice.js';
 import { getSiteSettings, getSiteSettingModifiers } from './site-settings.js';
 
 const DEFAULTS = Object.freeze({
-    frameSelector: '.site-frame',
+    frameSelector: '.site-frame[data-spw-promptability="visible"]',
     frameCopySelector: '.frame-prompt-copy',
-    accentHostSelector: '.spw-accent-host, .spw-svg-surface, [data-spw-prompt-host]',
+    accentHostSelector: '[data-spw-prompt-host]',
     wonderBlockSelector: '.spw-wonder-block',
     groundedSelector: '[data-spw-grounded="true"]',
     guidedSelector: '[data-spw-guided="true"]',
@@ -317,11 +317,13 @@ function initFrameCopyButtons(runtime) {
     document.querySelectorAll(runtime.config.frameSelector).forEach((frame) => {
         if (!frame.id || frame.querySelector(runtime.config.frameCopySelector)) return;
 
+        const title = normalizeText(frame.querySelector(runtime.config.titleSelector)?.textContent || frame.id || 'frame');
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'frame-prompt-copy';
         btn.dataset.promptTarget = runtime.config.promptTargets.spw_context;
-        btn.innerHTML = '<span class="log-op">$</span> copy_context';
+        btn.innerHTML = '<span class="log-op">$</span> copy_seed';
+        btn.setAttribute('aria-label', `Copy prompt seed for ${title}`);
 
         if (getComputedStyle(frame).position === 'static') {
             frame.style.position = 'relative';
@@ -352,31 +354,64 @@ function initWonderBlocks(runtime) {
         const next = surface.nextElementSibling;
         if (next?.matches(runtime.config.wonderBlockSelector)) return;
 
+        const source = resolvePromptSource(surface, runtime.config);
+        const promptTitle =
+            surface.dataset.spwPromptTitle
+            || source.frame?.id
+            || source.frame?.title
+            || 'prompt_seed';
+        const promptTeaser =
+            surface.dataset.spwPromptTeaser
+            || 'Reveal a route-shaped prompt from this surface.';
         const block = document.createElement('section');
         block.className = 'spw-wonder-block';
         block.dataset.promptBlock = 'wonder';
+        block.dataset.spwWonderBlockState = 'idle';
+        block.dataset.spwPromptTitle = promptTitle;
+        block.dataset.spwPromptTeaser = promptTeaser;
+
+        if (source.frame?.id) {
+            block.dataset.promptFrame = source.frame.id;
+        }
+
+        if (surface.id) {
+            block.dataset.promptHost = surface.id;
+        }
 
         block.innerHTML = `
             <div class="wonder-header">
                 <span class="log-op">?</span>
-                <span class="wonder-title">wonder_and_consideration</span>
+                <span class="wonder-title">${escapeHtml(promptTitle)}</span>
                 <div class="wonder-actions">
+                    <button type="button" class="wonder-action" data-action="preview" aria-pressed="false">show_seed</button>
                     <button type="button" class="wonder-action" data-target="wonder_prompt">copy_prompt</button>
-                    <button type="button" class="wonder-action" data-target="image_prompt">copy_image_prompt</button>
-                    <button type="button" class="wonder-action" data-target="midjourney_prompt">#&gt;hydrate_for_midjourney</button>
-                    <button type="button" class="wonder-action" data-target="prompt_bundle_json">copy_json</button>
+                    <button type="button" class="wonder-action" data-target="image_prompt">copy_image</button>
+                    <button type="button" class="wonder-action" data-target="spw_context">copy_context</button>
                 </div>
             </div>
-            <div class="wonder-body" data-wonder-text>Wait for resonance...</div>
+            <div class="wonder-body" data-wonder-text>${escapeHtml(promptTeaser)}</div>
         `;
 
         surface.after(block);
 
+        const previewButton = block.querySelector('[data-action="preview"]');
+        previewButton?.addEventListener('click', () => {
+            const expanded = previewButton.getAttribute('aria-pressed') === 'true';
+            const nextExpanded = !expanded;
+
+            previewButton.setAttribute('aria-pressed', nextExpanded ? 'true' : 'false');
+            block.dataset.spwWonderBlockState = nextExpanded ? 'revealed' : 'idle';
+            refreshWonderBlock(runtime, block);
+        });
+
         block.querySelectorAll('[data-target]').forEach((button) => {
             button.addEventListener('click', async () => {
                 const target = button.dataset.target;
-                const text = serializePrompt(runtime, target);
+                const text = serializePrompt(runtime, runtime.config.promptTargets[target] ? runtime.config.promptTargets[target] : target, resolveBlockPromptSource(block, runtime.config));
                 await copyToClipboard(text, button);
+                block.dataset.spwWonderBlockState = target === 'image_prompt' ? 'expanded' : 'revealed';
+                previewButton?.setAttribute('aria-pressed', 'true');
+                refreshWonderBlock(runtime, block);
 
                 bus.emit('prompt:copied', { target });
             });
@@ -387,13 +422,8 @@ function initWonderBlocks(runtime) {
 }
 
 function refreshWonderBlocks(runtime) {
-    const preview = truncateText(
-        serializePrompt(runtime, runtime.config.promptTargets.wonder_prompt),
-        runtime.config.maxWonderPreviewLength
-    );
-
-    document.querySelectorAll('[data-wonder-text]').forEach((node) => {
-        node.textContent = preview || 'Wait for resonance...';
+    document.querySelectorAll(runtime.config.wonderBlockSelector).forEach((block) => {
+        refreshWonderBlock(runtime, block);
     });
 }
 
@@ -612,6 +642,47 @@ function extractFrameContext(frame, config) {
     };
 }
 
+function resolvePromptSource(node, config) {
+    const surface = node instanceof Element ? node : null;
+    const frameEl = surface?.closest('.site-frame');
+
+    return {
+        frame: frameEl ? extractFrameContext(frameEl, config) : null,
+        surface,
+    };
+}
+
+function resolveBlockPromptSource(block, config) {
+    if (!(block instanceof Element)) return {};
+
+    const frameId = block.dataset.promptFrame || '';
+    const hostId = block.dataset.promptHost || '';
+    const frameEl = frameId ? document.getElementById(frameId) : block.closest('.site-frame');
+    const hostEl = hostId ? document.getElementById(hostId) : null;
+
+    return {
+        frame: frameEl ? extractFrameContext(frameEl, config) : null,
+        surface: hostEl || null,
+    };
+}
+
+function refreshWonderBlock(runtime, block) {
+    if (!(block instanceof Element)) return;
+
+    const state = block.dataset.spwWonderBlockState || 'idle';
+    const source = resolveBlockPromptSource(block, runtime.config);
+    const livePreview = truncateText(
+        serializePrompt(runtime, runtime.config.promptTargets.wonder_prompt, source),
+        runtime.config.maxWonderPreviewLength
+    );
+    const teaser = block.dataset.spwPromptTeaser || 'Reveal a route-shaped prompt from this surface.';
+    const body = block.querySelector('[data-wonder-text]');
+
+    if (body) {
+        body.textContent = state === 'idle' ? teaser : (livePreview || teaser);
+    }
+}
+
 function normalizePresetAlias(name) {
     if (!name) return null;
     return PRESET_ALIASES[name] || name;
@@ -642,6 +713,15 @@ function uniqueList(values = []) {
 
 function escapeString(value = '') {
     return String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function escapeHtml(value = '') {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 function round2(value) {

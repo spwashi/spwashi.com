@@ -1216,6 +1216,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'prompt-utils',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-promptability="visible"], [data-spw-prompt-host]',
+    rootMode: 'single',
+    load: () => import('./spw-prompt-utils.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwPromptUtils;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'experiential',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
