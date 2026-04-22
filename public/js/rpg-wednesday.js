@@ -1,5 +1,6 @@
 import { emitSpwAction } from './spw-shared.js';
 import { createAssetAtlasController } from './rpg-wednesday-asset-atlas.js';
+import { initRpgCharacterLab } from './rpg-wednesday-character-lab.js';
 import { createElement, createField, createShortcutToken } from './rpg-wednesday-dom.js';
 import {
     RPG_SHORTCUT_ACTIONS,
@@ -50,7 +51,15 @@ const buildRpgModeDescriptor = () => {
         return {
             pill: 'cast memory',
             title: 'RPG Mode',
-            note: 'Update the character card when the sheet changes, then move stable versions into cast memory once the canon is ready to keep.'
+            note: 'Cast is the collective register. Use the separate character-development page for one-person iteration, then move stable versions here once the canon is ready to keep.'
+        };
+    }
+
+    if (path === '/play/rpg-wednesday/character/') {
+        return {
+            pill: 'character focus',
+            title: 'RPG Mode',
+            note: 'Start with one person: name, art, and current pressure. Keep the character individual here before folding anything into cast memory or broader campaign lore.'
         };
     }
 
@@ -101,13 +110,18 @@ const ensureRpgModeWidget = () => {
     }, [
         createElement('a', {
             className: 'operator-chip',
-            href: '/tools/character-sheet/',
-            text: '@ update character card'
+            href: '/play/rpg-wednesday/character/',
+            text: '@ character development'
         }),
         createElement('a', {
             className: 'operator-chip',
             href: '/play/rpg-wednesday/cast/',
             text: '~ cast register'
+        }),
+        createElement('a', {
+            className: 'operator-chip',
+            href: '/tools/character-sheet/',
+            text: '^ translation sheet'
         }),
         createElement('a', {
             className: 'operator-chip',
@@ -204,8 +218,23 @@ export const initRpgWednesday = () => {
     if (!RPG_ROUTE_RE.test(window.location.pathname)) return null;
     ensureRpgModeWidget();
 
+    const controllers = [];
+    const characterSection = document.querySelector('[data-rpg-character-lab]');
+    if (characterSection instanceof HTMLElement && characterSection.dataset.rpgHydrated !== 'true') {
+        const characterLab = initRpgCharacterLab(characterSection);
+        if (characterLab) controllers.push(characterLab);
+    }
+
     const section = document.querySelector('[data-rpg-gameplay-kit]');
-    if (!section || section.dataset.rpgHydrated === 'true') return null;
+    if (!section || section.dataset.rpgHydrated === 'true') {
+        return controllers.length
+            ? {
+                destroy: () => {
+                    controllers.forEach((controller) => controller.destroy?.());
+                }
+            }
+            : null;
+    }
 
     const storage = createStorage();
     let state = storage.read();
@@ -906,7 +935,13 @@ export const initRpgWednesday = () => {
     void assetAtlas.render();
     refreshDerivedSurfaces();
 
-    return {
+    controllers.push({
         destroy: () => shortcutManager.destroy()
+    });
+
+    return {
+        destroy: () => {
+            controllers.forEach((controller) => controller.destroy?.());
+        }
     };
 };

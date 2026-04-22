@@ -1,6 +1,7 @@
 import { deleteImage, getImageDataUrl, storeImage } from './spw-image-store.js';
 
 export const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
+export const CHARACTER_STORAGE_KEY = 'spwashi:rpg-wednesday:characters:v1';
 export const RPG_ROUTE_RE = /^(?:\/rpg\/?$|\/play\/rpg-wednesday(?:\/|$))/;
 export const DASH_VALUE = 'not set';
 export const CLOCK_SEGMENT_OPTIONS = [2, 4, 6, 8, 10, 12];
@@ -24,6 +25,19 @@ export const ASSET_PRESET_OPTIONS = [
 
 const ASSET_KIND_VALUES = new Set(ASSET_KIND_OPTIONS.map((option) => option.value));
 const ASSET_PRESET_VALUES = new Set(ASSET_PRESET_OPTIONS.map((option) => option.value));
+
+const DEFAULT_CHARACTER = {
+    id: '',
+    name: '',
+    role: '',
+    lineage: '',
+    pronouns: '',
+    hook: '',
+    notes: '',
+    imageUrl: '',
+    imageKey: '',
+    updatedAt: ''
+};
 
 export const DEFAULT_STATE = {
     scene: '',
@@ -93,6 +107,26 @@ export const normalizeAsset = (asset) => ({
     createdAt: typeof asset.createdAt === 'string' ? asset.createdAt : '',
     updatedAt: typeof asset.updatedAt === 'string' ? asset.updatedAt : ''
 });
+
+export const normalizeCharacter = (character) => ({
+    ...DEFAULT_CHARACTER,
+    id: typeof character.id === 'string' ? character.id : makeId(),
+    name: typeof character.name === 'string' ? character.name : '',
+    role: typeof character.role === 'string' ? character.role : '',
+    lineage: typeof character.lineage === 'string' ? character.lineage : '',
+    pronouns: typeof character.pronouns === 'string' ? character.pronouns : '',
+    hook: typeof character.hook === 'string' ? character.hook : '',
+    notes: typeof character.notes === 'string' ? character.notes : '',
+    imageUrl: typeof character.imageUrl === 'string' ? character.imageUrl : '',
+    imageKey: typeof character.imageKey === 'string' ? character.imageKey : '',
+    updatedAt: typeof character.updatedAt === 'string' ? character.updatedAt : ''
+});
+
+export const normalizeCharacterDeck = (value) => (
+    Array.isArray(value)
+        ? value.filter((item) => item && typeof item === 'object').map(normalizeCharacter)
+        : []
+);
 
 export const normalizeState = (value) => {
     const input = value && typeof value === 'object' ? value : {};
@@ -167,6 +201,36 @@ export const createStorage = () => {
     };
 };
 
+export const createCharacterStorage = () => {
+    const unavailable = {
+        available: false,
+        read: () => [],
+        write: () => false,
+        clear: () => false
+    };
+
+    try {
+        const testKey = `${CHARACTER_STORAGE_KEY}:test`;
+        localStorage.setItem(testKey, '1');
+        localStorage.removeItem(testKey);
+    } catch {
+        return unavailable;
+    }
+
+    return {
+        available: true,
+        read: () => normalizeCharacterDeck(safeJsonParse(localStorage.getItem(CHARACTER_STORAGE_KEY))),
+        write: (deck) => {
+            localStorage.setItem(CHARACTER_STORAGE_KEY, JSON.stringify(deck));
+            return true;
+        },
+        clear: () => {
+            localStorage.removeItem(CHARACTER_STORAGE_KEY);
+            return true;
+        }
+    };
+};
+
 export const formatStatusTime = (iso) => {
     if (!iso) return 'local state not saved yet';
     const date = new Date(iso);
@@ -191,6 +255,7 @@ export const previewText = (value, fallback = DASH_VALUE, maxLength = 64) => {
 export const makeTimestamp = () => new Date().toISOString();
 
 export const buildAssetImageKey = (assetId) => `rpg-wednesday:asset:${assetId}`;
+export const buildCharacterImageKey = (characterId) => `rpg-wednesday:character:${characterId}`;
 
 export const splitTagList = (value) => (
     String(value || '')
