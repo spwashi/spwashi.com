@@ -854,6 +854,11 @@ body[data-spw-surface="home"] {
     font-size: 2.15rem;
   }
 
+  [data-spw-surface="home"] .home-brand-plate {
+    width: min(14rem, 100%);
+    margin-inline: 0;
+  }
+
   [data-spw-surface="home"] .home-hero-studies,
   [data-spw-surface="home"] .page-index ul,
   [data-spw-surface="home"] .spec-grid,

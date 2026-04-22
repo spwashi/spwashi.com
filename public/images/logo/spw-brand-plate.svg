@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="spw-brand-plate-title spw-brand-plate-desc">
+  <title id="spw-brand-plate-title">Spwashi brand plate</title>
+  <desc id="spw-brand-plate-desc">A warm library-paper brand plate with the Spwashi mark above the Spwashi wordmark in teal and gold.</desc>
+  <defs>
+    <linearGradient id="spw-brand-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffaf1"/>
+      <stop offset="58%" stop-color="#f7efe2"/>
+      <stop offset="100%" stop-color="#efe3d1"/>
+    </linearGradient>
+    <radialGradient id="spw-brand-glow" cx="50%" cy="42%" r="58%">
+      <stop offset="0%" stop-color="#fffef8" stop-opacity="0.94"/>
+      <stop offset="72%" stop-color="#fff6e9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="spw-brand-stroke" x1="20%" y1="18%" x2="80%" y2="82%">
+      <stop offset="0%" stop-color="#0f7f86"/>
+      <stop offset="70%" stop-color="#075b60"/>
+      <stop offset="100%" stop-color="#8d6a21"/>
+    </linearGradient>
+    <linearGradient id="spw-brand-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4983a"/>
+      <stop offset="100%" stop-color="#8d6a21"/>
+    </linearGradient>
+    <filter id="spw-brand-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#503315" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="640" rx="76" fill="url(#spw-brand-bg)"/>
+  <rect x="20" y="20" width="920" height="600" rx="58" fill="none" stroke="#d9c3a3" stroke-opacity="0.75"/>
+  <rect x="44" y="44" width="872" height="552" rx="42" fill="url(#spw-brand-glow)"/>
+
+  <path d="M92 174 C252 56 430 66 566 118" fill="none" stroke="#d9b36a" stroke-opacity="0.22" stroke-width="8" stroke-linecap="round"/>
+  <path d="M706 102 C814 136 874 212 892 318" fill="none" stroke="#7db8bd" stroke-opacity="0.16" stroke-width="7" stroke-linecap="round"/>
+  <path d="M118 514 C272 568 430 578 598 530" fill="none" stroke="#d9b36a" stroke-opacity="0.18" stroke-width="6" stroke-linecap="round"/>
+  <path d="M708 520 C796 478 862 410 894 330" fill="none" stroke="#7db8bd" stroke-opacity="0.14" stroke-width="6" stroke-linecap="round"/>
+
+  <g filter="url(#spw-brand-shadow)">
+    <rect x="252" y="106" width="456" height="340" rx="38" fill="#fffaf3" fill-opacity="0.86" stroke="#e2cfb2"/>
+    <path d="M356 218 Q480 100 604 218" fill="none" stroke="url(#spw-brand-stroke)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M356 278 L418 432 L480 278 L542 432 L604 278" fill="none" stroke="url(#spw-brand-stroke)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="480" y="520" text-anchor="middle" fill="#0b6268" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="116" letter-spacing="1.5">Spwashi</text>
+  <circle cx="761" cy="486" r="12" fill="url(#spw-brand-gold)"/>
+  <path d="M248 560 H410" fill="none" stroke="url(#spw-brand-gold)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.72"/>
+  <path d="M550 560 H712" fill="none" stroke="url(#spw-brand-gold)" stroke-width="3" stroke-linecap="round" stroke-opacity="0.72"/>
+  <text x="480" y="596" text-anchor="middle" fill="#8d6a21" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="28" letter-spacing="5">SOFTWARE + ART</text>
+</svg>

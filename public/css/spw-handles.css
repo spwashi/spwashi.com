@@ -1166,9 +1166,9 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   contain: paint style;
   isolation: isolate;
   transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background-color 180ms ease;
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
 }
 
 :where(.site-header, body > header) .spw-spell-path {
@@ -1353,8 +1353,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 @keyframes spw-breadcrumb-shell-project {
   0% {
-    opacity: 0.74;
-    transform: translateY(-0.14rem);
+    opacity: 0.86;
+    transform: translateY(-0.06rem);
   }
   100% {
     opacity: 1;
@@ -1364,8 +1364,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 @keyframes spw-breadcrumb-shell-settle {
   0% {
-    opacity: 0.78;
-    transform: translateY(0.08rem);
+    opacity: 0.9;
+    transform: translateY(0.04rem);
   }
   100% {
     opacity: 1;
@@ -1375,8 +1375,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 @keyframes spw-breadcrumb-copy-clarify {
   0% {
-    opacity: 0.68;
-    transform: translateY(-0.08rem);
+    opacity: 0.82;
+    transform: translateY(-0.04rem);
   }
   100% {
     opacity: 1;
@@ -1390,11 +1390,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-clarity="project"] {
-  animation: spw-breadcrumb-shell-project 220ms ease-out;
+  animation: spw-breadcrumb-shell-project 120ms ease-out;
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-clarity="settle"] {
-  animation: spw-breadcrumb-shell-settle 180ms ease-out;
+  animation: spw-breadcrumb-shell-settle 100ms ease-out;
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-state="open"] .spw-spell-shell {
@@ -1416,7 +1416,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 .spw-spell-path[data-spw-breadcrumb-menu-changed~="state"] .spw-spell-shell,
 .spw-spell-path[data-spw-breadcrumb-menu-changed~="mode"] .spw-spell-shell,
 .spw-spell-path[data-spw-breadcrumb-menu-changed~="phase"] .spw-spell-meaning {
-  animation: spw-breadcrumb-copy-clarify 180ms ease-out;
+  animation: spw-breadcrumb-copy-clarify 100ms ease-out;
 }
 
 @media (max-width: 720px) {

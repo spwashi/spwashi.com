@@ -345,10 +345,7 @@ function syncBreadcrumbViewportPreference() {
     return;
   }
 
-  if (runtime.pathCompact !== compact) {
-    runtime.pathCompact = compact;
-    runtime.pathExpanded = false;
-  }
+  runtime.pathCompact = compact;
 }
 
 function describeBreadcrumbSummary({ surface, routeParts, activeFrameSigil, activeMode }) {
