@@ -454,6 +454,17 @@ export const initRpgWednesday = () => {
             : 'Local storage is unavailable in this browser context. You can still type here, but state will not persist after the page closes.'
     });
 
+    const jumpbar = createElement('nav', {
+        className: 'rpg-gameplay-jumpbar',
+        'aria-label': 'Local gameplay kit sections'
+    }, [
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-scene', text: '@ scene' }),
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-initiative', text: '@ initiative' }),
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-notes', text: '~ notes' }),
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' })
+    ]);
+
     const { field: sceneField, input: sceneInput } = createField({
         id: 'rpg-scene',
         label: 'Current scene',
@@ -548,6 +559,8 @@ export const initRpgWednesday = () => {
     const dashboardValues = {
         scene: createDashboardStat('Scene'),
         objective: createDashboardStat('Objective'),
+        actors: createDashboardStat('Actors'),
+        clocks: createDashboardStat('Clocks'),
         turn: createDashboardStat('Turn'),
         pressure: createDashboardStat('Pressure')
     };
@@ -559,6 +572,8 @@ export const initRpgWednesday = () => {
 
         dashboardValues.scene.textContent = previewText(state.scene);
         dashboardValues.objective.textContent = previewText(state.objective);
+        dashboardValues.actors.textContent = state.initiative.length ? String(state.initiative.length) : DASH_VALUE;
+        dashboardValues.clocks.textContent = state.clocks.length ? String(state.clocks.length) : DASH_VALUE;
         dashboardValues.turn.textContent = activeActor
             ? previewText(activeActor.name, 'unnamed actor')
             : DASH_VALUE;
@@ -803,7 +818,11 @@ export const initRpgWednesday = () => {
         });
     });
 
-    const initiativePanel = createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
+    const initiativePanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel',
+        id: 'rpg-kit-initiative',
+        'data-spw-feature': 'rpg-kit-initiative'
+    }, [
         createElement('h3', { text: 'Initiative' }),
         createElement('div', { className: 'rpg-gameplay-actions' }, [
             createElement('button', {
@@ -822,7 +841,11 @@ export const initRpgWednesday = () => {
         initiativeList
     ]);
 
-    const clocksPanel = createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
+    const clocksPanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel',
+        id: 'rpg-kit-clocks',
+        'data-spw-feature': 'rpg-kit-clocks'
+    }, [
         createElement('h3', { text: 'Clocks' }),
         createElement('div', { className: 'rpg-gameplay-actions' }, [
             createElement('button', {
@@ -861,7 +884,9 @@ export const initRpgWednesday = () => {
     });
 
     const briefPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--brief'
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--brief',
+        id: 'rpg-kit-brief',
+        'data-spw-feature': 'rpg-kit-brief'
     }, [
         createElement('h3', { text: 'Table Brief' }),
         createElement('p', {
@@ -951,9 +976,14 @@ export const initRpgWednesday = () => {
     section.append(
         heading,
         privacy,
+        jumpbar,
         dashboard,
         createElement('div', { className: 'rpg-gameplay-grid' }, [
-            createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
+            createElement('div', {
+                className: 'frame-panel rpg-gameplay-panel',
+                id: 'rpg-kit-scene',
+                'data-spw-feature': 'rpg-kit-scene'
+            }, [
                 createElement('h3', { text: 'Scene Register' }),
                 sceneField,
                 objectiveField,
@@ -961,7 +991,11 @@ export const initRpgWednesday = () => {
             ]),
             initiativePanel,
             clocksPanel,
-            createElement('div', { className: 'frame-panel rpg-gameplay-panel' }, [
+            createElement('div', {
+                className: 'frame-panel rpg-gameplay-panel',
+                id: 'rpg-kit-notes',
+                'data-spw-feature': 'rpg-kit-notes'
+            }, [
                 createElement('h3', { text: 'Notes and handoff' }),
                 createElement('p', {
                     className: 'frame-note',

@@ -1192,6 +1192,13 @@
   border-style: dashed;
 }
 
+:where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-jumpbar) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+  margin-block: 0.75rem 0.4rem;
+}
+
 :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-dashboard) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-compact, 12rem)), 1fr));
@@ -1333,6 +1340,18 @@
 }
 
 @media (max-width: 720px) {
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-jumpbar) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.15rem;
+    scrollbar-width: thin;
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-jumpbar .operator-chip) {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row) {
     grid-template-columns: auto minmax(0, 1fr);
   }
