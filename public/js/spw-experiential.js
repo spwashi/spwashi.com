@@ -58,6 +58,8 @@ const runtime = {
   headerMemo: null,
   lastMemoTimeout: null,
   shellSnapshot: null,
+  pathExpanded: null,
+  pathCompact: null,
 };
 
 export function initSpwExperiential() {
@@ -128,6 +130,7 @@ function initSpellBreadcrumbs() {
 
   window.addEventListener('popstate', update);
   window.addEventListener('hashchange', update);
+  window.addEventListener('resize', update);
   document.addEventListener('spw:frame-change', update);
   document.addEventListener('spw:mode-change', update);
   document.addEventListener('brace:committed', update);
@@ -163,6 +166,7 @@ function renderBreadcrumbSpell() {
   const routeParts = url.pathname.split('/').filter(Boolean);
   const shellSnapshot = readShellSnapshot();
   runtime.shellSnapshot = shellSnapshot;
+  syncBreadcrumbViewportPreference();
 
   const activeFrame =
     document.querySelector('.site-frame.is-active-frame')
@@ -234,6 +238,14 @@ function renderBreadcrumbSpell() {
     activeMode,
     shellSnapshot,
   });
+  const compactSummary = describeBreadcrumbSummary({
+    surface,
+    routeParts,
+    activeFrameSigil,
+    activeMode,
+  });
+  const pathState = runtime.pathExpanded ? 'open' : 'closed';
+  const compact = runtime.pathCompact === true;
 
   pathBar.dataset.spwBreadcrumbSurface = surface;
   pathBar.dataset.spwBreadcrumbDepth = String(items.length);
@@ -248,10 +260,20 @@ function renderBreadcrumbSpell() {
   pathBar.dataset.spwBreadcrumbMenuPressure = shellSnapshot.pressure;
   pathBar.dataset.spwBreadcrumbMenuIntent = shellSnapshot.intent;
   pathBar.dataset.spwBreadcrumbReversible = shellSnapshot.reversible ? 'true' : 'false';
+  pathBar.dataset.spwBreadcrumbState = pathState;
+  pathBar.dataset.spwBreadcrumbViewport = compact ? 'compact' : 'roomy';
 
   pathBar.innerHTML = `
     <div class="spw-spell-path__header">
-      <span class="spw-spell-path__title">cognitive path</span>
+      <button
+        class="spw-spell-path-toggle"
+        type="button"
+        data-spw-breadcrumb-action="toggle-path"
+        aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
+        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} cognitive path. ${compactSummary}.`)}">
+        <span class="spw-spell-path__title">cognitive path</span>
+        <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
+      </button>
       ${renderShellControl(shellSnapshot)}
     </div>
     <ol class="spw-spell-trail" aria-label="Current cognitive breadcrumb">
@@ -303,6 +325,32 @@ function renderShellControl(shellSnapshot) {
       <span class="spw-spell-shell-state">${escapeHtml(label)}</span>
     </button>
   `;
+}
+
+function syncBreadcrumbViewportPreference() {
+  const compact = window.matchMedia('(max-width: 720px)').matches;
+
+  if (runtime.pathExpanded == null) {
+    runtime.pathCompact = compact;
+    runtime.pathExpanded = !compact;
+    return;
+  }
+
+  if (runtime.pathCompact !== compact) {
+    runtime.pathCompact = compact;
+    runtime.pathExpanded = !compact;
+  }
+}
+
+function describeBreadcrumbSummary({ surface, routeParts, activeFrameSigil, activeMode }) {
+  const routeLabel = humanizePathPart(routeParts.at(-1) || surface || 'home');
+  if (activeFrameSigil) {
+    return `${routeLabel} · ${stripWhitespace(activeFrameSigil)}`;
+  }
+  if (activeMode) {
+    return `${routeLabel} · ${humanizePathPart(activeMode)}`;
+  }
+  return routeLabel;
 }
 
 function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shellSnapshot }) {
@@ -361,6 +409,10 @@ function onBreadcrumbAction(event) {
   if (!(control instanceof HTMLElement)) return;
 
   switch (control.dataset.spwBreadcrumbAction) {
+    case 'toggle-path':
+      runtime.pathExpanded = !runtime.pathExpanded;
+      renderBreadcrumbSpell();
+      break;
     case 'focus-mode': {
       const selector = control.dataset.spwBreadcrumbSelector;
       if (!selector) return;

@@ -1001,6 +1001,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   display: grid;
   gap: 0.38rem;
   min-width: 0;
+  position: relative;
   margin-block: 0.35rem 0.75rem;
   padding: 0.24rem 0.56rem;
   border: 1px solid color-mix(in srgb, var(--teal, #008080) 18%, transparent);
@@ -1035,11 +1036,36 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   flex-wrap: wrap;
 }
 
+.spw-spell-path-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem 0.46rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spw-spell-path-toggle:is(:hover, :focus-visible) {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+}
+
 .spw-spell-path__title {
   color: var(--ink-soft);
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.spw-spell-path__summary {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  line-height: 1.2;
 }
 
 .spw-spell-shell {
@@ -1167,6 +1193,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   line-height: 1.45;
 }
 
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-trail,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-meaning {
+  display: none;
+}
+
 @keyframes spw-breadcrumb-shell-project {
   0% {
     opacity: 0.74;
@@ -1233,6 +1264,45 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 .spw-spell-path[data-spw-breadcrumb-menu-changed~="mode"] .spw-spell-shell,
 .spw-spell-path[data-spw-breadcrumb-menu-changed~="phase"] .spw-spell-meaning {
   animation: spw-breadcrumb-copy-clarify 180ms ease-out;
+}
+
+@media (max-width: 720px) {
+  .spw-spell-path {
+    gap: 0.2rem;
+    margin-block: 0.16rem 0.22rem;
+    padding: 0.16rem 0.34rem;
+  }
+
+  .spw-spell-path__header {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.32rem;
+  }
+
+  .spw-spell-path-toggle {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .spw-spell-path__summary {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] {
+    padding-block: 0.12rem;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell {
+    min-height: 1.72rem;
+    padding: 0.14rem 0.44rem;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell-state {
+    display: none;
+  }
 }
 
 .spell-visual {
