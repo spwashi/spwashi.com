@@ -529,12 +529,13 @@ body[data-spw-surface="home"] {
 
 [data-spw-surface="home"] .operator-chip {
   --operator-chip-border-width: 1.5px;
-  --operator-chip-bg: color-mix(in srgb, var(--home-accent) 12%, var(--home-surface-strong) 88%);
-  --operator-chip-border: color-mix(in srgb, var(--home-accent) 28%, transparent);
-  --operator-chip-ink: color-mix(in srgb, var(--home-accent) 88%, var(--home-ink));
+  --home-operator-accent: var(--spw-operator-color, var(--home-accent));
+  --operator-chip-bg: color-mix(in srgb, var(--home-operator-accent) 10%, var(--home-surface-strong) 90%);
+  --operator-chip-border: color-mix(in srgb, var(--home-operator-accent) 24%, transparent);
+  --operator-chip-ink: color-mix(in srgb, var(--home-operator-accent) 78%, var(--home-ink));
   --operator-chip-shadow: inset 0 1px 0 rgba(255,255,255,0.42);
-  --operator-chip-hover-bg: color-mix(in srgb, var(--home-accent) 18%, var(--home-surface-strong) 82%);
-  --operator-chip-hover-border: color-mix(in srgb, var(--home-accent) 48%, transparent);
+  --operator-chip-hover-bg: color-mix(in srgb, var(--home-operator-accent) 16%, var(--home-surface-strong) 84%);
+  --operator-chip-hover-border: color-mix(in srgb, var(--home-operator-accent) 42%, transparent);
   --operator-chip-hover-ink: var(--home-ink);
   --operator-chip-hover-shadow:
     inset 0 1px 0 rgba(255,255,255,0.48),
@@ -558,7 +559,7 @@ body[data-spw-surface="home"] {
   display: block;
   padding: 0.55rem 0.72rem;
   border: 1px solid color-mix(in srgb, var(--home-line) 96%, transparent);
-  border-radius: var(--shape-surface, 10px);
+  border-radius: var(--shape-control, 0.78rem);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
     color-mix(in srgb, var(--home-surface-strong) 94%, transparent);

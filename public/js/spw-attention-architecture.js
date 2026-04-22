@@ -37,6 +37,7 @@ const HANDLE_OP_ATTR = 'data-spw-section-handle-op';
 const HANDLE_PHASE_ATTR = 'data-spw-handle-phase';
 const HANDLE_AVAILABILITY_ATTR = 'data-spw-handle-availability';
 const HANDLE_ENHANCED_ATTR = 'data-spw-handle-enhanced';
+const HANDLE_SHELL_STATE_ATTR = 'data-spw-handle-shell-state';
 const SECTION_STATE_ATTR = 'data-spw-section-state';
 const SECTION_INDEX_ATTR = 'data-spw-section-index';
 const PAGE_SECTION_CURRENT_ATTR = 'data-spw-page-section-current';
@@ -48,6 +49,7 @@ const PAGE_SECTION_EVENT = 'spw:section-locomotion-state';
 const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
 const HANDLE_TRAVEL_SETTLE_MS = 760;
+const HANDLE_COMPACT_QUERY = '(max-width: 720px)';
 
 function getScrollBehavior() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -193,7 +195,10 @@ function createHandleShell(origin) {
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
-    <button type="button" class="spw-section-handle-step" data-spw-handle-target="top" aria-label="Jump to top of page">
+    <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel">
+      <span aria-hidden="true">+</span>
+    </button>
+    <button type="button" class="spw-section-handle-step" data-spw-handle-target="top" data-spw-handle-advanced="true" aria-label="Jump to top of page">
       <span aria-hidden="true">↑</span>
     </button>
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="prev" aria-label="Jump to previous section">
@@ -209,7 +214,7 @@ function createHandleShell(origin) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="next" aria-label="Jump to next section">
       <span aria-hidden="true">›</span>
     </button>
-    <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" aria-label="Jump to bottom of page">
+    <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">
       <span aria-hidden="true">↓</span>
     </button>
   `;
@@ -286,6 +291,7 @@ function initSectionHandle(root) {
   const currentToken = shell.querySelector('.spw-section-handle-current-token');
   const currentLabel = shell.querySelector('.spw-section-handle-current-label');
   const progressNode = shell.querySelector('.spw-section-handle-progress');
+  const toggleButton = shell.querySelector('[data-spw-handle-target="toggle"]');
   const topButton = shell.querySelector('[data-spw-handle-target="top"]');
   const prevButton = shell.querySelector('[data-spw-handle-target="prev"]');
   const nextButton = shell.querySelector('[data-spw-handle-target="next"]');
@@ -301,6 +307,20 @@ function initSectionHandle(root) {
     raf: 0,
     travelTimer: 0,
     travelTargetId: '',
+    compact: window.matchMedia(HANDLE_COMPACT_QUERY).matches,
+    manualCompact: false,
+  };
+
+  const syncShellState = () => {
+    shell.setAttribute(HANDLE_SHELL_STATE_ATTR, state.compact ? 'collapsed' : 'expanded');
+    if (!(toggleButton instanceof HTMLButtonElement)) return;
+    toggleButton.setAttribute('aria-expanded', state.compact ? 'false' : 'true');
+    toggleButton.setAttribute(
+      'aria-label',
+      state.compact ? 'Expand page travel' : 'Collapse page travel'
+    );
+    toggleButton.title = state.compact ? 'More travel' : 'Less travel';
+    toggleButton.textContent = state.compact ? '+' : '-';
   };
 
   sections.forEach((section, index) => {
@@ -425,6 +445,12 @@ function initSectionHandle(root) {
     if (!(button instanceof HTMLButtonElement)) return;
     const target = button.dataset.spwHandleTarget || '';
     switch (target) {
+      case 'toggle':
+        state.compact = !state.compact;
+        state.manualCompact = true;
+        syncShellState();
+        updateActiveState('toggle');
+        break;
       case 'top':
         travelToIndex(0, 'top');
         break;
@@ -484,6 +510,14 @@ function initSectionHandle(root) {
   };
 
   const onResize = () => {
+    if (!state.manualCompact) {
+      state.compact = window.matchMedia(HANDLE_COMPACT_QUERY).matches;
+    }
+    if (!window.matchMedia(HANDLE_COMPACT_QUERY).matches) {
+      state.compact = false;
+      state.manualCompact = false;
+    }
+    syncShellState();
     runUpdate('resize');
   };
 
@@ -496,6 +530,7 @@ function initSectionHandle(root) {
 
   setHandlePhase(shell, 'settled');
   setHandlePhase(handle, 'settled');
+  syncShellState();
   updateActiveState('init');
 
   return () => {

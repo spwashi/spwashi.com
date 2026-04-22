@@ -72,6 +72,7 @@ const DEFAULTS = Object.freeze({
 });
 
 const FONT_SCALE_STEPS = Object.freeze(['80', '90', '100', '110', '120']);
+const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
 
 function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
   if (width < 420) return 'compact';
@@ -354,6 +355,19 @@ function getCurrentFontScale() {
   return FONT_SCALE_STEPS.includes(String(current)) ? String(current) : '100';
 }
 
+function getCurrentColorMode() {
+  const current = window.spwSettings?.get?.()?.colorMode
+    || document.documentElement.dataset.spwColorMode
+    || 'auto';
+  return COLOR_MODE_STEPS.includes(String(current)) ? String(current) : 'auto';
+}
+
+function getNextColorMode() {
+  const current = getCurrentColorMode();
+  const index = Math.max(0, COLOR_MODE_STEPS.indexOf(current));
+  return COLOR_MODE_STEPS[(index + 1) % COLOR_MODE_STEPS.length];
+}
+
 function getNextFontScale(direction = 1) {
   const current = getCurrentFontScale();
   const index = Math.max(0, FONT_SCALE_STEPS.indexOf(current));
@@ -361,22 +375,24 @@ function getNextFontScale(direction = 1) {
   return FONT_SCALE_STEPS[nextIndex];
 }
 
-function ensureUtilityRow(nav) {
-  let row = nav.querySelector('.spw-shell-utility-row');
+function ensureUtilityRow(header) {
+  let row = header.querySelector('.spw-shell-utility-row');
   if (row instanceof HTMLElement) return row;
 
   row = document.createElement('div');
   row.className = 'spw-shell-utility-row';
   row.setAttribute('role', 'group');
-  row.setAttribute('aria-label', 'Reading and navigation utilities');
+  row.setAttribute('aria-label', 'Quick reading and display controls');
   row.innerHTML = `
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="theme-cycle" aria-label="Switch color mode">auto</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size">A-</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path">PATH</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size">A+</button>
-    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#typography-settings" aria-label="Open typography settings">Aa</a>
+    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings">Aa</a>
   `;
 
-  nav.prepend(row);
+  const trace = header.querySelector('.spw-header-trace');
+  header.insertBefore(row, trace || header.querySelector('nav') || null);
   return row;
 }
 
@@ -384,12 +400,20 @@ function syncUtilityRow(row) {
   if (!(row instanceof HTMLElement)) return;
 
   const current = getCurrentFontScale();
+  const currentColorMode = getCurrentColorMode();
   const min = FONT_SCALE_STEPS[0];
   const max = FONT_SCALE_STEPS[FONT_SCALE_STEPS.length - 1];
   const pathToggle = document.querySelector('.spw-spell-path-toggle');
 
   row.dataset.spwFontScale = current;
+  row.dataset.spwColorMode = currentColorMode;
   row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
+
+  row.querySelectorAll('[data-spw-shell-action="theme-cycle"]').forEach((button) => {
+    button.textContent = currentColorMode;
+    button.setAttribute('aria-label', `Switch color mode. Current mode: ${currentColorMode}.`);
+    button.title = `Color mode: ${currentColorMode}`;
+  });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
     button.toggleAttribute('disabled', current === min);
@@ -573,7 +597,7 @@ export function initSpwShellDisclosure(options = {}) {
     }
   }
 
-  const utilityRow = ensureUtilityRow(nav);
+  const utilityRow = ensureUtilityRow(header);
 
   const state = createState(config);
   header.dataset.spwMenu = 'closed';
@@ -696,6 +720,12 @@ export function initSpwShellDisclosure(options = {}) {
 
     if (action === 'path-toggle') {
       document.querySelector('.spw-spell-path-toggle')?.click();
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'theme-cycle') {
+      window.spwSettings?.save?.({ colorMode: getNextColorMode() });
       syncUtilityRow(utilityRow);
       return;
     }

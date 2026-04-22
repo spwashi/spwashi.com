@@ -68,6 +68,41 @@ const CLIMATE_TO_PROMPT_BIAS = Object.freeze({
     offer: ['publication', 'teaching', 'clarity'],
 });
 
+const PROMPT_QUERY_TARGET_ALIASES = Object.freeze({
+    context: 'spw_context',
+    seed: 'spw_context',
+    prompt: 'wonder_prompt',
+    wonder: 'wonder_prompt',
+    image: 'image_prompt',
+    midjourney: 'midjourney_prompt',
+    bundle: 'frame_seed_bundle',
+    json: 'prompt_bundle_json',
+});
+
+const PROMPT_QUERY_GENERATOR_ALIASES = Object.freeze({
+    generic: 'generic',
+    image: 'generic',
+    midjourney: 'midjourney',
+    chatgpt: 'chatgpt-images',
+    'chatgpt-images': 'chatgpt-images',
+    'chatgpt-image': 'chatgpt-images',
+    'gpt-image': 'chatgpt-images',
+    'gpt-image-1.5': 'chatgpt-images',
+    'gpt-image-2': 'chatgpt-images',
+    gemini: 'gemini',
+    firefly: 'firefly',
+    ideogram: 'ideogram',
+});
+
+const PROMPT_QUERY_GENERATOR_LABELS = Object.freeze({
+    generic: 'image generators',
+    midjourney: 'Midjourney',
+    'chatgpt-images': 'ChatGPT Images',
+    gemini: 'Gemini',
+    firefly: 'Adobe Firefly',
+    ideogram: 'Ideogram',
+});
+
 function createPromptRuntime(options = {}) {
     const config = { ...DEFAULTS, ...options };
 
@@ -160,6 +195,12 @@ function registerDefaultSignalProviders(runtime) {
         };
     });
 
+    runtime.signalProviders.set('prompt-query', (_, source, config) => {
+        return {
+            promptQuery: readPromptQuery(window.location.search, config.promptTargets),
+        };
+    });
+
     runtime.signalProviders.set('rhythm', () => {
         return {
             rhythm: {
@@ -240,11 +281,26 @@ function registerDefaultNormalizers(runtime) {
         const settings = context.settings || {};
         const modifiers = context.modifiers || {};
         const climateId = settings.currentDevelopmentalClimate || 'orient';
+        const promptQuery = context.promptQuery || {};
+        const generator = normalizePromptQueryGenerator(promptQuery.generator);
 
         return {
             ...context,
             descriptors: PERSONA_DESCRIPTORS[persona] || PERSONA_DESCRIPTORS.viewer,
             climateBias: CLIMATE_TO_PROMPT_BIAS[climateId] || CLIMATE_TO_PROMPT_BIAS.orient,
+            promptQuery: {
+                ...promptQuery,
+                target: normalizePromptTargetName(promptQuery.target, DEFAULTS.promptTargets),
+                generator,
+                generatorLabel: generator ? PROMPT_QUERY_GENERATOR_LABELS[generator] || '' : '',
+                hasOverrides: Boolean(
+                    promptQuery.open
+                    || promptQuery.host
+                    || promptQuery.focus
+                    || promptQuery.note
+                    || generator
+                ),
+            },
             semanticMode: {
                 density: settings.semanticDensity || 'minimal',
                 operatorPresentation: settings.operatorPresentation || 'symbolic',
@@ -394,10 +450,16 @@ function initWonderBlocks(runtime) {
 
         surface.after(block);
 
+        applyPromptQueryState(runtime, block);
+
         const previewButton = block.querySelector('[data-action="preview"]');
         previewButton?.addEventListener('click', () => {
             const expanded = previewButton.getAttribute('aria-pressed') === 'true';
             const nextExpanded = !expanded;
+
+            if (!block.dataset.promptPreviewTarget) {
+                block.dataset.promptPreviewTarget = runtime.config.promptTargets.wonder_prompt;
+            }
 
             previewButton.setAttribute('aria-pressed', nextExpanded ? 'true' : 'false');
             block.dataset.spwWonderBlockState = nextExpanded ? 'revealed' : 'idle';
@@ -409,6 +471,7 @@ function initWonderBlocks(runtime) {
                 const target = button.dataset.target;
                 const text = serializePrompt(runtime, runtime.config.promptTargets[target] ? runtime.config.promptTargets[target] : target, resolveBlockPromptSource(block, runtime.config));
                 await copyToClipboard(text, button);
+                block.dataset.promptPreviewTarget = runtime.config.promptTargets[target] ? runtime.config.promptTargets[target] : target;
                 block.dataset.spwWonderBlockState = target === 'image_prompt' ? 'expanded' : 'revealed';
                 previewButton?.setAttribute('aria-pressed', 'true');
                 refreshWonderBlock(runtime, block);
@@ -504,6 +567,7 @@ function serializePromptContextToSpw(context) {
     const settings = context.settings || {};
     const rhythm = context.rhythm || {};
     const guidance = context.guidance || {};
+    const promptQuery = context.promptQuery || {};
 
     const title = frame?.title || 'untitled';
     const id = frame?.id || 'surface';
@@ -548,10 +612,21 @@ function serializePromptContextToSpw(context) {
         out += `${context.lattice}\n`;
     }
 
+    if (promptQuery.hasOverrides) {
+        out += `\n^"prompt_link"{\n`;
+        out += `  target: "${escapeString(promptQuery.target || 'wonder_prompt')}"\n`;
+        if (promptQuery.host) out += `  host: "${escapeString(promptQuery.host)}"\n`;
+        if (promptQuery.generatorLabel) out += `  generator: "${escapeString(promptQuery.generatorLabel)}"\n`;
+        if (promptQuery.focus) out += `  focus: "${escapeString(promptQuery.focus)}"\n`;
+        if (promptQuery.note) out += `  note: "${escapeString(promptQuery.note)}"\n`;
+        out += `}\n`;
+    }
+
     return out.trim();
 }
 
 function serializeWonderPrompt(context) {
+    const promptQuery = context.promptQuery || {};
     const subject = context.groundedSummary.join(', ');
     const descriptors = context.descriptors.join(', ');
     const climateBias = context.climateBias.join(', ');
@@ -576,10 +651,12 @@ function serializeWonderPrompt(context) {
         semanticText,
         rhythmText,
         frameText,
+        promptQuery.focus ? `focus on ${promptQuery.focus}` : null,
+        promptQuery.note ? `preserve ${promptQuery.note}` : null,
         'materially rich interface thinking',
         'technical art',
         'diagrammatic atmosphere',
-    ].join(', ');
+    ].filter(Boolean).join(', ');
 }
 
 function serializeImagePrompt(context) {
@@ -671,16 +748,100 @@ function refreshWonderBlock(runtime, block) {
 
     const state = block.dataset.spwWonderBlockState || 'idle';
     const source = resolveBlockPromptSource(block, runtime.config);
+    const context = collectPromptContext(runtime, source);
+    const previewTarget = getWonderPreviewTarget(block, runtime);
+    const serializer = runtime.serializers.get(previewTarget);
     const livePreview = truncateText(
-        serializePrompt(runtime, runtime.config.promptTargets.wonder_prompt, source),
+        typeof serializer === 'function' ? serializer(context, runtime, source) : '',
         runtime.config.maxWonderPreviewLength
     );
-    const teaser = block.dataset.spwPromptTeaser || 'Reveal a route-shaped prompt from this surface.';
+    const teaser = buildWonderTeaser(block, context);
     const body = block.querySelector('[data-wonder-text]');
 
     if (body) {
         body.textContent = state === 'idle' ? teaser : (livePreview || teaser);
     }
+}
+
+function applyPromptQueryState(runtime, block) {
+    const query = readPromptQuery(window.location.search, runtime.config.promptTargets);
+    if (!query.open || !isWonderBlockTargeted(block, query)) return;
+
+    block.dataset.promptPreviewTarget = query.target || runtime.config.promptTargets.wonder_prompt;
+    block.dataset.spwWonderBlockState =
+        block.dataset.promptPreviewTarget === runtime.config.promptTargets.spw_context
+        || block.dataset.promptPreviewTarget === runtime.config.promptTargets.wonder_prompt
+            ? 'revealed'
+            : 'expanded';
+
+    block.querySelector('[data-action="preview"]')?.setAttribute('aria-pressed', 'true');
+}
+
+function buildWonderTeaser(block, context) {
+    const teaser = block.dataset.spwPromptTeaser || 'Reveal a route-shaped prompt from this surface.';
+    const promptQuery = context.promptQuery || {};
+    const details = [
+        promptQuery.focus ? `focus: ${promptQuery.focus}` : '',
+        promptQuery.generatorLabel ? `generator: ${promptQuery.generatorLabel}` : '',
+        promptQuery.note ? `note: ${promptQuery.note}` : '',
+    ].filter(Boolean);
+
+    return details.length ? `${teaser} ${details.join(' • ')}` : teaser;
+}
+
+function getWonderPreviewTarget(block, runtime) {
+    return normalizePromptTargetName(
+        block?.dataset?.promptPreviewTarget || runtime.config.promptTargets.wonder_prompt,
+        runtime.config.promptTargets
+    );
+}
+
+function isWonderBlockTargeted(block, query) {
+    if (!(block instanceof Element)) return false;
+    if (!query.host) return true;
+
+    return [block.dataset.promptHost, block.dataset.promptFrame]
+        .map((value) => normalizeText(value))
+        .filter(Boolean)
+        .includes(normalizeText(query.host));
+}
+
+function readPromptQuery(search = '', promptTargets = DEFAULTS.promptTargets) {
+    const params = new URLSearchParams(search || '');
+    const target = normalizePromptTargetName(params.get('spw_prompt_target'), promptTargets);
+
+    return {
+        open: isTruthyQueryValue(params.get('spw_prompt_open')),
+        host: normalizePromptQueryText(params.get('spw_prompt_host'), 96),
+        target,
+        focus: normalizePromptQueryText(params.get('spw_prompt_focus'), 160),
+        note: normalizePromptQueryText(params.get('spw_prompt_note'), 180),
+        generator: normalizePromptQueryGenerator(params.get('spw_prompt_generator')),
+    };
+}
+
+function normalizePromptTargetName(value, promptTargets = DEFAULTS.promptTargets) {
+    if (!value) return promptTargets.wonder_prompt;
+
+    const raw = normalizeText(value).toLowerCase();
+    const normalized = PROMPT_QUERY_TARGET_ALIASES[raw] || raw;
+
+    if (promptTargets[normalized]) return promptTargets[normalized];
+    if (Object.values(promptTargets).includes(normalized)) return normalized;
+    return promptTargets.wonder_prompt;
+}
+
+function normalizePromptQueryGenerator(value) {
+    if (!value) return '';
+    return PROMPT_QUERY_GENERATOR_ALIASES[normalizeText(value).toLowerCase()] || '';
+}
+
+function normalizePromptQueryText(value, max = 120) {
+    return normalizeText(value || '').slice(0, max);
+}
+
+function isTruthyQueryValue(value) {
+    return ['1', 'true', 'open', 'yes', 'on'].includes(normalizeText(value).toLowerCase());
 }
 
 function normalizePresetAlias(name) {
