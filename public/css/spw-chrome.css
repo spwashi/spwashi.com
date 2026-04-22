@@ -701,11 +701,15 @@
 }
 
 .spw-shell-utility-row {
-  display: flex;
+  display: none;
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.32rem;
   min-width: 0;
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) .spw-shell-utility-row {
+  display: flex;
 }
 
 .spw-shell-utility-button {

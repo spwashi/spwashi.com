@@ -341,13 +341,13 @@ function syncBreadcrumbViewportPreference() {
 
   if (runtime.pathExpanded == null) {
     runtime.pathCompact = compact;
-    runtime.pathExpanded = !compact;
+    runtime.pathExpanded = false;
     return;
   }
 
   if (runtime.pathCompact !== compact) {
     runtime.pathCompact = compact;
-    runtime.pathExpanded = !compact;
+    runtime.pathExpanded = false;
   }
 }
 
