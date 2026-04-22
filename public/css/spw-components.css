@@ -397,6 +397,12 @@
   --component-route-accent: var(--component-accent, var(--teal, #008080));
 }
 
+/* Hidden mode panels must leave layout even though the shared shell gives
+   them display:grid by default. */
+:where(.mode-panel[hidden]) {
+  display: none;
+}
+
 :where(
   .frame-card,
   .media-card,

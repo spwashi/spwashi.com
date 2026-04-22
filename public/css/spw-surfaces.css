@@ -1313,6 +1313,65 @@
   accent-color: var(--active-op-color, #008080);
 }
 
+:where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock) {
+  grid-template-columns:
+    minmax(8rem, 1fr)
+    minmax(4.5rem, 0.42fr)
+    minmax(5rem, 0.8fr)
+    auto
+    auto
+    auto
+    auto;
+}
+
+:where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock-text) {
+  min-width: 3.25rem;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.82rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row > :is(input, select, progress, .rpg-gameplay-clock-text)) {
+    grid-column: 1 / -1;
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock > :is(input, select, progress)) {
+    grid-column: 1 / -1;
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock-text) {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row .operator-chip) {
+    justify-content: center;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 440px) {
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row,
+         [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock) {
+    grid-template-columns: 1fr;
+  }
+
+  :where([data-spw-features~="rpg-gameplay"] .rpg-gameplay-row > *,
+         [data-spw-features~="rpg-gameplay"] .rpg-gameplay-clock > *) {
+    grid-column: 1 / -1;
+  }
+}
+
 /* ==========================================================================
    5. Runtime settings
    ========================================================================== */
