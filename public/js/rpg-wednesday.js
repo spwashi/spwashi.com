@@ -1,267 +1,31 @@
-import { deleteImage, getImageDataUrl, storeImage } from './spw-image-store.js';
 import { emitSpwAction } from './spw-shared.js';
-
-const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
-const RPG_ROUTE_RE = /^(?:\/rpg\/?$|\/play\/rpg-wednesday(?:\/|$))/;
-
-const DEFAULT_STATE = {
-    scene: '',
-    objective: '',
-    party: '',
-    initiative: [],
-    activeInitiativeId: null,
-    clocks: [],
-    assets: [],
-    notes: '',
-    characterBeat: '',
-    canonCandidates: '',
-    seeds: '',
-    updatedAt: ''
-};
-
-const ASSET_KIND_OPTIONS = [
-    { value: 'scene', label: 'Scene' },
-    { value: 'image', label: 'Image' },
-    { value: 'texture', label: 'Texture' },
-    { value: 'item', label: 'Item' },
-    { value: 'threat', label: 'Threat' }
-];
-const ASSET_PRESET_OPTIONS = [
-    { value: 'portrait', label: '4:5 portrait' },
-    { value: 'square', label: '1:1 square' },
-    { value: 'wide', label: '16:9 wide' },
-    { value: 'tall', label: '9:16 tall' }
-];
-const ASSET_KIND_VALUES = new Set(ASSET_KIND_OPTIONS.map((option) => option.value));
-const ASSET_PRESET_VALUES = new Set(ASSET_PRESET_OPTIONS.map((option) => option.value));
-const DEFAULT_ASSET_NAMESPACE = 'table';
-const DEFAULT_ASSET_TIMELINE = 'current';
-
-const makeId = () => {
-    if (globalThis.crypto?.randomUUID) {
-        return globalThis.crypto.randomUUID();
-    }
-    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
-};
-const cloneDefaultState = () => JSON.parse(JSON.stringify(DEFAULT_STATE));
-
-const safeJsonParse = (value) => {
-    try {
-        return JSON.parse(value);
-    } catch {
-        return null;
-    }
-};
-
-const normalizeList = (value) => (
-    Array.isArray(value)
-        ? value.filter((item) => item && typeof item === 'object')
-        : []
-);
-
-const normalizeAssetKind = (value) => (
-    ASSET_KIND_VALUES.has(value)
-        ? value
-        : 'scene'
-);
-
-const normalizeAssetPreset = (value) => (
-    ASSET_PRESET_VALUES.has(value)
-        ? value
-        : 'wide'
-);
-
-const normalizeAsset = (asset) => ({
-    id: typeof asset.id === 'string' ? asset.id : makeId(),
-    title: typeof asset.title === 'string' ? asset.title : '',
-    kind: normalizeAssetKind(asset.kind),
-    namespace: typeof asset.namespace === 'string' ? asset.namespace : DEFAULT_ASSET_NAMESPACE,
-    timeline: typeof asset.timeline === 'string' ? asset.timeline : DEFAULT_ASSET_TIMELINE,
-    context: typeof asset.context === 'string' ? asset.context : '',
-    tags: typeof asset.tags === 'string' ? asset.tags : '',
-    prompt: typeof asset.prompt === 'string' ? asset.prompt : '',
-    notes: typeof asset.notes === 'string' ? asset.notes : '',
-    imageUrl: typeof asset.imageUrl === 'string' ? asset.imageUrl : '',
-    imageKey: typeof asset.imageKey === 'string' ? asset.imageKey : '',
-    preset: normalizeAssetPreset(asset.preset),
-    collected: Boolean(asset.collected),
-    collapsed: Boolean(asset.collapsed),
-    createdAt: typeof asset.createdAt === 'string' ? asset.createdAt : '',
-    updatedAt: typeof asset.updatedAt === 'string' ? asset.updatedAt : ''
-});
-
-const normalizeState = (value) => {
-    const input = value && typeof value === 'object' ? value : {};
-    const state = {
-        ...cloneDefaultState(),
-        scene: typeof input.scene === 'string' ? input.scene : '',
-        objective: typeof input.objective === 'string' ? input.objective : '',
-        party: typeof input.party === 'string' ? input.party : '',
-        notes: typeof input.notes === 'string' ? input.notes : '',
-        characterBeat: typeof input.characterBeat === 'string' ? input.characterBeat : '',
-        canonCandidates: typeof input.canonCandidates === 'string' ? input.canonCandidates : '',
-        seeds: typeof input.seeds === 'string' ? input.seeds : '',
-        updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : ''
-    };
-
-    state.initiative = normalizeList(input.initiative).map((actor) => ({
-        id: typeof actor.id === 'string' ? actor.id : makeId(),
-        name: typeof actor.name === 'string' ? actor.name : '',
-        detail: typeof actor.detail === 'string' ? actor.detail : ''
-    }));
-
-    state.activeInitiativeId = state.initiative.some((actor) => actor.id === input.activeInitiativeId)
-        ? input.activeInitiativeId
-        : state.initiative[0]?.id || null;
-
-    state.clocks = normalizeList(input.clocks).map((clock) => {
-        const segments = Number.isFinite(clock.segments) ? Number(clock.segments) : 4;
-        const progress = Number.isFinite(clock.progress) ? Number(clock.progress) : 0;
-
-        return {
-            id: typeof clock.id === 'string' ? clock.id : makeId(),
-            name: typeof clock.name === 'string' ? clock.name : '',
-            segments: Math.min(12, Math.max(2, Math.round(segments))),
-            progress: Math.min(12, Math.max(0, Math.round(progress)))
-        };
-    }).map((clock) => ({
-        ...clock,
-        progress: Math.min(clock.progress, clock.segments)
-    }));
-
-    state.assets = normalizeList(input.assets).map(normalizeAsset);
-
-    return state;
-};
-
-const createStorage = () => {
-    const unavailable = { available: false, read: () => cloneDefaultState(), write: () => false, clear: () => false };
-
-    try {
-        const testKey = `${STORAGE_KEY}:test`;
-        localStorage.setItem(testKey, '1');
-        localStorage.removeItem(testKey);
-    } catch {
-        return unavailable;
-    }
-
-    return {
-        available: true,
-        read: () => normalizeState(safeJsonParse(localStorage.getItem(STORAGE_KEY))),
-        write: (state) => {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            return true;
-        },
-        clear: () => {
-            localStorage.removeItem(STORAGE_KEY);
-            return true;
-        }
-    };
-};
-
-const createElement = (tag, props = {}, children = []) => {
-    const element = document.createElement(tag);
-
-    Object.entries(props).forEach(([key, value]) => {
-        if (value === null || value === undefined) return;
-        if (key === 'className') {
-            element.className = value;
-            return;
-        }
-        if (key === 'text') {
-            element.textContent = value;
-            return;
-        }
-        if (key === 'html') {
-            element.innerHTML = value;
-            return;
-        }
-        if (key in element) {
-            element[key] = value;
-            return;
-        }
-        element.setAttribute(key, value);
-    });
-
-    children.forEach((child) => {
-        if (typeof child === 'string') {
-            element.appendChild(document.createTextNode(child));
-            return;
-        }
-        if (child) element.appendChild(child);
-    });
-
-    return element;
-};
-
-const createField = ({ id, label, value, rows = 2, placeholder }) => {
-    const input = createElement('textarea', {
-        id,
-        className: 'rpg-gameplay-input',
-        rows,
-        placeholder,
-        value
-    });
-
-    const field = createElement('label', { className: 'rpg-gameplay-field' }, [
-        createElement('span', { text: label }),
-        input
-    ]);
-
-    return { field, input };
-};
-
-const createLineField = ({ id, label, value, placeholder, type = 'text' }) => {
-    const input = createElement('input', {
-        id,
-        type,
-        className: 'rpg-gameplay-line-input',
-        value,
-        placeholder
-    });
-
-    const field = createElement('label', { className: 'rpg-gameplay-field' }, [
-        createElement('span', { text: label }),
-        input
-    ]);
-
-    return { field, input };
-};
-
-const createSelectField = ({ id, label, value, options }) => {
-    const input = createElement('select', {
-        id,
-        className: 'rpg-gameplay-line-input'
-    });
-    options.forEach((option) => {
-        input.appendChild(createElement('option', {
-            value: option.value,
-            text: option.label,
-            selected: option.value === value
-        }));
-    });
-
-    const field = createElement('label', { className: 'rpg-gameplay-field' }, [
-        createElement('span', { text: label }),
-        input
-    ]);
-
-    return { field, input };
-};
-
-const formatStatusTime = (iso) => {
-    if (!iso) return 'local state not saved yet';
-    const date = new Date(iso);
-    if (Number.isNaN(date.getTime())) return 'local state saved';
-
-    return `local state saved ${date.toLocaleTimeString([], {
-        hour: 'numeric',
-        minute: '2-digit'
-    })}`;
-};
-
-const buildClockText = (clock) => `${clock.progress}/${clock.segments}`;
-const DASH_VALUE = 'not set';
+import { createAssetAtlasController } from './rpg-wednesday-asset-atlas.js';
+import { createElement, createField, createShortcutToken } from './rpg-wednesday-dom.js';
+import {
+    RPG_SHORTCUT_ACTIONS,
+    RPG_SHORTCUT_SECTIONS,
+    createShortcutManager
+} from './rpg-wednesday-shortcuts.js';
+import {
+    CLOCK_SEGMENT_OPTIONS,
+    DASH_VALUE,
+    RPG_ROUTE_RE,
+    buildClockText,
+    buildSessionBrief,
+    clearStateAssetImages,
+    cloneDefaultState,
+    collectExportState,
+    createStorage,
+    formatClockSummary,
+    formatStatusTime,
+    getActiveActor,
+    getPressureClock,
+    makeId,
+    normalizeState,
+    persistImportedAssetImages,
+    previewText,
+    safeJsonParse
+} from './rpg-wednesday-state.js';
 
 const debounce = (fn, ms) => {
     let timer;
@@ -269,40 +33,6 @@ const debounce = (fn, ms) => {
         clearTimeout(timer);
         timer = setTimeout(() => fn(...args), ms);
     };
-};
-const CLOCK_SEGMENT_OPTIONS = [2, 4, 6, 8, 10, 12];
-
-const cleanLine = (value) => value.trim().replace(/\s+/g, ' ');
-
-const previewText = (value, fallback = DASH_VALUE, maxLength = 64) => {
-    const normalized = cleanLine(value || '');
-    if (!normalized) return fallback;
-    return normalized.length > maxLength ? `${normalized.slice(0, maxLength - 1)}…` : normalized;
-};
-
-const makeTimestamp = () => new Date().toISOString();
-
-const buildAssetImageKey = (assetId) => `rpg-wednesday:asset:${assetId}`;
-
-const splitTagList = (value) => (
-    String(value || '')
-        .split(',')
-        .map((part) => cleanLine(part))
-        .filter(Boolean)
-);
-
-const dataUrlToBlob = async (dataUrl) => {
-    const response = await fetch(dataUrl);
-    return response.blob();
-};
-
-const collectAssetImageData = async (asset) => {
-    if (!asset.imageKey) return null;
-    try {
-        return await getImageDataUrl(asset.imageKey);
-    } catch {
-        return null;
-    }
 };
 
 const buildRpgModeDescriptor = () => {
@@ -434,82 +164,6 @@ const ensureRpgModeWidget = () => {
     article.prepend(widget);
 };
 
-const getActiveActor = (state) => (
-    state.initiative.find((actor) => actor.id === state.activeInitiativeId) || null
-);
-
-const getClockRatio = (clock) => (
-    clock.segments > 0 ? clock.progress / clock.segments : 0
-);
-
-const getPressureClock = (state) => state.clocks.reduce((selected, clock) => {
-    if (!selected) return clock;
-
-    const selectedScore = selected.progress > 0 ? getClockRatio(selected) : -1;
-    const clockScore = clock.progress > 0 ? getClockRatio(clock) : -1;
-    return clockScore > selectedScore ? clock : selected;
-}, null);
-
-const formatClockSummary = (clock) => (
-    clock
-        ? `${previewText(clock.name, 'unnamed clock', 36)} ${buildClockText(clock)}`
-        : DASH_VALUE
-);
-
-const buildSessionBrief = (state) => {
-    const activeActor = getActiveActor(state);
-    const pressureClock = getPressureClock(state);
-    const lines = [
-        '# RPG Wednesday table brief',
-        `Updated: ${state.updatedAt || 'not saved yet'}`,
-        `Scene: ${previewText(state.scene)}`,
-        `Objective: ${previewText(state.objective)}`,
-        `Party: ${previewText(state.party)}`,
-        `Active turn: ${activeActor ? previewText(activeActor.name, 'unnamed actor') : DASH_VALUE}`,
-        `Pressure: ${formatClockSummary(pressureClock)}`
-    ];
-
-    if (state.initiative.length) {
-        lines.push('', 'Initiative:');
-        state.initiative.forEach((actor, index) => {
-            const marker = actor.id === state.activeInitiativeId ? '@' : '-';
-            lines.push(`${marker} ${index + 1}. ${previewText(actor.name, 'unnamed actor')} — ${previewText(actor.detail)}`);
-        });
-    }
-
-    if (state.clocks.length) {
-        lines.push('', 'Clocks:');
-        state.clocks.forEach((clock) => {
-            lines.push(`- ${formatClockSummary(clock)}`);
-        });
-    }
-
-    if (state.assets.length) {
-        lines.push('', 'Asset cards:');
-        state.assets.forEach((asset) => {
-            const timeline = cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE;
-            const namespace = cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE;
-            const marker = asset.collected ? '*' : '-';
-            lines.push(`${marker} ${previewText(asset.title, 'asset card')} [${asset.kind}] — ${timeline} / ${namespace}`);
-        });
-    }
-
-    if (cleanLine(state.characterBeat)) {
-        lines.push('', 'Character beat:', state.characterBeat.trim());
-    }
-
-    if (cleanLine(state.canonCandidates)) {
-        lines.push('', 'Canon candidates:', state.canonCandidates.trim());
-    }
-
-    if (cleanLine(state.seeds)) {
-        lines.push('', 'Session recap seeds:', state.seeds.trim());
-    }
-
-    lines.push('', 'Private scratch notes are not included in this brief.');
-    return lines.join('\n');
-};
-
 const downloadText = (filename, text) => {
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -551,7 +205,7 @@ export const initRpgWednesday = () => {
     ensureRpgModeWidget();
 
     const section = document.querySelector('[data-rpg-gameplay-kit]');
-    if (!section || section.dataset.rpgHydrated === 'true') return { storageKey: STORAGE_KEY };
+    if (!section || section.dataset.rpgHydrated === 'true') return null;
 
     const storage = createStorage();
     let state = storage.read();
@@ -592,6 +246,24 @@ export const initRpgWednesday = () => {
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' })
     ]);
 
+    const shortcutGroups = createElement('div', {
+        className: 'rpg-gameplay-shortcuts',
+        'aria-label': 'Keyboard shortcuts'
+    }, [
+        createElement('div', { className: 'rpg-gameplay-shortcuts__group' }, [
+            createElement('strong', { text: 'Jump' }),
+            createElement('div', { className: 'rpg-shortcut-row' }, RPG_SHORTCUT_SECTIONS.map((shortcut) => (
+                createShortcutToken(shortcut)
+            )))
+        ]),
+        createElement('div', { className: 'rpg-gameplay-shortcuts__group' }, [
+            createElement('strong', { text: 'Actions' }),
+            createElement('div', { className: 'rpg-shortcut-row' }, RPG_SHORTCUT_ACTIONS.map((shortcut) => (
+                createShortcutToken(shortcut)
+            )))
+        ])
+    ]);
+
     const { field: sceneField, input: sceneInput } = createField({
         id: 'rpg-scene',
         label: 'Current scene',
@@ -599,7 +271,6 @@ export const initRpgWednesday = () => {
         rows: 2,
         placeholder: 'Where are we right now?'
     });
-
     const { field: objectiveField, input: objectiveInput } = createField({
         id: 'rpg-objective',
         label: 'Immediate objective',
@@ -607,7 +278,6 @@ export const initRpgWednesday = () => {
         rows: 2,
         placeholder: 'What is the table trying to resolve next?'
     });
-
     const { field: partyField, input: partyInput } = createField({
         id: 'rpg-party',
         label: 'Active party',
@@ -615,7 +285,6 @@ export const initRpgWednesday = () => {
         rows: 3,
         placeholder: 'PCs, companions, or players present tonight'
     });
-
     const { field: notesField, input: notesInput } = createField({
         id: 'rpg-notes',
         label: 'Scratch notes',
@@ -623,7 +292,6 @@ export const initRpgWednesday = () => {
         rows: 5,
         placeholder: 'Private notes, rulings, loose details, reminders'
     });
-
     const { field: characterBeatField, input: characterBeatInput } = createField({
         id: 'rpg-character-beat',
         label: 'Character beat / fallout',
@@ -631,7 +299,6 @@ export const initRpgWednesday = () => {
         rows: 4,
         placeholder: 'What changed in a person? What now feels heavier, stranger, or newly possible?'
     });
-
     const { field: canonCandidatesField, input: canonCandidatesInput } = createField({
         id: 'rpg-canon-candidates',
         label: 'Canon candidates',
@@ -639,86 +306,12 @@ export const initRpgWednesday = () => {
         rows: 4,
         placeholder: 'Names, places, items, rules, or promises worth promoting into cast or world memory'
     });
-
     const { field: seedsField, input: seedsInput } = createField({
         id: 'rpg-seeds',
         label: 'Session recap seeds',
         value: state.seeds,
         rows: 5,
         placeholder: 'Moments worth turning into a public recap later'
-    });
-
-    const { field: assetTitleField, input: assetTitleInput } = createLineField({
-        id: 'rpg-asset-title',
-        label: 'Asset title',
-        value: '',
-        placeholder: 'Sunken observatory, storm coin, velvet moss texture'
-    });
-    const { field: assetKindField, input: assetKindInput } = createSelectField({
-        id: 'rpg-asset-kind',
-        label: 'Card kind',
-        value: 'scene',
-        options: ASSET_KIND_OPTIONS
-    });
-    const { field: assetNamespaceField, input: assetNamespaceInput } = createLineField({
-        id: 'rpg-asset-namespace',
-        label: 'Namespace',
-        value: DEFAULT_ASSET_NAMESPACE,
-        placeholder: 'table, omen, faction, texture-pack'
-    });
-    const { field: assetTimelineField, input: assetTimelineInput } = createLineField({
-        id: 'rpg-asset-timeline',
-        label: 'Timeline',
-        value: DEFAULT_ASSET_TIMELINE,
-        placeholder: 'current, next-session, cold-open, act-two'
-    });
-    const { field: assetContextField, input: assetContextInput } = createLineField({
-        id: 'rpg-asset-context',
-        label: 'Context',
-        value: '',
-        placeholder: 'Discord riff, live prompt, NPC reveal, texture pull'
-    });
-    const { field: assetTagsField, input: assetTagsInput } = createLineField({
-        id: 'rpg-asset-tags',
-        label: 'Tags',
-        value: '',
-        placeholder: 'glow, moss, brass, flooded, relic'
-    });
-    const { field: assetPresetField, input: assetPresetInput } = createSelectField({
-        id: 'rpg-asset-preset',
-        label: 'Frame preset',
-        value: 'wide',
-        options: ASSET_PRESET_OPTIONS
-    });
-    const { field: assetImageUrlField, input: assetImageUrlInput } = createLineField({
-        id: 'rpg-asset-image-url',
-        label: 'Image URL',
-        value: '',
-        placeholder: 'https://...'
-    });
-    const assetImageUpload = createElement('input', {
-        id: 'rpg-asset-image-upload',
-        className: 'rpg-gameplay-line-input',
-        type: 'file',
-        accept: 'image/*'
-    });
-    const assetImageUploadField = createElement('label', { className: 'rpg-gameplay-field' }, [
-        createElement('span', { text: 'Local image' }),
-        assetImageUpload
-    ]);
-    const { field: assetPromptField, input: assetPromptInput } = createField({
-        id: 'rpg-asset-prompt',
-        label: 'Prompt / interpretation note',
-        value: '',
-        rows: 4,
-        placeholder: 'What should the image or card preserve when it becomes art later?'
-    });
-    const { field: assetNotesField, input: assetNotesInput } = createField({
-        id: 'rpg-asset-notes',
-        label: 'Card notes',
-        value: '',
-        rows: 4,
-        placeholder: 'Table note, provenance, why this belongs in the timeline'
     });
 
     const initiativeList = createElement('div', {
@@ -731,11 +324,6 @@ export const initRpgWednesday = () => {
         role: 'list',
         'aria-label': 'Gameplay clocks'
     });
-    const assetList = createElement('div', {
-        className: 'rpg-asset-board',
-        role: 'list',
-        'aria-label': 'RPG asset timeline cards'
-    });
     const status = createElement('p', {
         className: 'rpg-gameplay-status',
         role: 'status',
@@ -747,6 +335,21 @@ export const initRpgWednesday = () => {
         role: 'list',
         'aria-label': 'Current table summary'
     });
+
+    let statusTimer = 0;
+    const syncSavedStatus = () => {
+        status.textContent = storage.available
+            ? formatStatusTime(state.updatedAt)
+            : 'local storage unavailable; changes are only in memory';
+    };
+    const setTransientStatus = (message) => {
+        clearTimeout(statusTimer);
+        status.textContent = message;
+        statusTimer = window.setTimeout(() => {
+            syncSavedStatus();
+        }, 2000);
+    };
+
     const createDashboardStat = (label) => {
         const value = createElement('strong', {
             className: 'rpg-gameplay-stat-value',
@@ -771,311 +374,8 @@ export const initRpgWednesday = () => {
         turn: createDashboardStat('Turn'),
         pressure: createDashboardStat('Pressure')
     };
+
     let briefOutput = null;
-    let assetNamespaceFilter = 'all';
-    let assetCollectedOnly = false;
-    let editingAssetId = null;
-    let assetRenderToken = 0;
-    const assetComposerStatus = createElement('p', {
-        className: 'frame-note rpg-asset-composer-status',
-        text: 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.'
-    });
-    const assetNamespaceFilterInput = createElement('select', {
-        id: 'rpg-asset-namespace-filter',
-        className: 'rpg-gameplay-line-input'
-    });
-    const assetNamespaceFilterField = createElement('label', { className: 'rpg-gameplay-field' }, [
-        createElement('span', { text: 'Focus namespace' }),
-        assetNamespaceFilterInput
-    ]);
-    const assetCollectedToggle = createElement('button', {
-        className: 'operator-chip',
-        type: 'button',
-        text: '~ collected only'
-    });
-    const assetBoardStatus = createElement('p', {
-        className: 'frame-note rpg-asset-board-status',
-        text: 'No asset cards yet. Start with one scene or one image so the live board has something stable to return to.'
-    });
-    const assetSaveButton = createElement('button', {
-        className: 'operator-chip',
-        type: 'button',
-        text: '@ add card'
-    });
-    const assetResetButton = createElement('button', {
-        className: 'operator-chip',
-        type: 'button',
-        text: '! clear draft'
-    });
-
-    const syncNamespaceFilterOptions = () => {
-        const previous = assetNamespaceFilter;
-        const namespaces = Array.from(new Set(
-            state.assets
-                .map((asset) => cleanLine(asset.namespace || ''))
-                .filter(Boolean)
-        )).sort((left, right) => left.localeCompare(right));
-
-        assetNamespaceFilterInput.replaceChildren(
-            createElement('option', { value: 'all', text: 'all namespaces', selected: previous === 'all' }),
-            ...namespaces.map((namespace) => createElement('option', {
-                value: namespace,
-                text: namespace,
-                selected: previous === namespace
-            }))
-        );
-
-        if (previous !== 'all' && !namespaces.includes(previous)) {
-            assetNamespaceFilter = 'all';
-            assetNamespaceFilterInput.value = 'all';
-        }
-    };
-
-    const updateAssetComposerButtons = () => {
-        assetSaveButton.textContent = editingAssetId ? '~ update card' : '@ add card';
-        assetResetButton.textContent = editingAssetId ? '! cancel edit' : '! clear draft';
-        assetCollectedToggle.textContent = assetCollectedOnly ? '~ showing collected' : '~ collected only';
-    };
-
-    const resetAssetComposer = ({ preserveFlow = false } = {}) => {
-        editingAssetId = null;
-        assetTitleInput.value = '';
-        assetTagsInput.value = '';
-        assetImageUrlInput.value = '';
-        assetPromptInput.value = '';
-        assetNotesInput.value = '';
-        assetImageUpload.value = '';
-
-        if (!preserveFlow) {
-            assetKindInput.value = 'scene';
-            assetNamespaceInput.value = DEFAULT_ASSET_NAMESPACE;
-            assetTimelineInput.value = DEFAULT_ASSET_TIMELINE;
-            assetContextInput.value = '';
-            assetPresetInput.value = 'wide';
-        }
-
-        assetComposerStatus.textContent = preserveFlow
-            ? 'Card saved. Namespace, timeline, and preset stayed in place so you can keep adding during the session.'
-            : 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.';
-        updateAssetComposerButtons();
-    };
-
-    const loadAssetIntoComposer = (asset) => {
-        editingAssetId = asset.id;
-        assetTitleInput.value = asset.title;
-        assetKindInput.value = asset.kind;
-        assetNamespaceInput.value = asset.namespace;
-        assetTimelineInput.value = asset.timeline;
-        assetContextInput.value = asset.context;
-        assetTagsInput.value = asset.tags;
-        assetPresetInput.value = asset.preset;
-        assetImageUrlInput.value = asset.imageUrl;
-        assetPromptInput.value = asset.prompt;
-        assetNotesInput.value = asset.notes;
-        assetImageUpload.value = '';
-        assetComposerStatus.textContent = `Editing ${previewText(asset.title, 'asset card', 48)}. Leave the image fields alone if the current image should stay attached.`;
-        updateAssetComposerButtons();
-        assetTitleInput.focus();
-    };
-
-    const moveAsset = (assetId, delta) => {
-        const index = state.assets.findIndex((asset) => asset.id === assetId);
-        const target = index + delta;
-        if (index < 0 || target < 0 || target >= state.assets.length) return;
-        const next = [...state.assets];
-        const [asset] = next.splice(index, 1);
-        next.splice(target, 0, asset);
-        state.assets = next;
-        save(delta < 0 ? 'moved asset card earlier' : 'moved asset card later');
-        renderAssets();
-    };
-
-    const removeAsset = async (assetId) => {
-        const asset = state.assets.find((item) => item.id === assetId);
-        if (!asset) return;
-        if (asset.imageKey) {
-            try {
-                await deleteImage(asset.imageKey);
-            } catch {
-                // Ignore image-store cleanup failures; metadata removal still matters.
-            }
-        }
-        state.assets = state.assets.filter((item) => item.id !== assetId);
-        if (editingAssetId === assetId) resetAssetComposer();
-        save('removed asset atlas card');
-        renderAssets();
-    };
-
-    const buildAssetCard = async (asset, index) => {
-        const imageSrc = asset.imageKey
-            ? await collectAssetImageData(asset)
-            : cleanLine(asset.imageUrl || '');
-        const card = createElement('article', {
-            className: `rpg-asset-card${asset.collected ? ' is-collected' : ''}${asset.collapsed ? ' is-collapsed' : ''}`,
-            role: 'listitem',
-            'data-rpg-asset-kind': asset.kind,
-            'data-rpg-asset-preset': asset.preset,
-            'data-rpg-asset-image-state': imageSrc ? 'present' : 'empty'
-        });
-        const meta = createElement('div', { className: 'rpg-asset-card__meta' }, [
-            createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
-            createElement('span', { className: 'spec-pill', text: cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE }),
-            createElement('span', { className: 'spec-pill', text: cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE })
-        ]);
-        const controls = createElement('div', { className: 'rpg-asset-card__controls' }, [
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: asset.collapsed ? '@ expand' : '@ collapse'
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: asset.collected ? '* collected' : '* collect'
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: '~ edit'
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: 'up'
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: 'down'
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: 'remove'
-            })
-        ]);
-        const [collapseButton, collectButton, editButton, upButton, downButton, removeButton] = Array.from(controls.children);
-        const heading = createElement('div', { className: 'rpg-asset-card__heading' }, [
-            createElement('strong', { text: asset.title }),
-            createElement('span', {
-                className: 'rpg-asset-card__context',
-                text: previewText(asset.context, 'no context set', 72)
-            })
-        ]);
-        const media = createElement('div', { className: 'rpg-asset-card__media' }, [
-            imageSrc
-                ? createElement('img', {
-                    src: imageSrc,
-                    alt: `${asset.title} reference card`,
-                    loading: 'lazy',
-                    decoding: 'async'
-                })
-                : createElement('div', { className: 'rpg-asset-card__placeholder' }, [
-                    createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
-                    createElement('strong', { text: previewText(asset.title, 'asset card', 48) }),
-                    createElement('span', { text: previewText(asset.context, 'attach an image or keep this as a text-only card', 80) })
-                ])
-        ]);
-        const body = createElement('div', { className: 'rpg-asset-card__body' }, []);
-        body.hidden = asset.collapsed;
-        const tagList = splitTagList(asset.tags);
-        if (tagList.length) {
-            body.appendChild(createElement('div', { className: 'spec-strip rpg-asset-card__tags' }, tagList.map((tag) => (
-                createElement('span', { className: 'spec-pill', text: tag })
-            ))));
-        }
-        if (cleanLine(asset.prompt)) {
-            body.appendChild(createElement('p', {
-                className: 'rpg-asset-card__prompt',
-                text: asset.prompt.trim()
-            }));
-        }
-        if (cleanLine(asset.notes)) {
-            body.appendChild(createElement('p', {
-                className: 'frame-note rpg-asset-card__notes',
-                text: asset.notes.trim()
-            }));
-        }
-        if (!tagList.length && !cleanLine(asset.prompt) && !cleanLine(asset.notes)) {
-            body.appendChild(createElement('p', {
-                className: 'frame-note',
-                text: 'No tags or notes yet. Keep the card light now, then expand it when the riff becomes durable.'
-            }));
-        }
-
-        collapseButton.addEventListener('click', () => {
-            asset.collapsed = !asset.collapsed;
-            save(asset.collapsed ? 'collapsed asset card' : 'expanded asset card');
-            renderAssets();
-        });
-        collectButton.addEventListener('click', () => {
-            asset.collected = !asset.collected;
-            save(asset.collected ? 'collected asset card' : 'uncollected asset card');
-            renderAssets();
-        });
-        editButton.addEventListener('click', () => loadAssetIntoComposer(asset));
-        upButton.addEventListener('click', () => moveAsset(asset.id, -1));
-        downButton.addEventListener('click', () => moveAsset(asset.id, 1));
-        removeButton.addEventListener('click', () => {
-            removeAsset(asset.id);
-        });
-
-        upButton.disabled = index === 0;
-        downButton.disabled = index === state.assets.length - 1;
-
-        card.append(
-            createElement('div', { className: 'rpg-asset-card__topline' }, [meta, controls]),
-            heading,
-            media,
-            body
-        );
-
-        return card;
-    };
-
-    const renderAssets = async () => {
-        const renderToken = ++assetRenderToken;
-        syncNamespaceFilterOptions();
-        assetList.replaceChildren();
-
-        const filteredAssets = state.assets.filter((asset) => {
-            const namespace = cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE;
-            const namespaceMatch = assetNamespaceFilter === 'all' || namespace === assetNamespaceFilter;
-            const collectedMatch = !assetCollectedOnly || asset.collected;
-            return namespaceMatch && collectedMatch;
-        });
-
-        if (!filteredAssets.length) {
-            assetList.appendChild(assetBoardStatus);
-            return;
-        }
-
-        const grouped = new Map();
-        filteredAssets.forEach((asset) => {
-            const timeline = cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE;
-            if (!grouped.has(timeline)) grouped.set(timeline, []);
-            grouped.get(timeline).push({ asset });
-        });
-
-        const timelineSections = await Promise.all(Array.from(grouped.entries()).map(async ([timeline, assets]) => {
-            const cards = await Promise.all(assets.map(async ({ asset }) => (
-                buildAssetCard(asset, state.assets.findIndex((item) => item.id === asset.id))
-            )));
-            return createElement('section', {
-                className: 'rpg-asset-timeline',
-                'data-rpg-asset-timeline': timeline
-            }, [
-                createElement('div', { className: 'rpg-asset-timeline__heading' }, [
-                    createElement('h4', { text: timeline }),
-                    createElement('span', { className: 'frame-card-sigil', text: `${assets.length} card${assets.length === 1 ? '' : 's'}` })
-                ]),
-                createElement('div', { className: 'rpg-asset-timeline__cards' }, cards)
-            ]);
-        }));
-
-        if (renderToken !== assetRenderToken) return;
-        assetList.replaceChildren(...timelineSections);
-    };
 
     const refreshDerivedSurfaces = () => {
         const activeActor = getActiveActor(state);
@@ -1087,7 +387,7 @@ export const initRpgWednesday = () => {
         dashboardValues.clocks.textContent = state.clocks.length ? String(state.clocks.length) : DASH_VALUE;
         dashboardValues.assets.textContent = state.assets.length ? String(state.assets.length) : DASH_VALUE;
         dashboardValues.namespaces.textContent = state.assets.length
-            ? String(new Set(state.assets.map((asset) => cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE)).size)
+            ? String(new Set(state.assets.map((asset) => asset.namespace || 'table')).size)
             : DASH_VALUE;
         dashboardValues.turn.textContent = activeActor
             ? previewText(activeActor.name, 'unnamed actor')
@@ -1102,9 +402,7 @@ export const initRpgWednesday = () => {
     const save = (description = 'saved local gameplay state') => {
         state.updatedAt = new Date().toISOString();
         if (storage.available) storage.write(state);
-        status.textContent = storage.available
-            ? formatStatusTime(state.updatedAt)
-            : 'local storage unavailable; changes are only in memory';
+        syncSavedStatus();
         refreshDerivedSurfaces();
         emitSpwAction('@local_gameplay.save', description);
     };
@@ -1119,95 +417,9 @@ export const initRpgWednesday = () => {
         state.seeds = seedsInput.value;
     };
 
-    const collectExportState = async () => {
-        const assets = await Promise.all(state.assets.map(async (asset) => {
-            const exported = { ...asset };
-            const imageDataUrl = await collectAssetImageData(asset);
-            if (imageDataUrl) exported.imageDataUrl = imageDataUrl;
-            return exported;
-        }));
-
-        return {
-            ...state,
-            assets
-        };
-    };
-
-    const saveAssetComposerState = async () => {
-        const title = cleanLine(assetTitleInput.value || '');
-        if (!title) {
-            assetComposerStatus.textContent = 'Asset cards need a title so the live board stays scannable.';
-            assetTitleInput.focus();
-            return;
-        }
-
-        const existing = editingAssetId
-            ? state.assets.find((asset) => asset.id === editingAssetId) || null
-            : null;
-        const asset = existing ? { ...existing } : normalizeAsset({ id: makeId() });
-        const hasNewFile = Boolean(assetImageUpload.files?.[0]);
-        const nextImageUrl = cleanLine(assetImageUrlInput.value || '');
-
-        asset.title = title;
-        asset.kind = normalizeAssetKind(assetKindInput.value);
-        asset.namespace = cleanLine(assetNamespaceInput.value || '') || DEFAULT_ASSET_NAMESPACE;
-        asset.timeline = cleanLine(assetTimelineInput.value || '') || DEFAULT_ASSET_TIMELINE;
-        asset.context = cleanLine(assetContextInput.value || '');
-        asset.tags = assetTagsInput.value;
-        asset.prompt = assetPromptInput.value;
-        asset.notes = assetNotesInput.value;
-        asset.preset = normalizeAssetPreset(assetPresetInput.value);
-        asset.createdAt ||= makeTimestamp();
-        asset.updatedAt = makeTimestamp();
-
-        if (hasNewFile) {
-            const imageKey = buildAssetImageKey(asset.id);
-            await storeImage(imageKey, assetImageUpload.files[0]);
-            asset.imageKey = imageKey;
-            asset.imageUrl = '';
-        } else if (nextImageUrl) {
-            if (asset.imageKey) {
-                try {
-                    await deleteImage(asset.imageKey);
-                } catch {
-                    // Prefer new metadata over stale local image state.
-                }
-            }
-            asset.imageKey = '';
-            asset.imageUrl = nextImageUrl;
-        }
-
-        if (existing) {
-            state.assets = state.assets.map((item) => (
-                item.id === asset.id ? asset : item
-            ));
-            save('updated asset atlas card');
-        } else {
-            state.assets.push(asset);
-            save('added asset atlas card');
-        }
-
-        await renderAssets();
-        resetAssetComposer({ preserveFlow: true });
-    };
-
-    assetNamespaceFilterInput.addEventListener('change', () => {
-        assetNamespaceFilter = assetNamespaceFilterInput.value || 'all';
-        renderAssets();
-    });
-
-    assetCollectedToggle.addEventListener('click', () => {
-        assetCollectedOnly = !assetCollectedOnly;
-        updateAssetComposerButtons();
-        renderAssets();
-    });
-
-    assetSaveButton.addEventListener('click', () => {
-        saveAssetComposerState();
-    });
-
-    assetResetButton.addEventListener('click', () => {
-        resetAssetComposer();
+    const assetAtlas = createAssetAtlasController({
+        getState: () => state,
+        save
     });
 
     const renderInitiative = () => {
@@ -1306,6 +518,7 @@ export const initRpgWednesday = () => {
                 title: 'Segments',
                 'aria-label': `Segment count for ${clock.name || 'clock'}`
             });
+
             CLOCK_SEGMENT_OPTIONS.forEach((option) => {
                 segments.appendChild(createElement('option', {
                     value: String(option),
@@ -1320,6 +533,7 @@ export const initRpgWednesday = () => {
                     selected: true
                 }));
             }
+
             const meter = createElement('progress', {
                 max: clock.segments,
                 value: clock.progress,
@@ -1401,6 +615,7 @@ export const initRpgWednesday = () => {
         state.activeInitiativeId = next.id;
         save('advanced initiative');
         renderInitiative();
+        setTransientStatus(`Turn moved to ${previewText(next.name, 'unnamed actor')}`);
     };
 
     const addClock = () => {
@@ -1424,86 +639,80 @@ export const initRpgWednesday = () => {
         });
     });
 
+    const addActorButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '@ add actor'
+    });
+    addActorButton.addEventListener('click', addActor);
+
+    const nextTurnButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '@ next turn'
+    });
+    nextTurnButton.addEventListener('click', nextTurn);
+
     const initiativePanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel',
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--initiative',
         id: 'rpg-kit-initiative',
         'data-spw-feature': 'rpg-kit-initiative'
     }, [
         createElement('h3', { text: 'Initiative' }),
         createElement('div', { className: 'rpg-gameplay-actions' }, [
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: '@ add actor',
-                onclick: addActor
-            }),
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: '@ next turn',
-                onclick: nextTurn
-            })
+            addActorButton,
+            nextTurnButton
         ]),
         initiativeList
     ]);
 
+    const addClockButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '@ add clock'
+    });
+    addClockButton.addEventListener('click', addClock);
+
     const clocksPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel',
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--clocks',
         id: 'rpg-kit-clocks',
         'data-spw-feature': 'rpg-kit-clocks'
     }, [
         createElement('h3', { text: 'Clocks' }),
         createElement('div', { className: 'rpg-gameplay-actions' }, [
-            createElement('button', {
-                className: 'operator-chip',
-                type: 'button',
-                text: '@ add clock',
-                onclick: addClock
-            })
+            addClockButton
         ]),
         clocksList
     ]);
 
-    const assetPanel = createElement('div', {
-        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--assets',
-        id: 'rpg-kit-assets',
-        'data-spw-feature': 'rpg-kit-assets'
+    const scenePanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--scene',
+        id: 'rpg-kit-scene',
+        'data-spw-feature': 'rpg-kit-scene'
     }, [
-        createElement('h3', { text: 'Asset Atlas' }),
+        createElement('h3', { text: 'Scene Register' }),
+        createElement('div', { className: 'rpg-gameplay-stack' }, [
+            sceneField,
+            objectiveField,
+            partyField
+        ])
+    ]);
+
+    const notesPanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--notes',
+        id: 'rpg-kit-notes',
+        'data-spw-feature': 'rpg-kit-notes'
+    }, [
+        createElement('h3', { text: 'Notes and handoff' }),
         createElement('p', {
             className: 'frame-note',
-            text: 'Use this during the session to stage scenes, textures, items, threats, and Midjourney riffs in a timeline. Cards stay local, can collapse or collect, and are arranged to be easy to screenshot later.'
+            text: 'Scratch notes stay private. Character beats and canon candidates are the lanes most likely to move into cast, world, or session memory.'
         }),
-        createElement('div', { className: 'rpg-asset-atlas' }, [
-            createElement('section', { className: 'rpg-asset-atlas__composer' }, [
-                createElement('div', { className: 'rpg-asset-atlas__field-grid' }, [
-                    assetTitleField,
-                    assetKindField,
-                    assetNamespaceField,
-                    assetTimelineField,
-                    assetContextField,
-                    assetTagsField,
-                    assetPresetField,
-                    assetImageUrlField,
-                    assetImageUploadField
-                ]),
-                assetPromptField,
-                assetNotesField,
-                createElement('div', { className: 'rpg-gameplay-actions' }, [
-                    assetSaveButton,
-                    assetResetButton
-                ]),
-                assetComposerStatus
-            ]),
-            createElement('section', { className: 'rpg-asset-atlas__board-panel' }, [
-                createElement('div', { className: 'rpg-asset-atlas__toolbar' }, [
-                    assetNamespaceFilterField,
-                    createElement('div', { className: 'rpg-gameplay-actions' }, [
-                        assetCollectedToggle
-                    ])
-                ]),
-                assetList
-            ])
+        createElement('div', { className: 'rpg-gameplay-notes-stack' }, [
+            notesField,
+            characterBeatField,
+            canonCandidatesField,
+            seedsField
         ])
     ]);
 
@@ -1513,23 +722,29 @@ export const initRpgWednesday = () => {
         readOnly: true,
         'aria-label': 'Generated RPG Wednesday table brief'
     });
+
     const copyBriefButton = createElement('button', {
         className: 'operator-chip',
         type: 'button',
         text: '~ copy brief'
     });
-    copyBriefButton.addEventListener('click', async () => {
+    const copyBrief = async () => {
         syncTextState();
         refreshDerivedSurfaces();
         try {
             await copyText(briefOutput.value);
-            status.textContent = 'session brief copied';
-            copyBriefButton.textContent = '~ copied ✓';
-            setTimeout(() => { copyBriefButton.textContent = '~ copy brief'; }, 1800);
+            setTransientStatus('session brief copied');
+            copyBriefButton.textContent = '~ copied';
+            window.setTimeout(() => {
+                copyBriefButton.textContent = '~ copy brief';
+            }, 1800);
             emitSpwAction('~local_gameplay.copy_brief', 'copied generated session brief');
         } catch {
-            status.textContent = 'copy failed; select the table brief manually';
+            setTransientStatus('copy failed; select the table brief manually');
         }
+    };
+    copyBriefButton.addEventListener('click', () => {
+        void copyBrief();
     });
 
     const briefPanel = createElement('div', {
@@ -1570,8 +785,9 @@ export const initRpgWednesday = () => {
     exportButton.addEventListener('click', async () => {
         syncTextState();
         save('exported local gameplay state');
-        const exportState = await collectExportState();
+        const exportState = await collectExportState(state);
         downloadText('rpg-wednesday-local-state.json', JSON.stringify(exportState, null, 2));
+        setTransientStatus('exported local gameplay state');
     });
 
     importInput.addEventListener('change', async () => {
@@ -1579,35 +795,14 @@ export const initRpgWednesday = () => {
         if (!file) return;
         const parsed = safeJsonParse(await file.text());
         if (!parsed || typeof parsed !== 'object') {
-            status.textContent = 'import failed: expected a JSON object';
+            setTransientStatus('import failed: expected a JSON object');
             importInput.value = '';
             return;
         }
-        await Promise.all(state.assets.map(async (asset) => {
-            if (!asset.imageKey) return;
-            try {
-                await deleteImage(asset.imageKey);
-            } catch {
-                // Ignore cleanup failure before import; new state still loads.
-            }
-        }));
+
+        await clearStateAssetImages(state);
         const next = normalizeState(parsed);
-        const importedAssets = normalizeList(parsed.assets);
-        await Promise.all(importedAssets.map(async (asset) => {
-            if (typeof asset.imageDataUrl !== 'string' || !asset.imageDataUrl.startsWith('data:')) return;
-            const assetId = typeof asset.id === 'string' ? asset.id : makeId();
-            const imageKey = buildAssetImageKey(assetId);
-            try {
-                await storeImage(imageKey, await dataUrlToBlob(asset.imageDataUrl));
-                const nextAsset = next.assets.find((item) => item.id === assetId);
-                if (nextAsset) {
-                    nextAsset.imageKey = imageKey;
-                    nextAsset.imageUrl = '';
-                }
-            } catch {
-                // Keep imported metadata even if the image blob fails to persist.
-            }
-        }));
+        await persistImportedAssetImages(parsed, next);
         state = next;
         sceneInput.value = state.scene;
         objectiveInput.value = state.objective;
@@ -1619,22 +814,17 @@ export const initRpgWednesday = () => {
         save('imported local gameplay state');
         renderInitiative();
         renderClocks();
-        resetAssetComposer();
-        await renderAssets();
+        assetAtlas.resetComposer();
+        await assetAtlas.render();
         importInput.value = '';
+        setTransientStatus('imported local gameplay state');
     });
 
     clearButton.addEventListener('click', async () => {
         const confirmed = window.confirm('Clear RPG Wednesday local gameplay state from this browser? Export first if you want a backup.');
         if (!confirmed) return;
-        await Promise.all(state.assets.map(async (asset) => {
-            if (!asset.imageKey) return;
-            try {
-                await deleteImage(asset.imageKey);
-            } catch {
-                // Ignore per-image cleanup failure during a full reset.
-            }
-        }));
+
+        await clearStateAssetImages(state);
         storage.clear();
         state = cloneDefaultState();
         sceneInput.value = '';
@@ -1644,12 +834,12 @@ export const initRpgWednesday = () => {
         characterBeatInput.value = '';
         canonCandidatesInput.value = '';
         seedsInput.value = '';
-        status.textContent = 'local gameplay state cleared';
         renderInitiative();
         renderClocks();
-        resetAssetComposer();
-        await renderAssets();
+        assetAtlas.resetComposer();
+        await assetAtlas.render();
         refreshDerivedSurfaces();
+        setTransientStatus('local gameplay state cleared');
         emitSpwAction('!local_gameplay.clear', 'cleared local gameplay state');
     });
 
@@ -1663,47 +853,60 @@ export const initRpgWednesday = () => {
         heading,
         privacy,
         jumpbar,
+        shortcutGroups,
         dashboard,
         createElement('div', { className: 'rpg-gameplay-grid' }, [
-            createElement('div', {
-                className: 'frame-panel rpg-gameplay-panel',
-                id: 'rpg-kit-scene',
-                'data-spw-feature': 'rpg-kit-scene'
-            }, [
-                createElement('h3', { text: 'Scene Register' }),
-                sceneField,
-                objectiveField,
-                partyField
-            ]),
+            scenePanel,
             initiativePanel,
             clocksPanel,
-            assetPanel,
-            createElement('div', {
-                className: 'frame-panel rpg-gameplay-panel',
-                id: 'rpg-kit-notes',
-                'data-spw-feature': 'rpg-kit-notes'
-            }, [
-                createElement('h3', { text: 'Notes and handoff' }),
-                createElement('p', {
-                    className: 'frame-note',
-                    text: 'Scratch notes stay private. Character beats and canon candidates are the lanes most likely to move into cast, world, or session memory.'
-                }),
-                notesField,
-                characterBeatField,
-                canonCandidatesField,
-                seedsField
-            ]),
+            assetAtlas.panel,
+            notesPanel,
             briefPanel
         ]),
         controls,
         status
     );
 
+    const shortcutManager = createShortcutManager({
+        scope: document,
+        focusMap: {
+            scene: () => sceneInput.focus(),
+            initiative: () => {
+                const actorInput = initiativeList.querySelector('[data-rpg-field="actor-name"]');
+                if (actorInput instanceof HTMLElement) {
+                    actorInput.focus();
+                    return;
+                }
+                addActorButton.focus();
+            },
+            clocks: () => {
+                const clockInput = clocksList.querySelector('[data-rpg-field="clock-name"]');
+                if (clockInput instanceof HTMLElement) {
+                    clockInput.focus();
+                    return;
+                }
+                addClockButton.focus();
+            },
+            assets: () => assetAtlas.focusComposer(),
+            notes: () => notesInput.focus(),
+            brief: () => briefOutput.focus()
+        },
+        actions: {
+            addActor,
+            addClock,
+            nextTurn,
+            copyBrief: () => { void copyBrief(); },
+            cancelAssetEdit: () => assetAtlas.cancelEdit()
+        },
+        onStatus: setTransientStatus
+    });
+
     renderInitiative();
     renderClocks();
-    renderAssets();
-    updateAssetComposerButtons();
+    void assetAtlas.render();
     refreshDerivedSurfaces();
 
-    return { storageKey: STORAGE_KEY };
+    return {
+        destroy: () => shortcutManager.destroy()
+    };
 };
