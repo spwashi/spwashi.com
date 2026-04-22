@@ -1024,6 +1024,12 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     background-color 180ms ease;
 }
 
+:where(.site-header, body > header) .spw-spell-path {
+  align-self: start;
+  justify-self: stretch;
+  margin-block: 0;
+}
+
 .spw-spell-path[data-spw-breadcrumb-reversible="true"] {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
 }
@@ -1267,6 +1273,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 }
 
 @media (max-width: 720px) {
+  :where(.site-header, body > header) .spw-spell-path {
+    width: 100%;
+    margin-block: 0;
+  }
+
   .spw-spell-path {
     gap: 0.2rem;
     margin-block: 0.16rem 0.22rem;

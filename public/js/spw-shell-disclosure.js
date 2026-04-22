@@ -3,6 +3,7 @@ import { emitSpwAction } from './spw-shared.js';
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',
   STATE: 'spw:shell-menu-state',
+  TRACE: 'spw:header-trace-change',
 });
 
 const MODES = Object.freeze({
@@ -605,6 +606,11 @@ export function initSpwShellDisclosure(options = {}) {
     syncDisclosure(header, nav, navList, toggle, state, 'settings');
   };
 
+  const handleTraceChange = () => {
+    syncScrollState(header, state);
+    syncDisclosure(header, nav, navList, toggle, state, 'trace');
+  };
+
   const handleMenuIntent = (event) => {
     const detail = event.detail || {};
     const source = detail.source || 'intent';
@@ -659,6 +665,7 @@ export function initSpwShellDisclosure(options = {}) {
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('keydown', handleDocumentKeydown);
   document.addEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
+  document.addEventListener(EVENT_NAMES.TRACE, handleTraceChange);
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
   window.addEventListener('orientationchange', handleResize);
@@ -685,6 +692,7 @@ export function initSpwShellDisclosure(options = {}) {
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('keydown', handleDocumentKeydown);
       document.removeEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
+      document.removeEventListener(EVENT_NAMES.TRACE, handleTraceChange);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);

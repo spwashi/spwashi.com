@@ -18,6 +18,7 @@ const MEMO_TIMEOUT_MS = 2600;
 const BOOKMARKS_KEY = 'spw-pins';
 const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
 const SHELL_MENU_STATE_EVENT = 'spw:shell-menu-state';
+const HEADER_TRACE_CHANGE_EVENT = 'spw:header-trace-change';
 
 const OPERATOR_INFO = Object.freeze({
   '#>': { type: 'frame', label: 'frame', intent: 'orient a stable unit', wonder: 'orientation' },
@@ -281,6 +282,14 @@ function renderBreadcrumbSpell() {
     </ol>
     <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
   `;
+
+  document.dispatchEvent(new CustomEvent(HEADER_TRACE_CHANGE_EVENT, {
+    detail: {
+      state: pathState,
+      compact,
+      depth: items.length,
+    },
+  }));
 }
 
 function renderBreadcrumbLink({ kind, href, token, label, current = false }) {

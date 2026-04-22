@@ -356,10 +356,10 @@
 ) {
   display: grid;
   align-content: start;
-  gap: var(--component-gap-tight, 0.55rem);
+  gap: var(--component-gap-tight, 0.48rem);
   min-width: 0;
   min-height: 100%;
-  padding: var(--component-pad, 0.9rem);
+  padding: var(--component-pad, 0.84rem);
   color: var(--ink, inherit);
   background: var(--component-surface, rgba(255, 255, 255, 0.92));
   border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
@@ -412,7 +412,7 @@ a.frame-card,
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
-  gap: var(--component-gap-tight, 0.55rem);
+  gap: var(--component-gap-tight, 0.48rem);
   min-width: 0;
   color: inherit;
   text-decoration: none;
@@ -594,7 +594,7 @@ a.frame-card:is(:hover, :focus-visible),
   li,
   span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
 ) {
-  line-height: 1.5;
+  line-height: 1.46;
   max-inline-size: 60ch;
 }
 
@@ -640,8 +640,8 @@ a.frame-card:is(:hover, :focus-visible),
    ========================================================================== */
 
 :where(.site-frame) {
-  --surface-gap: var(--spw-surface-gap, var(--component-gap, 0.9rem));
-  --surface-padding: var(--spw-surface-padding, clamp(1.15rem, 2.5vw, 1.75rem));
+  --surface-gap: var(--spw-surface-gap, var(--component-gap, 0.84rem));
+  --surface-padding: var(--spw-surface-padding, clamp(1rem, 2.25vw, 1.55rem));
 
   display: flex;
   flex-direction: column;
@@ -749,8 +749,8 @@ a.frame-card:is(:hover, :focus-visible),
 
 :where(.frame-topline) {
   min-height: var(--component-header-min-height);
-  margin-bottom: -0.25rem;
-  padding-bottom: 0.55rem;
+  margin-bottom: -0.32rem;
+  padding-bottom: 0.46rem;
   border-bottom: 1px solid color-mix(in oklab, var(--component-accent, #008080) 16%, transparent);
   transition: border-color var(--component-transition-base, 180ms ease);
 }
@@ -1572,9 +1572,9 @@ ul.frame-list.frame-list--inline > li > a {
 .screenshot-frame {
   display: flex;
   flex-direction: column;
-  gap: 0.95rem;
-  margin: 1.25rem 0;
-  padding: var(--component-pad, 1rem);
+  gap: 0.82rem;
+  margin: 1rem 0;
+  padding: var(--component-pad, 0.84rem);
   background: var(--component-surface, rgba(255, 255, 255, 0.92));
   border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
   border-radius: var(--component-radius, 12px);
@@ -1623,7 +1623,7 @@ figcaption.frame-note,
   display: grid;
   gap: var(--component-gap-tight, 0.48rem);
   min-width: 0;
-  padding: var(--component-pad, 0.95rem);
+  padding: var(--component-pad, 0.84rem);
   border: 1px solid color-mix(in srgb, var(--component-accent, #008080) 14%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--component-radius, 12px);
   background:
@@ -1656,8 +1656,8 @@ figcaption.frame-note,
   display: inline-flex;
   align-items: center;
   gap: 0.22rem;
-  min-height: var(--component-chip-height, 1.9rem);
-  padding: 0.2rem 0.58rem;
+  min-height: 1.78rem;
+  padding: 0.16rem 0.5rem;
   border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 92%, transparent);
   border-radius: var(--component-radius-pill, 999px);
   background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 94%, transparent);
