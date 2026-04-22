@@ -48,7 +48,7 @@ const PAGE_SECTION_EDGE_ATTR = 'data-spw-page-section-edge';
 const PAGE_SECTION_EVENT = 'spw:section-locomotion-state';
 const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
-const HANDLE_TRAVEL_SETTLE_MS = 760;
+const HANDLE_TRAVEL_SETTLE_MS = 340;
 const HANDLE_COMPACT_QUERY = '(max-width: 720px)';
 
 function getScrollBehavior() {
@@ -195,8 +195,8 @@ function createHandleShell(origin) {
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
-    <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel">
-      <span aria-hidden="true">+</span>
+    <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel rail">
+      <span aria-hidden="true">more</span>
     </button>
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="top" data-spw-handle-advanced="true" aria-label="Jump to top of page">
       <span aria-hidden="true">↑</span>
@@ -317,10 +317,10 @@ function initSectionHandle(root) {
     toggleButton.setAttribute('aria-expanded', state.compact ? 'false' : 'true');
     toggleButton.setAttribute(
       'aria-label',
-      state.compact ? 'Expand page travel' : 'Collapse page travel'
+      state.compact ? 'Expand page travel rail' : 'Collapse page travel rail'
     );
-    toggleButton.title = state.compact ? 'More travel' : 'Less travel';
-    toggleButton.textContent = state.compact ? '+' : '-';
+    toggleButton.title = state.compact ? 'Show more travel controls' : 'Show fewer travel controls';
+    toggleButton.textContent = state.compact ? 'more' : 'less';
   };
 
   sections.forEach((section, index) => {

@@ -131,17 +131,17 @@ export function mountLogo(selector, opts = {}) {
 
   // Inline the SVG mark so CSS can reach into it
   logo.innerHTML = `
-    <svg class="spw-logo-mark" viewBox="0 0 48 56" fill="none" aria-hidden="true" focusable="false">
+    <svg class="spw-logo-mark" viewBox="0 0 48 52" fill="none" aria-hidden="true" focusable="false">
       <path
         id="mark-arc-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--arc"
-        d="M 10 30 C 6 14 16 3 29 3 C 42 3 48 14 46 26 C 44 36 36 40 26 36"
+        d="M 8 20 Q 24 5 40 20"
         stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"
       />
       <path
         id="mark-w-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--w"
-        d="M 12 34 L 19 52 L 27 40 L 35 52 L 42 34"
+        d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
         stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"
       />
     </svg>

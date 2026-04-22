@@ -362,12 +362,6 @@ function getCurrentColorMode() {
   return COLOR_MODE_STEPS.includes(String(current)) ? String(current) : 'auto';
 }
 
-function getNextColorMode() {
-  const current = getCurrentColorMode();
-  const index = Math.max(0, COLOR_MODE_STEPS.indexOf(current));
-  return COLOR_MODE_STEPS[(index + 1) % COLOR_MODE_STEPS.length];
-}
-
 function getNextFontScale(direction = 1) {
   const current = getCurrentFontScale();
   const index = Math.max(0, FONT_SCALE_STEPS.indexOf(current));
@@ -384,7 +378,8 @@ function ensureUtilityRow(header) {
   row.setAttribute('role', 'group');
   row.setAttribute('aria-label', 'Quick reading and display controls');
   row.innerHTML = `
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="theme-cycle" aria-label="Switch color mode">auto</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" aria-label="Use light mode" title="Light mode">L</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" aria-label="Use dark mode" title="Dark mode">D</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size">A-</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path">PATH</button>
     <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size">A+</button>
@@ -409,10 +404,14 @@ function syncUtilityRow(row) {
   row.dataset.spwColorMode = currentColorMode;
   row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
 
-  row.querySelectorAll('[data-spw-shell-action="theme-cycle"]').forEach((button) => {
-    button.textContent = currentColorMode;
-    button.setAttribute('aria-label', `Switch color mode. Current mode: ${currentColorMode}.`);
-    button.title = `Color mode: ${currentColorMode}`;
+  row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
+    button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
+    button.title = currentColorMode === 'light' ? 'Light mode active' : 'Use light mode';
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
+    button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
+    button.title = currentColorMode === 'dark' ? 'Dark mode active' : 'Use dark mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
@@ -724,8 +723,10 @@ export function initSpwShellDisclosure(options = {}) {
       return;
     }
 
-    if (action === 'theme-cycle') {
-      window.spwSettings?.save?.({ colorMode: getNextColorMode() });
+    if (action === 'color-light' || action === 'color-dark') {
+      const nextMode = action === 'color-light' ? 'light' : 'dark';
+      if (nextMode === getCurrentColorMode()) return;
+      window.spwSettings?.save?.({ colorMode: nextMode });
       syncUtilityRow(utilityRow);
       return;
     }

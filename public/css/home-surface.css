@@ -322,9 +322,30 @@ body[data-spw-surface="home"] {
   text-wrap: balance;
 }
 
-[data-spw-surface="home"] #home-frame > :where(p, nav, .mode-panels) {
+[data-spw-surface="home"] #home-frame > :where(p, nav, .mode-panels, .home-brand-plate) {
   position: relative;
   z-index: 1;
+}
+
+[data-spw-surface="home"] .home-brand-plate {
+  width: min(17rem, 100%);
+  margin: 0.1rem 0 0.2rem auto;
+  padding: 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent) 16%, var(--home-line));
+  border-radius: calc(var(--home-panel-radius) + 2px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.32), transparent 62%),
+    color-mix(in srgb, var(--home-surface-strong) 96%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.42),
+    0 8px 20px rgba(39, 24, 15, 0.08);
+}
+
+[data-spw-surface="home"] .home-brand-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--home-panel-radius) - 1px);
 }
 
 [data-spw-surface="home"] #home-frame > p:not(.page-kicker) {

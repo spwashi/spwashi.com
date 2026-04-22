@@ -39,7 +39,7 @@
   flex-shrink: 0;
   display: block;
   width: 1.4em;
-  height: 1.63em;  /* preserves 48:56 aspect ratio */
+  height: 1.52em;  /* preserves 48:52 aspect ratio */
   color: var(--active-op-color, #008080);
   transition:
     color var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
