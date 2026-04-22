@@ -32,7 +32,7 @@ const summarizeVisibleAssets = (assets) => ({
 export const createAssetAtlasController = ({ getState, save }) => {
     const { field: assetTitleField, input: assetTitleInput } = createLineField({
         id: 'rpg-asset-title',
-        label: 'Asset title',
+        label: 'Card title',
         value: '',
         placeholder: 'Sunken observatory, storm coin, velvet moss texture'
     });
@@ -110,7 +110,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
     });
     const assetComposerStatus = createElement('p', {
         className: 'frame-note rpg-asset-composer-status',
-        text: 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.'
+        text: 'Start lean. A scene can live here with only a title, then gain prompt, image, or texture detail later if the table keeps returning to it.'
     });
     const assetNamespaceFilterInput = createElement('select', {
         id: 'rpg-asset-namespace-filter',
@@ -128,7 +128,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
     });
     const assetBoardStatus = createElement('p', {
         className: 'frame-note rpg-asset-board-status',
-        text: 'No asset cards yet. Start with one scene or one image so the live board has something stable to return to.'
+        text: 'No asset cards yet. Start with one title-only scene or one image so the live board has something stable to return to.'
     });
     const assetSaveButton = createElement('button', {
         className: 'operator-chip',
@@ -165,7 +165,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
         className: 'rpg-asset-board-empty'
     }, [
         createElement('p', {
-            text: 'Start with one durable card. A named scene, object, or threat gives the live board something stable to return to.'
+            text: 'Start with one durable card. A title-only scene, object, or threat gives the live board something stable to return to.'
         }),
         createElement('div', {
             className: 'rpg-shortcut-row',
@@ -183,7 +183,28 @@ export const createAssetAtlasController = ({ getState, save }) => {
     let editingAssetId = null;
     let assetRenderToken = 0;
     let requestedAssetFocusId = '';
+    let composerDensity = 'lean';
     const composerHeadingTitle = createElement('h4', { text: 'Draft card' });
+    const assetDensityToggle = createElement('button', {
+        className: 'operator-chip',
+        type: 'button'
+    });
+    const assetStarter = createElement('p', {
+        className: 'frame-note rpg-asset-atlas__starter',
+        text: 'Title first. Keep namespace and timeline stable. Open the larger prompt, image, and notes fields only when the riff earns more weight.'
+    });
+
+    [
+        assetContextField,
+        assetTagsField,
+        assetPresetField,
+        assetImageUrlField,
+        assetImageUploadField,
+        assetPromptField,
+        assetNotesField
+    ].forEach((field) => {
+        field.classList.add('rpg-asset-atlas__advanced');
+    });
 
     const requestAssetFocus = (assetId) => {
         requestedAssetFocusId = assetId;
@@ -225,6 +246,18 @@ export const createAssetAtlasController = ({ getState, save }) => {
         assetSaveButton.textContent = editingAssetId ? '~ update card' : '@ add card';
         assetResetButton.textContent = editingAssetId ? '! cancel edit' : '! clear draft';
         assetCollectedToggle.textContent = assetCollectedOnly ? '~ showing collected' : '~ collected only';
+        assetDensityToggle.textContent = composerDensity === 'lean' ? '~ full fields' : '~ lean fields';
+        assetDensityToggle.setAttribute('aria-pressed', composerDensity === 'full' ? 'true' : 'false');
+    };
+
+    const syncComposerDensity = () => {
+        assetComposerSection.dataset.rpgComposerDensity = composerDensity;
+        updateAssetComposerButtons();
+    };
+
+    const setComposerDensity = (nextDensity) => {
+        composerDensity = nextDensity === 'full' ? 'full' : 'lean';
+        syncComposerDensity();
     };
 
     const resetAssetComposer = ({ preserveFlow = false } = {}) => {
@@ -242,11 +275,12 @@ export const createAssetAtlasController = ({ getState, save }) => {
             assetTimelineInput.value = DEFAULT_ASSET_TIMELINE;
             assetContextInput.value = '';
             assetPresetInput.value = 'wide';
+            setComposerDensity('lean');
         }
 
         assetComposerStatus.textContent = preserveFlow
-            ? 'Card saved. Namespace, timeline, and preset stayed in place so you can keep adding during the session.'
-            : 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.';
+            ? 'Card saved. Namespace and timeline stayed in place so you can keep adding without rebuilding the draft rhythm.'
+            : 'Start lean. A scene can live here with only a title, then gain prompt, image, or texture detail later if the table keeps returning to it.';
         updateAssetComposerButtons();
     };
 
@@ -283,6 +317,16 @@ export const createAssetAtlasController = ({ getState, save }) => {
         assetPromptInput.value = asset.prompt;
         assetNotesInput.value = asset.notes;
         assetImageUpload.value = '';
+        setComposerDensity(
+            cleanLine(asset.context)
+            || cleanLine(asset.tags)
+            || cleanLine(asset.imageUrl)
+            || cleanLine(asset.prompt)
+            || cleanLine(asset.notes)
+            || cleanLine(asset.imageKey)
+                ? 'full'
+                : 'lean'
+        );
         assetComposerStatus.textContent = `Editing ${previewText(asset.title, 'asset card', 48)}. Leave the image fields alone if the current image should stay attached.`;
         updateAssetComposerButtons();
         assetTitleInput.focus();
@@ -516,7 +560,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
         if (!filteredAssets.length) {
             assetBoardStatus.textContent = state.assets.length
                 ? 'No cards match this filter. Change namespace or turn off collected-only to bring them back.'
-                : 'No asset cards yet. Start with one scene or one image so the live board has something stable to return to.';
+                : 'No asset cards yet. Start with one title-only scene or one image so the live board has something stable to return to.';
             assetList.appendChild(assetBoardEmpty);
             return;
         }
@@ -627,6 +671,10 @@ export const createAssetAtlasController = ({ getState, save }) => {
         void render();
     });
 
+    assetDensityToggle.addEventListener('click', () => {
+        setComposerDensity(composerDensity === 'lean' ? 'full' : 'lean');
+    });
+
     assetSaveButton.addEventListener('click', () => {
         void saveComposer();
     });
@@ -636,6 +684,35 @@ export const createAssetAtlasController = ({ getState, save }) => {
         focusComposer();
     });
 
+    const assetComposerSection = createElement('section', { className: 'rpg-asset-atlas__composer' }, [
+        createElement('div', { className: 'rpg-asset-atlas__section-heading' }, [
+            composerHeadingTitle,
+            createElement('div', { className: 'rpg-asset-atlas__heading-tools' }, [
+                assetDensityToggle,
+                assetShortcuts
+            ])
+        ]),
+        assetStarter,
+        createElement('div', { className: 'rpg-asset-atlas__field-grid' }, [
+            assetTitleField,
+            assetKindField,
+            assetNamespaceField,
+            assetTimelineField,
+            assetContextField,
+            assetTagsField,
+            assetPresetField,
+            assetImageUrlField,
+            assetImageUploadField
+        ]),
+        assetPromptField,
+        assetNotesField,
+        createElement('div', { className: 'rpg-gameplay-actions' }, [
+            assetSaveButton,
+            assetResetButton
+        ]),
+        assetComposerStatus
+    ]);
+
     const panel = createElement('div', {
         className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--assets',
         id: 'rpg-kit-assets',
@@ -644,33 +721,10 @@ export const createAssetAtlasController = ({ getState, save }) => {
         createElement('h3', { text: 'Asset Atlas' }),
         createElement('p', {
             className: 'frame-note',
-            text: 'Use this during the session to stage scenes, textures, items, threats, and Midjourney riffs in a timeline. Cards stay local, can collapse or collect, and are arranged to be easy to screenshot later.'
+            text: 'Use this during the session to stage scenes, textures, items, threats, and generator riffs in a timeline. Cards stay local, can collapse or collect, and are arranged to be easy to screenshot later. Start with a title when that is all you know.'
         }),
         createElement('div', { className: 'rpg-asset-atlas' }, [
-            createElement('section', { className: 'rpg-asset-atlas__composer' }, [
-                createElement('div', { className: 'rpg-asset-atlas__section-heading' }, [
-                    composerHeadingTitle,
-                    assetShortcuts
-                ]),
-                createElement('div', { className: 'rpg-asset-atlas__field-grid' }, [
-                    assetTitleField,
-                    assetKindField,
-                    assetNamespaceField,
-                    assetTimelineField,
-                    assetContextField,
-                    assetTagsField,
-                    assetPresetField,
-                    assetImageUrlField,
-                    assetImageUploadField
-                ]),
-                assetPromptField,
-                assetNotesField,
-                createElement('div', { className: 'rpg-gameplay-actions' }, [
-                    assetSaveButton,
-                    assetResetButton
-                ]),
-                assetComposerStatus
-            ]),
+            assetComposerSection,
             createElement('section', { className: 'rpg-asset-atlas__board-panel' }, [
                 createElement('div', { className: 'rpg-asset-atlas__section-heading' }, [
                     createElement('h4', { text: 'Live board' }),
@@ -691,6 +745,8 @@ export const createAssetAtlasController = ({ getState, save }) => {
             ])
         ])
     ]);
+
+    syncComposerDensity();
 
     return {
         panel,

@@ -1259,6 +1259,28 @@
                     <h2>Notes</h2>
                 </div>
                 <div class="frame-grid" data-spw-feature="settings-notes-grid">
+                    <div class="frame-panel settings-note-register" data-spw-local-notes-root data-spw-kind="panel" data-spw-role="reference" data-spw-context="settings" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_settings_settings__local_note_register">
+                        <h3>Local note register</h3>
+                        <p>Scratch notes, route ideas, and reminders can stay in this browser and come back later. Use this for thoughts that do not belong in a bookmark, a guide collection, or a full spell yet.</p>
+                        <form class="settings-note-form" data-spw-local-note-entry data-local-note-origin="settings">
+                            <label class="settings-note-form__label" for="settings-local-note">Write a local note</label>
+                            <textarea class="settings-note-form__input" id="settings-local-note" data-local-note-input data-local-note-draft-target rows="5" placeholder="A route to extend, a copy seam to revisit, a scenario worth carrying into RPG Wednesday, or a settings idea that should survive the day."></textarea>
+                            <input type="hidden" value="settings" data-local-note-context>
+                            <div class="settings-note-form__actions">
+                                <button class="operator-chip" type="submit">@ save note</button>
+                                <button class="operator-chip" type="button" data-local-note-draft-clear>! clear draft</button>
+                                <button class="operator-chip" type="button" data-local-notes-clear>~ clear all</button>
+                            </div>
+                            <p class="settings-status" data-local-note-status role="status" aria-live="polite"></p>
+                        </form>
+                        <div class="settings-note-form__meta">
+                            <p><strong data-local-note-count>0</strong> saved in this browser.</p>
+                            <p>Latest note: <span data-local-note-preview>No local note yet.</span></p>
+                            <p>Latest save: <span data-local-note-latest-time>not saved yet</span></p>
+                        </div>
+                        <p class="frame-note" data-local-notes-empty>No local notes yet. The footer quick-capture seam and this register write to the same local shelf.</p>
+                        <div class="settings-note-list" data-local-notes-list></div>
+                    </div>
                     <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="settings" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_settings_settings__panel_1">
                         <h3>Why quiet by default?</h3>
                         <p>The map and console are inspection tools that should not compete with the page content.</p>

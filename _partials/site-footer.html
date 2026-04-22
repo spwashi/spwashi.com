@@ -14,9 +14,20 @@
                     <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="hearth" aria-label="Apply the cozy preset">Cozy</button>
                     <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="access" aria-label="Apply the readable preset">Readable</button>
                 </div>
+                <form class="site-footer__note-entry" data-spw-local-note-entry data-local-note-origin="footer">
+                    <label class="site-footer__note-label" for="footer-local-note">Local note</label>
+                    <div class="site-footer__note-row">
+                        <input class="site-footer__note-input" id="footer-local-note" type="text" data-local-note-input placeholder="Leave a note for later">
+                        <button class="operator-chip" type="submit" data-spw-groundable="false">@ save note</button>
+                    </div>
+                    <input type="hidden" value="footer" data-local-note-context>
+                    <p class="site-footer__note-preview">Latest: <span data-local-note-preview>No local note yet.</span> · <span data-local-note-count>0</span> saved · <span data-local-note-latest-time>not saved yet</span></p>
+                    <p class="site-footer__settings-status" data-local-note-status role="status" aria-live="polite"></p>
+                </form>
                 <p class="site-footer__settings-meta">
                     <button class="site-footer__settings-link" type="button" data-spw-groundable="false" data-spw-memory-action="clear-grounded">Clear visits</button>
                     <a class="site-footer__settings-link" href="/settings/#stored-data" data-spw-groundable="false">Saved data</a>
+                    <a class="site-footer__settings-link" href="/settings/#settings-notes" data-spw-groundable="false">Notes</a>
                     <a class="site-footer__settings-link" href="/settings/" data-spw-groundable="false">Settings</a>
                 </p>
                 <p class="site-footer__settings-status" data-site-settings-status data-spw-memory-status role="status" aria-live="polite"></p>

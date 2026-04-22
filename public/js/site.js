@@ -1160,6 +1160,18 @@ const FEATURE_DEFS = [
       return fn(document.getElementById('payment-settings-container'));
     },
   },
+  {
+    id: 'local-notes',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-local-note-entry], [data-spw-local-notes-root], [data-local-note-preview]',
+    load: () => import('./spw-local-notes.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwLocalNotes;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
 ];
 
 const REGION_DEFS = [

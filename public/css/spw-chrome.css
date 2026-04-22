@@ -1286,6 +1286,60 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   min-height: 1.85rem;
 }
 
+.site-footer__note-entry {
+  display: grid;
+  flex: 1 1 18rem;
+  gap: 0.32rem;
+  min-width: min(100%, 18rem);
+}
+
+.site-footer__note-label {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-footer__note-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.site-footer__note-row .operator-chip {
+  min-height: 2.2rem;
+}
+
+.site-footer__note-input {
+  flex: 1 1 12rem;
+  min-height: 2.2rem;
+  padding: 0.5rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 94%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font: inherit;
+}
+
+.site-footer__note-input::placeholder {
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 84%, transparent);
+}
+
+.site-footer__note-input:focus-visible {
+  outline: none;
+  border-color: var(--active-op-color, var(--teal, #008080));
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+.site-footer__note-preview {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.42;
+  letter-spacing: normal;
+}
+
 .site-footer__settings-meta {
   display: flex;
   flex-basis: 100%;
@@ -1324,6 +1378,14 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-size: var(--text-size-2xs, 0.72rem);
   line-height: 1.35;
+}
+
+.site-footer__settings-status[data-status="success"] {
+  color: var(--op-action-color, #005959);
+}
+
+.site-footer__settings-status[data-status="info"] {
+  color: var(--op-probe-color, #4a2180);
 }
 
 .site-footer__settings-status:empty {

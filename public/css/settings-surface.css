@@ -286,7 +286,129 @@
 }
 
 /* ==========================================================================
-   6. PWA Status Grid
+   6. Local note register
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-note-register) {
+  display: grid;
+  gap: var(--space-md, 1rem);
+  align-content: start;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form) {
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__label) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__input) {
+  width: 100%;
+  min-height: 8.5rem;
+  padding: var(--inset-component, 1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 56%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  color: var(--ink, #161c1d);
+  font: inherit;
+  resize: vertical;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__input:focus-visible) {
+  outline: none;
+  border-color: var(--settings-accent);
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin: 0;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta p) {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface, #fff) 94%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta strong) {
+  color: var(--ink, #161c1d);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-list) {
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card) {
+  display: grid;
+  gap: 0.7rem;
+  padding: var(--inset-component, 1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.15), transparent 60%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__meta) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.45rem 0.75rem;
+  align-items: baseline;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__context) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__time) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-size: var(--text-size-2xs, 0.72rem);
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__text) {
+  margin: 0;
+  color: var(--ink, #161c1d);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+/* ==========================================================================
+   7. PWA Status Grid
    ========================================================================== */
 
 :where(body[data-spw-surface="settings"] .pwa-status-grid) {
@@ -317,7 +439,7 @@
 }
 
 /* ==========================================================================
-   7. Runtime map / navigators / structures
+   8. Runtime map / navigators / structures
    ========================================================================== */
 
 :where(body[data-spw-surface="settings"] .settings-system-map),
@@ -528,6 +650,15 @@
   :where(body[data-spw-surface="settings"] .settings-fieldset) {
     padding: 0.9rem;
     margin-bottom: 0.75rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-note-form__meta) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="settings"] .local-note-card__meta) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   :where(body[data-spw-surface="settings"] .settings-actions) {
