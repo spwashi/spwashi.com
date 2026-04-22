@@ -72,8 +72,10 @@
   --spw-header-opacity-local: 0.97;
 }
 
-:where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
-  overflow: hidden;
+@media (pointer: fine) {
+  :where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
+    overflow: hidden;
+  }
 }
 
 :where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
@@ -438,6 +440,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
   contain: paint style;
   cursor: pointer;
   box-shadow:
@@ -695,6 +698,54 @@
 
 .spw-route-menu {
   position: relative;
+}
+
+.spw-shell-utility-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.32rem;
+  min-width: 0;
+}
+
+.spw-shell-utility-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 2rem;
+  padding: 0.28rem 0.52rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 97%, var(--spw-shell-chrome-accent-local) 3%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--spw-shell-chrome-accent-local) 12%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  transition:
+    background-color var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease)),
+    border-color var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease)),
+    color var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease)),
+    opacity var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease));
+}
+
+.spw-shell-utility-button:is(:hover, :focus-visible) {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 92%, var(--spw-shell-chrome-accent-local) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+}
+
+.spw-shell-utility-button[disabled],
+.spw-shell-utility-button[aria-disabled="true"] {
+  opacity: 0.46;
+  pointer-events: none;
 }
 
 .spw-route-menu[data-spw-flow="pretext"] {
@@ -993,22 +1044,26 @@
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"] nav, body > header[data-spw-menu-topology="screen-field"] nav) {
-  position: fixed;
+  position: absolute;
   left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
   right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
-  top: calc(var(--spw-shell-menu-offset, var(--shell-header-height)) + 0.35rem);
-  bottom: max(0.8rem, env(safe-area-inset-bottom));
+  top: calc(100% + 0.35rem);
+  bottom: auto;
   z-index: calc(var(--z-header) + 4);
   display: grid;
   align-content: start;
-  gap: 0.7rem;
-  min-height: auto;
-  max-height: calc(100dvh - var(--spw-shell-menu-offset, var(--shell-header-height)) - max(0.9rem, env(safe-area-inset-bottom)));
-  overflow: auto;
-  overscroll-behavior: contain;
-  padding: 0.7rem;
+  gap: 0.52rem;
+  min-height: 0;
+  max-height: min(24rem, calc(100dvh - var(--spw-shell-menu-offset, var(--shell-header-height)) - max(4rem, env(safe-area-inset-bottom))));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y pinch-zoom;
+  padding: 0.56rem;
   border-width: 1px;
-  border-radius: clamp(1rem, 3vw, 1.35rem);
+  border-radius: clamp(0.9rem, 3vw, 1.2rem);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 16rem),
     color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-mobile-accent) 10%);
@@ -1025,7 +1080,7 @@
 
 :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
   align-content: start;
-  gap: 0.55rem;
+  gap: 0.42rem;
   width: 100%;
   min-width: 0;
   padding: 0;
@@ -1035,8 +1090,8 @@
 :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a) {
   justify-content: flex-start;
   align-items: flex-start;
-  min-height: max(2.8rem, var(--shell-nav-min-height));
-  padding: 0.72rem 0.82rem 0.84rem;
+  min-height: max(2.48rem, var(--shell-nav-min-height));
+  padding: 0.58rem 0.7rem 0.68rem;
   border-radius: calc(var(--shell-panel-radius) + 0.08rem);
   line-height: 1.08;
   text-align: left;
@@ -1057,15 +1112,15 @@
 :where(.site-header[data-spw-menu-topology="screen-field"] .spw-route-menu-trigger, body > header[data-spw-menu-topology="screen-field"] .spw-route-menu-trigger) {
   width: 100%;
   justify-content: space-between;
-  min-height: 2.9rem;
-  padding: 0.72rem 0.82rem;
+  min-height: 2.48rem;
+  padding: 0.56rem 0.7rem;
   border-radius: calc(var(--shell-panel-radius) + 0.08rem);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 96%, var(--spw-shell-mobile-accent) 4%);
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"] .spw-route-menu-panel, body > header[data-spw-menu-topology="screen-field"] .spw-route-menu-panel) {
-  margin-top: 0.45rem;
-  padding: 0.42rem;
+  margin-top: 0.32rem;
+  padding: 0.3rem;
   border-radius: calc(var(--shell-panel-radius) + 0.08rem);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 60%),
@@ -1745,14 +1800,14 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.42rem;
+    gap: 0.34rem;
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a) {
     justify-content: center;
     align-items: center;
-    min-height: 3rem;
-    padding: 0.56rem;
+    min-height: 2.42rem;
+    padding: 0.42rem;
     text-align: center;
   }
 
@@ -1793,6 +1848,17 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   .spw-nav-toggle-state,
   .spw-nav-toggle-meta {
     display: none;
+  }
+
+  .spw-shell-utility-row {
+    gap: 0.24rem;
+  }
+
+  .spw-shell-utility-button {
+    min-height: 1.82rem;
+    padding: 0.24rem 0.42rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.03em;
   }
 
   .spw-section-handle,

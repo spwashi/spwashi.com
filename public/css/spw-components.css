@@ -1008,8 +1008,8 @@ a.frame-card:is(:hover, :focus-visible),
 
 :where(.frame-topline) {
   min-height: var(--component-header-min-height);
-  margin-bottom: -0.32rem;
-  padding-bottom: 0.46rem;
+  margin-bottom: -0.18rem;
+  padding-bottom: 0.28rem;
   border-bottom: 1px solid color-mix(in oklab, var(--component-accent, #008080) 16%, transparent);
   transition: border-color var(--component-transition-base, 180ms ease);
 }

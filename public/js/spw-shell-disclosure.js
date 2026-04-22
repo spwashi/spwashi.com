@@ -71,6 +71,8 @@ const DEFAULTS = Object.freeze({
   scrollDirectionDeadzonePx: 4,
 });
 
+const FONT_SCALE_STEPS = Object.freeze(['80', '90', '100', '110', '120']);
+
 function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
   if (width < 420) return 'compact';
   if (width < config.narrowBreakpointPx) return 'narrow';
@@ -269,6 +271,12 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
   const phase = resolveMenuPhase(state, open, source);
   const intent = resolveMenuIntent({ open, phase, pressure });
   const returnPaths = describeReturnPaths(open);
+  const locking = open
+    && state.mode === MODES.TOGGLE
+    && topology === TOPOLOGIES.SCREEN_FIELD
+    && pointer !== 'coarse'
+    ? 'locked'
+    : 'permeable';
 
   return {
     mode: state.mode,
@@ -285,6 +293,7 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
     primaryRouteCount,
     overflowRouteCount,
     totalRouteCount: primaryRouteCount + overflowRouteCount,
+    locking,
     reversible: true,
     returnPaths,
     returnHint: open ? 'toggle, Escape, route, or hash' : 'toggle or focus',
@@ -309,6 +318,7 @@ function writeMenuDatasets(el, snapshot, role) {
   el.dataset.spwMenuNavFit = snapshot.navFit;
   el.dataset.spwMenuRouteCount = String(snapshot.totalRouteCount);
   el.dataset.spwMenuOverflowCount = String(snapshot.overflowRouteCount);
+  el.dataset.spwMenuLocking = snapshot.locking;
   el.dataset.spwMenuReversible = snapshot.reversible ? 'true' : 'false';
   el.dataset.spwMenuReturnPaths = snapshot.returnPaths.join(' ');
 }
@@ -328,14 +338,72 @@ function syncShellOffset(header) {
 }
 
 function syncShellLock(snapshot) {
-  const shouldLock = snapshot.mode === MODES.TOGGLE
-    && snapshot.state === 'open'
-    && snapshot.topology === TOPOLOGIES.SCREEN_FIELD;
+  const shouldLock = snapshot.locking === 'locked';
 
   [document.documentElement, document.body].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (shouldLock) node.dataset.spwShellMenuLock = 'true';
     else delete node.dataset.spwShellMenuLock;
+  });
+}
+
+function getCurrentFontScale() {
+  const current = window.spwSettings?.get?.()?.fontSizeScale
+    || document.documentElement.dataset.spwFontSizeScale
+    || '100';
+  return FONT_SCALE_STEPS.includes(String(current)) ? String(current) : '100';
+}
+
+function getNextFontScale(direction = 1) {
+  const current = getCurrentFontScale();
+  const index = Math.max(0, FONT_SCALE_STEPS.indexOf(current));
+  const nextIndex = Math.min(FONT_SCALE_STEPS.length - 1, Math.max(0, index + direction));
+  return FONT_SCALE_STEPS[nextIndex];
+}
+
+function ensureUtilityRow(nav) {
+  let row = nav.querySelector('.spw-shell-utility-row');
+  if (row instanceof HTMLElement) return row;
+
+  row = document.createElement('div');
+  row.className = 'spw-shell-utility-row';
+  row.setAttribute('role', 'group');
+  row.setAttribute('aria-label', 'Reading and navigation utilities');
+  row.innerHTML = `
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size">A-</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path">PATH</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size">A+</button>
+    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#typography-settings" aria-label="Open typography settings">Aa</a>
+  `;
+
+  nav.prepend(row);
+  return row;
+}
+
+function syncUtilityRow(row) {
+  if (!(row instanceof HTMLElement)) return;
+
+  const current = getCurrentFontScale();
+  const min = FONT_SCALE_STEPS[0];
+  const max = FONT_SCALE_STEPS[FONT_SCALE_STEPS.length - 1];
+  const pathToggle = document.querySelector('.spw-spell-path-toggle');
+
+  row.dataset.spwFontScale = current;
+  row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
+
+  row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
+    button.toggleAttribute('disabled', current === min);
+    button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
+    button.toggleAttribute('disabled', current === max);
+    button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
+    button.toggleAttribute('disabled', !pathToggle);
+    button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
   });
 }
 
@@ -505,6 +573,8 @@ export function initSpwShellDisclosure(options = {}) {
     }
   }
 
+  const utilityRow = ensureUtilityRow(nav);
+
   const state = createState(config);
   header.dataset.spwMenu = 'closed';
   header.dataset.spwMenuMode = MODES.INLINE;
@@ -604,11 +674,38 @@ export function initSpwShellDisclosure(options = {}) {
   const handleSettingsChanged = () => {
     syncScrollState(header, state);
     syncDisclosure(header, nav, navList, toggle, state, 'settings');
+    syncUtilityRow(utilityRow);
   };
 
   const handleTraceChange = () => {
     syncScrollState(header, state);
     syncDisclosure(header, nav, navList, toggle, state, 'trace');
+    syncUtilityRow(utilityRow);
+  };
+
+  const handleUtilityClick = (event) => {
+    const control = event.target.closest('[data-spw-shell-action]');
+    if (!(control instanceof HTMLElement)) return;
+
+    const action = control.dataset.spwShellAction || '';
+
+    if (action === 'settings') return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (action === 'path-toggle') {
+      document.querySelector('.spw-spell-path-toggle')?.click();
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'font-down' || action === 'font-up') {
+      const nextScale = getNextFontScale(action === 'font-up' ? 1 : -1);
+      if (!nextScale || nextScale === getCurrentFontScale()) return;
+      window.spwSettings?.save?.({ fontSizeScale: nextScale });
+      syncUtilityRow(utilityRow);
+    }
   };
 
   const handleMenuIntent = (event) => {
@@ -662,6 +759,7 @@ export function initSpwShellDisclosure(options = {}) {
   header.addEventListener('focusin', handleFocusIn);
   header.addEventListener('focusout', handleFocusOut);
   nav.addEventListener('click', handleNavClick);
+  utilityRow.addEventListener('click', handleUtilityClick);
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('keydown', handleDocumentKeydown);
   document.addEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
@@ -679,6 +777,7 @@ export function initSpwShellDisclosure(options = {}) {
   });
 
   syncDisclosure(header, nav, navList, toggle, state, 'init');
+  syncUtilityRow(utilityRow);
 
   return {
     cleanup() {
@@ -689,6 +788,7 @@ export function initSpwShellDisclosure(options = {}) {
       header.removeEventListener('focusin', handleFocusIn);
       header.removeEventListener('focusout', handleFocusOut);
       nav.removeEventListener('click', handleNavClick);
+      utilityRow.removeEventListener('click', handleUtilityClick);
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('keydown', handleDocumentKeydown);
       document.removeEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
@@ -716,6 +816,7 @@ export function initSpwShellDisclosure(options = {}) {
       delete header.dataset.spwMenuPointer;
       delete header.dataset.spwMenuPressure;
       delete header.dataset.spwMenuMode;
+      delete header.dataset.spwMenuLocking;
       delete header.dataset.spwMenuNavFit;
       delete header.dataset.spwMenuOverflowCount;
       delete header.dataset.spwMenuReturnPaths;

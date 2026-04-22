@@ -375,6 +375,38 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   border-radius: var(--shape-control, 0.78rem);
 }
 
+:where(
+  a.operator-chip,
+  a.spec-pill,
+  a.badge,
+  a.tag,
+  a.pill,
+  a.frame-sigil,
+  a.frame-card-sigil,
+  a.spw-component-tag,
+  a.spw-guide-chip
+):visited {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+  background: var(--handle-bg);
+  border-color: var(--handle-line-soft);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+)[data-spw-grounded="true"]:not([aria-current="page"]) {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
+  border-color: var(--handle-line-soft);
+}
+
 .spw-component-tag {
   appearance: none;
   -webkit-appearance: none;
@@ -719,7 +751,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: calc(var(--spw-control-gap, 0.28rem) + 0.16rem);
+  gap: calc(var(--spw-control-gap, 0.24rem) + 0.08rem);
   min-width: 0;
 }
 
@@ -727,24 +759,26 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    --mode-switch-* variables instead of re-describing pressed/hover logic. */
 .mode-switch .frame-sigil {
   --mode-switch-border-width: 1px;
-  --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 97%, var(--active-op-color, var(--teal)) 3%);
-  --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
-  --mode-switch-idle-ink: color-mix(in srgb, var(--active-op-color, var(--teal)) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
-  --mode-switch-idle-shadow: none;
+  --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 90%, var(--active-op-color, var(--teal)) 10%);
+  --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, var(--line, rgba(14, 18, 20, 0.14)) 66%);
+  --mode-switch-idle-ink: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
+  --mode-switch-idle-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
   --mode-switch-idle-weight: 500;
-  --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
-  --mode-switch-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 84%, var(--active-op-color, var(--teal)) 16%);
+  --mode-switch-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
   --mode-switch-hover-ink: var(--ink, rgba(14, 18, 20, 0.92));
-  --mode-switch-hover-shadow: var(--mode-switch-idle-shadow);
+  --mode-switch-hover-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
   --mode-switch-hover-lift: 0px;
-  --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 78%, var(--active-op-color, var(--teal)) 22%);
-  --mode-switch-active-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 52%, transparent);
-  --mode-switch-active-ink: color-mix(in srgb, var(--active-op-color, var(--teal)) 96%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 72%, var(--active-op-color, var(--teal)) 28%);
+  --mode-switch-active-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 58%, transparent);
+  --mode-switch-active-ink: var(--ink, rgba(14, 18, 20, 0.92));
   --mode-switch-active-weight: 600;
   --mode-switch-active-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.36),
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
-    0 3px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent),
+    0 2px 6px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
   --mode-switch-active-lift: 0px;
   position: relative;
   top: auto;
@@ -753,8 +787,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   inline-size: auto;
   width: auto;
   max-width: 100%;
-  min-height: calc(var(--spw-control-min-height, 2.1rem) - 0.04rem);
-  padding: var(--spw-control-padding-block, 0.24rem) var(--spw-control-padding-inline, 0.72rem);
+  min-height: calc(var(--spw-control-min-height, 2.1rem) - 0.22rem);
+  padding: calc(var(--spw-control-padding-block, 0.24rem) - 0.04rem) calc(var(--spw-control-padding-inline, 0.72rem) - 0.08rem);
   border: var(--mode-switch-border-width) solid var(--mode-switch-idle-border);
   border-radius: var(--spw-control-radius, var(--shape-control, 0.68rem));
   background: var(--mode-switch-idle-bg);
@@ -768,7 +802,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   color: var(--mode-switch-idle-ink);
   font-weight: var(--mode-switch-idle-weight);
   font-size: var(--text-size-chip, 0.84rem);
-  line-height: var(--spw-control-line-height, 1.08);
+  line-height: 1.02;
   transition:
     background-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
     border-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
@@ -776,6 +810,17 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     box-shadow var(--spw-control-transition-base, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
     transform var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
     font-weight var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
+}
+
+@media (prefers-color-scheme: dark) {
+  .mode-switch .frame-sigil {
+    --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+    --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, rgba(255, 255, 255, 0.18) 56%);
+    --mode-switch-idle-ink: color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.96)) 92%, var(--active-op-color, var(--teal)) 8%);
+    --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 74%, var(--active-op-color, var(--teal)) 26%);
+    --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 64%, var(--active-op-color, var(--teal)) 36%);
+    --mode-switch-active-ink: color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.98)) 96%, var(--active-op-color, var(--teal)) 4%);
+  }
 }
 
 .mode-switch .frame-sigil:is(:hover, :focus-visible) {
