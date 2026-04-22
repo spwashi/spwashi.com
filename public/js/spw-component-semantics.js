@@ -34,6 +34,13 @@ const DEFAULT_SELECTOR = [
   '.site-frame',
   '.frame-panel',
   '.frame-card',
+  '.media-card',
+  '.media-focus-card',
+  '.software-card',
+  '.operator-card',
+  '.plan-card',
+  '.compare-card',
+  '.spec-column',
   '.mode-panel',
   '[data-spw-kind]',
   '[data-spw-role]',
@@ -280,7 +287,16 @@ function getKind(el) {
   if (el.matches('figure')) return 'figure';
   if (el.classList.contains('site-frame')) return 'frame';
   if (el.classList.contains('frame-panel')) return 'panel';
-  if (el.classList.contains('frame-card')) return 'card';
+  if (
+    el.classList.contains('frame-card')
+    || el.classList.contains('media-card')
+    || el.classList.contains('media-focus-card')
+    || el.classList.contains('software-card')
+    || el.classList.contains('operator-card')
+    || el.classList.contains('plan-card')
+    || el.classList.contains('compare-card')
+    || el.classList.contains('spec-column')
+  ) return 'card';
   if (el.classList.contains('mode-panel')) return 'lens';
   return 'component';
 }

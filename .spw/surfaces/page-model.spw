@@ -141,6 +141,7 @@ attentional_topography: .{
 
 tunable_parameters: .{
  note = `Parameters that should be explicitly tunable at the page, region, or feature level.`
+ page_attention_state = `html[data-spw-page-presence='foreground|background'] + html[data-spw-page-arrival='entering|returning|restored|settled'] + html[data-spw-page-arrival-step='0|1|2|3']. One shared producer should publish this so cards, handles, and pretext can spend the same arrival physics without per-component timers.`
  peak_weight = `data-spw-attentional-weight (0.0–2.0) on any region or feature. Scales how strongly it contributes to the field.`
  decay_rate = `data-spw-decay-rate or CSS --spw-field-decay-rate. How quickly this region's charge falls off.`
  receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`

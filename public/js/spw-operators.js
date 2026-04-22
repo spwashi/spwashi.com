@@ -41,7 +41,7 @@ const applyOperatorMetadata = (element, op) => {
 
 const annotateSignals = () => {
     const sigils = Array.from(
-        document.querySelectorAll('.frame-sigil, .frame-card-sigil, .syntax-token, .operator-chip, .spw-spell-button, .spw-spell-shell, .spw-spell-link')
+        document.querySelectorAll('.frame-sigil, .frame-card-sigil, .syntax-token, .operator-chip, .spec-pill, .badge, .tag, .pill, .spw-spell-button, .spw-spell-shell, .spw-spell-link')
     );
 
     for (const sigil of sigils) {

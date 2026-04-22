@@ -67,6 +67,18 @@ const PAGE_STATES = {
   ENHANCED: 'enhanced',
 };
 
+const PAGE_PRESENCE = {
+  FOREGROUND: 'foreground',
+  BACKGROUND: 'background',
+};
+
+const PAGE_ARRIVAL = {
+  ENTERING: 'entering',
+  RETURNING: 'returning',
+  RESTORED: 'restored',
+  SETTLED: 'settled',
+};
+
 const REGION_STATES = {
   QUEUED: 'queued',
   PRIMED: 'primed',
@@ -95,6 +107,12 @@ const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
 let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
+const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
+const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
+  { step: '1', delay: 0 },
+  { step: '2', delay: 96 },
+  { step: '3', delay: 212 },
+]);
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
 
@@ -104,6 +122,146 @@ const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
 
 function setPageState(state) {
   HTML.dataset.spwPageState = state;
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+}
+
+function setPageAttentionState(ctx, detail = {}) {
+  const presence = detail.presence || HTML.dataset.spwPagePresence || PAGE_PRESENCE.FOREGROUND;
+  const arrival = detail.arrival || HTML.dataset.spwPageArrival || PAGE_ARRIVAL.SETTLED;
+  const step = String(detail.step ?? HTML.dataset.spwPageArrivalStep ?? '0');
+
+  HTML.dataset.spwPagePresence = presence;
+  HTML.dataset.spwPageArrival = arrival;
+  HTML.dataset.spwPageArrivalStep = step;
+  HTML.dataset.spwAttentionContext =
+    presence === PAGE_PRESENCE.BACKGROUND
+      ? 'background'
+      : arrival === PAGE_ARRIVAL.SETTLED
+        ? 'settled'
+        : arrival;
+
+  const payload = {
+    presence,
+    arrival,
+    step,
+    reason: detail.reason || 'runtime',
+    route: ctx?.route || SITE_SURFACE,
+  };
+
+  ctx?.bus?.emit?.(PAGE_ATTENTION_EVENT, payload);
+  document.dispatchEvent(new CustomEvent(PAGE_ATTENTION_EVENT, { detail: payload }));
+}
+
+function clearPageAttentionSequence(ctx) {
+  if (!ctx?.pageAttentionTimers?.size) return;
+  ctx.pageAttentionTimers.forEach((timerId) => {
+    window.clearTimeout(timerId);
+    ctx.timers.delete(timerId);
+  });
+  ctx.pageAttentionTimers.clear();
+}
+
+function addManagedTimeout(ctx, callback, delay) {
+  const timerId = window.setTimeout(() => {
+    ctx?.pageAttentionTimers?.delete(timerId);
+    ctx?.timers?.delete(timerId);
+    callback();
+  }, delay);
+
+  ctx?.pageAttentionTimers?.add(timerId);
+  ctx?.addTimer?.(timerId);
+  return timerId;
+}
+
+function schedulePageArrival(ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'page-enter') {
+  if (!ctx) return;
+
+  clearPageAttentionSequence(ctx);
+
+  if (prefersReducedMotion()) {
+    setPageAttentionState(ctx, {
+      presence: PAGE_PRESENCE.FOREGROUND,
+      arrival: PAGE_ARRIVAL.SETTLED,
+      step: '0',
+      reason,
+    });
+    return;
+  }
+
+  PAGE_ARRIVAL_STEP_SEQUENCE.forEach(({ step, delay }) => {
+    addManagedTimeout(ctx, () => {
+      setPageAttentionState(ctx, {
+        presence: PAGE_PRESENCE.FOREGROUND,
+        arrival,
+        step,
+        reason,
+      });
+    }, delay);
+  });
+
+  addManagedTimeout(ctx, () => {
+    setPageAttentionState(ctx, {
+      presence: PAGE_PRESENCE.FOREGROUND,
+      arrival: PAGE_ARRIVAL.SETTLED,
+      step: '0',
+      reason: `${reason}-settled`,
+    });
+  }, arrival === PAGE_ARRIVAL.RETURNING ? 280 : 420);
+}
+
+function initPageAttentionLifecycle(ctx) {
+  if (!ctx) return () => {};
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      clearPageAttentionSequence(ctx);
+      setPageAttentionState(ctx, {
+        presence: PAGE_PRESENCE.BACKGROUND,
+        arrival: PAGE_ARRIVAL.SETTLED,
+        step: '0',
+        reason: 'visibility-hidden',
+      });
+      return;
+    }
+
+    schedulePageArrival(ctx, PAGE_ARRIVAL.RETURNING, 'visibility-visible');
+  };
+
+  const handlePageShow = (event) => {
+    if (!event.persisted) return;
+    schedulePageArrival(ctx, PAGE_ARRIVAL.RESTORED, 'pageshow-restored');
+  };
+
+  const handlePageHide = () => {
+    clearPageAttentionSequence(ctx);
+    setPageAttentionState(ctx, {
+      presence: PAGE_PRESENCE.BACKGROUND,
+      arrival: PAGE_ARRIVAL.SETTLED,
+      step: '0',
+      reason: 'pagehide',
+    });
+  };
+
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  window.addEventListener('pageshow', handlePageShow);
+  window.addEventListener('pagehide', handlePageHide);
+
+  setPageAttentionState(ctx, {
+    presence: document.hidden ? PAGE_PRESENCE.BACKGROUND : PAGE_PRESENCE.FOREGROUND,
+    arrival: PAGE_ARRIVAL.SETTLED,
+    step: '0',
+    reason: 'page-init',
+  });
+
+  return () => {
+    clearPageAttentionSequence(ctx);
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.removeEventListener('pageshow', handlePageShow);
+    window.removeEventListener('pagehide', handlePageHide);
+  };
 }
 
 function setRegionState(el, state) {
@@ -480,6 +638,7 @@ function createRuntimeContext() {
     debug: parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug),
     observers: new Set(),
     timers: new Set(),
+    pageAttentionTimers: new Set(),
     cleanupStack: [],
     regions: [],
   };
@@ -1536,6 +1695,10 @@ function destroyRuntime() {
   runtimeCtx.destroy();
   runtimeCtx = null;
   delete HTML.dataset.spwPageState;
+  delete HTML.dataset.spwPagePresence;
+  delete HTML.dataset.spwPageArrival;
+  delete HTML.dataset.spwPageArrivalStep;
+  delete HTML.dataset.spwAttentionContext;
   delete HTML.dataset.spwHarmonyField;
   delete HTML.dataset.spwTempoField;
 }
@@ -1547,6 +1710,7 @@ async function bootSite() {
 
   runtimeCtx = createRuntimeContext();
   setPageState(PAGE_STATES.BOOTING);
+  runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
 
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
 
@@ -1561,6 +1725,8 @@ async function bootSite() {
     ENHANCEMENT_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
     runtimeCtx
   );
+
+  schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');
 
   setPageState(PAGE_STATES.INTERACTIVE);
   runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });

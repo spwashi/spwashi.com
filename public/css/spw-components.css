@@ -354,26 +354,202 @@
   .compare-card,
   .spec-column
 ) {
+  --component-arrival-offset: 0px;
+  --component-arrival-opacity: 1;
   display: grid;
   align-content: start;
   gap: var(--component-gap-tight, 0.48rem);
   min-width: 0;
   min-height: 100%;
+  position: relative;
   padding: var(--component-pad, 0.84rem);
   color: var(--ink, inherit);
   background: var(--component-surface, rgba(255, 255, 255, 0.92));
   border: var(--component-border, 1px solid rgba(0, 128, 128, 0.18));
   border-radius: var(--component-radius-tight, 8px);
   box-shadow: var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
-  transform: translateY(0);
+  opacity: var(--component-arrival-opacity);
+  transform: translateY(var(--component-arrival-offset));
   overflow: clip;
   box-sizing: border-box;
+  contain: paint style;
   transition:
     background   var(--component-transition-deliberate, 260ms ease),
     border-color var(--component-transition-base, 180ms ease),
     box-shadow   var(--component-transition-deliberate, 260ms ease),
     color        var(--component-transition-fast, 120ms ease),
-    transform    var(--component-transition-fast, 120ms ease);
+    opacity      var(--component-transition-fast, 120ms ease),
+    transform    var(--component-transition-arrival, var(--component-transition-fast, 120ms ease));
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) {
+  --component-route-accent: var(--component-accent, var(--teal, #008080));
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-primary-operator="probe"] { --component-route-accent: var(--op-probe-color, var(--component-accent, var(--teal, #008080))); }
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-primary-operator="action"] { --component-route-accent: var(--op-action-color, var(--component-accent, var(--teal, #008080))); }
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-primary-operator="merge"] { --component-route-accent: var(--op-merge-color, var(--component-accent, var(--teal, #008080))); }
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-primary-operator="binding"] { --component-route-accent: var(--op-binding-color, var(--component-accent, var(--teal, #008080))); }
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-primary-operator="frame"] { --component-route-accent: var(--op-frame-color, var(--component-accent, var(--teal, #008080))); }
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-route-state]:not([data-spw-route-state="none"]) {
+  padding-block-start: calc(var(--component-pad, 0.84rem) + 0.82rem);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .compare-card,
+  .spec-column
+)[data-spw-route-state]:not([data-spw-route-state="none"])::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
+  content: attr(data-spw-route-marker);
+  position: absolute;
+  inset: 0.46rem 0.58rem auto auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.3rem;
+  max-inline-size: calc(100% - 1.16rem);
+  padding: 0.08rem 0.42rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--component-surface-strong, rgba(255,255,255,0.98)) 94%, var(--component-route-accent, var(--component-accent, #008080)) 6%);
+  color: color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 78%, var(--ink-soft, rgba(14,18,20,0.68)) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.88;
+  transition:
+    border-color var(--component-transition-fast, 120ms ease),
+    background var(--component-transition-fast, 120ms ease),
+    color var(--component-transition-fast, 120ms ease),
+    opacity var(--component-transition-fast, 120ms ease),
+    transform var(--component-transition-fast, 120ms ease);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-route-state="branching"] {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 12%, transparent),
+    var(--component-shadow, 0 10px 24px rgba(0, 0, 0, 0.06));
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-route-state="branching"] :is(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
+  padding-top: 0.14rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 18%, transparent);
 }
 
 :where(
@@ -405,6 +581,89 @@
   border-color: color-mix(in srgb, var(--component-accent, #008080) 28%, var(--line, transparent));
   box-shadow: var(--component-shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
   transform: translateY(calc(var(--projection-lift-xs, 1px) * -1));
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {
+  border-color: color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 28%, transparent);
+  background: color-mix(in srgb, var(--component-surface-strong, rgba(255,255,255,0.98)) 88%, var(--component-route-accent, var(--component-accent, #008080)) 12%);
+  color: color-mix(in srgb, var(--component-route-accent, var(--component-accent, #008080)) 86%, var(--ink, rgba(14,18,20,0.92)) 14%);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"])) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) {
+  --component-transition-arrival: 180ms steps(3, end);
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 3px;
+  --component-arrival-opacity: 0.93;
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 1px;
+  --component-arrival-opacity: 0.97;
+}
+
+:where(html[data-spw-page-presence="background"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 0px;
+  --component-arrival-opacity: 0.98;
 }
 
 a.frame-card,
@@ -1074,7 +1333,7 @@ a.frame-card:is(:hover, :focus-visible),
 :where([data-spw-flow="pretext"][data-text-mode="settling"]) { --pretext-line-gap: 0.18rem; }
 :where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) { --pretext-local-pad: 0.35rem 0.45rem; }
 :where([data-spw-flow="pretext"][data-text-kind="question"]) { --pretext-local-pad: 0.25rem 0.35rem; }
-:where([data-spw-flow="pretext"][data-text-density="compressed"]) { --pretext-line-gap: 0.12rem; }
+:where([data-spw-flow="pretext"][data-text-density="dense"]) { --pretext-line-gap: 0.12rem; }
 :where([data-spw-flow="pretext"][data-text-density="soft"]) { --pretext-line-gap: 0.24rem; }
 :where([data-spw-flow="pretext"][data-text-wrap="volatile"]) { border-left: 2px solid color-mix(in srgb, var(--component-accent, #008080) 24%, transparent); }
 :where([data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-left: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, transparent); }

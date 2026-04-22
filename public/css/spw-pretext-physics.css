@@ -36,6 +36,9 @@
   --pretext-inline-pad: 0;
   --pretext-block-pad: 0;
   --pretext-radius: var(--shape-component, var(--radius-sm, 6px));
+  --pretext-arrival-shift: 0px;
+  --pretext-arrival-opacity: 1;
+  --pretext-arrival-scale: 1;
 
   --pretext-line-gap: 0.16rem;
   --pretext-line-shift: 0px;
@@ -77,6 +80,7 @@
   outline-offset: 0;
   overflow-wrap: anywhere;
   box-shadow: var(--pretext-rail-glow);
+  contain: paint style;
   transition:
     background var(--pretext-transition-fast),
     outline-color var(--pretext-transition-fast),
@@ -117,10 +121,10 @@
   min-width: 0;
   max-width: 100%;
   transform:
-    translateX(var(--pretext-line-shift))
-    scale(var(--pretext-line-scale));
+    translateX(calc(var(--pretext-line-shift) + var(--pretext-arrival-shift)))
+    scale(calc(var(--pretext-line-scale) * var(--pretext-arrival-scale)));
   transform-origin: left center;
-  opacity: var(--pretext-line-opacity);
+  opacity: calc(var(--pretext-line-opacity) * var(--pretext-arrival-opacity));
   transition:
     transform var(--pretext-transition-fast),
     opacity var(--pretext-transition-fast);
@@ -485,6 +489,28 @@
 
 :where(html[data-spw-debug~="pretext"] .pretext-flow-scaffold) {
   --pretext-scaffold-opacity: 1;
+}
+
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-line),
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold) {
+  transition-timing-function: steps(3, end);
+}
+
+:where(html[data-spw-page-arrival-step="1"] [data-spw-flow="pretext"]) {
+  --pretext-arrival-shift: 2px;
+  --pretext-arrival-opacity: 0.92;
+  --pretext-arrival-scale: 0.996;
+}
+
+:where(html[data-spw-page-arrival-step="2"] [data-spw-flow="pretext"]) {
+  --pretext-arrival-shift: 1px;
+  --pretext-arrival-opacity: 0.97;
+  --pretext-arrival-scale: 0.998;
+}
+
+:where(html[data-spw-page-presence="background"] [data-spw-flow="pretext"]) {
+  --pretext-rail-glow: none;
+  --pretext-scaffold-opacity: calc(var(--pretext-scaffold-opacity) * 0.82);
 }
 
 /* ==========================================================================

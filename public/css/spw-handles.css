@@ -134,6 +134,8 @@ header,
   [data-spw-handle="true"],
   :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ) {
+  --handle-arrival-lift: 0px;
+  --handle-arrival-opacity: 1;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -151,8 +153,11 @@ header,
   color: var(--handle-ink);
   text-decoration: none;
   text-shadow: none;
+  opacity: var(--handle-arrival-opacity);
   box-shadow: var(--handle-shadow-rest);
+  transform: translateY(var(--handle-arrival-lift));
   cursor: pointer;
+  contain: paint style;
   transition:
     color var(--handle-duration-fast) var(--handle-ease),
     background-color var(--handle-duration-fast) var(--handle-ease),
@@ -457,6 +462,100 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 
 :where(.spec-pill, .badge, .tag, .pill):hover {
   transform: none;
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .spw-spell-button,
+  .spw-spell-shell,
+  .spw-spell-link
+):is(
+  [data-spw-operator-reversibility="reversible"],
+  [data-spw-operator-reversibility="recoverable"],
+  [data-spw-operator-reversibility="returnable"],
+  [data-spw-operator-reversibility="deferrable"],
+  [data-spw-operator-reversibility="inspectable"],
+  [data-spw-operator-reversibility="revisable"],
+  [data-spw-operator-reversibility="replayable"]
+) {
+  border-style: dashed;
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .spw-spell-button,
+  .spw-spell-shell,
+  .spw-spell-link
+):is(
+  [data-spw-operator-reversibility="committing"],
+  [data-spw-operator-reversibility="sticky"],
+  [data-spw-operator-reversibility="constraining"],
+  [data-spw-operator-reversibility="projected"],
+  [data-spw-operator-reversibility="scoping"]
+) {
+  box-shadow:
+    inset 0 -1.5px 0 color-mix(in srgb, currentColor 22%, transparent),
+    var(--handle-shadow-rest);
+}
+
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"])) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+) {
+  transition-timing-function: steps(3, end);
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+):not(:hover):not(:focus-visible) {
+  --handle-arrival-lift: 2px;
+  --handle-arrival-opacity: 0.92;
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+):not(:hover):not(:focus-visible) {
+  --handle-arrival-lift: 1px;
+  --handle-arrival-opacity: 0.97;
 }
 
 :where(
