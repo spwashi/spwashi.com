@@ -1,3 +1,4 @@
+import { deleteImage, getImageDataUrl, storeImage } from './spw-image-store.js';
 import { emitSpwAction } from './spw-shared.js';
 
 const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
@@ -10,12 +11,31 @@ const DEFAULT_STATE = {
     initiative: [],
     activeInitiativeId: null,
     clocks: [],
+    assets: [],
     notes: '',
     characterBeat: '',
     canonCandidates: '',
     seeds: '',
     updatedAt: ''
 };
+
+const ASSET_KIND_OPTIONS = [
+    { value: 'scene', label: 'Scene' },
+    { value: 'image', label: 'Image' },
+    { value: 'texture', label: 'Texture' },
+    { value: 'item', label: 'Item' },
+    { value: 'threat', label: 'Threat' }
+];
+const ASSET_PRESET_OPTIONS = [
+    { value: 'portrait', label: '4:5 portrait' },
+    { value: 'square', label: '1:1 square' },
+    { value: 'wide', label: '16:9 wide' },
+    { value: 'tall', label: '9:16 tall' }
+];
+const ASSET_KIND_VALUES = new Set(ASSET_KIND_OPTIONS.map((option) => option.value));
+const ASSET_PRESET_VALUES = new Set(ASSET_PRESET_OPTIONS.map((option) => option.value));
+const DEFAULT_ASSET_NAMESPACE = 'table';
+const DEFAULT_ASSET_TIMELINE = 'current';
 
 const makeId = () => {
     if (globalThis.crypto?.randomUUID) {
@@ -38,6 +58,37 @@ const normalizeList = (value) => (
         ? value.filter((item) => item && typeof item === 'object')
         : []
 );
+
+const normalizeAssetKind = (value) => (
+    ASSET_KIND_VALUES.has(value)
+        ? value
+        : 'scene'
+);
+
+const normalizeAssetPreset = (value) => (
+    ASSET_PRESET_VALUES.has(value)
+        ? value
+        : 'wide'
+);
+
+const normalizeAsset = (asset) => ({
+    id: typeof asset.id === 'string' ? asset.id : makeId(),
+    title: typeof asset.title === 'string' ? asset.title : '',
+    kind: normalizeAssetKind(asset.kind),
+    namespace: typeof asset.namespace === 'string' ? asset.namespace : DEFAULT_ASSET_NAMESPACE,
+    timeline: typeof asset.timeline === 'string' ? asset.timeline : DEFAULT_ASSET_TIMELINE,
+    context: typeof asset.context === 'string' ? asset.context : '',
+    tags: typeof asset.tags === 'string' ? asset.tags : '',
+    prompt: typeof asset.prompt === 'string' ? asset.prompt : '',
+    notes: typeof asset.notes === 'string' ? asset.notes : '',
+    imageUrl: typeof asset.imageUrl === 'string' ? asset.imageUrl : '',
+    imageKey: typeof asset.imageKey === 'string' ? asset.imageKey : '',
+    preset: normalizeAssetPreset(asset.preset),
+    collected: Boolean(asset.collected),
+    collapsed: Boolean(asset.collapsed),
+    createdAt: typeof asset.createdAt === 'string' ? asset.createdAt : '',
+    updatedAt: typeof asset.updatedAt === 'string' ? asset.updatedAt : ''
+});
 
 const normalizeState = (value) => {
     const input = value && typeof value === 'object' ? value : {};
@@ -77,6 +128,8 @@ const normalizeState = (value) => {
         ...clock,
         progress: Math.min(clock.progress, clock.segments)
     }));
+
+    state.assets = normalizeList(input.assets).map(normalizeAsset);
 
     return state;
 };
@@ -158,6 +211,44 @@ const createField = ({ id, label, value, rows = 2, placeholder }) => {
     return { field, input };
 };
 
+const createLineField = ({ id, label, value, placeholder, type = 'text' }) => {
+    const input = createElement('input', {
+        id,
+        type,
+        className: 'rpg-gameplay-line-input',
+        value,
+        placeholder
+    });
+
+    const field = createElement('label', { className: 'rpg-gameplay-field' }, [
+        createElement('span', { text: label }),
+        input
+    ]);
+
+    return { field, input };
+};
+
+const createSelectField = ({ id, label, value, options }) => {
+    const input = createElement('select', {
+        id,
+        className: 'rpg-gameplay-line-input'
+    });
+    options.forEach((option) => {
+        input.appendChild(createElement('option', {
+            value: option.value,
+            text: option.label,
+            selected: option.value === value
+        }));
+    });
+
+    const field = createElement('label', { className: 'rpg-gameplay-field' }, [
+        createElement('span', { text: label }),
+        input
+    ]);
+
+    return { field, input };
+};
+
 const formatStatusTime = (iso) => {
     if (!iso) return 'local state not saved yet';
     const date = new Date(iso);
@@ -187,6 +278,31 @@ const previewText = (value, fallback = DASH_VALUE, maxLength = 64) => {
     const normalized = cleanLine(value || '');
     if (!normalized) return fallback;
     return normalized.length > maxLength ? `${normalized.slice(0, maxLength - 1)}…` : normalized;
+};
+
+const makeTimestamp = () => new Date().toISOString();
+
+const buildAssetImageKey = (assetId) => `rpg-wednesday:asset:${assetId}`;
+
+const splitTagList = (value) => (
+    String(value || '')
+        .split(',')
+        .map((part) => cleanLine(part))
+        .filter(Boolean)
+);
+
+const dataUrlToBlob = async (dataUrl) => {
+    const response = await fetch(dataUrl);
+    return response.blob();
+};
+
+const collectAssetImageData = async (asset) => {
+    if (!asset.imageKey) return null;
+    try {
+        return await getImageDataUrl(asset.imageKey);
+    } catch {
+        return null;
+    }
 };
 
 const buildRpgModeDescriptor = () => {
@@ -368,6 +484,16 @@ const buildSessionBrief = (state) => {
         });
     }
 
+    if (state.assets.length) {
+        lines.push('', 'Asset cards:');
+        state.assets.forEach((asset) => {
+            const timeline = cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE;
+            const namespace = cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE;
+            const marker = asset.collected ? '*' : '-';
+            lines.push(`${marker} ${previewText(asset.title, 'asset card')} [${asset.kind}] — ${timeline} / ${namespace}`);
+        });
+    }
+
     if (cleanLine(state.characterBeat)) {
         lines.push('', 'Character beat:', state.characterBeat.trim());
     }
@@ -461,6 +587,7 @@ export const initRpgWednesday = () => {
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-scene', text: '@ scene' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-initiative', text: '@ initiative' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-assets', text: '@ assets' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-notes', text: '~ notes' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' })
     ]);
@@ -521,6 +648,79 @@ export const initRpgWednesday = () => {
         placeholder: 'Moments worth turning into a public recap later'
     });
 
+    const { field: assetTitleField, input: assetTitleInput } = createLineField({
+        id: 'rpg-asset-title',
+        label: 'Asset title',
+        value: '',
+        placeholder: 'Sunken observatory, storm coin, velvet moss texture'
+    });
+    const { field: assetKindField, input: assetKindInput } = createSelectField({
+        id: 'rpg-asset-kind',
+        label: 'Card kind',
+        value: 'scene',
+        options: ASSET_KIND_OPTIONS
+    });
+    const { field: assetNamespaceField, input: assetNamespaceInput } = createLineField({
+        id: 'rpg-asset-namespace',
+        label: 'Namespace',
+        value: DEFAULT_ASSET_NAMESPACE,
+        placeholder: 'table, omen, faction, texture-pack'
+    });
+    const { field: assetTimelineField, input: assetTimelineInput } = createLineField({
+        id: 'rpg-asset-timeline',
+        label: 'Timeline',
+        value: DEFAULT_ASSET_TIMELINE,
+        placeholder: 'current, next-session, cold-open, act-two'
+    });
+    const { field: assetContextField, input: assetContextInput } = createLineField({
+        id: 'rpg-asset-context',
+        label: 'Context',
+        value: '',
+        placeholder: 'Discord riff, live prompt, NPC reveal, texture pull'
+    });
+    const { field: assetTagsField, input: assetTagsInput } = createLineField({
+        id: 'rpg-asset-tags',
+        label: 'Tags',
+        value: '',
+        placeholder: 'glow, moss, brass, flooded, relic'
+    });
+    const { field: assetPresetField, input: assetPresetInput } = createSelectField({
+        id: 'rpg-asset-preset',
+        label: 'Frame preset',
+        value: 'wide',
+        options: ASSET_PRESET_OPTIONS
+    });
+    const { field: assetImageUrlField, input: assetImageUrlInput } = createLineField({
+        id: 'rpg-asset-image-url',
+        label: 'Image URL',
+        value: '',
+        placeholder: 'https://...'
+    });
+    const assetImageUpload = createElement('input', {
+        id: 'rpg-asset-image-upload',
+        className: 'rpg-gameplay-line-input',
+        type: 'file',
+        accept: 'image/*'
+    });
+    const assetImageUploadField = createElement('label', { className: 'rpg-gameplay-field' }, [
+        createElement('span', { text: 'Local image' }),
+        assetImageUpload
+    ]);
+    const { field: assetPromptField, input: assetPromptInput } = createField({
+        id: 'rpg-asset-prompt',
+        label: 'Prompt / interpretation note',
+        value: '',
+        rows: 4,
+        placeholder: 'What should the image or card preserve when it becomes art later?'
+    });
+    const { field: assetNotesField, input: assetNotesInput } = createField({
+        id: 'rpg-asset-notes',
+        label: 'Card notes',
+        value: '',
+        rows: 4,
+        placeholder: 'Table note, provenance, why this belongs in the timeline'
+    });
+
     const initiativeList = createElement('div', {
         className: 'rpg-gameplay-list',
         role: 'list',
@@ -530,6 +730,11 @@ export const initRpgWednesday = () => {
         className: 'rpg-gameplay-list',
         role: 'list',
         'aria-label': 'Gameplay clocks'
+    });
+    const assetList = createElement('div', {
+        className: 'rpg-asset-board',
+        role: 'list',
+        'aria-label': 'RPG asset timeline cards'
     });
     const status = createElement('p', {
         className: 'rpg-gameplay-status',
@@ -561,10 +766,316 @@ export const initRpgWednesday = () => {
         objective: createDashboardStat('Objective'),
         actors: createDashboardStat('Actors'),
         clocks: createDashboardStat('Clocks'),
+        assets: createDashboardStat('Assets'),
+        namespaces: createDashboardStat('Namespaces'),
         turn: createDashboardStat('Turn'),
         pressure: createDashboardStat('Pressure')
     };
     let briefOutput = null;
+    let assetNamespaceFilter = 'all';
+    let assetCollectedOnly = false;
+    let editingAssetId = null;
+    let assetRenderToken = 0;
+    const assetComposerStatus = createElement('p', {
+        className: 'frame-note rpg-asset-composer-status',
+        text: 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.'
+    });
+    const assetNamespaceFilterInput = createElement('select', {
+        id: 'rpg-asset-namespace-filter',
+        className: 'rpg-gameplay-line-input'
+    });
+    const assetNamespaceFilterField = createElement('label', { className: 'rpg-gameplay-field' }, [
+        createElement('span', { text: 'Focus namespace' }),
+        assetNamespaceFilterInput
+    ]);
+    const assetCollectedToggle = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '~ collected only'
+    });
+    const assetBoardStatus = createElement('p', {
+        className: 'frame-note rpg-asset-board-status',
+        text: 'No asset cards yet. Start with one scene or one image so the live board has something stable to return to.'
+    });
+    const assetSaveButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '@ add card'
+    });
+    const assetResetButton = createElement('button', {
+        className: 'operator-chip',
+        type: 'button',
+        text: '! clear draft'
+    });
+
+    const syncNamespaceFilterOptions = () => {
+        const previous = assetNamespaceFilter;
+        const namespaces = Array.from(new Set(
+            state.assets
+                .map((asset) => cleanLine(asset.namespace || ''))
+                .filter(Boolean)
+        )).sort((left, right) => left.localeCompare(right));
+
+        assetNamespaceFilterInput.replaceChildren(
+            createElement('option', { value: 'all', text: 'all namespaces', selected: previous === 'all' }),
+            ...namespaces.map((namespace) => createElement('option', {
+                value: namespace,
+                text: namespace,
+                selected: previous === namespace
+            }))
+        );
+
+        if (previous !== 'all' && !namespaces.includes(previous)) {
+            assetNamespaceFilter = 'all';
+            assetNamespaceFilterInput.value = 'all';
+        }
+    };
+
+    const updateAssetComposerButtons = () => {
+        assetSaveButton.textContent = editingAssetId ? '~ update card' : '@ add card';
+        assetResetButton.textContent = editingAssetId ? '! cancel edit' : '! clear draft';
+        assetCollectedToggle.textContent = assetCollectedOnly ? '~ showing collected' : '~ collected only';
+    };
+
+    const resetAssetComposer = ({ preserveFlow = false } = {}) => {
+        editingAssetId = null;
+        assetTitleInput.value = '';
+        assetTagsInput.value = '';
+        assetImageUrlInput.value = '';
+        assetPromptInput.value = '';
+        assetNotesInput.value = '';
+        assetImageUpload.value = '';
+
+        if (!preserveFlow) {
+            assetKindInput.value = 'scene';
+            assetNamespaceInput.value = DEFAULT_ASSET_NAMESPACE;
+            assetTimelineInput.value = DEFAULT_ASSET_TIMELINE;
+            assetContextInput.value = '';
+            assetPresetInput.value = 'wide';
+        }
+
+        assetComposerStatus.textContent = preserveFlow
+            ? 'Card saved. Namespace, timeline, and preset stayed in place so you can keep adding during the session.'
+            : 'Add a scene, image, texture, item, or threat card. Namespace and timeline let you keep live session riffs stable while the context moves.';
+        updateAssetComposerButtons();
+    };
+
+    const loadAssetIntoComposer = (asset) => {
+        editingAssetId = asset.id;
+        assetTitleInput.value = asset.title;
+        assetKindInput.value = asset.kind;
+        assetNamespaceInput.value = asset.namespace;
+        assetTimelineInput.value = asset.timeline;
+        assetContextInput.value = asset.context;
+        assetTagsInput.value = asset.tags;
+        assetPresetInput.value = asset.preset;
+        assetImageUrlInput.value = asset.imageUrl;
+        assetPromptInput.value = asset.prompt;
+        assetNotesInput.value = asset.notes;
+        assetImageUpload.value = '';
+        assetComposerStatus.textContent = `Editing ${previewText(asset.title, 'asset card', 48)}. Leave the image fields alone if the current image should stay attached.`;
+        updateAssetComposerButtons();
+        assetTitleInput.focus();
+    };
+
+    const moveAsset = (assetId, delta) => {
+        const index = state.assets.findIndex((asset) => asset.id === assetId);
+        const target = index + delta;
+        if (index < 0 || target < 0 || target >= state.assets.length) return;
+        const next = [...state.assets];
+        const [asset] = next.splice(index, 1);
+        next.splice(target, 0, asset);
+        state.assets = next;
+        save(delta < 0 ? 'moved asset card earlier' : 'moved asset card later');
+        renderAssets();
+    };
+
+    const removeAsset = async (assetId) => {
+        const asset = state.assets.find((item) => item.id === assetId);
+        if (!asset) return;
+        if (asset.imageKey) {
+            try {
+                await deleteImage(asset.imageKey);
+            } catch {
+                // Ignore image-store cleanup failures; metadata removal still matters.
+            }
+        }
+        state.assets = state.assets.filter((item) => item.id !== assetId);
+        if (editingAssetId === assetId) resetAssetComposer();
+        save('removed asset atlas card');
+        renderAssets();
+    };
+
+    const buildAssetCard = async (asset, index) => {
+        const imageSrc = asset.imageKey
+            ? await collectAssetImageData(asset)
+            : cleanLine(asset.imageUrl || '');
+        const card = createElement('article', {
+            className: `rpg-asset-card${asset.collected ? ' is-collected' : ''}${asset.collapsed ? ' is-collapsed' : ''}`,
+            role: 'listitem',
+            'data-rpg-asset-kind': asset.kind,
+            'data-rpg-asset-preset': asset.preset,
+            'data-rpg-asset-image-state': imageSrc ? 'present' : 'empty'
+        });
+        const meta = createElement('div', { className: 'rpg-asset-card__meta' }, [
+            createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
+            createElement('span', { className: 'spec-pill', text: cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE }),
+            createElement('span', { className: 'spec-pill', text: cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE })
+        ]);
+        const controls = createElement('div', { className: 'rpg-asset-card__controls' }, [
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: asset.collapsed ? '@ expand' : '@ collapse'
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: asset.collected ? '* collected' : '* collect'
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: '~ edit'
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: 'up'
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: 'down'
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: 'remove'
+            })
+        ]);
+        const [collapseButton, collectButton, editButton, upButton, downButton, removeButton] = Array.from(controls.children);
+        const heading = createElement('div', { className: 'rpg-asset-card__heading' }, [
+            createElement('strong', { text: asset.title }),
+            createElement('span', {
+                className: 'rpg-asset-card__context',
+                text: previewText(asset.context, 'no context set', 72)
+            })
+        ]);
+        const media = createElement('div', { className: 'rpg-asset-card__media' }, [
+            imageSrc
+                ? createElement('img', {
+                    src: imageSrc,
+                    alt: `${asset.title} reference card`,
+                    loading: 'lazy',
+                    decoding: 'async'
+                })
+                : createElement('div', { className: 'rpg-asset-card__placeholder' }, [
+                    createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
+                    createElement('strong', { text: previewText(asset.title, 'asset card', 48) }),
+                    createElement('span', { text: previewText(asset.context, 'attach an image or keep this as a text-only card', 80) })
+                ])
+        ]);
+        const body = createElement('div', { className: 'rpg-asset-card__body' }, []);
+        body.hidden = asset.collapsed;
+        const tagList = splitTagList(asset.tags);
+        if (tagList.length) {
+            body.appendChild(createElement('div', { className: 'spec-strip rpg-asset-card__tags' }, tagList.map((tag) => (
+                createElement('span', { className: 'spec-pill', text: tag })
+            ))));
+        }
+        if (cleanLine(asset.prompt)) {
+            body.appendChild(createElement('p', {
+                className: 'rpg-asset-card__prompt',
+                text: asset.prompt.trim()
+            }));
+        }
+        if (cleanLine(asset.notes)) {
+            body.appendChild(createElement('p', {
+                className: 'frame-note rpg-asset-card__notes',
+                text: asset.notes.trim()
+            }));
+        }
+        if (!tagList.length && !cleanLine(asset.prompt) && !cleanLine(asset.notes)) {
+            body.appendChild(createElement('p', {
+                className: 'frame-note',
+                text: 'No tags or notes yet. Keep the card light now, then expand it when the riff becomes durable.'
+            }));
+        }
+
+        collapseButton.addEventListener('click', () => {
+            asset.collapsed = !asset.collapsed;
+            save(asset.collapsed ? 'collapsed asset card' : 'expanded asset card');
+            renderAssets();
+        });
+        collectButton.addEventListener('click', () => {
+            asset.collected = !asset.collected;
+            save(asset.collected ? 'collected asset card' : 'uncollected asset card');
+            renderAssets();
+        });
+        editButton.addEventListener('click', () => loadAssetIntoComposer(asset));
+        upButton.addEventListener('click', () => moveAsset(asset.id, -1));
+        downButton.addEventListener('click', () => moveAsset(asset.id, 1));
+        removeButton.addEventListener('click', () => {
+            removeAsset(asset.id);
+        });
+
+        upButton.disabled = index === 0;
+        downButton.disabled = index === state.assets.length - 1;
+
+        card.append(
+            createElement('div', { className: 'rpg-asset-card__topline' }, [meta, controls]),
+            heading,
+            media,
+            body
+        );
+
+        return card;
+    };
+
+    const renderAssets = async () => {
+        const renderToken = ++assetRenderToken;
+        syncNamespaceFilterOptions();
+        assetList.replaceChildren();
+
+        const filteredAssets = state.assets.filter((asset) => {
+            const namespace = cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE;
+            const namespaceMatch = assetNamespaceFilter === 'all' || namespace === assetNamespaceFilter;
+            const collectedMatch = !assetCollectedOnly || asset.collected;
+            return namespaceMatch && collectedMatch;
+        });
+
+        if (!filteredAssets.length) {
+            assetList.appendChild(assetBoardStatus);
+            return;
+        }
+
+        const grouped = new Map();
+        filteredAssets.forEach((asset) => {
+            const timeline = cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE;
+            if (!grouped.has(timeline)) grouped.set(timeline, []);
+            grouped.get(timeline).push({ asset });
+        });
+
+        const timelineSections = await Promise.all(Array.from(grouped.entries()).map(async ([timeline, assets]) => {
+            const cards = await Promise.all(assets.map(async ({ asset }) => (
+                buildAssetCard(asset, state.assets.findIndex((item) => item.id === asset.id))
+            )));
+            return createElement('section', {
+                className: 'rpg-asset-timeline',
+                'data-rpg-asset-timeline': timeline
+            }, [
+                createElement('div', { className: 'rpg-asset-timeline__heading' }, [
+                    createElement('h4', { text: timeline }),
+                    createElement('span', { className: 'frame-card-sigil', text: `${assets.length} card${assets.length === 1 ? '' : 's'}` })
+                ]),
+                createElement('div', { className: 'rpg-asset-timeline__cards' }, cards)
+            ]);
+        }));
+
+        if (renderToken !== assetRenderToken) return;
+        assetList.replaceChildren(...timelineSections);
+    };
 
     const refreshDerivedSurfaces = () => {
         const activeActor = getActiveActor(state);
@@ -574,6 +1085,10 @@ export const initRpgWednesday = () => {
         dashboardValues.objective.textContent = previewText(state.objective);
         dashboardValues.actors.textContent = state.initiative.length ? String(state.initiative.length) : DASH_VALUE;
         dashboardValues.clocks.textContent = state.clocks.length ? String(state.clocks.length) : DASH_VALUE;
+        dashboardValues.assets.textContent = state.assets.length ? String(state.assets.length) : DASH_VALUE;
+        dashboardValues.namespaces.textContent = state.assets.length
+            ? String(new Set(state.assets.map((asset) => cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE)).size)
+            : DASH_VALUE;
         dashboardValues.turn.textContent = activeActor
             ? previewText(activeActor.name, 'unnamed actor')
             : DASH_VALUE;
@@ -603,6 +1118,97 @@ export const initRpgWednesday = () => {
         state.canonCandidates = canonCandidatesInput.value;
         state.seeds = seedsInput.value;
     };
+
+    const collectExportState = async () => {
+        const assets = await Promise.all(state.assets.map(async (asset) => {
+            const exported = { ...asset };
+            const imageDataUrl = await collectAssetImageData(asset);
+            if (imageDataUrl) exported.imageDataUrl = imageDataUrl;
+            return exported;
+        }));
+
+        return {
+            ...state,
+            assets
+        };
+    };
+
+    const saveAssetComposerState = async () => {
+        const title = cleanLine(assetTitleInput.value || '');
+        if (!title) {
+            assetComposerStatus.textContent = 'Asset cards need a title so the live board stays scannable.';
+            assetTitleInput.focus();
+            return;
+        }
+
+        const existing = editingAssetId
+            ? state.assets.find((asset) => asset.id === editingAssetId) || null
+            : null;
+        const asset = existing ? { ...existing } : normalizeAsset({ id: makeId() });
+        const hasNewFile = Boolean(assetImageUpload.files?.[0]);
+        const nextImageUrl = cleanLine(assetImageUrlInput.value || '');
+
+        asset.title = title;
+        asset.kind = normalizeAssetKind(assetKindInput.value);
+        asset.namespace = cleanLine(assetNamespaceInput.value || '') || DEFAULT_ASSET_NAMESPACE;
+        asset.timeline = cleanLine(assetTimelineInput.value || '') || DEFAULT_ASSET_TIMELINE;
+        asset.context = cleanLine(assetContextInput.value || '');
+        asset.tags = assetTagsInput.value;
+        asset.prompt = assetPromptInput.value;
+        asset.notes = assetNotesInput.value;
+        asset.preset = normalizeAssetPreset(assetPresetInput.value);
+        asset.createdAt ||= makeTimestamp();
+        asset.updatedAt = makeTimestamp();
+
+        if (hasNewFile) {
+            const imageKey = buildAssetImageKey(asset.id);
+            await storeImage(imageKey, assetImageUpload.files[0]);
+            asset.imageKey = imageKey;
+            asset.imageUrl = '';
+        } else if (nextImageUrl) {
+            if (asset.imageKey) {
+                try {
+                    await deleteImage(asset.imageKey);
+                } catch {
+                    // Prefer new metadata over stale local image state.
+                }
+            }
+            asset.imageKey = '';
+            asset.imageUrl = nextImageUrl;
+        }
+
+        if (existing) {
+            state.assets = state.assets.map((item) => (
+                item.id === asset.id ? asset : item
+            ));
+            save('updated asset atlas card');
+        } else {
+            state.assets.push(asset);
+            save('added asset atlas card');
+        }
+
+        await renderAssets();
+        resetAssetComposer({ preserveFlow: true });
+    };
+
+    assetNamespaceFilterInput.addEventListener('change', () => {
+        assetNamespaceFilter = assetNamespaceFilterInput.value || 'all';
+        renderAssets();
+    });
+
+    assetCollectedToggle.addEventListener('click', () => {
+        assetCollectedOnly = !assetCollectedOnly;
+        updateAssetComposerButtons();
+        renderAssets();
+    });
+
+    assetSaveButton.addEventListener('click', () => {
+        saveAssetComposerState();
+    });
+
+    assetResetButton.addEventListener('click', () => {
+        resetAssetComposer();
+    });
 
     const renderInitiative = () => {
         initiativeList.replaceChildren();
@@ -858,6 +1464,49 @@ export const initRpgWednesday = () => {
         clocksList
     ]);
 
+    const assetPanel = createElement('div', {
+        className: 'frame-panel rpg-gameplay-panel rpg-gameplay-panel--assets',
+        id: 'rpg-kit-assets',
+        'data-spw-feature': 'rpg-kit-assets'
+    }, [
+        createElement('h3', { text: 'Asset Atlas' }),
+        createElement('p', {
+            className: 'frame-note',
+            text: 'Use this during the session to stage scenes, textures, items, threats, and Midjourney riffs in a timeline. Cards stay local, can collapse or collect, and are arranged to be easy to screenshot later.'
+        }),
+        createElement('div', { className: 'rpg-asset-atlas' }, [
+            createElement('section', { className: 'rpg-asset-atlas__composer' }, [
+                createElement('div', { className: 'rpg-asset-atlas__field-grid' }, [
+                    assetTitleField,
+                    assetKindField,
+                    assetNamespaceField,
+                    assetTimelineField,
+                    assetContextField,
+                    assetTagsField,
+                    assetPresetField,
+                    assetImageUrlField,
+                    assetImageUploadField
+                ]),
+                assetPromptField,
+                assetNotesField,
+                createElement('div', { className: 'rpg-gameplay-actions' }, [
+                    assetSaveButton,
+                    assetResetButton
+                ]),
+                assetComposerStatus
+            ]),
+            createElement('section', { className: 'rpg-asset-atlas__board-panel' }, [
+                createElement('div', { className: 'rpg-asset-atlas__toolbar' }, [
+                    assetNamespaceFilterField,
+                    createElement('div', { className: 'rpg-gameplay-actions' }, [
+                        assetCollectedToggle
+                    ])
+                ]),
+                assetList
+            ])
+        ])
+    ]);
+
     briefOutput = createElement('textarea', {
         className: 'rpg-gameplay-input rpg-gameplay-brief',
         rows: 9,
@@ -918,10 +1567,11 @@ export const initRpgWednesday = () => {
         text: '! clear local'
     });
 
-    exportButton.addEventListener('click', () => {
+    exportButton.addEventListener('click', async () => {
         syncTextState();
         save('exported local gameplay state');
-        downloadText('rpg-wednesday-local-state.json', JSON.stringify(state, null, 2));
+        const exportState = await collectExportState();
+        downloadText('rpg-wednesday-local-state.json', JSON.stringify(exportState, null, 2));
     });
 
     importInput.addEventListener('change', async () => {
@@ -933,7 +1583,31 @@ export const initRpgWednesday = () => {
             importInput.value = '';
             return;
         }
+        await Promise.all(state.assets.map(async (asset) => {
+            if (!asset.imageKey) return;
+            try {
+                await deleteImage(asset.imageKey);
+            } catch {
+                // Ignore cleanup failure before import; new state still loads.
+            }
+        }));
         const next = normalizeState(parsed);
+        const importedAssets = normalizeList(parsed.assets);
+        await Promise.all(importedAssets.map(async (asset) => {
+            if (typeof asset.imageDataUrl !== 'string' || !asset.imageDataUrl.startsWith('data:')) return;
+            const assetId = typeof asset.id === 'string' ? asset.id : makeId();
+            const imageKey = buildAssetImageKey(assetId);
+            try {
+                await storeImage(imageKey, await dataUrlToBlob(asset.imageDataUrl));
+                const nextAsset = next.assets.find((item) => item.id === assetId);
+                if (nextAsset) {
+                    nextAsset.imageKey = imageKey;
+                    nextAsset.imageUrl = '';
+                }
+            } catch {
+                // Keep imported metadata even if the image blob fails to persist.
+            }
+        }));
         state = next;
         sceneInput.value = state.scene;
         objectiveInput.value = state.objective;
@@ -945,12 +1619,22 @@ export const initRpgWednesday = () => {
         save('imported local gameplay state');
         renderInitiative();
         renderClocks();
+        resetAssetComposer();
+        await renderAssets();
         importInput.value = '';
     });
 
-    clearButton.addEventListener('click', () => {
+    clearButton.addEventListener('click', async () => {
         const confirmed = window.confirm('Clear RPG Wednesday local gameplay state from this browser? Export first if you want a backup.');
         if (!confirmed) return;
+        await Promise.all(state.assets.map(async (asset) => {
+            if (!asset.imageKey) return;
+            try {
+                await deleteImage(asset.imageKey);
+            } catch {
+                // Ignore per-image cleanup failure during a full reset.
+            }
+        }));
         storage.clear();
         state = cloneDefaultState();
         sceneInput.value = '';
@@ -963,6 +1647,8 @@ export const initRpgWednesday = () => {
         status.textContent = 'local gameplay state cleared';
         renderInitiative();
         renderClocks();
+        resetAssetComposer();
+        await renderAssets();
         refreshDerivedSurfaces();
         emitSpwAction('!local_gameplay.clear', 'cleared local gameplay state');
     });
@@ -991,6 +1677,7 @@ export const initRpgWednesday = () => {
             ]),
             initiativePanel,
             clocksPanel,
+            assetPanel,
             createElement('div', {
                 className: 'frame-panel rpg-gameplay-panel',
                 id: 'rpg-kit-notes',
@@ -1014,6 +1701,8 @@ export const initRpgWednesday = () => {
 
     renderInitiative();
     renderClocks();
+    renderAssets();
+    updateAssetComposerButtons();
     refreshDerivedSurfaces();
 
     return { storageKey: STORAGE_KEY };

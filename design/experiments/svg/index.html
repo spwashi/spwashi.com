@@ -8,12 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • SVG Experiments</title>
-    <meta name="description" content="A live SVG grammar lab for path weight, label spacing, and wonder-field carryover on Spwashi.">
+    <meta name="description" content="A live SVG grammar lab for path weight, label spacing, character-ready diagram hosts, and model handoff on Spwashi.">
     <link rel="canonical" href="https://spwashi.com/design/experiments/svg/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
     <meta property="og:title" content="Spwashi • SVG Experiments"/>
-    <meta property="og:description" content="A live SVG grammar lab for path weight, label spacing, and wonder-field carryover on Spwashi."/>
+    <meta property="og:description" content="A live SVG grammar lab for path weight, label spacing, character-ready diagram hosts, and model handoff on Spwashi."/>
     <meta property="og:url" content="https://spwashi.com/design/experiments/svg/"/>
     <script type="application/ld+json" data-spw-generated="breadcrumbs">
         {
@@ -80,6 +80,7 @@
                         <span class="spec-pill">path grammar</span>
                         <span class="spec-pill">label grammar</span>
                         <span class="spec-pill">shared field</span>
+                        <span class="spec-pill">model handoff</span>
                     </div>
                 </div>
 
@@ -92,9 +93,17 @@
                     label spacing, and how much the graphic feels carried by the surrounding surface.
                 </p>
 
+                <p>
+                    SVG is also where the site starts becoming useful for character and asset exploration. The same grammar
+                    that shapes a diagram can also shape speech bubble materials, enchantment seams, stabilization rings,
+                    tokens, silhouettes, and reusable props. A good SVG host should be easy to continue by hand and easy to
+                    hand off to a simpler coding model without losing the original contract.
+                </p>
+
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
                     <a class="operator-chip" href="#diagram-bundles">~ bundles</a>
                     <a class="operator-chip" href="#svg-specimens">^ specimens</a>
+                    <a class="operator-chip" href="#svg-handoff-register">@ handoff</a>
                     <a class="operator-chip" href="#svg-token-register">? token register</a>
                     <a class="operator-chip" href="/design/experiments/css/">open CSS experiments</a>
                     <a class="operator-chip" href="/topics/software/renderers/">open renderers</a>
@@ -194,17 +203,17 @@
                 </div>
             </section>
 
-            <section class="site-frame design-experiment-frame" id="svg-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis">
+            <section class="site-frame design-experiment-frame" id="svg-specimens" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="svg_specimen_handoff" data-spw-prompt-teaser="Reveal an SVG handoff seed from the current specimen: named nodes, diagram posture, material cues, and what another model may safely change.">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#svg-specimens">^ "svg_specimens"</a>
                     <h2>Diagram Surface Carryover</h2>
                 </div>
                 <p class="frame-note">
-                    The same grammar now affects path cadence, label spacing, and host contour. This is where SVG stops being an exception and becomes part of the same system.
+                    The same grammar now affects path cadence, label spacing, and host contour. This is where SVG stops being an exception and becomes part of the same system, and where a handoff-ready diagram starts to earn its keep.
                 </p>
 
                 <div class="design-specimen-grid design-specimen-grid--wide">
-                    <figure class="spw-svg-figure design-svg-stage" aria-labelledby="diagram-figure-title">
+                    <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="diagram-posture" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-motion="static" data-spw-svg-companion="rail" aria-labelledby="diagram-figure-title">
                         <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 520" role="img" aria-labelledby="diagram-figure-title diagram-figure-desc">
                             <title id="diagram-figure-title">Diagram posture specimen</title>
                             <desc id="diagram-figure-desc">A staged diagram showing authored seed, contour grammar, stroke grammar, field resonance, and route carryover.</desc>
@@ -216,31 +225,31 @@
                             <path class="spw-svg-flow spw-svg-flow--animated" d="M154 338 C236 370 318 368 402 330 S550 246 632 280 748 370 830 340"></path>
                             <path class="spw-svg-flow" d="M230 252 H730"></path>
 
-                            <g class="op-node--frame">
+                            <g class="op-node--frame" id="diagram-authored-seed">
                                 <rect class="spw-svg-node spw-svg-node--frame design-svg-node-rect" x="94" y="128" width="152" height="70"></rect>
                                 <text class="spw-svg-label" x="118" y="169">#&gt;authored_seed</text>
                                 <text class="spw-svg-note" x="118" y="190">base surface intent</text>
                             </g>
 
-                            <g class="op-node--probe">
+                            <g class="op-node--probe" id="diagram-contour-profile">
                                 <rect class="spw-svg-node spw-svg-node--probe design-svg-node-rect" x="314" y="124" width="182" height="78"></rect>
                                 <text class="spw-svg-label" x="338" y="168">? contour_profile</text>
                                 <text class="spw-svg-note" x="338" y="191">tight | balanced | soft</text>
                             </g>
 
-                            <g class="op-node--binding">
+                            <g class="op-node--binding" id="diagram-stroke-profile">
                                 <rect class="spw-svg-node spw-svg-node--binding design-svg-node-rect" x="560" y="120" width="176" height="84"></rect>
                                 <text class="spw-svg-label" x="584" y="166">= stroke_profile</text>
                                 <text class="spw-svg-note" x="584" y="190">hairline | structural | bold</text>
                             </g>
 
-                            <g class="op-node--surface">
+                            <g class="op-node--surface" id="diagram-field-resonance">
                                 <rect class="spw-svg-node spw-svg-node--surface design-svg-node-rect" x="212" y="286" width="198" height="84"></rect>
                                 <text class="spw-svg-label" x="236" y="332">&gt; field_resonance</text>
                                 <text class="spw-svg-note" x="236" y="356">local | field | choral</text>
                             </g>
 
-                            <g class="op-node--stream">
+                            <g class="op-node--stream" id="diagram-route-carryover">
                                 <rect class="spw-svg-node spw-svg-node--stream design-svg-node-rect" x="542" y="286" width="224" height="84"></rect>
                                 <text class="spw-svg-label" x="566" y="332">* route_carryover</text>
                                 <text class="spw-svg-note" x="566" y="356">wonder memory persists</text>
@@ -249,9 +258,16 @@
                             <text class="spw-svg-note" x="76" y="56">diagram host responds to contour, stroke, and field settings from the same root state as the rest of the site</text>
                             <text class="spw-svg-note" x="724" y="480">follow the tuned state into nearby routes</text>
                         </svg>
+                        <aside class="spw-svg-rail" aria-label="Diagram handoff register">
+                            <a class="operator-chip" data-spw-operator="frame" href="#diagram-authored-seed">authored seed</a>
+                            <a class="operator-chip" data-spw-operator="probe" href="#diagram-contour-profile">contour profile</a>
+                            <a class="operator-chip" data-spw-operator="binding" href="#diagram-stroke-profile">stroke profile</a>
+                            <a class="operator-chip" data-spw-operator="surface" href="#diagram-field-resonance">field resonance</a>
+                            <a class="operator-chip" data-spw-operator="stream" href="#diagram-route-carryover">route carryover</a>
+                        </aside>
 
                         <figcaption>
-                            <p>The outer frame responds most clearly to contour profile. The paths and node seams respond most clearly to stroke profile. The felt carryover into neighboring links depends on field resonance plus wonder memory.</p>
+                            <p>The outer frame responds most clearly to contour profile. The paths and node seams respond most clearly to stroke profile. The felt carryover into neighboring links depends on field resonance plus wonder memory. The named nodes make the host easier to discuss, revise, and hand off.</p>
                         </figcaption>
                     </figure>
 
@@ -282,13 +298,48 @@
                 </div>
             </section>
 
+            <section class="site-frame design-experiment-frame" id="svg-handoff-register" data-spw-kind="frame" data-spw-role="handoff" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#svg-handoff-register">@ "svg_handoff_register"</a>
+                    <h2>What A Good SVG Handoff Includes</h2>
+                </div>
+                <p class="frame-note">
+                    A naive model should not have to reverse-engineer the whole page. Give it the local contract: what the host is for, what material cues matter, and which seams should stay stable.
+                </p>
+
+                <div class="spec-grid">
+                    <article class="frame-panel">
+                        <h3>Role before style</h3>
+                        <p>Name whether the SVG is a diagram, speech bubble study, character sheet, token set, map mark, or ritual prop. The role constrains the geometry better than mood words alone.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Material cues</h3>
+                        <p>Say what the lines are pretending to be: chalk, clay seams, stitched paper, glass, stabilized enchantment rings, or speech-bubble membranes. That keeps trope physics from turning vague.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Stable seams</h3>
+                        <p>Keep node ids, operator roles, and reuse targets explicit. A later model can change size, ornament, or local detail, but it should not have to guess which parts repeat across the family.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Mutation budget</h3>
+                        <p>Tell the next tool what can move: palette, border treatment, posture, accessory marks, label copy, or texture density. Tell it what should stay anchored: silhouette, reading order, and structural slots.</p>
+                    </article>
+                </div>
+
+                <nav class="frame-operators" aria-label="SVG handoff routes">
+                    <a class="operator-chip" href="/topics/craft/svg/">svg storytelling</a>
+                    <a class="operator-chip" href="/about/website/#promptability-register">promptability</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
+                </nav>
+            </section>
+
             <section class="site-frame design-experiment-frame" id="svg-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
                 <div class="frame-heading">
                     <a class="frame-sigil" href="#svg-token-register">? "svg_token_register"</a>
                     <h2>Current Diagram Token Register</h2>
                 </div>
                 <p class="frame-note">
-                    These values are read from the root after the current settings have been applied.
+                    These values are read from the root after the current settings have been applied. They are part of the handoff contract when a diagram needs to stay in family across tools.
                 </p>
 
                 <div class="design-token-grid">
