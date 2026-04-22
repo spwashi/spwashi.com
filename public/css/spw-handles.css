@@ -1146,29 +1146,22 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .spw-spell-path {
   display: grid;
-  gap: 0.38rem;
+  gap: 0.18rem;
   min-width: 0;
   position: relative;
-  margin-block: 0.35rem 0.75rem;
-  padding: 0.24rem 0.56rem;
-  border: 1px solid color-mix(in srgb, var(--teal, #008080) 18%, transparent);
-  border-radius: 0.42rem;
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--teal, #008080) 10%, transparent) 0,
-      transparent 48%
-    ),
-    color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  margin-block: 0.24rem 0.56rem;
+  padding: 0.18rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--teal, #008080) 16%, transparent);
+  border-radius: 0;
+  background: transparent;
   color: var(--ink-soft);
   font-family: var(--handle-meta-font);
   font-size: 0.72rem;
-  contain: paint style;
-  isolation: isolate;
+  contain: layout style;
   transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    background-color 120ms ease;
+    color 120ms ease,
+    opacity 120ms ease;
 }
 
 :where(.site-header, body > header) .spw-spell-path {
@@ -1178,21 +1171,20 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 }
 
 .spw-spell-path[data-spw-breadcrumb-reversible="true"] {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+  box-shadow: none;
 }
 
 .spw-spell-path__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem 0.56rem;
-  flex-wrap: wrap;
+  gap: 0.28rem 0.5rem;
+  min-width: 0;
 }
 
 .spw-spell-path-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.28rem 0.46rem;
+  gap: 0.24rem 0.4rem;
   min-width: 0;
   padding: 0;
   border: 0;
@@ -1210,13 +1202,13 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .spw-spell-path__title {
   color: var(--ink-soft);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .spw-spell-path__summary {
-  color: var(--ink-soft);
+  color: color-mix(in srgb, var(--ink-soft) 82%, var(--ink, rgba(14, 18, 20, 0.92)) 18%);
   font-size: 0.68rem;
   line-height: 1.2;
 }
@@ -1225,33 +1217,28 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   display: inline-flex;
   align-items: center;
   gap: 0.32rem;
-  min-height: 1.9rem;
-  padding: 0.2rem 0.52rem;
-  border: 1px solid color-mix(in srgb, var(--teal, #008080) 20%, transparent);
+  min-height: auto;
+  padding: 0;
+  border: 0;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background: transparent;
+  color: var(--ink-soft);
   font: inherit;
-  contain: paint style;
   cursor: pointer;
   transition:
-    border-color 140ms ease,
-    background-color 140ms ease,
     color 140ms ease,
-    transform 140ms ease;
+    opacity 140ms ease;
 }
 
 .spw-spell-shell:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--teal, #008080) 34%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
   outline: none;
-  transform: translateY(-1px);
 }
 
 .spw-spell-shell-token {
   color: var(--teal);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1259,7 +1246,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .spw-spell-shell-state {
   color: var(--ink-soft);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
 }
 
 .spw-spell-trail {
@@ -1386,7 +1373,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 /* The breadcrumb and shell expose the same settle/open physics as the header. */
 .spw-spell-path[data-spw-breadcrumb-menu-state="open"] {
-  border-color: color-mix(in srgb, var(--teal, #008080) 26%, transparent);
+  color: color-mix(in srgb, var(--ink-soft) 76%, var(--ink, rgba(14, 18, 20, 0.92)) 24%);
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-clarity="project"] {
@@ -1398,8 +1385,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-state="open"] .spw-spell-shell {
-  border-color: color-mix(in srgb, var(--teal, #008080) 28%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
 .spw-spell-path[data-spw-breadcrumb-menu-state="closed"][data-spw-breadcrumb-reversible="true"] {
@@ -1426,9 +1412,9 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   }
 
   .spw-spell-path {
-    gap: 0.2rem;
-    margin-block: 0.16rem 0.22rem;
-    padding: 0.16rem 0.34rem;
+    gap: 0.12rem;
+    margin-block: 0.08rem 0.18rem;
+    padding: 0.12rem 0 0;
   }
 
   .spw-spell-path__header {
@@ -1450,12 +1436,12 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   }
 
   .spw-spell-path[data-spw-breadcrumb-state="closed"] {
-    padding-block: 0.12rem;
+    padding-block: 0.08rem 0;
   }
 
   .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell {
-    min-height: 1.72rem;
-    padding: 0.14rem 0.44rem;
+    min-height: auto;
+    padding: 0;
   }
 
   .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell-state {

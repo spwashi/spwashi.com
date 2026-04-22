@@ -272,10 +272,10 @@ function renderBreadcrumbSpell() {
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
         aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} cognitive path. ${compactSummary}.`)}">
-        <span class="spw-spell-path__title">cognitive path</span>
+        <span class="spw-spell-path__title">path</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
-      ${renderShellControl(shellSnapshot)}
+      ${compact ? '' : renderShellControl(shellSnapshot)}
     </div>
     <ol class="spw-spell-trail" aria-label="Current cognitive breadcrumb">
       ${items.join('')}
@@ -320,7 +320,7 @@ function renderBreadcrumbButton({ kind, action, token, label, current = false, s
 
 function renderShellControl(shellSnapshot) {
   const action = shellSnapshot.mode === 'toggle' ? 'toggle-menu' : 'focus-nav';
-  const label = `${humanizePathPart(shellSnapshot.topology)} · ${shellSnapshot.state}`;
+  const label = humanizePathPart(shellSnapshot.topology);
   const pressed = shellSnapshot.mode === 'toggle' && shellSnapshot.state === 'open';
 
   return `
@@ -329,8 +329,8 @@ function renderShellControl(shellSnapshot) {
       type="button"
       data-spw-breadcrumb-action="${escapeAttribute(action)}"
       aria-pressed="${pressed ? 'true' : 'false'}"
-      aria-label="${escapeAttribute(`Shell menu ${label}. ${shellSnapshot.returnHint}.`)}">
-      <span class="spw-spell-shell-token">!menu</span>
+      aria-label="${escapeAttribute(`Menu controls. ${shellSnapshot.returnHint}.`)}">
+      <span class="spw-spell-shell-token">menu</span>
       <span class="spw-spell-shell-state">${escapeHtml(label)}</span>
     </button>
   `;

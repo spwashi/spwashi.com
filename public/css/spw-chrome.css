@@ -204,12 +204,10 @@
 .spw-header-trace {
   grid-area: trace;
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.45rem var(--spw-shell-trace-gap, 0.7rem);
+  display: block;
   align-items: start;
   min-width: 0;
-  padding-inline: clamp(0rem, 1vw, 0.3rem);
+  padding-inline: 0;
   opacity: var(--spw-header-trace-opacity, 1);
   transform: translateY(var(--spw-header-trace-shift, 0px));
   transition:
@@ -218,15 +216,14 @@
 }
 
 .spw-header-trace > .spw-experience-memo {
-  grid-column: 1 / -1;
-  margin-top: -0.1rem;
+  margin-top: 0.18rem;
 }
 
 :where(.site-header, body > header) .spw-spell-path {
   margin: 0;
   min-width: 0;
-  padding: 0.24rem 0.52rem;
-  border-radius: var(--shell-panel-radius-tight);
+  padding: 0.08rem 0 0;
+  border-radius: 0;
   font-size: var(--text-size-label, 0.76rem);
 }
 
