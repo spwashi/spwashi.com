@@ -974,6 +974,36 @@ a.frame-card:is(:hover, :focus-visible),
   opacity: 1;
 }
 
+:where(.site-frame > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+  max-inline-size: 66ch;
+  text-wrap: pretty;
+}
+
+:where(
+  .site-frame > .frame-heading + p,
+  .site-frame > h1 + p,
+  .site-frame > h2 + p,
+  .site-frame > h3 + p,
+  .site-frame > .spec-kicker + h1 + p,
+  .site-frame > .spec-kicker + h2 + p,
+  .site-frame > .frame-topline + .spec-kicker + h1 + p,
+  .site-frame > .frame-topline + .spec-kicker + h2 + p
+):not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker) {
+  font-size: clamp(1.01rem, 0.96rem + 0.34vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.62;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, transparent);
+}
+
+:where(.site-frame > p + p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+  color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
+}
+
+:where(.site-frame > p + p + p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 94%, transparent);
+  font-size: 0.985em;
+}
+
 /* ==========================================================================
    8. Hero + heading thresholds
    ========================================================================== */
