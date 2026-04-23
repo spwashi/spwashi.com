@@ -372,10 +372,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 }
 
 .spec-pill {
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
-  border-color: var(--handle-line-soft);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
   border-radius: var(--shape-control, 0.78rem);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
 :where(
@@ -431,9 +432,9 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   appearance: none;
   -webkit-appearance: none;
   border-radius: var(--handle-radius-tight);
-  background: var(--semantic-metadata-bg, color-mix(in srgb, var(--surface-soft, #fff) 84%, transparent));
-  color: var(--semantic-metadata-ink, var(--handle-ink-soft));
-  border-color: var(--semantic-metadata-line, var(--handle-line-soft));
+  background: var(--semantic-metadata-bg, color-mix(in oklab, var(--surface-soft, #fff) 88%, var(--active-op-color, var(--teal)) 12%));
+  color: var(--semantic-metadata-ink, color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%));
+  border-color: var(--semantic-metadata-line, color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%));
   pointer-events: auto;
   cursor: pointer;
   user-select: none;
@@ -441,13 +442,14 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   -webkit-touch-callout: none;
   font: inherit;
   text-align: left;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 /* Substrate-aware tags and guide chips inherit the broader linguistic system. */
 :where(.spw-component-tag, .spw-guide-chip)[data-spw-substrate] {
-  color: var(--spw-substrate-color, var(--handle-ink-soft));
-  border-color: color-mix(in srgb, var(--spw-substrate-border, var(--handle-line-soft)) 92%, transparent);
-  background: color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-soft)) 72%, transparent);
+  color: var(--spw-substrate-color, color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--active-op-color, var(--teal)) 22%));
+  border-color: color-mix(in oklab, var(--spw-substrate-border, var(--handle-line-soft)) 94%, transparent);
+  background: color-mix(in oklab, var(--spw-substrate-bg-soft, var(--surface-soft)) 82%, var(--active-op-color, var(--teal)) 18%);
 }
 
 :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before,
@@ -469,8 +471,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide
 
 :where(.spw-component-tag, .spw-guide-chip):is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 28%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 8%, transparent));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 12%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--delight-color, var(--teal, #008080)) 12%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--delight-color, var(--teal, #008080)) 16%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 12%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
   outline: none;
 }
 

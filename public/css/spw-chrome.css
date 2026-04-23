@@ -849,8 +849,8 @@
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-label, 0.76rem);
   letter-spacing: 0.06em;
-  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 86%, transparent);
-  opacity: 0.92;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 68%, var(--spw-shell-chrome-accent-local) 32%);
+  opacity: 1;
 }
 
 .spw-route-menu-panel {
@@ -905,7 +905,7 @@
 }
 
 .spw-route-menu-link-note {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--spw-shell-chrome-accent-local) 28%);
   font-size: var(--text-size-label, 0.76rem);
   line-height: 1.35;
   text-wrap: balance;
@@ -924,6 +924,18 @@
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) {
   --spw-shell-mobile-accent: var(--spw-shell-chrome-accent-local);
+  --spw-shell-mobile-card-border: color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
+  --spw-shell-mobile-card-border-strong: color-mix(in oklab, var(--spw-shell-mobile-accent) 22%, transparent);
+  --spw-shell-mobile-card-bg:
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-mobile-accent) 2%);
+  --spw-shell-mobile-card-bg-strong:
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-mobile-accent) 6%);
+  --spw-shell-mobile-card-bg-current:
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-mobile-accent) 8%);
+  --spw-shell-mobile-card-ink:
+    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 94%, var(--spw-shell-mobile-accent) 6%);
+  --spw-shell-mobile-focus-ring:
+    0 0 0 2px color-mix(in oklab, var(--spw-shell-mobile-accent) 14%, transparent);
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "sigil toggle"
@@ -1005,11 +1017,13 @@
   width: 100%;
   box-sizing: border-box;
   justify-content: flex-start;
-  border: 1px solid color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
+  border: 1px solid var(--spw-shell-mobile-card-border);
   border-radius: var(--shell-panel-radius);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 99%, var(--spw-shell-mobile-accent) 1%);
-  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 94%, var(--spw-shell-mobile-accent) 6%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+  background: var(--spw-shell-mobile-card-bg);
+  color: var(--spw-shell-mobile-card-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 0 0 0 transparent;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip)::before,
@@ -1019,17 +1033,18 @@
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a):is(:hover, :focus-visible) {
-  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 22%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-mobile-accent) 6%);
+  border-color: var(--spw-shell-mobile-card-border-strong);
+  background: var(--spw-shell-mobile-card-bg-strong);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.34),
-    0 0 0 1px color-mix(in oklab, var(--spw-shell-mobile-accent) 8%, transparent);
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-mobile-accent) 8%, transparent),
+    var(--spw-shell-mobile-focus-ring);
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav a[aria-current="page"], body > header[data-spw-menu-mode="toggle"] nav a[aria-current="page"]) {
   border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 24%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-mobile-accent) 8%);
+  background: var(--spw-shell-mobile-card-bg-current);
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--spw-shell-mobile-accent) 16%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.34),
@@ -1045,16 +1060,17 @@
   box-sizing: border-box;
   justify-content: space-between;
   border-radius: var(--shell-panel-radius);
-  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-mobile-accent) 2%);
+  border-color: var(--spw-shell-mobile-card-border);
+  background: var(--spw-shell-mobile-card-bg);
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 90%, var(--spw-shell-mobile-accent) 10%);
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-trigger):is(:hover, :focus-visible),
 :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu[open] > .spw-route-menu-trigger, body > header[data-spw-menu-mode="toggle"] .spw-route-menu[open] > .spw-route-menu-trigger) {
-  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 20%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-mobile-accent) 6%);
+  border-color: var(--spw-shell-mobile-card-border-strong);
+  background: var(--spw-shell-mobile-card-bg-strong);
   color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: var(--spw-shell-mobile-focus-ring);
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] .spw-route-menu-panel, body > header[data-spw-menu-mode="toggle"] .spw-route-menu-panel) {
@@ -1062,9 +1078,8 @@
   min-width: 0;
   margin-top: 0.35rem;
   padding: 0.35rem;
-  border-color: color-mix(in oklab, var(--spw-shell-mobile-accent) 12%, var(--line, rgba(14, 18, 20, 0.14)) 88%);
-  background:
-    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 99%, var(--spw-shell-mobile-accent) 1%);
+  border-color: var(--spw-shell-mobile-card-border);
+  background: var(--spw-shell-mobile-card-bg);
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"], body > header[data-spw-menu-topology="screen-field"]) {
@@ -1123,9 +1138,9 @@
   border-radius: calc(var(--shell-panel-radius) + 0.08rem);
   line-height: 1.02;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)::after {
@@ -1156,6 +1171,12 @@
   background:
     linear-gradient(180deg, rgba(255,255,255,0.14), transparent 60%),
     color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.94)) 99%, var(--spw-shell-mobile-accent) 1%);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"])
+  :where(.spw-nav-toggle, .spw-route-menu-trigger, nav a, .spw-route-menu-link):focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--spw-shell-mobile-accent) 24%, transparent);
+  outline-offset: 2px;
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"][data-spw-menu-clarity="project"] nav, body > header[data-spw-menu-topology="screen-field"][data-spw-menu-clarity="project"] nav) {

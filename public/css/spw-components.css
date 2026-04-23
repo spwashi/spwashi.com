@@ -890,6 +890,7 @@ a.frame-card:is(:hover, :focus-visible),
 .operator-symbol {
   display: inline-block;
   font-weight: 700;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--active-op-color, var(--component-accent, #008080)) 28%);
   transition: color var(--component-transition-fast, 140ms ease);
 }
 

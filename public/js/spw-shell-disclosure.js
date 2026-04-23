@@ -73,6 +73,15 @@ const DEFAULTS = Object.freeze({
 
 const FONT_SCALE_STEPS = Object.freeze(['80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'summary',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(', ');
 
 function getViewportTier(width = window.innerWidth, config = DEFAULTS) {
   if (width < 420) return 'compact';
@@ -469,6 +478,28 @@ function buildToggleAria(snapshot) {
   return `${openness} navigation menu. ${snapshot.totalRouteCount} routes available. ${snapshot.topology}. ${snapshot.returnHint}.`;
 }
 
+function getFocusableMenuElements(header, nav, toggle) {
+  const nodes = [toggle, ...header.querySelectorAll(FOCUSABLE_SELECTOR)];
+  return nodes.filter((node, index, list) => {
+    if (!(node instanceof HTMLElement)) return false;
+    if (node.hidden) return false;
+    if (node.getAttribute('aria-hidden') === 'true') return false;
+    if (node.closest('[hidden], [aria-hidden="true"]')) return false;
+    if (!header.contains(node) && node !== toggle && !nav.contains(node)) return false;
+    if (node !== toggle && !nav.contains(node)) return false;
+    return list.indexOf(node) === index;
+  });
+}
+
+function focusFirstMenuTarget(nav) {
+  const target = nav.querySelector(FOCUSABLE_SELECTOR);
+  if (target instanceof HTMLElement) {
+    target.focus();
+    return true;
+  }
+  return false;
+}
+
 function syncToggleCopy(toggle, snapshot) {
   const labelNode = toggle.querySelector('.spw-nav-toggle-label');
   const stateNode = toggle.querySelector('.spw-nav-toggle-state');
@@ -608,6 +639,9 @@ export function initSpwShellDisclosure(options = {}) {
   const closeToggleMenu = (source = 'system') => {
     if (state.mode !== MODES.TOGGLE || !state.userIntentOpen) return;
     state.userIntentOpen = false;
+    document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
+      menu.open = false;
+    });
     const snapshot = applyMenuState(header, nav, navList, toggle, state, false, source);
     dispatchActionForSnapshot(snapshot);
   };
@@ -628,6 +662,25 @@ export function initSpwShellDisclosure(options = {}) {
     state.userIntentOpen = !state.userIntentOpen;
     const snapshot = applyMenuState(header, nav, navList, toggle, state, state.userIntentOpen, 'user');
     dispatchActionForSnapshot(snapshot);
+  };
+
+  const handleToggleKeydown = (event) => {
+    if (state.mode !== MODES.TOGGLE) return;
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (!state.userIntentOpen) openToggleMenu('toggle-key');
+      window.requestAnimationFrame(() => {
+        focusFirstMenuTarget(nav);
+      });
+      return;
+    }
+
+    if (event.key === 'ArrowUp' && state.userIntentOpen) {
+      event.preventDefault();
+      closeToggleMenu('toggle-key');
+      toggle.focus();
+    }
   };
 
   const handleTogglePointerDown = (event) => {
@@ -671,6 +724,26 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleDocumentKeydown = (event) => {
+    if (event.key === 'Tab' && state.mode === MODES.TOGGLE && state.userIntentOpen) {
+      const focusables = getFocusableMenuElements(header, nav, toggle);
+      if (focusables.length > 1) {
+        const active = document.activeElement;
+        const currentIndex = focusables.indexOf(active);
+        const lastIndex = focusables.length - 1;
+
+        if (event.shiftKey) {
+          if (currentIndex <= 0) {
+            event.preventDefault();
+            focusables[lastIndex].focus();
+          }
+        } else if (currentIndex === lastIndex || currentIndex === -1) {
+          event.preventDefault();
+          focusables[0].focus();
+        }
+      }
+      return;
+    }
+
     if (event.key !== 'Escape') return;
     if (state.mode !== MODES.TOGGLE || !state.userIntentOpen) return;
     closeToggleMenu('escape');
@@ -758,6 +831,7 @@ export function initSpwShellDisclosure(options = {}) {
       case 'open':
         openToggleMenu(source);
         if (detail.focusToggle) toggle.focus();
+        else if (detail.focusNav) window.requestAnimationFrame(() => focusFirstMenuTarget(nav));
         break;
       case 'close':
       case 'settle':
@@ -769,6 +843,9 @@ export function initSpwShellDisclosure(options = {}) {
           toggle.focus();
           if (detail.open !== false) {
             openToggleMenu(source);
+            if (detail.focusNav !== false) {
+              window.requestAnimationFrame(() => focusFirstMenuTarget(nav));
+            }
           }
         } else {
           nav.querySelector('a[href]')?.focus();
@@ -785,6 +862,7 @@ export function initSpwShellDisclosure(options = {}) {
 
   toggle.addEventListener('click', handleToggle);
   toggle.addEventListener('pointerdown', handleTogglePointerDown);
+  toggle.addEventListener('keydown', handleToggleKeydown);
   header.addEventListener('pointerenter', handlePointerEnter);
   header.addEventListener('pointerleave', handlePointerLeave);
   header.addEventListener('focusin', handleFocusIn);
@@ -814,6 +892,7 @@ export function initSpwShellDisclosure(options = {}) {
     cleanup() {
       toggle.removeEventListener('click', handleToggle);
       toggle.removeEventListener('pointerdown', handleTogglePointerDown);
+      toggle.removeEventListener('keydown', handleToggleKeydown);
       header.removeEventListener('pointerenter', handlePointerEnter);
       header.removeEventListener('pointerleave', handlePointerLeave);
       header.removeEventListener('focusin', handleFocusIn);
