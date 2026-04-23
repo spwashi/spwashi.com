@@ -357,10 +357,30 @@
             class="page-index"
             aria-label="Home sections"
             data-spw-feature="home-section-index"
+            data-home-section-index
             data-spw-role="local-register"
             data-spw-category-family="register"
             data-spw-seed="home_page_index"
             data-spw-context-relevance="archive website software craft">
+            <div class="page-index-toolbar">
+                <div class="page-index-toolbar-copy">
+                    <p class="page-index-kicker">Section register</p>
+                    <p class="page-index-note">Filter the homepage sections or follow the current reading position as you move.</p>
+                </div>
+                <label class="page-index-filter" for="home-section-filter">
+                    <span class="sr-only">Filter homepage sections</span>
+                    <input
+                        id="home-section-filter"
+                        name="home-section-filter"
+                        type="search"
+                        inputmode="search"
+                        autocomplete="off"
+                        placeholder="filter sections"
+                        data-home-section-filter>
+                    <button type="button" class="page-index-filter-clear" data-home-section-filter-clear hidden>Clear</button>
+                </label>
+            </div>
+            <p class="page-index-status" data-home-section-filter-status role="status" aria-live="polite">Showing all sections.</p>
             <ul>
                 <li><a href="#home-frame">Home</a></li>
                 <li><a href="#entry-loops">First Loops</a></li>

@@ -1161,6 +1161,19 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'home-section-index',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'home',
+    selector: '[data-home-section-index]',
+    load: () => import('./home-section-index.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initHomeSectionIndex;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'local-notes',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,
