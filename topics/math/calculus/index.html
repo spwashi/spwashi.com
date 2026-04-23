@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Calculus: Rates, Accumulation, and Multivariable Shape</title>
+    <meta name="description" content="Intuition-first field notes on derivatives, integrals, integration by parts, partial derivatives, gradients, and multivariable thinking, with portable interactive calculus diagrams.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module" src="/public/js/spw-math-diagrams.js?v=0.0.1"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/calculus/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Calculus: Rates, Accumulation, and Multivariable Shape"/>
+    <meta property="og:description" content="Intuition-first field notes on derivatives, integrals, integration by parts, partial derivatives, gradients, and multivariable thinking, with portable interactive calculus diagrams."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/calculus/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta property="og:image:alt" content="A mathematical signal field with gradients, axes, and motion-like traces."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Calculus: Rates, Accumulation, and Multivariable Shape"/>
+    <meta name="twitter:description" content="Intuition-first field notes on derivatives, integrals, integration by parts, partial derivatives, gradients, and multivariable thinking, with portable interactive calculus diagrams."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta name="twitter:image:alt" content="A mathematical signal field with gradients, axes, and motion-like traces."/>
+    <meta name="keywords" content="calculus, derivative, integral, integration by parts, partial derivatives, gradient, multivariable calculus, differential equations, area, slope">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Calculus: Rates, Accumulation, and Multivariable Shape",
+                "description": "Intuition-first field notes on derivatives, integrals, integration by parts, partial derivatives, gradients, and multivariable thinking, with portable interactive calculus diagrams.",
+                "url": "https://spwashi.com/topics/math/calculus/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "calculus",
+                        "derivative",
+                        "integral",
+                        "integration by parts",
+                        "partial derivatives",
+                        "gradient",
+                        "multivariable calculus",
+                        "differential equations"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "calculus-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "growth accumulation locality"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Calculus",
+                                "item": "https://spwashi.com/topics/math/calculus/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_calculus" data-spw-page-role="calculus-register" data-spw-related-routes="/topics/math/|/topics/math/trigonometry/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/math/numerical-methods/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_calculus__site_header" data-spw-related-routes="/topics/math/|/topics/math/trigonometry/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/math/numerical-methods/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/" data-spw-context-relevance="calculus derivative integral integration by parts partial derivatives gradient multivariable differential equations">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/calculus/">Calculus</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>d/dx</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_calculus__main_surface" data-spw-wonder="growth accumulation locality" id="main-content" tabindex="-1" aria-labelledby="calculus-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="calculus-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_calculus__hero" data-spw-context-relevance="calculus derivative integral integration by parts partial derivatives gradient multivariable differential equations" data-spw-related-routes="/topics/math/|/topics/math/trigonometry/|/topics/math/differential-equations/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#calculus-hero">#&gt;change_with_consequence</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">Calc I</span>
+                        <span class="spec-pill">Calc II</span>
+                        <span class="spec-pill">Calc III</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Pure Structure</p>
+                    <h1 id="calculus-title">Calculus is a literacy for rate, total, and local shape.</h1>
+                    <p>At the first layer, calculus asks how fast something is changing and how much has accumulated. At the second layer, it turns derivative rules into integration techniques, so products, substitutions, and repeated structure stop being random tricks. At the third layer, it lets one surface depend on more than one variable, which means slopes become directional and gradients become navigational. This route is arranged to make that ladder explicit rather than hiding it behind prestige. If you want the motion substrate first, go to <a href="/topics/math/trigonometry/#unit-circle-lab">trigonometry</a>. If you want change laws directly, go next to <a href="/topics/math/differential-equations/#slope-field-lab">differential equations</a>.</p>
+                    <nav class="frame-operators" aria-label="Calculus routes">
+                        <a class="operator-chip" href="#calc-ladder">calc ladder</a>
+                        <a class="operator-chip" href="#calculus-lab">rate and area lab</a>
+                        <a class="operator-chip" href="#integration-by-parts-lab">integration by parts</a>
+                        <a class="operator-chip" href="#multivariable-shape">partial derivatives</a>
+                        <a class="operator-chip" href="#anchor-equations">anchor equations</a>
+                        <a class="operator-chip" href="/topics/math/differential-equations/#slope-field-lab">differential equations</a>
+                        <a class="operator-chip" href="/topics/math/vector-calculus/">vector calculus</a>
+                        <a class="operator-chip" href="/topics/math/numerical-methods/">numerical methods</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#2a8c76, #d58c40, #7d989d, #9c653f" data-spw-accent-anchor="calculus rate area growth accumulation multivariable" data-spw-accent-operator="object" data-spw-accent-strength="0.94" data-spw-realization="hybrid" data-spw-substrate="frame">
+                    <img src="/public/images/renders/papergami/papergami-kinetic.webp" alt="Repeated folded forms moving in sequence, suggesting motion, slope, accumulation, and successive state.">
+                    <figcaption>
+                        <strong>Sequential change</strong>
+                        <span>One curve can be read as present tendency, accumulated history, and later as part of a larger multivariable surface.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Calculus sections">
+                <ul>
+                    <li><a href="#calculus-hero">Overview</a></li>
+                    <li><a href="#calc-ladder">Calc Ladder</a></li>
+                    <li><a href="#calculus-lab">Calc I: Rate and Area</a></li>
+                    <li><a href="#integration-techniques">Calc II: Techniques</a></li>
+                    <li><a href="#integration-by-parts-lab">Integration by Parts</a></li>
+                    <li><a href="#multivariable-shape">Calc III: Partial Derivatives</a></li>
+                    <li><a href="#anchor-equations">Anchor Equations</a></li>
+                    <li><a href="#calculus-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="calc-ladder" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__ladder" data-spw-context-relevance="calc i calc ii calc iii derivative integral techniques multivariable">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#calc-ladder">.calc_ladder</a>
+                    <h2>One Ladder, Three Viewpoints</h2>
+                </div>
+                <p class="frame-note">The usual course numbering is less arbitrary than it looks. Calc I makes local rate and accumulated total coexist. Calc II turns derivative rules around so integrals become something you can actually compute. Calc III keeps the same logic but lets the world depend on several variables at once, so slope becomes directional. Each layer is an elaboration of the same basic promise: change can stay legible.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">d/dx</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">local rate</span>
+                            <span class="spec-pill">area</span>
+                        </div>
+                        <h3>Calc I</h3>
+                        <p>Learn derivative and integral as paired readings of one curve. The big move is not notation. It is keeping rate and accumulation distinct while reading the same signal.</p>
+                        <a href="#calculus-lab">anchor: rate and area lab</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∫ parts</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">reverse rule</span>
+                            <span class="spec-pill">technique</span>
+                        </div>
+                        <h3>Calc II</h3>
+                        <p>Techniques like substitution and integration by parts are really structural recognitions: what pattern generated this integrand, and how can a known derivative rule be run backward?</p>
+                        <a href="#integration-techniques">anchor: techniques</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∂</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">slices</span>
+                            <span class="spec-pill">gradient</span>
+                        </div>
+                        <h3>Calc III</h3>
+                        <p>Once a quantity depends on x and y instead of only x, slope becomes directional. Partial derivatives are slice-specific rates, and gradients start acting like local navigation hints.</p>
+                        <a href="#multivariable-shape">anchor: multivariable shape</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="calculus-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__lab" data-spw-context-relevance="calculus derivative integral slope area local linearity accumulation" data-spw-related-routes="/topics/math/trigonometry/|/topics/math/statistical-analysis/|/topics/math/scale-intuition/|/topics/software/algorithms/|/play/rpg-wednesday/world/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#calculus-lab">^"rate_area_lab"{</a>
+                    <h2>Calc I: One Curve, Two Readings</h2>
+                </div>
+                <p class="frame-note">Move the slider across the curve. The tangent line shows local rate. The shaded region shows accumulated contribution from the left boundary. This is the first durable intuition in calculus: one graph can tell you what is happening here and what has been building over time.</p>
+                <div class="math-interactive-lab" data-math-visual="calculus-relationships">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>position <output data-output="position">0</output> / slope <output data-output="slope">0</output> / area <output data-output="area">0</output></span>
+                            <input data-control="position" type="range" min="-5" max="5" step="0.1" value="0">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 400" role="img" aria-labelledby="calculus-relationships-title calculus-relationships-desc">
+                            <title id="calculus-relationships-title">Interactive calculus relationship diagram</title>
+                            <desc id="calculus-relationships-desc">A graph with a highlighted point, tangent line, and shaded accumulated area showing derivative and integral together.</desc>
+                        </svg>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default state as a point on one sample curve. The main structure still holds: the tangent line approximates local behavior, and the shaded region records accumulated contribution over an interval.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move the position to compare local slope and accumulated area.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>The chosen position changes, so the highlighted point, tangent slope, and shaded accumulation all update.</p>
+                            <a href="#calculus-lab">anchor: rate and area lab</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The same underlying curve produces both readings. Derivative and integral are not competing decorations on top of separate data.</p>
+                            <a href="#calc-ladder">anchor: calc ladder</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What collapses</h3>
+                            <p>At small enough scale, the curve behaves almost like a line. That local collapse is the entry condition for derivative reasoning.</p>
+                            <a href="#anchor-equations">anchor: anchor equations</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Once derivative rules are familiar, the next move is to reverse them well enough that integration becomes tactical instead of theatrical.</p>
+                            <a href="#integration-techniques">next: integration techniques</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="integration-techniques" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__techniques" data-spw-context-relevance="integration substitution integration by parts reverse product rule calc ii">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#integration-techniques">~"integration_techniques"</a>
+                    <h2>Calc II: Techniques Are Pattern Recognizers</h2>
+                </div>
+                <p class="frame-note">Many students experience Calc II as a bag of tricks because the structural reason for each method never got named. Substitution says “a hidden chain rule made this.” Integration by parts says “a product rule made this.” Partial fractions say “an algebraic decomposition made this.” The techniques are not arbitrary. They are reverse-engineering literacies for how the integrand was built.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Substitution</h3>
+                        <p>Look for a nested expression and its derivative nearby. That is the signature of a hidden chain rule.</p>
+                        <a href="#anchor-equations">anchor: chain rule</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Integration by parts</h3>
+                        <p>Use it when a product got differentiated and you want to reconstruct the larger object instead of staying trapped inside the pieces.</p>
+                        <a href="#integration-by-parts-lab">anchor: integration by parts lab</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Repeated structure</h3>
+                        <p>Sometimes one round of reverse-engineering produces another integrand from the same family. That is a cue to recurse or solve algebraically for the original integral.</p>
+                        <a href="#integration-by-parts-lab">anchor: reverse product-rule accounting</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Series and equations</h3>
+                        <p>Once local approximation and repeated differentiation are comfortable, the next natural routes are differential equations and numerical methods.</p>
+                        <a href="/topics/math/differential-equations/#slope-field-lab">route: differential equations</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="integration-by-parts-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__integration_by_parts" data-spw-context-relevance="integration by parts reverse product rule area decomposition">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#integration-by-parts-lab">^"integration_by_parts"{</a>
+                    <h2>Integration By Parts As Reverse Product-Rule Accounting</h2>
+                </div>
+                <p class="frame-note">This demo chooses the simplest honest example: <code>I(a) = ∫₀ᵃ x dx</code>. It uses a square and its diagonal so the bookkeeping stays visible. The boundary term is the whole square. The swapped integral is the matching triangle. Integration by parts is doing nothing mystical here. It is reassigning area through the product rule and making the symmetry obvious.</p>
+                <div class="math-interactive-lab" data-math-visual="integration-by-parts">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>a <output data-output="upperBound">4</output> / triangle area <output data-output="triangleArea">8</output> / boundary term <output data-output="boundaryTerm">16</output></span>
+                            <input data-control="upperBound" type="range" min="1" max="6" step="0.1" value="4">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 380" role="img" aria-labelledby="integration-by-parts-title integration-by-parts-desc">
+                            <title id="integration-by-parts-title">Integration by parts area decomposition</title>
+                            <desc id="integration-by-parts-desc">A square split by a diagonal into two equal triangles alongside a panel showing integration by parts for the integral of x from zero to a.</desc>
+                        </svg>
+                        <figcaption class="frame-note">The formula <code>∫u dv = uv - ∫v du</code> is easiest to trust once one concrete picture shows what the boundary term and swapped integral are doing.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move the upper bound to keep the square, diagonal, and reverse product rule in sync.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>Demo equation</h3>
+                            <p><code>∫₀ᵃ x dx</code> is intentionally simple so the accounting structure stays more visible than the algebra.</p>
+                            <a href="#integration-by-parts-lab">anchor: current demo</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Why it works</h3>
+                            <p>The derivative of a product has two terms. Integration by parts is what happens when you solve that identity backward.</p>
+                            <a href="#anchor-equations">anchor: product rule</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Second example</h3>
+                            <p>After this square example, a good symbolic follow-up is <code>∫ x e^x dx = x e^x - e^x + C</code>.</p>
+                            <a href="#anchor-equations">anchor: demo equations</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>This reverse-engineering habit becomes essential again when differential equations and transforms start reusing product-like structures.</p>
+                            <a href="/topics/math/differential-equations/#equation-family">route: equation family</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="multivariable-shape" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__multivariable" data-spw-context-relevance="calc iii partial derivatives gradient multivariable slices surface">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#multivariable-shape">^"multivariable_shape"{</a>
+                    <h2>Calc III: Partial Derivatives And Directional Shape</h2>
+                </div>
+                <p class="frame-note">When a quantity depends on x and y, there is no single slope anymore. There are slice-specific slopes, one for “hold y fixed” and one for “hold x fixed,” and then broader directional questions built from them. Partial derivatives are not lesser versions of ordinary derivatives. They are the right local questions for a surface instead of a line. Once that clicks, gradients, constrained change, and vector thinking stop feeling like a different religion.</p>
+                <div class="math-interactive-lab" data-math-visual="partial-derivatives">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>x <output data-output="surfaceX">0</output></span>
+                            <input data-control="surfaceX" type="range" min="-2.5" max="2.5" step="0.1" value="0">
+                        </label>
+                        <label class="math-control">
+                            <span>y <output data-output="surfaceY">0</output> / height <output data-output="surfaceHeight">0</output> / ∂x <output data-output="partialX">0</output> / ∂y <output data-output="partialY">0</output></span>
+                            <input data-control="surfaceY" type="range" min="-2.5" max="2.5" step="0.1" value="0">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 760 420" role="img" aria-labelledby="partial-derivatives-title partial-derivatives-desc">
+                            <title id="partial-derivatives-title">Partial derivatives on a multivariable surface</title>
+                            <desc id="partial-derivatives-desc">A wireframe surface with highlighted x and y slices, tangent segments, and live partial derivative values at a chosen point.</desc>
+                        </svg>
+                        <figcaption class="frame-note">The orange slice holds y fixed. The violet slice holds x fixed. Their slopes are different because a surface carries directional local behavior.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move x and y to compare the slice-specific slopes on the same surface.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>The point moves on the surface, and the orange and violet tangent segments change because the local shape changed.</p>
+                            <a href="#multivariable-shape">anchor: multivariable shape</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The same surface supports both slices. Partial derivatives are coordinated local readings of one object.</p>
+                            <a href="#calc-ladder">anchor: calc ladder</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What gets added</h3>
+                            <p>Gradient language packages the partials into one local uphill direction. That is how optimization and field intuition usually enter.</p>
+                            <a href="#anchor-equations">anchor: gradient language</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Once the local directional structure is visible, differential equations and vector fields feel much less abrupt.</p>
+                            <a href="/topics/math/differential-equations/#slope-field-lab">route: slope field lab</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="anchor-equations" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_calculus__anchor_equations" data-spw-context-relevance="product rule chain rule fundamental theorem integration by parts gradient demo equations">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#anchor-equations">~"anchor_equations"</a>
+                    <h2>Anchor Equations And Identities</h2>
+                </div>
+                <p class="frame-note">These are not an exhaustive formula sheet. They are the equations worth carrying because they explain why the diagrams on this page work. If you can emotionally subvocalize these and remember what picture they belong to, the rest of the subject becomes easier to rebuild.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">product</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">rule</span>
+                            <span class="spec-pill">reverse</span>
+                        </div>
+                        <h3>Product rule</h3>
+                        <p><code>(uv)' = u'v + uv'</code>. Integration by parts is this identity solved backward for the integral of one term.</p>
+                        <a href="#integration-by-parts-lab">anchor: reverse product-rule accounting</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">chain</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">nested</span>
+                            <span class="spec-pill">scale</span>
+                        </div>
+                        <h3>Chain rule</h3>
+                        <p><code>(f∘g)' = (f'∘g)g'</code>. Substitution is the integral-side recognition of this nested structure.</p>
+                        <a href="/topics/math/trigonometry/#identity-family">route: trig identities</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">FTC</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">bridge</span>
+                            <span class="spec-pill">pairing</span>
+                        </div>
+                        <h3>Fundamental theorem</h3>
+                        <p><code>d/dx ∫ₐˣ f(t) dt = f(x)</code>. This is the formal statement that local rate and accumulated area are paired readings rather than separate topics.</p>
+                        <a href="#calculus-lab">anchor: one curve, two readings</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∇f</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">gradient</span>
+                            <span class="spec-pill">direction</span>
+                        </div>
+                        <h3>Gradient shorthand</h3>
+                        <p><code>∇f = (∂f/∂x, ∂f/∂y, ...)</code>. The gradient packages slice-specific rates into one local uphill hint.</p>
+                        <a href="/topics/math/vector-calculus/">route: vector calculus stub</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">demo</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">example</span>
+                            <span class="spec-pill">memory</span>
+                        </div>
+                        <h3>Demo equations worth keeping</h3>
+                        <p><code>∫₀ᵃ x dx = a²/2</code>, <code>∫ x e^x dx = x e^x - e^x + C</code>, <code>d/dx(sin x) = cos x</code>, and <code>∂/∂x (x² + xy) = 2x + y</code>.</p>
+                        <a href="/topics/math/differential-equations/#equation-family">next: equation family</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="calculus-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="growth accumulation locality" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_calculus__neighbors" data-spw-context-relevance="calculus trigonometry differential equations statistics algorithms worldbuilding weekly affairs" data-spw-related-routes="/topics/math/trigonometry/|/topics/math/differential-equations/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#calculus-neighbors">&amp;["change_neighbors"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <p class="frame-note">Calculus behaves best as a bridge discipline. It takes motion from one side, evidence from another, and turns both into more exact claims about change over time.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Trigonometry</h3>
+                        <p>Periodic motion and phase relationships are a natural substrate for derivatives, integrals, and harmonic reasoning.</p>
+                        <a href="/topics/math/trigonometry/#unit-circle-lab">route: trigonometry</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Differential equations</h3>
+                        <p>Once a derivative becomes the thing you are solving for, slope fields and initial conditions take over.</p>
+                        <a href="/topics/math/differential-equations/#slope-field-lab">route: differential equations</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Vector calculus</h3>
+                        <p>Gradients, divergence, and curl are the next honest handoff after partial derivatives start feeling stable.</p>
+                        <a href="/topics/math/vector-calculus/">route: vector calculus stub</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Statistical analysis</h3>
+                        <p>Growth claims still need sampling discipline, baseline language, and variance awareness to deserve trust.</p>
+                        <a href="/topics/math/statistical-analysis/">route: statistical analysis</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Algorithm visualization</h3>
+                        <p>Optimization, cumulative cost, throughput, and gradient-based methods all benefit from clearer slope and area intuition.</p>
+                        <a href="/topics/software/algorithms/">route: algorithm visualization</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Numerical methods</h3>
+                        <p>When exact symbolic work stalls, approximation, stepping, and convergence become the next literacy instead of a fallback embarrassment.</p>
+                        <a href="/topics/math/numerical-methods/">route: numerical methods stub</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Weekly affairs</h3>
+                        <p>Crop cycles, yields, and accumulated world state in RPG Wednesday are easier to narrate when local rate and total consequence stay distinct.</p>
+                        <a href="/play/rpg-wednesday/world/">route: RPG world</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>

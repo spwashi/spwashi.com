@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Trigonometry: Rotation, Projection, and Reuse</title>
+    <meta name="description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module" src="/public/js/spw-math-diagrams.js?v=0.0.1"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/trigonometry/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Trigonometry: Rotation, Projection, and Reuse"/>
+    <meta property="og:description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/trigonometry/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta property="og:image:alt" content="A math signal field with glowing arcs, axes, and projection-like marks."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Trigonometry: Rotation, Projection, and Reuse"/>
+    <meta name="twitter:description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta name="twitter:image:alt" content="A math signal field with glowing arcs, axes, and projection-like marks."/>
+    <meta name="keywords" content="trigonometry, unit circle, sine, cosine, tangent, identities, phase, projection, math intuition"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Trigonometry: Rotation, Projection, and Reuse",
+                "description": "Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram.",
+                "url": "https://spwashi.com/topics/math/trigonometry/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "trigonometry",
+                        "unit circle",
+                        "sine",
+                        "cosine",
+                        "tangent",
+                        "identities",
+                        "phase",
+                        "projection"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "trigonometry-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "rotation projection recurrence"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Trigonometry",
+                                "item": "https://spwashi.com/topics/math/trigonometry/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_trigonometry" data-spw-page-role="trigonometry-register" data-spw-related-routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/statistical-analysis/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_trigonometry__site_header" data-spw-related-routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/statistical-analysis/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/" data-spw-context-relevance="trigonometry unit circle sine cosine tangent identities phase projection">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/trigonometry/">Trigonometry</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>sin</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_trigonometry__main_surface" data-spw-wonder="rotation projection recurrence" id="main-content" tabindex="-1" aria-labelledby="trigonometry-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="trigonometry-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_trigonometry__hero" data-spw-context-relevance="trigonometry unit circle sine cosine tangent identities phase projection" data-spw-related-routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/math/statistical-analysis/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#trigonometry-hero">#&gt;rotation_with_memory</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">sine</span>
+                        <span class="spec-pill">cosine</span>
+                        <span class="spec-pill">phase</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Pure Structure</p>
+                    <h1 id="trigonometry-title">Trigonometry turns rotation into reusable coordinates.</h1>
+                    <p>Trigonometry becomes easier once angles stop being trivia and start acting like addresses on a circle. Sine and cosine are not separate magic words. They are the y- and x-projections of one moving point. Identities matter because they compress that movement into relations you can reuse in geometry, signal work, layout timing, and any system that cycles instead of only marching forward. If you want the nearest motion-based neighbor, go to <a href="/topics/math/calculus/#calculus-lab">calculus</a>; if you want the symmetry side first, go to <a href="/topics/math/symmetry/#symmetry-intuition">symmetry</a>.</p>
+                    <nav class="frame-operators" aria-label="Trigonometry routes">
+                        <a class="operator-chip" href="#trigonometry-intuition">intuition first</a>
+                        <a class="operator-chip" href="#unit-circle-lab">unit circle lab</a>
+                        <a class="operator-chip" href="#identity-family">identity family</a>
+                        <a class="operator-chip" href="#trig-neighbors">neighbor routes</a>
+                        <a class="operator-chip" href="/topics/math/calculus/#calculus-lab">calculus</a>
+                        <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#2a8c76, #d58c40, #6a3fb8, #1d57a3" data-spw-accent-anchor="trigonometry angles rotation phase projection" data-spw-accent-operator="topic" data-spw-accent-strength="0.96" data-spw-realization="hybrid" data-spw-substrate="frame">
+                    <img src="/public/images/routes/math-signal-field-square.webp" alt="A mathematical signal field with glowing arcs, axes, and projection-like marks.">
+                    <figcaption>
+                        <strong>Angle field</strong>
+                        <span>A point rotates, projections appear, signs flip by quadrant, and identities behave like reuse rules instead of isolated facts.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Trigonometry sections">
+                <ul>
+                    <li><a href="#trigonometry-hero">Overview</a></li>
+                    <li><a href="#trigonometry-intuition">Intuition First</a></li>
+                    <li><a href="#unit-circle-lab">Unit Circle Lab</a></li>
+                    <li><a href="#identity-family">Identity Family</a></li>
+                    <li><a href="#trig-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="trigonometry-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_trigonometry__intuition" data-spw-context-relevance="trigonometry unit circle sine cosine tangent identities phase projection" data-spw-related-routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#trigonometry-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">The cleanest starting point is the unit circle. Put one point on the circle, rotate it, and read its x-coordinate as cosine and y-coordinate as sine. Most introductory formulas are just consequences of that one picture. The circle is stable. The point moves. The coordinates project. That is already enough structure to reason about signs, periodicity, and why identities are really compression rules for repeated motion.</p>
+                <p class="frame-note">This is also why trigonometry belongs near design and software work. A repeated oscillation, a layout pulse, a seasonal cycle in <a href="/play/rpg-wednesday/world/">RPG Wednesday worldbuilding</a>, or an animation curve all benefit from knowing what phase means and which relationships stay invariant while orientation changes.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Angle as state</h3>
+                        <p>An angle is not only a measurement. It is a compact state description for where a point sits on a repeating orbit.</p>
+                        <a href="#unit-circle-lab">anchor: unit circle lab</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Projection as meaning</h3>
+                        <p>Sine and cosine are useful because they project one circular state onto two readable axes.</p>
+                        <a href="#identity-family">anchor: identity family</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Identity as compression</h3>
+                        <p>Good trig identities reduce repeated derivation. They keep phase relationships available without re-drawing the whole circle every time.</p>
+                        <a href="#identity-family">next: identity family</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Rate handoff</h3>
+                        <p>Once motion starts mattering more than static location, the next route is calculus.</p>
+                        <a href="/topics/math/calculus/#calculus-lab">route: calculus lab</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="unit-circle-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_trigonometry__unit_circle" data-spw-context-relevance="trigonometry unit circle sine cosine tangent identities phase projection" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/symmetry/|/topics/software/renderers/|/play/rpg-wednesday/world/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#unit-circle-lab">^"unit_circle_lab"{</a>
+                    <h2>Portable Diagram: One Point, Two Projections</h2>
+                </div>
+                <p class="frame-note">Use the slider to move one point around the unit circle. Watch what changes and what does not. The radius stays fixed. The angle changes. Sine and cosine trade size depending on orientation. Tangent becomes a quotient rather than an isolated fact. The identities become easier once you read them as statements about one stable circle rather than a pile of triangles.</p>
+                <div class="math-interactive-lab" data-math-visual="trig-unit-circle">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>angle <output data-output="angleDegrees">45</output>° / <output data-output="angleRadians">0.79</output> rad</span>
+                            <input data-control="angle" type="range" min="0" max="360" value="45">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 620 380" role="img" aria-labelledby="trig-unit-circle-title trig-unit-circle-desc">
+                            <title id="trig-unit-circle-title">Interactive trigonometry unit circle</title>
+                            <desc id="trig-unit-circle-desc">A unit circle with a rotating point, axis projections, and live identity labels for sine, cosine, and tangent.</desc>
+                        </svg>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default state as one point in the first quadrant. The main contract still holds: cosine is the x-projection, sine is the y-projection, and the circle radius remains one.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move the angle to compare signs, projections, and quadrant behavior.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>The angle changes, the point moves, and the projected coordinate lengths adjust with it.</p>
+                            <a href="#unit-circle-lab">anchor: unit circle lab</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The radius stays one. That fixed length is why the Pythagorean identity remains available everywhere on the circle.</p>
+                            <a href="#identity-family">anchor: identity family</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What collapses</h3>
+                            <p>Angles that differ by a full turn describe the same point. Periodicity is built into the picture, not appended later.</p>
+                            <a href="#trigonometry-intuition">anchor: intuition first</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Once you care about how these values change over time, the next useful move is derivative and integral thinking.</p>
+                            <a href="/topics/math/calculus/#calculus-lab">route: calculus lab</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="identity-family" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_trigonometry__identity_family" data-spw-context-relevance="trigonometry identities symmetry phase quotient recurrence" data-spw-related-routes="/topics/math/symmetry/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/software/renderers/|/play/rpg-wednesday/arcs/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#identity-family">~"identity_family"</a>
+                    <h2>Identity Family</h2>
+                </div>
+                <p class="frame-note">Memorization gets easier when each identity has a job. Some identities conserve radius. Some translate a ninety-degree shift. Some turn quotient relationships into readable ratios. The point is not to stockpile formulas. The point is to know which reuse rule you are invoking when a problem changes costume.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">sin²+cos²</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">radius</span>
+                            <span class="spec-pill">conservation</span>
+                        </div>
+                        <h3>Pythagorean identity</h3>
+                        <p><code>sin²θ + cos²θ = 1</code> simply says the point stayed on the unit circle. It is not extra magic. It is the circle reporting its own boundary condition.</p>
+                        <a href="#unit-circle-lab">anchor: unit circle lab</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">shift</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">phase</span>
+                            <span class="spec-pill">rotation</span>
+                        </div>
+                        <h3>Cofunction shifts</h3>
+                        <p><code>sin(θ + π/2) = cos θ</code> is a rotation statement. A quarter turn changes which axis is being read.</p>
+                        <a href="/topics/math/symmetry/#symmetry-intuition">route: symmetry intuition</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">tan</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">quotient</span>
+                            <span class="spec-pill">slope</span>
+                        </div>
+                        <h3>Tangent as quotient</h3>
+                        <p><code>tan θ = sin θ / cos θ</code> becomes readable once the axis projections are already visible. It is a ratio of two projections, not a separate creature.</p>
+                        <a href="/topics/math/calculus/#growth-language">next: slope language</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">d/dx</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">cycle</span>
+                            <span class="spec-pill">calculus</span>
+                        </div>
+                        <h3>Derivative cycle</h3>
+                        <p><code>d/dx(sin x) = cos x</code> and <code>d/dx(cos x) = -sin x</code> are a clean reminder that trigonometric motion keeps reappearing under differentiation.</p>
+                        <a href="/topics/math/differential-equations/#equation-family">route: equation family</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">±</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">quadrants</span>
+                            <span class="spec-pill">sign discipline</span>
+                        </div>
+                        <h3>Quadrant signs</h3>
+                        <p>Sign changes are a quadrant grammar. The function does not become mysterious; the coordinate projection just crossed an axis.</p>
+                        <a href="#unit-circle-lab">anchor: move the angle</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="trig-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_trigonometry__neighbors" data-spw-context-relevance="trigonometry calculus symmetry differential equations renderers mnemonic play worldbuilding" data-spw-related-routes="/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/symmetry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#trig-neighbors">&amp;["phase_neighbors"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <p class="frame-note">Trigonometry earns its keep by handing phase, rotation, and periodic reuse to other surfaces. That is useful in geometry, in motion work, and in any mnemonic system that benefits from cycles and return.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Calculus</h3>
+                        <p>Derivatives turn phase into rate. Integrals turn oscillation into accumulated consequence.</p>
+                        <a href="/topics/math/calculus/#calculus-lab">route: calculus lab</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Differential equations</h3>
+                        <p>Oscillation laws like <code>y'' + y = 0</code> make the trig family return as an actual solution space instead of a side note.</p>
+                        <a href="/topics/math/differential-equations/#equation-family">route: differential equations</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Symmetry</h3>
+                        <p>Reflections, rotations, and group-like behavior make quadrant changes and periodic repetition feel less arbitrary.</p>
+                        <a href="/topics/math/symmetry/#symmetry-intuition">route: symmetry intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Renderers</h3>
+                        <p>Coordinate transforms, shaders, and animation curves often need phase language more than they need a full theorem.</p>
+                        <a href="/topics/software/renderers/">route: renderers</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Mnemonic play</h3>
+                        <p>Ritual cycles, omens, signals, and recurring motifs in RPG Wednesday benefit from phase thinking and repeatable returns.</p>
+                        <a href="/play/rpg-wednesday/arcs/">route: arcs</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>

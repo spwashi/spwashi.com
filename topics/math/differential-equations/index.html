@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Differential Equations: Fields, Conditions, and Families</title>
+    <meta name="description" content="Intuition-first field notes on differential equations through slope fields, initial conditions, solution families, and gentle numerical intuition.">
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <script type="module" src="/public/js/spw-math-diagrams.js?v=0.0.1"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/differential-equations/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Differential Equations: Fields, Conditions, and Families"/>
+    <meta property="og:description" content="Intuition-first field notes on differential equations through slope fields, initial conditions, solution families, and gentle numerical intuition."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/differential-equations/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta property="og:image:alt" content="A mathematical signal field with directional marks and solution-like traces."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Differential Equations: Fields, Conditions, and Families"/>
+    <meta name="twitter:description" content="Intuition-first field notes on differential equations through slope fields, initial conditions, solution families, and gentle numerical intuition."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta name="twitter:image:alt" content="A mathematical signal field with directional marks and solution-like traces."/>
+    <meta name="keywords" content="differential equations, slope field, initial condition, solution family, Euler method, ordinary differential equations, math intuition">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Differential Equations: Fields, Conditions, and Families",
+                "description": "Intuition-first field notes on differential equations through slope fields, initial conditions, solution families, and gentle numerical intuition.",
+                "url": "https://spwashi.com/topics/math/differential-equations/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "differential equations",
+                        "slope field",
+                        "initial condition",
+                        "solution family",
+                        "Euler method",
+                        "ordinary differential equations"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "differential-equations-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "direction recurrence response"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Differential Equations",
+                                "item": "https://spwashi.com/topics/math/differential-equations/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_differential_equations" data-spw-page-role="differential-equations-register" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/trigonometry/|/topics/math/vector-calculus/|/topics/math/numerical-methods/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_differential_equations__site_header" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/trigonometry/|/topics/math/vector-calculus/|/topics/math/numerical-methods/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/" data-spw-context-relevance="differential equations slope field initial condition solution family euler method recurrence">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/math/differential-equations/">Differential Equations</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>y'</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_differential_equations__main_surface" data-spw-wonder="direction recurrence response" id="main-content" tabindex="-1" aria-labelledby="differential-equations-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="differential-equations-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_differential_equations__hero" data-spw-context-relevance="differential equations slope field initial condition solution family euler method recurrence" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/trigonometry/|/topics/math/statistical-analysis/|/topics/software/algorithms/|/play/rpg-wednesday/world/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#differential-equations-hero">#&gt;change_law</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">slope field</span>
+                        <span class="spec-pill">initial condition</span>
+                        <span class="spec-pill">family</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Change Laws</p>
+                    <h1 id="differential-equations-title">Differential equations describe how a system wants to move.</h1>
+                    <p>A differential equation is not only a curve to solve. It is a law relating a state to its rate of change. That means the most intuitive entry point is often a slope field: a visible patchwork of local directions before a single named solution is chosen. Then an initial condition picks one member of the family. This route keeps those three layers together: field, condition, family. If you want the derivative literacy underneath it, go to <a href="/topics/math/calculus/#calculus-lab">calculus</a>. If you want a periodic family that keeps reappearing in ODEs, go to <a href="/topics/math/trigonometry/#unit-circle-lab">trigonometry</a>.</p>
+                    <nav class="frame-operators" aria-label="Differential equations routes">
+                        <a class="operator-chip" href="#ode-intuition">intuition first</a>
+                        <a class="operator-chip" href="#slope-field-lab">slope field lab</a>
+                        <a class="operator-chip" href="#equation-family">equation family</a>
+                        <a class="operator-chip" href="#ode-neighbors">neighbor routes</a>
+                        <a class="operator-chip" href="/topics/math/calculus/#anchor-equations">anchor equations</a>
+                        <a class="operator-chip" href="/topics/math/trigonometry/#identity-family">trig identities</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#2a8c76, #d58c40, #6a3fb8, #1d57a3" data-spw-accent-anchor="differential equations fields directions families response" data-spw-accent-operator="topic" data-spw-accent-strength="0.95" data-spw-realization="hybrid" data-spw-substrate="frame">
+                    <img src="/public/images/routes/math-signal-field-square.webp" alt="A mathematical field of directional marks and structured traces suggesting local motion and solution families.">
+                    <figcaption>
+                        <strong>Direction field</strong>
+                        <span>The local instructions come first. The chosen trajectory comes second. Keeping that order visible makes the subject less hostile.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Differential equations sections">
+                <ul>
+                    <li><a href="#differential-equations-hero">Overview</a></li>
+                    <li><a href="#ode-intuition">Intuition First</a></li>
+                    <li><a href="#slope-field-lab">Slope Field Lab</a></li>
+                    <li><a href="#equation-family">Equation Family</a></li>
+                    <li><a href="#ode-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="ode-intuition" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_differential_equations__intuition">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ode-intuition">.intuition_first</a>
+                    <h2>Intuition First</h2>
+                </div>
+                <p class="frame-note">A differential equation says how the present state pushes on the next instant. In that sense it is closer to a rule of local behavior than a finished graph. A slope field keeps that locality visible. An initial condition says where you started. A solution family says what kind of trajectories satisfy the law. The topic is less overwhelming once those roles stop collapsing into one blur.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Field</h3>
+                        <p>The field is the local instruction set. It tells you how a tiny step should tilt at each point in the plane.</p>
+                        <a href="#slope-field-lab">anchor: slope field lab</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Condition</h3>
+                        <p>An initial condition chooses one specific member of a larger family. It is a selection rule, not a different equation.</p>
+                        <a href="#equation-family">anchor: equation family</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Approximation</h3>
+                        <p>Numerical methods like Euler are honest because they show what repeated local stepping buys and where it starts drifting.</p>
+                        <a href="#slope-field-lab">anchor: Euler comparison</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Periodic solutions</h3>
+                        <p>Some ODEs hand off directly to sine and cosine families, which is why trigonometry keeps returning later.</p>
+                        <a href="/topics/math/trigonometry/#identity-family">route: trig identities</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="slope-field-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_differential_equations__lab">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#slope-field-lab">^"slope_field_lab"{</a>
+                    <h2>Portable Diagram: Slope Field, Initial Condition, Exact Curve</h2>
+                </div>
+                <p class="frame-note">This demo uses the equation <code>y' = x - y</code>. The short blue segments are the local slope field. The teal curve is the exact solution family member chosen by the initial condition. The dashed amber curve is Euler’s method, which keeps stepping locally instead of solving symbolically. The point is not only to “get the answer.” It is to see how local instruction, chosen start, and approximate stepping relate.</p>
+                <div class="math-interactive-lab" data-math-visual="diff-eq-slope-field">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>initial y(0) <output data-output="initialY">0</output> / initial slope <output data-output="initialSlope">0</output></span>
+                            <input data-control="initialY" type="range" min="-2.5" max="2.5" step="0.1" value="0">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 390" role="img" aria-labelledby="diff-eq-slope-field-title diff-eq-slope-field-desc">
+                            <title id="diff-eq-slope-field-title">Differential equation slope field and solution family</title>
+                            <desc id="diff-eq-slope-field-desc">A slope field for y-prime equals x minus y with an initial condition, exact solution curve, and Euler approximation.</desc>
+                        </svg>
+                        <figcaption class="frame-note">Exact solutions are valuable, but the field already tells a story before you solve anything: where trajectories flatten, where they rise, and how the chosen initial condition narrows the family.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Move the initial condition to watch the chosen family member and local slope update together.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>The chosen initial condition changes, so the selected solution curve and initial slope change with it.</p>
+                            <a href="#slope-field-lab">anchor: slope field lab</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The differential equation itself stays fixed. Only the chosen family member changes.</p>
+                            <a href="#equation-family">anchor: equation family</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What gets approximated</h3>
+                            <p>Euler’s method is honest local stepping. It is useful precisely because it shows approximation as a process instead of a black box.</p>
+                            <a href="/topics/software/algorithms/#important_families">route: algorithm families</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Later equations bring in second derivatives, oscillation, stability, and forcing terms, but the field-condition-family pattern remains.</p>
+                            <a href="/topics/math/calculus/#anchor-equations">route: calculus anchor equations</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="equation-family" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_differential_equations__equation_family">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#equation-family">~"equation_family"</a>
+                    <h2>Equation Family And Demo Laws</h2>
+                </div>
+                <p class="frame-note">A broad differential-equations literacy does not require an exhaustive taxonomy on day one. It helps more to keep a few recurring equation types nearby and know what kind of behavior each one usually points toward.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">growth</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">response</span>
+                            <span class="spec-pill">feedback</span>
+                        </div>
+                        <h3>Exponential growth and decay</h3>
+                        <p><code>y' = ky</code> says the rate is proportional to the current state. This is the first good model for unchecked growth, decay, and cooling-style response.</p>
+                        <a href="/topics/math/calculus/#calculus-lab">route: rate and area lab</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">balance</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">equilibrium</span>
+                            <span class="spec-pill">lag</span>
+                        </div>
+                        <h3>First-order linear ODEs</h3>
+                        <p><code>y' + py = q(x)</code> models systems that are nudged by an external signal while also being pulled toward or away from equilibrium.</p>
+                        <a href="#slope-field-lab">anchor: current demo family</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">osc</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">cycle</span>
+                            <span class="spec-pill">return</span>
+                        </div>
+                        <h3>Second-order oscillation</h3>
+                        <p><code>y'' + y = 0</code> leads to sine and cosine. This is one clean reason trigonometry and differential equations keep rhyming.</p>
+                        <a href="/topics/math/trigonometry/#identity-family">route: trigonometry</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">field</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">numerical</span>
+                            <span class="spec-pill">approximation</span>
+                        </div>
+                        <h3>Numerical stepping</h3>
+                        <p>When exact solving is hard, local stepping methods still let you reason about stability, drift, and response by simulation.</p>
+                        <a href="/topics/math/numerical-methods/">route: numerical methods stub</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="ode-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="direction recurrence response" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_differential_equations__neighbors">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#ode-neighbors">&amp;["equation_neighbors"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <p class="frame-note">Differential equations are a natural handoff point between calculus, periodic motion, numerical reasoning, and any narrative system that wants to talk about change laws instead of isolated moments.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Calculus</h3>
+                        <p>Differential equations inherit derivative literacy, integration techniques, and multivariable caution from calculus.</p>
+                        <a href="/topics/math/calculus/#anchor-equations">route: calculus</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Trigonometry</h3>
+                        <p>Oscillation families and phase language keep showing up in second-order systems and periodic forcing.</p>
+                        <a href="/topics/math/trigonometry/#identity-family">route: trigonometry</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Vector calculus</h3>
+                        <p>Field language eventually grows into divergence, curl, and flow reasoning once scalar state alone stops being enough.</p>
+                        <a href="/topics/math/vector-calculus/">route: vector calculus stub</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Statistical analysis</h3>
+                        <p>A model of change still needs evidence discipline when real observations are noisy or sampled unevenly.</p>
+                        <a href="/topics/math/statistical-analysis/">route: statistical analysis</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Numerical methods</h3>
+                        <p>Approximation routines make the local law computational when an exact formula is unavailable or inconvenient.</p>
+                        <a href="/topics/math/numerical-methods/">route: numerical methods stub</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>RPG world state</h3>
+                        <p>Resource growth, crop response, rumor spread, and magical decay all become more narratable once “state plus change law” becomes a familiar sentence shape.</p>
+                        <a href="/play/rpg-wednesday/world/">route: RPG world</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>
