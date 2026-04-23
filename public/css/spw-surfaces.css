@@ -1641,14 +1641,23 @@
 }
 
 :where([data-spw-features~="rpg-gameplay"] .rpg-character-card__heading span,
+       [data-spw-features~="rpg-gameplay"] .rpg-character-card__literacies,
        [data-spw-features~="rpg-gameplay"] .rpg-character-card__notes) {
   color: var(--ink-soft);
   font-size: var(--text-size-xs, 0.8rem);
 }
 
 :where([data-spw-features~="rpg-gameplay"] .rpg-character-card__hook,
+       [data-spw-features~="rpg-gameplay"] .rpg-character-card__literacies,
        [data-spw-features~="rpg-gameplay"] .rpg-character-card__notes) {
   margin: 0;
+}
+
+:where([data-spw-features~="rpg-gameplay"] .rpg-character-card__literacies) {
+  padding: 0.42rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--spw-shell-line) 86%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
 }
 
 :where([data-spw-features~="rpg-gameplay"] .rpg-character-card__controls) {

@@ -145,7 +145,7 @@
                         <h1 id="software-title">Software</h1>
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square">]</span> that can also be addressed, queried, and projected by tools. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle">)</span>, and the <span class="spw-delimiter spw-delimiter--angle">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should be stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth.</p>
-                        <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the text-editing application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
+                        <p class="frame-note">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the text-editing application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map">parser field guide</a>, <a href="/topics/software/algorithms/">algorithm visualization</a>, <a href="/topics/math/complexity/#parser-budgets">complexity</a>, <a href="/topics/math/scale-intuition/">scale intuition</a>, <a href="/topics/math/statistical-analysis/">statistical analysis</a>, <a href="/topics/math/category-theory/#category-insight">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock">number theory</a>.</p>
                         <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel data-spw-feature="software-quick-tune">
                             <article class="vibe-widget">
                                 <div class="vibe-widget-header">
@@ -198,12 +198,15 @@
                             <a class="operator-chip" href="#spw-component-surface">component surface</a>
                             <a class="operator-chip" href="#interactive-codeblocks">interactive codeblocks</a>
                             <a class="operator-chip" href="/topics/software/pretext/">pretext field lab</a>
+                            <a class="operator-chip" href="/topics/software/algorithms/">algorithm visualization</a>
                             <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
                             <a class="operator-chip" href="/topics/software/schedulers/">schedulers</a>
                             <a class="operator-chip" href="/topics/software/compression/">compression</a>
                             <a class="operator-chip" href="/topics/software/parsers/#parser-map">parser field guide</a>
                             <a class="operator-chip" href="/topics/software/lattices/">lattices</a>
                             <a class="operator-chip" href="/topics/math/complexity/#parser-budgets">complexity budgets</a>
+                            <a class="operator-chip" href="/topics/math/scale-intuition/">scale intuition</a>
+                            <a class="operator-chip" href="/topics/math/statistical-analysis/">statistical analysis</a>
                             <a class="operator-chip" href="/topics/math/category-theory/#category-insight">category insight</a>
                             <a class="operator-chip" href="/topics/math/number-theory/#modular-clock">number theory</a>
                             <a class="operator-chip" href="/topics/software/browser/">browser + TypeScript reference</a>
@@ -513,6 +516,31 @@
                 </div>
                 <p class="inline-note">The rest of the page builds from these five ideas: keep text readable, name useful regions, make those regions queryable, project them into views, and let codeblocks participate.</p>
                 <p class="inline-note">If you are coming from writing, illustration, or book communities instead of software, start with the <a href="/topics/craft/">author craft ramp</a> and come back here when the file and syntax pieces start to feel useful.</p>
+            </section>
+
+            <section class="site-frame" id="algorithm-scale-cluster" data-spw-role="routing" data-spw-meaning="algorithm and evidence cluster" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_software__algorithm_scale_cluster" data-spw-related-routes="/topics/software/algorithms/|/topics/math/complexity/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/play/rpg-wednesday/">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-scale-cluster">~"algorithm_scale_cluster"</a>
+                    <h2>Algorithm + Evidence Cluster</h2>
+                </div>
+                <p class="inline-note">These routes keep software talk grounded when a procedure has to survive real scale, evidence pressure, and human consequence.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Algorithm visualization</h3>
+                        <p>Use pictures, invariants, and failure modes so search, ranking, compression, and traversal become discussable across roles.</p>
+                        <a href="/topics/software/algorithms/">route: algorithm visualization</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Scale intuition</h3>
+                        <p>Keep claims anchored to the right layer when a local rule begins touching teams, rooms, or public systems.</p>
+                        <a href="/topics/math/scale-intuition/">route: scale intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Statistical analysis</h3>
+                        <p>Bring in baseline, variance, sampling, and intervention language when the software surface needs evidence instead of vibes.</p>
+                        <a href="/topics/math/statistical-analysis/">route: statistical analysis</a>
+                    </article>
+                </div>
             </section>
 
             <section class="site-frame spec-grid" id="base-comparison-frame" data-spw-role="comparison" data-spw-meaning="source comparison" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software__base_comparison_frame" data-spw-context-relevance="software plain text interaction grammar projection tool probes" data-spw-related-routes="/|/about/|/play/|/blog/|/contact/|/settings/|/topics/software/spw/|/topics/craft/">

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Statistical Analysis: Baseline, Variance, Intervention</title>
+    <meta name="description" content="A practical field guide for statistical analysis: baseline, variance, sampling, effect size, intervention reading, and team language for uncertainty."/>
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/math/statistical-analysis/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Statistical Analysis: Baseline, Variance, Intervention"/>
+    <meta property="og:description" content="A practical field guide for statistical analysis: baseline, variance, sampling, effect size, intervention reading, and team language for uncertainty."/>
+    <meta property="og:url" content="https://spwashi.com/topics/math/statistical-analysis/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/home/constellation-studio-1600.webp"/>
+    <meta property="og:image:alt" content="A constellation-like field of nodes and intervals suggesting pattern, spread, and comparison."/>
+    <meta property="og:image:width" content="1600"/>
+    <meta property="og:image:height" content="1600"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Statistical Analysis: Baseline, Variance, Intervention"/>
+    <meta name="twitter:description" content="A practical field guide for statistical analysis: baseline, variance, sampling, effect size, intervention reading, and team language for uncertainty."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/home/constellation-studio-1600.webp"/>
+    <meta name="twitter:image:alt" content="A constellation-like field of nodes and intervals suggesting pattern, spread, and comparison."/>
+    <meta name="keywords" content="statistical analysis, variance, baseline, intervention, sampling, uncertainty, effect size, evidence">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Statistical Analysis: Baseline, Variance, Intervention",
+                "description": "A practical field guide for statistical analysis: baseline, variance, sampling, effect size, intervention reading, and team language for uncertainty.",
+                "url": "https://spwashi.com/topics/math/statistical-analysis/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "statistical analysis",
+                        "baseline",
+                        "variance",
+                        "sampling",
+                        "effect size",
+                        "interventions",
+                        "uncertainty"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "statistics-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "evidence variance interpretation"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Statistical Analysis",
+                                "item": "https://spwashi.com/topics/math/statistical-analysis/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="evidence variance interpretation" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_statistical_analysis" data-spw-page-role="statistics-register" data-spw-related-routes="/topics/math/|/topics/math/scale-intuition/|/topics/software/algorithms/|/topics/mental-health/|/topics/nutrition/|/play/rpg-wednesday/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_math_statistical_analysis__site_header" data-spw-related-routes="/topics/math/|/topics/math/scale-intuition/|/topics/software/algorithms/|/topics/mental-health/|/topics/nutrition/|/play/rpg-wednesday/" data-spw-context-relevance="statistical analysis variance baseline intervention sampling uncertainty">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/topics/math/statistical-analysis/">Statistical Analysis</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>evidence</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_statistical_analysis__main_surface" data-spw-wonder="evidence variance interpretation" id="main-content" tabindex="-1" aria-labelledby="statistics-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="statistics-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="evidence variance interpretation" data-spw-affordance="orient">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#statistics-hero">#&gt;statistical_analysis</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">baseline</span>
+                        <span class="spec-pill">variance</span>
+                        <span class="spec-pill">interventions</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Evidence Practice</p>
+                    <h1 id="statistics-title">Statistical analysis is how pattern talk grows up into evidence talk.</h1>
+                    <p>Statistics becomes approachable once it stops pretending to be a pile of detached formulas. The practical questions are usually simpler: what is the baseline, how much variation is normal, how noisy is this sample, what changed after the intervention, and how much confidence should we actually claim? Those questions matter in product work, nutrition, care, moderation, education, and public reasoning.</p>
+                    <p>A good statistical habit does not make someone passive. It makes them harder to fool with dramatic anecdotes, prettier charts, and wishful certainty. It also makes teams better at describing uncertainty without collapsing into vagueness.</p>
+                    <nav class="frame-operators" aria-label="Statistical analysis sections">
+                        <a class="operator-chip" href="#baseline-variance">baseline and variance</a>
+                        <a class="operator-chip" href="#analysis-language">team language</a>
+                        <a class="operator-chip" href="#analysis-rpg-hooks">rpg hooks</a>
+                        <a class="operator-chip" href="/topics/mental-health/">mental health</a>
+                        <a class="operator-chip" href="/topics/nutrition/">nutrition</a>
+                        <a class="operator-chip" href="/topics/software/algorithms/">algorithms</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-realization="hybrid" data-spw-substrate="surface">
+                    <img src="/public/images/home/constellation-studio-1600.webp" alt="A constellation-like field of nodes and intervals suggesting pattern, spread, and comparison." width="1600" height="1600">
+                    <figcaption>
+                        <strong>Spread and relation</strong>
+                        <span>Useful analysis is often about interval, spread, drift, clustering, and deciding whether a pattern deserves more trust than a vivid impression.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Statistical analysis sections">
+                <ul>
+                    <li><a href="#statistics-hero">Overview</a></li>
+                    <li><a href="#baseline-variance">Baseline and Variance</a></li>
+                    <li><a href="#analysis-language">Team Language</a></li>
+                    <li><a href="#analysis-rpg-hooks">RPG Hooks</a></li>
+                    <li><a href="#analysis-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="baseline-variance" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="evidence variance interpretation" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#baseline-variance">^"baseline_variance"{</a>
+                    <h2>Baseline, Variance, Intervention</h2>
+                </div>
+                <p class="frame-note">A baseline says what the system usually looks like. Variance says how much it naturally wiggles. An intervention asks whether the change after a treatment or new policy is larger than the ordinary wiggle. That is already a lot of useful statistics.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Baseline</h3>
+                        <p>Name the before-state clearly enough that people can tell what “better” or “worse” is relative to.</p>
+                        <a href="/topics/nutrition/">route: nutrition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Variance</h3>
+                        <p>Do not narrativize normal fluctuation as if it were immediate proof of success or failure.</p>
+                        <a href="/topics/mental-health/">route: mental health</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Sampling</h3>
+                        <p>Ask who is in the sample, who is missing, and whether the sample was selected by convenience, platform bias, or a real design.</p>
+                        <a href="/topics/math/scale-intuition/">route: scale intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Effect size</h3>
+                        <p>Even when a change is real, the next question is whether it matters enough to change behavior, policy, or design.</p>
+                        <a href="/topics/software/algorithms/">route: algorithms</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="analysis-language" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="evidence variance interpretation" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#analysis-language">~"analysis_language"</a>
+                    <h2>Grounding Language For Teams</h2>
+                </div>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>Compared to what?</h3>
+                        <p>Always name the baseline, control, or historical comparison instead of letting a number float by itself.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>How noisy is this?</h3>
+                        <p>Ask whether the range of normal fluctuation is already large enough to explain the observed shift.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Who is missing?</h3>
+                        <p>Sampling bias often enters before the math does, through who got measured, who opted out, and who the system never sees.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Is the effect meaningful?</h3>
+                        <p>A statistically detectable change is not automatically a design-significant, clinically meaningful, or socially useful change.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What is the confounder?</h3>
+                        <p>Many persuasive narratives disappear once you notice seasonality, selection effects, drift, or an untracked co-intervention.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What decision changes if this holds?</h3>
+                        <p>Analysis should connect back to action. If no decision would change, the team may be decorating itself with numbers.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="analysis-rpg-hooks" data-spw-role="reference" data-spw-kind="frame" data-spw-context="play" data-spw-wonder="evidence variance interpretation" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#analysis-rpg-hooks">@small_n_play</a>
+                    <h2>RPG Wednesday Hooks</h2>
+                </div>
+                <p class="frame-note">RPG Wednesday is not a lab in the formal sense, but it is useful practice for small-n observation. Weekly recurrence gives a chance to notice whether a ritual, layout, recap style, or character hook is genuinely helping or whether it only felt exciting once.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Session notes as observations</h3>
+                        <p>Short, dated notes create a baseline for how the table usually flows before a new tool or recap format is declared successful.</p>
+                        <a href="/play/rpg-wednesday/sessions/">route: sessions</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>World pages as memory control</h3>
+                        <p>A world register reduces drift by moving repeated facts into one place, which makes later interpretation less noisy.</p>
+                        <a href="/play/rpg-wednesday/world/">route: world</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Arc labels as interpretation</h3>
+                        <p>Arc naming is a model choice. It can help reveal a trend, or it can overfit one dramatic event.</p>
+                        <a href="/play/rpg-wednesday/arcs/">route: arcs</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="analysis-neighbors" data-spw-role="routing" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="evidence variance interpretation" data-spw-affordance="navigate">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#analysis-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Scale intuition</h3>
+                        <p>Use scale intuition when the question is about which layer a statistic is actually describing.</p>
+                        <a href="/topics/math/scale-intuition/">route: scale intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Algorithms</h3>
+                        <p>Use algorithms when the question becomes procedural: ranking, routing, thresholds, monitoring, or retrieval.</p>
+                        <a href="/topics/software/algorithms/">route: algorithm visualization</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Mental health and nutrition</h3>
+                        <p>Use the care-adjacent routes when evidence language needs to stay connected to lived practice rather than abstraction.</p>
+                        <a href="/topics/mental-health/">route: mental health</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>

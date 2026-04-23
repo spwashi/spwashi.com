@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Algorithm Visualization: Intuition for the Important Ones</title>
+    <meta name="description" content="A field guide for visualizing important algorithms, naming invariants, and keeping algorithm talk grounded when a team works across personal, social, and societal scales."/>
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/software/algorithms/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Algorithm Visualization: Intuition for the Important Ones"/>
+    <meta property="og:description" content="A field guide for visualizing important algorithms, naming invariants, and keeping algorithm talk grounded when a team works across personal, social, and societal scales."/>
+    <meta property="og:url" content="https://spwashi.com/topics/software/algorithms/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/topics/math/algorithm-signal-field-study.webp"/>
+    <meta property="og:image:alt" content="A luminous algorithm field with structured marks, graph-like branches, and readable signal lines."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="1200"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Algorithm Visualization: Intuition for the Important Ones"/>
+    <meta name="twitter:description" content="A field guide for visualizing important algorithms, naming invariants, and keeping algorithm talk grounded when a team works across personal, social, and societal scales."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/topics/math/algorithm-signal-field-study.webp"/>
+    <meta name="twitter:image:alt" content="A luminous algorithm field with structured marks, graph-like branches, and readable signal lines."/>
+    <meta name="keywords" content="algorithms, visualization, intuition, invariants, search, sorting, graphs, dynamic programming, compression, team language">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Algorithm Visualization: Intuition for the Important Ones",
+                "description": "A field guide for visualizing important algorithms, naming invariants, and keeping algorithm talk grounded when a team works across personal, social, and societal scales.",
+                "url": "https://spwashi.com/topics/software/algorithms/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "algorithms",
+                        "visualization",
+                        "search",
+                        "sorting",
+                        "graphs",
+                        "dynamic programming",
+                        "compression",
+                        "team communication"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "software"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "curriculum"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "topic-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "pattern compression consequence"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Software",
+                                "item": "https://spwashi.com/topics/software/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Algorithm Visualization",
+                                "item": "https://spwashi.com/topics/software/algorithms/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="pattern compression consequence" data-spw-page-family="curriculum" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_software_algorithms" data-spw-page-role="topic-register" data-spw-related-routes="/topics/software/|/topics/math/complexity/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/compression/|/topics/software/parsers/|/topics/software/distributed/|/play/rpg-wednesday/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_software_algorithms__site_header" data-spw-related-routes="/topics/software/|/topics/math/complexity/|/topics/math/scale-intuition/|/topics/math/statistical-analysis/|/topics/software/compression/|/topics/software/parsers/|/topics/software/distributed/|/play/rpg-wednesday/" data-spw-context-relevance="algorithms visualization intuition search sorting graphs compression">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a href="/play/">Play</a></li>
+                <li><a aria-current="page" href="/topics/software/algorithms/">Algorithms</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>pattern</span>
+    </header>
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_algorithms__main_surface" data-spw-wonder="pattern compression consequence" id="main-content" tabindex="-1" aria-labelledby="algorithms-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="algorithms-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="pattern compression consequence" data-spw-affordance="orient">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#algorithms-hero">#&gt;algorithm_visualization</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">invariants</span>
+                        <span class="spec-pill">update steps</span>
+                        <span class="spec-pill">team grounding</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Software / Algorithm Intuition</p>
+                    <h1 id="algorithms-title">Algorithm visualization is how important procedures become memorable enough to reason about.</h1>
+                    <p>Most teams do not need every theorem. They do need a way to picture what a procedure is preserving, what it updates each step, where it spends time or memory, and what kinds of error it introduces when the input stops being toy-sized. Visualization helps the important algorithm families stay concrete: search, sorting and ranking, graph traversal, dynamic programming, streaming, and compression.</p>
+                    <p>The other reason to visualize algorithms is ethical rather than decorative. Once an algorithm helps shape discovery, prioritization, moderation, recommendation, routing, or budgeting, it is no longer only a runtime concern. A team needs language for what gets compressed away, what proxy is standing in for value, and what happens when a local ranking rule starts touching social or societal scale.</p>
+                    <nav class="frame-operators" aria-label="Algorithm visualization sections">
+                        <a class="operator-chip" href="#algorithm-reading-grammar">reading grammar</a>
+                        <a class="operator-chip" href="#algorithm-families">important families</a>
+                        <a class="operator-chip" href="#algorithm-team-language">team grounding</a>
+                        <a class="operator-chip" href="#algorithm-rpg-hooks">rpg mnemonic hooks</a>
+                        <a class="operator-chip" href="/topics/math/complexity/#growth-curves">complexity</a>
+                        <a class="operator-chip" href="/topics/math/scale-intuition/">scale intuition</a>
+                        <a class="operator-chip" href="/topics/math/statistical-analysis/">statistical analysis</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-realization="hybrid" data-spw-substrate="probe">
+                    <img src="/public/images/topics/math/algorithm-signal-field-study.webp" alt="A luminous algorithm field with structured marks, graph-like branches, and readable signal lines." width="1200" height="1200">
+                    <figcaption>
+                        <strong>Signal field</strong>
+                        <span>Algorithms get easier to discuss once the procedure feels like a surface with paths, checkpoints, and losses instead of a black box full of prestige.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Algorithm visualization sections">
+                <ul>
+                    <li><a href="#algorithms-hero">Overview</a></li>
+                    <li><a href="#algorithm-reading-grammar">Reading Grammar</a></li>
+                    <li><a href="#algorithm-families">Important Families</a></li>
+                    <li><a href="#algorithm-team-language">Team Grounding</a></li>
+                    <li><a href="#algorithm-rpg-hooks">RPG Hooks</a></li>
+                    <li><a href="#algorithm-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="algorithm-reading-grammar" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="pattern compression consequence" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-reading-grammar">.algorithm_reading_grammar</a>
+                    <h2>Reading Grammar</h2>
+                </div>
+                <p class="frame-note">The quickest useful algorithm sketch usually answers four questions: what is the input shape, what invariant must stay true, what gets updated each step, and where does the cost or distortion accumulate. That grammar works for both code review and product discussion.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Input shape</h3>
+                        <p>Name whether you are dealing with a list, tree, graph, stream, queue, or score table. The right picture often starts there.</p>
+                        <a href="#algorithm-families">next: important families</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Invariant</h3>
+                        <p>State the thing that must remain true while the procedure runs: sorted prefix, shortest known path, lossless decode, bounded frontier.</p>
+                        <a href="/topics/math/complexity/#complexity-intuition">route: complexity intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Budget</h3>
+                        <p>Ask what is being spent: time, memory, human attention, patience, or a ranking slot that hides something else.</p>
+                        <a href="/topics/math/scale-intuition/#scale-language">route: scale language</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Failure mode</h3>
+                        <p>Every useful algorithm talk should name how it goes wrong: bias, starvation, overfitting, queue buildup, stale cache, or misleading proxy.</p>
+                        <a href="/topics/math/statistical-analysis/#analysis-language">route: analysis language</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="algorithm-families" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="pattern compression consequence" data-spw-affordance="navigate">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-families">^"important_families"{</a>
+                    <h2>Important Families</h2>
+                </div>
+                <p class="frame-note">The point of this shelf is not exhaustiveness. It is to keep the patterns most likely to matter in ordinary engineering and social tooling close enough to recall during design work.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">find()</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">lookup</span>
+                            <span class="spec-pill">search</span>
+                        </div>
+                        <h3>Search</h3>
+                        <p>Binary search, hash lookup, nearest-neighbor queries, and retrieval systems all revolve around how quickly a candidate set narrows.</p>
+                        <a href="/topics/math/complexity/#growth-curves">route: growth curves</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">rank()</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">order</span>
+                            <span class="spec-pill">proxy</span>
+                        </div>
+                        <h3>Sorting and ranking</h3>
+                        <p>Sorting sounds innocent until a ranked list becomes a public surface. Then the proxy, tie-break, and threshold logic deserve explicit review.</p>
+                        <a href="/topics/math/scale-intuition/#scale-ladder">route: scale ladder</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">graph</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">paths</span>
+                            <span class="spec-pill">frontiers</span>
+                        </div>
+                        <h3>Graph traversal</h3>
+                        <p>Breadth-first search, shortest paths, dependency walks, and recommendation neighborhoods all become easier when the frontier is drawable.</p>
+                        <a href="/topics/software/distributed/">route: distributed systems</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">dp</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">reuse</span>
+                            <span class="spec-pill">subproblems</span>
+                        </div>
+                        <h3>Dynamic programming</h3>
+                        <p>Dynamic programming is often the moment repeated structure becomes obvious enough to cache. It is really a literacy about overlap.</p>
+                        <a href="/topics/math/statistical-analysis/#baseline-variance">route: baseline and variance</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">zip()</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">compression</span>
+                            <span class="spec-pill">loss</span>
+                        </div>
+                        <h3>Compression</h3>
+                        <p>Compression is algorithmic memory design. It teaches what a representation is willing to keep, collapse, or discard.</p>
+                        <a href="/topics/software/compression/">route: compression</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="algorithm-team-language" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="pattern compression consequence" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-team-language">~"team_grounding"</a>
+                    <h2>Grounding Language For Teams</h2>
+                </div>
+                <p class="frame-note">When an algorithm touches routing, ranking, discovery, moderation, budgeting, or care, the team should be able to name what the procedure is doing without hiding behind mystique. These prompts tend to keep a discussion honest.</p>
+                <div class="frame-grid">
+                    <div class="frame-panel">
+                        <h3>What is the actual input?</h3>
+                        <p>Distinguish the raw event, the cleaned record, the feature vector, and the socially meaningful thing they only partially represent.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What proxy is standing in for value?</h3>
+                        <p>Clicks, replies, reports, watch time, frequency, and rank position are not the same as care, quality, or truth.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>What gets compressed away?</h3>
+                        <p>Ask what nuance disappears when the procedure reduces a person, event, or place to a score, bucket, label, or queue position.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Where does the bottleneck move?</h3>
+                        <p>Speeding up computation can simply relocate burden onto reviewers, moderators, support workers, or the people downstream of a ranking.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>Which scale are we actually discussing?</h3>
+                        <p>A rule that feels fine for one person or one room may break once it touches a whole city, platform, or institution.</p>
+                    </div>
+                    <div class="frame-panel">
+                        <h3>How will we know the procedure drifted?</h3>
+                        <p>Pair algorithm talk with monitoring language: baseline, expected range, false positives, miss rate, and what kind of appeal or override exists.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="algorithm-rpg-hooks" data-spw-role="reference" data-spw-kind="frame" data-spw-context="play" data-spw-wonder="pattern compression consequence" data-spw-affordance="read">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-rpg-hooks">@rpg_mnemonic_hooks</a>
+                    <h2>RPG Wednesday Hooks</h2>
+                </div>
+                <p class="frame-note">RPG Wednesday is a good lab for algorithm intuition because the table already cares about compression, layout, and recall. A session recap is a summarization algorithm. A cast card is a memory index. An arc title is compression with intentional loss. A readable world page is a layout strategy for not drowning in canon.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Layout as procedure</h3>
+                        <p>Page layout decides what a player can find quickly, what gets grouped, and what stays on-screen long enough to matter.</p>
+                        <a href="/play/rpg-wednesday/world/">route: world register</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Arc names as compression</h3>
+                        <p>An arc label should preserve the question without forcing every event into one moral. Good naming is controlled compression.</p>
+                        <a href="/play/rpg-wednesday/arcs/">route: arcs</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Character cards as indexes</h3>
+                        <p>A portrait, a hook, and a few development lanes behave like a tiny retrieval system for a person at the table.</p>
+                        <a href="/play/rpg-wednesday/character/">route: character development</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="algorithm-neighbors" data-spw-role="routing" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="pattern compression consequence" data-spw-affordance="navigate">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#algorithm-neighbors">&amp;["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Complexity</h3>
+                        <p>Use complexity when you need the budget story behind the sketch.</p>
+                        <a href="/topics/math/complexity/#parser-budgets">route: parser budgets</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Scale intuition</h3>
+                        <p>Use scale intuition when a local procedure starts making claims about rooms, communities, or institutions.</p>
+                        <a href="/topics/math/scale-intuition/">route: scale intuition</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Statistical analysis</h3>
+                        <p>Use statistical analysis when an algorithm needs evidence, monitoring, or intervention language.</p>
+                        <a href="/topics/math/statistical-analysis/">route: statistical analysis</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Parsers and compression</h3>
+                        <p>Use the software neighbors when the procedure is really about structure, encoding, or recoverable meaning.</p>
+                        <a href="/topics/software/parsers/#parser-map">route: parser map</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>

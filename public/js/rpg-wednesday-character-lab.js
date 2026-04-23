@@ -37,6 +37,8 @@ const buildCharacterSeed = (character) => {
     const parts = [
         previewText(character.name, 'Unnamed character'),
         character.role ? `role ${character.role}` : '',
+        character.vocation ? `development ${character.vocation}` : '',
+        character.literacies ? `literacies ${character.literacies}` : '',
         character.lineage ? `lineage ${character.lineage}` : '',
         character.pronouns ? `pronouns ${character.pronouns}` : '',
         character.hook ? `hook ${character.hook}` : '',
@@ -65,9 +67,21 @@ export const initRpgCharacterLab = (section) => {
     });
     const { field: roleField, input: roleInput } = createLineField({
         id: 'rpg-character-role',
-        label: 'Role / class',
+        label: 'Role / calling',
         value: '',
         placeholder: 'Signal cartographer, woodfrog paladin, coral witch'
+    });
+    const { field: vocationField, input: vocationInput } = createLineField({
+        id: 'rpg-character-vocation',
+        label: 'Development vector',
+        value: '',
+        placeholder: 'software, teaching, painting, care work, research, spiritual witness'
+    });
+    const { field: literaciesField, input: literaciesInput } = createLineField({
+        id: 'rpg-character-literacies',
+        label: 'Literacies in play',
+        value: '',
+        placeholder: 'code, visual, narrative, statistical, social, ritual, nutritional'
     });
     const { field: hookField, input: hookInput } = createField({
         id: 'rpg-character-hook',
@@ -131,7 +145,7 @@ export const initRpgCharacterLab = (section) => {
         placeholder: 'Voice, bonds, ritual habits, prompt utility, week-to-week changes'
     });
 
-    [lineageField, pronounsField, imageUrlField, notesField].forEach((field) => {
+    [vocationField, literaciesField, lineageField, pronounsField, imageUrlField, notesField].forEach((field) => {
         field.classList.add('rpg-character-lab__advanced');
     });
 
@@ -160,7 +174,8 @@ export const initRpgCharacterLab = (section) => {
         }, [
             createShortcutToken({ key: 'name', label: 'identity first' }),
             createShortcutToken({ key: 'art', label: 'visual anchor' }),
-            createShortcutToken({ key: 'hook', label: 'current pressure' })
+            createShortcutToken({ key: 'hook', label: 'current pressure' }),
+            createShortcutToken({ key: 'literacies', label: 'growth lanes' })
         ])
     ]);
 
@@ -200,7 +215,7 @@ export const initRpgCharacterLab = (section) => {
     });
     const starter = createElement('p', {
         className: 'frame-note rpg-character-lab__starter',
-        text: 'Keep the first pass narrow: who is this person, what do they look like, and what pressure are they carrying right now?'
+        text: 'Keep the first pass narrow: who is this person, what do they look like, and which kinds of development are they actually carrying?'
     });
     const composer = createElement('div', {
         className: 'rpg-character-lab__composer'
@@ -218,8 +233,10 @@ export const initRpgCharacterLab = (section) => {
         createElement('div', { className: 'rpg-character-lab__field-grid' }, [
             nameField,
             roleField,
+            vocationField,
             uploadField,
             hookField,
+            literaciesField,
             lineageField,
             pronounsField,
             imageUrlField,
@@ -238,7 +255,7 @@ export const initRpgCharacterLab = (section) => {
             createElement('h3', { text: 'Character Deck' }),
             createElement('p', {
                 className: 'frame-note',
-                text: 'Each card should stand alone well enough to screenshot, read aloud, or hand off to another model.'
+                text: 'Each card should stand alone well enough to screenshot, read aloud, or hand off to another model, while still pointing toward a broader life, craft, or calling.'
             })
         ]),
         board
@@ -264,6 +281,8 @@ export const initRpgCharacterLab = (section) => {
         draftUpload = null;
         nameInput.value = '';
         roleInput.value = '';
+        vocationInput.value = '';
+        literaciesInput.value = '';
         lineageInput.value = '';
         pronounsInput.value = '';
         hookInput.value = '';
@@ -280,6 +299,8 @@ export const initRpgCharacterLab = (section) => {
         draftUpload = null;
         nameInput.value = character.name || '';
         roleInput.value = character.role || '';
+        vocationInput.value = character.vocation || '';
+        literaciesInput.value = character.literacies || '';
         lineageInput.value = character.lineage || '';
         pronounsInput.value = character.pronouns || '';
         hookInput.value = character.hook || '';
@@ -316,7 +337,7 @@ export const initRpgCharacterLab = (section) => {
             const imageDataUrl = character.imageKey ? await getImageDataUrl(character.imageKey).catch(() => null) : null;
             const previewUrl = imageDataUrl || character.imageUrl || '';
 
-            const topMeta = [character.role, character.lineage, character.pronouns]
+            const topMeta = [character.role, character.vocation, character.lineage, character.pronouns]
                 .filter(Boolean)
                 .join(' · ');
 
@@ -345,6 +366,12 @@ export const initRpgCharacterLab = (section) => {
                         className: 'rpg-character-card__hook',
                         text: previewText(character.hook, 'No hook yet. Add one line of pressure, desire, or contradiction.', 160)
                     }),
+                    character.literacies
+                        ? createElement('p', {
+                            className: 'rpg-character-card__literacies',
+                            text: previewText(character.literacies, '', 180)
+                        })
+                        : '',
                     character.notes
                         ? createElement('p', {
                             className: 'rpg-character-card__notes',
@@ -419,6 +446,8 @@ export const initRpgCharacterLab = (section) => {
             id,
             name,
             role: roleInput.value.trim(),
+            vocation: vocationInput.value.trim(),
+            literacies: literaciesInput.value.trim(),
             lineage: lineageInput.value.trim(),
             pronouns: pronounsInput.value.trim(),
             hook: hookInput.value.trim(),
@@ -471,7 +500,7 @@ export const initRpgCharacterLab = (section) => {
         ]),
         createElement('p', {
             className: 'inline-note',
-            text: 'Build one person at a time. Start with a name and portrait, then add only the details that help the player recognize themselves as a specific individual.'
+            text: 'Build one person at a time. Start with a name and portrait, then add the development vectors and literacies that help the player recognize themselves as a specific individual.'
         }),
         createElement('div', { className: 'rpg-character-lab__layout' }, [
             composer,
