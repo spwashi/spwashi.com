@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Differential Lambda Calculus: Resource-Sensitive Change</title>
+    <meta name="description" content="A public bridge between calculus and software structure: integration by parts, cut elimination, resource-sensitive substitution, and boundary-aware reduction."/>
+    <link rel="stylesheet" href="/public/css/style.css?v=0.0.2">
+    <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+    <link rel="canonical" href="https://spwashi.com/topics/software/differential-lambda-calculus/">
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Differential Lambda Calculus: Resource-Sensitive Change"/>
+    <meta property="og:description" content="A public bridge between calculus and software structure: integration by parts, cut elimination, resource-sensitive substitution, and boundary-aware reduction."/>
+    <meta property="og:url" content="https://spwashi.com/topics/software/differential-lambda-calculus/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta property="og:image:alt" content="A signal field of mathematical and software-like marks sharing one structural surface."/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Differential Lambda Calculus: Resource-Sensitive Change"/>
+    <meta name="twitter:description" content="A public bridge between calculus and software structure: integration by parts, cut elimination, resource-sensitive substitution, and boundary-aware reduction."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
+    <meta name="twitter:image:alt" content="A signal field of mathematical and software-like marks sharing one structural surface."/>
+    <meta name="keywords" content="differential lambda calculus, cut elimination, integration by parts, resource sensitivity, structural reduction, calculus, software theory">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Differential Lambda Calculus: Resource-Sensitive Change",
+                "description": "A public bridge between calculus and software structure: integration by parts, cut elimination, resource-sensitive substitution, and boundary-aware reduction.",
+                "url": "https://spwashi.com/topics/software/differential-lambda-calculus/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "differential lambda calculus",
+                        "cut elimination",
+                        "integration by parts",
+                        "resource-sensitive substitution",
+                        "calculus",
+                        "software theory"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "software"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "theory-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "reduction boundary resource"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Software",
+                                "item": "https://spwashi.com/topics/software/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Differential Lambda Calculus",
+                                "item": "https://spwashi.com/topics/software/differential-lambda-calculus/"
+                        }
+                ]
+        }
+    </script>
+</head>
+<body data-spw-surface="software" data-spw-features="operators navigator console" data-spw-route-family="editorial systems field-guide" data-spw-context="analysis" data-spw-wonder="reduction boundary resource" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_software_differential_lambda_calculus" data-spw-page-role="theory-register" data-spw-related-routes="/topics/software/|/topics/software/spw/|/topics/software/algorithms/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/category-theory/|/play/rpg-wednesday/arcs/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
+    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_topics_topics_software_differential_lambda_calculus__site_header" data-spw-related-routes="/topics/software/|/topics/software/spw/|/topics/software/algorithms/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/category-theory/|/play/rpg-wednesday/arcs/" data-spw-context-relevance="differential lambda calculus cut elimination integration by parts structural reduction">
+        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
+        <nav aria-label="Primary">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/topics/">Topics</a></li>
+                <li><a href="/topics/software/">Software</a></li>
+                <li><a href="/topics/math/">Math</a></li>
+                <li><a aria-current="page" href="/topics/software/differential-lambda-calculus/">Differential Lambda Calculus</a></li>
+            </ul>
+        </nav>
+        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>reduction</span>
+    </header>
+    <main id="main-content" tabindex="-1" aria-labelledby="dlc-title">
+        <article>
+            <section class="site-frame site-hero site-hero--split-figure" id="dlc-hero" data-spw-image-hero="true">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#dlc-hero">#&gt;resource_sensitive_change</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill">cut elimination</span>
+                        <span class="spec-pill">integration by parts</span>
+                        <span class="spec-pill">boundary terms</span>
+                    </div>
+                </div>
+                <div class="topic-hero-copy">
+                    <p class="spec-kicker">Software / Structural Bridge</p>
+                    <h1 id="dlc-title">Differential lambda calculus gives a structural language for how change moves through a boundary.</h1>
+                    <p>This route is not trying to be a full formal-systems course. It is here because one public calculus trick, <a href="/topics/math/calculus/#integration-by-parts-lab">integration by parts</a>, becomes more memorable once you can read it as a structural rewrite: a product-shaped handoff is exposed, the boundary residue stays visible, and the remaining derivative burden moves to the other side. That is the kind of move people mean when they talk about cut elimination in a differential-lambda-calculus neighborhood.</p>
+                    <p>The point is practical. Teams often need language for moving work across an interface, making an intermediate handoff explicit, or reducing duplication without pretending a boundary disappeared. This route keeps those readings close enough to compare.</p>
+                    <nav class="frame-operators" aria-label="Differential lambda calculus sections">
+                        <a class="operator-chip" href="#structural-bridge">structural bridge</a>
+                        <a class="operator-chip" href="#aligned-readings">aligned readings</a>
+                        <a class="operator-chip" href="#team-language">team language</a>
+                        <a class="operator-chip" href="#dlc-neighbors">neighbor routes</a>
+                        <a class="operator-chip" href="/topics/math/calculus/#integration-structural-reading">calculus bridge</a>
+                        <a class="operator-chip" href="/topics/software/spw/#structural-reduction-bridge">Spw bridge</a>
+                    </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-realization="hybrid" data-spw-substrate="probe">
+                    <img src="/public/images/routes/math-signal-field-square.webp" alt="A signal field of mathematical and software-like marks sharing one structural surface." width="1600" height="1600">
+                    <figcaption>
+                        <strong>Shared structure</strong>
+                        <span>Boundary, reduction, and directional change can be read on one surface before they split into math, code, or interface vocabulary.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Differential lambda calculus sections">
+                <ul>
+                    <li><a href="#dlc-hero">Overview</a></li>
+                    <li><a href="#structural-bridge">Structural Bridge</a></li>
+                    <li><a href="#aligned-readings">Aligned Readings</a></li>
+                    <li><a href="#team-language">Team Language</a></li>
+                    <li><a href="#dlc-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="structural-bridge">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#structural-bridge">^"structural_bridge"{</a>
+                    <h2>Integration By Parts As A Human-Scale Structural Rewrite</h2>
+                </div>
+                <p class="frame-note">On this site, I want to treat integration by parts as a human-scale instance of cut elimination in a differential-lambda-calculus reading. The product rule creates a two-branch dependency. Running that identity backward makes the intermediate handoff explicit, preserves a boundary term, and relocates the differentiated work to the other factor. The important thing is not prestige. It is that the rewrite keeps boundary, residue, and remaining obligation readable.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>The split appears</h3>
+                        <p><code>(uv)' = u'v + uv'</code> says one paired object can unfold into two obligations. That is the product-rule side of the story.</p>
+                        <a href="/topics/math/calculus/#anchor-equations">route: product rule</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>The boundary remains</h3>
+                        <p><code>uv</code> does not vanish when the integral is rewritten. It survives as the boundary residue that keeps the transformation honest.</p>
+                        <a href="/topics/math/calculus/#integration-by-parts-lab">route: boundary term</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>The burden moves</h3>
+                        <p><code>∫u dv = uv - ∫v du</code> shifts the active differential burden. The remaining work is simpler because the dependence got relocated, not ignored.</p>
+                        <a href="#aligned-readings">next: aligned readings</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Why the lambda language helps</h3>
+                        <p>Differential lambda calculus keeps change, substitution, and resource sensitivity in the same room, so the rewrite reads like structure instead of a memorized maneuver.</p>
+                        <a href="/topics/software/spw/#structural-reduction-bridge">route: Spw bridge</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="aligned-readings">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#aligned-readings">~"aligned_readings"</a>
+                    <h2>Three Readings Of The Same Move</h2>
+                </div>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">calc</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">product rule</span>
+                            <span class="spec-pill">boundary</span>
+                        </div>
+                        <h3>Calculus reading</h3>
+                        <p>Integration by parts reverses the product rule. The derivative is moved, the boundary term is exposed, and the remaining integral becomes more workable.</p>
+                        <a href="/topics/math/calculus/#integration-structural-reading">route: structural reading</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">proof</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">cut</span>
+                            <span class="spec-pill">elimination</span>
+                        </div>
+                        <h3>Proof or reduction reading</h3>
+                        <p>An intermediate handoff is eliminated, but only by making the edge conditions explicit. Good reduction does not hide what survives the rewrite.</p>
+                        <a href="#structural-bridge">anchor: structural bridge</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">site</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">scope</span>
+                            <span class="spec-pill">projection</span>
+                        </div>
+                        <h3>Site or interface reading</h3>
+                        <p>When a surface is simplified, the goal is not to erase a dependency by force. The goal is to move work across a named boundary while keeping the remaining contract inspectable.</p>
+                        <a href="/topics/software/spw/">route: operator atlas</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="team-language">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#team-language">&amp;["team_language"]</a>
+                    <h2>Grounding Language For Teams</h2>
+                </div>
+                <p class="frame-note">Most teams are not going to sit around proving theorems in the differential lambda calculus. They can still benefit from sharper structural language. A handoff can be explicit or hidden. A boundary term can be preserved or dropped. A dependency can be duplicated, displaced, or discharged. Those distinctions matter in code review, interface design, and social tooling.</p>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Make the handoff visible</h3>
+                        <p>If two parts of a system only meet through an implicit side effect, the cut is harder to inspect and the rewrite cost is harder to estimate.</p>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Name the residue</h3>
+                        <p>Ask what must still be true after simplification. That is the interface-level cousin of keeping the boundary term explicit.</p>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Respect resource sensitivity</h3>
+                        <p>Not every dependency can be duplicated for free. Attention, latency, memory, ranking slots, and trust all behave like real costs.</p>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Use mnemonic compression</h3>
+                        <p>Good naming lets a group carry a rewrite pattern without carrying all of the proof text. That is part of why this route belongs near RPG arcs and world memory.</p>
+                        <a href="/play/rpg-wednesday/arcs/">route: RPG arcs</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="dlc-neighbors">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#dlc-neighbors">#["neighbor_routes"]</a>
+                    <h2>Neighbor Routes</h2>
+                </div>
+                <div class="topic-reference-grid">
+                    <article class="topic-reference-card">
+                        <h3>Calculus</h3>
+                        <p>The integration-by-parts lab is the public picture that keeps this whole route grounded.</p>
+                        <a href="/topics/math/calculus/#integration-structural-reading">route: calculus bridge</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Spw operator atlas</h3>
+                        <p>Projection, scope, and explicit boundaries matter more once structural rewrites stop feeling ornamental.</p>
+                        <a href="/topics/software/spw/#structural-reduction-bridge">route: Spw bridge</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Algorithm visualization</h3>
+                        <p>Optimization and repeated structure are easier to discuss when work movement and residue are explicit.</p>
+                        <a href="/topics/software/algorithms/">route: algorithms</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Differential equations</h3>
+                        <p>Once derivatives become the thing being solved for, structural rewrites become part of the equation-solving toolkit.</p>
+                        <a href="/topics/math/differential-equations/#equation-family">route: differential equations</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>Category theory</h3>
+                        <p>Composition and commuting structure are nearby literacies when you want the broader algebraic neighborhood.</p>
+                        <a href="/topics/math/category-theory/#category-insight">route: category theory</a>
+                    </article>
+                    <article class="topic-reference-card">
+                        <h3>RPG Wednesday arcs</h3>
+                        <p>Compression, recap, and playable residue are narrative cousins of keeping the boundary term while simplifying the path.</p>
+                        <a href="/play/rpg-wednesday/arcs/">route: RPG arcs</a>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+    <spw-include src="site-footer"></spw-include>
+</body>
+</html>
