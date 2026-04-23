@@ -2512,3 +2512,105 @@ code[data-interactive]:focus-visible::after {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ==========================================================================
+   26. Disclosure, Dense Cards, and Sponsor Slots
+   ========================================================================== */
+
+:where(.spw-inline-disclosure) {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--spw-shell-line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--shape-surface, 12px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 44%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 94%, transparent);
+  box-shadow: var(--shadow-sm, 0 1px 6px rgba(14, 18, 20, 0.06));
+  overflow: clip;
+}
+
+:where(.spw-inline-disclosure > summary) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.82rem 0.95rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-sm, 0.92rem);
+  line-height: 1.4;
+}
+
+:where(.spw-inline-disclosure > summary::-webkit-details-marker) {
+  display: none;
+}
+
+:where(.spw-inline-disclosure > summary::after) {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--active-op-color, var(--teal, #008080));
+  font-size: 1rem;
+  line-height: 1;
+}
+
+:where(.spw-inline-disclosure[open] > summary::after) {
+  content: "-";
+}
+
+:where(.spw-inline-disclosure__body) {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0 0.95rem 0.95rem;
+}
+
+:where(.frame-card--dense) {
+  gap: 0.45rem;
+  padding: clamp(0.72rem, 1.8vw, 0.9rem);
+  border-radius: min(var(--shape-component, 10px), 10px);
+}
+
+:where(.frame-card--dense .frame-card-sigil) {
+  margin-bottom: 0.1rem;
+  font-size: var(--text-size-2xs, 0.72rem);
+}
+
+:where(.frame-card--dense .spec-strip) {
+  gap: 0.3rem;
+}
+
+:where(.spw-sponsor-slot) {
+  display: grid;
+  gap: 0.45rem;
+  padding: clamp(0.72rem, 1.8vw, 0.92rem);
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
+  border-radius: var(--shape-surface, 12px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 44%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 95%, transparent);
+}
+
+:where(.spw-sponsor-slot__label) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:where(.spw-sponsor-slot--banner) {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+:where(.spw-sponsor-slot--popover) {
+  max-width: 22rem;
+  box-shadow:
+    var(--shadow-sm, 0 1px 6px rgba(14, 18, 20, 0.06)),
+    0 16px 36px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+}
+
+@media (max-width: 720px) {
+  :where(.spw-sponsor-slot--banner) {
+    grid-template-columns: 1fr;
+  }
+}

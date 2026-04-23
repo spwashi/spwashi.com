@@ -73,13 +73,13 @@ export const initRpgCharacterLab = (section) => {
     });
     const { field: vocationField, input: vocationInput } = createLineField({
         id: 'rpg-character-vocation',
-        label: 'Development vector',
+        label: 'Development vector / wonder lane',
         value: '',
         placeholder: 'software, teaching, painting, care work, research, spiritual witness'
     });
     const { field: literaciesField, input: literaciesInput } = createLineField({
         id: 'rpg-character-literacies',
-        label: 'Literacies in play',
+        label: 'Literacies / thinking tools',
         value: '',
         placeholder: 'code, visual, narrative, statistical, social, ritual, nutritional'
     });
@@ -114,18 +114,18 @@ export const initRpgCharacterLab = (section) => {
         type: 'file',
         accept: 'image/*'
     });
-    const uploadLabel = createElement('span', { className: 'rpg-character-upload__label', text: 'Character art' });
+    const uploadLabel = createElement('span', { className: 'rpg-character-upload__label', text: 'Portrait / character art' });
     const uploadHint = createElement('span', {
         className: 'rpg-character-upload__hint',
-        text: 'Choose portrait art, sketch, or screenshot'
+        text: 'Choose a portrait, sketch, screenshot, or study'
     });
     const uploadState = createElement('span', {
         className: 'rpg-character-upload__state',
-        text: 'No image loaded yet'
+        text: 'No portrait held yet'
     });
     const uploadPrompt = createElement('div', { className: 'rpg-character-upload__prompt' }, [
-        createElement('strong', { text: 'Drop in art or choose a file' }),
-        createElement('span', { text: '4:5 portraits and square studies work well here.' })
+        createElement('strong', { text: 'Drop in a face, sketch, or study' }),
+        createElement('span', { text: 'What if we start with the face and let the rest catch up? 4:5 portraits and square studies work well here.' })
     ]);
     const uploadField = createElement('label', { className: 'rpg-gameplay-field rpg-character-upload' }, [
         uploadLabel,
@@ -159,23 +159,23 @@ export const initRpgCharacterLab = (section) => {
         role: 'status',
         'aria-live': 'polite',
         text: storage.available
-            ? 'Character notes and art stay in this browser unless you copy or export them elsewhere.'
+            ? 'Character notes, art, and seeds stay in this browser unless you copy or export them elsewhere.'
             : 'Local storage is unavailable in this browser context. Character drafts will not persist after this page closes.'
     });
     const emptyState = createElement('div', {
         className: 'rpg-character-lab__empty'
     }, [
         createElement('p', {
-            text: 'Start with one person. A name and one image are enough to give the campaign someone specific to return to.'
+            text: 'Start with one person. A name and one image are enough to give the campaign someone specific to return to. What if that is already enough to make the week feel more real?'
         }),
         createElement('div', {
             className: 'rpg-shortcut-row',
             'aria-label': 'Character entry heuristics'
         }, [
             createShortcutToken({ key: 'name', label: 'identity first' }),
-            createShortcutToken({ key: 'art', label: 'visual anchor' }),
+            createShortcutToken({ key: 'art', label: 'face first' }),
             createShortcutToken({ key: 'hook', label: 'current pressure' }),
-            createShortcutToken({ key: 'literacies', label: 'growth lanes' })
+            createShortcutToken({ key: 'literacies', label: 'thinking lanes' })
         ])
     ]);
 
@@ -189,7 +189,7 @@ export const initRpgCharacterLab = (section) => {
             summaryCharacters
         ]),
         createElement('div', { className: 'rpg-character-lab__summary-item' }, [
-            createElement('span', { text: 'portraits' }),
+            createElement('span', { text: 'faces' }),
             summaryPortraits
         ]),
         createElement('div', { className: 'rpg-character-lab__summary-item' }, [
@@ -215,7 +215,7 @@ export const initRpgCharacterLab = (section) => {
     });
     const starter = createElement('p', {
         className: 'frame-note rpg-character-lab__starter',
-        text: 'Keep the first pass narrow: who is this person, what do they look like, and which kinds of development are they actually carrying?'
+        text: 'Table narrator: what if the first pass stays narrow? Who is this person, what do they look like, and which kinds of development are they actually carrying right now?'
     });
     const composer = createElement('div', {
         className: 'rpg-character-lab__composer'
@@ -254,10 +254,10 @@ export const initRpgCharacterLab = (section) => {
         createElement('div', { className: 'rpg-character-lab__section-heading' }, [
             createElement('h3', { text: 'Character Deck' }),
             createElement('p', {
-                className: 'frame-note',
-                text: 'Each card should stand alone well enough to screenshot, read aloud, or hand off to another model, while still pointing toward a broader life, craft, or calling.'
-            })
-        ]),
+                    className: 'frame-note',
+                    text: 'Each card should stand alone well enough to screenshot, read aloud, or hand off to another model, while still pointing toward a broader life, craft, calling, or spiritual question.'
+                })
+            ]),
         board
     ]);
 
@@ -271,7 +271,7 @@ export const initRpgCharacterLab = (section) => {
         status.textContent = message;
         statusTimer = window.setTimeout(() => {
             status.textContent = storage.available
-                ? 'Character notes and art stay in this browser unless you copy or export them elsewhere.'
+                ? 'Character notes, art, and seeds stay in this browser unless you copy or export them elsewhere.'
                 : 'Local storage is unavailable in this browser context. Character drafts will not persist after this page closes.';
         }, 2200);
     };
@@ -289,7 +289,7 @@ export const initRpgCharacterLab = (section) => {
         imageUrlInput.value = '';
         notesInput.value = '';
         uploadInput.value = '';
-        uploadState.textContent = 'No image loaded yet';
+        uploadState.textContent = 'No portrait held yet';
         saveButton.textContent = '@ save character';
         resetButton.textContent = '! clear draft';
     };
@@ -308,8 +308,8 @@ export const initRpgCharacterLab = (section) => {
         notesInput.value = character.notes || '';
         uploadInput.value = '';
         uploadState.textContent = character.imageKey || character.imageUrl
-            ? 'Art already attached'
-            : 'No image loaded yet';
+            ? 'Portrait already attached'
+            : 'No portrait held yet';
         saveButton.textContent = '~ update character';
         resetButton.textContent = '! cancel edit';
     };
@@ -355,7 +355,7 @@ export const initRpgCharacterLab = (section) => {
                     ])
                     : createElement('div', { className: 'rpg-character-card__placeholder' }, [
                         createElement('strong', { text: previewText(character.name, 'Unnamed') }),
-                        createElement('span', { text: 'Add art or leave this as a text-first card.' })
+                        createElement('span', { text: 'Add art later or keep this as a text-first individual card.' })
                     ]),
                 createElement('div', { className: 'rpg-character-card__body' }, [
                     createElement('div', { className: 'rpg-character-card__heading' }, [
@@ -483,7 +483,7 @@ export const initRpgCharacterLab = (section) => {
         draftUpload = uploadInput.files?.[0] || null;
         if (draftUpload) {
             uploadState.textContent = draftUpload.name;
-            syncStatus(`Loaded art: ${draftUpload.name}`);
+            syncStatus(`Loaded portrait: ${draftUpload.name}`);
         }
     });
 
@@ -500,7 +500,7 @@ export const initRpgCharacterLab = (section) => {
         ]),
         createElement('p', {
             className: 'inline-note',
-            text: 'Build one person at a time. Start with a name and portrait, then add the development vectors and literacies that help the player recognize themselves as a specific individual.'
+            text: 'Build one person at a time. Start with a name and portrait, then add the development vectors and literacies that help the player recognize themselves as a specific individual. Topic links elsewhere on the page are there to name the kind of thinking the character wants next.'
         }),
         createElement('div', { className: 'rpg-character-lab__layout' }, [
             composer,

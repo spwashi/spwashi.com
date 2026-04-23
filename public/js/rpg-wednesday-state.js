@@ -14,6 +14,8 @@ export const ASSET_KIND_OPTIONS = [
     { value: 'image', label: 'Image' },
     { value: 'texture', label: 'Texture' },
     { value: 'item', label: 'Item' },
+    { value: 'swag', label: 'Swag' },
+    { value: 'dice', label: 'Dice' },
     { value: 'threat', label: 'Threat' }
 ];
 export const ASSET_PRESET_OPTIONS = [

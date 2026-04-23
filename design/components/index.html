@@ -105,6 +105,13 @@
                 </p>
 
                 <p class="frame-note">
+                    Topic links can work as metacognitive handles here. If a component problem is really about procedure,
+                    open <a href="/topics/software/algorithms/">algorithms</a>. If it is about evidence and proof, open
+                    <a href="/topics/math/statistical-analysis/">statistical analysis</a>. If it is about scope drift,
+                    open <a href="/topics/math/scale-intuition/">scale intuition</a>.
+                </p>
+
+                <p class="frame-note">
                     Designers curious about RPG Wednesday should treat this page as onboarding. Learn the frame and card grammar here, then inspect the live campaign surface for stress cases like screenshottable capture cards, screen-readable hooks, promptable URLs, SVG cleanup seams, and later JSON or video-wizard handoffs. If you want to help shape those surfaces, the next move after this page is <a href="/contact/">contact</a>.
                 </p>
 
@@ -136,6 +143,9 @@
                     <a class="operator-chip" href="#data-attribute-decoration">#&gt;data attrs</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">* RPG Wednesday</a>
                     <a class="operator-chip" href="/design/experiments/svg/">^ svg experiments</a>
+                    <a class="operator-chip" href="/topics/software/algorithms/">#&gt; algorithms</a>
+                    <a class="operator-chip" href="/topics/math/statistical-analysis/">~ statistics</a>
+                    <a class="operator-chip" href="/topics/math/scale-intuition/">^ scale</a>
                     <a class="operator-chip" href="/services/#support">$ support</a>
                     <a class="operator-chip" href="/settings/#runtime-preferences">@ settings</a>
                 </nav>
@@ -215,6 +225,53 @@
                         <h3>.image-study</h3>
                         <p>Usually combined with <code>.topic-photo-card</code>. Provides a rich frame for surfacing screenshots or artwork, complete with accent palettes, responsive projection hints, and enough caption structure to survive screen reading, image prompting, and later SVG cleanup.</p>
                     </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="disclosure-sponsor-specimens" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <div class="frame-heading">
+                    <a class="frame-sigil" href="#disclosure-sponsor-specimens">#&gt;"dense_disclosure_sponsor"</a>
+                    <h2>Dense Cards, Disclosure, and Sponsor Slots</h2>
+                </div>
+                <p class="frame-note">These are useful when a route needs to stay mobile-legible, keep options collapsible, or host a sponsor/affiliate surface without blowing apart the reading flow.</p>
+                <div class="frame-grid frame-grid--dense">
+                    <details class="spw-inline-disclosure" open>
+                        <summary>Bench narrator: what if this route only needs a small expandable menu?</summary>
+                        <div class="spw-inline-disclosure__body">
+                            <p class="frame-note">Use disclosure when the page should offer extra links, thinking handles, or supporting context without forcing every reader to pay the full cognitive cost up front.</p>
+                            <nav class="frame-operators" aria-label="Disclosure specimen links">
+                                <a class="operator-chip" href="/topics/software/algorithms/">#&gt; procedure</a>
+                                <a class="operator-chip" href="/topics/math/statistical-analysis/">~ evidence</a>
+                                <a class="operator-chip" href="/topics/math/scale-intuition/">^ scope</a>
+                            </nav>
+                        </div>
+                    </details>
+
+                    <article class="frame-card frame-card--dense">
+                        <span class="frame-card-sigil">#&gt;dense_card</span>
+                        <strong>High-density reference card</strong>
+                        <span>Minimal enough for mobile, but still able to carry title, status, badges, and one useful sentence.</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">compact</span>
+                            <span class="spec-pill">screen-readable</span>
+                            <span class="spec-pill">fast scan</span>
+                        </div>
+                    </article>
+
+                    <div class="spw-sponsor-slot spw-sponsor-slot--banner" data-spw-kind="panel" data-spw-role="artifact" data-spw-context="analysis">
+                        <div>
+                            <span class="spw-sponsor-slot__label">sponsor banner slot</span>
+                            <strong>Quiet support lane</strong>
+                            <p class="frame-note">Useful for affiliate links, sponsorships, or a clearly marked supporter module that should feel native to the page instead of bolted on.</p>
+                        </div>
+                        <a class="operator-chip" href="/contact/">@ sponsor inquiry</a>
+                    </div>
+
+                    <div class="spw-sponsor-slot spw-sponsor-slot--popover" data-spw-kind="panel" data-spw-role="artifact" data-spw-context="analysis">
+                        <span class="spw-sponsor-slot__label">sponsor popup shell</span>
+                        <strong>Popover-sized support surface</strong>
+                        <p class="frame-note">A compact shell for time-bound offers, event support, or a politely timed ask. The infrastructure should be quiet, dismissible, and explicit about why it is present.</p>
+                    </div>
                 </div>
             </section>
 
@@ -301,6 +358,13 @@
                             <a class="operator-chip" href="/design/">#&gt;design</a>
                             <a class="operator-chip" href="/topics/">~topics</a>
                         </nav>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">identified narrator voice</p>
+                        <h3>Narrator specimen</h3>
+                        <p><strong>Bench narrator:</strong> “This component still wants a clearer job. If it needs three explanations, the slot order is wrong. What if we move the topic link higher and let the note become the spoken hook?”</p>
+                        <p>Some components should read like a person discovering what belongs on the page. That gives dialogue and characterization room to accumulate instead of making every surface sound like neutral documentation.</p>
                     </article>
 
                 </div>

@@ -219,184 +219,229 @@
                     <h2>Build the Card</h2>
                 </div>
                 <p class="inline-note">Switch lenses when you want to move from imaginative language toward something a mentor or team lead can act on.</p>
+                <p class="frame-note">On mobile, keep the preview close, work one panel at a time, and let the shorter fields carry the first pass. The builder should feel usable with one thumb, not like a desktop form squeezed into a phone.</p>
+                <nav class="profile-builder-nav" aria-label="Character sheet builder sections">
+                    <a class="operator-chip" href="#builder-preview">preview</a>
+                    <a class="operator-chip" href="#builder-panel-identity">identity</a>
+                    <a class="operator-chip" href="#builder-panel-signals">signals</a>
+                    <a class="operator-chip" href="#builder-panel-sections">beats</a>
+                    <a class="operator-chip" href="#builder-panel-contact">links</a>
+                </nav>
                 <div class="profile-preset-bar" role="group" aria-label="Character sheet presets">
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-default" aria-pressed="false">@ character lens</button>
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-translation" aria-pressed="false">~ translation lens</button>
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-application" aria-pressed="false">^ application lens</button>
+                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-deskar-null" aria-pressed="false">&gt; deskar null</button>
                 </div>
                 <div class="profile-wizard">
                     <div class="profile-wizard-form">
-                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_identity">
-                            <h3>Identity</h3>
-                            <div class="profile-field">
-                                <label class="profile-field-label" for="f-name">
-                                    <span class="profile-field-op">^</span> name
-                                </label>
-                                <input id="f-name" type="text" placeholder="your name or handle" autocomplete="name" spellcheck="false"/>
-                            </div>
-                            <div class="profile-field">
-                                <label class="profile-field-label" for="f-role">
-                                    <span class="profile-field-op">^</span> role
-                                </label>
-                                <input id="f-role" type="text" placeholder="junior engineer in formation, systems apprentice, ..." spellcheck="false"/>
-                            </div>
-                            <div class="profile-field">
-                                <label class="profile-field-label" for="f-tagline">
-                                    <span class="profile-field-op">~</span> tagline
-                                    <span class="profile-field-hint">one sentence</span>
-                                </label>
-                                <input id="f-tagline" type="text" placeholder="I turn worldbuilding, notes, and careful collaboration into readable systems." spellcheck="false"/>
-                            </div>
-                            <div class="profile-split-row">
+                        <details class="profile-builder-panel" id="builder-panel-identity" open>
+                            <summary>
+                                <span class="profile-builder-panel__op">^</span>
+                                <span class="profile-builder-panel__copy">
+                                    <span class="profile-builder-panel__title">Identity</span>
+                                    <span class="profile-builder-panel__hint">name, role, tagline, stance</span>
+                                </span>
+                            </summary>
+                            <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_identity">
+                                <h3>Identity</h3>
                                 <div class="profile-field">
-                                    <label class="profile-field-label" for="f-status">
-                                        <span class="profile-field-op">@</span> status
+                                    <label class="profile-field-label" for="f-name">
+                                        <span class="profile-field-op">^</span> name
                                     </label>
-                                    <select id="f-status">
-                                        <option value="available">available</option>
-                                        <option value="consulting">consulting</option>
-                                        <option value="open">open to offers</option>
-                                        <option value="building">building</option>
-                                        <option value="looking">actively looking</option>
-                                    </select>
+                                    <input id="f-name" type="text" placeholder="your name or handle" autocomplete="name" spellcheck="false"/>
                                 </div>
                                 <div class="profile-field">
-                                    <label class="profile-field-label" for="f-sigil">
-                                        <span class="profile-field-op">#</span> operator
-                                        <span class="profile-field-hint">your stance</span>
+                                    <label class="profile-field-label" for="f-role">
+                                        <span class="profile-field-op">^</span> role
                                     </label>
-                                    <select id="f-sigil">
-                                        <option value="^">^ object — I build stable things</option>
-                                        <option value="~">~ relay — I connect and translate</option>
-                                        <option value="@">@ event — I make moments happen</option>
-                                        <option value="?[">?[ probe — I investigate</option>
-                                        <option value=">">> boon — I bring possibility</option>
-                                        <option value="!">! pragma — I enforce correctness</option>
-                                    </select>
+                                    <input id="f-role" type="text" placeholder="junior engineer in formation, systems apprentice, ..." spellcheck="false"/>
+                                </div>
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-tagline">
+                                        <span class="profile-field-op">~</span> tagline
+                                        <span class="profile-field-hint">one sentence</span>
+                                    </label>
+                                    <input id="f-tagline" type="text" placeholder="I turn worldbuilding, notes, and careful collaboration into readable systems." spellcheck="false"/>
+                                </div>
+                                <div class="profile-split-row">
+                                    <div class="profile-field">
+                                        <label class="profile-field-label" for="f-status">
+                                            <span class="profile-field-op">@</span> status
+                                        </label>
+                                        <select id="f-status">
+                                            <option value="available">available</option>
+                                            <option value="consulting">consulting</option>
+                                            <option value="open">open to offers</option>
+                                            <option value="building">building</option>
+                                            <option value="looking">actively looking</option>
+                                        </select>
+                                    </div>
+                                    <div class="profile-field">
+                                        <label class="profile-field-label" for="f-sigil">
+                                            <span class="profile-field-op">#</span> operator
+                                            <span class="profile-field-hint">your stance</span>
+                                        </label>
+                                        <select id="f-sigil">
+                                            <option value="^">^ object — I build stable things</option>
+                                            <option value="~">~ relay — I connect and translate</option>
+                                            <option value="@">@ event — I make moments happen</option>
+                                            <option value="?[">?[ probe — I investigate</option>
+                                            <option value=">">> boon — I bring possibility</option>
+                                            <option value="!">! pragma — I enforce correctness</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </details>
 
-                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_badges">
-                            <h3>Signals</h3>
-                            <p class="frame-note">Use badges for stack, domain, approach, context, and role. Think of them as known spells, tools, habitats, and party signals.</p>
-                            <div class="badge-input-row">
-                                <input id="badge-input" type="text" placeholder="TypeScript, note-taking, encounter design, accessibility ..." spellcheck="false"/>
-                                <select id="badge-cluster">
-                                    <option value="stack">stack</option>
-                                    <option value="domain">domain</option>
-                                    <option value="approach">approach</option>
-                                    <option value="context">context</option>
-                                    <option value="role">role</option>
-                                </select>
-                                <button id="badge-add" type="button">add</button>
+                        <details class="profile-builder-panel" id="builder-panel-signals">
+                            <summary>
+                                <span class="profile-builder-panel__op">~</span>
+                                <span class="profile-builder-panel__copy">
+                                    <span class="profile-builder-panel__title">Signals</span>
+                                    <span class="profile-builder-panel__hint">stack, domain, approach, role</span>
+                                </span>
+                            </summary>
+                            <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_badges">
+                                <h3>Signals</h3>
+                                <p class="frame-note">Use badges for stack, domain, approach, context, and role. Think of them as known spells, tools, habitats, and party signals.</p>
+                                <div class="badge-input-row">
+                                    <input id="badge-input" type="text" placeholder="TypeScript, note-taking, encounter design, accessibility ..." spellcheck="false"/>
+                                    <select id="badge-cluster">
+                                        <option value="stack">stack</option>
+                                        <option value="domain">domain</option>
+                                        <option value="approach">approach</option>
+                                        <option value="context">context</option>
+                                        <option value="role">role</option>
+                                    </select>
+                                    <button id="badge-add" type="button">add</button>
+                                </div>
+                                <div class="profile-tag-strip" id="badge-strip"></div>
                             </div>
-                            <div class="profile-tag-strip" id="badge-strip"></div>
-                        </div>
+                        </details>
 
-                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_sections">
-                            <h3>Sections and beats</h3>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~">~</option>
-                                        <option value="@">@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">">></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Origin and tradition" spellcheck="false"/>
+                        <details class="profile-builder-panel" id="builder-panel-sections">
+                            <summary>
+                                <span class="profile-builder-panel__op">@</span>
+                                <span class="profile-builder-panel__copy">
+                                    <span class="profile-builder-panel__title">Sections and beats</span>
+                                    <span class="profile-builder-panel__hint">origin, pressure, proof, next arc</span>
+                                </span>
+                            </summary>
+                            <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_sections">
+                                <h3>Sections and beats</h3>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~">~</option>
+                                            <option value="@">@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">">></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Origin and tradition" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="What kind of world made this character, and what does that reveal about your working perspective?" rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="What kind of world made this character, and what does that reveal about your working perspective?" rows="3"></textarea>
-                            </div>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~" selected>~</option>
-                                        <option value="@">@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">">></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Party role" spellcheck="false"/>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~" selected>~</option>
+                                            <option value="@">@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">">></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Party role" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="How do you help a group move: translator, repairer, scout, synthesizer, host, builder?" rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="How do you help a group move: translator, repairer, scout, synthesizer, host, builder?" rows="3"></textarea>
-                            </div>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~" selected>~</option>
-                                        <option value="@">@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">">></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Voice, habits, and contradiction" spellcheck="false"/>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~" selected>~</option>
+                                            <option value="@">@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">">></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Voice, habits, and contradiction" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="What does this character notice first? What do they repeat, avoid, misread, or reveal by accident when pressure rises?" rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="What does this character notice first? What do they repeat, avoid, misread, or reveal by accident when pressure rises?" rows="3"></textarea>
-                            </div>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~">~</option>
-                                        <option value="@" selected>@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">">></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Pressure, wound, or private rule" spellcheck="false"/>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~">~</option>
+                                            <option value="@" selected>@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">">></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Pressure, wound, or private rule" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="What private rule, fear, debt, promise, or hunger keeps generating decisions for this person?" rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="What private rule, fear, debt, promise, or hunger keeps generating decisions for this person?" rows="3"></textarea>
-                            </div>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~">~</option>
-                                        <option value="@">@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">" selected>></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Quest and next arc" spellcheck="false"/>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~">~</option>
+                                            <option value="@">@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">" selected>></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Quest and next arc" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="What are you learning now, and what kind of mentorship would help that next arc become real?" rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="What are you learning now, and what kind of mentorship would help that next arc become real?" rows="3"></textarea>
-                            </div>
-                            <div class="profile-field">
-                                <div class="profile-section-row">
-                                    <select class="section-operator">
-                                        <option value="^">^</option>
-                                        <option value="~">~</option>
-                                        <option value="@" selected>@</option>
-                                        <option value="?[">?[</option>
-                                        <option value=">">></option>
-                                    </select>
-                                    <input class="section-heading" type="text" placeholder="Proof, notebooks, and world state" spellcheck="false"/>
+                                <div class="profile-field">
+                                    <div class="profile-section-row">
+                                        <select class="section-operator">
+                                            <option value="^">^</option>
+                                            <option value="~">~</option>
+                                            <option value="@" selected>@</option>
+                                            <option value="?[">?[</option>
+                                            <option value=">">></option>
+                                        </select>
+                                        <input class="section-heading" type="text" placeholder="Proof, notebooks, and world state" spellcheck="false"/>
+                                    </div>
+                                    <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms where the work is already visible." rows="3"></textarea>
                                 </div>
-                                <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms where the work is already visible." rows="3"></textarea>
                             </div>
-                        </div>
+                        </details>
 
-                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_contact">
-                            <h3>Contact and visible routes</h3>
-                            <div class="profile-field">
-                                <label class="profile-field-label" for="f-contact">
-                                    <span class="profile-field-op">~</span> contact
-                                </label>
-                                <input id="f-contact" type="text" placeholder="email, site route, or preferred contact" spellcheck="false"/>
-                            </div>
-                            <div class="profile-field">
-                                <label class="profile-field-label">
-                                    <span class="profile-field-op">~</span> links
-                                    <span class="profile-field-hint">label + URL</span>
-                                </label>
-                                <div class="profile-link-row">
-                                    <input id="link-input" type="text" placeholder="world notes" spellcheck="false"/>
-                                    <input id="link-href" type="url" placeholder="https://..." spellcheck="false"/>
-                                    <button id="link-add" type="button">add</button>
+                        <details class="profile-builder-panel" id="builder-panel-contact">
+                            <summary>
+                                <span class="profile-builder-panel__op">#</span>
+                                <span class="profile-builder-panel__copy">
+                                    <span class="profile-builder-panel__title">Contact and routes</span>
+                                    <span class="profile-builder-panel__hint">contact path and visible links</span>
+                                </span>
+                            </summary>
+                            <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_contact">
+                                <h3>Contact and visible routes</h3>
+                                <div class="profile-field">
+                                    <label class="profile-field-label" for="f-contact">
+                                        <span class="profile-field-op">~</span> contact
+                                    </label>
+                                    <input id="f-contact" type="text" placeholder="email, site route, or preferred contact" spellcheck="false"/>
                                 </div>
-                                <div class="profile-tag-strip" id="link-strip"></div>
+                                <div class="profile-field">
+                                    <label class="profile-field-label">
+                                        <span class="profile-field-op">~</span> links
+                                        <span class="profile-field-hint">label + URL</span>
+                                    </label>
+                                    <div class="profile-link-row">
+                                        <input id="link-input" type="text" placeholder="world notes" spellcheck="false"/>
+                                        <input id="link-href" type="url" placeholder="https://..." spellcheck="false"/>
+                                        <button id="link-add" type="button">add</button>
+                                    </div>
+                                    <div class="profile-tag-strip" id="link-strip"></div>
+                                </div>
                             </div>
-                        </div>
+                        </details>
 
                         <div class="profile-export-actions">
                             <button class="profile-export-btn" data-export="json">copy JSON</button>
@@ -407,9 +452,18 @@
                     </div>
 
                     <div id="builder-preview">
-                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_preview">
-                            <div id="profile-preview"></div>
-                        </div>
+                        <details class="profile-builder-panel profile-builder-panel--preview" open>
+                            <summary>
+                                <span class="profile-builder-panel__op">~</span>
+                                <span class="profile-builder-panel__copy">
+                                    <span class="profile-builder-panel__title">Live preview</span>
+                                    <span class="profile-builder-panel__hint">fold it away after a check</span>
+                                </span>
+                            </summary>
+                            <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_preview">
+                                <div id="profile-preview"></div>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </section>
@@ -538,6 +592,57 @@
                         { "heading": "What mentorship would unlock", "body": "", "operator": ">" },
                         { "heading": "Signals, links, and current practice", "body": "", "operator": "@" }
                     ]
+                }
+            </script>
+            <script id="character-sheet-deskar-null" type="application/json">
+                {
+                    "header": {
+                        "name": "Deskar Null",
+                        "role": "Eternal trader, who can never give, or receive gifts",
+                        "status": "available",
+                        "sigil": ">",
+                        "tagline": "I travel the dimensions, bringing things people want from one to the next, eternally wandering."
+                    },
+                    "badges": [
+                        { "cluster": "role", "value": "mentorship applicant" },
+                        { "cluster": "approach", "value": "local-first" },
+                        { "cluster": "approach", "value": "worldbuilding" }
+                    ],
+                    "sections": [
+                        {
+                            "heading": "Origin and tradition",
+                            "body": "Deskar was raised in ancient Mesopotamia. He made a deal with Baal Mammon, god of wealth and desire, for an eternal life.",
+                            "operator": "^"
+                        },
+                        {
+                            "heading": "Party role",
+                            "body": "He makes deals, negotiates, and navigates through dimensions.",
+                            "operator": "~"
+                        },
+                        {
+                            "heading": "Voice, habits, and contradiction",
+                            "body": "Deskar notices what draws people's attention. He quickly gauges desire, and he has a persistent desire to make a deal, which can turn into overpersistence.",
+                            "operator": "~"
+                        },
+                        {
+                            "heading": "Pressure, wound, or private rule",
+                            "body": "Deskar cannot give or receive gifts, nor can he steal or commit violence. He has to make deals for everything.",
+                            "operator": "@"
+                        },
+                        {
+                            "heading": "Quest and next arc",
+                            "body": "Exploring a new potential market. Someone familiar with that space could teach him a lot.",
+                            "operator": ">"
+                        },
+                        {
+                            "heading": "Proof, notebooks, and world state",
+                            "body": "",
+                            "operator": "@"
+                        }
+                    ],
+                    "footer": {
+                        "links": []
+                    }
                 }
             </script>
         </article>

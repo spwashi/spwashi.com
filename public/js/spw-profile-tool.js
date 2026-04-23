@@ -41,6 +41,9 @@ export function initSpwProfileTool(options = {}) {
   const sectionOperators = [...root.querySelectorAll('.section-operator')];
   const exportButtons = [...root.querySelectorAll('[data-export]')];
   const presetButtons = [...root.querySelectorAll('[data-profile-preset-script]')];
+  const builderPanels = [...root.querySelectorAll('.profile-builder-panel')];
+  const builderNavLinks = [...root.querySelectorAll('.profile-builder-nav a[href^="#"]')];
+  const compactPanelQuery = window.matchMedia('(max-width: 820px)');
 
   function scheduleSave() {
     window.clearTimeout(saveTimer);
@@ -303,6 +306,57 @@ export function initSpwProfileTool(options = {}) {
     });
   }
 
+  function bindBuilderPanels() {
+    if (!builderPanels.length) return;
+
+    const previewPanel = builderPanels.find((panel) =>
+      panel.classList.contains('profile-builder-panel--preview')
+    );
+
+    const syncCompactPanels = () => {
+      if (!compactPanelQuery.matches) {
+        builderPanels.forEach((panel) => {
+          panel.open = true;
+        });
+        return;
+      }
+
+      const firstContentPanel = builderPanels.find((panel) => panel !== previewPanel);
+      const activeContentPanel = builderPanels.find((panel) => panel !== previewPanel && panel.open);
+
+      builderPanels.forEach((panel) => {
+        if (panel === previewPanel) return;
+        panel.open = activeContentPanel ? panel === activeContentPanel : panel === firstContentPanel;
+      });
+    };
+
+    builderPanels.forEach((panel) => {
+      panel.addEventListener('toggle', () => {
+        if (!compactPanelQuery.matches || !panel.open || panel === previewPanel) return;
+        builderPanels.forEach((candidate) => {
+          if (candidate === panel || candidate === previewPanel) return;
+          candidate.open = false;
+        });
+      });
+    });
+
+    builderNavLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const targetSelector = link.getAttribute('href');
+        if (!targetSelector) return;
+        const target = root.querySelector(targetSelector);
+        const panel = target?.matches?.('.profile-builder-panel')
+          ? target
+          : target?.querySelector?.('.profile-builder-panel');
+        if (!panel) return;
+        panel.open = true;
+      });
+    });
+
+    syncCompactPanels();
+    compactPanelQuery.addEventListener('change', syncCompactPanels);
+  }
+
   function ensureSection(index) {
     if (profile.sections[index]) return;
     profile.sections[index] = { heading: '', body: '', operator: '^' };
@@ -315,6 +369,7 @@ export function initSpwProfileTool(options = {}) {
   bindExportButtons();
   bindImport();
   bindPresets();
+  bindBuilderPanels();
   populateForm();
   renderBadgeStrip();
   renderLinkStrip();
