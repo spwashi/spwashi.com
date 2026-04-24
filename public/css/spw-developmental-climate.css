@@ -23,7 +23,11 @@
        large saturated page washes, full-surface recolors, heavy badge tinting,
        climate colors competing with operator colors.
 
-   Low-specificity overrides via :where() keep atmosphere from breaking layout.
+   Parser-tolerance notes:
+   - Avoid self-referential custom properties such as:
+       --x: max(var(--x), 0.5);
+   - Avoid calc() inside color-mix() percentages when a stable value works.
+   - Keep chained :where() selectors complete and conservative.
    ========================================================================== */
 
 
@@ -70,13 +74,11 @@
   --climate-paper-tint: color-mix(in srgb, var(--climate-accent) 3%, transparent);
   --climate-margin-tint: color-mix(in srgb, var(--climate-accent) 5%, transparent);
   --climate-selection-ring: color-mix(in srgb, var(--climate-accent) 22%, transparent);
+
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 5%, transparent);
   --climate-seam: linear-gradient(
       90deg,
-      color-mix(
-          in srgb,
-          var(--climate-accent) calc(var(--climate-outline-strength) * 18%),
-          transparent
-      ) 0 0.32rem,
+      var(--climate-seam-color) 0 0.32rem,
       transparent 0.32rem
   );
 
@@ -144,6 +146,8 @@
   --developmental-light: 43%;
 
   --climate-accent: var(--climate-orient-accent);
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 4%, transparent);
+
   --climate-clarity-bias: 0.56;
   --climate-pressure-bias: 0.22;
   --climate-atmosphere-bias: 0.34;
@@ -173,6 +177,8 @@
   --developmental-light: 38%;
 
   --climate-accent: var(--climate-anchor-accent);
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 7%, transparent);
+
   --climate-clarity-bias: 0.76;
   --climate-pressure-bias: 0.46;
   --climate-atmosphere-bias: 0.10;
@@ -201,6 +207,8 @@
   --developmental-light: 34%;
 
   --climate-accent: var(--climate-weave-accent);
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 6%, transparent);
+
   --climate-clarity-bias: 0.68;
   --climate-pressure-bias: 0.38;
   --climate-atmosphere-bias: 0.20;
@@ -229,6 +237,8 @@
   --developmental-light: 42%;
 
   --climate-accent: var(--climate-rehearse-accent);
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 6%, transparent);
+
   --climate-clarity-bias: 0.70;
   --climate-pressure-bias: 0.36;
   --climate-atmosphere-bias: 0.14;
@@ -257,6 +267,8 @@
   --developmental-light: 32%;
 
   --climate-accent: var(--climate-offer-accent);
+  --climate-seam-color: color-mix(in srgb, var(--climate-accent) 7%, transparent);
+
   --climate-clarity-bias: 0.84;
   --climate-pressure-bias: 0.30;
   --climate-atmosphere-bias: 0.08;
@@ -282,16 +294,18 @@
 }
 
 body {
-  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 /* Climate seam: narrow editorial cue, not a large background recolor. */
 :where(.site-frame) {
   background-image: var(--climate-seam);
-  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+  transition:
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
 }
 
 :where(.site-frame::before) {
@@ -312,14 +326,11 @@ body {
   .spw-console,
   .spw-nav-panel
 ) {
-  border-color: color-mix(
-      in srgb,
-      var(--climate-accent-line) calc(62% + var(--climate-outline-strength) * 20%),
-      var(--line, transparent)
-  );
-  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+  border-color: color-mix(in srgb, var(--climate-accent-line) 70%, var(--line, transparent));
+  transition:
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
 }
 
 /* Badges receive restrained climate tint. */
@@ -327,9 +338,10 @@ body {
   background: var(--climate-badge-bg);
   color: var(--climate-badge-text);
   border-color: var(--climate-accent-line);
-  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  border-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 /* Memos and guide seams: use climate as guidance, not paint. */
@@ -340,22 +352,25 @@ body {
   .spw-surface-helper-chip
 ) {
   border-color: var(--climate-accent-line);
-  background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--climate-accent) calc(var(--climate-hint-opacity) * 8%), transparent) 0,
-      transparent 48%
-  ),
-  color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  background:
+      linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--climate-accent) 6%, transparent) 0,
+          transparent 48%
+      ),
+      color-mix(in srgb, var(--surface, #fff) 92%, transparent);
   opacity: var(--climate-hint-opacity);
-  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where(.spw-component-meta) {
   opacity: var(--developmental-guide-opacity);
-  transition: opacity var(--developmental-transition-duration) var(--developmental-transition-timing),
-  color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      opacity var(--developmental-transition-duration) var(--developmental-transition-timing),
+      color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 
@@ -371,11 +386,12 @@ body {
   [data-spw-author-surface],
   [data-spw-typeset-surface="editorial"]
 ) {
-  background-image: linear-gradient(
-      90deg,
-      var(--climate-margin-tint) 0 var(--manuscript-margin-width, 4rem),
-      transparent var(--manuscript-margin-width, 4rem)
-  );
+  background-image:
+      linear-gradient(
+          90deg,
+          var(--climate-margin-tint) 0 var(--manuscript-margin-width, 4rem),
+          transparent var(--manuscript-margin-width, 4rem)
+      );
 }
 
 :where(
@@ -386,17 +402,14 @@ body {
   [data-author-annotation],
   [data-spw-annotation]
 ) {
-  border-color: color-mix(
-      in srgb,
-      var(--climate-accent) calc(var(--climate-annotation-strength) * 42%),
-      var(--annotation-line, var(--line, transparent))
-  );
-  background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--climate-accent) calc(var(--climate-annotation-strength) * 12%), transparent),
-      transparent 62%
-  ),
-  var(--annotation-bg, transparent);
+  border-color: color-mix(in srgb, var(--climate-accent) 22%, var(--annotation-line, var(--line, transparent)));
+  background:
+      linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--climate-accent) 5%, transparent),
+          transparent 62%
+      ),
+      var(--annotation-bg, transparent);
 }
 
 :where(
@@ -406,11 +419,7 @@ body {
   [data-spw-relation],
   [data-author-thread]
 ) {
-  --thread-line: color-mix(
-      in srgb,
-      var(--climate-accent) calc(var(--climate-connection-strength) * 46%),
-      var(--line, transparent)
-  );
+  --thread-line: color-mix(in srgb, var(--climate-accent) 22%, var(--line, transparent));
 }
 
 :where(
@@ -420,11 +429,7 @@ body {
   [data-author-publication],
   [data-spw-publication]
 ) {
-  border-color: color-mix(
-      in srgb,
-      var(--climate-accent) calc(var(--climate-publication-strength) * 48%),
-      var(--line, transparent)
-  );
+  border-color: color-mix(in srgb, var(--climate-accent) 28%, var(--line, transparent));
 }
 
 
@@ -446,11 +451,8 @@ body {
   .syntax-token,
   .spw-delimiter
 )[data-spw-selection="focused"] {
-  box-shadow: 0 0 0 1px color-mix(
-      in srgb,
-      var(--climate-accent) calc((0.14 + var(--climate-selection-bias) * 0.14) * 100%),
-      transparent
-  );
+  box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--climate-accent) 16%, transparent);
 }
 
 :where(
@@ -466,8 +468,9 @@ body {
   .frame-sigil
 )[data-spw-selection="active"] {
   border-color: var(--climate-accent-line-strong);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 18%, transparent),
-  0 8px 22px color-mix(in srgb, var(--climate-accent) 6%, transparent);
+  box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--climate-accent) 18%, transparent),
+      0 8px 22px color-mix(in srgb, var(--climate-accent) 6%, transparent);
 }
 
 :where(
@@ -483,33 +486,22 @@ body {
   .frame-sigil
 )[data-spw-selection="selected"] {
   border-color: var(--climate-accent-line-strong);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 22%, transparent),
-  0 0 0 4px color-mix(in srgb, var(--climate-accent) 7%, transparent);
+  box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--climate-accent) 22%, transparent),
+      0 0 0 4px color-mix(in srgb, var(--climate-accent) 7%, transparent);
 }
 
 /* JS-driven gesture phases */
 :where([data-spw-gesture="charging"]) {
-  --developmental-live-accent: color-mix(
-      in srgb,
-      var(--climate-accent) calc((0.12 + var(--climate-charge-bias) * 0.10) * 100%),
-      transparent
-  );
+  --developmental-live-accent: color-mix(in srgb, var(--climate-accent) 14%, transparent);
 }
 
 :where([data-spw-gesture="active"]) {
-  --developmental-live-accent: color-mix(
-      in srgb,
-      var(--climate-accent) calc((0.18 + var(--climate-charge-bias) * 0.16) * 100%),
-      transparent
-  );
+  --developmental-live-accent: color-mix(in srgb, var(--climate-accent) 22%, transparent);
 }
 
 :where([data-spw-gesture="armed"]) {
-  --developmental-live-accent: color-mix(
-      in srgb,
-      var(--climate-accent) calc((0.24 + var(--climate-charge-bias) * 0.18) * 100%),
-      transparent
-  );
+  --developmental-live-accent: color-mix(in srgb, var(--climate-accent) 28%, transparent);
 }
 
 :where([data-spw-gesture="committed"]) {
@@ -531,12 +523,13 @@ body {
 /* Stable grounded state */
 :where([data-spw-latched="true"], [data-spw-pinned="true"], [data-spw-grounded="true"]) {
   border-color: var(--climate-accent-line-strong);
-  background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--climate-accent) calc((0.06 + var(--climate-memory-bias) * 0.10) * 100%), transparent),
-      transparent 54%
-  ),
-  var(--climate-badge-bg);
+  background:
+      linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--climate-accent) 8%, transparent),
+          transparent 54%
+      ),
+      var(--climate-badge-bg);
 }
 
 
@@ -545,31 +538,31 @@ body {
    ========================================================================== */
 
 :where([data-spw-field-wonder="orientation"]) {
-  --developmental-seam-opacity: calc(0.66 + var(--climate-atmosphere-bias) * 0.12);
+  --developmental-seam-opacity: 0.70;
 }
 
 :where([data-spw-field-wonder="inquiry"]) {
-  --developmental-guide-opacity: calc(0.70 + var(--climate-clarity-bias) * 0.12);
+  --developmental-guide-opacity: 0.78;
 }
 
 :where([data-spw-field-wonder="comparison"]) {
-  --developmental-seam-opacity: calc(0.68 + var(--climate-resonance-bias) * 0.12);
+  --developmental-seam-opacity: 0.72;
 }
 
 :where([data-spw-field-wonder="memory"]) {
-  --developmental-guide-opacity: calc(0.72 + var(--climate-memory-bias) * 0.14);
+  --developmental-guide-opacity: 0.80;
 }
 
 :where([data-spw-field-wonder="projection"]) {
-  --developmental-indicator-opacity: calc(0.82 + var(--climate-clarity-bias) * 0.1);
+  --developmental-indicator-opacity: 0.88;
 }
 
 :where([data-spw-field-wonder="constraint"]) {
-  --developmental-seam-opacity: calc(0.66 + var(--climate-pressure-bias) * 0.14);
+  --developmental-seam-opacity: 0.72;
 }
 
 :where([data-spw-field-wonder="resonance"]) {
-  --developmental-guide-opacity: calc(0.70 + var(--climate-resonance-bias) * 0.16);
+  --developmental-guide-opacity: 0.82;
 }
 
 
@@ -608,19 +601,24 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: var(--climate-menu-shadow);
-  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  box-shadow var(--developmental-transition-duration) var(--developmental-transition-timing),
-  transform var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      box-shadow var(--developmental-transition-duration) var(--developmental-transition-timing),
+      transform var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where(.climate-menu-trigger::-webkit-details-marker, .phase-menu-trigger::-webkit-details-marker) {
   display: none;
 }
 
-:where(.climate-menu-trigger:hover, .phase-menu-trigger:hover,
-       .climate-menu-trigger:focus-visible, .phase-menu-trigger:focus-visible) {
+:where(
+  .climate-menu-trigger:hover,
+  .phase-menu-trigger:hover,
+  .climate-menu-trigger:focus-visible,
+  .phase-menu-trigger:focus-visible
+) {
   border-color: var(--climate-accent-line-strong);
   transform: translateY(-1px);
 }
@@ -648,7 +646,7 @@ body {
   border: 1px solid var(--climate-menu-line);
   border-radius: var(--shape-surface, 0.75rem);
   background: var(--climate-menu-bg);
-  box-shadow: var(--shadow-active, 0 16px 34px color-mix(in srgb, var(--climate-accent) 8%, transparent));
+  box-shadow: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.12));
 }
 
 :where(.climate-menu-choice, .phase-menu-choice) {
@@ -668,13 +666,18 @@ body {
   font-size: var(--text-size-xs, 0.78rem);
   line-height: 1.25;
   text-align: left;
-  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
-:where(.climate-menu-choice:hover, .phase-menu-choice:hover,
-       .climate-menu-choice:focus-visible, .phase-menu-choice:focus-visible) {
+:where(
+  .climate-menu-choice:hover,
+  .phase-menu-choice:hover,
+  .climate-menu-choice:focus-visible,
+  .phase-menu-choice:focus-visible
+) {
   border-color: var(--climate-accent-line);
   background: color-mix(in srgb, var(--climate-accent) 7%, transparent);
 }
@@ -694,18 +697,20 @@ body {
 :where([data-developmental-indicator], [data-phase-indicator]) {
   color: var(--climate-accent);
   opacity: var(--developmental-indicator-opacity);
-  transition: color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where([data-op], [data-spw-operator]) {
-  transition: color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-  background-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition:
+      color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+      background-color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
-/* Optional author label output */
-:where([data-spw-developmental-author-label] [data-developmental-author-label])::before {
+/* Optional author label output. */
+:where([data-developmental-author-label])::before {
   content: attr(data-developmental-author-label);
 }
 
@@ -715,23 +720,23 @@ body {
    ========================================================================== */
 
 :where(html[data-spw-developmental-climate="orient"]) :where([data-spw-learning-surface="overview"]) {
-  --climate-hint-opacity: max(var(--climate-hint-opacity), 0.78);
+  --climate-hint-opacity: 0.78;
 }
 
 :where(html[data-spw-developmental-climate="anchor"]) :where([data-spw-learning-surface="archive"]) {
-  --climate-outline-strength: max(var(--climate-outline-strength), 0.38);
+  --climate-outline-strength: 0.38;
 }
 
 :where(html[data-spw-developmental-climate="weave"]) :where([data-spw-learning-surface="comparison"]) {
-  --climate-connection-strength: max(var(--climate-connection-strength), 0.54);
+  --climate-connection-strength: 0.54;
 }
 
 :where(html[data-spw-developmental-climate="rehearse"]) :where([data-spw-learning-surface="practice"]) {
-  --climate-annotation-strength: max(var(--climate-annotation-strength), 0.58);
+  --climate-annotation-strength: 0.58;
 }
 
 :where(html[data-spw-developmental-climate="offer"]) :where([data-spw-learning-surface="publication"]) {
-  --climate-publication-strength: max(var(--climate-publication-strength), 0.64);
+  --climate-publication-strength: 0.64;
 }
 
 
@@ -798,8 +803,9 @@ html[data-spw-color-mode="dark"] {
     .spw-console,
     .spw-nav-panel
   ) {
-    box-shadow: 0 1px 0 color-mix(in srgb, white 5%, transparent),
-    0 12px 28px color-mix(in srgb, black 22%, transparent);
+    box-shadow:
+        0 1px 0 color-mix(in srgb, white 5%, transparent),
+        0 12px 28px color-mix(in srgb, black 22%, transparent);
   }
 }
 
@@ -811,8 +817,8 @@ html[data-spw-color-mode="dark"] {
 :where(html[data-spw-high-contrast="on"]) {
   --climate-accent-line: color-mix(in srgb, var(--climate-accent) 58%, var(--ink, currentColor));
   --climate-accent-line-strong: color-mix(in srgb, var(--climate-accent) 72%, var(--ink, currentColor));
-  --climate-outline-strength: max(var(--climate-outline-strength), 0.38);
-  --climate-hint-opacity: max(var(--climate-hint-opacity), 0.82);
+  --climate-outline-strength: 0.38;
+  --climate-hint-opacity: 0.82;
 }
 
 :where(html[data-spw-high-contrast="on"])
@@ -827,68 +833,24 @@ html[data-spw-color-mode="dark"] {
 
 @media (prefers-reduced-motion: reduce) {
   :where(
-    html,
-    body,
-    .site-frame,
-    .frame-card,
-    .media-card,
-    .media-focus-card,
-    .operator-card,
-    .frame-panel,
-    .mode-panel,
-    .spec-pill,
-    .badge,
-    .tag,
-    .pill,
-    .spw-context-memo,
-    .spw-experience-memo,
-    .spw-guide-chip,
-    .spw-component-meta,
-    .developmental-climate-controls,
-    .phase-controls,
-    .climate-menu-trigger,
-    .phase-menu-trigger,
-    .climate-menu-choice,
-    .phase-menu-choice,
-    [data-developmental-indicator],
-    [data-phase-indicator],
-    [data-op],
-    [data-spw-operator]
+    *,
+    *::before,
+    *::after
   ) {
-    animation: none !important;
-    transition: none !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
   }
 }
 
-:where(html[data-spw-reduce-motion="on"])
-:where(
-  body,
-  .site-frame,
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .spec-pill,
-  .badge,
-  .tag,
-  .pill,
-  .spw-context-memo,
-  .spw-experience-memo,
-  .spw-guide-chip,
-  .spw-component-meta,
-  .developmental-climate-controls,
-  .phase-controls,
-  .climate-menu-trigger,
-  .phase-menu-trigger,
-  .climate-menu-choice,
-  .phase-menu-choice,
-  [data-developmental-indicator],
-  [data-phase-indicator],
-  [data-op],
-  [data-spw-operator]
+:where(html[data-spw-reduce-motion="on"]) :where(
+  *,
+  *::before,
+  *::after
 ) {
-  animation: none !important;
-  transition: none !important;
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 1ms !important;
 }
