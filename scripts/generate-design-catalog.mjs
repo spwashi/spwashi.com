@@ -26,16 +26,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
-
-function parseOutDir(argv) {
-  for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--out' && argv[i + 1]) return path.resolve(argv[i + 1]);
-    if (argv[i].startsWith('--out=')) return path.resolve(argv[i].slice('--out='.length));
-  }
-  return path.join(ROOT_DIR, 'design', 'catalog');
-}
-
-const OUTPUT_DIR = parseOutDir(process.argv.slice(2));
+const DEFAULT_OUT_DIR = path.join(ROOT_DIR, 'design', 'catalog');
 
 const IGNORED_SEGMENTS = new Set([
   '.agents',
@@ -49,22 +40,123 @@ const IGNORED_SEGMENTS = new Set([
 
 const CSS_SELECTOR_ATTR_RE = /\[data-spw-([a-z0-9-]+)(?:(~|\||\*|\^|\$)?=\s*("([^"]*)"|'([^']*)'|([^\]\s]+)))?\s*(?:i|s)?\s*\]/g;
 const CSS_VAR_DEF_RE = /^\s*(--[a-z0-9-]+)\s*:/gim;
-const CSS_VAR_REF_RE = /var\((--[a-z0-9-]+)/g;
+const CSS_VAR_REF_RE = /var\(\s*(--[a-z0-9-]+)/g;
 const AT_PROPERTY_RE = /@property\s+(--[a-z0-9-]+)\s*\{([^}]*)\}/g;
-const LAYER_IMPORT_RE = /@import\s+url\(['"]([^'"]+)['"]\)\s+layer\(([a-z-]+)\)/g;
+const LAYER_IMPORT_RE = /@import\s+(?:url\(\s*)?['"]([^'"]+)['"]\s*\)?\s+layer\(([a-z0-9_-]+)\)/g;
 
-const HTML_ATTR_USAGE_RE = /\bdata-spw-([a-z0-9-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'))?/g;
-const JS_DATASET_WRITE_RE = /(?:\.dataset\.(spw[A-Za-z0-9]+)\s*=|setAttribute\(\s*['"](data-spw-[a-z0-9-]+)['"]\s*,)/g;
+const DATA_SPW_ATTR_NAME_RE = /^data-spw-[a-z0-9-]+$/;
+const DOC_ATTR_RE = /data-spw-([a-z0-9-]+)/g;
+const DOC_TOKEN_RE = /(--[a-z][a-z0-9-]{2,})/g;
 
-function toPosix(p) {
-  return p.split(path.sep).join('/');
+function toPosix(value) {
+  return value.split(path.sep).join('/');
 }
 
 function relRepo(absPath) {
   return toPosix(path.relative(ROOT_DIR, absPath));
 }
 
-function shouldIgnoreRelativePath(relativePath) {
+function parseArgs(argv) {
+  const options = {
+    outDir: DEFAULT_OUT_DIR,
+    check: false,
+    quiet: false,
+  };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+
+    if (arg === '--out' && argv[index + 1]) {
+      options.outDir = path.resolve(argv[index + 1]);
+      index += 1;
+      continue;
+    }
+
+    if (arg.startsWith('--out=')) {
+      options.outDir = path.resolve(arg.slice('--out='.length));
+      continue;
+    }
+
+    if (arg === '--check') {
+      options.check = true;
+      continue;
+    }
+
+    if (arg === '--quiet') {
+      options.quiet = true;
+      continue;
+    }
+
+    if (arg === '--help' || arg === '-h') {
+      options.help = true;
+      continue;
+    }
+
+    throw new Error(`[catalog] unknown argument: ${arg}`);
+  }
+
+  return options;
+}
+
+function printHelp() {
+  console.log(`Usage: node scripts/generate-design-catalog.mjs [options]
+
+Options:
+  --out <dir>     Output directory. Default: design/catalog
+  --check         Do not write files; fail if generated files differ.
+  --quiet         Suppress summary output.
+  -h, --help      Show this help.
+`);
+}
+
+function getGeneratedAt() {
+  const epoch = process.env.SOURCE_DATE_EPOCH;
+  if (epoch && /^\d+$/.test(epoch)) {
+    return new Date(Number(epoch) * 1000).toISOString();
+  }
+
+  return new Date().toISOString();
+}
+
+function esc(value) {
+  return String(value).replace(/[&<>"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+  }[char]));
+}
+
+function decodeHtmlAttribute(value) {
+  const named = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+  };
+
+  return String(value).replace(/&(#x[\da-f]+|#\d+|[a-z][a-z0-9]+);/gi, (match, entity) => {
+    const normalized = entity.toLowerCase();
+
+    if (normalized.startsWith('#x')) {
+      const codepoint = Number.parseInt(normalized.slice(2), 16);
+      return Number.isFinite(codepoint) ? String.fromCodePoint(codepoint) : match;
+    }
+
+    if (normalized.startsWith('#')) {
+      const codepoint = Number.parseInt(normalized.slice(1), 10);
+      return Number.isFinite(codepoint) ? String.fromCodePoint(codepoint) : match;
+    }
+
+    return Object.prototype.hasOwnProperty.call(named, normalized)
+      ? named[normalized]
+      : match;
+  });
+}
+
+function shouldIgnoreRelativePath(relativePath, outputRelativePath = 'design/catalog') {
   const normalizedPath = toPosix(relativePath).replace(/^\/+/, '');
   if (!normalizedPath) return false;
 
@@ -72,44 +164,60 @@ function shouldIgnoreRelativePath(relativePath) {
   if (segments.some((segment) => IGNORED_SEGMENTS.has(segment))) return true;
   if (normalizedPath === '.spw/_workbench' || normalizedPath.startsWith('.spw/_workbench/')) return true;
 
+  if (
+    outputRelativePath
+    && (normalizedPath === outputRelativePath || normalizedPath.startsWith(`${outputRelativePath}/`))
+  ) {
+    return true;
+  }
+
   return false;
 }
 
-async function walk(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+async function walk(dir, options = {}) {
+  const entries = await fs.readdir(dir, {withFileTypes: true});
+  entries.sort((a, b) => a.name.localeCompare(b.name));
+
   const files = [];
+
   for (const entry of entries) {
     const abs = path.join(dir, entry.name);
     const rel = relRepo(abs);
-    if (shouldIgnoreRelativePath(rel)) continue;
+
+    if (shouldIgnoreRelativePath(rel, options.outputRelativePath)) continue;
     if (entry.name.startsWith('.') && entry.name !== '.spw') continue;
-    if (rel.startsWith('design/catalog/')) continue;
+    if (entry.isSymbolicLink()) continue;
+
     if (entry.isDirectory()) {
-      files.push(...await walk(abs));
-    } else {
+      files.push(...await walk(abs, options));
+    } else if (entry.isFile()) {
       files.push(abs);
     }
   }
+
   return files;
 }
 
 function lineOf(text, index) {
   let line = 1;
-  for (let i = 0; i < index && i < text.length; i++) {
-    if (text.charCodeAt(i) === 10) line++;
+
+  for (let cursor = 0; cursor < index && cursor < text.length; cursor += 1) {
+    if (text.charCodeAt(cursor) === 10) line += 1;
   }
+
   return line;
 }
 
 function camelSpwToDataAttr(camel) {
   const rest = camel.slice(3);
   const dashed = rest.replace(/([A-Z])/g, '-$1').toLowerCase();
-  return `data-spw${dashed.startsWith('-') ? dashed : '-' + dashed}`;
+  return `data-spw${dashed.startsWith('-') ? dashed : `-${dashed}`}`;
 }
 
 function extractFileHeaderDoc(text) {
   const match = text.match(/^\s*\/\*([\s\S]*?)\*\//);
   if (!match) return null;
+
   return match[1]
     .split('\n')
     .map((line) => line.replace(/^\s*\*+\s?/, '').replace(/^\s*={3,}.*$/, '').trim())
@@ -118,18 +226,34 @@ function extractFileHeaderDoc(text) {
     .slice(0, 600);
 }
 
+async function readTextFile(absPath) {
+  return fs.readFile(absPath, 'utf8');
+}
+
+async function readOptionalTextFile(absPath, fallback = '') {
+  try {
+    return await readTextFile(absPath);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return fallback;
+    throw error;
+  }
+}
+
 function buildFileToLayer(styleCss) {
   const map = new Map();
+
   for (const match of styleCss.matchAll(LAYER_IMPORT_RE)) {
     const [, url, layer] = match;
     const rel = url.replace(/^\//, '');
     map.set(rel, layer);
   }
+
   return map;
 }
 
 function ensureAttr(attributes, name) {
   let entry = attributes.get(name);
+
   if (!entry) {
     entry = {
       name,
@@ -142,11 +266,13 @@ function ensureAttr(attributes, name) {
     };
     attributes.set(name, entry);
   }
+
   return entry;
 }
 
 function ensureToken(tokens, name) {
   let tokenEntry = tokens.get(name);
+
   if (!tokenEntry) {
     tokenEntry = {
       name,
@@ -158,7 +284,150 @@ function ensureToken(tokens, name) {
     };
     tokens.set(name, tokenEntry);
   }
+
   return tokenEntry;
+}
+
+function findStartTags(html) {
+  const tags = [];
+  const openTagRe = /<\s*([a-z][a-z0-9:-]*)\b/gi;
+
+  let match;
+  while ((match = openTagRe.exec(html))) {
+    const start = match.index;
+    const tagName = match[1].toLowerCase();
+    let index = openTagRe.lastIndex;
+    let quote = null;
+
+    for (; index < html.length; index += 1) {
+      const char = html[index];
+
+      if (quote) {
+        if (char === quote) quote = null;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        continue;
+      }
+
+      if (char === '>') break;
+    }
+
+    if (index >= html.length) break;
+
+    tags.push({
+      name: tagName,
+      source: html.slice(start, index + 1),
+      index: start,
+    });
+
+    openTagRe.lastIndex = index + 1;
+  }
+
+  return tags;
+}
+
+function parseTagAttributes(tagSource) {
+  const attrs = new Map();
+  let index = 0;
+
+  if (tagSource[index] === '<') index += 1;
+  while (index < tagSource.length && /\s/.test(tagSource[index])) index += 1;
+
+  while (index < tagSource.length && !/[\s/>]/.test(tagSource[index])) index += 1;
+
+  while (index < tagSource.length) {
+    while (index < tagSource.length && /\s/.test(tagSource[index])) index += 1;
+    if (tagSource[index] === '>' || (tagSource[index] === '/' && tagSource[index + 1] === '>')) break;
+
+    const nameStart = index;
+    while (index < tagSource.length && !/[\s=/>]/.test(tagSource[index])) index += 1;
+
+    const name = tagSource.slice(nameStart, index).trim().toLowerCase();
+    if (!name) break;
+
+    while (index < tagSource.length && /\s/.test(tagSource[index])) index += 1;
+
+    let value = '';
+
+    if (tagSource[index] === '=') {
+      index += 1;
+      while (index < tagSource.length && /\s/.test(tagSource[index])) index += 1;
+
+      const quote = tagSource[index];
+
+      if (quote === '"' || quote === "'") {
+        index += 1;
+        const valueStart = index;
+        while (index < tagSource.length && tagSource[index] !== quote) index += 1;
+        value = tagSource.slice(valueStart, index);
+        if (tagSource[index] === quote) index += 1;
+      } else {
+        const valueStart = index;
+        while (index < tagSource.length && !/[\s>]/.test(tagSource[index])) index += 1;
+        value = tagSource.slice(valueStart, index);
+      }
+    }
+
+    attrs.set(name, decodeHtmlAttribute(value));
+  }
+
+  return attrs;
+}
+
+function collectHtmlDataSpwAttributes(html) {
+  const usages = [];
+
+  for (const tag of findStartTags(html)) {
+    const attrs = parseTagAttributes(tag.source);
+
+    for (const [name, value] of attrs.entries()) {
+      if (!DATA_SPW_ATTR_NAME_RE.test(name)) continue;
+
+      usages.push({
+        name,
+        value: value || null,
+        line: lineOf(html, tag.index),
+      });
+    }
+  }
+
+  return usages;
+}
+
+function collectJsDataSpwWrites(text) {
+  const writes = [];
+
+  const dotDatasetRe = /\.dataset\.(spw[A-Za-z0-9]+)\s*=/g;
+  for (const match of text.matchAll(dotDatasetRe)) {
+    writes.push({
+      name: camelSpwToDataAttr(match[1]),
+      line: lineOf(text, match.index),
+      snippet: match[0],
+    });
+  }
+
+  const bracketDatasetRe = /\.dataset\[\s*['"](spw[A-Za-z0-9]+)['"]\s*\]\s*=/g;
+  for (const match of text.matchAll(bracketDatasetRe)) {
+    writes.push({
+      name: camelSpwToDataAttr(match[1]),
+      line: lineOf(text, match.index),
+      snippet: match[0],
+    });
+  }
+
+  const setAttributeRe = /setAttribute\(\s*['"](data-spw-[a-z0-9-]+)['"]\s*,/g;
+  for (const match of text.matchAll(setAttributeRe)) {
+    writes.push({
+      name: match[1],
+      line: lineOf(text, match.index),
+      snippet: match[0],
+    });
+  }
+
+  return writes;
 }
 
 async function parseCss(files, fileToLayer) {
@@ -168,58 +437,65 @@ async function parseCss(files, fileToLayer) {
 
   for (const abs of files) {
     const rel = relRepo(abs);
-    const text = await fs.readFile(abs, 'utf8');
+    const text = await readTextFile(abs);
     const layer = fileToLayer.get(rel) || null;
     const header = extractFileHeaderDoc(text);
     const attrsHere = new Set();
     const tokensDefinedHere = [];
     const tokensConsumedHere = new Set();
 
-    for (const m of text.matchAll(CSS_SELECTOR_ATTR_RE)) {
-      const name = `data-spw-${m[1]}`;
-      const value = m[4] ?? m[5] ?? m[6] ?? null;
+    for (const match of text.matchAll(CSS_SELECTOR_ATTR_RE)) {
+      const name = `data-spw-${match[1]}`;
+      const value = match[4] ?? match[5] ?? match[6] ?? null;
+
       attrsHere.add(name);
+
       const entry = ensureAttr(attributes, name);
       entry.cssSelectors.push({
         file: rel,
         layer,
-        line: lineOf(text, m.index),
-        snippet: m[0],
+        line: lineOf(text, match.index),
+        snippet: match[0],
         value,
       });
-      if (value) entry.valuesInCss.add(value);
+
+      if (value) entry.valuesInCss.add(decodeHtmlAttribute(value));
     }
 
-    for (const m of text.matchAll(CSS_VAR_DEF_RE)) {
-      const name = m[1];
+    for (const match of text.matchAll(CSS_VAR_DEF_RE)) {
+      const name = match[1];
       tokensDefinedHere.push(name);
+
       ensureToken(tokens, name).definitions.push({
         file: rel,
         layer,
-        line: lineOf(text, m.index),
+        line: lineOf(text, match.index),
       });
     }
 
-    for (const m of text.matchAll(AT_PROPERTY_RE)) {
-      const [, name, body] = m;
+    for (const match of text.matchAll(AT_PROPERTY_RE)) {
+      const [, name, body] = match;
       const tokenEntry = ensureToken(tokens, name);
       const syntaxMatch = body.match(/syntax\s*:\s*["']([^"']+)["']/);
       const initialMatch = body.match(/initial-value\s*:\s*([^;]+);?/);
       const inheritsMatch = body.match(/inherits\s*:\s*(true|false)/);
+
       tokenEntry.syntax = syntaxMatch ? syntaxMatch[1] : tokenEntry.syntax;
       tokenEntry.initialValue = initialMatch ? initialMatch[1].trim() : tokenEntry.initialValue;
       tokenEntry.inherits = inheritsMatch ? inheritsMatch[1] === 'true' : tokenEntry.inherits;
-      const atPropLine = lineOf(text, m.index);
-      if (!tokenEntry.definitions.some((d) => d.file === rel && d.line === atPropLine)) {
-        tokenEntry.definitions.push({ file: rel, layer, line: atPropLine, registered: true });
+
+      const atPropLine = lineOf(text, match.index);
+      if (!tokenEntry.definitions.some((definition) => definition.file === rel && definition.line === atPropLine)) {
+        tokenEntry.definitions.push({file: rel, layer, line: atPropLine, registered: true});
       }
     }
 
-    for (const m of text.matchAll(CSS_VAR_REF_RE)) {
-      tokensConsumedHere.add(m[1]);
+    for (const match of text.matchAll(CSS_VAR_REF_RE)) {
+      tokensConsumedHere.add(match[1]);
     }
+
     for (const tokenName of tokensConsumedHere) {
-      ensureToken(tokens, tokenName).consumers.push({ file: rel, layer });
+      ensureToken(tokens, tokenName).consumers.push({file: rel, layer});
     }
 
     cssFiles[rel] = {
@@ -231,21 +507,21 @@ async function parseCss(files, fileToLayer) {
     };
   }
 
-  return { attributes, cssFiles, tokens };
+  return {attributes, cssFiles, tokens};
 }
 
 async function scanHtml(files, attributes) {
   for (const abs of files) {
     const rel = relRepo(abs);
-    const text = await fs.readFile(abs, 'utf8');
-    for (const m of text.matchAll(HTML_ATTR_USAGE_RE)) {
-      const name = `data-spw-${m[1]}`;
-      const value = m[2] ?? m[3] ?? null;
-      const entry = ensureAttr(attributes, name);
-      entry.htmlUsage.push({ file: rel, line: lineOf(text, m.index), value });
-      if (value) {
-        for (const v of value.split(/\s+/).filter(Boolean)) {
-          entry.valuesInHtml.add(v);
+    const text = await readTextFile(abs);
+
+    for (const usage of collectHtmlDataSpwAttributes(text)) {
+      const entry = ensureAttr(attributes, usage.name);
+      entry.htmlUsage.push({file: rel, line: usage.line, value: usage.value});
+
+      if (usage.value) {
+        for (const value of usage.value.split(/\s+/).filter(Boolean)) {
+          entry.valuesInHtml.add(value);
         }
       }
     }
@@ -255,48 +531,58 @@ async function scanHtml(files, attributes) {
 async function scanJs(files, attributes) {
   for (const abs of files) {
     const rel = relRepo(abs);
-    const text = await fs.readFile(abs, 'utf8');
-    for (const m of text.matchAll(JS_DATASET_WRITE_RE)) {
-      const name = m[1] ? camelSpwToDataAttr(m[1]) : m[2];
-      const entry = ensureAttr(attributes, name);
-      entry.jsWrites.push({ file: rel, line: lineOf(text, m.index) });
+    const text = await readTextFile(abs);
+
+    for (const write of collectJsDataSpwWrites(text)) {
+      const entry = ensureAttr(attributes, write.name);
+      entry.jsWrites.push({
+        file: rel,
+        line: write.line,
+        snippet: write.snippet,
+      });
     }
   }
 }
 
 async function scanSpwDocs(files, attributes, tokens) {
   const docs = {};
+
   for (const abs of files) {
     const rel = relRepo(abs);
-    const text = await fs.readFile(abs, 'utf8');
+    const text = await readTextFile(abs);
     const attrsMentioned = new Set();
     const tokensMentioned = new Set();
 
-    for (const m of text.matchAll(/data-spw-([a-z0-9-]+)/g)) {
-      const name = `data-spw-${m[1]}`;
+    for (const match of text.matchAll(DOC_ATTR_RE)) {
+      const name = `data-spw-${match[1]}`;
       attrsMentioned.add(name);
+
       const entry = attributes.get(name);
       if (entry) {
-        entry.docMentions.push({ file: rel, line: lineOf(text, m.index) });
+        entry.docMentions.push({file: rel, line: lineOf(text, match.index)});
       }
     }
-    for (const m of text.matchAll(/(--[a-z][a-z0-9-]{2,})/g)) {
-      const name = m[1];
+
+    for (const match of text.matchAll(DOC_TOKEN_RE)) {
+      const name = match[1];
       if (tokens.has(name)) tokensMentioned.add(name);
     }
 
     const titleMatch = text.match(/^#>([a-z0-9_]+)/m);
+
     docs[rel] = {
       title: titleMatch ? titleMatch[1] : path.basename(rel, path.extname(rel)),
       attributesMentioned: [...attrsMentioned].sort(),
       tokensMentioned: [...tokensMentioned].sort(),
     };
   }
+
   return docs;
 }
 
 function serializeAttributes(attributes) {
   const out = {};
+
   for (const [name, entry] of [...attributes.entries()].sort(([a], [b]) => a.localeCompare(b))) {
     out[name] = {
       name: entry.name,
@@ -307,12 +593,13 @@ function serializeAttributes(attributes) {
       valuesInHtml: [...entry.valuesInHtml].sort(),
       jsWrites: entry.jsWrites,
       docMentions: entry.docMentions,
-      cssFiles: [...new Set(entry.cssSelectors.map((s) => s.file))].sort(),
-      docFiles: [...new Set(entry.docMentions.map((d) => d.file))].sort(),
-      htmlFiles: [...new Set(entry.htmlUsage.map((h) => h.file))].sort(),
-      jsFiles: [...new Set(entry.jsWrites.map((j) => j.file))].sort(),
+      cssFiles: [...new Set(entry.cssSelectors.map((selector) => selector.file))].sort(),
+      docFiles: [...new Set(entry.docMentions.map((doc) => doc.file))].sort(),
+      htmlFiles: [...new Set(entry.htmlUsage.map((usage) => usage.file))].sort(),
+      jsFiles: [...new Set(entry.jsWrites.map((write) => write.file))].sort(),
     };
   }
+
   return out;
 }
 
@@ -321,25 +608,28 @@ function computeOrphans(attrs) {
   const attrsInHtmlNotCss = [];
   const attrsWithNoDoc = [];
   const attrsInDocOnly = [];
+
   for (const [name, entry] of Object.entries(attrs)) {
     const hasCss = entry.cssSelectors.length > 0;
     const hasHtml = entry.htmlUsage.length > 0;
     const hasDoc = entry.docMentions.length > 0;
+    const hasJs = entry.jsWrites.length > 0;
+
     if (hasCss && !hasHtml) attrsInCssNotHtml.push(name);
     if (hasHtml && !hasCss) attrsInHtmlNotCss.push(name);
-    if ((hasCss || hasHtml) && !hasDoc) attrsWithNoDoc.push(name);
-    if (hasDoc && !hasCss && !hasHtml) attrsInDocOnly.push(name);
+    if ((hasCss || hasHtml || hasJs) && !hasDoc) attrsWithNoDoc.push(name);
+    if (hasDoc && !hasCss && !hasHtml && !hasJs) attrsInDocOnly.push(name);
   }
-  return { attrsInCssNotHtml, attrsInHtmlNotCss, attrsWithNoDoc, attrsInDocOnly };
+
+  return {
+    attrsInCssNotHtml,
+    attrsInHtmlNotCss,
+    attrsWithNoDoc,
+    attrsInDocOnly,
+  };
 }
 
-function esc(s) {
-  return String(s).replace(/[&<>"]/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;',
-  }[c]));
-}
-
-function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, counts }) {
+function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, counts}) {
   const attrEntries = Object.values(attrs);
   const tokenEntries = [...tokens.values()].sort((a, b) => a.name.localeCompare(b.name));
   const docEntries = Object.entries(docs).sort(([a], [b]) => a.localeCompare(b));
@@ -348,16 +638,17 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
     .sort((a, b) => b.htmlUsageCount - a.htmlUsageCount || a.name.localeCompare(b.name))
     .map((entry) => {
       const values = entry.valuesInHtml.length ? entry.valuesInHtml : entry.valuesInCss;
+
       return `
         <article class="catalog-entry" id="attr-${esc(entry.name)}" data-spw-catalog-kind="attribute">
           <header class="catalog-entry__header">
             <code class="catalog-entry__name">${esc(entry.name)}</code>
             <span class="catalog-entry__meta">${entry.cssSelectors.length} CSS • ${entry.htmlUsageCount} HTML • ${entry.jsWrites.length} JS • ${entry.docMentions.length} docs</span>
           </header>
-          ${values.length ? `<p class="catalog-entry__line"><strong>values:</strong> ${values.slice(0, 32).map((v) => `<code>${esc(v)}</code>`).join(' ')}${values.length > 32 ? ` <em>+${values.length - 32}</em>` : ''}</p>` : ''}
-          ${entry.cssFiles.length ? `<p class="catalog-entry__line"><strong>css:</strong> ${entry.cssFiles.map((f) => `<a href="#css-${esc(f)}"><code>${esc(f)}</code></a>`).join(' ')}</p>` : ''}
-          ${entry.jsFiles.length ? `<p class="catalog-entry__line"><strong>js writers:</strong> ${entry.jsFiles.map((f) => `<code>${esc(f)}</code>`).join(' ')}</p>` : ''}
-          ${entry.docFiles.length ? `<p class="catalog-entry__line"><strong>philosophy:</strong> ${entry.docFiles.map((f) => `<a href="/${esc(f)}"><code>${esc(f)}</code></a>`).join(' ')}</p>` : '<p class="catalog-entry__line catalog-entry__line--warn"><strong>philosophy:</strong> <em>no .spw doc mentions this attribute</em></p>'}
+          ${values.length ? `<p class="catalog-entry__line"><strong>values:</strong> ${values.slice(0, 32).map((value) => `<code>${esc(value)}</code>`).join(' ')}${values.length > 32 ? ` <em>+${values.length - 32}</em>` : ''}</p>` : ''}
+          ${entry.cssFiles.length ? `<p class="catalog-entry__line"><strong>css:</strong> ${entry.cssFiles.map((file) => `<a href="#css-${esc(file)}"><code>${esc(file)}</code></a>`).join(' ')}</p>` : ''}
+          ${entry.jsFiles.length ? `<p class="catalog-entry__line"><strong>js writers:</strong> ${entry.jsFiles.map((file) => `<code>${esc(file)}</code>`).join(' ')}</p>` : ''}
+          ${entry.docFiles.length ? `<p class="catalog-entry__line"><strong>philosophy:</strong> ${entry.docFiles.map((file) => `<a href="/${esc(file)}"><code>${esc(file)}</code></a>`).join(' ')}</p>` : '<p class="catalog-entry__line catalog-entry__line--warn"><strong>philosophy:</strong> <em>no .spw doc mentions this attribute</em></p>'}
         </article>
       `;
     })
@@ -372,8 +663,8 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
           <span class="catalog-entry__meta">layer ${esc(info.layer || '—')} • ${info.attributesUsed.length} attrs • ${info.tokensDefined.length} tokens</span>
         </header>
         ${info.header ? `<p class="catalog-entry__doc">${esc(info.header)}</p>` : ''}
-        ${info.attributesUsed.length ? `<p class="catalog-entry__line"><strong>reads attrs:</strong> ${info.attributesUsed.map((a) => `<a href="#attr-${esc(a)}"><code>${esc(a)}</code></a>`).join(' ')}</p>` : ''}
-        ${info.tokensDefined.length ? `<p class="catalog-entry__line"><strong>defines tokens:</strong> ${info.tokensDefined.slice(0, 24).map((t) => `<code>${esc(t)}</code>`).join(' ')}${info.tokensDefined.length > 24 ? ` <em>+${info.tokensDefined.length - 24}</em>` : ''}</p>` : ''}
+        ${info.attributesUsed.length ? `<p class="catalog-entry__line"><strong>reads attrs:</strong> ${info.attributesUsed.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ')}</p>` : ''}
+        ${info.tokensDefined.length ? `<p class="catalog-entry__line"><strong>defines tokens:</strong> ${info.tokensDefined.slice(0, 24).map((token) => `<code>${esc(token)}</code>`).join(' ')}${info.tokensDefined.length > 24 ? ` <em>+${info.tokensDefined.length - 24}</em>` : ''}</p>` : ''}
       </article>
     `)
     .join('\n');
@@ -384,11 +675,11 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
       <p>Places where the traceability graph is incomplete.</p>
       <dl class="orphan-list">
         <dt>attrs in CSS, not in HTML (${orphans.attrsInCssNotHtml.length})</dt>
-        <dd>${orphans.attrsInCssNotHtml.map((a) => `<a href="#attr-${esc(a)}"><code>${esc(a)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
+        <dd>${orphans.attrsInCssNotHtml.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
         <dt>attrs in HTML, not in CSS (${orphans.attrsInHtmlNotCss.length})</dt>
-        <dd>${orphans.attrsInHtmlNotCss.map((a) => `<a href="#attr-${esc(a)}"><code>${esc(a)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
+        <dd>${orphans.attrsInHtmlNotCss.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
         <dt>attrs with no philosophy doc (${orphans.attrsWithNoDoc.length})</dt>
-        <dd>${orphans.attrsWithNoDoc.map((a) => `<a href="#attr-${esc(a)}"><code>${esc(a)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
+        <dd>${orphans.attrsWithNoDoc.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ') || '<em>none</em>'}</dd>
       </dl>
     </section>
   `;
@@ -399,7 +690,7 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
         <code class="catalog-entry__name"><a href="/${esc(file)}">${esc(file)}</a></code>
         <span class="catalog-entry__meta">${info.attributesMentioned.length} attrs • ${info.tokensMentioned.length} tokens</span>
       </header>
-      ${info.attributesMentioned.length ? `<p class="catalog-entry__line"><strong>mentions attrs:</strong> ${info.attributesMentioned.map((a) => `<a href="#attr-${esc(a)}"><code>${esc(a)}</code></a>`).join(' ')}</p>` : ''}
+      ${info.attributesMentioned.length ? `<p class="catalog-entry__line"><strong>mentions attrs:</strong> ${info.attributesMentioned.map((attr) => `<a href="#attr-${esc(attr)}"><code>${esc(attr)}</code></a>`).join(' ')}</p>` : ''}
     </article>
   `).join('\n');
 
@@ -463,14 +754,14 @@ function renderIndexHtml({ attrs, cssFiles, tokens, docs, orphans, generatedAt, 
     <h2>Custom-property tokens</h2>
     <p>Every <code>--token</code> — where defined, where consumed.</p>
     <div class="catalog-entries">
-      ${tokenEntries.slice(0, 500).map((t) => `
-        <article class="catalog-entry" id="token-${esc(t.name)}" data-spw-catalog-kind="token">
+      ${tokenEntries.slice(0, 500).map((token) => `
+        <article class="catalog-entry" id="token-${esc(token.name)}" data-spw-catalog-kind="token">
           <header class="catalog-entry__header">
-            <code class="catalog-entry__name">${esc(t.name)}</code>
-            <span class="catalog-entry__meta">${t.definitions.length} defs • ${t.consumers.length} reads${t.syntax ? ` • syntax <code>${esc(t.syntax)}</code>` : ''}</span>
+            <code class="catalog-entry__name">${esc(token.name)}</code>
+            <span class="catalog-entry__meta">${token.definitions.length} defs • ${token.consumers.length} reads${token.syntax ? ` • syntax <code>${esc(token.syntax)}</code>` : ''}</span>
           </header>
-          ${t.initialValue ? `<p class="catalog-entry__line"><strong>initial:</strong> <code>${esc(t.initialValue)}</code></p>` : ''}
-          ${t.definitions.length ? `<p class="catalog-entry__line"><strong>defined in:</strong> ${[...new Set(t.definitions.map((d) => d.file))].map((f) => `<code>${esc(f)}</code>`).join(' ')}</p>` : ''}
+          ${token.initialValue ? `<p class="catalog-entry__line"><strong>initial:</strong> <code>${esc(token.initialValue)}</code></p>` : ''}
+          ${token.definitions.length ? `<p class="catalog-entry__line"><strong>defined in:</strong> ${[...new Set(token.definitions.map((definition) => definition.file))].map((file) => `<code>${esc(file)}</code>`).join(' ')}</p>` : ''}
         </article>
       `).join('\n')}
       ${tokenEntries.length > 500 ? `<p><em>Showing first 500 of ${tokenEntries.length} tokens. See catalog.json for the full list.</em></p>` : ''}
@@ -523,34 +814,88 @@ const CATALOG_CSS = `
 .orphan-list dd { margin: 0.15rem 0 0.5rem 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
 `;
 
+function serializeTokens(tokens) {
+  return [...tokens.values()]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((token) => ({
+      name: token.name,
+      syntax: token.syntax,
+      initialValue: token.initialValue,
+      inherits: token.inherits,
+      definitions: token.definitions,
+      consumerCount: token.consumers.length,
+      consumerFiles: [...new Set(token.consumers.map((consumer) => consumer.file))].sort(),
+    }));
+}
+
+async function writeOrCheckFile(filePath, contents, options) {
+  if (!options.check) {
+    await fs.writeFile(filePath, contents);
+    return false;
+  }
+
+  let existing = null;
+
+  try {
+    existing = await fs.readFile(filePath, 'utf8');
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+
+  return existing !== contents;
+}
+
+async function writeOutputs(outputDir, outputs, options) {
+  await fs.mkdir(outputDir, {recursive: true});
+
+  const changed = [];
+
+  for (const [filename, contents] of Object.entries(outputs)) {
+    const filePath = path.join(outputDir, filename);
+    const differs = await writeOrCheckFile(filePath, contents, options);
+
+    if (differs) {
+      changed.push(relRepo(filePath));
+    }
+  }
+
+  if (options.check && changed.length) {
+    throw new Error(`[catalog] --check failed; generated files differ: ${changed.join(', ')}`);
+  }
+
+  return changed;
+}
+
 async function main() {
-  const styleCssText = await fs.readFile(path.join(ROOT_DIR, 'public/css/style.css'), 'utf8');
+  const options = parseArgs(process.argv.slice(2));
+
+  if (options.help) {
+    printHelp();
+    return;
+  }
+
+  const outputRelativePath = relRepo(options.outDir);
+  const styleCssText = await readOptionalTextFile(path.join(ROOT_DIR, 'public/css/style.css'));
   const fileToLayer = buildFileToLayer(styleCssText);
 
-  const allFiles = await walk(ROOT_DIR);
-  const cssFiles = allFiles.filter((p) => p.endsWith('.css'));
-  const htmlFiles = allFiles.filter((p) => p.endsWith('.html'));
-  const jsFiles = allFiles.filter((p) => (p.endsWith('.js') || p.endsWith('.mjs')) && !relRepo(p).startsWith('scripts/'));
-  const spwFiles = allFiles.filter((p) => p.endsWith('.spw'));
+  const allFiles = await walk(ROOT_DIR, {outputRelativePath});
 
-  const { attributes, cssFiles: cssFileInfo, tokens } = await parseCss(cssFiles, fileToLayer);
+  const cssFiles = allFiles.filter((filePath) => filePath.endsWith('.css'));
+  const htmlFiles = allFiles.filter((filePath) => filePath.endsWith('.html'));
+  const jsFiles = allFiles.filter((filePath) => {
+    const rel = relRepo(filePath);
+    return (filePath.endsWith('.js') || filePath.endsWith('.mjs')) && !rel.startsWith('scripts/');
+  });
+  const spwFiles = allFiles.filter((filePath) => filePath.endsWith('.spw'));
+
+  const {attributes, cssFiles: cssFileInfo, tokens} = await parseCss(cssFiles, fileToLayer);
   await scanHtml(htmlFiles, attributes);
   await scanJs(jsFiles, attributes);
-  const docs = await scanSpwDocs(spwFiles, attributes, tokens);
 
+  const docs = await scanSpwDocs(spwFiles, attributes, tokens);
   const attrs = serializeAttributes(attributes);
   const orphans = computeOrphans(attrs);
-
-  const tokensSerialized = [...tokens.values()].sort((a, b) => a.name.localeCompare(b.name))
-    .map((t) => ({
-      name: t.name,
-      syntax: t.syntax,
-      initialValue: t.initialValue,
-      inherits: t.inherits,
-      definitions: t.definitions,
-      consumerCount: t.consumers.length,
-      consumerFiles: [...new Set(t.consumers.map((c) => c.file))].sort(),
-    }));
+  const tokensSerialized = serializeTokens(tokens);
 
   const counts = {
     attributes: Object.keys(attrs).length,
@@ -562,7 +907,7 @@ async function main() {
   };
 
   const catalog = {
-    generatedAt: new Date().toISOString(),
+    generatedAt: getGeneratedAt(),
     counts,
     attributes: attrs,
     cssFiles: cssFileInfo,
@@ -571,26 +916,31 @@ async function main() {
     orphans,
   };
 
-  await fs.mkdir(OUTPUT_DIR, { recursive: true });
-  await fs.writeFile(path.join(OUTPUT_DIR, 'catalog.json'), JSON.stringify(catalog, null, 2));
-  await fs.writeFile(path.join(OUTPUT_DIR, 'catalog.css'), CATALOG_CSS.trim() + '\n');
-  await fs.writeFile(path.join(OUTPUT_DIR, 'index.html'), renderIndexHtml({
-    attrs,
-    cssFiles: cssFileInfo,
-    tokens,
-    docs,
-    orphans,
-    generatedAt: catalog.generatedAt,
-    counts,
-  }));
+  const outputs = {
+    'catalog.json': `${JSON.stringify(catalog, null, 2)}\n`,
+    'catalog.css': `${CATALOG_CSS.trim()}\n`,
+    'index.html': renderIndexHtml({
+      attrs,
+      cssFiles: cssFileInfo,
+      tokens,
+      docs,
+      orphans,
+      generatedAt: catalog.generatedAt,
+      counts,
+    }),
+  };
 
-  console.log(`[catalog] wrote ${relRepo(path.join(OUTPUT_DIR, 'index.html'))}`);
-  console.log(`[catalog] ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} css files • ${counts.docs} spw docs`);
-  console.log(`[catalog] scanned ${counts.htmlFilesScanned} html • ${counts.jsFilesScanned} js • ${cssFiles.length} css • ${spwFiles.length} spw`);
-  console.log(`[catalog] orphans: css-only=${orphans.attrsInCssNotHtml.length} html-only=${orphans.attrsInHtmlNotCss.length} no-doc=${orphans.attrsWithNoDoc.length}`);
+  await writeOutputs(options.outDir, outputs, options);
+
+  if (!options.quiet) {
+    console.log(`[catalog] ${options.check ? 'checked' : 'wrote'} ${relRepo(path.join(options.outDir, 'index.html'))}`);
+    console.log(`[catalog] ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} css files • ${counts.docs} spw docs`);
+    console.log(`[catalog] scanned ${counts.htmlFilesScanned} html • ${counts.jsFilesScanned} js • ${cssFiles.length} css • ${spwFiles.length} spw`);
+    console.log(`[catalog] orphans: css-only=${orphans.attrsInCssNotHtml.length} html-only=${orphans.attrsInHtmlNotCss.length} no-doc=${orphans.attrsWithNoDoc.length}`);
+  }
 }
 
-main().catch((err) => {
-  console.error(err);
+main().catch((error) => {
+  console.error(error);
   process.exit(1);
 });

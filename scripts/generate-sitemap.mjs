@@ -37,9 +37,6 @@ const EXCLUDED_PREFIXES = [
   '.spw/_workbench',
 ];
 
-const CANONICAL_RE = /<link\b[^>]*\brel=["']canonical["'][^>]*\bhref=["']([^"']+)["'][^>]*>/i;
-const ROBOTS_RE = /<meta\b[^>]*\bname=["']robots["'][^>]*\bcontent=["']([^"']+)["'][^>]*>/i;
-
 function toPosix(value) {
   return value.split(path.sep).join('/');
 }
@@ -64,6 +61,35 @@ function escapeXml(value) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+}
+
+function decodeHtmlAttribute(value) {
+  const named = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+  };
+
+  return String(value).replace(/&(#x[\da-f]+|#\d+|[a-z][a-z0-9]+);/gi, (match, entity) => {
+    const normalized = entity.toLowerCase();
+
+    if (normalized.startsWith('#x')) {
+      const codepoint = Number.parseInt(normalized.slice(2), 16);
+      return Number.isFinite(codepoint) ? String.fromCodePoint(codepoint) : match;
+    }
+
+    if (normalized.startsWith('#')) {
+      const codepoint = Number.parseInt(normalized.slice(1), 10);
+      return Number.isFinite(codepoint) ? String.fromCodePoint(codepoint) : match;
+    }
+
+    return Object.prototype.hasOwnProperty.call(named, normalized)
+      ? named[normalized]
+      : match;
+  });
 }
 
 function runGit(args) {
@@ -101,22 +127,165 @@ function listSourceRouteFiles() {
     .sort((a, b) => a.localeCompare(b));
 }
 
+/**
+ * Finds complete start tags for a given tag name.
+ *
+ * This intentionally avoids parsing all HTML. It only needs to safely collect
+ * complete <link ...> and <meta ...> tags while ignoring ">" characters inside
+ * quoted attribute values.
+ */
+function findStartTags(html, tagName) {
+  const tags = [];
+  const openTagRe = new RegExp(`<\\s*${tagName}\\b`, 'gi');
+
+  let match;
+  while ((match = openTagRe.exec(html))) {
+    const start = match.index;
+    let index = openTagRe.lastIndex;
+    let quote = null;
+
+    for (; index < html.length; index += 1) {
+      const char = html[index];
+
+      if (quote) {
+        if (char === quote) quote = null;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        continue;
+      }
+
+      if (char === '>') break;
+    }
+
+    if (index >= html.length) break;
+
+    tags.push(html.slice(start, index + 1));
+    openTagRe.lastIndex = index + 1;
+  }
+
+  return tags;
+}
+
+/**
+ * Parses attributes from a single HTML start tag.
+ *
+ * Supports:
+ * - any attribute order
+ * - single-quoted values
+ * - double-quoted values
+ * - unquoted values
+ * - boolean attributes
+ * - case-insensitive attribute names
+ */
+function parseTagAttributes(tag) {
+  const attrs = new Map();
+  let index = 0;
+
+  if (tag[index] === '<') index += 1;
+
+  while (index < tag.length && /\s/.test(tag[index])) index += 1;
+
+  // Skip tag name.
+  while (index < tag.length && !/[\s/>]/.test(tag[index])) index += 1;
+
+  while (index < tag.length) {
+    while (index < tag.length && /\s/.test(tag[index])) index += 1;
+
+    if (tag[index] === '>' || (tag[index] === '/' && tag[index + 1] === '>')) break;
+
+    const nameStart = index;
+
+    while (index < tag.length && !/[\s=/>]/.test(tag[index])) index += 1;
+
+    const name = tag.slice(nameStart, index).trim().toLowerCase();
+    if (!name) break;
+
+    while (index < tag.length && /\s/.test(tag[index])) index += 1;
+
+    let value = '';
+
+    if (tag[index] === '=') {
+      index += 1;
+
+      while (index < tag.length && /\s/.test(tag[index])) index += 1;
+
+      const quote = tag[index];
+
+      if (quote === '"' || quote === "'") {
+        index += 1;
+        const valueStart = index;
+
+        while (index < tag.length && tag[index] !== quote) index += 1;
+
+        value = tag.slice(valueStart, index);
+
+        if (tag[index] === quote) index += 1;
+      } else {
+        const valueStart = index;
+
+        while (index < tag.length && !/[\s>]/.test(tag[index])) index += 1;
+
+        value = tag.slice(valueStart, index);
+      }
+    }
+
+    attrs.set(name, decodeHtmlAttribute(value));
+  }
+
+  return attrs;
+}
+
+function tokenList(value) {
+  return String(value || '')
+    .split(/\s+/)
+    .map((token) => token.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function robotsTokenList(value) {
+  return String(value || '')
+    .split(/[,\s]+/)
+    .map((token) => token.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 function extractCanonical(html, repoPath) {
-  const canonicalMatch = html.match(CANONICAL_RE);
-  if (!canonicalMatch) {
+  const canonicals = findStartTags(html, 'link')
+    .map(parseTagAttributes)
+    .filter((attrs) => tokenList(attrs.get('rel')).includes('canonical'))
+    .map((attrs) => attrs.get('href')?.trim())
+    .filter(Boolean);
+
+  const uniqueCanonicals = [...new Set(canonicals)];
+
+  if (uniqueCanonicals.length === 0) {
     throw new Error(`[sitemap] missing canonical link in ${repoPath}`);
   }
-  return canonicalMatch[1].trim();
+
+  if (uniqueCanonicals.length > 1) {
+    throw new Error(`[sitemap] multiple canonical links in ${repoPath}: ${uniqueCanonicals.join(', ')}`);
+  }
+
+  return uniqueCanonicals[0];
 }
 
 function isNoIndex(html) {
-  const robotsMatch = html.match(ROBOTS_RE);
-  if (!robotsMatch) return false;
-  return robotsMatch[1].split(',').some((token) => token.trim().toLowerCase() === 'noindex');
+  return findStartTags(html, 'meta')
+    .map(parseTagAttributes)
+    .some((attrs) => {
+      const name = attrs.get('name')?.trim().toLowerCase();
+      if (name !== 'robots') return false;
+
+      return robotsTokenList(attrs.get('content')).includes('noindex');
+    });
 }
 
 function buildSitemapXml(urls) {
   const rows = urls.map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`);
+
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -132,8 +301,10 @@ async function collectUrls(routeFiles) {
   for (const repoPath of routeFiles) {
     const absPath = path.join(ROOT_DIR, repoPath);
     const source = await fs.readFile(absPath, 'utf8');
-    const { output } = await renderTemplate(source, { sourceLabel: relRepo(absPath) });
+    const {output} = await renderTemplate(source, {sourceLabel: relRepo(absPath)});
+
     if (isNoIndex(output)) continue;
+
     urls.push(extractCanonical(output, repoPath));
   }
 
@@ -146,7 +317,7 @@ async function main() {
   const urls = await collectUrls(routeFiles);
   const xml = buildSitemapXml(urls);
 
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.mkdir(path.dirname(outputPath), {recursive: true});
   await fs.writeFile(outputPath, xml, 'utf8');
 
   console.log(`[sitemap] wrote ${relRepo(outputPath)}`);
