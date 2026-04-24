@@ -1,81 +1,34 @@
 /**
  * Site Settings Manager
  * ---------------------------------------------------------------------------
- * Purpose
- * - Central hub for site-wide preferences.
- * - Normalizes persisted settings, applies them to the document, and exposes
- *   architectural modifiers for other systems.
+ * Central hub for site-wide preferences.
  *
- * Primary concerns
- * - navigation / console visibility
- * - accessibility / typography / motion
- * - semantic density / operator presentation / infospace complexity
- * - developmental climate
- * - cognitive handles / metadata / relational visualization
- * - performance and progressive enhancement
+ * This version treats author workflow and developmental climate as separate
+ * settings axes:
+ * - authorMode: draft / revise / polish / publish / archive
+ * - currentDevelopmentalClimate: orient / anchor / weave / rehearse / offer
  *
- * Design stance
- * - HTML/CSS should read stable datasets and CSS custom properties.
- * - JS modules should be able to ask for derived architectural modifiers
- *   rather than re-deriving them ad hoc.
- * - No transition layer for older spirit-phase vocabulary is kept here.
- *
- * New component-binding stance
- * - Settings UI does not need to live only on /settings.
- * - Any page may include:
- *   - a single field
- *   - a small fieldset
- *   - preset buttons
- *   - readout badges / summaries
- *   - state inspectors
- * - Components should connect to the same normalized model rather than
- *   inventing page-local state.
- *
- * Recommended markup contracts
- *
- * 1. Single setting controls
- *    <input type="radio" name="colorMode" value="dark" data-site-setting>
- *
- * 2. Group / container binding
- *    <form data-site-settings-form>...</form>
- *    <section data-site-settings-scope>...</section>
- *
- * 3. Preset triggers
- *    <button type="button" data-preset="loom">Apply Loom</button>
- *
- * 4. State readouts
- *    <strong data-settings-state="colorMode"></strong>
- *    <code data-site-setting-value="semanticDensity"></code>
- *
- * 5. Field validation hints
- *    <div data-site-setting-errors="colorMode"></div>
- *
- * 6. Declarative trigger controls
- *    <button type="button" data-site-setting-set="wonderMemory:sitewide">Resonate sitewide</button>
- *
- * Validation model
- * - validateSetting(name, value): validate a single field
- * - validatePartialSettings(partial): validate a partial payload
- * - normalizeSiteSettings(value): safe full-object normalization
- *
- * Binding model
- * - bindSettingsScope(root): attach settings behavior to any subtree
- * - bindSettingsField(field, options): attach one field directly
- * - bindSettingsReadouts(root): sync text-based state readouts
- *
- * These bindings are intended for independent reuse across pages.
- * ---------------------------------------------------------------------------
+ * The manager normalizes persisted settings, applies datasets and CSS custom
+ * properties to the document, exposes derived modifiers, and binds settings
+ * controls anywhere on the site.
  */
 
-import {bus} from './spw-bus.js';
+import { bus } from './spw-bus.js';
+import {
+  AUTHOR_WORKFLOW_DEFINITIONS,
+  AUTHOR_WORKFLOW_MODES,
+  normalizeAuthorMode,
+  normalizeDevelopmentalClimate
+} from './spw-shared.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteResonanceSwatches
 } from './spw-palette-resonance.js';
-import {shouldDisableServiceWorkerInDevelopment} from './spw-runtime-environment.js';
+import { shouldDisableServiceWorkerInDevelopment } from './spw-runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
+
 const THEME_PACK_OPTIONS = Object.freeze([
   'neutral-paper',
   'oxide-ledger',
@@ -84,10 +37,6 @@ const THEME_PACK_OPTIONS = Object.freeze([
   'copper-brace',
   'glass-console'
 ]);
-
-/* ==========================================================================
-   1. Static registries
-   ========================================================================== */
 
 const FONT_SIZE_PRESET_MULTIPLIER = Object.freeze({
   small: 0.93,
@@ -169,21 +118,9 @@ const HEADER_OPACITY_VALUE = Object.freeze({
 });
 
 const WONDER_MEMORY_PROFILE = Object.freeze({
-  off: Object.freeze({
-    strength: 0,
-    ttlMs: 0,
-    reach: 0
-  }),
-  nearby: Object.freeze({
-    strength: 0.56,
-    ttlMs: 28000,
-    reach: 0.54
-  }),
-  sitewide: Object.freeze({
-    strength: 0.92,
-    ttlMs: 96000,
-    reach: 1
-  })
+  off: Object.freeze({strength: 0, ttlMs: 0, reach: 0}),
+  nearby: Object.freeze({strength: 0.56, ttlMs: 28000, reach: 0.54}),
+  sitewide: Object.freeze({strength: 0.92, ttlMs: 96000, reach: 1})
 });
 
 const CONTOUR_PROFILE = Object.freeze({
@@ -282,10 +219,49 @@ const STROKE_PROFILE = Object.freeze({
   })
 });
 
+const AUTHOR_WORKFLOW_TOKEN_VALUE = Object.freeze({
+  draft: Object.freeze({
+    annotationStrength: 0.26,
+    marginPresence: 0.34,
+    threadDensity: 0.32,
+    draftPrivacy: 0.82,
+    publicationReadiness: 0.08
+  }),
+  revise: Object.freeze({
+    annotationStrength: 0.56,
+    marginPresence: 0.58,
+    threadDensity: 0.56,
+    draftPrivacy: 0.56,
+    publicationReadiness: 0.32
+  }),
+  polish: Object.freeze({
+    annotationStrength: 0.42,
+    marginPresence: 0.46,
+    threadDensity: 0.44,
+    draftPrivacy: 0.36,
+    publicationReadiness: 0.68
+  }),
+  publish: Object.freeze({
+    annotationStrength: 0.32,
+    marginPresence: 0.38,
+    threadDensity: 0.28,
+    draftPrivacy: 0.18,
+    publicationReadiness: 0.92
+  }),
+  archive: Object.freeze({
+    annotationStrength: 0.22,
+    marginPresence: 0.3,
+    threadDensity: 0.22,
+    draftPrivacy: 0.24,
+    publicationReadiness: 0.5
+  })
+});
+
 const DEVELOPMENTAL_CLIMATES = Object.freeze({
   orient: Object.freeze({
     id: 'orient',
     label: 'kindle',
+    authorLabel: 'find the page',
     learningMode: 'entry',
     description: 'Open the frame, notice cues, and sense the terrain before forcing conclusions.',
     clarity: 0.56,
@@ -301,6 +277,7 @@ const DEVELOPMENTAL_CLIMATES = Object.freeze({
   anchor: Object.freeze({
     id: 'anchor',
     label: 'anchor',
+    authorLabel: 'hold the structure',
     learningMode: 'stabilize',
     description: 'Name distinctions, stabilize references, and give the surface something firm to stand on.',
     clarity: 0.74,
@@ -316,6 +293,7 @@ const DEVELOPMENTAL_CLIMATES = Object.freeze({
   weave: Object.freeze({
     id: 'weave',
     label: 'weave',
+    authorLabel: 'connect the material',
     learningMode: 'connect',
     description: 'Relate examples, build parallels, and connect local structure to neighboring concepts.',
     clarity: 0.68,
@@ -331,6 +309,7 @@ const DEVELOPMENTAL_CLIMATES = Object.freeze({
   rehearse: Object.freeze({
     id: 'rehearse',
     label: 'rehearse',
+    authorLabel: 'test the voice',
     learningMode: 'practice',
     description: 'Retrieve, vary, test, and practice until the pattern can be used rather than merely recognized.',
     clarity: 0.7,
@@ -346,6 +325,7 @@ const DEVELOPMENTAL_CLIMATES = Object.freeze({
   offer: Object.freeze({
     id: 'offer',
     label: 'offer',
+    authorLabel: 'prepare the gift',
     learningMode: 'publish',
     description: 'Externalize the work through explanation, publication, teaching, or a usable contribution.',
     clarity: 0.84,
@@ -413,6 +393,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   developmentalIndicators: 'off',
   depthIndicators: 'off',
 
+  authorMode: 'draft',
   currentDevelopmentalClimate: 'orient',
   developmentalClimateAutoCycle: 'off',
 
@@ -476,6 +457,7 @@ const SETTING_OPTIONS = Object.freeze({
   developmentalIndicators: new Set(['off', 'on']),
   depthIndicators: new Set(['off', 'on']),
 
+  authorMode: new Set(AUTHOR_WORKFLOW_MODES),
   currentDevelopmentalClimate: new Set(Object.keys(DEVELOPMENTAL_CLIMATES)),
   developmentalClimateAutoCycle: new Set(['off', 'on']),
 
@@ -487,7 +469,8 @@ const SETTING_OPTIONS = Object.freeze({
 });
 
 const PRESETS = Object.freeze({
-  hearth: {
+  hearth: Object.freeze({
+    authorMode: 'draft',
     currentDevelopmentalClimate: 'orient',
     navigatorDisplay: 'quiet',
     consoleDisplay: 'hidden',
@@ -520,8 +503,9 @@ const PRESETS = Object.freeze({
     busMirrorToConsole: 'off',
     busHistorySize: '100',
     typesettingMode: 'default'
-  },
-  loom: {
+  }),
+  loom: Object.freeze({
+    authorMode: 'revise',
     currentDevelopmentalClimate: 'weave',
     semanticDensity: 'rich',
     grainIntensity: 'moderate',
@@ -548,8 +532,9 @@ const PRESETS = Object.freeze({
     busMirrorToConsole: 'off',
     busHistorySize: '250',
     typesettingMode: 'editorial'
-  },
-  workshop: {
+  }),
+  workshop: Object.freeze({
+    authorMode: 'revise',
     currentDevelopmentalClimate: 'anchor',
     navigatorDisplay: 'full',
     consoleDisplay: 'expanded',
@@ -573,8 +558,9 @@ const PRESETS = Object.freeze({
     busMirrorToConsole: 'on',
     busHistorySize: '500',
     typesettingMode: 'default'
-  },
-  access: {
+  }),
+  access: Object.freeze({
+    authorMode: 'draft',
     currentDevelopmentalClimate: 'anchor',
     highContrast: 'on',
     reduceMotion: 'on',
@@ -598,20 +584,17 @@ const PRESETS = Object.freeze({
     busMirrorToConsole: 'off',
     busHistorySize: '100',
     typesettingMode: 'default'
-  }
+  })
 });
 
 const SETTING_VALUE_LABELS = Object.freeze({
   navigatorDisplay: Object.freeze({quiet: 'Quiet', full: 'Full', hidden: 'Hidden'}),
   consoleDisplay: Object.freeze({collapsed: 'Collapsed', expanded: 'Expanded', hidden: 'Hidden'}),
   viewportActivation: Object.freeze({off: 'Off', on: 'On'}),
-
   reduceMotion: Object.freeze({off: 'Motion allowed', on: 'Reduced motion'}),
   highContrast: Object.freeze({off: 'Standard contrast', on: 'High contrast'}),
   fontSize: Object.freeze({small: 'Small', normal: 'Normal', large: 'Large'}),
-
   colorMode: Object.freeze({auto: 'Adaptive', light: 'Light', dark: 'Dark'}),
-
   themePack: Object.freeze({
     'neutral-paper': 'Neutral paper',
     'oxide-ledger': 'Oxide ledger',
@@ -620,156 +603,53 @@ const SETTING_VALUE_LABELS = Object.freeze({
     'copper-brace': 'Copper brace',
     'glass-console': 'Glass console'
   }),
-
   paletteResonance: Object.freeze({
     route: 'Context-led',
     craft: 'Craft-led',
     software: 'Software-led',
     math: 'Math-led'
   }),
-
-  baseMetamaterial: Object.freeze({
-    paper: 'Paper',
-    glass: 'Glass',
-    matte: 'Matte',
-    field: 'Field'
-  }),
-
-  baseAffordance: Object.freeze({
-    read: 'Read',
-    tune: 'Tune',
-    inspect: 'Inspect',
-    orient: 'Orient'
-  }),
-
-  componentDensity: Object.freeze({
-    dense: 'Dense',
-    soft: 'Soft',
-    roomy: 'Roomy'
-  }),
-
-  operatorSaturation: Object.freeze({
-    muted: 'Muted',
-    normal: 'Normal',
-    vibrant: 'Vibrant'
-  }),
-
-  animationIntensity: Object.freeze({
-    reduced: 'Reduced',
-    normal: 'Normal',
-    enhanced: 'Enhanced'
-  }),
-
-  contourProfile: Object.freeze({
-    tight: 'Tight',
-    balanced: 'Balanced',
-    soft: 'Soft'
-  }),
-
-  strokeProfile: Object.freeze({
-    hairline: 'Hairline',
-    structural: 'Structural',
-    bold: 'Bold'
-  }),
-
-  fieldResonance: Object.freeze({
-    local: 'Local',
-    field: 'Field',
-    choral: 'Choral'
-  }),
-
+  baseMetamaterial: Object.freeze({paper: 'Paper', glass: 'Glass', matte: 'Matte', field: 'Field'}),
+  baseAffordance: Object.freeze({read: 'Read', tune: 'Tune', inspect: 'Inspect', orient: 'Orient'}),
+  componentDensity: Object.freeze({dense: 'Dense', soft: 'Soft', roomy: 'Roomy'}),
+  operatorSaturation: Object.freeze({muted: 'Muted', normal: 'Normal', vibrant: 'Vibrant'}),
+  animationIntensity: Object.freeze({reduced: 'Reduced', normal: 'Normal', enhanced: 'Enhanced'}),
+  contourProfile: Object.freeze({tight: 'Tight', balanced: 'Balanced', soft: 'Soft'}),
+  strokeProfile: Object.freeze({hairline: 'Hairline', structural: 'Structural', bold: 'Bold'}),
+  fieldResonance: Object.freeze({local: 'Local', field: 'Field', choral: 'Choral'}),
   debugMode: Object.freeze({off: 'Off', on: 'On'}),
   showFrameMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
   verboseLogging: Object.freeze({off: 'Off', on: 'On'}),
-
-  fontSizeScale: Object.freeze({
-    80: '80%',
-    90: '90%',
-    100: '100%',
-    110: '110%',
-    120: '120%'
-  }),
-
-  lineSpacing: Object.freeze({
-    compact: 'Compact',
-    normal: 'Normal',
-    loose: 'Loose'
-  }),
-
-  monospaceVariant: Object.freeze({
-    system: 'System mono',
-    jetbrains: 'JetBrains Mono',
-    courier: 'Courier'
-  }),
-
-  typesettingMode: Object.freeze({
-    default: 'Default',
-    editorial: 'Editorial'
-  }),
-
+  fontSizeScale: Object.freeze({80: '80%', 90: '90%', 100: '100%', 110: '110%', 120: '120%'}),
+  lineSpacing: Object.freeze({compact: 'Compact', normal: 'Normal', loose: 'Loose'}),
+  monospaceVariant: Object.freeze({system: 'System mono', jetbrains: 'JetBrains Mono', courier: 'Courier'}),
+  typesettingMode: Object.freeze({default: 'Default', editorial: 'Editorial'}),
   showFooter: Object.freeze({on: 'Shown', off: 'Hidden'}),
-
-  headerOpacity: Object.freeze({
-    low: 'Low',
-    normal: 'Normal',
-    high: 'High'
-  }),
-
+  headerOpacity: Object.freeze({low: 'Low', normal: 'Normal', high: 'High'}),
   showSpecPills: Object.freeze({on: 'Shown', off: 'Hidden'}),
-
-  animationThrottling: Object.freeze({
-    off: 'Off',
-    light: 'Light',
-    heavy: 'Heavy'
-  }),
-
-  imageLazyLoading: Object.freeze({
-    on: 'Lazy loading',
-    off: 'Eager loading'
-  }),
-
-  enhancementLevel: Object.freeze({
-    minimal: 'Minimal',
-    balanced: 'Balanced',
-    rich: 'Rich'
-  }),
-
-  semanticDensity: Object.freeze({
-    minimal: 'Minimal',
-    normal: 'Normal',
-    rich: 'Rich'
-  }),
-
-  operatorPresentation: Object.freeze({
-    symbolic: 'Symbolic',
-    full: 'Full',
-    text: 'Text'
-  }),
-
-  infospaceComplexity: Object.freeze({
-    simple: 'Simple',
-    adaptive: 'Adaptive',
-    complex: 'Complex'
-  }),
-
+  animationThrottling: Object.freeze({off: 'Off', light: 'Light', heavy: 'Heavy'}),
+  imageLazyLoading: Object.freeze({on: 'Lazy loading', off: 'Eager loading'}),
+  enhancementLevel: Object.freeze({minimal: 'Minimal', balanced: 'Balanced', rich: 'Rich'}),
+  semanticDensity: Object.freeze({minimal: 'Minimal', normal: 'Normal', rich: 'Rich'}),
+  operatorPresentation: Object.freeze({symbolic: 'Symbolic', full: 'Full', text: 'Text'}),
+  infospaceComplexity: Object.freeze({simple: 'Simple', adaptive: 'Adaptive', complex: 'Complex'}),
   cognitiveHandles: Object.freeze({off: 'Off', on: 'On'}),
   dimensionalBreadcrumbs: Object.freeze({off: 'Off', on: 'On'}),
   fractalNesting: Object.freeze({off: 'Off', on: 'On'}),
   implementationMutations: Object.freeze({off: 'Off', on: 'On'}),
-
   showSemanticMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
   operatorHighlighting: Object.freeze({off: 'Off', on: 'On'}),
   relationalVisualization: Object.freeze({off: 'Off', on: 'On'}),
-
-  wonderMemory: Object.freeze({
-    off: 'Focused',
-    nearby: 'Connected',
-    sitewide: 'Immersive'
-  }),
-
+  wonderMemory: Object.freeze({off: 'Focused', nearby: 'Connected', sitewide: 'Immersive'}),
   developmentalIndicators: Object.freeze({off: 'Off', on: 'On'}),
   depthIndicators: Object.freeze({off: 'Off', on: 'On'}),
-
+  authorMode: Object.freeze({
+    draft: 'Draft',
+    revise: 'Revise',
+    polish: 'Polish',
+    publish: 'Publish',
+    archive: 'Archive'
+  }),
   currentDevelopmentalClimate: Object.freeze({
     orient: 'Kindle',
     anchor: 'Anchor',
@@ -777,29 +657,11 @@ const SETTING_VALUE_LABELS = Object.freeze({
     rehearse: 'Rehearse',
     offer: 'Offer'
   }),
-
   developmentalClimateAutoCycle: Object.freeze({off: 'Off', on: 'On'}),
-
-  grainIntensity: Object.freeze({
-    none: 'None',
-    subtle: 'Subtle',
-    moderate: 'Moderate',
-    rich: 'Rich'
-  }),
-
-  busDiagnostics: Object.freeze({
-    off: 'Off',
-    basic: 'Basic',
-    verbose: 'Verbose'
-  }),
-
+  grainIntensity: Object.freeze({none: 'None', subtle: 'Subtle', moderate: 'Moderate', rich: 'Rich'}),
+  busDiagnostics: Object.freeze({off: 'Off', basic: 'Basic', verbose: 'Verbose'}),
   busMirrorToConsole: Object.freeze({off: 'Off', on: 'On'}),
-
-  busHistorySize: Object.freeze({
-    100: '100 events',
-    250: '250 events',
-    500: '500 events'
-  })
+  busHistorySize: Object.freeze({100: '100 events', 250: '250 events', 500: '500 events'})
 });
 
 const PRESET_LABELS = Object.freeze({
@@ -817,6 +679,43 @@ const PRESET_DESCRIPTIONS = Object.freeze({
 });
 
 const UX_RECIPES = Object.freeze({
+  draft: Object.freeze({
+    label: 'Draft comfortably',
+    settings: Object.freeze({
+      authorMode: 'draft',
+      currentDevelopmentalClimate: 'orient',
+      typesettingMode: 'editorial',
+      semanticDensity: 'minimal',
+      wonderMemory: 'nearby',
+      showSemanticMetadata: 'off',
+      showSpecPills: 'off',
+      consoleDisplay: 'hidden'
+    })
+  }),
+  revise: Object.freeze({
+    label: 'Revise with annotations',
+    settings: Object.freeze({
+      authorMode: 'revise',
+      currentDevelopmentalClimate: 'rehearse',
+      typesettingMode: 'editorial',
+      semanticDensity: 'normal',
+      operatorHighlighting: 'on',
+      relationalVisualization: 'on',
+      wonderMemory: 'nearby'
+    })
+  }),
+  publish: Object.freeze({
+    label: 'Prepare for readers',
+    settings: Object.freeze({
+      authorMode: 'publish',
+      currentDevelopmentalClimate: 'offer',
+      typesettingMode: 'editorial',
+      semanticDensity: 'normal',
+      enhancementLevel: 'balanced',
+      showSemanticMetadata: 'on',
+      developmentalIndicators: 'on'
+    })
+  }),
   calm: Object.freeze({
     label: 'Calm the site',
     settings: Object.freeze({
@@ -832,7 +731,6 @@ const UX_RECIPES = Object.freeze({
       infospaceComplexity: 'simple'
     })
   }),
-
   readable: Object.freeze({
     label: 'Make reading easier',
     settings: Object.freeze({
@@ -843,7 +741,6 @@ const UX_RECIPES = Object.freeze({
       typesettingMode: 'editorial'
     })
   }),
-
   accessible: Object.freeze({
     label: 'Reduce friction',
     settings: Object.freeze({
@@ -858,7 +755,6 @@ const UX_RECIPES = Object.freeze({
       grainIntensity: 'none'
     })
   }),
-
   expressive: Object.freeze({
     label: 'Make it expressive',
     settings: Object.freeze({
@@ -873,7 +769,6 @@ const UX_RECIPES = Object.freeze({
       operatorHighlighting: 'on'
     })
   }),
-
   focus: Object.freeze({
     label: 'Focus the current page',
     settings: Object.freeze({
@@ -886,7 +781,6 @@ const UX_RECIPES = Object.freeze({
       infospaceComplexity: 'simple'
     })
   }),
-
   developer: Object.freeze({
     label: 'Inspect the system',
     settings: Object.freeze({
@@ -900,15 +794,11 @@ const UX_RECIPES = Object.freeze({
       busHistorySize: '500'
     })
   }),
-
   default: Object.freeze({
     label: 'Restore authored default',
     settings: Object.freeze(DEFAULT_SITE_SETTINGS)
   })
 });
-/* ==========================================================================
-   2. Storage & normalization
-   ========================================================================== */
 
 const storage = {
   get() {
@@ -935,36 +825,25 @@ const storage = {
   }
 };
 
+const isKnownSetting = (name) => Object.prototype.hasOwnProperty.call(DEFAULT_SITE_SETTINGS, name);
+
 const normalizeSiteSettings = (value = {}) => {
   const settings = {...DEFAULT_SITE_SETTINGS};
 
   Object.keys(settings).forEach((key) => {
     const candidate = value[key];
-    if (SETTING_OPTIONS[key]?.has(candidate)) {
-      settings[key] = candidate;
-    }
+    if (SETTING_OPTIONS[key]?.has(candidate)) settings[key] = candidate;
   });
+
+  settings.authorMode = normalizeAuthorMode(settings.authorMode);
+  settings.currentDevelopmentalClimate = normalizeDevelopmentalClimate(settings.currentDevelopmentalClimate);
 
   return settings;
 };
 
-/* ==========================================================================
-   3. Validation helpers
-   --------------------------------------------------------------------------
-   These helpers are intentionally public and lightweight so partial settings
-   components on other pages can validate inputs before saving.
-   ========================================================================== */
-
-const isKnownSetting = (name) => Object.prototype.hasOwnProperty.call(DEFAULT_SITE_SETTINGS, name);
-
 const validateSetting = (name, value) => {
   if (!isKnownSetting(name)) {
-    return {
-      valid: false,
-      name,
-      value,
-      reason: 'unknown-setting'
-    };
+    return {valid: false, name, value, reason: 'unknown-setting', allowedValues: []};
   }
 
   const valid = SETTING_OPTIONS[name]?.has(value) || false;
@@ -990,33 +869,17 @@ const validatePartialSettings = (partial = {}) => {
 const sanitizePartialSettings = (partial = {}) => {
   const next = {};
   Object.entries(partial).forEach(([name, value]) => {
-    if (validateSetting(name, value).valid) {
-      next[name] = value;
-    }
+    if (validateSetting(name, value).valid) next[name] = value;
   });
   return next;
 };
 
 const listDeviations = (settings = normalizeSiteSettings(storage.get())) => {
   const normalized = normalizeSiteSettings(settings);
-  const deviations = [];
-
-  Object.keys(DEFAULT_SITE_SETTINGS).forEach((key) => {
-    if (normalized[key] !== DEFAULT_SITE_SETTINGS[key]) {
-      deviations.push({
-        name: key,
-        default: DEFAULT_SITE_SETTINGS[key],
-        current: normalized[key]
-      });
-    }
-  });
-
-  return deviations;
+  return Object.keys(DEFAULT_SITE_SETTINGS)
+    .filter((key) => normalized[key] !== DEFAULT_SITE_SETTINGS[key])
+    .map((key) => ({name: key, default: DEFAULT_SITE_SETTINGS[key], current: normalized[key]}));
 };
-
-/* ==========================================================================
-   4. Pure helpers
-   ========================================================================== */
 
 const clampNumber = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -1039,35 +902,64 @@ const getMotionScale = (settings) => {
   return intensity * throttle;
 };
 
-const getDuration = (settings, milliseconds) => (
-  `${Math.max(1, Math.round(milliseconds * getMotionScale(settings)))}ms`
-);
-
-const applyImageLoadingPreference = (settings, root = document) => {
-  root.querySelectorAll('img').forEach((image) => {
-    if (!image.dataset.spwLoadingOriginal) {
-      image.dataset.spwLoadingOriginal = image.getAttribute('loading') || '';
-    }
-
-    const original = image.dataset.spwLoadingOriginal;
-
-    if (settings.imageLazyLoading === 'off' && original === 'lazy') {
-      image.setAttribute('loading', 'eager');
-    } else if (original) {
-      image.setAttribute('loading', original);
-    } else {
-      image.removeAttribute('loading');
-    }
-  });
-};
+const getDuration = (settings, milliseconds) => `${Math.max(1, Math.round(milliseconds * getMotionScale(settings)))}ms`;
 
 const getDevelopmentalClimateDefinition = (settings) => (
-  DEVELOPMENTAL_CLIMATES[settings.currentDevelopmentalClimate] || DEVELOPMENTAL_CLIMATES.orient
+  DEVELOPMENTAL_CLIMATES[normalizeDevelopmentalClimate(settings.currentDevelopmentalClimate)] || DEVELOPMENTAL_CLIMATES.orient
+);
+
+const getAuthorWorkflowDefinition = (settings) => (
+  AUTHOR_WORKFLOW_DEFINITIONS[normalizeAuthorMode(settings.authorMode)] || AUTHOR_WORKFLOW_DEFINITIONS.draft
+);
+
+const getAuthorWorkflowTokens = (settings) => (
+  AUTHOR_WORKFLOW_TOKEN_VALUE[normalizeAuthorMode(settings.authorMode)] || AUTHOR_WORKFLOW_TOKEN_VALUE.draft
 );
 
 const getWonderMemoryProfile = (settings) => (
   WONDER_MEMORY_PROFILE[settings.wonderMemory] || WONDER_MEMORY_PROFILE.nearby
 );
+
+const humanizeSettingName = (name = '') => String(name)
+  .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+  .replace(/[_-]+/g, ' ')
+  .trim()
+  .toLowerCase();
+
+const describeSettingValue = (name, value) => SETTING_VALUE_LABELS[name]?.[value] || String(value ?? '—');
+
+const describeSettingsPatch = (partial = {}) => Object.entries(partial)
+  .filter(([name]) => isKnownSetting(name))
+  .map(([name, value]) => `${humanizeSettingName(name)} → ${describeSettingValue(name, value)}`)
+  .join(' · ');
+
+const getPresetSettings = (name) => {
+  const preset = PRESETS[name];
+  if (!preset) return null;
+  return normalizeSiteSettings({...DEFAULT_SITE_SETTINGS, ...preset});
+};
+
+const presetMatchesSettings = (presetName, settings = getSiteSettings()) => {
+  const preset = getPresetSettings(presetName);
+  if (!preset) return false;
+  const normalized = normalizeSiteSettings(settings);
+  return Object.keys(DEFAULT_SITE_SETTINGS).every((key) => normalized[key] === preset[key]);
+};
+
+const presetIsSubsetOfSettings = (presetName, settings = getSiteSettings()) => {
+  const preset = PRESETS[presetName];
+  if (!preset) return false;
+  const normalized = normalizeSiteSettings(settings);
+  return Object.entries(preset).every(([key, value]) => normalized[key] === value);
+};
+
+const findActivePreset = (settings = getSiteSettings()) => (
+  Object.keys(PRESETS).find((presetName) => presetMatchesSettings(presetName, settings))
+  || Object.keys(PRESETS).find((presetName) => presetIsSubsetOfSettings(presetName, settings))
+  || null
+);
+
+const getUxRecipe = (name) => UX_RECIPES[name] || null;
 
 const applyPaletteResonanceSwatches = (root, settings) => {
   const swatches = getPaletteResonanceSwatches(settings.paletteResonance);
@@ -1075,43 +967,45 @@ const applyPaletteResonanceSwatches = (root, settings) => {
   for (let index = 0; index < 4; index += 1) {
     const value = swatches[index];
     const name = `--spw-palette-probe-${index + 1}`;
-
-    if (value) {
-      root.style.setProperty(name, value);
-    } else {
-      root.style.removeProperty(name);
-    }
+    if (value) root.style.setProperty(name, value);
+    else root.style.removeProperty(name);
   }
+};
+
+const applyImageLoadingPreference = (settings, root = document) => {
+  root.querySelectorAll?.('img').forEach((image) => {
+    if (!image.dataset.spwLoadingOriginal) {
+      image.dataset.spwLoadingOriginal = image.getAttribute('loading') || '';
+    }
+
+    const original = image.dataset.spwLoadingOriginal;
+
+    if (settings.imageLazyLoading === 'off' && original === 'lazy') image.setAttribute('loading', 'eager');
+    else if (original) image.setAttribute('loading', original);
+    else image.removeAttribute('loading');
+  });
 };
 
 const setDatasetEntries = (root, entries = {}) => {
   if (!(root instanceof HTMLElement)) return;
-
   Object.entries(entries).forEach(([key, value]) => {
-    if (value === undefined || value === null) {
-      delete root.dataset[key];
-      return;
-    }
-
-    root.dataset[key] = String(value);
+    if (value === undefined || value === null) delete root.dataset[key];
+    else root.dataset[key] = String(value);
   });
 };
 
 const setStyleProperties = (root, entries = {}) => {
   if (!(root instanceof HTMLElement)) return;
-
   Object.entries(entries).forEach(([name, value]) => {
-    if (value === undefined || value === null || value === '') {
-      root.style.removeProperty(name);
-      return;
-    }
-
-    root.style.setProperty(name, String(value));
+    if (value === undefined || value === null || value === '') root.style.removeProperty(name);
+    else root.style.setProperty(name, String(value));
   });
 };
 
 const deriveArchitecturalModifiers = (settings) => {
   const climate = getDevelopmentalClimateDefinition(settings);
+  const authorWorkflow = getAuthorWorkflowDefinition(settings);
+  const authorTokens = getAuthorWorkflowTokens(settings);
   const motionScale = getMotionScale(settings);
   const semanticDensityFactor = SEMANTIC_DENSITY_FACTOR[settings.semanticDensity] || 1;
   const enhancementFactor = ENHANCEMENT_FACTOR[settings.enhancementLevel] || 1;
@@ -1125,13 +1019,9 @@ const deriveArchitecturalModifiers = (settings) => {
   const contourProfile = CONTOUR_PROFILE[settings.contourProfile] || CONTOUR_PROFILE.balanced;
   const strokeProfile = STROKE_PROFILE[settings.strokeProfile] || STROKE_PROFILE.structural;
   const fieldResonance = FIELD_RESONANCE_PROFILE[settings.fieldResonance] || FIELD_RESONANCE_PROFILE.field;
-  const resolvedMaterialBlur = `${clampNumber(
-    contourProfile.materialBlurPx * fieldResonance.materialBlurScale,
-    2,
-    16
-  )}px`;
+  const materialBlur = `${clampNumber(contourProfile.materialBlurPx * fieldResonance.materialBlurScale, 2, 16)}px`;
 
-  const ecology = {
+  const ecology = Object.freeze({
     clarity: clampNumber(climate.clarity * enhancementFactor, 0, 1),
     pressure: clampNumber(climate.pressure * infospaceFactor, 0, 1),
     atmosphere: clampNumber(climate.atmosphere * enhancementFactor, 0, 1),
@@ -1141,16 +1031,32 @@ const deriveArchitecturalModifiers = (settings) => {
     selectionBias: clampNumber(climate.selectionBias * semanticDensityFactor, 0, 1),
     permeabilityBase: clampNumber(
       0.18
-      + ((settings.enhancementLevel === 'rich') ? 0.16 : settings.enhancementLevel === 'balanced' ? 0.08 : 0)
+      + (settings.enhancementLevel === 'rich' ? 0.16 : settings.enhancementLevel === 'balanced' ? 0.08 : 0)
       + (cognitiveFactor * 0.18)
       + (metadataFactor * 0.12)
       + (settings.implementationMutations === 'on' ? 0.18 : 0),
       0,
       1
     )
-  };
+  });
 
   return Object.freeze({
+    author: Object.freeze({
+      mode: normalizeAuthorMode(settings.authorMode),
+      label: authorWorkflow.label,
+      intent: authorWorkflow.intent,
+      description: authorWorkflow.description,
+      emphasis: authorWorkflow.emphasis || [],
+      annotationStrength: authorTokens.annotationStrength,
+      marginPresence: authorTokens.marginPresence,
+      threadDensity: authorTokens.threadDensity,
+      draftPrivacy: authorTokens.draftPrivacy,
+      publicationReadiness: authorTokens.publicationReadiness
+    }),
+    climate: Object.freeze({
+      ...climate,
+      authorLabel: climate.authorLabel || climate.label
+    }),
     typography: Object.freeze({
       rootFontSize: getRootFontSize(settings),
       lineHeight: LINE_SPACING_VALUE[settings.lineSpacing] || LINE_SPACING_VALUE.normal,
@@ -1164,11 +1070,8 @@ const deriveArchitecturalModifiers = (settings) => {
       base: getDuration(settings, 200),
       slow: getDuration(settings, 400)
     }),
-    grain: Object.freeze({
-      opacity: getGrainOpacity(settings)
-    }),
-    climate,
-    ecology: Object.freeze(ecology),
+    grain: Object.freeze({opacity: getGrainOpacity(settings)}),
+    ecology,
     semantic: Object.freeze({
       densityFactor: semanticDensityFactor,
       enhancementFactor,
@@ -1185,7 +1088,7 @@ const deriveArchitecturalModifiers = (settings) => {
       shapeSurface: contourProfile.shapeSurface,
       shapeFloating: contourProfile.shapeFloating,
       edgeSoftness: contourProfile.edgeSoftness,
-      materialBlur: resolvedMaterialBlur
+      materialBlur
     }),
     stroke: Object.freeze({
       lineMid: strokeProfile.lineMid,
@@ -1214,15 +1117,13 @@ const deriveArchitecturalModifiers = (settings) => {
   });
 };
 
-/* ==========================================================================
-   5. Core manager
-   ========================================================================== */
-
 class SiteSettingsManager {
   constructor() {
     this.root = document.documentElement;
+    this.body = document.body;
     this._initialized = false;
     this._pwaInitialized = false;
+    this._settingsCategoryRouting = null;
   }
 
   get() {
@@ -1240,7 +1141,10 @@ class SiteSettingsManager {
     const deviations = listDeviations(normalized);
     const deviationNames = deviations.map((entry) => entry.name);
 
-    setDatasetEntries(this.root, {
+    const datasetEntries = {
+      authorMode: modifiers.author.mode,
+      spwAuthorMode: modifiers.author.mode,
+      spwAuthorIntent: modifiers.author.intent,
       spwNavigator: normalized.navigatorDisplay,
       spwConsole: normalized.consoleDisplay,
       spwViewportActivation: normalized.viewportActivation,
@@ -1286,15 +1190,25 @@ class SiteSettingsManager {
       spwDepthIndicators: normalized.depthIndicators,
       spwDevelopmentalClimate: normalized.currentDevelopmentalClimate,
       spwDevelopmentalLabel: climate.label,
+      spwDevelopmentalAuthorLabel: climate.authorLabel,
       spwLearningMode: climate.learningMode,
+      spwSpiritPhase: normalized.currentDevelopmentalClimate,
       spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
       spwGrainIntensity: normalized.grainIntensity,
       spwDeviationCount: String(deviations.length),
       spwDeviations: deviationNames.join(' ') || null,
       spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
-    });
+    };
+
+    setDatasetEntries(this.root, datasetEntries);
+    if (this.body) setDatasetEntries(this.body, datasetEntries);
 
     setStyleProperties(this.root, {
+      '--author-annotation-strength': modifiers.author.annotationStrength,
+      '--author-margin-presence': modifiers.author.marginPresence,
+      '--author-thread-density': modifiers.author.threadDensity,
+      '--author-draft-privacy': modifiers.author.draftPrivacy,
+      '--author-publication-readiness': modifiers.author.publicationReadiness,
       '--font-size-scale': `${normalized.fontSizeScale}%`,
       '--site-root-font-size': modifiers.typography.rootFontSize,
       '--site-line-height': modifiers.typography.lineHeight,
@@ -1336,10 +1250,14 @@ class SiteSettingsManager {
       '--spw-region-field-intensity': modifiers.field.regionFieldIntensity,
       '--spw-wonder-memory-strength': modifiers.wonder.strength,
       '--spw-wonder-memory-ttl-ms': modifiers.wonder.ttlMs,
-      '--spw-wonder-memory-reach': modifiers.wonder.reach
-    });
-    applyPaletteResonanceSwatches(this.root, normalized);
-    setStyleProperties(this.root, {
+      '--spw-wonder-memory-reach': modifiers.wonder.reach,
+      '--climate-clarity-bias': modifiers.ecology.clarity,
+      '--climate-pressure-bias': modifiers.ecology.pressure,
+      '--climate-atmosphere-bias': modifiers.ecology.atmosphere,
+      '--climate-memory-bias': modifiers.ecology.memory,
+      '--climate-resonance-bias': modifiers.ecology.resonance,
+      '--climate-charge-bias': modifiers.ecology.chargeBias,
+      '--climate-selection-bias': modifiers.ecology.selectionBias,
       '--spw-developmental-clarity': modifiers.ecology.clarity,
       '--spw-developmental-pressure': modifiers.ecology.pressure,
       '--spw-developmental-atmosphere': modifiers.ecology.atmosphere,
@@ -1351,6 +1269,7 @@ class SiteSettingsManager {
       '--spw-deviation-count': deviations.length
     });
 
+    applyPaletteResonanceSwatches(this.root, normalized);
     applyImageLoadingPreference(normalized);
 
     return normalized;
@@ -1366,16 +1285,24 @@ class SiteSettingsManager {
     storage.set(merged);
     const applied = this.apply(merged);
     const deviations = listDeviations(applied);
+
     bus.emit('settings:changed', applied);
+    bus.emit('author:mode', {mode: applied.authorMode, ...getAuthorWorkflowDefinition(applied)});
+    bus.emit('development:shifted', {phase: applied.currentDevelopmentalClimate, ...getDevelopmentalClimateDefinition(applied)});
     bus.emit('settings:deviations-changed', {deviations, count: deviations.length});
+
     return applied;
   }
 
   reset() {
     storage.clear();
     const applied = this.apply(DEFAULT_SITE_SETTINGS);
+
     bus.emit('settings:changed', applied);
+    bus.emit('author:mode', {mode: applied.authorMode, ...getAuthorWorkflowDefinition(applied)});
+    bus.emit('development:shifted', {phase: applied.currentDevelopmentalClimate, ...getDevelopmentalClimateDefinition(applied)});
     bus.emit('settings:deviations-changed', {deviations: [], count: 0});
+
     return applied;
   }
 
@@ -1388,22 +1315,22 @@ class SiteSettingsManager {
     if (!preset) return null;
 
     const merged = normalizeSiteSettings({...DEFAULT_SITE_SETTINGS, ...preset});
-    const climate = DEVELOPMENTAL_CLIMATES[merged.currentDevelopmentalClimate];
+    const climate = getDevelopmentalClimateDefinition(merged);
+    const author = getAuthorWorkflowDefinition(merged);
 
     return {
       name,
       settings: merged,
+      authorMode: merged.authorMode,
+      authorIntent: author.intent,
       climate: climate.label,
+      climateAuthorLabel: climate.authorLabel || climate.label,
       learningMode: climate.learningMode
     };
   }
 }
 
 const manager = new SiteSettingsManager();
-
-/* ==========================================================================
-   6. Public API helpers
-   ========================================================================== */
 
 const getSiteSettings = () => manager.get();
 const getSiteSettingModifiers = (settings) => manager.getModifiers(settings);
@@ -1415,16 +1342,8 @@ const applySiteSettings = (settings) => {
 const saveSiteSettings = (nextSettings) => manager.save(nextSettings);
 const resetSiteSettings = () => manager.reset();
 const shouldUseViewportActivation = () => manager.shouldUseViewportActivation();
-
-const emitSettingsChange = (settings) => {
-  bus.emit('settings:changed', settings);
-};
-
-const getSettingValue = (name, settings = getSiteSettings()) => {
-  if (!isKnownSetting(name)) return undefined;
-  return normalizeSiteSettings(settings)[name];
-};
-
+const emitSettingsChange = (settings) => bus.emit('settings:changed', settings);
+const getSettingValue = (name, settings = getSiteSettings()) => (isKnownSetting(name) ? normalizeSiteSettings(settings)[name] : undefined);
 const getSiteSettingDeviations = (settings) => listDeviations(settings ?? getSiteSettings());
 
 const describeDeviation = ({name, default: defaultValue, current}) => ({
@@ -1440,12 +1359,6 @@ const resetSingleSetting = (name) => {
   if (!isKnownSetting(name)) return null;
   return saveSiteSettings({[name]: DEFAULT_SITE_SETTINGS[name]});
 };
-
-/* ==========================================================================
-   7. Form / field / readout utilities
-   --------------------------------------------------------------------------
-   These are intentionally reusable outside the dedicated settings page.
-   ========================================================================== */
 
 const collectSettingsFromScope = (root) => {
   const next = {};
@@ -1498,83 +1411,9 @@ const writeSettingsToScope = (root, settings) => {
   syncSettingsReadouts(root, normalized);
 };
 
-const humanizeSettingName = (name = '') => (
-  String(name)
-    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-    .replace(/[_-]+/g, ' ')
-    .trim()
-    .toLowerCase()
-);
-
-const describeSettingValue = (name, value) => (
-  SETTING_VALUE_LABELS[name]?.[value]
-  || String(value ?? '—')
-);
-
-const describeSettingsPatch = (partial = {}) => (
-  Object.entries(partial)
-    .filter(([name]) => isKnownSetting(name))
-    .map(([name, value]) => `${humanizeSettingName(name)} → ${describeSettingValue(name, value)}`)
-    .join(' · ')
-);
-
-const getPresetSettings = (name) => {
-  const preset = PRESETS[name];
-  if (!preset) return null;
-  return normalizeSiteSettings({...DEFAULT_SITE_SETTINGS, ...preset});
-};
-
-const presetMatchesSettings = (presetName, settings = getSiteSettings()) => {
-  const preset = getPresetSettings(presetName);
-  if (!preset) return false;
-
-  const normalized = normalizeSiteSettings(settings);
-  return Object.keys(DEFAULT_SITE_SETTINGS).every((key) => normalized[key] === preset[key]);
-};
-
-const presetIsSubsetOfSettings = (presetName, settings = getSiteSettings()) => {
-  const preset = PRESETS[presetName];
-  if (!preset) return false;
-
-  const normalized = normalizeSiteSettings(settings);
-  return Object.entries(preset).every(([key, value]) => normalized[key] === value);
-};
-
-const findActivePreset = (settings = getSiteSettings()) => (
-  Object.keys(PRESETS).find((presetName) => presetMatchesSettings(presetName, settings))
-  || Object.keys(PRESETS).find((presetName) => presetIsSubsetOfSettings(presetName, settings))
-  || null
-);
-
-const getUxRecipe = (name) => UX_RECIPES[name] || null;
-
-const applyUxRecipe = (recipeName, options = {}) => {
-  const {
-    statusNode = null,
-    onSaved = null
-  } = options;
-
-  const recipe = getUxRecipe(recipeName);
-  if (!recipe) {
-    writeSettingsStatus(statusNode, 'Unknown settings recipe.', 'info');
-    return null;
-  }
-
-  const saved = recipeName === 'default'
-    ? resetSiteSettings()
-    : saveSiteSettings(recipe.settings);
-
-  syncSettingsUx(document, saved);
-  writeSettingsStatus(statusNode, `${recipe.label}.`, 'success');
-  onSaved?.(saved, recipeName);
-  return saved;
-};
-
 const setPressedState = (node, isActive) => {
   if (!(node instanceof HTMLElement)) return;
-
   node.dataset.siteSettingActive = isActive ? 'true' : 'false';
-
   if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
     node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   }
@@ -1582,146 +1421,28 @@ const setPressedState = (node, isActive) => {
 
 const primeButtonLikeControl = (node) => {
   if (!(node instanceof HTMLElement)) return;
-
-  if (!(node instanceof HTMLButtonElement)) {
-    node.setAttribute('role', 'button');
-  }
-
-  if (
-    !(node instanceof HTMLButtonElement)
-    && !(node instanceof HTMLAnchorElement)
-    && !node.hasAttribute('tabindex')
-  ) {
+  if (!(node instanceof HTMLButtonElement)) node.setAttribute('role', 'button');
+  if (!(node instanceof HTMLButtonElement) && !(node instanceof HTMLAnchorElement) && !node.hasAttribute('tabindex')) {
     node.setAttribute('tabindex', '0');
   }
-};
-
-const syncPresetControls = (root = document, settings = getSiteSettings()) => {
-  const activePreset = findActivePreset(settings);
-
-  root.querySelectorAll?.('[data-preset]').forEach((node) => {
-    if (!(node instanceof HTMLElement)) return;
-
-    const presetName = node.getAttribute('data-preset');
-    const exact = presetName && presetMatchesSettings(presetName, settings);
-    const subset = presetName && presetIsSubsetOfSettings(presetName, settings);
-
-    primeButtonLikeControl(node);
-    setPressedState(node, Boolean(exact || subset));
-
-    node.dataset.presetActive = exact ? 'exact' : subset ? 'partial' : 'false';
-    node.dataset.siteSettingActive = (exact || subset) ? 'true' : 'false';
-
-    if (presetName) {
-      node.setAttribute(
-        'aria-label',
-        `${PRESET_LABELS[presetName] || presetName} preset. ${PRESET_DESCRIPTIONS[presetName] || ''}`.trim()
-      );
-    }
-  });
-
-  root.querySelectorAll?.('[data-site-active-preset]').forEach((node) => {
-    node.textContent = activePreset ? (PRESET_LABELS[activePreset] || activePreset) : 'Custom';
-    node.dataset.presetState = activePreset || 'custom';
-  });
-};
-
-const syncUxRecipeControls = (root = document) => {
-  root.querySelectorAll?.('[data-site-settings-recipe]').forEach((node) => {
-    if (!(node instanceof HTMLElement)) return;
-
-    const recipeName = node.getAttribute('data-site-settings-recipe');
-    const recipe = getUxRecipe(recipeName);
-
-    primeButtonLikeControl(node);
-
-    if (recipe) {
-      node.setAttribute('aria-label', recipe.label);
-    }
-  });
-};
-
-const syncSettingsFieldStates = (root = document, settings = getSiteSettings()) => {
-  const normalized = normalizeSiteSettings(settings);
-
-  root.querySelectorAll?.('[name]').forEach((field) => {
-    if (!(field instanceof HTMLElement)) return;
-
-    const name = field.getAttribute('name');
-    if (!name || !isKnownSetting(name)) return;
-
-    const isDefault = normalized[name] === DEFAULT_SITE_SETTINGS[name];
-    field.dataset.siteSettingDefault = isDefault ? 'true' : 'false';
-  });
-
-  root.querySelectorAll?.('.settings-fieldset, fieldset, .settings-category').forEach((container) => {
-    if (!(container instanceof HTMLElement)) return;
-
-    const relevantNames = new Set(
-      [...container.querySelectorAll('[name]')]
-        .map((field) => field.getAttribute('name'))
-        .filter((name) => name && isKnownSetting(name))
-    );
-
-    if (!relevantNames.size) return;
-
-    const deviationCount = [...relevantNames]
-      .filter((name) => normalized[name] !== DEFAULT_SITE_SETTINGS[name])
-      .length;
-
-    container.dataset.siteSettingDeviationCount = String(deviationCount);
-    container.dataset.siteSettingDeviationState = deviationCount > 0 ? 'deviated' : 'default';
-  });
-};
-
-const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
-  syncSettingsReadouts(root, settings);
-  syncDeviationReadouts(root, settings);
-  syncPresetControls(root, settings);
-  syncUxRecipeControls(root);
-  syncSettingsFieldStates(root, settings);
 };
 
 const parseSettingTrigger = (value = '') => {
   const [name = '', option = ''] = String(value).split(':');
   const normalizedName = name.trim();
   const normalizedOption = option.trim();
-
   if (!normalizedName || !normalizedOption) return null;
-
-  return {
-    name: normalizedName,
-    value: normalizedOption
-  };
+  return {name: normalizedName, value: normalizedOption};
 };
 
 const STANDALONE_SETTINGS_HINT = 'Choose a mode to update this preference. The active option stays highlighted.';
 
-const primeSettingTriggerControl = (node) => {
-  if (!(node instanceof HTMLElement)) return;
-
-  if (!(node instanceof HTMLButtonElement)) {
-    node.setAttribute('role', 'button');
-  }
-
-  if (
-    !(node instanceof HTMLButtonElement)
-    && !(node instanceof HTMLAnchorElement)
-    && !node.hasAttribute('tabindex')
-  ) {
-    node.setAttribute('tabindex', '0');
-  }
-};
+const primeSettingTriggerControl = primeButtonLikeControl;
 
 const setSettingTriggerState = (node, isActive) => {
   if (!(node instanceof HTMLElement)) return;
-
   node.dataset.siteSettingActive = isActive ? 'true' : 'false';
-
-  if (node instanceof HTMLAnchorElement) {
-    node.removeAttribute('aria-current');
-  }
-
+  if (node instanceof HTMLAnchorElement) node.removeAttribute('aria-current');
   if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
     node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   }
@@ -1730,11 +1451,9 @@ const setSettingTriggerState = (node, isActive) => {
 const resolveSettingTriggerControl = (source, root = document) => {
   const origin = source instanceof Event ? source.target : source;
   if (!(origin instanceof Element)) return null;
-
   const control = origin.closest('[data-site-setting-set]');
   if (!(control instanceof HTMLElement)) return null;
   if (root instanceof HTMLElement && !root.contains(control)) return null;
-
   return control;
 };
 
@@ -1743,7 +1462,6 @@ const activateSettingTriggerFromKeyboard = (event, control) => {
   if (event.defaultPrevented || (event.key !== 'Enter' && event.key !== ' ')) return false;
   if (control instanceof HTMLButtonElement) return false;
   if (control.getAttribute('role') !== 'button') return false;
-
   event.preventDefault();
   control.click();
   return true;
@@ -1751,23 +1469,15 @@ const activateSettingTriggerFromKeyboard = (event, control) => {
 
 const writeSettingsStatus = (statusNode, message = '', type = 'info') => {
   if (!(statusNode instanceof HTMLElement)) return;
-
   statusNode.textContent = message;
   statusNode.dataset.status = type;
   statusNode.dataset.updatedAt = String(Date.now());
-
-  if (!statusNode.hasAttribute('role')) {
-    statusNode.setAttribute('role', 'status');
-  }
-
-  if (!statusNode.hasAttribute('aria-live')) {
-    statusNode.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
-  }
+  if (!statusNode.hasAttribute('role')) statusNode.setAttribute('role', 'status');
+  if (!statusNode.hasAttribute('aria-live')) statusNode.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
 };
 
 const resolveStandaloneStatusNode = (node) => {
   if (!(node instanceof HTMLElement)) return null;
-
   const containers = [
     node.closest('[data-site-settings-panel]'),
     node.closest('.vibe-widget'),
@@ -1784,10 +1494,7 @@ const resolveStandaloneStatusNode = (node) => {
 };
 
 const applySettingTrigger = (trigger, options = {}) => {
-  const {
-    statusNode = null,
-    onSaved = null
-  } = options;
+  const {statusNode = null, onSaved = null} = options;
 
   if (!trigger || !isKnownSetting(trigger.name)) {
     writeSettingsStatus(statusNode, 'Unknown setting control.', 'info');
@@ -1796,37 +1503,37 @@ const applySettingTrigger = (trigger, options = {}) => {
 
   const validation = validateSetting(trigger.name, trigger.value);
   if (!validation.valid) {
-    writeSettingsStatus(
-      statusNode,
-      `Invalid ${humanizeSettingName(trigger.name)} option.`,
-      'info'
-    );
+    writeSettingsStatus(statusNode, `Invalid ${humanizeSettingName(trigger.name)} option.`, 'info');
     return null;
   }
 
   const current = getSiteSettings();
-
   if (current[trigger.name] === trigger.value) {
-    writeSettingsStatus(
-      statusNode,
-      `${describeSettingValue(trigger.name, trigger.value)} is already active.`,
-      'info'
-    );
+    writeSettingsStatus(statusNode, `${describeSettingValue(trigger.name, trigger.value)} is already active.`, 'info');
     syncSettingsUx(document, current);
     return current;
   }
 
   const saved = saveSiteSettings({[trigger.name]: trigger.value});
-
   syncSettingsUx(document, saved);
-
-  writeSettingsStatus(
-    statusNode,
-    `${humanizeSettingName(trigger.name)} → ${describeSettingValue(trigger.name, trigger.value)}.`,
-    'success'
-  );
-
+  writeSettingsStatus(statusNode, `${humanizeSettingName(trigger.name)} → ${describeSettingValue(trigger.name, trigger.value)}.`, 'success');
   onSaved?.(saved, trigger);
+  return saved;
+};
+
+const applyUxRecipe = (recipeName, options = {}) => {
+  const {statusNode = null, onSaved = null} = options;
+  const recipe = getUxRecipe(recipeName);
+
+  if (!recipe) {
+    writeSettingsStatus(statusNode, 'Unknown settings recipe.', 'info');
+    return null;
+  }
+
+  const saved = recipeName === 'default' ? resetSiteSettings() : saveSiteSettings(recipe.settings);
+  syncSettingsUx(document, saved);
+  writeSettingsStatus(statusNode, `${recipe.label}.`, 'success');
+  onSaved?.(saved, recipeName);
   return saved;
 };
 
@@ -1837,9 +1544,64 @@ const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
     const trigger = parseSettingTrigger(node.getAttribute('data-site-setting-set'));
     if (!trigger || !isKnownSetting(trigger.name)) return;
     primeSettingTriggerControl(node);
+    setSettingTriggerState(node, normalized[trigger.name] === trigger.value);
+  });
+};
 
-    const isActive = normalized[trigger.name] === trigger.value;
-    setSettingTriggerState(node, isActive);
+const syncPresetControls = (root = document, settings = getSiteSettings()) => {
+  const activePreset = findActivePreset(settings);
+
+  root.querySelectorAll?.('[data-preset]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    const presetName = node.getAttribute('data-preset');
+    const exact = presetName && presetMatchesSettings(presetName, settings);
+    const subset = presetName && presetIsSubsetOfSettings(presetName, settings);
+    primeButtonLikeControl(node);
+    setPressedState(node, Boolean(exact || subset));
+    node.dataset.presetActive = exact ? 'exact' : subset ? 'partial' : 'false';
+    node.dataset.siteSettingActive = (exact || subset) ? 'true' : 'false';
+    if (presetName) {
+      node.setAttribute('aria-label', `${PRESET_LABELS[presetName] || presetName} preset. ${PRESET_DESCRIPTIONS[presetName] || ''}`.trim());
+    }
+  });
+
+  root.querySelectorAll?.('[data-site-active-preset]').forEach((node) => {
+    node.textContent = activePreset ? (PRESET_LABELS[activePreset] || activePreset) : 'Custom';
+    node.dataset.presetState = activePreset || 'custom';
+  });
+};
+
+const syncUxRecipeControls = (root = document) => {
+  root.querySelectorAll?.('[data-site-settings-recipe]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    const recipeName = node.getAttribute('data-site-settings-recipe');
+    const recipe = getUxRecipe(recipeName);
+    primeButtonLikeControl(node);
+    if (recipe) node.setAttribute('aria-label', recipe.label);
+  });
+};
+
+const syncSettingsFieldStates = (root = document, settings = getSiteSettings()) => {
+  const normalized = normalizeSiteSettings(settings);
+
+  root.querySelectorAll?.('[name]').forEach((field) => {
+    if (!(field instanceof HTMLElement)) return;
+    const name = field.getAttribute('name');
+    if (!name || !isKnownSetting(name)) return;
+    field.dataset.siteSettingDefault = normalized[name] === DEFAULT_SITE_SETTINGS[name] ? 'true' : 'false';
+  });
+
+  root.querySelectorAll?.('.settings-fieldset, fieldset, .settings-category').forEach((container) => {
+    if (!(container instanceof HTMLElement)) return;
+    const relevantNames = new Set(
+      [...container.querySelectorAll('[name]')]
+        .map((field) => field.getAttribute('name'))
+        .filter((name) => name && isKnownSetting(name))
+    );
+    if (!relevantNames.size) return;
+    const deviationCount = [...relevantNames].filter((name) => normalized[name] !== DEFAULT_SITE_SETTINGS[name]).length;
+    container.dataset.siteSettingDeviationCount = String(deviationCount);
+    container.dataset.siteSettingDeviationState = deviationCount > 0 ? 'deviated' : 'default';
   });
 };
 
@@ -1861,6 +1623,14 @@ const syncSettingsReadouts = (root = document, settings = getSiteSettings()) => 
   syncSettingTriggers(root, normalized);
 };
 
+const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
+  syncSettingsReadouts(root, settings);
+  syncDeviationReadouts(root, settings);
+  syncPresetControls(root, settings);
+  syncUxRecipeControls(root);
+  syncSettingsFieldStates(root, settings);
+};
+
 const writeFieldError = (root, name, message = '') => {
   root.querySelectorAll?.(`[data-site-setting-errors="${CSS.escape(name)}"]`).forEach((node) => {
     node.textContent = message;
@@ -1875,35 +1645,25 @@ const clearFieldErrors = (root) => {
   });
 };
 
-/* ==========================================================================
-   8. Independent component binding
-   --------------------------------------------------------------------------
-   These helpers allow settings widgets to appear on any page independently.
-   ========================================================================== */
-
 const bindSettingsField = (field, options = {}) => {
-  if (!(field instanceof HTMLElement)) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
+  if (!(field instanceof HTMLElement)) return {
+    cleanup() {
+    }, refresh() {
+    }, save() {
+      return null;
+    }
+  };
 
-  const {
-    autosave = true,
-    root = field.closest('[data-site-settings-scope]') || document,
-    onSaved = null
-  } = options;
-
+  const {autosave = true, root = field.closest('[data-site-settings-scope]') || document, onSaved = null} = options;
   const name = field.getAttribute('name');
-  if (!name || !isKnownSetting(name)) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
+
+  if (!name || !isKnownSetting(name)) return {
+    cleanup() {
+    }, refresh() {
+    }, save() {
+      return null;
+    }
+  };
 
   const syncFromStore = (settings = getSiteSettings()) => {
     writeSettingsToScope(root, settings);
@@ -1912,15 +1672,9 @@ const bindSettingsField = (field, options = {}) => {
 
   const saveField = () => {
     let value;
-
-    if (field.type === 'checkbox') {
-      value = field.checked ? 'on' : 'off';
-    } else if (field.type === 'radio') {
-      const checked = root.querySelector(`[name="${CSS.escape(name)}"]:checked`);
-      value = checked?.value;
-    } else {
-      value = field.value;
-    }
+    if (field.type === 'checkbox') value = field.checked ? 'on' : 'off';
+    else if (field.type === 'radio') value = root.querySelector(`[name="${CSS.escape(name)}"]:checked`)?.value;
+    else value = field.value;
 
     const validation = validateSetting(name, value);
     if (!validation.valid) {
@@ -1943,16 +1697,12 @@ const bindSettingsField = (field, options = {}) => {
   };
 
   const handleChange = () => {
-    if (!autosave) return;
-    saveField();
+    if (autosave) saveField();
   };
 
   syncFromStore();
   field.addEventListener('change', handleChange);
-
-  const off = bus.on?.('settings:changed', (event) => {
-    syncFromStore(event.detail);
-  });
+  const off = bus.on?.('settings:changed', (event) => syncFromStore(event.detail));
 
   return {
     cleanup() {
@@ -1967,13 +1717,13 @@ const bindSettingsField = (field, options = {}) => {
 };
 
 const bindSettingsScope = (root, options = {}) => {
-  if (!(root instanceof HTMLElement)) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
+  if (!(root instanceof HTMLElement)) return {
+    cleanup() {
+    }, refresh() {
+    }, save() {
+      return null;
+    }
+  };
 
   const {
     autosave = true,
@@ -1985,11 +1735,7 @@ const bindSettingsScope = (root, options = {}) => {
   } = options;
 
   let debounceTimer = null;
-
-  const setStatus = (message, type = 'info') => {
-    writeSettingsStatus(statusNode, message, type);
-  };
-
+  const setStatus = (message, type = 'info') => writeSettingsStatus(statusNode, message, type);
   const syncFromStore = (settings = getSiteSettings()) => {
     writeSettingsToScope(root, settings);
     syncSettingsUx(root, settings);
@@ -1997,24 +1743,19 @@ const bindSettingsScope = (root, options = {}) => {
 
   const saveScope = () => {
     clearFieldErrors(root);
-
     const partial = collectSettingsFromScope(root);
     const validation = validatePartialSettings(partial);
 
     if (!validation.valid) {
-      validation.errors.forEach((error) => {
-        writeFieldError(root, error.name, `Allowed: ${error.allowedValues.join(', ')}`);
-      });
+      validation.errors.forEach((error) => writeFieldError(root, error.name, `Allowed: ${error.allowedValues.join(', ')}`));
       setStatus('Some settings are invalid.', 'info');
       return null;
     }
 
     const saved = saveSiteSettings(partial);
     syncFromStore(saved);
-
     const summary = describeSettingsPatch(partial);
     setStatus(summary ? `Saved locally · ${summary}.` : 'Saved locally.', 'success');
-
     onSaved?.(saved);
     return saved;
   };
@@ -2037,101 +1778,62 @@ const bindSettingsScope = (root, options = {}) => {
 
   const controls = root.querySelectorAll('input[name], select[name], textarea[name]');
   controls.forEach((field) => field.addEventListener('change', handleChange));
-
   root.addEventListener('keydown', handleTriggerKeydown);
-
-  if (root.matches('form')) {
-    root.addEventListener('submit', handleSubmit);
-  }
+  if (root.matches('form')) root.addEventListener('submit', handleSubmit);
 
   const presetHandlers = [];
-
   if (includePresets) {
     root.querySelectorAll('[data-preset]').forEach((button) => {
       const handler = () => {
         const presetName = button.dataset.preset;
-        const preset = PRESETS[presetName];
-        if (!preset) return;
-
+        if (!PRESETS[presetName]) return;
         const saved = saveSiteSettings(getPresetSettings(presetName));
         syncFromStore(saved);
-
         const description = manager.describePreset(presetName);
         const label = PRESET_LABELS[presetName] || presetName;
-
         setStatus(`Applied ${label} · ${description?.climate || 'climate'}.`, 'success');
-
         button.classList.add('is-applied');
         setTimeout(() => button.classList.remove('is-applied'), 1200);
-
         onPresetApplied?.(saved, presetName);
       };
-
       button.addEventListener('click', handler);
       presetHandlers.push(() => button.removeEventListener('click', handler));
     });
   }
 
   const triggerHandlers = [];
-
   root.querySelectorAll('[data-site-setting-set]').forEach((control) => {
     const handler = (event) => {
       const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
       if (!trigger) return;
-
-      if (control instanceof HTMLAnchorElement) {
-        event.preventDefault();
-      }
-
-      const saved = applySettingTrigger(trigger, {
-        statusNode,
-        onSaved
-      });
-
-      if (!saved) return;
-      syncFromStore(saved);
+      if (control instanceof HTMLAnchorElement) event.preventDefault();
+      const saved = applySettingTrigger(trigger, {statusNode, onSaved});
+      if (saved) syncFromStore(saved);
     };
-
     control.addEventListener('click', handler);
     triggerHandlers.push(() => control.removeEventListener('click', handler));
   });
 
   const recipeHandlers = [];
-
   root.querySelectorAll('[data-site-settings-recipe]').forEach((control) => {
     const handler = (event) => {
-      if (control instanceof HTMLAnchorElement) {
-        event.preventDefault();
-      }
-
-      const recipeName = control.getAttribute('data-site-settings-recipe');
-
-      const saved = applyUxRecipe(recipeName, {
-        statusNode,
-        onSaved
-      });
-
-      if (!saved) return;
-      syncFromStore(saved);
+      if (control instanceof HTMLAnchorElement) event.preventDefault();
+      const saved = applyUxRecipe(control.getAttribute('data-site-settings-recipe'), {statusNode, onSaved});
+      if (saved) syncFromStore(saved);
     };
-
     control.addEventListener('click', handler);
     recipeHandlers.push(() => control.removeEventListener('click', handler));
   });
 
   const resetButtons = [...root.querySelectorAll('[data-site-settings-reset]')];
-
   const handleReset = () => {
     const settings = resetSiteSettings();
     syncFromStore(settings);
     setStatus('Reset to authored defaults.', 'success');
   };
-
   resetButtons.forEach((button) => button.addEventListener('click', handleReset));
 
-  const off = bus.on?.('settings:changed', (event) => {
-    syncFromStore(event.detail);
-  });
+  const off = bus.on?.('settings:changed', (event) => syncFromStore(event.detail));
 
   syncFromStore();
 
@@ -2139,7 +1841,6 @@ const bindSettingsScope = (root, options = {}) => {
     const defaultMessage = root.querySelector('[data-site-setting-set], [data-site-settings-recipe]')
       ? STANDALONE_SETTINGS_HINT
       : 'Preferences are saved in this browser.';
-
     setStatus(defaultMessage, 'info');
   }
 
@@ -2147,40 +1848,23 @@ const bindSettingsScope = (root, options = {}) => {
     cleanup() {
       clearTimeout(debounceTimer);
       controls.forEach((field) => field.removeEventListener('change', handleChange));
-
       root.removeEventListener('keydown', handleTriggerKeydown);
-
-      if (root.matches('form')) {
-        root.removeEventListener('submit', handleSubmit);
-      }
-
+      if (root.matches('form')) root.removeEventListener('submit', handleSubmit);
       resetButtons.forEach((button) => button.removeEventListener('click', handleReset));
       presetHandlers.forEach((cleanup) => cleanup());
       triggerHandlers.forEach((cleanup) => cleanup());
       recipeHandlers.forEach((cleanup) => cleanup());
       off?.();
     },
-
     refresh() {
       syncFromStore();
     },
-
     save: saveScope
   };
 };
 
 const bindStandaloneSettingTriggers = (root = document, options = {}) => {
-  if (!(root instanceof HTMLElement) && root !== document) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
-
-  const {
-    onSaved = null
-  } = options;
+  const {onSaved = null} = options;
 
   const handleClick = (event) => {
     const control = event.target instanceof Element
@@ -2189,10 +1873,7 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
 
     if (!(control instanceof HTMLElement)) return;
     if (control.closest('[data-site-settings-form], [data-site-settings-scope]')) return;
-
-    if (control instanceof HTMLAnchorElement) {
-      event.preventDefault();
-    }
+    if (control instanceof HTMLAnchorElement) event.preventDefault();
 
     if (control.hasAttribute('data-site-settings-recipe')) {
       applyUxRecipe(control.getAttribute('data-site-settings-recipe'), {
@@ -2210,52 +1891,34 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
       onSaved
     });
   };
+
   const handleKeydown = (event) => {
     const control = resolveSettingTriggerControl(event, root);
-    if (!(control instanceof HTMLElement)) return;
-    if (control.closest('[data-site-settings-form], [data-site-settings-scope]')) return;
     activateSettingTriggerFromKeyboard(event, control);
   };
 
   root.addEventListener('click', handleClick);
   root.addEventListener('keydown', handleKeydown);
+  syncSettingsUx(root);
 
-  root.querySelectorAll('[data-site-settings-status]').forEach((statusNode) => {
-    if (!statusNode.textContent?.trim()) {
-      writeSettingsStatus(statusNode, STANDALONE_SETTINGS_HINT, 'info');
-    }
-  });
+  const off = bus.on?.('settings:changed', (event) => syncSettingsUx(root, event.detail));
 
   return {
     cleanup() {
       root.removeEventListener('click', handleClick);
       root.removeEventListener('keydown', handleKeydown);
+      off?.();
     },
     refresh() {
-      syncSettingsReadouts(document);
+      syncSettingsUx(root);
     }
   };
 };
 
 const bindSettingsReadouts = (root = document) => {
-  if (!(root instanceof HTMLElement) && root !== document) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
-
-  const sync = (settings = getSiteSettings()) => {
-    syncSettingsUx(root, settings);
-  };
-
+  const sync = (settings = getSiteSettings()) => syncSettingsUx(root, settings);
   sync();
-
-  const off = bus.on?.('settings:changed', (event) => {
-    sync(event.detail);
-  });
-
+  const off = bus.on?.('settings:changed', (event) => sync(event.detail));
   return {
     cleanup() {
       off?.();
@@ -2268,42 +1931,38 @@ const bindSettingsReadouts = (root = document) => {
 
 const syncDeviationReadouts = (root = document, settings = getSiteSettings()) => {
   const deviations = listDeviations(settings);
-  const described = deviations.map(describeDeviation);
 
   root.querySelectorAll?.('[data-site-deviation-count]').forEach((node) => {
-    node.textContent = String(described.length);
-    node.dataset.deviationState = described.length > 0 ? 'deviated' : 'default';
+    node.textContent = String(deviations.length);
   });
 
   root.querySelectorAll?.('[data-site-deviation-list]').forEach((host) => {
-    host.replaceChildren();
-    host.dataset.deviationState = described.length > 0 ? 'deviated' : 'default';
+    host.innerHTML = '';
 
-    if (!described.length) {
-      const empty = document.createElement('span');
+    if (!deviations.length) {
+      const empty = document.createElement('p');
       empty.className = 'site-deviation-empty';
-      empty.textContent = 'All settings match the authored default.';
+      empty.textContent = 'No deviations. This browser is using the authored default.';
       host.appendChild(empty);
       return;
     }
 
     const list = document.createElement('ul');
-    list.className = 'site-deviation-entries';
+    list.className = 'site-deviation-list';
 
-    described.forEach((entry) => {
+    deviations.forEach((entry) => {
       const item = document.createElement('li');
-      item.className = 'site-deviation-entry';
-      item.dataset.deviationName = entry.name;
+      item.className = 'site-deviation-item';
+      item.dataset.siteDeviation = entry.name;
 
-      const name = document.createElement('span');
-      name.className = 'site-deviation-name';
-      name.textContent = entry.humanName;
+      const label = document.createElement('span');
+      label.className = 'site-deviation-label';
+      label.textContent = humanizeSettingName(entry.name);
 
-      const change = document.createElement('span');
-      change.className = 'site-deviation-change';
-      change.textContent = `${entry.defaultLabel} → ${entry.currentLabel}`;
+      const value = document.createElement('code');
+      value.textContent = `${describeSettingValue(entry.name, entry.default)} → ${describeSettingValue(entry.name, entry.current)}`;
 
-      item.append(name, change);
+      item.append(label, value);
 
       if (host.dataset.siteDeviationList === 'resettable') {
         const reset = document.createElement('button');
@@ -2322,30 +1981,22 @@ const syncDeviationReadouts = (root = document, settings = getSiteSettings()) =>
 };
 
 const bindDeviationControls = (root = document) => {
-  if (!(root instanceof HTMLElement) && root !== document) {
-    return {
-      cleanup() {
-      }, refresh() {
-      }
-    };
-  }
+  if (!(root instanceof HTMLElement) && root !== document) return {
+    cleanup() {
+    }, refresh() {
+    }
+  };
 
   const handleClick = (event) => {
-    const target = event.target instanceof Element
-      ? event.target.closest('[data-site-deviation-reset]')
-      : null;
+    const target = event.target instanceof Element ? event.target.closest('[data-site-deviation-reset]') : null;
     if (!(target instanceof HTMLElement)) return;
     const name = target.getAttribute('data-site-deviation-reset');
-    if (!name) return;
-    resetSingleSetting(name);
+    if (name) resetSingleSetting(name);
   };
 
   root.addEventListener('click', handleClick);
   syncDeviationReadouts(root);
-
-  const off = bus.on?.('settings:changed', (event) => {
-    syncDeviationReadouts(root, event.detail);
-  });
+  const off = bus.on?.('settings:changed', (event) => syncDeviationReadouts(root, event.detail));
 
   return {
     cleanup() {
@@ -2358,11 +2009,79 @@ const bindDeviationControls = (root = document) => {
   };
 };
 
-/* ==========================================================================
-   9. Settings page UI
-   --------------------------------------------------------------------------
-   The dedicated settings page is now just one bound scope.
-   ========================================================================== */
+const initPwaStatusDisplay = () => {
+  if (manager._pwaInitialized) return;
+  manager._pwaInitialized = true;
+
+  const installEl = document.querySelector('[data-pwa-install-status]');
+  const swEl = document.querySelector('[data-pwa-sw-status]');
+  const cacheEl = document.querySelector('[data-pwa-cache-status]');
+  const connectionEl = document.querySelector('[data-pwa-connection-status]');
+
+  if (!installEl) return;
+
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  installEl.textContent = isStandalone ? 'Installed' : 'Browser tab';
+  installEl.dataset.status = isStandalone ? 'active' : 'inactive';
+
+  if (shouldDisableServiceWorkerInDevelopment()) {
+    if (swEl) {
+      swEl.textContent = 'Disabled in local dev';
+      swEl.dataset.status = 'inactive';
+    }
+    if (cacheEl) {
+      cacheEl.textContent = 'Bypassed';
+      cacheEl.dataset.status = 'inactive';
+    }
+  } else if (navigator.serviceWorker?.controller) {
+    if (swEl) {
+      swEl.textContent = 'Active';
+      swEl.dataset.status = 'active';
+    }
+  } else if (navigator.serviceWorker) {
+    if (swEl) {
+      swEl.textContent = 'Registering…';
+      swEl.dataset.status = 'inactive';
+      navigator.serviceWorker.ready.then(() => {
+        swEl.textContent = 'Active';
+        swEl.dataset.status = 'active';
+      }).catch(() => {
+        swEl.textContent = 'Error';
+        swEl.dataset.status = 'error';
+      });
+    }
+  } else if (swEl) {
+    swEl.textContent = 'Unsupported';
+    swEl.dataset.status = 'error';
+  }
+
+  if (cacheEl && !shouldDisableServiceWorkerInDevelopment()) {
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        const count = names.length;
+        cacheEl.textContent = count > 0 ? `${count} cache${count > 1 ? 's' : ''}` : 'Empty';
+        cacheEl.dataset.status = count > 0 ? 'active' : 'inactive';
+      }).catch(() => {
+        cacheEl.textContent = 'Error';
+        cacheEl.dataset.status = 'error';
+      });
+    } else {
+      cacheEl.textContent = 'Unsupported';
+      cacheEl.dataset.status = 'error';
+    }
+  }
+
+  if (connectionEl) {
+    const updateConnection = () => {
+      const online = navigator.onLine;
+      connectionEl.textContent = online ? 'Online' : 'Offline';
+      connectionEl.dataset.status = online ? 'active' : 'inactive';
+    };
+    updateConnection();
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
+  }
+};
 
 const initSiteSettingsBindings = () => {
   const forms = [...document.querySelectorAll('[data-site-settings-form]')];
@@ -2370,12 +2089,9 @@ const initSiteSettingsBindings = () => {
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
   const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set], [data-site-settings-recipe]')]
     .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
+  const hasReadouts = Boolean(document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list]'));
 
-  const hasReadouts = Boolean(
-    document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list]')
-  );
-
-  if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || manager._initialized) return;
+  if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || manager._initialized) return null;
 
   manager._initialized = true;
 
@@ -2418,7 +2134,6 @@ const initSiteSettingsBindings = () => {
 const syncSettingsCategoryTarget = () => {
   const targeted = [...document.querySelectorAll('.settings-category[data-settings-targeted="true"]')];
   targeted.forEach((node) => delete node.dataset.settingsTargeted);
-
   if (!window.location.hash) return;
 
   let target = null;
@@ -2430,10 +2145,7 @@ const syncSettingsCategoryTarget = () => {
 
   if (!(target instanceof HTMLElement)) return;
 
-  const category = target.matches('.settings-category')
-    ? target
-    : target.closest('.settings-category');
-
+  const category = target.matches('.settings-category') ? target : target.closest('.settings-category');
   if (!(category instanceof HTMLDetailsElement)) return;
 
   category.open = true;
@@ -2443,11 +2155,7 @@ const syncSettingsCategoryTarget = () => {
 const initSettingsCategoryRouting = () => {
   if (manager._settingsCategoryRouting) return manager._settingsCategoryRouting;
 
-  const handleHashChange = () => {
-    window.requestAnimationFrame(() => {
-      syncSettingsCategoryTarget();
-    });
-  };
+  const handleHashChange = () => window.requestAnimationFrame(() => syncSettingsCategoryTarget());
 
   manager._settingsCategoryRouting = {
     cleanup() {
@@ -2478,85 +2186,6 @@ const initSiteSettingsPage = () => {
   };
 };
 
-/* ==========================================================================
-   10. PWA status
-   ========================================================================== */
-
-const initPwaStatusDisplay = () => {
-  if (manager._pwaInitialized) return;
-  manager._pwaInitialized = true;
-
-  const installEl = document.querySelector('[data-pwa-install-status]');
-  const swEl = document.querySelector('[data-pwa-sw-status]');
-  const cacheEl = document.querySelector('[data-pwa-cache-status]');
-  const connectionEl = document.querySelector('[data-pwa-connection-status]');
-
-  if (!installEl) return;
-
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-    || window.navigator.standalone === true;
-
-  installEl.textContent = isStandalone ? 'Installed' : 'Browser tab';
-  installEl.dataset.status = isStandalone ? 'active' : 'inactive';
-
-  if (shouldDisableServiceWorkerInDevelopment()) {
-    if (swEl) {
-      swEl.textContent = 'Disabled in local dev';
-      swEl.dataset.status = 'inactive';
-    }
-    if (cacheEl) {
-      cacheEl.textContent = 'Bypassed';
-      cacheEl.dataset.status = 'inactive';
-    }
-  } else if (navigator.serviceWorker?.controller) {
-    swEl.textContent = 'Active';
-    swEl.dataset.status = 'active';
-  } else if (navigator.serviceWorker) {
-    swEl.textContent = 'Registering…';
-    swEl.dataset.status = 'inactive';
-    navigator.serviceWorker.ready.then(() => {
-      swEl.textContent = 'Active';
-      swEl.dataset.status = 'active';
-    }).catch(() => {
-      swEl.textContent = 'Error';
-      swEl.dataset.status = 'error';
-    });
-  } else {
-    swEl.textContent = 'Unsupported';
-    swEl.dataset.status = 'error';
-  }
-
-  if (shouldDisableServiceWorkerInDevelopment()) {
-    // Local development intentionally bypasses cache-backed PWA behavior.
-  } else if ('caches' in window) {
-    caches.keys().then((names) => {
-      const count = names.length;
-      cacheEl.textContent = count > 0 ? `${count} cache${count > 1 ? 's' : ''}` : 'Empty';
-      cacheEl.dataset.status = count > 0 ? 'active' : 'inactive';
-    }).catch(() => {
-      cacheEl.textContent = 'Error';
-      cacheEl.dataset.status = 'error';
-    });
-  } else {
-    cacheEl.textContent = 'Unsupported';
-    cacheEl.dataset.status = 'error';
-  }
-
-  const updateConnection = () => {
-    const online = navigator.onLine;
-    connectionEl.textContent = online ? 'Online' : 'Offline';
-    connectionEl.dataset.status = online ? 'active' : 'inactive';
-  };
-
-  updateConnection();
-  window.addEventListener('online', updateConnection);
-  window.addEventListener('offline', updateConnection);
-};
-
-/* ==========================================================================
-   11. Runtime API
-   ========================================================================== */
-
 if (typeof window !== 'undefined') {
   window.spwSettings = {
     get: getSiteSettings,
@@ -2582,19 +2211,17 @@ if (typeof window !== 'undefined') {
     recipes: UX_RECIPES,
     applyRecipe: applyUxRecipe,
     findActivePreset,
+    authorWorkflows: AUTHOR_WORKFLOW_DEFINITIONS,
+    developmentalClimates: DEVELOPMENTAL_CLIMATES,
     syncUx: syncSettingsUx,
     describePreset: (name) => manager.describePreset(name),
     initBindings: initSiteSettingsBindings,
     manager
   };
-  ;
 }
 
-/* ==========================================================================
-   12. Exports
-   ========================================================================== */
-
 export {
+  AUTHOR_WORKFLOW_TOKEN_VALUE,
   DEFAULT_SITE_SETTINGS,
   DEVELOPMENTAL_CLIMATES,
   PRESETS,
@@ -2614,6 +2241,8 @@ export {
   describeDeviation,
   emitSettingsChange,
   findActivePreset,
+  getAuthorWorkflowDefinition,
+  getAuthorWorkflowTokens,
   getSettingValue,
   getSiteSettingDeviations,
   getSiteSettingModifiers,

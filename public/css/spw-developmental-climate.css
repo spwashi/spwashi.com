@@ -3,141 +3,275 @@
    --------------------------------------------------------------------------
    Purpose:
    - Visual and interaction styling for developmental climate.
-   - Replaces the older "spirit phases" framing with a learning-centered model:
-       orient   -> kindle
-       anchor   -> anchor
-       weave    -> weave
-       rehearse -> rehearse
-       offer    -> offer
-   - Exposes semantic variables for expressive design.
-   - Low-specificity overrides via :where() ensure atmosphere doesn't break structure.
+   - Treat climate as an editorial / learning weather layer, not a full theme.
+   - Preserve compatibility with older "spirit phase" hooks.
+   - Consume the newer --climate-* interface when available.
+   - Keep broad site substrate stable for long-form reading and authoring.
+
+   Climate model:
+     orient   -> kindle    -> find the page
+     anchor   -> anchor    -> hold the structure
+     weave    -> weave     -> connect the material
+     rehearse -> rehearse  -> test the voice
+     offer    -> offer     -> prepare the gift
+
+   Design posture:
+   - Good targets:
+       seams, focus rings, annotations, relation lines, guide chips,
+       active controls, margin cues, publication affordances.
+   - Avoid:
+       large saturated page washes, full-surface recolors, heavy badge tinting,
+       climate colors competing with operator colors.
+
+   Low-specificity overrides via :where() keep atmosphere from breaking layout.
    ========================================================================== */
 
+
 /* ==========================================================================
-   1. Global climate tokens
+   1. Global climate interface + compatibility aliases
    ========================================================================== */
 
 :root {
   /* Route climate timing through global motion grammar */
-  --developmental-transition-duration: var(--duration-base, 180ms);
-  --developmental-transition-slow:     var(--duration-deliberate, 320ms);
-  --developmental-transition-timing:   var(--ease-mechanical, cubic-bezier(0.22, 0, 0.15, 1));
+  --developmental-transition-duration: var(--climate-transition-duration, var(--duration-base, 180ms));
+  --developmental-transition-slow: var(--climate-transition-slow, var(--duration-deliberate, 320ms));
+  --developmental-transition-timing: var(--climate-transition-timing, var(--ease-mechanical, cubic-bezier(0.22, 0, 0.15, 1)));
 
-  /* Fallback / current climate tokens */
-  --developmental-hue: 38;
-  --developmental-sat: 76%;
-  --developmental-light: 46%;
+  /* Fallback climate palette. spw-tokens.css may override these. */
+  --climate-orient-accent: hsl(42 48% 43%);
+  --climate-anchor-accent: hsl(215 28% 38%);
+  --climate-weave-accent: hsl(155 32% 34%);
+  --climate-rehearse-accent: hsl(274 24% 42%);
+  --climate-offer-accent: hsl(184 42% 32%);
 
-  --developmental-accent:        hsl(var(--developmental-hue) var(--developmental-sat) var(--developmental-light));
-  --developmental-accent-soft:   color-mix(in srgb, var(--developmental-accent) 18%, transparent);
-  --developmental-accent-strong: color-mix(in srgb, var(--developmental-accent) 34%, transparent);
+  --climate-accent: var(--climate-orient-accent);
+  --climate-accent-ink: color-mix(in srgb, var(--ink, currentColor) 86%, var(--climate-accent) 14%);
+  --climate-accent-line: color-mix(in srgb, var(--climate-accent) 24%, var(--line, transparent));
+  --climate-accent-line-strong: color-mix(in srgb, var(--climate-accent) 36%, var(--line, transparent));
+  --climate-accent-wash: color-mix(in srgb, var(--climate-accent) 7%, transparent);
+  --climate-accent-wash-strong: color-mix(in srgb, var(--climate-accent) 12%, transparent);
 
-  --developmental-surface-tint:        color-mix(in srgb, var(--developmental-accent) 7%, transparent);
-  --developmental-surface-tint-strong: color-mix(in srgb, var(--developmental-accent) 12%, transparent);
+  /* Behavioral climate axes */
+  --climate-clarity-bias: 0.64;
+  --climate-pressure-bias: 0.34;
+  --climate-atmosphere-bias: 0.18;
+  --climate-memory-bias: 0.18;
+  --climate-resonance-bias: 0.16;
+  --climate-charge-bias: 0.24;
+  --climate-selection-bias: 0.24;
 
-  --developmental-border:        color-mix(in srgb, var(--developmental-accent) 22%, var(--line, transparent));
-  --developmental-border-strong: color-mix(in srgb, var(--developmental-accent) 34%, var(--line, transparent));
+  /* Author-facing behavior */
+  --climate-hint-opacity: 0.65;
+  --climate-outline-strength: 0.22;
+  --climate-annotation-strength: 0.28;
+  --climate-connection-strength: 0.22;
+  --climate-publication-strength: 0.12;
 
-  --developmental-badge-bg:   color-mix(in srgb, var(--developmental-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.88)));
-  --developmental-badge-text: color-mix(in srgb, var(--developmental-accent) 72%, var(--ink, currentColor));
+  --climate-paper-tint: color-mix(in srgb, var(--climate-accent) 3%, transparent);
+  --climate-margin-tint: color-mix(in srgb, var(--climate-accent) 5%, transparent);
+  --climate-selection-ring: color-mix(in srgb, var(--climate-accent) 22%, transparent);
+  --climate-seam: linear-gradient(
+      90deg,
+      color-mix(
+          in srgb,
+          var(--climate-accent) calc(var(--climate-outline-strength) * 18%),
+          transparent
+      ) 0 0.32rem,
+      transparent 0.32rem
+  );
 
-  --developmental-menu-bg:     color-mix(in srgb, var(--surface, #fff) 92%, var(--developmental-accent-soft));
-  --developmental-menu-line:   color-mix(in srgb, var(--developmental-accent) 24%, transparent);
-  --developmental-menu-shadow: var(--shadow-active, 0 10px 28px color-mix(in srgb, var(--developmental-accent) 10%, transparent));
+  /* Menu / badge interface */
+  --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 8%, var(--surface-strong, rgba(255, 255, 255, 0.88)));
+  --climate-badge-text: color-mix(in srgb, var(--climate-accent) 64%, var(--ink, currentColor));
+  --climate-menu-bg: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--climate-accent) 6%);
+  --climate-menu-line: color-mix(in srgb, var(--climate-accent) 22%, transparent);
+  --climate-menu-shadow: 0 10px 28px color-mix(in srgb, var(--climate-accent) 8%, transparent);
 
-  --developmental-seam-opacity: 0.72;
-  --developmental-guide-opacity: 0.76;
-  --developmental-indicator-opacity: 0.9;
+  /* Compatibility aliases for older consumers */
+  --developmental-hue: 42;
+  --developmental-sat: 48%;
+  --developmental-light: 43%;
 
-  /* Semantic operational axes */
-  --developmental-clarity: 0.64;
-  --developmental-pressure: 0.34;
-  --developmental-atmosphere: 0.18;
-  --developmental-memory: 0.18;
-  --developmental-resonance: 0.16;
-  --developmental-charge-bias: 0.24;
-  --developmental-selection-bias: 0.24;
+  --developmental-accent: var(--climate-accent);
+  --developmental-accent-soft: var(--climate-accent-wash);
+  --developmental-accent-strong: var(--climate-accent-line-strong);
 
-  /* Explicit handoff to the rest of the design system */
-  --active-op-color:      var(--developmental-accent);
-  --card-border-emphasis: var(--developmental-border);
-  --badge-bg:             var(--developmental-badge-bg);
-  --badge-text:           var(--developmental-badge-text);
+  --developmental-surface-tint: var(--climate-paper-tint);
+  --developmental-surface-tint-strong: var(--climate-margin-tint);
+
+  --developmental-border: var(--climate-accent-line);
+  --developmental-border-strong: var(--climate-accent-line-strong);
+
+  --developmental-badge-bg: var(--climate-badge-bg);
+  --developmental-badge-text: var(--climate-badge-text);
+
+  --developmental-menu-bg: var(--climate-menu-bg);
+  --developmental-menu-line: var(--climate-menu-line);
+  --developmental-menu-shadow: var(--climate-menu-shadow);
+
+  --developmental-seam-opacity: var(--climate-hint-opacity);
+  --developmental-guide-opacity: calc(0.62 + var(--climate-clarity-bias) * 0.18);
+  --developmental-indicator-opacity: calc(0.72 + var(--climate-selection-bias) * 0.18);
+
+  --developmental-clarity: var(--climate-clarity-bias);
+  --developmental-pressure: var(--climate-pressure-bias);
+  --developmental-atmosphere: var(--climate-atmosphere-bias);
+  --developmental-memory: var(--climate-memory-bias);
+  --developmental-resonance: var(--climate-resonance-bias);
+  --developmental-charge-bias: var(--climate-charge-bias);
+  --developmental-selection-bias: var(--climate-selection-bias);
+
+  /* Handoff to design system. Keep operator color stable by default. */
+  --card-border-emphasis: var(--climate-accent-line);
+  --badge-bg: var(--climate-badge-bg);
+  --badge-text: var(--climate-badge-text);
 }
+
 
 /* ==========================================================================
    2. Climate mappings
    ========================================================================== */
 
-/* ORIENT / KINDLE */
-:where(html:is([data-spw-developmental-climate="orient"], [data-spw-spirit-phase="orient"], [data-spw-spirit-phase="initiation"])) {
-  --developmental-hue: 38;
-  --developmental-sat: 78%;
-  --developmental-light: 46%;
-  --developmental-clarity: 0.56;
-  --developmental-pressure: 0.24;
-  --developmental-atmosphere: 0.32;
-  --developmental-memory: 0.12;
-  --developmental-resonance: 0.18;
-  --developmental-charge-bias: 0.18;
-  --developmental-selection-bias: 0.18;
+/* ORIENT / KINDLE: find the page */
+:where(html:is(
+  [data-spw-developmental-climate="orient"],
+  [data-spw-spirit-phase="orient"],
+  [data-spw-spirit-phase="initiation"],
+  [data-spw-spirit-phase="kindle"]
+)) {
+  --developmental-hue: 42;
+  --developmental-sat: 48%;
+  --developmental-light: 43%;
+
+  --climate-accent: var(--climate-orient-accent);
+  --climate-clarity-bias: 0.56;
+  --climate-pressure-bias: 0.22;
+  --climate-atmosphere-bias: 0.34;
+  --climate-memory-bias: 0.12;
+  --climate-resonance-bias: 0.18;
+  --climate-charge-bias: 0.18;
+  --climate-selection-bias: 0.18;
+
+  --climate-hint-opacity: 0.86;
+  --climate-outline-strength: 0.14;
+  --climate-annotation-strength: 0.22;
+  --climate-connection-strength: 0.12;
+  --climate-publication-strength: 0.06;
 }
 
-/* ANCHOR */
-:where(html:is([data-spw-developmental-climate="anchor"], [data-spw-spirit-phase="anchor"], [data-spw-spirit-phase="resistance"], [data-spw-spirit-phase="attune"], [data-spw-spirit-phase="settle"])) {
-  --developmental-hue: 214;
-  --developmental-sat: 48%;
-  --developmental-light: 40%;
-  --developmental-clarity: 0.74;
-  --developmental-pressure: 0.46;
-  --developmental-atmosphere: 0.12;
-  --developmental-memory: 0.32;
-  --developmental-resonance: 0.14;
-  --developmental-charge-bias: 0.22;
-  --developmental-selection-bias: 0.32;
+/* ANCHOR: hold the structure */
+:where(html:is(
+  [data-spw-developmental-climate="anchor"],
+  [data-spw-spirit-phase="anchor"],
+  [data-spw-spirit-phase="resistance"],
+  [data-spw-spirit-phase="attune"],
+  [data-spw-spirit-phase="settle"],
+  [data-spw-spirit-phase="stabilize"]
+)) {
+  --developmental-hue: 215;
+  --developmental-sat: 28%;
+  --developmental-light: 38%;
+
+  --climate-accent: var(--climate-anchor-accent);
+  --climate-clarity-bias: 0.76;
+  --climate-pressure-bias: 0.46;
+  --climate-atmosphere-bias: 0.10;
+  --climate-memory-bias: 0.32;
+  --climate-resonance-bias: 0.14;
+  --climate-charge-bias: 0.22;
+  --climate-selection-bias: 0.34;
+
+  --climate-hint-opacity: 0.55;
+  --climate-outline-strength: 0.34;
+  --climate-annotation-strength: 0.26;
+  --climate-connection-strength: 0.16;
+  --climate-publication-strength: 0.10;
 }
 
-/* WEAVE */
-:where(html:is([data-spw-developmental-climate="weave"], [data-spw-spirit-phase="weave"], [data-spw-spirit-phase="transformation"], [data-spw-spirit-phase="compose"])) {
-  --developmental-hue: 160;
-  --developmental-sat: 48%;
+/* WEAVE: connect the material */
+:where(html:is(
+  [data-spw-developmental-climate="weave"],
+  [data-spw-spirit-phase="weave"],
+  [data-spw-spirit-phase="transformation"],
+  [data-spw-spirit-phase="compose"],
+  [data-spw-spirit-phase="connect"]
+)) {
+  --developmental-hue: 155;
+  --developmental-sat: 32%;
   --developmental-light: 34%;
-  --developmental-clarity: 0.68;
-  --developmental-pressure: 0.42;
-  --developmental-atmosphere: 0.2;
-  --developmental-memory: 0.2;
-  --developmental-resonance: 0.36;
-  --developmental-charge-bias: 0.26;
-  --developmental-selection-bias: 0.24;
+
+  --climate-accent: var(--climate-weave-accent);
+  --climate-clarity-bias: 0.68;
+  --climate-pressure-bias: 0.38;
+  --climate-atmosphere-bias: 0.20;
+  --climate-memory-bias: 0.22;
+  --climate-resonance-bias: 0.40;
+  --climate-charge-bias: 0.26;
+  --climate-selection-bias: 0.24;
+
+  --climate-hint-opacity: 0.68;
+  --climate-outline-strength: 0.22;
+  --climate-annotation-strength: 0.34;
+  --climate-connection-strength: 0.48;
+  --climate-publication-strength: 0.16;
 }
 
-/* REHEARSE */
-:where(html:is([data-spw-developmental-climate="rehearse"], [data-spw-spirit-phase="rehearse"], [data-spw-spirit-phase="return"], [data-spw-spirit-phase="practice"])) {
-  --developmental-hue: 286;
-  --developmental-sat: 34%;
+/* REHEARSE: test the voice */
+:where(html:is(
+  [data-spw-developmental-climate="rehearse"],
+  [data-spw-spirit-phase="rehearse"],
+  [data-spw-spirit-phase="return"],
+  [data-spw-spirit-phase="practice"],
+  [data-spw-spirit-phase="revise"]
+)) {
+  --developmental-hue: 274;
+  --developmental-sat: 24%;
   --developmental-light: 42%;
-  --developmental-clarity: 0.7;
-  --developmental-pressure: 0.38;
-  --developmental-atmosphere: 0.16;
-  --developmental-memory: 0.42;
-  --developmental-resonance: 0.22;
-  --developmental-charge-bias: 0.2;
-  --developmental-selection-bias: 0.28;
+
+  --climate-accent: var(--climate-rehearse-accent);
+  --climate-clarity-bias: 0.70;
+  --climate-pressure-bias: 0.36;
+  --climate-atmosphere-bias: 0.14;
+  --climate-memory-bias: 0.46;
+  --climate-resonance-bias: 0.22;
+  --climate-charge-bias: 0.20;
+  --climate-selection-bias: 0.30;
+
+  --climate-hint-opacity: 0.60;
+  --climate-outline-strength: 0.28;
+  --climate-annotation-strength: 0.52;
+  --climate-connection-strength: 0.26;
+  --climate-publication-strength: 0.22;
 }
 
-/* OFFER */
-:where(html:is([data-spw-developmental-climate="offer"], [data-spw-spirit-phase="offer"], [data-spw-spirit-phase="expression"], [data-spw-spirit-phase="project"])) {
-  --developmental-hue: 180;
-  --developmental-sat: 100%;
-  --developmental-light: 28%;
-  --developmental-clarity: 0.84;
-  --developmental-pressure: 0.3;
-  --developmental-atmosphere: 0.1;
-  --developmental-memory: 0.22;
-  --developmental-resonance: 0.28;
-  --developmental-charge-bias: 0.3;
-  --developmental-selection-bias: 0.34;
+/* OFFER: prepare the gift */
+:where(html:is(
+  [data-spw-developmental-climate="offer"],
+  [data-spw-spirit-phase="offer"],
+  [data-spw-spirit-phase="expression"],
+  [data-spw-spirit-phase="project"],
+  [data-spw-spirit-phase="publish"]
+)) {
+  --developmental-hue: 184;
+  --developmental-sat: 42%;
+  --developmental-light: 32%;
+
+  --climate-accent: var(--climate-offer-accent);
+  --climate-clarity-bias: 0.84;
+  --climate-pressure-bias: 0.30;
+  --climate-atmosphere-bias: 0.08;
+  --climate-memory-bias: 0.24;
+  --climate-resonance-bias: 0.30;
+  --climate-charge-bias: 0.30;
+  --climate-selection-bias: 0.36;
+
+  --climate-hint-opacity: 0.42;
+  --climate-outline-strength: 0.38;
+  --climate-annotation-strength: 0.28;
+  --climate-connection-strength: 0.22;
+  --climate-publication-strength: 0.58;
 }
+
 
 /* ==========================================================================
    3. Global climate application
@@ -148,156 +282,299 @@
 }
 
 body {
-  transition:
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
-/* Surface seams: subtle climate bias, not full recolor */
+/* Climate seam: narrow editorial cue, not a large background recolor. */
 :where(.site-frame) {
-  background-image:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--developmental-accent) calc((0.08 + var(--developmental-atmosphere) * 0.08) * 100%), transparent) 0 4rem,
-      transparent 4rem
-    );
-  transition:
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+  background-image: var(--climate-seam);
+  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
 }
 
 :where(.site-frame::before) {
-  opacity: calc(0.1 + var(--developmental-resonance) * 0.18);
+  opacity: calc(0.06 + var(--climate-resonance-bias) * 0.12);
 }
 
+/* Structural surfaces get border bias only. Keep paper/material stable. */
 :where(
-  .frame-card, .media-card, .media-focus-card, .operator-card, 
-  .frame-panel, .mode-panel, .pretext-surface, .settings-category, 
-  .settings-fieldset, .spw-console, .spw-nav-panel
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .pretext-surface,
+  .settings-category,
+  .settings-fieldset,
+  .spw-console,
+  .spw-nav-panel
 ) {
-  border-color: var(--developmental-border);
-  transition:
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
+  border-color: color-mix(
+      in srgb,
+      var(--climate-accent-line) calc(62% + var(--climate-outline-strength) * 20%),
+      var(--line, transparent)
+  );
+  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  box-shadow var(--developmental-transition-slow) var(--developmental-transition-timing);
 }
 
-/* Tokens / pills / badges */
+/* Badges receive restrained climate tint. */
 :where(.spec-pill, .badge, .tag, .pill) {
-  background: var(--developmental-badge-bg);
-  color: var(--developmental-badge-text);
-  border-color: var(--developmental-border);
-  transition:
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  background: var(--climate-badge-bg);
+  color: var(--climate-badge-text);
+  border-color: var(--climate-accent-line);
+  transition: background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  border-color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
-/* Memos and guide seams */
-:where(.spw-context-memo, .spw-experience-memo, .spw-guide-chip, .spw-surface-helper-chip) {
-  border-color: var(--developmental-border);
-  background:
-    linear-gradient(
+/* Memos and guide seams: use climate as guidance, not paint. */
+:where(
+  .spw-context-memo,
+  .spw-experience-memo,
+  .spw-guide-chip,
+  .spw-surface-helper-chip
+) {
+  border-color: var(--climate-accent-line);
+  background: linear-gradient(
       90deg,
-      color-mix(in srgb, var(--developmental-accent) 8%, transparent) 0,
+      color-mix(in srgb, var(--climate-accent) calc(var(--climate-hint-opacity) * 8%), transparent) 0,
       transparent 48%
-    ),
-    color-mix(in srgb, var(--surface, #fff) 90%, transparent);
-  opacity: var(--developmental-seam-opacity);
-  transition:
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+  ),
+  color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  opacity: var(--climate-hint-opacity);
+  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where(.spw-component-meta) {
   opacity: var(--developmental-guide-opacity);
-  transition:
-    opacity var(--developmental-transition-duration) var(--developmental-transition-timing),
-    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition: opacity var(--developmental-transition-duration) var(--developmental-transition-timing),
+  color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
+
 /* ==========================================================================
-   4. Interaction state & Gestures
+   4. Authoring / manuscript surfaces
    ========================================================================== */
 
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card, 
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil, 
-  .syntax-token, .spw-delimiter
+  .manuscript-surface,
+  .author-surface,
+  .editorial-surface,
+  [data-author-surface],
+  [data-spw-author-surface],
+  [data-spw-typeset-surface="editorial"]
+) {
+  background-image: linear-gradient(
+      90deg,
+      var(--climate-margin-tint) 0 var(--manuscript-margin-width, 4rem),
+      transparent var(--manuscript-margin-width, 4rem)
+  );
+}
+
+:where(
+  .annotation,
+  .annotation-card,
+  .margin-note,
+  .editor-note,
+  [data-author-annotation],
+  [data-spw-annotation]
+) {
+  border-color: color-mix(
+      in srgb,
+      var(--climate-accent) calc(var(--climate-annotation-strength) * 42%),
+      var(--annotation-line, var(--line, transparent))
+  );
+  background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--climate-accent) calc(var(--climate-annotation-strength) * 12%), transparent),
+      transparent 62%
+  ),
+  var(--annotation-bg, transparent);
+}
+
+:where(
+  .relation-line,
+  .thread-line,
+  .motif-link,
+  [data-spw-relation],
+  [data-author-thread]
+) {
+  --thread-line: color-mix(
+      in srgb,
+      var(--climate-accent) calc(var(--climate-connection-strength) * 46%),
+      var(--line, transparent)
+  );
+}
+
+:where(
+  .publish-card,
+  .export-card,
+  .reader-preview,
+  [data-author-publication],
+  [data-spw-publication]
+) {
+  border-color: color-mix(
+      in srgb,
+      var(--climate-accent) calc(var(--climate-publication-strength) * 48%),
+      var(--line, transparent)
+  );
+}
+
+
+/* ==========================================================================
+   5. Interaction state & gestures
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil,
+  .syntax-token,
+  .spw-delimiter
 )[data-spw-selection="focused"] {
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--developmental-accent) calc((0.18 + var(--developmental-selection-bias) * 0.18) * 100%), transparent);
+  box-shadow: 0 0 0 1px color-mix(
+      in srgb,
+      var(--climate-accent) calc((0.14 + var(--climate-selection-bias) * 0.14) * 100%),
+      transparent
+  );
 }
 
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card, 
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil
 )[data-spw-selection="active"] {
-  border-color: var(--developmental-border-strong);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--developmental-accent) 22%, transparent),
-    0 8px 22px color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+  border-color: var(--climate-accent-line-strong);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 18%, transparent),
+  0 8px 22px color-mix(in srgb, var(--climate-accent) 6%, transparent);
 }
 
 :where(
-  .site-frame, .frame-card, .media-card, .media-focus-card, .operator-card, 
-  .frame-panel, .mode-panel, .spec-pill, .operator-chip, .frame-sigil
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .operator-chip,
+  .frame-sigil
 )[data-spw-selection="selected"] {
-  border-color: var(--developmental-border-strong);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--developmental-accent) 24%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+  border-color: var(--climate-accent-line-strong);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--climate-accent) 22%, transparent),
+  0 0 0 4px color-mix(in srgb, var(--climate-accent) 7%, transparent);
 }
 
-/* JS-Driven Gesture Phases */
+/* JS-driven gesture phases */
 :where([data-spw-gesture="charging"]) {
-  --developmental-live-accent: color-mix(in srgb, var(--developmental-accent) calc((0.14 + var(--developmental-charge-bias) * 0.12) * 100%), transparent);
+  --developmental-live-accent: color-mix(
+      in srgb,
+      var(--climate-accent) calc((0.12 + var(--climate-charge-bias) * 0.10) * 100%),
+      transparent
+  );
 }
+
 :where([data-spw-gesture="active"]) {
-  --developmental-live-accent: color-mix(in srgb, var(--developmental-accent) calc((0.22 + var(--developmental-charge-bias) * 0.18) * 100%), transparent);
+  --developmental-live-accent: color-mix(
+      in srgb,
+      var(--climate-accent) calc((0.18 + var(--climate-charge-bias) * 0.16) * 100%),
+      transparent
+  );
 }
+
 :where([data-spw-gesture="armed"]) {
-  --developmental-live-accent: color-mix(in srgb, var(--developmental-accent) calc((0.28 + var(--developmental-charge-bias) * 0.2) * 100%), transparent);
+  --developmental-live-accent: color-mix(
+      in srgb,
+      var(--climate-accent) calc((0.24 + var(--climate-charge-bias) * 0.18) * 100%),
+      transparent
+  );
 }
+
 :where([data-spw-gesture="committed"]) {
-  --developmental-live-accent: color-mix(in srgb, var(--developmental-accent) 34%, transparent);
+  --developmental-live-accent: color-mix(in srgb, var(--climate-accent) 32%, transparent);
 }
 
 :where(
-  .frame-sigil, .operator-chip, .spec-pill, .syntax-token, 
-  .spw-delimiter, [data-spw-form]
+  .frame-sigil,
+  .operator-chip,
+  .spec-pill,
+  .syntax-token,
+  .spw-delimiter,
+  [data-spw-form]
 )[data-spw-gesture] {
-  border-color: var(--developmental-live-accent, var(--developmental-border));
+  border-color: var(--developmental-live-accent, var(--climate-accent-line));
   box-shadow: 0 0 0 1px var(--developmental-live-accent, transparent);
 }
 
 /* Stable grounded state */
 :where([data-spw-latched="true"], [data-spw-pinned="true"], [data-spw-grounded="true"]) {
-  border-color: var(--developmental-border-strong);
-  background:
-    linear-gradient(
+  border-color: var(--climate-accent-line-strong);
+  background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--developmental-accent) calc((0.08 + var(--developmental-memory) * 0.12) * 100%), transparent),
+      color-mix(in srgb, var(--climate-accent) calc((0.06 + var(--climate-memory-bias) * 0.10) * 100%), transparent),
       transparent 54%
-    ),
-    var(--developmental-badge-bg);
+  ),
+  var(--climate-badge-bg);
 }
 
+
 /* ==========================================================================
-   5. Wonder-field tuning
+   6. Wonder-field tuning
    ========================================================================== */
 
-:where([data-spw-field-wonder="orientation"]) { --developmental-seam-opacity: calc(0.68 + var(--developmental-atmosphere) * 0.12); }
-:where([data-spw-field-wonder="inquiry"])     { --developmental-guide-opacity: calc(0.72 + var(--developmental-clarity) * 0.12); }
-:where([data-spw-field-wonder="comparison"])  { --developmental-seam-opacity: calc(0.7 + var(--developmental-resonance) * 0.12); }
-:where([data-spw-field-wonder="memory"])      { --developmental-guide-opacity: calc(0.74 + var(--developmental-memory) * 0.14); }
-:where([data-spw-field-wonder="projection"])  { --developmental-indicator-opacity: calc(0.84 + var(--developmental-clarity) * 0.1); }
-:where([data-spw-field-wonder="constraint"])  { --developmental-seam-opacity: calc(0.68 + var(--developmental-pressure) * 0.14); }
-:where([data-spw-field-wonder="resonance"])   { --developmental-guide-opacity: calc(0.72 + var(--developmental-resonance) * 0.16); }
+:where([data-spw-field-wonder="orientation"]) {
+  --developmental-seam-opacity: calc(0.66 + var(--climate-atmosphere-bias) * 0.12);
+}
+
+:where([data-spw-field-wonder="inquiry"]) {
+  --developmental-guide-opacity: calc(0.70 + var(--climate-clarity-bias) * 0.12);
+}
+
+:where([data-spw-field-wonder="comparison"]) {
+  --developmental-seam-opacity: calc(0.68 + var(--climate-resonance-bias) * 0.12);
+}
+
+:where([data-spw-field-wonder="memory"]) {
+  --developmental-guide-opacity: calc(0.72 + var(--climate-memory-bias) * 0.14);
+}
+
+:where([data-spw-field-wonder="projection"]) {
+  --developmental-indicator-opacity: calc(0.82 + var(--climate-clarity-bias) * 0.1);
+}
+
+:where([data-spw-field-wonder="constraint"]) {
+  --developmental-seam-opacity: calc(0.66 + var(--climate-pressure-bias) * 0.14);
+}
+
+:where([data-spw-field-wonder="resonance"]) {
+  --developmental-guide-opacity: calc(0.70 + var(--climate-resonance-bias) * 0.16);
+}
+
 
 /* ==========================================================================
-   6. Developmental climate controls
+   7. Developmental climate controls
    ========================================================================== */
 
 :where(.developmental-climate-controls, .phase-controls) {
@@ -305,7 +582,7 @@ body {
   display: inline-flex;
   align-items: center;
   margin-left: auto;
-  color: var(--developmental-badge-text);
+  color: var(--climate-badge-text);
 }
 
 :where(.developmental-climate-controls[open], .phase-controls[open]) {
@@ -316,12 +593,13 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.38rem;
   min-height: calc(var(--touch-target-min, 2.75rem) * 0.75);
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--developmental-menu-line);
+  padding: 0.22rem 0.68rem;
+  border: 1px solid var(--climate-menu-line);
   border-radius: var(--radius-pill, 999px);
-  background: var(--developmental-menu-bg);
-  color: var(--developmental-badge-text);
+  background: var(--climate-menu-bg);
+  color: var(--climate-badge-text);
   cursor: pointer;
   list-style: none;
   font: inherit;
@@ -329,13 +607,12 @@ body {
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: var(--developmental-menu-shadow);
-  transition:
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    box-shadow var(--developmental-transition-duration) var(--developmental-transition-timing),
-    transform var(--developmental-transition-duration) var(--developmental-transition-timing);
+  box-shadow: var(--climate-menu-shadow);
+  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  box-shadow var(--developmental-transition-duration) var(--developmental-transition-timing),
+  transform var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where(.climate-menu-trigger::-webkit-details-marker, .phase-menu-trigger::-webkit-details-marker) {
@@ -344,8 +621,20 @@ body {
 
 :where(.climate-menu-trigger:hover, .phase-menu-trigger:hover,
        .climate-menu-trigger:focus-visible, .phase-menu-trigger:focus-visible) {
-  border-color: var(--developmental-border-strong);
+  border-color: var(--climate-accent-line-strong);
   transform: translateY(-1px);
+}
+
+:where(.climate-menu-trigger__label, .climate-menu-choice__label) {
+  font-weight: 700;
+}
+
+:where(.climate-menu-trigger__hint, .climate-menu-choice__hint) {
+  color: color-mix(in srgb, currentColor 76%, var(--ink-soft, currentColor));
+  font-size: 0.78em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 :where(.climate-menu-options, .phase-menu-options) {
@@ -354,18 +643,20 @@ body {
   top: calc(100% + 0.45rem);
   display: grid;
   gap: var(--space-3xs, 0.35rem);
-  min-width: 12rem;
+  min-width: 15rem;
   padding: var(--space-xs, 0.55rem);
-  border: 1px solid var(--developmental-menu-line);
+  border: 1px solid var(--climate-menu-line);
   border-radius: var(--shape-surface, 0.75rem);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--developmental-accent-soft));
-  box-shadow: var(--shadow-active, 0 16px 34px color-mix(in srgb, var(--developmental-accent) 10%, transparent));
+  background: var(--climate-menu-bg);
+  box-shadow: var(--shadow-active, 0 16px 34px color-mix(in srgb, var(--climate-accent) 8%, transparent));
 }
 
 :where(.climate-menu-choice, .phase-menu-choice) {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: minmax(4rem, auto) 1fr;
   align-items: center;
   justify-content: flex-start;
+  gap: 0.54rem;
   min-height: calc(var(--touch-target-min, 2.75rem) * 0.8);
   padding: var(--space-2xs, 0.4rem) var(--space-sm, 0.7rem);
   border: 1px solid transparent;
@@ -376,46 +667,76 @@ body {
   font: inherit;
   font-size: var(--text-size-xs, 0.78rem);
   line-height: 1.25;
-  transition:
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  text-align: left;
+  transition: border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  background-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where(.climate-menu-choice:hover, .phase-menu-choice:hover,
        .climate-menu-choice:focus-visible, .phase-menu-choice:focus-visible) {
-  border-color: var(--developmental-border);
-  background: color-mix(in srgb, var(--developmental-accent) 8%, transparent);
+  border-color: var(--climate-accent-line);
+  background: color-mix(in srgb, var(--climate-accent) 7%, transparent);
 }
 
 :where(.climate-menu-choice[aria-pressed="true"], .phase-menu-choice[aria-pressed="true"]) {
-  border-color: var(--developmental-border-strong);
-  background: color-mix(in srgb, var(--developmental-accent) 12%, transparent);
-  color: var(--developmental-badge-text);
+  border-color: var(--climate-accent-line-strong);
+  background: color-mix(in srgb, var(--climate-accent) 10%, transparent);
+  color: var(--climate-badge-text);
   font-weight: 600;
 }
 
+
 /* ==========================================================================
-   7. Indicator hooks
+   8. Indicator hooks
    ========================================================================== */
 
 :where([data-developmental-indicator], [data-phase-indicator]) {
-  color: var(--developmental-accent);
+  color: var(--climate-accent);
   opacity: var(--developmental-indicator-opacity);
-  transition:
-    color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition: color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  opacity var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
 :where([data-op], [data-spw-operator]) {
-  transition:
-    color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
-    background-color var(--developmental-transition-duration) var(--developmental-transition-timing);
+  transition: color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  border-color var(--developmental-transition-duration) var(--developmental-transition-timing),
+  background-color var(--developmental-transition-duration) var(--developmental-transition-timing);
 }
 
+/* Optional author label output */
+:where([data-spw-developmental-author-label] [data-developmental-author-label])::before {
+  content: attr(data-developmental-author-label);
+}
+
+
 /* ==========================================================================
-   8. Indicator-off modes
+   9. Climate-specific affordance hints
+   ========================================================================== */
+
+:where(html[data-spw-developmental-climate="orient"]) :where([data-spw-learning-surface="overview"]) {
+  --climate-hint-opacity: max(var(--climate-hint-opacity), 0.78);
+}
+
+:where(html[data-spw-developmental-climate="anchor"]) :where([data-spw-learning-surface="archive"]) {
+  --climate-outline-strength: max(var(--climate-outline-strength), 0.38);
+}
+
+:where(html[data-spw-developmental-climate="weave"]) :where([data-spw-learning-surface="comparison"]) {
+  --climate-connection-strength: max(var(--climate-connection-strength), 0.54);
+}
+
+:where(html[data-spw-developmental-climate="rehearse"]) :where([data-spw-learning-surface="practice"]) {
+  --climate-annotation-strength: max(var(--climate-annotation-strength), 0.58);
+}
+
+:where(html[data-spw-developmental-climate="offer"]) :where([data-spw-learning-surface="publication"]) {
+  --climate-publication-strength: max(var(--climate-publication-strength), 0.64);
+}
+
+
+/* ==========================================================================
+   10. Indicator-off modes
    ========================================================================== */
 
 :where(html:is([data-spw-developmental-indicators="off"], [data-spw-phase-indicators="off"]) .site-frame) {
@@ -443,40 +764,131 @@ body {
   opacity: 0;
 }
 
+
 /* ==========================================================================
-   9. Dark mode refinements
+   11. Dark mode refinements
    ========================================================================== */
 
+html[data-spw-color-mode="dark"] {
+  --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong, rgba(22, 24, 28, 0.92)));
+  --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);
+  --climate-menu-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 20, 24, 0.94)) 90%, var(--climate-accent) 10%);
+  --climate-menu-shadow: 0 12px 30px color-mix(in srgb, black 24%, transparent);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --developmental-badge-bg:   color-mix(in srgb, var(--developmental-accent) 20%, rgba(22, 24, 28, 0.92));
-    --developmental-badge-text: color-mix(in srgb, var(--developmental-accent) 62%, white);
-    --developmental-menu-bg:    color-mix(in srgb, rgba(18, 20, 24, 0.94) 88%, var(--developmental-accent-soft));
+  html:not([data-spw-color-mode="light"]) {
+    --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong, rgba(22, 24, 28, 0.92)));
+    --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);
+    --climate-menu-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 20, 24, 0.94)) 90%, var(--climate-accent) 10%);
+    --climate-menu-shadow: 0 12px 30px color-mix(in srgb, black 24%, transparent);
   }
 
-  :where(.site-frame, .frame-card, .media-card, .media-focus-card, .operator-card, 
-         .frame-panel, .mode-panel, .pretext-surface, .settings-category, 
-         .settings-fieldset, .spw-console, .spw-nav-panel) {
-    box-shadow:
-      0 1px 0 color-mix(in srgb, white 6%, transparent),
-      0 12px 28px color-mix(in srgb, black 24%, transparent);
+  :where(
+    .site-frame,
+    .frame-card,
+    .media-card,
+    .media-focus-card,
+    .operator-card,
+    .frame-panel,
+    .mode-panel,
+    .pretext-surface,
+    .settings-category,
+    .settings-fieldset,
+    .spw-console,
+    .spw-nav-panel
+  ) {
+    box-shadow: 0 1px 0 color-mix(in srgb, white 5%, transparent),
+    0 12px 28px color-mix(in srgb, black 22%, transparent);
   }
 }
 
+
 /* ==========================================================================
-   10. Reduced motion
+   12. High contrast
+   ========================================================================== */
+
+:where(html[data-spw-high-contrast="on"]) {
+  --climate-accent-line: color-mix(in srgb, var(--climate-accent) 58%, var(--ink, currentColor));
+  --climate-accent-line-strong: color-mix(in srgb, var(--climate-accent) 72%, var(--ink, currentColor));
+  --climate-outline-strength: max(var(--climate-outline-strength), 0.38);
+  --climate-hint-opacity: max(var(--climate-hint-opacity), 0.82);
+}
+
+:where(html[data-spw-high-contrast="on"])
+:where(.climate-menu-trigger, .phase-menu-trigger, .climate-menu-choice, .phase-menu-choice) {
+  border-width: 2px;
+}
+
+
+/* ==========================================================================
+   13. Reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   :where(
-    html, body, .site-frame, .frame-card, .media-card, .media-focus-card, 
-    .operator-card, .frame-panel, .mode-panel, .spec-pill, .badge, .tag, .pill, 
-    .spw-context-memo, .spw-experience-memo, .spw-guide-chip, .spw-component-meta, 
-    .developmental-climate-controls, .phase-controls, .climate-menu-trigger, 
-    .phase-menu-trigger, .climate-menu-choice, .phase-menu-choice, 
-    [data-developmental-indicator], [data-phase-indicator], [data-op], [data-spw-operator]
+    html,
+    body,
+    .site-frame,
+    .frame-card,
+    .media-card,
+    .media-focus-card,
+    .operator-card,
+    .frame-panel,
+    .mode-panel,
+    .spec-pill,
+    .badge,
+    .tag,
+    .pill,
+    .spw-context-memo,
+    .spw-experience-memo,
+    .spw-guide-chip,
+    .spw-component-meta,
+    .developmental-climate-controls,
+    .phase-controls,
+    .climate-menu-trigger,
+    .phase-menu-trigger,
+    .climate-menu-choice,
+    .phase-menu-choice,
+    [data-developmental-indicator],
+    [data-phase-indicator],
+    [data-op],
+    [data-spw-operator]
   ) {
     animation: none !important;
     transition: none !important;
   }
+}
+
+:where(html[data-spw-reduce-motion="on"])
+:where(
+  body,
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .spw-context-memo,
+  .spw-experience-memo,
+  .spw-guide-chip,
+  .spw-component-meta,
+  .developmental-climate-controls,
+  .phase-controls,
+  .climate-menu-trigger,
+  .phase-menu-trigger,
+  .climate-menu-choice,
+  .phase-menu-choice,
+  [data-developmental-indicator],
+  [data-phase-indicator],
+  [data-op],
+  [data-spw-operator]
+) {
+  animation: none !important;
+  transition: none !important;
 }
