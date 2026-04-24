@@ -125,7 +125,6 @@
 </header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="home-title">
-
     <section
         class="site-frame site-hero"
         id="home-frame"
@@ -134,8 +133,10 @@
         data-spw-kind="frame"
         data-spw-role="kernel-entry"
         data-spw-context="reading"
+        data-spw-context-domains="software craft texture lore website"
+        data-spw-context-actions="orient read inspect"
         data-spw-wonder="orientation locality consequence texture portability"
-        data-spw-affordance="navigate"
+        data-spw-affordance="read"
         data-spw-form="brace"
         data-spw-form-options="brace,block,angle"
         data-spw-liminality="entry"
@@ -154,10 +155,8 @@
         data-spw-projection="public-library"
         data-spw-seed-package=".spw/home-atlas"
         data-spw-materiality="paper texture svg print web"
-        data-spw-context-relevance="software craft website settings play texture lore"
-        data-spw-trope-hypothesis="kernel entry + semantic lattice + portable seed handles"
-        data-spw-related-routes="/about/website/|/topics/software/spw/|/topics/craft/|https://texture.website|https://spw.quest">
-
+        data-spw-related-routes="/about/website/|/topics/software/spw/|/topics/craft/|https://texture.website|https://spw.quest"
+    >
         <div class="frame-topline">
             <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
             <div class="mode-switch" role="group" aria-label="Home lens">
@@ -176,89 +175,137 @@
             </div>
         </div>
 
-        <div class="home-brand-plate">
-            <img
-                src="/public/images/logo/spw-brand-plate.svg"
-                alt="Spwashi logo plate showing the Spwashi mark and wordmark in teal and gold on a warm paper field.">
+        <div class="home-hero-grid">
+            <div class="home-hero-copy">
+                <p class="page-kicker">kernel entry</p>
+                <h1 id="home-title">
+                    I build readable software, make process art, and design Spw as a portable language surface
+                    for tools, images, learning, and lore.
+                </h1>
+
+                <p id="home-frame-note" class="page-lede">
+                    Spwashi.com is the public edge of a small-kernel, large-lattice system: a readable web surface
+                    for software, texture, language, image studies, publishing, and lore that can later travel as
+                    portable seed packages.
+                </p>
+
+                <p class="frame-note">
+                    The center of gravity is <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>,
+                    with projections into <a href="/topics/software/spw/">Spw language design</a>,
+                    <a href="/topics/software/">software routes</a>,
+                    <a href="/topics/math/">math</a>,
+                    <a href="/topics/craft/">craft</a>,
+                    <a href="https://texture.website">texture.website</a>,
+                    <a href="/play/rpg-wednesday/">RPG Wednesday</a>, and
+                    <a href="/about/domains/lore.land/">lore.land</a>.
+                </p>
+            </div>
+
+            <figure class="home-brand-plate">
+                <img
+                    src="/public/images/logo/spw-brand-plate.svg"
+                    alt="Spwashi logo plate showing the Spwashi mark and wordmark in teal and gold on a warm paper field."
+                />
+            </figure>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="operator-field"
+        aria-labelledby="operator-field-title"
+        data-spw-kind="frame"
+        data-spw-role="operator-field"
+        data-spw-context="orientation"
+        data-spw-context-domains="software math craft design publishing lore"
+        data-spw-context-actions="navigate compare enter"
+        data-spw-wonder="orientation locality consequence"
+        data-spw-affordance="navigate"
+        data-spw-form="angle"
+        data-spw-liminality="entry"
+        data-spw-category-family="register"
+        data-spw-locality="high"
+        data-spw-consequence="entry"
+        data-spw-promptability="visible"
+        data-spw-collectability="medium"
+        data-spw-seed="home_operator_field"
+    >
+        <div class="frame-heading">
+            <a class="frame-sigil" href="#operator-field">? "operator_field"</a>
+            <h2 id="operator-field-title">Choose a first route</h2>
         </div>
 
-        <p class="page-kicker">software kernel • semantic lattice • process art • texture • lore • readable web</p>
-        <h1 id="home-title">I build readable software, make process art, and design Spw as a portable language surface
-            for tools, images, learning, and lore.</h1>
-
-        <p id="home-frame-note" class="frame-note">
-            Spwashi.com is the public edge of a small-kernel, large-lattice system: <a
-            href="https://github.com/spwashi/spw-workbench">spw-workbench</a> at the center, with <a
-            href="/topics/software/spw/">Spw language design</a>, <a href="/topics/software/">software routes</a>, <a
-            href="/topics/math/">math studies</a>, <a href="/topics/craft/">craft experiments</a>, <a
-            href="https://texture.website">texture.website</a>, <a href="/play/rpg-wednesday/">RPG Wednesday</a>, and <a
-            href="/about/domains/lore.land/">lore.land</a> as projections. The homepage should read as a public library,
-            but its constructs should behave like portable seed packages.
-        </p>
-
-        <p class="page-lede">
-            The center of gravity is <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>: a TypeScript
-            workbench for parser, runtime, projection, and operator-driven tooling. Around that core are routes for <a
-            href="/topics/software/spw/">Spw language design</a>, <a href="/topics/software/parsers/">parser studies</a>,
-            <a href="/topics/software/renderers/">renderer notes</a>, <a href="/topics/software/compression/">compression
-            ideas</a>, <a href="/topics/software/distributed/">distributed file questions</a>, <a href="/topics/math/">math</a>,
-            <a href="/blog/">public notes</a>, and <a href="/play/rpg-wednesday/">RPG Wednesday</a>. The shared aim is a
-            readable system that can move between prose, code, images, prompts, cards, print objects, and local-first
-            tools without losing its route memory.
-        </p>
-
-        <p class="frame-note">
-            The practical wager is simple: a personal website can be more than a portfolio. It can be a workshop,
-            archive, field guide, prompt surface, texture lab, and durable place to return. The images here are not
-            decoration. They are materials for testing what structure feels like while it is being made, and some should
-            become portable seeds for future pages, prints, zines, decks, and domain forks.
+        <p class="inline-note">
+            This is the action layer. Start with the workbench, a topic route, a live playtest, or a texture-facing
+            surface.
         </p>
 
         <nav class="frame-operators frame-operators--probe" aria-label="Start here">
             <a class="operator-chip" href="https://github.com/spwashi/spw-workbench" data-spw-form="angle"
                data-spw-operator="object">^spw_workbench</a>
             <a class="operator-chip" href="/topics/software/" data-spw-form="angle" data-spw-operator="probe">?software_surface</a>
-            <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="stream">*rpg_wednesday</a>
-            <a class="operator-chip" href="/tools/midjourney/" data-spw-form="angle" data-spw-operator="ref">~midjourney_bench</a>
-            <a class="operator-chip" href="/topics/software/pretext/" data-spw-form="angle" data-spw-operator="surface">&gt;pretext</a>
-            <a class="operator-chip" href="/topics/software/parsers/" data-spw-form="angle" data-spw-operator="probe">?parsers</a>
-            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle" data-spw-operator="ref">~renderers</a>
+            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;spw_language</a>
             <a class="operator-chip" href="/topics/math/" data-spw-form="angle"
                data-spw-operator="stream">*math_routes</a>
             <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="action">@craft</a>
             <a class="operator-chip" href="/design/" data-spw-form="angle" data-spw-operator="frame">#&gt;design_hub</a>
+            <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="stream">*rpg_wednesday</a>
             <a class="operator-chip" href="/about/website/" data-spw-form="angle" data-spw-operator="frame">#&gt;website_guide</a>
             <a class="operator-chip" href="https://texture.website" data-spw-form="angle" data-spw-operator="surface">&gt;texture.website</a>
             <a class="operator-chip" href="https://spw.quest" data-spw-form="angle" data-spw-operator="frame">#&gt;spw.quest</a>
-            <a class="operator-chip" href="https://trope.wiki" data-spw-form="angle" data-spw-operator="surface">&gt;trope.wiki</a>
         </nav>
+    </section>
 
-        <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel
-             data-spw-feature="home-quick-tune">
+    <section
+        class="site-frame"
+        id="climate-tuning"
+        aria-labelledby="climate-tuning-title"
+        data-site-settings-scope
+        data-spw-kind="frame"
+        data-spw-role="climate-tuning"
+        data-spw-context="settings"
+        data-spw-context-domains="appearance resonance memory route discovery"
+        data-spw-context-actions="tune preview persist"
+        data-spw-wonder="comparison locality resonance"
+        data-spw-affordance="tune"
+        data-spw-form="brace"
+        data-spw-liminality="entry"
+        data-spw-category-family="register"
+        data-spw-locality="medium"
+        data-spw-consequence="state"
+        data-spw-promptability="ambient"
+        data-spw-collectability="medium"
+        data-spw-seed="home_climate_tuning"
+    >
+        <div class="frame-heading">
+            <a class="frame-sigil" href="#climate-tuning">~"climate_tuning"</a>
+            <h2 id="climate-tuning-title">Tune the atlas</h2>
+        </div>
+
+        <p class="frame-note">
+            These settings stay in this browser. Use them to set route bias, color atmosphere, and wonder memory without
+            mixing tuning controls into the kernel statement.
+        </p>
+
+        <div class="vibe-widget-grid vibe-widget-grid--compact">
             <article class="vibe-widget">
                 <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Tailor the atlas</p>
-                    <h2 class="vibe-widget-title">Tune the atlas to your route</h2>
+                    <p class="vibe-widget-kicker">Current state</p>
+                    <h3 class="vibe-widget-title">Read the active environment</h3>
                 </div>
-                <p class="vibe-widget-copy">These choices stay in this browser and shape image accents, cards, and route
-                    surfaces as you move. The full register lives in <a href="/settings/#presets">settings</a>.</p>
                 <div class="vibe-widget-meta">
-                    <span class="spec-pill">mode: <span class="vibe-widget-state"
-                                                        data-settings-state="colorMode">auto</span></span>
-                    <span class="spec-pill">pack: <span class="vibe-widget-state" data-settings-state="themePack">neutral paper</span></span>
-                    <span class="spec-pill">palette: <span class="vibe-widget-state"
-                                                           data-settings-state="paletteResonance">route</span></span>
-                    <span class="spec-pill">memory: <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span></span>
+                    <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
+                    <span class="spec-pill">pack: <span data-settings-state="themePack">neutral paper</span></span>
+                    <span class="spec-pill">palette: <span data-settings-state="paletteResonance">route</span></span>
+                    <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
                 </div>
             </article>
 
             <article class="vibe-widget">
                 <div class="vibe-widget-header">
                     <p class="vibe-widget-kicker">Resonance dimension</p>
-                    <h2 class="vibe-widget-title">Choose a reading bias</h2>
+                    <h3 class="vibe-widget-title">Choose a reading bias</h3>
                 </div>
-                <p class="vibe-widget-copy">Keep the atlas context-led, or let nearby images and cards lean toward
-                    craft, software, or mathematics.</p>
                 <div class="vibe-widget-actions" role="group" aria-label="Homepage dimensional resonance variants">
                     <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">
                         Context-led
@@ -277,10 +324,8 @@
             <article class="vibe-widget">
                 <div class="vibe-widget-header">
                     <p class="vibe-widget-kicker">Theme</p>
-                    <h2 class="vibe-widget-title">Set the light and material family</h2>
+                    <h3 class="vibe-widget-title">Set light and material family</h3>
                 </div>
-                <p class="vibe-widget-copy">Leave the surface adaptive, or pin the reading atmosphere before opening
-                    deeper routes.</p>
                 <div class="vibe-widget-actions" role="group" aria-label="Homepage color mode variants">
                     <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
                     <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
@@ -302,319 +347,195 @@
                             data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
                 </div>
             </article>
-        </div>
-        <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
 
-        <div class="palette-probe" data-site-settings-scope data-spw-feature="home-palette-probe">
-            <div class="palette-probe-header">
-                <div>
-                    <p class="palette-probe-kicker">Color paths</p>
-                    <h2 class="palette-probe-title">Pick a palette, then follow the route it makes coherent.</h2>
+            <article class="vibe-widget">
+                <div class="vibe-widget-header">
+                    <p class="vibe-widget-kicker">Wonder memory</p>
+                    <h3 class="vibe-widget-title">Control resonance carry</h3>
                 </div>
-                <div class="palette-probe-swatches theme-pack-chip-row" role="group"
-                     aria-label="Homepage theme pack choices">
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper"
-                            data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger"
-                            data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio"
-                            data-theme-pack-preview="electric-studio"
-                            aria-label="Choose electric studio theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum"
-                            data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace"
-                            data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console"
-                            data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
-                </div>
-            </div>
-            <p class="palette-probe-copy">Current pack: <span class="palette-probe-state"
-                                                              data-settings-state="themePack">neutral paper</span>.
-                Current dimension: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>.
-                Wonder memory is <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>, and
-                color mode is <span class="palette-probe-state" data-settings-state="colorMode">auto</span>.</p>
-            <div class="palette-probe-actions" aria-label="Homepage palette resonance choices">
-                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">
-                    Software-led
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led
-                </button>
-            </div>
-            <div class="palette-probe-paths" aria-label="Nearby route paths">
-                <a class="operator-chip" href="/topics/craft/" data-spw-operator="object">craft warmth</a>
-                <a class="operator-chip" href="/topics/software/" data-spw-operator="ref">software cool</a>
-                <a class="operator-chip" href="/recipes/" data-spw-operator="surface">substrate amber</a>
-                <a class="operator-chip" href="/play/" data-spw-operator="action">play signal</a>
-            </div>
-            <div class="palette-probe-actions" aria-label="Supporting homepage display settings">
-                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
-                <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
-            </div>
-            <p class="palette-probe-copy">The practical aim is simple: visitors should be able to discover a path by
-                color, not only by taxonomy. For the full browser-local register, open <a
-                    href="/settings/#runtime-preferences">runtime preferences</a>.</p>
-        </div>
-
-        <section
-            class="site-frame"
-            id="entry-loops"
-            data-spw-role="routing"
-            data-spw-kind="frame"
-            data-spw-context="orientation"
-            data-spw-wonder="orientation locality consequence"
-            data-spw-affordance="navigate"
-            data-spw-liminality="entry"
-            data-spw-category-family="register"
-            data-spw-locality="high"
-            data-spw-consequence="entry"
-            data-spw-promptability="visible"
-            data-spw-collectability="medium"
-            data-spw-seed="home_entry_loops">
-            <div class="frame-heading">
-                <a class="frame-sigil" href="#entry-loops">#&gt;"entry_loops"</a>
-                <h2>Three good first loops</h2>
-            </div>
-            <p class="inline-note">For a fast read, open one route as a component kit, one as a live playtest, and one
-                as a portable texture seed.</p>
-            <div class="frame-grid frame-grid--dense">
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-components"
-                         data-spw-form="block" data-spw-category-family="register">
-                    <a href="/design/components/" id="card-entry-components">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="cool"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#1a9999, #f0c36a, #355f77, #d9d2c6"
-                            data-spw-accent-anchor="design components onboarding glossary"
-                            data-spw-accent-operator="frame">
-                            <img src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp"
-                                 alt="A corridor-like structural image with luminous paper seams, suitable for a component glossary or onboarding route."
-                                 loading="lazy" decoding="async" width="1024" height="1024"/>
-                        </figure>
-                        <span class="frame-card-sigil">#&gt;component_glossary</span>
-                        <strong>Design components</strong>
-                        <span>A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
-                    </a>
-                </article>
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw"
-                         data-spw-form="block" data-spw-category-family="encounter">
-                    <a href="/play/rpg-wednesday/" id="card-entry-rpgw">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="warm"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#5d9367, #b06a5b, #f0c36a, #22363a"
-                            data-spw-accent-anchor="rpg wednesday playtest capture prompts"
-                            data-spw-accent-operator="stream">
-                            <img src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"
-                                 alt="An energetic RPG Wednesday signal image with green and amber light, like a social playtest surface gathering momentum."
-                                 loading="lazy" decoding="async" width="1024" height="1024"/>
-                        </figure>
-                        <span class="frame-card-sigil">*rpg_wednesday</span>
-                        <strong>RPG Wednesday</strong>
-                        <span>A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
-                    </a>
-                </article>
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-texture"
-                         data-spw-form="block" data-spw-category-family="specimen"
-                         data-spw-seed-package=".spw/texture-portal">
-                    <a href="https://texture.website" id="card-entry-texture">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="warm"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#0f5d64, #cfa16d, #7f5336, #efebe0"
-                            data-spw-accent-anchor="texture surface materials seed package"
-                            data-spw-accent-operator="surface">
-                            <img src="/public/images/renders/unsorted-curation/library-craft-register.webp"
-                                 alt="A warm library-like craft register image suggesting texture, study, publishing material, and sustained independent work."
-                                 loading="lazy" decoding="async" width="1024" height="1024"/>
-                        </figure>
-                        <span class="frame-card-sigil">&gt;texture_surface</span>
-                        <strong>Texture surface</strong>
-                        <span>A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
-                    </a>
-                </article>
-            </div>
-        </section>
-
-        <nav
-            class="page-index"
-            aria-label="Home sections"
-            data-spw-feature="home-section-index"
-            data-home-section-index
-            data-spw-role="local-register"
-            data-spw-category-family="register"
-            data-spw-seed="home_page_index"
-            data-spw-context-relevance="archive website software craft">
-            <div class="page-index-toolbar">
-                <div class="page-index-toolbar-copy">
-                    <p class="page-index-kicker">Section register</p>
-                    <p class="page-index-note">Filter the page, then follow the section that matches your current
-                        reading intent.</p>
-                </div>
-                <label class="page-index-filter" for="home-section-filter">
-                    <span class="sr-only">Filter homepage sections</span>
-                    <input
-                        id="home-section-filter"
-                        name="home-section-filter"
-                        type="search"
-                        inputmode="search"
-                        autocomplete="off"
-                        placeholder="filter sections"
-                        data-home-section-filter>
-                    <button type="button" class="page-index-filter-clear" data-home-section-filter-clear hidden>Clear
+                <div class="vibe-widget-actions" role="group" aria-label="Homepage wonder memory controls">
+                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused
                     </button>
-                </label>
-            </div>
-            <p class="page-index-status" data-home-section-filter-status role="status" aria-live="polite">Showing all
-                sections.</p>
-            <ul>
-                <li><a href="#home-frame">Home</a></li>
-                <li><a href="#entry-loops">First Loops</a></li>
-                <li><a href="#reading-layers">Reading Layers</a></li>
-                <li><a href="#kernel-lattice-field">Kernel + Lattice</a></li>
-                <li><a href="#parts-of-speech-field">Parts of Speech</a></li>
-                <li><a href="#accent-context-field">Accent Contexts</a></li>
-                <li><a href="#image-topic-bridge">Image–Topic Relations</a></li>
-                <li><a href="#cognitive-machine-map">How To Read The Site</a></li>
-                <li><a href="#site-category-atlas">Category Atlas</a></li>
-                <li><a href="#promptable-specimens">Promptable Specimens</a></li>
-                <li><a href="#media-focus">Signal Register</a></li>
-                <li><a href="#artifact-register">Artifact Register</a></li>
-                <li><a href="#portable-seed-register">Portable Seed Register</a></li>
-                <li><a href="#language-field">Language Field</a></li>
-                <li><a href="#operator-pivot-field">Operator Pivot Field</a></li>
-                <li><a href="#surface-register">Surface Register</a></li>
-                <li><a href="#material-studies">Material Studies</a></li>
-                <li><a href="#website-register">Website Register</a></li>
-                <li><a href="#constellation-frame">Constellation</a></li>
-            </ul>
-        </nav>
-
-        <div class="wonder-memory-strip" data-site-settings-scope
-             data-spw-memory-anchor="home craft software recipes play palette wonder colors"
-             data-spw-feature="home-memory-controls">
-            <p class="wonder-memory-copy">Paths can start with temperature instead of taxonomy: warmer materials lead
-                into <a href="/topics/craft/">craft</a> or <a href="/recipes/">recipes</a>, cooler structures lead into
-                <a href="/topics/software/">software</a>, and social energy leads into <a href="/play/">play</a>. Wonder
-                memory controls whether that resonance stays local or echoes across routes.</p>
-            <div class="wonder-memory-actions" role="group" aria-label="Homepage wonder memory controls">
-                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused</button>
-                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected
-                </button>
-                <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive
-                </button>
-                <span class="spec-pill">wonder memory: <span data-settings-state="wonderMemory">nearby</span></span>
-            </div>
+                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected
+                    </button>
+                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">
+                        Immersive
+                    </button>
+                </div>
+            </article>
         </div>
 
-        <p class="spw-spirit-sequence" aria-hidden="true">
-            <span data-op="probe">?</span>
-            <span data-op="ref">~</span>
-            <span data-op="action">@</span>
-            <span data-op="stream">&amp;</span>
-            <span data-op="object">*</span>
-            <span data-op="frame">^</span>
+        <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
+    </section>
+
+    <section
+        class="site-frame"
+        id="entry-loops"
+        aria-labelledby="entry-loops-title"
+        data-spw-role="routing"
+        data-spw-kind="frame"
+        data-spw-context="orientation"
+        data-spw-context-domains="components play texture support"
+        data-spw-context-actions="enter compare collect"
+        data-spw-wonder="orientation locality consequence"
+        data-spw-affordance="navigate"
+        data-spw-liminality="entry"
+        data-spw-category-family="register"
+        data-spw-locality="high"
+        data-spw-consequence="entry"
+        data-spw-promptability="visible"
+        data-spw-collectability="medium"
+        data-spw-seed="home_entry_loops"
+    >
+        <div class="frame-heading">
+            <a class="frame-sigil" href="#entry-loops">#&gt;"entry_loops"</a>
+            <h2 id="entry-loops-title">Three good first loops</h2>
+        </div>
+
+        <p class="inline-note">
+            Read one route as a component kit, one as a live playtest, and one as a texture or support surface.
         </p>
 
+        <div class="frame-grid frame-grid--dense">
+            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-components"
+                     data-spw-form="block" data-spw-category-family="register">
+                <a href="/design/components/" id="card-entry-components">
+                    <figure class="frame-card-media">
+                        <img
+                            src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp"
+                            alt="A corridor-like structural image with luminous paper seams, suitable for a component glossary or onboarding route."
+                            loading="lazy"
+                            decoding="async"
+                            width="1024"
+                            height="1024"
+                        />
+                    </figure>
+                    <span class="frame-card-sigil">#&gt;component_glossary</span>
+                    <strong>Design components</strong>
+                    <span>A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
+                </a>
+            </article>
+
+            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block"
+                     data-spw-category-family="encounter">
+                <a href="/play/rpg-wednesday/" id="card-entry-rpgw">
+                    <figure class="frame-card-media">
+                        <img
+                            src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"
+                            alt="An energetic RPG Wednesday signal image with green and amber light, like a social playtest surface gathering momentum."
+                            loading="lazy"
+                            decoding="async"
+                            width="1024"
+                            height="1024"
+                        />
+                    </figure>
+                    <span class="frame-card-sigil">*rpg_wednesday</span>
+                    <strong>RPG Wednesday</strong>
+                    <span>A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
+                </a>
+            </article>
+
+            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-texture"
+                     data-spw-form="block" data-spw-category-family="specimen"
+                     data-spw-seed-package=".spw/texture-portal">
+                <a href="https://texture.website" id="card-entry-texture">
+                    <figure class="frame-card-media">
+                        <img
+                            src="/public/images/renders/unsorted-curation/library-craft-register.webp"
+                            alt="A warm library-like craft register image suggesting texture, study, publishing material, and sustained independent work."
+                            loading="lazy"
+                            decoding="async"
+                            width="1024"
+                            height="1024"
+                        />
+                    </figure>
+                    <span class="frame-card-sigil">&gt;texture_surface</span>
+                    <strong>Texture surface</strong>
+                    <span>A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
+                </a>
+            </article>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="reading-layers"
+        aria-labelledby="reading-layers-title"
+        data-spw-kind="frame"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-context-domains="language typography surfaces topics"
+        data-spw-context-actions="inspect compare understand"
+        data-spw-wonder="orientation consequence resonance"
+        data-spw-affordance="read"
+        data-spw-form="brace"
+        data-spw-liminality="entry"
+        data-spw-category-family="register"
+        data-spw-locality="high"
+        data-spw-consequence="model"
+        data-spw-promptability="visible"
+        data-spw-collectability="medium"
+        data-spw-seed="home_reading_layers"
+    >
+        <div class="frame-heading">
+            <a class="frame-sigil" href="#reading-layers">^"reading_layers"{</a>
+            <h2 id="reading-layers-title">Read the site through multiple lenses</h2>
+        </div>
+
         <div class="mode-panels" data-spw-feature="home-lens-panels">
-            <section
-                class="mode-panel"
-                data-mode-group="home-lens"
-                data-mode-panel="surface"
-                data-spw-form="block"
-                data-spw-liminality="projected"
-                aria-labelledby="home-surface-title">
-                <h2 id="home-surface-title" class="sr-only">Surface view</h2>
+            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block"
+                     data-spw-liminality="projected" aria-labelledby="home-surface-title">
+                <h3 id="home-surface-title" class="sr-only">Surface view</h3>
                 <p>
                     Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle"
                                           data-spw-form="angle">&lt;</a><a href="/topics/software/spw/">Spw</a><span
-                    class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span> is a cognitive gesture.
-                    A frame <span class="syntax-token" title="frame: orients a named unit of meaning">#&gt;</span>
+                    class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>
+                    is a cognitive gesture. A frame <span class="syntax-token"
+                                                          title="frame: orients a named unit of meaning">#&gt;</span>
                     orients. A probe <span class="syntax-token" title="probe: opens inquiry without committing">?</span>
-                    opens inquiry. A reference <span class="syntax-token"
-                                                     title="ref: reaches without forcing commitment">~</span> reaches
-                    without binding. An action <span class="syntax-token"
-                                                     title="action: commits a local behavior">@</span> commits. A
-                    surface <span class="syntax-token"
-                                  title="surface: makes a layer available to perception">&gt;</span> projects.
+                    opens inquiry.
+                    A reference <span class="syntax-token" title="ref: reaches without forcing commitment">~</span>
+                    reaches without binding.
+                    An action <span class="syntax-token" title="action: commits a local behavior">@</span> commits.
+                    A surface <span class="syntax-token"
+                                    title="surface: makes a layer available to perception">&gt;</span> projects.
                 </p>
                 <p>
                     The same unit can be stressed differently depending on context. A word may be plain prose in one
-                    paragraph, a <span class="spw-topic" data-spw-topic="topic">topic handle</span> in another, an <span
-                    class="operator-chip" data-spw-form="angle" data-spw-operator="probe">operator route</span>
-                    somewhere else, or a label inside an SVG. This lets the page teach that typography is not only
-                    styling. It is a model of emphasis, access, and relationship that can point onward into <a
-                    href="/topics/software/">software</a>, <a href="/topics/math/">math</a>, <a href="/topics/craft/">craft</a>,
-                    or <a href="/recipes/">recipes</a> without needing a different interface for each mode.
-                </p>
-                <p>
-                    The site is built from reusable frames, cards, chips, figures, operator routes, image studies, and
-                    publishing surfaces. Those are not separate concerns. They are parts of one semantic lattice where
-                    plain text, component structure, visual atmosphere, and media cues can reinforce one another, then
-                    later feed into sister routes like <a href="/about/website/#publishing-register">publishing
-                    registers</a>, <a href="/settings/#runtime-preferences">runtime settings</a>, and eventually cloned
-                    domains such as <span class="spw-topic" data-spw-topic="domain">spwashi.art</span> and <span
-                    class="spw-topic" data-spw-topic="domain">spwashi.dev</span>.
+                    paragraph,
+                    a <span class="spw-topic" data-spw-topic="topic">topic handle</span> in another, an
+                    <span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">operator route</span>
+                    somewhere else,
+                    or a label inside an SVG.
                 </p>
             </section>
 
-            <section
-                class="mode-panel"
-                data-mode-group="home-lens"
-                data-mode-panel="syntax"
-                hidden
-                aria-labelledby="home-syntax-title">
-                <h2 id="home-syntax-title" class="sr-only">Syntax view</h2>
+            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden
+                     aria-labelledby="home-syntax-title">
+                <h3 id="home-syntax-title" class="sr-only">Syntax view</h3>
                 <p class="frame-note">
                     Each line is a gesture in a grammar that stays readable as plain text. Operators are vocabulary.
-                    Braces are containment. Topic handles and image studies can both be indexed as semantic surfaces.
+                    Braces are containment.
                 </p>
                 <pre><code>#>home_frame &lt; orients this unit of meaning
 #:layer pragmatics &lt; qualifies interpretive layer
-#&gt;home_kernel{
-  ^kernel &lt; keeps the small stable core inspectable
-  ~lattice &lt; relates routes, motifs, images, and topics
-  &gt;projection &lt; renders the same seed into page, card, print, or prompt
-  @seed_package ".spw/home-atlas" &lt; makes the unit portable
+^"reading_layers"{
+  ?[word] &lt; asks what a word is doing here
+  ~image &lt; relates text to nearby study
+  @accent &lt; commits a local emphasis
+  *topic &lt; connects repeated themes
+  >surface &lt; projects visible hierarchy
 }
 &amp;[context]{
-  =part_of_speech "noun|verb|adjective|operator|topic|seed"
-  $meta "panel|caption|card|image|route|print|package"
+  =part_of_speech "noun|verb|adjective|operator|topic"
+  $meta "panel|caption|card|image|route"
   !constraint "stay readable in plain text"
 }</code></pre>
             </section>
 
-            <section
-                class="mode-panel"
-                data-mode-group="home-lens"
-                data-mode-panel="artifacts"
-                hidden
-                data-spw-form="square"
-                data-spw-liminality="deep"
-                aria-labelledby="home-artifacts-title">
-                <h2 id="home-artifacts-title" class="sr-only">Artifact view</h2>
+            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden
+                     data-spw-form="square" data-spw-liminality="deep" aria-labelledby="home-artifacts-title">
+                <h3 id="home-artifacts-title" class="sr-only">Artifact view</h3>
                 <div class="frame-grid" role="list">
                     <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-workbench"
                              data-spw-category-family="workshop">
@@ -629,20 +550,12 @@
                         <a href="https://spw.quest" id="home-card-spw-quest">
                             <span class="frame-card-sigil">#&gt;spw_quest</span>
                             <strong>spw.quest</strong>
-                            <span>Onboarding and language documentation for Spw, pronounced “swoop,” as a plain-text grammar with visible structure and operator precedence.</span>
+                            <span>Language documentation for Spw as a plain-text grammar with visible structure and operator precedence.</span>
                         </a>
                     </article>
-                    <article class="frame-card" role="listitem" aria-labelledby="card-syntax-surface"
-                             data-spw-category-family="portal">
-                        <a href="/topics/software/spw/" id="card-syntax-surface">
-                            <span class="frame-card-sigil">#&gt;syntax_surface</span>
-                            <strong>Spw syntax</strong>
-                            <span>Routes into frames, operators, examples, and seed packages that show how plain text becomes inspectable structure.</span>
-                        </a>
-                    </article>
-                    <article class="frame-card" role="listitem" aria-labelledby="home-card-pretext-surface"
+                    <article class="frame-card" role="listitem" aria-labelledby="home-card-pretext"
                              data-spw-category-family="specimen">
-                        <a href="/topics/software/pretext/" id="home-card-pretext-surface">
+                        <a href="/topics/software/pretext/" id="home-card-pretext">
                             <span class="frame-card-sigil">&gt;pretext_surface</span>
                             <strong>Pretext physics</strong>
                             <span>Projection, rhythm, and measurable whimsy for genre-aware rendering and media studies.</span>
@@ -651,1275 +564,23 @@
                 </div>
             </section>
 
-            <section
-                class="mode-panel"
-                data-mode-group="home-lens"
-                data-mode-panel="website"
-                hidden
-                aria-labelledby="home-website-title">
-                <h2 id="home-website-title" class="sr-only">Website view</h2>
+            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="website" hidden
+                     aria-labelledby="home-website-title">
+                <h3 id="home-website-title" class="sr-only">Website view</h3>
                 <p>
                     The website itself is part of the practice. It is a field guide, a publishing surface, an
-                    observatory for settings and states, and a test for whether a site can stay readable while becoming
-                    more semantic, promptable, and cross-referenceable. I want the pages to behave less like isolated
-                    essays and more like modular projections where <a href="/settings/">settings</a>, <a
-                    href="/about/website/#interaction-register">interaction rules</a>, <a
-                    href="/about/website/#publishing-register">publishing cues</a>, and <span class="spw-topic"
-                                                                                              data-spw-topic="seed-package">seed packages</span>
-                    can move from one route to the next.
+                    observatory for settings and states,
+                    and a test for whether a site can stay readable while becoming more semantic, promptable, and
+                    cross-referenceable.
                 </p>
                 <p class="frame-note">
                     The practical thesis: readable syntax can give people and tools the same map. A typographic layer
-                    becomes more valuable when it is also a semantic layer. A surface becomes more valuable when it can
-                    imply nearby contexts without becoming noisy. That same grammar should be sturdy enough to seed
-                    later siblings such as <span class="spw-topic" data-spw-topic="domain">spwashi.art</span>, <span
-                    class="spw-topic" data-spw-topic="domain">spwashi.dev</span>, <span class="spw-topic"
-                                                                                        data-spw-topic="domain">texture.website</span>,
-                    and lore-facing print or ebook routes.
+                    becomes more valuable
+                    when it is also a semantic layer.
                 </p>
             </section>
         </div>
-
-        <div class="gallery-overlays home-hero-studies" role="list" data-spw-feature="home-hero-gallery">
-            <figure
-                class="image-study"
-                role="listitem"
-                data-spw-accent="resonance"
-                data-spw-accent-palette="cool"
-                data-spw-accent-resonance="image anchor recent manual"
-                data-spw-accent-colors="#1a9999, #f0c36a, #355f77, #d49357"
-                data-spw-accent-anchor="topics craft site-design atlas"
-                data-spw-accent-operator="surface"
-                data-spw-realization="hybrid"
-                data-spw-substrate="surface">
-                <a href="/topics/craft/">
-                    <img
-                        src="/public/images/renders/unsorted-curation/website-atlas-weather-0.webp"
-                        alt="A teal and amber tide-like field with drifting light and layered textures, suggesting an atlas made of paper, water, and weather."
-                        loading="eager"
-                        decoding="async"
-                        fetchpriority="high"
-                        width="1048"
-                        height="1400"/>
-                </a>
-                <figcaption>
-                    <strong>Atlas weather</strong> — the first color field should already hint that <a href="/topics/">the
-                    atlas</a>, <a href="/topics/craft/">craft</a>, and <a href="/design/website/">website design</a>
-                    share a paper-and-tide vocabulary.
-                </figcaption>
-            </figure>
-
-            <figure
-                class="image-study"
-                role="listitem"
-                data-spw-accent="resonance"
-                data-spw-accent-palette="cool"
-                data-spw-accent-resonance="image anchor recent manual"
-                data-spw-accent-colors="#165d64, #f0c36a, #8b3d24, #5f1720"
-                data-spw-accent-anchor="software parsers complexity number-theory"
-                data-spw-accent-operator="probe"
-                data-spw-realization="hybrid"
-                data-spw-substrate="probe">
-                <a href="/topics/software/parsers/#parser-map">
-                    <img
-                        src="/public/images/renders/unsorted-curation/algorithm-cosmos-3.webp"
-                        alt="A charged field of geometric solids, symbols, and glowing marks arranged like parser weather over a dark luminous surface."
-                        loading="lazy"
-                        decoding="async"
-                        width="1400"
-                        height="1400"/>
-                </a>
-                <figcaption>
-                    <strong>Parser weather</strong> — this route study points forward to <a href="/topics/software/">software</a>,
-                    the <a href="/topics/software/parsers/#parser-map">parser map</a>, and <a
-                    href="/topics/math/complexity/#parser-budgets">complexity budgets</a> before the page turns fully
-                    technical.
-                </figcaption>
-            </figure>
-        </div>
     </section>
-
-    <section
-        class="site-frame"
-        id="reading-layers"
-        aria-labelledby="reading-layers-title"
-        data-spw-kind="frame"
-        data-spw-role="projection-map"
-        data-spw-context="reading"
-        data-spw-form="brace"
-        data-spw-wonder="comparison projection"
-        data-spw-category-family="nook"
-        data-spw-projection="multi-view"
-        data-spw-seed="reading_layers_field">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#reading-layers">^"reading_layers"</a>
-        </div>
-        <h2 id="reading-layers-title">One page, several projections</h2>
-        <p class="frame-note">
-            The homepage should work as prose, component map, topic index, image atlas, operator field, and seed package
-            preview at the same time.
-        </p>
-
-        <div class="compare-sets" role="list">
-            <article class="compare-card" role="listitem" aria-labelledby="layer-prose">
-                <h3 id="layer-prose">As prose</h3>
-                <p>Read sentences for argument, tone, and invitation. Language remains the first interface.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="layer-components">
-                <h3 id="layer-components">As components</h3>
-                <p>Read frames, cards, chips, figures, panels, and captions as the visible grammar of the page.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="layer-topics">
-                <h3 id="layer-topics">As topics</h3>
-                <p>Read repeated terms as handles into software, pedagogy, craft, architecture, publishing, or play.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="layer-images">
-                <h3 id="layer-images">As image relations</h3>
-                <p>Read images as nearby materials that test how a concept behaves when it gathers form, light, and
-                    texture.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="layer-seeds">
-                <h3 id="layer-seeds">As portable seeds</h3>
-                <p>Read named sections as exportable units that could later become .spw packages, prompt cards, zine
-                    pages, or cloned route fragments.</p>
-            </article>
-        </div>
-
-        <nav class="frame-operators" aria-label="Reading layer routes">
-            <a class="operator-chip" href="/about/website/" data-spw-form="angle"
-               data-spw-operator="ref">~site_guide</a>
-            <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="baseline">.craft</a>
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;spw</a>
-            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle"
-               data-spw-operator="surface">&gt;renderers</a>
-        </nav>
-    </section>
-
-    <section
-        class="site-frame"
-        id="kernel-lattice-field"
-        aria-labelledby="kernel-lattice-field-title"
-        data-spw-kind="frame"
-        data-spw-role="architecture"
-        data-spw-context="systems"
-        data-spw-form="brace"
-        data-spw-wonder="architecture portability projection"
-        data-spw-category-family="workshop"
-        data-spw-kernel="stable"
-        data-spw-lattice="expansive"
-        data-spw-projection="modular"
-        data-spw-seed-package=".spw/kernel-lattice"
-        data-spw-seed="kernel_lattice_field">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#kernel-lattice-field">#&gt;"kernel_lattice_field"</a>
-        </div>
-        <h2 id="kernel-lattice-field-title">Small kernel, large semantic lattice</h2>
-        <p class="frame-note">
-            The recent direction is not “make the homepage bigger.” It is: keep the core small, make the semantic
-            lattice larger, and let routes project from portable seeds instead of hard-coded one-off pages.
-        </p>
-
-        <div class="spec-grid">
-            <article class="spec-column" aria-labelledby="kernel-stable-core" data-spw-kernel="stable">
-                <h3 id="kernel-stable-core">Stable kernel</h3>
-                <p>Parser, runtime, projection rules, operator meanings, route metadata, and a small set of durable
-                    component contracts.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="kernel-semantic-lattice" data-spw-lattice="expansive">
-                <h3 id="kernel-semantic-lattice">Semantic lattice</h3>
-                <p>Topics, motifs, images, cards, captions, lore hooks, teaching routes, texture families, and
-                    cross-page relationships.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="kernel-modular-projections" data-spw-projection="modular">
-                <h3 id="kernel-modular-projections">Modular projections</h3>
-                <p>The same seed can render as a homepage card, topic route, social prompt, SVG study, print page, or
-                    local-first tool surface.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="kernel-portable-packages" data-spw-seed-package=".spw">
-                <h3 id="kernel-portable-packages">Portable packages</h3>
-                <p>A future <code>.spw</code> folder should make seeds, examples, images, prompts, and projection hints
-                    travel between domains.</p>
-            </article>
-        </div>
-
-        <nav class="frame-operators" aria-label="Kernel and lattice routes">
-            <a class="operator-chip" href="https://github.com/spwashi/spw-workbench" data-spw-form="angle"
-               data-spw-operator="frame">#&gt;kernel</a>
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="object">^spw_lattice</a>
-            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle"
-               data-spw-operator="surface">&gt;projection</a>
-            <a class="operator-chip" href="https://texture.website" data-spw-form="angle" data-spw-operator="ref">~texture</a>
-        </nav>
-    </section>
-
-    <section
-        class="site-frame"
-        id="parts-of-speech-field"
-        aria-labelledby="parts-of-speech-field-title"
-        data-spw-kind="frame"
-        data-spw-role="schema"
-        data-spw-context="analysis"
-        data-spw-form="brace"
-        data-spw-wonder="inquiry"
-        data-spw-category-family="workshop"
-        data-spw-seed="parts_of_speech_field"
-        data-spw-trope-hypothesis="grammar field + visible card examples">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#parts-of-speech-field">?["parts_of_speech_field"]</a>
-        </div>
-        <h2 id="parts-of-speech-field-title">A word can become a handle, operator, or seed</h2>
-        <p class="frame-note">
-            On this page, a term can behave as noun, verb, adjective, topic, route, operator, label, caption, material
-            cue, or seed-package handle.
-        </p>
-
-        <div class="spec-grid">
-            <article class="spec-column" aria-labelledby="speech-noun">
-                <h3 id="speech-noun">Noun</h3>
-                <p><strong>frame</strong> as a thing: a container, a card, a room, a visible boundary.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="speech-verb">
-                <h3 id="speech-verb">Verb</h3>
-                <p><strong>frame</strong> as an action: to orient, to prepare, to set expectation and containment.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="speech-adjective">
-                <h3 id="speech-adjective">Adjective</h3>
-                <p><strong>frame-like</strong> as a quality: bounded, editorial, deliberate, clarifying.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="speech-operator">
-                <h3 id="speech-operator">Operator</h3>
-                <p><span class="syntax-token">#&gt;</span> as an operator: a formal stance that changes how the next
-                    thing is read.</p>
-            </article>
-            <article class="spec-column" aria-labelledby="speech-seed">
-                <h3 id="speech-seed">Seed</h3>
-                <p><strong>frame</strong> as a portable unit: a named package of syntax, imagery, route hints, and
-                    projection behavior.</p>
-            </article>
-        </div>
-
-        <p>
-            The same principle applies to <span class="spw-topic" data-spw-topic="surface">surface</span>, <span
-            class="spw-topic" data-spw-topic="signal">signal</span>, <span class="spw-topic" data-spw-topic="craft">craft</span>,
-            and <span class="spw-topic" data-spw-topic="play">play</span>. This is useful because the site is not just
-            cataloguing topics. It is also showing how a vocabulary becomes more expressive when the page itself
-            demonstrates multiple grammatical uses and prepares them for reuse.
-        </p>
-    </section>
-
-    <section
-        class="site-frame"
-        id="accent-context-field"
-        aria-labelledby="accent-context-field-title"
-        data-spw-kind="frame"
-        data-spw-role="schema"
-        data-spw-context="analysis"
-        data-spw-form="brace"
-        data-spw-wonder="comparison"
-        data-spw-category-family="workshop"
-        data-spw-seed="accent_context_field">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#accent-context-field">>"accent_context_field"</a>
-        </div>
-        <h2 id="accent-context-field-title">Accent depends on context</h2>
-        <p class="frame-note">
-            Accent should mark more than emphasis. It can signal topic, operator stance, utility, image relation, route
-            depth, or active affordance.
-        </p>
-
-        <div class="frame-grid" role="list">
-            <article class="frame-card" role="listitem" aria-labelledby="accent-prose">
-                <h3 id="accent-prose">Inside prose</h3>
-                <p>Use italics, rhythm, and sentence placement to make a word feel mobile or alive.</p>
-                <p><span class="craft-sensory">A structure can lean forward before it is named.</span></p>
-            </article>
-            <article class="frame-card" role="listitem" aria-labelledby="accent-topic">
-                <h3 id="accent-topic">As topic handle</h3>
-                <p>Use a topic wrapper when a word is meant to be revisited, discovered, or connected to nearby
-                    sections.</p>
-                <p><span class="spw-topic" data-spw-topic="compression">compression</span></p>
-            </article>
-            <article class="frame-card" role="listitem" aria-labelledby="accent-operator">
-                <h3 id="accent-operator">As operator route</h3>
-                <p>Use an operator chip when the word is a navigational stance or a procedural invitation.</p>
-                <p><span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">?parsers</span></p>
-            </article>
-            <article class="frame-card" role="listitem" aria-labelledby="accent-caption">
-                <h3 id="accent-caption">Near an image</h3>
-                <p>Use a caption or figure note when the word is explaining what the image is testing or
-                    materializing.</p>
-                <p class="frame-note">“Typographic routing” behaves differently beside a rendered study than inside a
-                    paragraph.</p>
-            </article>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="image-topic-bridge"
-        aria-labelledby="image-topic-bridge-title"
-        data-spw-kind="frame"
-        data-spw-role="projection"
-        data-spw-context="publishing"
-        data-spw-form="brace"
-        data-spw-wonder="projection"
-        data-spw-category-family="specimen"
-        data-spw-promptability="latent"
-        data-spw-seed="image_topic_bridge">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#image-topic-bridge">~"image_topic_bridge"</a>
-        </div>
-        <h2 id="image-topic-bridge-title">Words, topics, and images should cross-check one another</h2>
-        <p class="frame-note">
-            An image can act as evidence, mood, nearby material, contrast, or an invitation to reinterpret a topic
-            physically.
-        </p>
-
-        <div class="gallery-overlays" role="list">
-            <figure class="image-study" role="listitem">
-                <a href="/topics/software/pretext/">
-                    <img
-                        src="/public/images/assets/illustrations/pretext-physics.png"
-                        alt="A visual study representing pretext physics as layered textual motion and structural rhythm."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption>
-                    <strong>Pretext Physics</strong> — the image behaves like a nearby material proof for the topic
-                    <span class="spw-topic" data-spw-topic="pretext">pretext</span>.
-                </figcaption>
-            </figure>
-
-            <figure class="image-study" role="listitem">
-                <a href="/topics/craft/">
-                    <img
-                        src="/public/images/home/abstract-wash-study-2.webp"
-                        alt="An abstract wash study suggesting nearby mood, topic atmosphere, and material relation without literal depiction."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption>
-                    <strong>Abstract Wash Study</strong> — the image behaves like a nearby material cue for <span
-                    class="spw-topic" data-spw-topic="atmosphere">atmosphere</span>, <span class="spw-topic"
-                                                                                           data-spw-topic="accent">accent</span>,
-                    and <span class="spw-topic" data-spw-topic="material">material</span>.
-                </figcaption>
-            </figure>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="cognitive-machine-map"
-        aria-labelledby="cognitive-machine-map-title"
-        aria-describedby="cognitive-machine-map-note"
-        data-spw-kind="frame"
-        data-spw-role="reference"
-        data-spw-meaning="site design direction"
-        data-spw-context="analysis"
-        data-spw-form="brace"
-        data-spw-liminality="projected"
-        data-spw-accent="wave"
-        data-spw-accent-palette="cool"
-        data-spw-category-family="portal"
-        data-spw-seed="cognitive_machine_map">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#cognitive-machine-map">$"cognitive_machine_map"</a>
-        </div>
-        <h2 id="cognitive-machine-map-title">How to read the site</h2>
-        <p id="cognitive-machine-map-note" class="inline-note">
-            Start with the page in front of you, then follow handles when you want more. Each layer can remain available
-            as you move, turning repeated traversal into topical depth.
-        </p>
-
-        <figure class="spw-svg-figure" aria-labelledby="operator-grammar-title">
-            <svg class="spw-svg-surface spw-svg-flow-diagram cinematic-host" viewBox="0 0 944 228"
-                 xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-labelledby="operator-grammar-title operator-grammar-desc">
-                <title id="operator-grammar-title">Spw Operator Grammar Map</title>
-                <desc id="operator-grammar-desc">A working subset of Spw operators arranged in two rows to show the
-                    editor-facing reading spine and supporting grammar.
-                </desc>
-                <rect class="spw-svg-frame" x="12" y="12" width="920" height="204" rx="22"/>
-                <path class="spw-svg-flow spw-svg-flow--animated"
-                      d="M92 72 C160 52 210 52 256 72 S362 92 420 72 S528 52 584 72 S694 92 748 72 S830 58 852 72"/>
-                <path class="spw-svg-flow"
-                      d="M92 156 C160 136 210 136 256 156 S362 176 420 156 S528 136 584 156 S694 176 748 156 S830 142 852 156"/>
-                <path class="spw-svg-flow" d="M256 88 C300 116 364 122 420 140"/>
-                <path class="spw-svg-flow" d="M584 88 C626 116 696 122 748 140"/>
-
-                <text class="spw-svg-note" x="40" y="34">editor-facing reading spine</text>
-                <text class="spw-svg-note" x="40" y="198">support grammar for qualification, binding, reflection, and
-                    revision
-                </text>
-
-                <g>
-                    <rect class="spw-svg-node spw-svg-node--frame" x="54" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="92" y="73" text-anchor="middle">frame</text>
-                    <text class="spw-svg-note" x="92" y="98" text-anchor="middle">#&gt; orient</text>
-
-                    <rect class="spw-svg-node spw-svg-node--object" x="218" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="256" y="73" text-anchor="middle">object</text>
-                    <text class="spw-svg-note" x="256" y="98" text-anchor="middle">^ elevate</text>
-
-                    <rect class="spw-svg-node spw-svg-node--probe" x="382" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="420" y="73" text-anchor="middle">probe</text>
-                    <text class="spw-svg-note" x="420" y="98" text-anchor="middle">? inquire</text>
-
-                    <rect class="spw-svg-node spw-svg-node--ref" x="546" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="584" y="73" text-anchor="middle">ref</text>
-                    <text class="spw-svg-note" x="584" y="98" text-anchor="middle">~ relate</text>
-
-                    <rect class="spw-svg-node spw-svg-node--action" x="710" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="748" y="73" text-anchor="middle">action</text>
-                    <text class="spw-svg-note" x="748" y="98" text-anchor="middle">@ commit</text>
-
-                    <rect class="spw-svg-node spw-svg-node--stream" x="814" y="52" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="852" y="73" text-anchor="middle">surface</text>
-                    <text class="spw-svg-note" x="852" y="98" text-anchor="middle">&gt; project</text>
-                </g>
-
-                <g>
-                    <rect class="spw-svg-node spw-svg-node--layer" x="54" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="92" y="161" text-anchor="middle">layer</text>
-                    <text class="spw-svg-note" x="92" y="186" text-anchor="middle">qualify</text>
-
-                    <rect class="spw-svg-node spw-svg-node--baseline" x="218" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="256" y="161" text-anchor="middle">baseline</text>
-                    <text class="spw-svg-note" x="256" y="186" text-anchor="middle">settle</text>
-
-                    <rect class="spw-svg-node spw-svg-node--binding" x="382" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="420" y="161" text-anchor="middle">binding</text>
-                    <text class="spw-svg-note" x="420" y="186" text-anchor="middle">bind</text>
-
-                    <rect class="spw-svg-node spw-svg-node--meta" x="546" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="584" y="161" text-anchor="middle">meta</text>
-                    <text class="spw-svg-note" x="584" y="186" text-anchor="middle">reflect</text>
-
-                    <rect class="spw-svg-node spw-svg-node--merge" x="710" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="748" y="161" text-anchor="middle">merge</text>
-                    <text class="spw-svg-note" x="748" y="186" text-anchor="middle">integrate</text>
-
-                    <rect class="spw-svg-node spw-svg-node--normalize" x="814" y="140" width="76" height="34" rx="12"/>
-                    <text class="spw-svg-label" x="852" y="161" text-anchor="middle">normalize</text>
-                    <text class="spw-svg-note" x="852" y="186" text-anchor="middle">steady</text>
-                </g>
-
-                <text class="spw-svg-note" x="472" y="118" text-anchor="middle">the VS Code plugin, source text, and the
-                    site can share one readable grammar
-                </text>
-            </svg>
-            <figcaption class="frame-note">
-                A working subset of the operator family. Top row: the reading spine for orienting, elevating, inquiring,
-                relating, committing, and projecting. Bottom row: support grammar for qualification, settling, binding,
-                reflection, integration, and normalization.
-            </figcaption>
-        </figure>
-
-        <figure class="spw-svg-figure" aria-labelledby="polarity-axis-title">
-            <svg class="spw-svg-surface" viewBox="0 0 840 148" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-labelledby="polarity-axis-title polarity-axis-desc">
-                <title id="polarity-axis-title">Brace Polarity Axis</title>
-                <desc id="polarity-axis-desc">Horizontal gradient axis from left-brace objective shared structure to
-                    right-brace subjective situated meaning.
-                </desc>
-                <rect class="spw-svg-frame" x="12" y="12" width="816" height="124" rx="20"/>
-                <path class="spw-svg-flow" d="M150 62 H690"/>
-                <circle class="spw-svg-node spw-svg-node--frame" cx="150" cy="62" r="16"/>
-                <circle class="spw-svg-node spw-svg-node--ref" cx="420" cy="62" r="13"/>
-                <circle class="spw-svg-node spw-svg-node--pragma" cx="690" cy="62" r="16"/>
-                <text class="spw-svg-label" x="108" y="50">{</text>
-                <text class="spw-svg-label" x="722" y="50">}</text>
-                <text class="spw-svg-note" x="150" y="96" text-anchor="middle">shared wall</text>
-                <text class="spw-svg-note" x="150" y="112" text-anchor="middle">plugin text · stable structure</text>
-                <text class="spw-svg-note" x="420" y="96" text-anchor="middle">translation seam</text>
-                <text class="spw-svg-note" x="420" y="112" text-anchor="middle">selection · prompting · retelling</text>
-                <text class="spw-svg-note" x="690" y="96" text-anchor="middle">situated wall</text>
-                <text class="spw-svg-note" x="690" y="112" text-anchor="middle">page reading · local consequence</text>
-            </svg>
-            <figcaption class="frame-note">
-                The brace is also a polarity axis. The left wall <code>{</code> leans structural and shared; the right
-                wall <code>}</code> leans situated and felt.
-            </figcaption>
-        </figure>
-
-        <nav class="frame-operators" aria-label="Reading routes">
-            <a class="operator-chip" href="/about/website/" data-spw-form="angle"
-               data-spw-operator="ref">~site_guide</a>
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;frame</a>
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle"
-               data-spw-operator="probe">?probe</a>
-            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle"
-               data-spw-operator="surface">&gt;surface</a>
-        </nav>
-    </section>
-
-    <section
-        class="site-frame"
-        id="site-category-atlas"
-        aria-labelledby="site-category-atlas-title"
-        data-spw-kind="frame"
-        data-spw-role="reference"
-        data-spw-context="analysis"
-        data-spw-form="brace"
-        data-spw-category-family="register"
-        data-spw-seed="site_category_atlas"
-        data-spw-context-relevance="website craft software play archive"
-        data-spw-trope-hypothesis="page family strip + route relevance">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#site-category-atlas">^"site_category_atlas"{</a>
-        </div>
-        <h2 id="site-category-atlas-title">Each route is a room, projection, or package in the same workshop</h2>
-        <p class="frame-note">
-            A page does not only need sections. It can have rooms with different gravity: reflective nooks, charged
-            portals, registers, specimens, workshops, theatres, kitchens, and archives. The names exist to make process
-            legible and route visitors toward useful next surfaces.
-        </p>
-
-        <div class="frame-grid" role="list">
-            <article class="frame-card" role="listitem" data-spw-category-family="nook"
-                     data-spw-related-routes="/about/|/about/website/">
-                <span class="frame-card-sigil">~nook</span>
-                <strong>Nook</strong>
-                <span>Reflective, editorial, intimate surfaces that hold careful prose and slower invitation.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="portal"
-                     data-spw-related-routes="/topics/software/spw/|/play/">
-                <span class="frame-card-sigil">&gt;portal</span>
-                <strong>Portal</strong>
-                <span>Charged entry points that suggest another context is relevant and worth entering.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="register"
-                     data-spw-related-routes="/blog/|/about/website/|/settings/">
-                <span class="frame-card-sigil">=register</span>
-                <strong>Register</strong>
-                <span>Ledger-like surfaces that collect signals, routes, statuses, and later revisitation traces.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="specimen"
-                     data-spw-related-routes="/topics/craft/|/topics/software/pretext/">
-                <span class="frame-card-sigil">@specimen</span>
-                <strong>Specimen</strong>
-                <span>Promptable artifacts that imply screenshot-worthiness, material study, or trope development.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="workshop"
-                     data-spw-related-routes="/topics/software/|https://github.com/spwashi/spw-workbench">
-                <span class="frame-card-sigil">#&gt;workshop</span>
-                <strong>Workshop</strong>
-                <span>System-building surfaces for parser thinking, runtime ideas, architecture, and readable tooling.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="archive"
-                     data-spw-related-routes="/about/domains/|/blog/">
-                <span class="frame-card-sigil">$archive</span>
-                <strong>Archive</strong>
-                <span>Collected routes, older surfaces, domain clusters, and memory-bearing materials.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="kernel"
-                     data-spw-related-routes="https://github.com/spwashi/spw-workbench|/topics/software/spw/">
-                <span class="frame-card-sigil">#&gt;kernel</span>
-                <strong>Kernel</strong>
-                <span>Small stable contracts that make larger experiments portable, testable, and easier to teach.</span>
-            </article>
-            <article class="frame-card" role="listitem" data-spw-category-family="projection"
-                     data-spw-related-routes="/topics/software/renderers/|/topics/craft/|https://texture.website">
-                <span class="frame-card-sigil">&gt;projection</span>
-                <strong>Projection</strong>
-                <span>A seed rendered into a page, card, SVG, prompt, poster, zine page, or local tool.</span>
-            </article>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="promptable-specimens"
-        aria-labelledby="promptable-specimens-title"
-        data-spw-kind="frame"
-        data-spw-role="gallery"
-        data-spw-context="publishing"
-        data-spw-form="brace"
-        data-spw-category-family="specimen"
-        data-spw-promptability="visible"
-        data-spw-seed="promptable_specimen_row"
-        data-spw-context-relevance="craft website software"
-        data-spw-trope-hypothesis="specimen card + prompt seed + material cue">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#promptable-specimens">@["promptable_specimens"]</a>
-        </div>
-        <h2 id="promptable-specimens-title">Some surfaces should earn a screenshot</h2>
-        <p class="frame-note">
-            The aim is not to replace HTML with images. The aim is to let a component become a meaningful specimen:
-            reusable as a render study, poster, prompt seed, teaching surface, or print-friendly seed object.
-        </p>
-
-        <div class="gallery-overlays" role="list">
-            <figure
-                class="image-study"
-                role="listitem"
-                data-spw-promptability="visible"
-                data-spw-seed="papergami_architecture"
-                data-spw-related-routes="/topics/craft/svg/|/topics/software/renderers/"
-                data-spw-theme-phrase="papergami architecture">
-                <a href="/topics/craft/svg/">
-                    <img
-                        src="/public/images/renders/papergami/papergami-architecture.webp"
-                        alt="Papergami architecture study for structural layout, folded planes, and readable spatial hierarchy."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption>
-                    <strong>Papergami Architecture</strong> — a structural prompt seed for layout, readable planes, and
-                    spatial grammar.
-                </figcaption>
-            </figure>
-
-            <figure
-                class="image-study"
-                role="listitem"
-                data-spw-promptability="visible"
-                data-spw-seed="alchemy_token_display"
-                data-spw-related-routes="/about/website/|/topics/craft/fragments/"
-                data-spw-theme-phrase="alchemy token display">
-                <a href="/about/website/">
-                    <img
-                        src="/public/images/assets/motifs/spwashi-alchemy-token-display.webp"
-                        alt="A motif study showing symbolic token display, alchemical arrangement, and decorative semantic emphasis."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption>
-                    <strong>Alchemy Token Display</strong> — a motif study for symbolic emphasis, semantic ornament, and
-                    collectible token language.
-                </figcaption>
-            </figure>
-
-            <figure
-                class="image-study"
-                role="listitem"
-                data-spw-promptability="latent"
-                data-spw-seed="constellation_surface"
-                data-spw-related-routes="#constellation-frame|/play/"
-                data-spw-theme-phrase="constellation studio">
-                <a href="#constellation-frame">
-                    <img
-                        src="/public/images/home/constellation-studio-1600.webp"
-                        alt="A constellation-like studio image suggesting linked points, route traces, and semantic atmosphere."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption>
-                    <strong>Constellation Studio</strong> — a route-and-motif study for archives, signals, and connected
-                    surfaces.
-                </figcaption>
-            </figure>
-        </div>
-    </section>
-
-    <section
-        class="site-frame media-publishing-frame"
-        id="media-focus"
-        aria-labelledby="media-focus-title"
-        data-spw-kind="frame"
-        data-spw-role="broadcast"
-        data-spw-meaning="configured media publishing focus"
-        data-spw-context="publishing"
-        data-spw-form="brace"
-        data-spw-liminality="threshold"
-        data-spw-accent="vortex"
-        data-spw-accent-palette="warm"
-        data-spw-category-family="register"
-        data-spw-seed="media_focus_register">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#media-focus">*"media_focus"</a>
-        </div>
-        <h2 id="media-focus-title">Production signals and public cadence</h2>
-        <p class="frame-note">
-            The site should make production rhythm visible: <a href="/blog/">writing</a>, <a href="/topics/software/">software
-            notes</a>, <a href="/topics/craft/">render studies</a>, <a href="/about/website/">website changes</a>,
-            livestream language, and portable seed updates accumulating into a body of process rather than isolated
-            posts.
-        </p>
-        <div class="frame-grid frame-grid--media" role="list">
-            <article class="media-focus-card" role="listitem" data-spw-liminality="projected">
-                <a href="/blog/" aria-label="Open blog signal register">
-                    <img
-                        src="/public/images/assets/illustrations/lore-land-signal-poster-display.webp"
-                        alt="A signal-poster display for lore.land suggesting publishing cadence, signal emphasis, and atmospheric poster logic."
-                        loading="lazy"
-                        decoding="async"
-                        width="1200"
-                        height="900"/>
-                </a>
-                <div class="media-focus-content">
-                    <h3>Production season</h3>
-                    <p>A steadier public rhythm can hold channel summaries, workbench notes, linked topic updates, and
-                        enough visible process for the season to read as a body of work.</p>
-                </div>
-            </article>
-            <article class="media-focus-card" role="listitem" data-spw-liminality="deep">
-                <a href="/about/website/#interaction-register" aria-label="Open website interaction register">
-                    <img
-                        src="/public/images/home/papergami-study-1.webp"
-                        alt="A papergami study suggesting folded structure, visible route logic, and tactile component relationships."
-                        loading="lazy"
-                        decoding="async"
-                        width="1200"
-                        height="900"/>
-                </a>
-                <div class="media-focus-content">
-                    <h3>Configurable flows</h3>
-                    <p>The longer-term goal is configurable data flow between pages, so a route can carry state, related
-                        artifacts, or semantic cues from <a href="/settings/">settings</a> into <a
-                            href="/topics/software/">topic hubs</a>, <a href="/about/website/">field guides</a>, and
-                        future domain forks without flattening everything into one app.</p>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="artifact-register"
-        aria-labelledby="artifact-register-title"
-        data-spw-kind="frame"
-        data-spw-role="register"
-        data-spw-context="publishing"
-        data-spw-wonder="memory"
-        data-spw-affordance="navigate"
-        data-spw-swappable="^,?,*,#&gt;"
-        data-spw-category-family="workshop"
-        data-spw-seed="artifact_register">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#artifact-register">^"artifact_register"{</a>
-        </div>
-        <h2 id="artifact-register-title">Artifact register</h2>
-        <p class="frame-note">The workbench is the center of gravity. This register shows neighboring public surfaces:
-            <a href="/topics/software/">software topics</a>, <a href="/topics/math/">math routes</a>, <a
-                href="/topics/craft/">craft studies</a>, <a href="https://texture.website">texture.website</a>, <a
-                href="/about/website/">website notes</a>, and <a href="/tools/">tools</a> that can cross-reference one
-            another later.</p>
-
-        <ul class="frame-grid frame-grid--dense" role="list">
-            <li>
-                <article
-                    class="frame-card"
-                    aria-labelledby="card-spw-workbench"
-                    data-spw-form="block"
-                    data-spw-category-family="workshop"
-                    data-spw-promptability="latent"
-                    data-spw-collectability="possible"
-                    data-spw-seed="spw_workbench_card"
-                    data-spw-context-relevance="software architecture tooling"
-                    data-spw-related-routes="https://github.com/spwashi/spw-workbench|/topics/software/|/about/website/"
-                    data-spw-trope-hypothesis="artifact card + route seed + software register">
-                    <a href="https://github.com/spwashi/spw-workbench" id="card-spw-workbench">
-                        <span class="frame-card-sigil">#&gt;spw_workbench</span>
-                        <strong>spw-workbench</strong>
-                        <span>TypeScript workbench for parser, runtime, projection, and readable operator systems, with the website acting as its slower public edge.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card" aria-labelledby="card-spw-quest" data-spw-form="block"
-                         data-spw-category-family="portal">
-                    <a href="https://spw.quest" id="card-spw-quest">
-                        <span class="frame-card-sigil">#&gt;spw_quest</span>
-                        <strong>spw.quest</strong>
-                        <span>Onboarding and language documentation for Spw, pronounced “swoop,” as a plain-text grammar with visible structure, operator precedence, and portable examples.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-about-website"
-                         data-spw-form="block" data-spw-category-family="register">
-                    <a href="/about/website/" id="card-about-website">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="cool"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#1a9999, #f0c36a, #355f77, #c97d4c"
-                            data-spw-accent-anchor="website site-design settings"
-                            data-spw-accent-operator="surface"
-                            data-spw-realization="hybrid"
-                            data-spw-substrate="surface">
-                            <img src="/public/images/routes/website-field-instrument-square.webp"
-                                 alt="Layered frames, tokens, and corridor light blended into a website instrument study."
-                                 loading="lazy" decoding="async" width="1600" height="1600"/>
-                        </figure>
-                        <span class="frame-card-sigil">>"website_field_guide"</span>
-                        <strong>Website field guide</strong>
-                        <span>Explains the runtime shell, design commitments, profiles, themes, and publishing logic that the rest of the site keeps echoing.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card" aria-labelledby="card-pretext-surface" data-spw-form="block"
-                         data-spw-category-family="specimen">
-                    <a href="/topics/software/pretext/" id="card-pretext-surface">
-                        <span class="frame-card-sigil">&gt;pretext_surface</span>
-                        <strong>Pretext physics</strong>
-                        <span>Projection, rhythm, and measurable whimsy for genre-aware rendering.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card" aria-labelledby="card-texture-surface" data-spw-form="block"
-                         data-spw-category-family="specimen" data-spw-seed-package=".spw/texture-surface">
-                    <a href="https://texture.website" id="card-texture-surface">
-                        <span class="frame-card-sigil">&gt;texture.website</span>
-                        <strong>Texture surface</strong>
-                        <span>A public style and materiality route for patterns, texture logic, visual contagion, and reusable design seeds.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-parsers" data-spw-form="block"
-                         data-spw-category-family="workshop">
-                    <a href="/topics/software/parsers/" id="card-parsers">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="cool"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#165d64, #f0c36a, #8b3d24, #5f1720"
-                            data-spw-accent-anchor="software parsers complexity field-theory"
-                            data-spw-accent-operator="probe"
-                            data-spw-realization="hybrid"
-                            data-spw-substrate="probe">
-                            <img src="/public/images/renders/unsorted-curation/algorithm-lattice-0.webp"
-                                 alt="A structural tile of symbols, measures, and luminous shapes that reads like parser routes gathered into a single machine surface."
-                                 loading="lazy" decoding="async" width="1400" height="1400"/>
-                        </figure>
-                        <span class="frame-card-sigil">?parser_routes</span>
-                        <strong>Parser surfaces</strong>
-                        <span>Routes into parser systems, structural syntax, and plain-text accumulation where grammar, memory, and complexity stay visible.</span>
-                    </a>
-                </article>
-            </li>
-            <li>
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-tools" data-spw-form="block"
-                         data-spw-category-family="register">
-                    <a href="/tools/" id="card-tools">
-                        <figure
-                            class="frame-card-media"
-                            data-spw-image-surface
-                            data-spw-image-prominence="feature"
-                            data-spw-image-shape="square"
-                            data-spw-accent="resonance"
-                            data-spw-accent-palette="warm"
-                            data-spw-accent-resonance="image anchor recent manual"
-                            data-spw-accent-colors="#1a9999, #f0c36a, #7f5336, #2d4f51"
-                            data-spw-accent-anchor="tools services play"
-                            data-spw-accent-operator="object"
-                            data-spw-realization="hybrid"
-                            data-spw-substrate="object">
-                            <img src="/public/images/renders/unsorted-curation/boonhonk-machine-register.webp"
-                                 alt="A glowing boonhonk machine with layered signal parts, suggesting whimsical tools, instruments, and a collected device language."
-                                 loading="lazy" decoding="async" width="1024" height="1024"/>
-                        </figure>
-                        <span class="frame-card-sigil">^tool_registry</span>
-                        <strong>Tools</strong>
-                        <span>Utilities, profile builders, and support surfaces for the broader ecosystem when a local machine needs a readable face.</span>
-                    </a>
-                </article>
-            </li>
-        </ul>
-    </section>
-
-    <section
-        class="site-frame"
-        id="portable-seed-register"
-        aria-labelledby="portable-seed-register-title"
-        data-spw-kind="frame"
-        data-spw-role="seed-register"
-        data-spw-context="publishing"
-        data-spw-form="brace"
-        data-spw-wonder="portability compression reuse"
-        data-spw-category-family="register"
-        data-spw-kernel="portable"
-        data-spw-lattice="routeable"
-        data-spw-projection="multi-format"
-        data-spw-seed-package=".spw"
-        data-spw-seed="portable_seed_register">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#portable-seed-register">@["portable_seed_register"]</a>
-        </div>
-        <h2 id="portable-seed-register-title">Portable seed register</h2>
-        <p class="frame-note">
-            A seed is a compressed unit of route memory. It should be readable in HTML, useful to the workbench,
-            promptable for images, printable for zines or cards, and durable enough to move between domains without
-            becoming opaque.
-        </p>
-
-        <div class="compare-sets" role="list">
-            <article class="compare-card" role="listitem" aria-labelledby="seed-route">
-                <h3 id="seed-route">Route seed</h3>
-                <p>Names the page, related surfaces, local consequence, category family, and nearby links.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="seed-image">
-                <h3 id="seed-image">Image seed</h3>
-                <p>Stores motif, palette, material, lighting, texture, and promptability without reducing the image to
-                    decoration.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="seed-learning">
-                <h3 id="seed-learning">Learning seed</h3>
-                <p>Supports math, computer science, learning science, and syntax examples as reusable teaching
-                    material.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="seed-publishing">
-                <h3 id="seed-publishing">Publishing seed</h3>
-                <p>Prepares a unit to become a post, page, card, zine spread, slide, ebook fragment, or lore.land
-                    collectible.</p>
-            </article>
-        </div>
-
-        <pre><code>#&gt;seed_package ".spw/home-atlas"{
-  ^kernel "spw-workbench"
-  ~lattice "topics|images|routes|operators|lore|texture"
-  &gt;projection "html|card|prompt|print|tool"
-  @publish "public-library-surface"
-}</code></pre>
-
-        <nav class="frame-operators" aria-label="Portable seed routes">
-            <a class="operator-chip" href="/topics/software/compression/" data-spw-form="angle"
-               data-spw-operator="normalize">%compression</a>
-            <a class="operator-chip" href="/topics/software/renderers/" data-spw-form="angle"
-               data-spw-operator="surface">&gt;renderers</a>
-            <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="ref">~materials</a>
-            <a class="operator-chip" href="/about/domains/lore.land/" data-spw-form="angle" data-spw-operator="stream">*lore_land</a>
-        </nav>
-    </section>
-
-    <section
-        class="site-frame"
-        id="language-field"
-        aria-labelledby="language-field-title"
-        data-spw-kind="frame"
-        data-spw-role="reference"
-        data-spw-form="brace"
-        data-spw-accent="crystal"
-        data-spw-accent-palette="cool"
-        data-spw-category-family="nook"
-        data-spw-seed="language_field">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#language-field">#:language_field</a>
-        </div>
-        <h2 id="language-field-title">Language as field, kernel, and portable surface</h2>
-        <div class="spec-grid">
-            <article class="spec-column" aria-labelledby="spec-static-rigidity">
-                <h3 id="spec-static-rigidity">Static rigidity</h3>
-                <ul>
-                    <li>Demands exact serialization.</li>
-                    <li>Fails on missing commas.</li>
-                    <li>Opaque to the uninitiated.</li>
-                    <li>Designed mainly for transmission.</li>
-                </ul>
-            </article>
-            <article class="spec-column" aria-labelledby="spec-living-field">
-                <h3 id="spec-living-field">Living field</h3>
-                <ul>
-                    <li>Tolerates ambiguous intent.</li>
-                    <li>Gracefully degrades to plain text.</li>
-                    <li>Supports scaffolded access for learners.</li>
-                    <li>Designed for accumulation, reuse, and projection.</li>
-                </ul>
-            </article>
-        </div>
-        <nav class="frame-operators" aria-label="Language field routes">
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="surface">&gt;spw</a>
-            <a class="operator-chip" href="/topics/software/compression/" data-spw-form="angle"
-               data-spw-operator="normalize">%compression</a>
-            <a class="operator-chip" href="/topics/software/distributed/" data-spw-form="angle"
-               data-spw-operator="stream">*distributed</a>
-        </nav>
-    </section>
-
-    <section
-        class="site-frame"
-        id="operator-pivot-field"
-        aria-labelledby="operator-pivot-field-title"
-        data-spw-kind="frame"
-        data-spw-role="reference"
-        data-spw-form="brace"
-        data-spw-liminality="threshold"
-        data-spw-category-family="portal"
-        data-spw-seed="operator_pivot_field">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#operator-pivot-field">?["operator_pivot_field"]</a>
-        </div>
-        <h2 id="operator-pivot-field-title">One concept, several stances</h2>
-        <p class="frame-note">A single object changes behavior when an operator changes its stance.</p>
-        <div class="compare-sets" role="list">
-            <article class="compare-card" role="listitem" aria-labelledby="compare-project-frame">
-                <h3 id="compare-project-frame"><span class="syntax-token">#&gt;</span> project</h3>
-                <p>Establishes the environment. Sets boundaries, imports dependencies, prepares state.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="compare-project-probe">
-                <h3 id="compare-project-probe"><span class="syntax-token">?</span> project</h3>
-                <p>Questions assumptions. Triggers tests, audits, or interpretive challenges.</p>
-            </article>
-            <article class="compare-card" role="listitem" aria-labelledby="compare-project-action">
-                <h3 id="compare-project-action"><span class="syntax-token">@</span> project</h3>
-                <p>Executes the artifact. Builds, writes, emits, or deploys.</p>
-            </article>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="surface-register"
-        aria-labelledby="surface-register-title"
-        data-spw-kind="frame"
-        data-spw-role="directory"
-        data-spw-swappable="?,#&gt;,^"
-        data-spw-category-family="register"
-        data-spw-seed="surface_register">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#surface-register">?["surface_register"]</a>
-        </div>
-        <h2 id="surface-register-title">Surface register</h2>
-        <div class="directory-list">
-            <dl>
-                <dt><a href="/recipes/">~recipes</a></dt>
-                <dd>Applied kitchen structure, mise en place, reduction, fermentation, and hospitable composition.</dd>
-
-                <dt><a href="/services/">@services</a></dt>
-                <dd>Service surfaces for design, software structure, and long-arc consistency.</dd>
-
-                <dt><a href="/topics/architecture/">#&gt;architecture</a></dt>
-                <dd>Architecture routes for readable systems, project structure, and semantic organization.</dd>
-
-                <dt><a href="/topics/pedagogy/">^pedagogy</a></dt>
-                <dd>Learning surfaces that connect language, study, explanation, and cumulative instruction.</dd>
-
-                <dt><a href="/settings/">.settings</a></dt>
-                <dd>Runtime observatory for typography, density, profiles, themes, and visible state.</dd>
-
-                <dt><a href="https://texture.website">&gt;texture.website</a></dt>
-                <dd>Texture and materiality surface for visual systems, pattern studies, style contagion, and reusable
-                    prompt seeds.
-                </dd>
-
-                <dt><a href="/about/domains/lore.land/">*lore.land</a></dt>
-                <dd>Publishing and narrative surface where portable seeds can become scenes, zines, ebooks, and shared
-                    cultural anchors.
-                </dd>
-            </dl>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="material-studies"
-        aria-labelledby="material-studies-title"
-        data-spw-kind="frame"
-        data-spw-role="gallery"
-        data-spw-context="publishing"
-        data-spw-wonder="projection"
-        data-spw-category-family="specimen"
-        data-spw-seed="material_studies">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#material-studies">~"material_studies"</a>
-        </div>
-        <h2 id="material-studies-title">Material studies</h2>
-        <p class="frame-note">Visual studies for pretext physics, schedulers, semantic phases, compression, papergami
-            structure, texture systems, print materiality, and botanical media atmosphere.</p>
-
-        <div class="gallery-overlays" role="list">
-            <figure class="image-study" role="listitem">
-                <a href="/topics/software/pretext/">
-                    <img
-                        src="/public/images/assets/illustrations/pretext-physics.png"
-                        alt="A visual study representing pretext physics as layered textual motion and structural rhythm."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption><strong>Pretext Physics</strong> — projection, rhythm, and visible textual motion.
-                </figcaption>
-            </figure>
-
-            <figure class="image-study" role="listitem">
-                <a href="/topics/software/schedulers/">
-                    <img
-                        src="/public/images/assets/scheduler-clockwork.png"
-                        alt="A scheduler clockwork study showing timing, staging, and rhythmic distribution."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption><strong>Scheduler Clockwork</strong> — timing, staging, and rhythmic distribution.
-                </figcaption>
-            </figure>
-
-            <figure class="image-study" role="listitem">
-                <a href="/topics/software/renderers/">
-                    <img
-                        src="/public/images/assets/illustrations/semantic-phases.png"
-                        alt="A diagrammatic image showing semantic phases and layered structural transitions."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption><strong>Semantic Phases</strong> — layered transitions between meaning states.</figcaption>
-            </figure>
-
-            <figure class="image-study" role="listitem">
-                <a href="/topics/software/compression/">
-                    <img
-                        src="/public/images/assets/compression-crystals.png"
-                        alt="Compression crystals representing structure condensed into a more compact material form."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption><strong>Compression Crystals</strong> — structure condensed into compact material form.
-                </figcaption>
-            </figure>
-
-            <figure class="image-study" role="listitem">
-                <a href="/topics/craft/">
-                    <img
-                        src="/public/images/renders/papergami/papergami-botanical.webp"
-                        alt="A papergami botanical study showing organic layered structure, page-material wonder, and compositional growth."
-                        loading="lazy"
-                        decoding="async"
-                        width="1600"
-                        height="900"/>
-                </a>
-                <figcaption><strong>Papergami Botanical</strong> — organic page structure, growth, and layered wonder.
-                </figcaption>
-            </figure>
-        </div>
-    </section>
-
-    <section
-        class="site-frame"
-        id="website-register"
-        aria-labelledby="website-register-title"
-        data-spw-kind="frame"
-        data-spw-role="reference"
-        data-spw-context="analysis"
-        data-spw-form="brace"
-        data-spw-category-family="archive"
-        data-spw-seed="website_register"
-        data-spw-context-relevance="website settings software craft">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#website-register">>"website_register"</a>
-        </div>
-        <h2 id="website-register-title">The website is the practice surface and public kernel shell</h2>
-        <p class="inline-note">
-            Attention compounds here. Each pass should make the site more useful, more legible, more technically sound,
-            and more able to support collaboration, study, publication, portable seeds, and future sibling surfaces.
-        </p>
-
-        <div class="frame-grid">
-            <article class="frame-panel">
-                <h3>Home as spoken summary</h3>
-                <p>The <a href="/">home page</a> should summarize the Spwashi channel in plain language, then route
-                    people into <a href="/topics/software/">software</a>, <a href="/topics/math/">math</a>, <a
-                        href="/topics/craft/">craft</a>, <a href="/recipes/">recipes</a>, <a href="/play/">play</a>, and
-                    <a href="/about/domains/lore.land/">lore.land</a> without making the entry point feel abstract.</p>
-            </article>
-            <article class="frame-panel">
-                <h3>Website as process surface</h3>
-                <p><a href="/about/website/">The website field guide</a> should show that many engineers would benefit
-                    from making a webpage of their own. It does not need to begin as a polished brand surface. It needs
-                    to demonstrate how they relate to process, and it should stay compatible with authoring tools like
-                    <a href="/topics/knowledge-bases/markdown/">Obsidian</a> when those notes need to become public
-                    writing later.</p>
-            </article>
-            <article class="frame-panel">
-                <h3>Settings as cross-page state</h3>
-                <p><a href="/settings/">Settings</a> should clarify which parts of the system are global, local,
-                    atmospheric, behavioral, or inspectable, then eventually support richer data flow between pages so
-                    nearby routes can inherit useful context instead of starting blank.</p>
-            </article>
-            <article class="frame-panel">
-                <h3>Future route forks</h3>
-                <p><a href="/topics/craft/">Craft</a>, <a href="/design/website/">website design</a>, and <a
-                    href="https://texture.website">texture.website</a> define the visual language that could later seed
-                    <span class="spw-topic" data-spw-topic="domain">spwashi.art</span>, while <a
-                        href="/topics/software/">software</a>, <a href="/about/website/">website systems</a>, and <a
-                        href="https://github.com/spwashi/spw-workbench">spw-workbench</a> form the base for <span
-                        class="spw-topic" data-spw-topic="domain">spwashi.dev</span>. <a
-                        href="/about/domains/lore.land/">lore.land</a> is the companion route where author onboarding,
-                    ebooks, print objects, and narrative structure can become their own serious surface.</p>
-            </article>
-        </div>
-    </section>
-
-    <section
-        class="site-frame site-figure"
-        id="constellation-frame"
-        aria-labelledby="constellation-title"
-        data-spw-kind="frame"
-        data-spw-role="gallery"
-        data-spw-category-family="archive"
-        data-spw-promptability="latent"
-        data-spw-seed="constellation_frame">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#constellation-frame">*"constellation_frame"</a>
-        </div>
-        <h2 id="constellation-title">Constellation map</h2>
-
-        <figure class="spw-svg-figure" aria-labelledby="constellation-svg-title constellation-svg-desc">
-            <svg class="spw-svg-surface" viewBox="0 0 940 360" role="img"
-                 aria-labelledby="constellation-svg-title constellation-svg-desc" xmlns="http://www.w3.org/2000/svg">
-                <title id="constellation-svg-title">Constellation map of related surfaces</title>
-                <desc id="constellation-svg-desc">A simple constellation-like SVG placeholder showing linked points
-                    representing software, craft, website, settings, play, texture, and archive.
-                </desc>
-                <rect width="940" height="360" rx="12" fill="var(--spw-surface-2)"/>
-                <g fill="none" stroke="var(--spw-line-strong, rgba(255,255,255,0.2))" stroke-width="1.5">
-                    <path d="M150 210 L290 130 L450 190 L620 120 L790 200"/>
-                    <path d="M290 130 L330 250 L520 280 L620 120"/>
-                </g>
-                <g fill="var(--active-op-color, currentColor)">
-                    <circle cx="150" cy="210" r="8"/>
-                    <circle cx="290" cy="130" r="8"/>
-                    <circle cx="330" cy="250" r="8"/>
-                    <circle cx="450" cy="190" r="8"/>
-                    <circle cx="520" cy="280" r="8"/>
-                    <circle cx="620" cy="120" r="8"/>
-                    <circle cx="790" cy="200" r="8"/>
-                </g>
-                <g fill="var(--spw-text-muted, currentColor)" font-family="monospace" font-size="16">
-                    <text x="118" y="235">software</text>
-                    <text x="258" y="105">craft</text>
-                    <text x="298" y="275">settings</text>
-                    <text x="422" y="215">website</text>
-                    <text x="488" y="305">archive</text>
-                    <text x="586" y="95">play</text>
-                    <text x="754" y="225">texture</text>
-                </g>
-            </svg>
-            <figcaption class="frame-note">
-                A constellation study: routes do not only sit in a menu. They become nearby when a local interaction
-                makes another context relevant, and some should travel as reusable seeds.
-            </figcaption>
-        </figure>
-    </section>
-
 </main>
 
 <spw-include src="site-footer"></spw-include>
