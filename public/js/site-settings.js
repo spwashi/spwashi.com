@@ -67,13 +67,13 @@
  * ---------------------------------------------------------------------------
  */
 
-import { bus } from './spw-bus.js';
+import {bus} from './spw-bus.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteResonanceSwatches
 } from './spw-palette-resonance.js';
-import { shouldDisableServiceWorkerInDevelopment } from './spw-runtime-environment.js';
+import {shouldDisableServiceWorkerInDevelopment} from './spw-runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 const THEME_PACK_OPTIONS = Object.freeze([
@@ -602,11 +602,16 @@ const PRESETS = Object.freeze({
 });
 
 const SETTING_VALUE_LABELS = Object.freeze({
-  colorMode: Object.freeze({
-    auto: 'Adaptive',
-    light: 'Light',
-    dark: 'Dark'
-  }),
+  navigatorDisplay: Object.freeze({quiet: 'Quiet', full: 'Full', hidden: 'Hidden'}),
+  consoleDisplay: Object.freeze({collapsed: 'Collapsed', expanded: 'Expanded', hidden: 'Hidden'}),
+  viewportActivation: Object.freeze({off: 'Off', on: 'On'}),
+
+  reduceMotion: Object.freeze({off: 'Motion allowed', on: 'Reduced motion'}),
+  highContrast: Object.freeze({off: 'Standard contrast', on: 'High contrast'}),
+  fontSize: Object.freeze({small: 'Small', normal: 'Normal', large: 'Large'}),
+
+  colorMode: Object.freeze({auto: 'Adaptive', light: 'Light', dark: 'Dark'}),
+
   themePack: Object.freeze({
     'neutral-paper': 'Neutral paper',
     'oxide-ledger': 'Oxide ledger',
@@ -615,34 +620,292 @@ const SETTING_VALUE_LABELS = Object.freeze({
     'copper-brace': 'Copper brace',
     'glass-console': 'Glass console'
   }),
+
   paletteResonance: Object.freeze({
     route: 'Context-led',
     craft: 'Craft-led',
     software: 'Software-led',
     math: 'Math-led'
   }),
+
+  baseMetamaterial: Object.freeze({
+    paper: 'Paper',
+    glass: 'Glass',
+    matte: 'Matte',
+    field: 'Field'
+  }),
+
+  baseAffordance: Object.freeze({
+    read: 'Read',
+    tune: 'Tune',
+    inspect: 'Inspect',
+    orient: 'Orient'
+  }),
+
+  componentDensity: Object.freeze({
+    dense: 'Dense',
+    soft: 'Soft',
+    roomy: 'Roomy'
+  }),
+
+  operatorSaturation: Object.freeze({
+    muted: 'Muted',
+    normal: 'Normal',
+    vibrant: 'Vibrant'
+  }),
+
+  animationIntensity: Object.freeze({
+    reduced: 'Reduced',
+    normal: 'Normal',
+    enhanced: 'Enhanced'
+  }),
+
   contourProfile: Object.freeze({
     tight: 'Tight',
     balanced: 'Balanced',
     soft: 'Soft'
   }),
+
   strokeProfile: Object.freeze({
     hairline: 'Hairline',
     structural: 'Structural',
     bold: 'Bold'
   }),
+
   fieldResonance: Object.freeze({
     local: 'Local',
     field: 'Field',
     choral: 'Choral'
   }),
+
+  debugMode: Object.freeze({off: 'Off', on: 'On'}),
+  showFrameMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
+  verboseLogging: Object.freeze({off: 'Off', on: 'On'}),
+
+  fontSizeScale: Object.freeze({
+    80: '80%',
+    90: '90%',
+    100: '100%',
+    110: '110%',
+    120: '120%'
+  }),
+
+  lineSpacing: Object.freeze({
+    compact: 'Compact',
+    normal: 'Normal',
+    loose: 'Loose'
+  }),
+
+  monospaceVariant: Object.freeze({
+    system: 'System mono',
+    jetbrains: 'JetBrains Mono',
+    courier: 'Courier'
+  }),
+
+  typesettingMode: Object.freeze({
+    default: 'Default',
+    editorial: 'Editorial'
+  }),
+
+  showFooter: Object.freeze({on: 'Shown', off: 'Hidden'}),
+
+  headerOpacity: Object.freeze({
+    low: 'Low',
+    normal: 'Normal',
+    high: 'High'
+  }),
+
+  showSpecPills: Object.freeze({on: 'Shown', off: 'Hidden'}),
+
+  animationThrottling: Object.freeze({
+    off: 'Off',
+    light: 'Light',
+    heavy: 'Heavy'
+  }),
+
+  imageLazyLoading: Object.freeze({
+    on: 'Lazy loading',
+    off: 'Eager loading'
+  }),
+
+  enhancementLevel: Object.freeze({
+    minimal: 'Minimal',
+    balanced: 'Balanced',
+    rich: 'Rich'
+  }),
+
+  semanticDensity: Object.freeze({
+    minimal: 'Minimal',
+    normal: 'Normal',
+    rich: 'Rich'
+  }),
+
+  operatorPresentation: Object.freeze({
+    symbolic: 'Symbolic',
+    full: 'Full',
+    text: 'Text'
+  }),
+
+  infospaceComplexity: Object.freeze({
+    simple: 'Simple',
+    adaptive: 'Adaptive',
+    complex: 'Complex'
+  }),
+
+  cognitiveHandles: Object.freeze({off: 'Off', on: 'On'}),
+  dimensionalBreadcrumbs: Object.freeze({off: 'Off', on: 'On'}),
+  fractalNesting: Object.freeze({off: 'Off', on: 'On'}),
+  implementationMutations: Object.freeze({off: 'Off', on: 'On'}),
+
+  showSemanticMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
+  operatorHighlighting: Object.freeze({off: 'Off', on: 'On'}),
+  relationalVisualization: Object.freeze({off: 'Off', on: 'On'}),
+
   wonderMemory: Object.freeze({
     off: 'Focused',
     nearby: 'Connected',
     sitewide: 'Immersive'
+  }),
+
+  developmentalIndicators: Object.freeze({off: 'Off', on: 'On'}),
+  depthIndicators: Object.freeze({off: 'Off', on: 'On'}),
+
+  currentDevelopmentalClimate: Object.freeze({
+    orient: 'Kindle',
+    anchor: 'Anchor',
+    weave: 'Weave',
+    rehearse: 'Rehearse',
+    offer: 'Offer'
+  }),
+
+  developmentalClimateAutoCycle: Object.freeze({off: 'Off', on: 'On'}),
+
+  grainIntensity: Object.freeze({
+    none: 'None',
+    subtle: 'Subtle',
+    moderate: 'Moderate',
+    rich: 'Rich'
+  }),
+
+  busDiagnostics: Object.freeze({
+    off: 'Off',
+    basic: 'Basic',
+    verbose: 'Verbose'
+  }),
+
+  busMirrorToConsole: Object.freeze({off: 'Off', on: 'On'}),
+
+  busHistorySize: Object.freeze({
+    100: '100 events',
+    250: '250 events',
+    500: '500 events'
   })
 });
 
+const PRESET_LABELS = Object.freeze({
+  hearth: 'Hearth',
+  loom: 'Loom',
+  workshop: 'Workshop',
+  access: 'Access'
+});
+
+const PRESET_DESCRIPTIONS = Object.freeze({
+  hearth: 'Calm baseline for ordinary reading.',
+  loom: 'Expressive semantic surface with richer visual feedback.',
+  workshop: 'Inspection-forward setup for implementation and debugging.',
+  access: 'Larger, calmer, higher-guidance setup for reduced friction.'
+});
+
+const UX_RECIPES = Object.freeze({
+  calm: Object.freeze({
+    label: 'Calm the site',
+    settings: Object.freeze({
+      themePack: 'neutral-paper',
+      grainIntensity: 'none',
+      operatorSaturation: 'muted',
+      animationIntensity: 'reduced',
+      fieldResonance: 'local',
+      wonderMemory: 'off',
+      showSpecPills: 'off',
+      semanticDensity: 'minimal',
+      enhancementLevel: 'minimal',
+      infospaceComplexity: 'simple'
+    })
+  }),
+
+  readable: Object.freeze({
+    label: 'Make reading easier',
+    settings: Object.freeze({
+      fontSize: 'large',
+      fontSizeScale: '110',
+      lineSpacing: 'loose',
+      componentDensity: 'roomy',
+      typesettingMode: 'editorial'
+    })
+  }),
+
+  accessible: Object.freeze({
+    label: 'Reduce friction',
+    settings: Object.freeze({
+      highContrast: 'on',
+      reduceMotion: 'on',
+      fontSize: 'large',
+      fontSizeScale: '120',
+      lineSpacing: 'loose',
+      animationIntensity: 'reduced',
+      animationThrottling: 'heavy',
+      strokeProfile: 'bold',
+      grainIntensity: 'none'
+    })
+  }),
+
+  expressive: Object.freeze({
+    label: 'Make it expressive',
+    settings: Object.freeze({
+      themePack: 'electric-studio',
+      paletteResonance: 'route',
+      operatorSaturation: 'vibrant',
+      semanticDensity: 'rich',
+      enhancementLevel: 'rich',
+      fieldResonance: 'choral',
+      wonderMemory: 'sitewide',
+      showSpecPills: 'on',
+      operatorHighlighting: 'on'
+    })
+  }),
+
+  focus: Object.freeze({
+    label: 'Focus the current page',
+    settings: Object.freeze({
+      navigatorDisplay: 'quiet',
+      consoleDisplay: 'hidden',
+      showFooter: 'off',
+      showSpecPills: 'off',
+      wonderMemory: 'off',
+      semanticDensity: 'minimal',
+      infospaceComplexity: 'simple'
+    })
+  }),
+
+  developer: Object.freeze({
+    label: 'Inspect the system',
+    settings: Object.freeze({
+      navigatorDisplay: 'full',
+      consoleDisplay: 'expanded',
+      debugMode: 'on',
+      showFrameMetadata: 'on',
+      showSemanticMetadata: 'on',
+      busDiagnostics: 'verbose',
+      busMirrorToConsole: 'on',
+      busHistorySize: '500'
+    })
+  }),
+
+  default: Object.freeze({
+    label: 'Restore authored default',
+    settings: Object.freeze(DEFAULT_SITE_SETTINGS)
+  })
+});
 /* ==========================================================================
    2. Storage & normalization
    ========================================================================== */
@@ -673,7 +936,7 @@ const storage = {
 };
 
 const normalizeSiteSettings = (value = {}) => {
-  const settings = { ...DEFAULT_SITE_SETTINGS };
+  const settings = {...DEFAULT_SITE_SETTINGS};
 
   Object.keys(settings).forEach((key) => {
     const candidate = value[key];
@@ -1099,12 +1362,12 @@ class SiteSettingsManager {
 
   save(nextSettings = {}) {
     const current = this.get();
-    const merged = normalizeSiteSettings({ ...current, ...sanitizePartialSettings(nextSettings) });
+    const merged = normalizeSiteSettings({...current, ...sanitizePartialSettings(nextSettings)});
     storage.set(merged);
     const applied = this.apply(merged);
     const deviations = listDeviations(applied);
     bus.emit('settings:changed', applied);
-    bus.emit('settings:deviations-changed', { deviations, count: deviations.length });
+    bus.emit('settings:deviations-changed', {deviations, count: deviations.length});
     return applied;
   }
 
@@ -1112,7 +1375,7 @@ class SiteSettingsManager {
     storage.clear();
     const applied = this.apply(DEFAULT_SITE_SETTINGS);
     bus.emit('settings:changed', applied);
-    bus.emit('settings:deviations-changed', { deviations: [], count: 0 });
+    bus.emit('settings:deviations-changed', {deviations: [], count: 0});
     return applied;
   }
 
@@ -1124,7 +1387,7 @@ class SiteSettingsManager {
     const preset = PRESETS[name];
     if (!preset) return null;
 
-    const merged = normalizeSiteSettings({ ...DEFAULT_SITE_SETTINGS, ...preset });
+    const merged = normalizeSiteSettings({...DEFAULT_SITE_SETTINGS, ...preset});
     const climate = DEVELOPMENTAL_CLIMATES[merged.currentDevelopmentalClimate];
 
     return {
@@ -1164,7 +1427,7 @@ const getSettingValue = (name, settings = getSiteSettings()) => {
 
 const getSiteSettingDeviations = (settings) => listDeviations(settings ?? getSiteSettings());
 
-const describeDeviation = ({ name, default: defaultValue, current }) => ({
+const describeDeviation = ({name, default: defaultValue, current}) => ({
   name,
   humanName: humanizeSettingName(name),
   default: defaultValue,
@@ -1175,7 +1438,7 @@ const describeDeviation = ({ name, default: defaultValue, current }) => ({
 
 const resetSingleSetting = (name) => {
   if (!isKnownSetting(name)) return null;
-  return saveSiteSettings({ [name]: DEFAULT_SITE_SETTINGS[name] });
+  return saveSiteSettings({[name]: DEFAULT_SITE_SETTINGS[name]});
 };
 
 /* ==========================================================================
@@ -1248,6 +1511,177 @@ const describeSettingValue = (name, value) => (
   || String(value ?? '—')
 );
 
+const describeSettingsPatch = (partial = {}) => (
+  Object.entries(partial)
+    .filter(([name]) => isKnownSetting(name))
+    .map(([name, value]) => `${humanizeSettingName(name)} → ${describeSettingValue(name, value)}`)
+    .join(' · ')
+);
+
+const getPresetSettings = (name) => {
+  const preset = PRESETS[name];
+  if (!preset) return null;
+  return normalizeSiteSettings({...DEFAULT_SITE_SETTINGS, ...preset});
+};
+
+const presetMatchesSettings = (presetName, settings = getSiteSettings()) => {
+  const preset = getPresetSettings(presetName);
+  if (!preset) return false;
+
+  const normalized = normalizeSiteSettings(settings);
+  return Object.keys(DEFAULT_SITE_SETTINGS).every((key) => normalized[key] === preset[key]);
+};
+
+const presetIsSubsetOfSettings = (presetName, settings = getSiteSettings()) => {
+  const preset = PRESETS[presetName];
+  if (!preset) return false;
+
+  const normalized = normalizeSiteSettings(settings);
+  return Object.entries(preset).every(([key, value]) => normalized[key] === value);
+};
+
+const findActivePreset = (settings = getSiteSettings()) => (
+  Object.keys(PRESETS).find((presetName) => presetMatchesSettings(presetName, settings))
+  || Object.keys(PRESETS).find((presetName) => presetIsSubsetOfSettings(presetName, settings))
+  || null
+);
+
+const getUxRecipe = (name) => UX_RECIPES[name] || null;
+
+const applyUxRecipe = (recipeName, options = {}) => {
+  const {
+    statusNode = null,
+    onSaved = null
+  } = options;
+
+  const recipe = getUxRecipe(recipeName);
+  if (!recipe) {
+    writeSettingsStatus(statusNode, 'Unknown settings recipe.', 'info');
+    return null;
+  }
+
+  const saved = recipeName === 'default'
+    ? resetSiteSettings()
+    : saveSiteSettings(recipe.settings);
+
+  syncSettingsUx(document, saved);
+  writeSettingsStatus(statusNode, `${recipe.label}.`, 'success');
+  onSaved?.(saved, recipeName);
+  return saved;
+};
+
+const setPressedState = (node, isActive) => {
+  if (!(node instanceof HTMLElement)) return;
+
+  node.dataset.siteSettingActive = isActive ? 'true' : 'false';
+
+  if (node instanceof HTMLButtonElement || node.getAttribute('role') === 'button') {
+    node.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  }
+};
+
+const primeButtonLikeControl = (node) => {
+  if (!(node instanceof HTMLElement)) return;
+
+  if (!(node instanceof HTMLButtonElement)) {
+    node.setAttribute('role', 'button');
+  }
+
+  if (
+    !(node instanceof HTMLButtonElement)
+    && !(node instanceof HTMLAnchorElement)
+    && !node.hasAttribute('tabindex')
+  ) {
+    node.setAttribute('tabindex', '0');
+  }
+};
+
+const syncPresetControls = (root = document, settings = getSiteSettings()) => {
+  const activePreset = findActivePreset(settings);
+
+  root.querySelectorAll?.('[data-preset]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+
+    const presetName = node.getAttribute('data-preset');
+    const exact = presetName && presetMatchesSettings(presetName, settings);
+    const subset = presetName && presetIsSubsetOfSettings(presetName, settings);
+
+    primeButtonLikeControl(node);
+    setPressedState(node, Boolean(exact || subset));
+
+    node.dataset.presetActive = exact ? 'exact' : subset ? 'partial' : 'false';
+    node.dataset.siteSettingActive = (exact || subset) ? 'true' : 'false';
+
+    if (presetName) {
+      node.setAttribute(
+        'aria-label',
+        `${PRESET_LABELS[presetName] || presetName} preset. ${PRESET_DESCRIPTIONS[presetName] || ''}`.trim()
+      );
+    }
+  });
+
+  root.querySelectorAll?.('[data-site-active-preset]').forEach((node) => {
+    node.textContent = activePreset ? (PRESET_LABELS[activePreset] || activePreset) : 'Custom';
+    node.dataset.presetState = activePreset || 'custom';
+  });
+};
+
+const syncUxRecipeControls = (root = document) => {
+  root.querySelectorAll?.('[data-site-settings-recipe]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+
+    const recipeName = node.getAttribute('data-site-settings-recipe');
+    const recipe = getUxRecipe(recipeName);
+
+    primeButtonLikeControl(node);
+
+    if (recipe) {
+      node.setAttribute('aria-label', recipe.label);
+    }
+  });
+};
+
+const syncSettingsFieldStates = (root = document, settings = getSiteSettings()) => {
+  const normalized = normalizeSiteSettings(settings);
+
+  root.querySelectorAll?.('[name]').forEach((field) => {
+    if (!(field instanceof HTMLElement)) return;
+
+    const name = field.getAttribute('name');
+    if (!name || !isKnownSetting(name)) return;
+
+    const isDefault = normalized[name] === DEFAULT_SITE_SETTINGS[name];
+    field.dataset.siteSettingDefault = isDefault ? 'true' : 'false';
+  });
+
+  root.querySelectorAll?.('.settings-fieldset, fieldset, .settings-category').forEach((container) => {
+    if (!(container instanceof HTMLElement)) return;
+
+    const relevantNames = new Set(
+      [...container.querySelectorAll('[name]')]
+        .map((field) => field.getAttribute('name'))
+        .filter((name) => name && isKnownSetting(name))
+    );
+
+    if (!relevantNames.size) return;
+
+    const deviationCount = [...relevantNames]
+      .filter((name) => normalized[name] !== DEFAULT_SITE_SETTINGS[name])
+      .length;
+
+    container.dataset.siteSettingDeviationCount = String(deviationCount);
+    container.dataset.siteSettingDeviationState = deviationCount > 0 ? 'deviated' : 'default';
+  });
+};
+
+const syncSettingsUx = (root = document, settings = getSiteSettings()) => {
+  syncSettingsReadouts(root, settings);
+  syncDeviationReadouts(root, settings);
+  syncPresetControls(root, settings);
+  syncUxRecipeControls(root);
+  syncSettingsFieldStates(root, settings);
+};
+
 const parseSettingTrigger = (value = '') => {
   const [name = '', option = ''] = String(value).split(':');
   const normalizedName = name.trim();
@@ -1317,8 +1751,18 @@ const activateSettingTriggerFromKeyboard = (event, control) => {
 
 const writeSettingsStatus = (statusNode, message = '', type = 'info') => {
   if (!(statusNode instanceof HTMLElement)) return;
+
   statusNode.textContent = message;
   statusNode.dataset.status = type;
+  statusNode.dataset.updatedAt = String(Date.now());
+
+  if (!statusNode.hasAttribute('role')) {
+    statusNode.setAttribute('role', 'status');
+  }
+
+  if (!statusNode.hasAttribute('aria-live')) {
+    statusNode.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+  }
 };
 
 const resolveStandaloneStatusNode = (node) => {
@@ -1360,13 +1804,28 @@ const applySettingTrigger = (trigger, options = {}) => {
     return null;
   }
 
-  const saved = saveSiteSettings({ [trigger.name]: trigger.value });
-  syncSettingsReadouts(document, saved);
+  const current = getSiteSettings();
+
+  if (current[trigger.name] === trigger.value) {
+    writeSettingsStatus(
+      statusNode,
+      `${describeSettingValue(trigger.name, trigger.value)} is already active.`,
+      'info'
+    );
+    syncSettingsUx(document, current);
+    return current;
+  }
+
+  const saved = saveSiteSettings({[trigger.name]: trigger.value});
+
+  syncSettingsUx(document, saved);
+
   writeSettingsStatus(
     statusNode,
     `${humanizeSettingName(trigger.name)} → ${describeSettingValue(trigger.name, trigger.value)}.`,
     'success'
   );
+
   onSaved?.(saved, trigger);
   return saved;
 };
@@ -1422,20 +1881,13 @@ const clearFieldErrors = (root) => {
    These helpers allow settings widgets to appear on any page independently.
    ========================================================================== */
 
-/**
- * Bind a single settings field.
- *
- * Example:
- * <fieldset data-local-setting-group>
- *   <label><input type="radio" name="colorMode" value="light" data-site-setting></label>
- *   <label><input type="radio" name="colorMode" value="dark" data-site-setting></label>
- * </fieldset>
- *
- * bindSettingsField(field)
- */
 const bindSettingsField = (field, options = {}) => {
   if (!(field instanceof HTMLElement)) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
   const {
@@ -1446,11 +1898,16 @@ const bindSettingsField = (field, options = {}) => {
 
   const name = field.getAttribute('name');
   if (!name || !isKnownSetting(name)) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
-  const syncFromStore = () => {
-    writeSettingsToScope(root, getSiteSettings());
+  const syncFromStore = (settings = getSiteSettings()) => {
+    writeSettingsToScope(root, settings);
+    syncSettingsUx(root, settings);
   };
 
   const saveField = () => {
@@ -1472,9 +1929,16 @@ const bindSettingsField = (field, options = {}) => {
     }
 
     writeFieldError(root, name, '');
-    const saved = saveSiteSettings({ [name]: value });
-    syncSettingsReadouts(root, saved);
-    onSaved?.(saved, { name, value });
+
+    const current = getSiteSettings();
+    if (current[name] === value) {
+      syncFromStore(current);
+      return current;
+    }
+
+    const saved = saveSiteSettings({[name]: value});
+    syncFromStore(saved);
+    onSaved?.(saved, {name, value});
     return saved;
   };
 
@@ -1487,8 +1951,7 @@ const bindSettingsField = (field, options = {}) => {
   field.addEventListener('change', handleChange);
 
   const off = bus.on?.('settings:changed', (event) => {
-    syncSettingsReadouts(root, event.detail);
-    writeSettingsToScope(root, event.detail);
+    syncFromStore(event.detail);
   });
 
   return {
@@ -1503,25 +1966,13 @@ const bindSettingsField = (field, options = {}) => {
   };
 };
 
-/**
- * Bind a scope containing settings controls.
- *
- * Supports:
- * - full forms
- * - partial forms
- * - small local control clusters on other pages
- *
- * Example:
- * <section data-site-settings-scope>
- *   <label><input type="radio" name="colorMode" value="dark"></label>
- *   <strong data-settings-state="colorMode"></strong>
- * </section>
- *
- * const binding = bindSettingsScope(section);
- */
 const bindSettingsScope = (root, options = {}) => {
   if (!(root instanceof HTMLElement)) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
   const {
@@ -1541,7 +1992,7 @@ const bindSettingsScope = (root, options = {}) => {
 
   const syncFromStore = (settings = getSiteSettings()) => {
     writeSettingsToScope(root, settings);
-    syncSettingsReadouts(root, settings);
+    syncSettingsUx(root, settings);
   };
 
   const saveScope = () => {
@@ -1560,7 +2011,10 @@ const bindSettingsScope = (root, options = {}) => {
 
     const saved = saveSiteSettings(partial);
     syncFromStore(saved);
-    setStatus('Saved locally.', 'success');
+
+    const summary = describeSettingsPatch(partial);
+    setStatus(summary ? `Saved locally · ${summary}.` : 'Saved locally.', 'success');
+
     onSaved?.(saved);
     return saved;
   };
@@ -1583,6 +2037,7 @@ const bindSettingsScope = (root, options = {}) => {
 
   const controls = root.querySelectorAll('input[name], select[name], textarea[name]');
   controls.forEach((field) => field.addEventListener('change', handleChange));
+
   root.addEventListener('keydown', handleTriggerKeydown);
 
   if (root.matches('form')) {
@@ -1590,6 +2045,7 @@ const bindSettingsScope = (root, options = {}) => {
   }
 
   const presetHandlers = [];
+
   if (includePresets) {
     root.querySelectorAll('[data-preset]').forEach((button) => {
       const handler = () => {
@@ -1597,12 +2053,13 @@ const bindSettingsScope = (root, options = {}) => {
         const preset = PRESETS[presetName];
         if (!preset) return;
 
-        const merged = { ...getSiteSettings(), ...preset };
-        const saved = saveSiteSettings(merged);
+        const saved = saveSiteSettings(getPresetSettings(presetName));
         syncFromStore(saved);
 
         const description = manager.describePreset(presetName);
-        setStatus(`Applied "${presetName}" preset · ${description?.climate || 'climate'}.`, 'success');
+        const label = PRESET_LABELS[presetName] || presetName;
+
+        setStatus(`Applied ${label} · ${description?.climate || 'climate'}.`, 'success');
 
         button.classList.add('is-applied');
         setTimeout(() => button.classList.remove('is-applied'), 1200);
@@ -1616,6 +2073,7 @@ const bindSettingsScope = (root, options = {}) => {
   }
 
   const triggerHandlers = [];
+
   root.querySelectorAll('[data-site-setting-set]').forEach((control) => {
     const handler = (event) => {
       const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
@@ -1629,6 +2087,7 @@ const bindSettingsScope = (root, options = {}) => {
         statusNode,
         onSaved
       });
+
       if (!saved) return;
       syncFromStore(saved);
     };
@@ -1637,24 +2096,50 @@ const bindSettingsScope = (root, options = {}) => {
     triggerHandlers.push(() => control.removeEventListener('click', handler));
   });
 
-  const resetButton = root.querySelector('[data-site-settings-reset]');
+  const recipeHandlers = [];
+
+  root.querySelectorAll('[data-site-settings-recipe]').forEach((control) => {
+    const handler = (event) => {
+      if (control instanceof HTMLAnchorElement) {
+        event.preventDefault();
+      }
+
+      const recipeName = control.getAttribute('data-site-settings-recipe');
+
+      const saved = applyUxRecipe(recipeName, {
+        statusNode,
+        onSaved
+      });
+
+      if (!saved) return;
+      syncFromStore(saved);
+    };
+
+    control.addEventListener('click', handler);
+    recipeHandlers.push(() => control.removeEventListener('click', handler));
+  });
+
+  const resetButtons = [...root.querySelectorAll('[data-site-settings-reset]')];
+
   const handleReset = () => {
     const settings = resetSiteSettings();
     syncFromStore(settings);
-    setStatus('Reset to hearth defaults.', 'success');
+    setStatus('Reset to authored defaults.', 'success');
   };
 
-  resetButton?.addEventListener('click', handleReset);
+  resetButtons.forEach((button) => button.addEventListener('click', handleReset));
 
   const off = bus.on?.('settings:changed', (event) => {
     syncFromStore(event.detail);
   });
 
   syncFromStore();
+
   if (statusNode && !statusNode.textContent) {
-    const defaultMessage = root.querySelector('[data-site-setting-set]')
+    const defaultMessage = root.querySelector('[data-site-setting-set], [data-site-settings-recipe]')
       ? STANDALONE_SETTINGS_HINT
       : 'Preferences are saved in this browser.';
+
     setStatus(defaultMessage, 'info');
   }
 
@@ -1662,25 +2147,35 @@ const bindSettingsScope = (root, options = {}) => {
     cleanup() {
       clearTimeout(debounceTimer);
       controls.forEach((field) => field.removeEventListener('change', handleChange));
+
       root.removeEventListener('keydown', handleTriggerKeydown);
+
       if (root.matches('form')) {
         root.removeEventListener('submit', handleSubmit);
       }
-      resetButton?.removeEventListener('click', handleReset);
+
+      resetButtons.forEach((button) => button.removeEventListener('click', handleReset));
       presetHandlers.forEach((cleanup) => cleanup());
       triggerHandlers.forEach((cleanup) => cleanup());
+      recipeHandlers.forEach((cleanup) => cleanup());
       off?.();
     },
+
     refresh() {
       syncFromStore();
     },
+
     save: saveScope
   };
 };
 
 const bindStandaloneSettingTriggers = (root = document, options = {}) => {
   if (!(root instanceof HTMLElement) && root !== document) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
   const {
@@ -1689,25 +2184,32 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
 
   const handleClick = (event) => {
     const control = event.target instanceof Element
-      ? event.target.closest('[data-site-setting-set]')
+      ? event.target.closest('[data-site-setting-set], [data-site-settings-recipe]')
       : null;
 
     if (!(control instanceof HTMLElement)) return;
     if (control.closest('[data-site-settings-form], [data-site-settings-scope]')) return;
 
-    const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
-    if (!trigger) return;
-
     if (control instanceof HTMLAnchorElement) {
       event.preventDefault();
     }
+
+    if (control.hasAttribute('data-site-settings-recipe')) {
+      applyUxRecipe(control.getAttribute('data-site-settings-recipe'), {
+        statusNode: resolveStandaloneStatusNode(control),
+        onSaved
+      });
+      return;
+    }
+
+    const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
+    if (!trigger) return;
 
     applySettingTrigger(trigger, {
       statusNode: resolveStandaloneStatusNode(control),
       onSaved
     });
   };
-
   const handleKeydown = (event) => {
     const control = resolveSettingTriggerControl(event, root);
     if (!(control instanceof HTMLElement)) return;
@@ -1737,12 +2239,15 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
 
 const bindSettingsReadouts = (root = document) => {
   if (!(root instanceof HTMLElement) && root !== document) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
   const sync = (settings = getSiteSettings()) => {
-    syncSettingsReadouts(root, settings);
-    syncDeviationReadouts(root, settings);
+    syncSettingsUx(root, settings);
   };
 
   sync();
@@ -1818,7 +2323,11 @@ const syncDeviationReadouts = (root = document, settings = getSiteSettings()) =>
 
 const bindDeviationControls = (root = document) => {
   if (!(root instanceof HTMLElement) && root !== document) {
-    return { cleanup() {}, refresh() {} };
+    return {
+      cleanup() {
+      }, refresh() {
+      }
+    };
   }
 
   const handleClick = (event) => {
@@ -1859,8 +2368,9 @@ const initSiteSettingsBindings = () => {
   const forms = [...document.querySelectorAll('[data-site-settings-form]')];
   const scopes = [...document.querySelectorAll('[data-site-settings-scope]')]
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
-  const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set]')]
+  const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set], [data-site-settings-recipe]')]
     .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
+
   const hasReadouts = Boolean(
     document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list]')
   );
@@ -2067,10 +2577,17 @@ if (typeof window !== 'undefined') {
     listDeviations: getSiteSettingDeviations,
     describeDeviation,
     presets: PRESETS,
+    presetLabels: PRESET_LABELS,
+    presetDescriptions: PRESET_DESCRIPTIONS,
+    recipes: UX_RECIPES,
+    applyRecipe: applyUxRecipe,
+    findActivePreset,
+    syncUx: syncSettingsUx,
     describePreset: (name) => manager.describePreset(name),
     initBindings: initSiteSettingsBindings,
     manager
   };
+  ;
 }
 
 /* ==========================================================================
@@ -2081,9 +2598,13 @@ export {
   DEFAULT_SITE_SETTINGS,
   DEVELOPMENTAL_CLIMATES,
   PRESETS,
+  PRESET_DESCRIPTIONS,
+  PRESET_LABELS,
   SETTING_OPTIONS,
   SITE_SETTINGS_KEY,
+  UX_RECIPES,
   applySiteSettings,
+  applyUxRecipe,
   bindDeviationControls,
   bindSettingsField,
   bindSettingsReadouts,
@@ -2092,6 +2613,7 @@ export {
   collectSettingsFromScope,
   describeDeviation,
   emitSettingsChange,
+  findActivePreset,
   getSettingValue,
   getSiteSettingDeviations,
   getSiteSettingModifiers,
@@ -2105,7 +2627,10 @@ export {
   saveSiteSettings,
   shouldUseViewportActivation,
   syncDeviationReadouts,
+  syncPresetControls,
   syncSettingsReadouts,
+  syncSettingsUx,
+  syncUxRecipeControls,
   validatePartialSettings,
   validateSetting,
   writeSettingsToScope
