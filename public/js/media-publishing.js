@@ -1,30 +1,12 @@
+import {
+    DAY_KEYS,
+    cleanText,
+    createJsonFeedLoader,
+    el,
+} from './spw-feed-utils.js';
+
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
-const DAY_KEYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-
-let cachedConfig = null;
-
-const el = (tag, className, attrs = {}) => {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    Object.entries(attrs).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) node.setAttribute(key, value);
-    });
-    return node;
-};
-
-const cleanText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
-
-const loadMediaConfig = async () => {
-    if (cachedConfig) return cachedConfig;
-
-    const response = await fetch(MEDIA_FOCUS_URL, { cache: 'no-cache' });
-    if (!response.ok) {
-        throw new Error(`Unable to load media focus config: ${response.status}`);
-    }
-
-    cachedConfig = await response.json();
-    return cachedConfig;
-};
+const loadMediaConfig = createJsonFeedLoader(MEDIA_FOCUS_URL, null);
 
 const getDailyFocus = (config) => {
     const dayKey = DAY_KEYS[new Date().getDay()];
@@ -113,13 +95,8 @@ const initMediaPublishing = async () => {
     const collectionHosts = Array.from(document.querySelectorAll('[data-media-collection]'));
     if (!focusHosts.length && !collectionHosts.length) return;
 
-    let config;
-    try {
-        config = await loadMediaConfig();
-    } catch (error) {
-        console.warn('Media publishing config unavailable.', error);
-        return;
-    }
+    const config = await loadMediaConfig();
+    if (!config) return;
 
     focusHosts.forEach((host) => {
         const mode = host.dataset.mediaFocus;

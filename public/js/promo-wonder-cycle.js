@@ -1,5 +1,12 @@
+import {
+  cleanText,
+  clampIndex,
+  createJsonFeedLoader,
+  el,
+  getWeekIndex,
+} from './spw-feed-utils.js';
+
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
-const DAY_KEYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 const DEFAULT_FEED = Object.freeze({
   daily: [
@@ -206,43 +213,7 @@ const DEFAULT_FEED = Object.freeze({
   ],
 });
 
-let cachedFeed = null;
-
-const el = (tag, className, attrs = {}) => {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  Object.entries(attrs).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) node.setAttribute(key, value);
-  });
-  return node;
-};
-
-const cleanText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
-
-const clampIndex = (index, length) => {
-  if (!length) return 0;
-  return ((index % length) + length) % length;
-};
-
-const getWeekIndex = (date = new Date()) => {
-  const start = new Date(Date.UTC(date.getFullYear(), 0, 1));
-  const diff = date - start;
-  return Math.floor(diff / 604800000);
-};
-
-const loadFeed = async () => {
-  if (cachedFeed) return cachedFeed;
-
-  try {
-    const response = await fetch(FEED_URL, { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`Unable to load promo/wonder feed: ${response.status}`);
-    cachedFeed = await response.json();
-  } catch {
-    cachedFeed = DEFAULT_FEED;
-  }
-
-  return cachedFeed;
-};
+const loadFeed = createJsonFeedLoader(FEED_URL, DEFAULT_FEED);
 
 const pickDaily = (feed, date = new Date()) => {
   const daily = Array.isArray(feed.daily) && feed.daily.length ? feed.daily : DEFAULT_FEED.daily;
