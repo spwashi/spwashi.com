@@ -4,6 +4,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
+import { renderTemplate } from './template.mjs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -375,7 +377,8 @@ async function walkForFilesByExtension(directoryPath, extension, results = []) {
 
 async function parseRouteFile(absoluteFilePath) {
   const relativeFilePath = relativeRepoPath(absoluteFilePath);
-  const html = await fs.readFile(absoluteFilePath, 'utf8');
+  const source = await fs.readFile(absoluteFilePath, 'utf8');
+  const { output: html } = await renderTemplate(source, { sourceLabel: relativeFilePath });
   const bodyAttributes = extractBodyAttributes(html);
   const linkTags = collectTagAttributes(html, 'link');
   const scriptTags = collectTagAttributes(html, 'script');

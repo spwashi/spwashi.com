@@ -22,6 +22,9 @@
   --spw-header-indicator-shift: 0px;
   --spw-header-trace-opacity: 1;
   --spw-header-trace-shift: 0px;
+  --spw-shell-pointer-x: 50%;
+  --spw-shell-pointer-y: 0%;
+  --spw-shell-pointer-opacity: 0.26;
   --active-op-color: var(--spw-shell-chrome-accent-local);
   --shell-panel-bg:
     color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 96%, var(--spw-shell-chrome-accent-local) 4%);
@@ -117,11 +120,16 @@
   pointer-events: none;
   background:
     radial-gradient(
-      circle at top center,
-      color-mix(in oklab, var(--spw-shell-chrome-accent-local) 3%, transparent),
-      transparent 48%
+      circle at var(--spw-shell-pointer-x, 50%) var(--spw-shell-pointer-y, 0%),
+      color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent),
+      transparent 52%
     );
-  opacity: 0.26;
+  opacity: var(--spw-shell-pointer-opacity, 0.26);
+  transition: opacity 180ms var(--shell-ease);
+}
+
+:where(.site-header[data-spw-shell-pointer="tracking"], body > header[data-spw-shell-pointer="tracking"]) {
+  --spw-shell-pointer-opacity: 0.42;
 }
 
 :where(.site-header, body > header)::after {
@@ -664,6 +672,13 @@
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, transparent);
   outline: none;
   transform: translateY(-1px);
+}
+
+:where(.site-header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible),
+body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible)) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent),
+    0 8px 22px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 9%, transparent);
 }
 
 :where(.site-header nav a[aria-current="page"], body > header nav a[aria-current="page"]) {
@@ -1670,6 +1685,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 @media (prefers-reduced-motion: reduce) {
   :where(.site-header, body > header) {
+    --spw-shell-pointer-opacity: 0.22;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

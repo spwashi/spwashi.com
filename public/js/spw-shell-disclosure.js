@@ -347,6 +347,29 @@ function syncShellOffset(header) {
   document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset}px`);
 }
 
+function syncHeaderPointerField(header, event) {
+  if (!(header instanceof HTMLElement)) return;
+  if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const rect = header.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+
+  const x = Math.min(100, Math.max(0, ((event.clientX - rect.left) / rect.width) * 100));
+  const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
+  header.style.setProperty('--spw-shell-pointer-x', `${x.toFixed(2)}%`);
+  header.style.setProperty('--spw-shell-pointer-y', `${y.toFixed(2)}%`);
+  header.dataset.spwShellPointer = 'tracking';
+  header.dataset.spwShellMicrointeraction ||= 'pointer-field';
+}
+
+function clearHeaderPointerField(header) {
+  if (!(header instanceof HTMLElement)) return;
+  header.style.removeProperty('--spw-shell-pointer-x');
+  header.style.removeProperty('--spw-shell-pointer-y');
+  delete header.dataset.spwShellPointer;
+}
+
 function syncShellLock(snapshot) {
   const shouldLock = snapshot.locking === 'locked';
 
@@ -690,12 +713,18 @@ export function initSpwShellDisclosure(options = {}) {
   const handlePointerEnter = (event) => {
     if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     state.pointerInsideHeader = true;
+    syncHeaderPointerField(header, event);
     syncDisclosure(header, nav, navList, toggle, state, 'pointer');
+  };
+
+  const handlePointerMove = (event) => {
+    syncHeaderPointerField(header, event);
   };
 
   const handlePointerLeave = (event) => {
     if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     state.pointerInsideHeader = false;
+    clearHeaderPointerField(header);
     syncDisclosure(header, nav, navList, toggle, state, 'pointer');
   };
 
@@ -864,6 +893,7 @@ export function initSpwShellDisclosure(options = {}) {
   toggle.addEventListener('pointerdown', handleTogglePointerDown);
   toggle.addEventListener('keydown', handleToggleKeydown);
   header.addEventListener('pointerenter', handlePointerEnter);
+  header.addEventListener('pointermove', handlePointerMove);
   header.addEventListener('pointerleave', handlePointerLeave);
   header.addEventListener('focusin', handleFocusIn);
   header.addEventListener('focusout', handleFocusOut);
@@ -894,6 +924,7 @@ export function initSpwShellDisclosure(options = {}) {
       toggle.removeEventListener('pointerdown', handleTogglePointerDown);
       toggle.removeEventListener('keydown', handleToggleKeydown);
       header.removeEventListener('pointerenter', handlePointerEnter);
+      header.removeEventListener('pointermove', handlePointerMove);
       header.removeEventListener('pointerleave', handlePointerLeave);
       header.removeEventListener('focusin', handleFocusIn);
       header.removeEventListener('focusout', handleFocusOut);

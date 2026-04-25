@@ -28,6 +28,7 @@ composition_hierarchy: .{
   semantic_identity = #[role, context, `liminality at entry`][reg=set]
   field_role = `Sets the root attentional baseline. Determines which wonder types are available at all.`
   html_contract = `body[data-spw-role] and main carry the page-level semantic truth.`
+  authoring_contract = `Pages may declare head and shell chrome with <spw-page>, <spw-site-head>, and <spw-site-header>. The route source stays HTML-native while build/dev rendering expands shared metadata, navigation, JSON-LD, and microinteraction hooks.`
  }[reg=facet]
  region = .{
   definition = `A profiled sub-surface within a page. Has harmony, tempo, density, and a region role. Boundary is a layout boundary.`
@@ -85,6 +86,12 @@ data_flow: .{
 	  mechanism = `The component semantics pass publishes a compact registry at window.__SPW_SITE__.inspect.semantics. The registry can list, filter, resolve elements, and export JSON for screen recordings, voiceovers, and developer teaching.`
 	  queries = #[`summary()`, `list(filter)`, `get(component_id)`, `element(component_id)`, `json()`][reg=set]
 	  risk = `Without a runtime registry, screenshots and console demonstrations have to infer component identity from CSS selectors and visible text after the fact.`
+	 }[reg=facet]
+	 shell_template_contract = .{
+	  direction = ?< page_declaration, template_renderer, static_html, shell_runtime >[reg=stream]
+	  mechanism = `<spw-site-head> and <spw-site-header> expand during dev/build. They keep naive editing focused on page metadata and content while preserving consistent shared chrome and investor-facing microinteractions.`
+	  directives = #[`spw-page`, `spw-site-head`, `spw-site-header`, `spw-include`][reg=set]
+	  risk = `If only some pages use the shell template, chrome edits can drift between generated and hand-authored routes. The pilot route should be followed by route-family migrations.`
 	 }[reg=facet]
  authored_to_inferred = .{
   direction = ?< page, region, feature, component >[reg=stream]
