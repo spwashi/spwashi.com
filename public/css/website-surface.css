@@ -330,13 +330,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     var(--website-paper);
 }
 
-:where(body[data-spw-surface="website"] .media-focus-card),
-:where(body[data-spw-surface="website"] .media-card) {
-  border-color: color-mix(in srgb, var(--website-accent) 16%, var(--line, rgba(14,18,20,0.14)));
-  background: var(--website-panel);
-  box-shadow: var(--card-highlight), var(--card-shadow);
-}
-
 :where(body[data-spw-surface="website"] .media-focus-card--daily) {
   border-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 22%, transparent);
 }
@@ -344,14 +337,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 :where(body[data-spw-surface="website"] .media-card:hover),
 :where(body[data-spw-surface="website"] .media-focus-card:hover) {
   transform: translateY(-1px);
-}
-
-:where(body[data-spw-surface="website"] .media-card),
-:where(body[data-spw-surface="website"] .media-focus-card) {
-  transition:
-    transform var(--duration-fast, 140ms) ease,
-    border-color var(--duration-fast, 140ms) ease,
-    box-shadow var(--duration-base, 220ms) ease;
 }
 
 /* ==========================================================================

@@ -1557,16 +1557,13 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       "sigil toggle"
-      "indicator indicator"
-      "nav nav"
-      "trace trace";
+      "nav nav";
     align-content: start;
     gap: var(--spw-shell-row-gap, 0.25rem);
     padding-block: var(--spw-shell-surface-padding-block, 0.35rem);
   }
 
   .header-sigil,
-  .header-op-indicator,
   .spw-nav-toggle {
     padding-inline: 1rem;
   }
@@ -1579,12 +1576,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   .header-op-indicator {
-    grid-area: indicator;
-    grid-column: 1 / -1;
-    justify-self: center;
-    padding-top: 0.1rem;
-    padding-right: 0;
-    text-align: center;
+    display: none;
   }
 
   :where(.site-header nav, body > header nav) {
@@ -1631,12 +1623,11 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   .spw-header-trace {
-    grid-template-columns: 1fr;
+    display: none;
   }
 
   .spw-spell-dock {
-    justify-self: stretch;
-    min-width: 0;
+    display: none;
   }
 
   .site-footer__inner {
@@ -1691,10 +1682,6 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 @media (max-width: 480px) {
-  .header-op-indicator {
-    display: none;
-  }
-
   :where(.site-header, body > header) .spw-spell-path {
     font-size: var(--text-size-2xs, 0.72rem);
   }
@@ -1710,8 +1697,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 @media (max-width: 720px) {
   .spw-spell-dock {
-    width: 100%;
-    max-width: 100%;
+    display: none;
   }
 
   .spw-spell-dock-summary {

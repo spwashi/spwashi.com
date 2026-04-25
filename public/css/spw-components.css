@@ -450,8 +450,8 @@
   min-width: 0;
   min-height: 100%;
   padding: var(--component-pad);
-  color: var(--ink, inherit);
-  background: var(--component-surface);
+  color: color-mix(in srgb, var(--ink, inherit) 96%, #000 4%);
+  background: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
   border: var(--component-border);
   border-radius: var(--component-radius-tight);
   box-shadow: var(--component-shadow);
@@ -465,6 +465,55 @@
   color var(--component-transition-fast),
   opacity var(--component-transition-fast),
   transform var(--component-transition-arrival);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) {
+  --component-text: color-mix(in srgb, var(--ink, currentColor) 94%, #000 6%);
+  --component-text-soft: color-mix(in srgb, var(--ink-soft, currentColor) 88%, #000 12%);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(p, li, .frame-note, .frame-copy, .media-card-summary, .media-focus-card > p, .media-focus-copy) {
+  color: var(--component-text-soft);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(strong, h2, h3, h4, h5, h6, .frame-card-sigil, .media-card-title, .media-focus-title h3) {
+  color: var(--component-text);
 }
 
 :where(
@@ -511,6 +560,39 @@
   border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
   box-shadow: var(--component-shadow-active);
   transform: translateY(calc(var(--projection-lift-xs, 1px) * -1));
+}
+
+:where(.media-focus-card) {
+  --media-focus-accent: var(--component-accent);
+}
+
+:where(.media-focus-card .media-focus-title) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+:where(.media-focus-card .media-focus-title h3) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink, currentColor) 92%, var(--media-focus-accent) 8%);
+  font-size: clamp(1.02rem, 0.94rem + 0.35vw, 1.18rem);
+  line-height: 1.2;
+}
+
+:where(.media-focus-card .media-focus-operator) {
+  align-self: flex-start;
+}
+
+:where(.media-focus-card .spec-kicker) {
+  margin: 0;
+}
+
+:where(.media-focus-card > p) {
+  margin: 0;
+}
+
+:where(.media-focus-card .operator-chip) {
+  justify-self: start;
 }
 
 :where(
