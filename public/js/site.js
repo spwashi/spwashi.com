@@ -1174,6 +1174,18 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'brace-pivots',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-pivot]',
+    load: () => import('./spw-brace-pivots.js'),
+    mount: (mod) => {
+      const fn = mod?.initBracePivots;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'local-notes',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

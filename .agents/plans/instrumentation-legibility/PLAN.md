@@ -25,3 +25,5 @@ Refine recent developmental-climate and semantic-chrome changes so component ins
 - [x] Surface instrumentation in semantic popovers and state inspector blocks.
 - [x] Move prompt-copy UI into the frame header flow.
 - [x] Record the instrumentation contract in the page model.
+- [x] Register component identities and semantic ownership for console inspection.
+- [x] Route brace pivot settings changes through the canonical settings manager.

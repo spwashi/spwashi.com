@@ -23,6 +23,7 @@
  */
 
 import { bus } from './spw-bus.js';
+import { getSettingValue, saveSiteSettings } from './site-settings.js';
 
 const PIVOT_SEQUENCES = {
     semanticDensity:    ['minimal', 'normal', 'rich'],
@@ -48,25 +49,13 @@ function cycleValue(sequence, current) {
 }
 
 function getCurrentSetting(key) {
-    try {
-        const raw = localStorage.getItem('spw-site-settings');
-        if (!raw) return null;
-        return JSON.parse(raw)[key] ?? null;
-    } catch {
-        return null;
-    }
+    return getSettingValue(key) ?? null;
 }
 
 function setSetting(key, value) {
-    try {
-        const raw = localStorage.getItem('spw-site-settings');
-        const settings = raw ? JSON.parse(raw) : {};
-        settings[key] = value;
-        localStorage.setItem('spw-site-settings', JSON.stringify(settings));
-        bus.emit('settings:changed', { key, value });
-    } catch {
-        // silently fail — pivot is a progressive enhancement
-    }
+    const saved = saveSiteSettings({ [key]: value });
+    bus.emit('brace:pivoted', { key, value, settings: saved });
+    return saved;
 }
 
 function installPivotAffordance(wall, settingKey, labelMap) {

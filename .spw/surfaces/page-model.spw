@@ -46,9 +46,9 @@ composition_hierarchy: .{
  }[reg=facet]
  component = .{
   definition = `A reusable semantic element that participates in the attentional grammar.`
-  semantic_identity = #[kind, form, role, liminality, selection, value_layer, instrumentation][reg=set]
+  semantic_identity = #[component_id, component_name, component_address, kind, form, role, liminality, selection, value_layer, semantic_owner, instrumentation][reg=set]
   field_role = `Components are the primary resonance targets. They expose receptors via tokens inferred from role, kind, text, href, and manual anchors and respond when field charge matches their receptors.`
-  html_contract = `data-spw-* attributes. Enriched by spw-component-semantics.js. Instrumentation exposes machine-facing producer/debug hints through data-spw-instrumentation and data-spw-debug-source without requiring the public chrome to stay visible.`
+  html_contract = `data-spw-* attributes. Enriched by spw-component-semantics.js. Instrumentation exposes machine-facing producer/debug hints through data-spw-instrumentation and data-spw-debug-source without requiring the public chrome to stay visible. Runtime registration also writes data-spw-component-id, data-spw-component-name, data-spw-component-address, and data-spw-semantic-owner so console inspection can tell stories about coherent components instead of loose DOM nodes.`
   examples = #[
    `.operator-chip`,
    `.frame-sigil`,
@@ -74,12 +74,18 @@ composition_hierarchy: .{
 
 data_flow: .{
  note = `How semantic information moves through the composition hierarchy — from authored HTML to rendered field state.`
- instrumentation_contract = .{
-  direction = ?< producers, component_semantics, semantic_chrome, state_inspector >[reg=stream]
-  mechanism = `Runtime producers stamp explicit instrumentation/debug-source hints; component semantics folds them into snapshots; semantic chrome and state inspector make the chain visible only when inspection settings ask for it.`
-  values = #[`prompt-surface`, `prompt-copy`, `semantic-chrome`, `state-inspector`, `image-metaphysics`][reg=set]
-  risk = `If instrumentation is only represented as visible chips, debugging competes with reading hierarchy. If it is only hidden in JS, orchestration cannot be audited by agents or editors.`
- }[reg=facet]
+	 instrumentation_contract = .{
+	  direction = ?< producers, component_semantics, semantic_chrome, state_inspector >[reg=stream]
+	  mechanism = `Runtime producers stamp explicit instrumentation/debug-source hints; component semantics folds them into snapshots; semantic chrome and state inspector make the chain visible only when inspection settings ask for it.`
+	  values = #[`prompt-surface`, `prompt-copy`, `semantic-chrome`, `state-inspector`, `image-metaphysics`][reg=set]
+	  risk = `If instrumentation is only represented as visible chips, debugging competes with reading hierarchy. If it is only hidden in JS, orchestration cannot be audited by agents or editors.`
+	 }[reg=facet]
+	 component_registry_contract = .{
+	  direction = ?< authored_dom, component_semantics, console_inspection >[reg=stream]
+	  mechanism = `The component semantics pass publishes a compact registry at window.__SPW_SITE__.inspect.semantics. The registry can list, filter, resolve elements, and export JSON for screen recordings, voiceovers, and developer teaching.`
+	  queries = #[`summary()`, `list(filter)`, `get(component_id)`, `element(component_id)`, `json()`][reg=set]
+	  risk = `Without a runtime registry, screenshots and console demonstrations have to infer component identity from CSS selectors and visible text after the fact.`
+	 }[reg=facet]
  authored_to_inferred = .{
   direction = ?< page, region, feature, component >[reg=stream]
   mechanism = `Authored data-spw-* attributes are the truth source. Inference fills gaps: region profiling infers harmony from role, component semantics infers value_layer from kind + role.`

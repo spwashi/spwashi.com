@@ -98,6 +98,9 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   departed: 'exit'
 });
 
+const SEMANTIC_REGISTRY_VERSION = '0.3';
+let semanticRegistry = null;
+
 function normalizeText(value = '') {
   return value.replace(/\s+/g, ' ').trim();
 }
@@ -481,6 +484,50 @@ function inferInspectTarget(el) {
   return normalizeToken(el.dataset.spwInspect || el.id || '');
 }
 
+function inferComponentId(el, snapshotBase = {}) {
+  if (el.dataset.spwComponentId) return normalizeSlug(el.dataset.spwComponentId);
+  if (el.id) return normalizeSlug(el.id);
+
+  const primary = normalizeSlug(snapshotBase.primaryLabel || snapshotBase.primaryExpression || '');
+  const meaning = normalizeSlug(snapshotBase.meaning || '');
+  const role = normalizeSlug(snapshotBase.role || '');
+  const kind = normalizeSlug(snapshotBase.kind || '');
+  const label = primary || meaning || role || kind || 'component';
+  const peers = Array.from(document.querySelectorAll(DEFAULT_SELECTOR));
+  const index = Math.max(0, peers.indexOf(el)) + 1;
+
+  return `${label}-${String(index).padStart(2, '0')}`;
+}
+
+function inferComponentName(el, snapshotBase = {}) {
+  return normalizeText(
+    el.dataset.spwComponentName
+    || snapshotBase.primaryLabel
+    || snapshotBase.meaning
+    || getHeading(el)
+    || snapshotBase.kind
+    || 'component'
+  );
+}
+
+function inferSemanticOwner(snapshotBase = {}) {
+  if (snapshotBase.debugSource) return snapshotBase.debugSource;
+  if (snapshotBase.configDomain && snapshotBase.configDomain !== 'none') return snapshotBase.configDomain;
+  if (snapshotBase.instrumentation?.length) return snapshotBase.instrumentation[0];
+  return 'spw-component-semantics';
+}
+
+function getComponentAddress(snapshotBase = {}) {
+  const parts = [
+    snapshotBase.kind,
+    snapshotBase.role,
+    snapshotBase.context,
+    snapshotBase.valueLayer
+  ].filter(Boolean);
+
+  return parts.join('/');
+}
+
 function inferSlots(el) {
   const slots = [];
   if (el.dataset.spwSlot) slots.push(normalizeToken(el.dataset.spwSlot));
@@ -561,8 +608,28 @@ function snapshotComponentSemantics(el, options = {}) {
   const valueLayer = inferValueLayer(role, context);
   const stance = inferStance(el, importance, interactivity);
   const relationship = describeRelationship(el);
+  const componentBase = {
+    kind,
+    role,
+    meaning,
+    context,
+    valueLayer,
+    configDomain,
+    instrumentation,
+    debugSource,
+    primaryExpression: relationship.primaryExpression,
+    primaryLabel: relationship.primaryLabel
+  };
+  const componentId = inferComponentId(el, componentBase);
+  const componentName = inferComponentName(el, componentBase);
+  const semanticOwner = inferSemanticOwner(componentBase);
+  const componentAddress = getComponentAddress(componentBase);
 
   return {
+    componentId,
+    componentName,
+    componentAddress,
+    semanticOwner,
     kind,
     role,
     meaning,
@@ -593,7 +660,7 @@ function snapshotComponentSemantics(el, options = {}) {
     primaryLabel: relationship.primaryLabel,
     routeMarker: relationship.routeMarker,
     semanticTagged: 'true',
-    semanticVersion: options.semanticVersion || '0.2'
+    semanticVersion: options.semanticVersion || SEMANTIC_REGISTRY_VERSION
   };
 }
 
@@ -619,7 +686,11 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwStance', snapshot.stance);
   writer(el, 'spwSemanticTagged', snapshot.semanticTagged);
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
+  writer(el, 'spwComponentId', snapshot.componentId);
+  writer(el, 'spwComponentName', snapshot.componentName);
   writer(el, 'spwComponentKind', snapshot.kind);
+  writer(el, 'spwComponentAddress', snapshot.componentAddress);
+  writer(el, 'spwSemanticOwner', snapshot.semanticOwner);
   writer(el, 'spwRouteState', snapshot.routeState);
   writer(el, 'spwBranchCount', snapshot.branchCount);
   if (snapshot.instrumentation.length) writer(el, 'spwInstrumentation', snapshot.instrumentation.join(' '));
@@ -658,7 +729,9 @@ function summarizeSemanticField(snapshots) {
     configDomains: new Set(),
     affordances: new Set(),
     interactivity: new Set(),
-    instrumentation: new Set()
+    instrumentation: new Set(),
+    owners: new Set(),
+    valueLayers: new Set()
   };
 
   snapshots.forEach(({ snapshot }) => {
@@ -666,9 +739,17 @@ function summarizeSemanticField(snapshots) {
     summary.contexts.add(snapshot.context);
     summary.configDomains.add(snapshot.configDomain);
     summary.interactivity.add(snapshot.interactivity);
+    summary.owners.add(snapshot.semanticOwner);
+    summary.valueLayers.add(snapshot.valueLayer);
     snapshot.affordances.forEach((value) => summary.affordances.add(value));
     snapshot.instrumentation.forEach((value) => summary.instrumentation.add(value));
   });
+
+  const countBy = (key) => snapshots.reduce((counts, { snapshot }) => {
+    const value = snapshot[key] || 'unknown';
+    counts[value] = (counts[value] || 0) + 1;
+    return counts;
+  }, {});
 
   return {
     roles: [...summary.roles],
@@ -676,8 +757,137 @@ function summarizeSemanticField(snapshots) {
     configDomains: [...summary.configDomains],
     affordances: [...summary.affordances],
     interactivity: [...summary.interactivity],
-    instrumentation: [...summary.instrumentation]
+    instrumentation: [...summary.instrumentation],
+    owners: [...summary.owners],
+    valueLayers: [...summary.valueLayers],
+    counts: {
+      roles: countBy('role'),
+      kinds: countBy('kind'),
+      owners: countBy('semanticOwner'),
+      valueLayers: countBy('valueLayer')
+    }
   };
+}
+
+function makePublicSnapshot(element, snapshot) {
+  return {
+    id: element.id || null,
+    componentId: snapshot.componentId,
+    componentName: snapshot.componentName,
+    componentAddress: snapshot.componentAddress,
+    semanticOwner: snapshot.semanticOwner,
+    kind: snapshot.kind,
+    role: snapshot.role,
+    meaning: snapshot.meaning,
+    form: snapshot.form,
+    substrate: snapshot.substrate,
+    phrase: snapshot.phrase,
+    context: snapshot.context,
+    importance: snapshot.importance,
+    density: snapshot.density,
+    emphasis: snapshot.emphasis,
+    interactivity: snapshot.interactivity,
+    inspectability: snapshot.inspectability,
+    configDomain: snapshot.configDomain,
+    configKeys: snapshot.configKeys,
+    instrumentation: snapshot.instrumentation,
+    debugSource: snapshot.debugSource,
+    inspectTarget: snapshot.inspectTarget,
+    slots: snapshot.slots,
+    affordances: snapshot.affordances,
+    features: snapshot.features,
+    valueLayer: snapshot.valueLayer,
+    stance: snapshot.stance,
+    routeState: snapshot.routeState,
+    branchCount: snapshot.branchCount,
+    primaryOperator: snapshot.primaryOperator,
+    primaryExpression: snapshot.primaryExpression,
+    primaryLabel: snapshot.primaryLabel,
+    routeMarker: snapshot.routeMarker,
+    semanticVersion: snapshot.semanticVersion
+  };
+}
+
+function createSemanticRegistry({ root, field, snapshots }) {
+  const records = snapshots.map(({ element, snapshot }) => ({
+    element,
+    snapshot,
+    public: makePublicSnapshot(element, snapshot)
+  }));
+  const byComponentId = new Map(records.map((record) => [record.snapshot.componentId, record]));
+
+  return {
+    version: SEMANTIC_REGISTRY_VERSION,
+    root,
+    count: records.length,
+    field,
+    records,
+    list(filter = {}) {
+      return records
+        .filter((record) => {
+          if (filter.role && record.snapshot.role !== filter.role) return false;
+          if (filter.kind && record.snapshot.kind !== filter.kind) return false;
+          if (filter.owner && record.snapshot.semanticOwner !== filter.owner) return false;
+          if (filter.valueLayer && record.snapshot.valueLayer !== filter.valueLayer) return false;
+          if (filter.instrumentation && !record.snapshot.instrumentation.includes(filter.instrumentation)) return false;
+          return true;
+        })
+        .map((record) => record.public);
+    },
+    get(componentId) {
+      return byComponentId.get(normalizeSlug(componentId))?.public || null;
+    },
+    element(componentId) {
+      return byComponentId.get(normalizeSlug(componentId))?.element || null;
+    },
+    summary() {
+      return {
+        version: this.version,
+        count: this.count,
+        field: this.field
+      };
+    },
+    toJSON() {
+      return {
+        version: this.version,
+        count: this.count,
+        field: this.field,
+        components: this.list()
+      };
+    }
+  };
+}
+
+function installSemanticRegistry(registry) {
+  semanticRegistry = registry;
+
+  if (typeof window === 'undefined') return registry;
+
+  const siteApi = window.__SPW_SITE__ || {};
+  const inspect = siteApi.inspect || {};
+  const semanticsApi = {
+    registry: () => semanticRegistry,
+    summary: () => semanticRegistry?.summary() || null,
+    list: (filter = {}) => semanticRegistry?.list(filter) || [],
+    get: (componentId) => semanticRegistry?.get(componentId) || null,
+    element: (componentId) => semanticRegistry?.element(componentId) || null,
+    json: () => semanticRegistry?.toJSON() || null
+  };
+
+  window.__SPW_SITE__ = {
+    ...siteApi,
+    inspect: {
+      ...inspect,
+      semantics: semanticsApi,
+      components: semanticsApi.list
+    }
+  };
+
+  return registry;
+}
+
+function getSemanticRegistry() {
+  return semanticRegistry;
 }
 
 export function initSpwComponentSemantics(options = {}) {
@@ -686,7 +896,7 @@ export function initSpwComponentSemantics(options = {}) {
     selector = DEFAULT_SELECTOR,
     emit = true,
     overwrite = true,
-    semanticVersion = '0.2'
+    semanticVersion = SEMANTIC_REGISTRY_VERSION
   } = options;
 
   const targets = collectSemanticTargets(root, selector);
@@ -699,41 +909,16 @@ export function initSpwComponentSemantics(options = {}) {
   }
 
   if (emit) {
+    const field = summarizeSemanticField(snapshots);
+    const registry = createSemanticRegistry({ root, field, snapshots });
+    installSemanticRegistry(registry);
+
     const detail = {
       root,
       count: snapshots.length,
-      field: summarizeSemanticField(snapshots),
-      snapshots: snapshots.map(({ element, snapshot }) => ({
-        id: element.id || null,
-        kind: snapshot.kind,
-        role: snapshot.role,
-        meaning: snapshot.meaning,
-        form: snapshot.form,
-        substrate: snapshot.substrate,
-        phrase: snapshot.phrase,
-        context: snapshot.context,
-        importance: snapshot.importance,
-        density: snapshot.density,
-        emphasis: snapshot.emphasis,
-        interactivity: snapshot.interactivity,
-        inspectability: snapshot.inspectability,
-        configDomain: snapshot.configDomain,
-        configKeys: snapshot.configKeys,
-        instrumentation: snapshot.instrumentation,
-        debugSource: snapshot.debugSource,
-        inspectTarget: snapshot.inspectTarget,
-        slots: snapshot.slots,
-        affordances: snapshot.affordances,
-        features: snapshot.features,
-        valueLayer: snapshot.valueLayer,
-        stance: snapshot.stance,
-        routeState: snapshot.routeState,
-        branchCount: snapshot.branchCount,
-        primaryOperator: snapshot.primaryOperator,
-        primaryExpression: snapshot.primaryExpression,
-        primaryLabel: snapshot.primaryLabel,
-        routeMarker: snapshot.routeMarker
-      }))
+      field,
+      registryVersion: registry.version,
+      snapshots: snapshots.map(({ element, snapshot }) => makePublicSnapshot(element, snapshot))
     };
 
     bus.emit?.('semantic-snapshot', detail);
@@ -753,6 +938,9 @@ export function initSpwComponentSemantics(options = {}) {
     },
     getSnapshots() {
       return snapshots.slice();
+    },
+    getRegistry() {
+      return semanticRegistry;
     }
   };
 }
@@ -760,5 +948,6 @@ export function initSpwComponentSemantics(options = {}) {
 export {
   applySemanticSnapshot,
   collectSemanticTargets,
+  getSemanticRegistry,
   snapshotComponentSemantics
 };
