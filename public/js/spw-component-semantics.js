@@ -28,27 +28,14 @@
  */
 
 import { bus } from './spw-bus.js';
+import {
+  COMPONENT_SELECTOR,
+  buildAxisGenome,
+  inferTopographyKind,
+} from './spw-dom-contracts.js';
 import { detectOperator } from './spw-shared.js';
 
-const DEFAULT_SELECTOR = [
-  '.site-frame',
-  '.frame-panel',
-  '.frame-card',
-  '.media-card',
-  '.media-focus-card',
-  '.software-card',
-  '.operator-card',
-  '.plan-card',
-  '.compare-card',
-  '.spec-column',
-  '.mode-panel',
-  '[data-spw-kind]',
-  '[data-spw-role]',
-  '[data-spw-slot]',
-  '[data-spw-features]',
-  '[data-spw-meaning]',
-  '[data-spw-inspect]'
-].join(', ');
+const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
 
 const ROLE_DEFAULTS = Object.freeze({
   orientation: { substrate: 'frame', phrase: 'premise', context: 'reading' },
@@ -98,7 +85,7 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   departed: 'exit'
 });
 
-const SEMANTIC_REGISTRY_VERSION = '0.3';
+const SEMANTIC_REGISTRY_VERSION = '0.4';
 let semanticRegistry = null;
 
 function normalizeText(value = '') {
@@ -285,27 +272,7 @@ function getHeading(el) {
 }
 
 function getKind(el) {
-  if (el.dataset.spwKind) return normalizeToken(el.dataset.spwKind);
-  if (el.matches('main')) return 'main';
-  if (el.matches('nav')) return 'nav';
-  if (el.matches('aside')) return 'aside';
-  if (el.matches('article')) return 'article';
-  if (el.matches('section')) return 'section';
-  if (el.matches('figure')) return 'figure';
-  if (el.classList.contains('site-frame')) return 'frame';
-  if (el.classList.contains('frame-panel')) return 'panel';
-  if (
-    el.classList.contains('frame-card')
-    || el.classList.contains('media-card')
-    || el.classList.contains('media-focus-card')
-    || el.classList.contains('software-card')
-    || el.classList.contains('operator-card')
-    || el.classList.contains('plan-card')
-    || el.classList.contains('compare-card')
-    || el.classList.contains('spec-column')
-  ) return 'card';
-  if (el.classList.contains('mode-panel')) return 'lens';
-  return 'component';
+  return inferTopographyKind(el, 'component');
 }
 
 function inferRole(el, kind) {
@@ -528,6 +495,31 @@ function getComponentAddress(snapshotBase = {}) {
   return parts.join('/');
 }
 
+function buildComponentGenome(snapshotBase = {}) {
+  return buildAxisGenome(
+    [
+      ['kind', snapshotBase.kind],
+      ['role', snapshotBase.role],
+      ['form', snapshotBase.form],
+      ['substrate', snapshotBase.substrate],
+      ['context', snapshotBase.context],
+      ['importance', snapshotBase.importance],
+      ['density', snapshotBase.density],
+      ['emphasis', snapshotBase.emphasis],
+      ['interactivity', snapshotBase.interactivity],
+      ['inspectability', snapshotBase.inspectability],
+      ['value', snapshotBase.valueLayer],
+      ['stance', snapshotBase.stance],
+      ['route', snapshotBase.routeState],
+      ['operator', snapshotBase.primaryOperator]
+    ],
+    [
+      ['slot', snapshotBase.slots],
+      ['affordance', snapshotBase.affordances]
+    ]
+  );
+}
+
 function inferSlots(el) {
   const slots = [];
   if (el.dataset.spwSlot) slots.push(normalizeToken(el.dataset.spwSlot));
@@ -624,11 +616,30 @@ function snapshotComponentSemantics(el, options = {}) {
   const componentName = inferComponentName(el, componentBase);
   const semanticOwner = inferSemanticOwner(componentBase);
   const componentAddress = getComponentAddress(componentBase);
+  const componentGenome = buildComponentGenome({
+    kind,
+    role,
+    form,
+    substrate,
+    context,
+    importance,
+    density,
+    emphasis,
+    interactivity,
+    inspectability,
+    valueLayer,
+    stance,
+    routeState: relationship.routeState,
+    primaryOperator: relationship.primaryOperator,
+    slots,
+    affordances
+  });
 
   return {
     componentId,
     componentName,
     componentAddress,
+    componentGenome,
     semanticOwner,
     kind,
     role,
@@ -690,6 +701,7 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwComponentName', snapshot.componentName);
   writer(el, 'spwComponentKind', snapshot.kind);
   writer(el, 'spwComponentAddress', snapshot.componentAddress);
+  writer(el, 'spwComponentGenome', snapshot.componentGenome);
   writer(el, 'spwSemanticOwner', snapshot.semanticOwner);
   writer(el, 'spwRouteState', snapshot.routeState);
   writer(el, 'spwBranchCount', snapshot.branchCount);
@@ -775,6 +787,7 @@ function makePublicSnapshot(element, snapshot) {
     componentId: snapshot.componentId,
     componentName: snapshot.componentName,
     componentAddress: snapshot.componentAddress,
+    componentGenome: snapshot.componentGenome,
     semanticOwner: snapshot.semanticOwner,
     kind: snapshot.kind,
     role: snapshot.role,

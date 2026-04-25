@@ -1,14 +1,7 @@
+import { SEMANTIC_CHROME_SELECTOR } from './spw-dom-contracts.js';
 import { snapshotComponentSemantics } from './spw-component-semantics.js';
 
-const TARGET_SELECTOR = [
-  '.site-frame',
-  '.frame-panel',
-  '.frame-card',
-  '.mode-panel',
-  '[data-spw-kind]',
-  '[data-spw-role]',
-  '[data-spw-slot]'
-].join(', ');
+const TARGET_SELECTOR = SEMANTIC_CHROME_SELECTOR;
 
 const SEMANTIC_TOKEN_SELECTOR = [
   '.spw-component-tag[data-spw-generated="semantic-chrome"]',

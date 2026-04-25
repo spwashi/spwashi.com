@@ -521,6 +521,16 @@
   --spw-motion-settle: var(--duration-base) var(--ease-settle);
   --spw-motion-expressive: var(--duration-deliberate) var(--ease-paper);
 
+  /* Page/region timing aliases. Keep JS-readable values concrete. */
+  --spw-page-arrival-step-1-delay: 0ms;
+  --spw-page-arrival-step-2-delay: 96ms;
+  --spw-page-arrival-step-3-delay: 212ms;
+  --spw-page-arrival-duration: 420ms;
+  --spw-page-return-duration: 280ms;
+  --spw-region-profile-refresh-duration: 220ms;
+  --spw-component-arrival-transition: 180ms steps(3, end);
+  --spw-component-settle-transition: 220ms var(--ease-settle);
+
   --utility-shift-duration: var(--duration-deliberate);
   --utility-shift-ease: var(--ease-settle);
   --taste-drift-duration: var(--duration-base);
@@ -1149,6 +1159,14 @@ html[data-spw-reduce-motion="on"] {
   --attention-echo-duration: 1ms;
   --climate-transition-duration: 1ms;
   --climate-transition-slow: 1ms;
+  --spw-page-arrival-step-1-delay: 0ms;
+  --spw-page-arrival-step-2-delay: 1ms;
+  --spw-page-arrival-step-3-delay: 1ms;
+  --spw-page-arrival-duration: 1ms;
+  --spw-page-return-duration: 1ms;
+  --spw-region-profile-refresh-duration: 1ms;
+  --spw-component-arrival-transition: 1ms linear;
+  --spw-component-settle-transition: 1ms linear;
 }
 
 /* Mobile rhythm */

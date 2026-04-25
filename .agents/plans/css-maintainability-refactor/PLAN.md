@@ -17,6 +17,12 @@ Reduce CSS brittleness in the highest-leverage shared contracts so route work ca
 
 - `public/css/spw-handles.css`
 - `public/css/spw-components.css`
+- `public/js/spw-dom-contracts.js`
+- `public/js/spw-component-semantics.js`
+- `public/js/spw-contextual-ui.js`
+- `public/js/spw-page-metadata.js`
+- `public/js/spw-semantic-chrome.js`
+- `docs/developer-topography.md`
 - `public/css/recipes-surface.css`
 - `recipes/index.html`
 - `services/index.html`
@@ -48,6 +54,8 @@ Reduce CSS brittleness in the highest-leverage shared contracts so route work ca
 - Sentence-like frame lists should opt into an inline variant rather than patching one route locally.
 - Handle primitives should style named handle classes and explicit inline semantic carriers, not every structural element with `data-spw-operator` or `data-spw-charge-key`.
 - Topic/image heroes should expose header/body/figure structure directly in markup, with topic-surface layout using the same slot contract instead of a dedicated wrapper shape.
+- Repeated DOM selector families should live in `public/js/spw-dom-contracts.js` and be named by topography: route, shell, main, region, component, module, slot.
+- Runtime-written profile attributes such as `data-spw-component-genome` and `data-spw-region-genome` should be treated as composable axis bundles, not as another source of route-local naming.
 
 ## Risks
 

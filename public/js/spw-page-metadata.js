@@ -1,3 +1,9 @@
+import {
+  REGION_HOST_SELECTOR,
+  REGION_SELECTOR as PAGE_METADATA_REGION_SELECTOR,
+  inferTopographyKind,
+} from './spw-dom-contracts.js';
+
 const SITE_NAME = 'Spwashi';
 const DEFAULT_OG_IMAGE = 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg';
 const DEFAULT_OG_IMAGE_ALT = 'Illustrated Spwashi field card showing readable systems, structural surfaces, and playful semantic materials.';
@@ -108,16 +114,6 @@ const CONTEXT_STOP_WORDS = new Set([
   'your',
   'matches',
 ]);
-
-const PAGE_METADATA_REGION_SELECTOR = [
-  '.site-frame',
-  '[data-spw-kind="frame"]',
-  '[data-spw-kind="panel"]',
-  '[data-spw-kind="card"]',
-  '[data-spw-kind="surface"]',
-  '[data-spw-role]',
-  '[data-spw-slot]'
-].join(', ');
 
 const PAGE_METADATA_RULES = [
   {
@@ -963,16 +959,7 @@ function collectRegions(root = document) {
 }
 
 function inferRegionKind(el) {
-  return (
-    el.dataset.spwKind ||
-    (el.classList.contains('site-frame') ? 'frame' : '') ||
-    (el.classList.contains('frame-panel') ? 'panel' : '') ||
-    (el.classList.contains('frame-card') ? 'card' : '') ||
-    (el.matches('nav') ? 'nav' : '') ||
-    (el.matches('aside') ? 'aside' : '') ||
-    (el.matches('section') ? 'section' : '') ||
-    'component'
-  );
+  return inferTopographyKind(el, 'component');
 }
 
 function inferRegionRole(el) {
@@ -1045,7 +1032,7 @@ function normalizeRegionAccessibility(pageMeta, { body = document.body } = {}) {
   safeQueryAll('nav').forEach((nav, index) => {
     if (nav.getAttribute('aria-label') || nav.hasAttribute('aria-labelledby')) return;
 
-    const closestRegion = nav.closest('.site-frame, .frame-panel, .frame-card, [data-spw-kind], [data-spw-role]');
+    const closestRegion = nav.closest(REGION_HOST_SELECTOR);
     const heading = findRegionHeading(closestRegion);
     if (!heading) return;
 

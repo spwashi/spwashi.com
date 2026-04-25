@@ -15,21 +15,12 @@
  * --------------------------------------------------------------------------
  */
 
+import {
+  MODULE_SELECTOR,
+  inferTopographyKind,
+} from './spw-dom-contracts.js';
+
 const HTML = document.documentElement;
-const MODULE_SELECTOR = [
-  '.site-frame',
-  '.frame-panel',
-  '.frame-card',
-  '.software-card',
-  '.operator-card',
-  '.image-study',
-  '.topic-photo-card',
-  '.spw-svg-figure',
-  '[data-spw-image-surface]',
-  '.intent-cluster',
-  '.context-edge-card',
-  '.semantic-contract-card',
-].join(', ');
 
 const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/', label: 'Home', token: '#>home', note: 'Channel summary, active routes, and nearby materials.' },
@@ -150,10 +141,7 @@ function inferModuleId(el, index = 0) {
 
   const kind =
     normalizeToken(el.dataset.spwKind || '')
-    || (el.classList.contains('site-frame') ? 'frame' : '')
-    || (el.classList.contains('frame-panel') ? 'panel' : '')
-    || (el.classList.contains('frame-card') ? 'card' : '')
-    || 'module';
+    || inferTopographyKind(el, 'module');
 
   return `${kind}-${index + 1}`;
 }
@@ -275,7 +263,10 @@ function applyModuleSemantics(root = document) {
     const baseSalience = SALIENCE_WEIGHTS[salience] ?? SALIENCE_WEIGHTS.ambient;
     const effectiveSalience = Math.min(1, baseSalience + (contextMatched ? 0.14 : 0));
 
-    el.dataset.spwModule = inferModuleId(el, index);
+    if (!el.dataset.spwModule) {
+      el.dataset.spwModule = inferModuleId(el, index);
+      el.dataset.spwModuleInferred = 'true';
+    }
     el.dataset.spwPerspectiveResolved = perspective;
     el.dataset.spwPotentialResolved = potential;
     el.dataset.spwSalienceResolved = salience;
@@ -286,10 +277,12 @@ function applyModuleSemantics(root = document) {
 
     if (!el.dataset.spwModuleCopy) {
       el.dataset.spwModuleCopy = el.matches('.site-frame') ? 'scope-link' : 'fragment';
+      el.dataset.spwModuleCopyInferred = 'true';
     }
 
     if (!el.dataset.spwModuleHydration) {
       el.dataset.spwModuleHydration = el.matches('.site-frame') ? 'defer' : 'ready';
+      el.dataset.spwModuleHydrationInferred = 'true';
     }
 
     el.style.setProperty(
@@ -308,6 +301,36 @@ function applyModuleSemantics(root = document) {
     el.style.setProperty('--spw-context-bias-count', String(contextBias.length));
     el.style.setProperty('--spw-context-projection-count', String(contextProjection.length));
     el.style.setProperty('--spw-context-match-weight', contextMatched ? '1' : '0');
+  });
+}
+
+function clearModuleSemantics(root = document) {
+  root.querySelectorAll(MODULE_SELECTOR).forEach((el) => {
+    if (el.dataset.spwModuleInferred === 'true') delete el.dataset.spwModule;
+    if (el.dataset.spwModuleCopyInferred === 'true') delete el.dataset.spwModuleCopy;
+    if (el.dataset.spwModuleHydrationInferred === 'true') delete el.dataset.spwModuleHydration;
+
+    delete el.dataset.spwModuleInferred;
+    delete el.dataset.spwModuleCopyInferred;
+    delete el.dataset.spwModuleHydrationInferred;
+    delete el.dataset.spwPerspectiveResolved;
+    delete el.dataset.spwPotentialResolved;
+    delete el.dataset.spwSalienceResolved;
+    delete el.dataset.spwSalienceState;
+    delete el.dataset.spwDimensionResolved;
+    delete el.dataset.spwContextBiasResolved;
+    delete el.dataset.spwContextProjectionResolved;
+    delete el.dataset.spwContextMatch;
+
+    [
+      '--spw-perspective-weight',
+      '--spw-potential-weight',
+      '--spw-salience-weight',
+      '--spw-dimension-count',
+      '--spw-context-bias-count',
+      '--spw-context-projection-count',
+      '--spw-context-match-weight',
+    ].forEach((name) => el.style.removeProperty(name));
   });
 }
 
@@ -692,6 +715,8 @@ export function initSpwContextualUi() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
       resizeObserver?.disconnect();
+      clearModuleSemantics(document);
+      delete document.body.dataset.spwContextualUiInit;
     },
     refresh() {
       applyDeviceContext();

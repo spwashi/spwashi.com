@@ -2,6 +2,11 @@ import {
   PAGE_METADATA_REGION_SELECTOR,
   normalizeDocumentMetadata,
 } from './spw-page-metadata.js';
+import {
+  FRAME_SELECTOR,
+  buildAxisGenome,
+  inferTopographyKind,
+} from './spw-dom-contracts.js';
 
 /**
  * site.js
@@ -109,9 +114,9 @@ const ROOT_MAIN = document.querySelector('main');
 let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
 const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
-  { step: '1', delay: 0 },
-  { step: '2', delay: 96 },
-  { step: '3', delay: 212 },
+  { step: '1', token: '--spw-page-arrival-step-1-delay', fallback: 0 },
+  { step: '2', token: '--spw-page-arrival-step-2-delay', fallback: 96 },
+  { step: '3', token: '--spw-page-arrival-step-3-delay', fallback: 212 },
 ]);
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
@@ -124,8 +129,24 @@ function setPageState(state) {
   HTML.dataset.spwPageState = state;
 }
 
+function parseCssTimeMs(value, fallback = 0) {
+  const raw = String(value || '').trim();
+  if (!raw) return fallback;
+  const numeric = Number.parseFloat(raw);
+  if (!Number.isFinite(numeric)) return fallback;
+  return raw.endsWith('s') && !raw.endsWith('ms') ? numeric * 1000 : numeric;
+}
+
+function readRootTimeToken(name, fallback = 0) {
+  if (!name || typeof getComputedStyle !== 'function') return fallback;
+  return parseCssTimeMs(getComputedStyle(HTML).getPropertyValue(name), fallback);
+}
+
 function prefersReducedMotion() {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  return (
+    HTML.dataset.spwReduceMotion === 'on'
+    || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  );
 }
 
 function setPageAttentionState(ctx, detail = {}) {
@@ -191,7 +212,7 @@ function schedulePageArrival(ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'pag
     return;
   }
 
-  PAGE_ARRIVAL_STEP_SEQUENCE.forEach(({ step, delay }) => {
+  PAGE_ARRIVAL_STEP_SEQUENCE.forEach(({ step, token, fallback }) => {
     addManagedTimeout(ctx, () => {
       setPageAttentionState(ctx, {
         presence: PAGE_PRESENCE.FOREGROUND,
@@ -199,8 +220,13 @@ function schedulePageArrival(ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'pag
         step,
         reason,
       });
-    }, delay);
+    }, readRootTimeToken(token, fallback));
   });
+
+  const settleDelayToken = arrival === PAGE_ARRIVAL.RETURNING
+    ? '--spw-page-return-duration'
+    : '--spw-page-arrival-duration';
+  const settleDelayFallback = arrival === PAGE_ARRIVAL.RETURNING ? 280 : 420;
 
   addManagedTimeout(ctx, () => {
     setPageAttentionState(ctx, {
@@ -209,7 +235,7 @@ function schedulePageArrival(ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'pag
       step: '0',
       reason: `${reason}-settled`,
     });
-  }, arrival === PAGE_ARRIVAL.RETURNING ? 280 : 420);
+  }, readRootTimeToken(settleDelayToken, settleDelayFallback));
 }
 
 function initPageAttentionLifecycle(ctx) {
@@ -478,16 +504,7 @@ function collectRegions(root = document) {
 }
 
 function inferRegionKind(el) {
-  return (
-    el.dataset.spwKind ||
-    (el.classList.contains('site-frame') ? 'frame' : '') ||
-    (el.classList.contains('frame-panel') ? 'panel' : '') ||
-    (el.classList.contains('frame-card') ? 'card' : '') ||
-    (el.matches('nav') ? 'nav' : '') ||
-    (el.matches('aside') ? 'aside' : '') ||
-    (el.matches('section') ? 'section' : '') ||
-    'component'
-  );
+  return inferTopographyKind(el, 'component');
 }
 
 function inferRegionRole(el) {
@@ -561,6 +578,18 @@ function inferRegionDensity(profile) {
   return 'medium';
 }
 
+function buildRegionGenome(profile = {}) {
+  return buildAxisGenome([
+    ['kind', profile.kind],
+    ['role', profile.role],
+    ['context', profile.context],
+    ['surface', profile.surface],
+    ['harmony', profile.harmony],
+    ['tempo', profile.tempo],
+    ['density', profile.density],
+  ]);
+}
+
 function buildRegionProfile(el, index = 0) {
   const kind = inferRegionKind(el);
   const role = inferRegionRole(el);
@@ -578,6 +607,7 @@ function buildRegionProfile(el, index = 0) {
     harmony: '',
     tempo: '',
     density: '',
+    genome: '',
     features: readSet(
       ...parseFeatureList(el.dataset.spwFeatures).values?.() || [],
       kind,
@@ -589,6 +619,7 @@ function buildRegionProfile(el, index = 0) {
   profile.harmony = inferRegionHarmony(profile);
   profile.tempo = inferRegionTempo(profile);
   profile.density = inferRegionDensity(profile);
+  profile.genome = buildRegionGenome(profile);
 
   return profile;
 }
@@ -603,6 +634,7 @@ function applyRegionProfile(el, profile) {
   el.dataset.spwTempo = profile.tempo;
   el.dataset.spwDensity = profile.density;
   el.dataset.spwRegionKey = profile.key;
+  el.dataset.spwRegionGenome = profile.genome;
   el.style.setProperty('--region-index', String(profile.index));
 }
 
@@ -802,7 +834,7 @@ function bindModeGroups(ctx) {
 }
 
 function bindExplicitFrameActivation(ctx) {
-  const frames = safeQueryAll('.site-frame, [data-spw-kind="frame"]');
+  const frames = safeQueryAll(FRAME_SELECTOR);
   if (!frames.length) return () => {};
 
   function setActiveFrame(nextFrame) {
@@ -853,7 +885,7 @@ function resolveHashTargetFrame() {
   if (!hash || hash.length < 2) return null;
   const target = safeQuery(hash);
   if (!target) return null;
-  return target.closest('.site-frame, [data-spw-kind="frame"]') || null;
+  return target.closest(FRAME_SELECTOR) || null;
 }
 
 function bindHashLandingState(ctx) {
@@ -919,12 +951,18 @@ function bindRegionPrimeObserver(ctx) {
   return () => observer.disconnect();
 }
 
-function refreshRegionProfiles(ctx) {
+function refreshRegionProfiles(ctx, reason = 'runtime-refresh') {
   ctx.regions.forEach((entry, index) => {
     entry.profile = buildRegionProfile(entry.el, index);
     applyRegionProfile(entry.el, entry.profile);
   });
   syncPageHarmony(ctx);
+  ctx.bus.emit('spw:regions-profiled', {
+    route: ctx.route,
+    reason,
+    count: ctx.regions.length,
+    profiles: ctx.regions.map((entry) => entry.profile),
+  });
 }
 
 /* ==========================================================================
@@ -948,6 +986,7 @@ function initRegionEnhancer(ctx, root) {
   root.dataset.spwMotionFamily = profile.tempo;
   root.dataset.spwHarmony = profile.harmony;
   root.dataset.spwDensity = profile.density;
+  root.dataset.spwRegionGenome = profile.genome;
   root.dataset.spwRegionLayer = 'enhanced';
   root.style.setProperty('--region-harmonic-weight', String(region.profile.index + 1));
 
@@ -985,6 +1024,7 @@ function initRegionEnhancer(ctx, root) {
       root.dataset.spwMotionFamily = nextRegion.profile.tempo;
       root.dataset.spwHarmony = nextRegion.profile.harmony;
       root.dataset.spwDensity = nextRegion.profile.density;
+      root.dataset.spwRegionGenome = nextRegion.profile.genome;
     },
   };
 }
@@ -1708,7 +1748,7 @@ function queueIdleEnhancements(defs, ctx) {
    ========================================================================== */
 
 function refreshRuntime(ctx) {
-  refreshRegionProfiles(ctx);
+  refreshRegionProfiles(ctx, 'runtime-refresh');
 
   for (const record of ctx.registry.values()) {
     try {
@@ -1762,6 +1802,7 @@ async function bootSite() {
     ENHANCEMENT_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
     runtimeCtx
   );
+  refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
 
   schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');
 

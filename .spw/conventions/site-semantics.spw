@@ -74,6 +74,27 @@
   }
 }
 
+^"public_starter_topography"{
+  rule: "The site should be explainable to another developer as route -> shell -> region -> component -> slot -> module."
+  source_contract: "../../../public/js/spw-dom-contracts.js"
+  docs: "../../../docs/developer-topography.md"
+  layers: {
+    route: "A public URL and business purpose."
+    shell: "Persistent header, navigation, footer, and global controls."
+    region: "A named page section that can receive harmony, tempo, density, and attention state."
+    component: "A reusable block such as a frame, panel, card, surface, lens, or control."
+    slot: "A named internal component part: header, body, figure, actions, footer."
+    module: "A progressive JavaScript behavior mounted only when the route or DOM proves it is needed."
+  }
+  naming_bridge: {
+    genome: "An inspectable profile-axis bundle, not inherited biology metaphor in public copy."
+    component_address: "Compact route through kind, role, context, and value layer."
+    region_genome: "Region-level axis bundle for CSS and inspection."
+  }
+  starter_rule: "If a selector family is needed by more than one runtime module, put it in spw-dom-contracts.js before adding another local selector list."
+  counterexample: "A new business starter route copies three long card selector lists into CSS, semantic JS, and contextual JS, then each list drifts independently."
+}
+
 ^"overlay_contract"{
   definition: "An overlay child is a surface element that pins to a host edge or local viewport position instead of participating in the host's normal flow."
   html_contract: "Use data-spw-overlay on direct children that own their own placement inside a host."

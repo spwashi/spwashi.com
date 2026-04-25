@@ -1,0 +1,67 @@
+# wip — css-maintainability-refactor
+# Branch: main
+# Started: 2026-04-25
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/css-maintainability-refactor/PLAN.md"
+ @contracts: ~"public/js/spw-dom-contracts.js"
+ @site_runtime: ~"public/js/site.js"
+ @component_semantics: ~"public/js/spw-component-semantics.js"
+ @contextual_ui: ~"public/js/spw-contextual-ui.js"
+ @page_metadata: ~"public/js/spw-page-metadata.js"
+ @semantic_chrome: ~"public/js/spw-semantic-chrome.js"
+ @tokens: ~"public/css/spw-tokens.css"
+ @components: ~"public/css/spw-components.css"
+ @sw: ~"sw.js"
+ @docs: ~"docs/developer-topography.md"
+ @semantics: ~".spw/conventions/site-semantics.spw"
+}
+
+^["intent"]{
+ ~#goal: "Reduce shared CSS/JS sprawl by naming the DOM topography and using that contract across runtime, semantic enrichment, and component CSS."
+ ~#audience: "Developers adapting this site into a business starter surface for software, illustration, authorship, or decentralized team coordination."
+}
+
+^["audit"]{
+ css_hotspots: ["public/css/spw-surfaces.css", "public/css/spw-components.css", "public/css/spw-chrome.css", "public/css/spw-handles.css", "public/css/spw-grammar.css"]
+ js_hotspots: ["public/js/site.js", "public/js/spw-component-semantics.js", "public/js/spw-contextual-ui.js", "public/js/spw-page-metadata.js", "public/js/spw-semantic-chrome.js"]
+ observed_smells: [
+  "Repeated card/panel selector lists across component route-marker rules.",
+  "Near-duplicate semantic target selectors across page metadata, component semantics, contextual UI, and semantic chrome.",
+  "Timing values split between CSS and JS rather than named as shared tokens.",
+  "Conceptual naming understandable to the site author but not yet clear enough for another business owner/developer."
+ ]
+}
+
+^["contract"]{
+ topography: "route -> shell -> main -> region -> component -> slot -> module"
+ selector_registry: @contracts
+ css_rule: "Shared CSS should prefer low-specificity data contracts over repeated class-list state selectors once JS enrichment owns the state."
+ js_rule: "Repeated DOM selector families belong in spw-dom-contracts.js before they appear in a second module."
+ docs_rule: "Every invented term should have a plain-business translation in docs/developer-topography.md."
+}
+
+^["stream"]{
+ >>[2026-04-25] observe — `wc -l public/css/*.css` shows the largest shared surfaces are `spw-surfaces.css`, `spw-components.css`, and `spw-chrome.css`; these are the natural first audit targets.
+ >>[2026-04-25] observe — `spw-components.css` repeats the same frame/card/panel selector family across route markers and arrival states, which makes future variants hard to compose.
+ >>[2026-04-25] implement — introduced `public/js/spw-dom-contracts.js` as the named DOM topography registry for region, component, module, semantic chrome, and slot selectors.
+ >>[2026-04-25] implement — moved component semantic snapshots, contextual UI module targeting, page metadata region targeting, and semantic chrome targeting onto the shared selector contract.
+ >>[2026-04-25] implement — added component and region genome/profile axes so CSS can target meaningful semantic bundles rather than expanding class-list selectors.
+ >>[2026-04-25] implement — moved page-arrival timing values into `spw-tokens.css` so CSS and JS share the same timing vocabulary.
+ >>[2026-04-25] document — added `docs/developer-topography.md` for developers adapting the site as a starter business surface.
+ >>[2026-04-25] implement — added the new shared JS contract module and its immediate dependencies to the service worker precache surface.
+}
+
+^["open"]{
+ css_next: [
+  "Continue replacing repeated class-list groups in spw-components.css with component-kind/profile gates where first-paint behavior is not required.",
+  "Audit spw-chrome.css menu selectors for duplicated topology/mode chains.",
+  "Split or annotate spw-surfaces.css route-shared versus truly route-local styling."
+ ]
+ js_next: [
+  "Consider moving shared role/context inference into a small semantic authority module after the selector contract settles.",
+  "Review legacy duplicate modules without the `spw-` prefix and decide which are compatibility shims versus dead code."
+ ]
+}

@@ -105,7 +105,7 @@
   --component-transition-fast: var(--spw-control-transition-fast, var(--spw-motion-quick, var(--duration-fast, 120ms) var(--ease-mechanical, ease)));
   --component-transition-base: var(--spw-control-transition-base, var(--spw-motion-settle, var(--duration-base, 180ms) var(--ease-mechanical, ease)));
   --component-transition-deliberate: var(--spw-motion-expressive, var(--duration-deliberate, 260ms) var(--ease-mechanical, ease));
-  --component-transition-arrival: var(--component-transition-fast);
+  --component-transition-arrival: var(--spw-component-settle-transition, var(--component-transition-fast));
 
   /* Pretext */
   --pretext-line-gap: 0.18rem;
@@ -299,9 +299,7 @@
 
 :where(
   [data-spw-module],
-  .intent-cluster,
-  .context-edge-card,
-  .semantic-contract-card
+  [data-spw-component-genome]
 ) {
   --spw-perspective-weight: 0.5;
   --spw-potential-weight: 0.5;
@@ -311,12 +309,7 @@
   --component-module-rail-opacity: 0.32;
 }
 
-:where(
-  [data-spw-module],
-  .intent-cluster,
-  .context-edge-card,
-  .semantic-contract-card
-)::after {
+:where([data-spw-module])::after {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -330,23 +323,13 @@
   );
 }
 
-:where(
-  [data-spw-module][data-spw-module-hydration="ready"],
-  .intent-cluster[data-spw-module-hydration="ready"],
-  .context-edge-card[data-spw-module-hydration="ready"],
-  .semantic-contract-card[data-spw-module-hydration="ready"]
-) {
+:where([data-spw-module][data-spw-module-hydration="ready"]) {
   --component-module-rail-opacity: 0.44;
   box-shadow: inset 0 0 0 1px var(--component-module-hydration-ring),
   var(--component-shadow-quiet);
 }
 
-:where(
-  [data-spw-module][data-spw-salience-state="active"],
-  .intent-cluster[data-spw-salience-state="active"],
-  .context-edge-card[data-spw-salience-state="active"],
-  .semantic-contract-card[data-spw-salience-state="active"]
-) {
+:where([data-spw-module][data-spw-salience-state="active"]) {
   --component-module-rail-width: 3px;
   --component-module-rail-opacity: 0.56;
   transform: translateY(-1px);
@@ -354,16 +337,32 @@
   var(--component-shadow-active);
 }
 
-:where(
-  [data-spw-module][data-spw-context-match="active"],
-  .intent-cluster[data-spw-context-match="active"],
-  .context-edge-card[data-spw-context-match="active"],
-  .semantic-contract-card[data-spw-context-match="active"]
-) {
+:where([data-spw-module][data-spw-context-match="active"]) {
   --component-module-rail-width: 3px;
   --component-module-rail-opacity: 0.5;
   box-shadow: inset 0 0 0 1px var(--component-module-context-ring),
   var(--component-shadow);
+}
+
+:where([data-spw-component-genome~="importance-primary"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.5;
+}
+
+:where([data-spw-component-genome~="interactivity-controllable"]) {
+  --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-component-genome~="interactivity-inspectable"]) {
+  --component-route-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-region-genome~="harmony-indexed"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 20%, transparent);
+}
+
+:where([data-spw-region-genome~="harmony-structured"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
 }
 
 
@@ -570,31 +569,11 @@
   --component-route-accent: var(--op-ref-color, var(--component-accent));
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .plan-card,
-  .compare-card,
-  .spec-column
-)[data-spw-route-state]:not([data-spw-route-state="none"]) {
+:where([data-spw-component-kind])[data-spw-route-state]:not([data-spw-route-state="none"]) {
   padding-block-start: calc(var(--component-pad) + 0.82rem);
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .compare-card,
-  .spec-column
-)[data-spw-route-state]:not([data-spw-route-state="none"])::before,
+:where([data-spw-component-kind])[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
   content: attr(data-spw-route-marker);
   position: absolute;
@@ -626,50 +605,17 @@
   transform var(--component-transition-fast);
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .plan-card,
-  .compare-card,
-  .spec-column
-)[data-spw-route-state="branching"] {
+:where([data-spw-component-kind])[data-spw-route-state="branching"] {
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 12%, transparent),
   var(--component-shadow);
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .plan-card,
-  .compare-card,
-  .spec-column
-)[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
+:where([data-spw-component-kind])[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
   padding-top: 0.14rem;
   border-top: 1px dashed color-mix(in srgb, var(--component-route-accent) 18%, transparent);
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .plan-card,
-  .compare-card,
-  .spec-column
-)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::before,
+:where([data-spw-component-kind])[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card):is(:hover, :focus-within)::before,
 :where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {
   border-color: color-mix(in srgb, var(--component-route-accent) 28%, transparent);
   background: color-mix(in srgb, var(--component-surface-strong) 88%, var(--component-route-accent) 12%);
@@ -695,7 +641,7 @@
   .compare-card,
   .spec-column
 ) {
-  --component-transition-arrival: 180ms steps(3, end);
+  --component-transition-arrival: var(--spw-component-arrival-transition, 180ms steps(3, end));
 }
 
 :where(html[data-spw-page-arrival-step="1"]) :where(
