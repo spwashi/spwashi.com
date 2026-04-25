@@ -1214,6 +1214,19 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'promo-wonder-cycle',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    route: 'home',
+    selector: '[data-promo-wonder-cycle]',
+    load: () => import('./promo-wonder-cycle.js'),
+    mount: (mod) => {
+      const fn = mod?.initPromoWonderCycle;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'brace-pivots',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

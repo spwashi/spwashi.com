@@ -213,9 +213,110 @@
   border-radius: calc(var(--home-radius-md) - 4px);
 }
 
+:where(#home-frame .home-brand-plate-links) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.82rem;
+}
+
+:where(#home-frame .home-brand-plate-links__label) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
 /* ==========================================================================
-   4. Shared frame headings + sigils
+   4. Promo / wonder cycle
+   ========================================================================== */
+
+:where(#promo-wonder-cycle.site-frame) {
+  display: grid;
+  gap: var(--home-gap-lg);
+  padding: var(--home-frame-padding);
+  border: var(--home-surface-border);
+  border-radius: var(--home-radius-lg);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-primary) 4%, transparent), transparent 30%),
+    var(--home-surface-bg);
+  box-shadow: var(--home-shadow);
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__meta) {
+  margin: 0;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__grid,
+       #promo-wonder-cycle .promo-wonder-cycle__weekly) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--home-gap-md);
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card) {
+  display: grid;
+  gap: 0.62rem;
+  padding: 0.95rem 1rem 1rem;
+  border: var(--home-surface-border);
+  border-radius: var(--home-radius-md);
+  background: var(--home-surface-bg-muted);
+  box-shadow: var(--home-shadow-quiet);
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card--wonder) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 7%, transparent), transparent 48%),
+    var(--home-surface-bg-muted);
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__label) {
+  margin: 0;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__title-row) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__title-row h3) {
+  margin: 0;
+  color: var(--home-accent-ink);
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
+  line-height: 1.2;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__summary) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink, #1b1f23) 88%, transparent);
+  line-height: 1.56;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__cta) {
+  justify-self: start;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__fallback) {
+  margin: 0;
+}
+
+@media (max-width: 56rem) {
+  :where(#promo-wonder-cycle .promo-wonder-cycle__grid,
+         #promo-wonder-cycle .promo-wonder-cycle__weekly) {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==========================================================================
+   5. Shared frame headings + sigils
    ========================================================================== */
 
 :where(.site-frame .frame-heading) {

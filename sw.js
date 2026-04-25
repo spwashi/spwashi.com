@@ -96,6 +96,7 @@ const CORE_ASSETS = [
   '/public/js/site.js',
   '/public/js/spw-dom-contracts.js',
   '/public/js/spw-page-metadata.js',
+  '/public/js/promo-wonder-cycle.js',
   '/public/js/site-settings.js',
   '/public/js/design-experiments.js',
   '/public/js/spw-palette-resonance.js',
@@ -128,6 +129,7 @@ const CORE_ASSETS = [
   '/public/images/routes/topics-atlas-register-square.webp',
   '/public/images/routes/website-field-instrument-hero.webp',
   '/public/images/routes/website-field-instrument-square.webp',
+  '/public/data/promo-wonder-cycle.json',
   '/favicon.ico',
 ];
 

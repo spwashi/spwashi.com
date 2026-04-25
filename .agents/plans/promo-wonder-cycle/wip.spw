@@ -1,0 +1,17 @@
+@plan: ~"../promo-wonder-cycle/PLAN.md"
+
+promo_wonder_cycle:
+  goal: `Rotate promo and wonder structures by day and week with optional JSON hydration.`
+  public_shape:
+    promo: `conversion-facing card, CTA, sample, or offer`
+    wonder: `ambient card, lore field, curiosity surface, or atmospheric aside`
+  cadence:
+    day: `fast-moving, easy to replace`
+    week: `slower, themed, more editorial`
+  transport:
+    static_fallback: true
+    json_feed: optional
+  notes:
+    - `Keep the feed secondary to hand-authored HTML.`
+    - `Make the structure legible to other developers.`
+    - `Prefer explicit names over generic slots.`
