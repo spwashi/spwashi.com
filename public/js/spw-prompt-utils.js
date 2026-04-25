@@ -374,18 +374,32 @@ function initFrameCopyButtons(runtime) {
         if (!frame.id || frame.querySelector(runtime.config.frameCopySelector)) return;
 
         const title = normalizeText(frame.querySelector(runtime.config.titleSelector)?.textContent || frame.id || 'frame');
+        const mount = frame.querySelector(':scope > .frame-topline, :scope > .frame-heading');
+        const instrumentation = new Set(
+            (frame.dataset.spwInstrumentation || '')
+                .split(/\s+/)
+                .map((item) => item.trim())
+                .filter(Boolean)
+        );
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'frame-prompt-copy';
+        btn.dataset.spwInstrumentation = 'prompt-copy';
+        btn.dataset.spwComponent = 'prompt.copy';
+        btn.dataset.spwDebugSource = 'spw-prompt-utils';
         btn.dataset.promptTarget = runtime.config.promptTargets.spw_context;
         btn.innerHTML = '<span class="log-op">$</span> copy_seed';
         btn.setAttribute('aria-label', `Copy prompt seed for ${title}`);
 
-        if (getComputedStyle(frame).position === 'static') {
+        instrumentation.add('prompt-copy');
+        frame.dataset.spwInstrumentation = [...instrumentation].join(' ');
+        frame.dataset.spwDebugSource ||= 'spw-prompt-utils';
+
+        if (!mount && getComputedStyle(frame).position === 'static') {
             frame.style.position = 'relative';
         }
 
-        frame.appendChild(btn);
+        (mount || frame).appendChild(btn);
 
         btn.addEventListener('click', async (event) => {
             event.stopPropagation();

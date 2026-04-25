@@ -268,6 +268,43 @@ function readImageFields(target) {
     ];
 }
 
+function readInstrumentationFields(target) {
+    const fields = [];
+    const instrumentation = (target.dataset.spwInstrumentation || '')
+        .split(/\s+/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+    if (instrumentation.length) {
+        fields.push({
+            key: 'instrumentation',
+            value: instrumentation.join(' + '),
+            source: 'instrumentation',
+            interactive: false
+        });
+    }
+
+    if (target.dataset.spwDebugSource) {
+        fields.push({
+            key: 'debug_source',
+            value: target.dataset.spwDebugSource,
+            source: 'instrumentation',
+            interactive: false
+        });
+    }
+
+    if (target.dataset.spwSemanticVersion) {
+        fields.push({
+            key: 'semantic_version',
+            value: target.dataset.spwSemanticVersion,
+            source: 'semantic',
+            interactive: false
+        });
+    }
+
+    return fields;
+}
+
 function readLoopState(target) {
     return LOOP_STATE.get(target) || createLoopRecord();
 }
@@ -401,6 +438,7 @@ function collectFields(target) {
     if (phaseField) fields.push(phaseField);
     fields.push(...readFormFields(target));
     fields.push(...readImageFields(target));
+    fields.push(...readInstrumentationFields(target));
 
     return fields;
 }

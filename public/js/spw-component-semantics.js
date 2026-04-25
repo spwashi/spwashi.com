@@ -59,6 +59,8 @@ const ROLE_DEFAULTS = Object.freeze({
   surface: { substrate: 'surface', phrase: 'artifact', context: 'publishing' },
   artifact: { substrate: 'surface', phrase: 'artifact', context: 'publishing' },
   probe: { substrate: 'probe', phrase: 'inquiry', context: 'analysis' },
+  lab: { substrate: 'probe', phrase: 'inquiry', context: 'analysis' },
+  tool: { substrate: 'action', phrase: 'instruction', context: 'settings' },
   telemetry: { substrate: 'probe', phrase: 'inquiry', context: 'analysis' },
   status: { substrate: 'baseline', phrase: 'premise', context: 'analysis' },
   registry: { substrate: 'ref', phrase: 'register', context: 'analysis' }
@@ -73,6 +75,8 @@ const INTERACTION_DEFAULTS = Object.freeze({
   surface: { emphasis: 'artifact', interactivity: 'viewable', inspectability: 'summary' },
   artifact: { emphasis: 'artifact', interactivity: 'viewable', inspectability: 'summary' },
   probe: { emphasis: 'charged', interactivity: 'reactive', inspectability: 'deep' },
+  lab: { emphasis: 'charged', interactivity: 'inspectable', inspectability: 'deep' },
+  tool: { emphasis: 'responsive', interactivity: 'controllable', inspectability: 'detailed' },
   telemetry: { emphasis: 'measured', interactivity: 'inspectable', inspectability: 'deep' },
   status: { emphasis: 'stable', interactivity: 'ambient', inspectability: 'summary' },
   registry: { emphasis: 'indexed', interactivity: 'inspectable', inspectability: 'detailed' }
@@ -447,6 +451,32 @@ function inferConfigKeys(el) {
   return keys;
 }
 
+function inferInstrumentation(el) {
+  const items = [];
+
+  if (el.dataset.spwInstrumentation) {
+    items.push(...tokenizeFeatureList(el.dataset.spwInstrumentation));
+  }
+
+  if (el.dataset.spwInspect) items.push('state-inspector');
+  if (el.dataset.spwPromptHost != null || el.dataset.spwPromptability === 'visible') items.push('prompt-surface');
+  if (el.dataset.spwImageManaged === 'true') items.push('image-metaphysics');
+  if (el.dataset.spwGenerated) items.push(`generated-${normalizeToken(el.dataset.spwGenerated)}`);
+  if (el.querySelector?.(':scope > .spw-semantic-seam[data-spw-generated="semantic-chrome"]')) items.push('semantic-chrome');
+  if (el.querySelector?.(':scope > .frame-prompt-copy[data-spw-instrumentation]')) items.push('prompt-copy');
+
+  return uniqueList(items);
+}
+
+function inferDebugSource(el, instrumentation) {
+  if (el.dataset.spwDebugSource) return normalizeToken(el.dataset.spwDebugSource);
+  if (instrumentation.includes('state-inspector')) return 'spw-state-inspector';
+  if (instrumentation.includes('prompt-surface') || instrumentation.includes('prompt-copy')) return 'spw-prompt-utils';
+  if (instrumentation.includes('semantic-chrome')) return 'spw-semantic-chrome';
+  if (instrumentation.includes('image-metaphysics')) return 'spw-image-metaphysics';
+  return '';
+}
+
 function inferInspectTarget(el) {
   return normalizeToken(el.dataset.spwInspect || el.id || '');
 }
@@ -523,6 +553,8 @@ function snapshotComponentSemantics(el, options = {}) {
   const emphasis = inferEmphasis(el, role);
   const configDomain = inferConfigDomain(el, context, features);
   const configKeys = inferConfigKeys(el);
+  const instrumentation = inferInstrumentation(el);
+  const debugSource = inferDebugSource(el, instrumentation);
   const inspectTarget = inferInspectTarget(el);
   const slots = inferSlots(el);
   const affordances = inferAffordances(el, role, features);
@@ -545,6 +577,8 @@ function snapshotComponentSemantics(el, options = {}) {
     inspectability,
     configDomain,
     configKeys,
+    instrumentation,
+    debugSource,
     inspectTarget,
     slots,
     affordances,
@@ -588,6 +622,8 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwComponentKind', snapshot.kind);
   writer(el, 'spwRouteState', snapshot.routeState);
   writer(el, 'spwBranchCount', snapshot.branchCount);
+  if (snapshot.instrumentation.length) writer(el, 'spwInstrumentation', snapshot.instrumentation.join(' '));
+  if (snapshot.debugSource) writer(el, 'spwDebugSource', snapshot.debugSource);
   if (snapshot.primaryOperator) writer(el, 'spwPrimaryOperator', snapshot.primaryOperator);
   if (snapshot.primaryPrefix) writer(el, 'spwPrimaryPrefix', snapshot.primaryPrefix);
   if (snapshot.primaryExpression) writer(el, 'spwPrimaryExpression', snapshot.primaryExpression);
@@ -621,7 +657,8 @@ function summarizeSemanticField(snapshots) {
     contexts: new Set(),
     configDomains: new Set(),
     affordances: new Set(),
-    interactivity: new Set()
+    interactivity: new Set(),
+    instrumentation: new Set()
   };
 
   snapshots.forEach(({ snapshot }) => {
@@ -630,6 +667,7 @@ function summarizeSemanticField(snapshots) {
     summary.configDomains.add(snapshot.configDomain);
     summary.interactivity.add(snapshot.interactivity);
     snapshot.affordances.forEach((value) => summary.affordances.add(value));
+    snapshot.instrumentation.forEach((value) => summary.instrumentation.add(value));
   });
 
   return {
@@ -637,7 +675,8 @@ function summarizeSemanticField(snapshots) {
     contexts: [...summary.contexts],
     configDomains: [...summary.configDomains],
     affordances: [...summary.affordances],
-    interactivity: [...summary.interactivity]
+    interactivity: [...summary.interactivity],
+    instrumentation: [...summary.instrumentation]
   };
 }
 
@@ -680,6 +719,8 @@ export function initSpwComponentSemantics(options = {}) {
         inspectability: snapshot.inspectability,
         configDomain: snapshot.configDomain,
         configKeys: snapshot.configKeys,
+        instrumentation: snapshot.instrumentation,
+        debugSource: snapshot.debugSource,
         inspectTarget: snapshot.inspectTarget,
         slots: snapshot.slots,
         affordances: snapshot.affordances,

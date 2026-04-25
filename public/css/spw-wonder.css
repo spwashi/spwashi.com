@@ -507,6 +507,19 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
     background-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical);
 }
 
+:where(.frame-topline, .frame-heading) > .frame-prompt-copy {
+  position: static;
+  inset: auto;
+  flex: 0 0 auto;
+  margin-left: 0;
+  box-shadow: none;
+}
+
+.frame-topline > .spec-strip + .frame-prompt-copy,
+.frame-heading > .spec-strip + .frame-prompt-copy {
+  margin-left: 0.1rem;
+}
+
 .frame-prompt-copy:is(:hover, :focus-visible) {
   transform: translateY(-1px);
   box-shadow:

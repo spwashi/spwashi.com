@@ -324,9 +324,18 @@ function renderSemanticChrome(host) {
 
   const snapshot = snapshotComponentSemantics(host);
   const stance = resolveStance(host, snapshot);
+  const instrumentation = new Set(
+    (host.dataset.spwInstrumentation || '')
+      .split(/\s+/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+  );
 
   host.dataset.spwComponentKind = host.dataset.spwComponentKind || snapshot.kind;
   host.dataset.spwStance = host.dataset.spwStance || stance;
+  instrumentation.add('semantic-chrome');
+  host.dataset.spwInstrumentation = [...instrumentation].join(' ');
+  host.dataset.spwDebugSource ||= 'spw-semantic-chrome';
 
   const meta = ensureMetaContainer(host);
   const guides = ensureGuideContainer(host);
@@ -401,7 +410,15 @@ function buildSemanticRows(snapshot, host) {
     rows.push(['config', humanizeToken(snapshot.configDomain)]);
   }
 
-  return rows.filter(([, value]) => Boolean(normalizeText(value))).slice(0, 5);
+  if (snapshot.instrumentation?.length) {
+    rows.push(['instrumented', snapshot.instrumentation.map(humanizeToken).join(' · ')]);
+  }
+
+  if (snapshot.debugSource) {
+    rows.push(['source', humanizeToken(snapshot.debugSource)]);
+  }
+
+  return rows.filter(([, value]) => Boolean(normalizeText(value))).slice(0, 7);
 }
 
 function buildSemanticSummary(snapshot, tokenText) {

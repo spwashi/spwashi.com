@@ -459,11 +459,21 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 }
 
 :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before {
-  content: attr(data-spw-role);
   margin-right: 0.24em;
 }
 
+html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before,
+html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before {
+  content: attr(data-spw-role);
+}
+
 html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  content: attr(data-spw-stance);
+  margin-left: 0.28em;
+  text-transform: uppercase;
+}
+
+html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
   content: attr(data-spw-stance);
   margin-left: 0.28em;
   text-transform: uppercase;

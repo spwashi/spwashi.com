@@ -213,6 +213,33 @@ const describeModeAction = (detail) => {
     }
 };
 
+const describeDevelopmentAction = (detail = {}) => {
+    const phase = detail.phase || detail.climate || 'orient';
+    const label = detail.authorLabel || detail.label || phase;
+    return ['~climate.shift', `${phase}: ${label}`];
+};
+
+const describeSemanticSnapshot = (detail = {}) => {
+    const count = detail.count || detail.snapshots?.length || 0;
+    const field = detail.field || {};
+    const roles = field.roles?.slice(0, 3).join(', ') || 'roles';
+    const instrumentation = field.instrumentation?.slice(0, 3).join(', ') || 'no extra instrumentation';
+    return ['^semantic.field', `${count} components; ${roles}; ${instrumentation}`];
+};
+
+const describeRuntimeRefresh = (detail = {}) => {
+    const route = detail.route || getPageSurface() || 'surface';
+    return ['@runtime.refresh', `${route} regions and component projections resynced`];
+};
+
+const diagnosticsLevel = () => getSiteSettings().busDiagnostics || 'off';
+
+const shouldNarrateDiagnostics = (level = 'basic') => {
+    const current = diagnosticsLevel();
+    if (current === 'verbose') return true;
+    return level === 'basic' && current === 'basic';
+};
+
 const getDefaultCollapsedState = (storageKey, settings = getSiteSettings()) => {
     if (settings.consoleDisplay === 'expanded') return false;
     if (settings.consoleDisplay === 'collapsed' || settings.consoleDisplay === 'hidden') return true;
@@ -334,6 +361,24 @@ const initSpwConsole = () => {
         const display = event.detail?.consoleDisplay;
         if (display === 'expanded') applyCollapsed(false, true);
         if (display === 'collapsed' || display === 'hidden') applyCollapsed(true, true);
+    });
+
+    document.addEventListener('spw:development-shifted', (event) => {
+        if (!shouldNarrateDiagnostics('basic')) return;
+        setAction(nodes, history, ...describeDevelopmentAction(event.detail));
+        wake();
+    });
+
+    document.addEventListener('spw:semantic-snapshot', (event) => {
+        if (!shouldNarrateDiagnostics('verbose')) return;
+        setAction(nodes, history, ...describeSemanticSnapshot(event.detail));
+        wake();
+    });
+
+    document.addEventListener('spw:runtime-refresh', (event) => {
+        if (!shouldNarrateDiagnostics('verbose')) return;
+        setAction(nodes, history, ...describeRuntimeRefresh(event.detail));
+        wake();
     });
 };
 

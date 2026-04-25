@@ -276,6 +276,17 @@
   display: none;
 }
 
+:where(.spw-semantic-seam[data-spw-generated="semantic-chrome"]) {
+  display: none;
+}
+
+:where(
+  html[data-spw-show-semantic-metadata="on"],
+  html[data-spw-debug-mode="on"]
+) :where(.spw-semantic-seam[data-spw-generated="semantic-chrome"][data-spw-empty="false"]) {
+  display: flex;
+}
+
 :where(.spw-semantic-seam > .spw-component-guides) {
   margin-inline-start: 0;
   justify-content: flex-start;

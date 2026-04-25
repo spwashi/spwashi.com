@@ -1195,6 +1195,9 @@ class SiteSettingsManager {
       spwSpiritPhase: normalized.currentDevelopmentalClimate,
       spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
       spwGrainIntensity: normalized.grainIntensity,
+      spwBusDiagnostics: normalized.busDiagnostics,
+      spwBusMirrorToConsole: normalized.busMirrorToConsole,
+      spwBusHistorySize: normalized.busHistorySize,
       spwDeviationCount: String(deviations.length),
       spwDeviations: deviationNames.join(' ') || null,
       spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
