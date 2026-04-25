@@ -1,5 +1,11 @@
 import { SEMANTIC_CHROME_SELECTOR } from './spw-dom-contracts.js';
 import { snapshotComponentSemantics } from './spw-component-semantics.js';
+import {
+  humanizeToken,
+  normalizeText,
+  unique,
+  uniqueByKey,
+} from './spw-semantic-utils.js';
 
 const TARGET_SELECTOR = SEMANTIC_CHROME_SELECTOR;
 
@@ -27,24 +33,6 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   archived: 'exit',
   departed: 'exit',
 });
-
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
-
-function humanizeToken(value = '') {
-  return normalizeText(String(value).replace(/[_-]+/g, ' ')).toLowerCase();
-}
-
-function uniqueByKey(items = []) {
-  const seen = new Set();
-  return items.filter((item) => {
-    const key = `${item.kind}:${item.text}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
 
 const GENERIC_KIND_TEXTS = new Set(['component', 'frame', 'surface', 'panel', 'card']);
 const GENERIC_CONTEXT_TEXTS = new Set(['analysis', 'reading', 'routing', 'settings', 'play', 'publishing', 'orientation']);
@@ -289,7 +277,7 @@ function buildMetaTags(host, snapshot, stance) {
     });
   }
 
-  return uniqueByText(uniqueByKey(tags)).slice(0, 2);
+  return uniqueByText(uniqueByKey(tags, (item) => `${item.kind}:${item.text}`)).slice(0, 2);
 }
 
 function buildGuideChips(host, snapshot, stance, occupiedTexts = new Set()) {

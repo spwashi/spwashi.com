@@ -33,6 +33,12 @@ import {
   buildAxisGenome,
   inferTopographyKind,
 } from './spw-dom-contracts.js';
+import {
+  humanizeToken,
+  normalizeText,
+  normalizeToken,
+  unique,
+} from './spw-semantic-utils.js';
 import { detectOperator } from './spw-shared.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
@@ -88,20 +94,6 @@ const STANCE_BY_LIMINALITY = Object.freeze({
 const SEMANTIC_REGISTRY_VERSION = '0.4';
 let semanticRegistry = null;
 
-function normalizeText(value = '') {
-  return value.replace(/\s+/g, ' ').trim();
-}
-
-function humanize(value = '') {
-  return normalizeText(value).replace(/[_-]+/g, ' ').toLowerCase();
-}
-
-function normalizeToken(value = '') {
-  return humanize(value)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
 function tokenizeFeatureList(value = '') {
   return normalizeText(value)
     .split(/[\s,]+/)
@@ -109,12 +101,8 @@ function tokenizeFeatureList(value = '') {
     .filter(Boolean);
 }
 
-function uniqueList(values = []) {
-  return [...new Set(values.filter(Boolean))];
-}
-
 function normalizeSlug(value = '') {
-  return humanize(value)
+  return humanizeToken(value)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }
@@ -278,7 +266,7 @@ function getKind(el) {
 function inferRole(el, kind) {
   if (el.dataset.spwRole) return normalizeToken(el.dataset.spwRole);
 
-  const haystack = humanize([
+  const haystack = humanizeToken([
     el.id,
     el.getAttribute('role'),
     el.dataset.spwMeaning,
@@ -309,8 +297,8 @@ function inferRole(el, kind) {
 }
 
 function inferMeaning(el, kind) {
-  if (el.dataset.spwMeaning) return humanize(el.dataset.spwMeaning);
-  const heading = humanize(getHeading(el));
+  if (el.dataset.spwMeaning) return humanizeToken(el.dataset.spwMeaning);
+  const heading = humanizeToken(getHeading(el));
   if (heading) return heading;
   return kind;
 }
@@ -353,7 +341,7 @@ function inferFeatures(el, kind, role, context) {
   if (role === 'registry') implied.push('collectible');
   if (context === 'settings') implied.push('local-state');
 
-  return uniqueList([...raw, ...implied]);
+  return unique([...raw, ...implied]);
 }
 
 function inferImportance(el, kind, role) {
@@ -411,12 +399,12 @@ function inferConfigDomain(el, context, features) {
 
 function inferConfigKeys(el) {
   if (el.dataset.spwConfigKeys) {
-    return uniqueList(tokenizeFeatureList(el.dataset.spwConfigKeys));
+    return unique(tokenizeFeatureList(el.dataset.spwConfigKeys));
   }
 
   const inspectFields = tokenizeFeatureList(el.dataset.spwInspectFields || '');
   const formOptions = tokenizeFeatureList(el.dataset.spwFormOptions || '');
-  const keys = uniqueList([...inspectFields, ...formOptions]);
+  const keys = unique([...inspectFields, ...formOptions]);
 
   return keys;
 }
@@ -435,7 +423,7 @@ function inferInstrumentation(el) {
   if (el.querySelector?.(':scope > .spw-semantic-seam[data-spw-generated="semantic-chrome"]')) items.push('semantic-chrome');
   if (el.querySelector?.(':scope > .frame-prompt-copy[data-spw-instrumentation]')) items.push('prompt-copy');
 
-  return uniqueList(items);
+  return unique(items);
 }
 
 function inferDebugSource(el, instrumentation) {
@@ -526,7 +514,7 @@ function inferSlots(el) {
   el.querySelectorAll?.(':scope > [data-spw-slot]').forEach((child) => {
     slots.push(normalizeToken(child.dataset.spwSlot));
   });
-  return uniqueList(slots);
+  return unique(slots);
 }
 
 function inferAffordances(el, role, features) {
@@ -543,7 +531,7 @@ function inferAffordances(el, role, features) {
   if (el.querySelector('[data-site-settings-form], [data-site-settings-scope]')) affordances.push('settings-bind');
   if (el.querySelector('.operator-chip, a[href^="#"]')) affordances.push('navigate');
 
-  return uniqueList(affordances);
+  return unique(affordances);
 }
 
 function inferValueLayer(role, context) {

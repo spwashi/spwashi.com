@@ -19,6 +19,10 @@ import {
   MODULE_SELECTOR,
   inferTopographyKind,
 } from './spw-dom-contracts.js';
+import {
+  normalizeToken,
+  unique,
+} from './spw-semantic-utils.js';
 
 const HTML = document.documentElement;
 
@@ -67,10 +71,6 @@ const SALIENCE_WEIGHTS = Object.freeze({
   focal: 0.94,
 });
 
-function normalizeToken(value = '') {
-  return String(value).trim().toLowerCase().replace(/\s+/g, '-');
-}
-
 function normalizePathname(pathname = '') {
   if (!pathname || pathname === '/') return '/';
   return pathname.replace(/\/+$/, '/') || '/';
@@ -85,10 +85,6 @@ function normalizeRouteHref(value = '') {
   } catch {
     return normalizePathname(raw);
   }
-}
-
-function unique(items = []) {
-  return [...new Set(items.filter(Boolean))];
 }
 
 function parseContextTokens(value = '') {
