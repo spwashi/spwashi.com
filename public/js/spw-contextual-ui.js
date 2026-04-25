@@ -85,12 +85,55 @@ function normalizePathname(pathname = '') {
   return pathname.replace(/\/+$/, '/') || '/';
 }
 
+function normalizeRouteHref(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+
+  try {
+    return normalizePathname(new URL(raw, window.location.href).pathname);
+  } catch {
+    return normalizePathname(raw);
+  }
+}
+
 function unique(items = []) {
   return [...new Set(items.filter(Boolean))];
 }
 
 function parseContextTokens(value = '') {
   return unique(String(value).split(/[\s,]+/).map(normalizeToken));
+}
+
+function parseRoutePathList(value = '') {
+  return unique(String(value).split(/[|,]/).map(normalizeRouteHref));
+}
+
+function titleFromRoutePath(pathname = '') {
+  const segments = normalizePathname(pathname)
+    .split('/')
+    .filter(Boolean);
+  const last = segments[segments.length - 1] || 'home';
+  return last
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function tokenFromRoutePath(pathname = '') {
+  const segments = normalizePathname(pathname).split('/').filter(Boolean);
+  const last = normalizeToken(segments[segments.length - 1] || 'home');
+  return `~${last}`;
+}
+
+function getRouteDefinition(pathname = '') {
+  const normalized = normalizeRouteHref(pathname);
+  const known = TOP_ROUTE_REGISTRY.find((route) => normalizeRouteHref(route.href) === normalized);
+  if (known) return known;
+  return {
+    href: normalized,
+    label: titleFromRoutePath(normalized),
+    token: tokenFromRoutePath(normalized),
+    note: 'Related path from this surface.',
+  };
 }
 
 function inferModuleId(el, index = 0) {
@@ -346,6 +389,18 @@ function collectExistingNavPaths(navList) {
   );
 }
 
+function collectContextualRoutes(header, existingPaths) {
+  const currentPath = normalizeRouteHref(window.location.pathname);
+  const relatedPaths = parseRoutePathList([
+    document.body?.dataset?.spwRelatedRoutes,
+    header?.dataset?.spwRelatedRoutes,
+  ].filter(Boolean).join('|'));
+
+  return relatedPaths
+    .filter((pathname) => pathname && pathname !== currentPath && !existingPaths.has(pathname))
+    .map(getRouteDefinition);
+}
+
 function closeRouteMenus(except = null) {
   document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
     if (except && menu === except) return;
@@ -377,6 +432,8 @@ function syncRouteMenuMode(details) {
 
   details.dataset.textMode = phase;
   details.dataset.spwRouteState = phase;
+  details.dataset.spwRouteMenuState = details.open ? 'open' : 'closed';
+  details.querySelector(':scope > summary')?.setAttribute('aria-expanded', details.open ? 'true' : 'false');
 }
 
 function createRouteMenu(hostHeader, navList) {
@@ -388,11 +445,15 @@ function createRouteMenu(hostHeader, navList) {
 
   const details = document.createElement('details');
   details.className = 'spw-route-menu';
+  details.dataset.spwFeature = 'route-discovery-menu';
+  details.dataset.spwRole = 'routing';
   applyRouteMenuPretext(details);
 
   const summary = document.createElement('summary');
   summary.className = 'spw-route-menu-trigger';
+  summary.id = 'spw-route-menu-trigger';
   summary.setAttribute('aria-label', 'Show additional top-level routes');
+  summary.setAttribute('aria-expanded', 'false');
 
   const label = document.createElement('span');
   label.className = 'spw-route-menu-label';
@@ -405,6 +466,7 @@ function createRouteMenu(hostHeader, navList) {
   const panel = document.createElement('div');
   panel.className = 'spw-route-menu-panel';
   panel.setAttribute('aria-label', 'Additional top-level routes');
+  panel.setAttribute('aria-labelledby', summary.id);
 
   details.append(summary, panel);
   host.append(details);
@@ -418,6 +480,18 @@ function createRouteMenu(hostHeader, navList) {
   panel.addEventListener('click', () => {
     details.open = false;
     syncRouteMenuMode(details);
+  });
+
+  summary.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowDown') return;
+    if (!details.open) {
+      event.preventDefault();
+      details.open = true;
+      syncRouteMenuMode(details);
+    }
+    window.requestAnimationFrame(() => {
+      panel.querySelector('a[href]')?.focus();
+    });
   });
 
   details.addEventListener('pointerenter', (event) => {
@@ -451,14 +525,21 @@ function updateRouteMenu() {
   if (!header || !navList) return;
 
   const existingPaths = collectExistingNavPaths(navList);
-  const missingRoutes = TOP_ROUTE_REGISTRY.filter(
+  const missingSiteRoutes = TOP_ROUTE_REGISTRY.filter(
     (route) => !existingPaths.has(normalizePathname(route.href))
   );
+  const contextualRoutes = collectContextualRoutes(header, existingPaths);
+  const discoveryRoutes = contextualRoutes.length
+    ? contextualRoutes.slice(0, 5)
+    : missingSiteRoutes.slice(0, 4);
 
   const existingHost = navList.querySelector(':scope > .spw-route-menu-host');
-  if (!missingRoutes.length) {
+  if (!discoveryRoutes.length) {
     existingHost?.remove();
     header.dataset.spwRouteDiscovery = 'off';
+    delete header.dataset.spwRouteDiscoveryCount;
+    delete header.dataset.spwRouteDiscoveryLayout;
+    delete header.dataset.spwRouteDiscoveryScope;
     return;
   }
 
@@ -472,12 +553,27 @@ function updateRouteMenu() {
     || HTML.dataset.spwPointerMode === 'coarse'
     || header.dataset.spwMenuMode === 'toggle'
   );
+  const scope = contextualRoutes.length ? 'related' : 'site';
+  const routeCountLabel = scope === 'related'
+    ? `${discoveryRoutes.length} nearby ${discoveryRoutes.length === 1 ? 'path' : 'paths'}`
+    : `${discoveryRoutes.length} additional ${discoveryRoutes.length === 1 ? 'route' : 'routes'}`;
 
-  label.textContent = compact ? 'routes' : 'more';
-  count.textContent = `+${missingRoutes.length}`;
+  label.textContent = compact ? 'nearby' : '#>';
+  count.textContent = `+${discoveryRoutes.length}`;
+  details.dataset.spwRouteMenuCount = String(discoveryRoutes.length);
+  details.dataset.spwRouteMenuLabel = routeCountLabel;
+  details.dataset.spwRouteMenuLayout = compact ? 'expanded' : 'compact';
+  details.dataset.spwRouteMenuScope = scope;
+  panel.dataset.spwRouteMenuCount = String(discoveryRoutes.length);
+  panel.dataset.spwRouteMenuLayout = compact ? 'expanded' : 'compact';
+  panel.dataset.spwRouteMenuScope = scope;
+  header.dataset.spwRouteDiscoveryCount = String(discoveryRoutes.length);
+  header.dataset.spwRouteDiscoveryLayout = compact ? 'expanded' : 'compact';
+  header.dataset.spwRouteDiscoveryScope = scope;
+  details.querySelector(':scope > summary')?.setAttribute('aria-label', `Open ${routeCountLabel}`);
 
   panel.replaceChildren(
-    ...missingRoutes.map((route) => {
+    ...discoveryRoutes.map((route) => {
       const link = document.createElement('a');
       link.href = route.href;
       link.className = 'spw-route-menu-link';
@@ -535,11 +631,15 @@ function bindRouteMenuDismissal() {
     if (!openMenu) return;
     if (openMenu.contains(event.target)) return;
     openMenu.open = false;
+    syncRouteMenuMode(openMenu);
   };
 
   const onKeyDown = (event) => {
     if (event.key !== 'Escape') return;
+    const openMenu = document.querySelector('.spw-route-menu[open]');
+    const returnTarget = openMenu?.querySelector(':scope > summary');
     closeRouteMenus();
+    if (returnTarget instanceof HTMLElement) returnTarget.focus();
   };
 
   document.addEventListener('pointerdown', onPointerDown, true);

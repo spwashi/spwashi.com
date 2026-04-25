@@ -27,3 +27,5 @@ Refine recent developmental-climate and semantic-chrome changes so component ins
 - [x] Record the instrumentation contract in the page model.
 - [x] Register component identities and semantic ownership for console inspection.
 - [x] Route brace pivot settings changes through the canonical settings manager.
+- [x] Add an inspectable route-discovery menu contract so shell navigation can be narrated as state instead of inferred from layout.
+- [x] Raise the Glass console/settings legibility floor so runtime theme experiments stay readable across light and dark recording contexts.

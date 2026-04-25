@@ -93,6 +93,13 @@ data_flow: .{
 	  directives = #[`spw-page`, `spw-site-head`, `spw-site-header`, `spw-include`][reg=set]
 	  risk = `If only some pages use the shell template, chrome edits can drift between generated and hand-authored routes. The pilot route should be followed by route-family migrations.`
 	 }[reg=facet]
+	 route_discovery_contract = .{
+	  direction = ?< page_related_routes, contextual_ui, shell_navigation, console_inspection >[reg=stream]
+	  mechanism = `The shell route-discovery control first reads data-spw-related-routes from the current page/header and renders only nearby paths before falling back to a small site-route sample. The visible chrome stays compact; data-spw-route-menu-* attributes carry count, scope, layout, and open/closed state for teaching and debugging.`
+	  visible_shape = `Roomy chrome uses a small #> route glyph with a count. Constrained chrome uses the word nearby. The public control should feel like grounded traversal, not a second site map.`
+	  authoring_contract = `Pages that want better co-located discovery should add or refine data-spw-related-routes near the relevant feature or body shell instead of widening the global header.`
+	  risk = `A global overflow menu turns navigation into an unrelated context. A contextual route lattice lets entry and exit remain predictable while preserving machine-readable semantics.`
+	 }[reg=facet]
  authored_to_inferred = .{
   direction = ?< page, region, feature, component >[reg=stream]
   mechanism = `Authored data-spw-* attributes are the truth source. Inference fills gaps: region profiling infers harmony from role, component semantics infers value_layer from kind + role.`

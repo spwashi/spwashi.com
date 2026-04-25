@@ -1067,11 +1067,43 @@ html[data-spw-theme-pack="copper-brace"] {
 html[data-spw-theme-pack="glass-console"] {
   --bg: hsl(205 24% 88%);
   --bg-field: hsl(205 30% 94%);
-  --surface: rgba(255, 255, 255, 0.52);
-  --surface-strong: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.88);
+  --surface-panel: rgba(255, 255, 255, 0.78);
+  --surface-panel-strong: rgba(255, 255, 255, 0.92);
   --surface-glass: rgba(255, 255, 255, 0.24);
+  --ink-strong: rgba(var(--charcoal-rgb), 0.98);
+  --ink: rgba(var(--charcoal-rgb), 0.94);
+  --ink-soft: rgba(var(--charcoal-rgb), 0.82);
+  --ink-mid: rgba(var(--charcoal-rgb), 0.7);
   --material-blur: 10px;
   --material-transmission: 0.18;
+}
+
+html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
+  --surface: rgba(18, 24, 28, 0.78);
+  --surface-strong: rgba(25, 32, 37, 0.92);
+  --surface-panel: rgba(24, 31, 36, 0.9);
+  --surface-panel-strong: rgba(30, 38, 44, 0.95);
+  --surface-glass: rgba(255, 255, 255, 0.08);
+  --ink-strong: rgba(236, 241, 238, 0.96);
+  --ink: rgba(228, 235, 232, 0.92);
+  --ink-soft: rgba(190, 202, 198, 0.78);
+  --ink-mid: rgba(190, 202, 198, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="glass-console"] {
+    --surface: rgba(18, 24, 28, 0.78);
+    --surface-strong: rgba(25, 32, 37, 0.92);
+    --surface-panel: rgba(24, 31, 36, 0.9);
+    --surface-panel-strong: rgba(30, 38, 44, 0.95);
+    --surface-glass: rgba(255, 255, 255, 0.08);
+    --ink-strong: rgba(236, 241, 238, 0.96);
+    --ink: rgba(228, 235, 232, 0.92);
+    --ink-soft: rgba(190, 202, 198, 0.78);
+    --ink-mid: rgba(190, 202, 198, 0.6);
+  }
 }
 
 /* Semantic density */

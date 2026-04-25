@@ -19,9 +19,12 @@
 3. Reduce palette-probe reflow noise on narrow widths by switching grouped actions into tighter, more predictable grids.
 4. Make frame sigils and metadata seams read more like intentional anchors than faint leftovers.
 5. Bring the most noticeable shell controls onto a tighter radius family.
+6. Keep header route discovery compact: prefer `data-spw-related-routes`, render only nearby paths before falling back to site routes, and expose `data-spw-route-menu-*` state for console narration.
+7. Use a small Spw route glyph on roomy chrome and a plain `nearby` label on constrained chrome so entering/exiting route context stays learnable.
 
 ### Validation
 - `node --check public/js/spw-attention-architecture.js`
 - `node --check public/js/spw-shell-disclosure.js`
+- `node --check public/js/spw-contextual-ui.js`
 - `git diff --check`
 - `npm run check`
