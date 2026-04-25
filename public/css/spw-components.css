@@ -2170,12 +2170,35 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   :where(.operator-chip, .spec-pill) {
     white-space: normal;
   }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    gap: 0.4rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex: 1 1 11rem;
+    justify-content: flex-start;
+    min-height: 2.55rem;
+    padding-inline: 0.82rem;
+    text-align: left;
+  }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    padding: 0.14rem;
+    border: 1px solid color-mix(in srgb, var(--component-route-marker-line) 60%, transparent);
+    border-radius: calc(var(--component-radius, 10px) + 2px);
+    background: color-mix(in srgb, var(--component-surface-strong) 84%, transparent);
+  }
 }
 
 @media (max-width: 420px) {
   :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.42rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex-basis: 100%;
   }
 
   :where(.settings-shortcuts) {

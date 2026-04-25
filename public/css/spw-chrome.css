@@ -1665,6 +1665,31 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .spw-route-menu-host {
+    grid-column: 1 / -1;
+  }
+
+  .spw-route-menu {
+    width: 100%;
+  }
+
+  .spw-route-menu-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .spw-route-menu-panel {
+    position: static;
+    inset: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    margin-top: 0.35rem;
+  }
+}
+
 @media (max-width: 480px) {
   .header-op-indicator {
     display: none;
