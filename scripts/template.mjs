@@ -18,6 +18,9 @@
  *   <spw-site-header current="Settings" indicator="settings"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
  *
+ *   <spw-site-footer></spw-site-footer>
+ *     Generates the shared footer chrome from `_partials/site-footer.html`.
+ *
  * Variable substitution uses `{{name}}` inside text and attribute values — this
  * is the one non-HTML-native bit, because you can't place a child element inside
  * an attribute string. HTML-escaped by default.
@@ -44,6 +47,7 @@ const SPW_PAGE_RE = /<spw-page\b([^>]*?)(?:\/>|>\s*<\/spw-page>)/i;
 const SPW_INCLUDE_RE = /<spw-include\b([^>]*?)(?:\/>|>\s*<\/spw-include>)/gi;
 const SPW_SITE_HEAD_RE = /<spw-site-head\b([^>]*?)(?:\/>|>\s*<\/spw-site-head>)/gi;
 const SPW_SITE_HEADER_RE = /<spw-site-header\b([^>]*?)(?:\/>|>\s*<\/spw-site-header>)/gi;
+const SPW_SITE_FOOTER_RE = /<spw-site-footer\b([^>]*?)(?:\/>|>\s*<\/spw-site-footer>)/gi;
 const ATTR_RE = /([a-zA-Z][a-zA-Z0-9_:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s/>]+))/g;
 const VAR_RE = /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g;
 const HTML_OPEN_RE = /<html\b([^>]*)>/i;
@@ -62,6 +66,8 @@ const PRIMARY_NAV_ITEMS = Object.freeze([
   { href: '/about/domains/lore.land/', label: 'lore.land' },
   { href: '/settings/', label: 'Settings' },
 ]);
+
+let siteFooterTemplatePromise = null;
 
 const DERIVED_META_FIELDS = [
   { attr: 'data-spw-surface', metaName: 'spw:surface', propertyName: 'spwSurface' },
@@ -177,6 +183,11 @@ async function expandIncludes(text, scopeVars, depth, seen, warnings) {
   return parts.join('');
 }
 
+async function loadSiteFooterTemplate() {
+  siteFooterTemplatePromise ??= fs.readFile(resolvePartialPath('site-footer'), 'utf8');
+  return siteFooterTemplatePromise;
+}
+
 function substituteVars(text, vars, warnings) {
   const unknown = new Set();
   const out = text.replace(cloneRegex(VAR_RE), (_m, key) => {
@@ -207,7 +218,8 @@ function shouldProcess(text) {
   return /<spw-page\b/i.test(text)
     || /<spw-include\b/i.test(text)
     || /<spw-site-head\b/i.test(text)
-    || /<spw-site-header\b/i.test(text);
+    || /<spw-site-header\b/i.test(text)
+    || /<spw-site-footer\b/i.test(text);
 }
 
 function escapeJsonForScript(value) {
@@ -455,7 +467,7 @@ function renderSiteHeader(vars) {
     + '</header>';
 }
 
-function expandSiteDirectives(text, scopeVars, warnings) {
+async function expandSiteDirectives(text, scopeVars, warnings) {
   let output = text.replace(cloneRegex(SPW_SITE_HEAD_RE), (_match, attrString) => {
     const vars = mergeScopeVars(scopeVars, parseAttrs(attrString), warnings);
     return renderSiteHead(vars);
@@ -465,6 +477,14 @@ function expandSiteDirectives(text, scopeVars, warnings) {
     const vars = mergeScopeVars(scopeVars, parseAttrs(attrString), warnings);
     return renderSiteHeader(vars);
   });
+
+  if (/<spw-site-footer\b/i.test(output)) {
+    const footerTemplate = await loadSiteFooterTemplate();
+    output = output.replace(cloneRegex(SPW_SITE_FOOTER_RE), (_match, attrString) => {
+      const vars = mergeScopeVars(scopeVars, parseAttrs(attrString), warnings);
+      return substituteVars(footerTemplate, vars, warnings);
+    });
+  }
 
   return output;
 }
@@ -633,7 +653,7 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
   }
   const { vars, rest } = extractPageVars(source);
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
-  const withSiteDirectives = expandSiteDirectives(expanded, vars, warnings);
+  const withSiteDirectives = await expandSiteDirectives(expanded, vars, warnings);
   const withPageAttrs = applyPageDocumentAttributes(withSiteDirectives, vars);
   const output = enhanceHtmlMetadata(substituteVars(withPageAttrs, vars, warnings), warnings);
   if (warnings.length) {
@@ -655,5 +675,6 @@ export const TEMPLATE_INTERNALS = {
   SPW_INCLUDE_RE,
   SPW_SITE_HEAD_RE,
   SPW_SITE_HEADER_RE,
+  SPW_SITE_FOOTER_RE,
   VAR_RE,
 };
