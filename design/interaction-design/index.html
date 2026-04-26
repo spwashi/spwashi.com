@@ -38,18 +38,12 @@
     data-spw-page-seed="page_design_interaction_design"
     data-spw-related-routes="/|/design/|/design/website/|/design/accessibility/|/about/website/|/topics/software/browser/">
 <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/design/">Design</a></li>
-                <li><a href="/design/website/">Website</a></li>
-                <li><a aria-current="page" href="/design/interaction-design/">Interaction design</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>interaction</span>
-    </header>
+    <spw-site-header
+        current="Interaction design"
+        current_href="/design/interaction-design/"
+        indicator="interaction"
+        nav_items="Home:/|Design:/design/|Website:/design/website/|Interaction design:/design/interaction-design/"
+    ></spw-site-header>
 
     <main id="main-content" tabindex="-1" aria-labelledby="interaction-design-title">
         <article>

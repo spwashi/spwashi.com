@@ -71,20 +71,13 @@
 <body data-spw-surface="tools-budgeting" data-spw-features="operators navigator console" data-spw-route-family="editorial toolbench ledger" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-page-family="toolbench" data-spw-page-modes="inspect build compare use" data-spw-page-seed="page_tools_budgeting" data-spw-page-role="tool-interactive" data-spw-related-routes="/|/tools/|/services/|/services/creator/|/services/systems/|/services/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_budgeting__site_header" class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/tools/">Tools</a></li>
-                <li><a aria-current="page" href="/tools/budgeting/">Budgeting</a></li>
-                <li><a href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>ledger</span>
-    </header>
+    <spw-site-header
+        current="Budgeting"
+        current_href="/tools/budgeting/"
+        indicator="ledger"
+        seed="page_tools_budgeting__site_header"
+        nav_items="Home:/|About:/about|Tools:/tools/|Budgeting:/tools/budgeting/|Services:/services/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_budgeting__main_surface" id="main-content" tabindex="-1" aria-labelledby="budgeting-title">
         <article>

@@ -119,22 +119,15 @@
         <span class="spw-section-handle__label">section</span>
     </a>
 
-    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_design_design_hub__site_header" data-spw-related-routes="/|/about/website/|/design/website/|/design/interaction-design/|/design/accessibility/|/topics/software/pretext/|/topics/software/renderers/|/topics/architecture/|/settings/|/topics/craft/" data-spw-context-relevance="design hub rendering context pretext mobile interaction">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a aria-current="page" href="/design/">Design</a></li>
-                <li><a href="/about/website/">Website</a></li>
-                <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/topics/math/">Math</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>design</span>
-    </header>
+    <spw-site-header
+        current="Design"
+        current_href="/design/"
+        indicator="design"
+        seed="page_design_design_hub__site_header"
+        related_routes="/|/about/website/|/design/website/|/design/interaction-design/|/design/accessibility/|/topics/software/pretext/|/topics/software/renderers/|/topics/architecture/|/settings/|/topics/craft/"
+        context_relevance="design hub rendering context pretext mobile interaction"
+        nav_items="Home:/|About:/about/|Design:/design/|Website:/about/website/|Software:/topics/software/|Math:/topics/math/|Blog:/blog/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_design_design_hub__main_surface" data-spw-wonder="projection orientation locality" id="main-content" tabindex="-1" aria-labelledby="design-hub-title">
         <article>

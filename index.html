@@ -105,24 +105,12 @@
     <span class="spw-section-handle__label">section</span>
 </a>
 
-<header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing"
-        data-spw-category-family="portal">
-    <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-    <nav aria-label="Primary">
-        <ul>
-            <li><a aria-current="page" href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/topics/">Topics</a></li>
-            <li><a href="/topics/software/">Software</a></li>
-            <li><a href="/topics/math/">Math</a></li>
-            <li><a href="/design/">Design</a></li>
-            <li><a href="/blog/">Blog</a></li>
-            <li><a href="/about/domains/lore.land/">lore.land</a></li>
-            <li><a href="/settings/">Settings</a></li>
-        </ul>
-    </nav>
-    <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
-</header>
+<spw-site-header
+    current="Home"
+    current_href="/"
+    indicator="frame"
+    nav_items="Home:/|About:/about|Topics:/topics/|Software:/topics/software/|Math:/topics/math/|Design:/design/|Blog:/blog/|lore.land:/about/domains/lore.land/|Settings:/settings/"
+></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="home-title">
     <section

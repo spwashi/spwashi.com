@@ -53,20 +53,12 @@
 
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#>spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a aria-current="page" href="/design/">Design</a></li>
-                <li><a href="/topics/">Topics</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>slots</span>
-    </header>
+    <spw-site-header
+        current="Design"
+        current_href="/design/"
+        indicator="slots"
+        nav_items="Home:/|About:/about/|Design:/design/|Topics:/topics/|Blog:/blog/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>

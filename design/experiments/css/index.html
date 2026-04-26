@@ -56,20 +56,12 @@
         <span class="spw-section-handle__label">section</span>
     </a>
 
-    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a aria-current="page" href="/design/">Design</a></li>
-                <li><a href="/topics/">Topics</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>css experiments</span>
-    </header>
+    <spw-site-header
+        current="Design"
+        current_href="/design/"
+        indicator="css experiments"
+        nav_items="Home:/|About:/about/|Design:/design/|Topics:/topics/|Blog:/blog/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article data-design-experiments-root data-spw-feature="design-experiments">

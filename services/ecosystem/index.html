@@ -59,21 +59,13 @@
 <body data-spw-surface="services-ecosystem" data-spw-features="operators navigator console" data-spw-route-family="editorial service resting-point" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-page-family="register" data-spw-page-modes="read compare contact" data-spw-page-seed="page_services_ecosystem" data-spw-page-role="resting-point" data-spw-related-routes="/|/services/|/services/creator/|/services/systems/|/services/care/|/play/rpg-wednesday/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_services_ecosystem__site_header" class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/tools/">Tools</a></li>
-                <li><a aria-current="page" href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>ecosystem</span>
-    </header>
+    <spw-site-header
+        current="Services"
+        current_href="/services/"
+        indicator="ecosystem"
+        seed="page_services_ecosystem__site_header"
+        nav_items="Home:/|About:/about|Software:/topics/software/|Play:/play/|Tools:/tools/|Services:/services/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="relay" data-spw-context="routing" data-spw-seed="page_services_ecosystem__main_surface" id="main-content" tabindex="-1" aria-labelledby="ecosystem-title">
         <article>

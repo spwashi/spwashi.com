@@ -38,18 +38,12 @@
     data-spw-page-seed="page_design_accessibility"
     data-spw-related-routes="/|/design/|/design/website/|/design/interaction-design/|/about/website/|/topics/software/browser/">
 <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/design/">Design</a></li>
-                <li><a href="/design/website/">Website</a></li>
-                <li><a aria-current="page" href="/design/accessibility/">Accessibility</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>a11y</span>
-    </header>
+    <spw-site-header
+        current="Accessibility"
+        current_href="/design/accessibility/"
+        indicator="a11y"
+        nav_items="Home:/|Design:/design/|Website:/design/website/|Accessibility:/design/accessibility/"
+    ></spw-site-header>
 
     <main id="main-content" tabindex="-1" aria-labelledby="accessibility-title">
         <article>

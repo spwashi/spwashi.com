@@ -92,22 +92,15 @@
     <span class="spw-section-handle__label">section</span>
 </a>
 
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_tools_character_sheet__site_header" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/" data-spw-context-relevance="character sheet mentorship junior engineering worldbuilding collaboration" class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/tools/">Tools</a></li>
-                <li><a href="/tools/profile/">Profile</a></li>
-                <li><a aria-current="page" href="/tools/character-sheet/">Character</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
-    </header>
+    <spw-site-header
+        current="Character"
+        current_href="/tools/character-sheet/"
+        indicator="frame"
+        seed="page_tools_tools_character_sheet__site_header"
+        related_routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/"
+        context_relevance="character sheet mentorship junior engineering worldbuilding collaboration"
+        nav_items="Home:/|About:/about|Tools:/tools/|Profile:/tools/profile/|Character:/tools/character-sheet/|Play:/play/|Services:/services/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_tools_character_sheet__main_surface" data-spw-wonder="projection locality consequence" id="main-content" tabindex="-1" aria-labelledby="character-sheet-title">
         <article>

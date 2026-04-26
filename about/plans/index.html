@@ -109,23 +109,15 @@
 
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="site-header" role="banner" data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_about_about_plans__site_header" data-spw-related-routes="/|/about/|/topics/craft/|/topics/software/|/play/|/blog/|/services/|/settings/" data-spw-context-relevance="plans horizons strategic com direction feature semantic visualization">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a aria-current="page" href="/about/plans/">Plans</a></li>
-                <li><a href="/topics/craft/">Craft</a></li>
-                <li><a href="/topics/software/">Software</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>plans</span>
-    </header>
+    <spw-site-header
+        current="Plans"
+        current_href="/about/plans/"
+        indicator="plans"
+        seed="page_about_about_plans__site_header"
+        related_routes="/|/about/|/topics/craft/|/topics/software/|/play/|/blog/|/services/|/settings/"
+        context_relevance="plans horizons strategic com direction feature semantic visualization"
+        nav_items="Home:/|About:/about|Plans:/about/plans/|Craft:/topics/craft/|Software:/topics/software/|Play:/play/|Blog:/blog/|Services:/services/|Settings:/settings/"
+    ></spw-site-header>
 
     <main id="main-content" data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_about_about_plans__main_surface" data-spw-wonder="projection constraint consequence" tabindex="-1" aria-labelledby="plans-title">
         <article>

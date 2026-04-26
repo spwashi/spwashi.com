@@ -94,20 +94,15 @@
 <body data-spw-surface="tools" data-spw-features="operators navigator console" data-spw-route-family="editorial toolbench" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-page-family="toolbench" data-spw-page-modes="inspect build compare use" data-spw-page-seed="page_tools_tools" data-spw-page-role="tool-register" data-spw-related-routes="/|/about/|/play/|/services/|/settings/|/tools/profile/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/newyear/|/play/rpg-wednesday/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header data-spw-kind="shell" data-spw-role="routing" data-spw-category-family="portal" data-spw-seed="page_tools_tools__site_header" data-spw-related-routes="/|/about/|/play/|/services/|/settings/|/tools/profile/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/newyear/|/play/rpg-wednesday/" data-spw-context-relevance="local only json extensible screenshottable profile seed cards" class="site-header" role="banner">
-        <a class="header-sigil" href="/" aria-label="Spwashi home">#&gt;spwashi</a>
-        <nav aria-label="Primary">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a aria-current="page" href="/tools/">Tools</a></li>
-                <li><a href="/play/">Play</a></li>
-                <li><a href="/services/">Services</a></li>
-                <li><a href="/settings/">Settings</a></li>
-            </ul>
-        </nav>
-        <span class="header-op-indicator" aria-hidden="true" data-header-op-slot>frame</span>
-    </header>
+    <spw-site-header
+        current="Tools"
+        current_href="/tools/"
+        indicator="frame"
+        seed="page_tools_tools__site_header"
+        related_routes="/|/about/|/play/|/services/|/settings/|/tools/profile/|/tools/character-sheet/|/tools/midjourney/|/tools/budgeting/|/newyear/|/play/rpg-wednesday/"
+        context_relevance="local only json extensible screenshottable profile seed cards"
+        nav_items="Home:/|About:/about|Tools:/tools/|Play:/play/|Services:/services/|Settings:/settings/"
+    ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_tools_tools__main_surface" data-spw-wonder="projection locality consequence" id="main-content" tabindex="-1" aria-labelledby="tools-title">
         <article>

@@ -17,6 +17,7 @@
  *
  *   <spw-site-header current="Settings" indicator="settings"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
+ *     Use `nav_items="Home:/|Settings:/settings/"` for page-specific nav.
  *
  *   <spw-site-footer></spw-site-footer>
  *     Generates the shared footer chrome from `_partials/site-footer.html`.
@@ -433,6 +434,10 @@ function renderSiteHeader(vars) {
   const current = firstValue(vars.current, vars.header_current, vars.nav_current, vars.breadcrumb_label);
   const currentHref = normalizeUrlPath(firstValue(vars.current_href, vars.header_current_href, vars.canonical));
   const indicator = firstValue(vars.indicator, vars.header_indicator, current).toLowerCase();
+  const configuredNavItems = parseKeyedList(firstValue(vars.nav_items, vars.header_nav, vars.primary_nav));
+  const navSource = configuredNavItems.length
+    ? configuredNavItems.map(({ key, content }) => ({ label: key, href: content }))
+    : PRIMARY_NAV_ITEMS;
   const relatedRoutes = firstValue(vars.related_routes, vars.spw_related_routes);
   const seed = firstValue(vars.seed, vars.header_seed);
   const contextRelevance = firstValue(vars.context_relevance, vars.header_context_relevance);
@@ -449,7 +454,7 @@ function renderSiteHeader(vars) {
     relatedRoutes ? `data-spw-related-routes="${attrEscape(relatedRoutes)}"` : '',
     contextRelevance ? `data-spw-context-relevance="${attrEscape(contextRelevance)}"` : '',
   ].filter(Boolean).join(' ');
-  const navItems = PRIMARY_NAV_ITEMS.map((item) => {
+  const navItems = navSource.map((item) => {
     const hrefPath = normalizeUrlPath(item.href);
     const isCurrent = item.label.toLowerCase() === currentLabel || (currentHref && hrefPath === currentHref);
     const aria = isCurrent ? ' aria-current="page"' : '';
