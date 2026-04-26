@@ -20,17 +20,12 @@
     data-spw-page-role="topic-register"
     data-spw-page-seed="page_topics_knowledge_bases_markdown"
     data-spw-related-routes="/|/topics/|/topics/knowledge-bases/|/topics/software/text-editing/|/blog/|/about/website/">
-    <header class="site-header" role="banner">
-        <div class="site-header__inner">
-            <a class="site-title" href="/">Spwashi</a>
-            <nav class="site-nav" aria-label="Primary">
-                <a href="/about/">about</a>
-                <a href="/blog/">blog</a>
-                <a href="/topics/">topics</a>
-                <a href="/settings/">settings</a>
-            </nav>
-        </div>
-    </header>
+    <spw-site-header
+        current="Topics"
+        current_href="/topics/"
+        indicator="markdown"
+        nav_items="Home:/|About:/about/|Blog:/blog/|Topics:/topics/|Settings:/settings/"
+    ></spw-site-header>
 
     <main id="main-content">
         <section class="site-frame site-hero" data-spw-kind="frame" data-spw-role="orientation">
