@@ -55,6 +55,7 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run dev` | Vite dev server for the source tree, with Spw HTML template rendering wired through `vite.config.ts`. |
 | `npm run dev:legacy` | Previous zero-dep local dev server for fallback/template debugging. |
 | `npm run build` | Runs TypeScript typechecking, then produces `dist/` with the static deploy builder, sitemap, design catalog, and `.nojekyll` marker. |
+| `npm run build:tools` | Compiles typed build-control modules from `scripts/ts/` into `scripts/typed/` for Node scripts. |
 | `npm run build:runtime` | Compiles selected TypeScript runtime modules from `public/ts/` into browser-ready modules under `public/js/typed/`. |
 | `npm run build:vite` | Vite production smoke build into `dist-vite/` for bundler compatibility checks; not the deploy artifact. |
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |

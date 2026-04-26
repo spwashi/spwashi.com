@@ -5,6 +5,10 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import { renderTemplate } from './template.mjs';
+import {
+  shouldIgnoreValidationPath,
+  toPosixPath,
+} from './typed/build-topology.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,21 +16,6 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const ROUTE_MANIFEST_OUTPUT = process.env.SPW_ROUTE_MANIFEST_OUTPUT
   || path.join(process.env.TMPDIR || '/tmp', 'spwashi-route-runtime-manifest.json');
-
-const IGNORED_SEGMENTS = new Set([
-  '.agents',
-  '.git',
-  '.idea',
-  '.spw',
-  '00.unsorted',
-  'dist',
-  'dist-vite',
-  'node_modules',
-]);
-
-const IGNORED_PREFIXES = [
-  'design/catalog/',
-];
 
 const REQUIRED_BODY_DATA_KEYS = Object.freeze([
   'spwSurface',
@@ -41,10 +30,6 @@ const REQUIRED_BODY_DATA_KEYS = Object.freeze([
 
 const EXPECTED_STYLESHEET_PREFIX = '/public/css/style.css';
 const EXPECTED_SITE_SCRIPT_PREFIX = '/public/js/site.js';
-
-function toPosixPath(value) {
-  return value.split(path.sep).join('/');
-}
 
 function stripQueryHash(value) {
   return String(value || '').replace(/[?#].*$/, '');
@@ -73,9 +58,7 @@ function relativeRepoPath(absolutePath) {
 }
 
 function shouldIgnoreRepoPath(relativePath) {
-  const firstSegment = relativePath.split('/')[0];
-  if (IGNORED_SEGMENTS.has(firstSegment)) return true;
-  return IGNORED_PREFIXES.some((prefix) => relativePath === prefix.slice(0, -1) || relativePath.startsWith(prefix));
+  return shouldIgnoreValidationPath(relativePath);
 }
 
 function routePathFromFile(relativeFilePath) {

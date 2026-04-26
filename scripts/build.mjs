@@ -25,62 +25,22 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 import { renderTemplate } from './template.mjs';
+import {
+  IMAGE_EXTENSIONS,
+  shouldExcludeBuildPath,
+  toPosixPath,
+} from './typed/build-topology.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DEFAULT_OUT_DIR = path.join(ROOT_DIR, 'dist');
 
-const EXCLUDED_TOP_LEVEL = new Set([
-  '.agents',
-  '.git',
-  '.github',
-  '.idea',
-  '.gitignore',
-  '.gitmodules',
-  '00.unsorted',
-  '_partials',
-  'dist',
-  'dist-vite',
-  'node_modules',
-  'scripts',
-  'types',
-  'AGENTS.md',
-  'package.json',
-  'package-lock.json',
-  'split-css.js',
-  'tsconfig.json',
-  'tsconfig.runtime.json',
-  'vite.config.ts',
-]);
-
-const EXCLUDED_BASENAMES = new Set([
-  '.DS_Store',
-]);
-
-const EXCLUDED_PREFIXES = [
-  '.spw/_workbench',
-  'public/ts',
-  'public/images/renders/_raw',
-  'public/images/renders/_raw-2x2',
-];
-
-const IMAGE_EXTENSIONS = new Set([
-  '.avif',
-  '.gif',
-  '.ico',
-  '.jpeg',
-  '.jpg',
-  '.png',
-  '.svg',
-  '.webp',
-]);
-
 const DEFAULT_COPY_CONCURRENCY = 8;
 const DEFAULT_COPY_PROGRESS_INTERVAL = 100;
 
 function toPosix(value) {
-  return value.split(path.sep).join('/');
+  return toPosixPath(value);
 }
 
 function relRepo(absPath) {
@@ -230,25 +190,7 @@ function assertSafeOutputDir(outDir) {
 }
 
 function shouldExcludeRepoPath(repoPath, outputRelativePath = 'dist') {
-  const normalizedPath = toPosix(repoPath).replace(/^\/+/, '');
-  if (!normalizedPath) return true;
-
-  const segments = normalizedPath.split('/');
-  if (EXCLUDED_TOP_LEVEL.has(segments[0])) return true;
-
-  if (
-    outputRelativePath
-    && (normalizedPath === outputRelativePath || normalizedPath.startsWith(`${outputRelativePath}/`))
-  ) {
-    return true;
-  }
-
-  if (EXCLUDED_PREFIXES.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`))) {
-    return true;
-  }
-
-  const basename = path.posix.basename(normalizedPath);
-  return EXCLUDED_BASENAMES.has(basename);
+  return shouldExcludeBuildPath(repoPath, outputRelativePath);
 }
 
 async function rmrf(target) {
@@ -323,7 +265,7 @@ function listSourceRepoPaths(options) {
 async function checkImageRedundancy(sourcePaths) {
   const imagePaths = sourcePaths.filter((repoPath) => {
     if (!repoPath.startsWith('public/images/')) return false;
-    return IMAGE_EXTENSIONS.has(path.posix.extname(repoPath).toLowerCase());
+    return IMAGE_EXTENSIONS.includes(path.posix.extname(repoPath).toLowerCase());
   });
 
   const pathsBySize = new Map();

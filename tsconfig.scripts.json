@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "lib": ["ES2022"],
+    "noEmit": false,
+    "outDir": "scripts/typed",
+    "rootDir": "scripts/ts",
+    "sourceMap": false,
+    "types": []
+  },
+  "include": ["scripts/ts/**/*.mts"],
+  "exclude": []
+}
