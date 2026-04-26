@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -58,6 +58,22 @@ function isTemplateDependency(relativePath: string): boolean {
   return templateDependencyPrefixes.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
 }
 
+function resolveDirectoryIndex(pathname: string): string | null {
+  let decodedPath: string;
+  try {
+    decodedPath = decodeURIComponent(pathname);
+  } catch {
+    return null;
+  }
+
+  const relativePath = decodedPath.replace(/^\/+/, '');
+  const absolutePath = path.resolve(rootDir, relativePath);
+  if (absolutePath !== rootDir && !absolutePath.startsWith(`${rootDir}${path.sep}`)) return null;
+
+  const indexPath = path.join(absolutePath, 'index.html');
+  return existsSync(indexPath) ? indexPath : null;
+}
+
 function toInputKey(relativePath: string): string {
   const normalizedPath = toPosixPath(relativePath).replace(/^\/+/, '');
   if (normalizedPath === 'index.html') return 'home';
@@ -98,6 +114,23 @@ function spwHtmlTemplates(): Plugin {
     configureServer(server) {
       server.watcher.add(Object.values(htmlInputs));
       server.watcher.add(path.join(rootDir, '_partials'));
+
+      server.middlewares.use((request, response, next) => {
+        if (request.method !== 'GET' && request.method !== 'HEAD') {
+          next();
+          return;
+        }
+
+        const requestUrl = new URL(request.url || '/', 'http://spwashi.local');
+        if (requestUrl.pathname.endsWith('/') || !resolveDirectoryIndex(requestUrl.pathname)) {
+          next();
+          return;
+        }
+
+        response.statusCode = 302;
+        response.setHeader('Location', `${requestUrl.pathname}/${requestUrl.search}`);
+        response.end();
+      });
     },
     handleHotUpdate({ file, server }) {
       const relativePath = path.relative(rootDir, file);
