@@ -315,6 +315,7 @@
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
+  scrollbar-width: none;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   border: 1.5px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
@@ -325,6 +326,10 @@
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
     var(--spw-depth-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+}
+
+:where(.site-header nav, body > header nav)::-webkit-scrollbar {
+  display: none;
 }
 
 :where(.site-header nav[hidden], body > header nav[hidden]) {
@@ -703,6 +708,42 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   text-decoration-style: dotted;
   text-decoration-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
   text-underline-offset: 0.16rem;
+}
+
+@media (min-width: 981px) {
+  :where(.site-header, body > header) {
+    --shell-header-height: 3.55rem;
+    --shell-header-pad-block: 0.32rem;
+    --spw-shell-row-gap: 0.28rem;
+  }
+
+  :where(.site-header nav, body > header nav) {
+    justify-self: center;
+    width: fit-content;
+    max-width: min(100%, 74rem);
+    padding: 0.28rem 0.42rem;
+    border-radius: calc(var(--shell-panel-radius-loose) - 0.16rem);
+  }
+
+  :where(.site-header ul, body > header ul) {
+    width: max-content;
+    min-width: 0;
+    padding-block: 0.22rem;
+    gap: 0.22rem 0.34rem;
+  }
+
+  :where(.site-header nav a, body > header nav a) {
+    min-height: 2.05rem;
+    padding: 0.26rem 0.58rem;
+  }
+
+  .header-sigil {
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
+
+  .header-op-indicator {
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
 }
 
 :where(.site-header[data-spw-nav-fit="tight"], body > header[data-spw-nav-fit="tight"]) {

@@ -147,14 +147,19 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] {
    ========================================================================== */
 
 body[data-spw-surface="about"] {
+  --grain-body-opacity: calc(var(--grain-opacity, 0.028) * 0.46);
+  --grain-atmosphere-bias: -0.035;
+  --grain-resonance-bias: 0;
   background:
-    radial-gradient(circle at top center, color-mix(in srgb, var(--about-accent-2) 8%, transparent), transparent 32%),
+    radial-gradient(circle at top center, color-mix(in srgb, var(--about-accent-2) 4%, transparent), transparent 24%),
     linear-gradient(180deg, var(--about-bg-field), var(--about-bg));
   color: var(--about-ink);
 }
 
 [data-spw-surface="about"] main {
   gap: clamp(1.05rem, 2.3vw, 1.55rem);
+  max-width: min(var(--page-width-wide, 84rem), calc(100vw - (var(--page-gutter-inline, 1rem) * 2)));
+  margin-top: clamp(0.8rem, 1.5vw, 1.25rem);
 }
 
 [data-spw-surface="about"] main > section + section,
@@ -212,12 +217,18 @@ body[data-spw-surface="about"] {
 [data-spw-surface="about"] #about-frame {
   position: relative;
   overflow: hidden;
+  padding: clamp(1.05rem, 2vw, 1.6rem);
   border-radius: var(--about-panel-radius-loose);
   background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-2) 7%, transparent), transparent 34%),
-    radial-gradient(circle at top right, color-mix(in srgb, var(--about-accent-3) 6%, transparent), transparent 30%),
-    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 74%, transparent), transparent 22%),
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--about-accent-2) 6%, transparent), transparent 28%),
+    radial-gradient(circle at 86% 12%, color-mix(in srgb, var(--about-accent-3) 4%, transparent), transparent 24%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 54%, transparent), transparent 18%),
     var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #about-frame > * {
+  position: relative;
+  z-index: 1;
 }
 
 [data-spw-surface="about"] #about-frame::before {
@@ -237,10 +248,10 @@ body[data-spw-surface="about"] {
 }
 
 [data-spw-surface="about"] #about-title {
-  max-width: 10ch;
+  max-width: 14ch;
   color: color-mix(in srgb, var(--about-ink) 90%, var(--about-accent-2));
   font-family: var(--craft-display, var(--site-display-font));
-  font-size: clamp(2.15rem, 4vw, 2.95rem);
+  font-size: clamp(2.35rem, 4.6vw, 3.8rem);
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.02;
@@ -257,6 +268,36 @@ body[data-spw-surface="about"] {
 
 [data-spw-surface="about"] #about-frame strong {
   color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
+}
+
+@media (min-width: 860px) {
+  [data-spw-surface="about"] #about-frame {
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
+    column-gap: clamp(2rem, 5vw, 4.25rem);
+    row-gap: clamp(0.75rem, 1.4vw, 1rem);
+    align-items: start;
+  }
+
+  [data-spw-surface="about"] #about-frame > .frame-topline {
+    grid-column: 1 / -1;
+    margin-bottom: clamp(0.35rem, 1vw, 0.7rem);
+  }
+
+  [data-spw-surface="about"] #about-frame > .page-kicker,
+  [data-spw-surface="about"] #about-frame > #about-title,
+  [data-spw-surface="about"] #about-frame > .page-lede {
+    grid-column: 1;
+  }
+
+  [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) {
+    grid-column: 2;
+    max-width: var(--about-reading-measure-tight);
+    margin-block: 0;
+  }
+
+  [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) + p:not(.page-kicker):not(.page-lede) {
+    margin-top: 0.8rem;
+  }
 }
 
 [data-spw-surface="about"] #about-frame a:not(.operator-chip):not(.frame-sigil) {
