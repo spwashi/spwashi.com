@@ -1,0 +1,61 @@
+# Timing, Data, And Localization
+#
+# Ontology for scheduled site surfaces, JSON-fed copy, and future locale
+# projections. This keeps the daily/weekly "living site" idea inspectable
+# instead of hiding it inside JavaScript convenience code.
+
+#>timing_data_localization
+#:semantics #!philosophy
+#:layer #!pragmatics
+
+^"thesis"{
+ claim: "Timed site data should behave like authored editorial rhythm, not like arbitrary personalization."
+ why: "A daily or weekly card gives the site a reason to be revisited. The data needs enough structure for localization, accessibility, and future agents to understand what changes, when it changes, and why the change is legitimate."
+}
+
+^"core_entities"{
+ cadence: "The temporal rhythm that selects a copy unit, such as daily or weekly."
+ feed: "A static JSON source that carries authored copy units and their timing shape."
+ copy_unit: "A stable semantic unit that can be translated, inspected, and rendered without relying on raw English as identity."
+ source_locale: "The locale where a feed was authored first."
+ locale_projection: "A locale-specific version of the same copy unit, allowed to restate tone rather than translate fragment-by-fragment."
+ fallback: "Embedded browser-safe copy used when the feed is missing or malformed."
+}
+
+^"timing_contract"{
+ daily: "Use for return signals, prompts, and lightweight promotional invitations."
+ weekly: "Use for broader themes, strategic offers, and larger interpretive frames."
+ invariant: "Timing changes should be predictable enough to be accessible and cacheable, but expressive enough to make the surface feel maintained."
+ anti_pattern: "Changing important calls to action randomly on every render."
+}
+
+^"data_contract"{
+ format: "JSON feeds carry sourceLocale, localization metadata, and typed card fields."
+ required_card_fields: #[`title`, `summary`, `href`, `cta`][reg=set]
+ optional_card_fields: #[`label`, `operator`, `why`, `tag`, `copyUnit`, `locale`][reg=set]
+ rendering_rule: "TypeScript normalizes text and sets data-spw-copy-unit, data-spw-locale, and data-spw-cadence where a generated card appears."
+}
+
+^"localization_contract"{
+ source_rule: "Every feed should name sourceLocale, even when only English is published."
+ projection_rule: "Future locale feeds may restate whole card fields instead of translating tiny fragments."
+ template_rule: "The HTML template renderer should emit lang, spw:locale, spw:source-locale, and hreflang alternates when page metadata provides them."
+ honesty_rule: "Do not emit alternate-language metadata for a route or feed projection that has not been published."
+}
+
+^"implementation_links"{
+ runtime_types: ~"../../public/ts"
+ emitted_runtime: ~"../../public/js/typed"
+ promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+ media_feed: ~"../../public/data/media-focus.json"
+ template_renderer: ~"../../scripts/template.mjs"
+ localization_convention: ~"../conventions/copy-localization.spw"
+}
+
+invariants: #[
+ `Timed data is editorial rhythm, not opaque personalization.`,
+ `Generated cards should expose cadence, locale, and copy-unit identity in HTML.`,
+ `Feeds should remain static and cacheable so the public site stays simple.`,
+ `Localization prepares complete thoughts and CTAs, not isolated string crumbs.`,
+ `Templates own page-level locale metadata; runtime modules own generated-card locale metadata.`
+][reg=set]

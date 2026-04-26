@@ -1,4 +1,10 @@
 {
+  "sourceLocale": "en",
+  "localization": {
+    "prepared": true,
+    "copyUnit": "website.mediaPublishing",
+    "notes": "Focus cards preserve label, title, summary, why, and CTA as translation-facing fields rather than opaque HTML snippets."
+  },
   "updated": "2026-04-10",
   "weekly": {
     "label": "Weekly focus",

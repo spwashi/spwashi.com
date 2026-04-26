@@ -1219,9 +1219,22 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'home',
     selector: '[data-promo-wonder-cycle]',
-    load: () => import('./promo-wonder-cycle.js'),
+    load: () => import('./typed/promo-wonder-cycle.js'),
     mount: (mod) => {
       const fn = mod?.initPromoWonderCycle;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'media-publishing',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'website',
+    selector: '[data-media-focus], [data-media-collection]',
+    load: () => import('./typed/media-publishing.js'),
+    mount: (mod) => {
+      const fn = mod?.initMediaPublishing;
       if (!isFn(fn)) return;
       return fn();
     },

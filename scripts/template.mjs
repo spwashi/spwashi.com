@@ -240,6 +240,19 @@ function splitLines(value = '') {
     .filter(Boolean);
 }
 
+function parseKeyedList(value = '') {
+  return splitLines(value)
+    .map((item) => {
+      const separatorIndex = item.indexOf(':');
+      if (separatorIndex < 0) return null;
+      const key = normalizeContent(item.slice(0, separatorIndex));
+      const content = normalizeContent(item.slice(separatorIndex + 1));
+      if (!key || !content) return null;
+      return { key, content };
+    })
+    .filter(Boolean);
+}
+
 function normalizeUrlPath(value = '') {
   const normalized = normalizeContent(value);
   if (!normalized) return '';
@@ -249,6 +262,17 @@ function normalizeUrlPath(value = '') {
   } catch {
     return normalized.replace(/\/+$/, '/') || '/';
   }
+}
+
+function normalizeLocaleCode(value = '') {
+  return normalizeContent(value).replace(/_/g, '-');
+}
+
+function localeToOgLocale(value = '') {
+  const locale = normalizeLocaleCode(value);
+  if (!locale) return '';
+  if (locale.toLowerCase() === 'en') return 'en_US';
+  return locale.replace(/-/g, '_');
 }
 
 function mergeScopeVars(scopeVars, rawAttrs, warnings) {
@@ -268,6 +292,12 @@ function renderExtraStyles(value = '') {
 function renderExtraScripts(value = '') {
   return splitList(value)
     .map((src) => `    <script src="${attrEscape(src)}" type="module"></script>`)
+    .join('\n');
+}
+
+function renderAlternateLocaleLinks(vars) {
+  return parseKeyedList(vars.alternate_locales || vars.alternates || '')
+    .map(({ key, content }) => `    <link rel="alternate" hreflang="${attrEscape(normalizeLocaleCode(key))}" href="${attrEscape(content)}" />`)
     .join('\n');
 }
 
@@ -330,6 +360,9 @@ function renderSiteHead(vars) {
   const ogImage = firstValue(vars.og_image, 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg');
   const ogImageAlt = firstValue(vars.og_image_alt, `${title} illustrated metadata card on Spwashi.`);
   const keywords = firstValue(vars.keywords);
+  const locale = normalizeLocaleCode(firstValue(vars.locale, vars.lang, 'en'));
+  const sourceLocale = normalizeLocaleCode(firstValue(vars.source_locale, vars.source_lang, locale));
+  const alternateLocaleLinks = renderAlternateLocaleLinks(vars);
   const extraStyles = renderExtraStyles(vars.extra_styles);
   const extraScripts = renderExtraScripts(vars.extra_scripts);
   const pageJsonLd = renderPageJsonLd(vars);
@@ -344,6 +377,8 @@ function renderSiteHead(vars) {
     '    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />',
     '    <meta content="Spwashi" name="apple-mobile-web-app-title" />',
     `    <meta name="description" content="${attrEscape(description)}" />`,
+    `    <meta name="spw:locale" content="${attrEscape(locale)}" />`,
+    `    <meta name="spw:source-locale" content="${attrEscape(sourceLocale)}" />`,
     '',
     '    <link href="/favicon.ico" rel="icon" sizes="32x32" />',
     '    <link href="/public/images/favicon.svg" rel="icon" type="image/svg+xml" />',
@@ -357,12 +392,14 @@ function renderSiteHead(vars) {
     extraScripts,
     '',
     `    <link href="${attrEscape(canonical)}" rel="canonical" />`,
+    alternateLocaleLinks,
     '',
     '    <meta content="website" property="og:type" />',
     '    <meta content="Spwashi" property="og:site_name" />',
     `    <meta content="${attrEscape(ogTitle)}" property="og:title" />`,
     `    <meta content="${attrEscape(ogDescription)}" property="og:description" />`,
     `    <meta content="${attrEscape(canonical)}" property="og:url" />`,
+    `    <meta content="${attrEscape(localeToOgLocale(locale))}" property="og:locale" />`,
     `    <meta content="${attrEscape(ogImage)}" property="og:image" />`,
     `    <meta content="${attrEscape(ogImageAlt)}" property="og:image:alt" />`,
     '    <meta content="1200" property="og:image:width" />',
@@ -432,6 +469,29 @@ function expandSiteDirectives(text, scopeVars, warnings) {
   return output;
 }
 
+function mergeHtmlAttributes(existingAttrs, nextAttrs) {
+  const attrs = { ...parseAttrs(existingAttrs) };
+  for (const [key, value] of Object.entries(nextAttrs)) {
+    const normalized = normalizeContent(value);
+    if (!normalized) continue;
+    attrs[key] = normalized;
+  }
+
+  return Object.entries(attrs)
+    .map(([key, value]) => ` ${key}="${attrEscape(value)}"`)
+    .join('');
+}
+
+function applyPageDocumentAttributes(source, vars) {
+  if (!/<html\b/i.test(source)) return source;
+
+  const lang = normalizeLocaleCode(firstValue(vars.lang, vars.locale));
+  const dir = firstValue(vars.dir, vars.text_direction);
+  if (!lang && !dir) return source;
+
+  return source.replace(HTML_OPEN_RE, (_match, attrs) => `<html${mergeHtmlAttributes(attrs || '', { lang, dir })}>`);
+}
+
 function parseDocumentSemanticMeta(source) {
   const htmlMatch = source.match(HTML_OPEN_RE);
   const bodyMatch = source.match(BODY_OPEN_RE);
@@ -452,15 +512,24 @@ function parseDocumentSemanticMeta(source) {
     });
   }
 
-  const lang = normalizeContent(htmlAttrs.lang);
+  const sourceLocale = normalizeLocaleCode(bodyAttrs['data-spw-source-locale'] || htmlAttrs['data-spw-source-locale']);
+  if (sourceLocale) {
+    entries.push({
+      metaName: 'spw:source-locale',
+      propertyName: 'spwSourceLocale',
+      value: sourceLocale,
+    });
+  }
+
+  const lang = normalizeLocaleCode(htmlAttrs.lang);
   if (lang) {
     entries.push({
       property: 'og:locale',
-      value: lang.toLowerCase() === 'en' ? 'en_US' : lang,
+      value: localeToOgLocale(lang),
     });
     entries.push({
-      metaName: 'spw:lang',
-      propertyName: 'spwLang',
+      metaName: 'spw:locale',
+      propertyName: 'spwLocale',
       value: lang,
     });
   }
@@ -565,7 +634,8 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
   const { vars, rest } = extractPageVars(source);
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
   const withSiteDirectives = expandSiteDirectives(expanded, vars, warnings);
-  const output = enhanceHtmlMetadata(substituteVars(withSiteDirectives, vars, warnings), warnings);
+  const withPageAttrs = applyPageDocumentAttributes(withSiteDirectives, vars);
+  const output = enhanceHtmlMetadata(substituteVars(withPageAttrs, vars, warnings), warnings);
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);

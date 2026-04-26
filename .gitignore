@@ -4,5 +4,6 @@
 public/images/renders/_raw/
 00.unsorted/
 dist/
+dist-vite/
 design/catalog/
 node_modules/

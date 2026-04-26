@@ -81,6 +81,7 @@
  required_behaviors: [
   "emit locale-specific HTML documents",
   "write correct html lang values",
+  "emit spw:locale and spw:source-locale metadata for templated pages",
   "emit canonical and alternate-language metadata only for published locale variants",
   "fail loudly when a required translation projection is missing for a route being published"
  ]
@@ -101,4 +102,15 @@
  "Locale expansion is additive and explicit; missing required projections should fail authoring or build checks.",
  "Operator and brace vocabulary may require per-locale glosses or restatements rather than frozen literal carryover.",
  "Published output remains static HTML, CSS, and JS."
+}
+
+^"timed_feed_bridge"{
+ rule: "JSON-fed timed surfaces should be localization-ready before additional locales are published."
+ required_fields: [
+  "sourceLocale on the feed",
+  "localization metadata that names the copy-unit family",
+  "complete title, summary, href, and CTA fields on each rendered card",
+  "data-spw-copy-unit, data-spw-locale, and data-spw-cadence on generated card HTML"
+ ]
+ see: ~"../philosophy/timing-data-localization.spw"
 }

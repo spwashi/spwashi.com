@@ -1,4 +1,10 @@
 {
+  "sourceLocale": "en",
+  "localization": {
+    "prepared": true,
+    "copyUnit": "home.promoWonderCycle",
+    "notes": "Daily and weekly entries are authored as complete copy units so future locale feeds can restate tone without splitting rhetoric into fragments."
+  },
   "daily": [
     {
       "promo": {

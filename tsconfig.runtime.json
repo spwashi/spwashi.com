@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": false,
+    "outDir": "public/js/typed",
+    "rootDir": "public/ts",
+    "sourceMap": false,
+    "types": []
+  },
+  "include": ["public/ts/**/*.ts"],
+  "exclude": []
+}

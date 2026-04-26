@@ -11,6 +11,7 @@
 @wonder_doctrine: ~"./wonder-doctrine.spw"
 @cognitive_surface: ~"./cognitive-surface.spw"
 @spatial_grammar: ~"./spatial-grammar.spw"
+@timing_data_localization: ~"./timing-data-localization.spw"
 @site_semantics: ~"../conventions/site-semantics.spw"
 @style_development: ~"../conventions/style-development.spw"
 @valence_kb: ~"../_workbench/.agents/kb/valence.spw"
@@ -22,6 +23,7 @@ dispatch: .{
  wonder = @wonder_doctrine
  cognition = @cognitive_surface
  spatial = @spatial_grammar
+ timing_data_localization = @timing_data_localization
  semantics = @site_semantics
  style = @style_development
  valence = @valence_kb
@@ -31,13 +33,14 @@ dispatch: .{
 
 reading_order: .{
  note = `Suggested reading order for someone building a coherent model from scratch.`
- sequence = ?< @spatial_grammar, @brace_physics, @wonder_doctrine, @spirit_cycle, @cognitive_surface, @site_semantics, @style_development >[reg=stream]
+ sequence = ?< @spatial_grammar, @brace_physics, @wonder_doctrine, @spirit_cycle, @cognitive_surface, @timing_data_localization, @site_semantics, @style_development >[reg=stream]
  rationale = #[
   `spatial_grammar grounds everything else in something perceptible`,
   `brace_physics makes the spatial grammar physically intuitive`,
   `wonder_doctrine clarifies what this system is for`,
   `spirit_cycle shows how engagement arcs over time`,
   `cognitive_surface integrates the prior four into a design model`,
+  `timing_data_localization explains how scheduled copy becomes a maintainable data surface`,
   `site_semantics applies the model to concrete component decisions`,
   `style_development tracks where aesthetic choices emerge from the work`
  ][reg=set]
@@ -48,7 +51,8 @@ open_across_documents: #[
  .{ ask = `Is wonder a property of the surface, the visitor, or the relationship between them?` },
  .{ ask = `What is the relationship between spatial grammar and accessibility — does the spatial model make the site more or less accessible?` },
  .{ ask = `How does the cognitive-surface model change when the visitor is the author rather than the reader?` },
- .{ ask = `When the site hosts another language through Spw, is the resulting surface more or less cognitively demanding?` }
+ .{ ask = `When the site hosts another language through Spw, is the resulting surface more or less cognitively demanding?` },
+ .{ ask = `How much timed variation is enough to create return value without making the site feel unstable?`, see = @timing_data_localization }
 ][reg=set]
 
 invariants: #[

@@ -2,13 +2,26 @@
   "name": "spwashi.com",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "npm run typecheck && npm run build:runtime && node scripts/build.mjs",
+    "build:runtime": "tsc -p tsconfig.runtime.json",
+    "build:site": "node scripts/build.mjs",
+    "build:vite": "npm run build:runtime && vite build",
     "catalog": "node scripts/generate-design-catalog.mjs",
     "check": "node scripts/check-site.mjs",
-    "dev": "node scripts/dev-server.mjs",
-    "dev:host": "node scripts/dev-server.mjs --host 0.0.0.0",
-    "dev:open": "node scripts/dev-server.mjs --open",
+    "dev": "npm run build:runtime && vite",
+    "dev:host": "npm run build:runtime && vite --host 0.0.0.0",
+    "dev:legacy": "node scripts/dev-server.mjs",
+    "dev:legacy:host": "node scripts/dev-server.mjs --host 0.0.0.0",
+    "dev:legacy:open": "node scripts/dev-server.mjs --open",
+    "dev:open": "npm run build:runtime && vite --open",
     "manifest": "node scripts/generate-route-runtime-manifest.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "preview": "vite preview",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.39",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10"
   }
 }

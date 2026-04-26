@@ -41,12 +41,17 @@ const EXCLUDED_TOP_LEVEL = new Set([
   '00.unsorted',
   '_partials',
   'dist',
+  'dist-vite',
   'node_modules',
   'scripts',
+  'types',
   'AGENTS.md',
   'package.json',
   'package-lock.json',
   'split-css.js',
+  'tsconfig.json',
+  'tsconfig.runtime.json',
+  'vite.config.ts',
 ]);
 
 const EXCLUDED_BASENAMES = new Set([
@@ -55,6 +60,7 @@ const EXCLUDED_BASENAMES = new Set([
 
 const EXCLUDED_PREFIXES = [
   '.spw/_workbench',
+  'public/ts',
   'public/images/renders/_raw',
   'public/images/renders/_raw-2x2',
 ];
@@ -371,7 +377,14 @@ function logDuplicateImages(duplicateGroups, logger) {
 async function copyTrackedPath(repoPath, options) {
   const srcPath = path.join(ROOT_DIR, repoPath);
   const dstPath = path.join(options.outDir, repoPath);
-  const stats = await fs.lstat(srcPath);
+  let stats;
+
+  try {
+    stats = await fs.lstat(srcPath);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return 'skipped-missing';
+    throw error;
+  }
 
   if (stats.isDirectory()) return 'skipped-directory';
 

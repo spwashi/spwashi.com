@@ -52,8 +52,11 @@ As of 2026-04, the site publishes through a local build step rather than serving
 
 | Command | What it does |
 |---------|--------------|
-| `npm run dev` | Local dev server (live reload, CSS hot-swap) serving the **source** tree. |
-| `npm run build` | Produces `dist/` — copy of the tracked deployable site surface with the design catalog regenerated and a `.nojekyll` marker. |
+| `npm run dev` | Vite dev server for the source tree, with Spw HTML template rendering wired through `vite.config.ts`. |
+| `npm run dev:legacy` | Previous zero-dep local dev server for fallback/template debugging. |
+| `npm run build` | Runs TypeScript typechecking, then produces `dist/` with the static deploy builder, sitemap, design catalog, and `.nojekyll` marker. |
+| `npm run build:runtime` | Compiles selected TypeScript runtime modules from `public/ts/` into browser-ready modules under `public/js/typed/`. |
+| `npm run build:vite` | Vite production smoke build into `dist-vite/` for bundler compatibility checks; not the deploy artifact. |
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |

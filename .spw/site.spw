@@ -22,6 +22,7 @@
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @philosophy: ~"./philosophy/index.spw"
+@timing_data_localization: ~"./philosophy/timing-data-localization.spw"
 @graph: ~"./graph.spw"
 @surfaces: ~"./surfaces.spw"
 @canon: ~"./_workbench/.spw/index.spw"
@@ -62,6 +63,7 @@ translations: .{
  installation = #[@submodule, @mount][reg=set]
  site_semantics = #[@conventions, @site_semantics][reg=set]
  localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
+ timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
  style_development = #[@style_development, @site_semantics][reg=set]
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
@@ -90,6 +92,7 @@ dispatch: .{
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
  philosophy = @philosophy
+ timing_data_localization = @timing_data_localization
  graph = @graph
  public_surfaces = @surfaces
  workbench = @canon

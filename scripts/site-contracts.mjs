@@ -19,8 +19,14 @@ const IGNORED_SEGMENTS = new Set([
   '.idea',
   '.spw',
   '00.unsorted',
+  'dist',
+  'dist-vite',
   'node_modules',
 ]);
+
+const IGNORED_PREFIXES = [
+  'design/catalog/',
+];
 
 const REQUIRED_BODY_DATA_KEYS = Object.freeze([
   'spwSurface',
@@ -64,6 +70,12 @@ function splitPipeList(value) {
 
 function relativeRepoPath(absolutePath) {
   return toPosixPath(path.relative(ROOT_DIR, absolutePath));
+}
+
+function shouldIgnoreRepoPath(relativePath) {
+  const firstSegment = relativePath.split('/')[0];
+  if (IGNORED_SEGMENTS.has(firstSegment)) return true;
+  return IGNORED_PREFIXES.some((prefix) => relativePath === prefix.slice(0, -1) || relativePath.startsWith(prefix));
 }
 
 function routePathFromFile(relativeFilePath) {
@@ -335,9 +347,8 @@ async function walkForRouteFiles(directoryPath, results = []) {
   for (const entry of entries) {
     const absolutePath = path.join(directoryPath, entry.name);
     const relativePath = relativeRepoPath(absolutePath);
-    const firstSegment = relativePath.split('/')[0];
 
-    if (IGNORED_SEGMENTS.has(firstSegment)) continue;
+    if (shouldIgnoreRepoPath(relativePath)) continue;
 
     if (entry.isDirectory()) {
       await walkForRouteFiles(absolutePath, results);
@@ -358,9 +369,8 @@ async function walkForFilesByExtension(directoryPath, extension, results = []) {
   for (const entry of entries) {
     const absolutePath = path.join(directoryPath, entry.name);
     const relativePath = relativeRepoPath(absolutePath);
-    const firstSegment = relativePath.split('/')[0];
 
-    if (IGNORED_SEGMENTS.has(firstSegment)) continue;
+    if (shouldIgnoreRepoPath(relativePath)) continue;
 
     if (entry.isDirectory()) {
       await walkForFilesByExtension(absolutePath, extension, results);
@@ -623,9 +633,8 @@ async function collectSyntaxCheckTargets() {
     for (const entry of entries) {
       const absolutePath = path.join(directoryPath, entry.name);
       const relativePath = relativeRepoPath(absolutePath);
-      const firstSegment = relativePath.split('/')[0];
 
-      if (IGNORED_SEGMENTS.has(firstSegment)) continue;
+      if (shouldIgnoreRepoPath(relativePath)) continue;
 
       if (entry.isDirectory()) {
         await walk(absolutePath);
