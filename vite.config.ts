@@ -1,4 +1,4 @@
-import { promises as fs, readdirSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,6 +23,12 @@ const ignoredPrefixes = [
   '.spw/_workbench',
   'design/catalog',
 ];
+const templateDependencyPrefixes = [
+  '_partials',
+];
+const templateDependencyFiles = new Set([
+  'scripts/template.mjs',
+]);
 const renderTemplate = renderTemplateRuntime as (
   source: string,
   options?: { sourceLabel?: string },
@@ -39,6 +45,17 @@ function shouldIgnoreEntry(relativePath: string): boolean {
   const segments = normalizedPath.split('/');
   if (segments.some((segment) => ignoredSegments.has(segment))) return true;
   return ignoredPrefixes.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
+}
+
+function isRouteHtmlFile(relativePath: string): boolean {
+  const normalizedPath = toPosixPath(relativePath).replace(/^\/+/, '');
+  return normalizedPath.endsWith('.html') && !shouldIgnoreEntry(normalizedPath);
+}
+
+function isTemplateDependency(relativePath: string): boolean {
+  const normalizedPath = toPosixPath(relativePath).replace(/^\/+/, '');
+  if (templateDependencyFiles.has(normalizedPath)) return true;
+  return templateDependencyPrefixes.some((prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`));
 }
 
 function toInputKey(relativePath: string): string {
@@ -78,6 +95,20 @@ function spwHtmlTemplates(): Plugin {
   return {
     name: 'spw-html-templates',
     enforce: 'pre',
+    configureServer(server) {
+      server.watcher.add(Object.values(htmlInputs));
+      server.watcher.add(path.join(rootDir, '_partials'));
+    },
+    handleHotUpdate({ file, server }) {
+      const relativePath = path.relative(rootDir, file);
+      if (!isRouteHtmlFile(relativePath) && !isTemplateDependency(relativePath)) return;
+
+      server.ws.send({
+        type: 'full-reload',
+        path: '*',
+      });
+      return [];
+    },
     transformIndexHtml: {
       order: 'pre',
       async handler(html, context) {

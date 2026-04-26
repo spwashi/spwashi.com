@@ -68,8 +68,6 @@ const PRIMARY_NAV_ITEMS = Object.freeze([
   { href: '/settings/', label: 'Settings' },
 ]);
 
-let siteFooterTemplatePromise = null;
-
 const DERIVED_META_FIELDS = [
   { attr: 'data-spw-surface', metaName: 'spw:surface', propertyName: 'spwSurface' },
   { attr: 'data-spw-features', metaName: 'spw:features', propertyName: 'spwFeatures' },
@@ -185,8 +183,7 @@ async function expandIncludes(text, scopeVars, depth, seen, warnings) {
 }
 
 async function loadSiteFooterTemplate() {
-  siteFooterTemplatePromise ??= fs.readFile(resolvePartialPath('site-footer'), 'utf8');
-  return siteFooterTemplatePromise;
+  return fs.readFile(resolvePartialPath('site-footer'), 'utf8');
 }
 
 function substituteVars(text, vars, warnings) {
