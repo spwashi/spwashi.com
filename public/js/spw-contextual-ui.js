@@ -18,6 +18,9 @@
 import {
   MODULE_SELECTOR,
   inferTopographyKind,
+  writeDatasetValue,
+  writeDatasetValueIfMissing,
+  writeStyleValue,
 } from './spw-dom-contracts.js';
 import {
   normalizeToken,
@@ -259,64 +262,67 @@ function applyModuleSemantics(root = document) {
     const baseSalience = SALIENCE_WEIGHTS[salience] ?? SALIENCE_WEIGHTS.ambient;
     const effectiveSalience = Math.min(1, baseSalience + (contextMatched ? 0.14 : 0));
 
-    if (!el.dataset.spwModule) {
-      el.dataset.spwModule = inferModuleId(el, index);
-      el.dataset.spwModuleInferred = 'true';
-    }
-    el.dataset.spwPerspectiveResolved = perspective;
-    el.dataset.spwPotentialResolved = potential;
-    el.dataset.spwSalienceResolved = salience;
-    el.dataset.spwDimensionResolved = dimensions.join(' ');
-    el.dataset.spwContextBiasResolved = contextBias.join(' ');
-    el.dataset.spwContextProjectionResolved = contextProjection.join(' ');
-    el.dataset.spwContextMatch = contextMatched ? 'active' : 'idle';
-
-    if (!el.dataset.spwModuleCopy) {
-      el.dataset.spwModuleCopy = el.matches('.site-frame') ? 'scope-link' : 'fragment';
-      el.dataset.spwModuleCopyInferred = 'true';
+    if (writeDatasetValueIfMissing(el, 'spwModule', inferModuleId(el, index))) {
+      writeDatasetValue(el, 'spwModuleInferred', 'true');
     }
 
-    if (!el.dataset.spwModuleHydration) {
-      el.dataset.spwModuleHydration = el.matches('.site-frame') ? 'defer' : 'ready';
-      el.dataset.spwModuleHydrationInferred = 'true';
+    writeDatasetValue(el, 'spwPerspectiveResolved', perspective);
+    writeDatasetValue(el, 'spwPotentialResolved', potential);
+    writeDatasetValue(el, 'spwSalienceResolved', salience);
+    writeDatasetValue(el, 'spwDimensionResolved', dimensions.join(' '));
+    writeDatasetValue(el, 'spwContextBiasResolved', contextBias.join(' '));
+    writeDatasetValue(el, 'spwContextProjectionResolved', contextProjection.join(' '));
+    writeDatasetValue(el, 'spwContextMatch', contextMatched ? 'active' : 'idle');
+
+    if (writeDatasetValueIfMissing(el, 'spwModuleCopy', el.matches('.site-frame') ? 'scope-link' : 'fragment')) {
+      writeDatasetValue(el, 'spwModuleCopyInferred', 'true');
     }
 
-    el.style.setProperty(
+    if (writeDatasetValueIfMissing(el, 'spwModuleHydration', el.matches('.site-frame') ? 'defer' : 'ready')) {
+      writeDatasetValue(el, 'spwModuleHydrationInferred', 'true');
+    }
+
+    writeStyleValue(
+      el,
       '--spw-perspective-weight',
       String(PERSPECTIVE_WEIGHTS[perspective] ?? PERSPECTIVE_WEIGHTS.public)
     );
-    el.style.setProperty(
+    writeStyleValue(
+      el,
       '--spw-potential-weight',
       String(POTENTIAL_WEIGHTS[potential] ?? POTENTIAL_WEIGHTS.ready)
     );
-    el.style.setProperty(
+    writeStyleValue(
+      el,
       '--spw-salience-weight',
       String(effectiveSalience)
     );
-    el.style.setProperty('--spw-dimension-count', String(Math.max(1, dimensions.length)));
-    el.style.setProperty('--spw-context-bias-count', String(contextBias.length));
-    el.style.setProperty('--spw-context-projection-count', String(contextProjection.length));
-    el.style.setProperty('--spw-context-match-weight', contextMatched ? '1' : '0');
+    writeStyleValue(el, '--spw-dimension-count', String(Math.max(1, dimensions.length)));
+    writeStyleValue(el, '--spw-context-bias-count', String(contextBias.length));
+    writeStyleValue(el, '--spw-context-projection-count', String(contextProjection.length));
+    writeStyleValue(el, '--spw-context-match-weight', contextMatched ? '1' : '0');
   });
 }
 
 function clearModuleSemantics(root = document) {
   root.querySelectorAll(MODULE_SELECTOR).forEach((el) => {
-    if (el.dataset.spwModuleInferred === 'true') delete el.dataset.spwModule;
-    if (el.dataset.spwModuleCopyInferred === 'true') delete el.dataset.spwModuleCopy;
-    if (el.dataset.spwModuleHydrationInferred === 'true') delete el.dataset.spwModuleHydration;
+    if (el.dataset.spwModuleInferred === 'true') writeDatasetValue(el, 'spwModule', null);
+    if (el.dataset.spwModuleCopyInferred === 'true') writeDatasetValue(el, 'spwModuleCopy', null);
+    if (el.dataset.spwModuleHydrationInferred === 'true') writeDatasetValue(el, 'spwModuleHydration', null);
 
-    delete el.dataset.spwModuleInferred;
-    delete el.dataset.spwModuleCopyInferred;
-    delete el.dataset.spwModuleHydrationInferred;
-    delete el.dataset.spwPerspectiveResolved;
-    delete el.dataset.spwPotentialResolved;
-    delete el.dataset.spwSalienceResolved;
-    delete el.dataset.spwSalienceState;
-    delete el.dataset.spwDimensionResolved;
-    delete el.dataset.spwContextBiasResolved;
-    delete el.dataset.spwContextProjectionResolved;
-    delete el.dataset.spwContextMatch;
+    [
+      'spwModuleInferred',
+      'spwModuleCopyInferred',
+      'spwModuleHydrationInferred',
+      'spwPerspectiveResolved',
+      'spwPotentialResolved',
+      'spwSalienceResolved',
+      'spwSalienceState',
+      'spwDimensionResolved',
+      'spwContextBiasResolved',
+      'spwContextProjectionResolved',
+      'spwContextMatch',
+    ].forEach((key) => writeDatasetValue(el, key, null));
 
     [
       '--spw-perspective-weight',
@@ -326,14 +332,14 @@ function clearModuleSemantics(root = document) {
       '--spw-context-bias-count',
       '--spw-context-projection-count',
       '--spw-context-match-weight',
-    ].forEach((name) => el.style.removeProperty(name));
+    ].forEach((name) => writeStyleValue(el, name, null));
   });
 }
 
 function setActiveModuleState(target, active) {
   const host = target?.closest?.(MODULE_SELECTOR);
   if (!host) return;
-  host.dataset.spwSalienceState = active ? 'active' : 'resting';
+  writeDatasetValue(host, 'spwSalienceState', active ? 'active' : 'resting');
 }
 
 function bindModuleInteractionStates() {
@@ -341,20 +347,20 @@ function bindModuleInteractionStates() {
     const host = event.target?.closest?.(MODULE_SELECTOR);
     if (!host) return;
     if (event.relatedTarget instanceof Node && host.contains(event.relatedTarget)) return;
-    host.dataset.spwSalienceState = 'active';
+    writeDatasetValue(host, 'spwSalienceState', 'active');
   };
   const onPointerOut = (event) => {
     const host = event.target?.closest?.(MODULE_SELECTOR);
     if (!host) return;
     if (event.relatedTarget instanceof Node && host.contains(event.relatedTarget)) return;
-    host.dataset.spwSalienceState = 'resting';
+    writeDatasetValue(host, 'spwSalienceState', 'resting');
   };
   const onFocusIn = (event) => setActiveModuleState(event.target, true);
   const onFocusOut = (event) => {
     const host = event.target?.closest?.(MODULE_SELECTOR);
     if (!host) return;
     const active = document.activeElement;
-    host.dataset.spwSalienceState = active && host.contains(active) ? 'active' : 'resting';
+    writeDatasetValue(host, 'spwSalienceState', active && host.contains(active) ? 'active' : 'resting');
   };
 
   document.addEventListener('pointerover', onPointerOver, true);
@@ -388,10 +394,10 @@ function applyDeviceContext() {
   const pointer = computePointerMode();
   const hover = window.matchMedia('(hover: hover)').matches ? 'hover' : 'touch';
 
-  HTML.dataset.spwViewportTier = tier;
-  HTML.dataset.spwPointerMode = pointer;
-  HTML.dataset.spwHoverMode = hover;
-  HTML.dataset.spwDeviceContext = `${tier}-${pointer}`;
+  writeDatasetValue(HTML, 'spwViewportTier', tier);
+  writeDatasetValue(HTML, 'spwPointerMode', pointer);
+  writeDatasetValue(HTML, 'spwHoverMode', hover);
+  writeDatasetValue(HTML, 'spwDeviceContext', `${tier}-${pointer}`);
 }
 
 function collectExistingNavPaths(navList) {

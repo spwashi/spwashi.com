@@ -109,6 +109,48 @@ function matchesAny(el, selectors = []) {
   return selectors.some((selector) => el?.matches?.(selector));
 }
 
+export function writeDatasetValue(el, key, value, options = {}) {
+  if (!el?.dataset || !key) return false;
+
+  const { allowEmpty = false, missingOnly = false } = options;
+  const shouldRemove = value == null || (!allowEmpty && value === '');
+
+  if (shouldRemove) {
+    if (missingOnly || !(key in el.dataset)) return false;
+    delete el.dataset[key];
+    return true;
+  }
+
+  if (missingOnly && el.dataset[key]) return false;
+
+  const next = String(value);
+  if (el.dataset[key] === next) return false;
+  el.dataset[key] = next;
+  return true;
+}
+
+export function writeDatasetValueIfMissing(el, key, value, options = {}) {
+  return writeDatasetValue(el, key, value, { ...options, missingOnly: true });
+}
+
+export function writeStyleValue(el, property, value, options = {}) {
+  if (!el?.style || !property) return false;
+
+  const { allowEmpty = false } = options;
+  const shouldRemove = value == null || (!allowEmpty && value === '');
+
+  if (shouldRemove) {
+    if (!el.style.getPropertyValue(property)) return false;
+    el.style.removeProperty(property);
+    return true;
+  }
+
+  const next = String(value);
+  if (el.style.getPropertyValue(property) === next) return false;
+  el.style.setProperty(property, next);
+  return true;
+}
+
 export function normalizeTopographyToken(value = '') {
   return String(value)
     .replace(/\s+/g, ' ')

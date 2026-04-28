@@ -32,6 +32,8 @@ import {
   COMPONENT_SELECTOR,
   buildAxisGenome,
   inferTopographyKind,
+  writeDatasetValue,
+  writeDatasetValueIfMissing,
 } from './spw-dom-contracts.js';
 import {
   humanizeToken,
@@ -555,13 +557,11 @@ function inferStance(el, importance, interactivity) {
 }
 
 function setIfMissing(el, key, value) {
-  if (value == null || value === '') return;
-  if (!el.dataset[key]) el.dataset[key] = value;
+  writeDatasetValueIfMissing(el, key, value);
 }
 
 function setOrReplace(el, key, value) {
-  if (value == null || value === '') return;
-  el.dataset[key] = value;
+  writeDatasetValue(el, key, value);
 }
 
 function snapshotComponentSemantics(el, options = {}) {

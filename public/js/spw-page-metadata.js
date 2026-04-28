@@ -2,6 +2,8 @@ import {
   REGION_HOST_SELECTOR,
   REGION_SELECTOR as PAGE_METADATA_REGION_SELECTOR,
   inferTopographyKind,
+  writeDatasetValue,
+  writeDatasetValueIfMissing,
 } from './spw-dom-contracts.js';
 
 const SITE_NAME = 'Spwashi';
@@ -486,8 +488,7 @@ function safeQueryAll(selector, root = document) {
 }
 
 function setDataIfMissing(el, key, value) {
-  if (!el || !value) return;
-  if (!el.dataset[key]) el.dataset[key] = value;
+  writeDatasetValueIfMissing(el, key, value);
 }
 
 function pathMatchesPrefix(pathname, prefix) {
@@ -1146,7 +1147,7 @@ export function normalizeDocumentMetadata() {
   const surface = body.dataset.spwSurface || deriveSurfaceFromPath(pathname);
 
   if (!body.dataset.spwSurface) {
-    body.dataset.spwSurface = surface;
+    writeDatasetValue(body, 'spwSurface', surface);
   }
 
   const pageMeta = resolvePageMetadata({ body, main });

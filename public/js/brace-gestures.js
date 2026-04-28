@@ -18,14 +18,17 @@
  *     html[data-spw-implementation-mutations="on"]
  *     body[data-spw-implementation-mutations="on"]
  *     or nearest ancestor [data-spw-material-context~="mutable"]
+ * - Resolved hints are written to data-spw-resolved-* attributes by default.
+ *   Author-owned CSS routing attributes such as data-spw-context and
+ *   data-spw-wonder are only committed when explicitly opted in.
  *
  * When enabled, resolved semantic hints are written back into markup:
  * - data-spw-handle-kind
  * - data-spw-resolved-affordance
  * - data-spw-resolved-operator
- * - data-spw-wonder
+ * - data-spw-resolved-wonder
  * - data-spw-last-gesture
- * - data-spw-context
+ * - data-spw-resolved-context
  *
  * Local field hormones
  * - Updates nearest .site-frame / [data-spw-field-root] with lightweight
@@ -37,6 +40,10 @@
  */
 
 import { bus } from './spw-bus.js';
+import {
+  writeDatasetValue,
+  writeStyleValue,
+} from './spw-dom-contracts.js';
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
@@ -86,6 +93,20 @@ const PREFIX_TO_TYPE = Object.freeze({
 });
 
 const LEADING_OPERATOR_RE = /^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>)/;
+
+const CSS_OBSERVED_SEMANTIC_DATA_KEYS = Object.freeze([
+  'spwContext',
+  'spwOperator',
+  'spwWonder',
+]);
+
+const DISCOVERED_META_DATA_KEYS = Object.freeze({
+  targetKind: 'spwHandleKind',
+  operator: 'spwResolvedOperator',
+  wonder: 'spwResolvedWonder',
+  context: 'spwResolvedContext',
+  affordance: 'spwResolvedAffordance',
+});
 
 /**
  * @type {WeakMap<Element, {
@@ -281,27 +302,27 @@ function setGesture(el, meta, gesture) {
   if (!el) return;
 
   if (!gesture || gesture === 'neutral') {
-    delete el.dataset.spwGesture;
-    delete el.dataset.spwCharge;
-    delete el.dataset.spwArmed;
-    delete el.dataset.spwLastGesture;
-    el.style.removeProperty('--charge');
-    el.style.removeProperty('--drag-dx');
-    el.style.removeProperty('--drag-dy');
-    el.style.removeProperty('--drag-distance');
+    writeDatasetValue(el, 'spwGesture', null);
+    writeDatasetValue(el, 'spwCharge', null);
+    writeDatasetValue(el, 'spwArmed', null);
+    writeDatasetValue(el, 'spwLastGesture', null);
+    writeStyleValue(el, '--charge', null);
+    writeStyleValue(el, '--drag-dx', null);
+    writeStyleValue(el, '--drag-dy', null);
+    writeStyleValue(el, '--drag-distance', null);
     updateFieldHormones(meta, 'neutral');
     syncDiscoveredMarkup(el, meta, { spwLastGesture: null, spwArmed: null });
     return;
   }
 
-  el.dataset.spwGesture = gesture;
-  el.dataset.spwCharge = GESTURE_TO_CHARGE_BUCKET[gesture] || 'active';
-  el.style.setProperty('--charge', `${CHARGE_BY_GESTURE[gesture] ?? 0}`);
+  writeDatasetValue(el, 'spwGesture', gesture);
+  writeDatasetValue(el, 'spwCharge', GESTURE_TO_CHARGE_BUCKET[gesture] || 'active');
+  writeStyleValue(el, '--charge', `${CHARGE_BY_GESTURE[gesture] ?? 0}`);
 
   if (gesture === 'armed') {
-    el.dataset.spwArmed = 'true';
+    writeDatasetValue(el, 'spwArmed', 'true');
   } else {
-    delete el.dataset.spwArmed;
+    writeDatasetValue(el, 'spwArmed', null);
   }
 
   syncDiscoveredMarkup(el, meta, {
@@ -319,23 +340,23 @@ function updateFieldHormones(meta, gesture) {
   const intensity = CHARGE_BY_GESTURE[gesture] ?? 0;
 
   FIELD_WONDERS.forEach((name) => {
-    root.style.setProperty(`--spw-field-${name}`, name === meta.wonder ? `${intensity}` : '0');
+    writeStyleValue(root, `--spw-field-${name}`, name === meta.wonder ? `${intensity}` : '0');
   });
 
-  root.style.setProperty('--spw-field-charge', `${intensity}`);
+  writeStyleValue(root, '--spw-field-charge', `${intensity}`);
 
   if (intensity > 0) {
-    root.dataset.spwFieldWonder = meta.wonder;
-    root.dataset.spwFieldGesture = gesture;
+    writeDatasetValue(root, 'spwFieldWonder', meta.wonder);
+    writeDatasetValue(root, 'spwFieldGesture', gesture);
     syncDiscoveredMarkup(root, meta, {
       spwFieldWonder: meta.wonder,
       spwFieldGesture: gesture,
       spwFieldContext: meta.context,
     });
   } else {
-    delete root.dataset.spwFieldWonder;
-    delete root.dataset.spwFieldGesture;
-    delete root.dataset.spwFieldContext;
+    writeDatasetValue(root, 'spwFieldWonder', null);
+    writeDatasetValue(root, 'spwFieldGesture', null);
+    writeDatasetValue(root, 'spwFieldContext', null);
   }
 }
 
@@ -355,23 +376,36 @@ function isMarkupMutationEnabled(el) {
   );
 }
 
+function isCssObservedMutationEnabled(el) {
+  const html = document.documentElement;
+  const body = document.body;
+
+  if (html?.dataset.spwCssObservedMutations === 'on') return true;
+  if (body?.dataset.spwCssObservedMutations === 'on') return true;
+
+  return Boolean(
+    el?.closest?.('[data-spw-material-context~="css-mutable"], [data-spw-context-features~="css-observed-mutable"]')
+  );
+}
+
 function syncDiscoveredMarkup(el, meta, extra = {}) {
   if (!el || !isMarkupMutationEnabled(el)) return;
 
-  if (meta?.targetKind) el.dataset.spwHandleKind = meta.targetKind;
-  if (meta?.operator) el.dataset.spwResolvedOperator = meta.operator;
-  if (meta?.wonder) el.dataset.spwWonder = meta.wonder;
-  if (meta?.context) el.dataset.spwContext = meta.context;
+  const commitCssObserved = isCssObservedMutationEnabled(el);
+
+  if (meta?.targetKind) writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.targetKind, meta.targetKind);
+  if (meta?.operator) writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.operator, meta.operator);
+  if (meta?.wonder) writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.wonder, meta.wonder);
+  if (meta?.context) writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.context, meta.context);
   if (meta?.affordances?.length) {
-    el.dataset.spwResolvedAffordance = meta.affordances.join(' ');
+    writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.affordance, meta.affordances.join(' '));
   }
 
   Object.entries(extra).forEach(([key, value]) => {
-    if (value == null) {
-      delete el.dataset[key];
-    } else {
-      el.dataset[key] = String(value);
+    if (CSS_OBSERVED_SEMANTIC_DATA_KEYS.includes(key) && !commitCssObserved) {
+      return;
     }
+    writeDatasetValue(el, key, value);
   });
 }
 
@@ -395,7 +429,7 @@ function handleOperatorSwap(el, meta) {
   const nextPrefix = operators[(currentIndex + 1) % operators.length];
   const nextType = PREFIX_TO_TYPE[nextPrefix] || nextPrefix;
 
-  el.dataset.spwOperator = nextType;
+  writeDatasetValue(el, 'spwOperator', nextType);
   syncDiscoveredMarkup(el, { ...meta, operator: nextType }, { spwResolvedOperator: nextType });
 
   const sigil = el.querySelector?.('.frame-sigil, .frame-card-sigil, .frame-panel-sigil');
@@ -426,11 +460,11 @@ function togglePin(el, meta) {
   const nextPinned = el.dataset.spwPinned !== 'true';
 
   if (nextPinned) {
-    el.dataset.spwPinned = 'true';
-    el.dataset.spwLatched = 'true';
+    writeDatasetValue(el, 'spwPinned', 'true');
+    writeDatasetValue(el, 'spwLatched', 'true');
   } else {
-    delete el.dataset.spwPinned;
-    delete el.dataset.spwLatched;
+    writeDatasetValue(el, 'spwPinned', null);
+    writeDatasetValue(el, 'spwLatched', null);
   }
 
   const id = meta.id;
@@ -481,17 +515,17 @@ function restorePins() {
       || document.querySelector(`[data-spw-sigil="${CSS.escape(id)}"]`);
 
     if (el?.matches?.('[data-spw-form], .frame-sigil, .frame-card-sigil, .frame-panel-sigil')) {
-      el.dataset.spwPinned = 'true';
-      el.dataset.spwLatched = 'true';
+      writeDatasetValue(el, 'spwPinned', 'true');
+      writeDatasetValue(el, 'spwLatched', 'true');
     }
   });
 }
 
 function pulseLatch(el) {
-  el.dataset.spwLatched = 'true';
+  writeDatasetValue(el, 'spwLatched', 'true');
   window.setTimeout(() => {
     if (el.dataset.spwPinned !== 'true') {
-      delete el.dataset.spwLatched;
+      writeDatasetValue(el, 'spwLatched', null);
     }
   }, 320);
 }
@@ -632,9 +666,9 @@ function onPointerMove(event) {
   }
 
   if (state.dragging) {
-    target.style.setProperty('--drag-dx', `${dx}px`);
-    target.style.setProperty('--drag-dy', `${dy}px`);
-    target.style.setProperty('--drag-distance', `${distance}px`);
+    writeStyleValue(target, '--drag-dx', `${dx}px`);
+    writeStyleValue(target, '--drag-dy', `${dy}px`);
+    writeStyleValue(target, '--drag-distance', `${distance}px`);
 
     emitBraceEvents(
       ['brace:moved', 'brace:project-move'],

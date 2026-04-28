@@ -6,6 +6,9 @@ import {
   FRAME_SELECTOR,
   buildAxisGenome,
   inferTopographyKind,
+  writeDatasetValue,
+  writeDatasetValueIfMissing,
+  writeStyleValue,
 } from './spw-dom-contracts.js';
 
 /**
@@ -126,7 +129,7 @@ const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
    ========================================================================== */
 
 function setPageState(state) {
-  HTML.dataset.spwPageState = state;
+  writeDatasetValue(HTML, 'spwPageState', state);
 }
 
 function parseCssTimeMs(value, fallback = 0) {
@@ -154,15 +157,16 @@ function setPageAttentionState(ctx, detail = {}) {
   const arrival = detail.arrival || HTML.dataset.spwPageArrival || PAGE_ARRIVAL.SETTLED;
   const step = String(detail.step ?? HTML.dataset.spwPageArrivalStep ?? '0');
 
-  HTML.dataset.spwPagePresence = presence;
-  HTML.dataset.spwPageArrival = arrival;
-  HTML.dataset.spwPageArrivalStep = step;
-  HTML.dataset.spwAttentionContext =
+  writeDatasetValue(HTML, 'spwPagePresence', presence);
+  writeDatasetValue(HTML, 'spwPageArrival', arrival);
+  writeDatasetValue(HTML, 'spwPageArrivalStep', step);
+  writeDatasetValue(HTML, 'spwAttentionContext',
     presence === PAGE_PRESENCE.BACKGROUND
       ? 'background'
       : arrival === PAGE_ARRIVAL.SETTLED
         ? 'settled'
-        : arrival;
+        : arrival
+  );
 
   const payload = {
     presence,
@@ -292,7 +296,7 @@ function initPageAttentionLifecycle(ctx) {
 
 function setRegionState(el, state) {
   if (!el || !(el instanceof HTMLElement)) return;
-  el.dataset.spwRegionState = state;
+  writeDatasetValue(el, 'spwRegionState', state);
 }
 
 function safeQuery(selector, root = document) {
@@ -385,8 +389,7 @@ function parseFeatureList(value) {
 }
 
 function setDataIfMissing(el, key, value) {
-  if (!el || !value) return;
-  if (!el.dataset[key]) el.dataset[key] = value;
+  writeDatasetValueIfMissing(el, key, value);
 }
 
 function readSet(...values) {
@@ -630,12 +633,12 @@ function applyRegionProfile(el, profile) {
   setDataIfMissing(el, 'spwContext', profile.context);
   setDataIfMissing(el, 'spwSurface', profile.surface);
 
-  el.dataset.spwHarmony = profile.harmony;
-  el.dataset.spwTempo = profile.tempo;
-  el.dataset.spwDensity = profile.density;
-  el.dataset.spwRegionKey = profile.key;
-  el.dataset.spwRegionGenome = profile.genome;
-  el.style.setProperty('--region-index', String(profile.index));
+  writeDatasetValue(el, 'spwHarmony', profile.harmony);
+  writeDatasetValue(el, 'spwTempo', profile.tempo);
+  writeDatasetValue(el, 'spwDensity', profile.density);
+  writeDatasetValue(el, 'spwRegionKey', profile.key);
+  writeDatasetValue(el, 'spwRegionGenome', profile.genome);
+  writeStyleValue(el, '--region-index', String(profile.index));
 }
 
 function syncPageHarmony(ctx) {
@@ -643,9 +646,9 @@ function syncPageHarmony(ctx) {
   const harmonies = new Set(profiles.map((profile) => profile.harmony));
   const tempos = new Set(profiles.map((profile) => profile.tempo));
 
-  HTML.dataset.spwHarmonyField = [...harmonies].join(' ');
-  HTML.dataset.spwTempoField = [...tempos].join(' ');
-  HTML.style.setProperty('--region-count', String(profiles.length));
+  writeDatasetValue(HTML, 'spwHarmonyField', [...harmonies].join(' '));
+  writeDatasetValue(HTML, 'spwTempoField', [...tempos].join(' '));
+  writeStyleValue(HTML, '--region-count', String(profiles.length));
 }
 
 /* ==========================================================================
