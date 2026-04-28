@@ -305,6 +305,101 @@ function renderExtraScripts(value = '') {
     .join('\n');
 }
 
+function renderSettingsPreflightScript() {
+  return `    <script data-spw-settings-preflight>
+        (() => {
+            const root = document.documentElement;
+            const options = {
+                fontSize: ['small', 'normal', 'large'],
+                fontSizeScale: ['80', '90', '100', '110', '120'],
+                lineSpacing: ['compact', 'normal', 'loose'],
+                monospaceVariant: ['system', 'jetbrains', 'courier'],
+                headerOpacity: ['low', 'normal', 'high'],
+                colorMode: ['auto', 'light', 'dark'],
+                themePack: ['neutral-paper', 'oxide-ledger', 'electric-studio', 'ritual-vellum', 'copper-brace', 'glass-console'],
+                paletteResonance: ['route', 'craft', 'software', 'math'],
+                semanticDensity: ['minimal', 'normal', 'rich'],
+                enhancementLevel: ['minimal', 'balanced', 'rich'],
+                operatorSaturation: ['muted', 'normal', 'vibrant'],
+                reduceMotion: ['off', 'on'],
+                highContrast: ['off', 'on'],
+                grainIntensity: ['none', 'subtle', 'moderate', 'rich']
+            };
+            const defaults = {
+                fontSize: 'normal',
+                fontSizeScale: '100',
+                lineSpacing: 'normal',
+                monospaceVariant: 'jetbrains',
+                headerOpacity: 'normal',
+                colorMode: 'auto',
+                themePack: 'neutral-paper',
+                paletteResonance: 'route',
+                semanticDensity: 'minimal',
+                enhancementLevel: 'minimal',
+                operatorSaturation: 'normal',
+                reduceMotion: 'off',
+                highContrast: 'off',
+                grainIntensity: 'subtle'
+            };
+            const datasetNames = {
+                fontSize: 'spwFontSize',
+                fontSizeScale: 'spwFontSizeScale',
+                lineSpacing: 'spwLineSpacing',
+                monospaceVariant: 'spwMonospaceVariant',
+                headerOpacity: 'spwHeaderOpacity',
+                colorMode: 'spwColorMode',
+                themePack: 'spwThemePack',
+                paletteResonance: 'spwPaletteResonance',
+                semanticDensity: 'spwSemanticDensity',
+                enhancementLevel: 'spwEnhancementLevel',
+                operatorSaturation: 'spwOperatorSaturation',
+                reduceMotion: 'spwReduceMotion',
+                highContrast: 'spwHighContrast',
+                grainIntensity: 'spwGrainIntensity'
+            };
+            const lineHeight = { compact: '1.55', normal: '1.68', loose: '1.82' };
+            const monoFont = {
+                system: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
+                jetbrains: '"JetBrains Mono", monospace',
+                courier: '"Courier New", Courier, monospace'
+            };
+            const headerOpacity = { low: '0.76', normal: '0.9', high: '1' };
+            const fontPreset = { small: 0.93, normal: 1, large: 1.12 };
+            let stored = {};
+            try {
+                stored = JSON.parse(localStorage.getItem('spw-site-settings') || '{}') || {};
+            } catch {
+                stored = {};
+            }
+            const settings = {};
+            for (const [key, fallback] of Object.entries(defaults)) {
+                settings[key] = options[key]?.includes(stored[key]) ? stored[key] : fallback;
+                root.dataset[datasetNames[key]] = settings[key];
+            }
+            const scale = Number(settings.fontSizeScale) || 100;
+            root.style.setProperty('--font-size-scale', \`\${settings.fontSizeScale}%\`);
+            root.style.setProperty('--site-root-font-size', \`\${Math.round(scale * (fontPreset[settings.fontSize] || 1))}%\`);
+            root.style.setProperty('--site-line-height', lineHeight[settings.lineSpacing] || lineHeight.normal);
+            root.style.setProperty('--site-mono-font', monoFont[settings.monospaceVariant] || monoFont.jetbrains);
+            root.style.setProperty('--site-header-opacity', headerOpacity[settings.headerOpacity] || headerOpacity.normal);
+            root.dataset.spwSettingsPreflight = 'ready';
+        })();
+    </script>`;
+}
+
+function injectSettingsPreflight(source) {
+  if (source.includes('data-spw-settings-preflight')) return source;
+  const script = renderSettingsPreflightScript();
+  const styleLinkPattern = /(\s*<link\b[^>]*\bhref=["']\/public\/css\/style\.css[^>]*>)/i;
+  if (styleLinkPattern.test(source)) {
+    return source.replace(styleLinkPattern, `\n${script}$1`);
+  }
+  if (HEAD_CLOSE_RE.test(source)) {
+    return source.replace(HEAD_CLOSE_RE, `${script}\n</head>`);
+  }
+  return source;
+}
+
 function renderAlternateLocaleLinks(vars) {
   return parseKeyedList(vars.alternate_locales || vars.alternates || '')
     .map(({ key, content }) => `    <link rel="alternate" hreflang="${attrEscape(normalizeLocaleCode(key))}" href="${attrEscape(content)}" />`)
@@ -466,6 +561,7 @@ function renderSiteHeader(vars) {
     + '        </ul>\n'
     + '    </nav>\n\n'
     + `    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>${htmlEscape(indicator)}</span>\n`
+    + '    <div class="spw-header-trace" data-spw-template-slot="header-trace"></div>\n'
     + '</header>';
 }
 
@@ -657,7 +753,7 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
   const withSiteDirectives = await expandSiteDirectives(expanded, vars, warnings);
   const withPageAttrs = applyPageDocumentAttributes(withSiteDirectives, vars);
-  const output = enhanceHtmlMetadata(substituteVars(withPageAttrs, vars, warnings), warnings);
+  const output = enhanceHtmlMetadata(injectSettingsPreflight(substituteVars(withPageAttrs, vars, warnings)), warnings);
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);

@@ -804,7 +804,7 @@ export function initSpwShellDisclosure(options = {}) {
 
   const handleTraceChange = () => {
     syncScrollState(header, state);
-    syncDisclosure(header, nav, navList, toggle, state, 'trace');
+    syncShellOffset(header);
     syncUtilityRow(utilityRow);
   };
 

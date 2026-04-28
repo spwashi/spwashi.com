@@ -36,6 +36,7 @@
 @import url('/public/css/services-surface.css') layer(routes);
 @import url('/public/css/topics-surface.css') layer(routes);
 @import url('/public/css/website-surface.css') layer(routes);
+@import url('/public/css/design-surface.css') layer(routes);
 @import url('/public/css/plans-surface.css') layer(routes);
 @import url('/public/css/craft-surface.css') layer(routes);
 @import url('/public/css/blog-surface.css') layer(routes);

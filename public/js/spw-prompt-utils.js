@@ -219,15 +219,17 @@ function registerDefaultSignalProviders(runtime) {
     });
 
     runtime.signalProviders.set('active-frame', (_, source) => {
-        const frame =
+        const frameSource =
             source.frame
             || window.spwInterface?.getActiveFrame?.()
             || document.querySelector('.site-frame.is-active-frame');
 
-        if (!frame) return { frame: null };
+        if (!frameSource) return { frame: null };
 
         return {
-            frame: extractFrameContext(frame, runtime.config),
+            frame: frameSource instanceof Element
+                ? extractFrameContext(frameSource, runtime.config)
+                : frameSource,
         };
     });
 
@@ -371,7 +373,7 @@ function registerDefaultSerializers(runtime) {
 
 function initFrameCopyButtons(runtime) {
     document.querySelectorAll(runtime.config.frameSelector).forEach((frame) => {
-        if (!frame.id || frame.querySelector(runtime.config.frameCopySelector)) return;
+        if (!frame.id) return;
 
         const title = normalizeText(frame.querySelector(runtime.config.titleSelector)?.textContent || frame.id || 'frame');
         const mount = frame.querySelector(':scope > .frame-topline, :scope > .frame-heading');
@@ -381,14 +383,21 @@ function initFrameCopyButtons(runtime) {
                 .map((item) => item.trim())
                 .filter(Boolean)
         );
-        const btn = document.createElement('button');
+        let btn = frame.querySelector(runtime.config.frameCopySelector);
+        if (!(btn instanceof HTMLButtonElement)) {
+            btn = document.createElement('button');
+            btn.className = 'frame-prompt-copy';
+            btn.innerHTML = '<span class="log-op">$</span> copy_seed';
+            (mount || frame).appendChild(btn);
+        }
+
+        if (btn.dataset.spwPromptCopyBound === 'true') return;
+
         btn.type = 'button';
-        btn.className = 'frame-prompt-copy';
         btn.dataset.spwInstrumentation = 'prompt-copy';
         btn.dataset.spwComponent = 'prompt.copy';
         btn.dataset.spwDebugSource = 'spw-prompt-utils';
         btn.dataset.promptTarget = runtime.config.promptTargets.spw_context;
-        btn.innerHTML = '<span class="log-op">$</span> copy_seed';
         btn.setAttribute('aria-label', `Copy prompt seed for ${title}`);
 
         instrumentation.add('prompt-copy');
@@ -399,7 +408,7 @@ function initFrameCopyButtons(runtime) {
             frame.style.position = 'relative';
         }
 
-        (mount || frame).appendChild(btn);
+        btn.dataset.spwPromptCopyBound = 'true';
 
         btn.addEventListener('click', async (event) => {
             event.stopPropagation();

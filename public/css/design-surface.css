@@ -1,0 +1,70 @@
+/* ==========================================================================
+   design-surface.css
+   --------------------------------------------------------------------------
+   Surface purpose
+   - /design/ reuses the website surface vocabulary for coordination, but its
+     hero and route cards need a stable light reading contract.
+   - Keep these rules route-seeded so other website/design-register pages can
+     make their own material choices.
+   ========================================================================== */
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) {
+  --design-surface-accent: color-mix(in srgb, var(--teal, #008080) 68%, var(--amber, #c58b2a) 32%);
+  --design-surface-ink: rgba(14, 18, 20, 0.94);
+  --design-surface-ink-soft: rgba(14, 18, 20, 0.74);
+  --design-surface-line: color-mix(in srgb, var(--design-surface-accent) 24%, rgba(14, 18, 20, 0.12));
+  --design-surface-line-strong: color-mix(in srgb, var(--design-surface-accent) 42%, rgba(14, 18, 20, 0.16));
+  --design-surface-base: rgba(255, 255, 255, 0.76);
+  --design-surface-base-strong: rgba(255, 255, 255, 0.9);
+  --design-surface-base-soft: rgba(255, 255, 255, 0.58);
+  --design-surface-panel: rgba(255, 255, 255, 0.84);
+  --design-surface-panel-strong: rgba(255, 255, 255, 0.92);
+
+  --website-accent: var(--design-surface-accent);
+  --website-ink: var(--design-surface-ink);
+  --website-ink-soft: var(--design-surface-ink-soft);
+  --website-line: var(--design-surface-line);
+  --website-line-strong: var(--design-surface-line-strong);
+  --website-surface: var(--design-surface-base);
+  --website-surface-strong: var(--design-surface-base-strong);
+  --website-surface-soft: var(--design-surface-base-soft);
+  --website-surface-panel: var(--design-surface-panel);
+  --website-surface-panel-strong: var(--design-surface-panel-strong);
+
+  --ink: var(--design-surface-ink);
+  --ink-soft: var(--design-surface-ink-soft);
+  --ink-mid: rgba(14, 18, 20, 0.58);
+  --line: var(--design-surface-line);
+  --line-strong: var(--design-surface-line-strong);
+  --surface: var(--design-surface-base);
+  --surface-strong: var(--design-surface-base-strong);
+  --surface-soft: var(--design-surface-base-soft);
+  --surface-panel: var(--design-surface-panel);
+  --surface-panel-strong: var(--design-surface-panel-strong);
+  --grammar-surface: var(--website-paper);
+  --grammar-surface-strong: var(--website-panel-strong);
+  --grammar-surface-soft: var(--design-surface-base-soft);
+  --grammar-line: var(--design-surface-line);
+  --grammar-ink: var(--design-surface-ink);
+  --grammar-ink-soft: var(--design-surface-ink-soft);
+  --spw-shell-chrome-accent: color-mix(in srgb, var(--design-surface-accent) 78%, var(--design-surface-ink) 22%);
+  --spw-shell-chrome-line: color-mix(in srgb, var(--design-surface-accent) 24%, rgba(14, 18, 20, 0.14));
+
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"] article > .site-frame) {
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"] article > .site-frame :is(p, li, figcaption, .frame-note, .spec-kicker, .spec-pill)) {
+  color: var(--design-surface-ink-soft);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"] article > .site-frame :is(h1, h2, h3, h4, strong)) {
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"] article > .site-frame a:not(.operator-chip)) {
+  color: color-mix(in srgb, var(--design-surface-accent) 78%, var(--design-surface-ink) 22%);
+}

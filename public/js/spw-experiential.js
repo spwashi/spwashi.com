@@ -61,6 +61,7 @@ const runtime = {
   shellSnapshot: null,
   pathExpanded: null,
   pathCompact: null,
+  lastTraceSignature: '',
 };
 
 export function initSpwExperiential() {
@@ -282,6 +283,19 @@ function renderBreadcrumbSpell() {
     </ol>
     <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
   `;
+
+  const traceSignature = [
+    pathState,
+    compact ? 'compact' : 'roomy',
+    String(items.length),
+    shellSnapshot.state,
+    shellSnapshot.mode,
+    shellSnapshot.phase,
+    shellSnapshot.pressure,
+  ].join('|');
+
+  if (runtime.lastTraceSignature === traceSignature) return;
+  runtime.lastTraceSignature = traceSignature;
 
   document.dispatchEvent(new CustomEvent(HEADER_TRACE_CHANGE_EVENT, {
     detail: {
