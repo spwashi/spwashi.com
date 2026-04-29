@@ -14,7 +14,7 @@
    1. Home surface tokens
    ========================================================================== */
 
-:root {
+:where(body[data-spw-surface="home"]) {
   --home-accent-primary: var(--teal, #0f7f7d);
   --home-accent-secondary: color-mix(in srgb, var(--home-accent-primary) 26%, var(--gold, #c79a3b));
   --home-accent-tertiary: color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
@@ -492,18 +492,18 @@
   box-shadow: var(--home-shadow);
 }
 
-:where(.vibe-widget-grid) {
+:where(body[data-spw-surface="home"] .vibe-widget-grid) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: var(--home-gap-md);
   min-width: 0;
 }
 
-:where(.vibe-widget-grid--compact) {
+:where(body[data-spw-surface="home"] .vibe-widget-grid--compact) {
   gap: var(--home-gap-sm);
 }
 
-:where(.vibe-widget) {
+:where(body[data-spw-surface="home"] .vibe-widget) {
   display: grid;
   align-content: start;
   gap: var(--home-gap-sm);
@@ -516,12 +516,12 @@
   box-shadow: var(--home-shadow-quiet);
 }
 
-:where(.vibe-widget-header) {
+:where(body[data-spw-surface="home"] .vibe-widget-header) {
   display: grid;
   gap: 0.22rem;
 }
 
-:where(.vibe-widget-kicker) {
+:where(body[data-spw-surface="home"] .vibe-widget-kicker) {
   margin: 0;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.7rem;
@@ -532,7 +532,7 @@
   color: color-mix(in srgb, var(--home-accent-primary) 54%, var(--ink-soft, rgba(27, 31, 35, 0.68)));
 }
 
-:where(.vibe-widget-title) {
+:where(body[data-spw-surface="home"] .vibe-widget-title) {
   margin: 0;
   font-size: 1rem;
   line-height: 1.25;
@@ -540,9 +540,9 @@
   color: var(--home-accent-ink);
 }
 
-:where(.vibe-widget-meta),
-:where(.vibe-widget-actions),
-:where(.theme-pack-chip-row) {
+:where(body[data-spw-surface="home"] .vibe-widget-meta),
+:where(body[data-spw-surface="home"] .vibe-widget-actions),
+:where(body[data-spw-surface="home"] .theme-pack-chip-row) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -550,7 +550,7 @@
   min-width: 0;
 }
 
-:where(.theme-pack-chip-btn) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn) {
   inline-size: 2rem;
   block-size: 2rem;
   border: 1px solid color-mix(in srgb, var(--home-accent-primary) 18%, transparent);
@@ -564,49 +564,49 @@
       box-shadow var(--home-transition-fast);
 }
 
-:where(.theme-pack-chip-btn:is(:hover, :focus-visible)) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn:is(:hover, :focus-visible)) {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--home-accent-primary) 34%, transparent);
 }
 
-:where(.theme-pack-chip-btn[data-site-setting-active="true"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-site-setting-active="true"]) {
   border-color: color-mix(in srgb, var(--home-accent-primary) 44%, transparent);
   box-shadow:
       0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 16%, transparent),
       inset 0 0 0 1px rgba(255, 255, 255, 0.36);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="neutral-paper"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="neutral-paper"]) {
   background:
       linear-gradient(135deg, #f6f2ea, #e7ebe9);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="oxide-ledger"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="oxide-ledger"]) {
   background:
       linear-gradient(135deg, #ece5d7, #8a6b53);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="electric-studio"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="electric-studio"]) {
   background:
       linear-gradient(135deg, #d6f6ff, #4a5ff0);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="ritual-vellum"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="ritual-vellum"]) {
   background:
       linear-gradient(135deg, #f2eadf, #6d4b63);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="copper-brace"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="copper-brace"]) {
   background:
       linear-gradient(135deg, #f0d8bf, #8d6a57);
 }
 
-:where(.theme-pack-chip-btn[data-theme-pack-preview="glass-console"]) {
+:where(body[data-spw-surface="home"] .theme-pack-chip-btn[data-theme-pack-preview="glass-console"]) {
   background:
       linear-gradient(135deg, #dfe9ee, #8ba9b1);
 }
 
-:where(.spec-pill) {
+:where(body[data-spw-surface="home"] .spec-pill) {
   display: inline-flex;
   align-items: center;
   gap: 0.24rem;
@@ -623,7 +623,7 @@
   white-space: nowrap;
 }
 
-:where(.vibe-widget-status) {
+:where(body[data-spw-surface="home"] .vibe-widget-status) {
   color: var(--ink-soft, rgba(27, 31, 35, 0.68));
   font-size: 0.88rem;
   line-height: 1.4;
@@ -708,9 +708,9 @@
   line-height: 1.55;
 }
 
-:where(.syntax-token),
-:where(.spw-topic),
-:where(.spw-delimiter) {
+:where(body[data-spw-surface="home"] .syntax-token),
+:where(body[data-spw-surface="home"] .spw-topic),
+:where(body[data-spw-surface="home"] .spw-delimiter) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -723,7 +723,7 @@
   font-size: 0.88em;
 }
 
-:where(.sr-only) {
+:where(body[data-spw-surface="home"] .sr-only) {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -781,32 +781,32 @@
     font-size: clamp(1.8rem, 1.25rem + 3vw, 3rem);
   }
 
-  :where(.frame-topline),
-  :where(.frame-heading) {
+  :where(body[data-spw-surface="home"] .frame-topline),
+  :where(body[data-spw-surface="home"] .frame-heading) {
     align-items: flex-start;
   }
 
-  :where(.mode-switch) {
+  :where(body[data-spw-surface="home"] .mode-switch) {
     width: 100%;
   }
 }
 
 @media (max-width: 520px) {
-  :where(.vibe-widget-grid),
-  :where(.frame-grid) {
+  :where(body[data-spw-surface="home"] .vibe-widget-grid),
+  :where(body[data-spw-surface="home"] .frame-grid) {
     grid-template-columns: 1fr;
   }
 
-  :where(.operator-chip),
-  :where(.spec-pill),
-  :where(.frame-sigil) {
+  :where(body[data-spw-surface="home"] .operator-chip),
+  :where(body[data-spw-surface="home"] .spec-pill),
+  :where(body[data-spw-surface="home"] .frame-sigil) {
     white-space: normal;
   }
 
   :where(#home-frame .page-lede),
   :where(#home-frame .frame-note),
-  :where(.inline-note),
-  :where(.frame-note) {
+  :where(body[data-spw-surface="home"] .inline-note),
+  :where(body[data-spw-surface="home"] .frame-note) {
     font-size: 0.95rem;
   }
 }
@@ -816,7 +816,7 @@
    13. Dark mode
    ========================================================================== */
 
-html[data-spw-color-mode="dark"] {
+html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   --home-accent-ink: color-mix(in srgb, white 88%, var(--home-accent-primary) 12%);
   --home-surface-bg: rgba(19, 23, 26, 0.9);
   --home-surface-bg-strong: rgba(22, 27, 30, 0.96);
@@ -829,7 +829,7 @@ html[data-spw-color-mode="dark"] {
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-spw-color-mode="light"]) {
+  html:not([data-spw-color-mode="light"]) body[data-spw-surface="home"] {
     --home-accent-ink: color-mix(in srgb, white 88%, var(--home-accent-primary) 12%);
     --home-surface-bg: rgba(19, 23, 26, 0.9);
     --home-surface-bg-strong: rgba(22, 27, 30, 0.96);
@@ -854,12 +854,12 @@ html[data-spw-color-mode="dark"] {
     #climate-tuning,
     #entry-loops,
     #reading-layers,
-    .frame-card,
-    .operator-chip,
-    .frame-sigil,
-    .theme-pack-chip-btn,
-    .vibe-widget,
-    .mode-panel
+    body[data-spw-surface="home"] .frame-card,
+    body[data-spw-surface="home"] .operator-chip,
+    body[data-spw-surface="home"] .frame-sigil,
+    body[data-spw-surface="home"] .theme-pack-chip-btn,
+    body[data-spw-surface="home"] .vibe-widget,
+    body[data-spw-surface="home"] .mode-panel
   ) {
     transition: none !important;
     animation: none !important;
@@ -872,12 +872,12 @@ html[data-spw-color-mode="dark"] {
   #climate-tuning,
   #entry-loops,
   #reading-layers,
-  .frame-card,
-  .operator-chip,
-  .frame-sigil,
-  .theme-pack-chip-btn,
-  .vibe-widget,
-  .mode-panel
+  body[data-spw-surface="home"] .frame-card,
+  body[data-spw-surface="home"] .operator-chip,
+  body[data-spw-surface="home"] .frame-sigil,
+  body[data-spw-surface="home"] .theme-pack-chip-btn,
+  body[data-spw-surface="home"] .vibe-widget,
+  body[data-spw-surface="home"] .mode-panel
 ) {
   transition: none !important;
   animation: none !important;
