@@ -64,6 +64,17 @@
 }
 
 /* Shared grid normalization for early-route card systems */
+:where(.frame-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 16rem)), 1fr));
+  gap: var(--spw-shell-panel-gap, var(--component-gap, 0.9rem));
+  min-width: 0;
+}
+
+:where(.frame-grid--dense) {
+  gap: var(--component-gap-tight, 0.55rem);
+}
+
 :where(
   .frame-grid,
   .media-card-grid,
@@ -266,6 +277,10 @@
 
 :where(.frame-card--illustrated > a:first-child) {
   gap: 0.72rem;
+}
+
+:where(.frame-card-sigil) {
+  width: fit-content;
 }
 
 :where(.frame-card-media) {
