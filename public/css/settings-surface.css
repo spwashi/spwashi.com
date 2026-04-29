@@ -22,6 +22,7 @@
   /* The "control" operator (action/pragma) colors dominate */
   --settings-accent: var(--op-action-color, hsl(180 100% 22%));
   --settings-accent-soft: var(--op-action-bg-soft, rgba(230, 248, 248, 0.72));
+  --active-op-color: var(--settings-accent);
   --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.94)) 96%, var(--settings-accent-soft) 4%);
   --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(255, 255, 255, 0.84)) 94%, transparent);
   --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--settings-accent-soft) 8%);
@@ -102,10 +103,6 @@
 
 :where(body[data-spw-surface="settings"] .settings-quickstart-grid .vibe-widget-status) {
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
-}
-
-:where(body[data-spw-surface="settings"] .settings-quickstart-grid .spec-pill) {
-  background: color-mix(in srgb, var(--settings-accent) 8%, var(--surface-strong, rgba(255, 255, 255, 0.92)));
 }
 
 :where(body[data-spw-surface="settings"] .settings-hero-actions) {
@@ -603,55 +600,6 @@
 
 :where(body[data-spw-surface="settings"] .settings-nav-card .operator-chip) {
   margin-top: auto;
-}
-
-:where(body[data-spw-surface="settings"] .operator-chip) {
-  --operator-chip-border-width: 1.25px;
-  --operator-chip-bg: color-mix(in srgb, var(--settings-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.96)) 90%);
-  --operator-chip-border: color-mix(in srgb, var(--settings-accent) 34%, var(--line, rgba(14, 18, 20, 0.14)) 66%);
-  --operator-chip-ink: color-mix(in srgb, var(--settings-accent) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
-  --operator-chip-hover-bg: color-mix(in srgb, var(--settings-accent) 16%, var(--surface-strong, rgba(255, 255, 255, 0.96)) 84%);
-  --operator-chip-hover-border: color-mix(in srgb, var(--settings-accent) 46%, transparent);
-  --operator-chip-hover-ink: var(--ink, rgba(14, 18, 20, 0.92));
-  --operator-chip-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.24),
-    0 1px 0 rgba(0,0,0,0.02);
-  --operator-chip-hover-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 0 0 1px color-mix(in srgb, var(--settings-accent) 10%, transparent);
-  --operator-chip-hover-lift: 0px;
-}
-
-:where(html[data-spw-color-mode="dark"] body[data-spw-surface="settings"] .operator-chip) {
-  --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--settings-accent) 12%);
-  --operator-chip-border: color-mix(in srgb, var(--settings-accent) 42%, rgba(255, 255, 255, 0.16) 58%);
-  --operator-chip-ink: color-mix(in srgb, rgba(245, 247, 250, 0.98) 90%, var(--settings-accent) 10%);
-  --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--settings-accent) 22%);
-  --operator-chip-hover-border: color-mix(in srgb, var(--settings-accent) 54%, rgba(255, 255, 255, 0.18) 46%);
-  --operator-chip-hover-ink: rgba(245, 247, 250, 0.98);
-  --operator-chip-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 0 0 1px rgba(0,0,0,0.08);
-  --operator-chip-hover-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    0 0 0 1px color-mix(in srgb, var(--settings-accent) 14%, transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="settings"] .operator-chip) {
-    --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--settings-accent) 12%);
-    --operator-chip-border: color-mix(in srgb, var(--settings-accent) 42%, rgba(255, 255, 255, 0.16) 58%);
-    --operator-chip-ink: color-mix(in srgb, rgba(245, 247, 250, 0.98) 90%, var(--settings-accent) 10%);
-    --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--settings-accent) 22%);
-    --operator-chip-hover-border: color-mix(in srgb, var(--settings-accent) 54%, rgba(255, 255, 255, 0.18) 46%);
-    --operator-chip-hover-ink: rgba(245, 247, 250, 0.98);
-    --operator-chip-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.05),
-      0 0 0 1px rgba(0,0,0,0.08);
-    --operator-chip-hover-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.08),
-      0 0 0 1px color-mix(in srgb, var(--settings-accent) 14%, transparent);
-  }
 }
 
 /* ==========================================================================

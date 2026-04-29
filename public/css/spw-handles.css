@@ -371,12 +371,64 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
     inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
 }
 
+html[data-spw-color-mode="dark"] .operator-chip {
+  --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
+  --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
+  --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+  --operator-chip-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(0,0,0,0.08);
+  --operator-chip-hover-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] .operator-chip {
+    --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+    --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
+    --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+    --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+    --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
+    --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+    --operator-chip-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.05),
+      0 0 0 1px rgba(0,0,0,0.08);
+    --operator-chip-hover-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+  }
+}
+
 .spec-pill {
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
   border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
   background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
   border-radius: var(--shape-control, 0.78rem);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+  background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
+  color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+    background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
+    color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.05),
+      0 0 0 1px rgba(0,0,0,0.08);
+  }
 }
 
 :where(
@@ -949,17 +1001,17 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    This is where the file becomes more semantically integrated with the site.
    ========================================================================== */
 
-:where([data-spw-features~="operators"] [data-spw-operator],
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator],
        [data-spw-features~="console"] .spw-console [data-spw-operator]) {
   color: var(--spw-operator-color, currentColor);
   border-color: var(--spw-operator-border, currentColor);
 }
 
-:where([data-spw-features~="operators"] [data-spw-operator]) {
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator]) {
   background: var(--spw-operator-bg-soft, transparent);
 }
 
-:where([data-spw-features~="operators"] [data-spw-operator]:is(:hover, :focus-visible)) {
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator]:is(:hover, :focus-visible)) {
   filter: brightness(1.04);
 }
 

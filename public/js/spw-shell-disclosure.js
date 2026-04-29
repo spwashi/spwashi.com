@@ -150,20 +150,10 @@ function countOverflowRoutes(navList) {
 }
 
 function resolveMenuMode(header, nav, navList, state) {
-  const html = document.documentElement;
-  const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
-  const pointer = html.dataset.spwPointerMode || getPointerMode();
-  const ratio = computeNavRatio(header, nav, navList);
-  const navFit = header.dataset.spwNavFit || 'roomy';
-
-  if (tier === 'compact' || tier === 'narrow') {
-    return MODES.TOGGLE;
-  }
-
-  if (tier === 'mid' && (pointer === 'coarse' || navFit === 'compressed' || ratio > state.config.compressedRatio)) {
-    return MODES.TOGGLE;
-  }
-
+  void header;
+  void nav;
+  void navList;
+  void state;
   return MODES.INLINE;
 }
 
@@ -185,8 +175,9 @@ function resolveMenuPressure({ mode, ratio, navFit, tier, pointer }) {
 
 function resolveMenuTopology(mode, pressure, tier) {
   if (mode === MODES.INLINE) return TOPOLOGIES.INLINE_RIBBON;
-  if (tier === 'compact' || tier === 'narrow') return TOPOLOGIES.SCREEN_FIELD;
-  if (pressure === PRESSURES.CROWDED) return TOPOLOGIES.DRAWER_FIELD;
+  if (tier === 'compact' || tier === 'narrow' || pressure === PRESSURES.CROWDED) {
+    return TOPOLOGIES.STACKED_FIELD;
+  }
   return TOPOLOGIES.STACKED_FIELD;
 }
 
@@ -343,8 +334,7 @@ function writeScrollDatasets(header, state) {
 
 function syncShellOffset(header) {
   if (!(header instanceof HTMLElement)) return;
-  const offset = Math.max(0, Math.round(header.getBoundingClientRect().bottom));
-  document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset}px`);
+  document.documentElement.style.removeProperty('--spw-shell-menu-offset');
 }
 
 function syncHeaderPointerField(header, event) {

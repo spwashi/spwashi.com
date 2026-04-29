@@ -1090,7 +1090,15 @@ html[data-spw-theme-pack="glass-console"] {
   --material-transmission: 0.18;
 }
 
-html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
+html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"],
+html[data-spw-color-mode="dark"][data-spw-theme-pack="ritual-vellum"],
+html[data-spw-color-mode="dark"][data-spw-theme-pack="oxide-ledger"],
+html[data-spw-color-mode="dark"][data-spw-theme-pack="electric-studio"],
+html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
+  --bg: hsl(214 18% 10%);
+  --bg-field: hsl(214 15% 13%);
+  --paper: hsl(214 14% 13%);
+  --paper-warm: hsl(32 12% 15%);
   --surface: rgba(18, 24, 28, 0.78);
   --surface-strong: rgba(25, 32, 37, 0.92);
   --surface-panel: rgba(24, 31, 36, 0.9);
@@ -1100,10 +1108,20 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
   --ink: rgba(228, 235, 232, 0.92);
   --ink-soft: rgba(190, 202, 198, 0.78);
   --ink-mid: rgba(190, 202, 198, 0.6);
+  --line: rgba(228, 235, 232, 0.14);
+  --line-strong: rgba(96, 210, 210, 0.34);
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"][data-spw-theme-pack="glass-console"] {
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="glass-console"],
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="ritual-vellum"],
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="oxide-ledger"],
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="electric-studio"],
+  html[data-spw-color-mode="auto"][data-spw-theme-pack="copper-brace"] {
+    --bg: hsl(214 18% 10%);
+    --bg-field: hsl(214 15% 13%);
+    --paper: hsl(214 14% 13%);
+    --paper-warm: hsl(32 12% 15%);
     --surface: rgba(18, 24, 28, 0.78);
     --surface-strong: rgba(25, 32, 37, 0.92);
     --surface-panel: rgba(24, 31, 36, 0.9);
@@ -1113,6 +1131,8 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
     --ink: rgba(228, 235, 232, 0.92);
     --ink-soft: rgba(190, 202, 198, 0.78);
     --ink-mid: rgba(190, 202, 198, 0.6);
+    --line: rgba(228, 235, 232, 0.14);
+    --line-strong: rgba(96, 210, 210, 0.34);
   }
 }
 

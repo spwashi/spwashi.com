@@ -549,6 +549,16 @@ function updateRouteMenu() {
   const navList = header?.querySelector('nav > ul');
   if (!header || !navList) return;
 
+  const routeDiscoveryEnabled = document.body?.dataset.spwFeatures?.split(/\s+/).includes('route-discovery');
+  if (!routeDiscoveryEnabled) {
+    navList.querySelector(':scope > .spw-route-menu-host')?.remove();
+    header.dataset.spwRouteDiscovery = 'off';
+    delete header.dataset.spwRouteDiscoveryCount;
+    delete header.dataset.spwRouteDiscoveryLayout;
+    delete header.dataset.spwRouteDiscoveryScope;
+    return;
+  }
+
   const existingPaths = collectExistingNavPaths(navList);
   const missingSiteRoutes = TOP_ROUTE_REGISTRY.filter(
     (route) => !existingPaths.has(normalizePathname(route.href))

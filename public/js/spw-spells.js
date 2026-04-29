@@ -218,6 +218,11 @@ function ensureHeaderTraceHost() {
 }
 
 function ensureSpellDock() {
+  const features = document.body?.dataset.spwFeatures?.split(/\s+/) || [];
+  if (!features.includes('shell-trace') && !features.includes('spells')) {
+    return null;
+  }
+
   const host = ensureHeaderTraceHost();
   if (!host) return null;
 
