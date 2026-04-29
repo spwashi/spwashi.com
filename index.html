@@ -93,7 +93,7 @@
     data-spw-projection="homepage"
     data-spw-seed-package=".spw/home-atlas"
     data-spw-materiality="paper texture svg print web"
-    data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/software/|/topics/software/spw/|/topics/craft/|/play/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|https://texture.website|https://spw.quest">
+    data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/software/|/topics/software/spw/|/topics/craft/|/play/|/play/rpg-wednesday/library/|/tools/|/tools/character-sheet/|/tools/midjourney/|/settings/|https://texture.website|https://spw.quest">
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -109,7 +109,7 @@
     current="Home"
     current_href="/"
     indicator="frame"
-    nav_items="Home:/|Now:/now/|Cards:/cards/|Membership:/membership/|Research:/research/|Services:/services/|Topics:/topics/|Settings:/settings/"
+    nav_items="Home:/|Now:/now/|Cards:/cards/|Membership:/membership/|Research:/research/|Services:/services/|Play:/play/|Topics:/topics/|Settings:/settings/"
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="home-title">
@@ -143,7 +143,7 @@
         data-spw-projection="public-library"
         data-spw-seed-package=".spw/home-atlas"
         data-spw-materiality="paper texture svg print web"
-        data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/software/spw/|/topics/craft/|https://texture.website|https://spw.quest"
+        data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/software/spw/|/topics/craft/|/play/rpg-wednesday/library/|https://texture.website|https://spw.quest"
     >
         <div class="frame-topline">
             <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
@@ -197,6 +197,7 @@
                     <a class="operator-chip" href="/now/">$ support sprint</a>
                     <a class="operator-chip" href="/cards/">^ create card</a>
                     <a class="operator-chip" href="/membership/">#&gt; join field</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="frame" data-spw-sigil="#&gt;town_library">#&gt; enter library</a>
                     <a class="operator-chip" href="/research/">? research</a>
                     <a class="operator-chip" href="/services/">@ commission</a>
                 </nav>
@@ -213,6 +214,56 @@
                     <a class="operator-chip" href="/public/images/logo/spwashi.logo-concept.premium.png">Premium</a>
                 </figcaption>
             </figure>
+        </div>
+    </section>
+
+    <section
+        class="site-frame"
+        id="town-library-gateway"
+        aria-labelledby="town-library-gateway-title"
+        data-spw-kind="frame"
+        data-spw-role="education-gateway"
+        data-spw-context="education"
+        data-spw-context-domains="rpg wednesday library quests college portfolio"
+        data-spw-context-actions="enter choose build document"
+        data-spw-wonder="orientation belonging systems documentation"
+        data-spw-affordance="navigate"
+        data-spw-form="brace"
+        data-spw-liminality="entry"
+        data-spw-category-family="portal"
+        data-spw-locality="high"
+        data-spw-consequence="entry"
+        data-spw-promptability="visible"
+        data-spw-collectability="high"
+        data-spw-seed="home_town_library_gateway"
+        data-spw-feature="town-library-gateway"
+    >
+        <div class="frame-heading">
+            <a class="frame-sigil" href="#town-library-gateway" data-spw-operator="frame" data-spw-sigil="#&gt;town_library">#&gt;town_library</a>
+            <h2 id="town-library-gateway-title">Enter the Town Library.</h2>
+        </div>
+
+        <p class="page-lede">
+            Build your way into college-level thinking through a playable library, guide characters, studio quests,
+            garden prompts, and portfolio-ready artifacts.
+        </p>
+
+        <div class="frame-grid frame-grid--dense">
+            <article class="frame-panel">
+                <h3>Start a first quest</h3>
+                <p>Make a route map, sealed object card, or systems diagram in one sitting.</p>
+                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#starter-quests" data-spw-operator="action" data-spw-sigil="@starter_quests">@ choose quest</a></p>
+            </article>
+            <article class="frame-panel">
+                <h3>Meet the guides</h3>
+                <p>Use Grounding Rod, Cask, and Avalanche Evan as learning interfaces, not only character art.</p>
+                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="ref" data-spw-sigil="~guide_cards">~ guide cards</a></p>
+            </article>
+            <article class="frame-panel">
+                <h3>Practice the college bridge</h3>
+                <p>Notice, name, build, document, connect, and extend before committing to a major label.</p>
+                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#college-wonder-path" data-spw-operator="probe" data-spw-sigil="?college_wonder_path">? wonder path</a></p>
+            </article>
         </div>
     </section>
 

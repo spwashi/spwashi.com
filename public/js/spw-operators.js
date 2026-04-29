@@ -19,11 +19,54 @@
 //   !pragma    pragma — encodes a runtime constraint or hint
 //   >surface   surface — a projected or rendered view
 
-import { detectOperator, detectOperatorFromElement } from './spw-shared.js';
+import { detectOperator, detectOperatorFromElement, extractOperatorPrefix, normalizeToken } from './spw-shared.js';
 
 let initialized = false;
 
-// Attach data-spw-operator and a descriptive title to each matching sigil.
+const stripSigilWrapper = (value = '') => value
+    .trim()
+    .replace(/^\s*["'[{(<]+/, '')
+    .replace(/[>"'\])}]+\s*$/, '')
+    .replace(/\{\s*$/, '')
+    .trim();
+
+const readSigilText = (element) => (
+    element.dataset.spwSigil
+    || element.textContent
+    || ''
+).trim();
+
+const parseSigilParts = (element, op) => {
+    const sigil = readSigilText(element);
+    if (!sigil || !op) return null;
+
+    const prefix = op.prefix || extractOperatorPrefix(sigil);
+    const rawName = prefix ? sigil.slice(prefix.length) : sigil;
+    const name = normalizeToken(stripSigilWrapper(rawName));
+
+    return {
+        sigil,
+        prefix,
+        name,
+        label: name ? `${op.label}: ${name.replace(/_/g, ' ')}` : op.label,
+    };
+};
+
+const applySigilParts = (element, op) => {
+    const parts = parseSigilParts(element, op);
+    if (!parts) return;
+
+    element.dataset.spwSigil = element.dataset.spwSigil || parts.sigil;
+    element.dataset.spwSigilPrefix = element.dataset.spwSigilPrefix || parts.prefix;
+    element.dataset.spwSigilName = element.dataset.spwSigilName || parts.name;
+    element.dataset.spwSigilLabel = element.dataset.spwSigilLabel || parts.label;
+
+    if (!element.getAttribute('aria-label')) {
+        element.setAttribute('aria-label', parts.label);
+    }
+};
+
+// Attach data-spw-operator and descriptive sigil metadata to each matching signal.
 const applyOperatorMetadata = (element, op) => {
     if (!(element instanceof HTMLElement) || !op) return;
 
@@ -34,8 +77,12 @@ const applyOperatorMetadata = (element, op) => {
     element.dataset.spwOperatorSpeech = op.speech;
     element.dataset.spwOperatorReversibility = op.reversibility;
 
+    applySigilParts(element, op);
+
     if (!element.title) {
-        element.title = `${op.label}: ${op.interaction}`;
+        element.title = element.dataset.spwSigilLabel
+            ? `${element.dataset.spwSigilLabel} — ${op.interaction}`
+            : `${op.label}: ${op.interaction}`;
     }
 };
 

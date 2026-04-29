@@ -1,0 +1,24 @@
+# RPG Wednesday Learning Library WIP
+
+#>rpg_wednesday_learning_library
+#:layer #!semantics
+#:surface #!education_route
+
+sigil_contract: .{
+ authored_truth = `Route-facing sigils should declare data-spw-operator and data-spw-sigil when the visible text is intentionally acting as Spw grammar. Runtime inference may still fill gaps, but education surfaces should not depend on punctuation guessing for their primary concept map.`
+ runtime_projection = `public/js/spw-operators.js annotates operator family, intent, interaction, reversibility, and now parsed sigil parts: data-spw-sigil-prefix, data-spw-sigil-name, and data-spw-sigil-label.`
+ accessibility = `Sigils that lack an authored aria-label receive a generated label from the parsed operator and normalized sigil name.`
+ constraint = `No new JavaScript files. Extend the existing operator annotator and route markup instead.`
+}[reg=facet]
+
+library_operator_map: .{
+ "#>town_library" = `route frame and gateway`
+ "^library_map" = `inspectable object map of rooms and purposes`
+ "~guide_cards" = `reference set of guide characters`
+ "@starter_quests" = `action set of first portfolio tasks`
+ "*boonhonk_fit" = `reflection stream that transforms a project through boon/bane/bone/bonk/honk`
+ "?college_wonder_path" = `probe path for considering college through worldbuilding`
+ "^garden" = `object/rest space for seed prompts`
+ "~isee_map" = `reference translation between curriculum pillars and world forms`
+ "#>next_builds" = `exit frame for future route candidates`
+}[reg=map]
