@@ -1377,6 +1377,17 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'discovery-notices',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: () => import('./spw-discovery-notices.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwDiscoveryNotices;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'semantic-chrome',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

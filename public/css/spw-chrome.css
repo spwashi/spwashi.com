@@ -1630,6 +1630,115 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   font-size: var(--text-size-label, 0.76rem);
 }
 
+/* Discovery notices stay fixed, readable, and easy to dismiss. */
+.spw-discovery-notice-stack {
+  position: fixed;
+  inset-block-end: max(1rem, env(safe-area-inset-bottom));
+  inset-inline-end: max(1rem, env(safe-area-inset-right));
+  display: grid;
+  gap: 0.65rem;
+  width: min(24rem, calc(100vw - 2rem));
+  z-index: calc(var(--z-floating, 100) + 6);
+  pointer-events: none;
+}
+
+.spw-discovery-notice {
+  pointer-events: auto;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 84%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 64%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 96%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px) saturate(1.02);
+  -webkit-backdrop-filter: blur(10px) saturate(1.02);
+  transition:
+    opacity var(--shell-duration-fast) var(--shell-ease),
+    transform var(--shell-duration-fast) var(--shell-ease),
+    border-color var(--shell-duration-fast) var(--shell-ease);
+}
+
+.spw-discovery-notice[data-spw-cadence="weekly"] {
+  border-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
+}
+
+.spw-discovery-notice.is-dismissing {
+  opacity: 0;
+  transform: translateY(0.35rem);
+}
+
+.spw-discovery-notice__label {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spw-discovery-notice__title {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: var(--text-size-body, 1rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.spw-discovery-notice__summary {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  font-size: var(--text-size-xs, 0.84rem);
+  line-height: 1.45;
+}
+
+.spw-discovery-notice__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.spw-discovery-notice__cta,
+.spw-discovery-notice__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.38rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 78%, transparent);
+  border-radius: 0.46rem;
+  font: inherit;
+  font-size: var(--text-size-xs, 0.84rem);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    color var(--shell-duration-fast) var(--shell-ease),
+    border-color var(--shell-duration-fast) var(--shell-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+.spw-discovery-notice__cta {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-discovery-notice__dismiss {
+  background: transparent;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+}
+
+.spw-discovery-notice__cta:is(:hover, :focus-visible),
+.spw-discovery-notice__dismiss:is(:hover, :focus-visible) {
+  outline: none;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
+  transform: translateY(-1px);
+}
+
 /* ==========================================================================
    4. Responsive
    ========================================================================== */

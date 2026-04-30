@@ -29,10 +29,16 @@
  anti_pattern: "Changing important calls to action randomly on every render."
 }
 
+^"notice_surface"{
+ rule: "Dismissible discovery notices should key dismissal to the active cadence so a daily promo can return tomorrow and a weekly promo can return next week."
+ shape: "Notice cards are still copy units: label, title, summary, href, and cta stay complete enough to render without fragmenting the editorial thought."
+ scope: "The popup is a shell-layer affordance, not a modal interruption."
+}
+
 ^"data_contract"{
  format: "JSON feeds carry sourceLocale, localization metadata, and typed card fields."
  required_card_fields: #[`title`, `summary`, `href`, `cta`][reg=set]
- optional_card_fields: #[`label`, `operator`, `why`, `tag`, `copyUnit`, `locale`][reg=set]
+ optional_card_fields: #[`label`, `operator`, `why`, `tag`, `copyUnit`, `locale`, `cadence`][reg=set]
  rendering_rule: "TypeScript normalizes text and sets data-spw-copy-unit, data-spw-locale, and data-spw-cadence where a generated card appears."
 }
 
