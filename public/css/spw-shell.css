@@ -872,11 +872,6 @@ figure.generic-figure,
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
 }
 
-/* Slightly more breathing room below sticky shell */
-main {
-  padding-top: clamp(0.2rem, 0.8vw, 0.5rem);
-}
-
 /* Frame header structures are owned by the components layer (spw-components.css).
    No shell-layer fallbacks needed — components always overrides shell in cascade. */
 
