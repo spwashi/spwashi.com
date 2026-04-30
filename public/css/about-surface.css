@@ -319,7 +319,7 @@ body[data-spw-surface="about"] {
     var(--about-surface);
 }
 
-[data-spw-surface="about"] #typography-register .context-readout > span {
+[data-spw-surface="about"] #typography-register .context-readout > div {
   border-color: color-mix(in srgb, var(--about-accent) 16%, var(--about-line));
   background: color-mix(in srgb, var(--about-surface-strong) 96%, transparent);
 }

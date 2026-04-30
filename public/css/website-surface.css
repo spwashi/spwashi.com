@@ -433,11 +433,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     var(--website-panel);
 }
 
-:where(body[data-spw-surface="website"] .context-readout > span) {
-  border-color: color-mix(in srgb, var(--website-accent) 16%, var(--website-line));
-  background: color-mix(in srgb, var(--website-surface-strong) 96%, transparent);
-}
-
 /* ==========================================================================
    8. Motif grid
    ========================================================================== */

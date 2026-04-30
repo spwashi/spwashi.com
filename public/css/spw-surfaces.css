@@ -547,7 +547,7 @@
   flex-wrap: wrap;
 }
 
-:where(.palette-probe-header > div) {
+:where(.palette-probe-header > header) {
   display: grid;
   gap: 0.28rem;
 }
@@ -780,6 +780,31 @@
 :where(.palette-probe-state) {
   color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 74%, var(--ink) 26%);
   font-weight: 600;
+}
+
+:where(.context-readout) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+  gap: 0.45rem 0.6rem;
+}
+
+:where(.context-readout > div, .context-readout > span) {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+:where(.context-readout dt, .context-readout dd) {
+  margin: 0;
+}
+
+:where(.context-readout dt) {
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.78rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 :where(.palette-probe-paths) {

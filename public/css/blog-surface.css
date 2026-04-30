@@ -182,7 +182,7 @@
     var(--blog-bg-card-strong);
 }
 
-:where(body[data-spw-surface="blog"] #recording-cues .context-readout > span) {
+:where(body[data-spw-surface="blog"] #recording-cues .context-readout > div) {
   border-color: color-mix(in srgb, var(--blog-line-strong) 70%, transparent);
   background: color-mix(in srgb, var(--blog-bg-card-strong) 96%, transparent);
 }

@@ -107,12 +107,24 @@
                     Designers curious about RPG Wednesday should treat this page as onboarding. Learn the frame and card grammar here, then inspect the live campaign surface for stress cases like screenshottable capture cards, screen-readable hooks, promptable URLs, SVG cleanup seams, and later JSON or video-wizard handoffs. If you want to help shape those surfaces, the next move after this page is <a href="/contact/">contact</a>.
                 </p>
 
-                <div class="context-readout" aria-label="Current component glossary context">
-                    <span>theme <strong data-settings-state="themePack">neutral paper</strong></span>
-                    <span>mode <strong data-settings-state="colorMode">auto</strong></span>
-                    <span>density <strong data-settings-state="componentDensity">soft</strong></span>
-                    <span>metadata <strong data-settings-state="showSemanticMetadata">off</strong></span>
-                </div>
+                <dl class="context-readout" aria-label="Current component glossary context">
+                    <div>
+                        <dt>theme</dt>
+                        <dd><strong data-settings-state="themePack">neutral paper</strong></dd>
+                    </div>
+                    <div>
+                        <dt>mode</dt>
+                        <dd><strong data-settings-state="colorMode">auto</strong></dd>
+                    </div>
+                    <div>
+                        <dt>density</dt>
+                        <dd><strong data-settings-state="componentDensity">soft</strong></dd>
+                    </div>
+                    <div>
+                        <dt>metadata</dt>
+                        <dd><strong data-settings-state="showSemanticMetadata">off</strong></dd>
+                    </div>
+                </dl>
 
                 <figure class="image-study topic-photo-card" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#1a9999, #f0c36a, #355f77, #d9d2c6" data-spw-accent-anchor="component glossary onboarding threshold corridor" data-spw-accent-operator="frame">
                     <img src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp" alt="A threshold-like corridor image with pale paper walls, teal seams, and luminous structural depth." loading="lazy" decoding="async" width="1024" height="1024">
@@ -221,10 +233,10 @@
             </section>
 
             <section class="site-frame" id="disclosure-sponsor-specimens" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#disclosure-sponsor-specimens">#&gt;"dense_disclosure_sponsor"</a>
                     <h2>Dense Cards, Disclosure, and Sponsor Slots</h2>
-                </div>
+                </header>
                 <p class="frame-note">These are useful when a route needs to stay mobile-legible, keep options collapsible, or host a sponsor/affiliate surface without blowing apart the reading flow.</p>
                 <div class="frame-grid frame-grid--dense">
                     <details class="spw-inline-disclosure" open>
@@ -271,10 +283,10 @@
                  Frame Internals: heading, topline, sigil, note, actions
                  ============================================================ -->
             <section class="site-frame" id="frame-internals" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#frame-internals">#&gt;"frame_internals"</a>
                     <h2>Frame Internals</h2>
-                </div>
+                </header>
                 <p class="frame-note">Every <code>.site-frame</code> or <code>.frame-card</code> is composed from a fixed set of named slots. These are the sub-components available inside any frame-level container.</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -305,10 +317,10 @@
                         <h3>.frame-heading</h3>
                         <p>The primary heading wrapper inside a frame. Contains <code>h1</code>–<code>h3</code> and an optional sigil anchor. Adds appropriate vertical rhythm and max-width capping.</p>
                         <div style="margin-top: 0.75rem; border: 1px dashed var(--line); border-radius: var(--component-radius-tight); padding: 0.4rem 0.6rem;">
-                            <div class="frame-heading">
+                            <header class="frame-heading">
                                 <a class="frame-sigil" href="#frame-internals">^"heading_slot"</a>
                                 <h4 style="margin: 0;">Section Title</h4>
-                            </div>
+                            </header>
                         </div>
                     </article>
 
@@ -366,10 +378,10 @@
                  Chips & Strips: spec-pill, spec-strip, meta-chip, info-chip
                  ============================================================ -->
             <section class="site-frame" id="chips-strips" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#chips-strips">#&gt;"chips_strips"</a>
                     <h2>Chips &amp; Strips</h2>
-                </div>
+                </header>
                 <p class="frame-note">Inline labels, status badges, and horizontal runs of metadata. These are the smallest named vocabulary units.</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -438,10 +450,10 @@
                  Metamaterial States: glass / paper / matte / field side by side
                  ============================================================ -->
             <section class="site-frame" id="metamaterial-states" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#metamaterial-states">^"metamaterial_states"</a>
                     <h2>Metamaterial States</h2>
-                </div>
+                </header>
                 <p class="frame-note">Any <code>.frame-card</code> or <code>.frame-panel</code> can receive a <code>data-spw-metamaterial</code> attribute to shift its visual posture. These are the four primary states.</p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -451,7 +463,7 @@
                             <span class="frame-sigil">#&gt;</span>
                             <div class="spec-strip"><span class="spec-pill">glass</span></div>
                         </header>
-                        <div class="frame-heading"><h3>Glass</h3></div>
+                        <header class="frame-heading"><h3>Glass</h3></header>
                         <p>Translucent with <code>backdrop-filter: blur</code>. Default interactive surface. Implies legibility over background content.</p>
                         <div class="code-block-wrapper">
 <pre><code>data-spw-metamaterial="glass"</code></pre>
@@ -463,7 +475,7 @@
                             <span class="frame-sigil">#&gt;</span>
                             <div class="spec-strip"><span class="spec-pill">paper</span></div>
                         </header>
-                        <div class="frame-heading"><h3>Paper</h3></div>
+                        <header class="frame-heading"><h3>Paper</h3></header>
                         <p>Warm opaque surface. Signals a reading posture — settled, uninterrupted. No blur, no transparency.</p>
                         <div class="code-block-wrapper">
 <pre><code>data-spw-metamaterial="paper"</code></pre>
@@ -475,7 +487,7 @@
                             <span class="frame-sigil">#&gt;</span>
                             <div class="spec-strip"><span class="spec-pill">matte</span></div>
                         </header>
-                        <div class="frame-heading"><h3>Matte</h3></div>
+                        <header class="frame-heading"><h3>Matte</h3></header>
                         <p>Flat, structural. Used for reference grids and documentation panels. Reduced shadow and border emphasis.</p>
                         <div class="code-block-wrapper">
 <pre><code>data-spw-metamaterial="matte"</code></pre>
@@ -487,7 +499,7 @@
                             <span class="frame-sigil">#&gt;</span>
                             <div class="spec-strip"><span class="spec-pill">field</span></div>
                         </header>
-                        <div class="frame-heading"><h3>Field</h3></div>
+                        <header class="frame-heading"><h3>Field</h3></header>
                         <p>High-contrast bounded zone for active widgets, inputs, and tunable controls. Visible boundary, ready to react.</p>
                         <div class="code-block-wrapper">
 <pre><code>data-spw-metamaterial="field"</code></pre>
@@ -501,10 +513,10 @@
                  Inline Annotations: inline-note, editorial-note
                  ============================================================ -->
             <section class="site-frame" id="inline-annotations" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#inline-annotations">~"inline_annotations"</a>
                     <h2>Inline Annotations</h2>
-                </div>
+                </header>
                 <p class="frame-note">Prose-level sidenotes and callouts that don't require a card or panel. These live inside content flow without breaking the reading rhythm.</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -539,18 +551,30 @@
             </section>
 
             <section class="site-frame" id="interactive-physics-lab" data-spw-role="lab" data-spw-kind="frame" data-spw-context="ritual" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="component_physics_specimen" data-spw-prompt-teaser="Reveal a compact seed for the current component posture and settings.">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#interactive-physics-lab">@ "interactive_physics_lab"</a>
                     <h2>Live Composition Playground</h2>
-                </div>
+                </header>
                 <p class="frame-note">This is the most direct-wired surface on the page. Nudge the room, watch the specimen respond, then decide whether the route wants to feel denser, calmer, sharper, or more explicitly inspectable.</p>
 
-                <div class="context-readout" aria-label="Current playground settings">
-                    <span>theme <strong data-settings-state="themePack">neutral paper</strong></span>
-                    <span>density <strong data-settings-state="componentDensity">soft</strong></span>
-                    <span>memory <strong data-settings-state="wonderMemory">nearby</strong></span>
-                    <span>metadata <strong data-settings-state="showSemanticMetadata">off</strong></span>
-                </div>
+                <dl class="context-readout" aria-label="Current playground settings">
+                    <div>
+                        <dt>theme</dt>
+                        <dd><strong data-settings-state="themePack">neutral paper</strong></dd>
+                    </div>
+                    <div>
+                        <dt>density</dt>
+                        <dd><strong data-settings-state="componentDensity">soft</strong></dd>
+                    </div>
+                    <div>
+                        <dt>memory</dt>
+                        <dd><strong data-settings-state="wonderMemory">nearby</strong></dd>
+                    </div>
+                    <div>
+                        <dt>metadata</dt>
+                        <dd><strong data-settings-state="showSemanticMetadata">off</strong></dd>
+                    </div>
+                </dl>
 
                 <div class="lab-container frame-grid frame-grid--split">
                     <div class="lab-controls">
@@ -603,9 +627,9 @@
                                 <span class="frame-sigil">#&gt;</span>
                                 <span class="spec-pill">active specimen</span>
                             </header>
-                            <div class="frame-heading">
+                            <header class="frame-heading">
                                 <h3>Physics Response Test</h3>
-                            </div>
+                            </header>
                             <p>This specimen responds to the same settings that shape the rest of the site. The point is not only to see a card move. The point is to judge whether the interaction still means the same thing after the environment changes.</p>
                             <p>The <code>data-site-setting-set</code> and <code>data-preset</code> attributes let an ordinary button act like a remote handle for the runtime. That keeps the demos declarative enough for later passes to extend without inventing a new widget language.</p>
                             <footer class="frame-actions">
@@ -619,10 +643,10 @@
 
 
             <section class="site-frame" id="operator-intent-registry" data-spw-role="registry" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#operator-intent-registry">? "operator_intent_registry"</a>
                     <h2>Operator Intent Registry</h2>
-                </div>
+                </header>
                 <p class="frame-note">Operators are the primary semantic markers in Spw. Each one carries a specific functional intent and a "wonder" category that drives sensory feedback (haptics, sound, and resonance).</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -684,10 +708,10 @@
             </section>
 
             <section class="site-frame" id="component-anatomy-slots" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#component-anatomy-slots">^"component_anatomy_slots"</a>
                     <h2>Slot-Based Composition</h2>
-                </div>
+                </header>
                 <p class="frame-note">Most Spw components follow a strictly ordered slot contract. This consistency allows the runtime to reliably find sub-elements for animations, metadata projections, and accessibility labels.</p>
 
                 <div class="anatomy-visualizer frame-grid frame-grid--2up">
@@ -696,9 +720,9 @@
                             <span class="frame-sigil">#&gt;</span>
                             <span class="spec-pill">header / topline slot</span>
                         </header>
-                        <div class="frame-heading">
+                        <header class="frame-heading">
                             <h3>Component Body Slot</h3>
-                        </div>
+                        </header>
                         <p>The primary content area for prose, data, or media controls. It handles text-wrap and local density.</p>
                         <figure class="frame-figure" style="background: var(--surface-strong); border: 1px dashed var(--line); height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
                             <span class="frame-note">figure / media slot</span>
@@ -722,10 +746,10 @@
             </section>
 
             <section class="site-frame" id="brace-grammar-specimens" data-spw-role="grammar" data-spw-kind="frame" data-spw-context="analysis">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#brace-grammar-specimens">^"brace_grammar_specimens"</a>
                     <h2>Brace Grammar Forms</h2>
-                </div>
+                </header>
                 <p class="frame-note">The Spw language uses brace delimiters to anchor specific semantic intentions. We project these into HTML using <code>data-spw-form="brace"</code>.</p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -751,10 +775,10 @@
 
 
             <section class="site-frame" id="data-attribute-decoration" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#data-attribute-decoration">^"data_attribute_decoration"</a>
                     <h2>Data Attribute Distinction</h2>
-                </div>
+                </header>
                 
                 <p class="frame-note">We rarely invent new CSS classes for state or variations. Instead, we stack <code>data-spw-*</code> attributes onto the base components defined above. This makes the surface readable to CSS selectors without bloating the HTML with ad-hoc BEM modifiers.</p>
 

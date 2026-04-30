@@ -268,11 +268,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   border-color: color-mix(in srgb, var(--recipes-line-strong) 22%, var(--recipes-line));
 }
 
-:where(body[data-spw-surface="recipes"] #prompt-kitchen .context-readout > span) {
-  border-color: color-mix(in srgb, var(--recipes-line-strong) 20%, var(--recipes-line));
-  background: color-mix(in srgb, var(--recipes-surface-strong) 95%, transparent);
-}
-
 :where(body[data-spw-surface="recipes"] #recipes-index .frame-list) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));

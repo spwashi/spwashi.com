@@ -217,10 +217,10 @@
             </section>
 
             <section class="site-frame" id="design-circuits" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="routing" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__design_circuits" data-spw-context-relevance="design routes circuits website pretext renderers">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#design-circuits">~"design_circuits"</a>
                     <h2>Trails Through The Feature Set</h2>
-                </div>
+                </header>
                 <p class="frame-note">The hub should shorten coordination time. Each circuit below is a different kind of design question, not just another content category.</p>
 
                 <div class="frame-grid frame-grid--2up design-visual-register">
@@ -317,18 +317,18 @@
             </section>
 
             <section class="site-frame" id="context-stack" data-site-settings-scope data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="tune" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__context_stack" data-spw-context-relevance="global local data attributes palette resonance design system">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#context-stack">#&gt;context_stack</a>
                     <h2>Global And Local Display Context</h2>
-                </div>
+                </header>
                 <p class="frame-note">This is the working stack I would use for design decisions. The page also exposes live global controls so the neighboring cards can be tested under real site settings.</p>
 
-                <div class="palette-probe">
+                <section class="palette-probe" aria-label="Global context controls">
                     <div class="palette-probe-header">
-                        <div>
+                        <header>
                             <p class="palette-probe-kicker">Global Context</p>
                             <h3 class="palette-probe-title">Bias the environment first, then judge whether the local variants still make sense.</h3>
-                        </div>
+                        </header>
                         <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Design hub theme pack choices">
                             <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
                             <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
@@ -352,7 +352,7 @@
                         <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
                     </div>
                     <p class="palette-probe-copy" data-site-settings-status>Preferences are saved in this browser.</p>
-                </div>
+                </section>
 
                 <div class="frame-grid frame-grid--2up">
                     <article class="frame-panel">
@@ -386,10 +386,10 @@
             </section>
 
             <section class="site-frame" id="promptability-studio" data-site-settings-scope data-spw-role="lab" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="tune" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="projection" data-spw-promptability="visible" data-spw-prompt-host data-spw-prompt-title="design_atlas_weather" data-spw-prompt-teaser="Reveal a seed that mixes atmosphere, route purpose, and visual posture." data-spw-collectability="medium" data-spw-seed="page_design_design_hub__promptability_studio" data-spw-context-relevance="prompt seeds filming route physics settings resonance art direction">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#promptability-studio">@["promptability_studio"]</a>
                     <h2>Promptability Studio</h2>
-                </div>
+                </header>
                 <p class="frame-note">A compact direct-wiring surface for filming, art direction, and route seeds. Change the room first. Then decide what the page is trying to be.</p>
 
                 <div class="frame-grid" data-spw-layout="media-prose" data-spw-density="soft">
@@ -401,18 +401,30 @@
                         </figcaption>
                     </figure>
 
-                    <div class="trope-box">
+                    <aside class="trope-box">
                         <p class="frame-note">Use this studio when a page needs a direction, a shot list, or a cleaner prompt.</p>
                         <h3>A good route seed names the room, the artifact, and the kind of attention it deserves.</h3>
                         <p>For this site, the useful archetypes are usually field guide, specimen cabinet, control surface, invitation, or threshold weather. The wrong move is asking for generic polish before the route has chosen its posture.</p>
                         <p>As of April 22, 2026, the usual shelf around here includes Midjourney, ChatGPT Images, Gemini, Adobe Firefly, and Ideogram. The seed should still read well before it gets tuned to any one of them.</p>
 
-                        <div class="context-readout" aria-label="Current design context">
-                            <span>theme <strong data-settings-state="themePack">neutral paper</strong></span>
-                            <span>mode <strong data-settings-state="colorMode">auto</strong></span>
-                            <span>density <strong data-settings-state="componentDensity">soft</strong></span>
-                            <span>memory <strong data-settings-state="wonderMemory">nearby</strong></span>
-                        </div>
+                        <dl class="context-readout" aria-label="Current design context">
+                            <div>
+                                <dt>theme</dt>
+                                <dd><strong data-settings-state="themePack">neutral paper</strong></dd>
+                            </div>
+                            <div>
+                                <dt>mode</dt>
+                                <dd><strong data-settings-state="colorMode">auto</strong></dd>
+                            </div>
+                            <div>
+                                <dt>density</dt>
+                                <dd><strong data-settings-state="componentDensity">soft</strong></dd>
+                            </div>
+                            <div>
+                                <dt>memory</dt>
+                                <dd><strong data-settings-state="wonderMemory">nearby</strong></dd>
+                            </div>
+                        </dl>
 
                         <div class="demo-control-bank">
                             <section class="demo-control-group">
@@ -456,15 +468,15 @@
                             <a class="operator-chip" href="/design/?spw_prompt_open=1&spw_prompt_host=promptability-studio&spw_prompt_target=image_prompt&spw_prompt_generator=midjourney&spw_prompt_focus=teal%20threshold%20weather%20and%20speech-bubble%20materials#promptability-studio">? materials prompt</a>
                             <a class="operator-chip" href="/play/rpg-wednesday/?spw_prompt_open=1&spw_prompt_host=rpgw-library-build&spw_prompt_target=image_prompt&spw_prompt_generator=chatgpt-images&spw_prompt_focus=clay%20golem%20library%20canon#rpgw-library-build">* RPG library seed</a>
                         </nav>
-                    </div>
+                    </aside>
                 </div>
             </section>
 
             <section class="site-frame" id="rendering-contexts" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="projection" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__rendering_contexts" data-spw-context-relevance="rendering context test cards pretext material mobile">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#rendering-contexts">^"rendering_contexts"</a>
                     <h2>Rendering Context Tests</h2>
-                </div>
+                </header>
                 <p class="frame-note">These are intentionally small, comparable specimens. They use real attribute families so the question can be “does the contract feel right?” instead of “can we invent a new demo widget?”</p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -559,10 +571,10 @@
             </section>
 
             <section class="site-frame" id="component-anatomy" data-spw-role="schema" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="inspect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="projection" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__anatomy" data-spw-context-relevance="component anatomy slots structure options utilities">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#component-anatomy">^"component_options"</a>
                     <h2>Component Option Register</h2>
-                </div>
+                </header>
                 <p class="frame-note">A utility to break down how surface options relate to underlying structures. Instead of asking "what should it look like", a design team can ask "what materials and states map to its purpose?"</p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -619,10 +631,10 @@
             </section>
 
             <section class="site-frame" id="mobile-interactions" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="interaction" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__mobile_interactions" data-spw-context-relevance="mobile interaction header rail controls badges">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#mobile-interactions">?["mobile_interactions"]</a>
                     <h2>Mobile Interaction Notes</h2>
-                </div>
+                </header>
                 <p class="frame-note">Phones are where the design model gets honest. If a structure only reads on hover, wide screens, or desktop breathing room, it is not yet a stable contract.</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -649,10 +661,10 @@
             </section>
 
             <section class="site-frame" id="team-prompts" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="coordination" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__team_prompts" data-spw-context-relevance="team communication prompts variants slots lifecycle">
-                <div class="frame-heading">
+                <header class="frame-heading">
                     <a class="frame-sigil" href="#team-prompts">@["team_prompts"]</a>
                     <h2>Questions Worth Asking Before Another Patch Lands</h2>
-                </div>
+                </header>
 
                 <div class="frame-grid frame-grid--dense">
                     <article class="frame-panel">
