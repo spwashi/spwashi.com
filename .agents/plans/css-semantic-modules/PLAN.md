@@ -40,7 +40,7 @@ Make CSS easier to debug, teach, and refactor by moving from large hand-edited C
 
 1. Add validation for CSS headers, layer imports, and route-linked stylesheets.
 2. Create source folders without changing output paths.
-3. Move one low-risk route surface into native/PostCSS source and compile back to the same public CSS.
+3. Move low-risk route/debug surfaces into native/PostCSS source and compile back to the same public CSS.
 4. Move one shared layer after the route proof is stable.
 5. Decide whether SCSS adds enough value after the native/PostCSS proof.
 
@@ -62,6 +62,12 @@ Make CSS easier to debug, teach, and refactor by moving from large hand-edited C
 - `npm run check`
 - Targeted check that generated CSS still imports from `public/css/style.css`.
 - Targeted check that route-linked extra stylesheets still resolve.
+
+## First Proof
+
+- `src/styles/entries/design-experiments.css` -> `public/css/design-experiments.css`
+- `src/styles/entries/spw-debug.css` -> `public/css/spw-debug.css`
+- `src/styles/entries/tools-budgeting-surface.css` -> `public/css/tools-budgeting-surface.css`
 
 ## Out Of Scope
 

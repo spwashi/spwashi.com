@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
+    "postcss": "^8.5.12",
     "typescript": "^6.0.3",
     "vite": "^8.0.10"
   }
