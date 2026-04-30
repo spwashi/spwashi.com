@@ -56,21 +56,32 @@ function outputPathForEntry(entryPath) {
     const outputRelativePath = relativeEntryPath.replace(/\.(?:pcss|postcss)$/i, '.css');
     return path.join(PUBLIC_CSS_DIR, outputRelativePath);
 }
-export async function buildCssSources() {
+export async function collectCssBuildPlan() {
     const entries = (await walk(SOURCE_ENTRIES_DIR)).sort();
-    const pipeline = entries.length ? await loadPostcssPipeline() : null;
-    const results = [];
-    for (const entry of entries) {
-        const source = await fs.readFile(entry, 'utf8');
+    return entries.map((entry) => {
         const outputPath = outputPathForEntry(entry);
-        const output = pipeline
-            ? (await pipeline.process(source, { from: entry, to: outputPath })).css
-            : source;
-        await fs.mkdir(path.dirname(outputPath), { recursive: true });
-        await fs.writeFile(outputPath, output.endsWith('\n') ? output : `${output}\n`, 'utf8');
-        results.push({
+        return {
             output: relativeRepoPath(outputPath),
+            outputPath,
             source: relativeRepoPath(entry),
+            sourcePath: entry,
+        };
+    });
+}
+export async function buildCssSources() {
+    const plan = await collectCssBuildPlan();
+    const pipeline = plan.length ? await loadPostcssPipeline() : null;
+    const results = [];
+    for (const entry of plan) {
+        const source = await fs.readFile(entry.sourcePath, 'utf8');
+        const output = pipeline
+            ? (await pipeline.process(source, { from: entry.sourcePath, to: entry.outputPath })).css
+            : source;
+        await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
+        await fs.writeFile(entry.outputPath, output.endsWith('\n') ? output : `${output}\n`, 'utf8');
+        results.push({
+            output: entry.output,
+            source: entry.source,
             transformed: Boolean(pipeline),
         });
     }

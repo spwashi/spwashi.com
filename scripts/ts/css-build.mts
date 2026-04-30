@@ -18,6 +18,13 @@ type CssBuildResult = {
   transformed: boolean;
 };
 
+type CssBuildPlanEntry = {
+  output: string;
+  outputPath: string;
+  source: string;
+  sourcePath: string;
+};
+
 function relativeRepoPath(absolutePath: string): string {
   return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }
@@ -73,24 +80,36 @@ function outputPathForEntry(entryPath: string): string {
   return path.join(PUBLIC_CSS_DIR, outputRelativePath);
 }
 
-export async function buildCssSources(): Promise<CssBuildResult[]> {
+export async function collectCssBuildPlan(): Promise<CssBuildPlanEntry[]> {
   const entries = (await walk(SOURCE_ENTRIES_DIR)).sort();
-  const pipeline = entries.length ? await loadPostcssPipeline() : null;
+  return entries.map((entry) => {
+    const outputPath = outputPathForEntry(entry);
+    return {
+      output: relativeRepoPath(outputPath),
+      outputPath,
+      source: relativeRepoPath(entry),
+      sourcePath: entry,
+    };
+  });
+}
+
+export async function buildCssSources(): Promise<CssBuildResult[]> {
+  const plan = await collectCssBuildPlan();
+  const pipeline = plan.length ? await loadPostcssPipeline() : null;
   const results: CssBuildResult[] = [];
 
-  for (const entry of entries) {
-    const source = await fs.readFile(entry, 'utf8');
-    const outputPath = outputPathForEntry(entry);
+  for (const entry of plan) {
+    const source = await fs.readFile(entry.sourcePath, 'utf8');
     const output = pipeline
-      ? (await pipeline.process(source, { from: entry, to: outputPath })).css
+      ? (await pipeline.process(source, { from: entry.sourcePath, to: entry.outputPath })).css
       : source;
 
-    await fs.mkdir(path.dirname(outputPath), { recursive: true });
-    await fs.writeFile(outputPath, output.endsWith('\n') ? output : `${output}\n`, 'utf8');
+    await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
+    await fs.writeFile(entry.outputPath, output.endsWith('\n') ? output : `${output}\n`, 'utf8');
 
     results.push({
-      output: relativeRepoPath(outputPath),
-      source: relativeRepoPath(entry),
+      output: entry.output,
+      source: entry.source,
       transformed: Boolean(pipeline),
     });
   }
