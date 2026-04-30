@@ -1,3 +1,19 @@
+/* ==========================================================================
+   design-experiments.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped experiment-lab styles keyed by
+     body[data-spw-page-family="experiment-lab"].
+   - Keep experimental controls readable while preserving the shared frame,
+     slot, and semantic metadata contracts.
+   - Keep experiment blocks mapped to visible HTML nouns.
+
+   Debugging notes
+   - Prefer data-spw-feature or data-spw-slot for durable clusters.
+   - If a rule would help more than one route, move it to spw-components.css
+     or spw-surfaces.css instead of widening this file.
+   ========================================================================== */
+
 [data-spw-page-family="experiment-lab"] .design-experiment-hero,
 [data-spw-page-family="experiment-lab"] .design-experiment-frame {
   overflow: clip;

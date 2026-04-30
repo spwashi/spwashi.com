@@ -128,6 +128,7 @@
    2. Base component ownership
    ========================================================================== */
 
+/* Shared registry: add only route-portable component nouns. */
 :where(
   [data-spw-component-kind],
   [data-spw-kind],
@@ -184,6 +185,7 @@
   container-type: inline-size;
 }
 
+/* Lift content above generated rails, seams, and debug labels. */
 :where(
   [data-spw-component-kind] > *,
   [data-spw-kind] > *,
@@ -210,6 +212,7 @@
    3. Slot conventions
    ========================================================================== */
 
+/* Slots are stable anatomy; prefer them over child-order selectors. */
 :where([data-spw-slot]) {
   min-width: 0;
 }
@@ -254,6 +257,7 @@
   min-width: 0;
 }
 
+/* Captions share measure across figure-like surfaces. */
 :where([data-spw-slot="caption"]) {
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.88em;
@@ -280,6 +284,7 @@
   display: none;
 }
 
+/* Semantic chrome stays hidden until metadata or debug mode asks for it. */
 :where(
   html[data-spw-show-semantic-metadata="on"],
   html[data-spw-debug-mode="on"]
@@ -297,6 +302,7 @@
    4. Module semantics
    ========================================================================== */
 
+/* Module rails mark machine-readable ownership without crowding content. */
 :where(
   [data-spw-module],
   [data-spw-component-genome]
@@ -323,6 +329,7 @@
   );
 }
 
+/* Hydration/context states are visual confidence cues, not layout states. */
 :where([data-spw-module][data-spw-module-hydration="ready"]) {
   --component-module-rail-opacity: 0.44;
   box-shadow: inset 0 0 0 1px var(--component-module-hydration-ring),

@@ -12,6 +12,7 @@
    1. Header shell
    ========================================================================== */
 
+/* Chrome owns the persistent page frame. */
 :where(.site-header, body > header) {
   --spw-shell-chrome-accent-local:
     var(--spw-shell-chrome-accent, color-mix(in oklab, var(--teal, #008080) 68%, var(--ink, rgba(14, 18, 20, 0.92)) 32%));
@@ -72,6 +73,7 @@
     border-color 160ms var(--shell-ease);
 }
 
+/* shell-trace is gated because it changes header geometry. */
 :where(body:not([data-spw-features~="shell-trace"]) .site-header, body:not([data-spw-features~="shell-trace"]) > header) {
   grid-template-areas: "sigil nav indicator";
 }
@@ -87,6 +89,7 @@
 }
 
 @media (pointer: fine) {
+  /* Menu lock is for shell navigation only. */
   :where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
     overflow: hidden;
   }
@@ -144,6 +147,7 @@
   --spw-shell-pointer-opacity: 0.24;
 }
 
+/* The bottom line is chrome's objective/subjective brace rail. */
 :where(.site-header, body > header)::after {
   content: "";
   position: absolute;

@@ -33,6 +33,7 @@ header,
   z-index: 2000;
 }
 
+/* Handles sit above content but below site-level overlays. */
 .mode-switch,
 .demo-controls,
 .spw-spell-path,
@@ -117,6 +118,7 @@ header,
    Raw semantic attributes only get handle treatment on inline-capable tags.
    ========================================================================== */
 
+/* Handle gateway: add only things visitors can grasp or scan. */
 :where(
   .operator-chip,
   .syntax-token,
@@ -169,6 +171,7 @@ header,
 }
 
 /* Inline handles should read like annotated language before they read as pills. */
+/* The :not() list keeps full controls from flattening into prose tokens. */
 :where(
   .syntax-token,
   .spw-delimiter,

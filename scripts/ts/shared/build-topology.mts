@@ -11,6 +11,7 @@ export const BUILD_EXCLUDED_TOP_LEVEL = [
   'dist-vite',
   'node_modules',
   'scripts',
+  'src',
   'types',
   'AGENTS.md',
   'package.json',

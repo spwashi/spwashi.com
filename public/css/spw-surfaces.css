@@ -54,6 +54,7 @@
 }
 
 /* Generic shell card/panel rhythm */
+/* Macro surfaces normalize containment for route shells and runtime panels. */
 :where(
   .media-focus-card,
   .media-card,
@@ -70,6 +71,7 @@
   min-width: 0;
 }
 
+/* Keep only route-portable card material in this shared layer. */
 :where(.media-focus-card, .media-card, .topic-reference-card) {
   position: relative;
   min-height: 100%;
@@ -96,6 +98,7 @@
 }
 
 /* Shared grid normalization for early-route card systems */
+/* frame-grid is generic composition; variants should name intent explicitly. */
 :where(.frame-grid) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 16rem)), 1fr));
@@ -135,6 +138,7 @@
    2. Media publishing
    ========================================================================== */
 
+/* Feature gates keep reusable behavior portable across routes. */
 :where([data-spw-features~="media-publishing"] .media-publishing-frame) {
   gap: var(--space-md, 1rem);
 }
@@ -212,6 +216,7 @@
    3. Topic reference and study surfaces
    ========================================================================== */
 
+/* Topic study composition is shared; route files tune identity. */
 :where(.topic-reference-grid, .topic-photo-grid) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));

@@ -94,6 +94,7 @@
    2. Shared ownership and safe defaults
    ========================================================================== */
 
+/* Grammar owns route-portable structural semantics. */
 :where(
   .site-frame,
   .frame-panel,
@@ -110,6 +111,7 @@
   min-width: 0;
 }
 
+/* Lift content above generated braces, rails, and ornaments. */
 :where(
   .site-frame > *,
   .frame-panel > *,
@@ -154,6 +156,7 @@
    3. Container depth vocabulary
    ========================================================================== */
 
+/* Depth is semantic distance, not a one-off shadow knob. */
 [data-spw-depth="0"] {
   --container-surface: transparent;
   --container-border: transparent;
@@ -192,6 +195,7 @@
    4. Container type vocabulary
    ========================================================================== */
 
+/* Container names describe how meaning is held: field, cluster, concept. */
 :where([data-spw-container="field"]) {
   background: transparent;
   border-color: transparent;

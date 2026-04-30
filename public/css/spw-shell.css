@@ -130,6 +130,7 @@
    2. Body / viewport scaffolding
    ========================================================================== */
 
+/* Shell defaults keep raw HTML routes usable before route CSS loads. */
 html {
   min-height: 100%;
   scroll-padding-top: calc(var(--shell-header-height) + 1rem);
@@ -154,6 +155,7 @@ body {
   overflow-wrap: break-word;
 }
 
+/* Density is page rhythm; components consume it rather than rename it. */
 body[data-spw-shell-density="compact"] {
   --surface-gap: clamp(0.8rem, 1.5vw, 1rem);
   --page-stack-gap: clamp(0.9rem, 1.8vw, 1.2rem);
@@ -215,6 +217,7 @@ main[data-spw-layout="atlas"] {
 /* Split layouts place a narrower reading column next to a rail for
    related-routes, quick-jumps, or locally-collected items. */
 @media (min-width: 72rem) {
+  /* Split is the shell-owned reading-column + rail contract. */
   :where(body[data-spw-layout="split"]) main,
   main[data-spw-layout="split"] {
     max-width: var(--page-width-wide);

@@ -10,6 +10,7 @@
 
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
+@css_instruction: ~"./conventions/css-instruction.spw"
 @style_development: ~"./conventions/style-development.spw"
 @asset_management: ~"./conventions/asset-management.spw"
 @copy_localization: ~"./conventions/copy-localization.spw"
@@ -65,7 +66,7 @@ translations: .{
  site_semantics = #[@conventions, @site_semantics][reg=set]
  localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
  timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
- style_development = #[@style_development, @site_semantics][reg=set]
+ style_development = #[@css_instruction, @style_development, @site_semantics][reg=set]
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]

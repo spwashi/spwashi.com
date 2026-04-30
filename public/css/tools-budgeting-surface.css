@@ -1,3 +1,17 @@
+/* ==========================================================================
+   tools-budgeting-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped surface for body[data-spw-surface="tools-budgeting"].
+   - Present budgeting as a compact working dashboard without moving shared
+     card, panel, or shell ownership out of the system CSS files.
+   - Keep dashboard, panel, summary, row, and status semantics inspectable.
+
+   Debugging notes
+   - Use route scope first, then component nouns.
+   - Promote reusable table/card/control behavior to spw-components.css.
+   ========================================================================== */
+
 :where(body[data-spw-surface="tools-budgeting"]) .budget-dashboard {
   display: grid;
   gap: 1.5rem;

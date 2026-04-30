@@ -52,6 +52,7 @@
 @import url('/public/css/phase-controls.css') layer(handles);
 @import url('/public/css/spw-logo.css') layer(handles);
 
+/* Effects project semantic state; they must stay additive. */
 @import url('/public/css/spw-material.css') layer(effects);
 @import url('/public/css/enhancements.css') layer(effects);
 @import url('/public/css/grain-texture.css') layer(effects);
@@ -62,6 +63,7 @@
 @import url('/public/css/spw-demos.css') layer(effects);
 @import url('/public/css/spw-wonder.css') layer(effects);
 @import url('/public/css/spw-metaphysical-paper.css') layer(effects);
+@import url('/public/css/spw-debug.css') layer(effects);
 
 @import url('/public/css/spw-whimsy.css') layer(ornament);
 @import url('/public/css/spw-canvas-accents.css') layer(ornament);

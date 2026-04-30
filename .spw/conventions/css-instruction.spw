@@ -1,0 +1,79 @@
+# CSS Instruction
+#
+# Rules for keeping CSS files useful to people, agents, and browser debugging.
+
+#>spw_css_instruction
+#:conventions #!css #!instruction
+#:layer #!pragmatics
+
+^"purpose"{
+  statement: "Every CSS file should teach its ownership boundary before it styles a surface."
+  useful_for_instruction: "A reader should be able to open the file, identify the semantic source of truth, and know where a related change belongs."
+}
+
+^"file_contract"{
+  header: [
+    "Name the file and route/system scope.",
+    "State what the file owns.",
+    "State what it must not own when the boundary is easy to confuse.",
+    "List durable HTML/data contracts when the file depends on them.",
+    "Name debug hooks if the file exposes or consumes inspection state."
+  ]
+  section_shape: [
+    "1. route/system tokens",
+    "2. layout or structure",
+    "3. component variants",
+    "4. state and interaction",
+    "5. responsive/reduced-motion policy"
+  ]
+  selector_rule: "Prefer semantic scope -> component noun -> slot/state. Avoid long child-order selectors unless the child order is itself the contract."
+  comment_rule: "Comments should be concise and scannable; prefer one-line guardrails near semantic boundaries."
+}
+
+^"semantic_normalization"{
+  page_truth: "body[data-spw-surface], data-spw-page-family, and related page metadata define route identity."
+  cluster_truth: "data-spw-feature names coherent route clusters; it should not be added to empty wrappers."
+  component_truth: "data-spw-module, data-spw-component-id, data-spw-semantic-owner, and component classes name reusable machinery."
+  slot_truth: "data-spw-slot expresses stable component anatomy: header, meta, body, figure, actions, footer, caption."
+  state_truth: "Runtime state belongs in existing data-spw-* families before new names are introduced."
+}
+
+^"debug_contract"{
+  global_toggle: "html[data-spw-debug-mode=\"on\"] enables inspection-forward CSS projected from public/js/site-settings.js."
+  local_toggle: "[data-spw-debug~=\"css\"] opts a subtree into CSS structure overlays without changing settings."
+  owner: "public/css/spw-debug.css exposes structure only. It must not become required for layout or comprehension."
+  devtools_path: [
+    "Find the visible element.",
+    "Read data-spw-surface / data-spw-feature / data-spw-slot / data-spw-module.",
+    "Open public/css/style.css to find the owning layer.",
+    "Patch the smallest file that owns that semantic level."
+  ]
+}
+
+^"import_manifest"{
+  entrypoint: "public/css/style.css is the ordered manifest."
+  layer_rule: "Do not change the @layer declaration order casually; add imports inside the existing owner layer."
+  import_rule: "The import order should read like instruction: reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament."
+}
+
+^"source_direction"{
+  stance: "Prefer native CSS plus PostCSS for source refactors; SCSS remains allowed when it clarifies ownership."
+  module_rule: "Future source modules must compile or copy to public/css while preserving the style.css layer contract."
+  naming_rule: "Module files should be named by semantic owner: shell, chrome, grammar, component, surface, route, effect, ornament."
+  postcss_rule: "PostCSS plugins are optional and should support standards-aligned CSS rather than hiding semantic selectors."
+}
+
+^"failure_modes"{
+  accidental_ownership: "A route file fixes a shared component because it was faster than finding the owner."
+  hidden_dependency: "A visual behavior depends on child order or a broad :has() selector without a header explaining the contract."
+  debug_as_product: "Debug overlays become the only way to understand what the page is doing."
+  duplicate_semantics: "A new data-spw-* name repeats an existing surface, feature, slot, module, role, or state concept."
+}
+
+^"dispatch"{
+  @style_manifest: ~"../../../public/css/style.css"
+  @debug_css: ~"../../../public/css/spw-debug.css"
+  @css_source_plan: ~"../../.agents/plans/css-semantic-modules/PLAN.md"
+  @style_development: ~"./style-development.spw"
+  @site_semantics: ~"./site-semantics.spw"
+}

@@ -7,24 +7,32 @@ import {
   runSyntaxChecks,
   writeRouteRuntimeManifest,
 } from './site-contracts/index.mjs';
+import { collectCssContractReport } from './css-contracts.mjs';
 
 export async function main(): Promise<void> {
   const manifest = await writeRouteRuntimeManifest();
   const manifestIssues = collectManifestIssues(manifest);
   const syntaxReport = await runSyntaxChecks();
+  const cssReport = await collectCssContractReport();
   const gitDiffResult = runGitDiffCheck();
 
   console.log(`[check] manifest=${ROUTE_MANIFEST_OUTPUT}`);
   console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
   console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
+  console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
 
-  if (manifestIssues.warnings.length) {
-    console.log(`[check] warnings=${manifestIssues.warnings.length}`);
-    for (const warning of manifestIssues.warnings.slice(0, 12)) {
+  const warnings = [
+    ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
+    ...cssReport.warnings.map((warning) => `[css] ${warning}`),
+  ];
+
+  if (warnings.length) {
+    console.log(`[check] warnings=${warnings.length}`);
+    for (const warning of warnings.slice(0, 12)) {
       console.log(`  warn: ${warning}`);
     }
-    if (manifestIssues.warnings.length > 12) {
-      console.log(`  ... ${manifestIssues.warnings.length - 12} more warnings`);
+    if (warnings.length > 12) {
+      console.log(`  ... ${warnings.length - 12} more warnings`);
     }
   }
 
@@ -48,6 +56,16 @@ export async function main(): Promise<void> {
     }
     if (syntaxReport.failures.length > 12) {
       console.log(`  ... ${syntaxReport.failures.length - 12} more syntax failures`);
+    }
+  }
+
+  if (cssReport.errors.length) {
+    failures.push(`[css] ${cssReport.errors.length} contract error(s)`);
+    for (const error of cssReport.errors.slice(0, 12)) {
+      console.log(`  css: ${error}`);
+    }
+    if (cssReport.errors.length > 12) {
+      console.log(`  ... ${cssReport.errors.length - 12} more css errors`);
     }
   }
 
