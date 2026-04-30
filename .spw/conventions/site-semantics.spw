@@ -113,6 +113,15 @@
   counterexample: "A route surface restates background, shadow, child z-index, and overlay placement independently from the shared material tokens."
 }
 
+^"shell_menu_contract"{
+  definition: "The site menu should switch between inline and toggle modes from available space, then expose a small stable lifecycle for CSS and debugging."
+  runtime_contract: "spw-shell-disclosure writes grouped data-spw-menu-* fields from a single snapshot rather than scattered one-off attribute mutations."
+  mode_rule: "Inline mode is for roomy headers. Toggle mode is for narrow viewports or measured overflow."
+  phase_rule: "Projecting and settling are transient phases; closed menus should return to resting after the settle interval so CSS does not hold a loud transitional state."
+  ux_rule: "Mobile route entries should remain readable labels before becoming symbolic chips. Icon-only route grids are a last resort, not the default."
+  debug_rule: "The header, nav, and toggle carry the same snapshot vocabulary: mode, state, phase, pressure, topology, intent, clarity, and changed axes."
+}
+
 ^"interaction_states"{
   ambient: "Present but not yet being addressed."
   addressable: "Available through route, hover, focus, sigil, or keypath."

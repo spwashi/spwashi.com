@@ -1,4 +1,9 @@
 import { emitSpwAction } from './spw-shared.js';
+import {
+  removeDatasetValues,
+  writeDatasetValues,
+  writeDatasetValue,
+} from './spw-dom-contracts.js';
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',
@@ -69,7 +74,29 @@ const DEFAULTS = Object.freeze({
   scrollLiftPx: 18,
   scrollDeepPx: 132,
   scrollDirectionDeadzonePx: 4,
+  settlePhaseMs: 180,
 });
+
+const MENU_DATASET_KEYS = Object.freeze([
+  'spwMenuRole',
+  'spwMenuMode',
+  'spwMenuChanged',
+  'spwMenuClarity',
+  'spwMenu',
+  'spwMenuPhase',
+  'spwMenuSource',
+  'spwMenuViewport',
+  'spwMenuPointer',
+  'spwMenuPressure',
+  'spwMenuTopology',
+  'spwMenuIntent',
+  'spwMenuNavFit',
+  'spwMenuRouteCount',
+  'spwMenuOverflowCount',
+  'spwMenuLocking',
+  'spwMenuReversible',
+  'spwMenuReturnPaths',
+]);
 
 const FONT_SCALE_STEPS = Object.freeze(['80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
@@ -125,6 +152,7 @@ function createState(config) {
     scrollBand: resolveScrollBand(scrollY, config),
     scrollDirection: SCROLL_DIRECTIONS.STILL,
     scrollRaf: 0,
+    settleTimer: 0,
     lastTransitionSource: 'init',
     snapshot: null,
   };
@@ -150,10 +178,12 @@ function countOverflowRoutes(navList) {
 }
 
 function resolveMenuMode(header, nav, navList, state) {
-  void header;
-  void nav;
-  void navList;
-  void state;
+  const tier = document.documentElement.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  if (tier === 'compact' || tier === 'narrow') return MODES.TOGGLE;
+
+  const ratio = computeNavRatio(header, nav, navList);
+  if (ratio > state.config.compressedRatio) return MODES.TOGGLE;
+
   return MODES.INLINE;
 }
 
@@ -175,8 +205,11 @@ function resolveMenuPressure({ mode, ratio, navFit, tier, pointer }) {
 
 function resolveMenuTopology(mode, pressure, tier) {
   if (mode === MODES.INLINE) return TOPOLOGIES.INLINE_RIBBON;
-  if (tier === 'compact' || tier === 'narrow' || pressure === PRESSURES.CROWDED) {
-    return TOPOLOGIES.STACKED_FIELD;
+  if (tier === 'compact' || pressure === PRESSURES.CROWDED) {
+    return TOPOLOGIES.SCREEN_FIELD;
+  }
+  if (tier === 'narrow' || pressure === PRESSURES.COMPRESSED) {
+    return TOPOLOGIES.DRAWER_FIELD;
   }
   return TOPOLOGIES.STACKED_FIELD;
 }
@@ -304,30 +337,34 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
 function writeMenuDatasets(el, snapshot, role) {
   if (!(el instanceof HTMLElement)) return;
 
-  el.dataset.spwMenuRole = role;
-  el.dataset.spwMenuMode = snapshot.mode;
-  el.dataset.spwMenuChanged = snapshot.changedAxes.join(' ') || 'none';
-  el.dataset.spwMenuClarity = snapshot.clarity;
-  el.dataset.spwMenu = snapshot.state;
-  el.dataset.spwMenuPhase = snapshot.phase;
-  el.dataset.spwMenuSource = snapshot.source;
-  el.dataset.spwMenuViewport = snapshot.viewportTier;
-  el.dataset.spwMenuPointer = snapshot.pointerMode;
-  el.dataset.spwMenuPressure = snapshot.pressure;
-  el.dataset.spwMenuTopology = snapshot.topology;
-  el.dataset.spwMenuIntent = snapshot.intent;
-  el.dataset.spwMenuNavFit = snapshot.navFit;
-  el.dataset.spwMenuRouteCount = String(snapshot.totalRouteCount);
-  el.dataset.spwMenuOverflowCount = String(snapshot.overflowRouteCount);
-  el.dataset.spwMenuLocking = snapshot.locking;
-  el.dataset.spwMenuReversible = snapshot.reversible ? 'true' : 'false';
-  el.dataset.spwMenuReturnPaths = snapshot.returnPaths.join(' ');
+  writeDatasetValues(el, {
+    spwMenuRole: role,
+    spwMenuMode: snapshot.mode,
+    spwMenuChanged: snapshot.changedAxes.join(' ') || 'none',
+    spwMenuClarity: snapshot.clarity,
+    spwMenu: snapshot.state,
+    spwMenuPhase: snapshot.phase,
+    spwMenuSource: snapshot.source,
+    spwMenuViewport: snapshot.viewportTier,
+    spwMenuPointer: snapshot.pointerMode,
+    spwMenuPressure: snapshot.pressure,
+    spwMenuTopology: snapshot.topology,
+    spwMenuIntent: snapshot.intent,
+    spwMenuNavFit: snapshot.navFit,
+    spwMenuRouteCount: snapshot.totalRouteCount,
+    spwMenuOverflowCount: snapshot.overflowRouteCount,
+    spwMenuLocking: snapshot.locking,
+    spwMenuReversible: snapshot.reversible ? 'true' : 'false',
+    spwMenuReturnPaths: snapshot.returnPaths.join(' '),
+  });
 }
 
 function writeScrollDatasets(header, state) {
   if (!(header instanceof HTMLElement)) return;
-  header.dataset.spwShellScroll = state.scrollBand;
-  header.dataset.spwShellScrollDirection = state.scrollDirection;
+  writeDatasetValues(header, {
+    spwShellScroll: state.scrollBand,
+    spwShellScrollDirection: state.scrollDirection,
+  });
   header.classList.toggle('is-scrolled', state.scrollBand !== SCROLL_BANDS.TOP);
   syncShellOffset(header);
 }
@@ -349,15 +386,15 @@ function syncHeaderPointerField(header, event) {
   const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
   header.style.setProperty('--spw-shell-pointer-x', `${x.toFixed(2)}%`);
   header.style.setProperty('--spw-shell-pointer-y', `${y.toFixed(2)}%`);
-  header.dataset.spwShellPointer = 'tracking';
-  header.dataset.spwShellMicrointeraction ||= 'pointer-field';
+  writeDatasetValue(header, 'spwShellPointer', 'tracking');
+  writeDatasetValue(header, 'spwShellMicrointeraction', 'pointer-field', { missingOnly: true });
 }
 
 function clearHeaderPointerField(header) {
   if (!(header instanceof HTMLElement)) return;
   header.style.removeProperty('--spw-shell-pointer-x');
   header.style.removeProperty('--spw-shell-pointer-y');
-  delete header.dataset.spwShellPointer;
+  removeDatasetValues(header, ['spwShellPointer']);
 }
 
 function syncShellLock(snapshot) {
@@ -365,8 +402,7 @@ function syncShellLock(snapshot) {
 
   [document.documentElement, document.body].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
-    if (shouldLock) node.dataset.spwShellMenuLock = 'true';
-    else delete node.dataset.spwShellMenuLock;
+    writeDatasetValue(node, 'spwShellMenuLock', shouldLock ? 'true' : null);
   });
 }
 
@@ -540,16 +576,42 @@ function emitMenuState(snapshot) {
   }));
 }
 
+function clearSettleTimer(state) {
+  if (!state.settleTimer) return;
+  window.clearTimeout(state.settleTimer);
+  state.settleTimer = 0;
+}
+
+function scheduleRestingPhase(header, nav, toggle, state, snapshot) {
+  clearSettleTimer(state);
+  if (snapshot.phase !== PHASES.SETTLING || snapshot.state !== 'closed') return;
+
+  state.settleTimer = window.setTimeout(() => {
+    state.settleTimer = 0;
+    if (!state.snapshot || state.snapshot.state !== 'closed' || state.snapshot.phase !== PHASES.SETTLING) return;
+
+    const settled = {
+      ...state.snapshot,
+      phase: PHASES.RESTING,
+      intent: INTENTS.SURVEY,
+      clarity: CLARITIES.STEADY,
+      changedAxes: ['phase'],
+      source: 'settled',
+    };
+
+    writeMenuDatasets(header, settled, 'header');
+    writeMenuDatasets(nav, settled, 'nav');
+    writeMenuDatasets(toggle, settled, 'toggle');
+    state.snapshot = settled;
+    emitMenuState(settled);
+  }, state.config.settlePhaseMs);
+}
+
 function applyMenuState(header, nav, navList, toggle, state, open, source = 'system') {
   const snapshot = buildMenuSnapshot(header, nav, navList, state, open, source);
   snapshot.changedAxes = collectChangedAxes(state.snapshot, snapshot);
   snapshot.clarity = resolveMenuClarity(snapshot, snapshot.changedAxes);
   syncShellOffset(header);
-
-  header.dataset.spwMenu = snapshot.state;
-  header.dataset.spwMenuMode = snapshot.mode;
-  header.dataset.spwMenuPhase = snapshot.phase;
-  header.dataset.spwMenuSource = snapshot.source;
 
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
   toggle.hidden = state.mode !== MODES.TOGGLE;
@@ -566,6 +628,7 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   state.lastTransitionSource = source;
   state.snapshot = snapshot;
   emitMenuState(snapshot);
+  scheduleRestingPhase(header, nav, toggle, state, snapshot);
   return snapshot;
 }
 
@@ -612,7 +675,7 @@ export function initSpwShellDisclosure(options = {}) {
     return { cleanup() {}, refresh() {} };
   }
 
-  header.dataset.spwShellDisclosureInit = 'true';
+  writeDatasetValue(header, 'spwShellDisclosureInit', 'true');
   nav.id ||= 'spw-shell-nav';
 
   let toggle = header.querySelector('.spw-nav-toggle');
@@ -643,10 +706,12 @@ export function initSpwShellDisclosure(options = {}) {
   const utilityRow = ensureUtilityRow(header);
 
   const state = createState(config);
-  header.dataset.spwMenu = 'closed';
-  header.dataset.spwMenuMode = MODES.INLINE;
-  header.dataset.spwMenuPhase = PHASES.RESTING;
-  header.dataset.spwMenuSource = 'init';
+  writeDatasetValues(header, {
+    spwMenu: 'closed',
+    spwMenuMode: MODES.INLINE,
+    spwMenuPhase: PHASES.RESTING,
+    spwMenuSource: 'init',
+  });
   syncScrollState(header, state, state.scrollY);
 
   const closeToggleMenu = (source = 'system') => {
@@ -931,34 +996,23 @@ export function initSpwShellDisclosure(options = {}) {
       document.removeEventListener('spw:settings-changed', handleSettingsChanged);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       navObserver.disconnect();
+      clearSettleTimer(state);
       if (state.scrollRaf) {
         window.cancelAnimationFrame(state.scrollRaf);
         state.scrollRaf = 0;
       }
-      delete header.dataset.spwShellDisclosureInit;
-      delete header.dataset.spwShellScroll;
-      delete header.dataset.spwShellScrollDirection;
+      removeDatasetValues(header, [
+        'spwShellDisclosureInit',
+        'spwShellScroll',
+        'spwShellScrollDirection',
+        'spwShellPointer',
+      ]);
       header.classList.remove('is-scrolled');
-      delete header.dataset.spwMenu;
-      delete header.dataset.spwMenuChanged;
-      delete header.dataset.spwMenuClarity;
-      delete header.dataset.spwMenuIntent;
-      delete header.dataset.spwMenuPhase;
-      delete header.dataset.spwMenuPointer;
-      delete header.dataset.spwMenuPressure;
-      delete header.dataset.spwMenuMode;
-      delete header.dataset.spwMenuLocking;
-      delete header.dataset.spwMenuNavFit;
-      delete header.dataset.spwMenuOverflowCount;
-      delete header.dataset.spwMenuReturnPaths;
-      delete header.dataset.spwMenuReversible;
-      delete header.dataset.spwMenuRole;
-      delete header.dataset.spwMenuRouteCount;
-      delete header.dataset.spwMenuSource;
-      delete header.dataset.spwMenuTopology;
-      delete header.dataset.spwMenuViewport;
-      delete document.documentElement.dataset.spwShellMenuLock;
-      delete document.body.dataset.spwShellMenuLock;
+      removeDatasetValues(header, MENU_DATASET_KEYS);
+      removeDatasetValues(nav, MENU_DATASET_KEYS);
+      removeDatasetValues(toggle, MENU_DATASET_KEYS);
+      removeDatasetValues(document.documentElement, ['spwShellMenuLock']);
+      removeDatasetValues(document.body, ['spwShellMenuLock']);
       document.documentElement.style.removeProperty('--spw-shell-menu-offset');
     },
     refresh(nextOptions = {}) {

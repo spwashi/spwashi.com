@@ -137,6 +137,28 @@ export function writeDatasetValueIfMissing(el, key, value, options = {}) {
   return writeDatasetValue(el, key, value, { ...options, missingOnly: true });
 }
 
+export function writeDatasetValues(el, entries = {}, options = {}) {
+  if (!el?.dataset || !entries || typeof entries !== 'object') return false;
+
+  let changed = false;
+  Object.entries(entries).forEach(([key, value]) => {
+    changed = writeDatasetValue(el, key, value, options) || changed;
+  });
+  return changed;
+}
+
+export function removeDatasetValues(el, keys = []) {
+  if (!el?.dataset || !Array.isArray(keys)) return false;
+
+  let changed = false;
+  keys.forEach((key) => {
+    if (!key || !(key in el.dataset)) return;
+    delete el.dataset[key];
+    changed = true;
+  });
+  return changed;
+}
+
 export function writeStyleValue(el, property, value, options = {}) {
   if (!el?.style || !property) return false;
 

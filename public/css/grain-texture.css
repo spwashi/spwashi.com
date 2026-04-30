@@ -198,7 +198,6 @@ body::after {
       calc((var(--grain-atmosphere-bias) * 0.5) + (var(--grain-resonance-bias) * 0.24)),
       0.05);
   background:
-    radial-gradient(circle at top center, color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent), transparent 54%),
     linear-gradient(180deg, var(--grain-ambient-tint), transparent 32%);
   mix-blend-mode: normal;
 }
