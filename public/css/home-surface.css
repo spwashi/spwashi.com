@@ -299,6 +299,13 @@
   line-height: 1.56;
 }
 
+:where(#promo-wonder-cycle .promo-wonder-cycle__why) {
+  margin: -0.15rem 0 0;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.72));
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 :where(#promo-wonder-cycle .promo-wonder-cycle__cta) {
   justify-self: start;
 }

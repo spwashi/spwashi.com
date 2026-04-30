@@ -150,6 +150,13 @@ function createNoticeElement(notice) {
   summary.className = 'spw-discovery-notice__summary';
   summary.textContent = notice.summary;
 
+  const whyText = cleanText(notice.why || '');
+  const why = whyText ? document.createElement('p') : null;
+  if (why) {
+    why.className = 'spw-discovery-notice__why';
+    why.textContent = whyText;
+  }
+
   const actions = document.createElement('div');
   actions.className = 'spw-discovery-notice__actions';
 
@@ -168,7 +175,11 @@ function createNoticeElement(notice) {
   dismiss.textContent = 'Dismiss';
   actions.append(dismiss);
 
-  article.append(label, title, summary, actions);
+  if (why) {
+    article.append(label, title, summary, why, actions);
+  } else {
+    article.append(label, title, summary, actions);
+  }
 
   return { article, dismiss };
 }
@@ -219,6 +230,7 @@ function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
     summary,
     href,
     cta: cleanText(source.cta || 'Open'),
+    why: cleanText(source.why || ''),
     copyUnit: cleanText(source.copyUnit || `home.discoveryNotice.${cadence}`),
     dismissKey: buildDismissKey(cadence, { ...source, href, title, summary }, scheduleKey, index),
   };

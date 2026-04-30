@@ -19,6 +19,7 @@ type PromoWonderCard = {
   summary?: string;
   href?: string;
   cta?: string;
+  why?: string;
 };
 
 type PromoWonderPair = {
@@ -52,10 +53,11 @@ const DEFAULT_FEED = Object.freeze({
       promo: {
         label: 'Daily promo',
         operator: '@',
-        title: 'Start with the smallest useful next step',
-        summary: 'Open the route that best matches the work you need today, then move from curiosity to a concrete conversation.',
-        href: '/contact/',
-        cta: 'Open contact',
+        title: 'Help the next release land',
+        summary: 'Releases are scheduled for the 13th and 26th of each month. Small support keeps the work moving and makes the next page easier to ship.',
+        href: '/services/#support',
+        cta: 'Open support',
+        why: 'A direct contribution keeps the monthly cadence steady.',
       },
       wonder: {
         label: 'Daily wonder',
@@ -90,10 +92,11 @@ const DEFAULT_FEED = Object.freeze({
       promo: {
         label: 'Weekly promo',
         operator: '@',
-        title: 'Hire for readable systems and strong creative coordination',
-        summary: 'The weekly offer can frame deeper collaboration, not just a one-off task.',
-        href: '/contact/',
-        cta: 'Discuss a project',
+        title: 'Keep the release rhythm steady',
+        summary: 'Development costs are around $250 per month. If the work is useful, direct support keeps the public cadence open.',
+        href: '/now/',
+        cta: 'Review funding',
+        why: 'One steady contribution helps keep releases on the 13th and 26th.',
       },
       wonder: {
         label: 'Weekly wonder',
@@ -179,6 +182,13 @@ function renderCard(
   summary.textContent = cleanText(item.summary || '');
 
   article.append(label, titleRow, summary);
+
+  const why = cleanText(item.why || '');
+  if (why) {
+    const note = el('p', 'promo-wonder-cycle__why');
+    note.textContent = why;
+    article.append(note);
+  }
 
   if (item.href) {
     const link = el('a', 'operator-chip promo-wonder-cycle__cta', {

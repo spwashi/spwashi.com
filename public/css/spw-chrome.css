@@ -1695,6 +1695,13 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   line-height: 1.45;
 }
 
+.spw-discovery-notice__why {
+  margin: -0.1rem 0 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.64));
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.38;
+}
+
 .spw-discovery-notice__actions {
   display: flex;
   flex-wrap: wrap;
