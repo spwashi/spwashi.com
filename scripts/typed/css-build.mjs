@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import { shouldIgnoreValidationPath, toPosixPath, } from './shared/build-topology.mjs';
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..');
@@ -58,9 +59,11 @@ function outputPathForEntry(entryPath) {
 }
 export async function collectCssBuildPlan() {
     const entries = (await walk(SOURCE_ENTRIES_DIR)).sort();
+    const hasPostcssConfig = await pathExists(POSTCSS_CONFIG_PATH);
     return entries.map((entry) => {
         const outputPath = outputPathForEntry(entry);
         return {
+            mode: hasPostcssConfig ? 'postcss' : 'copy',
             output: relativeRepoPath(outputPath),
             outputPath,
             source: relativeRepoPath(entry),
@@ -68,7 +71,22 @@ export async function collectCssBuildPlan() {
         };
     });
 }
-export async function buildCssSources() {
+async function readIfExists(absolutePath) {
+    try {
+        return await fs.readFile(absolutePath, 'utf8');
+    }
+    catch (error) {
+        if (error?.code === 'ENOENT')
+            return null;
+        throw error;
+    }
+}
+function parseOptions(argv) {
+    return {
+        check: argv.includes('--check'),
+    };
+}
+export async function buildCssSources(options = { check: false }) {
     const plan = await collectCssBuildPlan();
     const pipeline = plan.length ? await loadPostcssPipeline() : null;
     const results = [];
@@ -77,25 +95,37 @@ export async function buildCssSources() {
         const output = pipeline
             ? (await pipeline.process(source, { from: entry.sourcePath, to: entry.outputPath })).css
             : source;
-        await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
-        await fs.writeFile(entry.outputPath, output.endsWith('\n') ? output : `${output}\n`, 'utf8');
+        const normalizedOutput = output.endsWith('\n') ? output : `${output}\n`;
+        const currentOutput = await readIfExists(entry.outputPath);
+        const isFresh = currentOutput === normalizedOutput;
+        if (options.check && !isFresh) {
+            throw new Error(`[css-build] stale output: ${entry.output}`);
+        }
+        if (!options.check && !isFresh) {
+            await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
+            await fs.writeFile(entry.outputPath, normalizedOutput, 'utf8');
+        }
         results.push({
             output: entry.output,
             source: entry.source,
             transformed: Boolean(pipeline),
+            written: !options.check && !isFresh,
         });
     }
     return results;
 }
 export async function main() {
-    const results = await buildCssSources();
+    const options = parseOptions(process.argv.slice(2));
+    const results = await buildCssSources(options);
     if (!results.length) {
         console.log('[css-build] no src/styles/entries sources; public/css remains authoritative');
         return;
     }
-    console.log(`[css-build] built ${results.length} stylesheet source(s)`);
+    const verb = options.check ? 'checked' : 'built';
+    console.log(`[css-build] ${verb} ${results.length} stylesheet source(s)`);
     for (const result of results) {
         const mode = result.transformed ? 'postcss' : 'copy';
-        console.log(`  ${mode}: ${result.source} -> ${result.output}`);
+        const suffix = options.check ? '' : result.written ? ' updated' : ' fresh';
+        console.log(`  ${mode}: ${result.source} -> ${result.output}${suffix}`);
     }
 }

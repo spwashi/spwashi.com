@@ -13,6 +13,7 @@ import {
   shouldIgnoreValidationPath,
   toPosixPath,
 } from './shared/build-topology.mjs';
+import { collectCssBuildPlan } from './css-build.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -140,6 +141,7 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
   const warnings: string[] = [];
   const cssFiles = await collectCssFiles();
   const sourceFiles = await collectStyleSourceFiles();
+  const buildPlan = await collectCssBuildPlan();
   const styleSource = await fs.readFile(STYLE_MANIFEST, 'utf8');
   const imports = parseStyleImports(styleSource);
   const linkedStylesheets = await collectLinkedStylesheets();
@@ -170,6 +172,12 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
       await fs.access(path.join(ROOT_DIR, href.replace(/^\/+/, '')));
     } catch {
       errors.push(`${href} is linked by a route but does not exist.`);
+    }
+  }
+
+  for (const entry of buildPlan) {
+    if (!knownReferences.has(`/${entry.output}`)) {
+      errors.push(`${entry.source} generates ${entry.output}, but that output is not imported or linked.`);
     }
   }
 

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { renderTemplate } from '../template.mjs';
 import { collectTagAttributes, splitList, stripQueryHash, } from './site-contracts/helpers.mjs';
 import { shouldIgnoreValidationPath, toPosixPath, } from './shared/build-topology.mjs';
+import { collectCssBuildPlan } from './css-build.mjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
@@ -99,6 +100,7 @@ export async function collectCssContractReport() {
     const warnings = [];
     const cssFiles = await collectCssFiles();
     const sourceFiles = await collectStyleSourceFiles();
+    const buildPlan = await collectCssBuildPlan();
     const styleSource = await fs.readFile(STYLE_MANIFEST, 'utf8');
     const imports = parseStyleImports(styleSource);
     const linkedStylesheets = await collectLinkedStylesheets();
@@ -129,6 +131,11 @@ export async function collectCssContractReport() {
         }
         catch {
             errors.push(`${href} is linked by a route but does not exist.`);
+        }
+    }
+    for (const entry of buildPlan) {
+        if (!knownReferences.has(`/${entry.output}`)) {
+            errors.push(`${entry.source} generates ${entry.output}, but that output is not imported or linked.`);
         }
     }
     for (const absolutePath of cssFiles) {
