@@ -20,6 +20,7 @@
 public_routes: .{
  index = .{ path = ~"../index.html", role = hub, bridge = `entry surface into the wider grammar` }[reg=facet]
  about = .{ path = ~"../about/index.html", role = `identity register`, bridge = `public register of domains, trajectory, and adjacent surfaces` }[reg=facet]
+ care = .{ path = ~"../care/index.html", role = `care interface`, bridge = `non-clinical translation layer for language, cards, peer witness, privacy, and escalation boundaries before or alongside formal support` }[reg=facet]
  website_field_guide = .{ path = ~"../about/website/index.html", role = `media field guide`, bridge = `public translation layer for the site's PWA shell, frame navigation, Spw surfaces, Pretext lab, and cognitive-surface direction` }[reg=facet]
  contact = .{ path = ~"../contact/index.html", role = `contact route`, bridge = `direct path for conversation and collaboration` }[reg=facet]
  software = .{ path = ~"../topics/software/index.html", role = `grammar surface`, bridge = `public syntax, interaction grammar, and workbench-facing translation layer` }[reg=facet]

@@ -40,6 +40,7 @@ surfaces: .{
  note = `Main surfaces and nested reference surfaces. Each follows the same frame architecture.`
  index = .{ path = ~"../index.html", role = `hub, orientation, entry` }[reg=facet]
  about = .{ path = ~"../about/index.html", role = `identity, register, land cluster` }[reg=facet]
+ care = .{ path = ~"../care/index.html", role = `non-clinical care interface, translation cards, witness protocols, safety boundary` }[reg=facet]
  website = .{ path = ~"../about/website/index.html", role = `media field guide, feature translation, public orientation` }[reg=facet]
  software = .{ path = ~"../topics/software/index.html", role = `grammar, operators, interactive codeblocks` }[reg=facet]
  spw = .{ path = ~"../topics/software/spw/index.html", role = `operator atlas, alchemistry, interaction semantics` }[reg=facet]
