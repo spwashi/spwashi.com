@@ -1,0 +1,146 @@
+# wip - style-image-cohesion
+# Branch: main
+# Started: 2026-04-30
+
+#:layer #!pragmatics
+
+^["roots"]{
+ @plan: ~".agents/plans/style-image-cohesion/PLAN.md"
+ @site_semantics: ~".spw/conventions/site-semantics.spw"
+ @style_development: ~".spw/conventions/style-development.spw"
+ @asset_management: ~".spw/conventions/asset-management.spw"
+ @image_naming: ~"/Users/spwashi/.codex/skills/.system/image-naming-magic/SKILL.md"
+ @image_optimize: ~"/Users/spwashi/.codex/skills/.system/image-optimize/SKILL.md"
+ @home: ~"index.html"
+ @about: ~"about/index.html"
+ @website: ~"about/website/index.html"
+ @topics: ~"topics/index.html"
+ @software: ~"topics/software/index.html"
+ @design: ~"design/index.html"
+ @craft: ~"topics/craft/"
+}
+
+^["intent"]{
+ ~#goal: "Generate a small, coherent image set that gives the site one visual grammar for creator identity, system reference, and route atmosphere."
+ ~#taste: "calm technical wonder, legible system imagery, cohesive branding without stock-like sameness"
+}
+
+^["development"]{
+ lane: #site_surface_quality
+ ladder: #service
+ develops: [#brand_identity, #system_atlas, #route_family_posters, #palette_cohesion, #image_wireup]
+ review_surfaces: [@plan, @site_semantics, @style_development, @asset_management, @home, @about, @website, @topics, @software, @design, @craft]
+ snippet_routes: [#image, #hero, #poster, #atlas, #brand]
+}
+
+^["concept_index"]{
+ primary: [#creator_portrait, #operator_constellation, #semantic_workbench, #material_swatch, #route_poster]
+ surfaces: [#home, #about, #website, #software, #craft, #design, #topics]
+ tensions: [#identity_vs_system, #wonder_vs_legibility, #hero_vs_texture, #shared_set_vs_route_flavor]
+ transfers: [#visual_grammar, #palette_memory, #route_identity, #editorial_cohesion]
+}
+
+^["recursive_improvement"]{
+ loop: [
+  "? generate one image that can define the visual grammar for the rest",
+  "< bias each later image toward the same material and light logic",
+  "$ wire only a few routes first so the set can prove cohesion before spreading",
+  "^ keep captions and alt text specific enough to explain why the image exists",
+  "% prefer reusable bitmap assets over one-off decorative treatments"
+ ]
+ gates: [#cohesion, #route_specificity, #readability, #asset_reuse]
+}
+
+^["parallel_work"]{
+ critical_path: [#image_generation, #asset_naming, #route_selection]
+ parallelizable: [#captioning, #optimization, #palette_notes]
+ shared_hot_files: ["public/images/", "public/css/spw-metaphysical-paper.css", "public/css/spw-surfaces.css", "public/css/home-surface.css", "public/css/topics-surface.css", "public/css/website-surface.css"]
+ merge_risks: [#route_copy_drift, #asset_naming_drift, #palette_fragmentation]
+ handoff_artifacts: [@plan]
+}
+
+^["image_set"]{
+ first_batch: [
+  {
+   name: "creator-portrait-system"
+   purpose: "A human-centered creator portrait with software diagrams, art tools, and warm desk materials."
+   wire_to: [@home, @about]
+   prompt_axis: [#portrait, #software, #art, #desk, #warm_light]
+  },
+  {
+   name: "operator-constellation-field"
+   purpose: "A sparse starfield of operators and arcs for brand texture and hero backgrounds."
+   wire_to: [@home, @website]
+   prompt_axis: [#constellation, #operator_sigils, #fine_arcs, #dark_field]
+  },
+  {
+   name: "semantic-workbench-still-life"
+   purpose: "A calm workbench scene that reads like software and art at once."
+   wire_to: [@about, @software]
+   prompt_axis: [#notebook, #code, #swatches, #terminal_glow, #paper]
+  },
+  {
+   name: "material-swatch-sheet"
+   purpose: "A reference board for glass, matte, paper, code surface, ink, line, glow, and grain."
+   wire_to: [@design]
+   prompt_axis: [#swatches, #material_samples, #system_reference, #neutral_light]
+  },
+  {
+   name: "route-family-posters"
+   purpose: "A poster series with the same composition rules for software, craft, and design routes."
+   wire_to: [@software, @craft, @design]
+   prompt_axis: [#poster, #route_family, #editorial_grid, #shared_layout]
+  }
+ ]
+}
+
+^["wiring_rules"]{
+ source_rule: "Generate into the image pipeline first, then optimize into public/images/ only after naming and route fit are settled."
+ route_rule: "Use one shared image grammar across routes; let palette, caption, and framing differentiate the surface."
+ alt_rule: "Alt text should explain the image's function on the page, not just its subject."
+ css_rule: "Favor existing hero and illustrated-card patterns before adding new layout grammar."
+}
+
+^["risk_model"]{
+ hard_failures: [#visual_incoherence, #route_overreach, #naming_sprawl]
+ soft_failures: [#too_many_styles, #generic_ai_look, #image_as_decoration]
+ non_negotiables: [#static_html, #inspectable_assets, #shared_css, #cohesive_branding]
+}
+
+^["validation"]{
+ hypotheses: [#first_batch_reads_as_one_family, #routes_gain_identity_without_new_layouts, #captions_do_real_work]
+ negative_controls: [#pages_remain_readable_without_images, #copy_remains_specific, #existing_css_contracts_stay_intact]
+ demo_path: ["/", "/about/", "/about/website/", "/topics/software/", "/topics/craft/", "/design/"]
+}
+
+^["stream"]{
+ >>[2026-04-30 00:00] observe — The site already has strong image metaphysics and route-level surface rules, but the branding still needs a small coherent visual set rather than a broad image sprawl.
+ >>[2026-04-30 00:02] decide — Start with five images: creator portrait, operator constellation, workbench still life, material swatch sheet, and a route-family poster series.
+ >>[2026-04-30 00:04] decide — Wire only a few routes first so the visual grammar can prove itself before it becomes a general pattern.
+}
+
+^["open"]{
+ ?[first_wire]: "Should the first wired image be the creator portrait on the home/about surface, or the operator constellation field on the home/website surface?"
+ ?[poster_scope]: "Should the poster series cover software, craft, and design only, or include topics/about as well?"
+}
+
+^["commits"]{
+ ~[1]: "#[images] — define a cohesive first batch of brand and system imagery"
+ ~[2]: "&[assets] — generate, name, and optimize the first batch"
+ ~[3]: ".[routes] — wire a minimal set of routes to prove cohesion"
+ ~[4]: "![brand] — review whether the image grammar can generalize"
+}
+
+^["cache"]{
+ ~#status: "planning"
+ ~#base_ref: "main@e4facba"
+ ~#hygiene_split: "none"
+ ~#files_hot: "public/images/ public/css/spw-metaphysical-paper.css public/css/spw-surfaces.css public/css/home-surface.css public/css/topics-surface.css public/css/website-surface.css"
+ ~#next_commit: "1"
+ ~#open_count: "2"
+ ~#last_stream: "2026-04-30 00:04"
+ ~#taste_debt: ""
+}
+
+^["done"]{
+}

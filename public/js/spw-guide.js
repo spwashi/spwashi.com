@@ -106,6 +106,9 @@ function createUpdater() {
 }
 
 export function initSpwGuide() {
+    console.log('[SpwGuide] Initializing cognitive guide...');
+    console.log('[SpwGuide] no-op rn');
+    return () => {};
     if (initialized) {
         return currentCleanup || (() => {});
     }
