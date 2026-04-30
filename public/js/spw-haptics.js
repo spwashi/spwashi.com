@@ -50,6 +50,7 @@ const CHARGE_SELECTORS = [
   '.operator-card',
   '.media-card',
   '.media-focus-card',
+  '[data-spw-component-kind]',
   '.domain-visual',
   '[data-spw-operator]',
   '[data-spw-cluster]',

@@ -15,6 +15,9 @@ export const CORE_COMPONENT_SELECTORS = Object.freeze([
   '.frame-card',
   '.media-card',
   '.media-focus-card',
+  '.topic-reference-card',
+  '.vibe-widget',
+  '.palette-probe',
   '.software-card',
   '.operator-card',
   '.plan-card',
@@ -39,6 +42,7 @@ export const RELATION_COMPONENT_SELECTORS = Object.freeze([
 
 export const SEMANTIC_ATTRIBUTE_SELECTORS = Object.freeze([
   '[data-spw-kind]',
+  '[data-spw-component-kind]',
   '[data-spw-role]',
   '[data-spw-slot]',
   '[data-spw-features]',
@@ -187,6 +191,7 @@ export function buildAxisGenome(axisEntries = [], listEntries = []) {
 export function inferTopographyKind(el, fallback = 'component') {
   if (!el) return fallback;
   if (el.dataset?.spwKind) return normalizeTopographyToken(el.dataset.spwKind);
+  if (el.dataset?.spwComponentKind) return normalizeTopographyToken(el.dataset.spwComponentKind);
 
   if (matchesAny(el, SURFACE_COMPONENT_SELECTORS)) return 'surface';
   if (hasClass(el, 'site-frame')) return 'frame';
@@ -196,6 +201,9 @@ export function inferTopographyKind(el, fallback = 'component') {
     hasClass(el, 'frame-card')
     || hasClass(el, 'media-card')
     || hasClass(el, 'media-focus-card')
+    || hasClass(el, 'topic-reference-card')
+    || hasClass(el, 'vibe-widget')
+    || hasClass(el, 'palette-probe')
     || hasClass(el, 'software-card')
     || hasClass(el, 'operator-card')
     || hasClass(el, 'plan-card')

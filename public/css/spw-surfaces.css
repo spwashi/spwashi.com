@@ -19,9 +19,9 @@
   --spw-shell-card-pad:   var(--inset-component, 1rem);
   --spw-shell-panel-pad:  var(--inset-surface, 0.9rem);
   
-  --spw-shell-soft-bg:        var(--surface-soft, rgba(255, 255, 255, 0.44));
-  --spw-shell-card-bg:        var(--surface, rgba(255, 255, 255, 0.68));
-  --spw-shell-card-bg-strong: var(--surface-strong, rgba(255, 255, 255, 0.74));
+  --spw-shell-soft-bg:        var(--spw-surface-fill-soft, var(--surface-soft, rgba(255, 255, 255, 0.44)));
+  --spw-shell-card-bg:        var(--spw-surface-fill-rest, var(--surface, rgba(255, 255, 255, 0.68)));
+  --spw-shell-card-bg-strong: var(--spw-surface-fill-strong, var(--surface-strong, rgba(255, 255, 255, 0.74)));
   --spw-shell-panel-bg:
     linear-gradient(
       180deg,
@@ -38,8 +38,15 @@
   --spw-shell-overlay: var(--overlay-gradient-fade-bottom);
 
 
-  --spw-shell-line:        var(--line, rgba(14, 18, 20, 0.14));
-  --spw-shell-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
+  --spw-shell-line:        var(--spw-surface-line-rest, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-shell-line-strong: var(--spw-surface-line-active, var(--line-strong, rgba(0, 128, 128, 0.34)));
+  --spw-shell-card-shadow: var(--spw-surface-shadow-rest, var(--card-shadow));
+  --spw-shell-card-shadow-raised: var(--spw-surface-shadow-raised, var(--card-shadow-hover));
+  --spw-shell-card-transition:
+    transform var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease);
   --spw-palette-probe-1: var(--active-op-color, #008080);
   --spw-palette-probe-2: var(--op-object-color, #c68a22);
   --spw-palette-probe-3: var(--op-ref-color, #1d57a3);
@@ -61,6 +68,31 @@
   .spw-console
 ) {
   min-width: 0;
+}
+
+:where(.media-focus-card, .media-card, .topic-reference-card) {
+  position: relative;
+  min-height: 100%;
+  padding: var(--spw-shell-card-pad);
+  border: 1px solid var(--spw-shell-line);
+  border-radius: var(--shape-surface, 10px);
+  background: var(--spw-shell-panel-bg);
+  color: inherit;
+  box-sizing: border-box;
+  box-shadow: var(--spw-shell-card-shadow);
+  overflow: hidden;
+  transition: var(--spw-shell-card-transition);
+}
+
+:where(.media-focus-card, .media-card) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.62rem);
+}
+
+:where(.topic-reference-card) {
+  display: grid;
+  gap: 0.55rem;
 }
 
 /* Shared grid normalization for early-route card systems */
@@ -121,24 +153,7 @@
 
 :where([data-spw-features~="media-publishing"] .media-focus-card,
        [data-spw-features~="media-publishing"] .media-card) {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm, 0.62rem);
-  min-height: 100%;
-  padding: var(--spw-shell-card-pad);
-  border: 1px solid var(--spw-shell-line);
-  border-radius: var(--shape-surface, 10px);
   background: var(--spw-shell-card-bg);
-  color: inherit;
-  box-sizing: border-box;
-  box-shadow: var(--card-shadow);
-  overflow: hidden;
-  transition:
-    transform var(--duration-base, 220ms) var(--ease-mechanical, ease),
-    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-    background var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease);
 }
 
 :where([data-spw-features~="media-publishing"] a.media-card) {
@@ -150,12 +165,12 @@
   transform: translateY(-2px);
   border-color: var(--card-border-hover, var(--line-strong));
   background: var(--card-bg-hover, var(--surface-strong));
-  box-shadow: var(--card-shadow-hover);
+  box-shadow: var(--spw-shell-card-shadow-raised);
 }
 
 :where([data-spw-features~="media-publishing"] .media-focus-card--daily) {
   background: var(--spw-shell-card-bg-strong);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--spw-shell-card-shadow);
 }
 
 :where([data-spw-features~="media-publishing"] .media-focus-title,
@@ -204,14 +219,7 @@
 }
 
 :where(.topic-reference-card) {
-  display: grid;
-  gap: 0.55rem;
-  min-height: 100%;
-  padding: var(--spw-shell-card-pad);
-  border: 1px solid var(--spw-shell-line);
-  border-radius: var(--shape-surface, 10px);
   background: var(--spw-shell-panel-bg);
-  box-shadow: var(--card-shadow);
 }
 
 :where(.topic-reference-card > h3) {

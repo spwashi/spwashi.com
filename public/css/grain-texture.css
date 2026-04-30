@@ -45,13 +45,14 @@
 
   /* Panel-friendly material vars */
   --grain-ambient-tint: color-mix(in srgb, var(--page-bg, #f8f7f5) 92%, transparent);
-  --grain-panel-fill: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 92%, transparent);
-  --grain-panel-fill-strong: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.84)) 98%, transparent);
-  --grain-panel-edge: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  --grain-panel-fill: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 92%, transparent);
+  --grain-panel-fill-strong: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 98%, transparent);
+  --grain-panel-edge: color-mix(in srgb, var(--material-line, var(--line, rgba(14, 18, 20, 0.14))) 82%, transparent);
 
   --grain-shadow-strength: 0.06;
-  --grain-shadow-soft: 0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
+  --grain-shadow-soft: var(--material-shadow-rest, 0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
     0 6px 16px rgba(0, 0, 0, var(--grain-shadow-strength));
+  );
 
   --grain-glow-strength: 0.08;
   --grain-panel-glow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*120%), transparent),
@@ -239,7 +240,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  z-index: 0;
+  z-index: var(--spw-local-layer-substrate, 0);
 }
 
 :where(.site-frame, .frame-card, .frame-panel, .mode-panel,
@@ -247,9 +248,9 @@ body::after {
   .pretext-surface, .settings-category, .settings-fieldset,
   .domain-visual, .spw-console, .spw-nav-panel,
   .payment-card, .seed-card, .profile-card, .svc-wrapper,
-  .operator-chip, .spec-pill, .badge, .tag, .pill)>* {
+  .operator-chip, .spec-pill, .badge, .tag, .pill)> :not([data-spw-overlay]) {
   position: relative;
-  z-index: 1;
+  z-index: var(--spw-local-layer-content, 1);
 }
 
 /* Surface grain layer */

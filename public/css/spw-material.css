@@ -23,22 +23,26 @@
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-line:          var(--line, rgba(14, 18, 20, 0.14));
-  --material-line-strong:   var(--line-strong, rgba(0, 128, 128, 0.34));
+  --material-line:          var(--spw-surface-line-rest, var(--line, rgba(14, 18, 20, 0.14)));
+  --material-line-strong:   var(--spw-surface-line-active, var(--line-strong, rgba(0, 128, 128, 0.34)));
   --material-ink:           var(--ink, #161c1d);
   --material-ink-soft:      var(--ink-soft, rgba(14, 18, 20, 0.68));
 
-  --material-surface:        var(--surface, rgba(255, 255, 255, 0.62));
-  --material-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.78));
-  --material-surface-soft:   var(--surface-soft, rgba(255, 255, 255, 0.44));
+  --material-surface:        var(--spw-surface-fill-rest, var(--surface, rgba(255, 255, 255, 0.62)));
+  --material-surface-strong: var(--spw-surface-fill-strong, var(--surface-strong, rgba(255, 255, 255, 0.78)));
+  --material-surface-soft:   var(--spw-surface-fill-soft, var(--surface-soft, rgba(255, 255, 255, 0.44)));
 
-  --material-shadow-rest:    var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
-  --material-shadow-lift:    var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
+  --material-shadow-rest:    var(--spw-surface-shadow-rest, var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06)));
+  --material-shadow-lift:    var(--spw-surface-shadow-raised, var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10)));
   --material-highlight-inset: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
   --material-depth-opacity-3: 0.97;
+
+  --material-layer-substrate: var(--spw-local-layer-substrate, 0);
+  --material-layer-content: var(--spw-local-layer-content, 1);
+  --material-layer-overlay: var(--spw-local-layer-overlay, 2);
 
   --material-blur-frame: var(--material-blur, 12px);
   --material-blur-card:  calc(var(--material-blur, 12px) * 0.8);
@@ -78,11 +82,14 @@
       var(--material-surface) calc(var(--material-depth-opacity) * 100%),
       transparent
     );
+  --material-local-background: var(--material-local-surface);
+  --material-local-border-color: var(--material-line);
+  --material-local-shadow: var(--material-shadow-rest);
 
   color: var(--material-ink);
-  background: var(--material-local-surface);
-  border-color: var(--material-line);
-  box-shadow: var(--material-shadow-rest);
+  background: var(--material-local-background);
+  border-color: var(--material-local-border-color);
+  box-shadow: var(--material-local-shadow);
   transition:
     transform    var(--material-duration-fast) var(--material-lift-ease),
     box-shadow   var(--material-duration-base) var(--material-settle-ease),
@@ -97,7 +104,6 @@
 
 :where([data-spw-metamaterial]) {
   --material-local-border: 1px solid var(--material-line);
-  --material-local-shadow: var(--material-shadow-rest);
   --material-local-background: var(--material-local-surface);
 
   background: var(--material-local-background);
@@ -604,7 +610,7 @@
   content: "";
   position: absolute;
   pointer-events: none;
-  z-index: 0;
+  z-index: var(--material-layer-substrate);
 }
 
 /* Layer: Bottom Fade
@@ -637,7 +643,7 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(4px);
-  z-index: -1;
+  z-index: var(--material-layer-substrate);
 }
 
 /* ─── Automated Content-Aware Overlays ──────────────────────────────────── */
@@ -659,7 +665,7 @@
     pointer-events: none;
     background: var(--overlay-gradient-fade-bottom);
     opacity: 0.28;
-    z-index: 1;
+    z-index: var(--material-layer-overlay);
     border-radius: inherit;
   }
 }

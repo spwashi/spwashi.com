@@ -457,17 +457,36 @@
 
   /* Layers */
   --layer-ground: 1;
+  --layer-substrate: 0;
+  --layer-content: 1;
+  --layer-overlay: 2;
   --layer-surface: 20;
   --layer-floating: 100;
   --layer-docked: 900;
   --layer-header: 1000;
   --layer-priority: 2000;
 
+  /* Local surface stack aliases */
+  --spw-local-layer-substrate: var(--layer-substrate);
+  --spw-local-layer-content: var(--layer-content);
+  --spw-local-layer-overlay: var(--layer-overlay);
+
   --depth-ambient: 1;
   --depth-settled: 10;
   --depth-active: 50;
   --depth-projected: 100;
   --depth-cinematic: 140;
+
+  /* Cross-layer material aliases */
+  --spw-surface-fill-rest: var(--surface);
+  --spw-surface-fill-strong: var(--surface-strong);
+  --spw-surface-fill-soft: var(--surface-soft);
+  --spw-surface-fill-matte: var(--surface-matte);
+  --spw-surface-line-rest: var(--line);
+  --spw-surface-line-active: var(--line-strong);
+  --spw-surface-shadow-rest: var(--shadow-base);
+  --spw-surface-shadow-raised: var(--shadow-active);
+  --spw-surface-shadow-floating: var(--floating-shadow);
 }
 
 

@@ -66,8 +66,10 @@ function getDailyFocus(config: MediaPublishingConfig): MediaItem | undefined {
 function renderItemCard(item: MediaItem = {}, options: CardOptions = {}, locale: LocaleCode = SOURCE_LOCALE): HTMLElement {
   const href = cleanText(item.href) || '#';
   const card = el('a', options.featured ? 'media-card media-card--featured' : 'media-card', {
+    'data-spw-component-kind': 'card',
     'data-spw-copy-unit': item.copyUnit || 'website.mediaPublishing.collection',
     'data-spw-locale': item.locale || locale,
+    'data-spw-metamaterial': options.featured ? 'shell' : 'matte',
     href,
     lang: item.locale || locale,
   });
@@ -110,8 +112,10 @@ function renderFocus(
 
   const article = el('article', options.daily ? 'media-focus-card media-focus-card--daily' : 'media-focus-card', {
     'data-spw-cadence': options.daily ? 'daily' : 'weekly',
+    'data-spw-component-kind': 'card',
     'data-spw-copy-unit': item.copyUnit || `website.mediaPublishing.${options.daily ? 'daily' : 'weekly'}`,
     'data-spw-locale': item.locale || locale,
+    'data-spw-metamaterial': options.daily ? 'shell' : 'matte',
     lang: item.locale || locale,
   });
   const label = el('p', 'spec-kicker');

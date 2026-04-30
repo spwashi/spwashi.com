@@ -104,6 +104,15 @@
   counterexample: "A shared host rule forces position: relative onto every child, so an opted-in overlay starts animating between flow and edge-pinned geometry."
 }
 
+^"surface_material_contract"{
+  definition: "Shared surface depth is a contract between tokens, material, grain, and ornament rather than a route-local paint choice."
+  css_contract: "Use --spw-surface-* aliases for fill, line, and shadow; use --spw-local-layer-* aliases for substrate, content, and overlay placement inside a surface."
+  layer_rule: "Tokens name the stack, material chooses the surface state, grain adds tactile substrate, and ornament may intensify the result without replacing the structural role."
+  host_rule: "A grain or material host may lift ordinary flow children above pseudo-element substrate layers, but opted-in overlay children keep their own geometry and stacking contract."
+  examples: ["frame-card with grain substrate and lifted flow content", "media card with automated fade overlay", "settings panel with material depth and quiet grain"]
+  counterexample: "A route surface restates background, shadow, child z-index, and overlay placement independently from the shared material tokens."
+}
+
 ^"interaction_states"{
   ambient: "Present but not yet being addressed."
   addressable: "Available through route, hover, focus, sigil, or keypath."
