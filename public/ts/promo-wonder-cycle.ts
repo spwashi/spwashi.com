@@ -130,16 +130,16 @@ const DEFAULT_FEED = Object.freeze({
 
 const loadFeed = createJsonFeedLoader<PromoWonderFeed>(FEED_URL, DEFAULT_FEED);
 
-function feedLocale(feed: PromoWonderFeed): LocaleCode {
+export function feedLocale(feed: PromoWonderFeed): LocaleCode {
   return cleanText(feed.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;
 }
 
-function pickDaily(feed: PromoWonderFeed, date = new Date()): PromoWonderPair {
+export function pickDaily(feed: PromoWonderFeed, date = new Date()): PromoWonderPair {
   const daily = Array.isArray(feed.daily) && feed.daily.length ? feed.daily : DEFAULT_FEED.daily;
   return daily[clampIndex(date.getDay(), daily.length)] ?? DEFAULT_FEED.daily[0];
 }
 
-function pickWeekly(feed: PromoWonderFeed, date = new Date()): PromoWonderPair {
+export function pickWeekly(feed: PromoWonderFeed, date = new Date()): PromoWonderPair {
   const weekly = Array.isArray(feed.weekly) && feed.weekly.length ? feed.weekly : DEFAULT_FEED.weekly;
   return weekly[clampIndex(getWeekIndex(date), weekly.length)] ?? DEFAULT_FEED.weekly[0];
 }

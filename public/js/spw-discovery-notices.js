@@ -16,7 +16,7 @@ const NOTICE_HIDE_DELAY_MS = 180;
 const loadFeed = createJsonFeedLoader(FEED_URL, null);
 let removeEscapeListener = () => {};
 
-function slugify(value = '') {
+export function slugify(value = '') {
   return cleanText(value)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -47,7 +47,7 @@ function writeDismissals(next) {
   }
 }
 
-function getDateKeys(date = new Date()) {
+export function getDateKeys(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
@@ -59,23 +59,23 @@ function getDateKeys(date = new Date()) {
   return { isoDay, isoWeek, dayName };
 }
 
-function normalizeHref(href = '') {
+export function normalizeHref(href = '') {
   const value = cleanText(href);
   if (!value) return '';
 
   try {
     return new URL(value, window.location.href).pathname.replace(/\/+$/, '/') || '/';
   } catch {
-    return value.replace(/\/+$/, '/') || '/';
+    return value.split(/[?#]/)[0].replace(/\/+$/, '/') || '/';
   }
 }
 
-function buildDismissKey(scope, notice, scheduleKey, index) {
+export function buildDismissKey(scope, notice, scheduleKey, index) {
   const noticeId = slugify(notice.id || notice.title || notice.cta || notice.href || String(index));
   return `${scope}:${noticeId}:${scheduleKey}`;
 }
 
-function selectScheduleItems(feed, date = new Date()) {
+export function selectScheduleItems(feed, date = new Date()) {
   const daily = Array.isArray(feed?.daily) ? feed.daily : [];
   const weekly = Array.isArray(feed?.weekly) ? feed.weekly : [];
   const { isoDay, isoWeek, dayName } = getDateKeys(date);
@@ -112,17 +112,17 @@ function selectScheduleItems(feed, date = new Date()) {
   return selected;
 }
 
-function isCurrentRoute(href) {
+export function isCurrentRoute(href, currentPath = window.location.pathname) {
   const normalized = normalizeHref(href);
   if (!normalized) return false;
 
-  const current = window.location.pathname.replace(/\/+$/, '/') || '/';
+  const current = cleanText(currentPath || window.location.pathname).replace(/\/+$/, '/') || '/';
   return normalized === current;
 }
 
-function shouldSuppressNotice(notice, scheduleKey, dismissals) {
+export function shouldSuppressNotice(notice, scheduleKey, dismissals, currentPath = window.location.pathname) {
   if (!notice) return true;
-  if (isCurrentRoute(notice.href)) return true;
+  if (isCurrentRoute(notice.href, currentPath)) return true;
 
   const storedKey = dismissals[notice.dismissKey];
   return storedKey === scheduleKey;
@@ -213,7 +213,7 @@ function dismissNotice(notice, stack, dismissals) {
   }, NOTICE_HIDE_DELAY_MS);
 }
 
-function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
+export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
   const source = raw?.source || raw || {};
   const href = cleanText(source.href || '');
   const title = cleanText(source.title || source.summary || 'Featured route');
@@ -236,15 +236,14 @@ function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
   };
 }
 
-function buildVisibleNotices(feed) {
+export function buildVisibleNotices(feed, date = new Date(), dismissals = readDismissals(), currentPath = window.location.pathname) {
   const locale = cleanText(feed?.sourceLocale || 'en') || 'en';
-  const dismissals = readDismissals();
-  const selected = selectScheduleItems(feed);
+  const selected = selectScheduleItems(feed, date);
   const visible = [];
 
   for (const item of selected) {
     const notice = normalizeNotice(item, item.cadence, item.scheduleKey, item.index, locale);
-    if (!notice || shouldSuppressNotice(notice, item.scheduleKey, dismissals)) continue;
+    if (!notice || shouldSuppressNotice(notice, item.scheduleKey, dismissals, currentPath)) continue;
     if (visible.some((entry) => normalizeHref(entry.href) === normalizeHref(notice.href))) continue;
     visible.push(notice);
   }

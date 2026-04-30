@@ -21,6 +21,7 @@
     "dev:open": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && vite --open",
     "manifest": "node scripts/generate-route-runtime-manifest.mjs",
     "preview": "vite preview",
+    "test:engagement": "npm run build:tools && npm run build:runtime && node --test scripts/tests/engagement-features.test.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.scripts.json --noEmit && tsc -p tsconfig.runtime.json --noEmit"
   },

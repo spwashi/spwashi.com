@@ -88,14 +88,14 @@ const DEFAULT_FEED = Object.freeze({
     ],
 });
 const loadFeed = createJsonFeedLoader(FEED_URL, DEFAULT_FEED);
-function feedLocale(feed) {
+export function feedLocale(feed) {
     return cleanText(feed.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;
 }
-function pickDaily(feed, date = new Date()) {
+export function pickDaily(feed, date = new Date()) {
     const daily = Array.isArray(feed.daily) && feed.daily.length ? feed.daily : DEFAULT_FEED.daily;
     return daily[clampIndex(date.getDay(), daily.length)] ?? DEFAULT_FEED.daily[0];
 }
-function pickWeekly(feed, date = new Date()) {
+export function pickWeekly(feed, date = new Date()) {
     const weekly = Array.isArray(feed.weekly) && feed.weekly.length ? feed.weekly : DEFAULT_FEED.weekly;
     return weekly[clampIndex(getWeekIndex(date), weekly.length)] ?? DEFAULT_FEED.weekly[0];
 }
