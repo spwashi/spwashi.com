@@ -1,9 +1,9 @@
 import { spawnSync } from 'node:child_process';
 import process from 'node:process';
 import { collectCssBuildPlan } from './css-build.mjs';
-const GENERATED_ROOTS = [
-    'scripts/typed',
-    'public/js/typed',
+const GENERATED_TS_GROUPS = [
+    { label: 'tools-ts', paths: ['scripts/typed'] },
+    { label: 'runtime-ts', paths: ['public/js/typed'] },
 ];
 function runGit(args) {
     return spawnSync('git', args, {
@@ -21,16 +21,30 @@ function collectChangedFiles(args) {
         .map((item) => item.trim())
         .filter(Boolean);
 }
-export async function collectGeneratedOutputs() {
+export async function collectGeneratedGroups() {
     const cssPlan = await collectCssBuildPlan();
-    return [...GENERATED_ROOTS, ...cssPlan.map((entry) => entry.output)].sort();
+    return [
+        ...GENERATED_TS_GROUPS,
+        {
+            label: 'css',
+            paths: cssPlan.map((entry) => entry.output).sort(),
+        },
+    ];
+}
+export async function collectGeneratedOutputs() {
+    const groups = await collectGeneratedGroups();
+    return groups.flatMap((group) => group.paths).sort();
 }
 export async function main() {
+    const groups = await collectGeneratedGroups();
     const generatedOutputs = await collectGeneratedOutputs();
     const unstaged = collectChangedFiles(['diff', '--name-only', '--', ...generatedOutputs]);
     const untracked = collectChangedFiles(['ls-files', '--others', '--exclude-standard', '--', ...generatedOutputs]);
     const changed = [...new Set([...unstaged, ...untracked])].sort();
-    console.log(`[generated] outputs=${generatedOutputs.length}`);
+    console.log(`[generated] groups=${groups.length} outputs=${generatedOutputs.length}`);
+    for (const group of groups) {
+        console.log(`  ${group.label}: ${group.paths.length}`);
+    }
     if (!changed.length) {
         console.log('[generated] passed');
         return;
