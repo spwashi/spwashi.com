@@ -834,44 +834,6 @@ figure.generic-figure,
    fallback frame header structures when route/component styling is incomplete.
    ========================================================================== */
 
-/* Skip link */
-.skip-link {
-  position: fixed;
-  top: 0.55rem;
-  left: max(0.55rem, env(safe-area-inset-left));
-  z-index: calc(var(--z-priority, 2000) + 10);
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.25rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 90%, transparent);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.92)) 96%, transparent);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.74rem;
-  text-decoration: none;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transform: translateY(-140%);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform var(--shell-duration-fast) var(--shell-ease),
-    opacity var(--shell-duration-fast) var(--shell-ease),
-    border-color var(--shell-duration-fast) var(--shell-ease);
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-  outline: none;
-  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
-}
-
 /* Frame header structures are owned by the components layer (spw-components.css).
    No shell-layer fallbacks needed — components always overrides shell in cascade. */
 
@@ -890,13 +852,4 @@ figure.generic-figure,
 /* Old pages sometimes place the header directly under body without classes */
 body > header:empty {
   display: none;
-}
-
-/* Generic fallback when a page has almost no structure */
-main > :where(h1, h2, h3, p, ul, ol, figure):first-child {
-  margin-top: 0;
-}
-
-main > :where(h1, h2, h3, p, ul, ol, figure):last-child {
-  margin-bottom: 0;
 }

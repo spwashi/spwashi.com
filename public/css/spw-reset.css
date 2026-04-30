@@ -172,6 +172,15 @@ aside {
   margin-top: var(--flow-section-gap);
 }
 
+/* Keep sparse pages from carrying accidental edge gaps. */
+main > :where(h1, h2, h3, p, ul, ol, figure):first-child {
+  margin-top: 0;
+}
+
+main > :where(h1, h2, h3, p, ul, ol, figure):last-child {
+  margin-bottom: 0;
+}
+
 /* useful generic stack */
 .flow-stack,
 .reading-stack,
