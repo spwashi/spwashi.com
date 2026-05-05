@@ -1,0 +1,482 @@
+/* ==========================================================================
+   cognitive-handles.css
+   --------------------------------------------------------------------------
+   Purpose:
+   - Semantic affordances for depth, phase, relation, and foldable layers.
+   - Handles should read as paper creases and Spw braces, not decoration.
+   - Tied directly to the operator palette and precision motion grammar.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Handle Tokens & Matrix Mapping
+   ========================================================================== */
+
+:root {
+    /* Dimensional increments */
+    --depth-0: 0px;
+    --depth-1: 4px;
+    --depth-2: 8px;
+    --depth-3: 12px;
+    --depth-4: 16px;
+
+    /* Semantic mappings to the Operator matrix */
+    --handle-entry:    var(--op-frame-color,  #008080);
+    --handle-concept:  var(--op-meta-color,   #324a85);
+    --handle-instance: var(--op-object-color, #a67c00);
+    --handle-relation: var(--op-merge-color,  #277a87);
+    --handle-phase:    var(--op-stream-color, #208259);
+
+    /* Phase specific mappings */
+    --phase-initiation:     var(--op-action-color, #005959);
+    --phase-resistance:     var(--op-pragma-color, #883a3a);
+    --phase-transformation: var(--op-merge-color,  #277a87);
+    --phase-expression:     var(--op-stream-color, #208259);
+    --phase-return:         var(--op-baseline-color, #594d3f);
+
+    /* Material properties */
+    --handle-line:        var(--line, rgba(14, 18, 20, 0.14));
+    --handle-line-active: var(--active-op-color, #008080);
+    
+    /* Motion alignment */
+    --handle-duration: var(--duration-fast, 140ms);
+    --handle-ease:     var(--ease-mechanical, ease);
+}
+
+/* ==========================================================================
+   2. Base State & Anchors
+   ========================================================================== */
+
+:where(
+    [data-cognitive-handle],
+    [data-handle-corner],
+    [data-dimension],
+    [data-nested-container],
+    [data-nested-bracket],
+    [data-abstraction-level],
+    [data-relation-pair],
+    [data-phase-dimension],
+    [data-scale-handle],
+    [data-cognitive-anchor],
+    [data-dimensional-link],
+    [data-foldable]
+) {
+    position: relative;
+}
+
+:where(
+    [data-cognitive-handle],
+    [data-scale-handle],
+    [data-foldable],
+    [data-cognitive-anchor]
+) {
+    cursor: pointer;
+}
+
+/* Universal Focus */
+:where(
+    [data-cognitive-handle]:focus-visible,
+    [data-scale-handle]:focus-visible,
+    [data-foldable]:focus-visible,
+    [data-cognitive-anchor]:focus-visible,
+    [data-dimensional-link]:focus-visible
+) {
+    outline: 2px solid var(--handle-line-active);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ==========================================================================
+   3. Primary Handle: Left Crease
+   ========================================================================== */
+
+:where([data-cognitive-handle]) {
+    transition:
+        border-color var(--handle-duration) var(--handle-ease),
+        background-color var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-cognitive-handle])::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    border-left: 2px solid var(--handle-line);
+    opacity: 0.58;
+    pointer-events: none;
+    transition:
+        border-color var(--handle-duration) var(--handle-ease),
+        opacity var(--handle-duration) var(--handle-ease),
+        width var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-cognitive-handle]:hover::before, [data-cognitive-handle]:focus-within::before) {
+    width: 5px;
+    border-color: var(--handle-line-active);
+    opacity: 0.92;
+}
+
+:where([data-cognitive-handle][data-depth="0"])::before { height: 22%; }
+:where([data-cognitive-handle][data-depth="1"])::before { height: 42%; }
+:where([data-cognitive-handle][data-depth="2"])::before { height: 62%; }
+:where([data-cognitive-handle][data-depth="3"])::before { height: 82%; }
+:where([data-cognitive-handle][data-depth="4"])::before { height: 100%; }
+
+/* ==========================================================================
+   4. Corner Braces
+   ========================================================================== */
+
+:where([data-handle-corner])::after {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border: 2px solid transparent;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity var(--handle-duration) var(--handle-ease),
+        border-color var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-handle-corner="tl"])::after {
+    top: 0;
+    left: 0;
+    border-top-color: var(--handle-entry);
+    border-left-color: var(--handle-entry);
+}
+
+:where([data-handle-corner="tr"])::after {
+    top: 0;
+    right: 0;
+    border-top-color: var(--handle-concept);
+    border-right-color: var(--handle-concept);
+}
+
+:where([data-handle-corner="bl"])::after {
+    bottom: 0;
+    left: 0;
+    border-bottom-color: var(--handle-instance);
+    border-left-color: var(--handle-instance);
+}
+
+:where([data-handle-corner="br"])::after {
+    right: 0;
+    bottom: 0;
+    border-right-color: var(--handle-relation);
+    border-bottom-color: var(--handle-relation);
+}
+
+:where([data-handle-corner]:hover::after, [data-handle-corner]:focus-within::after) {
+    opacity: 0.82;
+}
+
+/* ==========================================================================
+   5. Dimensional Creases & Nesting
+   ========================================================================== */
+
+:where([data-dimension])::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--depth-indicator-width, 2px);
+    border-left: var(--depth-indicator-width, 2px) double var(--handle-line);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        border-color var(--handle-duration) var(--handle-ease),
+        opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-dimension]:hover::before, [data-dimension]:focus-within::before) {
+    border-color: var(--handle-line-active);
+    opacity: 1;
+}
+
+:where([data-dimension="0"])::before { --depth-indicator-width: 1px; }
+:where([data-dimension="1"])::before { --depth-indicator-width: 2px; }
+:where([data-dimension="2"])::before { --depth-indicator-width: 3px; }
+:where([data-dimension="3"])::before { --depth-indicator-width: 4px; }
+
+:where([data-nested-container]) {
+    padding-left: calc(var(--nesting-level, 0) * 14px);
+    border-left: 1px solid transparent;
+    transition:
+        border-color var(--handle-duration) var(--handle-ease),
+        padding-left var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-nested-container][data-nesting-level="1"]) { border-left-color: color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent); }
+:where([data-nested-container][data-nesting-level="2"]) { border-left-color: color-mix(in srgb, var(--active-op-color, #008080) 30%, transparent); }
+:where([data-nested-container][data-nesting-level="3"]) { border-left-color: color-mix(in srgb, var(--active-op-color, #008080) 38%, transparent); }
+
+:where([data-nested-container]:hover, [data-nested-container]:focus-within) {
+    border-left-color: var(--handle-line-active);
+}
+
+:where([data-nested-bracket]) {
+    display: inline-block;
+}
+
+:where([data-nested-bracket])::before,
+:where([data-nested-bracket])::after {
+    position: absolute;
+    color: var(--handle-concept);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-nested-bracket])::before { content: '{'; left: -1em; }
+:where([data-nested-bracket])::after  { content: '}'; right: -1em; }
+
+:where([data-nested-bracket]:hover::before, [data-nested-bracket]:hover::after,
+       [data-nested-bracket]:focus-within::before, [data-nested-bracket]:focus-within::after) {
+    opacity: 0.66;
+}
+
+/* ==========================================================================
+   6. Abstraction Labels
+   ========================================================================== */
+
+:where([data-abstraction-level])::after {
+    content: attr(data-abstraction-label);
+    position: absolute;
+    top: -1.5em;
+    right: 0;
+    color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-size: var(--text-size-xs, 0.75rem);
+    font-weight: 600;
+    opacity: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-abstraction-level]:hover::after, [data-abstraction-level]:focus-within::after) {
+    opacity: 1;
+}
+
+:where([data-abstraction-level="entry"])::after    { color: var(--handle-entry); }
+:where([data-abstraction-level="concept"])::after  { color: var(--handle-concept); }
+:where([data-abstraction-level="instance"])::after { color: var(--handle-instance); }
+:where([data-abstraction-level="relation"])::after { color: var(--handle-relation); }
+
+/* ==========================================================================
+   7. Relation & Phase
+   ========================================================================== */
+
+:where([data-relation-pair][data-paired="true"]) {
+    border-radius: var(--shape-component, 6px);
+    background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.05));
+    transition: outline-color var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-relation-pair][data-paired="true"]:hover, [data-relation-pair][data-paired="true"]:focus-within) {
+    outline: 1px solid var(--handle-line-active);
+    outline-offset: 2px;
+}
+
+:where([data-relation-pair])::before {
+    content: '&';
+    position: absolute;
+    top: 50%;
+    left: -1.1em;
+    color: var(--handle-relation);
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-relation-pair]:hover::before, [data-relation-pair]:focus-within::before) {
+    opacity: 0.72;
+}
+
+:where([data-relation-line]) {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    stroke: var(--handle-relation);
+    stroke-width: var(--line-thick, 2px);
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-relation-pair]:hover ~ [data-relation-line], [data-relation-pair]:focus-within ~ [data-relation-line]) {
+    opacity: 0.42;
+}
+
+:where([data-phase-dimension])::before {
+    content: attr(data-phase);
+    position: absolute;
+    top: 50%;
+    right: -1rem;
+    color: var(--handle-phase);
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-xs, 0.72rem);
+    opacity: 0;
+    transform: translate(100%, -50%);
+    white-space: nowrap;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-phase-dimension]:hover::before, [data-phase-dimension]:focus-within::before) {
+    opacity: 0.8;
+}
+
+:where([data-phase="initiation"])::before     { color: var(--phase-initiation); }
+:where([data-phase="resistance"])::before     { color: var(--phase-resistance); }
+:where([data-phase="transformation"])::before { color: var(--phase-transformation); }
+:where([data-phase="expression"])::before     { color: var(--phase-expression); }
+:where([data-phase="return"])::before         { color: var(--phase-return); }
+
+/* ==========================================================================
+   8. Scale, Anchors, Portals, Folds
+   ========================================================================== */
+
+:where([data-scale-handle])::after {
+    content: '#';
+    position: absolute;
+    top: 50%;
+    right: -1em;
+    color: var(--handle-line-active);
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-scale-handle]:hover::after, [data-scale-handle]:focus-visible::after) {
+    opacity: 0.75;
+}
+
+:where([data-dimensional-breadcrumb]) {
+    display: flex;
+    gap: var(--space-xs, 0.5rem);
+    align-items: center;
+    margin-bottom: var(--space-md, 1rem);
+    color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-size: var(--text-size-sm, 0.85rem);
+}
+
+:where([data-dimensional-breadcrumb] > span) {
+    position: relative;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--handle-line);
+    border-radius: var(--shape-component, 6px);
+    background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.06));
+    transition: 
+        border-color var(--handle-duration) var(--handle-ease),
+        color var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-dimensional-breadcrumb] > span:hover, [data-dimensional-breadcrumb] > span:focus-visible) {
+    border-color: var(--handle-line-active);
+    color: var(--ink);
+}
+
+:where([data-cognitive-anchor])::before {
+    content: '#{';
+    position: absolute;
+    left: -1.55em;
+    color: var(--handle-relation);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-cognitive-anchor])::after {
+    content: '}';
+    color: var(--handle-relation);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-cognitive-anchor]:hover::before, [data-cognitive-anchor]:hover::after,
+       [data-cognitive-anchor]:focus-visible::before, [data-cognitive-anchor]:focus-visible::after) {
+    opacity: 0.8;
+}
+
+:where([data-dimensional-link])::after {
+    content: ' ~{}';
+    color: var(--handle-concept);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-dimensional-link]:hover::after, [data-dimensional-link]:focus-visible::after) {
+    opacity: 0.72;
+}
+
+:where([data-foldable])::before {
+    content: '{';
+    position: absolute;
+    top: 50%;
+    left: -0.75rem;
+    color: var(--handle-line-active);
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity var(--handle-duration) var(--handle-ease);
+}
+
+:where([data-foldable][data-folded="true"])::before {
+    content: '}';
+}
+
+:where([data-foldable]:hover::before, [data-foldable]:focus-visible::before) {
+    opacity: 0.85;
+}
+
+/* ==========================================================================
+   9. Responsive & Accessibility Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    :where([data-cognitive-handle])::before {
+        opacity: 0.72;
+        width: 4px;
+    }
+
+    :where([data-handle-corner])::after {
+        opacity: 0.48;
+    }
+
+    :where([data-dimensional-breadcrumb]) {
+        gap: var(--space-2xs, 0.25rem);
+        font-size: var(--text-size-xs, 0.75rem);
+    }
+
+    :where([data-dimensional-breadcrumb] > span) {
+        padding: 0.2rem 0.4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(
+        [data-cognitive-handle],
+        [data-cognitive-handle]::before,
+        [data-handle-corner]::after,
+        [data-nested-container],
+        [data-nested-bracket]::before,
+        [data-nested-bracket]::after,
+        [data-abstraction-level]::after,
+        [data-relation-pair],
+        [data-relation-pair]::before,
+        [data-relation-line],
+        [data-phase-dimension]::before,
+        [data-scale-handle]::after,
+        [data-cognitive-anchor]::before,
+        [data-cognitive-anchor]::after,
+        [data-dimensional-link]::after,
+        [data-foldable]::before
+    ) {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -1,1 +1,1 @@
-export * from './spw-payment-card.js';
+export * from './modules/payment-card.js';

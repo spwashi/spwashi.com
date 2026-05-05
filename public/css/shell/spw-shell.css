@@ -1,0 +1,855 @@
+/* ==========================================================================
+   spw-shell.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Site shell, viewport framing, page scaffolding, safe-area behavior,
+     generic page rhythm, header/footer/navigation contracts, and broad
+     “default page” presentation for spwashi.com.
+   - This file should be trustworthy even on pages with minimal markup.
+   - It should provide a pleasant generic page by default, while leaving room
+     for routes to bias identity later.
+
+   Design stance
+   - The shell should feel materially calm, structurally clear, and subtly
+     dimensional before any route-specific CSS loads.
+   - Defaults should never aggressively tint the whole site into one operator.
+   - Generic pages should still feel authored: readable measure, good spacing,
+     decent panels, figure treatment, and useful empty-state behavior.
+   - Shell semantics should remain low-specificity enough that route files can
+     override them without fighting.
+
+   Responsibilities
+   - viewport / body / safe area scaffolding
+   - generic page surfaces and reading defaults
+   - generic page shell defaults beneath the shared site chrome
+   - global side walls / brace rails
+   - main / article / section / aside / figure shell defaults
+   - generic cards, panels, notes, and page intro scaffolds
+   - generic responsive behavior
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Shell root tokens
+   ========================================================================== */
+
+:root {
+  /* Widths */
+  --page-width: 72rem;
+  --page-width-reading: 56rem;
+  --page-width-wide: 84rem;
+  --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
+  --page-gutter-block: clamp(0.9rem, 2.2vw, 1.8rem);
+
+  /* Vertical rhythm */
+  --surface-gap: clamp(1rem, 2vw, 1.35rem);
+  --page-stack-gap: clamp(1.1rem, 2.3vw, 1.7rem);
+  --page-stack-gap-loose: clamp(1.6rem, 3vw, 2.4rem);
+  --page-section-gap: clamp(2rem, 4vw, 3.25rem);
+  --page-section-gap-tight: clamp(1.3rem, 2.8vw, 2rem);
+
+  /* Header */
+  --shell-header-height: var(--header-height, 4rem);
+  --shell-header-min-height: 3.75rem;
+  --shell-header-pad-inline: clamp(0.85rem, 2vw, 1.2rem);
+  --shell-header-pad-block: 0.45rem;
+  --shell-header-grid-gap: 0.5rem;
+
+  /* Nav */
+  --shell-nav-min-height: max(2.5rem, var(--touch-target-min, 2.75rem));
+  --shell-nav-font-size: var(--text-size-nav, 0.88rem);
+  --shell-nav-padding-inline: clamp(0.72rem, 1.3vw, 0.92rem);
+  --shell-nav-padding-block: 0.38rem;
+  --shell-nav-gap-inline: 0.58rem;
+  --shell-nav-gap-block: 0.4rem;
+  --shell-nav-radius: var(--shape-control, 0.78rem);
+
+  /* Generic surface shell */
+  --shell-panel-radius: var(--shape-surface, 10px);
+  --shell-panel-radius-tight: var(--shape-component, 6px);
+  --shell-panel-radius-loose: var(--shape-floating, 16px);
+
+  --shell-panel-bg:
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 92%, transparent);
+  --shell-panel-bg-soft:
+    color-mix(in srgb, var(--surface, rgba(255, 255, 255, 0.62)) 90%, transparent);
+  --shell-panel-bg-matte:
+    color-mix(in srgb, var(--surface-matte, rgba(247, 244, 238, 0.93)) 94%, transparent);
+
+  --shell-panel-line:
+    color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 96%, transparent);
+  --shell-panel-line-strong:
+    color-mix(in srgb, var(--active-op-border, rgba(0, 128, 128, 0.34)) 90%, transparent);
+
+  --shell-panel-shadow:
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.52)),
+    var(--card-shadow, 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.03));
+
+  --shell-panel-shadow-hover:
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.52)),
+    var(--card-shadow-hover, 0 4px 18px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04));
+
+  --shell-panel-pad-inline: clamp(0.9rem, 2vw, 1.25rem);
+  --shell-panel-pad-block: clamp(0.8rem, 1.7vw, 1.1rem);
+
+  /* Generic reading */
+  --shell-reading-measure: var(--measure-reading, 68ch);
+  --shell-reading-measure-tight: var(--measure-panel, 52ch);
+  --shell-reading-measure-compact: var(--measure-card, 42ch);
+
+  /* Generic page hero */
+  --shell-hero-pad-inline: clamp(1rem, 2.4vw, 1.5rem);
+  --shell-hero-pad-block: clamp(1rem, 2.4vw, 1.4rem);
+
+  /* Footer */
+  --shell-footer-min-height: 3.5rem;
+  --shell-footer-font-size: var(--text-size-sm, 0.92rem);
+  --shell-footer-opacity: 0.92;
+
+  /* Rails / walls */
+  --shell-wall-width: 2px;
+  --shell-wall-opacity: 0.72;
+  --shell-wall-active-opacity: 1;
+
+  /* Motion */
+  --shell-duration-fast: var(--duration-fast, 140ms);
+  --shell-duration-base: var(--duration-base, 220ms);
+  --shell-duration-deliberate: var(--duration-deliberate, 360ms);
+
+  --shell-ease: var(--ease-mechanical, ease);
+  --shell-settle-ease: var(--ease-settle, ease);
+
+  /* Z layers */
+  --z-base: var(--layer-ground, 1);
+  --z-surface: var(--layer-surface, 20);
+  --z-floating: var(--layer-floating, 100);
+  --z-header: var(--layer-header, 1000);
+  --z-priority: var(--layer-priority, 2000);
+}
+
+/* ==========================================================================
+   2. Body / viewport scaffolding
+   ========================================================================== */
+
+/* Shell defaults keep raw HTML routes usable before route CSS loads. */
+html {
+  min-height: 100%;
+  scroll-padding-top: calc(var(--shell-header-height) + 1rem);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  background:
+    linear-gradient(180deg, var(--bg-field, var(--bg, hsl(42 77% 82%))), var(--bg, hsl(42 77% 82%)));
+  text-rendering: optimizeLegibility;
+
+  /* Ensure the body itself respects the safe area to prevent horizontal bleed */
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+
+  /* Shell-friendly defaults */
+  line-height: var(--site-line-height, 1.68);
+  overflow-wrap: break-word;
+}
+
+/* Density is page rhythm; components consume it rather than rename it. */
+body[data-spw-shell-density="compact"] {
+  --surface-gap: clamp(0.8rem, 1.5vw, 1rem);
+  --page-stack-gap: clamp(0.9rem, 1.8vw, 1.2rem);
+  --page-section-gap: clamp(1.4rem, 2.6vw, 2rem);
+}
+
+body[data-spw-shell-density="roomy"] {
+  --surface-gap: clamp(1.15rem, 2.2vw, 1.55rem);
+  --page-stack-gap: clamp(1.35rem, 2.8vw, 1.95rem);
+  --page-section-gap: clamp(2.4rem, 4.4vw, 3.8rem);
+}
+
+/* Generic top-level flow */
+body > * {
+  position: relative;
+}
+
+/* ==========================================================================
+   3. Generic page defaults
+   --------------------------------------------------------------------------
+   These make an otherwise plain page look intentional before route CSS adds
+   more specific identity.
+   ========================================================================== */
+
+/* main owns the page gutter; nested sections should not add a second page edge. */
+main {
+  width: 100%;
+  max-width: var(--page-width);
+  padding-inline: var(--page-gutter-inline);
+  margin:
+    clamp(1.2rem, 3vw, 2.2rem)
+    auto
+    calc(clamp(2.8rem, 5.5vw, 4.2rem) + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+  touch-action: pan-y;
+}
+
+/* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
+   different uses of horizontal space on wide screens. Reading is the default.
+   "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;
+   "split" is reading-column + rail for reading routes with navigation context. */
+:where(body[data-spw-layout="reading"]) main,
+main[data-spw-layout="reading"] {
+  max-width: var(--page-width-reading);
+}
+
+:where(body[data-spw-layout="wide"]) main,
+main[data-spw-layout="wide"] {
+  max-width: var(--page-width-wide);
+}
+
+:where(body[data-spw-layout="atlas"]) main,
+main[data-spw-layout="atlas"] {
+  max-width: var(--page-width-atlas);
+}
+
+/* Split layouts place a narrower reading column next to a rail for
+   related-routes, quick-jumps, or locally-collected items. */
+@media (min-width: 72rem) {
+  /* Split is the shell-owned reading-column + rail contract. */
+  :where(body[data-spw-layout="split"]) main,
+  main[data-spw-layout="split"] {
+    max-width: var(--page-width-wide);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--attention-rail-width);
+    column-gap: var(--attention-rail-gap);
+    align-items: start;
+  }
+
+  :where(body[data-spw-layout="split"]) main > :not(.spw-gutter-rail),
+  main[data-spw-layout="split"] > :not(.spw-gutter-rail) {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  :where(body[data-spw-layout="split"]) main > .spw-gutter-rail,
+  main[data-spw-layout="split"] > .spw-gutter-rail {
+    grid-column: 2;
+    grid-row: 1 / span 99;
+    position: sticky;
+    top: calc(var(--header-height) + 1rem);
+    align-self: start;
+    max-height: calc(100dvh - var(--header-height) - 2rem);
+    overflow-y: auto;
+  }
+}
+
+/* Gutter rail: auxiliary content that lives beside reading on wide screens
+   and collapses into the document flow on narrow ones. */
+.spw-gutter-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-surface);
+  font-size: var(--text-size-sm);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+@media (max-width: 72rem) {
+  .spw-gutter-rail {
+    order: 99;
+    border-top: 1px solid var(--line, rgba(0, 128, 128, 0.18));
+    padding-top: var(--gap-surface);
+  }
+}
+
+main > article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-section-gap);
+  touch-action: pan-y;
+}
+
+/* Gap handles section separation; prevent typography flow from double-spacing */
+main > article > * {
+  margin-block-start: 0;
+}
+
+main > :where(section, aside, nav, article, figure) + :where(section, aside, nav, article, figure) {
+  margin-top: 0;
+}
+
+:where(main > article > *, main > section > *, main > aside > *) {
+  min-width: 0;
+}
+
+main :where(section, aside, figure) {
+  min-width: 0;
+}
+
+main :where(section, aside) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+}
+
+main :where(article > h1:first-child, section > h1:first-child) {
+  margin-bottom: 0.25rem;
+}
+
+main :where(article > p, section > p, aside > p, li, blockquote, figcaption) {
+  max-width: var(--shell-reading-measure);
+}
+
+main :where(article > ul, article > ol, section > ul, section > ol) {
+  max-width: var(--shell-reading-measure-tight);
+}
+
+/* Generic page hero / intro */
+.page-intro,
+.page-hero,
+.shell-hero,
+.site-hero {
+  position: relative;
+  display: grid;
+  gap: clamp(0.85rem, 1.8vw, 1.2rem);
+  padding: var(--shell-hero-pad-block) var(--shell-hero-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius-loose);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 4%, transparent),
+      transparent 26%
+    ),
+    var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+.page-intro > :first-child,
+.page-hero > :first-child,
+.shell-hero > :first-child,
+.site-hero > :first-child {
+  margin-top: 0;
+}
+
+.page-intro > :last-child,
+.page-hero > :last-child,
+.shell-hero > :last-child,
+.site-hero > :last-child {
+  margin-bottom: 0;
+}
+
+.page-kicker,
+.hero-kicker,
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 1.7rem;
+  padding: 0.14rem 0.54rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.page-lede,
+.hero-lede,
+.shell-lede {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: clamp(1rem, 1.2rem + 0.2vw, 1.15rem);
+  line-height: 1.72;
+  max-width: min(56ch, 100%);
+}
+
+/* Generic page clusters and grids */
+.page-grid,
+.panel-grid,
+.card-grid,
+.generic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+  gap: var(--surface-gap);
+  min-width: 0;
+}
+
+.panel-grid--wide,
+.card-grid--wide {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
+}
+
+.page-cluster,
+.generic-cluster,
+.meta-cluster,
+.action-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  align-items: center;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   4. Generic surface defaults for common page content
+   --------------------------------------------------------------------------
+   This is intentionally broad so a route with sparse markup still looks good.
+   ========================================================================== */
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) {
+  position: relative;
+  min-width: 0;
+  padding: var(--shell-panel-pad-block) var(--shell-panel-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+  transition:
+    border-color var(--shell-duration-base) var(--shell-ease),
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    transform var(--shell-duration-fast) var(--shell-settle-ease);
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--active-op-border, rgba(0, 128, 128, 0.34)) 88%, transparent);
+  box-shadow: var(--shell-panel-shadow-hover);
+}
+
+.callout-card,
+.note-card {
+  border-inline-start: 0.28rem solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
+}
+
+.page-panel--matte,
+.generic-panel--matte {
+  background: var(--shell-panel-bg-matte);
+}
+
+.page-card--soft,
+.generic-card--soft {
+  background: var(--shell-panel-bg-soft);
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) > :first-child {
+  margin-top: 0;
+}
+
+:where(
+  .page-panel,
+  .generic-panel,
+  .info-panel,
+  .page-card,
+  .generic-card,
+  .reading-card,
+  .note-card,
+  .callout-card
+) > :last-child {
+  margin-bottom: 0;
+}
+
+/* Generic panels for figures and screenshots */
+figure.page-figure,
+figure.generic-figure,
+.screenshot-frame,
+.media-frame {
+  display: grid;
+  gap: 0.75rem;
+  padding: var(--shell-panel-pad-block) var(--shell-panel-pad-inline);
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > img,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > svg,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > video,
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: calc(var(--shell-panel-radius) - 2px);
+}
+
+:where(figure.page-figure, figure.generic-figure, .screenshot-frame, .media-frame) > figcaption {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+/* Generic data / list surfaces */
+.data-stack,
+.page-index,
+.link-index,
+.file-index,
+.section-index {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.link-row,
+.file-row,
+.index-row,
+.page-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+  min-width: 0;
+  padding: 0.82rem 0.95rem;
+  border: 1px solid var(--shell-panel-line);
+  border-radius: var(--shell-panel-radius);
+  background: var(--shell-panel-bg);
+  box-shadow: var(--shell-panel-shadow);
+}
+
+.index-sigil,
+.row-sigil,
+.file-ext {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.6rem;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--shell-panel-radius-tight);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 64%),
+    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 84%, var(--ink));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   5. Side rails / brace walls
+   --------------------------------------------------------------------------
+   Keep these subtle. The old defaults were too assertive for generic pages.
+   ========================================================================== */
+
+.spw-objective-wall,
+.spw-boon-wall {
+  position: fixed;
+  left: 0;
+  top: var(--shell-header-height);
+  bottom: 0;
+  width: var(--shell-wall-width);
+  z-index: 198;
+  pointer-events: none;
+  background: transparent;
+  opacity: var(--shell-wall-opacity);
+  box-shadow:
+    inset -1px 0 0 color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  transition:
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    opacity var(--shell-duration-fast) var(--shell-ease);
+}
+
+.spw-subjective-wall,
+.spw-bane-wall {
+  position: fixed;
+  right: 0;
+  top: var(--shell-header-height);
+  bottom: 0;
+  width: var(--shell-wall-width);
+  z-index: 198;
+  pointer-events: none;
+  background: transparent;
+  opacity: var(--shell-wall-opacity);
+  box-shadow:
+    inset 1px 0 0 color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  transition:
+    box-shadow var(--shell-duration-deliberate) var(--shell-settle-ease),
+    background-color var(--shell-duration-fast) var(--shell-ease),
+    opacity var(--shell-duration-fast) var(--shell-ease);
+}
+
+/* Hide interior content from walls by default */
+.spw-objective-wall-char,
+.spw-boon-wall-char,
+.spw-subjective-wall-char,
+.spw-bane-wall-char,
+.spw-objective-label,
+.spw-subjective-label,
+.spw-bane-label,
+.spw-pivot-label,
+.spw-subjective-scroll-track,
+.spw-bane-scroll-track {
+  display: none;
+}
+
+.spw-objective-wall[role="button"],
+.spw-subjective-wall[role="button"],
+.spw-boon-wall[role="button"],
+.spw-bane-wall[role="button"] {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.spw-objective-wall[role="button"]:hover,
+.spw-boon-wall[role="button"]:hover {
+  opacity: var(--shell-wall-active-opacity);
+  background: color-mix(in srgb, var(--objective-brace-wash, rgba(0, 128, 128, 0.08)) 170%, transparent);
+  box-shadow:
+    inset -2px 0 0 color-mix(in srgb, var(--objective-brace-color, var(--active-op-color, var(--teal, #008080))) 34%, transparent);
+}
+
+.spw-subjective-wall[role="button"]:hover,
+.spw-bane-wall[role="button"]:hover {
+  opacity: var(--shell-wall-active-opacity);
+  background: color-mix(in srgb, var(--subjective-brace-wash, rgba(160, 42, 77, 0.08)) 170%, transparent);
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--subjective-brace-color, var(--active-op-color, var(--teal, #008080))) 34%, transparent);
+}
+
+.spw-objective-wall[data-spw-pivot-active="true"],
+.spw-boon-wall[data-spw-pivot-active="true"] {
+  background: color-mix(in srgb, var(--objective-brace-wash, rgba(0, 128, 128, 0.08)) 280%, transparent);
+}
+
+.spw-subjective-wall[data-spw-pivot-active="true"],
+.spw-bane-wall[data-spw-pivot-active="true"] {
+  background: color-mix(in srgb, var(--subjective-brace-wash, rgba(160, 42, 77, 0.08)) 280%, transparent);
+}
+
+/* ==========================================================================
+   6. Utility shell defaults for common authoring structures
+   --------------------------------------------------------------------------
+   These support a generic page with decent style depth even without route CSS.
+   ========================================================================== */
+
+.page-columns,
+.columns-2,
+.columns-3 {
+  display: grid;
+  gap: var(--surface-gap);
+  min-width: 0;
+}
+
+.page-columns,
+.columns-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.columns-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-meta,
+.page-note,
+.page-transition,
+.inline-note,
+.section-note {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.page-note,
+.page-transition,
+.section-note {
+  padding-left: 0.95rem;
+  border-left: 2px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 96%, transparent);
+}
+
+.page-rule,
+.section-rule,
+.soft-rule {
+  width: 100%;
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  margin: 0;
+}
+
+.page-label,
+.section-label,
+.meta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.page-actions,
+.card-actions,
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.6rem;
+  align-items: center;
+}
+
+.page-chip,
+.meta-chip,
+.info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 1.7rem;
+  padding: 0.14rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   7. Responsive
+   ========================================================================== */
+
+@media (max-width: 980px) {
+  .page-columns,
+  .columns-2,
+  .columns-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-intro,
+  .page-hero,
+  .shell-hero,
+  .site-hero {
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
+  }
+
+  :where(
+    .page-panel,
+    .generic-panel,
+    .info-panel,
+    .page-card,
+    .generic-card,
+    .reading-card,
+    .note-card,
+    .callout-card,
+    figure.page-figure,
+    figure.generic-figure,
+    .screenshot-frame,
+    .media-frame
+  ) {
+    padding-inline: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .index-sigil,
+  .row-sigil,
+  .file-ext {
+    min-width: 3rem;
+  }
+
+  .link-row,
+  .file-row,
+  .index-row,
+  .page-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   8. Reduced motion / low processing defaults
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-objective-wall,
+  .spw-subjective-wall,
+  .spw-boon-wall,
+  .spw-bane-wall,
+  :where(
+    .page-panel,
+    .generic-panel,
+    .info-panel,
+    .page-card,
+    .generic-card,
+    .reading-card,
+    .note-card,
+    .callout-card,
+    .link-row,
+    .file-row,
+    .index-row,
+    .page-row
+  ) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   11. Missing shell integration defaults
+   --------------------------------------------------------------------------
+   Patch-level shell ownership for skip links, nav interior containment, and
+   fallback frame header structures when route/component styling is incomplete.
+   ========================================================================== */
+
+/* Frame header structures are owned by the components layer (spw-components.css).
+   No shell-layer fallbacks needed — components always overrides shell in cascade. */
+
+/* ==========================================================================
+   12. A few targeted compatibility bridges
+   --------------------------------------------------------------------------
+   Keep these at the end so older markup still works while the shell becomes
+   more reasonable.
+   ========================================================================== */
+
+/* Push floating UI above the home indicator */
+[data-attn-register] {
+  bottom: calc(2rem + env(safe-area-inset-bottom));
+}
+
+/* Old pages sometimes place the header directly under body without classes */
+body > header:empty {
+  display: none;
+}

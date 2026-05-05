@@ -1,0 +1,788 @@
+/* ==========================================================================
+   blog-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped surface system for body[data-spw-surface="blog"].
+   - Orchestrates reading-first defaults, semantic theming, and route-specific
+     rhythm/phase bridges.
+   - Discrete UI components (Interpreter, Demos, Registers) have been extracted.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root scope + tokens
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) {
+  /* surface identity */
+  --blog-measure: 68ch;
+  --blog-radius: var(--shape-surface, 8px);
+  --blog-radius-tight: var(--shape-element, 4px);
+  --blog-radius-loose: var(--shape-floating, 10px);
+  --blog-gap-1: var(--space-2xs, 0.35rem);
+  --blog-gap-2: var(--space-xs, 0.55rem);
+  --blog-gap-3: var(--space-sm, 0.8rem);
+  --blog-gap-4: var(--space-md, 1rem);
+  --blog-gap-5: var(--space-lg, 1.2rem);
+  --blog-panel-pad: var(--inset-component, 1rem);
+  --blog-shadow-soft: var(--shadow-active, 0 4px 20px rgba(0, 0, 0, 0.10));
+  --blog-shadow-card: var(--shadow-base, 0 2px 10px rgba(0, 0, 0, 0.05));
+  --blog-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+  --blog-transition-ui: var(--duration-base, 180ms) var(--ease-mechanical, ease);
+
+  /* semantic palette: light */
+  --blog-bg: hsl(188 32% 97%);
+  --blog-bg-deep: hsl(146 24% 93%);
+  --blog-bg-card: rgba(255, 255, 255, 0.80);
+  --blog-bg-card-strong: rgba(255, 255, 255, 0.92);
+  --blog-field-bg: rgba(255, 255, 255, 0.84);
+
+  --blog-ink: hsl(178 16% 15%);
+  --blog-ink-soft: hsl(178 9% 38%);
+  --blog-line: rgba(18, 52, 50, 0.14);
+  --blog-line-strong: rgba(24, 123, 135, 0.34);
+
+  --blog-accent: hsl(188 64% 32%);
+  --blog-wonder: hsl(342 58% 38%);
+  --blog-spw: hsl(188 64% 32%);
+  --blog-draft: hsl(150 54% 30%);
+  --blog-play: hsl(271 46% 43%);
+  --blog-warn: hsl(1 62% 46%);
+
+  --blog-focus-ring: rgba(24, 123, 135, 0.18);
+  --blog-focus-outline: 2px solid var(--blog-accent);
+  
+  --blog-wonder-bg: rgba(160, 42, 77, 0.10);
+  --blog-spw-bg: rgba(24, 123, 135, 0.10);
+  --blog-draft-bg: rgba(35, 118, 82, 0.10);
+  --blog-warn-bg: rgba(192, 48, 44, 0.10);
+
+  --blog-objective-line: rgba(24, 123, 135, 0.26);
+  --blog-subjective-line: rgba(160, 42, 77, 0.20);
+  --spw-prompt-block-bg: var(--blog-bg-card-strong);
+  --spw-prompt-block-line: color-mix(in srgb, var(--blog-accent) 24%, var(--blog-line));
+  --spw-prompt-block-ink: var(--blog-ink);
+
+  background-color: var(--blog-bg);
+  color: var(--blog-ink);
+  line-height: var(--site-line-height, 1.65);
+  overflow-wrap: break-word;
+}
+
+/* Dark theme token override */
+:where(
+  html[data-spw-color-mode="dark"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"]),
+  body[data-spw-surface="blog"][data-theme="atelier-dark"]
+) {
+  --blog-bg: hsl(178 14% 11%);
+  --blog-bg-deep: hsl(326 18% 14%);
+  --blog-bg-card: rgba(255, 255, 255, 0.07);
+  --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
+  --blog-field-bg: rgba(255, 255, 255, 0.08);
+
+  --blog-ink: hsl(172 24% 88%);
+  --blog-ink-soft: hsl(168 13% 68%);
+  --blog-line: rgba(255, 255, 255, 0.14);
+  --blog-line-strong: rgba(103, 212, 222, 0.38);
+
+  --blog-accent: hsl(188 68% 62%);
+  --blog-wonder: hsl(342 66% 66%);
+  --blog-spw: hsl(188 68% 62%);
+  --blog-draft: hsl(150 58% 58%);
+  --blog-play: hsl(271 52% 70%);
+  --blog-warn: hsl(1 70% 68%);
+
+  --blog-focus-ring: rgba(103, 212, 222, 0.24);
+  --blog-wonder-bg: rgba(228, 108, 144, 0.13);
+  --blog-spw-bg: rgba(103, 212, 222, 0.13);
+  --blog-draft-bg: rgba(95, 213, 157, 0.13);
+  --blog-warn-bg: rgba(238, 112, 108, 0.13);
+
+  --blog-objective-line: rgba(103, 212, 222, 0.30);
+  --blog-subjective-line: rgba(228, 108, 144, 0.26);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"])) {
+    --blog-bg: hsl(178 14% 11%);
+    --blog-bg-deep: hsl(326 18% 14%);
+    --blog-bg-card: rgba(255, 255, 255, 0.07);
+    --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
+    --blog-field-bg: rgba(255, 255, 255, 0.08);
+
+    --blog-ink: hsl(172 24% 88%);
+    --blog-ink-soft: hsl(168 13% 68%);
+    --blog-line: rgba(255, 255, 255, 0.14);
+    --blog-line-strong: rgba(103, 212, 222, 0.38);
+
+    --blog-accent: hsl(188 68% 62%);
+    --blog-wonder: hsl(342 66% 66%);
+    --blog-spw: hsl(188 68% 62%);
+    --blog-draft: hsl(150 58% 58%);
+    --blog-play: hsl(271 52% 70%);
+    --blog-warn: hsl(1 70% 68%);
+
+    --blog-focus-ring: rgba(103, 212, 222, 0.24);
+    --blog-wonder-bg: rgba(228, 108, 144, 0.13);
+    --blog-spw-bg: rgba(103, 212, 222, 0.13);
+    --blog-draft-bg: rgba(95, 213, 157, 0.13);
+    --blog-warn-bg: rgba(238, 112, 108, 0.13);
+
+    --blog-objective-line: rgba(103, 212, 222, 0.30);
+    --blog-subjective-line: rgba(228, 108, 144, 0.26);
+  }
+}
+
+:where(html[data-spw-high-contrast="on"] body[data-spw-surface="blog"]) {
+  --blog-line: currentColor;
+  --blog-line-strong: currentColor;
+  --blog-objective-line: currentColor;
+  --blog-subjective-line: currentColor;
+  --blog-focus-ring: transparent;
+  --blog-shadow-soft: none;
+  --blog-shadow-card: none;
+}
+
+/* ==========================================================================
+   2. Normalization + low-specificity route defaults
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] main) {
+  width: min(100%, 1100px);
+  margin-inline: auto;
+  padding-inline: var(--space-md, 1rem);
+  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
+}
+
+:where(body[data-spw-surface="blog"] main > article) {
+  display: grid;
+  gap: clamp(0.95rem, 2vw, 1.35rem);
+}
+
+:where(body[data-spw-surface="blog"]) :is(img, video) {
+  display: block;
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
+  max-width: var(--blog-measure);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues) {
+  background:
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--blog-wonder) 11%, transparent), transparent 24%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--blog-accent) 8%, transparent), transparent 28%),
+    var(--blog-bg-card);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .demo-control-group),
+:where(body[data-spw-surface="blog"] #recording-cues .trope-box) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 72%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--blog-accent) 7%, transparent), transparent 28%),
+    var(--blog-bg-card-strong);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .context-readout > div) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--blog-bg-card-strong) 96%, transparent);
+}
+
+:where(body[data-spw-surface="blog"]) .blog-svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   3. Brace perspective frames
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) .site-frame {
+  --blog-frame-objective-opacity: 0.22;
+  --blog-frame-subjective-opacity: 0.18;
+
+  position: relative;
+  border-color: var(--blog-line);
+  border-left-color: var(--blog-objective-line);
+  border-right-color: var(--blog-subjective-line);
+  border-radius: var(--blog-radius);
+  background: var(--blog-bg-card);
+  transition:
+    border-color var(--blog-transition-ui),
+    box-shadow var(--blog-transition-ui),
+    background-color var(--blog-transition-ui),
+    transform var(--blog-transition-ui);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::before,
+:where(body[data-spw-surface="blog"]) .site-frame::after {
+  position: absolute;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.88rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity var(--blog-transition-ui);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::before {
+  content: "{";
+  top: 0.55rem;
+  left: 0.65rem;
+  color: var(--blog-accent);
+  opacity: var(--blog-frame-objective-opacity);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::after {
+  content: "}";
+  right: 0.65rem;
+  bottom: 0.5rem;
+  color: var(--blog-wonder);
+  opacity: var(--blog-frame-subjective-opacity);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame:hover::before {
+  opacity: max(var(--blog-frame-objective-opacity), 0.34);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame:hover::after {
+  opacity: max(var(--blog-frame-subjective-opacity), 0.34);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .site-frame.is-active-frame,
+  .site-frame:focus-within,
+  .site-frame:target
+) {
+  --blog-frame-objective-opacity: 0.48;
+  --blog-frame-subjective-opacity: 0.48;
+  
+  border-color: color-mix(in srgb, var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix, 0%)), var(--blog-line));
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength, 0.06));
+}
+
+/* Perspective Routing */
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-liminality="threshold"], .site-frame[data-wonder-level="w0"]) {
+  --blog-frame-objective-opacity: 0.16;
+  --blog-frame-subjective-opacity: 0.16;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="objective"], .site-frame[data-wonder-level="w1"]) {
+  --blog-frame-objective-opacity: 0.36;
+  --blog-frame-subjective-opacity: 0.18;
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame[data-wonder-level="w2"] {
+  --blog-frame-objective-opacity: 0.32;
+  --blog-frame-subjective-opacity: 0.22;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="balanced"], .site-frame[data-wonder-level="w3"]) {
+  --blog-frame-objective-opacity: 0.28;
+  --blog-frame-subjective-opacity: 0.28;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="subjective"], .site-frame[data-wonder-level="w5"]) {
+  --blog-frame-objective-opacity: 0.22;
+  --blog-frame-subjective-opacity: 0.38;
+}
+
+/* ==========================================================================
+   4. Semantic charge terms & References
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) [data-spw-charge-key] {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--blog-line-strong);
+  transition:
+    background-color var(--blog-transition-fast),
+    border-color var(--blog-transition-fast),
+    color var(--blog-transition-fast),
+    box-shadow var(--blog-transition-fast);
+}
+
+:where(body[data-spw-surface="blog"]) [data-spw-charge-key]:focus-visible {
+  outline: var(--blog-focus-outline);
+  outline-offset: 3px;
+}
+
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="preview"], [data-spw-charge-state="resonant"]) {
+  color: var(--blog-accent);
+  background-color: var(--blog-spw-bg);
+  border-bottom-color: var(--blog-accent);
+}
+
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="pinned"]) {
+  color: var(--blog-wonder);
+  background-color: var(--blog-wonder-bg);
+  border-bottom-color: var(--blog-wonder);
+  box-shadow: inset 0 -0.38em 0 var(--blog-wonder-bg);
+}
+
+:where(body[data-spw-surface="blog"]) [data-attn-active] {
+  outline: 2px solid var(--blog-accent);
+  outline-offset: 1px;
+}
+
+:where(body[data-spw-surface="blog"]) .blog-transition {
+  margin: 0.2rem 0 0.6rem;
+  padding-left: 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--blog-ink-soft);
+  border-left: 2px solid var(--blog-line);
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note a, .blog-transition a) {
+  color: var(--blog-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blog-line);
+  transition: border-color var(--blog-transition-fast);
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note a:hover, .blog-transition a:hover) {
+  border-color: var(--blog-accent);
+}
+
+/* ==========================================================================
+   5. Runtime-aligned preset + rhythm bridge
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) {
+  --blog-readable-width: min(var(--blog-measure), calc(var(--spw-preset-panel-readable-width, 42rem) * 1px));
+  --blog-card-readable-width: min(100%, calc(var(--spw-preset-card-readable-width, 34rem) * 1px));
+
+  /* pretext rhythm bridge */
+  --blog-pretext-line-gap-resting: 0.14rem;
+  --blog-pretext-line-gap-approach: 0.18rem;
+  --blog-pretext-line-gap-projecting: 0.24rem;
+  --blog-pretext-line-gap-contact: 0.2rem;
+
+  --blog-rhythm-accent-mix: 0%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.22;
+}
+
+/* Phase-aware site surface bias */
+:where(html[data-spw-phase="ambient"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 4%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.20;
+}
+
+:where(html[data-spw-phase="verse"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 7%;
+  --blog-rhythm-shadow-strength: 0.07;
+  --blog-rhythm-border-strength: 0.24;
+}
+
+:where(html[data-spw-phase="chorus"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 12%;
+  --blog-rhythm-shadow-strength: 0.11;
+  --blog-rhythm-border-strength: 0.32;
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 15%;
+  --blog-rhythm-shadow-strength: 0.14;
+  --blog-rhythm-border-strength: 0.36;
+}
+
+/* ==========================================================================
+   6. Route-specific pretext host specialization
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0.18rem;
+  --pretext-local-radius: var(--blog-radius-tight);
+  --pretext-line-gap: var(--blog-pretext-line-gap-resting);
+  --pretext-line-height: var(--spw-preset-body-line-height, 1.55rem);
+
+  max-width: 100%;
+  color: inherit;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%, color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%), transparent);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
+  max-width: min(100%, var(--blog-readable-width));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .line-decor) {
+  opacity: calc(0.18 + (var(--pretext-influence, 0) * 0.42));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-color: color-mix(in srgb, var(--blog-accent) 28%, var(--blog-line)); }
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) { 
+  border-color: color-mix(in srgb, var(--blog-wonder) 30%, var(--blog-line));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent);
+}
+
+/* ==========================================================================
+   7. Beat-aware ambient emphasis
+   ========================================================================== */
+
+:where(html[data-spw-playing="on"][data-spw-beat="1"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 3%);
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat="5"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="9"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="13"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 2%);
+}
+
+/* ==========================================================================
+   8. Route layouts
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] .page-index ul) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0.5rem 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+:where(body[data-spw-surface="blog"] .page-index a,
+       body[data-spw-surface="blog"] .specimen-index-card) {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 0;
+  padding: 0.68rem 0.82rem;
+  border: 1px solid var(--blog-line);
+  border-radius: 0.8rem;
+  background: var(--blog-bg-card);
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(body[data-spw-surface="blog"] .blog-hero-svg) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  color: var(--blog-ink);
+  margin-block: 0.2rem 0.35rem;
+}
+
+:where(body[data-spw-surface="blog"] .atelier-theme-toggle,
+       body[data-spw-surface="blog"] .operator-snippet-grid,
+       body[data-spw-surface="blog"] .specimen-index-grid,
+       body[data-spw-surface="blog"] .blog-output-grid,
+       body[data-spw-surface="blog"] .fiber-linguistics-grid,
+       body[data-spw-surface="blog"] .field-notes-grid) {
+  display: grid;
+  gap: var(--blog-gap-4);
+}
+
+:where(body[data-spw-surface="blog"] .atelier-theme-toggle,
+       body[data-spw-surface="blog"] .operator-snippet-grid,
+       body[data-spw-surface="blog"] .specimen-index-grid,
+       body[data-spw-surface="blog"] .blog-output-grid,
+       body[data-spw-surface="blog"] .fiber-linguistics-grid,
+       body[data-spw-surface="blog"] .field-notes-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch,
+       body[data-spw-surface="blog"] .operator-snippet,
+       body[data-spw-surface="blog"] .blog-output-card,
+       body[data-spw-surface="blog"] .fiber-pair,
+       body[data-spw-surface="blog"] .field-note) {
+  min-width: 0;
+  padding: var(--blog-panel-pad);
+  border: 1px solid var(--blog-line);
+  border-radius: var(--blog-radius);
+  background: var(--blog-bg-card);
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch) {
+  appearance: none;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch[aria-pressed="true"]) {
+  border-color: var(--blog-line-strong);
+  background: var(--blog-bg-card-strong);
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    var(--blog-shadow-card);
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch-palette) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin-top: 0.55rem;
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch-chip) {
+  inline-size: 0.9rem;
+  block-size: 0.9rem;
+  border-radius: 0.28rem;
+  border: 1px solid var(--blog-line);
+}
+
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-bg) { background: hsl(188 32% 97%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-accent) { background: hsl(188 64% 32%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-wonder) { background: hsl(342 58% 38%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-ink) { background: hsl(178 16% 15%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-draft) { background: hsl(150 54% 30%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--light-warn) { background: hsl(1 62% 46%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-bg) { background: hsl(178 14% 11%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-accent) { background: hsl(188 68% 62%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-wonder) { background: hsl(342 66% 66%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-ink) { background: hsl(172 24% 88%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-draft) { background: hsl(150 58% 58%); }
+:where(body[data-spw-surface="blog"] .theme-swatch-chip--dark-warn) { background: hsl(1 70% 68%); }
+
+:where(body[data-spw-surface="blog"] .blog-interpreter-layout) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--blog-gap-4);
+}
+
+:where(body[data-spw-surface="blog"] .blog-input-panel,
+       body[data-spw-surface="blog"] .blog-output-panel) {
+  display: grid;
+  gap: var(--blog-gap-4);
+  min-width: 0;
+  padding: var(--blog-panel-pad);
+  border: 1px solid var(--blog-line);
+  border-radius: var(--blog-radius);
+  background: var(--blog-bg-card);
+}
+
+:where(body[data-spw-surface="blog"] .blog-input-textarea) {
+  width: 100%;
+  min-height: 14rem;
+  padding: 0.9rem;
+  border: 1px solid var(--blog-line);
+  border-radius: var(--blog-radius-tight);
+  background: var(--blog-field-bg);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+
+:where(body[data-spw-surface="blog"] .blog-input-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+:where(body[data-spw-surface="blog"] .blog-input-status) {
+  color: var(--blog-ink-soft);
+}
+
+:where(body[data-spw-surface="blog"] .blog-output-header,
+       body[data-spw-surface="blog"] .blog-metric-grid) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(body[data-spw-surface="blog"] .blog-metric-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+}
+
+:where(body[data-spw-surface="blog"] .blog-metric) {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--blog-line);
+  border-radius: var(--blog-radius-tight);
+  background: color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent);
+}
+
+:where(body[data-spw-surface="blog"] .blog-chip-list,
+       body[data-spw-surface="blog"] .blog-output-list) {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+:where(body[data-spw-surface="blog"] .blog-chip-list) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+:where(body[data-spw-surface="blog"] .blog-chip-list li) {
+  padding: 0.22rem 0.46rem;
+  border: 1px solid var(--blog-line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent);
+}
+
+:where(body[data-spw-surface="blog"] .specimen-refs) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: var(--blog-gap-3);
+}
+
+:where(body[data-spw-surface="blog"] .specimen-ref) {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"] :is(.specimen-kernel-code, .blog-seed-card pre, .demo-code-output, .operator-snippet-example)) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+:where(body[data-spw-surface="blog"] .blog-seed-card pre) {
+  margin: 0;
+}
+
+:where(body[data-spw-surface="blog"] .operator-snippet-example) {
+  display: block;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+:where(body[data-spw-surface="blog"] .demo-audio-frequency,
+       body[data-spw-surface="blog"] .demo-audio-controls select) {
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"] .demo-canvas-wrap canvas) {
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+:where(body[data-spw-surface="blog"] .demo-filter-target) {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  :where(body[data-spw-surface="blog"]) {
+    --blog-panel-pad: 0.85rem;
+    --blog-gap-4: 0.82rem;
+  }
+
+  :where(body[data-spw-surface="blog"] main) {
+    padding-inline: 0.8rem;
+    padding-block-start: 0.8rem;
+  }
+
+  :where(body[data-spw-surface="blog"] main > article) {
+    gap: 0.85rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline,
+         body[data-spw-surface="blog"] .frame-heading) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline) {
+    min-height: 0;
+    margin-bottom: 0;
+    padding-bottom: 0.45rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .frame-topline > :is(.spec-strip, .frame-operators, .spw-component-meta),
+         body[data-spw-surface="blog"] .frame-heading > .spw-component-meta) {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  :where(body[data-spw-surface="blog"] .spw-semantic-seam) {
+    display: none;
+  }
+
+  :where(body[data-spw-surface="blog"] .page-index ul,
+         body[data-spw-surface="blog"] .atelier-theme-toggle,
+         body[data-spw-surface="blog"] .operator-snippet-grid,
+         body[data-spw-surface="blog"] .specimen-index-grid,
+         body[data-spw-surface="blog"] .blog-output-grid,
+         body[data-spw-surface="blog"] .fiber-linguistics-grid,
+         body[data-spw-surface="blog"] .field-notes-grid,
+         body[data-spw-surface="blog"] .blog-interpreter-layout) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="blog"] .blog-input-actions) {
+    align-items: stretch;
+  }
+
+  :where(body[data-spw-surface="blog"] .blog-input-actions > *) {
+    width: 100%;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row,
+         body[data-spw-surface="blog"] .demo-audio-controls) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.42rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row label,
+         body[data-spw-surface="blog"] .demo-audio-controls label) {
+    min-width: 0;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-out) {
+    min-width: 0;
+    text-align: left;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-slider-row input[type="range"],
+         body[data-spw-surface="blog"] .demo-audio-controls input[type="range"],
+         body[data-spw-surface="blog"] .demo-audio-controls select) {
+    width: 100%;
+  }
+
+  :where(body[data-spw-surface="blog"] .blog-input-status) {
+    font-size: 0.82rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .specimen-kernel-code,
+         body[data-spw-surface="blog"] .blog-seed-card pre,
+         body[data-spw-surface="blog"] .demo-code-output) {
+    font-size: 0.74rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-filter-target) {
+    font-size: clamp(1.35rem, 8vw, 1.9rem);
+  }
+
+  :where(body[data-spw-surface="blog"] .demo-audio-waveform) {
+    height: 3.5rem;
+  }
+
+  :where(body[data-spw-surface="blog"] .page-index a,
+         body[data-spw-surface="blog"] .specimen-index-card,
+         body[data-spw-surface="blog"] .theme-swatch) {
+    padding: 0.62rem 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   9. Reduced motion
+   ========================================================================== */
+
+:where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
+  .site-frame,
+  .mode-switch button,
+  [data-mode-group][data-set-mode],
+  [data-spw-flow="pretext"],
+  [data-spw-flow="pretext"] .line-decor
+) {
+  transition: none;
+  animation: none;
+  transform: none;
+}

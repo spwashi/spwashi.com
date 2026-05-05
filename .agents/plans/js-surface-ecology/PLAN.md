@@ -55,3 +55,17 @@ kernel → semantic → runtime → interface → modules
 - classify before merging
 - preserve suspicious files in place or move them to `legacy/`
 - verify updated import paths after each small move set
+
+## Implementation pass: 2026-05-05
+
+The first mechanical pass now exists.
+
+- `public/js/site.js` remains the public runtime entrypoint.
+- Root-level `public/js/*.js` compatibility wrappers preserve existing route, service-worker, and test URLs.
+- Implementation files moved into `kernel/`, `semantic/`, `runtime/`, `interface/`, `modules/`, and `media/`.
+- `public/js/typed/` remains generated output and was not moved.
+- Internal moved-module imports now resolve through stable `/public/js/*.js` wrappers, keeping this pass mechanical rather than a dependency-graph rewrite.
+- `public/css/style.css` now imports layered implementation files from folders matching the cascade layer order.
+- Root-level `public/css/*.css` files remain compatibility wrappers for older direct stylesheet links.
+
+The remaining cleanup is semantic, not mechanical: inspect root wrappers that represent real shadow twins, then merge only where call sites prove they share a contract.

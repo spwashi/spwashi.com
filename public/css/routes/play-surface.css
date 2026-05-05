@@ -1,0 +1,421 @@
+/* ==========================================================================
+ * play-surface.css
+ * --------------------------------------------------------------------------
+ * Purpose
+ * - Route-scoped surface layer for body[data-spw-surface="play"].
+ * - Gives /play/ a stronger role as session console, campaign atlas, and
+ * interactive route for playful systems.
+ * - Aligns with site rhythm, measured presets, and shared Spw frame semantics
+ * without fighting global component layers.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Route scope + tokens
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"]) {
+  /* Route Layout Variables */
+  --play-shell-max: 1160px;
+  --play-measure: 70ch;
+  --play-readable-width: min(var(--play-measure), var(--spw-preset-panel-readable-width, 46rem));
+  --play-card-readable-width: min(100%, var(--spw-preset-card-readable-width, 34rem));
+
+  /* Overriding Global Material/Semantic Tokens for the Play Route */
+  --bg: color-mix(in srgb, #f4e2b5 94%, rgba(24, 123, 135, 0.05));
+  --bg-deep: color-mix(in srgb, var(--bg) 88%, rgba(129, 69, 25, 0.06));
+  
+  --surface: color-mix(in srgb, rgba(255, 255, 255, 0.78) 86%, transparent);
+  --surface-strong: color-mix(in srgb, rgba(255, 255, 255, 0.90) 88%, transparent);
+  --surface-soft: color-mix(in srgb, rgba(255, 255, 255, 0.70) 84%, transparent);
+
+  --ink: var(--site-ink, #1f2423);
+  --ink-soft: var(--site-ink-soft, rgba(28, 34, 33, 0.68));
+  
+  --line: rgba(20, 41, 40, 0.16);
+  --line-strong: color-mix(in srgb, var(--active-op-border, #1a9999) 34%, var(--line));
+
+  /* Local Palette Overrides */
+  --play-accent: var(--active-op-color, #1a9999);
+  --play-accent-soft: color-mix(in srgb, var(--play-accent) 8%, transparent);
+  --play-wonder: color-mix(in srgb, #a02a4d 88%, #5c2437);
+  --play-wonder-soft: color-mix(in srgb, var(--play-wonder) 12%, transparent);
+
+  /* Measured Heights */
+  --play-card-min-height-phone: var(--spw-preset-card-min-height-phone, 12rem);
+  --play-card-min-height-tablet: var(--spw-preset-card-min-height-tablet, 10rem);
+  --play-panel-min-height-phone: var(--spw-preset-panel-min-height-phone, 14rem);
+  --play-panel-min-height-tablet: var(--spw-preset-panel-min-height-tablet, 12rem);
+
+  /* Control Dimensions */
+  --play-control-min-width: var(--spw-preset-control-min-width, 8.5rem);
+  --play-control-min-height: var(--spw-preset-control-min-height, 2.35rem);
+
+  /* Rhythm Variables */
+  --play-rhythm-accent-mix: 0%;
+  --play-rhythm-shadow-strength: 0.06;
+  --play-rhythm-border-strength: 0.22;
+
+  --play-pretext-line-gap-resting: 0.14rem;
+  --play-pretext-line-gap-approach: 0.18rem;
+  --play-pretext-line-gap-projecting: 0.24rem;
+  --play-pretext-line-gap-contact: 0.2rem;
+
+  background:
+    radial-gradient(circle at top center, rgba(255,255,255,0.18), transparent 36%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+}
+
+/* ==========================================================================
+   2. Rhythm bias
+   ========================================================================== */
+
+:where(html[data-spw-phase="ambient"] body[data-spw-surface="play"]) {
+  --play-rhythm-accent-mix: 4%;
+  --play-rhythm-shadow-strength: 0.06;
+  --play-rhythm-border-strength: 0.20;
+}
+
+:where(html[data-spw-phase="verse"] body[data-spw-surface="play"]) {
+  --play-rhythm-accent-mix: 7%;
+  --play-rhythm-shadow-strength: 0.07;
+  --play-rhythm-border-strength: 0.24;
+}
+
+:where(html[data-spw-phase="chorus"] body[data-spw-surface="play"]) {
+  --play-rhythm-accent-mix: 12%;
+  --play-rhythm-shadow-strength: 0.11;
+  --play-rhythm-border-strength: 0.32;
+}
+
+:where(html[data-spw-phase="bridge"] body[data-spw-surface="play"]) {
+  --play-rhythm-accent-mix: 9%;
+  --play-rhythm-shadow-strength: 0.09;
+  --play-rhythm-border-strength: 0.28;
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="play"]) {
+  --play-rhythm-accent-mix: 15%;
+  --play-rhythm-shadow-strength: 0.14;
+  --play-rhythm-border-strength: 0.36;
+}
+
+/* ==========================================================================
+   3. Shell Configuration
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"]) main {
+  width: min(100%, var(--play-shell-max));
+  margin-inline: auto;
+  padding-inline: var(--space-md, 1rem);
+  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.5rem);
+}
+
+:where(body[data-spw-surface="play"]) main > article {
+  width: 100%;
+  padding-top: var(--space-md, 1rem);
+}
+
+/* ==========================================================================
+   4. Hero / route introduction
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] .site-hero) {
+  display: grid;
+  gap: var(--space-md, 1rem);
+  margin-bottom: var(--space-xl, 1.9rem);
+  padding: var(--inset-surface, 1.5rem);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-strong) 96%, transparent) 0%,
+    color-mix(in srgb, var(--surface) 92%, transparent) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--play-accent) calc(18% + var(--play-rhythm-accent-mix)), var(--line));
+  border-radius: var(--shape-floating, 16px);
+  box-shadow: var(--shadow-sm, 0 10px 32px rgba(0, 0, 0, 0.08));
+}
+
+:where(body[data-spw-surface="play"] .site-hero .frame-topline) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm, 0.8rem);
+  flex-wrap: wrap;
+}
+
+:where(body[data-spw-surface="play"] .site-hero :is(p, .inline-note, .frame-note)) {
+  max-width: var(--play-readable-width);
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   5. Core panels / cards (Overrides for Play Route)
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+  padding: var(--inset-component, 1.2rem);
+  min-height: var(--play-card-min-height-phone);
+}
+
+@media (min-width: 48rem) {
+  :where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
+    min-height: var(--play-card-min-height-tablet);
+  }
+  :where(body[data-spw-surface="play"] .site-frame) {
+    min-height: var(--play-panel-min-height-tablet);
+  }
+}
+
+:where(body[data-spw-surface="play"] .site-frame::before),
+:where(body[data-spw-surface="play"] .site-frame::after) {
+  position: absolute;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="play"] .site-frame::before) {
+  content: "{";
+  top: 0.7rem;
+  left: 0.8rem;
+  color: var(--play-accent);
+  opacity: 0.26;
+}
+
+:where(body[data-spw-surface="play"] .site-frame::after) {
+  content: "}";
+  right: 0.8rem;
+  bottom: 0.65rem;
+  color: var(--play-wonder);
+  opacity: 0.22;
+}
+
+:where(body[data-spw-surface="play"] .site-frame.is-active-frame),
+:where(body[data-spw-surface="play"] .site-frame:focus-within),
+:where(body[data-spw-surface="play"] .site-frame:target) {
+  border-color: color-mix(in srgb, var(--play-accent) calc(48% + var(--play-rhythm-accent-mix)), var(--line));
+  box-shadow:
+    var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18)),
+    0 0.75rem 1.8rem rgba(0, 0, 0, var(--play-rhythm-shadow-strength));
+}
+
+:where(html[data-spw-playing="on"] body[data-spw-surface="play"] .site-frame.is-active-frame) {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--play-accent-soft) calc(24% + var(--play-rhythm-accent-mix)), transparent) 0%,
+    var(--surface) 100%
+  );
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="play"] .site-frame.is-active-frame) {
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   6. Frame grammar
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.55rem);
+}
+
+:where(body[data-spw-surface="play"] :is(.frame-sigil, .operator-chip, .syntax-token)) {
+  min-height: var(--play-control-min-height);
+  padding: 0.32rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--play-accent) 18%, var(--line));
+}
+
+:where(body[data-spw-surface="play"] :is(.frame-sigil:hover, .operator-chip:hover, .syntax-token:hover,
+                                         .frame-sigil:focus-visible, .operator-chip:focus-visible, .syntax-token:focus-visible)) {
+  border-color: var(--play-accent);
+  background: var(--play-accent-soft);
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+/* ==========================================================================
+   7. Readable text and notes
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] :is(.frame-note, .inline-note, .session-note, .frame-panel p, .frame-card p, .play-card p, .seed-card p)) {
+  max-width: var(--play-readable-width);
+}
+
+:where(body[data-spw-surface="play"] :is(pre, code, .demo-code-output, .seed-card pre)) {
+  max-width: min(100%, var(--spw-preset-code-readable-width, 48rem));
+}
+
+/* ==========================================================================
+   8. Session / campaign grids
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] :is(.frame-grid, .session-grid, .play-grid)) {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="play"] :is(.frame-grid > *, .session-grid > *, .play-grid > *)) {
+  grid-column: span 6;
+}
+
+:where(body[data-spw-surface="play"] :is(.frame-grid > .is-wide, .session-grid > .is-wide, .play-grid > .is-wide)) {
+  grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   9. Controls + toggles
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] :is(button, .mode-switch button, [data-mode-group][data-set-mode], .phase-menu-trigger, .session-action, .play-action)) {
+  min-width: var(--play-control-min-width);
+  min-height: var(--play-control-min-height);
+  padding: 0.42rem 0.72rem;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  transition:
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="play"] :is(button:hover, .mode-switch button:hover, [data-mode-group][data-set-mode]:hover, .phase-menu-trigger:hover)) {
+  border-color: color-mix(in srgb, var(--play-accent) 44%, var(--line));
+  background: color-mix(in srgb, var(--surface-strong) 88%, var(--play-accent-soft));
+}
+
+:where(body[data-spw-surface="play"] :is(button:focus-visible, .mode-switch button:focus-visible, [data-mode-group][data-set-mode]:focus-visible, .phase-menu-trigger:focus-visible)) {
+  outline: var(--play-focus-outline, 2px solid #008080);
+  outline-offset: 3px;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+:where(body[data-spw-surface="play"] :is(.mode-switch button.is-selected, [data-mode-group][data-set-mode].is-selected, [data-mode-group][data-set-mode][aria-pressed="true"])) {
+  border-color: color-mix(in srgb, var(--play-accent) calc(60% + var(--play-rhythm-accent-mix)), var(--line));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--play-accent-soft) 72%, transparent) 0%,
+    color-mix(in srgb, var(--surface-strong) 95%, transparent) 100%
+  );
+  box-shadow:
+    var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18)),
+    0 0.3rem 0.8rem rgba(0, 0, 0, var(--play-rhythm-shadow-strength));
+}
+
+/* ==========================================================================
+   10. Toast / install / utility affordances
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] [data-pwa-toast="install"]) {
+  position: fixed;
+  right: var(--space-md, 1rem);
+  bottom: calc(var(--space-md, 1rem) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--layer-docked, 900);
+  width: min(24rem, calc(100vw - 2rem));
+  padding: var(--inset-element, 0.85rem 1rem);
+  background: var(--surface-strong);
+  border: 1px solid color-mix(in srgb, var(--play-accent) 20%, var(--line));
+  border-radius: var(--shape-floating, 16px);
+  box-shadow: var(--shadow-active, 0 10px 32px rgba(0, 0, 0, 0.08));
+}
+
+/* ==========================================================================
+   11. Route-specific pretext bridge
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"]) {
+  --pretext-line-gap: var(--play-pretext-line-gap-resting);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--surface-strong) 94%, transparent) 0%,
+    color-mix(in srgb, var(--surface) 96%, transparent) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--line) calc(100% + var(--play-rhythm-border-strength) * 0%), transparent);
+}
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
+  max-width: min(100%, var(--play-readable-width));
+}
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  border-color: color-mix(in srgb, var(--play-accent) 28%, var(--line));
+}
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  border-color: color-mix(in srgb, var(--play-wonder) 30%, var(--line));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--play-wonder) 18%, transparent);
+}
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"][data-text-phase="chorus"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--play-accent) 22%, transparent), 0 0.4rem 1.1rem rgba(0, 0, 0, 0.08);
+}
+
+:where(body[data-spw-surface="play"] [data-spw-flow="pretext"][data-text-phase="drop"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--play-wonder) 20%, transparent), 0 0.55rem 1.5rem rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   12. Charge / attn bridge
+   ========================================================================== */
+
+:where(body[data-spw-surface="play"] [data-spw-charge-key]) {
+  border-bottom: 1px dotted color-mix(in srgb, var(--play-accent) 45%, var(--line));
+}
+
+:where(body[data-spw-surface="play"] :is([data-spw-charge-state="preview"], [data-spw-charge-state="resonant"])) {
+  color: var(--play-accent);
+  background-color: var(--play-accent-soft);
+  border-bottom-color: var(--play-accent);
+}
+
+:where(body[data-spw-surface="play"] :is([data-spw-charge-state="pinned"], [data-spw-charge-state="pinned"].is-charge-source)) {
+  color: var(--play-wonder);
+  background-color: var(--play-wonder-soft);
+  border-bottom-color: var(--play-wonder);
+  box-shadow: inset 0 -0.38em 0 var(--play-wonder-soft);
+}
+
+:where(body[data-spw-surface="play"] [data-attn-register]) {
+  background: var(--surface-strong);
+  border-color: color-mix(in srgb, var(--play-accent) 18%, var(--line));
+  box-shadow: var(--shadow-active, 0 10px 32px rgba(0, 0, 0, 0.08));
+}
+
+/* ==========================================================================
+   13. Responsive
+   ========================================================================== */
+
+@media (max-width: 820px) {
+  :where(body[data-spw-surface="play"]) main { padding-inline: 0.8rem; }
+  :where(body[data-spw-surface="play"]) main > article { padding-top: 0.85rem; }
+  :where(body[data-spw-surface="play"] .site-hero) { padding: 1rem 1rem 1.2rem; }
+  :where(body[data-spw-surface="play"] .site-hero .frame-topline) { flex-direction: column; align-items: flex-start; }
+  :where(body[data-spw-surface="play"] :is(.frame-grid, .session-grid, .play-grid)) { grid-template-columns: 1fr; }
+  :where(body[data-spw-surface="play"] :is(.frame-grid > *, .session-grid > *, .play-grid > *)) { grid-column: auto; }
+  :where(body[data-spw-surface="play"] [data-pwa-toast="install"]) {
+    right: 0.75rem; left: 0.75rem; width: auto; bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 560px) {
+  :where(body[data-spw-surface="play"] .frame-operators) { gap: 0.4rem; }
+  :where(body[data-spw-surface="play"] :is(.operator-chip, .frame-sigil, .syntax-token)) { max-width: 100%; overflow-wrap: anywhere; }
+  :where(body[data-spw-surface="play"] .frame-heading) { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
+  :where(body[data-spw-surface="play"] :is(button, .mode-switch button, [data-mode-group][data-set-mode])) { width: 100%; min-width: 0; }
+}
+
+/* ==========================================================================
+   14. Reduced motion
+   ========================================================================== */
+
+:where(html[data-spw-reduce-motion="on"] body[data-spw-surface="play"]) :is(
+  .site-frame, .frame-card, .operator-chip, .frame-sigil, .syntax-token,
+  [data-pwa-toast="install"], [data-spw-flow="pretext"], [data-spw-flow="pretext"] .line-decor
+) {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}

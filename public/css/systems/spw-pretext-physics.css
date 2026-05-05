@@ -1,0 +1,693 @@
+/* ==========================================================================
+   spw-pretext-physics.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Visual contract for pretext runtime state.
+   - Make text behavior inspectable and expressive without overwhelming reading.
+   - Give designers stable hooks for microanimation, scaffolds, and semantic
+     layout behavior.
+   - Stay legible when enhancement is absent or reduced.
+
+   Expected HTML / JS contract
+   - [data-spw-flow="pretext"]
+   - .pretext-flow-lines
+   - .pretext-flow-line
+   - .pretext-flow-line-text
+   - .pretext-flow-scaffold
+
+   Expected state attributes
+   - [data-text-kind]
+   - [data-text-density]
+   - [data-text-measure]
+   - [data-text-projection]
+   - [data-text-ornament]
+   - [data-text-mode]
+   - [data-text-width-class]
+   - [data-text-wrap]
+   - [data-text-influence]
+   - [data-text-phase]
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root pretext host
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"]) {
+  --pretext-inline-pad: 0;
+  --pretext-block-pad: 0;
+  --pretext-radius: var(--shape-component, var(--radius-sm, 6px));
+  --pretext-arrival-shift: 0px;
+  --pretext-arrival-opacity: 1;
+  --pretext-arrival-scale: 1;
+
+  --pretext-line-gap: 0.16rem;
+  --pretext-line-shift: 0px;
+  --pretext-line-scale: 1;
+  --pretext-line-opacity: 1;
+
+  --pretext-edge-opacity: 0;
+  --pretext-edge-offset: 0px;
+  --pretext-edge-scale: 1;
+  --pretext-edge-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 68%, var(--ink-soft, rgba(14,18,20,0.68)));
+
+  --pretext-rail-width: 0px;
+  --pretext-rail-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent);
+  --pretext-rail-glow: none;
+
+  --pretext-surface-wash: transparent;
+  --pretext-outline-color: transparent;
+  --pretext-outline-width: 0px;
+
+  --pretext-scaffold-opacity: 0.72;
+  --pretext-scaffold-scale: 1;
+  --pretext-scaffold-border: color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 80%, transparent);
+
+  --pretext-transition-fast: var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+  --pretext-transition-base: var(--duration-base, 220ms) var(--ease-mechanical, ease);
+  --pretext-transition-deliberate: var(--duration-deliberate, 360ms) var(--ease-settle, ease);
+
+  position: relative;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  padding:
+    var(--pretext-block-pad)
+    var(--pretext-inline-pad);
+  border-radius: var(--pretext-radius);
+  color: inherit;
+  background: var(--pretext-surface-wash);
+  outline: var(--pretext-outline-width) solid var(--pretext-outline-color);
+  outline-offset: 0;
+  overflow-wrap: anywhere;
+  box-shadow: var(--pretext-rail-glow);
+  contain: paint style;
+  transition:
+    background var(--pretext-transition-fast),
+    outline-color var(--pretext-transition-fast),
+    box-shadow var(--pretext-transition-base),
+    color var(--pretext-transition-fast);
+}
+
+:where([data-spw-flow="pretext"])::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pretext-rail-width);
+  border-radius: inherit;
+  background: var(--pretext-rail-color);
+  opacity: 0.95;
+  pointer-events: none;
+  transition:
+    width var(--pretext-transition-fast),
+    background-color var(--pretext-transition-fast),
+    opacity var(--pretext-transition-fast);
+}
+
+/* ==========================================================================
+   2. Line container
+   ========================================================================== */
+
+:where(.pretext-flow-lines) {
+  display: grid;
+  gap: var(--pretext-line-gap);
+  min-width: 0;
+  align-content: start;
+}
+
+:where(.pretext-flow-line) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.42em;
+  min-width: 0;
+  max-width: 100%;
+  transform:
+    translateX(calc(var(--pretext-line-shift) + var(--pretext-arrival-shift)))
+    scale(calc(var(--pretext-line-scale) * var(--pretext-arrival-scale)));
+  transform-origin: left center;
+  opacity: calc(var(--pretext-line-opacity) * var(--pretext-arrival-opacity));
+  transition:
+    transform var(--pretext-transition-fast),
+    opacity var(--pretext-transition-fast);
+}
+
+:where(.pretext-flow-line-text) {
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+  color: inherit;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+/* ==========================================================================
+   3. Edge decor
+   ========================================================================== */
+
+:where(.line-decor) {
+  flex: 0 0 auto;
+  min-width: 0;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.9em;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--pretext-edge-color);
+  opacity: var(--pretext-edge-opacity);
+  transform:
+    translateX(var(--pretext-edge-offset))
+    scale(var(--pretext-edge-scale));
+  transform-origin: center;
+  transition:
+    opacity var(--pretext-transition-fast),
+    transform var(--pretext-transition-fast),
+    color var(--pretext-transition-fast);
+}
+
+:where(.line-decor.is-sigil-edge) {
+  font-weight: 700;
+}
+
+:where(.line-decor.is-echo) {
+  opacity: calc(var(--pretext-edge-opacity) * 0.82);
+  font-style: italic;
+}
+
+:where(.line-decor.is-staged) {
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   4. Scaffold
+   ========================================================================== */
+
+:where(.pretext-flow-scaffold) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  align-items: center;
+  margin-top: 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed var(--pretext-scaffold-border);
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  opacity: var(--pretext-scaffold-opacity);
+  transform: scale(var(--pretext-scaffold-scale));
+  transform-origin: left top;
+  transition:
+    opacity var(--pretext-transition-fast),
+    transform var(--pretext-transition-fast),
+    border-color var(--pretext-transition-fast);
+}
+
+/* ==========================================================================
+   5. Kind presets
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-kind="prose"]) {
+  --pretext-line-gap: 0.16rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="question"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 26%, transparent);
+  --pretext-edge-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 72%, var(--ink-soft, rgba(14,18,20,0.68)));
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="caption"]) {
+  --pretext-line-gap: 0.12rem;
+  --pretext-scaffold-opacity: 0.62;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="ledger"]) {
+  --pretext-line-gap: 0.14rem;
+  --pretext-rail-color: color-mix(in srgb, var(--op-meta-color, #324a85) 18%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) {
+  --pretext-line-gap: 0.1rem;
+  --pretext-edge-color: color-mix(in srgb, var(--op-binding-color, #8f401f) 72%, var(--ink-soft, rgba(14,18,20,0.68)));
+  --pretext-outline-color: color-mix(in srgb, var(--op-binding-border, hsla(24,65%,34%,0.22)) 90%, transparent);
+  --pretext-outline-width: 1px;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="invocation"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-stream-color, #208259) 24%, transparent);
+  --pretext-edge-color: color-mix(in srgb, var(--op-stream-color, #208259) 72%, var(--ink-soft, rgba(14,18,20,0.68)));
+}
+
+/* ==========================================================================
+   6. Density
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-density="soft"]) {
+  --pretext-line-gap: 0.22rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="medium"]) {
+  --pretext-line-gap: 0.16rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="dense"]) {
+  --pretext-line-gap: 0.08rem;
+  --pretext-scaffold-opacity: 0.64;
+}
+
+/* ==========================================================================
+   7. Measure profile
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-measure="tight"]) {
+  --pretext-inline-pad: 0.1rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-measure="standard"]) {
+  --pretext-inline-pad: 0;
+}
+
+:where([data-spw-flow="pretext"][data-text-measure="wide"]) {
+  --pretext-inline-pad: 0.08rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-measure="elastic"]) {
+  --pretext-inline-pad: 0.04rem;
+}
+
+/* ==========================================================================
+   8. Projection families
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-projection="expand"]) {
+  --pretext-line-shift: 0px;
+}
+
+:where([data-spw-flow="pretext"][data-text-projection="lean"]) {
+  --pretext-line-shift: calc(var(--pretext-direction, 0) * 1px);
+}
+
+:where([data-spw-flow="pretext"][data-text-projection="indent"]) {
+  --pretext-inline-pad: 0.25rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-projection="pulse"]) {
+  --pretext-line-scale: calc(1 + (var(--pretext-influence, 0) * 0.008));
+}
+
+/* ==========================================================================
+   9. Ornament families
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-ornament="none"]) {
+  --pretext-edge-opacity: 0;
+}
+
+:where([data-spw-flow="pretext"][data-text-ornament="echo"]) {
+  --pretext-edge-opacity: calc(0.12 + (var(--pretext-influence, 0) * 0.22));
+}
+
+:where([data-spw-flow="pretext"][data-text-ornament="staged"]) {
+  --pretext-edge-opacity: calc(0.16 + (var(--pretext-influence, 0) * 0.24));
+  --pretext-edge-offset: 1px;
+}
+
+:where([data-spw-flow="pretext"][data-text-ornament="sigil-edge"]) {
+  --pretext-edge-opacity: calc(0.18 + (var(--pretext-influence, 0) * 0.3));
+  --pretext-edge-scale: calc(1 + (var(--pretext-influence, 0) * 0.06));
+}
+
+/* ==========================================================================
+   10. Width classes
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-width-class="xs"]) {
+  --pretext-scaffold-scale: 0.96;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="sm"]) {
+  --pretext-scaffold-scale: 0.98;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="md"]) {
+  --pretext-scaffold-scale: 1;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="lg"]) {
+  --pretext-scaffold-scale: 1;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="xl"]) {
+  --pretext-scaffold-scale: 1.02;
+}
+
+/* ==========================================================================
+   11. Wrap volatility
+   --------------------------------------------------------------------------
+   This is one of the most useful utility concepts for designers.
+   It should change restraint, not just decoration.
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-wrap="stable"]) {
+  --pretext-surface-wash: transparent;
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  --pretext-surface-wash:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-bg-soft, rgba(0,128,128,0.06)) 70%, transparent),
+      transparent 68%
+    );
+  --pretext-rail-width: 1px;
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  --pretext-surface-wash:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-bg-soft, rgba(0,128,128,0.06)) 92%, transparent),
+      transparent 72%
+    );
+  --pretext-rail-width: 2px;
+  --pretext-outline-color: color-mix(in srgb, var(--active-op-border, rgba(0,128,128,0.34)) 84%, transparent);
+  --pretext-outline-width: 1px;
+  --pretext-scaffold-opacity: 0.9;
+}
+
+/* ==========================================================================
+   12. Interaction modes
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-mode="resting"]) {
+  --pretext-line-opacity: 1;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="approach"]) {
+  --pretext-rail-width: max(var(--pretext-rail-width), 1px);
+  --pretext-line-shift: calc(var(--pretext-direction, 0) * 1px);
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="contact"]) {
+  --pretext-rail-width: max(var(--pretext-rail-width), 2px);
+  --pretext-line-scale: calc(1 + (var(--pretext-influence, 0) * 0.01));
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
+  --pretext-rail-width: max(var(--pretext-rail-width), 3px);
+  --pretext-line-scale: calc(1 + (var(--pretext-influence, 0) * 0.014));
+  --pretext-rail-glow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent),
+    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="settling"]) {
+  --pretext-line-opacity: 0.96;
+}
+
+/* ==========================================================================
+   13. Influence buckets
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-influence="0"]) {
+  --pretext-edge-opacity: 0;
+}
+
+:where([data-spw-flow="pretext"][data-text-influence="1"]) {
+  --pretext-edge-opacity: max(var(--pretext-edge-opacity), 0.12);
+}
+
+:where([data-spw-flow="pretext"][data-text-influence="2"]) {
+  --pretext-edge-opacity: max(var(--pretext-edge-opacity), 0.18);
+}
+
+:where([data-spw-flow="pretext"][data-text-influence="3"]) {
+  --pretext-edge-opacity: max(var(--pretext-edge-opacity), 0.24);
+}
+
+:where([data-spw-flow="pretext"][data-text-influence="4"]) {
+  --pretext-edge-opacity: max(var(--pretext-edge-opacity), 0.32);
+}
+
+:where([data-spw-flow="pretext"][data-text-influence="5"]) {
+  --pretext-edge-opacity: max(var(--pretext-edge-opacity), 0.42);
+}
+
+/* ==========================================================================
+   14. Rhythm phases
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"][data-text-phase="ambient"]) {
+  --pretext-scaffold-opacity: calc(var(--pretext-scaffold-opacity) * 0.9);
+}
+
+:where([data-spw-flow="pretext"][data-text-phase="verse"]) {
+  --pretext-line-scale: calc(var(--pretext-line-scale) * 0.998);
+}
+
+:where([data-spw-flow="pretext"][data-text-phase="chorus"]) {
+  --pretext-line-scale: calc(var(--pretext-line-scale) * 1.006);
+}
+
+:where([data-spw-flow="pretext"][data-text-phase="bridge"]) {
+  --pretext-line-shift: calc(var(--pretext-line-shift) + (var(--pretext-direction, 0) * 1px));
+}
+
+:where([data-spw-flow="pretext"][data-text-phase="drop"]) {
+  --pretext-rail-width: max(var(--pretext-rail-width), 3px);
+}
+
+/* ==========================================================================
+   15. Semantic role bridges
+   --------------------------------------------------------------------------
+   Useful when pretext lives inside richer semantic frames.
+   ========================================================================== */
+
+:where(.site-frame[data-spw-role="probe"] [data-spw-flow="pretext"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 26%, transparent);
+  --pretext-edge-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 72%, var(--ink-soft, rgba(14,18,20,0.68)));
+}
+
+:where(.site-frame[data-spw-role="reference"] [data-spw-flow="pretext"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-ref-color, #1d57a3) 20%, transparent);
+}
+
+:where(.site-frame[data-spw-role="schema"] [data-spw-flow="pretext"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-binding-color, #8f401f) 20%, transparent);
+}
+
+:where(.site-frame[data-spw-role="surface"] [data-spw-flow="pretext"]) {
+  --pretext-rail-color: color-mix(in srgb, var(--op-surface-color, #178282) 22%, transparent);
+}
+
+/* ==========================================================================
+   16. Debug / scaffold emphasis
+   ========================================================================== */
+
+:where(html[data-spw-debug~="pretext"] [data-spw-flow="pretext"]) {
+  --pretext-outline-color: color-mix(in srgb, var(--active-op-border, rgba(0,128,128,0.34)) 70%, transparent);
+  --pretext-outline-width: 1px;
+}
+
+:where(html[data-spw-debug~="pretext"] .pretext-flow-scaffold) {
+  --pretext-scaffold-opacity: 1;
+}
+
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-line),
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold) {
+  transition-timing-function: steps(3, end);
+}
+
+:where(html[data-spw-page-arrival-step="1"] [data-spw-flow="pretext"]) {
+  --pretext-arrival-shift: 2px;
+  --pretext-arrival-opacity: 0.92;
+  --pretext-arrival-scale: 0.996;
+}
+
+:where(html[data-spw-page-arrival-step="2"] [data-spw-flow="pretext"]) {
+  --pretext-arrival-shift: 1px;
+  --pretext-arrival-opacity: 0.97;
+  --pretext-arrival-scale: 0.998;
+}
+
+:where(html[data-spw-page-presence="background"] [data-spw-flow="pretext"]) {
+  --pretext-rail-glow: none;
+  --pretext-scaffold-opacity: calc(var(--pretext-scaffold-opacity) * 0.82);
+}
+
+/* ==========================================================================
+   17. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-flow="pretext"]) {
+    transition: none !important;
+    box-shadow: none !important;
+  }
+
+  :where([data-spw-flow="pretext"]::before),
+  :where(.pretext-flow-line),
+  :where(.line-decor),
+  :where(.pretext-flow-scaffold) {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  :where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
+    --pretext-line-scale: 1;
+    --pretext-line-shift: 0px;
+  }
+}
+
+/* ==========================================================================
+   18. Pretext Sandbox and Inspector
+   ========================================================================== */
+
+:where(.pretext-sandbox-area) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 1.5rem 1rem 2rem 1rem;
+  border-radius: var(--shape-surface, 10px);
+  background: var(--paper, #fff);
+  border: 1px solid var(--border-soft, rgba(14,18,20,0.1));
+}
+
+:where(.pretext-sandbox) {
+  position: relative;
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border-soft, rgba(14,18,20,0.1));
+}
+
+:where(.pretext-sandbox-lines) {
+  position: relative;
+  width: 100%;
+  min-height: 4rem;
+}
+
+:where(.pretext-sandbox-handle) {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 20px;
+  bottom: 0;
+  cursor: ew-resize;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+:where(.pretext-sandbox-handle::after) {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 24px;
+  background: var(--op-frame-color, #008080);
+  border-radius: 2px;
+  transition: transform var(--duration-fast);
+}
+
+:where(.pretext-sandbox-handle:hover::after, .pretext-sandbox-handle:active::after) {
+  transform: scaleY(1.4);
+  background: var(--op-action-color, #0e5e5e);
+}
+
+:where(.pretext-sandbox-ruler) {
+  position: relative;
+  height: 1.5rem;
+  width: 100%;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+}
+
+:where(.ruler-mark) {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+:where(.ruler-mark::before) {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 4px;
+  background: var(--ink-soft);
+}
+
+:where(.pretext-inspect-overlay) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--paper, #fff) 96%, transparent);
+  border-radius: inherit;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  animation: fadeIn var(--duration-base) var(--ease-mechanical);
+}
+
+:where(.inspect-header) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+:where(.inspect-label) {
+  font-family: var(--site-mono-font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--op-probe-color, #4a2180);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:where(.inspect-close) {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+:where(.inspect-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+:where(.inspect-segment) {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  background: var(--surface-soft);
+  border-radius: var(--radius-sm);
+  align-items: baseline;
+}
+
+:where(.inspect-segment-meta) {
+  font-family: var(--site-mono-font);
+  font-size: 0.7rem;
+  color: var(--op-meta-color, #324a85);
+  font-weight: 600;
+}
+
+:where(.inspect-segment-text) {
+  font-size: 0.9rem;
+}

@@ -1,0 +1,181 @@
+/* ==========================================================================
+ * spw-logo.css
+ * --------------------------------------------------------------------------
+ * Spwashi Logo Runtime
+ * The logo is the smallest unit of the site's physics.
+ * Every state it can enter — preview, charged, emitting, settled —
+ * matches the site-wide canonical state vocabulary.
+ *
+ * Component topology: island (self-contained, interactive, serializable)
+ * Touch: tap channel
+ * State contract: settled → preview → charged → emitting → settled
+ * ========================================================================== */
+
+:where(.spw-logo) {
+  --logo-charge: 0;
+  --logo-arc-color: currentColor;
+  --logo-w-color: currentColor;
+  --logo-wordmark-opacity: 1;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs, 0.45em);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+
+  transition:
+    color var(--touch-acknowledge, 90ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    opacity var(--touch-acknowledge, 90ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+}
+
+/* ── Mark (SVG glyph) ── */
+
+:where(.spw-logo-mark) {
+  flex-shrink: 0;
+  display: block;
+  width: 1.4em;
+  height: 1.52em;  /* preserves 48:52 aspect ratio */
+  color: var(--active-op-color, #008080);
+  transition:
+    color var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    transform var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    filter var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+  will-change: transform, filter;
+}
+
+:where(.mark-layer) {
+  transition:
+    stroke-opacity var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    stroke-width var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1)),
+    stroke var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+}
+
+:where(.mark-layer--arc) { stroke-opacity: 0.85; }
+:where(.mark-layer--w)   { stroke-opacity: 0.65; }
+
+/* ── Wordmark ── */
+
+:where(.spw-logo-wordmark) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.88em);
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  opacity: var(--logo-wordmark-opacity);
+  transition: opacity var(--touch-commit, 180ms) var(--ease-precise, cubic-bezier(0.2, 0, 0.12, 1));
+  white-space: nowrap;
+}
+
+/* ── State: settled (default) ── */
+
+:where(.spw-logo[data-logo-state="settled"], .spw-logo:not([data-logo-state])) {
+  --logo-charge: 0;
+}
+
+/* ── State: preview ── */
+
+:where(.spw-logo[data-logo-state="preview"]) {
+  --logo-charge: 0.3;
+}
+
+:where(.spw-logo[data-logo-state="preview"] .spw-logo-mark) {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+:where(.spw-logo[data-logo-state="preview"] .mark-layer--arc) {
+  stroke-opacity: 1;
+}
+
+/* ── State: charged ── */
+
+:where(.spw-logo[data-logo-state="charged"]) {
+  --logo-charge: 0.7;
+}
+
+:where(.spw-logo[data-logo-state="charged"] .spw-logo-mark) {
+  filter: brightness(1.08) saturate(1.12);
+  transform: translateY(-1px) scale(1.04);
+}
+
+:where(.spw-logo[data-logo-state="charged"] .mark-layer--arc) {
+  stroke-opacity: 1;
+  stroke-width: 2.8;
+}
+
+:where(.spw-logo[data-logo-state="charged"] .mark-layer--w) {
+  stroke-opacity: 0.9;
+}
+
+/* ── State: emitting ── */
+
+:where(.spw-logo[data-logo-state="emitting"]) {
+  --logo-charge: 1;
+}
+
+:where(.spw-logo[data-logo-state="emitting"] .spw-logo-mark) {
+  filter: brightness(1.12) saturate(1.2);
+  transform: scale(1.06);
+}
+
+@keyframes logo-emit-pulse {
+  0%   { opacity: 0; transform: scale(0.95); }
+  40%  { opacity: 0.3; transform: scale(1.08); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+
+:where(.spw-logo[data-logo-state="emitting"])::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1.5px solid var(--active-op-color, #008080);
+  border-radius: var(--radius-pill, 50%);
+  pointer-events: none;
+  animation: logo-emit-pulse var(--duration-slow, 480ms) var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1)) forwards;
+}
+
+/* ── Scroll-charge: driven by --logo-charge from JS ── */
+
+:where(.spw-logo[data-logo-scroll] .spw-logo-mark) {
+  filter:
+    brightness(calc(1 + var(--logo-charge, 0) * 0.08))
+    saturate(calc(1 + var(--logo-charge, 0) * 0.15));
+}
+
+/* ── Header placement ── */
+
+:where(.header-logo) {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Responsive & Accessibility ── */
+
+@media (max-width: 480px) {
+  :where(.spw-logo-wordmark) {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  :where(.spw-logo-mark) {
+    width: 1.1em;
+    height: 1.28em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-logo[data-logo-state="emitting"])::after {
+    animation: none !important;
+    display: none;
+  }
+  
+  :where(.spw-logo-mark, .mark-layer, .spw-logo) {
+    transition: none !important;
+    transform: none !important;
+  }
+}

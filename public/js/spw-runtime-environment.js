@@ -1,1 +1,1 @@
-export * from './typed/spw-runtime-environment.js';
+export * from './kernel/spw-runtime-environment.js';

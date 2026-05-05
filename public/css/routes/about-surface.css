@@ -1,0 +1,673 @@
+/* ==========================================================================
+   about-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped identity for /about
+   - Shift the page toward practical clarity, durable structure, and tangible
+     conversion of attention into tools, surfaces, services, and hospitality
+   - Reduce ornamental drift and support a more direct, less flowery tone
+   - Keep compatibility with shared shell/components/systems layers
+
+   Design stance
+   - About should feel grounded, useful, and directional
+   - The page should read like an operating memo with enough warmth to feel
+     human, but not vague
+   - Priority should go to structure, decision-making, and next actions
+   - Symbolic/ecological material should still be present, but organized as
+     supporting context rather than the main voice
+   ========================================================================== */
+
+[data-spw-surface="about"] {
+  --about-bg: hsl(42 34% 95%);
+  --about-bg-deep: hsl(38 24% 89%);
+  --about-bg-field: hsl(44 28% 97%);
+
+  --about-surface: rgba(255, 252, 248, 0.86);
+  --about-surface-strong: rgba(255, 253, 250, 0.95);
+  --about-surface-soft: rgba(247, 242, 235, 0.74);
+  --about-surface-matte: rgba(248, 245, 239, 0.96);
+
+  --about-ink: rgba(24, 22, 20, 0.96);
+  --about-ink-soft: rgba(24, 22, 20, 0.72);
+  --about-ink-mid: rgba(24, 22, 20, 0.56);
+  --about-ink-faint: rgba(24, 22, 20, 0.34);
+
+  --about-line: rgba(56, 43, 35, 0.14);
+  --about-line-strong: rgba(98, 76, 64, 0.24);
+  --about-line-accent: rgba(24, 123, 135, 0.20);
+
+  --about-accent: hsl(186 34% 34%);
+  --about-accent-2: hsl(28 46% 40%);
+  --about-accent-3: hsl(334 22% 40%);
+  --about-accent-soft: hsla(186, 34%, 34%, 0.08);
+  --about-accent-2-soft: hsla(28, 46%, 40%, 0.08);
+  --about-accent-3-soft: hsla(334, 22%, 40%, 0.06);
+
+  --about-reading-measure: 72ch;
+  --about-reading-measure-tight: 58ch;
+  --about-reading-measure-wide: 82ch;
+
+  --about-frame-shadow:
+    0 1px 3px rgba(39, 24, 15, 0.04),
+    0 10px 22px rgba(39, 24, 15, 0.05);
+  --about-frame-shadow-hover:
+    0 0 0 1px color-mix(in srgb, var(--about-accent) 10%, transparent),
+    0 14px 28px rgba(39, 24, 15, 0.08);
+
+  --about-panel-radius: 12px;
+  --about-panel-radius-loose: 16px;
+
+  --grain-panel-fill-local: color-mix(in srgb, var(--about-surface-strong) 96%, #f3eadf 4%);
+  --grain-panel-shadow-local:
+    0 2px 4px rgba(49, 34, 24, 0.04),
+    0 14px 28px rgba(49, 34, 24, 0.06);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(98, 76, 64, 0.08),
+    0 0 18px rgba(98, 76, 64, 0.04);
+
+  --active-op-color: var(--about-accent);
+  --active-op-border: color-mix(in srgb, var(--about-accent) 30%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--about-accent) 8%, transparent);
+
+  --objective-brace-color: color-mix(in srgb, var(--about-accent) 84%, black 6%);
+  --subjective-brace-color: color-mix(in srgb, var(--about-accent-3) 82%, black 6%);
+  --objective-brace-wash: color-mix(in srgb, var(--about-accent) 10%, transparent);
+  --subjective-brace-wash: color-mix(in srgb, var(--about-accent-3) 8%, transparent);
+  --spw-prompt-block-bg: var(--about-surface-strong);
+  --spw-prompt-block-line: color-mix(in srgb, var(--about-accent) 22%, var(--about-line));
+  --spw-prompt-block-ink: var(--about-ink);
+
+  color: var(--about-ink);
+}
+
+html[data-spw-color-mode="dark"] [data-spw-surface="about"] {
+  --about-bg: hsl(18 10% 11%);
+  --about-bg-deep: hsl(18 12% 8%);
+  --about-bg-field: hsl(24 10% 13%);
+
+  --about-surface: rgba(255, 248, 239, 0.08);
+  --about-surface-strong: rgba(255, 248, 239, 0.12);
+  --about-surface-soft: rgba(255, 248, 239, 0.06);
+  --about-surface-matte: rgba(255, 248, 239, 0.08);
+
+  --about-ink: hsl(32 22% 91%);
+  --about-ink-soft: hsl(30 12% 72%);
+  --about-ink-mid: hsla(30, 12%, 72%, 0.72);
+  --about-ink-faint: hsla(30, 12%, 72%, 0.40);
+
+  --about-line: rgba(255, 240, 225, 0.12);
+  --about-line-strong: rgba(209, 164, 134, 0.22);
+  --about-line-accent: rgba(132, 204, 212, 0.18);
+
+  --about-accent: hsl(184 34% 66%);
+  --about-accent-2: hsl(32 54% 68%);
+  --about-accent-3: hsl(336 28% 68%);
+
+  --active-op-color: var(--about-accent);
+  --active-op-border: color-mix(in srgb, var(--about-accent) 32%, transparent);
+  --active-op-bg-soft: color-mix(in srgb, var(--about-accent) 10%, transparent);
+
+  --grain-panel-fill-local: color-mix(in srgb, rgba(255,255,255,0.10) 88%, transparent);
+  --grain-panel-shadow-local:
+    0 2px 8px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.28);
+  --grain-panel-glow-local:
+    0 0 0 1px rgba(209, 164, 134, 0.10),
+    0 0 24px rgba(209, 164, 134, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] [data-spw-surface="about"] {
+    --about-bg: hsl(18 10% 11%);
+    --about-bg-deep: hsl(18 12% 8%);
+    --about-bg-field: hsl(24 10% 13%);
+
+    --about-surface: rgba(255, 248, 239, 0.08);
+    --about-surface-strong: rgba(255, 248, 239, 0.12);
+    --about-surface-soft: rgba(255, 248, 239, 0.06);
+    --about-surface-matte: rgba(255, 248, 239, 0.08);
+
+    --about-ink: hsl(32 22% 91%);
+    --about-ink-soft: hsl(30 12% 72%);
+    --about-ink-mid: hsla(30, 12%, 72%, 0.72);
+    --about-ink-faint: hsla(30, 12%, 72%, 0.40);
+
+    --about-line: rgba(255, 240, 225, 0.12);
+    --about-line-strong: rgba(209, 164, 134, 0.22);
+    --about-line-accent: rgba(132, 204, 212, 0.18);
+
+    --about-accent: hsl(184 34% 66%);
+    --about-accent-2: hsl(32 54% 68%);
+    --about-accent-3: hsl(336 28% 68%);
+  }
+}
+
+/* ==========================================================================
+   1. Route background and shell bias
+   ========================================================================== */
+
+body[data-spw-surface="about"] {
+  --grain-body-opacity: calc(var(--grain-opacity, 0.028) * 0.46);
+  --grain-atmosphere-bias: -0.035;
+  --grain-resonance-bias: 0;
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--about-accent-2) 4%, transparent), transparent 24%),
+    linear-gradient(180deg, var(--about-bg-field), var(--about-bg));
+  color: var(--about-ink);
+}
+
+[data-spw-surface="about"] main {
+  gap: clamp(1.05rem, 2.3vw, 1.55rem);
+  max-width: min(var(--page-width-wide, 84rem), calc(100vw - (var(--page-gutter-inline, 1rem) * 2)));
+  margin-top: clamp(0.8rem, 1.5vw, 1.25rem);
+}
+
+[data-spw-surface="about"] main > section + section,
+[data-spw-surface="about"] main > nav + section,
+[data-spw-surface="about"] main > section + nav {
+  margin-top: clamp(0.1rem, 0.5vw, 0.35rem);
+}
+
+/* ==========================================================================
+   2. Generic frame tuning
+   ========================================================================== */
+
+[data-spw-surface="about"] .site-frame {
+  border-color: color-mix(in srgb, var(--about-line) 96%, transparent);
+  border-radius: var(--about-panel-radius);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 56%, transparent), transparent 18%),
+    var(--about-surface);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    var(--about-frame-shadow);
+  color: var(--about-ink);
+}
+
+[data-spw-surface="about"] .site-frame:is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    var(--about-frame-shadow-hover);
+}
+
+[data-spw-surface="about"] .frame-sigil {
+  color: color-mix(in srgb, var(--about-ink-soft) 90%, var(--about-accent));
+}
+
+[data-spw-surface="about"] .frame-note,
+[data-spw-surface="about"] .inline-note {
+  color: var(--about-ink-soft);
+  max-width: var(--about-reading-measure-tight);
+}
+
+[data-spw-surface="about"] p,
+[data-spw-surface="about"] li {
+  color: var(--about-ink);
+}
+
+[data-spw-surface="about"] p:not(.page-kicker):not(.inline-note):not(.frame-note) {
+  max-width: var(--about-reading-measure);
+}
+
+/* ==========================================================================
+   3. Hero
+   ========================================================================== */
+
+[data-spw-surface="about"] #about-frame {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.05rem, 2vw, 1.6rem);
+  border-radius: var(--about-panel-radius-loose);
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--about-accent-2) 6%, transparent), transparent 28%),
+    radial-gradient(circle at 86% 12%, color-mix(in srgb, var(--about-accent-3) 4%, transparent), transparent 24%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 54%, transparent), transparent 18%),
+    var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #about-frame > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-spw-surface="about"] #about-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--about-accent) 7%, transparent),
+      transparent 18%,
+      transparent 82%,
+      color-mix(in srgb, var(--about-accent-3) 6%, transparent)
+    );
+  opacity: 0.9;
+}
+
+[data-spw-surface="about"] #about-title {
+  max-width: 14ch;
+  color: color-mix(in srgb, var(--about-ink) 90%, var(--about-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(2.35rem, 4.6vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+[data-spw-surface="about"] #about-orientation-note.page-lede,
+[data-spw-surface="about"] #about-frame .page-lede {
+  max-width: 60ch;
+  color: color-mix(in srgb, var(--about-ink-soft) 92%, var(--about-accent));
+  font-size: clamp(1.02rem, 1.1rem + 0.2vw, 1.14rem);
+  line-height: 1.72;
+}
+
+[data-spw-surface="about"] #about-frame strong {
+  color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
+}
+
+@media (min-width: 860px) {
+  [data-spw-surface="about"] #about-frame {
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
+    column-gap: clamp(2rem, 5vw, 4.25rem);
+    row-gap: clamp(0.75rem, 1.4vw, 1rem);
+    align-items: start;
+  }
+
+  [data-spw-surface="about"] #about-frame > .frame-topline {
+    grid-column: 1 / -1;
+    margin-bottom: clamp(0.35rem, 1vw, 0.7rem);
+  }
+
+  [data-spw-surface="about"] #about-frame > .page-kicker,
+  [data-spw-surface="about"] #about-frame > #about-title,
+  [data-spw-surface="about"] #about-frame > .page-lede {
+    grid-column: 1;
+  }
+
+  [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) {
+    grid-column: 2;
+    max-width: var(--about-reading-measure-tight);
+    margin-block: 0;
+  }
+
+  [data-spw-surface="about"] #about-frame > p:not(.page-kicker):not(.page-lede) + p:not(.page-kicker):not(.page-lede) {
+    margin-top: 0.8rem;
+  }
+}
+
+[data-spw-surface="about"] #about-frame a:not(.operator-chip):not(.frame-sigil) {
+  color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
+}
+
+[data-spw-surface="about"] #typography-register {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-2) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 86% 18%, color-mix(in srgb, var(--about-accent) 7%, transparent), transparent 24%),
+    var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #typography-register .demo-control-group,
+[data-spw-surface="about"] #typography-register .trope-box {
+  border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 76%, transparent), transparent 28%),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] #typography-register .context-readout > div {
+  border-color: color-mix(in srgb, var(--about-accent) 16%, var(--about-line));
+  background: color-mix(in srgb, var(--about-surface-strong) 96%, transparent);
+}
+
+/* ==========================================================================
+   4. About index
+   ========================================================================== */
+
+[data-spw-surface="about"] #about-index {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--about-surface-matte) 96%, transparent), transparent),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] #about-index .frame-list {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 1.15rem;
+}
+
+[data-spw-surface="about"] #about-index .frame-list li {
+  color: var(--about-ink-soft);
+}
+
+[data-spw-surface="about"] #about-index .frame-list a {
+  color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
+  text-decoration-color: color-mix(in srgb, var(--about-accent) 24%, transparent);
+  text-underline-offset: 0.14em;
+}
+
+/* ==========================================================================
+   5. Panels and grids
+   ========================================================================== */
+
+[data-spw-surface="about"] .frame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.95rem;
+}
+
+[data-spw-surface="about"] .frame-panel {
+  min-width: 0;
+  border-color: color-mix(in srgb, var(--about-line) 96%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20), transparent 62%),
+    color-mix(in srgb, var(--about-surface-strong) 95%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 6px 16px rgba(34, 22, 14, 0.04);
+  transition:
+    border-color var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-surface="about"] .frame-panel:is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--about-accent) 18%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--about-accent) 8%, transparent),
+    0 12px 22px rgba(34, 22, 14, 0.06);
+  transform: translateY(-1px);
+}
+
+[data-spw-surface="about"] .frame-panel h3 {
+  color: color-mix(in srgb, var(--about-ink) 90%, var(--about-accent-2));
+  font-family: var(--site-sans-font, Inter, sans-serif);
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0.004em;
+}
+
+[data-spw-surface="about"] .frame-panel p,
+[data-spw-surface="about"] .frame-panel li {
+  color: var(--about-ink-soft);
+}
+
+[data-spw-surface="about"] .frame-panel strong {
+  color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent));
+}
+
+/* ==========================================================================
+   6. Links and operator chips
+   ========================================================================== */
+
+[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token) {
+  color: color-mix(in srgb, var(--about-accent) 86%, var(--about-ink));
+  text-decoration-color: color-mix(in srgb, var(--about-accent) 28%, transparent);
+  text-underline-offset: 0.16em;
+}
+
+[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):hover,
+[data-spw-surface="about"] a:not(.frame-card):not(.operator-chip):not(.frame-sigil):not(.syntax-token):focus-visible {
+  color: color-mix(in srgb, var(--about-accent-2) 82%, var(--about-accent));
+  text-decoration-color: currentColor;
+  outline: none;
+}
+
+[data-spw-surface="about"] .frame-operators {
+  gap: 0.5rem 0.6rem;
+}
+
+[data-spw-surface="about"] .operator-chip {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--about-accent) 7%, transparent);
+  border-color: color-mix(in srgb, var(--about-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--about-accent) 86%, var(--about-ink));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    0 1px 3px rgba(35, 22, 16, 0.04);
+}
+
+[data-spw-surface="about"] .operator-chip:hover,
+[data-spw-surface="about"] .operator-chip:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--about-accent) 11%, transparent);
+  border-color: color-mix(in srgb, var(--about-accent) 28%, transparent);
+  color: var(--about-ink);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--about-accent) 8%, transparent),
+    0 6px 14px rgba(35, 22, 16, 0.06);
+}
+
+/* ==========================================================================
+   7. Documentation and website sections
+   ========================================================================== */
+
+[data-spw-surface="about"] #documentation-register,
+[data-spw-surface="about"] #website-register {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 52%, transparent), transparent 18%),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] #documentation-register .frame-panel,
+[data-spw-surface="about"] #website-register .frame-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    color-mix(in srgb, var(--about-surface-matte) 94%, transparent);
+}
+
+/* ==========================================================================
+   8. Boonhonk and symbolic context
+   --------------------------------------------------------------------------
+   Keep it present, but calmer and more disciplined than before.
+   ========================================================================== */
+
+[data-spw-surface="about"] #boonhonk-register {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-3-soft) 88%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 42%, transparent), transparent 18%),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] .syntax-list {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+[data-spw-surface="about"] .syntax-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem 0.9rem;
+  align-items: start;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--about-line) 92%, transparent);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--about-surface-strong) 94%, transparent);
+}
+
+[data-spw-surface="about"] .syntax-list .syntax-token {
+  color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
+  text-decoration: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+[data-spw-surface="about"] .syntax-list span:last-child {
+  color: var(--about-ink-soft);
+}
+
+/* ==========================================================================
+   9. SVG figures
+   ========================================================================== */
+
+[data-spw-surface="about"] .spw-svg-figure {
+  display: grid;
+  gap: 0.7rem;
+}
+
+[data-spw-surface="about"] .spw-svg-surface {
+  width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--about-line) 94%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 62%),
+    color-mix(in srgb, var(--about-surface-strong) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.24),
+    0 8px 18px rgba(34, 22, 14, 0.05);
+}
+
+[data-spw-surface="about"] .spw-svg-figure figcaption {
+  color: var(--about-ink-soft);
+  max-width: var(--about-reading-measure-tight);
+}
+
+/* ==========================================================================
+   10. World creatures / images
+   ========================================================================== */
+
+[data-spw-surface="about"] #world-creatures {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-2-soft) 86%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 38%, transparent), transparent 16%),
+    var(--about-surface);
+}
+
+[data-spw-surface="about"] [data-spw-image-surface] {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--about-line) 94%, transparent);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--about-surface-strong) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.24),
+    0 8px 18px rgba(34, 22, 14, 0.05);
+}
+
+[data-spw-surface="about"] [data-spw-image-surface] img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+[data-spw-surface="about"] [data-spw-image-surface] figcaption {
+  color: var(--about-ink-soft);
+}
+
+/* ==========================================================================
+   11. Nutrition / hospitality emphasis
+   ========================================================================== */
+
+[data-spw-surface="about"] #nutrition-register {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--about-accent-2-soft) 96%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-2-soft) 62%, transparent), transparent 16%),
+    var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #nutrition-register .frame-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 62%),
+    linear-gradient(135deg, color-mix(in srgb, var(--about-accent-2) 7%, transparent), transparent 42%),
+    color-mix(in srgb, var(--about-surface-matte) 95%, transparent);
+}
+
+[data-spw-surface="about"] #nutrition-register h3 {
+  color: color-mix(in srgb, var(--about-ink) 88%, var(--about-accent-2));
+}
+
+/* ==========================================================================
+   12. Current direction
+   ========================================================================== */
+
+[data-spw-surface="about"] #current-direction {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--about-accent-soft) 82%, transparent), transparent 32%),
+    linear-gradient(180deg, color-mix(in srgb, var(--about-accent-soft) 54%, transparent), transparent 16%),
+    var(--about-surface-strong);
+}
+
+[data-spw-surface="about"] #current-direction p {
+  max-width: var(--about-reading-measure);
+}
+
+[data-spw-surface="about"] #current-direction strong {
+  color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
+}
+
+/* ==========================================================================
+   13. Text hierarchy
+   ========================================================================== */
+
+[data-spw-surface="about"] h2 {
+  color: color-mix(in srgb, var(--about-ink) 90%, var(--about-accent-2));
+  font-family: var(--craft-display, var(--site-display-font));
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}
+
+[data-spw-surface="about"] h3 {
+  color: color-mix(in srgb, var(--about-ink) 88%, var(--about-accent));
+  font-family: var(--site-sans-font, Inter, sans-serif);
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0.004em;
+}
+
+/* ==========================================================================
+   14. Responsive
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  [data-spw-surface="about"] #about-title {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  [data-spw-surface="about"] .frame-grid {
+    grid-template-columns: 1fr;
+  }
+
+  [data-spw-surface="about"] .syntax-list li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+@media (max-width: 520px) {
+  [data-spw-surface="about"] .frame-panel {
+    min-height: 0;
+  }
+}
+
+/* ==========================================================================
+   15. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-surface="about"] .site-frame,
+  [data-spw-surface="about"] .frame-panel,
+  [data-spw-surface="about"] .operator-chip {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

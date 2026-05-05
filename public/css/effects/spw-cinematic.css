@@ -1,0 +1,601 @@
+/* ==========================================================================
+ * spw-cinematic.css
+ * --------------------------------------------------------------------------
+ * Purpose
+ * - Shared motion, field, and depth physics for Spw surfaces and handles.
+ * - Consumes semantic state from bus-driven charge, developmental climate,
+ * component semantics, and authored HTML attributes.
+ * - Serves as a seed layer for ethos: not just "animation", but the felt
+ * mechanics of attention, pressure, memory, and release.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Typed property registration
+   ========================================================================== */
+
+@property --charge {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+/* ==========================================================================
+   2. Root cinematic contracts
+   ========================================================================== */
+
+:root {
+  /* Timing */
+  --cinematic-arrive-duration:  var(--duration-fast, 140ms);
+  --cinematic-dwell-duration:   var(--duration-base, 220ms);
+  --cinematic-release-duration: var(--duration-slow, 480ms);
+
+  --cinematic-arrive-ease:  cubic-bezier(0.22, 0, 0.0, 1);
+  --cinematic-dwell-ease:   cubic-bezier(0.32, 0, 0.0, 1);
+  --cinematic-release-ease: cubic-bezier(0.08, 0, 0.0, 1);
+
+  /* Shared intensity */
+  --cinematic-intensity: 1;
+  --cinematic-depth-scale: 1;
+  --cinematic-outline-scale: 1;
+  --cinematic-wash-scale: 1;
+  --cinematic-glow-scale: 1;
+
+  /* Developmental climate handoff */
+  --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
+  --cinematic-climate-pressure:       var(--developmental-pressure, 0.34);
+  --cinematic-climate-atmosphere:     var(--developmental-atmosphere, 0.18);
+  --cinematic-climate-memory:         var(--developmental-memory, 0.18);
+  --cinematic-climate-resonance:      var(--developmental-resonance, 0.16);
+  --cinematic-climate-charge-bias:    var(--developmental-charge-bias, 0.24);
+  --cinematic-climate-selection-bias: var(--developmental-selection-bias, 0.24);
+
+  /* Default derived values */
+  --cinematic-field-opacity: 
+    calc((0.08 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-atmosphere) * 0.08)) * var(--cinematic-glow-scale));
+  --cinematic-field-radius: 
+    calc((4px + (var(--charge, 0) * 18px) + (var(--cinematic-climate-resonance) * 8px)) * var(--cinematic-depth-scale));
+  --cinematic-outline-alpha: 
+    calc((0.14 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-charge-bias) * 0.12)) * var(--cinematic-outline-scale));
+  --cinematic-wash-alpha: 
+    calc((0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-atmosphere) * 0.04)) * var(--cinematic-wash-scale));
+  --cinematic-shadow-alpha: 
+    calc(0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-pressure) * 0.06));
+}
+
+/* ==========================================================================
+   3. Learning-mode ethos
+   ========================================================================== */
+
+:where(html[data-spw-learning-mode="entry"]) {
+  --cinematic-intensity: 0.9;
+  --cinematic-depth-scale: 0.9;
+  --cinematic-outline-scale: 0.88;
+  --cinematic-wash-scale: 1.08;
+  --cinematic-glow-scale: 0.9;
+}
+
+:where(html[data-spw-learning-mode="stabilize"]) {
+  --cinematic-intensity: 1;
+  --cinematic-depth-scale: 1.04;
+  --cinematic-outline-scale: 1.06;
+  --cinematic-wash-scale: 0.94;
+  --cinematic-glow-scale: 0.94;
+}
+
+:where(html[data-spw-learning-mode="connect"]) {
+  --cinematic-intensity: 1.04;
+  --cinematic-depth-scale: 1;
+  --cinematic-outline-scale: 0.96;
+  --cinematic-wash-scale: 1;
+  --cinematic-glow-scale: 1.08;
+}
+
+:where(html[data-spw-learning-mode="practice"]) {
+  --cinematic-intensity: 0.96;
+  --cinematic-depth-scale: 0.98;
+  --cinematic-outline-scale: 1.08;
+  --cinematic-wash-scale: 0.9;
+  --cinematic-glow-scale: 0.92;
+}
+
+:where(html[data-spw-learning-mode="publish"]) {
+  --cinematic-intensity: 1.08;
+  --cinematic-depth-scale: 1.06;
+  --cinematic-outline-scale: 1.12;
+  --cinematic-wash-scale: 1.02;
+  --cinematic-glow-scale: 1.06;
+}
+
+/* ==========================================================================
+   4. Shared tracked elements
+   ========================================================================== */
+
+:where(
+  [data-spw-form],
+  [data-spw-charge],
+  [data-spw-handle="true"],
+  [data-spw-affordance],
+  [data-spw-groundable="true"],
+  .spw-delimiter,
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .frame-sigil,
+  .frame-card-sigil
+) {
+  transition:
+    --charge         var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
+    filter           var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
+    box-shadow       var(--cinematic-dwell-duration)  var(--cinematic-dwell-ease),
+    outline-color    var(--cinematic-dwell-duration)  var(--cinematic-dwell-ease),
+    outline-offset   var(--cinematic-dwell-duration)  var(--cinematic-dwell-ease),
+    border-color     var(--cinematic-dwell-duration)  var(--cinematic-dwell-ease),
+    background-color var(--cinematic-release-duration) var(--cinematic-release-ease),
+    opacity          var(--cinematic-release-duration) var(--cinematic-release-ease),
+    text-shadow      var(--cinematic-dwell-duration) var(--cinematic-dwell-ease),
+    transform        var(--cinematic-dwell-duration) var(--cinematic-dwell-ease);
+}
+
+:where(
+  [data-spw-form]:not([data-spw-charge]):not(:hover),
+  .operator-chip:not([data-spw-charge]):not(:hover),
+  .syntax-token:not([data-spw-charge]):not(:hover),
+  .spec-pill:not([data-spw-charge]):not(:hover),
+  .frame-sigil:not([data-spw-charge]):not(:hover)
+) {
+  transition:
+    --charge         var(--cinematic-release-duration) var(--cinematic-release-ease),
+    filter           var(--cinematic-release-duration) var(--cinematic-release-ease),
+    box-shadow       var(--cinematic-release-duration) var(--cinematic-release-ease),
+    outline-color    var(--cinematic-release-duration) var(--cinematic-release-ease),
+    outline-offset   var(--cinematic-release-duration) var(--cinematic-release-ease),
+    border-color     var(--cinematic-release-duration) var(--cinematic-release-ease),
+    background-color var(--cinematic-release-duration) var(--cinematic-release-ease),
+    opacity          var(--cinematic-release-duration) var(--cinematic-release-ease),
+    text-shadow      var(--cinematic-release-duration) var(--cinematic-release-ease),
+    transform        var(--cinematic-release-duration) var(--cinematic-release-ease);
+}
+
+/* ==========================================================================
+   5. Operator color resolution
+   ========================================================================== */
+
+:where([data-spw-operator="frame"])     { --spw-operator-color: var(--op-frame-color, #008080); }
+:where([data-spw-operator="object"])    { --spw-operator-color: var(--op-object-color, #a67c00); }
+:where([data-spw-operator="ref"])       { --spw-operator-color: var(--op-ref-color, #1d57a3); }
+:where([data-spw-operator="probe"])     { --spw-operator-color: var(--op-probe-color, #4a2180); }
+:where([data-spw-operator="action"])    { --spw-operator-color: var(--op-action-color, #005959); }
+:where([data-spw-operator="stream"])    { --spw-operator-color: var(--op-stream-color, #208259); }
+:where([data-spw-operator="merge"])     { --spw-operator-color: var(--op-merge-color, #277a87); }
+:where([data-spw-operator="binding"])   { --spw-operator-color: var(--op-binding-color, #8f401f); }
+:where([data-spw-operator="meta"])      { --spw-operator-color: var(--op-meta-color, #324a85); }
+:where([data-spw-operator="normalize"]) { --spw-operator-color: var(--op-normalize-color, #4d7539); }
+:where([data-spw-operator="pragma"])    { --spw-operator-color: var(--op-pragma-color, #883a3a); }
+:where([data-spw-operator="surface"])   { --spw-operator-color: var(--op-surface-color, #178282); }
+:where([data-spw-operator="layer"])     { --spw-operator-color: var(--op-layer-color, #404040); }
+:where([data-spw-operator="baseline"])  { --spw-operator-color: var(--op-baseline-color, #594d3f); }
+:where([data-spw-operator="topic"])     { --spw-operator-color: var(--op-topic-color, #1f6b80); }
+
+/* ==========================================================================
+   6. Shared charged field
+   ========================================================================== */
+
+:where(
+  [data-spw-form][data-spw-charge],
+  .operator-chip[data-spw-charge],
+  .syntax-token[data-spw-charge],
+  .spec-pill[data-spw-charge],
+  .frame-sigil[data-spw-charge],
+  .frame-card-sigil[data-spw-charge]
+) {
+  --cinematic-field-color: color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 26%, transparent);
+
+  filter: none;
+
+  outline: 1px solid color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, #008080))
+      calc(6% + (var(--charge, 0) * 14%)),
+    transparent
+  );
+  outline-offset: calc(1px + (var(--charge, 0) * 1.5px));
+
+  box-shadow:
+    inset 0 0 0 1px color-mix(
+      in srgb,
+      var(--spw-operator-color, var(--active-op-color, #008080))
+        calc(4% + (var(--charge, 0) * 12%)),
+      transparent
+    ),
+    0 4px 12px rgba(17, 18, 20, 0.04);
+}
+
+:where([data-spw-form="brace"][data-spw-charge]) {
+  background-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, #008080))
+      calc(var(--cinematic-wash-alpha) * 72%),
+    transparent
+  );
+}
+
+:where([data-spw-charge="active"], [data-spw-charge="sustained"], [data-spw-charge="manifest"]) {
+  filter: none;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 16%, transparent),
+    0 6px 16px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 8%, transparent);
+}
+
+:where([data-spw-charge="sustained"], [data-spw-gesture="armed"]) {
+  animation: none;
+}
+
+@keyframes spw-cinematic-sustain-breath {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent))
+      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 56%, white));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 42%, transparent))
+      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 74%, white));
+  }
+}
+
+/* ==========================================================================
+   7. Gesture nuance
+   ========================================================================== */
+
+:where([data-spw-gesture="charging"]) {
+  --cinematic-wash-scale: 0.92;
+}
+
+:where([data-spw-gesture="active"]) {
+  --cinematic-outline-scale: 1.08;
+  transform: none;
+}
+
+:where([data-spw-gesture="armed"]) {
+  --cinematic-outline-scale: 1.14;
+  --cinematic-glow-scale: 1.08;
+}
+
+:where([data-spw-gesture="committed"]) {
+  --cinematic-depth-scale: 1.08;
+  --cinematic-outline-scale: 1.1;
+}
+
+:where([data-spw-gesture="projecting"]) {
+  --drag-dx: 0px;
+  --drag-dy: 0px;
+  transition: none;
+  filter:
+    drop-shadow(
+      calc(var(--drag-dx) * 0.08)
+      calc(var(--drag-dy) * 0.08)
+      16px
+      color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent)
+    );
+}
+
+/* ==========================================================================
+   8. Selection depth
+   ========================================================================== */
+
+:where([data-spw-selection="focused"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) calc((0.18 + var(--cinematic-climate-selection-bias)) * 100%), transparent);
+}
+
+:where([data-spw-selection="active"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 22%, transparent),
+    0 8px 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 8%, transparent);
+}
+
+:where([data-spw-selection="selected"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 8%, transparent);
+}
+
+/* ==========================================================================
+   9. Brace dielectric physics
+   ========================================================================== */
+
+:where([data-spw-form="brace"]) {
+  --brace-glow-alpha: calc(var(--charge, 0) * 0.24);
+  --brace-edge-alpha: calc(0.12 + (var(--charge, 0) * 0.42));
+  --brace-inner-density: calc(0.018 + (var(--charge, 0) * 0.06));
+  position: relative;
+}
+
+:where([data-spw-form="brace"])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 128, 128, var(--brace-inner-density)) 0%,
+      transparent 28%,
+      transparent 68%,
+      rgba(160, 42, 77, calc(var(--brace-inner-density) * 0.8)) 100%
+    );
+  opacity: calc(0.4 + (var(--charge, 0) * 0.5));
+  transition: opacity var(--cinematic-release-duration) var(--cinematic-release-ease);
+  z-index: 0;
+}
+
+:where([data-spw-form="brace"][data-spw-charge="charging"]) {
+  box-shadow:
+    inset 2px 0 0 rgba(0, 128, 128, calc(var(--brace-edge-alpha) * 0.92)),
+    0 6px 14px rgba(0, 128, 128, calc(var(--brace-glow-alpha) * 0.24));
+}
+
+:where([data-spw-form="brace"][data-spw-charge="active"]) {
+  box-shadow:
+    inset 3px 0 0 rgba(0, 128, 128, calc(var(--brace-edge-alpha) + 0.08)),
+    inset -2px 0 0 rgba(160, 42, 77, 0.1),
+    0 8px 18px rgba(0, 128, 128, calc(var(--brace-glow-alpha) * 0.34));
+}
+
+:where([data-spw-form="brace"][data-spw-charge="sustained"], [data-spw-form="brace"][data-spw-charge="manifest"]) {
+  box-shadow:
+    inset 4px 0 0 rgba(0, 128, 128, 0.46),
+    inset -3px 0 0 rgba(160, 42, 77, 0.18),
+    0 10px 20px rgba(0, 128, 128, 0.1);
+}
+
+:where([data-spw-brace-state="emitting"]) {
+  animation: spw-brace-emit 360ms var(--cinematic-release-ease) 1;
+}
+
+@keyframes spw-brace-emit {
+  0%   { filter: brightness(1) scale(1); }
+  38%  { filter: brightness(1.07) scale(1.008); }
+  100% { filter: brightness(1) scale(1); }
+}
+
+/* ==========================================================================
+   10. Grounding / pinning / latching
+   ========================================================================== */
+
+:where([data-spw-pinned="true"], [data-spw-latched="true"]) {
+  --charge: 0.3;
+  outline: 1px dashed color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 38%, transparent);
+  outline-offset: 3px;
+}
+
+:where([data-spw-grounded="true"]) {
+  opacity: calc(0.9 + (var(--cinematic-climate-memory) * 0.08));
+  text-decoration: none;
+  filter: none;
+}
+
+:where(.frame-card[data-spw-grounded="true"], .frame-panel[data-spw-grounded="true"], .software-card[data-spw-grounded="true"], .site-frame[data-spw-grounded="true"]) {
+  opacity: 1;
+  text-decoration: none;
+}
+
+:where([data-spw-grounded="false"]) {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   11. Wonder-conditioned bias
+   ========================================================================== */
+
+:where([data-spw-field-wonder="orientation"]) { --cinematic-wash-scale: calc(1 + (var(--cinematic-climate-atmosphere) * 0.2)); }
+:where([data-spw-field-wonder="inquiry"])     { --cinematic-glow-scale: calc(1 + (var(--cinematic-climate-clarity) * 0.12)); }
+:where([data-spw-field-wonder="comparison"])  { --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.12)); }
+:where([data-spw-field-wonder="memory"])      { --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-memory) * 0.16)); }
+:where([data-spw-field-wonder="projection"])  { --cinematic-glow-scale: calc(1 + (var(--cinematic-intensity) * 0.08)); }
+:where([data-spw-field-wonder="constraint"])  { --cinematic-outline-scale: calc(1 + (var(--cinematic-climate-pressure) * 0.18)); }
+:where([data-spw-field-wonder="resonance"])   { --cinematic-depth-scale: calc(1 + (var(--cinematic-climate-resonance) * 0.16)); }
+
+/* ==========================================================================
+   12. Directionality
+   ========================================================================== */
+
+:where([data-spw-charge-direction="prefix"] .frame-card-sigil, [data-spw-charge-direction="prefix"] .frame-sigil) {
+  text-shadow: 4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 18%, transparent);
+}
+
+:where([data-spw-charge-direction="postfix"] .frame-card-sigil, [data-spw-charge-direction="postfix"] .frame-sigil) {
+  text-shadow: -4px 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 12%, transparent);
+}
+
+/* ==========================================================================
+   13. Cinematic hosts and SVG surfaces
+   ========================================================================== */
+
+:where(.cinematic-host) {
+  filter: drop-shadow(0 0 0 transparent);
+  transition: filter var(--cinematic-release-duration) var(--cinematic-dwell-ease);
+}
+
+:where(.cinematic-host:hover) {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent));
+}
+
+:where(.spw-svg-surface) {
+  transition: transform var(--cinematic-arrive-duration) var(--cinematic-release-ease);
+}
+
+:where(.spw-svg-surface:hover) {
+  transform: scale(1.005);
+}
+
+@keyframes flow-dash {
+  to { stroke-dashoffset: -40; }
+}
+
+:where(.spw-svg-flow--animated) {
+  animation: flow-dash 4s linear infinite;
+}
+
+:where([data-spw-charge="active"] .spw-svg-flow--animated)    { animation-duration: 2.2s; }
+:where([data-spw-charge="sustained"] .spw-svg-flow--animated) { animation-duration: 1.2s; }
+
+:where(.filter-aberration) {
+  filter: url('#cinematic-aberration');
+}
+
+/* ==========================================================================
+   14. Reactive spine (SVG Network)
+   ========================================================================== */
+
+:where(.op-node circle) {
+  transition:
+    opacity var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
+    filter var(--cinematic-arrive-duration) var(--cinematic-arrive-ease),
+    r var(--cinematic-dwell-duration) var(--cinematic-dwell-ease);
+}
+
+:where(.op-node text) {
+  transition: opacity var(--cinematic-arrive-duration) var(--cinematic-arrive-ease);
+}
+
+:where(.op-node--charged circle) {
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--active-op-color, #008080) 32%, transparent));
+  opacity: 1;
+}
+
+:where(.op-node--charged[data-spw-charge="charging"] circle) {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent));
+}
+
+:where(.op-node--charged[data-spw-charge="active"] circle) {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06);
+}
+
+:where(.op-node--charged[data-spw-charge="sustained"] circle) {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 58%, transparent)) brightness(1.1);
+  animation: spine-sustain 900ms var(--cinematic-dwell-ease) infinite;
+}
+
+@keyframes spine-sustain {
+  0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06); }
+  50%      { filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color, #008080) 64%, transparent)) brightness(1.12); }
+}
+
+:where(.op-node--frame)     { --active-op-color: var(--op-frame-color, #008080); }
+:where(.op-node--object)    { --active-op-color: var(--op-object-color, #a67c00); }
+:where(.op-node--probe)     { --active-op-color: var(--op-probe-color, #4a2180); }
+:where(.op-node--ref)       { --active-op-color: var(--op-ref-color, #1d57a3); }
+:where(.op-node--action)    { --active-op-color: var(--op-action-color, #005959); }
+:where(.op-node--stream)    { --active-op-color: var(--op-stream-color, #208259); }
+:where(.op-node--surface)   { --active-op-color: var(--op-surface-color, #178282); }
+:where(.op-node--layer)     { --active-op-color: var(--op-layer-color, #404040); }
+:where(.op-node--baseline)  { --active-op-color: var(--op-baseline-color, #594d3f); }
+:where(.op-node--binding)   { --active-op-color: var(--op-binding-color, #8f401f); }
+:where(.op-node--meta)      { --active-op-color: var(--op-meta-color, #324a85); }
+:where(.op-node--merge)     { --active-op-color: var(--op-merge-color, #277a87); }
+:where(.op-node--normalize) { --active-op-color: var(--op-normalize-color, #4d7539); }
+:where(.op-node--pragma)    { --active-op-color: var(--op-pragma-color, #883a3a); }
+
+/* ==========================================================================
+   15. Parallel shimmer / resonance
+   ========================================================================== */
+
+:where(.spw-parallel-shimmer, [data-spw-parallel="active"]) {
+  animation: spw-parallel-pulse 1.8s var(--cinematic-dwell-ease) infinite;
+}
+
+@keyframes spw-parallel-pulse {
+  0%, 100% { box-shadow: 0 0 0 transparent; }
+  50% { box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent); }
+}
+
+@keyframes spw-resonance-breathe {
+  0%, 100% { outline-offset: 2px; outline-width: 1.5px; }
+  50%      { outline-offset: 6px; outline-width: 1px; }
+}
+
+:where([data-spw-resonance="high"]) {
+  outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 60%, transparent);
+  animation: spw-resonance-breathe 1100ms var(--cinematic-dwell-ease) infinite;
+}
+
+:where([data-spw-resonance="medium"]) {
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 35%, transparent);
+}
+
+/* ==========================================================================
+   16. Pop snap and emission cues
+   ========================================================================== */
+
+@keyframes spw-pop-snap {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(0.88); opacity: 0.9; }
+  70%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+:where(.spw-pop-snap) {
+  animation: spw-pop-snap 180ms var(--cinematic-dwell-ease) forwards;
+}
+
+/* ==========================================================================
+   17. Selective touch interaction
+   ========================================================================== */
+
+:where(
+  button, [role="button"], [role="tab"], [data-spw-operator], [data-spw-wall],
+  [data-spw-handle], [data-touch-ui], .operator-chip, .spec-pill, .mode-switch,
+  .frame-sigil, .frame-card-sigil, .spw-objective-wall, .spw-subjective-wall,
+  .spw-boon-wall, .spw-bane-wall
+) {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+:where(
+  p, li, pre, code, blockquote, [data-copyable], [data-readable],
+  .frame-panel p, .frame-card span, .inline-note, .frame-note
+) {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* ==========================================================================
+   18. Copy button states
+   ========================================================================== */
+
+:where([data-copy-button][aria-busy="true"], .copy-button[aria-busy="true"]) {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+:where(.copy-status) {
+  min-height: 1.1em;
+  font-size: var(--text-size-xs, 0.78rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  transition: opacity var(--duration-fast, 120ms) var(--cinematic-dwell-ease);
+}
+
+/* ==========================================================================
+   19. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    [data-spw-form], [data-spw-charge], [data-spw-handle="true"],
+    [data-spw-affordance], [data-spw-groundable="true"], .spw-delimiter,
+    .operator-chip, .syntax-token, .spec-pill, .frame-sigil, .frame-card-sigil,
+    .cinematic-host, .spw-svg-surface, .spw-svg-flow--animated, .op-node circle,
+    .op-node text, .spw-parallel-shimmer, [data-spw-parallel="active"],
+    [data-spw-resonance="high"], [data-spw-resonance="medium"], .spw-pop-snap, .copy-status
+  ) {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

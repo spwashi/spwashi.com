@@ -1,0 +1,2246 @@
+/* ==========================================================================
+   spw-components.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Structural component layer for reusable Spw frames, cards, panels, chips,
+     metadata rails, readable stacks, grids, and pretext-aware text hosts.
+   - Provide low-cost, tunable “metamaterial” surfaces that support semantic
+     instrumentation without requiring expensive filters or layout-heavy effects.
+   - Expose component contracts that JS runtimes can target through documented
+     custom properties and data attributes.
+
+   Design rules
+   - Reading and text flow take priority over ornament.
+   - Components remain legible when enhancement is off.
+   - Width / lineation changes are driven by JS measurement; CSS should not
+     animate width or force expensive reflow loops.
+   - Use data attributes for semantics and runtime state.
+   - Keep specificity low and prefer generic, composable utilities.
+   - Support route HTML while remaining reusable for later authoring surfaces.
+
+   Parser-tolerance notes
+   - Avoid calc() inside color-mix() percentages when fixed percentages work.
+   - Avoid self-referential custom properties such as --x: max(var(--x), 0.5).
+   - Prefer named intermediate tokens for complex visual recipes.
+   - Keep :where() selector lists closed, non-empty, and comma-separated.
+
+   Expected collaborators
+   - /public/css/spw-reset.css
+   - /public/css/spw-tokens.css
+   - /public/css/spw-typography.css
+   - /public/css/spw-typography-context.css
+   - /public/css/spw-developmental-climate.css
+   - route surface files
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Component tokens
+   ========================================================================== */
+
+:root {
+  /* Spacing */
+  --component-gap: var(--spw-component-gap, 0.9rem);
+  --component-gap-tight: var(--spw-component-gap-tight, 0.55rem);
+  --component-gap-loose: var(--spw-component-gap-loose, 1.2rem);
+  --component-gap-roomy: var(--spw-component-gap-roomy, 1.6rem);
+
+  --component-pad: var(--spw-component-pad, 0.9rem);
+  --component-pad-tight: var(--spw-component-pad-tight, 0.65rem);
+  --component-pad-loose: var(--spw-component-pad-loose, 1.15rem);
+  --component-pad-roomy: var(--spw-component-pad-roomy, 1.45rem);
+
+  /* Shape */
+  --component-radius: var(--shape-surface, 10px);
+  --component-radius-tight: var(--shape-component, 6px);
+  --component-radius-loose: var(--shape-floating, 16px);
+  --component-radius-pill: var(--shape-control, 999px);
+
+  /* Line */
+  --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
+  --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
+  --component-border-quiet: 1px solid color-mix(in srgb, var(--line, rgba(0, 128, 128, 0.18)) 72%, transparent);
+
+  /* Surface */
+  --component-surface: var(--surface, rgba(255, 255, 255, 0.92));
+  --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
+  --component-surface-matte: color-mix(in srgb, var(--component-surface-strong) 94%, var(--bg, #f7f4ee));
+  --component-surface-elevated: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
+  var(--component-surface-strong);
+
+  /* Shadow */
+  --component-shadow: var(--spw-depth-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
+  --component-shadow-active: var(--spw-depth-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
+  --component-shadow-quiet: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.03));
+  --component-frame-shadow: var(--spw-depth-frame-shadow, var(--component-shadow));
+  --component-frame-shadow-active: var(--spw-depth-frame-shadow-active, var(--component-shadow-active));
+
+  /* Accent */
+  --component-accent: var(--active-op-color, var(--teal, #008080));
+  --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
+  --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  --component-accent-wash: color-mix(in srgb, var(--component-accent) 8%, transparent);
+
+  /* Route accent */
+  --component-route-accent: var(--component-accent);
+  --component-route-marker-bg: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
+  --component-route-marker-line: color-mix(in srgb, var(--component-route-accent) 18%, transparent);
+  --component-route-marker-text: color-mix(in srgb, var(--component-route-accent) 78%, var(--ink-soft, rgba(14, 18, 20, 0.68)) 22%);
+
+  /* Module semantics */
+  --component-module-rail-start: color-mix(in srgb, var(--component-accent) 28%, transparent);
+  --component-module-rail-end: color-mix(in srgb, var(--component-accent) 18%, transparent);
+  --component-module-hydration-ring: color-mix(in srgb, var(--component-accent) 10%, transparent);
+  --component-module-active-ring: color-mix(in srgb, var(--component-accent) 16%, transparent);
+  --component-module-context-ring: color-mix(in srgb, var(--component-accent) 18%, transparent);
+
+  /* Measures */
+  --component-measure: 68ch;
+  --component-measure-tight: 58ch;
+  --component-measure-wide: 78ch;
+  --component-code-measure: 84ch;
+
+  /* Motion */
+  --component-transition-fast: var(--spw-control-transition-fast, var(--spw-motion-quick, var(--duration-fast, 120ms) var(--ease-mechanical, ease)));
+  --component-transition-base: var(--spw-control-transition-base, var(--spw-motion-settle, var(--duration-base, 180ms) var(--ease-mechanical, ease)));
+  --component-transition-deliberate: var(--spw-motion-expressive, var(--duration-deliberate, 260ms) var(--ease-mechanical, ease));
+  --component-transition-arrival: var(--spw-component-settle-transition, var(--component-transition-fast));
+
+  /* Pretext */
+  --pretext-line-gap: 0.18rem;
+  --pretext-line-height: 1.55;
+  --pretext-width: auto;
+  --pretext-canonical-width: auto;
+  --pretext-projected-width: auto;
+  --pretext-influence: 0;
+  --pretext-direction: 0;
+  --pretext-scaffold-opacity: 0.74;
+
+  /* Component chrome */
+  --component-rail-width: 3px;
+  --component-header-min-height: 1.5rem;
+  --component-chip-height: var(--spw-control-min-height, 2rem);
+}
+
+
+/* ==========================================================================
+   2. Base component ownership
+   ========================================================================== */
+
+/* Shared registry: add only route-portable component nouns. */
+:where(
+  [data-spw-component-kind],
+  [data-spw-kind],
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card
+) {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+  box-sizing: border-box;
+}
+
+:where(
+  [data-spw-component-kind],
+  [data-spw-kind],
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
+) {
+  container-type: inline-size;
+}
+
+/* Lift content above generated rails, seams, and debug labels. */
+:where(
+  [data-spw-component-kind] > *,
+  [data-spw-kind] > *,
+  .site-frame > *,
+  .frame-card > *,
+  .media-card > *,
+  .media-focus-card > *,
+  .software-card > *,
+  .operator-card > *,
+  .frame-panel > *,
+  .mode-panel > *,
+  .plan-card > *,
+  .compare-card > *,
+  .spec-column > *,
+  .ref-card > *
+) {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   3. Slot conventions
+   ========================================================================== */
+
+/* Slots are stable anatomy; prefer them over child-order selectors. */
+:where([data-spw-slot]) {
+  min-width: 0;
+}
+
+:where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
+  min-width: 0;
+}
+
+:where(.frame-topline) {
+  align-items: center;
+  min-height: var(--component-header-min-height);
+  margin-bottom: -0.08rem;
+  padding-bottom: 0.34rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
+  transition: border-color var(--component-transition-base);
+}
+
+:where(.site-frame.is-active-frame .frame-topline) {
+  border-bottom-color: color-mix(in srgb, var(--component-accent) 32%, transparent);
+}
+
+header.frame-heading > :is(h1, h2, h3) {
+  margin: 0;
+}
+
+:where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
+  min-width: 0;
+}
+
+:where([data-spw-slot="figure"]) {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Captions share measure across figure-like surfaces. */
+:where([data-spw-slot="caption"]) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  font-size: 0.88em;
+  max-inline-size: 65ch;
+}
+
+:where(.spw-semantic-seam) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.8rem);
+  width: fit-content;
+  max-width: 100%;
+  align-self: flex-start;
+  min-width: 0;
+}
+
+:where(.spw-semantic-seam:empty, .spw-semantic-seam[hidden], .spw-semantic-seam[data-spw-empty="true"]) {
+  display: none;
+}
+
+:where(.spw-semantic-seam[data-spw-generated="semantic-chrome"]) {
+  display: none;
+}
+
+/* Semantic chrome stays hidden until metadata or debug mode asks for it. */
+:where(
+  html[data-spw-show-semantic-metadata="on"],
+  html[data-spw-debug-mode="on"]
+) :where(.spw-semantic-seam[data-spw-generated="semantic-chrome"][data-spw-empty="false"]) {
+  display: flex;
+}
+
+:where(.spw-semantic-seam > .spw-component-guides) {
+  margin-inline-start: 0;
+  justify-content: flex-start;
+}
+
+
+/* ==========================================================================
+   4. Module semantics
+   ========================================================================== */
+
+/* Module rails mark machine-readable ownership without crowding content. */
+:where(
+  [data-spw-module],
+  [data-spw-component-genome]
+) {
+  --spw-perspective-weight: 0.5;
+  --spw-potential-weight: 0.5;
+  --spw-salience-weight: 0.34;
+  --spw-dimension-count: 1;
+  --component-module-rail-width: 2px;
+  --component-module-rail-opacity: 0.32;
+}
+
+:where([data-spw-module])::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--component-module-rail-width);
+  opacity: var(--component-module-rail-opacity);
+  pointer-events: none;
+  background: linear-gradient(
+      180deg,
+      var(--component-module-rail-start),
+      var(--component-module-rail-end)
+  );
+}
+
+/* Hydration/context states are visual confidence cues, not layout states. */
+:where([data-spw-module][data-spw-module-hydration="ready"]) {
+  --component-module-rail-opacity: 0.44;
+  box-shadow: inset 0 0 0 1px var(--component-module-hydration-ring),
+  var(--component-shadow-quiet);
+}
+
+:where([data-spw-module][data-spw-salience-state="active"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.56;
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px var(--component-module-active-ring),
+  var(--component-shadow-active);
+}
+
+:where([data-spw-module][data-spw-context-match="active"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.5;
+  box-shadow: inset 0 0 0 1px var(--component-module-context-ring),
+  var(--component-shadow);
+}
+
+:where([data-spw-component-genome~="importance-primary"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.5;
+}
+
+:where([data-spw-component-genome~="interactivity-controllable"]) {
+  --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-component-genome~="interactivity-inspectable"]) {
+  --component-route-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-region-genome~="harmony-indexed"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 20%, transparent);
+}
+
+:where([data-spw-region-genome~="harmony-structured"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
+}
+
+
+/* ==========================================================================
+   5. Bleed utilities
+   ========================================================================== */
+
+:where(.spw-bleed) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  width: calc(100% + (var(--local-bleed-offset) * 2));
+  margin-inline: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.spw-bleed-block) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  margin-block: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+}
+
+
+/* ==========================================================================
+   6. Stance utilities
+   ========================================================================== */
+
+:where([data-spw-stance="entry"]) {
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--ink, currentColor) 78%, transparent);
+  transition: color var(--component-transition-deliberate);
+}
+
+:where([data-spw-stance="ground"]) {
+  letter-spacing: 0.01em;
+  transition: color var(--component-transition-deliberate);
+}
+
+:where([data-spw-stance="exit"]) {
+  opacity: 0.76;
+  letter-spacing: 0.01em;
+  transition: opacity var(--component-transition-deliberate),
+  color var(--component-transition-deliberate);
+}
+
+
+/* ==========================================================================
+   7. Shared card / panel shell
+   ========================================================================== */
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
+) {
+  --component-arrival-offset: 0px;
+  --component-arrival-opacity: 1;
+
+  display: grid;
+  align-content: start;
+  gap: var(--component-gap-tight);
+  min-width: 0;
+  min-height: 100%;
+  padding: var(--component-pad);
+  color: color-mix(in srgb, var(--ink, inherit) 96%, #000 4%);
+  background: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  box-shadow: var(--component-shadow);
+  opacity: var(--component-arrival-opacity);
+  transform: translateY(var(--component-arrival-offset));
+  overflow: clip;
+  contain: paint style;
+  transition: background var(--component-transition-deliberate),
+  border-color var(--component-transition-base),
+  box-shadow var(--component-transition-deliberate),
+  color var(--component-transition-fast),
+  opacity var(--component-transition-fast),
+  transform var(--component-transition-arrival);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) {
+  --component-text: color-mix(in srgb, var(--ink, currentColor) 94%, #000 6%);
+  --component-text-soft: color-mix(in srgb, var(--ink-soft, currentColor) 88%, #000 12%);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(p, li, .frame-note, .frame-copy, .media-card-summary, .media-focus-card > p, .media-focus-copy) {
+  color: var(--component-text-soft);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(strong, h2, h3, h4, h5, h6, .frame-card-sigil, .media-card-title, .media-focus-title h3) {
+  color: var(--component-text);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+:where(.mode-panel[hidden]) {
+  display: none;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
+):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
+  box-shadow: var(--component-shadow-active);
+  transform: translateY(calc(var(--projection-lift-xs, 1px) * -1));
+}
+
+:where(.media-focus-card) {
+  --media-focus-accent: var(--component-accent);
+}
+
+:where(.media-focus-card .media-focus-title) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+:where(.media-focus-card .media-focus-title h3) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink, currentColor) 92%, var(--media-focus-accent) 8%);
+  font-size: clamp(1.02rem, 0.94rem + 0.35vw, 1.18rem);
+  line-height: 1.2;
+}
+
+:where(.media-focus-card .media-focus-operator) {
+  align-self: flex-start;
+}
+
+:where(.media-focus-card .spec-kicker) {
+  margin: 0;
+}
+
+:where(.media-focus-card > p) {
+  margin: 0;
+}
+
+:where(.media-focus-card .operator-chip) {
+  justify-self: start;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) > :last-child:is(
+  .operator-chip,
+  .media-card-cta,
+  .frame-operators,
+  .plan-links,
+  .card-sub-links,
+  [data-spw-slot="actions"]
+) {
+  margin-top: auto;
+}
+
+
+/* ==========================================================================
+   8. Operator / route accent mapping
+   ========================================================================== */
+
+:where([data-spw-primary-operator="probe"]) {
+  --component-route-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="action"]) {
+  --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="merge"]) {
+  --component-route-accent: var(--op-merge-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="binding"]) {
+  --component-route-accent: var(--op-binding-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="frame"]) {
+  --component-route-accent: var(--op-frame-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="surface"]) {
+  --component-route-accent: var(--op-surface-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="ref"]) {
+  --component-route-accent: var(--op-ref-color, var(--component-accent));
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]) {
+  padding-block-start: calc(var(--component-pad) + 0.82rem);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card)::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
+  content: attr(data-spw-route-marker);
+  position: absolute;
+  inset: 0.46rem 0.58rem auto auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.3rem;
+  max-inline-size: calc(100% - 1.16rem);
+  padding: 0.08rem 0.42rem;
+  overflow: hidden;
+  border: 1px solid var(--component-route-marker-line);
+  border-radius: 999px;
+  background: var(--component-route-marker-bg);
+  color: var(--component-route-marker-text);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.88;
+  transition: border-color var(--component-transition-fast),
+  background var(--component-transition-fast),
+  color var(--component-transition-fast),
+  opacity var(--component-transition-fast),
+  transform var(--component-transition-fast);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state="branching"] {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 12%, transparent),
+  var(--component-shadow);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
+  padding-top: 0.14rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-route-accent) 18%, transparent);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card):is(:hover, :focus-within)::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {
+  border-color: color-mix(in srgb, var(--component-route-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--component-surface-strong) 88%, var(--component-route-accent) 12%);
+  color: color-mix(in srgb, var(--component-route-accent) 86%, var(--ink, rgba(14, 18, 20, 0.92)) 14%);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   9. Arrival / presence states
+   ========================================================================== */
+
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"])) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) {
+  --component-transition-arrival: var(--spw-component-arrival-transition, 180ms steps(3, end));
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 3px;
+  --component-arrival-opacity: 0.93;
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 1px;
+  --component-arrival-opacity: 0.97;
+}
+
+:where(html[data-spw-page-presence="background"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 0px;
+  --component-arrival-opacity: 0.98;
+}
+
+
+/* ==========================================================================
+   10. Frame cards and link cards
+   ========================================================================== */
+
+a.frame-card,
+.frame-card > a:first-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--component-gap-tight);
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+:where(.frame-card, .frame-card > a:first-child) {
+  justify-items: start;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :where(
+  .spw-semantic-seam,
+  p,
+  ul,
+  ol,
+  figure,
+  .frame-note,
+  .frame-copy,
+  .card-sub-links,
+  span:not(.frame-card-sigil):not(.spw-component-tag):not(.spw-guide-chip)
+) {
+  justify-self: stretch;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :is(strong, h2, h3, h4, h5, h6) {
+  max-inline-size: 30ch;
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+:where(.frame-card, .frame-card > a:first-child) > :is(
+  p,
+  .frame-note,
+  .frame-copy,
+  span:not(.frame-card-sigil):not(.spw-component-tag):not(.spw-guide-chip)
+) {
+  max-inline-size: 42ch;
+  text-wrap: pretty;
+}
+
+a.frame-card:is(:hover, :focus-visible),
+.frame-card > a:first-child:is(:hover, :focus-visible) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.frame-card > a:first-child:last-child {
+  min-block-size: 100%;
+}
+
+.frame-card-sigil,
+.operator-symbol,
+.ref-card-sigil {
+  display: inline-block;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--active-op-color, var(--component-accent)) 28%);
+  transition: color var(--component-transition-fast);
+}
+
+.frame-card:hover .frame-card-sigil,
+.frame-card:focus-within .frame-card-sigil,
+.operator-symbol:hover,
+.operator-symbol:focus-visible {
+  color: var(--active-op-color, var(--component-accent));
+}
+
+.card-sub-links,
+.ref-links,
+.plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.4rem 0.5rem;
+  min-width: 0;
+  margin-top: auto;
+}
+
+.card-sub-links a,
+.ref-links a,
+a.ref-link {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: 0.22rem;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.card-sub-links a:is(:hover, :focus-visible),
+.ref-links a:is(:hover, :focus-visible),
+a.ref-link:is(:hover, :focus-visible) {
+  color: var(--component-accent);
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::before,
+.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76em;
+  color: color-mix(in srgb, var(--component-accent) 58%, transparent);
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::before {
+  content: attr(data-spw-nav-prefix);
+}
+
+.card-sub-links a[data-spw-nav-tokenized="true"]::after {
+  content: attr(data-spw-nav-postfix);
+}
+
+
+/* ==========================================================================
+   11. Inner type hygiene
+   ========================================================================== */
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  li,
+  blockquote,
+  pre,
+  code,
+  figure,
+  figcaption,
+  .frame-note,
+  .frame-copy,
+  .specimen-material,
+  .operator-snippet-note,
+  .plan-thesis,
+  .plan-wonder p
+) {
+  min-width: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(h2, h3, h4, p, ul, ol, pre, figure, figcaption) {
+  margin: 0;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card
+) :is(
+  p,
+  li,
+  span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
+) {
+  line-height: 1.46;
+  max-inline-size: 60ch;
+}
+
+
+/* ==========================================================================
+   12. Site frame
+   ========================================================================== */
+
+:where(.site-frame) {
+  --surface-gap: var(--spw-surface-gap, var(--component-gap));
+  --surface-padding: var(--spw-surface-padding, clamp(1rem, 2.25vw, 1.55rem));
+  --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap);
+  min-width: 0;
+  overflow: clip;
+  padding: var(--surface-padding);
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 6%, transparent),
+      transparent 22%
+  ),
+  var(--component-surface);
+  box-shadow: var(--component-frame-shadow);
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+  transition: background var(--component-transition-deliberate),
+  border-color var(--component-transition-base),
+  box-shadow var(--component-transition-deliberate);
+}
+
+:where(.site-frame)::before {
+  content: "";
+  position: absolute;
+  inset: 1rem var(--surface-padding) auto var(--surface-padding);
+  height: 1px;
+  background: linear-gradient(
+      90deg,
+      var(--site-frame-seam-color) 0 4.5rem,
+      transparent 4.5rem
+  );
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+:where(.site-frame.is-active-frame) {
+  border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
+  background: var(--component-surface-strong);
+  box-shadow: var(--component-frame-shadow-active);
+}
+
+.site-frame h1 {
+  font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.site-frame h2 {
+  font-size: clamp(1.1rem, 0.9rem + 1.1vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.site-frame h3 {
+  font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+.site-lede,
+.page-lede {
+  font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.58;
+  max-inline-size: 48ch;
+  text-wrap: pretty;
+  color: color-mix(in srgb, var(--ink, #161c1d) 88%, transparent);
+}
+
+:where(.site-frame > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+  max-inline-size: 66ch;
+  text-wrap: pretty;
+}
+
+:where(
+  .site-frame > header.frame-heading + p,
+  .site-frame > h1 + p,
+  .site-frame > h2 + p,
+  .site-frame > h3 + p,
+  .site-frame > .spec-kicker + h1 + p,
+  .site-frame > .spec-kicker + h2 + p,
+  .site-frame > .frame-topline + .spec-kicker + h1 + p,
+  .site-frame > .frame-topline + .spec-kicker + h2 + p
+):not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker) {
+  font-size: clamp(1.01rem, 0.96rem + 0.34vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.62;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, transparent);
+}
+
+
+/* ==========================================================================
+   13. Role-based frame stance
+   ========================================================================== */
+
+:where(.site-frame[data-spw-role="probe"]) {
+  background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--op-probe-bg-soft, var(--component-accent-soft)) 50%, transparent),
+      transparent 55%
+  ),
+  var(--component-surface);
+}
+
+:where(.site-frame[data-spw-role="surface"]) {
+  background: linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--op-surface-bg-soft, var(--component-accent-soft)) 40%, transparent),
+      transparent 50%
+  ),
+  var(--component-surface);
+}
+
+:where(.site-frame[data-spw-role="reference"]) {
+  border-left-width: 2px;
+  border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
+  --component-measure: 74ch;
+  --surface-gap: 1.3rem;
+}
+
+:where(.site-frame[data-spw-role="reference"] p) {
+  line-height: 1.65;
+}
+
+:where(.site-frame[data-spw-role="status"]) {
+  background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 10%, transparent),
+      transparent 42%
+  ),
+  var(--component-surface);
+}
+
+:where(.site-frame[data-spw-role="routing"]) {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--component-accent) 24%, var(--line, transparent));
+}
+
+:where(.site-frame[data-spw-role="schema"]) {
+  background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 6%, transparent),
+      transparent 32%
+  ),
+  var(--component-surface);
+}
+
+:where(.site-frame[data-spw-role="gallery"]) {
+  background: radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--component-accent) 8%, transparent),
+      transparent 30%
+  ),
+  var(--component-surface);
+}
+
+:where(.site-frame[data-spw-role="broadcast"]) {
+  background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 10%, transparent),
+      transparent 28%
+  ),
+  var(--component-surface);
+}
+
+
+/* ==========================================================================
+   14. Hero + heading thresholds
+   ========================================================================== */
+
+:where(.site-hero) {
+  gap: var(--spw-hero-gap, clamp(1.1rem, 2vw, 1.5rem));
+}
+
+:where(.site-hero--split-figure) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
+  min-width: 0;
+}
+
+:where(.site-hero--split-figure) > [data-spw-slot="body"] {
+  display: grid;
+  gap: clamp(0.85rem, 1.8vw, 1.15rem);
+  align-content: start;
+}
+
+:where(.site-hero--split-figure) > [data-spw-slot="figure"] {
+  align-self: start;
+}
+
+@media (min-width: 70rem) {
+  :where(.site-hero--split-figure) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(0.85rem, 1.8vw, 1.2rem) clamp(0.95rem, 2vw, 1.35rem);
+    align-items: start;
+    align-content: start;
+  }
+
+  :where(.site-hero--split-figure) > canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="header"] {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+    grid-column: 1 / span 6;
+    grid-row: 2;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="figure"] {
+    grid-column: 8 / -1;
+    grid-row: 2;
+    width: 100%;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="actions"] {
+    grid-column: 1 / span 7;
+    grid-row: 3;
+  }
+}
+
+
+/* ==========================================================================
+   15. Metamaterial selectors
+   ========================================================================== */
+
+:where([data-spw-metamaterial]) {
+  --component-material-border: var(--component-border);
+  --component-material-bg: var(--component-surface);
+  --component-material-shadow: var(--component-shadow);
+
+  background: var(--component-material-bg);
+  border: var(--component-material-border);
+  box-shadow: var(--component-material-shadow);
+}
+
+:where([data-spw-metamaterial="paper"]) {
+  --component-material-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface, #fff) 96%, var(--component-accent-soft)) 0%,
+      var(--surface, #fff) 100%
+  );
+  --component-material-border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, var(--component-accent-soft));
+}
+
+:where([data-spw-metamaterial="ledger"]) {
+  --component-material-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 6%, transparent) 0 1px,
+      transparent 1px 100%
+  ),
+  var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 22%, var(--line, transparent));
+}
+
+:where([data-spw-metamaterial="signal"]) {
+  --component-material-bg: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 10%, transparent),
+      transparent 30%
+  ),
+  var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 30%, var(--line, transparent));
+}
+
+:where([data-spw-metamaterial="field"]) {
+  --component-material-bg: radial-gradient(
+      circle at 12% 18%,
+      color-mix(in srgb, var(--component-accent) 9%, transparent) 0%,
+      transparent 34%
+  ),
+  var(--component-surface);
+}
+
+:where([data-spw-metamaterial="glass"]) {
+  --component-material-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, #fff 14%, transparent) 0%,
+      color-mix(in srgb, var(--component-surface) 92%, transparent) 100%
+  );
+  --component-material-border: 1px solid color-mix(in srgb, #fff 12%, var(--line, transparent));
+}
+
+:where([data-spw-metamaterial="shell"]) {
+  --component-material-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 5%, transparent) 0%,
+      transparent 48%
+  ),
+  var(--component-surface);
+  --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
+}
+
+
+/* ==========================================================================
+   16. Pretext flow host
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0;
+  --pretext-local-radius: var(--component-radius-tight);
+
+  position: relative;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  contain: layout paint style;
+  isolation: isolate;
+  padding: var(--pretext-local-pad);
+  border-radius: var(--pretext-local-radius);
+  color: inherit;
+  transition: color var(--component-transition-fast),
+  background-color var(--component-transition-fast),
+  box-shadow var(--component-transition-base);
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-lines) {
+  display: grid;
+  gap: var(--pretext-line-gap);
+  min-width: 0;
+  align-content: start;
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-line) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38em;
+  min-width: 0;
+  max-width: 100%;
+  line-height: var(--pretext-line-height);
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-line-text) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+:where([data-spw-flow="pretext"] .line-decor) {
+  flex: 0 0 auto;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.92em;
+  opacity: 0.42;
+  color: color-mix(in srgb, currentColor 72%, transparent);
+  transition: opacity var(--component-transition-fast),
+  color var(--component-transition-fast);
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="resting"]) {
+  --pretext-line-gap: 0.16rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="approach"]) {
+  --pretext-line-gap: 0.2rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="contact"]) {
+  --pretext-line-gap: 0.22rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
+  --pretext-line-gap: 0.24rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="settling"]) {
+  --pretext-line-gap: 0.18rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) {
+  --pretext-local-pad: 0.35rem 0.45rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="question"]) {
+  --pretext-local-pad: 0.25rem 0.35rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="dense"]) {
+  --pretext-line-gap: 0.12rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="soft"]) {
+  --pretext-line-gap: 0.24rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="xs"]) {
+  max-inline-size: 20rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="sm"]) {
+  max-inline-size: 28rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="md"]) {
+  max-inline-size: 40rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="lg"]) {
+  max-inline-size: 54rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="xl"]) {
+  max-inline-size: min(100%, 72rem);
+}
+
+:where(.pretext-flow-scaffold) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  margin-top: 0.45rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  opacity: var(--pretext-scaffold-opacity);
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.6)) 88%, transparent);
+}
+
+:where([data-spw-debug~="pretext"] .pretext-flow-scaffold),
+:where([data-spw-pretext-scaffold] .pretext-flow-scaffold) {
+  padding-top: 0.4rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where(.pretext-flow-scaffold > span) {
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   17. Meaningful card utilities
+   ========================================================================== */
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="soft"] {
+  --component-pad: 1rem;
+  --component-gap-tight: 0.65rem;
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="dense"] {
+  --component-pad: 0.75rem;
+  --component-gap-tight: 0.4rem;
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-density="roomy"] {
+  --component-pad: 1.2rem;
+  --component-gap-tight: 0.8rem;
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="measure"] {
+  max-inline-size: min(100%, var(--component-measure));
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="code"] {
+  max-inline-size: min(100%, var(--component-code-measure));
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-reading="ambient"] {
+  color: color-mix(in srgb, var(--ink, currentColor) 94%, transparent);
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="focused"] {
+  border-color: color-mix(in srgb, var(--component-accent) 34%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
+  var(--component-shadow);
+}
+
+:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .compare-card, .spec-column, .ref-card)[data-spw-attention="held"] {
+  border-color: color-mix(in srgb, var(--component-accent) 44%, var(--line, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 24%, transparent),
+  var(--component-shadow-active);
+}
+
+
+/* ==========================================================================
+   18. Grouping and grid helpers
+   ========================================================================== */
+
+:where(
+  .frame-grid,
+  .plans-grid,
+  .contact-grid,
+  .gallery-overlays,
+  .compare-sets,
+  .spec-grid,
+  .directory-grid,
+  .ref-grid,
+  .settings-state-grid,
+  .settings-navigator-grid,
+  .settings-structures-grid,
+  .settings-quickstart-grid,
+  .vibe-widget-grid,
+  .pwa-status-grid
+) {
+  --spw-grid-min-base: 15rem;
+  --spw-grid-min-mid: 14.5rem;
+  --spw-grid-min-narrow: 13.5rem;
+  --spw-grid-min-compact: 12rem;
+  --spw-grid-gap-base: var(--component-gap);
+  --spw-grid-gap-mid: 0.84rem;
+  --spw-grid-gap-narrow: 0.74rem;
+  --spw-grid-gap-compact: 0.66rem;
+  --spw-grid-min-active: var(--spw-grid-min-base);
+  --spw-grid-gap-active: var(--spw-grid-gap-base);
+
+  display: grid;
+  gap: var(--spw-grid-gap-active);
+  align-items: stretch;
+  min-width: 0;
+}
+
+:where(
+  .frame-grid,
+  .contact-grid,
+  .gallery-overlays,
+  .compare-sets,
+  .spec-grid,
+  .directory-grid,
+  .ref-grid,
+  .settings-state-grid,
+  .settings-navigator-grid,
+  .settings-structures-grid,
+  .settings-quickstart-grid,
+  .vibe-widget-grid,
+  .pwa-status-grid
+) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active)), 1fr));
+}
+
+:where(.plans-grid) {
+  grid-template-columns: 1fr;
+}
+
+:where(.ref-grid) {
+  --spw-grid-min-base: 17rem;
+  --spw-grid-min-mid: 16rem;
+  --spw-grid-min-narrow: 14.5rem;
+  --spw-grid-min-compact: 12.75rem;
+}
+
+:where(.frame-grid--dense, .ref-grid--dense),
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="dense"] {
+  --spw-grid-min-base: 13.75rem;
+  --spw-grid-min-mid: 13.2rem;
+  --spw-grid-min-narrow: 12.4rem;
+  --spw-grid-min-compact: 11.5rem;
+  --spw-grid-gap-base: 0.78rem;
+  --spw-grid-gap-mid: 0.74rem;
+  --spw-grid-gap-narrow: 0.68rem;
+  --spw-grid-gap-compact: 0.62rem;
+}
+
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="soft"] {
+  --spw-grid-min-base: 15.5rem;
+  --spw-grid-min-mid: 15rem;
+  --spw-grid-min-narrow: 14rem;
+  --spw-grid-min-compact: 12.5rem;
+  --spw-grid-gap-base: 0.88rem;
+  --spw-grid-gap-mid: 0.82rem;
+  --spw-grid-gap-narrow: 0.76rem;
+  --spw-grid-gap-compact: 0.68rem;
+}
+
+:where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="roomy"] {
+  --spw-grid-min-base: 17rem;
+  --spw-grid-min-mid: 16.25rem;
+  --spw-grid-min-narrow: 15rem;
+  --spw-grid-min-compact: 13rem;
+  --spw-grid-gap-base: 1rem;
+  --spw-grid-gap-mid: 0.92rem;
+  --spw-grid-gap-narrow: 0.82rem;
+  --spw-grid-gap-compact: 0.72rem;
+}
+
+:where(.frame-grid--media) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+:where(.frame-grid--2up) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:where(.frame-grid--3up) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+html[data-spw-viewport-tier="mid"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-mid);
+  --spw-grid-gap-active: var(--spw-grid-gap-mid);
+}
+
+html[data-spw-viewport-tier="narrow"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-narrow);
+  --spw-grid-gap-active: var(--spw-grid-gap-narrow);
+}
+
+html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+  --spw-grid-min-active: var(--spw-grid-min-compact);
+  --spw-grid-gap-active: var(--spw-grid-gap-compact);
+}
+
+:where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) {
+  display: grid;
+  min-width: 0;
+}
+
+:where(.frame-grid > *, .contact-grid > *, .compare-sets > *, .spec-grid > *, .directory-grid > *, .ref-grid > *) {
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   19. Reference cards
+   ========================================================================== */
+
+:where(.ref-card) {
+  gap: var(--component-gap-tight, 0.45rem);
+}
+
+:where(.ref-card-sigil) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-sm, 0.92rem);
+  color: var(--component-accent);
+}
+
+:where(.ref-terms) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.45rem 0 0;
+}
+
+:where(.ref-terms li) {
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-control, 999px);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--component-accent) 78%, var(--ink, rgba(14, 18, 20, 0.92)) 22%);
+}
+
+
+/* ==========================================================================
+   20. Chips, badges, metadata
+   ========================================================================== */
+
+:where(.operator-chip, .spec-pill, .spw-component-tag, .media-card-tag, .plan-status) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  min-width: 0;
+  min-height: var(--component-chip-height);
+  padding: 0.18rem 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
+  border-radius: var(--component-radius-pill);
+  background: color-mix(in srgb, var(--component-accent) 7%, var(--component-surface-strong));
+  color: color-mix(in srgb, var(--component-accent) 68%, var(--ink, currentColor));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-xs, 0.78rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--component-transition-fast),
+  border-color var(--component-transition-fast),
+  color var(--component-transition-fast),
+  transform var(--component-transition-fast),
+  box-shadow var(--component-transition-fast);
+}
+
+:where(.operator-chip:is(:hover, :focus-visible), a.spec-pill:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--component-accent) 34%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 11%, var(--component-surface-strong));
+  color: color-mix(in srgb, var(--component-accent) 84%, var(--ink, currentColor));
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+:where(.operator-chip[aria-pressed="true"], .operator-chip[data-site-setting-active="true"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 44%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
+}
+
+:where(.spec-strip) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.32rem;
+  min-width: 0;
+}
+
+:where(.spw-component-meta, .spw-component-guides) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  align-items: center;
+  min-width: 0;
+  color: var(--semantic-metadata-ink, var(--ink-soft));
+  font-size: var(--semantic-metadata-font-size, 0.62rem);
+  letter-spacing: var(--semantic-metadata-tracking, 0.04em);
+}
+
+
+/* ==========================================================================
+   21. Notes, prose helpers, lists
+   ========================================================================== */
+
+:where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
+  max-inline-size: var(--component-measure);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+:where(.frame-copy) {
+  max-inline-size: var(--component-measure-wide);
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+:where(.frame-list) {
+  display: grid;
+  gap: 0.38rem;
+  padding-inline-start: 1.1rem;
+  margin-block: 0.4rem 0;
+}
+
+:where(.frame-list li) {
+  max-inline-size: 68ch;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   22. Media cards and figures
+   ========================================================================== */
+
+:where(.frame-card-media, .media-card figure, .media-focus-card figure, .image-study, .topic-photo-card) {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  overflow: clip;
+  border-radius: var(--component-radius-tight);
+}
+
+:where(.frame-card-media img, .media-card img, .media-focus-card img, .image-study img, .topic-photo-card img) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+:where(.frame-card--illustrated .frame-card-media) {
+  margin: calc(var(--component-pad) * -1);
+  margin-bottom: 0.2rem;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+:where(figcaption, .media-card-caption) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+
+/* ==========================================================================
+   23. Settings components
+   ========================================================================== */
+
+:where(.settings-form) {
+  display: grid;
+  gap: var(--component-gap);
+}
+
+:where(.settings-category) {
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  background: var(--component-surface-soft);
+  overflow: clip;
+}
+
+:where(.settings-category-header) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: var(--component-pad-tight) var(--component-pad);
+  cursor: pointer;
+  font-weight: 750;
+  color: var(--ink, currentColor);
+}
+
+:where(.settings-category[open] > .settings-category-header) {
+  border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
+}
+
+:where(.settings-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--component-gap);
+  padding: var(--component-pad);
+}
+
+:where(.settings-fieldset) {
+  display: grid;
+  gap: 0.52rem;
+  min-width: 0;
+  padding: var(--component-pad);
+  border: var(--component-border-quiet);
+  border-radius: var(--component-radius-tight);
+  background: color-mix(in srgb, var(--component-surface-strong) 82%, transparent);
+}
+
+:where(.settings-fieldset legend) {
+  padding-inline: 0.24rem;
+  font-weight: 750;
+  color: var(--ink, currentColor);
+}
+
+:where(.settings-option) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  min-width: 0;
+  padding: 0.52rem 0.58rem;
+  border: 1px solid transparent;
+  border-radius: var(--component-radius-tight);
+  cursor: pointer;
+}
+
+:where(.settings-option:is(:hover, :focus-within)) {
+  border-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 5%, transparent);
+}
+
+:where(.settings-option input) {
+  margin-block-start: 0.14rem;
+}
+
+:where(.settings-option-copy) {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+:where(.settings-option-copy strong) {
+  line-height: 1.2;
+}
+
+:where(.settings-option-copy span, .settings-option-hint) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.42;
+}
+
+:where(.settings-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  padding-top: var(--component-gap-tight);
+}
+
+:where(.settings-status) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+}
+
+:where(.settings-status[data-status="success"]) {
+  color: var(--valence-pos, hsl(160 45% 34%));
+}
+
+:where(.settings-status[data-status="error"]) {
+  color: var(--valence-neg, hsl(8 54% 42%));
+}
+
+:where(.settings-presets) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.settings-preset-btn) {
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+}
+
+:where(.settings-preset-btn strong) {
+  display: block;
+}
+
+:where(.settings-preset-btn span) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.42;
+}
+
+:where(.settings-preset-btn[data-site-setting-active="true"], .settings-preset-btn[data-preset-active="exact"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 9%, var(--component-surface-strong));
+}
+
+:where(.settings-shortcuts) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.72rem;
+}
+
+:where(.settings-shortcut-card) {
+  display: grid;
+  gap: 0.28rem;
+  padding: var(--component-pad);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  background: var(--component-surface-soft);
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.settings-shortcut-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--component-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 6%, var(--component-surface-strong));
+  text-decoration: none;
+}
+
+:where(.settings-shortcut-kicker, .settings-state-label, .vibe-widget-kicker) {
+  color: var(--ink-faint, rgba(14, 18, 20, 0.42));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.settings-state-card strong) {
+  font-size: var(--text-size-lg, 1.1rem);
+  line-height: 1.2;
+}
+
+:where(.settings-nav-card, .settings-structure-card, .settings-map-card) {
+  gap: 0.55rem;
+}
+
+:where(.settings-nav-card code, .settings-structure-card code, .settings-map-card code) {
+  width: fit-content;
+}
+
+
+/* ==========================================================================
+   24. Vibe widgets and local note surfaces
+   ========================================================================== */
+
+:where(.vibe-widget) {
+  gap: var(--component-gap-tight);
+}
+
+:where(.vibe-widget-header) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.vibe-widget-title) {
+  margin: 0;
+}
+
+:where(.vibe-widget-copy) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.5;
+  margin: 0;
+}
+
+:where(.vibe-widget-actions, .vibe-widget-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+:where(.site-deviation-surface, .settings-note-list) {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+:where(.site-deviation-list) {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+:where(.site-deviation-item) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.45rem;
+  border: var(--component-border-quiet);
+  border-radius: var(--component-radius-tight);
+  background: color-mix(in srgb, var(--component-surface-strong) 72%, transparent);
+}
+
+:where(.site-deviation-reset) {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--component-accent) 20%, transparent);
+  border-radius: var(--component-radius-pill);
+  background: transparent;
+  color: var(--component-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.12rem 0.46rem;
+}
+
+:where(.settings-note-form) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.settings-note-form__label) {
+  font-weight: 700;
+}
+
+:where(.settings-note-form__input) {
+  width: 100%;
+  min-height: 8rem;
+  resize: vertical;
+  padding: var(--component-pad-tight);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  background: var(--component-surface-strong);
+  color: var(--ink, currentColor);
+  font: inherit;
+  line-height: 1.5;
+}
+
+:where(.settings-note-form__actions, .settings-note-form__meta) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+
+/* ==========================================================================
+   25. Selection, active, and section states
+   ========================================================================== */
+
+:where(main > section[id], main > article > section[id]) {
+  scroll-margin-top: calc(var(--shell-header-height, var(--header-height, 4rem)) + 1.1rem);
+}
+
+:where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
+  transition: box-shadow var(--component-transition-deliberate),
+  border-color var(--component-transition-deliberate),
+  transform var(--component-transition-deliberate);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent),
+  var(--component-shadow-active);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) :where(h1, h2, h3) {
+  color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
+}
+
+:where([data-spw-selection="focused"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
+}
+
+:where([data-spw-selection="active"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 34%, transparent);
+}
+
+:where([data-spw-selection="selected"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 22%, transparent),
+  0 0 0 4px color-mix(in srgb, var(--component-accent) 7%, transparent);
+}
+
+
+/* ==========================================================================
+   26. Accessibility and visibility
+   ========================================================================== */
+
+:where([hidden]) {
+  display: none !important;
+}
+
+:where(:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+:where(button, a, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where(html[data-spw-high-contrast="on"]) {
+  --component-border: 1px solid color-mix(in srgb, var(--ink, currentColor) 34%, var(--line, transparent));
+  --component-border-strong: 2px solid color-mix(in srgb, var(--component-accent) 58%, var(--ink, currentColor));
+}
+
+:where(html[data-spw-high-contrast="on"]) :where(.operator-chip, .spec-pill, .settings-option, .settings-fieldset) {
+  border-width: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(*, *::before, *::after) {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(*, *::before, *::after) {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 1ms !important;
+}
+
+
+/* ==========================================================================
+   27. Responsive container behavior
+   ========================================================================== */
+
+@container (max-width: 36rem) {
+  :where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+  }
+
+  :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+    width: 100%;
+    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+  }
+
+  :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+    gap: var(--component-gap);
+  }
+
+  :where(.site-lede, .page-lede) {
+    font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 760px) {
+  :where(.site-frame) {
+    --surface-padding: var(--spw-surface-padding, 0.82rem);
+    border-radius: var(--component-radius-tight);
+  }
+
+  :where(.site-frame)::before {
+    inset-inline: var(--surface-padding);
+  }
+
+  :where(.frame-grid--2up, .frame-grid--3up) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.settings-grid) {
+    grid-template-columns: 1fr;
+    padding: var(--component-pad-tight);
+  }
+
+  :where(.settings-category-header) {
+    padding-inline: var(--component-pad-tight);
+  }
+
+  :where(.operator-chip, .spec-pill) {
+    white-space: normal;
+  }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    gap: 0.4rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex: 1 1 11rem;
+    justify-content: flex-start;
+    min-height: 2.55rem;
+    padding-inline: 0.82rem;
+    text-align: left;
+  }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    padding: 0.14rem;
+    border: 1px solid color-mix(in srgb, var(--component-route-marker-line) 60%, transparent);
+    border-radius: calc(var(--component-radius, 10px) + 2px);
+    background: color-mix(in srgb, var(--component-surface-strong) 84%, transparent);
+  }
+}
+
+@media (max-width: 420px) {
+  :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
+    --component-pad: 0.68rem;
+    --component-gap-tight: 0.42rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex-basis: 100%;
+  }
+
+  :where(.settings-shortcuts) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid, .settings-quickstart-grid) {
+    grid-template-columns: 1fr;
+  }
+}

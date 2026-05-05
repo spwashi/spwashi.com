@@ -1,1 +1,1 @@
-export * from './spw-pwa-update-handler.js';
+export * from './runtime/pwa-update-handler.js';

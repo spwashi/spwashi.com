@@ -1,1 +1,1 @@
-export * from './spw-profile-builder.js';
+export * from './modules/profile-builder.js';

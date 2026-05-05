@@ -132,6 +132,14 @@ function hasTopFileContract(source: string): boolean {
   return firstChunk.trimStart().startsWith('/*');
 }
 
+function isCompatibilityWrapper(source: string, filename: string): boolean {
+  const trimmed = source.trim();
+  const wrapperPattern = new RegExp(
+    `^@import\\s+url\\('/public/css/[a-z0-9_-]+/${filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'\\);$`
+  );
+  return wrapperPattern.test(trimmed);
+}
+
 function referencesSemanticCss(source: string): boolean {
   return /\bdata-spw-|--spw-|--component-|--grammar-|--handle-|--shell-|--material-|--ornament-/.test(source);
 }
@@ -186,16 +194,17 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
     const rootPath = rootRelativeCssPath(absolutePath);
     const filename = path.basename(absolutePath);
     const source = await fs.readFile(absolutePath, 'utf8');
+    const compatibilityWrapper = isCompatibilityWrapper(source, filename);
 
-    if (!hasInstructionHeader(source, filename)) {
+    if (!compatibilityWrapper && !hasInstructionHeader(source, filename)) {
       errors.push(`${relativePath} needs an instructional header naming its file and scope.`);
     }
 
-    if (referencesSemanticCss(source) && !hasTopFileContract(source)) {
+    if (!compatibilityWrapper && referencesSemanticCss(source) && !hasTopFileContract(source)) {
       warnings.push(`${relativePath} uses semantic CSS hooks without an obvious top-of-file contract.`);
     }
 
-    if (!knownReferences.has(rootPath)) {
+    if (!compatibilityWrapper && !knownReferences.has(rootPath)) {
       warnings.push(`${relativePath} is not imported by style.css or linked by rendered routes.`);
     }
   }

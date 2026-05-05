@@ -1,1 +1,1 @@
-export * from './spw-services-configurator.js';
+export * from './modules/services-configurator.js';

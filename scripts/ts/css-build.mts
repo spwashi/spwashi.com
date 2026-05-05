@@ -83,7 +83,13 @@ async function loadPostcssPipeline() {
 
 function outputPathForEntry(entryPath: string): string {
   const relativeEntryPath = toPosixPath(path.relative(SOURCE_ENTRIES_DIR, entryPath));
-  const outputRelativePath = relativeEntryPath.replace(/\.(?:pcss|postcss)$/i, '.css');
+  const cssRelativePath = relativeEntryPath.replace(/\.(?:pcss|postcss)$/i, '.css');
+  const outputRelativePath = (() => {
+    if (cssRelativePath === 'spw-debug.css') return `effects/${cssRelativePath}`;
+    if (cssRelativePath === 'design-experiments.css') return `routes/${cssRelativePath}`;
+    if (cssRelativePath.endsWith('-surface.css')) return `routes/${cssRelativePath}`;
+    return cssRelativePath;
+  })();
   return path.join(PUBLIC_CSS_DIR, outputRelativePath);
 }
 

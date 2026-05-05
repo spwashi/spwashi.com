@@ -1,0 +1,1065 @@
+/*
+ * spw-metaphysical-paper.css
+ *
+ * Semantic ornament for image-bearing surfaces. The goal is not to impose a
+ * universal card treatment, but to let image studies, SVG figures, and page
+ * artifacts share a readable image ritual: semantic treatment, hold-to-visit,
+ * and a persistent visited glow.
+ */
+
+.spw-metaphysics-host {
+  --spw-image-accent: var(--teal);
+  --spw-image-paper:
+    color-mix(in srgb, var(--spw-image-accent) 5%, rgba(255, 248, 236, 0.94));
+  --spw-image-line:
+    color-mix(in srgb, var(--spw-image-accent) 18%, rgba(17, 18, 20, 0.14));
+  --spw-image-glow:
+    color-mix(in srgb, var(--spw-image-accent) 18%, rgba(255, 208, 131, 0.12));
+  --spw-image-focus-x: 50%;
+  --spw-image-focus-y: 42%;
+  --spw-image-tilt-x: 0deg;
+  --spw-image-tilt-y: 0deg;
+  --spw-image-drift-x: 0px;
+  --spw-image-drift-y: 0px;
+  --spw-image-energy: 0;
+  --spw-image-scale: 1;
+  --spw-image-pixel-cell: clamp(8px, 1vw + 2px, 13px);
+  --spw-image-pixel-line: clamp(1px, 0.12vw + 0.4px, 2px);
+  --spw-image-helper-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 90%, rgba(17, 18, 20, 0.08));
+  --spw-image-helper-bg-strong:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 84%, rgba(17, 18, 20, 0.12));
+  --spw-image-helper-border:
+    color-mix(in srgb, var(--spw-image-accent) 20%, rgba(17, 18, 20, 0.14));
+  --spw-image-helper-ink:
+    color-mix(in srgb, var(--spw-image-accent) 68%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 24%, var(--ink-mid, rgba(14, 18, 20, 0.64)));
+  --spw-image-memory-ink:
+    color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 88%, var(--spw-image-accent));
+  --spw-image-helper-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 8px 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+  --spw-image-helper-lift-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 10px 22px color-mix(in srgb, var(--spw-image-accent) 14%, transparent);
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--spw-image-accent));
+  --spw-image-caption-shadow: 0 1px 0 rgba(255, 255, 255, 0.14);
+
+  position: relative;
+  isolation: isolate;
+  cursor: grab;
+  outline: none;
+  touch-action: manipulation;
+  container-type: inline-size;
+  transition:
+    box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="amber"] {
+  --spw-image-accent: var(--op-object-color, #c68a22);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="violet"] {
+  --spw-image-accent: var(--op-probe-color, #6a3fb8);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="sea"] {
+  --spw-image-accent: var(--op-topic-color, #2a8c76);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="blue"] {
+  --spw-image-accent: var(--op-ref-color, #1d57a3);
+}
+
+.spw-metaphysics-host[data-spw-image-resonance="ink"] {
+  --spw-image-accent: color-mix(in srgb, var(--ink, #1f2423) 78%, var(--teal));
+}
+
+.spw-metaphysics-host[data-spw-image-gesture="drag"],
+.spw-metaphysics-host[data-spw-hold-state="arming"] {
+  cursor: grabbing;
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"] {
+  touch-action: pan-y pinch-zoom;
+}
+
+
+.spw-metaphysics-host:focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 28%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+}
+
+.spw-metaphysics-host.spw-scaffold::before {
+  content: none;
+}
+
+.spw-metaphysics-host::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: calc(0.44 + (var(--spw-image-energy) * 0.28));
+  mix-blend-mode: screen;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), transparent 38%),
+    radial-gradient(
+      circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 243, 215, 0.14)),
+      transparent 44%
+    );
+  transition:
+    opacity var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    background var(--duration-base, 200ms) var(--ease-mechanical, ease);
+}
+
+:where(.spw-metaphysics-host img, .spw-metaphysics-host svg) {
+  position: relative;
+  z-index: 0;
+  transform-origin: var(--spw-image-focus-x) var(--spw-image-focus-y);
+  transform:
+    perspective(1200px)
+    translate3d(var(--spw-image-drift-x), var(--spw-image-drift-y), 0)
+    rotateX(var(--spw-image-tilt-x))
+    rotateY(var(--spw-image-tilt-y))
+    scale(var(--spw-image-scale));
+  transition:
+    filter var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    transform var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    opacity var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease);
+}
+
+.spw-metaphysics-host figcaption {
+  position: relative;
+  z-index: 1;
+  color: var(--spw-image-caption-ink);
+  text-shadow: var(--spw-image-caption-shadow);
+  transition:
+    color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    text-shadow var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="raised"] {
+  --spw-image-helper-border:
+    color-mix(in srgb, var(--spw-image-accent) 28%, rgba(17, 18, 20, 0.14));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 34%, var(--ink-mid, rgba(14, 18, 20, 0.64)));
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.94)) 74%, var(--spw-image-accent));
+  --spw-image-caption-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 10px color-mix(in srgb, var(--spw-image-accent) 6%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-contrast-state="focused"] {
+  --spw-image-helper-bg:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 80%, rgba(17, 18, 20, 0.14));
+  --spw-image-helper-bg-strong:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 62%),
+    color-mix(in srgb, var(--spw-image-paper) 74%, rgba(17, 18, 20, 0.18));
+  --spw-image-helper-border:
+    color-mix(in srgb, var(--spw-image-accent) 36%, rgba(17, 18, 20, 0.18));
+  --spw-image-helper-ink:
+    color-mix(in srgb, var(--spw-image-accent) 76%, var(--ink, rgba(14, 18, 20, 0.96)));
+  --spw-image-helper-secondary-ink:
+    color-mix(in srgb, var(--spw-image-accent) 46%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --spw-image-memory-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.94)) 74%, var(--spw-image-accent));
+  --spw-image-caption-ink:
+    color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.96)) 68%, var(--spw-image-accent));
+  --spw-image-caption-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 14px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-medium="raster"] img {
+  filter: saturate(0.98) contrast(1.01);
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-preview="on"] img,
+  .spw-metaphysics-host[data-spw-image-preview="on"] svg,
+  .spw-metaphysics-host:focus-within img,
+  .spw-metaphysics-host:focus-within svg
+) {
+  --spw-image-scale: 1.008;
+}
+
+.spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"] img {
+  image-rendering: pixelated;
+  --spw-image-scale: 1.018;
+  filter: saturate(0.84) contrast(1.18) brightness(1.01);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="pixelize"]::after {
+  opacity: calc(0.58 + (var(--spw-image-energy) * 0.26));
+  mix-blend-mode: soft-light;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 40%),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 255, 255, 0.05)) 0 var(--spw-image-pixel-line),
+      transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 255, 255, 0.03)) 0 var(--spw-image-pixel-line),
+      transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+    ),
+    radial-gradient(
+      circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+      color-mix(in srgb, var(--spw-image-accent) 20%, rgba(255, 243, 215, 0.18)),
+      transparent 46%
+    );
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"][data-spw-image-preview="on"] img,
+  .spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="raster"]:focus-within img
+) {
+  --spw-image-scale: 1.028;
+  filter: saturate(0.92) contrast(1.22) brightness(1.03);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="pixelize"][data-spw-medium="vector"] svg {
+  shape-rendering: crispEdges;
+  filter:
+    contrast(1.08)
+    saturate(0.92)
+    drop-shadow(0 0 10px color-mix(in srgb, var(--spw-image-accent) 12%, transparent));
+}
+
+.spw-metaphysics-host[data-spw-image-effect="watercolor"]::after {
+  opacity: calc(0.68 + (var(--spw-image-energy) * 0.22));
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.16), transparent 40%),
+    radial-gradient(
+      circle at 18% 20%,
+      color-mix(in srgb, var(--spw-image-accent) 11%, rgba(255, 243, 215, 0.2)),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 78% 72%,
+      color-mix(in srgb, var(--spw-image-accent) 9%, rgba(255, 243, 215, 0.16)),
+      transparent 36%
+    ),
+    linear-gradient(
+      132deg,
+      color-mix(in srgb, var(--spw-image-accent) 8%, rgba(255, 243, 215, 0.1)) 0 14%,
+      transparent 28% 68%,
+      color-mix(in srgb, var(--spw-image-accent) 7%, rgba(255, 243, 215, 0.08)) 84% 100%
+    ),
+    repeating-linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--spw-image-accent) 6%, transparent) 0 2px,
+      transparent 2px 24px
+    ),
+    radial-gradient(
+      circle at 46% 42%,
+      rgba(255, 247, 232, 0.16),
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+      color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 243, 215, 0.18)),
+      transparent 48%
+    );
+}
+
+.spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"] img {
+  filter: saturate(0.94) contrast(1.02) brightness(1.04) sepia(0.04);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="vector"] svg {
+  filter:
+    saturate(0.96)
+    contrast(0.99)
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.1))
+    drop-shadow(0 0 16px color-mix(in srgb, var(--spw-image-accent) 6%, transparent));
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"][data-spw-image-preview="on"] img,
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="raster"]:focus-within img
+) {
+  --spw-image-scale: 1.014;
+  filter: saturate(0.98) contrast(1.05) brightness(1.05) sepia(0.03);
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="vector"][data-spw-image-preview="on"] svg,
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"][data-spw-medium="vector"]:focus-within svg
+) {
+  --spw-image-scale: 1.012;
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-effect="clarify"] img,
+  .spw-metaphysics-host[data-spw-image-effect="clarify"] svg
+) {
+  filter: saturate(1.06) contrast(1.08) brightness(0.99);
+}
+
+.spw-metaphysics-host[data-spw-image-effect="clarify"]::after {
+  opacity: calc(0.32 + (var(--spw-image-energy) * 0.16));
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.12), transparent 42%),
+    linear-gradient(
+      180deg,
+      transparent 0 58%,
+      color-mix(in srgb, var(--spw-image-accent) 5%, rgba(255, 255, 255, 0.12)) 100%
+    ),
+    radial-gradient(
+      circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+      color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 243, 215, 0.12)),
+      transparent 40%
+    );
+}
+
+.spw-metaphysics-host[data-spw-image-effect="clarify"][data-spw-medium="vector"] svg {
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.16))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--spw-image-accent) 10%, transparent));
+}
+
+/* ─── Frame hint (discoverability) ──────────────────────────────────── */
+/*
+ * A breathing accent line at the bottom edge of the image. Visible on hover,
+ * not a button — just a signal that something can happen here.
+ * Clicking it (via .spw-image-hint) opens the control strip.
+ */
+.spw-image-hint {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 2.6rem;
+  height: 3px;
+  border-radius: 999px 999px 0 0;
+  background: color-mix(in srgb, var(--spw-image-accent) 42%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    width 220ms ease,
+    background 220ms ease;
+}
+
+.spw-metaphysics-host[data-spw-image-preview="on"] .spw-image-hint {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.spw-metaphysics-host[data-spw-image-state="primed"] .spw-image-hint {
+  width: 3.4rem;
+  opacity: 0.96;
+}
+
+.spw-metaphysics-host[data-spw-image-input="coarse"] .spw-image-hint {
+  height: 4px;
+}
+
+.spw-metaphysics-host[data-spw-controls-open="true"] .spw-image-hint {
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Control strip (frame-integrated, bottom edge) ─────────────────── */
+/*
+ * Collapsed by default. Expands upward from the image bottom edge when the
+ * hint is clicked. Controls feel like part of the frame, not a floating HUD.
+ */
+.spw-image-helper-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.36rem;
+  padding: 0 0.72rem 0.6rem;
+  pointer-events: none;
+
+  /* Collapsed: zero-height, content hidden */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    max-height 260ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.spw-metaphysics-host[data-spw-controls-open="true"] .spw-image-helper-strip {
+  max-height: 8rem;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+:where(.spw-image-helper, .spw-image-memory) {
+  pointer-events: auto;
+  flex: 0 1 auto;
+  box-sizing: border-box;
+  border: 1px solid var(--spw-image-helper-border, var(--spw-image-line));
+  border-radius: calc(var(--shape-control, 0.68rem) + 0.06rem);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--spw-image-helper-shadow);
+}
+
+.spw-image-helper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "eyebrow value"
+    "track track";
+  gap: 0.1rem 0.55rem;
+  min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+  min-width: min(100%, 9.25rem);
+  padding: 0.42rem 0.66rem 0.46rem;
+  background: var(--spw-image-helper-bg);
+  color: var(--spw-image-helper-ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  line-height: 1;
+  transition:
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    background var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.spw-image-helper:hover, .spw-image-helper:focus-visible) {
+  border-color: color-mix(in srgb, var(--spw-image-accent) 40%, transparent);
+  background: var(--spw-image-helper-bg-strong);
+  transform: translateY(-1.5px);
+  box-shadow: var(--spw-image-helper-lift-shadow);
+  outline: none;
+}
+
+.spw-image-helper[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--spw-image-accent) 30%, transparent);
+  background: var(--spw-image-helper-bg-strong);
+  box-shadow: var(--spw-image-helper-lift-shadow);
+}
+
+.spw-image-helper__eyebrow {
+  grid-area: eyebrow;
+  align-self: end;
+  color: var(--spw-image-helper-secondary-ink, var(--ink-mid));
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.spw-image-helper__value {
+  grid-area: value;
+  justify-self: end;
+  align-self: end;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.spw-image-helper__track {
+  grid-area: track;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.22rem;
+  margin-top: 0.06rem;
+}
+
+.spw-image-helper__stop {
+  height: 0.28rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spw-image-accent) 10%, rgba(255, 255, 255, 0.16));
+  opacity: 0.72;
+  transition:
+    background var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(.spw-image-helper:hover, .spw-image-helper:focus-visible) .spw-image-helper__stop {
+  opacity: 0.92;
+}
+
+:where(
+  .spw-image-helper[data-spw-effect="semantic"] [data-spw-effect-stop="semantic"],
+  .spw-image-helper[data-spw-effect="pixelize"] [data-spw-effect-stop="pixelize"],
+  .spw-image-helper[data-spw-effect="watercolor"] [data-spw-effect-stop="watercolor"],
+  .spw-image-helper[data-spw-effect="clarify"] [data-spw-effect-stop="clarify"]
+) {
+  background: color-mix(in srgb, var(--spw-image-accent) 44%, rgba(255, 255, 255, 0.92));
+  opacity: 1;
+  transform: scaleY(1.08);
+}
+
+.spw-image-helper[data-spw-override-state="manual"] .spw-image-helper__eyebrow,
+.spw-image-memory[data-spw-override-state="manual"] .spw-image-memory__logic {
+  color: color-mix(in srgb, var(--spw-image-accent) 58%, var(--ink-mid));
+}
+
+.spw-image-memory {
+  display: grid;
+  align-content: center;
+  gap: 0.08rem;
+  min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+  max-width: min(100%, 13rem);
+  padding: 0.42rem 0.58rem 0.46rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.86)) 90%, transparent);
+}
+
+.spw-image-memory__logic {
+  color: var(--spw-image-helper-secondary-ink, var(--ink-mid));
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-image-memory__value {
+  color: var(--spw-image-memory-ink, var(--ink-soft));
+  font-size: 0.68rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spw-image-memory[data-spw-visited="true"] {
+  border-color: color-mix(in srgb, var(--spw-image-accent) 28%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 10px 22px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+}
+
+.spw-image-memory[data-spw-visited="true"] .spw-image-memory__logic {
+  color: color-mix(in srgb, var(--spw-image-accent) 70%, var(--ink));
+}
+
+.spw-image-memory[data-spw-visited="true"] .spw-image-memory__value {
+  color: color-mix(in srgb, var(--spw-image-accent) 46%, var(--ink-soft));
+}
+
+/* ─── Strip close button ────────────────────────────────────────────── */
+.spw-image-strip-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  background: none;
+  border: 1px solid color-mix(in srgb, var(--spw-image-accent) 16%, transparent);
+  border-radius: 50%;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 140ms ease, border-color 140ms ease;
+  flex-shrink: 0;
+}
+
+.spw-image-strip-close:hover {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--spw-image-accent) 32%, transparent);
+}
+
+/* ─── Palette swatches ──────────────────────────────────────────────── */
+/*
+ * Shows the image's own extracted palette as interactive chips.
+ * Clicking a swatch sets it as the active brush color.
+ * This makes palette integration tangible — paint with the image's own colors.
+ */
+.spw-image-palette-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+  flex: 1;
+}
+
+.spw-image-palette-swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+  background: var(--swatch-color, var(--spw-image-accent));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.spw-image-palette-swatch:hover {
+  transform: scale(1.18);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.spw-image-palette-swatch[data-active="true"] {
+  transform: scale(1.24);
+  border-color: #fff;
+  box-shadow: 0 0 0 2px var(--swatch-color), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Brush Mode Controls ──────────────────────────────────────────────── */
+
+.spw-image-brush-toggle {
+  min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+  padding: 0.32rem 0.56rem;
+  background: color-mix(in srgb, var(--spw-image-accent) 6%, var(--surface-strong, #ffffff));
+  border: 1px solid color-mix(in srgb, var(--spw-image-accent) 18%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+  border-radius: 0.64rem;
+  color: var(--spw-image-accent);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 140ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.spw-image-brush-toggle:hover:not([data-spw-brush-active="true"]) {
+  background: color-mix(in srgb, var(--spw-image-accent) 12%, var(--surface-strong, #ffffff));
+  border-color: color-mix(in srgb, var(--spw-image-accent) 28%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+  transform: translateY(-1px);
+}
+
+.spw-image-brush-toggle[data-spw-brush-active="true"] {
+  background: color-mix(in srgb, var(--spw-image-accent) 22%, var(--surface-strong, #ffffff));
+  border-color: color-mix(in srgb, var(--spw-image-accent) 42%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.24), 0 4px 10px color-mix(in srgb, var(--spw-image-accent) 12%, transparent);
+}
+
+.spw-image-brush-toggle:active {
+  transform: translateY(0);
+  opacity: 0.88;
+}
+
+.spw-image-brush-controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0.32rem 0.48rem;
+  padding: 0.48rem 0.56rem;
+  background: color-mix(in srgb, var(--surface, #ffffff) 90%, transparent);
+  border: 1px solid var(--spw-shell-line, rgba(14, 18, 20, 0.14));
+  border-radius: 0.64rem;
+  font-size: 0.64rem;
+}
+
+.spw-image-brush-size-label,
+.spw-image-brush-opacity-label {
+  display: flex;
+  align-items: center;
+  color: var(--ink-soft);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.spw-image-brush-size-slider,
+.spw-image-brush-opacity-slider {
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--spw-shell-line, rgba(14, 18, 20, 0.14));
+  outline: none;
+  cursor: pointer;
+}
+
+.spw-image-brush-size-slider::-webkit-slider-thumb,
+.spw-image-brush-opacity-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--spw-image-accent) 68%, var(--ink));
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--spw-image-accent) 28%, transparent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.spw-image-brush-size-slider::-moz-range-thumb,
+.spw-image-brush-opacity-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--spw-image-accent) 68%, var(--ink));
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--spw-image-accent) 28%, transparent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 700px) {
+  .spw-image-brush-controls {
+    display: none;
+    grid-template-columns: 1fr;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: max-content;
+    z-index: 1200;
+  }
+
+  .spw-metaphysics-host[data-spw-brush-mode="true"] .spw-image-brush-controls {
+    display: grid;
+  }
+}
+
+html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
+  max-width: 8.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spw-metaphysics-host[data-spw-visited="true"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+    0 8px 20px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"] {
+  box-shadow:
+    var(--card-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.42)),
+    0 8px 22px color-mix(in srgb, var(--spw-image-accent) 7%, rgba(0, 0, 0, 0.1));
+}
+
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-image-preview="on"],
+.spw-metaphysics-host[data-spw-image-prominence="hero"]:focus-within,
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-image-gesture="drag"],
+.spw-metaphysics-host[data-spw-image-prominence="hero"][data-spw-salience-state="active"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 20%, transparent),
+    0 10px 24px color-mix(in srgb, var(--spw-image-accent) 10%, rgba(0, 0, 0, 0.12));
+}
+
+.spw-metaphysics-host[data-spw-visited="true"]::after {
+  opacity: 0.94;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 34%),
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 236, 196, 0.2)),
+      transparent 48%
+    );
+}
+
+.spw-metaphysics-host[data-spw-visited="true"] .spw-image-memory {
+  color: color-mix(in srgb, var(--spw-image-accent) 58%, var(--ink));
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-visited="true"] img,
+  .spw-metaphysics-host[data-spw-visited="true"] svg
+) {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
+}
+
+:where(
+  .spw-metaphysics-host[data-spw-image-gesture="drag"] img,
+  .spw-metaphysics-host[data-spw-image-gesture="drag"] svg
+) {
+  --spw-image-scale: 1.018;
+  box-shadow: 0 10px 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-hold-state="arming"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+    0 0 12px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+}
+
+.spw-metaphysics-host[data-spw-hold-state="arming"] .spw-image-helper {
+  animation: spw-image-hold-pulse 0.72s ease-in-out infinite;
+}
+
+.spw-metaphysics-host[data-spw-visit-burst="true"] {
+  animation: spw-image-visit-burst 0.82s ease;
+}
+
+.spw-metaphysics-host[data-spw-medium="vector"] {
+  padding: clamp(0.6rem, 2vw, 0.9rem);
+  border-radius: var(--shape-surface, 8px);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-image-paper) 82%, transparent),
+      transparent 56%
+    ),
+    rgba(255, 255, 255, 0.4);
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-helper-strip {
+  gap: 0.3rem;
+  padding-inline: 0.56rem;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-palette-swatches {
+  flex: 1 1 100%;
+  order: 1;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-helper {
+  min-width: 0;
+  flex: 1 1 8rem;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-memory {
+  order: 4;
+  flex: 1 1 100%;
+  max-width: none;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-strip-close {
+  order: 3;
+}
+
+.spw-metaphysics-host[data-spw-image-layout="compact"][data-spw-image-input="coarse"] :where(
+  .spw-image-helper,
+  .spw-image-memory,
+  .spw-image-brush-toggle
+) {
+  min-height: max(2.3rem, var(--touch-target-compact, 2.15rem));
+}
+
+
+@media (max-width: 48rem) {
+  .spw-metaphysics-host {
+    --spw-image-pixel-cell: clamp(10px, 3vw, 15px);
+    --spw-image-pixel-line: 1px;
+  }
+
+  .spw-image-helper-strip {
+    justify-content: space-between;
+    gap: 0.34rem;
+  }
+
+  .spw-image-helper {
+    flex: 1 1 9.5rem;
+    min-width: 8.5rem;
+    padding-inline: 0.6rem;
+  }
+
+  .spw-image-memory {
+    flex: 1 1 7rem;
+    min-width: 0;
+    max-width: 10rem;
+  }
+
+  .spw-image-memory__value {
+    font-size: 0.64rem;
+  }
+
+  .spw-metaphysics-host[data-spw-image-layout="compact"] .spw-image-memory__value {
+    white-space: normal;
+  }
+
+  .spw-metaphysics-host[data-spw-image-effect="pixelize"]::after {
+    opacity: calc(0.64 + (var(--spw-image-energy) * 0.22));
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.11), transparent 42%),
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--spw-image-accent) 18%, rgba(255, 255, 255, 0.04)) 0 var(--spw-image-pixel-line),
+        transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+      ),
+      repeating-linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--spw-image-accent) 14%, rgba(255, 255, 255, 0.02)) 0 var(--spw-image-pixel-line),
+        transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+      ),
+      radial-gradient(
+        circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+        color-mix(in srgb, var(--spw-image-accent) 20%, rgba(255, 243, 215, 0.18)),
+        transparent 52%
+      );
+  }
+
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"]::after {
+    opacity: calc(0.72 + (var(--spw-image-energy) * 0.18));
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.14), transparent 42%),
+      radial-gradient(
+        circle at 14% 18%,
+        color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 243, 215, 0.22)),
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 74% 72%,
+        color-mix(in srgb, var(--spw-image-accent) 10%, rgba(255, 243, 215, 0.18)),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+        color-mix(in srgb, var(--spw-image-accent) 18%, rgba(255, 243, 215, 0.18)),
+        transparent 52%
+      );
+  }
+}
+
+@container (max-width: 28rem) {
+  .spw-image-helper-strip {
+    gap: 0.3rem;
+    padding-inline: 0.54rem;
+  }
+
+  .spw-image-helper {
+    min-width: 0;
+    flex: 1 1 8rem;
+  }
+
+  .spw-image-memory {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .spw-image-memory__value {
+    white-space: normal;
+  }
+}
+
+@media (min-width: 72rem), (min-width: 48rem) and (min-height: 58rem) {
+  .spw-metaphysics-host[data-spw-image-prominence="hero"] {
+    --spw-image-pixel-cell: clamp(8px, 0.85vw + 2px, 13px);
+  }
+
+  .spw-metaphysics-host[data-spw-image-prominence="hero"] .spw-image-helper-strip {
+    gap: 0.5rem;
+  }
+
+  .spw-metaphysics-host[data-spw-image-prominence="hero"] .spw-image-helper {
+    min-width: 9.9rem;
+    padding-inline: 0.74rem;
+  }
+
+  .spw-metaphysics-host[data-spw-image-prominence="hero"] .spw-image-memory {
+    max-width: 13.5rem;
+  }
+
+  .spw-metaphysics-host[data-spw-image-effect="pixelize"]::after {
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 40%),
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--spw-image-accent) 7%, transparent) 0 18%,
+        transparent 34% 68%,
+        color-mix(in srgb, var(--spw-image-accent) 6%, transparent) 84% 100%
+      ),
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--spw-image-accent) 16%, rgba(255, 255, 255, 0.05)) 0 var(--spw-image-pixel-line),
+        transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+      ),
+      repeating-linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--spw-image-accent) 12%, rgba(255, 255, 255, 0.03)) 0 var(--spw-image-pixel-line),
+        transparent var(--spw-image-pixel-line) var(--spw-image-pixel-cell)
+      ),
+      radial-gradient(
+        circle at var(--spw-image-focus-x) var(--spw-image-focus-y),
+        color-mix(in srgb, var(--spw-image-accent) 20%, rgba(255, 243, 215, 0.18)),
+        transparent 46%
+      );
+  }
+
+  .spw-metaphysics-host[data-spw-image-effect="watercolor"]::after {
+    opacity: calc(0.64 + (var(--spw-image-energy) * 0.22));
+  }
+
+  :where(
+    .spw-metaphysics-host[data-spw-image-effect="clarify"] img,
+    .spw-metaphysics-host[data-spw-image-effect="clarify"] svg
+  ) {
+    filter: saturate(1.08) contrast(1.1) brightness(0.99);
+  }
+}
+
+@keyframes spw-image-hold-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-image-accent) 0%, transparent);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+  }
+}
+
+@keyframes spw-image-visit-burst {
+  0% {
+    box-shadow:
+      0 0 0 0 color-mix(in srgb, var(--spw-image-accent) 18%, transparent),
+      0 0 0 color-mix(in srgb, var(--spw-image-accent) 0%, transparent);
+  }
+
+  55% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 26%, transparent),
+      0 0 18px color-mix(in srgb, var(--spw-image-accent) 10%, transparent);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--spw-image-accent) 24%, transparent),
+      0 8px 20px color-mix(in srgb, var(--spw-image-accent) 8%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-metaphysics-host {
+    touch-action: auto;
+  }
+
+  :where(.spw-metaphysics-host img, .spw-metaphysics-host svg) {
+    transform: none;
+    transition:
+      filter var(--duration-base, 200ms) var(--ease-mechanical, ease),
+      opacity var(--duration-base, 200ms) var(--ease-mechanical, ease),
+      box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease);
+  }
+
+  .spw-metaphysics-host::after {
+    opacity: 0.56;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .spw-metaphysics-host img,
+    .spw-metaphysics-host svg,
+    .spw-image-helper
+  ) {
+    transition: none;
+  }
+
+  :where(
+    .spw-metaphysics-host[data-spw-hold-state="arming"] .spw-image-helper,
+    .spw-metaphysics-host[data-spw-visit-burst="true"]
+  ) {
+    animation: none;
+  }
+}

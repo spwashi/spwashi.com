@@ -1,0 +1,730 @@
+/* ==========================================================================
+   services-configurator.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Weighted field for tier resolution.
+   - Four dimensions resolve to a service tier via a scoring formula.
+   - Mirrors the boonhonk-mixer interaction language, but with more explicit
+     dimensional hierarchy, value reasoning, and SVG-ready semantic states.
+
+   Design goals
+   - Prepare for more advanced combinatorics and SVG interactions.
+   - Make price movement, charge, and utility feel grounded and legible.
+   - Support elegant, screenshot-worthy value selection with precise state.
+   - Give JS a richer state grammar without forcing immediate HTML changes.
+
+   Suggested JS-facing attributes / classes
+   - [data-svc-state="idle|probing|weighted|resolved|projecting|comparing"]
+   - [data-svc-focus="time|scope|depth|tenure|center"]
+   - [data-svc-tier="fast|standard|premium|blended"]
+   - [data-svc-utility="low|medium|high|magnified"]
+   - [data-svc-charge="0..1"] or inline custom property --svc-charge
+   - [data-svc-price-shift="stable|rising|falling|floating"]
+   - [data-svc-axis-state="quiet|active|locked"]
+   - [data-svc-combinatorics="simple|layered|advanced"]
+   - .is-resolved / .is-projecting / .is-comparing / .is-hovering-node
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Wrapper + root variables
+   ========================================================================== */
+
+.svc-wrapper {
+  --svc-accent: var(--spw-accent, #1a9999);
+  --svc-accent-soft: color-mix(in oklab, var(--svc-accent) 12%, transparent);
+  --svc-accent-strong: color-mix(in oklab, var(--svc-accent) 28%, transparent);
+
+  --svc-bg: var(--card-bg, rgba(255, 255, 255, 0.84));
+  --svc-bg-strong:
+    color-mix(in oklab, var(--page-bg, #f8f7f5) 90%, var(--svc-accent) 10%);
+  --svc-line: var(--line, rgba(18, 52, 50, 0.12));
+  --svc-line-strong: color-mix(in oklab, var(--svc-accent) 24%, transparent);
+  --svc-text: var(--ink, hsl(178 18% 14%));
+  --svc-text-soft: var(--ink-soft, hsl(178 10% 42%));
+
+  --svc-charge: 0;
+  --svc-resolve-alpha: calc(0.12 + (var(--svc-charge) * 0.24));
+  --svc-utility-alpha: calc(0.08 + (var(--svc-charge) * 0.18));
+  --svc-center-scale: 1;
+  --svc-price-y: 0px;
+  --svc-tier-y: 0px;
+
+  --svc-radius: 1rem;
+  --svc-radius-tight: 0.45rem;
+  --svc-pad-x: 1rem;
+  --svc-pad-y: 1rem;
+  --svc-gap: 0.75rem;
+
+  --svc-duration-fast: var(--duration-fast, 120ms);
+  --svc-duration-base: var(--duration-base, 180ms);
+  --svc-duration-deliberate: var(--duration-deliberate, 280ms);
+  --svc-ease: var(--ease-mechanical, ease);
+  --svc-settle-ease:
+    var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--svc-gap);
+  max-width: 32rem;
+  padding: var(--svc-pad-y) var(--svc-pad-x) 0.5rem;
+  background: var(--svc-bg);
+  border: 1px solid var(--svc-line);
+  border-radius: var(--svc-radius);
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition:
+    border-color var(--svc-duration-base) var(--svc-ease),
+    box-shadow var(--svc-duration-deliberate) var(--svc-settle-ease),
+    background var(--svc-duration-base) var(--svc-ease),
+    transform var(--svc-duration-fast) var(--svc-settle-ease);
+}
+
+.svc-wrapper:is(:hover, :focus-within) {
+  border-color: var(--svc-line-strong);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--svc-accent) 12%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.svc-wrapper[data-svc-state="probing"] {
+  --svc-charge: 0.18;
+}
+
+.svc-wrapper[data-svc-state="weighted"] {
+  --svc-charge: 0.34;
+}
+
+.svc-wrapper[data-svc-state="resolved"],
+.svc-wrapper .svc-svg.is-resolved {
+  --svc-charge: 0.62;
+}
+
+.svc-wrapper[data-svc-state="projecting"],
+.svc-wrapper .svc-svg.is-projecting {
+  --svc-charge: 0.82;
+}
+
+.svc-wrapper[data-svc-combinatorics="advanced"] {
+  --svc-utility-alpha: calc(0.14 + (var(--svc-charge) * 0.24));
+}
+
+/* ==========================================================================
+   2. SVG surface
+   ========================================================================== */
+
+.svc-svg {
+  width: min(260px, 100%);
+  height: auto;
+  overflow: visible;
+  cursor: default;
+}
+
+.svc-svg[data-svc-focus="center"] {
+  --svc-center-scale: 1.03;
+}
+
+.svc-field {
+  fill: color-mix(in oklab, var(--svc-accent) 3%, var(--page-bg, #f8f7f5));
+  stroke: color-mix(in oklab, var(--svc-accent) 10%, transparent);
+  stroke-width: 1;
+  transition:
+    fill var(--svc-duration-deliberate) var(--svc-ease),
+    stroke var(--svc-duration-base) var(--svc-ease),
+    opacity var(--svc-duration-base) var(--svc-ease);
+}
+
+.svc-field[data-svc-utility="magnified"] {
+  fill: color-mix(in oklab, var(--svc-accent) 8%, var(--page-bg, #f8f7f5));
+  stroke: color-mix(in oklab, var(--svc-accent) 18%, transparent);
+}
+
+.svc-polygon {
+  transition:
+    fill var(--svc-duration-deliberate) var(--svc-ease),
+    opacity var(--svc-duration-base) var(--svc-ease),
+    points 160ms ease,
+    filter var(--svc-duration-base) var(--svc-settle-ease);
+}
+
+.svc-svg[data-svc-state="weighted"] .svc-polygon,
+.svc-svg.is-comparing .svc-polygon {
+  filter: drop-shadow(0 0 8px color-mix(in oklab, var(--svc-accent) 8%, transparent));
+}
+
+.svc-spoke {
+  transition:
+    stroke-width 240ms ease,
+    opacity 200ms ease,
+    stroke var(--svc-duration-base) var(--svc-ease);
+}
+
+.svc-svg[data-svc-combinatorics="advanced"] .svc-spoke {
+  stroke-dasharray: 2 3;
+  opacity: 0.72;
+}
+
+.svc-svg[data-svc-combinatorics="advanced"] .svc-node.is-active ~ .svc-spoke,
+.svc-svg.is-hovering-node .svc-spoke {
+  stroke-dasharray: 4 2;
+}
+
+/* ==========================================================================
+   3. Center / resolved tier / price logic
+   --------------------------------------------------------------------------
+   Designed to support price moving location, charge, and magnified utility.
+   ========================================================================== */
+
+.svc-center {
+  transform-origin: center;
+  transform: scale(var(--svc-center-scale));
+  transition:
+    fill 260ms ease,
+    opacity 200ms ease,
+    transform var(--svc-duration-deliberate) var(--svc-settle-ease),
+    filter var(--svc-duration-deliberate) var(--svc-settle-ease);
+}
+
+.svc-svg.is-resolved .svc-center,
+.svc-svg[data-svc-state="resolved"] .svc-center {
+  filter: drop-shadow(0 0 8px color-mix(in oklab, currentColor 40%, transparent));
+}
+
+.svc-svg.is-projecting .svc-center,
+.svc-svg[data-svc-state="projecting"] .svc-center {
+  filter:
+    drop-shadow(0 0 10px color-mix(in oklab, currentColor 26%, transparent))
+    drop-shadow(0 0 22px color-mix(in oklab, currentColor 10%, transparent));
+  transform: scale(1.05);
+}
+
+.svc-center-hit {
+  fill: transparent;
+  cursor: default;
+  transition: cursor 0ms;
+}
+
+.svc-svg.is-resolved .svc-center-hit,
+.svc-svg[data-svc-state="resolved"] .svc-center-hit,
+.svc-svg.is-projecting .svc-center-hit,
+.svc-svg[data-svc-state="projecting"] .svc-center-hit {
+  cursor: pointer;
+}
+
+.svc-center-tier {
+  fill: rgba(255, 255, 255, 0.9);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 11px;
+  font-weight: 700;
+  pointer-events: none;
+  user-select: none;
+  transform: translateY(var(--svc-tier-y));
+  transition:
+    opacity 180ms ease,
+    fill var(--svc-duration-fast) var(--svc-ease),
+    transform var(--svc-duration-deliberate) var(--svc-settle-ease),
+    letter-spacing var(--svc-duration-base) var(--svc-ease);
+}
+
+.svc-center-price {
+  fill: rgba(255, 255, 255, 0.75);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 9px;
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+  transform: translateY(var(--svc-price-y));
+  transition:
+    fill var(--svc-duration-fast) var(--svc-ease),
+    opacity var(--svc-duration-base) var(--svc-ease),
+    transform var(--svc-duration-deliberate) var(--svc-settle-ease),
+    font-size var(--svc-duration-deliberate) var(--svc-settle-ease);
+}
+
+/* Elegant price relocation / reasoning states */
+.svc-svg[data-svc-price-shift="rising"] {
+  --svc-price-y: -4px;
+  --svc-tier-y: 1px;
+}
+
+.svc-svg[data-svc-price-shift="falling"] {
+  --svc-price-y: 4px;
+  --svc-tier-y: -1px;
+}
+
+.svc-svg[data-svc-price-shift="floating"] .svc-center-price {
+  font-size: 10px;
+  opacity: 0.92;
+}
+
+.svc-svg[data-svc-utility="magnified"] .svc-center-tier,
+.svc-svg[data-svc-utility="magnified"] .svc-center-price {
+  letter-spacing: 0.03em;
+}
+
+.svc-svg.is-resolved .svc-center-tier,
+.svc-svg[data-svc-state="resolved"] .svc-center-tier {
+  fill: white;
+}
+
+/* Optional satellite labels for future markup */
+.svc-center-utility,
+.svc-center-reason,
+.svc-center-shift {
+  fill: color-mix(in oklab, white 76%, transparent);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 7px;
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition:
+    opacity var(--svc-duration-base) var(--svc-ease),
+    transform var(--svc-duration-deliberate) var(--svc-settle-ease);
+}
+
+.svc-svg[data-svc-state="projecting"] :is(.svc-center-utility, .svc-center-reason, .svc-center-shift),
+.svc-svg[data-svc-combinatorics="advanced"] :is(.svc-center-utility, .svc-center-reason) {
+  opacity: 0.86;
+}
+
+/* ==========================================================================
+   4. Nodes
+   --------------------------------------------------------------------------
+   Nodes should make dimensions feel weighted, precise, and inspectable.
+   ========================================================================== */
+
+.svc-node {
+  cursor: pointer;
+  outline: none;
+}
+
+.svc-node-hit {
+  fill: transparent;
+}
+
+.svc-node-dot {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1.5;
+  transition:
+    opacity 180ms ease,
+    r 160ms ease,
+    transform var(--svc-duration-fast) var(--svc-settle-ease),
+    filter var(--svc-duration-base) var(--svc-settle-ease),
+    stroke var(--svc-duration-base) var(--svc-ease);
+}
+
+.svc-node:focus-visible .svc-node-dot {
+  stroke: white;
+  stroke-width: 3;
+}
+
+.svc-node:hover .svc-node-dot {
+  filter: brightness(1.15);
+}
+
+.svc-node.is-active .svc-node-dot {
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.svc-node[data-svc-axis-state="locked"] .svc-node-dot {
+  stroke-dasharray: 0;
+  stroke-width: 2.2;
+}
+
+.svc-node[data-svc-utility="magnified"] .svc-node-dot {
+  filter:
+    drop-shadow(0 0 6px color-mix(in oklab, currentColor 22%, transparent))
+    brightness(1.08);
+}
+
+.svc-node-label {
+  fill: var(--svc-text);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 9px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.65;
+  text-decoration: none;
+  transition:
+    opacity var(--svc-duration-fast) var(--svc-ease),
+    letter-spacing var(--svc-duration-base) var(--svc-ease),
+    fill var(--svc-duration-fast) var(--svc-ease);
+}
+
+.svc-node.is-active .svc-node-label {
+  opacity: 1;
+}
+
+.svc-node-step {
+  fill: var(--svc-text-soft);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 8px;
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+  transition:
+    opacity var(--svc-duration-fast) var(--svc-ease),
+    fill var(--svc-duration-fast) var(--svc-ease);
+}
+
+.svc-node.is-active .svc-node-step {
+  opacity: 1;
+}
+
+/* Optional axis descriptions for later markup */
+.svc-node-note,
+.svc-node-weight,
+.svc-node-reason {
+  fill: color-mix(in oklab, var(--svc-text-soft) 88%, transparent);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 7px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity var(--svc-duration-base) var(--svc-ease);
+}
+
+.svc-node.is-active :is(.svc-node-note, .svc-node-weight, .svc-node-reason),
+.svc-svg[data-svc-combinatorics="advanced"] .svc-node :is(.svc-node-weight) {
+  opacity: 0.84;
+}
+
+/* ==========================================================================
+   5. Legend
+   --------------------------------------------------------------------------
+   Legend should eventually support richer combinatorics and reasoning states.
+   ========================================================================== */
+
+.svc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.svc-legend__chip {
+  --node-color: currentColor;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--svc-line);
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--svc-text-soft);
+  white-space: nowrap;
+  text-decoration: none;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.7rem;
+  transition:
+    background var(--svc-duration-fast) var(--svc-ease),
+    border-color var(--svc-duration-fast) var(--svc-ease),
+    color var(--svc-duration-fast) var(--svc-ease),
+    box-shadow var(--svc-duration-base) var(--svc-settle-ease),
+    transform var(--svc-duration-fast) var(--svc-settle-ease);
+}
+
+a.svc-legend__chip:hover,
+.svc-legend__chip[data-svc-active="true"] {
+  background: color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+  border-color: color-mix(in oklab, var(--node-color, currentColor) 28%, transparent);
+  color: var(--svc-text);
+  transform: translateY(-1px);
+}
+
+.svc-legend__chip::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--node-color, currentColor);
+}
+
+.svc-legend__chip[data-svc-utility="magnified"] {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--node-color, currentColor) 18%, transparent),
+    0 0 10px color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+}
+
+/* ==========================================================================
+   6. Reasoning readout
+   --------------------------------------------------------------------------
+   For future HTML, but useful now as a CSS contract.
+   ========================================================================== */
+
+.svc-readout {
+  width: 100%;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.svc-readout__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  min-width: 0;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.72rem;
+  color: var(--svc-text-soft);
+}
+
+.svc-readout__label {
+  color: var(--svc-text);
+}
+
+.svc-readout__bar {
+  position: relative;
+  height: 0.42rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--svc-accent) 8%, transparent);
+}
+
+.svc-readout__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: calc(var(--svc-score, 0.32) * 100%);
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--svc-accent) 48%, transparent),
+      color-mix(in oklab, var(--svc-accent) 78%, transparent)
+    );
+  transition: width var(--svc-duration-deliberate) var(--svc-settle-ease);
+}
+
+.svc-readout__value {
+  color: var(--svc-text);
+}
+
+.svc-readout__row[data-svc-tier="premium"] {
+  --svc-accent: var(--op-surface-color, #1a9999);
+}
+
+/* ==========================================================================
+   7. CTA panel
+   ========================================================================== */
+
+.svc-cta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--svc-accent) 20%, transparent);
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--svc-accent) 6%, var(--page-bg, #f8f7f5));
+  animation: svc-cta-in 220ms ease both;
+  transition:
+    background var(--svc-duration-base) var(--svc-ease),
+    border-color var(--svc-duration-base) var(--svc-ease),
+    box-shadow var(--svc-duration-deliberate) var(--svc-settle-ease);
+}
+
+@keyframes svc-cta-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.svc-cta[data-svc-utility="magnified"] {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--svc-accent) 16%, transparent),
+    0 0 20px color-mix(in oklab, var(--svc-accent) 10%, transparent);
+}
+
+.svc-cta__title {
+  margin: 0;
+  color: var(--svc-text);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.svc-cta__note {
+  margin: 0;
+  color: var(--svc-text-soft);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.72rem;
+}
+
+.svc-cta__reasoning,
+.svc-cta__utility {
+  color: color-mix(in oklab, var(--svc-text-soft) 92%, transparent);
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.svc-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.svc-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.45rem;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background var(--svc-duration-fast) var(--svc-ease),
+    color var(--svc-duration-fast) var(--svc-ease),
+    border-color var(--svc-duration-fast) var(--svc-ease),
+    transform var(--svc-duration-fast) var(--svc-settle-ease),
+    box-shadow var(--svc-duration-base) var(--svc-settle-ease);
+}
+
+.svc-cta__btn:hover,
+.svc-cta__btn:focus-visible {
+  transform: translateY(-1px);
+}
+
+.svc-cta__btn--primary {
+  background: var(--svc-accent);
+  color: white;
+  border: 1px solid transparent;
+}
+
+.svc-cta__btn--primary:hover {
+  filter: brightness(1.08);
+}
+
+.svc-cta__btn--secondary {
+  background: transparent;
+  color: var(--svc-text);
+  border: 1px solid color-mix(in oklab, var(--svc-line) 90%, transparent);
+}
+
+.svc-cta__btn--secondary:hover {
+  background: color-mix(in oklab, var(--svc-accent) 8%, transparent);
+  border-color: var(--svc-accent);
+}
+
+/* ==========================================================================
+   8. Nudge / note
+   ========================================================================== */
+
+.svc-nudge {
+  margin: 0;
+  text-align: center;
+  color: var(--svc-text-soft);
+  opacity: 0.8;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.72rem;
+}
+
+.svc-nudge__btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--svc-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.72rem;
+}
+
+.svc-nudge__btn:hover {
+  opacity: 0.8;
+}
+
+.svc-note {
+  margin: 0;
+  padding-bottom: 0.25rem;
+  text-align: center;
+  color: var(--svc-text-soft);
+  opacity: 0.6;
+  font-family: var(--site-mono-font, var(--font-mono, monospace));
+  font-size: 0.7rem;
+}
+
+/* ==========================================================================
+   9. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-polygon,
+  .svc-spoke,
+  .svc-center,
+  .svc-center-tier,
+  .svc-center-price,
+  .svc-node-dot,
+  .svc-node-label,
+  .svc-node-step,
+  .svc-cta,
+  .svc-cta__btn,
+  .svc-readout__bar::before,
+  .svc-legend__chip {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ==========================================================================
+   10. Dark mode
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  .svc-wrapper {
+    background: var(--card-bg, rgba(18, 32, 30, 0.88));
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .svc-node-label {
+    fill: rgba(255, 255, 255, 0.7);
+  }
+
+  .svc-node-step {
+    fill: rgba(255, 255, 255, 0.5);
+  }
+
+  .svc-legend__chip {
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .svc-cta {
+    background: color-mix(in oklab, var(--svc-accent) 8%, rgba(10, 20, 18, 0.9));
+  }
+
+  .svc-cta__title {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .svc-cta__note,
+  .svc-cta__reasoning,
+  .svc-cta__utility {
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  .svc-cta__btn--secondary {
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}

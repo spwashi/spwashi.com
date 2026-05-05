@@ -1,0 +1,592 @@
+/* ==========================================================================
+   website-surface.css
+   --------------------------------------------------------------------------
+   Surface purpose
+   - /about/website should feel like a field guide, observatory, and specimen
+     surface for the site itself.
+   - Support calm reading first, then richer microcosm detail.
+   - Distinguish nooks / registers / specimens / workshop logic without making
+     the page feel like a dashboard.
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"]) {
+  --website-accent: color-mix(in srgb, var(--teal, #008080) 76%, var(--amber, #c58b2a) 24%);
+  --website-accent-soft: color-mix(in srgb, var(--website-accent) 14%, transparent);
+  --website-accent-quiet: color-mix(in srgb, var(--website-accent) 8%, transparent);
+
+  --website-ink: rgba(14, 18, 20, 0.92);
+  --website-ink-soft: rgba(14, 18, 20, 0.68);
+  --website-surface: rgba(255, 255, 255, 0.72);
+  --website-surface-strong: rgba(255, 255, 255, 0.86);
+  --website-surface-soft: rgba(255, 255, 255, 0.48);
+  --website-surface-panel: rgba(255, 255, 255, 0.82);
+  --website-surface-panel-strong: rgba(255, 255, 255, 0.9);
+  --website-line: color-mix(in srgb, var(--website-accent) 22%, rgba(14, 18, 20, 0.1));
+  --website-line-strong: color-mix(in srgb, var(--website-accent) 40%, transparent);
+  --website-sheen: rgba(255, 255, 255, 0.18);
+  --website-sheen-soft: rgba(255, 255, 255, 0.12);
+
+  --website-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--website-accent) 3%, var(--website-surface-strong)),
+      color-mix(in srgb, var(--website-surface-strong) 96%, hsl(42 24% 96%)) 38%,
+      color-mix(in srgb, var(--website-surface-panel-strong) 96%, hsl(36 28% 95%))
+    );
+
+  --website-panel:
+    linear-gradient(
+      180deg,
+      var(--website-surface-panel-strong),
+      color-mix(in srgb, var(--website-surface-panel) 96%, hsl(38 22% 94%))
+    );
+  --website-panel-strong:
+    linear-gradient(
+      180deg,
+      var(--website-surface-panel-strong),
+      color-mix(in srgb, var(--website-surface-panel) 94%, hsl(36 18% 93%))
+    );
+  --website-chip-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--website-accent) 7%, var(--website-surface-strong)),
+      color-mix(in srgb, var(--website-surface) 92%, transparent)
+    );
+
+  --website-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+
+  --website-shadow-active:
+    0 16px 36px rgba(0, 0, 0, 0.09),
+    0 4px 14px rgba(0, 0, 0, 0.05);
+
+  --spw-prompt-block-bg: var(--website-panel);
+  --spw-prompt-block-line: color-mix(in srgb, var(--website-accent) 24%, var(--website-line));
+  --spw-prompt-block-ink: var(--website-ink);
+
+  --website-radius-lg: var(--shape-surface, 10px);
+  --website-radius-md: var(--shape-component, 6px);
+  --website-radius-sm: var(--shape-element, 4px);
+
+  --ink: var(--website-ink);
+  --ink-soft: var(--website-ink-soft);
+  --line: var(--website-line);
+  --line-strong: var(--website-line-strong);
+  --surface: var(--website-surface);
+  --surface-strong: var(--website-surface-strong);
+  --surface-soft: var(--website-surface-soft);
+  --surface-panel: var(--website-surface-panel);
+  --surface-panel-strong: var(--website-surface-panel-strong);
+  --card-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  --spw-philosophy-panel: var(--website-panel);
+  --spw-philosophy-paper: var(--website-paper);
+  --spw-philosophy-line: var(--website-line);
+  color: var(--website-ink);
+}
+
+html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
+  --website-accent: hsl(182 38% 66%);
+  --website-accent-soft: color-mix(in srgb, var(--website-accent) 16%, transparent);
+  --website-accent-quiet: color-mix(in srgb, var(--website-accent) 10%, transparent);
+  --website-ink: rgba(235, 241, 240, 0.94);
+  --website-ink-soft: rgba(205, 214, 212, 0.76);
+  --website-surface: rgba(18, 24, 26, 0.82);
+  --website-surface-strong: rgba(25, 31, 34, 0.92);
+  --website-surface-soft: rgba(18, 24, 26, 0.58);
+  --website-surface-panel: rgba(24, 30, 33, 0.92);
+  --website-surface-panel-strong: rgba(31, 38, 41, 0.96);
+  --website-line: color-mix(in srgb, var(--website-accent) 18%, rgba(226, 234, 231, 0.1));
+  --website-line-strong: color-mix(in srgb, var(--website-accent) 28%, rgba(226, 234, 231, 0.16));
+  --website-sheen: rgba(255, 255, 255, 0.06);
+  --website-sheen-soft: rgba(255, 255, 255, 0.04);
+  --website-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--website-accent) 7%, rgba(16, 21, 23, 0.98)),
+      rgba(18, 23, 26, 0.96) 38%,
+      rgba(13, 17, 19, 0.99)
+    );
+  --website-panel:
+    linear-gradient(180deg, rgba(30, 37, 40, 0.96), rgba(20, 25, 28, 0.98));
+  --website-panel-strong:
+    linear-gradient(180deg, rgba(33, 40, 43, 0.98), rgba(21, 26, 29, 0.99));
+  --website-chip-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--website-accent) 10%, rgba(30, 37, 40, 0.96)),
+      rgba(20, 25, 28, 0.98)
+    );
+  --website-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.18);
+  --website-shadow-active:
+    0 18px 40px rgba(0, 0, 0, 0.34),
+    0 6px 18px rgba(0, 0, 0, 0.2);
+  --card-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(body[data-spw-surface="website"]) {
+    --website-accent: hsl(182 38% 66%);
+    --website-accent-soft: color-mix(in srgb, var(--website-accent) 16%, transparent);
+    --website-accent-quiet: color-mix(in srgb, var(--website-accent) 10%, transparent);
+    --website-ink: rgba(235, 241, 240, 0.94);
+    --website-ink-soft: rgba(205, 214, 212, 0.76);
+    --website-surface: rgba(18, 24, 26, 0.82);
+    --website-surface-strong: rgba(25, 31, 34, 0.92);
+    --website-surface-soft: rgba(18, 24, 26, 0.58);
+    --website-surface-panel: rgba(24, 30, 33, 0.92);
+    --website-surface-panel-strong: rgba(31, 38, 41, 0.96);
+    --website-line: color-mix(in srgb, var(--website-accent) 18%, rgba(226, 234, 231, 0.1));
+    --website-line-strong: color-mix(in srgb, var(--website-accent) 28%, rgba(226, 234, 231, 0.16));
+    --website-sheen: rgba(255, 255, 255, 0.06);
+    --website-sheen-soft: rgba(255, 255, 255, 0.04);
+    --website-paper:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--website-accent) 7%, rgba(16, 21, 23, 0.98)),
+        rgba(18, 23, 26, 0.96) 38%,
+        rgba(13, 17, 19, 0.99)
+      );
+    --website-panel:
+      linear-gradient(180deg, rgba(30, 37, 40, 0.96), rgba(20, 25, 28, 0.98));
+    --website-panel-strong:
+      linear-gradient(180deg, rgba(33, 40, 43, 0.98), rgba(21, 26, 29, 0.99));
+    --website-chip-bg:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--website-accent) 10%, rgba(30, 37, 40, 0.96)),
+        rgba(20, 25, 28, 0.98)
+      );
+    --website-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.28),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    --website-shadow-active:
+      0 18px 40px rgba(0, 0, 0, 0.34),
+      0 6px 18px rgba(0, 0, 0, 0.2);
+    --card-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* ==========================================================================
+   1. Article rhythm
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] main > article) {
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+:where(body[data-spw-surface="website"] article > .site-frame) {
+  position: relative;
+  overflow: clip;
+  border-color: var(--website-line);
+  background: var(--website-paper);
+  box-shadow: var(--website-shadow);
+}
+
+:where(body[data-spw-surface="website"] article > .site-frame:hover) {
+  box-shadow: var(--website-shadow-active);
+}
+
+/* subtle topographic wash */
+:where(body[data-spw-surface="website"] article > .site-frame)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.72;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--website-accent) 8%, transparent), transparent 28%),
+    radial-gradient(circle at bottom right, color-mix(in srgb, var(--op-ref-color, #1d57a3) 5%, transparent), transparent 26%);
+}
+
+/* ==========================================================================
+   2. Hero / opening nook
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] #website-field-guide) {
+  gap: 1.1rem;
+  padding-top: clamp(1.2rem, 2.4vw, 1.6rem);
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--website-accent) 10%, transparent), transparent 34%),
+    radial-gradient(circle at 85% 18%, color-mix(in srgb, var(--op-surface-color, #178282) 6%, transparent), transparent 24%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide h1) {
+  max-width: 18ch;
+  margin: 0;
+  text-wrap: balance;
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide > p) {
+  max-width: 74ch;
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide > p strong) {
+  color: color-mix(in srgb, var(--website-accent) 72%, var(--ink));
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide .spec-strip) {
+  gap: 0.34rem;
+}
+
+:where(body[data-spw-surface="website"] #website-field-guide .spec-pill) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
+  background: color-mix(in srgb, var(--website-accent) 7%, var(--website-surface-strong));
+}
+
+:where(body[data-spw-surface="website"] .palette-probe) {
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--website-accent)) 20%, var(--website-line));
+}
+
+:where(body[data-spw-surface="website"] .market-card) {
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--website-accent)) 18%, var(--website-line));
+}
+
+/* ==========================================================================
+   3. Section identity by category family
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="nook"]) {
+  --family-accent: color-mix(in srgb, var(--website-accent) 74%, var(--amber, #c58b2a) 26%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="register"]) {
+  --family-accent: color-mix(in srgb, var(--op-ref-color, #1d57a3) 62%, var(--website-accent) 38%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="portal"]) {
+  --family-accent: color-mix(in srgb, var(--op-probe-color, #4a2180) 54%, var(--website-accent) 46%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="specimen"]) {
+  --family-accent: color-mix(in srgb, var(--op-object-color, #2f5d8d) 56%, var(--website-accent) 44%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="workshop"]) {
+  --family-accent: color-mix(in srgb, var(--op-binding-color, #8f401f) 58%, var(--website-accent) 42%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="theatre"]) {
+  --family-accent: color-mix(in srgb, var(--op-surface-color, #178282) 58%, var(--website-accent) 42%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family="archive"]) {
+  --family-accent: color-mix(in srgb, var(--op-meta-color, #324a85) 56%, var(--website-accent) 44%);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family]) {
+  border-left-width: 2px;
+  border-left-color: color-mix(in srgb, var(--family-accent, var(--website-accent)) 34%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .site-frame[data-spw-category-family] .frame-heading h2) {
+  text-wrap: balance;
+}
+
+/* ==========================================================================
+   4. Design details section
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] #design-details) {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--op-binding-color, #8f401f) 8%, transparent), transparent 28%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] #design-details .frame-panel) {
+  background: var(--website-panel);
+}
+
+:where(body[data-spw-surface="website"] #design-details .frame-panel h3) {
+  position: relative;
+  padding-bottom: 0.3rem;
+}
+
+:where(body[data-spw-surface="website"] #design-details .frame-panel h3)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.2rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--website-accent) 34%, transparent);
+}
+
+/* ==========================================================================
+   5. Publishing register
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] #publishing-register) {
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--op-surface-color, #178282) 7%, transparent), transparent 22%),
+    radial-gradient(circle at 86% 82%, color-mix(in srgb, var(--op-probe-color, #4a2180) 5%, transparent), transparent 18%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] .media-focus-card--daily) {
+  border-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 22%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .media-card:hover),
+:where(body[data-spw-surface="website"] .media-focus-card:hover) {
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   6. Machine register / SVG host
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] #machine-register) {
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--op-ref-color, #1d57a3) 5%, transparent), transparent 32%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] .spw-svg-figure) {
+  margin: 0;
+  padding: clamp(0.75rem, 1.6vw, 1rem);
+  border: 1px solid color-mix(in srgb, var(--website-accent) 14%, transparent);
+  border-radius: var(--website-radius-lg);
+  background: var(--website-panel);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(body[data-spw-surface="website"] .spw-svg-figure figcaption) {
+  margin-top: 0.65rem;
+  color: var(--website-ink-soft);
+  font-size: var(--text-size-sm, 0.9rem);
+}
+
+:where(body[data-spw-surface="website"] .feature-ladder) {
+  gap: var(--gap-panel, 0.85rem);
+}
+
+:where(body[data-spw-surface="website"] .feature-ladder .frame-panel) {
+  background: var(--website-panel);
+}
+
+/* ==========================================================================
+   7. Interaction + promptability registers
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] #interaction-register),
+:where(body[data-spw-surface="website"] #promptability-register) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--website-accent) 5%, transparent), transparent 24%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] #promptability-register .frame-card) {
+  min-height: 10rem;
+  background: var(--website-panel-strong);
+}
+
+:where(body[data-spw-surface="website"] #promptability-register .frame-card:hover) {
+  border-color: color-mix(in srgb, var(--op-surface-color, #178282) 24%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-surface-color, #178282) 10%, transparent),
+    0 12px 24px rgba(0,0,0,0.05);
+}
+
+:where(body[data-spw-surface="website"] #promptability-register .frame-card-sigil) {
+  color: var(--op-surface-color, #178282);
+}
+
+/* latent promptability visual cue */
+:where(body[data-spw-surface="website"] [data-spw-promptability="visible"]),
+:where(body[data-spw-surface="website"] [data-spw-promptability="latent"]) {
+  position: relative;
+}
+
+:where(body[data-spw-surface="website"] [data-spw-promptability="visible"]::after) {
+  content: "";
+  position: absolute;
+  inset: auto 0.7rem 0.7rem auto;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--op-surface-color, #178282) 62%, var(--website-surface-strong) 38%);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--op-surface-color, #178282) 10%, transparent);
+  pointer-events: none;
+  opacity: 0.84;
+}
+
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab)) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--website-accent) 9%, transparent), transparent 30%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--op-ref-color, #1d57a3) 8%, transparent), transparent 24%),
+    var(--website-paper);
+}
+
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab) .demo-control-group),
+:where(body[data-spw-surface="website"] :is(#promptability-studio, #interactive-physics-lab) .trope-box) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, var(--website-line));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--website-accent) 6%, transparent), transparent 30%),
+    var(--website-panel);
+}
+
+/* ==========================================================================
+   8. Motif grid
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] .motif-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--gap-panel, 0.85rem);
+}
+
+:where(body[data-spw-surface="website"] .motif-card) {
+  position: relative;
+  display: grid;
+  gap: 0.42rem;
+  min-width: 0;
+  min-height: 10rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--website-accent) 14%, transparent);
+  border-radius: var(--website-radius-md);
+  background: var(--website-panel-strong);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(body[data-spw-surface="website"] .motif-card .frame-card-sigil) {
+  color: var(--website-ink-soft);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where(body[data-spw-surface="website"] .motif-card strong) {
+  color: var(--website-ink);
+}
+
+:where(body[data-spw-surface="website"] .motif-card span:last-child) {
+  color: var(--website-ink-soft);
+}
+
+:where(body[data-spw-surface="website"] .motif-card--operator) {
+  border-left: 2px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 28%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .motif-card--land) {
+  border-left: 2px solid color-mix(in srgb, var(--op-surface-color, #178282) 28%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .motif-card--constellation) {
+  border-left: 2px solid color-mix(in srgb, var(--op-ref-color, #1d57a3) 28%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .motif-card--archive) {
+  border-left: 2px solid color-mix(in srgb, var(--op-meta-color, #324a85) 28%, transparent);
+}
+
+/* ==========================================================================
+   9. Lists / prose / route emphasis
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] .frame-list) {
+  padding-left: 1.2rem;
+}
+
+:where(body[data-spw-surface="website"] .frame-list li) {
+  margin-bottom: 0.5rem;
+  max-width: 74ch;
+}
+
+:where(body[data-spw-surface="website"] .inline-note) {
+  max-width: 72ch;
+  color: var(--website-ink-soft);
+}
+
+:where(body[data-spw-surface="website"] code) {
+  padding: 0.08rem 0.28rem;
+  border-radius: var(--website-radius-sm);
+  background: color-mix(in srgb, var(--website-accent) 8%, transparent);
+  color: color-mix(in srgb, var(--website-accent) 70%, var(--website-ink) 30%);
+}
+
+/* ==========================================================================
+   10. Route chips / operator chips
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] .frame-operators) {
+  gap: 0.42rem;
+}
+
+:where(body[data-spw-surface="website"] .operator-chip) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
+  background: var(--website-chip-bg);
+}
+
+:where(body[data-spw-surface="website"] .operator-chip:hover) {
+  border-color: color-mix(in srgb, var(--website-accent) 30%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--website-accent) 10%, transparent);
+}
+
+:where(body[data-spw-surface="website"] .intent-cluster,
+       body[data-spw-surface="website"] .context-edge-card,
+       body[data-spw-surface="website"] .semantic-contract-card) {
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(body[data-spw-surface="website"] .intent-token,
+       body[data-spw-surface="website"] .semantic-contract-token) {
+  border-color: color-mix(in srgb, var(--website-accent) 18%, transparent);
+}
+
+/* ==========================================================================
+   11. Footer calm
+   ========================================================================== */
+
+:where(body[data-spw-surface="website"] .site-footer) {
+  opacity: 0.78;
+}
+
+/* ==========================================================================
+   12. Responsive tuning
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  :where(body[data-spw-surface="website"] #website-field-guide h1) {
+    max-width: 100%;
+  }
+
+  :where(body[data-spw-surface="website"] .motif-card),
+  :where(body[data-spw-surface="website"] #promptability-register .frame-card) {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  :where(body[data-spw-surface="website"] article > .site-frame) {
+    box-shadow:
+      0 6px 14px rgba(0, 0, 0, 0.05),
+      0 1px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  :where(body[data-spw-surface="website"] .spw-svg-figure) {
+    padding: 0.75rem;
+  }
+}
+
+/* ==========================================================================
+   13. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    body[data-spw-surface="website"] article > .site-frame,
+    body[data-spw-surface="website"] .media-card,
+    body[data-spw-surface="website"] .media-focus-card,
+    body[data-spw-surface="website"] #promptability-register .frame-card,
+    body[data-spw-surface="website"] .operator-chip
+  ) {
+    transition: none !important;
+    transform: none !important;
+  }
+}

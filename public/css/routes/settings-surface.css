@@ -1,0 +1,701 @@
+/* ==========================================================================
+ * settings-surface.css
+ * --------------------------------------------------------------------------
+ * Purpose
+ * - Route-scoped surface system for body[data-spw-surface="settings"].
+ * - A highly legible, structured space focused on inspection and control.
+ * - Differs from reading (blog) or play surfaces by emphasizing rigid
+ * containment, interactive feedback, and high-contrast boundaries.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Root scope + tokens
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"]) {
+  /* Geometric rhythm */
+  --settings-measure: 72ch;
+  --settings-pad-inline: clamp(1rem, 4vw, 2.5rem);
+  --settings-pad-block: clamp(1.2rem, 3vw, 2rem);
+  --settings-gap: var(--space-md, 1.25rem);
+
+  /* The "control" operator (action/pragma) colors dominate */
+  --settings-accent: var(--op-action-color, hsl(180 100% 22%));
+  --settings-accent-soft: var(--op-action-bg-soft, rgba(230, 248, 248, 0.72));
+  --active-op-color: var(--settings-accent);
+  --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.94)) 96%, var(--settings-accent-soft) 4%);
+  --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(255, 255, 255, 0.84)) 94%, transparent);
+  --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--settings-accent-soft) 8%);
+  --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 84%, var(--settings-accent) 16%);
+  --settings-control-line: color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, var(--line, rgba(14, 18, 20, 0.14)) 42%);
+  --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 64%, transparent);
+  --settings-ink-strong: var(--ink-strong, rgba(14, 18, 20, 0.96));
+  --settings-ink: var(--ink, rgba(14, 18, 20, 0.92));
+  --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--settings-accent) 16%);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 68%, transparent);
+
+  /* Force the background to slightly distinguish from standard reading routes */
+  background: color-mix(in srgb, var(--bg, #f4e2b5) 85%, #fff 15%);
+}
+
+/* Dark theme specific background tint */
+:where(html[data-spw-color-mode="dark"] body[data-spw-surface="settings"]) {
+  --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(30, 38, 44, 0.95)) 94%, var(--settings-accent) 6%);
+  --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(24, 31, 36, 0.9)) 94%, transparent);
+  --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--settings-accent) 10%);
+  --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 78%, var(--settings-accent) 22%);
+  --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
+  --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
+  --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+  background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="settings"]) {
+    --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(30, 38, 44, 0.95)) 94%, var(--settings-accent) 6%);
+    --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(24, 31, 36, 0.9)) 94%, transparent);
+    --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--settings-accent) 10%);
+    --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 78%, var(--settings-accent) 22%);
+    --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
+    --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
+    --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
+    --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+    background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
+  }
+}
+
+/* ==========================================================================
+   2. Base Frame Modifications
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .site-frame) {
+  padding: var(--settings-pad-block) var(--settings-pad-inline);
+  background: var(--settings-panel-bg);
+  border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+}
+
+:where(body[data-spw-surface="settings"] .site-frame.is-active-frame) {
+  box-shadow: 
+    0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent), 
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}
+
+:where(body[data-spw-surface="settings"] h2) {
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  letter-spacing: -0.01em;
+}
+
+:where(body[data-spw-surface="settings"] .settings-prose) {
+  max-inline-size: 66ch;
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-start-note) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid) {
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid .vibe-widget-status) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+}
+
+:where(body[data-spw-surface="settings"] .settings-hero-actions) {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcuts) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card) {
+  display: grid;
+  gap: 0.28rem;
+  min-height: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--settings-accent) 16%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, var(--settings-accent-soft));
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  transition:
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card strong) {
+  color: var(--ink-strong, #090b0c);
+  font-size: var(--text-size-sm, 0.95rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card > span:last-child) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-kicker) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--settings-accent) 44%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   3. Settings Forms & Categories
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-form) {
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category) {
+  background: var(--settings-panel-bg-quiet);
+  border: 1px solid var(--settings-control-line-soft);
+  margin-bottom: var(--space-sm, 0.75rem);
+  scroll-margin-top: calc(var(--shell-header-height, 4rem) + 1rem);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  transition:
+    background-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
+    border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[open]) {
+  border-color: var(--settings-control-line);
+  background: var(--settings-panel-bg);
+  box-shadow: var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[data-settings-targeted="true"]) {
+  border-color: color-mix(in srgb, var(--settings-accent) 58%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--settings-accent) 14%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm, 0.75rem);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.85rem);
+  color: var(--settings-ink);
+  letter-spacing: 0.08em;
+  padding: var(--inset-component, 1rem 1.25rem);
+  outline: none;
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header::after) {
+  content: "";
+  inline-size: 0.5rem;
+  aspect-ratio: 1;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: 0.62;
+  transform: rotate(45deg) translateY(-0.1rem);
+  transition:
+    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[open] > .settings-category-header::after) {
+  opacity: 0.86;
+  transform: rotate(225deg) translate(-0.12rem, -0.12rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header:is(:hover, :focus-visible)) {
+  color: var(--settings-ink-strong);
+  background: color-mix(in srgb, var(--settings-accent) 7%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header:focus-visible) {
+  outline: 2px solid var(--settings-accent);
+  outline-offset: -2px;
+}
+
+/* ==========================================================================
+   4. Fieldsets & Options
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-fieldset) {
+  border: 1px solid var(--settings-control-line-soft);
+  background: var(--settings-control-bg);
+  padding: var(--inset-component, 1.2rem);
+  margin-bottom: var(--space-md, 1rem);
+  border-radius: var(--shape-component, 6px);
+}
+
+:where(body[data-spw-surface="settings"] .settings-fieldset legend) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-weight: 600;
+  color: var(--settings-accent);
+  padding: 0.08rem var(--space-xs, 0.5rem);
+  border: 1px solid color-mix(in srgb, var(--settings-control-line) 62%, transparent);
+  border-radius: var(--shape-element, 4px);
+  background: var(--settings-panel-bg);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option) {
+  padding: var(--space-sm, 0.65rem) var(--space-xs, 0.5rem);
+  border: 1px solid transparent;
+  border-radius: var(--shape-element, 4px);
+  color: var(--settings-ink);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option:hover,
+       body[data-spw-surface="settings"] .settings-option:focus-within) {
+  border-color: color-mix(in srgb, var(--settings-control-line) 82%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 8%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option:has(input:checked)) {
+  border-color: var(--settings-control-line);
+  background: var(--settings-control-bg-active);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option input[type="radio"],
+       body[data-spw-surface="settings"] .settings-option input[type="checkbox"]) {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--settings-accent);
+  cursor: pointer;
+}
+
+:where(body[data-spw-surface="settings"] .settings-option input:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+  border-radius: var(--shape-element, 4px);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option-copy strong) {
+  display: block;
+  font-size: var(--text-size-sm, 0.95rem);
+  margin-bottom: 0.15rem;
+  color: var(--settings-ink-strong);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option-copy span) {
+  display: block;
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+  color: var(--settings-muted);
+}
+
+/* ==========================================================================
+   5. Actions & Status
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-actions) {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-xl, 2rem);
+  padding-top: var(--space-lg, 1.5rem);
+  border-top: 2px dashed var(--line, rgba(14, 18, 20, 0.14));
+}
+
+:where(body[data-spw-surface="settings"] .settings-status) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.8rem);
+  padding: var(--space-2xs, 0.4rem) var(--space-sm, 0.8rem);
+  border-radius: var(--shape-element, 4px);
+  transition: opacity var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-status[data-status="success"]) {
+  background: color-mix(in srgb, var(--op-action-color, #005959) 12%, transparent);
+  color: var(--op-action-color, #005959);
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #005959) 30%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-status[data-status="info"]) {
+  background: color-mix(in srgb, var(--op-probe-color, #4a2180) 12%, transparent);
+  color: var(--op-probe-color, #4a2180);
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 30%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-preset-btn.is-applied) {
+  border-color: color-mix(in srgb, var(--settings-accent) 64%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.94)));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 16%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}
+
+/* ==========================================================================
+   6. Local note register
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-note-register) {
+  display: grid;
+  gap: var(--space-md, 1rem);
+  align-content: start;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form) {
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__label) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__input) {
+  width: 100%;
+  min-height: 8.5rem;
+  padding: var(--inset-component, 1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 56%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  color: var(--ink, #161c1d);
+  font: inherit;
+  resize: vertical;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__input:focus-visible) {
+  outline: none;
+  border-color: var(--settings-accent);
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin: 0;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta p) {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface, #fff) 94%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-form__meta strong) {
+  color: var(--ink, #161c1d);
+}
+
+:where(body[data-spw-surface="settings"] .settings-note-list) {
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card) {
+  display: grid;
+  gap: 0.7rem;
+  padding: var(--inset-component, 1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.15), transparent 60%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__meta) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.45rem 0.75rem;
+  align-items: baseline;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__context) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__time) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-size: var(--text-size-2xs, 0.72rem);
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__text) {
+  margin: 0;
+  color: var(--ink, #161c1d);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+:where(body[data-spw-surface="settings"] .local-note-card__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+/* ==========================================================================
+   7. PWA Status Grid
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .pwa-status-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .pwa-status-card) {
+  padding: var(--inset-component, 1.25rem);
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border-radius: var(--shape-component, 6px);
+}
+
+:where(body[data-spw-surface="settings"] .pwa-status-label) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  margin-bottom: var(--space-2xs, 0.4rem);
+}
+
+:where(body[data-spw-surface="settings"] .pwa-status-value) {
+  font-size: var(--text-size-lg, 1.1rem);
+  font-weight: 600;
+  color: var(--ink, #161c1d);
+}
+
+/* ==========================================================================
+   8. Runtime map / navigators / structures
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-system-map),
+:where(body[data-spw-surface="settings"] .settings-navigator-grid),
+:where(body[data-spw-surface="settings"] .settings-structures-grid),
+:where(body[data-spw-surface="settings"] .settings-state-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card),
+:where(body[data-spw-surface="settings"] .settings-nav-card),
+:where(body[data-spw-surface="settings"] .settings-structure-card),
+:where(body[data-spw-surface="settings"] .settings-state-card) {
+  position: relative;
+  min-width: 0;
+  padding: var(--inset-component, 1.1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0,128,128,0.34)) 62%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 6px 16px rgba(0,0,0,0.04);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card::before),
+:where(body[data-spw-surface="settings"] .settings-nav-card::before),
+:where(body[data-spw-surface="settings"] .settings-structure-card::before),
+:where(body[data-spw-surface="settings"] .settings-state-card::before) {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: color-mix(in srgb, var(--settings-accent) 72%, transparent);
+  border-radius: inherit 0 0 inherit;
+  opacity: 0.88;
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card h3),
+:where(body[data-spw-surface="settings"] .settings-nav-card h3),
+:where(body[data-spw-surface="settings"] .settings-structure-card h3),
+:where(body[data-spw-surface="settings"] .settings-state-card strong) {
+  margin: 0 0 0.45rem;
+  color: var(--ink-strong, #090b0c);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card p),
+:where(body[data-spw-surface="settings"] .settings-nav-card p),
+:where(body[data-spw-surface="settings"] .settings-structure-card p) {
+  margin: 0 0 0.65rem;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+  line-height: 1.52;
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card code),
+:where(body[data-spw-surface="settings"] .settings-structure-card code),
+:where(body[data-spw-surface="settings"] .settings-nav-card code) {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--settings-accent) 8%, transparent);
+  color: var(--settings-accent);
+  overflow-wrap: anywhere;
+}
+
+:where(body[data-spw-surface="settings"] .settings-state-card) {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  min-height: 6.5rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-state-label) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+}
+
+:where(body[data-spw-surface="settings"] .settings-nav-card .frame-list) {
+  margin: 0.5rem 0 0.8rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-nav-card .operator-chip) {
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   8. Dimensional section cues
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] #runtime-map) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--settings-accent) 7%, transparent), transparent 34%),
+    var(--surface-strong, rgba(255,255,255,0.94));
+}
+
+:where(body[data-spw-surface="settings"] #token-navigator) {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--op-binding-color, #8f401f) 6%, transparent), transparent 32%),
+    var(--surface-strong, rgba(255,255,255,0.94));
+}
+
+:where(body[data-spw-surface="settings"] #data-structures) {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--op-ref-color, #1d57a3) 6%, transparent), transparent 32%),
+    var(--surface-strong, rgba(255,255,255,0.94));
+}
+
+:where(body[data-spw-surface="settings"] #applied-state) {
+  background:
+    radial-gradient(circle at top center, color-mix(in srgb, var(--op-probe-color, #4a2180) 7%, transparent), transparent 32%),
+    var(--surface-strong, rgba(255,255,255,0.94));
+}
+
+/* ==========================================================================
+   9. Better details readability
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-category) {
+  overflow: clip;
+  border-radius: var(--shape-component, 6px);
+}
+
+:where(body[data-spw-surface="settings"] .settings-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-md, 1rem);
+  padding: 0 var(--space-md, 1rem) var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-scale-group) {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+@media (max-width: 720px) {
+  :where(body[data-spw-surface="settings"] .settings-scale-group) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(body[data-spw-surface="settings"] .site-frame) {
+    --settings-pad-inline: 0.9rem;
+    --settings-pad-block: 1rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-grid) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-fieldset) {
+    padding: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-note-form__meta) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(body[data-spw-surface="settings"] .local-note-card__meta) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-actions) {
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-actions > *) {
+    width: 100%;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-system-map),
+  :where(body[data-spw-surface="settings"] .settings-navigator-grid),
+  :where(body[data-spw-surface="settings"] .settings-structures-grid),
+  :where(body[data-spw-surface="settings"] .settings-state-grid),
+  :where(body[data-spw-surface="settings"] .pwa-status-grid) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}

@@ -1,0 +1,388 @@
+/* ==========================================================================
+ * spw-typography.css
+ * --------------------------------------------------------------------------
+ * Spw General & Operator Typography
+ * * Defines the core reading rhythm, heading scales, and rich-text semantics.
+ * Also houses the dynamic operator typography, where font axes 
+ * (weight, tracking, size, oblique) interpolate based on the `--charge` state.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. General Reading Rhythm & Flow
+   ========================================================================== */
+
+/* Establish vertical rhythm for standard prose content */
+:where(.prose, article, .frame-copy, .frame-note) {
+  --flow-space: var(--spw-flow-space, var(--space-md, 1rem));
+}
+
+:where(.prose > * + *, article > * + *, .frame-copy > * + *) {
+  margin-block-start: var(--flow-space);
+}
+
+:where(p) {
+  margin: 0;
+  max-inline-size: var(--measure-reading, 68ch);
+  text-wrap: pretty;
+  color: var(--ink, #161c1d);
+}
+
+/* ==========================================================================
+   2. Heading Hierarchy
+   ========================================================================== */
+
+:where(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  color: var(--ink-strong, #090b0c);
+  font-family: var(--site-sans-font, system-ui, sans-serif);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  /* Ensure headings clear preceding content slightly more than standard flow */
+  margin-block-start: calc(var(--flow-space, 1rem) * var(--spw-heading-flow-space-multiplier, 1.5));
+}
+
+:where(h1:first-child, h2:first-child, h3:first-child) {
+  margin-block-start: 0;
+}
+
+:where(h1) { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; }
+:where(h2) { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; }
+:where(h3) { font-size: clamp(1.25rem, 3vw, 1.5rem); font-weight: 600; }
+:where(h4) { font-size: clamp(1.1rem, 2vw, 1.25rem); font-weight: 600; }
+:where(h5) { font-size: 1rem; font-weight: 600; }
+:where(h6) {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* ==========================================================================
+   3. Rich Text & Inline Semantics
+   ========================================================================== */
+
+:where(blockquote) {
+  margin: 0;
+  padding-inline-start: var(--space-md, 1rem);
+  border-left: 3px solid var(--active-op-border, rgba(0, 128, 128, 0.34));
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-style: italic;
+}
+
+:where(ul, ol) {
+  margin: 0;
+  padding-inline-start: 1.5rem;
+  max-inline-size: var(--measure-reading, 68ch);
+}
+
+:where(li) {
+  margin-block-start: var(--space-2xs, 0.25rem);
+}
+
+:where(li::marker) {
+  color: var(--active-op-color, #008080);
+}
+
+:where(hr) {
+  border: none;
+  border-top: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  margin-block: var(--space-xl, 2rem);
+}
+
+:where(strong, b) {
+  font-weight: 700;
+  color: var(--ink-strong, #090b0c);
+}
+
+:where(em, i) {
+  font-style: italic;
+}
+
+:where(mark) {
+  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.12));
+  color: inherit;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+:where(del) {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+:where(a:any-link) {
+  --spw-link-visited-color:
+    color-mix(in oklab, var(--ink, #161c1d) 68%, var(--active-op-color, #008080) 32%);
+  --spw-link-grounded-color:
+    color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
+}
+
+:where(a:visited):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+  color: var(--spw-link-visited-color);
+}
+
+:where(a[data-spw-grounded='true']):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
+  color: var(--spw-link-grounded-color);
+}
+
+/* ==========================================================================
+   4. Monospace Alignment
+   ========================================================================== */
+/* Chips, tokens, sigils, and code blocks must all render on the same
+   character grid. JetBrains Mono's contextual alternates ("calt") improve
+   operator glyph sequences (#>, ->, =>, etc.); "zero" keeps 0 legible.    */
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil
+) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-feature-settings: "calt" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+}
+
+/* Code surfaces: tab stops and pre-layout */
+:where(
+  pre,
+  code,
+  kbd,
+  samp,
+  .spw-transparent-block,
+  .spw-state-block code
+) {
+  tab-size: 2;
+  -moz-tab-size: 2;
+  font-feature-settings: "calt" 1;
+}
+
+/* ==========================================================================
+   5. Shared Operator Typographic Custom Properties
+   ========================================================================== */
+/* Each operator sets these on its own element so --charge calc expressions
+   stay generic. Charge-driven calc() handles the actual interpolation.      */
+
+:where([data-spw-operator]) {
+  --type-weight-base: 400;
+  --type-weight-range: 0;
+  --type-tracking-base: 0em;
+  --type-tracking-range: 0em;
+  --type-size-surge: 0;
+  --type-oblique-range: 0;
+
+  font-weight: calc(var(--type-weight-base) + var(--charge, 0) * var(--type-weight-range));
+  letter-spacing: calc(var(--type-tracking-base) + var(--charge, 0) * var(--type-tracking-range));
+  font-size: calc(1em * (1 + var(--charge, 0) * var(--type-size-surge)));
+  font-style: oblique calc(var(--charge, 0) * var(--type-oblique-range) * 1deg);
+
+  transition:
+    font-weight var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    letter-spacing var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    font-size var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    font-style var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+/* Disable size surge for structural framing logic to prevent layout shift */
+:where(.site-frame [data-spw-operator]) {
+  --type-size-surge: 0;
+}
+
+/* Apply minimal size surge directly to specific inline token handles */
+:where(
+  .operator-chip[data-spw-operator],
+  .spec-pill[data-spw-operator],
+  .badge[data-spw-operator],
+  .syntax-token[data-spw-operator]
+) {
+  --type-size-surge: 0.04;
+}
+
+/* ==========================================================================
+   6. Operator Specific Typographic Axes
+   ========================================================================== */
+
+:where([data-spw-operator='frame']) {
+  --type-weight-base: 500;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: -0.06em;
+  --type-size-surge: 0.04;
+}
+
+:where([data-spw-operator='probe']) {
+  --type-weight-base: 400;
+  --type-weight-range: 100;
+  --type-tracking-base: 0.03em;
+  --type-tracking-range: 0.12em;
+  --type-oblique-range: 8;
+}
+
+:where([data-spw-operator='action']) {
+  --type-weight-base: 500;
+  --type-weight-range: 400;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: -0.02em;
+}
+
+:where(
+  [data-spw-charge='active'][data-spw-operator='action'],
+  [data-spw-charge='sustained'][data-spw-operator='action'],
+  [data-spw-charge='manifest'][data-spw-operator='action']
+) {
+  font-variant-caps: all-small-caps;
+}
+
+:where(
+  [data-spw-charge='sustained'][data-spw-operator='action'],
+  [data-spw-charge='manifest'][data-spw-operator='action']
+) {
+  text-transform: uppercase;
+  font-variant-caps: normal;
+}
+
+:where([data-spw-operator='ref']) {
+  --type-weight-base: 400;
+  --type-weight-range: 100;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: 0.06em;
+  --type-oblique-range: 12;
+}
+
+:where([data-spw-operator='stream']) {
+  --type-weight-base: 400;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: -0.08em;
+}
+
+:where([data-spw-operator='pragma']) {
+  --type-weight-base: 600;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: 0.04em;
+}
+
+:where([data-spw-charge='charging'][data-spw-operator='pragma']) {
+  font-variant-caps: small-caps;
+}
+
+:where(
+  [data-spw-charge='active'][data-spw-operator='pragma'],
+  [data-spw-charge='sustained'][data-spw-operator='pragma']
+) {
+  font-variant-caps: all-small-caps;
+}
+
+:where([data-spw-operator='object']) {
+  --type-weight-base: 400;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: 0.03em;
+  --type-size-surge: 0.12;
+}
+
+:where([data-spw-operator='merge']) {
+  --type-weight-base: 400;
+  --type-weight-range: 0;
+  --type-tracking-base: 0.04em;
+  --type-tracking-range: 0.14em;
+}
+
+:where([data-spw-operator='binding']) {
+  --type-weight-base: 500;
+  --type-weight-range: 100;
+  --type-tracking-base: 0;
+  --type-tracking-range: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(
+  [data-spw-charge='active'][data-spw-operator='binding'],
+  [data-spw-charge='sustained'][data-spw-operator='binding']
+) {
+  font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  font-variant-ligatures: none;
+}
+
+:where([data-spw-operator='meta']) {
+  --type-weight-base: 400;
+  --type-weight-range: -100;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: 0.06em;
+  --type-oblique-range: 16;
+}
+
+:where([data-spw-operator='surface']) {
+  --type-weight-base: 500;
+  --type-weight-range: 300;
+  --type-tracking-base: 0.03em;
+  --type-tracking-range: 0.08em;
+  --type-size-surge: 0.18;
+}
+
+:where([data-spw-operator='layer']) {
+  --type-weight-base: 300;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.06em;
+  --type-tracking-range: 0.04em;
+  font-variant-caps: small-caps;
+}
+
+:where([data-spw-operator='baseline']) {
+  --type-weight-base: 400;
+  --type-weight-range: -100;
+  --type-tracking-base: 0.01em;
+  --type-tracking-range: -0.01em;
+  --type-size-surge: -0.06;
+  opacity: calc(0.88 - var(--charge, 0) * 0.08);
+}
+
+:where([data-spw-operator='normalize']) {
+  --type-weight-base: 500;
+  --type-weight-range: 200;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   7. Grounding Override
+   ========================================================================== */
+
+:where([data-spw-grounded='true']) {
+  --charge: 0 !important;
+  --type-weight-range: 0;
+  --type-tracking-range: 0em;
+  --type-size-surge: 0;
+  --type-oblique-range: 0;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  text-transform: none;
+  font-family: inherit;
+}
+
+/* Base operator tinting */
+:where([data-spw-grounded-in='probe'])     { color: var(--op-probe-color, #4a2180); }
+:where([data-spw-grounded-in='frame'])     { color: var(--op-frame-color, #008080); }
+:where([data-spw-grounded-in='action'])    { color: var(--op-action-color, #005959); }
+:where([data-spw-grounded-in='ref'])       { color: var(--op-ref-color, #1d57a3); }
+:where([data-spw-grounded-in='stream'])    { color: var(--op-stream-color, #208259); }
+:where([data-spw-grounded-in='pragma'])    { color: var(--op-pragma-color, #883a3a); }
+:where([data-spw-grounded-in='object'])    { color: var(--op-object-color, #a67c00); }
+:where([data-spw-grounded-in='binding'])   { color: var(--op-binding-color, #8f401f); }
+:where([data-spw-grounded-in='meta'])      { color: var(--op-meta-color, #324a85); }
+:where([data-spw-grounded-in='normalize']) { color: var(--op-normalize-color, #4d7539); }
+:where([data-spw-grounded-in='surface'])   { color: var(--op-surface-color, #178282); }
+:where([data-spw-grounded-in='layer'])     { color: var(--op-layer-color, rgba(14, 18, 20, 0.68)); }
+:where([data-spw-grounded-in='baseline'])  { color: var(--op-baseline-color, #594d3f); }

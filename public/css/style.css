@@ -10,61 +10,61 @@
    Weights 200..800, Optical Sizing opsz 6..72pt */
 @import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
 
-@import url('/public/css/spw-reset.css') layer(reset);
-@import url('/public/css/spw-tokens.css') layer(tokens);
+@import url('/public/css/reset/spw-reset.css') layer(reset);
+@import url('/public/css/tokens/spw-tokens.css') layer(tokens);
 
-@import url('/public/css/spw-shell.css') layer(shell);
-@import url('/public/css/spw-chrome.css') layer(shell);
+@import url('/public/css/shell/spw-shell.css') layer(shell);
+@import url('/public/css/shell/spw-chrome.css') layer(shell);
 
-@import url('/public/css/spw-typography.css') layer(typography);
-@import url('/public/css/spw-typography-context.css') layer(typography);
-@import url('/public/css/spw-typesetting.css') layer(typography);
+@import url('/public/css/typography/spw-typography.css') layer(typography);
+@import url('/public/css/typography/spw-typography-context.css') layer(typography);
+@import url('/public/css/typography/spw-typesetting.css') layer(typography);
 
-@import url('/public/css/spw-grammar.css') layer(grammar);
+@import url('/public/css/grammar/spw-grammar.css') layer(grammar);
 
-@import url('/public/css/spw-components.css') layer(components);
+@import url('/public/css/components/spw-components.css') layer(components);
 
-@import url('/public/css/spw-substrate-ecology.css') layer(systems);
-@import url('/public/css/spw-surfaces.css') layer(systems);
-@import url('/public/css/svg-surfaces.css') layer(systems);
-@import url('/public/css/spw-svg-personas.css') layer(systems);
-@import url('/public/css/spw-pretext-physics.css') layer(systems);
+@import url('/public/css/systems/spw-substrate-ecology.css') layer(systems);
+@import url('/public/css/systems/spw-surfaces.css') layer(systems);
+@import url('/public/css/systems/svg-surfaces.css') layer(systems);
+@import url('/public/css/systems/spw-svg-personas.css') layer(systems);
+@import url('/public/css/systems/spw-pretext-physics.css') layer(systems);
 
-@import url('/public/css/home-surface.css') layer(routes);
-@import url('/public/css/contact-surface.css') layer(routes);
-@import url('/public/css/about-surface.css') layer(routes);
-@import url('/public/css/services-surface.css') layer(routes);
-@import url('/public/css/topics-surface.css') layer(routes);
-@import url('/public/css/website-surface.css') layer(routes);
-@import url('/public/css/design-surface.css') layer(routes);
-@import url('/public/css/plans-surface.css') layer(routes);
-@import url('/public/css/craft-surface.css') layer(routes);
-@import url('/public/css/blog-surface.css') layer(routes);
-@import url('/public/css/settings-surface.css') layer(routes);
-@import url('/public/css/recipes-surface.css') layer(routes);
-@import url('/public/css/play-surface.css') layer(routes);
-@import url('/public/css/rpg-wednesday-surface.css') layer(routes);
-@import url('/public/css/tools-budgeting-surface.css') layer(routes);
-@import url('/public/css/design-experiments.css') layer(routes);
+@import url('/public/css/routes/home-surface.css') layer(routes);
+@import url('/public/css/routes/contact-surface.css') layer(routes);
+@import url('/public/css/routes/about-surface.css') layer(routes);
+@import url('/public/css/routes/services-surface.css') layer(routes);
+@import url('/public/css/routes/topics-surface.css') layer(routes);
+@import url('/public/css/routes/website-surface.css') layer(routes);
+@import url('/public/css/routes/design-surface.css') layer(routes);
+@import url('/public/css/routes/plans-surface.css') layer(routes);
+@import url('/public/css/routes/craft-surface.css') layer(routes);
+@import url('/public/css/routes/blog-surface.css') layer(routes);
+@import url('/public/css/routes/settings-surface.css') layer(routes);
+@import url('/public/css/routes/recipes-surface.css') layer(routes);
+@import url('/public/css/routes/play-surface.css') layer(routes);
+@import url('/public/css/routes/rpg-wednesday-surface.css') layer(routes);
+@import url('/public/css/routes/tools-budgeting-surface.css') layer(routes);
+@import url('/public/css/routes/design-experiments.css') layer(routes);
 
-@import url('/public/css/cognitive-handles.css') layer(handles);
-@import url('/public/css/spw-handles.css') layer(handles);
-@import url('/public/css/phase-controls.css') layer(handles);
-@import url('/public/css/spw-logo.css') layer(handles);
+@import url('/public/css/handles/cognitive-handles.css') layer(handles);
+@import url('/public/css/handles/spw-handles.css') layer(handles);
+@import url('/public/css/handles/phase-controls.css') layer(handles);
+@import url('/public/css/handles/spw-logo.css') layer(handles);
 
 /* Effects project semantic state; they must stay additive. */
-@import url('/public/css/spw-material.css') layer(effects);
-@import url('/public/css/enhancements.css') layer(effects);
-@import url('/public/css/grain-texture.css') layer(effects);
-@import url('/public/css/spw-electromagnetic-container.css') layer(effects);
-@import url('/public/css/spw-cinematic.css') layer(effects);
-@import url('/public/css/spw-developmental-climate.css') layer(effects);
-@import url('/public/css/spw-enrichment.css') layer(effects);
-@import url('/public/css/spw-demos.css') layer(effects);
-@import url('/public/css/spw-wonder.css') layer(effects);
-@import url('/public/css/spw-metaphysical-paper.css') layer(effects);
-@import url('/public/css/spw-debug.css') layer(effects);
+@import url('/public/css/effects/spw-material.css') layer(effects);
+@import url('/public/css/effects/enhancements.css') layer(effects);
+@import url('/public/css/effects/grain-texture.css') layer(effects);
+@import url('/public/css/effects/spw-electromagnetic-container.css') layer(effects);
+@import url('/public/css/effects/spw-cinematic.css') layer(effects);
+@import url('/public/css/effects/spw-developmental-climate.css') layer(effects);
+@import url('/public/css/effects/spw-enrichment.css') layer(effects);
+@import url('/public/css/effects/spw-demos.css') layer(effects);
+@import url('/public/css/effects/spw-wonder.css') layer(effects);
+@import url('/public/css/effects/spw-metaphysical-paper.css') layer(effects);
+@import url('/public/css/effects/spw-debug.css') layer(effects);
 
-@import url('/public/css/spw-whimsy.css') layer(ornament);
-@import url('/public/css/spw-canvas-accents.css') layer(ornament);
-@import url('/public/css/spw-ornament.css') layer(ornament);
+@import url('/public/css/ornament/spw-whimsy.css') layer(ornament);
+@import url('/public/css/ornament/spw-canvas-accents.css') layer(ornament);
+@import url('/public/css/ornament/spw-ornament.css') layer(ornament);
