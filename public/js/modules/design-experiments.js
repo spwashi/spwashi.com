@@ -132,8 +132,8 @@ function updateVariableStatus(root, message, type = 'info') {
   writeStatus(findVariableStatusNode(root), message, type);
 }
 
-function bindVariableControl(control, root) {
-  if (!(control instanceof HTMLInputElement) || !(root instanceof HTMLElement)) return () => {};
+function bindVariableControl(control, lab, scope) {
+  if (!(control instanceof HTMLInputElement) || !(lab instanceof HTMLElement) || !(scope instanceof HTMLElement)) return () => {};
 
   const handleInput = () => {
     const token = control.getAttribute('data-design-css-var-control');
@@ -149,9 +149,10 @@ function bindVariableControl(control, root) {
 
     const applied = applyVariableControl(control);
     writeVariableStore(next);
-    syncVariableValueNodes(root);
+    syncVariableValueNodes(lab);
+    syncTokenValues(scope);
     if (applied) {
-      updateVariableStatus(root, `Updated ${applied.token} to ${applied.value}.`, 'success');
+      updateVariableStatus(lab, `Updated ${applied.token} to ${applied.value}.`, 'success');
     }
   };
 
@@ -164,16 +165,17 @@ function bindVariableControl(control, root) {
   };
 }
 
-function bindVariableLab(root) {
-  if (!(root instanceof HTMLElement)) return () => {};
+function bindVariableLab(lab, scope) {
+  if (!(lab instanceof HTMLElement) || !(scope instanceof HTMLElement)) return () => {};
 
-  const controls = Array.from(root.querySelectorAll(VARIABLE_CONTROL_SELECTOR));
+  const controls = Array.from(lab.querySelectorAll(VARIABLE_CONTROL_SELECTOR));
   if (!controls.length) return () => {};
 
-  syncVariableControls(root);
+  syncVariableControls(lab);
+  syncTokenValues(scope);
 
-  const cleanups = controls.map((control) => bindVariableControl(control, root));
-  const resetButtons = Array.from(root.querySelectorAll(VARIABLE_RESET_SELECTOR));
+  const cleanups = controls.map((control) => bindVariableControl(control, lab, scope));
+  const resetButtons = Array.from(lab.querySelectorAll(VARIABLE_RESET_SELECTOR));
 
   const handleReset = () => {
     controls.forEach((control) => {
@@ -186,8 +188,9 @@ function bindVariableLab(root) {
     });
 
     writeVariableStore({});
-    syncVariableValueNodes(root);
-    updateVariableStatus(root, 'Reset CSS variables to authored defaults.', 'success');
+    syncVariableValueNodes(lab);
+    syncTokenValues(scope);
+    updateVariableStatus(lab, 'Reset CSS variables to authored defaults.', 'success');
   };
 
   resetButtons.forEach((button) => button.addEventListener('click', handleReset));
@@ -342,7 +345,7 @@ export function initDesignExperiments(root = document) {
   const cleanups = roots.flatMap((scope) => (
     Array.from(scope.querySelectorAll(BUNDLE_SELECTOR)).map((button) => bindBundleButton(button, scope))
   ));
-  const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab)));
+  const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab, scope)));
 
   const syncAll = (settings = getSiteSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
