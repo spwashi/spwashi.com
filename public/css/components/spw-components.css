@@ -255,6 +255,19 @@
   min-width: 0;
 }
 
+:where([data-spw-region-flow="overlay"], .spw-region-overlay) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  justify-items: stretch;
+  min-width: 0;
+}
+
+:where([data-spw-region-flow="overlay"] > *, .spw-region-overlay > *) {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
 /* Lift content above generated rails, seams, and debug labels. */
 :where(
   [data-spw-component-kind] > *,

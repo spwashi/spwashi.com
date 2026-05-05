@@ -232,6 +232,8 @@
    ========================================================================== */
 
 :where(#promo-wonder-cycle.site-frame) {
+  position: relative;
+  isolation: isolate;
   display: grid;
   gap: var(--home-gap-lg);
   padding: var(--home-frame-padding);
@@ -253,58 +255,114 @@
 :where(#promo-wonder-cycle .promo-wonder-cycle__grid,
        #promo-wonder-cycle .promo-wonder-cycle__weekly) {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--home-gap-md);
+  gap: 0;
+  align-items: start;
+  min-width: 0;
+  perspective: 1200px;
+  justify-items: stretch;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__grid > *,
+       #promo-wonder-cycle .promo-wonder-cycle__weekly > *) {
+  width: min(100%, 32rem);
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__card) {
   display: grid;
+  position: relative;
+  grid-template-rows: auto auto 1fr auto;
   gap: 0.62rem;
-  padding: 0.95rem 1rem 1rem;
+  min-width: 0;
+  min-height: 100%;
+  padding: 1rem 1.05rem 1.05rem;
   border: var(--home-surface-border);
-  border-radius: var(--home-radius-md);
-  background: var(--home-surface-bg-muted);
-  box-shadow: var(--home-shadow-quiet);
+  border-radius: calc(var(--home-radius-md) + 0.1rem);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-surface-bg-strong) 94%, transparent), var(--home-surface-bg-muted)),
+    var(--home-surface-bg-muted);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  overflow: clip;
+  transition:
+    transform var(--home-transition-base),
+    box-shadow var(--home-transition-base),
+    border-color var(--home-transition-base);
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__card--wonder) {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 7%, transparent), transparent 48%),
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 9%, transparent), transparent 52%),
     var(--home-surface-bg-muted);
 }
 
+:where(#promo-wonder-cycle .promo-wonder-cycle__card--promo) {
+  z-index: 2;
+  transform: translateY(-0.35rem) rotate(-0.4deg);
+  justify-self: start;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card--wonder) {
+  z-index: 1;
+  transform: translateY(0.7rem) rotate(0.45deg);
+  justify-self: end;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card:is(:hover, :focus-within)) {
+  border-color: var(--home-accent-line-strong);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  transform: translateY(-0.55rem) rotate(0deg);
+}
+
 :where(#promo-wonder-cycle .promo-wonder-cycle__label) {
+  align-self: start;
+  justify-self: start;
   margin: 0;
+  padding: 0.16rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
+  border-radius: var(--home-radius-pill);
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 94%, var(--home-accent-primary) 6%);
+  color: color-mix(in srgb, var(--home-accent-primary) 54%, var(--ink-soft, rgba(27, 31, 35, 0.68)));
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__title-row) {
   display: flex;
   align-items: flex-start;
-  gap: 0.55rem;
+  gap: 0.65rem;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__title-row h3) {
   margin: 0;
   color: var(--home-accent-ink);
-  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
-  line-height: 1.2;
+  font-size: clamp(1.02rem, 0.94rem + 0.42vw, 1.22rem);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__summary) {
   margin: 0;
   color: color-mix(in srgb, var(--ink, #1b1f23) 88%, transparent);
   line-height: 1.56;
+  max-inline-size: 36ch;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__why) {
-  margin: -0.15rem 0 0;
+  margin: -0.1rem 0 0;
+  padding-inline-start: 0.7rem;
+  border-inline-start: 1px solid color-mix(in srgb, var(--home-accent-primary) 22%, transparent);
   color: var(--ink-soft, rgba(27, 31, 35, 0.72));
-  font-size: 0.84rem;
+  font-size: 0.83rem;
   line-height: 1.45;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__cta) {
   justify-self: start;
+  margin-top: auto;
 }
 
 :where(#promo-wonder-cycle .promo-wonder-cycle__fallback) {
@@ -315,6 +373,24 @@
   :where(#promo-wonder-cycle .promo-wonder-cycle__grid,
          #promo-wonder-cycle .promo-wonder-cycle__weekly) {
     grid-template-columns: 1fr;
+    gap: var(--home-gap-md);
+    perspective: none;
+  }
+
+  :where(#promo-wonder-cycle .promo-wonder-cycle__grid > *,
+         #promo-wonder-cycle .promo-wonder-cycle__weekly > *) {
+    width: 100%;
+    grid-area: auto;
+    justify-self: stretch;
+  }
+
+  :where(#promo-wonder-cycle .promo-wonder-cycle__card--promo,
+         #promo-wonder-cycle .promo-wonder-cycle__card--wonder) {
+    transform: none;
+  }
+
+  :where(#promo-wonder-cycle .promo-wonder-cycle__card:is(:hover, :focus-within)) {
+    transform: translateY(-1px);
   }
 }
 

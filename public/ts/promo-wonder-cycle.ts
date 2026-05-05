@@ -234,9 +234,11 @@ function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): vo
   meta.append('Updated for ', dayTime, ' · ', weekSpan);
 
   const grid = el('div', 'promo-wonder-cycle__grid');
+  grid.dataset.spwRegionFlow = 'overlay';
   grid.append(renderCard(daily.promo, 'promo', 'daily', locale), renderCard(daily.wonder, 'wonder', 'daily', locale));
 
   const weeklyGrid = el('div', 'promo-wonder-cycle__weekly');
+  weeklyGrid.dataset.spwRegionFlow = 'overlay';
   weeklyGrid.append(renderCard(weekly.promo, 'promo', 'weekly', locale), renderCard(weekly.wonder, 'wonder', 'weekly', locale));
 
   const fallback = el('p', 'frame-note promo-wonder-cycle__fallback');

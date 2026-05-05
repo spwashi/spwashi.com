@@ -104,6 +104,16 @@
   counterexample: "A shared host rule forces position: relative onto every child, so an opted-in overlay starts animating between flow and edge-pinned geometry."
 }
 
+^"region_flow_contract"{
+  definition: "Region flow names how repeated children should occupy a host: stack, cluster, overlay, or popout."
+  html_contract: "Use data-spw-region-flow to choose the flow family instead of restating layout mechanics in each route."
+  stack_rule: "stack is for vertical reading order and section bodies."
+  cluster_rule: "cluster is for compact inline chips and short control groups."
+  overlay_rule: "overlay is for deliberate overlap or decked compositions where one child can sit on a higher plane."
+  popout_rule: "popout is for edge-pinned content that intentionally escapes the host's interior flow."
+  counterexample: "A route hardcodes overflow, grid, and z-index locally instead of declaring the region flow family once."
+}
+
 ^"surface_material_contract"{
   definition: "Shared surface depth is a contract between tokens, material, grain, and ornament rather than a route-local paint choice."
   css_contract: "Use --spw-surface-* aliases for fill, line, and shadow; use --spw-local-layer-* aliases for substrate, content, and overlay placement inside a surface."
