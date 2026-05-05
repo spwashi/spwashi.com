@@ -311,7 +311,7 @@
   margin: 0;
 }
 
-@media (max-width: 56rem) {
+@container (max-width: 56rem) {
   :where(#promo-wonder-cycle .promo-wonder-cycle__grid,
          #promo-wonder-cycle .promo-wonder-cycle__weekly) {
     grid-template-columns: 1fr;

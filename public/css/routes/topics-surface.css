@@ -456,7 +456,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   opacity: 0.22;
 }
 
-@media (min-width: 58rem) and (max-width: 69.99rem) {
+@container (min-width: 58rem) and (max-width: 69.99rem) {
   :where(body[data-spw-surface="topics"] .site-hero--split-figure[data-spw-image-hero="true"]) {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(min(100%, 19rem), 0.95fr);

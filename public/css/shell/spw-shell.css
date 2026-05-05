@@ -203,6 +203,7 @@ main {
   flex-direction: var(--spw-main-direction);
   gap: var(--spw-main-gap);
   touch-action: pan-y;
+  container-type: inline-size;
 }
 
 /* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into

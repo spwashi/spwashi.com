@@ -264,7 +264,7 @@ body[data-spw-surface="about"] {
   color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
 }
 
-@media (min-width: 860px) {
+@container (min-width: 860px) {
   [data-spw-surface="about"] #about-frame {
     grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
     column-gap: clamp(2rem, 5vw, 4.25rem);

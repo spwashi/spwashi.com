@@ -151,7 +151,7 @@
   min-height: var(--play-card-min-height-phone);
 }
 
-@media (min-width: 48rem) {
+@container (min-width: 48rem) {
   :where(body[data-spw-surface="play"] :is(.frame-panel, .frame-card, .session-card, .play-card, .seed-card)) {
     min-height: var(--play-card-min-height-tablet);
   }

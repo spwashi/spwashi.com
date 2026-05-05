@@ -1246,6 +1246,13 @@ a.ref-link:is(:hover, :focus-visible) {
   min-width: 0;
 }
 
+:where(.site-hero--split-figure) {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  align-content: start;
+}
+
 :where(.site-hero--split-figure) > [data-spw-slot="body"] {
   display: grid;
   gap: clamp(0.85rem, 1.8vw, 1.15rem);
@@ -1256,13 +1263,10 @@ a.ref-link:is(:hover, :focus-visible) {
   align-self: start;
 }
 
-@media (min-width: 70rem) {
+@container (min-width: 70rem) {
   :where(.site-hero--split-figure) {
-    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: clamp(0.85rem, 1.8vw, 1.2rem) clamp(0.95rem, 2vw, 1.35rem);
-    align-items: start;
-    align-content: start;
   }
 
   :where(.site-hero--split-figure) > canvas {
