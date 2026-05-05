@@ -28,6 +28,7 @@ The desired end state is a site where a few top-level routes immediately feel mo
 - Favor pieces with teal/amber resonance so they sit naturally inside the current palette system.
 - Use at least one `ChatGPT` render and at least a few hero/card images from the other `00.unsorted/` buckets.
 - Keep asset references root-relative and reuse the current image interaction runtime instead of inventing a new widget layer.
+- Follow-up passes should target visible repetition first, especially when multiple routes are sharing the same hero or generic social card.
 
 ## Copy Strategy
 

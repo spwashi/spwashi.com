@@ -63,6 +63,7 @@
  >>[2026-04-15 16:48] fix — Mobile effect parity matters first: raster watercolor now uses a CSS-native wash path, and pixelize gets an explicit grid/scale treatment so all images show a visible state on dense screens.
  >>[2026-04-15 18:07] implement — Added a shared illustrated-card treatment, rewired the topics hero into an image-backed atlas surface, refreshed the home hero studies, and swapped the software hero to parser-specific imagery.
  >>[2026-04-15 18:12] align — Used the content blob, library stack, algorithm field, RPG tile, and tide backgrounds so captions and card copy point outward into routes instead of acting like loose decoration.
+ >>[2026-05-05 11:55] diversify — Promoted a care cabinet, nutrition shelf, shelter house, and rain-paladin study so care, nutrition, mental health, and RPG Wednesday stop sharing the same visual register.
 }
 
 ^["open"]{
