@@ -258,6 +258,92 @@
     var(--spw-shell-card-bg-strong);
 }
 
+/* ==========================================================================
+   3b. Return-visitor / drift surfaces
+   ========================================================================== */
+
+:where(.returner-grid) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: var(--spw-shell-panel-gap);
+  align-items: stretch;
+}
+
+:where(.returner-card, .returner-ledger) {
+  min-width: 0;
+  min-height: 100%;
+  padding: var(--spw-shell-panel-pad);
+  border: 1px solid color-mix(in srgb, var(--spw-shell-line-strong) 42%, var(--spw-shell-line));
+  border-radius: var(--shape-floating, 14px);
+  background:
+    linear-gradient(180deg, var(--spw-shell-sheen), transparent 42%),
+    var(--spw-shell-panel-bg-strong);
+  box-shadow: var(--spw-shell-card-shadow);
+}
+
+:where(.returner-card) {
+  display: grid;
+  gap: 0.72rem;
+  align-content: start;
+}
+
+:where(.returner-card--warm) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--op-object-color, #c68a22) 8%, var(--spw-shell-sheen)),
+      transparent 42%
+    ),
+    var(--spw-shell-panel-bg-strong);
+}
+
+:where(.returner-card-kicker) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.returner-card > h3, .returner-ledger-title) {
+  margin: 0;
+}
+
+:where(.returner-card > p, .returner-ledger-item > p) {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+:where(.returner-chip-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+:where(.returner-ledger) {
+  display: grid;
+  gap: 0.72rem;
+  align-content: start;
+}
+
+:where(.returner-ledger-item) {
+  display: grid;
+  gap: 0.32rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
+}
+
+:where(.returner-ledger-item > strong) {
+  color: var(--ink);
+}
+
+@media (max-width: 960px) {
+  :where(.returner-grid) {
+    grid-template-columns: 1fr;
+  }
+}
+
 :where(.topic-photo-card img) {
   display: block;
   width: 100%;
