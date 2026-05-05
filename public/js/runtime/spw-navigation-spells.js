@@ -186,6 +186,84 @@ function describeExpression(expression, destination, scope) {
   return `${expression} · ${direction} as ${scope} · ground to replay`;
 }
 
+function buildNavigationSpellRecord(link, url) {
+  const scope = getScope(link);
+  const label = getVisibleLabel(link);
+  const baseToken = resolveBaseToken(link, url, scope, label);
+  const prefix = resolvePrefix(baseToken);
+  const destination = resolveDestination(url);
+  const postfix = resolvePostfix(destination, baseToken);
+  const operator = resolveOperatorType(baseToken, scope);
+  const expression = createExpression(baseToken, postfix);
+  const isGroundable = !link.matches('.header-sigil');
+
+  return {
+    scope,
+    label,
+    baseToken,
+    prefix,
+    destination,
+    postfix,
+    operator,
+    expression,
+    groundKey: buildGroundKey(url, scope),
+    isGroundable,
+    groundable: isGroundable ? 'true' : 'false',
+    title: describeExpression(expression, destination, scope),
+  };
+}
+
+function setLinkDataset(link, entries = {}) {
+  Object.entries(entries).forEach(([key, value]) => {
+    if (value == null || value === '') {
+      delete link.dataset[key];
+      return;
+    }
+    link.dataset[key] = String(value);
+  });
+}
+
+function applyNavigationSpellRecord(link, record) {
+  setLinkDataset(link, {
+    spwNavTokenized: 'true',
+    spwGroundable: record.groundable,
+    spwOperator: link.dataset.spwOperator || record.operator,
+    spwWonder: link.dataset.spwWonder || WONDER_BY_SCOPE[record.scope] || 'orientation',
+    spwAffordance: link.dataset.spwAffordance || 'navigate ground replay',
+    spwNavScope: record.scope,
+    spwNavDestination: record.destination,
+    spwNavPrefix: record.prefix,
+    spwNavPostfix: record.postfix,
+    spwNavExpression: record.expression,
+  });
+
+  if (record.isGroundable) {
+    setLinkDataset(link, {
+      spwGroundKey: record.groundKey,
+      spwGroundLabel: record.label || record.expression,
+      spwGroundExpression: record.expression,
+      spwGroundPrefix: record.prefix,
+      spwGroundPostfix: record.postfix,
+      spwGroundSubstrate: record.operator,
+      spwGroundGroup: GROUP_BY_SCOPE[record.scope] || record.scope,
+    });
+  } else {
+    setLinkDataset(link, {
+      spwGroundKey: '',
+      spwGroundLabel: '',
+      spwGroundExpression: '',
+      spwGroundPrefix: '',
+      spwGroundPostfix: '',
+      spwGroundSubstrate: '',
+      spwGroundGroup: '',
+    });
+  }
+
+  if (!link.title) {
+    link.title = record.title;
+  }
+}
+
 function annotateLink(link) {
   if (!(link instanceof HTMLAnchorElement)) return;
   if (link.closest('[data-spw-nav-tokenized="false"]')) return;
@@ -199,49 +277,8 @@ function annotateLink(link) {
 
   if (url.origin !== window.location.origin) return;
 
-  const scope = getScope(link);
-  const label = getVisibleLabel(link);
-  const baseToken = resolveBaseToken(link, url, scope, label);
-  const prefix = resolvePrefix(baseToken);
-  const destination = resolveDestination(url);
-  const postfix = resolvePostfix(destination, baseToken);
-  const operator = resolveOperatorType(baseToken, scope);
-  const expression = createExpression(baseToken, postfix);
-  const groundKey = buildGroundKey(url, scope);
-  const isHeaderSigil = link.matches('.header-sigil');
-  const isGroundable = !isHeaderSigil;
-
-  link.dataset.spwNavTokenized = 'true';
-  link.dataset.spwGroundable = isGroundable ? 'true' : 'false';
-  if (isGroundable) {
-    link.dataset.spwGroundKey = groundKey;
-    link.dataset.spwGroundLabel = label || expression;
-    link.dataset.spwGroundExpression = expression;
-    link.dataset.spwGroundPrefix = prefix;
-    link.dataset.spwGroundPostfix = postfix;
-    link.dataset.spwGroundSubstrate = operator;
-    link.dataset.spwGroundGroup = GROUP_BY_SCOPE[scope] || scope;
-  } else {
-    delete link.dataset.spwGroundKey;
-    delete link.dataset.spwGroundLabel;
-    delete link.dataset.spwGroundExpression;
-    delete link.dataset.spwGroundPrefix;
-    delete link.dataset.spwGroundPostfix;
-    delete link.dataset.spwGroundSubstrate;
-    delete link.dataset.spwGroundGroup;
-  }
-  link.dataset.spwOperator = link.dataset.spwOperator || operator;
-  link.dataset.spwWonder = link.dataset.spwWonder || WONDER_BY_SCOPE[scope] || 'orientation';
-  link.dataset.spwAffordance = link.dataset.spwAffordance || 'navigate ground replay';
-  link.dataset.spwNavScope = scope;
-  link.dataset.spwNavDestination = destination;
-  link.dataset.spwNavPrefix = prefix;
-  link.dataset.spwNavPostfix = postfix;
-  link.dataset.spwNavExpression = expression;
-
-  if (!link.title) {
-    link.title = describeExpression(expression, destination, scope);
-  }
+  const record = buildNavigationSpellRecord(link, url);
+  applyNavigationSpellRecord(link, record);
 }
 
 function applyTokens(root = document) {

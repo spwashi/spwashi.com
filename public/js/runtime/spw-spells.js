@@ -37,6 +37,10 @@ function isCompactSpellDockViewport() {
   return window.matchMedia('(max-width: 720px)').matches;
 }
 
+function getSpellSurface() {
+  return document.body?.dataset.spwSurface || 'surface';
+}
+
 function getGroundedEntries() {
   const registry = getGroundedRegistry();
   const couplings = getGroundedCouplings();
@@ -44,13 +48,17 @@ function getGroundedEntries() {
   return registry.map((key, index) => buildSpellEntry(key, couplings[key], index)).filter(Boolean);
 }
 
-function buildSpellEntry(key, coupling = {}, index = 0) {
-  const expression = String(
+function getSpellExpression(key, coupling = {}) {
+  return String(
     coupling?.expression
     || coupling?.label
     || coupling?.text
     || inferExpressionFromKey(key)
   ).trim();
+}
+
+function buildSpellEntry(key, coupling = {}, index = 0) {
+  const expression = getSpellExpression(key, coupling);
 
   if (!expression) return null;
 
@@ -74,7 +82,7 @@ function buildSpellEntry(key, coupling = {}, index = 0) {
     destination,
     href: coupling?.href || null,
     wonder: coupling?.wonder || 'orientation',
-    context: coupling?.context || document.body?.dataset?.spwSurface || 'surface',
+    context: coupling?.context || getSpellSurface(),
     group: coupling?.group || 'routes',
     groundedAt: coupling?.groundedAt || 0,
   };
@@ -120,14 +128,34 @@ function inferDestination(postfix = '', expression = '') {
 
 function buildSpellModel() {
   const entries = getGroundedEntries();
-  const prefixCounts = new Map();
-  const destinationCounts = new Map();
+  const prefixCounts = countBy(entries, (entry) => entry.prefix || '.');
+  const destinationCounts = countBy(entries, (entry) => entry.destination);
+  const combos = buildSpellCombos(entries);
+
+  return {
+    entries,
+    prefixCounts,
+    destinationCounts,
+    combos,
+    snippet: constructSpell(entries),
+  };
+}
+
+function countBy(items, getKey) {
+  const counts = new Map();
+
+  items.forEach((item, index) => {
+    const key = getKey(item, index);
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+
+  return [...counts.entries()];
+}
+
+function buildSpellCombos(entries) {
   const combos = new Map();
 
   entries.forEach((entry, index) => {
-    prefixCounts.set(entry.prefix || '.', (prefixCounts.get(entry.prefix || '.') || 0) + 1);
-    destinationCounts.set(entry.destination, (destinationCounts.get(entry.destination) || 0) + 1);
-
     if (index === 0) return;
     const previous = entries[index - 1];
     const comboKey = `${previous.operatorType}->${entry.destination}`;
@@ -139,22 +167,14 @@ function buildSpellModel() {
     });
   });
 
-  return {
-    entries,
-    prefixCounts: [...prefixCounts.entries()],
-    destinationCounts: [...destinationCounts.entries()],
-    combos: [...combos.values()],
-    snippet: constructSpell(entries),
-  };
+  return [...combos.values()];
 }
 
 function constructSpell(entries) {
   const timestamp = new Date().toISOString();
-  const surface = document.body?.dataset.spwSurface || 'surface';
-
   const lines = [
     '@cast_spell("navigation_lattice")',
-    `#:surface !${surface}`,
+    `#:surface !${getSpellSurface()}`,
     `=grounded ${entries.length}`,
     `#:at "${timestamp}"`,
     '',
@@ -180,9 +200,10 @@ function constructSpell(entries) {
 }
 
 function buildProjectionNotes(entries) {
-  const scopeCount = entries.filter((entry) => entry.destination === 'scope').length;
-  const projectionCount = entries.filter((entry) => entry.destination === 'projection').length;
-  const lensCount = entries.filter((entry) => entry.destination === 'lens').length;
+  const destinationCounts = new Map(countBy(entries, (entry) => entry.destination));
+  const scopeCount = destinationCounts.get('scope') || 0;
+  const projectionCount = destinationCounts.get('projection') || 0;
+  const lensCount = destinationCounts.get('lens') || 0;
   const notes = [];
 
   if (scopeCount) notes.push(`~"scope_entries" =${scopeCount}`);
@@ -258,52 +279,73 @@ function updateSpellDock(model) {
   if (!dock) return;
   const compactViewport = isCompactSpellDockViewport();
 
-  const count = dock.querySelector('.spw-spell-dock-count');
-  const label = dock.querySelector('.spw-spell-dock-label');
-  const body = dock.querySelector('.spw-spell-dock-body');
+  const parts = getSpellDockParts(dock);
 
   dock.dataset.spwViewport = compactViewport ? 'compact' : 'default';
-  if (count) count.textContent = String(model.entries.length);
-  if (label) {
-    label.textContent = model.entries.length
-      ? 'spellbook'
-      : 'ground lines';
-  }
+  if (parts.count) parts.count.textContent = String(model.entries.length);
+  if (parts.label) parts.label.textContent = model.entries.length ? 'spellbook' : 'ground lines';
 
-  if (!body) return;
+  if (!parts.body) return;
 
   if (!model.entries.length) {
-    body.innerHTML = `
-      <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell you can replay.</p>
-    `;
+    parts.body.innerHTML = renderEmptySpellDock();
     return;
   }
 
-  const preview = model.entries
-    .slice(-(compactViewport ? 3 : 4))
+  const preview = renderSpellAtomStrip(model.entries, compactViewport ? 3 : 4);
+  const destinations = renderDestinationRegisters(
+    compactViewport ? model.destinationCounts.slice(0, 2) : model.destinationCounts
+  );
+
+  if (compactViewport) {
+    parts.body.innerHTML = renderCompactSpellDock(preview, destinations);
+    return;
+  }
+
+  parts.body.innerHTML = renderExpandedSpellDock(preview, destinations, model.snippet);
+}
+
+function getSpellDockParts(dock) {
+  return {
+    count: dock.querySelector('.spw-spell-dock-count'),
+    label: dock.querySelector('.spw-spell-dock-label'),
+    body: dock.querySelector('.spw-spell-dock-body'),
+  };
+}
+
+function renderEmptySpellDock() {
+  return `
+    <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell you can replay.</p>
+  `;
+}
+
+function renderSpellAtomStrip(entries, limit) {
+  return entries
+    .slice(-limit)
     .map(renderSpellAtom)
     .join('');
-  const destinationCounts = compactViewport
-    ? model.destinationCounts.slice(0, 2)
-    : model.destinationCounts;
-  const destinations = destinationCounts.map(([key, countValue]) => {
+}
+
+function renderDestinationRegisters(destinationCounts = []) {
+  return destinationCounts.map(([key, countValue]) => {
     const labelValue = DESTINATION_LABELS[key] || key;
     return `<span class="spell-register">${escapeHtml(labelValue)} · ${countValue}</span>`;
   }).join('');
+}
 
-  if (compactViewport) {
-    body.innerHTML = `
-      <div class="spell-visual spell-visual--compact">${preview}</div>
-      <div class="spell-register-strip">${destinations}</div>
-      <p class="spell-note spell-note--compact">Replayable navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
-    `;
-    return;
-  }
-
-  body.innerHTML = `
+function renderCompactSpellDock(preview, destinations) {
+  return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip">${destinations}</div>
-    <pre class="spell-source spell-source--compact"><code>${escapeHtml(model.snippet)}</code></pre>
+    <p class="spell-note spell-note--compact">Replayable navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
+  `;
+}
+
+function renderExpandedSpellDock(preview, destinations, snippet) {
+  return `
+    <div class="spell-visual spell-visual--compact">${preview}</div>
+    <div class="spell-register-strip">${destinations}</div>
+    <pre class="spell-source spell-source--compact"><code>${escapeHtml(snippet)}</code></pre>
   `;
 }
 
@@ -371,49 +413,56 @@ function renderSpellBoard(board, model) {
 }
 
 function buildSavedBundlesUI() {
-  try {
-    const bundles = listSpellBundles();
-    if (!bundles.length) return '';
-    return `
-      <div class="spell-bundle-bank">
-        <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path.</p>
-        <div class="spell-bundle-grid">
-          ${bundles.map((bundle) => `
-            <article class="spell-bundle-card">
-              <div class="spell-bundle-card__header">
-                <strong class="spell-bundle-card__title">${escapeHtml(bundle.name)}</strong>
-                <span class="spell-register">working set</span>
-              </div>
-              <p class="spell-bundle-card__meta">${escapeHtml(formatSpellBundleMeta(bundle))}</p>
-              <div class="spell-actions spell-actions--bundles">
-                <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref">
-                  ~ restore "${escapeHtml(bundle.name)}"
-                </button>
-              </div>
-            </article>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  } catch {
-    return '';
-  }
+  const bundles = listSpellBundles();
+  if (!bundles.length) return '';
+
+  return renderSavedBundles(bundles);
 }
 
 function listSpellBundles() {
   return Object.keys(localStorage)
     .filter((key) => key.startsWith(SPELL_BUNDLE_PREFIX))
-    .map((key) => {
-      const name = key.slice(SPELL_BUNDLE_PREFIX.length);
-      const parsed = parseSpellBundle(localStorage.getItem(key));
-      return {
-        name,
-        count: Array.isArray(parsed?.registry) ? parsed.registry.length : 0,
-        path: parsed?.path || '',
-        savedAt: Number(parsed?.savedAt || 0),
-      };
-    })
+    .map(parseSpellBundleEntry)
     .sort((a, b) => b.savedAt - a.savedAt);
+}
+
+function parseSpellBundleEntry(key) {
+  const name = key.slice(SPELL_BUNDLE_PREFIX.length);
+  const parsed = parseSpellBundle(localStorage.getItem(key));
+  return {
+    name,
+    count: Array.isArray(parsed?.registry) ? parsed.registry.length : 0,
+    path: parsed?.path || '',
+    savedAt: Number(parsed?.savedAt || 0),
+  };
+}
+
+function renderSavedBundles(bundles) {
+  return `
+    <div class="spell-bundle-bank">
+      <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path.</p>
+      <div class="spell-bundle-grid">
+        ${bundles.map(renderSavedBundleCard).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSavedBundleCard(bundle) {
+  return `
+    <article class="spell-bundle-card">
+      <div class="spell-bundle-card__header">
+        <strong class="spell-bundle-card__title">${escapeHtml(bundle.name)}</strong>
+        <span class="spell-register">working set</span>
+      </div>
+      <p class="spell-bundle-card__meta">${escapeHtml(formatSpellBundleMeta(bundle))}</p>
+      <div class="spell-actions spell-actions--bundles">
+        <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref">
+          ~ restore "${escapeHtml(bundle.name)}"
+        </button>
+      </div>
+    </article>
+  `;
 }
 
 function parseSpellBundle(raw) {
@@ -554,12 +603,4 @@ export function initSpwSpells() {
       renderAllSpellSurfaces();
     },
   };
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
