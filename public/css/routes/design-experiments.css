@@ -17,6 +17,13 @@
 [data-spw-page-family="experiment-lab"] .design-experiment-hero,
 [data-spw-page-family="experiment-lab"] .design-experiment-frame {
   overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 34%, transparent);
+  border-radius: var(--shape-surface);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, transparent), color-mix(in srgb, var(--surface) 97%, transparent));
+  box-shadow:
+    0 12px 28px rgba(10, 18, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 [data-spw-page-family="experiment-lab"] .design-experiment-actions,
@@ -53,7 +60,9 @@
     );
   color: inherit;
   text-align: left;
-  box-shadow: var(--shadow-xs);
+  box-shadow:
+    0 6px 16px rgba(10, 18, 24, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
   transition:
     transform var(--duration-fast) var(--ease-mechanical),
     box-shadow var(--duration-base) var(--ease-settle),
@@ -64,8 +73,10 @@
 [data-spw-page-family="experiment-lab"] .design-bundle-btn:hover,
 [data-spw-page-family="experiment-lab"] .design-bundle-btn:focus-visible,
 [data-spw-page-family="experiment-lab"] .design-bundle-btn[data-design-bundle-active="true"] {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-base);
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 24px rgba(10, 18, 24, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46);
   border-color: color-mix(in srgb, var(--active-op-color) 36%, var(--line));
 }
 
@@ -111,7 +122,82 @@
   padding: var(--inset-panel);
   border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
   border-radius: var(--shape-surface);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, transparent), color-mix(in srgb, var(--surface) 96%, transparent));
+  box-shadow:
+    0 8px 20px rgba(10, 18, 24, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-grid {
+  display: grid;
+  gap: var(--gap-surface);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-card {
+  display: grid;
+  gap: var(--gap-block-tight);
+  padding: var(--inset-panel);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: var(--shape-surface);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 97%, transparent), color-mix(in srgb, var(--surface) 96%, transparent));
+  box-shadow:
+    0 8px 20px rgba(10, 18, 24, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-card h3 {
+  margin: 0;
+  font-size: var(--text-size-base);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-card p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-control {
+  display: grid;
+  gap: 0.35rem;
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-control span {
+  color: var(--ink-soft);
+  font-size: var(--text-size-2xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-control input[type="range"] {
+  width: 100%;
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-readout {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--shape-component);
+  background: color-mix(in srgb, var(--surface-code) 88%, transparent);
+  color: color-mix(in srgb, white 90%, var(--active-op-color) 10%);
+  font-family: var(--site-mono-font);
+  font-size: var(--text-size-sm);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-inline-tight);
+  align-items: center;
+  margin-top: var(--gap-block-tight);
+}
+
+[data-spw-page-family="experiment-lab"] .design-variable-status {
+  margin: 0;
+  color: var(--ink-soft);
 }
 
 [data-spw-page-family="experiment-lab"] .design-token-value {
@@ -132,6 +218,16 @@
   overflow: hidden;
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--line) 42%, transparent);
+}
+
+[data-spw-page-family="experiment-lab"] .design-experiment-status {
+  margin-top: var(--gap-block-tight);
+  padding: 0.7rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
+  border-radius: var(--shape-component);
+  background: color-mix(in srgb, var(--surface-strong) 96%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  color: var(--ink-soft);
 }
 
 [data-spw-page-family="experiment-lab"] .design-token-meter::after {
@@ -167,6 +263,9 @@
   background:
     radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--active-op-color) 8%, transparent), transparent 36%),
     linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, transparent), color-mix(in srgb, var(--surface) 98%, transparent));
+  box-shadow:
+    0 10px 26px rgba(10, 18, 24, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
 }
 
 [data-spw-page-family="experiment-lab"] .design-css-stack {

@@ -234,40 +234,84 @@
             <section class="site-frame" id="context-stack" data-site-settings-scope data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="tune" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__context_stack" data-spw-context-relevance="global local data attributes palette resonance design system">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#context-stack">#&gt;context_stack</a>
-                    <h2>Global And Local Display Context</h2>
+                    <h2>QA Bench For Global Context</h2>
                 </header>
-                <p class="frame-note">This is the working stack I would use for design decisions. The page also exposes live global controls so the neighboring cards can be tested under real site settings.</p>
+                <p class="frame-note">This is the working surface I would use for QA: inspect the live root state, modify the surrounding environment, then reset and compare the same route against authored defaults.</p>
 
-                <section class="palette-probe" aria-label="Global context controls">
-                    <div class="palette-probe-header">
-                        <header>
-                            <p class="palette-probe-kicker">Global Context</p>
-                            <h3 class="palette-probe-title">Bias the environment first, then judge whether the local variants still make sense.</h3>
-                        </header>
-                        <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Design hub theme pack choices">
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
-                            <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
+                <div class="design-qa-grid">
+                    <article class="frame-panel design-qa-card design-qa-card--state">
+                        <p class="frame-note">Current state</p>
+                        <h3>Read the live settings first</h3>
+                        <dl class="design-qa-state-list" aria-label="Current design hub state">
+                            <div>
+                                <dt>theme</dt>
+                                <dd><strong data-settings-state="themePack">neutral paper</strong></dd>
+                            </div>
+                            <div>
+                                <dt>mode</dt>
+                                <dd><strong data-settings-state="colorMode">auto</strong></dd>
+                            </div>
+                            <div>
+                                <dt>density</dt>
+                                <dd><strong data-settings-state="componentDensity">soft</strong></dd>
+                            </div>
+                            <div>
+                                <dt>palette</dt>
+                                <dd><strong data-settings-state="paletteResonance">route</strong></dd>
+                            </div>
+                            <div>
+                                <dt>memory</dt>
+                                <dd><strong data-settings-state="wonderMemory">nearby</strong></dd>
+                            </div>
+                            <div>
+                                <dt>metadata</dt>
+                                <dd><strong data-settings-state="showSemanticMetadata">off</strong></dd>
+                            </div>
+                        </dl>
+                        <p class="design-qa-status" data-site-settings-status>Preferences are saved in this browser.</p>
+                    </article>
+
+                    <section class="palette-probe design-qa-card design-qa-card--modify" aria-label="Global context controls">
+                        <div class="palette-probe-header">
+                            <header>
+                                <p class="palette-probe-kicker">Modify</p>
+                                <h3 class="palette-probe-title">Bias the environment first, then judge whether the local variants still make sense.</h3>
+                            </header>
+                            <div class="palette-probe-swatches theme-pack-chip-row" role="group" aria-label="Design hub theme pack choices">
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger" data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio" data-theme-pack-preview="electric-studio" aria-label="Choose electric studio theme"></button>
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum" data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace" data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
+                                <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console" data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
+                            </div>
                         </div>
-                    </div>
-                    <p class="palette-probe-copy">Current mode: <span class="palette-probe-state" data-settings-state="colorMode">auto</span>. Theme pack: <span class="palette-probe-state" data-settings-state="themePack">neutral paper</span>. Palette resonance: <span class="palette-probe-state" data-settings-state="paletteResonance">route</span>. Wonder memory: <span class="palette-probe-state" data-settings-state="wonderMemory">nearby</span>.</p>
-                    <div class="palette-probe-actions" aria-label="Design hub palette choices">
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
-                    </div>
-                    <div class="palette-probe-actions" aria-label="Design hub global display settings">
-                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
-                    </div>
-                    <p class="palette-probe-copy" data-site-settings-status>Preferences are saved in this browser.</p>
-                </section>
+                        <div class="palette-probe-actions" aria-label="Design hub palette choices">
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
+                        </div>
+                        <div class="palette-probe-actions" aria-label="Design hub global display settings">
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                        </div>
+                    </section>
+
+                    <article class="frame-panel design-qa-card design-qa-card--reset">
+                        <p class="frame-note">Reset and compare</p>
+                        <h3>Return to authored defaults before comparing another route</h3>
+                        <p>Use reset to clear the local bias, then read the same cards again to see what came from the route itself and what came from the browser state.</p>
+                        <div class="design-qa-actions">
+                            <button class="operator-chip" type="button" data-site-settings-reset>reset authored defaults</button>
+                            <a class="operator-chip" href="/design/experiments/css/">open CSS lab</a>
+                            <a class="operator-chip" href="/design/components/">open glossary</a>
+                        </div>
+                        <p class="design-qa-copy">After resetting, compare the route against the render and component labs.</p>
+                    </article>
+                </div>
 
                 <div class="frame-grid frame-grid--2up">
                     <article class="frame-panel">
@@ -612,7 +656,7 @@
                 <ul>
                     <li><a href="#design-hub">Hub</a></li>
                     <li><a href="#design-circuits">Circuits</a></li>
-                    <li><a href="#context-stack">Context Stack</a></li>
+                    <li><a href="#context-stack">QA Bench</a></li>
                     <li><a href="#promptability-studio">Prompt Studio</a></li>
                     <li><a href="#rendering-contexts">Rendering Tests</a></li>
                     <li><a href="#component-anatomy">Component Options</a></li>
@@ -623,8 +667,8 @@
 
             <section class="frame-panel">
                 <p class="frame-note">Use this page</p>
-                <h2>How To Work With The Hub</h2>
-                <p>Change a global setting, inspect the context cards, then follow one of the outbound circuits to see whether the same idea survives a real route.</p>
+                <h2>How To Work With The Bench</h2>
+                <p>Inspect the live state, tweak the surrounding controls, then reset before you compare the same idea on a different route.</p>
             </section>
 
             <section class="frame-panel">
@@ -643,7 +687,7 @@
             <section class="frame-panel">
                 <p class="frame-note">Model sketch</p>
                 <h2>Short Version</h2>
-                <p>Environment first. Route next. Component after that. Variant or slot only when the anatomy truly changes.</p>
+                <p>Environment first. Route next. Component after that. Variant or slot only when the anatomy truly changes. Reset before the comparison round.</p>
             </section>
 
             <section class="frame-panel">

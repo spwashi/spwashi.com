@@ -245,6 +245,83 @@
                 </div>
             </section>
 
+            <section class="site-frame design-experiment-frame" id="css-variable-lab" data-design-css-variable-lab data-spw-kind="frame" data-spw-role="control" data-spw-context="analysis">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#css-variable-lab">$ "css_variable_lab"</a>
+                    <h2>CSS Variable Lab</h2>
+                </header>
+                <p class="frame-note">
+                    Learn the live custom-property vocabulary here. Move a slider, watch the token register update below, then reset before comparing another route.
+                </p>
+
+                <div class="design-variable-grid">
+                    <article class="design-variable-card">
+                        <h3><code>--shape-component</code></h3>
+                        <p>Controls chip and small control curvature.</p>
+                        <label class="design-variable-control" for="shape-component">
+                            <span>Radius</span>
+                            <input id="shape-component" type="range" min="2" max="14" step="1" value="5" data-design-css-var-control="--shape-component" data-design-css-var-default="5px" data-design-css-var-unit="px">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--shape-component">5px</code>
+                    </article>
+
+                    <article class="design-variable-card">
+                        <h3><code>--shape-surface</code></h3>
+                        <p>Controls frame and panel curvature.</p>
+                        <label class="design-variable-control" for="shape-surface">
+                            <span>Radius</span>
+                            <input id="shape-surface" type="range" min="4" max="18" step="1" value="8" data-design-css-var-control="--shape-surface" data-design-css-var-default="8px" data-design-css-var-unit="px">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--shape-surface">8px</code>
+                    </article>
+
+                    <article class="design-variable-card">
+                        <h3><code>--line-mid</code></h3>
+                        <p>Controls the weight of structural dividers.</p>
+                        <label class="design-variable-control" for="line-mid">
+                            <span>Weight</span>
+                            <input id="line-mid" type="range" min="0.5" max="4" step="0.5" value="1.5" data-design-css-var-control="--line-mid" data-design-css-var-default="1.5px" data-design-css-var-unit="px">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--line-mid">1.5px</code>
+                    </article>
+
+                    <article class="design-variable-card">
+                        <h3><code>--material-blur</code></h3>
+                        <p>Controls the depth of the glass-like surfaces.</p>
+                        <label class="design-variable-control" for="material-blur">
+                            <span>Blur</span>
+                            <input id="material-blur" type="range" min="0" max="16" step="1" value="6" data-design-css-var-control="--material-blur" data-design-css-var-default="6px" data-design-css-var-unit="px">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--material-blur">6px</code>
+                    </article>
+
+                    <article class="design-variable-card">
+                        <h3><code>--attention-field-radius</code></h3>
+                        <p>Controls how broad operator resonance feels.</p>
+                        <label class="design-variable-control" for="attention-field-radius">
+                            <span>Radius</span>
+                            <input id="attention-field-radius" type="range" min="0" max="1" step="0.05" value="0.4" data-design-css-var-control="--attention-field-radius" data-design-css-var-default="0.4">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--attention-field-radius">0.4</code>
+                    </article>
+
+                    <article class="design-variable-card">
+                        <h3><code>--spw-wonder-memory-reach</code></h3>
+                        <p>Controls how much wonder memory travels across routes.</p>
+                        <label class="design-variable-control" for="wonder-memory-reach">
+                            <span>Reach</span>
+                            <input id="wonder-memory-reach" type="range" min="0" max="1.5" step="0.05" value="0.54" data-design-css-var-control="--spw-wonder-memory-reach" data-design-css-var-default="0.54">
+                        </label>
+                        <code class="design-variable-readout" data-design-css-var-value="--spw-wonder-memory-reach">0.54</code>
+                    </article>
+                </div>
+
+                <div class="design-variable-actions">
+                    <button class="operator-chip" type="button" data-design-css-var-reset>reset CSS variables</button>
+                    <p class="design-variable-status" data-design-css-var-status>Adjust a variable, then compare the token register under it.</p>
+                </div>
+            </section>
+
             <section class="site-frame design-experiment-frame" id="css-token-register" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#css-token-register">? "css_token_register"</a>

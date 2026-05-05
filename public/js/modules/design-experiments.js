@@ -9,6 +9,12 @@ const ROOT_SELECTOR = '[data-design-experiments-root]';
 const BUNDLE_SELECTOR = '[data-design-setting-bundle]';
 const TOKEN_VALUE_SELECTOR = '[data-design-token-value]';
 const TOKEN_METER_SELECTOR = '[data-design-token-meter]';
+const VARIABLE_LAB_SELECTOR = '[data-design-css-variable-lab]';
+const VARIABLE_CONTROL_SELECTOR = '[data-design-css-var-control]';
+const VARIABLE_VALUE_SELECTOR = '[data-design-css-var-value]';
+const VARIABLE_RESET_SELECTOR = '[data-design-css-var-reset]';
+const VARIABLE_STATUS_SELECTOR = '[data-design-css-var-status]';
+const VARIABLE_STORAGE_KEY = 'spw-design-css-variable-lab';
 
 function clampNumber(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -30,6 +36,166 @@ function parseBundle(bundle = '') {
 function parseNumericToken(value = '') {
   const parsed = Number.parseFloat(String(value).trim());
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function safeParseJson(value, fallback) {
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function readVariableStore() {
+  try {
+    return safeParseJson(window.localStorage.getItem(VARIABLE_STORAGE_KEY), {});
+  } catch {
+    return {};
+  }
+}
+
+function writeVariableStore(next) {
+  try {
+    if (!next || !Object.keys(next).length) {
+      window.localStorage.removeItem(VARIABLE_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(VARIABLE_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    // Local storage is optional here.
+  }
+}
+
+function findVariableStatusNode(root) {
+  if (!(root instanceof HTMLElement)) return null;
+  return root.querySelector(VARIABLE_STATUS_SELECTOR);
+}
+
+function getVariableLabs(root) {
+  if (!(root instanceof HTMLElement)) return [];
+  if (root.matches(VARIABLE_LAB_SELECTOR)) return [root];
+  return Array.from(root.querySelectorAll(VARIABLE_LAB_SELECTOR));
+}
+
+function getControlValue(control) {
+  const unit = control.getAttribute('data-design-css-var-unit') || '';
+  return unit ? `${control.value}${unit}` : control.value;
+}
+
+function getControlDefaultValue(control) {
+  return control.defaultValue || control.getAttribute('data-design-css-var-default') || control.value || '';
+}
+
+function syncVariableValueNodes(root) {
+  if (!(root instanceof HTMLElement)) return;
+
+  const styles = getComputedStyle(document.documentElement);
+  root.querySelectorAll(VARIABLE_VALUE_SELECTOR).forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    const token = node.getAttribute('data-design-css-var-value');
+    if (!token) return;
+    node.textContent = styles.getPropertyValue(token).trim() || node.getAttribute('data-design-css-var-default') || 'unset';
+  });
+}
+
+function applyVariableControl(control) {
+  if (!(control instanceof HTMLInputElement)) return null;
+  const token = control.getAttribute('data-design-css-var-control');
+  if (!token) return null;
+
+  const value = getControlValue(control);
+  document.documentElement.style.setProperty(token, value);
+  return { token, value };
+}
+
+function syncVariableControls(root) {
+  if (!(root instanceof HTMLElement)) return;
+
+  const store = readVariableStore();
+  root.querySelectorAll(VARIABLE_CONTROL_SELECTOR).forEach((control) => {
+    if (!(control instanceof HTMLInputElement)) return;
+    const token = control.getAttribute('data-design-css-var-control');
+    if (!token) return;
+
+    const saved = store[token];
+    if (saved !== undefined && saved !== null && saved !== '') {
+      control.value = String(saved);
+      document.documentElement.style.setProperty(token, getControlValue(control));
+    }
+  });
+
+  syncVariableValueNodes(root);
+}
+
+function updateVariableStatus(root, message, type = 'info') {
+  writeStatus(findVariableStatusNode(root), message, type);
+}
+
+function bindVariableControl(control, root) {
+  if (!(control instanceof HTMLInputElement) || !(root instanceof HTMLElement)) return () => {};
+
+  const handleInput = () => {
+    const token = control.getAttribute('data-design-css-var-control');
+    if (!token) return;
+
+    const defaultValue = getControlDefaultValue(control);
+    const next = readVariableStore();
+    if (String(control.value) === String(control.defaultValue || defaultValue)) {
+      delete next[token];
+    } else {
+      next[token] = control.value;
+    }
+
+    const applied = applyVariableControl(control);
+    writeVariableStore(next);
+    syncVariableValueNodes(root);
+    if (applied) {
+      updateVariableStatus(root, `Updated ${applied.token} to ${applied.value}.`, 'success');
+    }
+  };
+
+  control.addEventListener('input', handleInput);
+  control.addEventListener('change', handleInput);
+
+  return () => {
+    control.removeEventListener('input', handleInput);
+    control.removeEventListener('change', handleInput);
+  };
+}
+
+function bindVariableLab(root) {
+  if (!(root instanceof HTMLElement)) return () => {};
+
+  const controls = Array.from(root.querySelectorAll(VARIABLE_CONTROL_SELECTOR));
+  if (!controls.length) return () => {};
+
+  syncVariableControls(root);
+
+  const cleanups = controls.map((control) => bindVariableControl(control, root));
+  const resetButtons = Array.from(root.querySelectorAll(VARIABLE_RESET_SELECTOR));
+
+  const handleReset = () => {
+    controls.forEach((control) => {
+      if (!(control instanceof HTMLInputElement)) return;
+      const token = control.getAttribute('data-design-css-var-control');
+      if (!token) return;
+
+      control.value = control.defaultValue;
+      document.documentElement.style.removeProperty(token);
+    });
+
+    writeVariableStore({});
+    syncVariableValueNodes(root);
+    updateVariableStatus(root, 'Reset CSS variables to authored defaults.', 'success');
+  };
+
+  resetButtons.forEach((button) => button.addEventListener('click', handleReset));
+
+  return () => {
+    cleanups.forEach((cleanup) => cleanup());
+    resetButtons.forEach((button) => button.removeEventListener('click', handleReset));
+  };
 }
 
 function writeStatus(node, message, type = 'info') {
@@ -96,6 +262,9 @@ function syncBundleButtons(root, settings = getSiteSettings()) {
 function syncRoot(root, settings = getSiteSettings()) {
   syncTokenValues(root);
   syncBundleButtons(root, settings);
+  getVariableLabs(root).forEach((lab) => {
+    syncVariableControls(lab);
+  });
 }
 
 function applyBundle(button, root) {
@@ -173,6 +342,7 @@ export function initDesignExperiments(root = document) {
   const cleanups = roots.flatMap((scope) => (
     Array.from(scope.querySelectorAll(BUNDLE_SELECTOR)).map((button) => bindBundleButton(button, scope))
   ));
+  const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab)));
 
   const syncAll = (settings = getSiteSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
@@ -187,6 +357,7 @@ export function initDesignExperiments(root = document) {
   return {
     cleanup() {
       cleanups.forEach((cleanup) => cleanup());
+      variableCleanups.forEach((cleanup) => cleanup());
       off?.();
     },
     refresh() {
