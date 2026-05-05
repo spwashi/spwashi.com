@@ -780,7 +780,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   :where(.site-header nav, body > header nav) {
     justify-self: center;
     width: fit-content;
-    max-width: min(100%, 74rem);
+    max-inline-size: min(100%, var(--shell-nav-max-width));
     padding: 0.28rem 0.42rem;
     border-radius: calc(var(--shell-panel-radius-loose) - 0.16rem);
   }

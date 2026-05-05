@@ -95,6 +95,7 @@
   --shell-reading-measure: var(--measure-reading, 68ch);
   --shell-reading-measure-tight: var(--measure-panel, 52ch);
   --shell-reading-measure-compact: var(--measure-card, 42ch);
+  --shell-nav-max-width: 74rem;
 
   /* Generic page hero */
   --shell-hero-pad-inline: clamp(1rem, 2.4vw, 1.5rem);
