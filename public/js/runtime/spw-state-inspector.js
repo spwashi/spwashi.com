@@ -140,23 +140,16 @@ function readModeField(target) {
         || buttons.find((button) => button.classList.contains('is-selected'))
         || buttons[0];
 
-    return {
-        key: 'mode',
-        value: active.dataset.setMode,
-        options: buttons.map((button) => button.dataset.setMode),
+    return createStateField('mode', active.dataset.setMode, {
         source: 'mode',
-        interactive: true
-    };
+        interactive: true,
+        options: buttons.map((button) => button.dataset.setMode)
+    });
 }
 
 function readPhaseField(target) {
     if (!target.dataset.spwPhase) return null;
-    return {
-        key: 'phase',
-        value: target.dataset.spwPhase,
-        source: 'phase',
-        interactive: false
-    };
+    return createStateField('phase', target.dataset.spwPhase, { source: 'phase' });
 }
 
 function readFormField(target, name) {
@@ -168,36 +161,30 @@ function readFormField(target, name) {
 
     if (first instanceof HTMLInputElement && first.type === 'radio') {
         const active = nodes.find((node) => node.checked) || first;
-        return {
-            key,
-            value: active.value,
-            options: nodes.map((node) => node.value),
+        return createStateField(key, active.value, {
             source: 'form',
             fieldName: name,
-            interactive: true
-        };
+            interactive: true,
+            options: nodes.map((node) => node.value)
+        });
     }
 
     if (first instanceof HTMLInputElement && first.type === 'checkbox') {
-        return {
-            key,
-            value: first.checked ? 'on' : 'off',
-            options: ['off', 'on'],
+        return createStateField(key, first.checked ? 'on' : 'off', {
             source: 'form',
             fieldName: name,
-            interactive: true
-        };
+            interactive: true,
+            options: ['off', 'on']
+        });
     }
 
     if (first instanceof HTMLSelectElement) {
-        return {
-            key,
-            value: first.value,
-            options: Array.from(first.options).map((option) => option.value),
+        return createStateField(key, first.value, {
             source: 'form',
             fieldName: name,
-            interactive: true
-        };
+            interactive: true,
+            options: Array.from(first.options).map((option) => option.value)
+        });
     }
 
     return null;
@@ -218,53 +205,33 @@ function readImageFields(target) {
     if (target.dataset.spwImageManaged !== 'true') return [];
 
     return [
-        {
-            key: 'hold',
-            value: target.dataset.spwHoldState
-                || (target.dataset.spwVisited === 'true' ? 'settled' : 'idle'),
+        createStateField('hold', target.dataset.spwHoldState
+            || (target.dataset.spwVisited === 'true' ? 'settled' : 'idle'), {
             source: 'image-hold',
-            interactive: false,
             tone: target.dataset.spwHoldState
                 ? LOOP_STATES.ACTIVATED
                 : (target.dataset.spwVisited === 'true' ? LOOP_STATES.RESOLVED : LOOP_STATES.IDLE)
-        },
-        {
-            key: 'effect',
-            value: target.dataset.spwImageEffectOverride || target.dataset.spwImageEffect || 'semantic',
-            options: [...IMAGE_EFFECT_OPTIONS],
+        }),
+        createStateField('effect', target.dataset.spwImageEffectOverride || target.dataset.spwImageEffect || 'semantic', {
             source: 'image-effect',
-            interactive: true
-        },
-        {
-            key: 'state',
-            value: target.dataset.spwImageState || 'settled',
-            source: 'image-state',
-            interactive: false
-        },
-        {
-            key: 'contrast',
-            value: target.dataset.spwContrastState || 'rest',
-            source: 'image-contrast',
-            interactive: false
-        },
-        {
-            key: 'layout',
-            value: target.dataset.spwImageLayout || 'balanced',
-            source: 'image-layout',
-            interactive: false
-        },
-        {
-            key: 'visited',
-            value: target.dataset.spwVisited === 'true' ? 'true' : 'false',
-            source: 'image-visited',
-            interactive: false
-        },
-        {
-            key: 'realization',
-            value: target.dataset.spwRealization || 'hybrid',
-            source: 'image-realization',
-            interactive: false
-        }
+            interactive: true,
+            options: [...IMAGE_EFFECT_OPTIONS]
+        }),
+        createStateField('state', target.dataset.spwImageState || 'settled', {
+            source: 'image-state'
+        }),
+        createStateField('contrast', target.dataset.spwContrastState || 'rest', {
+            source: 'image-contrast'
+        }),
+        createStateField('layout', target.dataset.spwImageLayout || 'balanced', {
+            source: 'image-layout'
+        }),
+        createStateField('visited', target.dataset.spwVisited === 'true' ? 'true' : 'false', {
+            source: 'image-visited'
+        }),
+        createStateField('realization', target.dataset.spwRealization || 'hybrid', {
+            source: 'image-realization'
+        })
     ];
 }
 
@@ -276,30 +243,21 @@ function readInstrumentationFields(target) {
         .filter(Boolean);
 
     if (instrumentation.length) {
-        fields.push({
-            key: 'instrumentation',
-            value: instrumentation.join(' + '),
-            source: 'instrumentation',
-            interactive: false
-        });
+        fields.push(createStateField('instrumentation', instrumentation.join(' + '), {
+            source: 'instrumentation'
+        }));
     }
 
     if (target.dataset.spwDebugSource) {
-        fields.push({
-            key: 'debug_source',
-            value: target.dataset.spwDebugSource,
-            source: 'instrumentation',
-            interactive: false
-        });
+        fields.push(createStateField('debug_source', target.dataset.spwDebugSource, {
+            source: 'instrumentation'
+        }));
     }
 
     if (target.dataset.spwSemanticVersion) {
-        fields.push({
-            key: 'semantic_version',
-            value: target.dataset.spwSemanticVersion,
-            source: 'semantic',
-            interactive: false
-        });
+        fields.push(createStateField('semantic_version', target.dataset.spwSemanticVersion, {
+            source: 'semantic'
+        }));
     }
 
     return fields;
@@ -323,6 +281,29 @@ function getRestoreButton(target) {
 
 function readDisclosureState(target) {
     return DISCLOSURE_STATE.get(target) || DISCLOSURE_STATES.EXPANDED;
+}
+
+function createStateField(key, value, options = {}) {
+    const field = {
+        key,
+        value,
+        source: options.source || 'state',
+        interactive: Boolean(options.interactive)
+    };
+
+    if (options.tone) field.tone = options.tone;
+    if (options.fieldName) field.fieldName = options.fieldName;
+    if (Array.isArray(options.options) && options.options.length) {
+        field.options = options.options;
+    }
+
+    return field;
+}
+
+function getNextCircularValue(values = [], current = '') {
+    if (!values.length) return '';
+    const index = values.indexOf(current);
+    return values[(index + 1 + values.length) % values.length];
 }
 
 function syncDisclosure(target) {
@@ -420,13 +401,10 @@ function resolveLoop(target, token) {
 
 function readLoopField(target) {
     const loop = readLoopState(target);
-    return {
-        key: 'loop',
-        value: formatLoopFieldValue(loop),
+    return createStateField('loop', formatLoopFieldValue(loop), {
         source: 'loop',
-        interactive: false,
         tone: loop.state
-    };
+    });
 }
 
 function collectFields(target) {
@@ -770,7 +748,7 @@ function cycleMode(target) {
     const field = readModeField(target);
     if (!field?.options?.length) return;
 
-    const next = field.options[(field.options.indexOf(field.value) + 1) % field.options.length];
+    const next = getNextCircularValue(field.options, field.value);
     window.spwInterface?.setGroupMode?.(target.dataset.spwInspectModeGroup, next, {
         source: 'state-inspector',
         force: true
@@ -799,7 +777,7 @@ function cycleFormField(target, fieldName) {
 
     if (first instanceof HTMLSelectElement) {
         const values = Array.from(first.options).map((option) => option.value);
-        const next = values[(values.indexOf(first.value) + 1) % values.length];
+        const next = getNextCircularValue(values, first.value);
         first.value = next;
         first.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -807,7 +785,7 @@ function cycleFormField(target, fieldName) {
 
 function cycleImageEffect(target) {
     const current = target.dataset.spwImageEffectOverride || target.dataset.spwImageEffect || 'semantic';
-    const next = IMAGE_EFFECT_OPTIONS[(IMAGE_EFFECT_OPTIONS.indexOf(current) + 1) % IMAGE_EFFECT_OPTIONS.length];
+    const next = getNextCircularValue(IMAGE_EFFECT_OPTIONS, current);
     target.dataset.spwImageEffectOverride = next;
     dispatchImageRefresh(target, IMAGE_REFRESH_REASONS.EFFECT);
 }
