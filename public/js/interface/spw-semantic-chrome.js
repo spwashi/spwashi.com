@@ -38,6 +38,10 @@ const GENERIC_KIND_TEXTS = new Set(['component', 'frame', 'surface', 'panel', 'c
 const GENERIC_CONTEXT_TEXTS = new Set(['analysis', 'reading', 'routing', 'settings', 'play', 'publishing', 'orientation']);
 const GENERIC_ROLE_TEXTS = new Set(['reference', 'orientation', 'routing', 'context', 'vessel']);
 
+function shouldExposeSemanticSeam() {
+  return HTML.dataset.spwShowSemanticMetadata === 'on' || HTML.dataset.spwDebugMode === 'on';
+}
+
 function uniqueByText(items = []) {
   const seen = new Set();
   return items.filter((item) => {
@@ -91,6 +95,7 @@ function findHeaderSlot(host) {
 function ensureSemanticSeam(host) {
   const existing = host.querySelector?.(':scope > .spw-semantic-seam[data-spw-generated="semantic-chrome"]');
   if (existing) return existing;
+  if (!shouldExposeSemanticSeam()) return host;
 
   const seam = document.createElement('div');
   seam.className = 'spw-semantic-seam';

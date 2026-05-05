@@ -2195,17 +2195,22 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.42rem;
+    grid-template-columns: 1fr;
+    gap: 0.34rem;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a) {
     justify-content: flex-start;
-    align-items: center;
-    min-height: 2.82rem;
-    padding: 0.56rem 0.66rem;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 2.66rem;
+    padding: 0.48rem 0.64rem;
     text-align: left;
     line-height: 1.16;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
@@ -2233,18 +2238,23 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.36rem;
+    grid-template-columns: 1fr;
+    gap: 0.32rem;
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a) {
     justify-content: flex-start;
-    align-items: center;
-    min-height: 2.52rem;
-    padding: 0.46rem 0.56rem;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 2.48rem;
+    padding: 0.44rem 0.58rem;
     text-align: left;
     font-size: min(var(--shell-nav-font-size), 0.82rem);
     line-height: 1.16;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
@@ -2368,7 +2378,13 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
 @media (max-width: 540px) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] li, body > header[data-spw-menu-mode="toggle"] li),
+  :where(.site-header[data-spw-menu-topology="screen-field"] li, body > header[data-spw-menu-topology="screen-field"] li) {
+    width: 100%;
   }
 
   .spw-section-handle-shell {
