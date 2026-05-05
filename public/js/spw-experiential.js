@@ -274,8 +274,8 @@ function renderBreadcrumbSpell() {
         type="button"
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
-        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} cognitive path. ${compactSummary}.`)}">
-        <span class="spw-spell-path__title">path</span>
+        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} spell path. ${compactSummary}.`)}">
+        <span class="spw-spell-path__title">spell path</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
       ${compact ? '' : renderShellControl(shellSnapshot)}

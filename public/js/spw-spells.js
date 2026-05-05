@@ -2,8 +2,8 @@
  * Spw Spells
  *
  * Serializes grounded tokens into a readable spellbook so navigation can feel
- * like collecting operators, scopes, and projections instead of merely
- * changing pages.
+ * like assembling replayable operators, scopes, and projections instead of
+ * merely changing pages.
  */
 
 import { bus } from './spw-bus.js';
@@ -158,7 +158,7 @@ function constructSpell(entries) {
     `=grounded ${entries.length}`,
     `#:at "${timestamp}"`,
     '',
-    '^"collected_navigation"{',
+    '^"replayable_navigation"{',
   ];
 
   entries.forEach((entry) => {
@@ -267,14 +267,14 @@ function updateSpellDock(model) {
   if (label) {
     label.textContent = model.entries.length
       ? 'spellbook'
-      : 'collect lines';
+      : 'ground lines';
   }
 
   if (!body) return;
 
   if (!model.entries.length) {
     body.innerHTML = `
-      <p class="spell-note">Ground route links, page lines, or operator chips to collect a readable navigation spell.</p>
+      <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell you can replay.</p>
     `;
     return;
   }
@@ -295,7 +295,7 @@ function updateSpellDock(model) {
     body.innerHTML = `
       <div class="spell-visual spell-visual--compact">${preview}</div>
       <div class="spell-register-strip">${destinations}</div>
-      <p class="spell-note spell-note--compact">Collected navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
+      <p class="spell-note spell-note--compact">Replayable navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
     `;
     return;
   }
@@ -319,7 +319,7 @@ function renderSpellBoard(board, model) {
   if (!model.entries.length) {
     board.innerHTML = `
       <p class="frame-note">
-        No navigation spell collected yet. Follow routes, section lines, or operator chips to gather a readable sequence.
+        No navigation spell assembled yet. Follow routes, section lines, or operator chips to build a readable sequence you can replay.
       </p>
     `;
     return;
@@ -340,14 +340,14 @@ function renderSpellBoard(board, model) {
     ? model.combos.slice(0, 4).map((combo) => (
       `<span class="spell-register">${escapeHtml(combo.from)} → ${escapeHtml(combo.to)}</span>`
     )).join('')
-    : '<span class="spell-register">collect another token to form a sequence</span>';
+    : '<span class="spell-register">ground another token to complete the sequence</span>';
 
   board.innerHTML = `
     <div class="spell-visual">
       ${model.entries.map(renderSpellAtom).join('')}
     </div>
     <div class="spell-ledger">
-      <p class="spell-note">Prefix notation shapes intent. Postfix notation shapes what the interaction does next.</p>
+      <p class="spell-note">A spell is a small replayable outcome. Prefix notation shapes intent. Postfix notation shapes what the interaction does next.</p>
       <div class="spell-register-strip">${prefixSummary}</div>
       <div class="spell-register-strip">${destinationSummary}</div>
       <div class="spell-register-strip">${comboSummary}</div>
@@ -376,7 +376,7 @@ function buildSavedBundlesUI() {
     if (!bundles.length) return '';
     return `
       <div class="spell-bundle-bank">
-        <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without re-collecting the whole path.</p>
+        <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path.</p>
         <div class="spell-bundle-grid">
           ${bundles.map((bundle) => `
             <article class="spell-bundle-card">
@@ -478,7 +478,7 @@ function registerSpellActions() {
       }
     },
     checkpoint(button) {
-      const name = window.prompt('Save working set as:', `Working Set - ${new Date().toLocaleDateString()}`);
+      const name = window.prompt('Save spell or working set as:', `Working Set - ${new Date().toLocaleDateString()}`);
       if (!name) return;
       bus.emit('spell:checkpoint', { name });
       if (button instanceof HTMLElement) button.textContent = `! saved: ${name}`;

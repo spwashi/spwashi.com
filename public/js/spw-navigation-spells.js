@@ -178,8 +178,12 @@ function buildGroundKey(url, scope) {
 }
 
 function describeExpression(expression, destination, scope) {
-  const direction = destination === 'scope' ? 'enters a local scope' : 'projects into another surface';
-  return `${expression} · ${direction} as ${scope}`;
+  const direction = destination === 'scope'
+    ? 'enters a local scope'
+    : destination === 'settle'
+      ? 'returns to the current surface'
+      : 'projects into another surface';
+  return `${expression} · ${direction} as ${scope} · ground to replay`;
 }
 
 function annotateLink(link) {
@@ -228,7 +232,7 @@ function annotateLink(link) {
   }
   link.dataset.spwOperator = link.dataset.spwOperator || operator;
   link.dataset.spwWonder = link.dataset.spwWonder || WONDER_BY_SCOPE[scope] || 'orientation';
-  link.dataset.spwAffordance = link.dataset.spwAffordance || 'navigate collect';
+  link.dataset.spwAffordance = link.dataset.spwAffordance || 'navigate ground replay';
   link.dataset.spwNavScope = scope;
   link.dataset.spwNavDestination = destination;
   link.dataset.spwNavPrefix = prefix;
