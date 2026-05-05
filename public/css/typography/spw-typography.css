@@ -85,6 +85,10 @@
   max-inline-size: min(100%, var(--measure-panel, 52ch));
 }
 
+:where(pre, code, .demo-code-output, .seed-card pre) {
+  max-inline-size: min(100%, var(--measure-code, 84ch));
+}
+
 :where(li) {
   margin-block-start: var(--space-2xs, 0.25rem);
 }

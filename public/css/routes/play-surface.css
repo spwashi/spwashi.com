@@ -20,6 +20,7 @@
   --play-measure: 70ch;
   --play-readable-width: min(var(--play-measure), var(--spw-preset-panel-readable-width, 46rem));
   --play-card-readable-width: min(100%, var(--spw-preset-card-readable-width, 34rem));
+  --measure-code: var(--spw-preset-code-readable-width, 48rem);
 
   /* Overriding Global Material/Semantic Tokens for the Play Route */
   --bg: color-mix(in srgb, #f4e2b5 94%, rgba(24, 123, 135, 0.05));
@@ -235,10 +236,6 @@
 
 :where(body[data-spw-surface="play"] :is(.frame-note, .inline-note, .session-note, .frame-panel p, .frame-card p, .play-card p, .seed-card p)) {
   max-width: var(--play-readable-width);
-}
-
-:where(body[data-spw-surface="play"] :is(pre, code, .demo-code-output, .seed-card pre)) {
-  max-width: min(100%, var(--spw-preset-code-readable-width, 48rem));
 }
 
 /* ==========================================================================
