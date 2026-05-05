@@ -25,6 +25,30 @@ const MEMORY_TARGET_SELECTOR = [
 const SITEWIDE_ONLY_SELECTOR = '.intent-cluster, .context-edge-card, .math-lens-card';
 const RESONANT_BLOCK_SELECTOR = '.topic-photo-card, .intent-cluster, .context-edge-card, .math-lens-card';
 
+function readTargetMemorySnapshot(target) {
+    return {
+        wonderState: target.getAttribute('data-spw-wonder-state') || '',
+        fieldWonder: target.getAttribute('data-spw-field-wonder') || '',
+        memoryMatch: target.getAttribute('data-spw-memory-match') || ''
+    };
+}
+
+function writeTargetMemorySnapshot(target, snapshot) {
+    if (snapshot.wonderState) target.dataset.spwWonderState = snapshot.wonderState;
+    else delete target.dataset.spwWonderState;
+
+    if (snapshot.fieldWonder) target.dataset.spwFieldWonder = snapshot.fieldWonder;
+    else delete target.dataset.spwFieldWonder;
+
+    if (snapshot.memoryMatch) target.dataset.spwMemoryMatch = snapshot.memoryMatch;
+    else delete target.dataset.spwMemoryMatch;
+}
+
+function setMemoryState(target, state, wonder) {
+    target.dataset.spwWonderState = state;
+    target.dataset.spwFieldWonder = wonder;
+}
+
 function getRuntimeAccentColors() {
     const rootStyles = getComputedStyle(document.documentElement);
 
@@ -42,18 +66,11 @@ function getRuntimeAccentColors() {
 function clearTargetState(target) {
     if (target.dataset.spwWonderMemoryManaged !== 'true') return;
 
-    const previousWonderState = target.dataset.spwWonderMemoryPrevWonderState || '';
-    const previousFieldWonder = target.dataset.spwWonderMemoryPrevFieldWonder || '';
-    const previousMemoryMatch = target.dataset.spwWonderMemoryPrevMemoryMatch || '';
-
-    if (previousWonderState) target.dataset.spwWonderState = previousWonderState;
-    else delete target.dataset.spwWonderState;
-
-    if (previousFieldWonder) target.dataset.spwFieldWonder = previousFieldWonder;
-    else delete target.dataset.spwFieldWonder;
-
-    if (previousMemoryMatch) target.dataset.spwMemoryMatch = previousMemoryMatch;
-    else delete target.dataset.spwMemoryMatch;
+    writeTargetMemorySnapshot(target, {
+        wonderState: target.dataset.spwWonderMemoryPrevWonderState || '',
+        fieldWonder: target.dataset.spwWonderMemoryPrevFieldWonder || '',
+        memoryMatch: target.dataset.spwWonderMemoryPrevMemoryMatch || ''
+    });
 
     delete target.dataset.spwWonderMemoryManaged;
     delete target.dataset.spwWonderMemoryPrevWonderState;
@@ -67,9 +84,10 @@ function snapshotTargetState(target) {
     if (target.dataset.spwWonderMemoryManaged === 'true') return;
 
     target.dataset.spwWonderMemoryManaged = 'true';
-    target.dataset.spwWonderMemoryPrevWonderState = target.getAttribute('data-spw-wonder-state') || '';
-    target.dataset.spwWonderMemoryPrevFieldWonder = target.getAttribute('data-spw-field-wonder') || '';
-    target.dataset.spwWonderMemoryPrevMemoryMatch = target.getAttribute('data-spw-memory-match') || '';
+    const snapshot = readTargetMemorySnapshot(target);
+    target.dataset.spwWonderMemoryPrevWonderState = snapshot.wonderState;
+    target.dataset.spwWonderMemoryPrevFieldWonder = snapshot.fieldWonder;
+    target.dataset.spwWonderMemoryPrevMemoryMatch = snapshot.memoryMatch;
 }
 
 function getManualMemoryTokens(target) {
@@ -114,13 +132,20 @@ function clearRootState(root) {
 }
 
 function collectTargets(root = document) {
+    if (root instanceof Element) {
+        return [
+            ...(root.matches?.(MEMORY_TARGET_SELECTOR) ? [root] : []),
+            ...root.querySelectorAll(MEMORY_TARGET_SELECTOR)
+        ];
+    }
+
     return [...root.querySelectorAll(MEMORY_TARGET_SELECTOR)];
 }
 
 export function clearWonderMemoryState(root = document) {
     const host = root === document ? document.documentElement : root;
     clearRootState(host);
-    collectTargets(document).forEach(clearTargetState);
+    collectTargets(root).forEach(clearTargetState);
 }
 
 export function applyWonderMemoryState(root = document) {
@@ -128,7 +153,7 @@ export function applyWonderMemoryState(root = document) {
     const recent = getActiveRecentPathMemory();
     const strength = getWonderMemoryStrength();
     const host = root === document ? document.documentElement : root;
-    const targets = collectTargets(document);
+    const targets = collectTargets(root);
 
     targets.forEach(clearTargetState);
 
@@ -164,8 +189,7 @@ export function applyWonderMemoryState(root = document) {
         if (!matches.length) return;
 
         snapshotTargetState(target);
-        target.dataset.spwWonderState = target.matches(RESONANT_BLOCK_SELECTOR) ? 'resonant' : 'accented';
-        target.dataset.spwFieldWonder = wonder;
+        setMemoryState(target, target.matches(RESONANT_BLOCK_SELECTOR) ? 'resonant' : 'accented', wonder);
         target.dataset.spwMemoryMatch = matches.join(' ');
         target.style.setProperty('--wonder-accent-color', primary);
         target.style.setProperty('--delight-color', secondary);

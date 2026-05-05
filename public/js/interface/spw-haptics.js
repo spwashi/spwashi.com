@@ -62,6 +62,57 @@ let initialized = false;
 let restoreObserver = null;
 let unsubscribeBus = [];
 
+function readJsonStorage(key, fallback) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+    return parsed && typeof parsed === 'object' ? parsed : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeJsonStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function setGroundedFlags(el, grounded) {
+  el.dataset.spwGrounded = grounded ? 'true' : 'false';
+  if (!grounded) delete el.dataset.spwVisited;
+}
+
+function setGroundedMetadata(el, substrate = '', wonder = '') {
+  if (substrate) el.dataset.spwGroundedIn = substrate;
+  else delete el.dataset.spwGroundedIn;
+
+  if (wonder) el.dataset.spwGroundedWonder = wonder;
+  else delete el.dataset.spwGroundedWonder;
+}
+
+function clearGroundedMetadata(el) {
+  delete el.dataset.spwVisited;
+  delete el.dataset.spwGroundedIn;
+  delete el.dataset.spwGroundedWonder;
+  if (el.dataset.spwSuccession === 'latched') {
+    delete el.dataset.spwSuccession;
+  }
+}
+
+function updateRegistryStore(transform) {
+  const current = getGroundedRegistry();
+  const next = transform(current);
+  writeJsonStorage(STORAGE_KEY, next);
+  return next;
+}
+
+function updateCouplingStore(key, transform) {
+  const global = isGlobalKey(key);
+  const current = global ? getGlobalCouplings() : getPathCouplings();
+  const next = transform(current);
+  if (global) writeJsonStorage(GLOBAL_COUPLING_KEY, next);
+  else writeJsonStorage(COUPLING_KEY(), next);
+  return next;
+}
+
 export function initSpwHaptics() {
   if (initialized) return () => {};
   initialized = true;
@@ -183,21 +234,10 @@ export function groundElement(el, overrides = {}) {
 
   setPassiveCharge(el, false, detail.source || 'ground');
 
-  el.dataset.spwGrounded = 'true';
+  setGroundedFlags(el, true);
   el.dataset.spwSuccession = 'latched';
   el.dataset.spwVisited = 'true';
-
-  if (detail.substrate) {
-    el.dataset.spwGroundedIn = detail.substrate;
-  } else {
-    delete el.dataset.spwGroundedIn;
-  }
-
-  if (detail.wonder) {
-    el.dataset.spwGroundedWonder = detail.wonder;
-  } else {
-    delete el.dataset.spwGroundedWonder;
-  }
+  setGroundedMetadata(el, detail.substrate || '', detail.wonder || '');
 
   addToRegistry(detail.key);
   writeCoupling(detail.key, {
@@ -230,13 +270,8 @@ export function groundElement(el, overrides = {}) {
 export function ungroundElement(el, overrides = {}) {
   const detail = buildSemanticDetail(el, overrides);
 
-  el.dataset.spwGrounded = 'false';
-  delete el.dataset.spwVisited;
-  delete el.dataset.spwGroundedIn;
-  delete el.dataset.spwGroundedWonder;
-  if (el.dataset.spwSuccession === 'latched') {
-    delete el.dataset.spwSuccession;
-  }
+  setGroundedFlags(el, false);
+  clearGroundedMetadata(el);
 
   removeFromRegistry(detail.key);
   removeCoupling(detail.key);
@@ -249,34 +284,15 @@ export function ungroundElement(el, overrides = {}) {
 }
 
 function applyGroundedState(el, coupling = null) {
-  el.dataset.spwGrounded = 'true';
+  setGroundedFlags(el, true);
   el.dataset.spwVisited = 'true';
   el.dataset.spwSuccession = 'latched';
-
-  const substrate = coupling?.substrate || '';
-  const wonder = coupling?.wonder || '';
-
-  if (substrate) {
-    el.dataset.spwGroundedIn = substrate;
-  } else {
-    delete el.dataset.spwGroundedIn;
-  }
-
-  if (wonder) {
-    el.dataset.spwGroundedWonder = wonder;
-  } else {
-    delete el.dataset.spwGroundedWonder;
-  }
+  setGroundedMetadata(el, coupling?.substrate || '', coupling?.wonder || '');
 }
 
 function clearGroundedState(el) {
-  el.dataset.spwGrounded = 'false';
-  delete el.dataset.spwVisited;
-  delete el.dataset.spwGroundedIn;
-  delete el.dataset.spwGroundedWonder;
-  if (el.dataset.spwSuccession === 'latched') {
-    delete el.dataset.spwSuccession;
-  }
+  setGroundedFlags(el, false);
+  clearGroundedMetadata(el);
 }
 
 /* ==========================================================================
@@ -324,12 +340,8 @@ function setPassiveCharge(el, active, source = 'pointer') {
    ========================================================================== */
 
 export function getGroundedRegistry() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const parsed = readJsonStorage(STORAGE_KEY, []);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
 function isGlobalKey(key = '') {
@@ -337,21 +349,11 @@ function isGlobalKey(key = '') {
 }
 
 function getPathCouplings() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(COUPLING_KEY()) || '{}');
-    return parsed && typeof parsed === 'object' ? parsed : {};
-  } catch {
-    return {};
-  }
+  return readJsonStorage(COUPLING_KEY(), {});
 }
 
 function getGlobalCouplings() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(GLOBAL_COUPLING_KEY) || '{}');
-    return parsed && typeof parsed === 'object' ? parsed : {};
-  } catch {
-    return {};
-  }
+  return readJsonStorage(GLOBAL_COUPLING_KEY, {});
 }
 
 function getStoredCouplings() {
@@ -366,50 +368,36 @@ export function getGroundedCouplings() {
 }
 
 function setPathCouplings(value) {
-  localStorage.setItem(COUPLING_KEY(), JSON.stringify(value));
+  writeJsonStorage(COUPLING_KEY(), value);
 }
 
 function setGlobalCouplings(value) {
-  localStorage.setItem(GLOBAL_COUPLING_KEY, JSON.stringify(value));
+  writeJsonStorage(GLOBAL_COUPLING_KEY, value);
 }
 
 function addToRegistry(key) {
-  const registry = getGroundedRegistry();
-  if (!registry.includes(key)) {
-    registry.push(key);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(registry));
-  }
+  updateRegistryStore((registry) => (
+    registry.includes(key) ? registry : [...registry, key]
+  ));
 }
 
 function removeFromRegistry(key) {
-  const registry = getGroundedRegistry().filter((entry) => entry !== key);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(registry));
+  updateRegistryStore((registry) => registry.filter((entry) => entry !== key));
 }
 
 function writeCoupling(key, value) {
-  if (isGlobalKey(key)) {
-    const couplings = getGlobalCouplings();
-    couplings[key] = value;
-    setGlobalCouplings(couplings);
-    return;
-  }
-
-  const couplings = getPathCouplings();
-  couplings[key] = value;
-  setPathCouplings(couplings);
+  updateCouplingStore(key, (couplings) => ({
+    ...couplings,
+    [key]: value
+  }));
 }
 
 function removeCoupling(key) {
-  if (isGlobalKey(key)) {
-    const couplings = getGlobalCouplings();
-    delete couplings[key];
-    setGlobalCouplings(couplings);
-    return;
-  }
-
-  const couplings = getPathCouplings();
-  delete couplings[key];
-  setPathCouplings(couplings);
+  updateCouplingStore(key, (couplings) => {
+    const next = { ...couplings };
+    delete next[key];
+    return next;
+  });
 }
 
 function restoreGroundedState(root = document) {
@@ -455,7 +443,7 @@ export function saveCheckpoint(event) {
     path: window.location.pathname
   };
 
-  localStorage.setItem(`${CHECKPOINT_PREFIX}${name}`, JSON.stringify(payload));
+  writeJsonStorage(`${CHECKPOINT_PREFIX}${name}`, payload);
 
   bus.emit(
     'spell:checkpoint-saved',
@@ -475,7 +463,7 @@ export function restoreCheckpoint(name) {
     const registry = Array.isArray(parsed?.registry) ? parsed.registry : [];
     const couplings = resolveCheckpointCouplings(parsed?.couplings);
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(registry));
+    writeJsonStorage(STORAGE_KEY, registry);
     setGlobalCouplings(couplings.global);
     setPathCouplings(couplings.path);
 

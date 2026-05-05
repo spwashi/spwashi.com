@@ -102,6 +102,69 @@ function setHandlePhase(handle, phase) {
   handle.setAttribute(HANDLE_PHASE_ATTR, phase);
 }
 
+function writeAttributes(node, attributes = {}) {
+  if (!(node instanceof HTMLElement)) return;
+
+  Object.entries(attributes).forEach(([name, value]) => {
+    if (value == null) return;
+    const next = String(value);
+    if (node.getAttribute(name) === next) return;
+    node.setAttribute(name, next);
+  });
+}
+
+function clearAttributes(node, names = []) {
+  if (!(node instanceof HTMLElement)) return;
+  names.forEach((name) => {
+    if (!node.hasAttribute(name)) return;
+    node.removeAttribute(name);
+  });
+}
+
+function getSectionLifecycleState(index, activeIndex) {
+  if (index === activeIndex) return 'active';
+  if (index === activeIndex - 1) return 'previous';
+  if (index === activeIndex + 1) return 'next';
+  return 'rest';
+}
+
+function getPageSectionEdge(currentIndex, sectionCount) {
+  if (currentIndex <= 0) return 'top';
+  if (currentIndex >= sectionCount - 1) return 'bottom';
+  return 'middle';
+}
+
+function buildSectionSnapshot(section, index, activeIndex, phase, source, origin, sectionCount) {
+  const info = describeSection(section, index);
+  if (!info) return null;
+
+  return {
+    currentId: info.id,
+    currentIndex: activeIndex,
+    currentLabel: info.label,
+    currentToken: info.token,
+    sectionCount,
+    availability: describeAvailability(activeIndex, sectionCount),
+    phase,
+    source,
+    origin,
+  };
+}
+
+function syncHandleContent(parts, info, activeIndex, sectionCount) {
+  const { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink } = parts;
+
+  if (opNode) opNode.textContent = info.token || '#>';
+  if (labelNode) labelNode.textContent = info.label || 'section';
+  if (currentToken) currentToken.textContent = info.token || '#>';
+  if (currentLabel) currentLabel.textContent = info.label || 'section';
+  if (progressNode) progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
+  if (currentLink instanceof HTMLAnchorElement) {
+    currentLink.href = `#${info.id}`;
+    currentLink.setAttribute('aria-label', `Jump to ${info.label}`);
+  }
+}
+
 function getSectionHeading(section) {
   if (!(section instanceof HTMLElement)) return null;
   return (
@@ -284,21 +347,16 @@ function describeAvailability(activeIndex, count) {
 }
 
 function writePageSectionDatasets(snapshot) {
-  const html = document.documentElement;
-  const body = document.body;
-  const edge = snapshot.currentIndex <= 0
-    ? 'top'
-    : snapshot.currentIndex >= snapshot.sectionCount - 1
-      ? 'bottom'
-      : 'middle';
+  const edge = getPageSectionEdge(snapshot.currentIndex, snapshot.sectionCount);
 
-  [html, body].forEach((node) => {
-    if (!(node instanceof HTMLElement)) return;
-    node.setAttribute(PAGE_SECTION_CURRENT_ATTR, snapshot.currentId);
-    node.setAttribute(PAGE_SECTION_INDEX_ATTR, String(snapshot.currentIndex + 1));
-    node.setAttribute(PAGE_SECTION_COUNT_ATTR, String(snapshot.sectionCount));
-    node.setAttribute(PAGE_SECTION_PHASE_ATTR, snapshot.phase);
-    node.setAttribute(PAGE_SECTION_EDGE_ATTR, edge);
+  [document.documentElement, document.body].forEach((node) => {
+    writeAttributes(node, {
+      [PAGE_SECTION_CURRENT_ATTR]: snapshot.currentId,
+      [PAGE_SECTION_INDEX_ATTR]: snapshot.currentIndex + 1,
+      [PAGE_SECTION_COUNT_ATTR]: snapshot.sectionCount,
+      [PAGE_SECTION_PHASE_ATTR]: snapshot.phase,
+      [PAGE_SECTION_EDGE_ATTR]: edge,
+    });
   });
 
   document.dispatchEvent(new CustomEvent(PAGE_SECTION_EVENT, {
@@ -369,45 +427,35 @@ function initSectionHandle(root) {
     const info = describeSection(activeSection, state.activeIndex);
     if (!info) return;
 
-    const availability = describeAvailability(state.activeIndex, sections.length);
-    const snapshot = {
-      currentId: info.id,
-      currentIndex: state.activeIndex,
-      currentLabel: info.label,
-      currentToken: info.token,
-      sectionCount: sections.length,
-      availability,
-      phase: state.phase,
+    const snapshot = buildSectionSnapshot(
+      activeSection,
+      state.activeIndex,
+      state.activeIndex,
+      state.phase,
       source,
-      origin: generated ? 'generated' : 'markup',
-    };
+      generated ? 'generated' : 'markup',
+      sections.length
+    );
+    if (!snapshot) return;
 
-    if (opNode) opNode.textContent = info.token || '#>';
-    if (labelNode) labelNode.textContent = info.label || 'section';
-    if (currentToken) currentToken.textContent = info.token || '#>';
-    if (currentLabel) currentLabel.textContent = info.label || 'section';
-    if (progressNode) progressNode.textContent = `${state.activeIndex + 1} / ${sections.length}`;
-    if (currentLink instanceof HTMLAnchorElement) {
-      currentLink.href = `#${info.id}`;
-      currentLink.setAttribute('aria-label', `Jump to ${info.label}`);
-    }
+    syncHandleContent(
+      { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink },
+      info,
+      state.activeIndex,
+      sections.length
+    );
 
-    handle.href = `#${info.id}`;
-    handle.setAttribute('aria-label', `Jump to ${info.label}`);
-    handle.setAttribute(HANDLE_OP_ATTR, info.token || '');
-    handle.setAttribute(HANDLE_LABEL_ATTR, info.label || '');
+    writeAttributes(handle, {
+      href: `#${info.id}`,
+      'aria-label': `Jump to ${info.label}`,
+      [HANDLE_OP_ATTR]: info.token || '',
+      [HANDLE_LABEL_ATTR]: info.label || '',
+    });
 
     sections.forEach((section, index) => {
-      section.setAttribute(
-        SECTION_STATE_ATTR,
-        index === state.activeIndex
-          ? 'active'
-          : index === state.activeIndex - 1
-            ? 'previous'
-            : index === state.activeIndex + 1
-              ? 'next'
-              : 'rest'
-      );
+      writeAttributes(section, {
+        [SECTION_STATE_ATTR]: getSectionLifecycleState(index, state.activeIndex),
+      });
     });
 
     const hasPrev = state.activeIndex > 0;
@@ -417,9 +465,11 @@ function initSectionHandle(root) {
     if (nextButton instanceof HTMLButtonElement) nextButton.disabled = !hasNext;
     if (bottomButton instanceof HTMLButtonElement) bottomButton.disabled = !hasNext;
 
-    shell.setAttribute(HANDLE_LABEL_ATTR, info.label || '');
-    shell.setAttribute(HANDLE_OP_ATTR, info.token || '');
-    shell.setAttribute(HANDLE_AVAILABILITY_ATTR, availability.join(' '));
+    writeAttributes(shell, {
+      [HANDLE_LABEL_ATTR]: info.label || '',
+      [HANDLE_OP_ATTR]: info.token || '',
+      [HANDLE_AVAILABILITY_ATTR]: snapshot.availability.join(' '),
+    });
     shell.dataset.spwHandleCurrent = info.id;
     shell.dataset.spwHandleIndex = String(state.activeIndex + 1);
     shell.dataset.spwHandleCount = String(sections.length);
@@ -504,16 +554,18 @@ function initSectionHandle(root) {
   };
 
   const handleCurrentClick = () => {
-    state.phase = 'traveling';
-    setHandlePhase(shell, 'traveling');
-    setHandlePhase(handle, 'traveling');
-    window.clearTimeout(state.travelTimer);
-    state.travelTimer = window.setTimeout(() => {
+    const settle = () => {
       state.phase = 'settled';
       setHandlePhase(shell, 'settled');
       setHandlePhase(handle, 'settled');
       updateActiveState('current-settled');
-    }, HANDLE_TRAVEL_SETTLE_MS);
+    };
+
+    state.phase = 'traveling';
+    setHandlePhase(shell, 'traveling');
+    setHandlePhase(handle, 'traveling');
+    window.clearTimeout(state.travelTimer);
+    state.travelTimer = window.setTimeout(settle, HANDLE_TRAVEL_SETTLE_MS);
   };
 
   const handleShellKeydown = (event) => {
@@ -582,20 +634,18 @@ function initSectionHandle(root) {
     window.clearTimeout(state.travelTimer);
     shell.remove();
     handle.hidden = false;
-    handle.removeAttribute(HANDLE_ENHANCED_ATTR);
-    handle.removeAttribute(HANDLE_PHASE_ATTR);
-    handle.removeAttribute(HANDLE_AVAILABILITY_ATTR);
+    clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR]);
     sections.forEach((section) => {
-      section.removeAttribute(SECTION_STATE_ATTR);
-      section.removeAttribute(SECTION_INDEX_ATTR);
+      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR]);
     });
     [document.documentElement, document.body].forEach((node) => {
-      if (!(node instanceof HTMLElement)) return;
-      node.removeAttribute(PAGE_SECTION_CURRENT_ATTR);
-      node.removeAttribute(PAGE_SECTION_INDEX_ATTR);
-      node.removeAttribute(PAGE_SECTION_COUNT_ATTR);
-      node.removeAttribute(PAGE_SECTION_PHASE_ATTR);
-      node.removeAttribute(PAGE_SECTION_EDGE_ATTR);
+      clearAttributes(node, [
+        PAGE_SECTION_CURRENT_ATTR,
+        PAGE_SECTION_INDEX_ATTR,
+        PAGE_SECTION_COUNT_ATTR,
+        PAGE_SECTION_PHASE_ATTR,
+        PAGE_SECTION_EDGE_ATTR,
+      ]);
     });
     if (generated) {
       handle.remove();
