@@ -185,6 +185,67 @@
   container-type: inline-size;
 }
 
+/* Region flow utilities: opt in when a region or component needs explicit
+   containment behavior rather than inheriting the route default. */
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card,
+  .seed-card,
+  .spw-region-shell
+)[data-spw-region-flow="popout"] {
+  overflow: visible;
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card,
+  .seed-card,
+  .spw-region-shell
+)[data-spw-region-flow="clip"] {
+  overflow: clip;
+}
+
+:where([data-spw-region-flow="stack"], .spw-region-stack) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap, 1rem);
+  min-width: 0;
+}
+
 /* Lift content above generated rails, seams, and debug labels. */
 :where(
   [data-spw-component-kind] > *,
