@@ -1,7 +1,7 @@
 import {
     DEFAULT_PALETTE_RESONANCE,
     getPaletteResonanceTokens
-} from '/public/js/spw-palette-resonance.js';
+} from '/public/js/interface/spw-palette-resonance.js';
 
 /**
  * Spw Accent Palette

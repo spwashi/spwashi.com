@@ -5,8 +5,8 @@
  * cycles. Serializes developmental weights as Spw scripts.
  */
 
-import { getGroundedRegistry } from '/public/js/spw-haptics.js';
-import { bus } from '/public/js/spw-bus.js';
+import { getGroundedRegistry } from '/public/js/interface/spw-haptics.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 export const LATTICE = {
     'software:Schedulers': { parallels: ['software:Pretext', 'software:Browser', 'science:Resonance'], clusters: ['runtime', 'orchestration'] },

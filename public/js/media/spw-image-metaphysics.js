@@ -9,13 +9,13 @@
  * - a compact helper operator cycles treatments without turning into a toolbar
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
     dispatchImageRefresh,
     IMAGE_REFRESH_EVENT,
     IMAGE_REFRESH_REASONS
-} from '/public/js/spw-interaction-loop.js';
-import { getCanvasAccentInstance } from '/public/js/spw-canvas-accents.js';
+} from '/public/js/runtime/spw-interaction-loop.js';
+import { getCanvasAccentInstance } from '/public/js/interface/spw-canvas-accents.js';
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
 const HOLD_DURATION_MS = 480;

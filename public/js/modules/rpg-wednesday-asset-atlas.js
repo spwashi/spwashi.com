@@ -1,4 +1,4 @@
-import { deleteImage, storeImage } from '/public/js/spw-image-store.js';
+import { deleteImage, storeImage } from '/public/js/media/spw-image-store.js';
 import {
     ASSET_KIND_OPTIONS,
     ASSET_PRESET_OPTIONS,
@@ -14,14 +14,14 @@ import {
     normalizeAssetPreset,
     previewText,
     splitTagList
-} from '/public/js/rpg-wednesday-state.js';
+} from '/public/js/modules/rpg-wednesday-state.js';
 import {
     createElement,
     createField,
     createLineField,
     createSelectField,
     createShortcutToken
-} from '/public/js/rpg-wednesday-dom.js';
+} from '/public/js/modules/rpg-wednesday-dom.js';
 
 const summarizeVisibleAssets = (assets) => ({
     cards: assets.length,

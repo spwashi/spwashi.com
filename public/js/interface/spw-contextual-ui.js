@@ -21,11 +21,11 @@ import {
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
-} from '/public/js/spw-dom-contracts.js';
+} from '/public/js/kernel/spw-dom-contracts.js';
 import {
   normalizeToken,
   unique,
-} from '/public/js/spw-semantic-utils.js';
+} from '/public/js/semantic/spw-semantic-utils.js';
 
 const HTML = document.documentElement;
 

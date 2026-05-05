@@ -12,7 +12,7 @@
  * - image effect overrides for managed image surfaces
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
     createLoopRecord,
     dispatchImageRefresh,
@@ -23,8 +23,8 @@ import {
     IMAGE_REFRESH_REASONS,
     LOOP_STATES,
     LOOP_TOKENS
-} from '/public/js/spw-interaction-loop.js';
-import { OPERATOR_DEFINITIONS, detectOperator } from '/public/js/spw-shared.js';
+} from '/public/js/runtime/spw-interaction-loop.js';
+import { OPERATOR_DEFINITIONS, detectOperator } from '/public/js/kernel/spw-shared.js';
 
 const TARGET_SELECTOR = [
     '[data-spw-inspect]',

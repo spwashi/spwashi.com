@@ -26,7 +26,7 @@
  * data-spw-charge vocabulary so spw-cinematic.css rules apply.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const EVENT_TO_OPERATOR = {
     'frame:activated':    'frame',

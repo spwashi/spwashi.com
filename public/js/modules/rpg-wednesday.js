@@ -1,12 +1,12 @@
-import { emitSpwAction } from '/public/js/spw-shared.js';
-import { createAssetAtlasController } from '/public/js/rpg-wednesday-asset-atlas.js';
-import { initRpgCharacterLab } from '/public/js/rpg-wednesday-character-lab.js';
-import { createElement, createField, createShortcutToken } from '/public/js/rpg-wednesday-dom.js';
+import { emitSpwAction } from '/public/js/kernel/spw-shared.js';
+import { createAssetAtlasController } from '/public/js/modules/rpg-wednesday-asset-atlas.js';
+import { initRpgCharacterLab } from '/public/js/modules/rpg-wednesday-character-lab.js';
+import { createElement, createField, createShortcutToken } from '/public/js/modules/rpg-wednesday-dom.js';
 import {
     RPG_SHORTCUT_ACTIONS,
     RPG_SHORTCUT_SECTIONS,
     createShortcutManager
-} from '/public/js/rpg-wednesday-shortcuts.js';
+} from '/public/js/modules/rpg-wednesday-shortcuts.js';
 import {
     CLOCK_SEGMENT_OPTIONS,
     DASH_VALUE,
@@ -26,7 +26,7 @@ import {
     persistImportedAssetImages,
     previewText,
     safeJsonParse
-} from '/public/js/rpg-wednesday-state.js';
+} from '/public/js/modules/rpg-wednesday-state.js';
 
 const debounce = (fn, ms) => {
     let timer;

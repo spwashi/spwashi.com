@@ -1,5 +1,5 @@
-import { bus } from '/public/js/spw-bus.js';
-import { initPersonaSelector } from '/public/js/spw-persona-selector.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { initPersonaSelector } from '/public/js/interface/spw-persona-selector.js';
 
 const PERSONAS = ['viewer', 'doodler', 'scribe'];
 const STORAGE_KEY = 'spw-active-persona';

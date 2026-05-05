@@ -1,9 +1,9 @@
-import { emitSpwAction } from '/public/js/spw-shared.js';
+import { emitSpwAction } from '/public/js/kernel/spw-shared.js';
 import {
   removeDatasetValues,
   writeDatasetValues,
   writeDatasetValue,
-} from '/public/js/spw-dom-contracts.js';
+} from '/public/js/kernel/spw-dom-contracts.js';
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',

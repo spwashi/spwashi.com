@@ -10,7 +10,7 @@ import {
   selectScheduleItems,
   slugify,
   shouldSuppressNotice,
-} from '../../public/js/spw-discovery-notices.js';
+} from '../../public/js/interface/spw-discovery-notices.js';
 import {
   feedLocale,
   pickDaily,

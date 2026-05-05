@@ -19,7 +19,7 @@
 //   !pragma    pragma — encodes a runtime constraint or hint
 //   >surface   surface — a projected or rendered view
 
-import { detectOperator, detectOperatorFromElement, extractOperatorPrefix, normalizeToken } from '/public/js/spw-shared.js';
+import { detectOperator, detectOperatorFromElement, extractOperatorPrefix, normalizeToken } from '/public/js/kernel/spw-shared.js';
 
 let initialized = false;
 

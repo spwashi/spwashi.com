@@ -20,7 +20,7 @@
  *
  * To add a new toast type: extend ToastManager.show() and add a new maybeShow* handler.
  */
-import { shouldDisableServiceWorkerInDevelopment } from '/public/js/spw-runtime-environment.js';
+import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/spw-runtime-environment.js';
 
 const APP_THEME_COLOR = '#1a9999';
 const UPDATE_CHECK_INTERVAL = 30 * 60 * 1000;

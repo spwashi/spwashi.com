@@ -39,11 +39,11 @@
  * - These are intended for subtle environmental responses in CSS.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
   writeDatasetValue,
   writeStyleValue,
-} from '/public/js/spw-dom-contracts.js';
+} from '/public/js/kernel/spw-dom-contracts.js';
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;

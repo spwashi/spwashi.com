@@ -80,3 +80,15 @@ The first wrapper-chain cleanup landed after the tree move.
 - Public root URLs remain available for route HTML, service-worker entries, tests, and older external links.
 
 Next candidates should be real call graph reallocations, not alias deletion: inspect repeated imports of `/public/js/spw-bus.js`, `/public/js/spw-shared.js`, and `/public/js/site-settings.js` inside layer folders, then move those call sites inward only when the target dependency belongs to the same or lower layer.
+
+## Wrapper removal pass: 2026-05-05
+
+The JS root wrapper surface has now been removed.
+
+- `public/js/site.js` remains the stable public runtime entrypoint.
+- Direct feature imports in route HTML now point at `public/js/modules/...`.
+- Service-worker core assets now point at semantic implementation paths.
+- Internal imports now use canonical folder paths instead of root wrappers.
+- `spw-wonder-memory.js` moved into `public/js/interface/`.
+
+CSS wrappers still exist at the root because route-level stylesheets are part of the public stylesheet contract; remove those only after updating route links and the CSS contract in a dedicated CSS pass.

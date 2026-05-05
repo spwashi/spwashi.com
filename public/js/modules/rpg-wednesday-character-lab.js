@@ -1,4 +1,4 @@
-import { deleteImage, getImageDataUrl, storeImage } from '/public/js/spw-image-store.js';
+import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/spw-image-store.js';
 import {
     buildCharacterImageKey,
     createCharacterStorage,
@@ -6,13 +6,13 @@ import {
     makeTimestamp,
     normalizeCharacter,
     previewText
-} from '/public/js/rpg-wednesday-state.js';
+} from '/public/js/modules/rpg-wednesday-state.js';
 import {
     createElement,
     createField,
     createLineField,
     createShortcutToken
-} from '/public/js/rpg-wednesday-dom.js';
+} from '/public/js/modules/rpg-wednesday-dom.js';
 
 const copyText = async (text) => {
     if (navigator.clipboard?.writeText) {

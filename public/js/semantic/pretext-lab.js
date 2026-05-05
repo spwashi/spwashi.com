@@ -13,7 +13,7 @@ The surface becomes measurable.
 The layout learns to breathe.`
 };
 
-import { loadPretext } from '/public/js/pretext-utils.js';
+import { loadPretext } from '/public/js/semantic/pretext-utils.js';
 
 const DEMO_FONT = '16px system-ui';
 const SANDBOX_MIN_WIDTH = 100;

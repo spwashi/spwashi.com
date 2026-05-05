@@ -18,7 +18,7 @@
  *   window.spwRecipes.setDetail     — toggle between 'compact' | 'full' detail
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const COMPLEXITY_ATTR = 'data-spw-recipe-complexity';
 const DETAIL_ATTR = 'data-spw-recipe-detail';

@@ -1,4 +1,4 @@
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 let isBuilt = false;
 const chipButtons = {};

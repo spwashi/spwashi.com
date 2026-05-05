@@ -5,7 +5,7 @@
  * lightweight page-level visitation metadata for CSS and downstream helpers.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
 

@@ -9,7 +9,7 @@
  * This script says when and why state changes.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const SCROLL_CHARGE_DEPTH = 320; // px of scroll over which charge builds
 

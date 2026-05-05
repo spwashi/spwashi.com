@@ -19,7 +19,7 @@
      backward-compatible DOM pathways where needed.
    ========================================================================== */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 /* ==========================================================================
    1. Safe environment helpers

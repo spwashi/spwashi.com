@@ -6,14 +6,14 @@
  * Never hides failure — falls back to text selection instead.
  *
  * Usage:
- *   import { copyWithFallback, handleCopyButton } from '/public/js/spw-copy.js';
+ *   import { copyWithFallback, handleCopyButton } from '/public/js/kernel/spw-copy.js';
  *
  *   await copyWithFallback(text);
  *
  *   handleCopyButton({ text, button, statusNode, selectableNode });
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 /**
  * Copy text to clipboard.

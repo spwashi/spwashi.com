@@ -10,7 +10,7 @@
  * - Accessibility to high-level 'metaphysics' scaffolding.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const PASSCODE_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // sha256 of 'nuanced_weights'
 

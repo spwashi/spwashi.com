@@ -31,8 +31,8 @@ import {
     emitSpwAction,
     getFrameMeta,
     isInputFocused
-} from '/public/js/spw-shared.js';
-import { getSiteSettings } from '/public/js/site-settings.js';
+} from '/public/js/kernel/spw-shared.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const NAV_ROUTE_SELECTOR = [
     'main .frame-operators a[href]',

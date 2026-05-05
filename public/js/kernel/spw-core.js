@@ -13,8 +13,8 @@
  * the reader's attention toward conceptually related elements.
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { groundElement } from '/public/js/spw-haptics.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { groundElement } from '/public/js/interface/spw-haptics.js';
 
 const KNOWLEDGE_TARGET_SELECTOR = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .spw-delimiter, [data-spw-groundable="true"]';
 

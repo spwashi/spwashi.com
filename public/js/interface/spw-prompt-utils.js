@@ -1,6 +1,6 @@
-import { bus } from '/public/js/spw-bus.js';
-import { serializeLatticeToSpw } from '/public/js/spw-lattice.js';
-import { getSiteSettings, getSiteSettingModifiers } from '/public/js/site-settings.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { serializeLatticeToSpw } from '/public/js/semantic/spw-lattice.js';
+import { getSiteSettings, getSiteSettingModifiers } from '/public/js/kernel/site-settings.js';
 
 const DEFAULTS = Object.freeze({
     frameSelector: '.site-frame[data-spw-promptability="visible"]',
@@ -913,7 +913,7 @@ function round2(value) {
 }
 
 async function copyToClipboard(text, btn) {
-    const { handleCopyButton } = await import('/public/js/spw-copy.js');
+    const { handleCopyButton } = await import('/public/js/kernel/spw-copy.js');
     const original = btn.innerHTML;
 
     await handleCopyButton({

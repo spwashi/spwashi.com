@@ -7,9 +7,9 @@
  * - aborts DOM listeners
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { getGroundedRegistry } from '/public/js/spw-haptics.js';
-import { getSiteSettings } from '/public/js/site-settings.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { getGroundedRegistry } from '/public/js/interface/spw-haptics.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const SCAFFOLD_MAP = {
     'software:Schedulers': ['pretext-probe-frame', 'browser-frame'],

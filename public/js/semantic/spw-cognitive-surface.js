@@ -7,10 +7,10 @@
  * how it is being phrased.
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { getGroundedRegistry } from '/public/js/spw-haptics.js';
-import { LATTICE } from '/public/js/spw-lattice.js';
-import { getSiteSettings } from '/public/js/site-settings.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { getGroundedRegistry } from '/public/js/interface/spw-haptics.js';
+import { LATTICE } from '/public/js/semantic/spw-lattice.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const COUPLING_KEY = (path = window.location.pathname) => `spw-coupling:${path}`;
 

@@ -10,11 +10,11 @@
  * whether the trace is conceptual or realized, and what phrasing is active.
  */
 
-import { getKnowledgeMap } from '/public/js/spw-core.js';
-import { getGroundedRegistry } from '/public/js/spw-haptics.js';
-import { LATTICE } from '/public/js/spw-lattice.js';
-import { getSiteSettings } from '/public/js/site-settings.js';
-import { getCouplingMap, getCurrentPageMetadata } from '/public/js/spw-cognitive-surface.js';
+import { getKnowledgeMap } from '/public/js/kernel/spw-core.js';
+import { getGroundedRegistry } from '/public/js/interface/spw-haptics.js';
+import { LATTICE } from '/public/js/semantic/spw-lattice.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { getCouplingMap, getCurrentPageMetadata } from '/public/js/semantic/spw-cognitive-surface.js';
 
 const escapeHtml = (value) => String(value)
     .replace(/&/g, '&amp;')

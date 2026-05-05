@@ -1,11 +1,11 @@
-import { SEMANTIC_CHROME_SELECTOR } from '/public/js/spw-dom-contracts.js';
-import { snapshotComponentSemantics } from '/public/js/spw-component-semantics.js';
+import { SEMANTIC_CHROME_SELECTOR } from '/public/js/kernel/spw-dom-contracts.js';
+import { snapshotComponentSemantics } from '/public/js/semantic/spw-component-semantics.js';
 import {
   humanizeToken,
   normalizeText,
   unique,
   uniqueByKey,
-} from '/public/js/spw-semantic-utils.js';
+} from '/public/js/semantic/spw-semantic-utils.js';
 
 const TARGET_SELECTOR = SEMANTIC_CHROME_SELECTOR;
 

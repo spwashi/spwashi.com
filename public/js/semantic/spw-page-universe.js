@@ -28,7 +28,7 @@
  *   }, null, 2);
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const GESTURE_VOCABULARY = {
     tap:        'charge — begins accumulation on the target',

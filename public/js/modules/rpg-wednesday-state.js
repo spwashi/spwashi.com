@@ -1,4 +1,4 @@
-import { deleteImage, getImageDataUrl, storeImage } from '/public/js/spw-image-store.js';
+import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/spw-image-store.js';
 
 export const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
 export const CHARACTER_STORAGE_KEY = 'spwashi:rpg-wednesday:characters:v1';

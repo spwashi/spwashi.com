@@ -50,9 +50,9 @@
 import {
   getSiteSettings,
   saveSiteSettings
-} from '/public/js/site-settings.js';
+} from '/public/js/kernel/site-settings.js';
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const DEVELOPMENTAL_CLIMATES = Object.freeze([
   {

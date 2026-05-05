@@ -1,4 +1,4 @@
-import { loadPretext } from '/public/js/pretext-utils.js';
+import { loadPretext } from '/public/js/semantic/pretext-utils.js';
 
 const METRICS_FONT = '16px JetBrains Mono, monospace';
 const LINE_HEIGHT = 26;

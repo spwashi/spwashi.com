@@ -4,7 +4,7 @@
  * Metaphor: charge as cognitive potential, rendered as paper-machine state.
  */
 
-import { getSiteSettings } from '/public/js/site-settings.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const CHARGE_STATES = ['conception', 'potential', 'kinetic', 'manifest'];
 const CHARGE_STATE_MAP = {

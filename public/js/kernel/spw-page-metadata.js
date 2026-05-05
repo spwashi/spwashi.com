@@ -4,7 +4,7 @@ import {
   inferTopographyKind,
   writeDatasetValue,
   writeDatasetValueIfMissing,
-} from '/public/js/spw-dom-contracts.js';
+} from '/public/js/kernel/spw-dom-contracts.js';
 
 const SITE_NAME = 'Spwashi';
 const DEFAULT_OG_IMAGE = 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg';

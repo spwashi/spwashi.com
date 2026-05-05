@@ -28,7 +28,7 @@
  *   - Shift+click while collected to cycle intention without releasing.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const COLLECTION_KEY = 'spw-badge-collection';
 

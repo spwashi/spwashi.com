@@ -27,21 +27,21 @@
  * - write data-spw-* hints that CSS and JS can read
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
   COMPONENT_SELECTOR,
   buildAxisGenome,
   inferTopographyKind,
   writeDatasetValue,
   writeDatasetValueIfMissing,
-} from '/public/js/spw-dom-contracts.js';
+} from '/public/js/kernel/spw-dom-contracts.js';
 import {
   humanizeToken,
   normalizeText,
   normalizeToken,
   unique,
-} from '/public/js/spw-semantic-utils.js';
-import { detectOperator } from '/public/js/spw-shared.js';
+} from '/public/js/semantic/spw-semantic-utils.js';
+import { detectOperator } from '/public/js/kernel/spw-shared.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
 

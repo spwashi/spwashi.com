@@ -17,7 +17,7 @@
  *   !   pragma  → hint       → constraint → pragma
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const SEMANTIC_PHASES = Object.freeze({
     'frame':   ['objective', 'neutral',     'subjective'],

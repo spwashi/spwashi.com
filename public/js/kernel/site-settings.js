@@ -13,19 +13,19 @@
  * controls anywhere on the site.
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
   AUTHOR_WORKFLOW_DEFINITIONS,
   AUTHOR_WORKFLOW_MODES,
   normalizeAuthorMode,
   normalizeDevelopmentalClimate
-} from '/public/js/spw-shared.js';
+} from '/public/js/kernel/spw-shared.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteResonanceSwatches
-} from '/public/js/spw-palette-resonance.js';
-import { shouldDisableServiceWorkerInDevelopment } from '/public/js/spw-runtime-environment.js';
+} from '/public/js/interface/spw-palette-resonance.js';
+import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/spw-runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 

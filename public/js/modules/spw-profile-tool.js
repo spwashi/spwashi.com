@@ -4,7 +4,7 @@ import {
   profileToJSON,
   profileToSpw,
   renderProfileCard,
-} from '/public/js/spw-profile-builder.js';
+} from '/public/js/modules/spw-profile-builder.js';
 
 const DEFAULT_STORAGE_PREFIX = 'spw-profile-tool';
 

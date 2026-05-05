@@ -1,4 +1,4 @@
-import { detectOperator } from '/public/js/spw-shared.js';
+import { detectOperator } from '/public/js/kernel/spw-shared.js';
 
 const TOKEN_SELECTOR = [
   '.header-sigil[href]',

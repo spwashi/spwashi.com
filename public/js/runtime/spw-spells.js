@@ -6,9 +6,9 @@
  * merely changing pages.
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { detectOperator, getOperatorDefinition } from '/public/js/spw-shared.js';
-import { getGroundedCouplings, getGroundedRegistry, restoreCheckpoint } from '/public/js/spw-haptics.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { detectOperator, getOperatorDefinition } from '/public/js/kernel/spw-shared.js';
+import { getGroundedCouplings, getGroundedRegistry, restoreCheckpoint } from '/public/js/interface/spw-haptics.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',

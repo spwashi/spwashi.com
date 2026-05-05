@@ -29,7 +29,7 @@
  */
 
 import { loadPretext } from '../legacy/pretext-utils.js';
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 /* ==========================================================================
    1. Defaults, presets, channels

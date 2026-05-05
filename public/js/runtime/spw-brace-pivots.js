@@ -22,8 +22,8 @@
  *   element via data-spw-pivot="<key>".
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { getSettingValue, saveSiteSettings } from '/public/js/site-settings.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { getSettingValue, saveSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const PIVOT_SEQUENCES = {
     semanticDensity:    ['minimal', 'normal', 'rich'],

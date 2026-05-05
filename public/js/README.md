@@ -1,6 +1,6 @@
 # JavaScript Tree
 
-`site.js` is the public runtime entrypoint. Most other root-level `.js` files are compatibility wrappers that preserve existing `/public/js/*.js` URLs for pages, service-worker caches, tests, and older imports.
+`site.js` is the public runtime entrypoint. Implementation modules live below semantic folders instead of root-level compatibility wrappers.
 
 Implementation files live in semantic folders:
 
@@ -12,6 +12,4 @@ Implementation files live in semantic folders:
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
 - `typed/`: generated browser-ready modules from `public/ts/`; do not hand-edit generated output.
 
-Working rule: move obvious files into these folders, keep wrappers for public URLs, and merge duplicates only after proving the callers share the same contract.
-
-Legacy aliases may stay at the root, but avoid creating alias chains. If a root file exists only for compatibility, point it directly at the canonical implementation in one of the folders above.
+Working rule: import implementation modules from the folder that owns the behavior. Keep `/public/js/site.js` stable for route shells, but do not add new root-level module wrappers.

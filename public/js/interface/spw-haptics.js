@@ -24,7 +24,7 @@
  * - spell:checkpoint
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const STORAGE_KEY = 'spw-grounded-registry';
 const CHECKPOINT_PREFIX = 'spw-checkpoint:';

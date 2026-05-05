@@ -22,7 +22,7 @@
  *   window.spwTopics.index()         — structured map of all topics on page
  */
 
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
 const BADGE_SELECTOR = '.spec-pill, .operator-chip';

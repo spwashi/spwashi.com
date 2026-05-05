@@ -1,4 +1,4 @@
-import { emitSpwAction } from '/public/js/spw-shared.js';
+import { emitSpwAction } from '/public/js/kernel/spw-shared.js';
 
 const TARGET_SELECTOR = [
     '.site-frame[data-spw-form="brace"]',

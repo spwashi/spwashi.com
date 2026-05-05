@@ -1,5 +1,5 @@
 /** Spw Canvas Accents - shared canvas ornament for image-bearing and structural surfaces. */
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
     getActivePaletteResonanceTokens,
     getActiveRecentPathMemory,
@@ -12,8 +12,8 @@ import {
     samplePaletteFromImage,
     uniqueAccentValues,
     withAlpha
-} from '/public/js/spw-accent-palette.js';
-import { applyWonderMemoryState } from '/public/js/spw-wonder-memory.js';
+} from '/public/js/interface/spw-accent-palette.js';
+import { applyWonderMemoryState } from '/public/js/interface/spw-wonder-memory.js';
 const INSTANCE_MAP = new WeakMap();
 const activeInstances = new Set();
 const PARTICLE_TYPES = new Set(['wave', 'vortex', 'crystal', 'resonance']);

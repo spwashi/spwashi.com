@@ -1,8 +1,8 @@
 import {
     getPageSurface,
     matchesMaxWidth
-} from '/public/js/spw-shared.js';
-import { getSiteSettings } from '/public/js/site-settings.js';
+} from '/public/js/kernel/spw-shared.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 let initialized = false;
 

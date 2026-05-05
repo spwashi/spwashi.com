@@ -1,9 +1,9 @@
-import { bus } from '/public/js/spw-bus.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
 import {
   getSiteSettings,
   saveSiteSettings,
   validatePartialSettings
-} from '/public/js/site-settings.js';
+} from '/public/js/kernel/site-settings.js';
 
 const ROOT_SELECTOR = '[data-design-experiments-root]';
 const BUNDLE_SELECTOR = '[data-design-setting-bundle]';

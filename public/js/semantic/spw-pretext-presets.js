@@ -27,8 +27,8 @@
  *   presets:measured { ...full measurement payload }
  */
 
-import { bus } from '/public/js/spw-bus.js';
-import { loadPretext } from '/public/js/pretext-utils.js';
+import { bus } from '/public/js/kernel/spw-bus.js';
+import { loadPretext } from '/public/js/semantic/pretext-utils.js';
 
 const BREAKPOINTS = Object.freeze({
     phone: 320,
