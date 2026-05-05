@@ -105,6 +105,15 @@
   --shell-footer-font-size: var(--text-size-sm, 0.92rem);
   --shell-footer-opacity: 0.92;
 
+  /* Main page shell */
+  --spw-main-display: flex;
+  --spw-main-direction: column;
+  --spw-main-width: var(--page-width);
+  --spw-main-gap: var(--surface-gap);
+  --spw-main-padding-inline: var(--page-gutter-inline);
+  --spw-main-padding-block-start: clamp(1.2rem, 3vw, 2.2rem);
+  --spw-main-padding-block-end: calc(clamp(2.8rem, 5.5vw, 4.2rem) + env(safe-area-inset-bottom));
+
   /* Rails / walls */
   --shell-wall-width: 2px;
   --shell-wall-opacity: 0.72;
@@ -183,15 +192,15 @@ body > * {
 /* main owns the page gutter; nested sections should not add a second page edge. */
 main {
   width: 100%;
-  max-width: var(--page-width);
-  padding-inline: var(--page-gutter-inline);
+  max-width: var(--spw-main-width);
+  padding-inline: var(--spw-main-padding-inline);
   margin:
-    clamp(1.2rem, 3vw, 2.2rem)
+    var(--spw-main-padding-block-start)
     auto
-    calc(clamp(2.8rem, 5.5vw, 4.2rem) + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  gap: var(--surface-gap);
+    var(--spw-main-padding-block-end);
+  display: var(--spw-main-display);
+  flex-direction: var(--spw-main-direction);
+  gap: var(--spw-main-gap);
   touch-action: pan-y;
 }
 
@@ -201,17 +210,17 @@ main {
    "split" is reading-column + rail for reading routes with navigation context. */
 :where(body[data-spw-layout="reading"]) main,
 main[data-spw-layout="reading"] {
-  max-width: var(--page-width-reading);
+  --spw-main-width: var(--page-width-reading);
 }
 
 :where(body[data-spw-layout="wide"]) main,
 main[data-spw-layout="wide"] {
-  max-width: var(--page-width-wide);
+  --spw-main-width: var(--page-width-wide);
 }
 
 :where(body[data-spw-layout="atlas"]) main,
 main[data-spw-layout="atlas"] {
-  max-width: var(--page-width-atlas);
+  --spw-main-width: var(--page-width-atlas);
 }
 
 /* Split layouts place a narrower reading column next to a rail for
@@ -220,7 +229,7 @@ main[data-spw-layout="atlas"] {
   /* Split is the shell-owned reading-column + rail contract. */
   :where(body[data-spw-layout="split"]) main,
   main[data-spw-layout="split"] {
-    max-width: var(--page-width-wide);
+    --spw-main-width: var(--page-width-wide);
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--attention-rail-width);
     column-gap: var(--attention-rail-gap);

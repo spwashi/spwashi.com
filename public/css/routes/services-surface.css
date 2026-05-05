@@ -11,6 +11,7 @@
   --services-accent: #986134;
   --services-accent-cool: #455342;
   --services-glow: #8d945e;
+  --spw-main-width: 1160px;
   --services-line:
     color-mix(in srgb, var(--services-accent-cool) 18%, rgba(18, 24, 28, 0.12));
   --services-line-strong:
@@ -34,13 +35,6 @@
       transparent 34%
     ),
     linear-gradient(180deg, rgba(248, 245, 239, 0.92), rgba(241, 237, 230, 0.98));
-}
-
-:where(body[data-spw-surface="services"]) main {
-  width: min(100%, 1160px);
-  margin-inline: auto;
-  padding-inline: var(--space-md, 1rem);
-  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
 }
 
 :where(body[data-spw-surface="services"]) main > article {

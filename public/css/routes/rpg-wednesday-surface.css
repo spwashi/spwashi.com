@@ -11,6 +11,7 @@
   --rpg-accent: #5d9367;
   --rpg-accent-soft: color-mix(in srgb, var(--rpg-accent) 12%, transparent);
   --rpg-wonder: #b06a5b;
+  --spw-main-width: 1280px;
   --rpg-line:
     color-mix(in srgb, var(--rpg-accent) 20%, rgba(18, 24, 28, 0.12));
   --rpg-paper:
@@ -28,13 +29,6 @@
   background:
     radial-gradient(circle at top center, rgba(93, 147, 103, 0.08), transparent 32%),
     linear-gradient(180deg, rgba(244, 247, 242, 0.98), rgba(236, 232, 224, 0.98));
-}
-
-:where(body[data-spw-surface="rpg-wednesday"]) main {
-  width: min(100%, 1280px);
-  margin-inline: auto;
-  padding-inline: var(--space-md, 1rem);
-  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
 }
 
 :where(body[data-spw-surface="rpg-wednesday"]) main > article {

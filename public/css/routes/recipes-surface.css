@@ -12,6 +12,7 @@
   --recipes-accent: #2d7a72;
   --recipes-ember: #a86132;
   --recipes-gold: #c59752;
+  --spw-main-width: 1160px;
   --recipes-ink: rgba(28, 24, 20, 0.94);
   --recipes-ink-soft: rgba(28, 24, 20, 0.82);
   --recipes-surface: rgba(255, 252, 247, 0.9);
@@ -132,15 +133,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
       radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--recipes-accent) 8%, transparent), transparent 22%),
       linear-gradient(180deg, rgba(20, 17, 15, 0.99), rgba(13, 11, 10, 0.99));
   }
-}
-
-:where(body[data-spw-surface="recipes"]) main {
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.4rem);
-  width: min(100%, 1160px);
-  margin-inline: auto;
-  padding-inline: var(--space-md, 1rem);
-  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
 }
 
 :where(body[data-spw-surface="recipes"] main > :is(section, nav, article)) {

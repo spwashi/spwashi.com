@@ -16,6 +16,7 @@
 :where(body[data-spw-surface="play"]) {
   /* Route Layout Variables */
   --play-shell-max: 1160px;
+  --spw-main-width: var(--play-shell-max);
   --play-measure: 70ch;
   --play-readable-width: min(var(--play-measure), var(--spw-preset-panel-readable-width, 46rem));
   --play-card-readable-width: min(100%, var(--spw-preset-card-readable-width, 34rem));
@@ -102,13 +103,6 @@
 /* ==========================================================================
    3. Shell Configuration
    ========================================================================== */
-
-:where(body[data-spw-surface="play"]) main {
-  width: min(100%, var(--play-shell-max));
-  margin-inline: auto;
-  padding-inline: var(--space-md, 1rem);
-  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.5rem);
-}
 
 :where(body[data-spw-surface="play"]) main > article {
   width: 100%;

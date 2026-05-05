@@ -59,6 +59,8 @@
   --home-hero-padding: clamp(1rem, 2.4vw, 1.6rem);
   --home-frame-padding: clamp(0.95rem, 2vw, 1.35rem);
   --home-section-max: 84rem;
+  --spw-main-display: grid;
+  --spw-main-gap: var(--home-gap-xl);
 }
 
 
@@ -70,11 +72,6 @@
   --component-accent: var(--home-accent-primary);
   --card-border-emphasis: var(--home-accent-line);
   --focus-ring: 0 0 0 3px color-mix(in srgb, var(--home-accent-primary) 18%, transparent);
-}
-
-:where(body[data-spw-surface="home"] main) {
-  display: grid;
-  gap: var(--home-gap-xl);
 }
 
 :where(body[data-spw-surface="home"] main > .site-frame) {

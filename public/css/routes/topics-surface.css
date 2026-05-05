@@ -10,6 +10,7 @@
 :where(body[data-spw-surface="topics"]) {
   --topics-accent: #2a504b;
   --topics-warm: #9e592b;
+  --spw-main-width: 1180px;
   --topics-ink: rgba(24, 30, 29, 0.94);
   --topics-ink-soft: rgba(24, 30, 29, 0.72);
   --topics-surface: rgba(255, 255, 255, 0.72);
@@ -190,13 +191,6 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
       radial-gradient(circle at top center, color-mix(in srgb, var(--topics-accent) 8%, transparent), transparent 34%),
       linear-gradient(180deg, rgba(13, 17, 19, 0.99), rgba(10, 13, 15, 0.99));
   }
-}
-
-:where(body[data-spw-surface="topics"]) main {
-  width: min(100%, 1180px);
-  margin-inline: auto;
-  padding-inline: var(--space-md, 1rem);
-  padding-block: var(--space-md, 1rem) var(--space-2xl, 2.75rem);
 }
 
 :where(body[data-spw-surface="topics"]) main > article {
