@@ -18,73 +18,47 @@ const SCAFFOLD_MAP = {
     'about:Land Cluster': ['flow-magic', 'concept-register'],
 };
 
-const GUIDED_SELECTOR = '[data-spw-guided="true"]';
+const GUIDED_COMPONENT_SELECTOR = [
+    '.site-frame',
+    '.frame-panel',
+    '.frame-card',
+    '.software-card',
+    '.operator-card',
+    '.mode-panel',
+].join(', ');
+
+const GUIDED_SELECTOR = `${GUIDED_COMPONENT_SELECTOR}[data-spw-guided="true"]`;
 const isGuidanceEnabled = () => getSiteSettings().cognitiveHandles === 'on';
 
 let initialized = false;
 let currentCleanup = null;
 
 function getActiveGuideKeys() {
-    const keys = new Set(getGroundedRegistry());
-
-    document.querySelectorAll('[data-spw-grounded="true"][data-spw-cluster]').forEach((element) => {
-        if (element.dataset.spwCluster) keys.add(element.dataset.spwCluster);
-    });
-
-    return Array.from(keys);
+    return uniqueValues([
+        ...getGroundedRegistry(),
+        ...getGroundedClusters(),
+    ]);
 }
 
 function clearGuidance() {
     document.querySelectorAll(GUIDED_SELECTOR).forEach((element) => {
-        const previous = element.dataset.spwGuidePreviousLiminality;
-        const meta = element.querySelector('.spw-component-meta');
-
-        if (previous !== undefined) {
-            if (previous) element.dataset.spwLiminality = previous;
-            else delete element.dataset.spwLiminality;
-        }
-
-        delete element.dataset.spwGuidePreviousLiminality;
-        delete element.dataset.spwGuided;
-        delete element.dataset.spwGuideReason;
-
-        if (meta) delete meta.dataset.spwGuideReason;
+        restoreGuidanceState(element);
     });
 }
 
 function guideElement(element, reason) {
     if (!element || element.dataset.spwGuided === 'true') return;
 
-    const meta = element.querySelector('.spw-component-meta');
-
-    element.dataset.spwGuidePreviousLiminality = element.dataset.spwLiminality || '';
-    element.dataset.spwGuided = 'true';
-    element.dataset.spwGuideReason = reason;
-    element.dataset.spwLiminality = 'threshold';
-
-    if (meta) meta.dataset.spwGuideReason = reason;
+    applyGuidanceState(element, reason);
 }
 
 function guideBySubstrate() {
-    const activeSubstrates = new Set(
-        Array.from(document.querySelectorAll('[data-spw-grounded="true"][data-spw-grounded-in]'))
-            .map((element) => element.dataset.spwGroundedIn)
-            .filter(Boolean)
-    );
-
-    activeSubstrates.forEach((substrate) => {
-        const selector = [
-            `.site-frame[data-spw-substrate="${substrate}"]`,
-            `.frame-panel[data-spw-substrate="${substrate}"]`,
-            `.frame-card[data-spw-substrate="${substrate}"]`,
-        ].join(', ');
-
-        const candidates = Array.from(document.querySelectorAll(selector))
-            .filter((element) => element.dataset.spwRealization !== 'realized');
-
-        candidates.slice(0, 3).forEach((element) => {
-            guideElement(element, `${substrate} substrate`);
-        });
+    getActiveSubstrates().forEach((substrate) => {
+        getSubstrateCandidates(substrate)
+            .slice(0, 3)
+            .forEach((element) => {
+                guideElement(element, `${substrate} substrate`);
+            });
     });
 }
 
@@ -103,6 +77,61 @@ function createUpdater() {
 
         guideBySubstrate();
     };
+}
+
+function uniqueValues(values = []) {
+    return Array.from(new Set(values.filter(Boolean)));
+}
+
+function getGroundedClusters() {
+    return Array.from(document.querySelectorAll('[data-spw-grounded="true"][data-spw-cluster]'))
+        .map((element) => element.dataset.spwCluster)
+        .filter(Boolean);
+}
+
+function getActiveSubstrates() {
+    return uniqueValues(
+        Array.from(document.querySelectorAll('[data-spw-grounded="true"][data-spw-grounded-in]'))
+            .map((element) => element.dataset.spwGroundedIn)
+    );
+}
+
+function getSubstrateCandidates(substrate) {
+    const selector = [
+        `.site-frame[data-spw-substrate="${substrate}"]`,
+        `.frame-panel[data-spw-substrate="${substrate}"]`,
+        `.frame-card[data-spw-substrate="${substrate}"]`,
+    ].join(', ');
+
+    return Array.from(document.querySelectorAll(selector))
+        .filter((element) => element.dataset.spwRealization !== 'realized');
+}
+
+function applyGuidanceState(element, reason) {
+    const meta = element.querySelector('.spw-component-meta');
+
+    element.dataset.spwGuidePreviousLiminality = element.dataset.spwLiminality || '';
+    element.dataset.spwGuided = 'true';
+    element.dataset.spwGuideReason = reason;
+    element.dataset.spwLiminality = 'threshold';
+
+    if (meta) meta.dataset.spwGuideReason = reason;
+}
+
+function restoreGuidanceState(element) {
+    const previous = element.dataset.spwGuidePreviousLiminality;
+    const meta = element.querySelector('.spw-component-meta');
+
+    if (previous !== undefined) {
+        if (previous) element.dataset.spwLiminality = previous;
+        else delete element.dataset.spwLiminality;
+    }
+
+    delete element.dataset.spwGuidePreviousLiminality;
+    delete element.dataset.spwGuided;
+    delete element.dataset.spwGuideReason;
+
+    if (meta) delete meta.dataset.spwGuideReason;
 }
 
 export function initSpwGuide() {

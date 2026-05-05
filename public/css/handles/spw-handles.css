@@ -1713,7 +1713,15 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
    Makes semantic instruction legible without requiring dedicated panels.
    ========================================================================== */
 
-[data-spw-guided="true"] {
+/* Guiding should only style component-family containers, not arbitrary nodes. */
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .operator-card,
+  .mode-panel
+)[data-spw-guided="true"] {
   box-shadow: var(--handle-shadow-guided);
   background-image:
     linear-gradient(
@@ -1723,8 +1731,34 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     );
 }
 
-html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] > .spw-component-guides,
-html[data-spw-show-semantic-metadata="on"] [data-spw-guided="true"] > .spw-semantic-seam > .spw-component-guides {
+/* Guided threshold states should read as an earned seam, not a generic highlight. */
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .operator-card,
+  .mode-panel
+)[data-spw-guided="true"][data-spw-liminality="threshold"] {
+  border-color: color-mix(in srgb, var(--spw-substrate-color, var(--teal)) 34%, var(--handle-line-soft));
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .operator-card,
+  .mode-panel
+)[data-spw-guided="true"] > .spw-component-guides,
+html[data-spw-show-semantic-metadata="on"] :where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .operator-card,
+  .mode-panel
+)[data-spw-guided="true"] > .spw-semantic-seam > .spw-component-guides {
   display: inline-flex;
 }
 
@@ -1732,7 +1766,14 @@ html[data-spw-cognitive-handles="off"] :is(.spw-smart-console-host, .cognitive-s
   display: none !important;
 }
 
-html[data-spw-cognitive-handles="off"] [data-spw-guided="true"] {
+html[data-spw-cognitive-handles="off"] :where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .software-card,
+  .operator-card,
+  .mode-panel
+)[data-spw-guided="true"] {
   box-shadow: none;
   background-image: none;
 }
