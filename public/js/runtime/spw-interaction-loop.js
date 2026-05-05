@@ -4,9 +4,10 @@
  * Shared process vocabulary for reversible UI actions that move through a
  * visible loop: preview -> activated -> resolved -> idle.
  *
- * This module stays intentionally small and pure. It owns canonical state and
- * reason names, timing reads from CSS tokens, and formatting helpers that let
- * runtimes expose the same interaction semantics without duplicating strings.
+ * This module stays intentionally small and portable. It owns canonical state
+ * and reason names, timing reads from CSS tokens, and formatting helpers that
+ * let runtimes expose the same interaction semantics without duplicating
+ * strings.
  */
 
 export const LOOP_STATES = Object.freeze({
@@ -36,8 +37,17 @@ export const IMAGE_REFRESH_REASONS = Object.freeze({
     RELEASED: 'released'
 });
 
-export const readDurationMs = (name, fallback) => {
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+export const INTERACTION_LOOP_CONTRACT = Object.freeze({
+    states: LOOP_STATES,
+    tokens: LOOP_TOKENS,
+    event: IMAGE_REFRESH_EVENT,
+    reasons: IMAGE_REFRESH_REASONS
+});
+
+export const readDurationMs = (name, fallback, root = document?.documentElement) => {
+    if (!root || typeof getComputedStyle !== 'function') return fallback;
+
+    const raw = getComputedStyle(root).getPropertyValue(name).trim();
     if (!raw) return fallback;
 
     if (raw.endsWith('ms')) {
@@ -54,9 +64,9 @@ export const readDurationMs = (name, fallback) => {
     return Number.isFinite(value) ? value : fallback;
 };
 
-export const getLoopTiming = () => ({
-    previewReleaseMs: readDurationMs('--duration-fast', 180),
-    resolveMs: readDurationMs('--duration-slow', 480) * 2
+export const getLoopTiming = (root = document?.documentElement) => ({
+    previewReleaseMs: readDurationMs('--duration-fast', 180, root),
+    resolveMs: readDurationMs('--duration-slow', 480, root) * 2
 });
 
 export const formatLoopLabel = (state, token = '') => {

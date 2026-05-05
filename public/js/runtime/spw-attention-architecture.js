@@ -15,6 +15,11 @@
  *
  * Both features degrade cleanly. Mount is idempotent: the mount function
  * returns a cleanup fn that the site.js lifecycle can call to refresh.
+ *
+ * Public contract
+ * - `initSpwAttentionArchitecture(ctx)` mounts both enhancements.
+ * - `ATTENTION_ARCHITECTURE_CONTRACT` exposes the selectors, attributes, and
+ *   thresholds in a portable, inspectable bundle for other sites or docs.
  * --------------------------------------------------------------------------
  */
 
@@ -50,6 +55,36 @@ const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
 const HANDLE_TRAVEL_SETTLE_MS = 340;
 const HANDLE_COMPACT_QUERY = '(max-width: 720px)';
+
+export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
+  selectors: Object.freeze({
+    handle: HANDLE_SELECTOR,
+    operatorSections: OPERATOR_SECTION_SELECTOR,
+  }),
+  attributes: Object.freeze({
+    probe: PROBE_ATTR,
+    handleState: HANDLE_STATE_ATTR,
+    handleLabel: HANDLE_LABEL_ATTR,
+    handleOperator: HANDLE_OP_ATTR,
+    handlePhase: HANDLE_PHASE_ATTR,
+    handleAvailability: HANDLE_AVAILABILITY_ATTR,
+    handleEnhanced: HANDLE_ENHANCED_ATTR,
+    handleShellState: HANDLE_SHELL_STATE_ATTR,
+    sectionState: SECTION_STATE_ATTR,
+    sectionIndex: SECTION_INDEX_ATTR,
+    pageSectionCurrent: PAGE_SECTION_CURRENT_ATTR,
+    pageSectionIndex: PAGE_SECTION_INDEX_ATTR,
+    pageSectionCount: PAGE_SECTION_COUNT_ATTR,
+    pageSectionPhase: PAGE_SECTION_PHASE_ATTR,
+    pageSectionEdge: PAGE_SECTION_EDGE_ATTR,
+  }),
+  thresholds: Object.freeze({
+    autoHandleMinSections: AUTO_HANDLE_MIN_SECTIONS,
+    visibilityScroll: HANDLE_VISIBILITY_SCROLL,
+    travelSettleMs: HANDLE_TRAVEL_SETTLE_MS,
+    compactQuery: HANDLE_COMPACT_QUERY,
+  }),
+});
 
 function getScrollBehavior() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
