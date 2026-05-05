@@ -2198,6 +2198,10 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   -webkit-tap-highlight-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
 }
 
+:where(button, summary, input[type="button"], input[type="submit"], input[type="reset"], [role="button"]) {
+  cursor: pointer;
+}
+
 :where(html[data-spw-high-contrast="on"]) {
   --component-border: 1px solid color-mix(in srgb, var(--ink, currentColor) 34%, var(--line, transparent));
   --component-border-strong: 2px solid color-mix(in srgb, var(--component-accent) 58%, var(--ink, currentColor));

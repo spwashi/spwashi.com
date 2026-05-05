@@ -77,6 +77,11 @@
   max-inline-size: var(--measure-reading, 68ch);
 }
 
+:where(blockquote, figcaption, dd, li) {
+  max-inline-size: var(--measure-reading, 68ch);
+  overflow-wrap: break-word;
+}
+
 :where(.frame-note, .inline-note) {
   max-inline-size: min(100%, var(--measure-panel, 52ch));
 }
@@ -87,6 +92,37 @@
 
 :where(pre, code, .demo-code-output, .seed-card pre) {
   max-inline-size: min(100%, var(--measure-code, 84ch));
+}
+
+:where([data-reading-region], [data-spw-readable]) {
+  max-inline-size: var(--measure-reading, 68ch);
+}
+
+:where(
+  article p,
+  article li,
+  article blockquote,
+  article pre,
+  article code,
+  article kbd,
+  article samp,
+  .site-lede,
+  .page-lede,
+  .frame-panel p,
+  .frame-panel li,
+  .frame-details p,
+  .inline-note,
+  .frame-note,
+  .plan-thesis,
+  .plan-wonder p,
+  .plan-considerations li,
+  [data-reading-region],
+  [data-spw-readable],
+  [contenteditable]
+) {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
 }
 
 :where(li) {

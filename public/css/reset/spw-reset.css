@@ -14,10 +14,6 @@
   --site-root-font-size: 100%;
   --site-line-height: 1.68;
 
-  --reading-width: 68ch;
-  --reading-width-tight: 58ch;
-  --reading-width-wide: 82ch;
-
   --flow-gap-2xs: 0.35rem;
   --flow-gap-xs: 0.55rem;
   --flow-gap-sm: 0.8rem;
@@ -50,8 +46,6 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 html,
@@ -255,15 +249,6 @@ h4 {
 }
 
 p,
-li,
-blockquote,
-figcaption,
-dd {
-  max-width: var(--reading-width, 68ch);
-  overflow-wrap: break-word;
-}
-
-p,
 blockquote,
 figcaption,
 dd {
@@ -332,47 +317,7 @@ kbd {
   font-size: 0.92em;
 }
 
-/* ── 5. Reading Regions & Selection Recovery ───────────────────────────── */
-
-article p,
-article li,
-article blockquote,
-article pre,
-article code,
-article kbd,
-article samp,
-.site-lede,
-.page-lede,
-.frame-panel p,
-.frame-panel li,
-.frame-details p,
-.inline-note,
-.frame-note,
-.plan-thesis,
-.plan-wonder p,
-.plan-considerations li,
-[data-reading-region],
-[data-spw-readable],
-[contenteditable] {
-  user-select: text;
-  -webkit-user-select: text;
-  cursor: text;
-}
-
-article a,
-article button,
-article summary,
-article input,
-article textarea,
-article select,
-article label,
-.operator-chip,
-.frame-card,
-.frame-sigil {
-  cursor: pointer;
-}
-
-/* ── 6. Links & Focus States ────────────────────────────────────────────── */
+/* ── 5. Links & Focus States ────────────────────────────────────────────── */
 
 a {
   color: inherit;
@@ -419,7 +364,7 @@ a:hover {
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
 }
 
-/* ── 7. Tables, Rules, Disclosure ──────────────────────────────────────── */
+/* ── 6. Tables, Rules, Disclosure ──────────────────────────────────────── */
 
 hr {
   border: 0;
@@ -460,7 +405,7 @@ summary::-webkit-details-marker {
   display: none;
 }
 
-/* ── 8. Form Controls & Code ───────────────────────────────────────────── */
+/* ── 7. Form Controls & Code ───────────────────────────────────────────── */
 
 input,
 button,
@@ -504,7 +449,7 @@ code {
   overflow-wrap: anywhere;
 }
 
-/* ── 9. Scrollbars ─────────────────────────────────────────────────────── */
+/* ── 8. Scrollbars ─────────────────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
   width: 7px;
