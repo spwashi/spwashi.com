@@ -396,15 +396,12 @@
   --pretext-local-radius: var(--blog-radius-tight);
   --pretext-line-gap: var(--blog-pretext-line-gap-resting);
   --pretext-line-height: var(--spw-preset-body-line-height, 1.55rem);
+  --pretext-line-max-inline-size: var(--blog-readable-width);
 
   max-width: 100%;
   color: inherit;
   background: linear-gradient(180deg, color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%, color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%);
   border: 1px solid color-mix(in srgb, var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%), transparent);
-}
-
-:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
-  max-width: min(100%, var(--blog-readable-width));
 }
 
 :where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .line-decor) {

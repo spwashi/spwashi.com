@@ -322,16 +322,13 @@
 
 :where(body[data-spw-surface="play"] [data-spw-flow="pretext"]) {
   --pretext-line-gap: var(--play-pretext-line-gap-resting);
+  --pretext-line-max-inline-size: var(--play-readable-width);
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--surface-strong) 94%, transparent) 0%,
     color-mix(in srgb, var(--surface) 96%, transparent) 100%
   );
   border: 1px solid color-mix(in srgb, var(--line) calc(100% + var(--play-rhythm-border-strength) * 0%), transparent);
-}
-
-:where(body[data-spw-surface="play"] [data-spw-flow="pretext"] .pretext-flow-line-text) {
-  max-width: min(100%, var(--play-readable-width));
 }
 
 :where(body[data-spw-surface="play"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) {

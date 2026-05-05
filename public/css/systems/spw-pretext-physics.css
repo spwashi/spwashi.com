@@ -36,6 +36,7 @@
   --pretext-inline-pad: 0;
   --pretext-block-pad: 0;
   --pretext-radius: var(--shape-component, var(--radius-sm, 6px));
+  --pretext-line-max-inline-size: 100%;
   --pretext-arrival-shift: 0px;
   --pretext-arrival-opacity: 1;
   --pretext-arrival-scale: 1;
@@ -132,7 +133,7 @@
 
 :where(.pretext-flow-line-text) {
   min-width: 0;
-  max-width: 100%;
+  max-inline-size: min(100%, var(--pretext-line-max-inline-size));
   flex: 1 1 auto;
   color: inherit;
   text-wrap: pretty;
