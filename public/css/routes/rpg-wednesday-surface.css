@@ -12,6 +12,7 @@
   --rpg-accent-soft: color-mix(in srgb, var(--rpg-accent) 12%, transparent);
   --rpg-wonder: #b06a5b;
   --spw-main-width: 1280px;
+  --rpg-character-image-max-inline-size: 20rem;
   --rpg-line:
     color-mix(in srgb, var(--rpg-accent) 20%, rgba(18, 24, 28, 0.12));
   --rpg-paper:
@@ -303,8 +304,8 @@
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character [data-spw-image-surface]) {
-  width: min(100%, 20rem);
-  max-width: 20rem;
+  inline-size: min(100%, var(--rpg-character-image-max-inline-size));
+  max-inline-size: var(--rpg-character-image-max-inline-size);
   justify-self: center;
 }
 
@@ -457,9 +458,6 @@
     grid-template-columns: 1fr;
   }
 
-  :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character [data-spw-image-surface]) {
-    max-width: min(100%, 20rem);
-  }
 }
 
 @media (max-width: 560px) {
