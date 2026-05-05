@@ -5,6 +5,48 @@
     "copyUnit": "home.promoWonderCycle",
     "notes": "Daily and weekly entries are authored as complete copy units so future locale feeds can restate tone without splitting rhetoric into fragments."
   },
+  "promotionPlaybook": {
+    "purpose": "Give teammates a copy-and-paste brief for event, deal, discount, or service promotion.",
+    "note": "Use the playbook when a promotion needs to be explained to someone who does not know the site well enough to improvise the structure.",
+    "kinds": {
+      "event": {
+        "goal": "Drive attendance",
+        "psychology": "anticipation and social proof",
+        "structure": "lead with what it is, when it happens, and why the room matters",
+        "presentation": "modal",
+        "ctaPattern": "Join / RSVP / Save the date",
+        "proof": "speaker, venue, time, and who else it is for",
+        "riskReversal": "clear cancellation or reminder path"
+      },
+      "deal": {
+        "goal": "Make the offer legible and time-bound",
+        "psychology": "clarity plus urgency",
+        "structure": "state the deal, the savings, and the deadline in the first pass",
+        "presentation": "toast",
+        "ctaPattern": "Claim / View deal / Start",
+        "proof": "before/after price, scope, and conditions",
+        "riskReversal": "simple exit or low-friction next step"
+      },
+      "discount": {
+        "goal": "Reduce hesitation with a concrete savings frame",
+        "psychology": "loss aversion and specificity",
+        "structure": "show the original price, the discount, and the net result",
+        "presentation": "toast",
+        "ctaPattern": "Use discount / Get code / Apply",
+        "proof": "exact amount saved and eligible audience",
+        "riskReversal": "clear terms and a no-surprise promise"
+      },
+      "service": {
+        "goal": "Turn a service into an understandable next step",
+        "psychology": "risk reversal and outcome clarity",
+        "structure": "state the outcome, the method, and the first conversation",
+        "presentation": "modal",
+        "ctaPattern": "Book / Start / Review service",
+        "proof": "examples, scope, and a concise proof point",
+        "riskReversal": "what happens if the fit is not right"
+      }
+    }
+  },
   "daily": [
     {
       "promo": {
@@ -14,7 +56,21 @@
         "summary": "Releases are scheduled for the 13th and 26th of each month. Small support keeps the work moving and makes the next page easier to ship.",
         "href": "/services/#support",
         "cta": "Open support",
-        "why": "A direct contribution keeps the monthly cadence steady."
+        "why": "A direct contribution keeps the monthly cadence steady.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "support",
+          "audience": "people deciding whether to support the work",
+          "offer": "Help the release cadence stay dependable",
+          "proof": "The public cadence ships on the 13th and 26th.",
+          "objection": "It should be obvious what support changes.",
+          "urgency": "The next release window is already on the calendar.",
+          "tone": "clear",
+          "theme": "glass",
+          "handles": ["support", "cadence", "modal", "clear"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
       },
       "wonder": {
         "label": "Daily wonder",
@@ -32,7 +88,21 @@
         "title": "Package the work as a readable offer",
         "summary": "If you are hiring, commissioning, or comparing, the page should say what happens next without making people decode it.",
         "href": "/services/",
-        "cta": "Review services"
+        "cta": "Review services",
+        "presentation": "toast",
+        "promotion": {
+          "kind": "service",
+          "audience": "people deciding whether the service fits the current problem",
+          "offer": "A readable way to understand the work before a call",
+          "proof": "The service page already names the routes, artifacts, and support path.",
+          "objection": "It should be obvious what happens after the first click.",
+          "urgency": "A clear decision path reduces the chance of stalling.",
+          "tone": "direct",
+          "theme": "signal",
+          "handles": ["service", "clarity", "route", "direct"],
+          "ctaStyle": "secondary",
+          "presentation": "toast"
+        }
       },
       "wonder": {
         "label": "Daily wonder",
@@ -50,7 +120,21 @@
         "title": "Make collaboration easy to imagine",
         "summary": "Keep the call to action low friction: a card, a button, a short route, or a clear email path to follow.",
         "href": "/contact/",
-        "cta": "Send a note"
+        "cta": "Send a note",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "event",
+          "audience": "people who want a quick first conversation",
+          "offer": "A direct opening for collaboration without heavy ceremony",
+          "proof": "The contact route stays plain and open across the site.",
+          "objection": "It should be easy to understand the next step.",
+          "urgency": "A quick reply path lowers the cost of saying yes.",
+          "tone": "inviting",
+          "theme": "glass",
+          "handles": ["collaboration", "contact", "modal", "invite"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
       },
       "wonder": {
         "label": "Daily wonder",
@@ -143,7 +227,21 @@
         "summary": "Development costs are around $250 per month. If the work is useful, direct support keeps the public cadence open.",
         "href": "/now/",
         "cta": "Review funding",
-        "why": "One steady contribution helps keep releases on the 13th and 26th."
+        "why": "One steady contribution helps keep releases on the 13th and 26th.",
+        "presentation": "modal",
+        "promotion": {
+          "kind": "service",
+          "audience": "people assessing whether to fund the work",
+          "offer": "A transparent way to keep the release rhythm steady",
+          "proof": "The work costs about $250 per month to keep moving.",
+          "objection": "It should be easy to know where the money goes.",
+          "urgency": "The next release cadence depends on steady support.",
+          "tone": "direct",
+          "theme": "signal",
+          "handles": ["funding", "cadence", "modal", "transparent"],
+          "ctaStyle": "primary",
+          "presentation": "modal"
+        }
       },
       "wonder": {
         "label": "Weekly wonder",
@@ -161,7 +259,21 @@
         "title": "Make the work legible to a new teammate quickly",
         "summary": "Good surfaces reduce onboarding time for developers, illustrators, and authors alike.",
         "href": "/topics/software/",
-        "cta": "Browse software"
+        "cta": "Browse software",
+        "presentation": "toast",
+        "promotion": {
+          "kind": "deal",
+          "audience": "people comparing a new route before they commit time",
+          "offer": "A faster way to understand the software surface",
+          "proof": "The topic register and operator atlas already organize the path.",
+          "objection": "The first pass should feel legible, not clever.",
+          "urgency": "A better map reduces the cost of onboarding this week.",
+          "tone": "clear",
+          "theme": "glass",
+          "handles": ["onboarding", "software", "deal", "clear"],
+          "ctaStyle": "secondary",
+          "presentation": "toast"
+        }
       },
       "wonder": {
         "label": "Weekly wonder",

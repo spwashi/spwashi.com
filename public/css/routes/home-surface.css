@@ -360,6 +360,28 @@
   line-height: 1.45;
 }
 
+:where(#promo-wonder-cycle .promo-wonder-cycle__handles) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__handle) {
+  font-size: 0.72rem;
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card[data-spw-presentation="modal"]) {
+  border-color: color-mix(in srgb, var(--home-accent-line-strong) 60%, var(--home-surface-border-color, transparent));
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+:where(#promo-wonder-cycle .promo-wonder-cycle__card[data-spw-presentation="modal"] .promo-wonder-cycle__title-row h3) {
+  color: color-mix(in srgb, var(--home-accent-ink) 92%, var(--home-accent-primary) 8%);
+}
+
 :where(#promo-wonder-cycle .promo-wonder-cycle__cta) {
   justify-self: start;
   margin-top: auto;

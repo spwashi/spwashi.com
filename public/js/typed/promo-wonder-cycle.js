@@ -8,6 +8,48 @@ const DEFAULT_FEED = Object.freeze({
         notes: 'Embedded fallback copy for the daily and weekly promo/wonder cycle.',
         prepared: true,
     },
+    promotionPlaybook: {
+        purpose: 'Give teammates a copy-and-paste brief for event, deal, discount, or service promotion.',
+        note: 'Use the playbook when a promotion needs to be explained to someone who does not know the site well enough to improvise the structure.',
+        kinds: {
+            event: {
+                goal: 'Drive attendance',
+                psychology: 'anticipation and social proof',
+                structure: 'lead with what it is, when it happens, and why the room matters',
+                presentation: 'modal',
+                ctaPattern: 'Join / RSVP / Save the date',
+                proof: 'speaker, venue, time, and who else it is for',
+                riskReversal: 'clear cancellation or reminder path',
+            },
+            deal: {
+                goal: 'Make the offer legible and time-bound',
+                psychology: 'clarity plus urgency',
+                structure: 'state the deal, the savings, and the deadline in the first pass',
+                presentation: 'toast',
+                ctaPattern: 'Claim / View deal / Start',
+                proof: 'before/after price, scope, and conditions',
+                riskReversal: 'simple exit or low-friction next step',
+            },
+            discount: {
+                goal: 'Reduce hesitation with a concrete savings frame',
+                psychology: 'loss aversion and specificity',
+                structure: 'show the original price, the discount, and the net result',
+                presentation: 'toast',
+                ctaPattern: 'Use discount / Get code / Apply',
+                proof: 'exact amount saved and eligible audience',
+                riskReversal: 'clear terms and a no-surprise promise',
+            },
+            service: {
+                goal: 'Turn a service into an understandable next step',
+                psychology: 'risk reversal and outcome clarity',
+                structure: 'state the outcome, the method, and the first conversation',
+                presentation: 'modal',
+                ctaPattern: 'Book / Start / Review service',
+                proof: 'examples, scope, and a concise proof point',
+                riskReversal: 'what happens if the fit is not right',
+            },
+        },
+    },
     daily: [
         {
             promo: {
@@ -18,6 +60,20 @@ const DEFAULT_FEED = Object.freeze({
                 href: '/services/#support',
                 cta: 'Open support',
                 why: 'A direct contribution keeps the monthly cadence steady.',
+                presentation: 'modal',
+                promotion: {
+                    kind: 'support',
+                    audience: 'people deciding whether to support the work',
+                    offer: 'Help the release cadence stay dependable',
+                    proof: 'The public cadence ships on the 13th and 26th.',
+                    objection: 'It should be obvious what support changes.',
+                    urgency: 'The next release window is already on the calendar.',
+                    tone: 'clear',
+                    theme: 'glass',
+                    handles: ['support', 'cadence', 'modal', 'clear'],
+                    ctaStyle: 'primary',
+                    presentation: 'modal',
+                },
             },
             wonder: {
                 label: 'Daily wonder',
@@ -57,6 +113,20 @@ const DEFAULT_FEED = Object.freeze({
                 href: '/now/',
                 cta: 'Review funding',
                 why: 'One steady contribution helps keep releases on the 13th and 26th.',
+                presentation: 'modal',
+                promotion: {
+                    kind: 'service',
+                    audience: 'people assessing whether to fund the work',
+                    offer: 'A transparent way to keep the release rhythm steady',
+                    proof: 'The work costs about $250 per month to keep moving.',
+                    objection: 'It should be easy to know where the money goes.',
+                    urgency: 'The next release cadence depends on steady support.',
+                    tone: 'direct',
+                    theme: 'signal',
+                    handles: ['funding', 'cadence', 'modal', 'transparent'],
+                    ctaStyle: 'primary',
+                    presentation: 'modal',
+                },
             },
             wonder: {
                 label: 'Weekly wonder',
@@ -108,13 +178,39 @@ function fallbackTitle(kind) {
 function fallbackOperator(kind) {
     return kind === 'promo' ? '@' : '?';
 }
+function getPresentation(item) {
+    return cleanText(item.presentation || item.promotion?.presentation || 'toast');
+}
+function getPromotionHandles(item) {
+    return Array.isArray(item.promotion?.handles)
+        ? item.promotion.handles.map((handle) => cleanText(handle)).filter(Boolean)
+        : [];
+}
+function getPromotionTheme(item) {
+    return cleanText(item.promotion?.theme || '');
+}
+function getPromotionKind(item) {
+    return cleanText(item.promotion?.kind || '');
+}
 function renderCard(item = {}, kind = 'promo', cadence = 'daily', locale = SOURCE_LOCALE) {
     const article = el('article', `promo-wonder-cycle__card promo-wonder-cycle__card--${kind}`, {
         'data-spw-cadence': cadence,
         'data-spw-copy-unit': item.copyUnit || `home.promoWonderCycle.${cadence}.${kind}`,
+        'data-spw-presentation': getPresentation(item),
         'data-spw-locale': item.locale || locale,
         lang: item.locale || locale,
     });
+    const promotionKind = getPromotionKind(item);
+    const promotionTheme = getPromotionTheme(item);
+    const promotionHandles = getPromotionHandles(item);
+    if (promotionKind)
+        article.dataset.spwPromotionKind = promotionKind;
+    if (promotionTheme)
+        article.dataset.spwPromotionTheme = promotionTheme;
+    if (item.promotion?.ctaStyle)
+        article.dataset.spwPromotionCtaStyle = cleanText(item.promotion.ctaStyle);
+    if (promotionHandles.length)
+        article.dataset.spwPromotionHandles = promotionHandles.join(' ');
     const label = el('p', 'spec-kicker promo-wonder-cycle__label');
     label.textContent = cleanText(item.label || fallbackLabel(kind));
     const titleRow = el('div', 'promo-wonder-cycle__title-row');
@@ -131,6 +227,15 @@ function renderCard(item = {}, kind = 'promo', cadence = 'daily', locale = SOURC
         const note = el('p', 'promo-wonder-cycle__why');
         note.textContent = why;
         article.append(note);
+    }
+    if (promotionHandles.length) {
+        const handles = el('div', 'promo-wonder-cycle__handles');
+        promotionHandles.forEach((handle) => {
+            const pill = el('span', 'spec-pill promo-wonder-cycle__handle');
+            pill.textContent = handle;
+            handles.append(pill);
+        });
+        article.append(handles);
     }
     if (item.href) {
         const link = el('a', 'operator-chip promo-wonder-cycle__cta', {

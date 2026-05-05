@@ -132,6 +132,16 @@
   debug_rule: "The header, nav, and toggle carry the same snapshot vocabulary: mode, state, phase, pressure, topology, intent, clarity, and changed axes."
 }
 
+^"promo_presentation_contract"{
+  definition: "Promo feed entries carry a brief, a route, and optional persuasion notes so teammates can copy, paste, and restate the promotion without knowing the original context."
+  feed_contract: "Use promotionPlaybook for the general kind-level brief, and promotion for per-item audience, offer, proof, objection, urgency, tone, theme, handles, ctaStyle, and presentation."
+  presentation_rule: "toast is for transient notices; modal is for fuller promotional copy that benefits from stronger hierarchy and a focused action path; inline is for embedded prose."
+  cta_rule: "A useful promotion names the next action and the reason it is worth doing now, rather than only naming the route destination."
+  psychology_rule: "Offer, proof, objection, and urgency should be readable as a persuasion structure, not as decorative copy fragments."
+  theming_rule: "Handles are semantic hooks for optional thematic styling and for language-model prompts that need a concise vocabulary."
+  counterexample: "A promo feed only stores a title and href, then asks the renderer to invent the audience, the reason, and the urgency later."
+}
+
 ^"interaction_states"{
   ambient: "Present but not yet being addressed."
   addressable: "Available through route, hover, focus, sigil, or keypath."
