@@ -474,15 +474,15 @@
                     data-spw-touch="tap"
                     data-spw-meaning="direct payment links"
                 >
-                    <div class="payment-card__header" data-spw-region="header">
+                    <div class="payment-card__header" data-spw-region="header" data-spw-region-flow="cluster">
                         <span class="payment-card__sigil" aria-hidden="true">$</span>
-                        <div class="payment-card__title-group">
+                        <div class="payment-card__title-group" data-spw-region-flow="stack">
                             <span class="payment-card__title">Support spwashi</span>
                             <span class="payment-card__subtitle">direct · local · no account needed</span>
                         </div>
                     </div>
-                    <div class="payment-card__body" data-spw-region="body"></div>
-                    <div class="payment-card__footer" data-spw-region="footer">
+                    <div class="payment-card__body" data-spw-region="body" data-spw-region-flow="stack"></div>
+                    <div class="payment-card__footer" data-spw-region="footer" data-spw-region-flow="stack">
                         <p class="payment-card__note">local-only · hold to adjust options</p>
                     </div>
                 </div>

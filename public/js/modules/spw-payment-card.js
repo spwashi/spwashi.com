@@ -99,6 +99,7 @@ function buildAmountChips(body) {
     const strip = document.createElement('div');
     strip.className = 'payment-card__amounts';
     strip.setAttribute('data-spw-region', 'amounts');
+    strip.setAttribute('data-spw-region-flow', 'cluster');
     strip.setAttribute('aria-label', 'Suggested amounts');
 
     let selectedAmount = null;
@@ -225,6 +226,7 @@ export function initPaymentCards(root = document) {
         const body = card.querySelector('[data-spw-region="body"]');
         if (!body) return;
 
+        body.setAttribute('data-spw-region-flow', 'stack');
         const render = (ids) => renderLinks(body, ids);
         render(getPaymentEnabled());
         attachHoldBehavior(card);
@@ -246,6 +248,7 @@ export function initPaymentSettings(container) {
 
     const group = document.createElement('div');
     group.className = 'payment-settings__toggles';
+    group.setAttribute('data-spw-region-flow', 'stack');
     group.setAttribute('role', 'group');
     group.setAttribute('aria-label', 'Payment options to display');
 

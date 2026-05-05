@@ -246,6 +246,15 @@
   min-width: 0;
 }
 
+:where([data-spw-region-flow="cluster"], .spw-region-cluster) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--component-gap-tight, 0.55rem);
+  min-width: 0;
+}
+
 /* Lift content above generated rails, seams, and debug labels. */
 :where(
   [data-spw-component-kind] > *,

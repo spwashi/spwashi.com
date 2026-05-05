@@ -131,6 +131,7 @@ export class SeedCard {
       header.className = 'seed-card-header';
       el.prepend(header);
     }
+    header.setAttribute('data-spw-region-flow', 'cluster');
     header.innerHTML = `
       <span class="seed-card-sigil">
         ${template.sigil}<span class="seed-card-year" contenteditable="true" spellcheck="false" aria-label="year">${year}</span>]
@@ -146,6 +147,7 @@ export class SeedCard {
       pivot.setAttribute('aria-label', 'seed template');
       header.after(pivot);
     }
+    pivot.setAttribute('data-spw-region-flow', 'cluster');
     pivot.innerHTML = Object.entries(SEED_TEMPLATES).map(([key, tmpl]) => `
       <button type="button" class="seed-pivot-btn" data-pivot="${key}" aria-pressed="${key === this.templateKey}">
         ${tmpl.label}
@@ -159,6 +161,7 @@ export class SeedCard {
       fieldsEl.className = 'seed-card-fields';
       pivot.after(fieldsEl);
     }
+    fieldsEl.setAttribute('data-spw-region-flow', 'stack');
     fieldsEl.innerHTML = template.fields.map(f => `
       <div class="seed-field" data-field="${f.key}" data-spw-touch="edit">
         <span class="seed-field-op" aria-hidden="true">${f.op}</span>
@@ -183,10 +186,11 @@ export class SeedCard {
       footer.className = 'seed-card-footer';
       fieldsEl.after(footer);
     }
+    footer.setAttribute('data-spw-region-flow', 'stack');
     footer.innerHTML = `
       <code class="seed-output" aria-live="polite" aria-label="seed notation"></code>
-      <div class="seed-card-footer-row">
-        <div class="seed-card-actions" data-spw-touch="tap">
+      <div class="seed-card-footer-row" data-spw-region-flow="cluster">
+        <div class="seed-card-actions" data-spw-touch="tap" data-spw-region-flow="cluster">
           <button type="button" class="seed-action" data-action="copy">copy seed</button>
           <button type="button" class="seed-action" data-action="screenshot">screenshot</button>
           <button type="button" class="seed-action" data-action="clear">clear</button>

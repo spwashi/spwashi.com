@@ -240,9 +240,6 @@
    ========================================================================== */
 
 .payment-card__header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--card-border-color);
@@ -273,9 +270,6 @@
 }
 
 .payment-card__title-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
   min-width: 0;
 }
 
@@ -292,14 +286,6 @@
   letter-spacing: 0.03em;
   font-family: var(--card-font);
   font-size: 0.72rem;
-}
-
-.payment-card__header-meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-left: auto;
-  flex-wrap: wrap;
 }
 
 .payment-card__state-chip,
@@ -397,10 +383,6 @@
    ========================================================================== */
 
 .payment-card__amounts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem;
   margin-bottom: 0.55rem;
   padding-bottom: 0.55rem;
   border-bottom: 1px solid var(--card-border-color);
@@ -477,12 +459,6 @@
 /* ==========================================================================
    6. Body (payment links)
    ========================================================================== */
-
-.payment-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
 
 .payment-card__body[data-payment-focus="method"] .payment-card__link {
   border-color: color-mix(in oklab, var(--teal, #1a9999) 20%, transparent);
@@ -598,13 +574,6 @@
   transform: translateY(-1px);
 }
 
-.payment-card__method-copy {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: 0.08rem;
-}
-
 .payment-card__method-label {
   min-width: 0;
   white-space: nowrap;
@@ -702,9 +671,6 @@
 }
 
 .payment-card__footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
   margin-top: 0.45rem;
 }
 
@@ -771,9 +737,6 @@
    ========================================================================== */
 
 .payment-settings__toggles {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   margin-top: 0.75rem;
 }
 
