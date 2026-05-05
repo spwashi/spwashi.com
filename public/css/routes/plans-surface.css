@@ -45,9 +45,8 @@
   --plans-accent-3-soft: hsla(334, 22%, 40%, 0.06);
   --plans-accent-4-soft: hsla(40, 56%, 48%, 0.10);
 
-  --plans-reading-measure: 72ch;
-  --plans-reading-measure-tight: 58ch;
-  --plans-reading-measure-wide: 84ch;
+  --measure-reading: 72ch;
+  --measure-panel: 58ch;
 
   --plans-frame-shadow:
     0 1px 3px rgba(39, 24, 15, 0.04),
@@ -217,16 +216,11 @@ body[data-spw-surface="plans"] {
 [data-spw-surface="plans"] .frame-note,
 [data-spw-surface="plans"] .inline-note {
   color: var(--plans-ink-soft);
-  max-width: var(--plans-reading-measure-tight);
 }
 
 [data-spw-surface="plans"] p,
 [data-spw-surface="plans"] li {
   color: var(--plans-ink);
-}
-
-[data-spw-surface="plans"] p:not(.spec-kicker):not(.inline-note):not(.frame-note):not(.plan-thesis) {
-  max-width: var(--plans-reading-measure);
 }
 
 /* ==========================================================================
@@ -466,7 +460,6 @@ body[data-spw-surface="plans"] {
 
 [data-spw-surface="plans"] .plan-thesis {
   margin: 0 0 0.9rem 0;
-  max-width: var(--plans-reading-measure-tight);
   color: var(--plans-ink);
   font-size: 0.98rem;
   line-height: 1.58;
