@@ -13,3 +13,5 @@ Implementation files live in semantic folders:
 - `typed/`: generated browser-ready modules from `public/ts/`; do not hand-edit generated output.
 
 Working rule: move obvious files into these folders, keep wrappers for public URLs, and merge duplicates only after proving the callers share the same contract.
+
+Legacy aliases may stay at the root, but avoid creating alias chains. If a root file exists only for compatibility, point it directly at the canonical implementation in one of the folders above.

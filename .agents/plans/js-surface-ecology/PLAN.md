@@ -69,3 +69,14 @@ The first mechanical pass now exists.
 - Root-level `public/css/*.css` files remain compatibility wrappers for older direct stylesheet links.
 
 The remaining cleanup is semantic, not mechanical: inspect root wrappers that represent real shadow twins, then merge only where call sites prove they share a contract.
+
+## Deduplication pass: 2026-05-05
+
+The first wrapper-chain cleanup landed after the tree move.
+
+- `public/js/site.js` now imports mounted implementation modules from their semantic folders.
+- Legacy root aliases such as `blog-interpreter.js`, `payment-card.js`, and `seed-card.js` now point directly to canonical `spw-*` module implementations.
+- Redundant folder-level alias files were removed where they only re-exported another wrapper.
+- Public root URLs remain available for route HTML, service-worker entries, tests, and older external links.
+
+Next candidates should be real call graph reallocations, not alias deletion: inspect repeated imports of `/public/js/spw-bus.js`, `/public/js/spw-shared.js`, and `/public/js/site-settings.js` inside layer folders, then move those call sites inward only when the target dependency belongs to the same or lower layer.

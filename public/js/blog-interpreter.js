@@ -1,1 +1,1 @@
-export * from './modules/blog-interpreter.js';
+export * from './modules/spw-blog-interpreter.js';

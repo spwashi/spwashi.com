@@ -1,1 +1,1 @@
-export * from './modules/seed-card.js';
+export * from './modules/spw-seed-card.js';

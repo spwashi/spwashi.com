@@ -1,1 +1,1 @@
-export * from './modules/attn-register.js';
+export * from './modules/spw-attn-register.js';
