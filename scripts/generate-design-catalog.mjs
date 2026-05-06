@@ -702,7 +702,7 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, c
   <title>Spwashi • Design Catalog</title>
   <meta name="description" content="Traceability catalog: data-spw-* attributes, CSS clusters, tokens, and philosophy docs, cross-referenced across the site-facing surfaces.">
   <meta name="robots" content="noindex">
-  <script type="module" src="/public/js/site.js?v=0.0.2"></script>
+  <script type="module" src="/public/js/site.js"></script>
   <link rel="stylesheet" href="/public/css/style.css">
   <link rel="stylesheet" href="/design/catalog/catalog.css">
 </head>
