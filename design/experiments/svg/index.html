@@ -39,13 +39,13 @@
     data-spw-features="operators navigator console themes inspectability promptability svg-surfaces"
     data-spw-route-family="design experiments systems"
     data-spw-context="analysis"
-    data-spw-wonder="projection resonance locality"
+    data-spw-wonder="projection resonance locality tunability branding screenshots"
     data-spw-page-family="experiment-lab"
     data-spw-page-modes="inspect tune compare carry"
     data-spw-page-seed="page_design_experiments_svg"
     data-spw-page-role="design-lab"
     data-spw-layout="wide"
-    data-spw-related-routes="/design/|/design/website/|/design/experiments/css/|/settings/|/topics/software/renderers/">
+    data-spw-related-routes="/design/|/design/runtime/|/design/composition/|/design/website/|/design/experiments/css/|/settings/|/topics/software/renderers/">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <a class="spw-section-handle"
@@ -95,8 +95,11 @@
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
                     <a class="operator-chip" href="#diagram-bundles">~ bundles</a>
                     <a class="operator-chip" href="#svg-specimens">^ specimens</a>
+                    <a class="operator-chip" href="#svg-tunability-contract">= tunability</a>
+                    <a class="operator-chip" href="#svg-brand-screenshot">? screenshot state</a>
                     <a class="operator-chip" href="#svg-handoff-register">@ handoff</a>
                     <a class="operator-chip" href="#svg-token-register">? token register</a>
+                    <a class="operator-chip" href="/design/runtime/#svg-art-runtime">runtime SVG</a>
                     <a class="operator-chip" href="/design/experiments/css/">open CSS experiments</a>
                     <a class="operator-chip" href="/topics/software/renderers/">open renderers</a>
                 </nav>
@@ -205,7 +208,7 @@
                 </p>
 
                 <div class="design-specimen-grid design-specimen-grid--wide">
-                    <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="diagram-posture" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-motion="static" data-spw-svg-companion="rail" aria-labelledby="diagram-figure-title">
+                    <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="diagram-posture" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-motion="static" data-spw-svg-companion="rail" data-spw-svg-pointer="field" data-spw-image-model="diagram showing how authored SVG nodes respond to brand color, stroke, spacing, motion, and pointer-field tuning" aria-labelledby="diagram-figure-title">
                         <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 520" role="img" aria-labelledby="diagram-figure-title diagram-figure-desc">
                             <title id="diagram-figure-title">Diagram posture specimen</title>
                             <desc id="diagram-figure-desc">A staged diagram showing authored seed, contour grammar, stroke grammar, field resonance, and route carryover.</desc>
@@ -288,6 +291,94 @@
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="svg-tunability-contract" data-spw-kind="frame" data-spw-role="query-contract" data-spw-context="analysis">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#svg-tunability-contract">= "svg_tunability_contract"</a>
+                    <h2>SVG Tunability For Branding, QA, And Reuse</h2>
+                </header>
+                <p class="frame-note">
+                    SVG hosts can now declare pointer behavior and accept URL-visible tuning for brand color, surface field, stroke, dash cadence, label spacing, motion, and internal spacing. This keeps screenshots reproducible and gives image models visible structure plus semantic attributes to interpret.
+                </p>
+
+                <div class="spec-grid">
+                    <article class="frame-panel">
+                        <h3>Declarative host</h3>
+                        <pre><code>&lt;figure
+  class="spw-svg-figure"
+  data-spw-svg-host="launch-card"
+  data-spw-svg-pointer="field"
+  data-spw-image-model="branded SVG card for screenshot interpretation"&gt;</code></pre>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Portable spell</h3>
+                        <pre><code>import { applySvgQueryTunability } from '/public/js/spw-compose.js';
+
+applySvgQueryTunability(document);</code></pre>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Palette reason</h3>
+                        <p>Named SVG palettes apply a color disposition and write <code>data-spw-svg-palette-reason</code>. Color can still be overridden by brand query values when QA needs exact comparison.</p>
+                        <pre><code>?spw-svg-palette=warm-offer
+?spw-svg-accent=%23008080&amp;spw-svg-field=%23f6ffff</code></pre>
+                    </article>
+                </div>
+
+                <nav class="frame-operators" aria-label="SVG query examples">
+                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=brand&amp;spw-svg-accent=%23008080&amp;spw-svg-field=%23f6ffff&amp;spw-svg-stroke=1.15&amp;spw-svg-dash=6&amp;spw-svg-gap=10&amp;spw-svg-label=0.045em&amp;spw-svg-fill=14%25&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-specimens">brand teal field</a>
+                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.45&amp;spw-svg-dash=3&amp;spw-svg-gap=7&amp;spw-svg-label=0.02em&amp;spw-svg-fill=20%25&amp;spw-svg-pointer=trace&amp;spw-svg-motion=quick&amp;spw-reflow=interaction#svg-brand-screenshot">warm offer screenshot</a>
+                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=soft-blue&amp;spw-svg-stroke=0.85&amp;spw-svg-dash=10&amp;spw-svg-gap=14&amp;spw-svg-label=0.06em&amp;spw-svg-motion=paused&amp;spw-svg-pointer=none&amp;spw-reflow=theme#svg-brand-screenshot">paused review state</a>
+                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-space=1rem&amp;spw-svg-pointer=field&amp;spw-log=spw-svg-tunability&amp;spw-log-level=debug#svg-tunability-contract">log palette reason</a>
+                </nav>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="svg-brand-screenshot" data-spw-kind="frame" data-spw-role="screenshot-surface" data-spw-context="analysis" data-spw-promptability="visible">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#svg-brand-screenshot">? "svg_brand_screenshot"</a>
+                    <h2>Screenshot-Ready SVG Interpretation Surface</h2>
+                </header>
+                <p class="frame-note">
+                    This specimen is intentionally legible to a human reviewer and to an image model: labeled regions, explicit color roles, and a short semantic description in the host attributes.
+                </p>
+
+                <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="brand-screenshot-card" data-spw-svg-kind="branded-screenshot-card" data-spw-svg-scale="wide" data-spw-svg-pointer="tilt" data-spw-svg-companion="rail" data-spw-image-model="screenshot-ready SVG card with brand accent, offer/action region, trust notes, and interpretation labels" aria-labelledby="brand-screenshot-title">
+                    <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 920 420" role="img" aria-labelledby="brand-screenshot-title brand-screenshot-desc">
+                        <title id="brand-screenshot-title">Brand screenshot interpretation specimen</title>
+                        <desc id="brand-screenshot-desc">A reusable SVG card with brand accent rail, offer block, trust notes, action target, and semantic labels for image interpretation.</desc>
+
+                        <rect class="spw-svg-frame" x="22" y="22" width="876" height="376"></rect>
+                        <rect class="spw-svg-node spw-svg-node--frame" x="62" y="62" width="156" height="296" rx="18"></rect>
+                        <text class="spw-svg-label" x="92" y="132">brand field</text>
+                        <text class="spw-svg-note" x="92" y="162">accent + surface</text>
+                        <circle class="spw-svg-node spw-svg-node--surface" cx="140" cy="238" r="42"></circle>
+                        <text class="spw-svg-note" x="94" y="316">screenshot source</text>
+
+                        <rect class="spw-svg-node spw-svg-node--object" x="272" y="82" width="284" height="118" rx="16"></rect>
+                        <text class="spw-svg-label" x="304" y="132">semantic offer</text>
+                        <text class="spw-svg-note" x="304" y="164">event | deal | service</text>
+
+                        <rect class="spw-svg-node spw-svg-node--probe" x="604" y="82" width="222" height="118" rx="16"></rect>
+                        <text class="spw-svg-label" x="634" y="132">trust cues</text>
+                        <text class="spw-svg-note" x="634" y="164">deadline, venue, terms</text>
+
+                        <path class="spw-svg-flow spw-svg-flow--animated" d="M220 238 C318 184 386 194 472 238 S654 302 800 236"></path>
+                        <path class="spw-svg-flow" d="M414 240 H728"></path>
+
+                        <rect class="spw-svg-node spw-svg-node--action" x="512" y="268" width="224" height="62" rx="16"></rect>
+                        <text class="spw-svg-label" x="548" y="306">@ actualized_cta</text>
+                        <text class="spw-svg-note" x="754" y="326">visible next step</text>
+                    </svg>
+                    <aside class="spw-svg-rail" aria-label="Screenshot interpretation register">
+                        <span class="spec-pill">brand accent</span>
+                        <span class="spec-pill">semantic offer</span>
+                        <span class="spec-pill">trust cues</span>
+                        <span class="spec-pill">actualized CTA</span>
+                    </aside>
+                    <figcaption>
+                        <p>Use this as a QA fixture: change query values, capture the same anchored SVG, and compare whether the brand and interpretation labels survive the visual treatment.</p>
+                    </figcaption>
+                </figure>
             </section>
 
             <section class="site-frame design-experiment-frame" id="svg-handoff-register" data-spw-kind="frame" data-spw-role="handoff" data-spw-context="analysis">

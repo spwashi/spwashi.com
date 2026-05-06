@@ -297,3 +297,9 @@ frame #svg-art-runtime
   surface design/runtime
   concept svg_art performance puppetry
   note "SVG art can be semantic markup, visual figure, and live puppet surface. Runtime docs should expose moved nodes, variable colors, repaint or reflow reasons, and controller namespaces."
+
+frame #svg-tunability-contract
+  role convention
+  surface design/experiments/svg
+  concept svg_art tunability branding screenshot_qa palette_reason
+  note "SVG hosts can expose named palette reasons, brand color overrides, stroke cadence, internal spacing, pointer-field behavior, and screenshot-ready semantic labels through query-visible tuning."

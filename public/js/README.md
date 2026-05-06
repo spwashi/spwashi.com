@@ -45,6 +45,7 @@ These are the best candidates when you want to reuse a file on another site:
 - `kernel/spw-dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/spw-interaction-loop.js` for small interaction-state records and refresh events.
 - `runtime/spw-attention-architecture.js` for section locomotion and resonance pinning.
+- `media/spw-svg-tunability.js` for declarative SVG palette, pointer, stroke, spacing, and screenshot tuning.
 - `media/spw-image-store.js` for IndexedDB-backed image persistence.
 - `semantic/pretext-utils.js` for CDN loading and pretext data fetch helpers.
 
@@ -82,6 +83,19 @@ Console helpers should reveal the same model:
   with `spw-log-level=debug|info|warn|error` to tune console output.
 - Loggers can describe their relationship to the page with `logger.describe()`
   and can attach target snapshots with `logger.trace(message, target)`.
+
+## SVG Tunability
+
+SVG hosts can opt into runtime tuning with attributes such as
+`data-spw-svg-host` and `data-spw-svg-pointer`. The portable entrypoint exports
+`applySvgQueryTunability`, `applySvgTunability`, and `SPW_SVG_PALETTES` so a
+page can expose brand colors, palette reasons, stroke cadence, spacing, motion,
+and pointer-field behavior without mounting the full site runtime.
+
+Useful query examples include `spw-svg-palette=warm-offer`,
+`spw-svg-accent=%23008080`, `spw-svg-field=%23f6ffff`,
+`spw-svg-stroke=1.2`, `spw-svg-space=1rem`, and
+`spw-svg-pointer=field`. Documentation route: `/design/experiments/svg/`.
 
 ## Structural Rule
 

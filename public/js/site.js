@@ -1299,6 +1299,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'svg-tunability',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer]',
+    rootMode: 'single',
+    load: () => import('./media/spw-svg-tunability.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwSvgTunability;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'canvas-accents',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

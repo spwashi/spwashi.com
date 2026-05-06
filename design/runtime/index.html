@@ -66,8 +66,15 @@ puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
 
         <section class="frame-panel" id="svg-art-runtime" aria-labelledby="svg-art-runtime-title" data-spw-kind="panel" data-spw-role="future-surface" data-spw-wonder="svg art performance">
             <h2 id="svg-art-runtime-title">SVG art as a controllable surface</h2>
-            <p>SVG belongs in this model because it can be semantic markup, visual art, and a live puppet surface at the same time. Future scripts should expose which SVG node they move, which variable colors it reads, and which reflow or repaint cost it may introduce.</p>
-            <p><a class="operator-chip" href="/design/experiments/svg/">open SVG lab</a></p>
+            <p>SVG belongs in this model because it can be semantic markup, visual art, and a live puppet surface at the same time. Hosts can expose named palettes, brand color overrides, pointer modes, and repaint cost so screenshots remain interpretable by people and image models.</p>
+            <pre><code>import {
+  applySvgQueryTunability,
+  SPW_SVG_PALETTES
+} from '/public/js/spw-compose.js';
+
+applySvgQueryTunability(document);
+console.table(SPW_SVG_PALETTES);</code></pre>
+            <p><a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field&amp;spw-reflow=theme#svg-brand-screenshot">open tuned SVG lab</a></p>
         </section>
 
         <section class="frame-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
@@ -77,6 +84,7 @@ puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
                 <a class="operator-chip" href="/design/runtime/?spw-palette=craft&spw-color-active-op=%23008080&spw-var-shape-component=8px&spw-tune-density=compact&spw-reflow=density#query-controls">^ craft compact</a>
                 <a class="operator-chip" href="/design/runtime/?spw-palette=software&spw-log=spw-compose,spw-core&spw-log-level=debug&spw-reflow=interaction#console-contract">@ console logging</a>
                 <a class="operator-chip" href="/design/runtime/?spw-var-material-blur=18px&spw-reflow=theme#reflow-contract">~ blur disposition</a>
+                <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.35&amp;spw-svg-space=1rem&amp;spw-svg-pointer=trace#svg-brand-screenshot">^ SVG palette QA</a>
             </nav>
         </section>
 

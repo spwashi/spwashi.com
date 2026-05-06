@@ -1,8 +1,14 @@
-@layer tokens, typography, grammar, components, handles, effects;
+/* ==========================================================================
+ * spw-compose.css
+ * --------------------------------------------------------------------------
+ * Portable composition entrypoint.
+ *
+ * Use this when another site wants Spw theming, component grammar, and handle
+ * styling without the full spwashi.com shell, route surfaces, or ornament
+ * layer. Keep this file import-only so it stays useful as a standalone bundle.
+ * ========================================================================== */
 
-/* Portable composition entrypoint.
-   Use this when you want Spw theming, component grammar, and handle styling
-   without the full spwashi.com shell, route surfaces, or ornament layer. */
+@layer tokens, typography, grammar, components, handles, effects;
 
 @import url('./tokens/spw-tokens.css') layer(tokens);
 

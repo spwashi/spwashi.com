@@ -36,3 +36,9 @@ it becomes a pile of overrides.
 Query-driven demos can tune color and palette disposition with parameters like
 `spw-palette=craft`, `spw-color-active-op=%23008080`, and
 `spw-var-shape-component=8px` when JS opts into `applySpwQueryDisposition`.
+
+SVG surfaces add a narrower, screenshot-friendly layer of tuning through
+`public/css/systems/svg-surfaces.css`. Brand and QA states can drive
+`--spw-svg-brand-accent`, `--spw-svg-brand-field`, `--spw-svg-stroke-scale`,
+`--spw-svg-space`, `--spw-svg-flow-dash`, and `--spw-svg-flow-gap` through
+`applySvgQueryTunability`.

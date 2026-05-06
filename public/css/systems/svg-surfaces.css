@@ -42,10 +42,22 @@
 /* ─── SVG Container & Surface ───────────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    --spw-svg-pointer-x: 50%;
+    --spw-svg-pointer-y: 50%;
+    --spw-svg-pointer-x-ratio: 0.5;
+    --spw-svg-pointer-y-ratio: 0.5;
+    --spw-svg-pointer-intensity: 0;
+    --spw-svg-pointer-lift: 0.42;
+    --spw-svg-motion-rate: 4s;
+    --spw-svg-node-fill-mix: 10%;
+    --spw-svg-brand-accent: var(--active-op-color, #008080);
+    --spw-svg-brand-field: var(--surface, #ffffff);
     display: grid;
-    gap: var(--space-sm, 0.6rem);
+    gap: var(--spw-svg-space, var(--space-sm, 0.6rem));
     margin: 0;
     container-type: inline-size;
+    position: relative;
+    isolation: isolate;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface {
@@ -56,13 +68,26 @@
     border: 1px solid var(--spw-shell-line, rgba(14, 18, 20, 0.14));
     border-radius: var(--shape-surface, 10px);
     background: var(--surface, #ffffff);
+    background:
+        radial-gradient(
+            circle at var(--spw-svg-pointer-x, 50%) var(--spw-svg-pointer-y, 50%),
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) calc(var(--spw-svg-pointer-intensity, 0) * 9%), transparent),
+            transparent 42%
+        ),
+        var(--spw-svg-brand-field, var(--surface, #ffffff));
     box-shadow: var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05));
     color: var(--ink, #161c1d);
+    transform:
+        translate3d(0, calc(var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-pointer-lift, 0) * -0.18rem), 0)
+        rotateX(calc((0.5 - var(--spw-svg-pointer-y-ratio, 0.5)) * var(--spw-svg-pointer-intensity, 0) * 1.2deg))
+        rotateY(calc((var(--spw-svg-pointer-x-ratio, 0.5) - 0.5) * var(--spw-svg-pointer-intensity, 0) * 1.2deg));
+    transform-origin: center;
     transition:
         border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
         box-shadow var(--duration-base, 200ms) var(--ease-mechanical, ease),
         color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
-        background var(--duration-base, 200ms) var(--ease-mechanical, ease);
+        background var(--duration-base, 200ms) var(--ease-mechanical, ease),
+        transform var(--duration-base, 200ms) var(--ease-smooth, ease);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface text {
@@ -88,18 +113,18 @@
  * Mixes against --surface-strong to ensure nodes invert correctly in dark mode 
  * while maintaining a solid "fill" that obscures paths behind them. 
  */
-[data-spw-features~="svg-surfaces"] .spw-svg-node--frame     { stroke: var(--op-frame-color, #008080);      fill: color-mix(in srgb, var(--op-frame-color, #008080)      10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--probe     { stroke: var(--op-probe-color, #4a2180);      fill: color-mix(in srgb, var(--op-probe-color, #4a2180)      10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--ref       { stroke: var(--op-ref-color, #1d57a3);        fill: color-mix(in srgb, var(--op-ref-color, #1d57a3)        10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--action    { stroke: var(--op-action-color, #005959);     fill: color-mix(in srgb, var(--op-action-color, #005959)     10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--object    { stroke: var(--op-object-color, #a67c00);     fill: color-mix(in srgb, var(--op-object-color, #a67c00)     10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--surface   { stroke: var(--op-surface-color, #178282);    fill: color-mix(in srgb, var(--op-surface-color, #178282)    10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--stream    { stroke: var(--op-stream-color, #208259);     fill: color-mix(in srgb, var(--op-stream-color, #208259)     10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--merge     { stroke: var(--op-merge-color, #277a87);      fill: color-mix(in srgb, var(--op-merge-color, #277a87)      10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--binding   { stroke: var(--op-binding-color, #8f401f);    fill: color-mix(in srgb, var(--op-binding-color, #8f401f)    10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--meta      { stroke: var(--op-meta-color, #324a85);       fill: color-mix(in srgb, var(--op-meta-color, #324a85)       10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--pragma    { stroke: var(--op-pragma-color, #883a3a);     fill: color-mix(in srgb, var(--op-pragma-color, #883a3a)     10%, var(--surface-strong, #ffffff)); }
-[data-spw-features~="svg-surfaces"] .spw-svg-node--normalize { stroke: var(--op-normalize-color, #4d7539);  fill: color-mix(in srgb, var(--op-normalize-color, #4d7539)  10%, var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--frame     { stroke: var(--op-frame-color, #008080);      fill: color-mix(in srgb, var(--op-frame-color, #008080)      var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--probe     { stroke: var(--op-probe-color, #4a2180);      fill: color-mix(in srgb, var(--op-probe-color, #4a2180)      var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--ref       { stroke: var(--op-ref-color, #1d57a3);        fill: color-mix(in srgb, var(--op-ref-color, #1d57a3)        var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--action    { stroke: var(--op-action-color, #005959);     fill: color-mix(in srgb, var(--op-action-color, #005959)     var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--object    { stroke: var(--op-object-color, #a67c00);     fill: color-mix(in srgb, var(--op-object-color, #a67c00)     var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--surface   { stroke: var(--op-surface-color, #178282);    fill: color-mix(in srgb, var(--op-surface-color, #178282)    var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--stream    { stroke: var(--op-stream-color, #208259);     fill: color-mix(in srgb, var(--op-stream-color, #208259)     var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--merge     { stroke: var(--op-merge-color, #277a87);      fill: color-mix(in srgb, var(--op-merge-color, #277a87)      var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--binding   { stroke: var(--op-binding-color, #8f401f);    fill: color-mix(in srgb, var(--op-binding-color, #8f401f)    var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--meta      { stroke: var(--op-meta-color, #324a85);       fill: color-mix(in srgb, var(--op-meta-color, #324a85)       var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--pragma    { stroke: var(--op-pragma-color, #883a3a);     fill: color-mix(in srgb, var(--op-pragma-color, #883a3a)     var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
+[data-spw-features~="svg-surfaces"] .spw-svg-node--normalize { stroke: var(--op-normalize-color, #4d7539);  fill: color-mix(in srgb, var(--op-normalize-color, #4d7539)  var(--spw-svg-node-fill-mix, 10%), var(--surface-strong, #ffffff)); }
 [data-spw-features~="svg-surfaces"] .spw-svg-node--layer     { stroke: var(--op-layer-color, rgba(14,18,20,0.68)); fill: var(--surface-strong, #ffffff); }
 [data-spw-features~="svg-surfaces"] .spw-svg-node--baseline  { stroke: var(--op-baseline-color, #594d3f);   fill: var(--surface-strong, #ffffff); }
 
@@ -116,7 +141,59 @@
 
 [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
     /* Using generic animation token fallback if --duration-slow is missing */
-    animation: svg-flow-dash 4s linear infinite;
+    animation: svg-flow-dash var(--spw-svg-motion-rate, 4s) linear infinite;
+}
+
+/* ─── Declarative tuning states ─────────────────────────────────────────── */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-tune-motion="slow"] {
+    --spw-svg-motion-rate: 7s;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-tune-motion="quick"] {
+    --spw-svg-motion-rate: 2.4s;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-tune-motion="paused"] .spw-svg-flow--animated {
+    animation-play-state: paused;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-tune-contrast="soft"] {
+    --spw-svg-node-fill-mix: 6%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-tune-contrast="strong"] {
+    --spw-svg-node-fill-mix: 18%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: var(--shape-surface, 10px);
+    opacity: calc(var(--spw-svg-pointer-intensity, 0) * 0.72);
+    background:
+        radial-gradient(
+            circle at var(--spw-svg-pointer-x, 50%) var(--spw-svg-pointer-y, 50%),
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 18%, transparent),
+            transparent 34%
+        );
+    mix-blend-mode: multiply;
+    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer="trace"][data-spw-svg-pointer-state="active"] .spw-svg-flow {
+    opacity: 0.9;
+    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1) * 1.18);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer="field"][data-spw-svg-pointer-state="active"] .spw-svg-surface {
+    border-color: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 32%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+    box-shadow:
+        var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05)),
+        0 10px 28px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 10%, transparent);
 }
 
 /* ─── Typography & Labels ───────────────────────────────────────────────── */
@@ -333,5 +410,9 @@
 @media (prefers-reduced-motion: reduce) {
     [data-spw-features~="svg-surfaces"] .spw-svg-flow {
         animation: none;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-surface {
+        transform: none;
     }
 }

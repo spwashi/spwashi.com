@@ -25,6 +25,8 @@ export const SPW_COMPOSITION_CONTRACT = Object.freeze({
     'state attributes',
     'script gestures',
     'visible CSS result',
+    'palette reasons',
+    'SVG interpretation hooks',
   ]),
   literateRule:
     'A portable behavior should name its field, target, gesture, and visible result before it asks another site to run it.',
@@ -103,3 +105,12 @@ export {
   snapshotInstrumentationTarget,
   writeTuningAttributes,
 } from './kernel/spw-instrumentation.js';
+
+export {
+  SPW_SVG_PALETTES,
+  SPW_SVG_TUNABILITY_CONTRACT,
+  applySvgQueryTunability,
+  applySvgTunability,
+  initSpwSvgTunability,
+  parseSvgTunabilitySearch,
+} from './media/spw-svg-tunability.js';
