@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi - Composition Bundle Notes"
+    description="A short reference for standalone Spw CSS and JavaScript composition bundles: what they include, what they avoid, and how to use them for theming and behavior experiments."
+    canonical="https://spwashi.com/design/composition/"
+    og_title="Spwashi - Composition Bundle Notes"
+    og_description="Standalone Spw composition bundle notes for people studying theming, component grammar, and behavior contracts."
+></spw-page>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="design documentation composition"
+    data-spw-context="analysis"
+    data-spw-wonder="composition portability theming spellcasting browser"
+    data-spw-page-family="design"
+    data-spw-page-modes="reading inspect reuse"
+    data-spw-page-role="composition-reference"
+    data-spw-layout="reading"
+    data-spw-related-routes="/design/|/design/components/|/design/experiments/css/|/about/website/|/topics/software/spw/|/play/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<spw-site-header
+    current="Composition"
+    current_href="/design/composition/"
+    indicator="design"
+    nav_items="Design:/design/|Components:/design/components/|CSS Lab:/design/experiments/css/|Website:/about/website/|SPW:/topics/software/spw/|Play:/play/"
+></spw-site-header>
+
+<main id="main-content" tabindex="-1" aria-labelledby="composition-title">
+    <article class="site-frame" id="composition-bundles" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis" data-spw-wonder="composition portability theming spellcasting browser">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#composition-bundles">#&gt;composition_bundles</a>
+            <div class="spec-strip">
+                <span class="spec-pill">standalone CSS</span>
+                <span class="spec-pill">portable JS</span>
+                <span class="spec-pill">docs-ready</span>
+            </div>
+        </div>
+
+        <p class="page-kicker">Design / Composition / Reuse</p>
+        <h1 id="composition-title">Standalone bundles should teach composition, theming, and browser behavior without carrying the whole site.</h1>
+
+        <p>
+            These entries are meant for documentation, prototypes, and vendor-facing experiments. They keep the
+            aesthetic and behavior contracts visible while avoiding the complete route shell.
+        </p>
+
+        <section class="frame-panel" aria-labelledby="css-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
+            <h2 id="css-bundle-title">CSS composition bundle</h2>
+            <p>
+                <code>/public/css/spw-compose.css</code> imports tokens, typography, grammar, components, handles, and
+                light effects. Treat it as a disposition: a metaphilosophical bias toward readable surfaces, visible
+                state, and calm interaction. It leaves out route surfaces, shell chrome, and ornament so another page can
+                keep its own layout.
+            </p>
+            <pre><code>&lt;link rel="stylesheet" href="/public/css/spw-compose.css"&gt;</code></pre>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="js-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
+            <h2 id="js-bundle-title">JavaScript composition bundle</h2>
+            <p>
+                <code>/public/js/spw-compose.js</code> exports selector contracts, dataset/style writers, interaction-loop
+                records, palette helpers, and attention architecture contracts without mounting <code>site.js</code>.
+                Treat scripts here as spells: small repeatable gestures that change the document in inspectable ways.
+            </p>
+            <pre><code>import {
+  COMPONENT_SELECTOR,
+  writeDatasetValue,
+  createLoopRecord,
+  getPaletteResonanceSwatches
+} from '/public/js/spw-compose.js';</code></pre>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="reuse-boundary-title" data-spw-kind="panel" data-spw-role="boundary">
+            <h2 id="reuse-boundary-title">Reuse boundary</h2>
+            <p>
+                Use these bundles when the goal is to study or reuse composition primitives. Use <code>style.css</code>
+                and <code>site.js</code> when the goal is to run the complete Spwashi site shell.
+            </p>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="spellcasting-title" data-spw-kind="panel" data-spw-role="metaphor" data-spw-wonder="spellcasting composition">
+            <h2 id="spellcasting-title">Scripts as spells, stylesheets as disposition</h2>
+            <p>
+                The browser is the field where documents become interactive surfaces. A script spell is a small, named
+                composition that produces a visible outcome: tokens set the field, selectors find the target, JS applies
+                the gesture, and CSS reveals the result. A stylesheet carries the disposition of the world: what counts
+                as calm, active, focused, dimensional, readable, or strange.
+            </p>
+            <pre><code>// field + target + gesture + visible result
+writeDatasetValue(card, 'spwCast', 'preview');
+const record = createLoopRecord('preview', 'operator');</code></pre>
+        </section>
+    </article>
+</main>
+
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

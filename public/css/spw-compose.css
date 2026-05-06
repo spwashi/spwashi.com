@@ -1,0 +1,23 @@
+@layer tokens, typography, grammar, components, handles, effects;
+
+/* Portable composition entrypoint.
+   Use this when you want Spw theming, component grammar, and handle styling
+   without the full spwashi.com shell, route surfaces, or ornament layer. */
+
+@import url('./tokens/spw-tokens.css') layer(tokens);
+
+@import url('./typography/spw-typography.css') layer(typography);
+@import url('./typography/spw-typography-context.css') layer(typography);
+@import url('./typography/spw-typesetting.css') layer(typography);
+
+@import url('./grammar/spw-grammar.css') layer(grammar);
+
+@import url('./components/spw-components.css') layer(components);
+
+@import url('./handles/cognitive-handles.css') layer(handles);
+@import url('./handles/spw-handles.css') layer(handles);
+@import url('./handles/phase-controls.css') layer(handles);
+
+@import url('./effects/spw-material.css') layer(effects);
+@import url('./effects/enhancements.css') layer(effects);
+@import url('./effects/spw-wonder.css') layer(effects);

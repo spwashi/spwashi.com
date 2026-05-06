@@ -256,3 +256,8 @@
   "Metaphysical charge and projection bias must be visible to inspection or treated as nonexistent.",
   "A failed or unavailable interaction should keep the rest of the interaction field explorable."
 }
+frame #composition-spellcasting
+  role convention
+  surface design
+  concept spellcasting browser disposition
+  note "The browser is the field. Scripts are spells: small named gestures that alter the document in inspectable ways. Stylesheets are metaphilosophical disposition: they encode what a surface treats as calm, active, focused, readable, dimensional, or strange."

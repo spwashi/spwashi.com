@@ -44,7 +44,9 @@ export const INTERACTION_LOOP_CONTRACT = Object.freeze({
     reasons: IMAGE_REFRESH_REASONS
 });
 
-export const readDurationMs = (name, fallback, root = document?.documentElement) => {
+const getDefaultRoot = () => globalThis.document?.documentElement || null;
+
+export const readDurationMs = (name, fallback, root = getDefaultRoot()) => {
     if (!root || typeof getComputedStyle !== 'function') return fallback;
 
     const raw = getComputedStyle(root).getPropertyValue(name).trim();
@@ -64,7 +66,7 @@ export const readDurationMs = (name, fallback, root = document?.documentElement)
     return Number.isFinite(value) ? value : fallback;
 };
 
-export const getLoopTiming = (root = document?.documentElement) => ({
+export const getLoopTiming = (root = getDefaultRoot()) => ({
     previewReleaseMs: readDurationMs('--duration-fast', 180, root),
     resolveMs: readDurationMs('--duration-slow', 480, root) * 2
 });
