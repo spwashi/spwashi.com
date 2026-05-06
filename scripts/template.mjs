@@ -15,8 +15,10 @@
  *   <spw-site-head></spw-site-head>
  *     Generates the standard route head from page vars.
  *     Optional attrs: analytics="off", prepaint="off", site_script="off",
+ *     analytics_engine="none|custom", analytics_src="/path/to/script.js",
  *     preconnect="https://example.com|https://cdn.example.com",
  *     modulepreloads="/public/js/module.js|/public/js/other.js".
+ *     Analytics defaults to none; an engine must be declared explicitly.
  *
  *   <spw-site-header current="Settings" indicator="settings"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
@@ -328,6 +330,25 @@ function renderModulePreloadLinks(value = '') {
     .join('\n');
 }
 
+function renderAnalyticsScript(vars) {
+  const engine = firstValue(vars.analytics_engine, vars.analytics, vars.head_analytics, 'none').toLowerCase();
+  if (!engine || isOff(engine) || engine === 'none') return '';
+
+  const src = firstValue(vars.analytics_src, vars.analytics_script_src);
+  if (!src) return '';
+
+  const attrs = [
+    `src="${attrEscape(src)}"`,
+    'defer',
+    `data-spw-analytics-engine="${attrEscape(engine)}"`,
+  ];
+
+  const site = firstValue(vars.analytics_site, vars.analytics_domain);
+  if (site) attrs.push(`data-site="${attrEscape(site)}"`);
+
+  return `    <script ${attrs.join(' ')}></script>`;
+}
+
 function renderSettingsPreflightScript() {
   return '    <script data-spw-settings-preflight src="/public/js/runtime/spw-prepaint-state.js"></script>';
 }
@@ -419,7 +440,7 @@ function renderSiteHead(vars) {
   const extraScripts = renderExtraScripts(vars.extra_scripts);
   const pageJsonLd = renderPageJsonLd(vars);
   const breadcrumbs = renderBreadcrumbJsonLd(vars);
-  const includeAnalytics = !isOff(firstValue(vars.analytics, vars.head_analytics));
+  const analyticsScript = renderAnalyticsScript(vars);
   const includePrepaint = !isOff(firstValue(vars.prepaint, vars.head_prepaint));
   const includeSiteScript = !isOff(firstValue(vars.site_script, vars.head_site_script));
   const stylesheetHref = firstValue(vars.stylesheet, vars.site_stylesheet, '/public/css/style.css');
@@ -448,7 +469,7 @@ function renderSiteHead(vars) {
     `    <link href="${attrEscape(stylesheetHref)}" rel="stylesheet" />`,
     extraStyles,
     '',
-    includeAnalytics ? '    <script data-domain="spwashi.com" defer src="https://plausible.io/js/script.js"></script>' : '',
+    analyticsScript,
     includeSiteScript ? `    <script src="${attrEscape(siteScriptSrc)}" type="module"></script>` : '',
     extraScripts,
     '',

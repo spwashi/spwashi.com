@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi - Privacy and Local State"
+    description="A plain-language privacy and local state guide for spwashi.com: analytics posture, local browser storage, notes, settings, service worker state, and reset paths."
+    canonical="https://spwashi.com/privacy/"
+    og_title="Spwashi - Privacy and Local State"
+    og_description="A plain-language guide to what spwashi.com stores locally, what leaves the browser, and how to inspect or reset local state."
+    keywords="privacy, local state, local storage, settings, analytics, service worker, browser storage, spwashi"
+></spw-page>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body
+    data-spw-surface="privacy"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="privacy local-state browser"
+    data-spw-context="reference"
+    data-spw-wonder="locality consent inspectability"
+    data-spw-page-family="policy"
+    data-spw-page-modes="read inspect reset"
+    data-spw-page-role="privacy-register"
+    data-spw-layout="reading"
+    data-spw-related-routes="/settings/|/design/runtime/|/tools/|/care/|/services/care/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<spw-site-header
+    current="Privacy"
+    current_href="/privacy/"
+    indicator="privacy"
+    nav_items="Home:/|Privacy:/privacy/|Settings:/settings/|Runtime:/design/runtime/|Tools:/tools/|Care:/care/|Contact:/contact/"
+></spw-site-header>
+
+<main id="main-content" tabindex="-1" aria-labelledby="privacy-title">
+    <article class="site-frame site-hero" id="privacy-overview" data-spw-kind="frame" data-spw-role="privacy-register" data-spw-context="reference" data-spw-wonder="locality consent inspectability">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#privacy-overview">#&gt;privacy</a>
+            <div class="spec-strip">
+                <span class="spec-pill">no default third-party analytics</span>
+                <span class="spec-pill">local browser state</span>
+                <span class="spec-pill">reset paths</span>
+            </div>
+        </div>
+
+        <p class="page-kicker">Privacy / Local State / Browser Trust</p>
+        <h1 id="privacy-title">The privacy model should be easy to inspect.</h1>
+        <p>
+            Spwashi is mostly a static site with progressive browser features. Some features remember preferences,
+            visits, notes, checkpoints, or drafts in this browser so the surface can feel continuous across visits.
+            Those records are local unless a specific feature says otherwise.
+        </p>
+        <nav class="frame-operators" aria-label="Privacy shortcuts">
+            <a class="operator-chip" href="#analytics-posture">? analytics</a>
+            <a class="operator-chip" href="#local-state">^ local state</a>
+            <a class="operator-chip" href="#reset-paths">! reset paths</a>
+            <a class="operator-chip" href="/settings/#stored-data">@ saved data</a>
+            <a class="operator-chip" href="/design/runtime/">~ runtime lab</a>
+        </nav>
+    </article>
+
+    <section class="site-frame" id="analytics-posture" data-spw-kind="frame" data-spw-role="analytics-policy">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#analytics-posture">?"analytics_posture"</a>
+            <h2>Analytics posture</h2>
+        </header>
+        <p>
+            Plausible is no longer emitted by the shared template and legacy Plausible tags have been removed from
+            source pages. The head template now requires analytics to be declared explicitly with an engine and script
+            source. If no engine is configured, no analytics script is rendered.
+        </p>
+        <pre><code>&lt;spw-page
+  analytics_engine="custom"
+  analytics_src="/public/js/runtime/example-analytics.js"&gt;
+&lt;/spw-page&gt;</code></pre>
+    </section>
+
+    <section class="site-frame" id="local-state" data-spw-kind="frame" data-spw-role="local-state-inventory">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#local-state">^"local_state"</a>
+            <h2>Local state inventory</h2>
+        </header>
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>Settings</h3>
+                <p>Theme, density, typography, runtime display, and accessibility preferences live under the site settings key.</p>
+                <code>spw-site-settings</code>
+            </article>
+            <article class="frame-panel">
+                <h3>Notes</h3>
+                <p>Footer and settings notes are stored in this browser and can be cleared from the settings page.</p>
+                <code>spw-local-notes</code>
+            </article>
+            <article class="frame-panel">
+                <h3>Guide and visit state</h3>
+                <p>Collected handles, grounded visits, pins, and checkpoints make repeated browsing easier.</p>
+                <code>spw:guide-collection</code>
+            </article>
+            <article class="frame-panel">
+                <h3>Tool state</h3>
+                <p>Some tools, such as care, budgeting, RPG Wednesday, and seed cards, keep working data locally.</p>
+                <code>tool-specific localStorage keys</code>
+            </article>
+        </div>
+    </section>
+
+    <section class="site-frame" id="reset-paths" data-spw-kind="frame" data-spw-role="reset-guide">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#reset-paths">!"reset_paths"</a>
+            <h2>Reset paths</h2>
+        </header>
+        <ul class="frame-list">
+            <li>Use <a href="/settings/#presets">settings presets</a> or the deviation register to reset appearance and runtime preferences.</li>
+            <li>Use <a href="/settings/#settings-notes">local notes</a> to review or clear browser notes.</li>
+            <li>Use <a href="/settings/#stored-data">saved data and app status</a> to inspect service worker and cache state.</li>
+            <li>Use browser storage tools when you want to clear every local trace for this origin.</li>
+        </ul>
+        <p class="frame-note">
+            Sensitive working surfaces should say when data stays local. If a future feature sends data off-device,
+            that should be visible in the route copy, not hidden in implementation.
+        </p>
+    </section>
+</main>
+
+<spw-site-footer></spw-site-footer>
+</body>
+</html>
