@@ -27,6 +27,11 @@ import {
   markReflowReason,
   writeTuningAttributes,
 } from '../kernel/spw-instrumentation.js';
+import {
+  removeDatasetValues,
+  writeDatasetValues,
+  writeStyleValue,
+} from '../kernel/spw-dom-contracts.js';
 
 const SVG_HOST_SELECTOR = [
   '[data-spw-svg-host]',
@@ -50,6 +55,33 @@ const CSS_TUNINGS = Object.freeze({
   space: '--spw-svg-space',
   nodeFill: '--spw-svg-node-fill-mix',
 });
+const SVG_STYLE_PROPERTIES = Object.freeze([
+  '--spw-svg-brand-accent',
+  '--spw-svg-brand-field',
+  '--spw-svg-pointer-x',
+  '--spw-svg-pointer-y',
+  '--spw-svg-pointer-x-ratio',
+  '--spw-svg-pointer-y-ratio',
+  '--spw-svg-pointer-intensity',
+  '--spw-svg-pointer-lift',
+  '--spw-svg-motion-rate',
+  '--spw-svg-node-fill-mix',
+  '--spw-svg-space',
+  '--spw-svg-stroke-scale',
+  '--spw-svg-flow-dash',
+  '--spw-svg-flow-gap',
+  '--spw-svg-label-spacing',
+]);
+const SVG_DATASET_KEYS = Object.freeze([
+  'spwSvgPalette',
+  'spwSvgPaletteReason',
+  'spwSvgTuneMotion',
+  'spwSvgTuneContrast',
+  'spwSvgPointer',
+  'spwSvgPointerState',
+  'spwSvgPointerX',
+  'spwSvgPointerY',
+]);
 
 export const SPW_SVG_PALETTES = Object.freeze({
   brand: Object.freeze({
@@ -155,9 +187,11 @@ const readNumber = (value, min, max) => {
   return String(clamp(parsed, min, max));
 };
 
-const writeStyleIfPresent = (host, property, value) => {
-  if (value === undefined || value === null || value === '') return;
-  host.style.setProperty(property, String(value));
+const resetSvgTunability = (host) => {
+  SVG_STYLE_PROPERTIES.forEach((property) => {
+    writeStyleValue(host, property, '');
+  });
+  removeDatasetValues(host, SVG_DATASET_KEYS);
 };
 
 export function applySvgTunability(target, options = {}) {
@@ -171,26 +205,35 @@ export function applySvgTunability(target, options = {}) {
   const paletteName = normalizeToken(options.palette || '');
   const palette = SPW_SVG_PALETTES[paletteName];
 
+  resetSvgTunability(host);
+
   if (palette) {
-    writeStyleIfPresent(host, '--spw-svg-brand-accent', palette.accent);
-    writeStyleIfPresent(host, '--spw-svg-brand-field', palette.field);
-    writeStyleIfPresent(host, '--spw-svg-node-fill-mix', palette.nodeFill);
-    host.dataset.spwSvgPalette = paletteName;
-    host.dataset.spwSvgPaletteReason = palette.reason;
+    writeStyleValue(host, '--spw-svg-brand-accent', palette.accent);
+    writeStyleValue(host, '--spw-svg-brand-field', palette.field);
+    writeStyleValue(host, '--spw-svg-node-fill-mix', palette.nodeFill);
+    writeDatasetValues(host, {
+      spwSvgPalette: paletteName,
+      spwSvgPaletteReason: palette.reason,
+    });
   }
 
   Object.entries(NUMERIC_TUNINGS).forEach(([key, property]) => {
-    writeStyleIfPresent(host, property, options[key]);
+    writeStyleValue(host, property, options[key]);
   });
   Object.entries(CSS_TUNINGS).forEach(([key, property]) => {
-    writeStyleIfPresent(host, property, options[key]);
+    writeStyleValue(host, property, options[key]);
   });
-  writeStyleIfPresent(host, '--spw-svg-label-spacing', options.labelSpacing);
+  writeStyleValue(host, '--spw-svg-label-spacing', options.labelSpacing);
 
-  if (MOTION_STATES.has(motion)) host.dataset.spwSvgTuneMotion = motion;
-  if (CONTRAST_STATES.has(contrast)) host.dataset.spwSvgTuneContrast = contrast;
-  if (pointer === 'none') delete host.dataset.spwSvgPointer;
-  else if (POINTER_MODES.has(pointer)) host.dataset.spwSvgPointer = pointer;
+  writeDatasetValues(host, {
+    spwSvgTuneMotion: MOTION_STATES.has(motion) ? motion : '',
+    spwSvgTuneContrast: CONTRAST_STATES.has(contrast) ? contrast : '',
+    spwSvgPointer: POINTER_MODES.has(pointer) ? pointer : '',
+  });
+
+  if (pointer === 'none') {
+    removeDatasetValues(host, ['spwSvgPointer']);
+  }
 
   writeTuningAttributes(host, {
     svgStroke: options.strokeScale,
@@ -322,7 +365,11 @@ const writePointerVars = (host, event) => {
   host.style.setProperty('--spw-svg-pointer-x-ratio', xRatio.toFixed(4));
   host.style.setProperty('--spw-svg-pointer-y-ratio', yRatio.toFixed(4));
   host.style.setProperty('--spw-svg-pointer-intensity', '1');
-  host.dataset.spwSvgPointerState = 'active';
+  writeDatasetValues(host, {
+    spwSvgPointerState: 'active',
+    spwSvgPointerX: xRatio.toFixed(4),
+    spwSvgPointerY: yRatio.toFixed(4),
+  });
 };
 
 const queuePointerWrite = (host, event) => {
@@ -344,16 +391,26 @@ const clearPointerHost = (host) => {
     globalThis.cancelAnimationFrame(state.frame);
   }
   state.frame = 0;
-  host.style.setProperty('--spw-svg-pointer-intensity', '0');
-  host.dataset.spwSvgPointerState = 'rest';
+  writeStyleValue(host, '--spw-svg-pointer-intensity', '0');
+  writeStyleValue(host, '--spw-svg-pointer-x', '');
+  writeStyleValue(host, '--spw-svg-pointer-y', '');
+  writeStyleValue(host, '--spw-svg-pointer-x-ratio', '');
+  writeStyleValue(host, '--spw-svg-pointer-y-ratio', '');
+  writeDatasetValues(host, {
+    spwSvgPointerState: 'rest',
+    spwSvgPointerX: '',
+    spwSvgPointerY: '',
+  });
 };
 
 function initPointerHost(host) {
   const pointerMode = normalizeToken(host.dataset.spwSvgPointer || '');
   if (!POINTER_MODES.has(pointerMode) || host.dataset.spwSvgPointerManaged === 'true') return;
 
-  host.dataset.spwSvgPointerManaged = 'true';
-  host.dataset.spwSvgPointerState ||= 'rest';
+  writeDatasetValues(host, {
+    spwSvgPointerManaged: 'true',
+    spwSvgPointerState: host.dataset.spwSvgPointerState || 'rest',
+  });
   markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-pointer', pointerMode] });
 
   host.addEventListener('pointerenter', (event) => {
