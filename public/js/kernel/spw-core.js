@@ -15,8 +15,10 @@
 
 import { bus } from '/public/js/kernel/spw-bus.js';
 import { groundElement } from '/public/js/interface/spw-haptics.js';
+import { createSpwLogger, markInstrumented } from '/public/js/kernel/spw-instrumentation.js';
 
 const KNOWLEDGE_TARGET_SELECTOR = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .spw-delimiter, [data-spw-groundable="true"]';
+const logger = createSpwLogger('spw-core');
 
 export function initSpwCore() {
     // Sustained hold on any operator chip or syntax token marks knowledge gained
@@ -33,7 +35,7 @@ export function initSpwCore() {
     // LLM / console hook: externally guide attention toward a cluster
     window.spwGuideHuman = (clusterName) => {
         highlightClusterWonder(clusterName);
-        console.log(`@ [core] guiding: ${clusterName}`);
+        logger.info('guiding attention', { clusterName });
     };
 }
 
@@ -58,7 +60,8 @@ function gainKnowledge(el) {
         groundElement(el, { key, text });
     }
 
-    console.log(`@ [core] knowledge: ${key}`);
+    markInstrumented(el, 'spw-core', { tags: ['knowledge'] });
+    logger.info('knowledge gained', { key });
     bus.emit('core:knowledge', { key, text }, { element: el });
 }
 

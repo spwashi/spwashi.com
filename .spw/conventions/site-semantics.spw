@@ -261,3 +261,39 @@ frame #composition-spellcasting
   surface design
   concept spellcasting browser disposition
   note "The browser is the field. Scripts are spells: small named gestures that alter the document in inspectable ways. Stylesheets are metaphilosophical disposition: they encode what a surface treats as calm, active, focused, readable, dimensional, or strange."
+
+frame #literate-browser-extension
+  role convention
+  surface design
+  concept literate_programming extensibility theming
+  note "Browser extension should be explainable from the document outward: field tokens, target selectors, state attributes, script gestures, and CSS-rendered results."
+
+frame #console-instrumentability
+  role convention
+  surface design
+  concept logging instrumentation browser_console
+  note "Portable scripts should expose intentional console inspection: mark touched targets, snapshot Spw dataset state, and log under a named namespace. Logs should help a reader understand the script's role and relationship to the document."
+
+frame #query-disposition
+  role convention
+  surface design
+  concept query_parameters theming palette reflow
+  note "Opt-in query parameters may tune CSS variables, color tokens, palette resonance, data attributes, and reflow reasons for documentation demos."
+
+frame #runtime-behavior-lab
+  role route
+  surface design/runtime
+  concept browser_runtime configurability console_instrumentation
+  note "The runtime behavior lab exposes query tuning, console inspection, and reflow reasons as documentation-first browser behavior."
+
+frame #performance-puppetry
+  role concept
+  surface design/runtime
+  concept performance puppetry browser_runtime
+  note "Performance puppetry treats scripts as named controllers, query strings as stage setup, stylesheets as disposition, and logs as narration of which controller moved which surface."
+
+frame #svg-art-runtime
+  role concept
+  surface design/runtime
+  concept svg_art performance puppetry
+  note "SVG art can be semantic markup, visual figure, and live puppet surface. Runtime docs should expose moved nodes, variable colors, repaint or reflow reasons, and controller namespaces."

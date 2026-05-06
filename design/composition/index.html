@@ -20,14 +20,14 @@
     data-spw-page-modes="reading inspect reuse"
     data-spw-page-role="composition-reference"
     data-spw-layout="reading"
-    data-spw-related-routes="/design/|/design/components/|/design/experiments/css/|/about/website/|/topics/software/spw/|/play/">
+    data-spw-related-routes="/design/|/design/runtime/|/design/components/|/design/experiments/css/|/about/website/|/topics/software/spw/|/play/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <spw-site-header
     current="Composition"
     current_href="/design/composition/"
     indicator="design"
-    nav_items="Design:/design/|Components:/design/components/|CSS Lab:/design/experiments/css/|Website:/about/website/|SPW:/topics/software/spw/|Play:/play/"
+    nav_items="Design:/design/|Runtime:/design/runtime/|Components:/design/components/|CSS Lab:/design/experiments/css/|Website:/about/website/|SPW:/topics/software/spw/|Play:/play/"
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="composition-title">
@@ -49,6 +49,15 @@
             aesthetic and behavior contracts visible while avoiding the complete route shell.
         </p>
 
+        <section class="frame-panel" aria-labelledby="browser-wonder-title" data-spw-kind="panel" data-spw-role="principle" data-spw-wonder="browser literate extensible">
+            <h2 id="browser-wonder-title">Browser wonder</h2>
+            <p>
+                A browser is an unusually generous runtime: markup can stay readable, stylesheets can express a
+                worldview, and scripts can add behavior without owning the whole document. The portable bundle should
+                preserve that wonder by making extension points legible in the source.
+            </p>
+        </section>
+
         <section class="frame-panel" aria-labelledby="css-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
             <h2 id="css-bundle-title">CSS composition bundle</h2>
             <p>
@@ -58,6 +67,9 @@
                 keep its own layout.
             </p>
             <pre><code>&lt;link rel="stylesheet" href="/public/css/spw-compose.css"&gt;</code></pre>
+            <p class="frame-note">
+                Direct file: <a href="/public/css/spw-compose.css">spw-compose.css</a>
+            </p>
         </section>
 
         <section class="frame-panel" aria-labelledby="js-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
@@ -73,6 +85,40 @@
   createLoopRecord,
   getPaletteResonanceSwatches
 } from '/public/js/spw-compose.js';</code></pre>
+            <p class="frame-note">
+                Direct file: <a href="/public/js/spw-compose.js">spw-compose.js</a>
+            </p>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="console-instrumentation-title" data-spw-kind="panel" data-spw-role="instrumentation">
+            <h2 id="console-instrumentation-title">Console instrumentability</h2>
+            <p>
+                The composition bundle includes small logging and inspection helpers for browser-console work. They do
+                not mount UI by themselves; they expose a deliberate console surface for explaining what a script spell
+                touched.
+            </p>
+            <pre><code>import {
+  installSpwCompositionConsole,
+  markInstrumented
+} from '/public/js/spw-compose.js';
+
+installSpwCompositionConsole(window);
+markInstrumented('[data-spw-kind="card"]', 'demo-spell');
+spwCompose.inspect('[data-spw-kind="card"]');</code></pre>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="query-disposition-title" data-spw-kind="panel" data-spw-role="query-disposition">
+            <h2 id="query-disposition-title">Query disposition</h2>
+            <p>
+                Documentation and demos can opt into URL-driven tuning. Query parameters can set CSS variables,
+                semantic data attributes, palette resonance, tuning attributes, and reflow reasons.
+            </p>
+            <pre><code>?spw-palette=craft
+&amp;spw-color-active-op=%23008080
+&amp;spw-var-shape-component=8px
+&amp;spw-log=spw-compose
+&amp;spw-tune-density=compact
+&amp;spw-reflow=density</code></pre>
         </section>
 
         <section class="frame-panel" aria-labelledby="reuse-boundary-title" data-spw-kind="panel" data-spw-role="boundary">
@@ -94,6 +140,22 @@
             <pre><code>// field + target + gesture + visible result
 writeDatasetValue(card, 'spwCast', 'preview');
 const record = createLoopRecord('preview', 'operator');</code></pre>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="literate-extension-title" data-spw-kind="panel" data-spw-role="extension-contract">
+            <h2 id="literate-extension-title">Literate extension contract</h2>
+            <p>
+                Extensible behavior should be explainable from the document outward. Name the field with CSS variables,
+                name the target with selectors or <code>data-spw-*</code> attributes, name the gesture in JS, and leave a
+                visible state that CSS can style.
+            </p>
+            <pre><code>&lt;article data-spw-kind="card" data-spw-cast="preview"&gt;
+  ...
+&lt;/article&gt;
+
+:where([data-spw-cast="preview"]) {
+  --spw-local-emphasis: 1;
+}</code></pre>
         </section>
     </article>
 </main>

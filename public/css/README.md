@@ -28,3 +28,11 @@ Spellcasting language is useful when documenting composition: CSS tokens define
 the field, component selectors define the target, and state attributes reveal the
 cast result. Stylesheets are the disposition of the surface: they encode what the
 browser should treat as calm, active, focused, readable, dimensional, or strange.
+
+For extensible theming, prefer custom properties and semantic attributes over
+route-specific selectors. A theme should be readable as a disposition layer before
+it becomes a pile of overrides.
+
+Query-driven demos can tune color and palette disposition with parameters like
+`spw-palette=craft`, `spw-color-active-op=%23008080`, and
+`spw-var-shape-component=8px` when JS opts into `applySpwQueryDisposition`.

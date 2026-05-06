@@ -7,6 +7,14 @@ module tree, not a pile of ad hoc helpers.
 contracts, palette utilities, attention contracts, and interaction loop records
 without mounting the full site runtime.
 
+It also exports `SPW_COMPOSITION_CONTRACT`, a small documentation object for the
+browser-field / script-spell / stylesheet-disposition model.
+
+For console-oriented work, it exports `createSpwLogger`,
+`markInstrumented`, `snapshotInstrumentationTarget`, and
+`installSpwCompositionConsole`. These helpers let a page expose
+`window.spwCompose` intentionally instead of relying on scattered ad hoc logs.
+
 ## Reading Order
 
 If you are trying to learn the runtime, read in this order:
@@ -49,6 +57,31 @@ the full site runtime.
 
 Scripts should read as spells: small repeatable actions that change the browser
 document in visible, inspectable ways.
+
+## Literate Extension Rule
+
+Portable behavior should be explainable from the document outward: name the field
+with tokens, name the target with selectors or `data-spw-*` attributes, name the
+gesture in JS, and leave visible state for CSS to render.
+
+## Console Instrumentability
+
+Console helpers should reveal the same model:
+
+- `markInstrumented(target, source)` writes `data-spw-instrumentation` and
+  `data-spw-debug-source`.
+- `snapshotInstrumentationTarget(target)` returns tag, classes, Spw dataset, and
+  optional CSS token values.
+- `installSpwCompositionConsole(window)` exposes `window.spwCompose.inspect`,
+  `window.spwCompose.mark`, and `window.spwCompose.log`.
+- `applySpwQueryDisposition(root)` applies opt-in query parameters such as
+  `spw-palette=craft`, `spw-color-active-op=%23008080`,
+  `spw-var-shape-component=8px`, `spw-tune-density=compact`, and
+  `spw-reflow=density`.
+- Logging is namespaced. Use `spw-log=spw-compose,spw-core` or `spw-log=*`
+  with `spw-log-level=debug|info|warn|error` to tune console output.
+- Loggers can describe their relationship to the page with `logger.describe()`
+  and can attach target snapshots with `logger.trace(message, target)`.
 
 ## Structural Rule
 

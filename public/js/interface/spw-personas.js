@@ -1,8 +1,10 @@
 import { bus } from '/public/js/kernel/spw-bus.js';
 import { initPersonaSelector } from '/public/js/interface/spw-persona-selector.js';
+import { createSpwLogger } from '/public/js/kernel/spw-instrumentation.js';
 
 const PERSONAS = ['viewer', 'doodler', 'scribe'];
 const STORAGE_KEY = 'spw-active-persona';
+const logger = createSpwLogger('spw-personas');
 
 let scribeTooltip = null;
 
@@ -25,7 +27,7 @@ export function initSpwPersonas() {
 
     bus.on('spirit:peak', () => {
         if (Math.random() > 0.8) {
-            console.log('@ [persona] spirit peak detected — suggests doodler@');
+            logger.info('spirit peak suggests doodler');
         }
     });
 }
@@ -93,7 +95,7 @@ function applyPersona(persona) {
     localStorage.setItem(STORAGE_KEY, persona);
     hideScribeTooltip(); 
     bus.emit('persona:active', { persona });
-    console.log(`@ [persona] active: ${persona}@`);
+    logger.info('active persona', { persona });
 }
 
 window.spwShiftPersona = (persona) => bus.emit('persona:shift', { persona });

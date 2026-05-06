@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<spw-page
+    title="Spwashi - Runtime Behavior Lab"
+    description="A design lab for inspecting and tuning Spwashi runtime behavior with query parameters, console helpers, reflow reasons, and CSS variable disposition."
+    canonical="https://spwashi.com/design/runtime/"
+    og_title="Spwashi - Runtime Behavior Lab"
+    og_description="Inspect and tune browser behavior, query-driven theming, reflow reasons, and console instrumentation for Spwashi composition."
+></spw-page>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console themes inspectability"
+    data-spw-route-family="design runtime documentation"
+    data-spw-context="analysis"
+    data-spw-wonder="browser runtime configurability console puppetry performance svg"
+    data-spw-page-family="design"
+    data-spw-page-modes="inspect tune debug"
+    data-spw-page-role="runtime-lab"
+    data-spw-layout="reading"
+    data-spw-related-routes="/design/|/design/composition/|/design/experiments/css/|/design/experiments/svg/|/design/components/|/play/|/settings/">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<spw-site-header
+    current="Runtime"
+    current_href="/design/runtime/"
+    indicator="design"
+    nav_items="Design:/design/|Composition:/design/composition/|CSS Lab:/design/experiments/css/|SVG Lab:/design/experiments/svg/|Components:/design/components/|Play:/play/|Settings:/settings/"
+></spw-site-header>
+
+<main id="main-content" tabindex="-1" aria-labelledby="runtime-lab-title">
+    <article class="site-frame" id="runtime-lab" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-wonder="browser runtime configurability console puppetry performance svg" data-spw-inspect="runtime_lab">
+        <div class="frame-topline">
+            <a class="frame-sigil" href="#runtime-lab">#&gt;runtime_lab</a>
+            <div class="spec-strip">
+                <span class="spec-pill">query tuning</span>
+                <span class="spec-pill">console inspection</span>
+                <span class="spec-pill">reflow reasons</span>
+                <span class="spec-pill">puppetry</span>
+                <span class="spec-pill">svg art</span>
+            </div>
+        </div>
+
+        <p class="page-kicker">Design / Runtime / Browser Behavior</p>
+        <h1 id="runtime-lab-title">Runtime behavior should be inspectable before it becomes configurable.</h1>
+
+        <p>
+            This page is for learning how browser behavior is tuned: URL parameters declare temporary disposition,
+            console helpers inspect the result, and data attributes explain why a surface may reflow.
+        </p>
+
+        <section class="frame-panel" id="performance-puppetry" aria-labelledby="performance-puppetry-title" data-spw-kind="panel" data-spw-role="performance-model" data-spw-wonder="puppetry performance browser svg">
+            <h2 id="performance-puppetry-title">Performance puppetry</h2>
+            <p>For live use, runtime behavior can become puppetry: query strings set the stage, scripts pull named strings, CSS changes disposition, SVG art carries visible figures, and logs narrate which controller moved which surface.</p>
+            <pre><code>const puppet = spwCompose.logger('stage-puppet', {
+  role: 'performance-controller',
+  owns: 'runtime-lab',
+  metaphor: 'puppet-string'
+});
+
+puppet.describe();
+puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
+        </section>
+
+        <section class="frame-panel" id="svg-art-runtime" aria-labelledby="svg-art-runtime-title" data-spw-kind="panel" data-spw-role="future-surface" data-spw-wonder="svg art performance">
+            <h2 id="svg-art-runtime-title">SVG art as a controllable surface</h2>
+            <p>SVG belongs in this model because it can be semantic markup, visual art, and a live puppet surface at the same time. Future scripts should expose which SVG node they move, which variable colors it reads, and which reflow or repaint cost it may introduce.</p>
+            <p><a class="operator-chip" href="/design/experiments/svg/">open SVG lab</a></p>
+        </section>
+
+        <section class="frame-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
+            <h2 id="query-controls-title">Query tuning links</h2>
+            <p>These links keep behavior visible in the URL so a tester, teammate, or language model can see the configuration without opening storage.</p>
+            <nav class="frame-operators" aria-label="Runtime query examples">
+                <a class="operator-chip" href="/design/runtime/?spw-palette=craft&spw-color-active-op=%23008080&spw-var-shape-component=8px&spw-tune-density=compact&spw-reflow=density#query-controls">^ craft compact</a>
+                <a class="operator-chip" href="/design/runtime/?spw-palette=software&spw-log=spw-compose,spw-core&spw-log-level=debug&spw-reflow=interaction#console-contract">@ console logging</a>
+                <a class="operator-chip" href="/design/runtime/?spw-var-material-blur=18px&spw-reflow=theme#reflow-contract">~ blur disposition</a>
+            </nav>
+        </section>
+
+        <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
+            <h2 id="console-contract-title">Console contract</h2>
+            <p>The portable bundle exposes a deliberate console API. Install it when a lab page needs inspection without mounting the whole site runtime.</p>
+            <pre><code>import { installSpwCompositionConsole } from '/public/js/spw-compose.js';
+
+installSpwCompositionConsole(window);
+spwCompose.query(document.documentElement);
+spwCompose.inspect('#runtime-lab');</code></pre>
+        </section>
+
+        <section class="frame-panel" id="logging-contract" aria-labelledby="logging-contract-title" data-spw-kind="panel" data-spw-role="logging-contract">
+            <h2 id="logging-contract-title">Namespaced logging</h2>
+            <p>Loggers stay quiet unless debug mode or a namespace query enables them. Each logger can describe its role, metaphor, owned surface, and target snapshot.</p>
+            <pre><code>?spw-log=spw-compose,spw-core&amp;spw-log-level=debug
+
+const logger = spwCompose.logger('demo-spell', {
+  role: 'query-lab',
+  owns: 'runtime-lab'
+});
+
+logger.describe();
+logger.trace('after query disposition', '#runtime-lab');</code></pre>
+        </section>
+
+        <section class="frame-panel" id="reflow-contract" aria-labelledby="reflow-contract-title" data-spw-kind="panel" data-spw-role="reflow-contract">
+            <h2 id="reflow-contract-title">Reflow reasons</h2>
+            <p>When behavior can move layout, write the reason and tuning scope. The point is not to prevent reflow; it is to make the cause inspectable.</p>
+            <pre><code>spwCompose.reflow('#runtime-lab', 'density', {
+  scope: 'document',
+  tuning: { density: 'compact' }
+});</code></pre>
+        </section>
+    </article>
+</main>
+
+<spw-site-footer></spw-site-footer>
+</body>
+</html>

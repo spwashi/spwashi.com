@@ -109,6 +109,10 @@
                 <nav class="frame-operators" aria-label="Design hub routes">
                     <a class="operator-chip" href="#design-circuits">~ circuits</a>
                     <a class="operator-chip" href="#context-stack"># context stack</a>
+                    <a class="operator-chip" href="#lab-behavior">@ lab behavior</a>
+                    <a class="operator-chip" href="/design/runtime/">@ runtime lab</a>
+                    <a class="operator-chip" href="/design/runtime/#performance-puppetry">~ puppetry</a>
+                    <a class="operator-chip" href="/design/runtime/#svg-art-runtime">^ SVG runtime</a>
                     <a class="operator-chip" href="#promptability-studio">@ prompt studio</a>
                     <a class="operator-chip" href="/design/components/">* component glossary</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">* RPG Wednesday</a>
@@ -118,6 +122,8 @@
                     <a class="operator-chip" href="/design/palettes/">^ palettes & colors</a>
                     <a class="operator-chip" href="/design/experiments/css/">^ CSS experiments</a>
                     <a class="operator-chip" href="/design/composition/"># composition bundles</a>
+                    <a class="operator-chip" href="/public/css/spw-compose.css">^ compose.css</a>
+                    <a class="operator-chip" href="/public/js/spw-compose.js">@ compose.js</a>
                     <a class="operator-chip" href="/design/experiments/svg/">^ SVG experiments</a>
                     <a class="operator-chip" href="#rendering-contexts">^ rendering tests</a>
                     <a class="operator-chip" href="#component-anatomy">^ component options</a>
@@ -313,6 +319,25 @@
                         <p class="design-qa-copy">After resetting, compare the route against the render and component labs.</p>
                     </article>
                 </div>
+
+                <section class="frame-panel" id="lab-behavior" aria-labelledby="lab-behavior-title" data-spw-kind="panel" data-spw-role="lab-behavior" data-spw-wonder="browser console query theming">
+                    <p class="frame-note">Lab behavior</p>
+                    <h3 id="lab-behavior-title">Expose behavior as links before hiding it in runtime state</h3>
+                    <p>Use query links to test color, palette, density, and reflow disposition. Use the console helpers when a script spell needs to show what it touched. This is also the start of performance puppetry: named controls moving visible surfaces, including SVG art later.</p>
+                    <nav class="frame-operators" aria-label="Design lab behavior links">
+                        <a class="operator-chip" href="/design/composition/"># composition docs</a>
+                        <a class="operator-chip" href="/design/runtime/#performance-puppetry">~ puppetry</a>
+                        <a class="operator-chip" href="/design/runtime/#svg-art-runtime">^ SVG runtime</a>
+                        <a class="operator-chip" href="/design/?spw-palette=craft&spw-color-active-op=%23008080&spw-var-shape-component=8px&spw-tune-density=compact&spw-reflow=density#lab-behavior">^ craft compact</a>
+                        <a class="operator-chip" href="/design/?spw-palette=software&spw-log=spw-compose,spw-core&spw-log-level=debug&spw-reflow=interaction#lab-behavior">@ console log</a>
+                        <a class="operator-chip" href="/public/css/spw-compose.css">^ compose.css</a>
+                        <a class="operator-chip" href="/public/js/spw-compose.js">@ compose.js</a>
+                    </nav>
+                    <pre><code>import { installSpwCompositionConsole } from '/public/js/spw-compose.js';
+installSpwCompositionConsole(window);
+spwCompose.query(document.documentElement);
+spwCompose.inspect('#lab-behavior');</code></pre>
+                </section>
 
                 <div class="frame-grid frame-grid--2up">
                     <article class="frame-panel">

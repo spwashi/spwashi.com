@@ -26,6 +26,10 @@
  * 2. Append to defs
  * 3. (Optional) expose via window.spwSvgFilters.register if you want runtime addition
  */
+import { createSpwLogger } from '/public/js/kernel/spw-instrumentation.js';
+
+const logger = createSpwLogger('spw-svg-filters');
+
 export function initSpwSvgFilters() {
     if (document.getElementById('spw-global-svg-filters')) return;
 
@@ -225,8 +229,8 @@ export function initSpwSvgFilters() {
         svg.appendChild(defs);
         document.body.appendChild(svg);
 
-        console.log('[Spw SVG Filters] Initialized successfully — 5 filters ready');
+        logger.info('initialized 5 filters');
     } catch (err) {
-        console.warn('[Spw SVG Filters] Failed to initialize (non-fatal — site still works)', err);
+        logger.warn('failed to initialize filters; continuing without them', err);
     }
 }
