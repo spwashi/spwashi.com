@@ -14,6 +14,9 @@
  *
  *   <spw-site-head></spw-site-head>
  *     Generates the standard route head from page vars.
+ *     Optional attrs: analytics="off", prepaint="off", site_script="off",
+ *     preconnect="https://example.com|https://cdn.example.com",
+ *     modulepreloads="/public/js/module.js|/public/js/other.js".
  *
  *   <spw-site-header current="Settings" indicator="settings"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
@@ -305,90 +308,32 @@ function renderExtraScripts(value = '') {
     .join('\n');
 }
 
+function isOff(value = '') {
+  return /^(?:0|false|no|off)$/i.test(normalizeContent(value));
+}
+
+function renderPreconnectLinks(value = '') {
+  return splitList(value)
+    .map((href) => {
+      const needsCrossorigin = /\/\/fonts\.gstatic\.com(?:\/|$)/i.test(href);
+      const crossorigin = needsCrossorigin ? ' crossorigin' : '';
+      return `    <link href="${attrEscape(href)}" rel="preconnect"${crossorigin} />`;
+    })
+    .join('\n');
+}
+
+function renderModulePreloadLinks(value = '') {
+  return splitList(value)
+    .map((href) => `    <link href="${attrEscape(href)}" rel="modulepreload" />`)
+    .join('\n');
+}
+
 function renderSettingsPreflightScript() {
-  return `    <script data-spw-settings-preflight>
-        (() => {
-            const root = document.documentElement;
-            const options = {
-                fontSize: ['small', 'normal', 'large'],
-                fontSizeScale: ['80', '90', '100', '110', '120'],
-                lineSpacing: ['compact', 'normal', 'loose'],
-                monospaceVariant: ['system', 'jetbrains', 'courier'],
-                headerOpacity: ['low', 'normal', 'high'],
-                colorMode: ['auto', 'light', 'dark'],
-                themePack: ['neutral-paper', 'oxide-ledger', 'electric-studio', 'ritual-vellum', 'copper-brace', 'glass-console'],
-                paletteResonance: ['route', 'craft', 'software', 'math'],
-                semanticDensity: ['minimal', 'normal', 'rich'],
-                enhancementLevel: ['minimal', 'balanced', 'rich'],
-                operatorSaturation: ['muted', 'normal', 'vibrant'],
-                reduceMotion: ['off', 'on'],
-                highContrast: ['off', 'on'],
-                grainIntensity: ['none', 'subtle', 'moderate', 'rich']
-            };
-            const defaults = {
-                fontSize: 'normal',
-                fontSizeScale: '100',
-                lineSpacing: 'normal',
-                monospaceVariant: 'jetbrains',
-                headerOpacity: 'normal',
-                colorMode: 'auto',
-                themePack: 'neutral-paper',
-                paletteResonance: 'route',
-                semanticDensity: 'minimal',
-                enhancementLevel: 'minimal',
-                operatorSaturation: 'normal',
-                reduceMotion: 'off',
-                highContrast: 'off',
-                grainIntensity: 'subtle'
-            };
-            const datasetNames = {
-                fontSize: 'spwFontSize',
-                fontSizeScale: 'spwFontSizeScale',
-                lineSpacing: 'spwLineSpacing',
-                monospaceVariant: 'spwMonospaceVariant',
-                headerOpacity: 'spwHeaderOpacity',
-                colorMode: 'spwColorMode',
-                themePack: 'spwThemePack',
-                paletteResonance: 'spwPaletteResonance',
-                semanticDensity: 'spwSemanticDensity',
-                enhancementLevel: 'spwEnhancementLevel',
-                operatorSaturation: 'spwOperatorSaturation',
-                reduceMotion: 'spwReduceMotion',
-                highContrast: 'spwHighContrast',
-                grainIntensity: 'spwGrainIntensity'
-            };
-            const lineHeight = { compact: '1.55', normal: '1.68', loose: '1.82' };
-            const monoFont = {
-                system: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
-                jetbrains: '"JetBrains Mono", monospace',
-                courier: '"Courier New", Courier, monospace'
-            };
-            const headerOpacity = { low: '0.76', normal: '0.9', high: '1' };
-            const fontPreset = { small: 0.93, normal: 1, large: 1.12 };
-            let stored = {};
-            try {
-                stored = JSON.parse(localStorage.getItem('spw-site-settings') || '{}') || {};
-            } catch {
-                stored = {};
-            }
-            const settings = {};
-            for (const [key, fallback] of Object.entries(defaults)) {
-                settings[key] = options[key]?.includes(stored[key]) ? stored[key] : fallback;
-                root.dataset[datasetNames[key]] = settings[key];
-            }
-            const scale = Number(settings.fontSizeScale) || 100;
-            root.style.setProperty('--font-size-scale', \`\${settings.fontSizeScale}%\`);
-            root.style.setProperty('--site-root-font-size', \`\${Math.round(scale * (fontPreset[settings.fontSize] || 1))}%\`);
-            root.style.setProperty('--site-line-height', lineHeight[settings.lineSpacing] || lineHeight.normal);
-            root.style.setProperty('--site-mono-font', monoFont[settings.monospaceVariant] || monoFont.jetbrains);
-            root.style.setProperty('--site-header-opacity', headerOpacity[settings.headerOpacity] || headerOpacity.normal);
-            root.dataset.spwSettingsPreflight = 'ready';
-        })();
-    </script>`;
+  return '    <script data-spw-settings-preflight src="/public/js/runtime/spw-prepaint-state.js"></script>';
 }
 
 function injectSettingsPreflight(source) {
-  if (source.includes('data-spw-settings-preflight')) return source;
+  if (source.includes('data-spw-settings-preflight') || source.includes('/public/js/runtime/spw-prepaint-state.js')) return source;
   const script = renderSettingsPreflightScript();
   const styleLinkPattern = /(\s*<link\b[^>]*\bhref=["']\/public\/css\/style\.css[^>]*>)/i;
   if (styleLinkPattern.test(source)) {
@@ -468,10 +413,17 @@ function renderSiteHead(vars) {
   const locale = normalizeLocaleCode(firstValue(vars.locale, vars.lang, 'en'));
   const sourceLocale = normalizeLocaleCode(firstValue(vars.source_locale, vars.source_lang, locale));
   const alternateLocaleLinks = renderAlternateLocaleLinks(vars);
+  const preconnectLinks = renderPreconnectLinks(firstValue(vars.preconnect, vars.head_preconnect));
+  const modulePreloadLinks = renderModulePreloadLinks(firstValue(vars.modulepreloads, vars.module_preloads, vars.head_modulepreloads));
   const extraStyles = renderExtraStyles(vars.extra_styles);
   const extraScripts = renderExtraScripts(vars.extra_scripts);
   const pageJsonLd = renderPageJsonLd(vars);
   const breadcrumbs = renderBreadcrumbJsonLd(vars);
+  const includeAnalytics = !isOff(firstValue(vars.analytics, vars.head_analytics));
+  const includePrepaint = !isOff(firstValue(vars.prepaint, vars.head_prepaint));
+  const includeSiteScript = !isOff(firstValue(vars.site_script, vars.head_site_script));
+  const stylesheetHref = firstValue(vars.stylesheet, vars.site_stylesheet, '/public/css/style.css');
+  const siteScriptSrc = firstValue(vars.site_script_src, vars.site_runtime, '/public/js/site.js');
 
   return [
     `    <title>${htmlEscape(title)}</title>`,
@@ -485,15 +437,19 @@ function renderSiteHead(vars) {
     `    <meta name="spw:locale" content="${attrEscape(locale)}" />`,
     `    <meta name="spw:source-locale" content="${attrEscape(sourceLocale)}" />`,
     '',
+    preconnectLinks,
+    modulePreloadLinks,
+    '',
     '    <link href="/favicon.ico" rel="icon" sizes="32x32" />',
     '    <link href="/public/images/favicon.svg" rel="icon" type="image/svg+xml" />',
     '    <link href="/public/images/apple-touch-icon.png" rel="apple-touch-icon" />',
     '    <link href="/manifest.webmanifest" rel="manifest" />',
-    '    <link href="/public/css/style.css" rel="stylesheet" />',
+    includePrepaint ? renderSettingsPreflightScript() : '',
+    `    <link href="${attrEscape(stylesheetHref)}" rel="stylesheet" />`,
     extraStyles,
     '',
-    '    <script data-domain="spwashi.com" defer src="https://plausible.io/js/script.js"></script>',
-    '    <script src="/public/js/site.js" type="module"></script>',
+    includeAnalytics ? '    <script data-domain="spwashi.com" defer src="https://plausible.io/js/script.js"></script>' : '',
+    includeSiteScript ? `    <script src="${attrEscape(siteScriptSrc)}" type="module"></script>` : '',
     extraScripts,
     '',
     `    <link href="${attrEscape(canonical)}" rel="canonical" />`,
@@ -747,13 +703,17 @@ function enhanceHtmlMetadata(source, warnings) {
 export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) {
   const warnings = [];
   if (!shouldProcess(source)) {
-    return { output: enhanceHtmlMetadata(source, warnings), vars: {}, warnings };
+    return { output: enhanceHtmlMetadata(injectSettingsPreflight(source), warnings), vars: {}, warnings };
   }
   const { vars, rest } = extractPageVars(source);
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
   const withSiteDirectives = await expandSiteDirectives(expanded, vars, warnings);
   const withPageAttrs = applyPageDocumentAttributes(withSiteDirectives, vars);
-  const output = enhanceHtmlMetadata(injectSettingsPreflight(substituteVars(withPageAttrs, vars, warnings)), warnings);
+  const substituted = substituteVars(withPageAttrs, vars, warnings);
+  const withPreflight = isOff(firstValue(vars.prepaint, vars.head_prepaint))
+    ? substituted
+    : injectSettingsPreflight(substituted);
+  const output = enhanceHtmlMetadata(withPreflight, warnings);
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);
