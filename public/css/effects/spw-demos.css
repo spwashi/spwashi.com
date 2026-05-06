@@ -325,7 +325,84 @@
 }
 
 /* ==========================================================================
-   4. Fiber Linguistics & Palimpsest Frames
+   4. Discoverable Demo Rails
+   ========================================================================== */
+
+:where(.spw-demo-rail) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-sm, 0.8rem);
+  margin-block: var(--space-md, 1rem);
+}
+
+:where(.spw-demo-card) {
+  --spw-demo-accent: var(--active-op-color, #008080);
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs, 0.5rem);
+  min-width: 0;
+  padding: var(--inset-component, 1rem);
+  overflow: clip;
+  color: var(--ink, #161c1d);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--spw-demo-accent) 7%, transparent), transparent 54%),
+    var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid color-mix(in srgb, var(--spw-demo-accent) 20%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 8px);
+  box-shadow: var(--shadow-xs, 0 1px 4px rgba(0, 0, 0, 0.04));
+}
+
+:where(.spw-demo-card::before) {
+  content: attr(data-spw-demo-kind);
+  justify-self: start;
+  padding: 0.14rem 0.44rem;
+  color: var(--spw-demo-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--spw-demo-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--spw-demo-accent) 22%, transparent);
+  border-radius: 999px;
+}
+
+:where(.spw-demo-card[data-spw-operator="action"]) { --spw-demo-accent: var(--op-action-color, #005959); }
+:where(.spw-demo-card[data-spw-operator="frame"]) { --spw-demo-accent: var(--op-frame-color, #008080); }
+:where(.spw-demo-card[data-spw-operator="object"]) { --spw-demo-accent: var(--op-object-color, #a67c00); }
+:where(.spw-demo-card[data-spw-operator="probe"]) { --spw-demo-accent: var(--op-probe-color, #4a2180); }
+:where(.spw-demo-card[data-spw-operator="ref"]) { --spw-demo-accent: var(--op-ref-color, #1d57a3); }
+:where(.spw-demo-card[data-spw-operator="surface"]) { --spw-demo-accent: var(--op-surface-color, #178282); }
+
+:where(.spw-demo-card h3) {
+  margin: 0;
+  font-size: var(--text-size-md, 1rem);
+  line-height: 1.25;
+}
+
+:where(.spw-demo-card p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.86rem);
+}
+
+:where(.spw-demo-card__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs, 0.35rem);
+  margin-top: var(--space-2xs, 0.4rem);
+}
+
+:where(.spw-demo-card__route) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.7rem);
+  overflow-wrap: anywhere;
+}
+
+/* ==========================================================================
+   5. Fiber Linguistics & Palimpsest Frames
    ========================================================================== */
 
 :where(.palimpsest-frame) {
@@ -417,7 +494,7 @@
 }
 
 /* ==========================================================================
-   5. Field Notes
+   6. Field Notes
    ========================================================================== */
 
 :where(.field-notes-grid) {
@@ -483,7 +560,7 @@
 }
 
 /* ==========================================================================
-   6. Responsive Adjustments
+   7. Responsive Adjustments
    ========================================================================== */
 
 @container (max-width: 32rem) {

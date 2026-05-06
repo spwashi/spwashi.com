@@ -42,3 +42,8 @@ SVG surfaces add a narrower, screenshot-friendly layer of tuning through
 `--spw-svg-brand-accent`, `--spw-svg-brand-field`, `--spw-svg-stroke-scale`,
 `--spw-svg-space`, `--spw-svg-flow-dash`, and `--spw-svg-flow-gap` through
 `applySvgQueryTunability`.
+
+Use `.spw-demo-rail` and `.spw-demo-card` from `public/css/effects/spw-demos.css`
+when a route needs tasteful internal marketing: a short reason, a reproducible
+demo link, and an honest next step. These are meant for discoverability and QA,
+not broad campaign banners.

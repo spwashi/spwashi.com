@@ -303,3 +303,9 @@ frame #svg-tunability-contract
   surface design/experiments/svg
   concept svg_art tunability branding screenshot_qa palette_reason
   note "SVG hosts can expose named palette reasons, brand color overrides, stroke cadence, internal spacing, pointer-field behavior, and screenshot-ready semantic labels through query-visible tuning."
+
+frame #quick-demo-rail
+  role component
+  surface design services about/website
+  concept discoverability internal_marketing qa_demo route_handoff
+  note "Quick demo rails expose small route-local proofs: why the surface matters, which live link demonstrates it, and what next step becomes available without turning the page into a campaign banner."
