@@ -1257,12 +1257,8 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 }
 
 :where(.site-header[data-spw-menu-topology="screen-field"] nav, body > header[data-spw-menu-topology="screen-field"] nav) {
-  position: absolute;
-  left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
-  right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
-  top: calc(100% + 0.18rem);
-  bottom: auto;
-  z-index: calc(var(--z-header) + 4);
+  position: relative;
+  z-index: calc(var(--z-header) + 1);
   display: grid;
   align-content: start;
   gap: 0.42rem;
