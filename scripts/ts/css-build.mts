@@ -1,4 +1,5 @@
 import { promises as fs } from 'node:fs';
+import { watch as watchFs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
@@ -30,6 +31,7 @@ type CssBuildPlanEntry = {
 
 type CssBuildOptions = {
   check: boolean;
+  watch: boolean;
 };
 
 function relativeRepoPath(absolutePath: string): string {
@@ -120,10 +122,62 @@ async function readIfExists(absolutePath: string): Promise<string | null> {
 function parseOptions(argv: string[]): CssBuildOptions {
   return {
     check: argv.includes('--check'),
+    watch: argv.includes('--watch'),
   };
 }
 
-export async function buildCssSources(options: CssBuildOptions = { check: false }): Promise<CssBuildResult[]> {
+function shouldIgnoreWatchPath(absolutePath: string): boolean {
+  const relativePath = relativeRepoPath(absolutePath);
+  return shouldIgnoreValidationPath(relativePath);
+}
+
+function watchDelay(): number {
+  return 100;
+}
+
+async function watchDirectory(directoryPath: string, onChange: (changedPath: string) => void, seen = new Set<string>()): Promise<void> {
+  if (seen.has(directoryPath)) return;
+  seen.add(directoryPath);
+
+  let entries;
+  try {
+    entries = await fs.readdir(directoryPath, { withFileTypes: true });
+  } catch {
+    return;
+  }
+
+  const watcher = watchFs(directoryPath, { recursive: false }, (eventType, fileName) => {
+    const changedPath = fileName ? path.resolve(directoryPath, String(fileName)) : directoryPath;
+    if (shouldIgnoreWatchPath(changedPath)) return;
+    onChange(changedPath);
+    if (eventType === 'rename') {
+      void watchDirectory(changedPath, onChange, seen);
+    }
+  });
+
+  watcher.on('error', (error) => {
+    console.warn(`[css-build] watcher error at ${relativeRepoPath(directoryPath)}: ${error.message}`);
+  });
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    await watchDirectory(path.join(directoryPath, entry.name), onChange, seen);
+  }
+}
+
+function watchFile(filePath: string, onChange: (changedPath: string) => void): void {
+  const watcher = watchFs(filePath, { recursive: false }, (_eventType, fileName) => {
+    const changedPath = fileName ? path.resolve(path.dirname(filePath), String(fileName)) : filePath;
+    if (shouldIgnoreWatchPath(changedPath)) return;
+    onChange(changedPath);
+  });
+
+  watcher.on('error', (error) => {
+    console.warn(`[css-build] watcher error at ${relativeRepoPath(filePath)}: ${error.message}`);
+  });
+}
+
+export async function buildCssSources(options: CssBuildOptions = { check: false, watch: false }): Promise<CssBuildResult[]> {
   const plan = await collectCssBuildPlan();
   const pipeline = plan.length ? await loadPostcssPipeline() : null;
   const results: CssBuildResult[] = [];
@@ -163,7 +217,7 @@ export async function main(): Promise<void> {
 
   if (!results.length) {
     console.log('[css-build] no src/styles/entries sources; public/css remains authoritative');
-    return;
+    if (!options.watch) return;
   }
 
   const verb = options.check ? 'checked' : 'built';
@@ -173,4 +227,38 @@ export async function main(): Promise<void> {
     const suffix = options.check ? '' : result.written ? ' updated' : ' fresh';
     console.log(`  ${mode}: ${result.source} -> ${result.output}${suffix}`);
   }
+
+  if (!options.watch) return;
+
+  let pending = false;
+  let timer: NodeJS.Timeout | null = null;
+
+  const rerun = async (changedPath: string) => {
+    console.log(`[css-build] change detected: ${relativeRepoPath(changedPath)}`);
+    pending = true;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(async () => {
+      timer = null;
+      if (!pending) return;
+      pending = false;
+      try {
+        await buildCssSources({ check: false, watch: false });
+        console.log('[css-build] watch rebuild complete');
+      } catch (error) {
+        console.error(`[css-build] watch rebuild failed: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }, watchDelay());
+  };
+
+  if (await pathExists(SOURCE_ENTRIES_DIR)) {
+    await watchDirectory(SOURCE_ENTRIES_DIR, rerun);
+  }
+
+  if (await pathExists(POSTCSS_CONFIG_PATH)) {
+    watchFile(POSTCSS_CONFIG_PATH, rerun);
+  }
+
+  await new Promise<void>(() => {
+    // Keep the process alive for filesystem watch mode.
+  });
 }
