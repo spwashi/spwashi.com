@@ -38,6 +38,7 @@
 [data-spw-page-family="experiment-lab"] .design-bundle-grid,
 [data-spw-page-family="experiment-lab"] .design-token-grid,
 [data-spw-page-family="experiment-lab"] .design-specimen-grid,
+[data-spw-page-family="experiment-lab"] .design-rule-grid,
 [data-spw-page-family="experiment-lab"] .design-reading-grid {
   display: grid;
   gap: var(--gap-surface);
@@ -115,6 +116,7 @@
 }
 
 [data-spw-page-family="experiment-lab"] .design-token-card,
+[data-spw-page-family="experiment-lab"] .design-rule-panel,
 [data-spw-page-family="experiment-lab"] .design-reading-card,
 [data-spw-page-family="experiment-lab"] .design-specimen-card {
   display: grid;
@@ -296,6 +298,135 @@
   border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--active-op-color) 42%, transparent);
 }
 
+[data-spw-page-family="experiment-lab"] .design-rule-stage {
+  --design-rule-accent: var(--active-op-color);
+  display: grid;
+  gap: var(--gap-surface);
+  margin-top: var(--gap-surface);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong) 32%, transparent);
+  border-radius: var(--shape-surface);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--design-rule-accent) 8%, transparent), transparent 34%),
+    color-mix(in srgb, var(--surface-strong) 96%, transparent);
+}
+
+[data-design-cascade-layer="tokens"] .design-rule-stage {
+  --design-rule-accent: var(--op-ref-color);
+}
+
+[data-design-cascade-layer="components"] .design-rule-stage {
+  --design-rule-accent: var(--op-frame-color);
+}
+
+[data-design-cascade-layer="ornament"] .design-rule-stage {
+  --design-rule-accent: var(--op-probe-color);
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-specimen {
+  display: grid;
+  gap: var(--gap-block-tight);
+  width: min(100%, 28rem);
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--design-rule-accent) 46%, var(--line));
+  border-radius: var(--shape-surface);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong) 92%, var(--design-rule-accent) 8%),
+      color-mix(in srgb, var(--surface) 96%, transparent)
+    );
+  box-shadow:
+    0 8px 18px rgba(10, 18, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+[data-design-cascade-layer="ornament"] .design-rule-specimen {
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--design-rule-accent) 28%, transparent),
+    0 14px 30px rgba(10, 18, 24, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+[data-design-selector-scope="region"] .design-rule-stage :where(.design-rule-specimen, .design-rule-readout, .operator-chip, .spec-pill) {
+  outline: 1px dashed color-mix(in srgb, var(--design-rule-accent) 46%, transparent);
+  outline-offset: 0.18rem;
+}
+
+[data-design-selector-scope="component"] .design-rule-specimen {
+  outline: 2px solid color-mix(in srgb, var(--design-rule-accent) 54%, transparent);
+  outline-offset: 0.22rem;
+}
+
+[data-design-selector-scope="slot"] .design-rule-slot {
+  border-radius: var(--shape-component);
+  background: color-mix(in srgb, var(--design-rule-accent) 12%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--design-rule-accent) 34%, transparent);
+  outline-offset: 0.12rem;
+}
+
+[data-design-box-model="content-box"] .design-rule-specimen {
+  box-sizing: content-box;
+  inline-size: min(100%, 24rem);
+  padding: 1.35rem;
+  border-width: 0.35rem;
+}
+
+[data-design-box-model="border-box"] .design-rule-specimen,
+[data-design-box-model="contained"] .design-rule-specimen {
+  box-sizing: border-box;
+}
+
+[data-design-box-model="contained"] .design-rule-specimen {
+  contain: layout paint;
+  inline-size: min(100%, 24rem);
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout {
+  display: grid;
+  gap: var(--gap-block-tight);
+  align-content: start;
+  min-width: 0;
+  padding: var(--inset-panel);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: var(--shape-surface);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout dl {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout dl div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--gap-inline-tight);
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout dt {
+  color: var(--ink-soft);
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout dd {
+  margin: 0;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-readout pre {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.8rem;
+  overflow-x: auto;
+  border-radius: var(--shape-component);
+  background: color-mix(in srgb, var(--surface-code) 92%, transparent);
+  color: color-mix(in srgb, white 90%, var(--design-rule-accent) 10%);
+}
+
 [data-spw-page-family="experiment-lab"] .design-svg-stage {
   display: grid;
   gap: var(--gap-surface);
@@ -348,5 +479,9 @@
 @media (min-width: 64rem) {
   [data-spw-page-family="experiment-lab"] .design-specimen-grid--wide {
     grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.9fr);
+  }
+
+  [data-spw-page-family="experiment-lab"] .design-rule-stage {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
   }
 }

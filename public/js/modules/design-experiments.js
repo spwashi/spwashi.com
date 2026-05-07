@@ -15,6 +15,35 @@ const VARIABLE_VALUE_SELECTOR = '[data-design-css-var-value]';
 const VARIABLE_RESET_SELECTOR = '[data-design-css-var-reset]';
 const VARIABLE_STATUS_SELECTOR = '[data-design-css-var-status]';
 const VARIABLE_STORAGE_KEY = 'spw-design-css-variable-lab';
+const RULE_BENCH_SELECTOR = '[data-design-css-rule-bench]';
+const RULE_CONTROL_SELECTOR = '[data-design-rule-axis][data-design-rule-value]';
+const RULE_READOUT_SELECTOR = '[data-design-rule-readout]';
+const RULE_CODE_SELECTOR = '[data-design-rule-code]';
+const RULE_STATUS_SELECTOR = '[data-design-rule-status]';
+
+const RULE_DATASET_KEYS = Object.freeze({
+  boxModel: 'designBoxModel',
+  cascadeLayer: 'designCascadeLayer',
+  selectorScope: 'designSelectorScope',
+});
+
+const RULE_LABELS = Object.freeze({
+  boxModel: Object.freeze({
+    'border-box': 'border-box',
+    'content-box': 'content-box',
+    contained: 'contained border-box',
+  }),
+  cascadeLayer: Object.freeze({
+    tokens: 'tokens',
+    components: 'components',
+    ornament: 'ornament',
+  }),
+  selectorScope: Object.freeze({
+    region: 'region',
+    component: 'component',
+    slot: 'slot',
+  }),
+});
 
 function clampNumber(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -76,6 +105,12 @@ function getVariableLabs(root) {
   if (!(root instanceof HTMLElement)) return [];
   if (root.matches(VARIABLE_LAB_SELECTOR)) return [root];
   return Array.from(root.querySelectorAll(VARIABLE_LAB_SELECTOR));
+}
+
+function getRuleBenches(root) {
+  if (!(root instanceof HTMLElement)) return [];
+  if (root.matches(RULE_BENCH_SELECTOR)) return [root];
+  return Array.from(root.querySelectorAll(RULE_BENCH_SELECTOR));
 }
 
 function getControlValue(control) {
@@ -201,6 +236,88 @@ function bindVariableLab(lab, scope) {
   };
 }
 
+function getRuleState(bench) {
+  return {
+    boxModel: bench.dataset.designBoxModel || 'border-box',
+    cascadeLayer: bench.dataset.designCascadeLayer || 'components',
+    selectorScope: bench.dataset.designSelectorScope || 'component',
+  };
+}
+
+function renderRuleCode(state) {
+  const selector = state.selectorScope === 'region'
+    ? '[data-design-css-rule-bench] *'
+    : state.selectorScope === 'slot'
+      ? '.design-rule-specimen [data-design-rule-slot]'
+      : '.design-rule-specimen';
+  const layer = state.cascadeLayer === 'tokens'
+    ? '--active-op-color: var(--op-ref-color);'
+    : state.cascadeLayer === 'ornament'
+      ? 'box-shadow: 0 0 0 3px var(--active-op-color);'
+      : 'border-color: var(--active-op-color);';
+  const box = state.boxModel === 'content-box'
+    ? 'box-sizing: content-box;'
+    : 'box-sizing: border-box;';
+
+  return `${selector} {\n  ${box}\n  ${layer}\n}`;
+}
+
+function syncRuleBench(bench) {
+  if (!(bench instanceof HTMLElement)) return;
+  const state = getRuleState(bench);
+
+  bench.querySelectorAll(RULE_READOUT_SELECTOR).forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    const key = node.getAttribute('data-design-rule-readout');
+    node.textContent = RULE_LABELS[key]?.[state[key]] || state[key] || 'unset';
+  });
+
+  bench.querySelectorAll(RULE_CODE_SELECTOR).forEach((node) => {
+    if (node instanceof HTMLElement) node.textContent = renderRuleCode(state);
+  });
+
+  bench.querySelectorAll(RULE_CONTROL_SELECTOR).forEach((control) => {
+    if (!(control instanceof HTMLElement)) return;
+    const axis = control.getAttribute('data-design-rule-axis');
+    const value = control.getAttribute('data-design-rule-value');
+    const active = axis && value && state[axis] === value;
+    control.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+function bindRuleBench(bench) {
+  if (!(bench instanceof HTMLElement)) return () => {};
+
+  syncRuleBench(bench);
+
+  const controls = Array.from(bench.querySelectorAll(RULE_CONTROL_SELECTOR));
+  const handleClick = (event) => {
+    const control = event.currentTarget;
+    if (!(control instanceof HTMLElement)) return;
+
+    const axis = control.getAttribute('data-design-rule-axis');
+    const value = control.getAttribute('data-design-rule-value');
+    const datasetKey = RULE_DATASET_KEYS[axis];
+    if (!datasetKey || !value) return;
+
+    bench.dataset[datasetKey] = value;
+    syncRuleBench(bench);
+    writeStatus(
+      bench.querySelector(RULE_STATUS_SELECTOR),
+      `Rule bench set ${axis} to ${value}.`,
+      'success'
+    );
+  };
+
+  controls.forEach((control) => {
+    control.addEventListener('click', handleClick);
+  });
+
+  return () => {
+    controls.forEach((control) => control.removeEventListener('click', handleClick));
+  };
+}
+
 function writeStatus(node, message, type = 'info') {
   if (!(node instanceof HTMLElement)) return;
   node.textContent = message;
@@ -268,6 +385,7 @@ function syncRoot(root, settings = getSiteSettings()) {
   getVariableLabs(root).forEach((lab) => {
     syncVariableControls(lab);
   });
+  getRuleBenches(root).forEach(syncRuleBench);
 }
 
 function applyBundle(button, root) {
@@ -346,6 +464,7 @@ export function initDesignExperiments(root = document) {
     Array.from(scope.querySelectorAll(BUNDLE_SELECTOR)).map((button) => bindBundleButton(button, scope))
   ));
   const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab, scope)));
+  const ruleCleanups = roots.flatMap((scope) => getRuleBenches(scope).map(bindRuleBench));
 
   const syncAll = (settings = getSiteSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
@@ -361,6 +480,7 @@ export function initDesignExperiments(root = document) {
     cleanup() {
       cleanups.forEach((cleanup) => cleanup());
       variableCleanups.forEach((cleanup) => cleanup());
+      ruleCleanups.forEach((cleanup) => cleanup());
       off?.();
     },
     refresh() {

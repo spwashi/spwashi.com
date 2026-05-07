@@ -87,6 +87,7 @@
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
                     <a class="operator-chip" href="#bundle-register">~ bundles</a>
                     <a class="operator-chip" href="#css-specimens">^ specimens</a>
+                    <a class="operator-chip" href="#css-rule-bench">% rule bench</a>
                     <a class="operator-chip" href="#css-variable-lab">$ variables</a>
                     <a class="operator-chip" href="#css-token-register">? token register</a>
                     <a class="operator-chip" href="/design/experiments/svg/">open SVG experiments</a>
@@ -242,6 +243,84 @@
                             <p>Hover matching chips and compare how far the resonance spreads. That is the field, not just decoration.</p>
                         </article>
                     </div>
+                </div>
+            </section>
+
+            <section class="site-frame design-experiment-frame" id="css-rule-bench" data-design-css-rule-bench data-design-selector-scope="component" data-design-cascade-layer="components" data-design-box-model="border-box" data-spw-kind="frame" data-spw-role="lab" data-spw-context="analysis" data-spw-feature="css-rule-bench">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#css-rule-bench">% "css_rule_bench"</a>
+                    <h2>CSS Rule Anatomy Bench</h2>
+                </header>
+                <p class="frame-note">
+                    Rules become easier to learn when selector scope, cascade layer, and box model are visible at the same time. Change one axis, then read the specimen before touching another.
+                </p>
+
+                <div class="design-rule-grid">
+                    <article class="design-rule-panel">
+                        <h3>Selector Scope</h3>
+                        <p>Choose whether the rule addresses the whole region, one component, or a slot inside the component.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Selector scope choices">
+                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="region">region</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="component">component</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="selectorScope" data-design-rule-value="slot">slot</button>
+                        </div>
+                    </article>
+
+                    <article class="design-rule-panel">
+                        <h3>Cascade Layer</h3>
+                        <p>Move the same idea through token, component, and ornament responsibilities.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Cascade layer choices">
+                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="tokens">tokens</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="components">components</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="cascadeLayer" data-design-rule-value="ornament">ornament</button>
+                        </div>
+                    </article>
+
+                    <article class="design-rule-panel">
+                        <h3>Box Model</h3>
+                        <p>Compare predictable sizing with a content-box rule that lets padding and border change the apparent footprint.</p>
+                        <div class="design-experiment-axis" role="group" aria-label="Box model choices">
+                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="border-box">border-box</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="content-box">content-box</button>
+                            <button class="operator-chip" type="button" data-design-rule-axis="boxModel" data-design-rule-value="contained">contained</button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="design-rule-stage" aria-label="CSS rule anatomy specimen">
+                    <article class="design-rule-specimen" data-design-rule-target>
+                        <div class="frame-topline design-rule-slot" data-design-rule-slot="header">
+                            <span class="frame-sigil">#&gt;rule_specimen</span>
+                            <span class="spec-pill">component</span>
+                        </div>
+                        <h3 class="design-rule-slot" data-design-rule-slot="heading">A rule is an address plus a responsibility.</h3>
+                        <p class="design-rule-slot" data-design-rule-slot="body">Selector scope decides what is addressed. Cascade layer decides which responsibility is being expressed. The box model decides whether the component keeps its promised footprint.</p>
+                        <div class="design-rule-slot design-css-chip-cloud" data-design-rule-slot="actions">
+                            <a class="operator-chip" href="#css-token-register">read token</a>
+                            <a class="operator-chip" href="#css-variable-lab">tune variable</a>
+                        </div>
+                    </article>
+
+                    <aside class="design-rule-readout" aria-label="Current CSS rule model">
+                        <dl>
+                            <div>
+                                <dt>selector</dt>
+                                <dd><code data-design-rule-readout="selectorScope">component</code></dd>
+                            </div>
+                            <div>
+                                <dt>layer</dt>
+                                <dd><code data-design-rule-readout="cascadeLayer">components</code></dd>
+                            </div>
+                            <div>
+                                <dt>box</dt>
+                                <dd><code data-design-rule-readout="boxModel">border-box</code></dd>
+                            </div>
+                        </dl>
+                        <pre><code data-design-rule-code>[data-design-css-rule-bench] .design-rule-specimen {
+  box-sizing: border-box;
+}</code></pre>
+                        <p class="design-variable-status" data-design-rule-status>Use the controls to make a rule visible.</p>
+                    </aside>
                 </div>
             </section>
 
