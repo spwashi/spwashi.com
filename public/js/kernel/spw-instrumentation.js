@@ -8,6 +8,100 @@ const QUERY_PREFIXES = Object.freeze({
   data: 'spw-data-',
   tune: 'spw-tune-',
 });
+export const SPW_QUERY_ALIASES = Object.freeze({
+  log: Object.freeze(['spw-log', 'log']),
+  logLevel: Object.freeze(['spw-log-level', 'log-level']),
+  meaning: Object.freeze(['spw-meaning', 'meaning']),
+  palette: Object.freeze(['spw-palette', 'palette']),
+  physics: Object.freeze(['spw-physics', 'physics']),
+  reflow: Object.freeze(['spw-reflow', 'reflow']),
+});
+
+export const SPW_PHYSICS_PRESETS = Object.freeze({
+  calm: Object.freeze({
+    data: Object.freeze({ spwPhysics: 'calm' }),
+    cssVars: Object.freeze({
+      '--cinematic-intensity': '0.82',
+      '--cinematic-depth-scale': '0.78',
+      '--cinematic-outline-scale': '0.84',
+      '--cinematic-wash-scale': '0.72',
+      '--cinematic-glow-scale': '0.7',
+      '--spw-motion-puppet-response': '0.24',
+    }),
+  }),
+  tactile: Object.freeze({
+    data: Object.freeze({ spwPhysics: 'tactile' }),
+    cssVars: Object.freeze({
+      '--cinematic-intensity': '1',
+      '--cinematic-depth-scale': '1.08',
+      '--cinematic-outline-scale': '1',
+      '--cinematic-wash-scale': '0.9',
+      '--cinematic-glow-scale': '0.88',
+      '--spw-motion-puppet-response': '0.46',
+    }),
+  }),
+  puppet: Object.freeze({
+    data: Object.freeze({ spwPhysics: 'puppet' }),
+    cssVars: Object.freeze({
+      '--cinematic-intensity': '1.12',
+      '--cinematic-depth-scale': '1.18',
+      '--cinematic-outline-scale': '1.14',
+      '--cinematic-wash-scale': '1.04',
+      '--cinematic-glow-scale': '1.12',
+      '--spw-motion-puppet-response': '0.72',
+    }),
+  }),
+  screenshot: Object.freeze({
+    data: Object.freeze({ spwPhysics: 'screenshot' }),
+    cssVars: Object.freeze({
+      '--cinematic-intensity': '0.92',
+      '--cinematic-depth-scale': '1',
+      '--cinematic-outline-scale': '1.24',
+      '--cinematic-wash-scale': '0.7',
+      '--cinematic-glow-scale': '0.58',
+      '--spw-motion-puppet-response': '0.18',
+    }),
+  }),
+});
+
+export const SPW_MEANING_PRESETS = Object.freeze({
+  quiet: Object.freeze({
+    data: Object.freeze({
+      spwMeaningMode: 'quiet',
+      spwSemanticDensity: 'minimal',
+      spwShowSemanticMetadata: 'off',
+    }),
+    cssVars: Object.freeze({ '--spw-semantic-density-factor': '0' }),
+  }),
+  readable: Object.freeze({
+    data: Object.freeze({
+      spwMeaningMode: 'readable',
+      spwSemanticDensity: 'normal',
+      spwShowSemanticMetadata: 'off',
+    }),
+    cssVars: Object.freeze({ '--spw-semantic-density-factor': '0.42' }),
+  }),
+  inspect: Object.freeze({
+    data: Object.freeze({
+      spwMeaningMode: 'inspect',
+      spwSemanticDensity: 'rich',
+      spwShowSemanticMetadata: 'on',
+    }),
+    cssVars: Object.freeze({ '--spw-semantic-density-factor': '1' }),
+  }),
+  screenshot: Object.freeze({
+    data: Object.freeze({
+      spwMeaningMode: 'screenshot',
+      spwSemanticDensity: 'rich',
+      spwShowSemanticMetadata: 'on',
+      spwSpecPills: 'on',
+    }),
+    cssVars: Object.freeze({
+      '--spw-semantic-density-factor': '1',
+      '--spw-screenshot-meaning-contrast': '1',
+    }),
+  }),
+});
 
 export const SPW_LOG_LEVELS = Object.freeze({
   DEBUG: 'debug',
@@ -129,11 +223,23 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     cssVariable: 'spw-var-<token>=<value>',
     colorVariable: 'spw-color-<token>=<color>',
     dataAttribute: 'spw-data-<name>=<value>',
-    logNamespaces: 'spw-log=<on|*|namespace[,namespace]>',
-    logLevel: 'spw-log-level=<debug|info|warn|error>',
-    paletteResonance: 'spw-palette=<route|craft|software|math>',
+    logNamespaces: 'spw-log|log=<on|*|namespace[,namespace]>',
+    logLevel: 'spw-log-level|log-level=<debug|info|warn|error>',
+    paletteResonance: 'spw-palette|palette=<route|craft|software|math>',
+    physicsPreset: 'spw-physics|physics=<calm|tactile|puppet|screenshot>',
+    meaningPreset: 'spw-meaning|meaning=<quiet|readable|inspect|screenshot>',
     tuningAttribute: 'spw-tune-<name>=<value>',
-    reflowReason: 'spw-reflow=<reason>',
+    reflowReason: 'spw-reflow|reflow=<reason>',
+  }),
+  queryAliases: SPW_QUERY_ALIASES,
+  queryExtension: Object.freeze({
+    aliases: 'parse/apply option: { aliases: { family: ["name", "other-name"] } }',
+    presets: 'parse/apply option: { physicsPresets, meaningPresets }',
+    handlers: 'parse/apply option: { handlers: [(entry) => boolean] }',
+  }),
+  presets: Object.freeze({
+    physics: SPW_PHYSICS_PRESETS,
+    meaning: SPW_MEANING_PRESETS,
   }),
   reflowReasons: SPW_REFLOW_REASONS,
   relationships: SPW_LOG_RELATIONSHIPS,
@@ -146,6 +252,42 @@ const normalizeReflowReason = (reason = SPW_REFLOW_REASONS.INTERACTION) => {
     ? normalized
     : SPW_REFLOW_REASONS.INTERACTION;
 };
+
+const freezeAliasSets = (aliases = {}) => Object.fromEntries(
+  Object.entries(aliases).map(([family, names]) => [
+    family,
+    new Set(Array.isArray(names) || names instanceof Set ? [...names].map(String) : []),
+  ])
+);
+
+const mergeAliasFamily = (defaults = [], additions = []) => [
+  ...new Set([
+    ...(Array.isArray(defaults) ? defaults : [...defaults || []]),
+    ...(Array.isArray(additions) || additions instanceof Set ? [...additions] : []),
+  ].map(String).filter(Boolean)),
+];
+
+export function createSpwQueryContract(options = {}) {
+  const aliasEntries = Object.fromEntries(
+    Object.entries(SPW_QUERY_ALIASES).map(([family, names]) => [
+      family,
+      mergeAliasFamily(names, options.aliases?.[family]),
+    ])
+  );
+
+  Object.entries(options.aliases || {}).forEach(([family, names]) => {
+    if (!aliasEntries[family]) aliasEntries[family] = mergeAliasFamily([], names);
+  });
+
+  return Object.freeze({
+    aliases: freezeAliasSets(aliasEntries),
+    physicsPresets: options.physicsPresets || SPW_PHYSICS_PRESETS,
+    meaningPresets: options.meaningPresets || SPW_MEANING_PRESETS,
+    handlers: Object.freeze([...(options.handlers || [])].filter((handler) => typeof handler === 'function')),
+  });
+}
+
+export const SPW_QUERY_CONTRACT = createSpwQueryContract();
 
 const writeTuningDatasetValue = (element, key, value) => {
   const normalizedKey = toDatasetKey(`${TUNING_PREFIX}-${normalizeToken(key)}`);
@@ -209,16 +351,32 @@ export function markReflowReason(target, reason = SPW_REFLOW_REASONS.INTERACTION
   return element;
 }
 
-export function parseSpwQueryDisposition(search = globalThis.location?.search || '') {
+export function parseSpwQueryDisposition(search = globalThis.location?.search || '', options = {}) {
   const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  const queryContract = options.queryContract || createSpwQueryContract(options);
   const disposition = {
     cssVars: {},
     data: {},
+    presets: {},
     reflowReason: '',
     tuning: {},
   };
 
   for (const [key, value] of params.entries()) {
+    const entry = {
+      key,
+      value,
+      disposition,
+      contract: queryContract,
+      helpers: {
+        normalizeToken,
+        toCssCustomProperty,
+        toDatasetKey,
+        normalizeReflowReason,
+      },
+    };
+    if (queryContract.handlers.some((handler) => handler(entry))) continue;
+
     if (key.startsWith(QUERY_PREFIXES.cssVar)) {
       const property = toCssCustomProperty(key.slice(QUERY_PREFIXES.cssVar.length));
       if (property) disposition.cssVars[property] = value;
@@ -243,24 +401,46 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
       continue;
     }
 
-    if (key === 'spw-reflow') {
+    if (queryContract.aliases.reflow?.has(key)) {
       disposition.reflowReason = normalizeReflowReason(value);
       continue;
     }
 
-    if (key === 'spw-palette') {
+    if (queryContract.aliases.palette?.has(key)) {
       disposition.data.spwPaletteResonance = normalizeToken(value);
       disposition.tuning.palette = normalizeToken(value);
       continue;
     }
 
-    if (key === 'spw-log') {
+    if (queryContract.aliases.physics?.has(key)) {
+      const preset = normalizeToken(value);
+      if (queryContract.physicsPresets[preset]) {
+        Object.assign(disposition.cssVars, queryContract.physicsPresets[preset].cssVars);
+        Object.assign(disposition.data, queryContract.physicsPresets[preset].data);
+        disposition.presets.physics = preset;
+        disposition.tuning.physics = preset;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.meaning?.has(key)) {
+      const preset = normalizeToken(value);
+      if (queryContract.meaningPresets[preset]) {
+        Object.assign(disposition.cssVars, queryContract.meaningPresets[preset].cssVars);
+        Object.assign(disposition.data, queryContract.meaningPresets[preset].data);
+        disposition.presets.meaning = preset;
+        disposition.tuning.meaning = preset;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.log?.has(key)) {
       disposition.data.spwLog = value;
       disposition.tuning.log = value;
       continue;
     }
 
-    if (key === 'spw-log-level') {
+    if (queryContract.aliases.logLevel?.has(key)) {
       disposition.data.spwLogLevel = normalizeToken(value);
       disposition.tuning.logLevel = normalizeToken(value);
     }
@@ -273,7 +453,7 @@ export function applySpwQueryDisposition(target = globalThis.document?.documentE
   const element = resolveTarget(target, options.root);
   if (!element) return null;
 
-  const disposition = parseSpwQueryDisposition(options.search);
+  const disposition = parseSpwQueryDisposition(options.search, options);
 
   Object.entries(disposition.cssVars).forEach(([property, value]) => {
     element.style.setProperty(property, value);

@@ -108,6 +108,7 @@
 
                 <nav class="frame-operators" aria-label="Design hub routes">
                     <a class="operator-chip" href="#design-circuits">~ circuits</a>
+                    <a class="operator-chip" href="#query-disposition">? query setups</a>
                     <a class="operator-chip" href="#context-stack"># context stack</a>
                     <a class="operator-chip" href="#lab-behavior">@ lab behavior</a>
                     <a class="operator-chip" href="/design/runtime/">@ runtime lab</a>
@@ -160,9 +161,9 @@
                         <h3>Change The Room</h3>
                         <p>Use the runtime lab to tune density, palette, and log output from a URL that QA can repeat.</p>
                         <div class="spw-demo-card__actions">
-                            <a class="operator-chip" href="/design/runtime/?spw-palette=software&amp;spw-log=spw-compose,spw-svg-tunability&amp;spw-log-level=debug&amp;spw-reflow=interaction#query-controls">open runtime demo</a>
+                            <a class="operator-chip" href="/design/runtime/?palette=software&amp;log=spw-compose,spw-svg-tunability&amp;log-level=debug&amp;reflow=interaction#query-controls">open runtime demo</a>
                         </div>
-                        <span class="spw-demo-card__route">/design/runtime/?spw-log=...</span>
+                        <span class="spw-demo-card__route">/design/runtime/?palette=software&amp;log=...</span>
                     </article>
                     <article class="spw-demo-card" data-spw-demo-kind="learn" data-spw-operator="action">
                         <h3>Find A Grounded Next Step</h3>
@@ -269,6 +270,42 @@
                 </div>
             </section>
 
+            <section class="site-frame" id="query-disposition" data-spw-role="control" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="calibration reproducibility interpretation" data-spw-affordance="tune" data-spw-liminality="instrument" data-spw-category-family="runtime" data-spw-locality="medium" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__query_disposition" data-spw-context-relevance="query parameters plugins lab equipment painting semantics runtime presets">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#query-disposition">?query_disposition</a>
+                    <h2>URLs As Lab Notes And Paint Trays</h2>
+                </header>
+                <p class="frame-note">A query string should be a repeatable setup: enough state to reproduce a screenshot, compare a page under different conditions, or hand a fork a vocabulary it can rename without editing parser internals.</p>
+
+                <div class="frame-grid frame-grid--3up">
+                    <article class="frame-panel" data-spw-query-family="calibration">
+                        <h3>Calibrate The Instrument</h3>
+                        <p>Use readable parameters for experimental conditions: <code>physics=puppet</code>, <code>meaning=inspect</code>, <code>palette=software</code>, and <code>reflow=layout</code>.</p>
+                        <p><a class="operator-chip" href="/design/?physics=puppet&amp;meaning=inspect&amp;palette=software&amp;reflow=layout#query-disposition">try calibrated view</a></p>
+                    </article>
+
+                    <article class="frame-panel" data-spw-query-family="painting">
+                        <h3>Keep The Semantics Painterly</h3>
+                        <p>Presets should feel like studio choices: ground, wash, contrast, outline, motion, and reading density. The runtime still writes explicit data attributes and CSS variables so the result remains inspectable.</p>
+                        <p><a class="operator-chip" href="/design/?physics=screenshot&amp;meaning=screenshot&amp;palette=craft#query-disposition">prepare screenshot</a></p>
+                    </article>
+
+                    <article class="frame-panel" data-spw-query-family="plugin">
+                        <h3>Leave Room For Forks</h3>
+                        <p>Plugins can build a query contract with custom aliases, preset maps, or handlers. A fork could rename <code>physics</code> to <code>exposure</code>, <code>meaning</code> to <code>reading</code>, or add its own instrument without patching core parsing.</p>
+                        <p><a class="operator-chip" href="/public/js/spw-compose.js">inspect compose.js</a></p>
+                    </article>
+                </div>
+
+                <div class="frame-operators" aria-label="Query disposition examples">
+                    <a class="operator-chip" href="/design/runtime/?physics=calm&amp;meaning=readable#query-controls">calm readable</a>
+                    <a class="operator-chip" href="/design/runtime/?physics=puppet&amp;meaning=inspect&amp;log=site-runtime&amp;log-level=debug#console-contract">puppet console</a>
+                    <a class="operator-chip" href="/design/runtime/?palette=math&amp;reflow=theme#query-controls">palette measurement</a>
+                    <a class="operator-chip" href="/design/palettes/?palette=craft#palette-resonance">palette bench</a>
+                    <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field#svg-tunability-contract">SVG field trace</a>
+                </div>
+            </section>
+
             <section class="site-frame" id="context-stack" data-site-settings-scope data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="tune" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_design_design_hub__context_stack" data-spw-context-relevance="global local data attributes palette resonance design system">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#context-stack">#&gt;context_stack</a>
@@ -359,8 +396,8 @@
                         <a class="operator-chip" href="/design/composition/"># composition docs</a>
                         <a class="operator-chip" href="/design/runtime/#performance-puppetry">~ puppetry</a>
                         <a class="operator-chip" href="/design/runtime/#svg-art-runtime">^ SVG runtime</a>
-                        <a class="operator-chip" href="/design/?spw-palette=craft&spw-color-active-op=%23008080&spw-var-shape-component=8px&spw-tune-density=compact&spw-reflow=density#lab-behavior">^ craft compact</a>
-                        <a class="operator-chip" href="/design/?spw-palette=software&spw-log=spw-compose,spw-core&spw-log-level=debug&spw-reflow=interaction#lab-behavior">@ console log</a>
+                        <a class="operator-chip" href="/design/?palette=craft&amp;spw-color-active-op=%23008080&amp;spw-var-shape-component=8px&amp;spw-tune-density=compact&amp;reflow=density#lab-behavior">^ craft compact</a>
+                        <a class="operator-chip" href="/design/?palette=software&amp;log=spw-compose,spw-core&amp;log-level=debug&amp;reflow=interaction#lab-behavior">@ console log</a>
                         <a class="operator-chip" href="/public/css/spw-compose.css">^ compose.css</a>
                         <a class="operator-chip" href="/public/js/spw-compose.js">@ compose.js</a>
                     </nav>

@@ -39,6 +39,9 @@
   --cinematic-outline-scale: 1;
   --cinematic-wash-scale: 1;
   --cinematic-glow-scale: 1;
+  --spw-motion-puppet-response: 0.36;
+  --spw-motion-puppet-lag: calc(18ms + (var(--spw-motion-puppet-response) * 90ms));
+  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -2px);
 
   /* Developmental climate handoff */
   --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
@@ -107,6 +110,49 @@
 }
 
 /* ==========================================================================
+   3b. Query-tunable physics presets
+   --------------------------------------------------------------------------
+   These are deliberately root-level dispositions. Query strings and console
+   tools can choose them without rewriting component CSS.
+   ========================================================================== */
+
+:where(html[data-spw-physics="calm"]) {
+  --cinematic-intensity: 0.82;
+  --cinematic-depth-scale: 0.78;
+  --cinematic-outline-scale: 0.84;
+  --cinematic-wash-scale: 0.72;
+  --cinematic-glow-scale: 0.7;
+  --spw-motion-puppet-response: 0.24;
+}
+
+:where(html[data-spw-physics="tactile"]) {
+  --cinematic-intensity: 1;
+  --cinematic-depth-scale: 1.08;
+  --cinematic-outline-scale: 1;
+  --cinematic-wash-scale: 0.9;
+  --cinematic-glow-scale: 0.88;
+  --spw-motion-puppet-response: 0.46;
+}
+
+:where(html[data-spw-physics="puppet"]) {
+  --cinematic-intensity: 1.12;
+  --cinematic-depth-scale: 1.18;
+  --cinematic-outline-scale: 1.14;
+  --cinematic-wash-scale: 1.04;
+  --cinematic-glow-scale: 1.12;
+  --spw-motion-puppet-response: 0.72;
+}
+
+:where(html[data-spw-physics="screenshot"]) {
+  --cinematic-intensity: 0.92;
+  --cinematic-depth-scale: 1;
+  --cinematic-outline-scale: 1.24;
+  --cinematic-wash-scale: 0.7;
+  --cinematic-glow-scale: 0.58;
+  --spw-motion-puppet-response: 0.18;
+}
+
+/* ==========================================================================
    4. Shared tracked elements
    ========================================================================== */
 
@@ -134,6 +180,32 @@
     opacity          var(--cinematic-release-duration) var(--cinematic-release-ease),
     text-shadow      var(--cinematic-dwell-duration) var(--cinematic-dwell-ease),
     transform        var(--cinematic-dwell-duration) var(--cinematic-dwell-ease);
+}
+
+:where(html[data-spw-physics="puppet"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+):is(:hover, :focus-visible, [data-spw-gesture], [data-spw-annotation-state="pinned"]) {
+  transform: translateY(var(--spw-motion-puppet-lift));
+  transition-delay: var(--spw-motion-puppet-lag);
+}
+
+:where(html[data-spw-physics="screenshot"]) :where(
+  [data-spw-kind],
+  [data-spw-role],
+  .operator-chip,
+  .spec-pill,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+) {
+  transition-duration: 0ms;
+  animation: none;
 }
 
 :where(

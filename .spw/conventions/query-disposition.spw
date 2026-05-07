@@ -1,0 +1,45 @@
+# Query Disposition
+#
+# URL query strings as shareable design instruments: part lab setup, part
+# paint tray, part plugin contract.
+
+#>query_disposition
+#:convention #!runtime
+#:layer #!pragmatics
+
+claim = `Query parameters are a design surface when they describe reproducible conditions instead of incidental debug switches.`
+
+metaphors: .{
+ lab = `A query string can record calibrated conditions: palette, physics, meaning density, logging, and reflow reason.`
+ painting = `The same controls can feel like ground, wash, contrast, outline, and motion when the public vocabulary needs studio language.`
+ plugin = `Forks should be able to rename vocabulary or add instruments without editing parser internals.`
+}[reg=facet]
+
+default_vocabulary: #[
+ `spw-physics|physics`,
+ `spw-meaning|meaning`,
+ `spw-palette|palette`,
+ `spw-log|log`,
+ `spw-log-level|log-level`,
+ `spw-reflow|reflow`
+][reg=set]
+
+anti_commitments: #[
+ `One-letter aliases are too strong a public promise right now.`,
+ `Readable short names are preferable to cryptic shorthand for collaborators and screenshots.`,
+ `The parser should accept custom query contracts from plugins and forks.`
+][reg=set]
+
+implementation: .{
+ portable_entry = ~"../../public/js/spw-compose.js"
+ parser = ~"../../public/js/kernel/spw-instrumentation.js"
+ design_surface = ~"../../design/index.html#query-disposition"
+ api = `createSpwQueryContract({ aliases, physicsPresets, meaningPresets, handlers })`
+}[reg=facet]
+
+invariants: #[
+ `Canonical spw-* names remain available for collision-resistant embedding.`,
+ `Readable aliases are for authored links and QA links.`,
+ `Plugin handlers may extend query behavior but should leave inspectable data attributes, tuning attributes, or CSS variables behind.`,
+ `A screenshot-worthy URL should explain what was tuned without requiring the console.`
+][reg=set]

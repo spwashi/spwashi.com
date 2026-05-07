@@ -79,6 +79,18 @@ Console helpers should reveal the same model:
   `spw-palette=craft`, `spw-color-active-op=%23008080`,
   `spw-var-shape-component=8px`, `spw-tune-density=compact`, and
   `spw-reflow=density`.
+- Query presets compose with the same mechanism. The canonical form is
+  `spw-physics=calm|tactile|puppet|screenshot` and
+  `spw-meaning=quiet|readable|inspect|screenshot`, while ergonomic aliases
+  such as `physics=puppet&meaning=inspect` are accepted for quick QA links,
+  screenshots, and repeatable lab setups.
+- Query vocabulary is configurable. Forks and plugins can call
+  `createSpwQueryContract({ aliases, physicsPresets, meaningPresets, handlers })`
+  and pass that contract into `parseSpwQueryDisposition`,
+  `applySpwQueryDisposition`, or `window.spwCompose.query`. Use this when a
+  studio wants different names for the same instruments: brush, wash, exposure,
+  calibration, reading mode, or any local vocabulary that should remain typed in
+  the URL instead of hard-coded into parser internals.
 - Logging is namespaced. Use `spw-log=spw-compose,spw-core` or `spw-log=*`
   with `spw-log-level=debug|info|warn|error` to tune console output.
 - Loggers can describe their relationship to the page with `logger.describe()`

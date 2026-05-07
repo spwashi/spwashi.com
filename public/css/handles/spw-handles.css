@@ -559,6 +559,40 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.58);
 }
 
+:where(html[data-spw-meaning-mode="quiet"]) :where(
+  .spw-component-meta,
+  .spw-component-guides,
+  .spw-semantic-seam,
+  .spw-section-handle-shell
+) {
+  opacity: 0.78;
+}
+
+:where(html[data-spw-meaning-mode="inspect"]) :where(
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation,
+  [data-spw-annotation-match="true"]
+) {
+  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent),
+    var(--handle-shadow-rest);
+}
+
+:where(html[data-spw-meaning-mode="screenshot"]) :where(
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation,
+  .operator-chip,
+  .spec-pill,
+  [data-spw-annotation-match="true"]
+) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
+}
+
 /* ==========================================================================
    6. Hover / focus / keyboard states
    ========================================================================== */

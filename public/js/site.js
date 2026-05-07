@@ -10,6 +10,10 @@ import {
   writeDatasetValueIfMissing,
   writeStyleValue,
 } from './kernel/spw-dom-contracts.js';
+import {
+  applySpwQueryDisposition,
+  installSpwCompositionConsole,
+} from './kernel/spw-instrumentation.js';
 
 /**
  * site.js
@@ -1852,6 +1856,18 @@ async function bootSite() {
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
+  const composeApi = installSpwCompositionConsole(window, {
+    namespace: 'site-runtime',
+    role: 'runtime',
+    metaphor: 'composition-console',
+    owns: 'query disposition, runtime inspection, tuning hooks',
+  });
+  const queryDisposition = applySpwQueryDisposition(HTML, {
+    source: 'site-runtime',
+    scope: 'document',
+  });
+  runtimeCtx.queryDisposition = queryDisposition;
+  runtimeCtx.compose = composeApi;
   setPageState(PAGE_STATES.BOOTING);
   runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
 

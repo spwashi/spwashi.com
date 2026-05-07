@@ -23,6 +23,7 @@
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @annotation_layer: ~"./conventions/annotation-layer.spw"
+@query_disposition: ~"./conventions/query-disposition.spw"
 @philosophy: ~"./philosophy/index.spw"
 @timing_data_localization: ~"./philosophy/timing-data-localization.spw"
 @graph: ~"./graph.spw"
@@ -72,6 +73,7 @@ translations: .{
  reviews = #[@reviews, @site_semantics][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
  annotation_layer = #[@annotation_layer, @attention_field, @site_semantics][reg=set]
+ query_disposition = #[@query_disposition, @style_development, @site_semantics][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
@@ -96,6 +98,7 @@ dispatch: .{
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
  annotation_layer = @annotation_layer
+ query_disposition = @query_disposition
  philosophy = @philosophy
  timing_data_localization = @timing_data_localization
  graph = @graph
