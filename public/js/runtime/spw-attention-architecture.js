@@ -23,6 +23,11 @@
  * --------------------------------------------------------------------------
  */
 
+import {
+  SPW_LOG_RELATIONSHIPS,
+  createSpwLogger,
+} from '/public/js/kernel/spw-instrumentation.js';
+
 const HANDLE_SELECTOR = '.spw-section-handle';
 const HANDLE_SHELL_CLASS = 'spw-section-handle-shell';
 const OPERATOR_SECTION_SELECTOR = [
@@ -55,6 +60,14 @@ const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
 const HANDLE_TRAVEL_SETTLE_MS = 340;
 const HANDLE_COMPACT_QUERY = '(max-width: 720px)';
+let lastSectionLogKey = '';
+let lastProbeLogKey = '';
+const logger = createSpwLogger('attention-architecture', {
+  role: 'runtime',
+  metaphor: 'attention-field',
+  owns: 'section locomotion, operator resonance probe',
+  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe',
+});
 
 export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
   selectors: Object.freeze({
@@ -365,6 +378,16 @@ function writePageSectionDatasets(snapshot) {
       edge,
     },
   }));
+
+  const logKey = `${snapshot.currentId}:${snapshot.phase}:${snapshot.source}`;
+  if (logKey !== lastSectionLogKey) {
+    lastSectionLogKey = logKey;
+    logger.debug(
+      `section ${snapshot.phase}: ${snapshot.currentLabel}`,
+      { ...snapshot, edge },
+      SPW_LOG_RELATIONSHIPS.LIFECYCLE
+    );
+  }
 }
 
 function initSectionHandle(root) {
@@ -662,8 +685,16 @@ function initResonanceProbe(root) {
 
   function apply() {
     const op = probeFocus || probeHover;
-    if (op) html.setAttribute(PROBE_ATTR, op);
-    else html.removeAttribute(PROBE_ATTR);
+    const nextLogKey = op || 'cleared';
+    const shouldLog = nextLogKey !== lastProbeLogKey;
+    lastProbeLogKey = nextLogKey;
+    if (op) {
+      html.setAttribute(PROBE_ATTR, op);
+      if (shouldLog) logger.debug('resonance probe set', { operator: op }, SPW_LOG_RELATIONSHIPS.GESTURE);
+    } else {
+      html.removeAttribute(PROBE_ATTR);
+      if (shouldLog) logger.debug('resonance probe cleared', {}, SPW_LOG_RELATIONSHIPS.GESTURE);
+    }
   }
 
   function onFocusIn(event) {

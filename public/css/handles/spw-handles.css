@@ -459,7 +459,8 @@ html[data-spw-color-mode="dark"] .operator-chip {
   .frame-sigil,
   .frame-card-sigil,
   .spw-component-tag,
-  .spw-guide-chip
+  .spw-guide-chip,
+  .header-annotation
 )[data-spw-grounded="true"]:not([aria-current="page"]) {
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
@@ -534,7 +535,7 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   text-transform: uppercase;
 }
 
-:where(.spw-component-tag, .spw-guide-chip):is(:hover, :focus-visible) {
+:where(.spw-component-tag, .spw-guide-chip, .header-annotation):is(:hover, :focus-visible) {
   border-color: color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 28%, transparent);
   background: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--delight-color, var(--teal, #008080)) 12%);
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--delight-color, var(--teal, #008080)) 16%);
@@ -542,6 +543,20 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
     0 0 0 1px color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 12%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
   outline: none;
+}
+
+:where([data-spw-annotation-match="true"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
+  outline-offset: 2px;
+}
+
+:where([data-spw-annotation-state="preview"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.34);
+}
+
+:where([data-spw-annotation-state="pinned"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.58);
 }
 
 /* ==========================================================================

@@ -1,0 +1,39 @@
+# Annotation Layer
+#
+# Runtime convention for learnable guide handles that connect shell copy,
+# current page regions, semantic chrome, and console inspection.
+
+#>annotation_layer
+#:runtime #!convention
+#:layer #!pragmatics
+
+claim = `Annotations should behave like small handles into the current page structure, not like decorative labels. A visitor can preview, pin, inspect, and release a concept; the DOM and console show the same state.`
+
+gesture_loop: #[
+ `notice: a compact handle is visible where the concept naturally belongs, usually the shell or a section heading.`,
+ `preview: hover or focus writes data-spw-annotation-state='preview' and highlights matching regions.`,
+ `pin: click, Enter, Space, or hold writes data-spw-annotation-state='pinned'.`,
+ `inspect: window.spwAnnotations.snapshot() exposes the active concept, state, source, active section, and matched regions.`,
+ `release: Escape, second click, blur, or pointer leave returns the layer to idle unless pinned.`
+][reg=set]
+
+html_contract: .{
+ handle = `Use data-spw-annotation-handle on controls that teach a concept. Header templates emit .header-annotation when header_annotation is provided.`
+ region_match = `Regions participate through existing data-spw-kind, data-spw-role, data-spw-context, data-spw-feature, data-spw-page-family, data-spw-role-cluster, data-spw-category-family, data-spw-meaning, and data-spw-wonder.`
+ root_state = `The runtime writes data-spw-annotation, data-spw-annotation-scope, data-spw-annotation-state, and data-spw-annotation-source to html and body.`
+ region_state = `Matched regions receive data-spw-annotation-match='true', data-spw-annotation, and data-spw-annotation-state.`
+}
+
+module_contract: .{
+ attention = `spw-attention-architecture.js owns current section state and emits spw:section-locomotion-state.`
+ annotation = `spw-annotation-layer.js listens for section state, handles gestures, writes annotation state, and exposes window.spwAnnotations.`
+ semantic_chrome = `spw-semantic-chrome.js owns semantic popovers for generated semantic chips. Annotation handles should stay compatible with that interaction language.`
+ guide_badge = `spw-guide-badge.js owns browse, inspect, and collect vocabulary for small handles. Annotation handles participate as ambient guide targets.`
+ disclosure = `spw-shell-disclosure.js owns shell pressure, topology, and menu disclosure. It should not own annotation meaning, but annotation state may respond to shell context.`
+}
+
+open_questions: #[
+ .{ ask = `Which route-level annotation names should be canonical: field-guide, workbench, recipe, offer, reference, runtime, or another set?` },
+ .{ ask = `Should pinned annotations become collectible guide badges, or remain temporary inspection state?` },
+ .{ ask = `Should annotation matching be token-based only, or should routes declare explicit data-spw-annotation-target values?` }
+][reg=set]

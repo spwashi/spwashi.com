@@ -1453,6 +1453,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'annotation-layer',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-annotation-handle], [data-spw-header-annotation]',
+    rootMode: 'single',
+    load: () => import('./runtime/spw-annotation-layer.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwAnnotationLayer;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

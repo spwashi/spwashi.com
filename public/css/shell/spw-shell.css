@@ -48,10 +48,10 @@
   --page-section-gap-tight: clamp(1.3rem, 2.8vw, 2rem);
 
   /* Header */
-  --shell-header-height: var(--header-height, 4rem);
-  --shell-header-min-height: 3.75rem;
+  --shell-header-height: 3.25rem;
+  --shell-header-min-height: 0;
   --shell-header-pad-inline: clamp(0.85rem, 2vw, 1.2rem);
-  --shell-header-pad-block: 0.45rem;
+  --shell-header-pad-block: 0.28rem;
   --shell-header-grid-gap: 0.5rem;
 
   /* Nav */

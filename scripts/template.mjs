@@ -20,9 +20,10 @@
  *     modulepreloads="/public/js/module.js|/public/js/other.js".
  *     Analytics defaults to none; an engine must be declared explicitly.
  *
- *   <spw-site-header current="Settings" indicator="settings"></spw-site-header>
+ *   <spw-site-header current="Settings" indicator="settings" header_annotation="local state"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
  *     Use `nav_items="Home:/|Settings:/settings/"` for page-specific nav.
+ *     Use `header_annotation` for a compact guide phrase inside the header.
  *
  *   <spw-site-footer></spw-site-footer>
  *     Generates the shared footer chrome from `_partials/site-footer.html`.
@@ -503,6 +504,7 @@ function renderSiteHeader(vars) {
   const current = firstValue(vars.current, vars.header_current, vars.nav_current, vars.breadcrumb_label);
   const currentHref = normalizeUrlPath(firstValue(vars.current_href, vars.header_current_href, vars.canonical));
   const indicator = firstValue(vars.indicator, vars.header_indicator, current).toLowerCase();
+  const annotation = firstValue(vars.annotation, vars.header_annotation, vars.guide, vars.header_guide);
   const configuredNavItems = parseKeyedList(firstValue(vars.nav_items, vars.header_nav, vars.primary_nav));
   const navSource = configuredNavItems.length
     ? configuredNavItems.map(({ key, content }) => ({ label: key, href: content }))
@@ -522,6 +524,7 @@ function renderSiteHeader(vars) {
     seed ? `data-spw-seed="${attrEscape(seed)}"` : '',
     relatedRoutes ? `data-spw-related-routes="${attrEscape(relatedRoutes)}"` : '',
     contextRelevance ? `data-spw-context-relevance="${attrEscape(contextRelevance)}"` : '',
+    annotation ? `data-spw-header-annotation="${attrEscape(annotation)}"` : '',
   ].filter(Boolean).join(' ');
   const navItems = navSource.map((item) => {
     const hrefPath = normalizeUrlPath(item.href);
@@ -537,7 +540,12 @@ function renderSiteHeader(vars) {
     + `${navItems}\n`
     + '        </ul>\n'
     + '    </nav>\n\n'
-    + `    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>${htmlEscape(indicator)}</span>\n`
+    + '    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>\n'
+    + `        <span class="header-op-indicator__token">${htmlEscape(indicator)}</span>\n`
+    + '    </span>\n'
+    + (annotation
+      ? `    <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
+      : '')
     + '    <div class="spw-header-trace" data-spw-template-slot="header-trace"></div>\n'
     + '</header>';
 }

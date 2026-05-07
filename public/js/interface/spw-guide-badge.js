@@ -29,6 +29,11 @@
  */
 
 import { bus } from '/public/js/kernel/spw-bus.js';
+import {
+  SPW_LOG_RELATIONSHIPS,
+  createSpwLogger,
+  markInstrumented,
+} from '/public/js/kernel/spw-instrumentation.js';
 
 const COLLECTION_KEY = 'spw-badge-collection';
 
@@ -36,7 +41,8 @@ const AMBIENT_SELECTOR = [
   '.operator-chip',
   '.frame-sigil',
   '.frame-card-sigil',
-  '.spec-pill'
+  '.spec-pill',
+  '.header-annotation'
 ].join(', ');
 
 const COLLECTIBLE_ATTR = 'data-spw-guide-badge';
@@ -53,6 +59,12 @@ const COLLECTION_INTENTIONS = Object.freeze([
   'refer',
   'support',
 ]);
+const logger = createSpwLogger('guide-badge', {
+  role: 'interface',
+  metaphor: 'collection-gesture',
+  owns: 'guide handle browse, inspect, collect, release',
+  writes: 'data-spw-interaction-context, data-spw-collected, spw-badge-collection',
+});
 
 const store = {
   read() {
@@ -90,9 +102,11 @@ function badgeId(element) {
 function setContext(element, context) {
   if (!context) {
     delete element.dataset.spwInteractionContext;
+    markInstrumented(element, 'guide-badge', { tags: ['context-release'] });
     return;
   }
   element.dataset.spwInteractionContext = context;
+  markInstrumented(element, 'guide-badge', { tags: ['interaction-context', context] });
 }
 
 function markCollected(element, strength, intention = COLLECTION_INTENTIONS[0]) {
@@ -181,7 +195,9 @@ function collect(element, intention = COLLECTION_INTENTIONS[0]) {
 
   store.write(entries);
   markCollected(element, INITIAL_COLLECTION_STRENGTH, intention);
+  markInstrumented(element, 'guide-badge', { tags: ['collected', intention] });
   bus.emit?.('guide-badge:collected', record);
+  logger.info('guide badge collected', record, SPW_LOG_RELATIONSHIPS.GESTURE);
   renderCollectionStatus(document);
   return record;
 }
@@ -193,7 +209,9 @@ function release(element) {
   const entries = store.read().filter((entry) => entry.id !== id);
   store.write(entries);
   unmarkCollected(element);
+  markInstrumented(element, 'guide-badge', { tags: ['released'] });
   bus.emit?.('guide-badge:released', { id });
+  logger.info('guide badge released', { id }, SPW_LOG_RELATIONSHIPS.GESTURE);
   renderCollectionStatus(document);
 }
 
@@ -237,6 +255,10 @@ function clearCollectionWhere(predicate, scope = 'filtered') {
     count: removedIds.length,
     scope,
   });
+  logger.info('guide badge collection cleared', {
+    count: removedIds.length,
+    scope,
+  }, SPW_LOG_RELATIONSHIPS.GESTURE);
   renderCollectionStatus(document);
 
   return removedIds.length;
