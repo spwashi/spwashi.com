@@ -8,12 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • CSS Experiments</title>
-    <meta name="description" content="A live CSS grammar lab for contour, stroke, and field resonance on Spwashi surfaces.">
+    <meta name="description" content="A live CSS learning lab for selector scope, cascade layers, box model behavior, custom properties, SVG-adjacent diagrams, and inspectable browser state on Spwashi.">
     <link rel="canonical" href="https://spwashi.com/design/experiments/css/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
     <meta property="og:title" content="Spwashi • CSS Experiments"/>
-    <meta property="og:description" content="A live CSS grammar lab for contour, stroke, and field resonance on Spwashi surfaces."/>
+    <meta property="og:description" content="A live CSS learning lab for selector scope, cascade layers, box model behavior, custom properties, SVG-adjacent diagrams, and inspectable browser state on Spwashi."/>
     <meta property="og:url" content="https://spwashi.com/design/experiments/css/"/>
     <script type="application/ld+json" data-spw-generated="breadcrumbs">
         {
@@ -35,7 +35,7 @@
 </head>
 <body
     data-spw-surface="website"
-    data-spw-features="operators navigator console themes inspectability promptability"
+    data-spw-features="operators navigator console themes inspectability promptability svg-surfaces"
     data-spw-route-family="design experiments systems"
     data-spw-context="analysis"
     data-spw-wonder="resonance constraint locality"
@@ -75,11 +75,12 @@
                 </div>
 
                 <p class="spec-kicker">Design / Experiments / CSS</p>
-                <h1>CSS experiments should teach the grammar, not only show decoration.</h1>
+                <h1>CSS experiments should teach rules, variables, and SVG-adjacent structure, not only show decoration.</h1>
 
                 <p>
                     This route tunes three low-level axes that can travel to the rest of the site: contour profile,
-                    stroke profile, and field resonance. The settings are browser-local and persist after you leave the lab,
+                    stroke profile, and field resonance. The rule bench adds selector scope, cascade layer, and box-model
+                    comparison, while the SVG map shows how the same grammar can become a diagram. The settings are browser-local and persist after you leave the lab,
                     so you can tune here, then inspect the same atmosphere on the <a href="/design/website/">website design</a>
                     route or the broader <a href="/about/website/">website field guide</a>.
                 </p>
@@ -288,6 +289,37 @@
                 </div>
 
                 <div class="design-rule-stage" aria-label="CSS rule anatomy specimen">
+                    <figure class="design-rule-map spw-svg-figure" data-spw-svg-host="css-rule-map" data-spw-svg-kind="cascade-map" data-spw-svg-pointer="field">
+                        <svg class="spw-svg-surface" data-design-rule-map viewBox="0 0 640 360" role="img" aria-labelledby="css-rule-map-title css-rule-map-desc">
+                            <title id="css-rule-map-title">CSS cascade rule map</title>
+                            <desc id="css-rule-map-desc">A three-layer SVG diagram connecting tokens, components, ornament, selector scope, and box model behavior.</desc>
+                            <rect class="spw-svg-frame design-rule-map__frame" x="18" y="18" width="604" height="324"></rect>
+                            <path class="spw-svg-flow design-rule-map__path design-rule-map__path--tokens" d="M110 96 C190 52 278 52 358 96 S492 138 542 92"></path>
+                            <path class="spw-svg-flow design-rule-map__path design-rule-map__path--components" d="M110 180 H542"></path>
+                            <path class="spw-svg-flow design-rule-map__path design-rule-map__path--ornament" d="M110 264 C190 310 278 310 358 264 S492 220 542 268"></path>
+                            <g class="design-rule-map__node design-rule-map__node--tokens">
+                                <rect x="68" y="62" width="122" height="68" rx="14"></rect>
+                                <text x="129" y="102" text-anchor="middle">tokens</text>
+                            </g>
+                            <g class="design-rule-map__node design-rule-map__node--components">
+                                <rect x="252" y="146" width="136" height="68" rx="14"></rect>
+                                <text x="320" y="186" text-anchor="middle">component</text>
+                            </g>
+                            <g class="design-rule-map__node design-rule-map__node--ornament">
+                                <rect x="450" y="230" width="124" height="68" rx="14"></rect>
+                                <text x="512" y="270" text-anchor="middle">ornament</text>
+                            </g>
+                            <g class="design-rule-map__scope">
+                                <circle cx="320" cy="180" r="118"></circle>
+                                <text x="320" y="321" text-anchor="middle">selector scope changes the address</text>
+                            </g>
+                        </svg>
+                        <figcaption>
+                            <strong>Rule map</strong>
+                            <span>The highlighted layer follows the controls. Use the console API to inspect the same state as data.</span>
+                        </figcaption>
+                    </figure>
+
                     <article class="design-rule-specimen" data-design-rule-target>
                         <div class="frame-topline design-rule-slot" data-design-rule-slot="header">
                             <span class="frame-sigil">#&gt;rule_specimen</span>
@@ -319,7 +351,7 @@
                         <pre><code data-design-rule-code>[data-design-css-rule-bench] .design-rule-specimen {
   box-sizing: border-box;
 }</code></pre>
-                        <p class="design-variable-status" data-design-rule-status>Use the controls to make a rule visible.</p>
+                        <p class="design-variable-status" data-design-rule-status>Use the controls to make a rule visible. In the console, try <code>spwDesignExperiments.inspectRuleBench()</code>.</p>
                     </aside>
                 </div>
             </section>

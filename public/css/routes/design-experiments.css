@@ -311,6 +311,70 @@
     color-mix(in srgb, var(--surface-strong) 96%, transparent);
 }
 
+[data-spw-page-family="experiment-lab"] .design-rule-map {
+  display: grid;
+  gap: var(--gap-block-tight);
+  align-content: start;
+  min-width: 0;
+  margin: 0;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-map .spw-svg-surface {
+  display: block;
+  width: 100%;
+  max-width: none;
+  border-radius: var(--shape-surface);
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-map__frame,
+[data-spw-page-family="experiment-lab"] .design-rule-map__node rect {
+  fill: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+  stroke: color-mix(in srgb, var(--design-rule-accent) 42%, var(--line));
+  stroke-width: calc(var(--line-mid) * var(--spw-svg-stroke-scale, 1));
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-map__path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--design-rule-accent) 68%, transparent);
+  stroke-linecap: round;
+  stroke-width: calc(2.5px * var(--spw-svg-stroke-scale, 1));
+  opacity: 0.42;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-map__node text,
+[data-spw-page-family="experiment-lab"] .design-rule-map__scope text {
+  fill: var(--ink);
+  font-family: var(--site-mono-font);
+  font-size: 20px;
+  letter-spacing: 0.03em;
+}
+
+[data-spw-page-family="experiment-lab"] .design-rule-map__scope circle {
+  fill: none;
+  stroke: color-mix(in srgb, var(--design-rule-accent) 28%, transparent);
+  stroke-dasharray: 8 10;
+  stroke-width: 2;
+}
+
+[data-design-cascade-layer="tokens"] .design-rule-map__path--tokens,
+[data-design-cascade-layer="components"] .design-rule-map__path--components,
+[data-design-cascade-layer="ornament"] .design-rule-map__path--ornament {
+  opacity: 1;
+  stroke-width: calc(4px * var(--spw-svg-stroke-scale, 1));
+}
+
+[data-design-selector-scope="region"] .design-rule-map__scope circle {
+  r: 142px;
+}
+
+[data-design-selector-scope="component"] .design-rule-map__scope circle {
+  r: 104px;
+}
+
+[data-design-selector-scope="slot"] .design-rule-map__scope circle {
+  r: 58px;
+}
+
 [data-design-cascade-layer="tokens"] .design-rule-stage {
   --design-rule-accent: var(--op-ref-color);
 }
@@ -482,6 +546,6 @@
   }
 
   [data-spw-page-family="experiment-lab"] .design-rule-stage {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 0.9fr) minmax(16rem, 0.7fr);
   }
 }

@@ -1,5 +1,10 @@
 import { bus } from '/public/js/kernel/spw-bus.js';
 import {
+  createSpwLogger,
+  markInstrumented,
+  snapshotInstrumentationTarget,
+} from '/public/js/kernel/spw-instrumentation.js';
+import {
   getSiteSettings,
   saveSiteSettings,
   validatePartialSettings
@@ -20,6 +25,7 @@ const RULE_CONTROL_SELECTOR = '[data-design-rule-axis][data-design-rule-value]';
 const RULE_READOUT_SELECTOR = '[data-design-rule-readout]';
 const RULE_CODE_SELECTOR = '[data-design-rule-code]';
 const RULE_STATUS_SELECTOR = '[data-design-rule-status]';
+const RULE_MAP_SELECTOR = '[data-design-rule-map]';
 
 const RULE_DATASET_KEYS = Object.freeze({
   boxModel: 'designBoxModel',
@@ -43,6 +49,13 @@ const RULE_LABELS = Object.freeze({
     component: 'component',
     slot: 'slot',
   }),
+});
+
+const logger = createSpwLogger('design-experiments', {
+  role: 'design-lab-controller',
+  metaphor: 'lab-instrument',
+  owns: `${ROOT_SELECTOR}, ${RULE_BENCH_SELECTOR}, ${VARIABLE_LAB_SELECTOR}`,
+  writes: 'design-rule datasets, CSS variable style overrides, token readouts',
 });
 
 function clampNumber(value, min, max) {
@@ -265,6 +278,10 @@ function renderRuleCode(state) {
 function syncRuleBench(bench) {
   if (!(bench instanceof HTMLElement)) return;
   const state = getRuleState(bench);
+  markInstrumented(bench, 'design-experiments', {
+    tags: ['css-rule-bench', state.selectorScope, state.cascadeLayer, state.boxModel],
+    state: 'synced',
+  });
 
   bench.querySelectorAll(RULE_READOUT_SELECTOR).forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
@@ -282,6 +299,13 @@ function syncRuleBench(bench) {
     const value = control.getAttribute('data-design-rule-value');
     const active = axis && value && state[axis] === value;
     control.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+
+  bench.querySelectorAll(RULE_MAP_SELECTOR).forEach((map) => {
+    if (!(map instanceof SVGElement)) return;
+    map.dataset.designSelectorScope = state.selectorScope;
+    map.dataset.designCascadeLayer = state.cascadeLayer;
+    map.dataset.designBoxModel = state.boxModel;
   });
 }
 
@@ -302,6 +326,7 @@ function bindRuleBench(bench) {
 
     bench.dataset[datasetKey] = value;
     syncRuleBench(bench);
+    logger.debug('rule bench updated', getRuleState(bench), 'gesture');
     writeStatus(
       bench.querySelector(RULE_STATUS_SELECTOR),
       `Rule bench set ${axis} to ${value}.`,
@@ -316,6 +341,31 @@ function bindRuleBench(bench) {
   return () => {
     controls.forEach((control) => control.removeEventListener('click', handleClick));
   };
+}
+
+function createDesignExperimentsConsole(roots) {
+  const getBenches = () => roots.flatMap((scope) => getRuleBenches(scope));
+  return Object.freeze({
+    inspectRuleBench(index = 0) {
+      return snapshotInstrumentationTarget(getBenches()[index], {
+        includeText: true,
+        tokens: ['--active-op-color', '--shape-surface', '--line-mid'],
+      });
+    },
+    inspectTokens(tokens = ['--shape-component', '--shape-surface', '--line-mid', '--attention-field-radius']) {
+      const styles = getComputedStyle(document.documentElement);
+      return Object.fromEntries(tokens.map((token) => [token, styles.getPropertyValue(token).trim() || 'unset']));
+    },
+    setRuleBench(next = {}, index = 0) {
+      const bench = getBenches()[index];
+      if (!(bench instanceof HTMLElement)) return null;
+      Object.entries(RULE_DATASET_KEYS).forEach(([axis, datasetKey]) => {
+        if (next[axis]) bench.dataset[datasetKey] = String(next[axis]);
+      });
+      syncRuleBench(bench);
+      return getRuleState(bench);
+    },
+  });
 }
 
 function writeStatus(node, message, type = 'info') {
@@ -465,6 +515,11 @@ export function initDesignExperiments(root = document) {
   ));
   const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab, scope)));
   const ruleCleanups = roots.flatMap((scope) => getRuleBenches(scope).map(bindRuleBench));
+  const existingConsole = window.spwDesignExperiments || {};
+  window.spwDesignExperiments = Object.freeze({
+    ...existingConsole,
+    ...createDesignExperimentsConsole(roots),
+  });
 
   const syncAll = (settings = getSiteSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
@@ -481,6 +536,7 @@ export function initDesignExperiments(root = document) {
       cleanups.forEach((cleanup) => cleanup());
       variableCleanups.forEach((cleanup) => cleanup());
       ruleCleanups.forEach((cleanup) => cleanup());
+      if (window.spwDesignExperiments) delete window.spwDesignExperiments;
       off?.();
     },
     refresh() {
