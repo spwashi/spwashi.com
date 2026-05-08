@@ -800,6 +800,69 @@ const UX_RECIPES = Object.freeze({
   })
 });
 
+const SETTINGS_QUERY_RECIPES = Object.freeze({
+  quiet: Object.freeze({
+    label: 'Quiet view',
+    description: 'Minimal meaning, no debug chrome, and a quiet reading posture.',
+    params: Object.freeze({
+      view: 'quiet',
+      meaning: 'quiet'
+    })
+  }),
+  readable: Object.freeze({
+    label: 'Readable view',
+    description: 'Visible semantic cues without the full inspection layer.',
+    params: Object.freeze({
+      view: 'readable',
+      meaning: 'readable'
+    })
+  }),
+  inspect: Object.freeze({
+    label: 'Inspect view',
+    description: 'The page explains itself, shows debug chrome, and logs more detail.',
+    params: Object.freeze({
+      view: 'inspect',
+      meaning: 'inspect',
+      debug: 'css,layout',
+      log: 'site-settings',
+      'log-level': 'debug'
+    })
+  }),
+  lab: Object.freeze({
+    label: 'Lab view',
+    description: 'Inspection plus physics and palette bias for design work and QA.',
+    params: Object.freeze({
+      view: 'inspect',
+      meaning: 'inspect',
+      debug: 'css,layout',
+      physics: 'screenshot',
+      palette: 'craft',
+      reflow: 'interaction'
+    })
+  })
+});
+
+const buildQueryString = (params = {}) => {
+  const search = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === '' || value === null || value === undefined) return;
+    search.set(key, String(value));
+  });
+  const query = search.toString();
+  return query ? `?${query}` : '';
+};
+
+const getSettingsQueryRecipe = (name = 'inspect') => SETTINGS_QUERY_RECIPES[name] || SETTINGS_QUERY_RECIPES.inspect;
+
+const buildSettingsQuerySearch = (name = 'inspect') => buildQueryString(getSettingsQueryRecipe(name).params);
+
+const buildSettingsQueryHref = (name = 'inspect', location = window.location) => {
+  const query = buildSettingsQuerySearch(name);
+  const path = location?.pathname || '';
+  const hash = location?.hash || '';
+  return `${path}${query}${hash}`;
+};
+
 const storage = {
   get() {
     try {
@@ -2173,18 +2236,101 @@ const initSettingsCategoryRouting = () => {
   return manager._settingsCategoryRouting;
 };
 
+const bindSettingsQueryLab = (root = document) => {
+  const panel = root.querySelector?.('[data-site-settings-query-lab]');
+  if (!(panel instanceof HTMLElement)) return {
+    cleanup() {},
+    refresh() {}
+  };
+
+  const previewNode = panel.querySelector?.('[data-site-settings-query-preview]');
+  const copyButton = panel.querySelector?.('[data-site-settings-query-copy]');
+  const links = [...panel.querySelectorAll?.('[data-site-settings-query-mode]') || []];
+
+  const syncPreview = (mode = panel.dataset.siteSettingsQueryMode || 'inspect') => {
+    const recipe = getSettingsQueryRecipe(mode);
+    const search = buildSettingsQuerySearch(mode);
+    panel.dataset.siteSettingsQueryMode = mode;
+    if (previewNode) {
+      previewNode.textContent = search || ' ';
+      previewNode.title = recipe.description;
+    }
+    links.forEach((link) => {
+      const linkMode = link.getAttribute('data-site-settings-query-mode');
+      link.dataset.settingsQueryActive = linkMode === mode ? 'true' : 'false';
+    });
+  };
+
+  const handleClick = (event) => {
+    const link = event.target instanceof Element
+      ? event.target.closest('[data-site-settings-query-mode]')
+      : null;
+
+    if (link instanceof HTMLAnchorElement) {
+      const mode = link.getAttribute('data-site-settings-query-mode');
+      if (!mode) return;
+      link.href = buildSettingsQueryHref(mode, window.location);
+      link.setAttribute('aria-label', `${getSettingsQueryRecipe(mode).label} query`);
+    }
+  };
+
+  const handleCopy = async () => {
+    const activeMode = panel.dataset.siteSettingsQueryMode || copyButton?.getAttribute('data-site-settings-query-copy') || 'inspect';
+    const text = buildSettingsQueryHref(activeMode, window.location);
+    const {handleCopyButton} = await import('/public/js/kernel/spw-copy.js');
+    await handleCopyButton({
+      text,
+      button: copyButton || undefined,
+      labelCopied: '✓ copied query',
+      labelFailed: '! copy query',
+      labelDefault: copyButton?.textContent || 'Copy query',
+    });
+  };
+
+  links.forEach((link) => {
+    const mode = link.getAttribute('data-site-settings-query-mode');
+    if (!mode) return;
+    link.href = buildSettingsQueryHref(mode, window.location);
+    link.setAttribute('aria-label', `${getSettingsQueryRecipe(mode).label} query`);
+    link.addEventListener('mouseenter', () => syncPreview(mode));
+    link.addEventListener('focus', () => syncPreview(mode));
+  });
+
+  copyButton?.addEventListener('click', handleCopy);
+  panel.addEventListener('click', handleClick);
+  syncPreview(panel.dataset.siteSettingsQueryMode || 'inspect');
+
+  return {
+    cleanup() {
+      copyButton?.removeEventListener('click', handleCopy);
+      panel.removeEventListener('click', handleClick);
+    },
+    refresh() {
+      links.forEach((link) => {
+        const mode = link.getAttribute('data-site-settings-query-mode');
+        if (!mode) return;
+        link.href = buildSettingsQueryHref(mode, window.location);
+      });
+      syncPreview(panel.dataset.siteSettingsQueryMode || 'inspect');
+    }
+  };
+};
+
 const initSiteSettingsPage = () => {
   const bindings = initSiteSettingsBindings();
   const routing = initSettingsCategoryRouting();
+  const queryLab = bindSettingsQueryLab();
 
   return {
     cleanup() {
       bindings?.cleanup?.();
       routing?.cleanup?.();
+      queryLab?.cleanup?.();
     },
     refresh() {
       bindings?.refresh?.();
       syncSettingsCategoryTarget();
+      queryLab?.refresh?.();
     }
   };
 };
@@ -2208,12 +2354,15 @@ if (typeof window !== 'undefined') {
     bindDeviationControls,
     listDeviations: getSiteSettingDeviations,
     describeDeviation,
-    presets: PRESETS,
-    presetLabels: PRESET_LABELS,
-    presetDescriptions: PRESET_DESCRIPTIONS,
-    recipes: UX_RECIPES,
-    applyRecipe: applyUxRecipe,
-    findActivePreset,
+  presets: PRESETS,
+  presetLabels: PRESET_LABELS,
+  presetDescriptions: PRESET_DESCRIPTIONS,
+  queryRecipes: SETTINGS_QUERY_RECIPES,
+  buildSettingsQueryHref,
+  buildSettingsQuerySearch,
+  recipes: UX_RECIPES,
+  applyRecipe: applyUxRecipe,
+  findActivePreset,
     authorWorkflows: AUTHOR_WORKFLOW_DEFINITIONS,
     developmentalClimates: DEVELOPMENTAL_CLIMATES,
     syncUx: syncSettingsUx,
@@ -2230,9 +2379,12 @@ export {
   PRESETS,
   PRESET_DESCRIPTIONS,
   PRESET_LABELS,
+  SETTINGS_QUERY_RECIPES,
   SETTING_OPTIONS,
   SITE_SETTINGS_KEY,
   UX_RECIPES,
+  buildSettingsQueryHref,
+  buildSettingsQuerySearch,
   applySiteSettings,
   applyUxRecipe,
   bindDeviationControls,

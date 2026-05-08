@@ -1740,6 +1740,27 @@
                     <p>Canonical bus events announce settings, author mode, development shifts, and deviations.</p>
                     <code>bus.emit("settings:changed", settings)</code>
                 </article>
+
+                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab">
+                    <h3>Query recipes</h3>
+                    <p>
+                        These links use the same query contract as the runtime. They are handy when you want to compare a quiet
+                        page, a readable page, an inspect-first page, or a more lab-like debugging posture.
+                    </p>
+                    <div class="settings-query-actions" role="group" aria-label="Query recipes">
+                        <a class="operator-chip" data-site-settings-query-mode="quiet" href="?view=quiet&amp;meaning=quiet">Quiet view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="readable" href="?view=readable&amp;meaning=readable">Readable view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspect view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                    </div>
+                    <p class="settings-query-preview-copy">
+                        Current query:
+                        <code class="settings-query-preview" data-site-settings-query-preview>?view=inspect&meaning=inspect&debug=css,layout&log=site-settings&log-level=debug</code>
+                    </p>
+                    <div class="settings-query-footer">
+                        <button class="operator-chip" data-site-settings-query-copy="inspect" type="button">Copy inspect query</button>
+                    </div>
+                </article>
             </div>
         </section>
 
