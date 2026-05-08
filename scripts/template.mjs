@@ -23,7 +23,7 @@
  *   <spw-site-header current="Settings" indicator="settings" header_annotation="local state"></spw-site-header>
  *     Generates the primary navigation chrome from compact route metadata.
  *     Use `nav_items="Home:/|Settings:/settings/"` for page-specific nav.
- *     Use `header_annotation` for a compact guide phrase inside the header.
+ *     Use `header_annotation` for a compact guide phrase beside the sigil.
  *
  *   <spw-site-footer></spw-site-footer>
  *     Generates the shared footer chrome from `_partials/site-footer.html`.
@@ -534,7 +534,12 @@ function renderSiteHeader(vars) {
   }).join('\n');
 
   return `<header ${attrs}>\n`
-    + '    <a aria-label="Spwashi home" class="header-sigil" href="/">#&gt;spwashi</a>\n\n'
+    + '    <div class="header-brand">\n'
+    + '        <a aria-label="Spwashi home" class="header-sigil" href="/">#&gt;spwashi</a>\n'
+    + (annotation
+      ? `        <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
+      : '')
+    + '    </div>\n\n'
     + '    <nav aria-label="Primary">\n'
     + '        <ul>\n'
     + `${navItems}\n`
@@ -543,9 +548,6 @@ function renderSiteHeader(vars) {
     + '    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>\n'
     + `        <span class="header-op-indicator__token">${htmlEscape(indicator)}</span>\n`
     + '    </span>\n'
-    + (annotation
-      ? `    <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
-      : '')
     + '    <div class="spw-header-trace" data-spw-template-slot="header-trace"></div>\n'
     + '</header>';
 }

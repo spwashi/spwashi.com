@@ -79,13 +79,42 @@ console.table(SPW_SVG_PALETTES);</code></pre>
 
         <section class="frame-panel" id="query-controls" aria-labelledby="query-controls-title" data-spw-kind="panel" data-spw-role="query-contract">
             <h2 id="query-controls-title">Query tuning links</h2>
-            <p>These links keep behavior visible in the URL so a tester, teammate, or language model can see the configuration without opening storage.</p>
+            <p>These links keep behavior visible in the URL so a tester, teammate, or language model can see the configuration without opening storage. The short aliases are meant to be typed from memory; the longer <code>spw-*</code> names remain available for forks that want stricter namespacing.</p>
             <nav class="frame-operators" aria-label="Runtime query examples">
-                <a class="operator-chip" href="/design/runtime/?spw-palette=craft&spw-color-active-op=%23008080&spw-var-shape-component=8px&spw-tune-density=compact&spw-reflow=density#query-controls">^ craft compact</a>
-                <a class="operator-chip" href="/design/runtime/?spw-palette=software&spw-log=spw-compose,spw-core&spw-log-level=debug&spw-reflow=interaction#console-contract">@ console logging</a>
+                <a class="operator-chip" href="/design/runtime/?palette=craft&view=readable&spw-color-active-op=%23008080&spw-var-shape-component=8px&reflow=density#query-controls">^ craft readable</a>
+                <a class="operator-chip" href="/design/runtime/?view=inspect&debug=layout&reflow=layout#query-controls"># inspect layout</a>
+                <a class="operator-chip" href="/design/runtime/?interaction=puppet&log=attention-architecture,spw-compose&log-level=debug&reflow=interaction#console-contract">@ puppet logging</a>
+                <a class="operator-chip" href="/design/runtime/?view=screenshot&interaction=screenshot&palette=software&reflow=theme#query-controls">= screenshot pass</a>
                 <a class="operator-chip" href="/design/runtime/?spw-var-material-blur=18px&spw-reflow=theme#reflow-contract">~ blur disposition</a>
                 <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=warm-offer&amp;spw-svg-stroke=1.35&amp;spw-svg-space=1rem&amp;spw-svg-pointer=trace#svg-brand-screenshot">^ SVG palette QA</a>
             </nav>
+        </section>
+
+        <section class="frame-panel" id="debug-presets" aria-labelledby="debug-presets-title" data-spw-kind="panel" data-spw-role="debug-contract">
+            <h2 id="debug-presets-title">View and interaction presets</h2>
+            <p><code>view</code> tunes semantic density, <code>interaction</code> tunes motion and response, and <code>debug</code> reveals ownership. They compose cleanly because they target different layers of the runtime model.</p>
+            <div class="frame-grid frame-grid--2up">
+                <article class="frame-panel">
+                    <h3>Viewing</h3>
+                    <p>Use <code>?view=quiet</code>, <code>?view=readable</code>, <code>?view=inspect</code>, or <code>?view=screenshot</code> when the question is how much meaning should stay visible.</p>
+                    <p><a class="operator-chip" href="/design/runtime/?view=inspect#debug-presets">open inspect view</a></p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Interaction</h3>
+                    <p>Use <code>?interaction=calm</code>, <code>?interaction=tactile</code>, <code>?interaction=puppet</code>, or <code>?interaction=screenshot</code> when the question is how physically responsive a surface should feel.</p>
+                    <p><a class="operator-chip" href="/design/runtime/?interaction=puppet#debug-presets">open puppet interaction</a></p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Debug</h3>
+                    <p>Use <code>?debug=css</code> for structure tags, <code>?debug=layout</code> for ownership overlays, and comma-join them when the question is where a rule belongs.</p>
+                    <p><a class="operator-chip" href="/design/runtime/?debug=css,layout#debug-presets">open layout debug</a></p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Bundle handoff</h3>
+                    <p>The same query contract travels with the portable bundles, so vendors or teammates can read the URL, inspect the DOM, and know which runtime posture they are seeing.</p>
+                    <p><a class="operator-chip" href="/design/composition/#css-svg-learning-title">open bundle docs</a></p>
+                </article>
+            </div>
         </section>
 
         <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">

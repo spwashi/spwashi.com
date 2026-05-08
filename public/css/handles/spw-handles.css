@@ -668,7 +668,10 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
     var(--handle-shadow-rest);
 }
 
-:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"])) :where(
+:where(
+  html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
+  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
+) :where(
   .operator-chip,
   .spec-pill,
   .badge,

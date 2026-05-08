@@ -119,6 +119,7 @@ const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
 let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
+const FLOATING_CHROME_SELECTOR = '.skip-link, .spw-section-handle, .spw-section-handle-shell';
 const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
   { step: '1', token: '--spw-page-arrival-step-1-delay', fallback: 0 },
@@ -127,6 +128,7 @@ const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
 ]);
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
+const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
 
 /* ==========================================================================
    2. Small runtime helpers
@@ -136,6 +138,14 @@ function setPageState(state) {
   writeDatasetValue(HTML, 'spwPageState', state);
 }
 
+function annotateFloatingChrome(root = document) {
+  if (!root?.querySelectorAll) return;
+  root.querySelectorAll(FLOATING_CHROME_SELECTOR).forEach((element) => {
+    writeDatasetValueIfMissing(element, 'spwFloatingChrome', 'true');
+    writeDatasetValueIfMissing(element, 'spwLayoutOwner', 'floating-chrome');
+  });
+}
+
 function parseCssTimeMs(value, fallback = 0) {
   const raw = String(value || '').trim();
   if (!raw) return fallback;
@@ -143,6 +153,8 @@ function parseCssTimeMs(value, fallback = 0) {
   if (!Number.isFinite(numeric)) return fallback;
   return raw.endsWith('s') && !raw.endsWith('ms') ? numeric * 1000 : numeric;
 }
+
+annotateFloatingChrome(document);
 
 function readRootTimeToken(name, fallback = 0) {
   if (!name || typeof getComputedStyle !== 'function') return fallback;
@@ -156,32 +168,53 @@ function prefersReducedMotion() {
   );
 }
 
-function setPageAttentionState(ctx, detail = {}) {
+function derivePageTransitionState(detail = {}) {
   const presence = detail.presence || HTML.dataset.spwPagePresence || PAGE_PRESENCE.FOREGROUND;
   const arrival = detail.arrival || HTML.dataset.spwPageArrival || PAGE_ARRIVAL.SETTLED;
   const step = String(detail.step ?? HTML.dataset.spwPageArrivalStep ?? '0');
-
-  writeDatasetValue(HTML, 'spwPagePresence', presence);
-  writeDatasetValue(HTML, 'spwPageArrival', arrival);
-  writeDatasetValue(HTML, 'spwPageArrivalStep', step);
-  writeDatasetValue(HTML, 'spwAttentionContext',
-    presence === PAGE_PRESENCE.BACKGROUND
-      ? 'background'
-      : arrival === PAGE_ARRIVAL.SETTLED
-        ? 'settled'
-        : arrival
-  );
-
-  const payload = {
+  const phase = presence === PAGE_PRESENCE.BACKGROUND
+    ? PAGE_PRESENCE.BACKGROUND
+    : arrival === PAGE_ARRIVAL.SETTLED
+      ? PAGE_ARRIVAL.SETTLED
+      : arrival;
+  const transition = presence === PAGE_PRESENCE.BACKGROUND
+    ? PAGE_PRESENCE.BACKGROUND
+    : `${phase}${step !== '0' && phase !== PAGE_ARRIVAL.SETTLED ? `-${step}` : ''}`;
+  return {
     presence,
     arrival,
     step,
+    phase,
+    transition,
+  };
+}
+
+function setPageAttentionState(ctx, detail = {}) {
+  const transition = derivePageTransitionState(detail);
+
+  writeDatasetValue(HTML, 'spwPagePresence', transition.presence);
+  writeDatasetValue(HTML, 'spwPageArrival', transition.arrival);
+  writeDatasetValue(HTML, 'spwPageArrivalStep', transition.step);
+  writeDatasetValue(HTML, 'spwPageTransition', transition.transition);
+  writeDatasetValue(HTML, 'spwPageTransitionPhase', transition.phase);
+  writeDatasetValue(HTML, 'spwAttentionContext',
+    transition.presence === PAGE_PRESENCE.BACKGROUND
+      ? 'background'
+      : transition.phase === PAGE_ARRIVAL.SETTLED
+        ? 'settled'
+        : transition.phase
+  );
+
+  const payload = {
+    ...transition,
     reason: detail.reason || 'runtime',
     route: ctx?.route || SITE_SURFACE,
   };
 
   ctx?.bus?.emit?.(PAGE_ATTENTION_EVENT, payload);
+  ctx?.bus?.emit?.(PAGE_TRANSITION_EVENT, payload);
   document.dispatchEvent(new CustomEvent(PAGE_ATTENTION_EVENT, { detail: payload }));
+  document.dispatchEvent(new CustomEvent(PAGE_TRANSITION_EVENT, { detail: payload }));
 }
 
 function clearPageAttentionSequence(ctx) {
@@ -1845,6 +1878,8 @@ function destroyRuntime() {
   delete HTML.dataset.spwPagePresence;
   delete HTML.dataset.spwPageArrival;
   delete HTML.dataset.spwPageArrivalStep;
+  delete HTML.dataset.spwPageTransition;
+  delete HTML.dataset.spwPageTransitionPhase;
   delete HTML.dataset.spwAttentionContext;
   delete HTML.dataset.spwHarmonyField;
   delete HTML.dataset.spwTempoField;

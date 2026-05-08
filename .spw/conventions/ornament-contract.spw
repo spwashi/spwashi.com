@@ -95,7 +95,9 @@ runtime_exposure_contract: .{
    `html[data-spw-wonder-memory-state='active|inactive']`,
    `html[data-spw-wonder-memory-wonder='orientation|resonance|inquiry|...']`,
    `html[data-spw-deviation-count='N']`,
-   `html[data-spw-page-state='booting|interactive|hydrated|region-enhanced|enhanced']`
+   `html[data-spw-page-state='booting|interactive|hydrated|region-enhanced|enhanced']`,
+   `html[data-spw-page-transition='background|settled|entering-1|returning-2|restored-3']`,
+   `html[data-spw-page-transition-phase='background|settled|entering|returning|restored']`
   ][reg=set]
  }[reg=facet]
  component_level = .{

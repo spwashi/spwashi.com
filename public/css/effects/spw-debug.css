@@ -5,7 +5,8 @@
    - Debug-only overlays for page surface -> feature/module -> slots.
 
    Activation
-   - html[data-spw-debug-mode="on"] or [data-spw-debug~="css"].
+   - html[data-spw-debug-mode="on"] or [data-spw-debug~="css"] or
+     [data-spw-debug~="layout"].
 
    Ownership
    - Expose structure only; move required UI rules to the semantic owner.
@@ -13,7 +14,8 @@
 
 :where(
   html[data-spw-debug-mode="on"],
-  [data-spw-debug~="css"]
+  [data-spw-debug~="css"],
+  [data-spw-debug~="layout"]
 ) :where(
   [data-spw-surface],
   [data-spw-feature],
@@ -21,7 +23,9 @@
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
-  [data-spw-semantic-owner]
+  [data-spw-semantic-owner],
+  [data-spw-layout-owner],
+  [data-spw-floating-chrome="true"]
 ) {
   --spw-css-debug-color: var(--active-op-color, var(--teal, #008080));
   outline: 1px dashed color-mix(in srgb, var(--spw-css-debug-color) 46%, transparent);
@@ -30,28 +34,34 @@
 
 :where(
   html[data-spw-debug-mode="on"],
-  [data-spw-debug~="css"]
+  [data-spw-debug~="css"],
+  [data-spw-debug~="layout"]
 ) :where(
   [data-spw-feature],
   [data-spw-module],
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
-  [data-spw-semantic-owner]
+  [data-spw-semantic-owner],
+  [data-spw-layout-owner],
+  [data-spw-floating-chrome="true"]
 ) {
   position: relative;
 }
 
 :where(
   html[data-spw-debug-mode="on"],
-  [data-spw-debug~="css"]
+  [data-spw-debug~="css"],
+  [data-spw-debug~="layout"]
 ) :where(
   [data-spw-feature],
   [data-spw-module],
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
-  [data-spw-semantic-owner]
+  [data-spw-semantic-owner],
+  [data-spw-layout-owner],
+  [data-spw-floating-chrome="true"]
 )::before {
   position: absolute;
   z-index: 20;
@@ -76,56 +86,72 @@
   text-overflow: ellipsis;
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-feature]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-feature]::before {
   content: "feature:" attr(data-spw-feature);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-module]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module]::before {
   content: "module:" attr(data-spw-module);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-slot]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-slot]::before {
   content: "slot:" attr(data-spw-slot);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-kind]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-kind]::before {
   content: "kind:" attr(data-spw-kind);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-component-id]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-component-id]::before {
   content: "component:" attr(data-spw-component-id);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-semantic-owner]::before {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-semantic-owner]::before {
   content: "owner:" attr(data-spw-semantic-owner);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-surface] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-layout-owner]::before {
+  content: "layout:" attr(data-spw-layout-owner);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-floating-chrome="true"]::before {
+  content: "floating chrome";
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-surface] {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--spw-css-debug-color) 16%, transparent);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-slot] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-slot] {
   --spw-css-debug-color: var(--op-ref-color, #1d57a3);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-feature] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-feature] {
   --spw-css-debug-color: var(--op-frame-color, #008080);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-module] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module] {
   --spw-css-debug-color: var(--op-action-color, #005959);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-kind] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-kind] {
   --spw-css-debug-color: var(--op-object-color, #a67c00);
 }
 
-:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) [data-spw-semantic-owner] {
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-semantic-owner] {
   --spw-css-debug-color: var(--op-probe-color, #4a2180);
 }
 
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-layout-owner] {
+  --spw-css-debug-color: var(--op-action-color, #005959);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-floating-chrome="true"] {
+  --spw-css-debug-color: color-mix(in srgb, var(--op-action-color, #005959) 70%, var(--teal, #008080));
+}
+
 @media (prefers-reduced-motion: reduce) {
-  :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"]) * {
+  :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) * {
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1;

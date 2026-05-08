@@ -268,22 +268,23 @@
   min-width: 0;
 }
 
-/* Lift content above generated rails, seams, and debug labels. */
+/* Lift ordinary flow content above generated rails, seams, and debug labels.
+   Floating chrome keeps its own geometry contract and must opt out here. */
 :where(
-  [data-spw-component-kind] > *,
-  [data-spw-kind] > *,
-  .site-frame > *,
-  .frame-card > *,
-  .media-card > *,
-  .media-focus-card > *,
-  .software-card > *,
-  .operator-card > *,
-  .frame-panel > *,
-  .mode-panel > *,
-  .plan-card > *,
-  .compare-card > *,
-  .spec-column > *,
-  .ref-card > *
+  [data-spw-component-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .site-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .media-focus-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .software-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .operator-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .frame-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .mode-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .plan-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .compare-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .spec-column > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .ref-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell)
 ) {
   position: relative;
   z-index: 1;
@@ -801,7 +802,10 @@ header.frame-heading > :is(h1, h2, h3) {
    9. Arrival / presence states
    ========================================================================== */
 
-:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"])) :where(
+:where(
+  html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
+  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
+) :where(
   .frame-card,
   .media-card,
   .media-focus-card,
@@ -848,7 +852,10 @@ header.frame-heading > :is(h1, h2, h3) {
   --component-arrival-opacity: 0.97;
 }
 
-:where(html[data-spw-page-presence="background"]) :where(
+:where(
+  html[data-spw-page-presence="background"],
+  html[data-spw-page-transition-phase="background"]
+) :where(
   .frame-card,
   .media-card,
   .media-focus-card,

@@ -427,7 +427,7 @@ body {
 
 :where(
   .annotation, .annotation-card, .margin-note, .editor-note,
-  [data-author-annotation], [data-spw-annotation]
+  [data-author-annotation], [data-spw-annotation]:not(html):not(body)
 ) {
   opacity: calc(0.44 + var(--climate-annotation-strength) * 0.64);
   border-color: color-mix(in srgb, var(--climate-accent) 24%, var(--annotation-line, transparent));

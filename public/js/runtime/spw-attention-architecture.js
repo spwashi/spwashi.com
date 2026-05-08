@@ -273,6 +273,8 @@ function collectSections() {
 function ensureHandle(root, sections) {
   const existing = root.querySelector(HANDLE_SELECTOR);
   if (existing instanceof HTMLElement) {
+    existing.dataset.spwFloatingChrome = 'true';
+    existing.dataset.spwLayoutOwner = 'floating-chrome';
     return { handle: existing, generated: false };
   }
 
@@ -284,6 +286,8 @@ function ensureHandle(root, sections) {
   handle.className = 'spw-section-handle spw-section-handle--generated';
   handle.href = '#main-content';
   handle.setAttribute('aria-label', 'Jump to current section');
+  handle.dataset.spwFloatingChrome = 'true';
+  handle.dataset.spwLayoutOwner = 'floating-chrome';
   handle.innerHTML = `
     <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
     <span class="spw-section-handle__label">section</span>
@@ -304,6 +308,8 @@ function createHandleShell(origin) {
   shell.className = HANDLE_SHELL_CLASS;
   shell.setAttribute('aria-label', 'Page locomotion');
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
+  shell.dataset.spwFloatingChrome = 'true';
+  shell.dataset.spwLayoutOwner = 'floating-chrome';
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
     <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel rail">

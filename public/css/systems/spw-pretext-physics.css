@@ -493,7 +493,9 @@
 }
 
 :where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-line),
-:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold) {
+:where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold),
+:where(html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]) [data-spw-flow="pretext"] .pretext-flow-line),
+:where(html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold) {
   transition-timing-function: steps(3, end);
 }
 
@@ -509,7 +511,10 @@
   --pretext-arrival-scale: 0.998;
 }
 
-:where(html[data-spw-page-presence="background"] [data-spw-flow="pretext"]) {
+:where(
+  html[data-spw-page-presence="background"] [data-spw-flow="pretext"],
+  html[data-spw-page-transition-phase="background"] [data-spw-flow="pretext"]
+) {
   --pretext-rail-glow: none;
   --pretext-scaffold-opacity: calc(var(--pretext-scaffold-opacity) * 0.82);
 }

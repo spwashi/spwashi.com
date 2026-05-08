@@ -9,12 +9,15 @@ const QUERY_PREFIXES = Object.freeze({
   tune: 'spw-tune-',
 });
 export const SPW_QUERY_ALIASES = Object.freeze({
+  debug: Object.freeze(['spw-debug', 'debug']),
+  interaction: Object.freeze(['spw-interaction', 'interaction']),
   log: Object.freeze(['spw-log', 'log']),
   logLevel: Object.freeze(['spw-log-level', 'log-level']),
   meaning: Object.freeze(['spw-meaning', 'meaning']),
   palette: Object.freeze(['spw-palette', 'palette']),
   physics: Object.freeze(['spw-physics', 'physics']),
   reflow: Object.freeze(['spw-reflow', 'reflow']),
+  view: Object.freeze(['spw-view', 'view']),
 });
 
 export const SPW_PHYSICS_PRESETS = Object.freeze({
@@ -223,11 +226,14 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     cssVariable: 'spw-var-<token>=<value>',
     colorVariable: 'spw-color-<token>=<color>',
     dataAttribute: 'spw-data-<name>=<value>',
+    debugView: 'spw-debug|debug=<on|off|css|layout|css,layout>',
+    interactionPreset: 'spw-interaction|interaction=<calm|tactile|puppet|screenshot>',
     logNamespaces: 'spw-log|log=<on|*|namespace[,namespace]>',
     logLevel: 'spw-log-level|log-level=<debug|info|warn|error>',
     paletteResonance: 'spw-palette|palette=<route|craft|software|math>',
     physicsPreset: 'spw-physics|physics=<calm|tactile|puppet|screenshot>',
     meaningPreset: 'spw-meaning|meaning=<quiet|readable|inspect|screenshot>',
+    viewingPreset: 'spw-view|view=<quiet|readable|inspect|screenshot>',
     tuningAttribute: 'spw-tune-<name>=<value>',
     reflowReason: 'spw-reflow|reflow=<reason>',
   }),
@@ -252,6 +258,13 @@ const normalizeReflowReason = (reason = SPW_REFLOW_REASONS.INTERACTION) => {
     ? normalized
     : SPW_REFLOW_REASONS.INTERACTION;
 };
+
+const readDebugTokens = (value = '') => (
+  String(value)
+    .split(/[,\s]+/)
+    .map(normalizeToken)
+    .filter(Boolean)
+);
 
 const freezeAliasSets = (aliases = {}) => Object.fromEntries(
   Object.entries(aliases).map(([family, names]) => [
@@ -406,6 +419,22 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
       continue;
     }
 
+    if (queryContract.aliases.debug?.has(key)) {
+      const debugTokens = readDebugTokens(value);
+      const enabledTokens = debugTokens.filter((token) => token !== 'on' && token !== 'off');
+      if (!debugTokens.includes('off')) {
+        disposition.data.spwDebugMode = 'on';
+      }
+      if (enabledTokens.length) {
+        disposition.data.spwDebug = enabledTokens.join(' ');
+        disposition.tuning.debug = enabledTokens.join(',');
+      } else if (debugTokens.includes('on')) {
+        disposition.data.spwDebug = 'css';
+        disposition.tuning.debug = 'css';
+      }
+      continue;
+    }
+
     if (queryContract.aliases.palette?.has(key)) {
       disposition.data.spwPaletteResonance = normalizeToken(value);
       disposition.tuning.palette = normalizeToken(value);
@@ -430,6 +459,28 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
         Object.assign(disposition.data, queryContract.meaningPresets[preset].data);
         disposition.presets.meaning = preset;
         disposition.tuning.meaning = preset;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.view?.has(key)) {
+      const preset = normalizeToken(value);
+      if (queryContract.meaningPresets[preset]) {
+        Object.assign(disposition.cssVars, queryContract.meaningPresets[preset].cssVars);
+        Object.assign(disposition.data, queryContract.meaningPresets[preset].data);
+        disposition.presets.meaning = preset;
+        disposition.tuning.view = preset;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.interaction?.has(key)) {
+      const preset = normalizeToken(value);
+      if (queryContract.physicsPresets[preset]) {
+        Object.assign(disposition.cssVars, queryContract.physicsPresets[preset].cssVars);
+        Object.assign(disposition.data, queryContract.physicsPresets[preset].data);
+        disposition.presets.physics = preset;
+        disposition.tuning.interaction = preset;
       }
       continue;
     }

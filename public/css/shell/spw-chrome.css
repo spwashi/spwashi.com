@@ -84,7 +84,7 @@
   top: 0;
   z-index: var(--z-header);
 
-  padding-top: env(safe-area-inset-top);
+  padding-top: 0;
   padding-bottom: max(var(--shell-header-pad-block), 0.16rem);
   padding-left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
   padding-right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
@@ -116,29 +116,9 @@
   grid-template-areas: "sigil nav indicator";
 }
 
-:where(.site-header[data-spw-header-annotation], body > header[data-spw-header-annotation]) {
-  grid-template-areas:
-    "sigil nav indicator"
-    ". nav annotation"
-    "trace trace trace";
-}
-
-:where(body:not([data-spw-features~="shell-trace"]) .site-header[data-spw-header-annotation], body:not([data-spw-features~="shell-trace"]) > header[data-spw-header-annotation]) {
-  grid-template-areas:
-    "sigil nav indicator"
-    ". nav annotation";
-}
-
 :where(body[data-spw-features~="shell-trace"] .site-header, body[data-spw-features~="shell-trace"] > header) {
   grid-template-areas:
     "sigil nav indicator"
-    "trace trace trace";
-}
-
-:where(body[data-spw-features~="shell-trace"] .site-header[data-spw-header-annotation], body[data-spw-features~="shell-trace"] > header[data-spw-header-annotation]) {
-  grid-template-areas:
-    "sigil nav indicator"
-    ". nav annotation"
     "trace trace trace";
 }
 
@@ -223,18 +203,26 @@
 }
 
 .header-sigil {
-  grid-area: sigil;
-  justify-self: start;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   min-width: 0;
+  gap: 0.5rem;
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 74%, var(--active-op-color, var(--teal, #008080)) 26%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-label, 0.76rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.header-brand {
+  grid-area: sigil;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .header-sigil::before,
@@ -292,11 +280,10 @@
 }
 
 .header-annotation {
-  grid-area: annotation;
-  justify-self: end;
-  max-width: min(24ch, 28vw);
-  margin: -0.12rem calc(var(--subjective-brace-width, 28px) + 0.75rem) 0 0;
-  padding: 0.1rem 0.38rem;
+  display: inline-flex;
+  align-items: center;
+  max-width: min(18ch, 28vw);
+  padding: 0.1rem 0.4rem;
   border: 1px solid color-mix(in srgb, var(--spw-shell-chrome-line-local) 82%, transparent);
   border-radius: var(--shell-panel-radius-tight, 6px);
   background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 88%, transparent);
@@ -306,7 +293,7 @@
   font-size: 0.64rem;
   letter-spacing: 0.04em;
   line-height: 1.15;
-  text-align: right;
+  text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -1189,6 +1176,20 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   gap: var(--spw-shell-row-gap, 0.25rem);
 }
 
+:where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"]) {
+  grid-template-areas:
+    "sigil toggle"
+    "tools tools";
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) {
+  grid-template-areas:
+    "sigil toggle"
+    "tools tools"
+    "nav nav"
+    "trace trace";
+}
+
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .header-sigil,
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-nav-toggle {
   padding-inline: 1rem;
@@ -1209,18 +1210,9 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   align-self: start;
 }
 
-:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]):not(:has(> .spw-semantic-seam:not([hidden]):not([data-spw-empty="true"]))) {
+:where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]):not(:has(> .spw-semantic-seam:not([hidden]):not([data-spw-empty="true"]))) {
   grid-template-areas:
     "sigil toggle"
-    "tools tools"
-    "nav nav"
-    "trace trace";
-}
-
-:where(.site-header[data-spw-menu-mode="toggle"][data-spw-header-annotation], body > header[data-spw-menu-mode="toggle"][data-spw-header-annotation]) {
-  grid-template-areas:
-    "sigil toggle"
-    "annotation annotation"
     "tools tools"
     "nav nav"
     "trace trace";
@@ -1925,14 +1917,6 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
       "trace trace";
   }
 
-  :where(.site-header[data-spw-header-annotation]:not([data-spw-menu-mode="toggle"]), body > header[data-spw-header-annotation]:not([data-spw-menu-mode="toggle"])) {
-    grid-template-areas:
-      "sigil indicator"
-      "annotation annotation"
-      "nav nav"
-      "trace trace";
-  }
-
   .header-op-indicator {
     align-self: center;
   }
@@ -1954,13 +1938,6 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     padding-block: var(--spw-shell-surface-padding-block, 0.35rem);
   }
 
-  :where(.site-header[data-spw-header-annotation], body > header[data-spw-header-annotation]) {
-    grid-template-areas:
-      "sigil toggle"
-      "annotation annotation"
-      "nav nav";
-  }
-
   .header-sigil,
   .spw-nav-toggle {
     padding-inline: 1rem;
@@ -1978,10 +1955,18 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   .header-annotation {
-    justify-self: start;
-    max-width: min(100%, 38ch);
-    margin: 0 0 0 var(--page-gutter-inline);
+    max-width: min(100%, 24ch);
     text-align: left;
+  }
+
+  .header-brand {
+    gap: 0.35rem;
+    padding-inline-start: 0;
+  }
+
+  .header-brand,
+  .header-sigil {
+    min-width: 0;
   }
 
   :where(.site-header nav, body > header nav) {
@@ -2588,4 +2573,28 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/*
+ * These chrome affordances are inserted as direct children of <body>.
+ * Keep them out of body flex/grid flow even if generic shell or component
+ * child selectors assign `position: relative` to top-level descendants.
+ */
+body > a.skip-link {
+  position: fixed;
+  top: 0.55rem;
+  left: max(0.55rem, env(safe-area-inset-left));
+  margin: 0;
+  flex: none;
+  align-self: auto;
+}
+
+body > .spw-section-handle,
+body > nav.spw-section-handle-shell {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--attention-handle-offset, 1rem) + env(safe-area-inset-bottom));
+  margin: 0;
+  flex: none;
+  align-self: auto;
 }

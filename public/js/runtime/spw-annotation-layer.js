@@ -144,12 +144,11 @@ function writeRootState(snapshot) {
     spwAnnotationSource: snapshot.source,
   };
 
-  [ROOT, document.body].forEach((node) => {
-    if (!node) return;
-    Object.entries(entries).forEach(([key, value]) => {
-      if (value) node.dataset[key] = value;
-      else delete node.dataset[key];
-    });
+  /* Keep annotation state on html only so broad body-level semantic selectors
+     do not accidentally treat the whole page as the active annotation target. */
+  Object.entries(entries).forEach(([key, value]) => {
+    if (value) ROOT.dataset[key] = value;
+    else delete ROOT.dataset[key];
   });
 }
 

@@ -178,8 +178,8 @@ body[data-spw-shell-density="roomy"] {
   --page-section-gap: clamp(2.4rem, 4.4vw, 3.8rem);
 }
 
-/* Generic top-level flow */
-body > * {
+/* Generic top-level flow belongs to page regions, not floating chrome. */
+body > :where(header, main, footer) {
   position: relative;
 }
 

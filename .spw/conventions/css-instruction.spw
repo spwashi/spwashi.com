@@ -41,6 +41,7 @@
 ^"debug_contract"{
   global_toggle: "html[data-spw-debug-mode=\"on\"] enables inspection-forward CSS projected from public/js/site-settings.js."
   local_toggle: "[data-spw-debug~=\"css\"] opts a subtree into CSS structure overlays without changing settings."
+  layout_toggle: "[data-spw-debug~=\"layout\"] highlights ownership roles such as data-spw-layout-owner and data-spw-floating-chrome."
   owner: "public/css/spw-debug.css exposes structure only. It must not become required for layout or comprehension."
   devtools_path: [
     "Find the visible element.",
@@ -48,6 +49,13 @@
     "Open public/css/style.css to find the owning layer.",
     "Patch the smallest file that owns that semantic level."
   ]
+}
+
+^"flow_ownership"{
+  rule: "Broad child-lifting selectors may protect ordinary content from pseudo-element substrate layers, but they must not silently reclassify overlays, toasts, skip links, or dismissable shells as flow content."
+  floating_chrome_contract: "Use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for viewport-pinned or host-edge affordances that should stay outside normal component flow."
+  anatomy_rule: "Slot-bearing card anatomy owns readable content. Floating chrome and overlays are separate roles even when they borrow the same material tokens."
+  failure_mode: "A generic > * selector assigns position or min-width to a fixed affordance, then debugging starts by guessing which broad rule stole layout ownership."
 }
 
 ^"import_manifest"{

@@ -235,6 +235,21 @@
                         <h3>.image-study</h3>
                         <p>Usually combined with <code>.topic-photo-card</code>. Provides a rich frame for surfacing screenshots or artwork, complete with accent palettes, responsive projection hints, and enough caption structure to survive screen reading, image prompting, and later SVG cleanup.</p>
                     </article>
+
+                    <article class="frame-panel" id="floating-chrome-contract">
+                        <p class="frame-note">viewport-local affordances</p>
+                        <h3>Floating chrome</h3>
+                        <p>Skip links, section handles, toasts, non-modal notices, and similar dismissable shells are not card content. They should declare <code>data-spw-floating-chrome="true"</code> and <code>data-spw-layout-owner="floating-chrome"</code> so shared content-lifting rules do not pull them back into host flow.</p>
+                        <p>This is a layout role, not a visual style. A floating affordance can still borrow card material tokens, but its geometry belongs to the viewport or host edge rather than the card body.</p>
+                        <p><a class="operator-chip" href="/design/runtime/?debug=layout#debug-presets">inspect ownership</a> <a class="operator-chip" href="/design/#design-circuits">see design circuits</a></p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">card interior anatomy</p>
+                        <h3>Slot-bearing content</h3>
+                        <p>Cards, frames, panels, and compare shells should spend their anatomy budget on <code>header</code>, <code>meta</code>, <code>body</code>, <code>figure</code>, <code>actions</code>, and <code>footer</code>. Dismissable overlays belong beside that anatomy as overlays or floating chrome, not as anonymous extra children that broad selectors have to guess about later.</p>
+                        <p>The practical test is simple: if removing the element should not collapse the reading order, it probably is not flow content.</p>
+                    </article>
                 </div>
             </section>
 
