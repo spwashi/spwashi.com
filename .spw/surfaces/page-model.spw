@@ -18,16 +18,16 @@
 thesis: .{
  claim = `A page is a nested field of attentional possibility, not a flat sequence of content blocks. Its structure can be described top-down as a composition tree and bottom-up as a gradient field. Both descriptions are simultaneously true.`
  corollary = `The composition tree tells you what a page contains. The gradient field tells you how attention moves through it. A well-designed page has a topography that rewards deliberate traversal.`
- gap = `The current site describes routes as path + role + bridge, and components as kind + form + role + liminality + selection. The structural level between route and component — the feature, and the interaction context within a feature — is currently unnamed and therefore hard to design or audit.`
+ gap = `The site now names pages, features, and interaction contexts, but the ownership ladder between page metadata, region flow, feature identity, component anatomy, and out-of-flow affordances is still easy to blur. That ambiguity is where leaky selectors and composition drift tend to begin.`
 }[reg=facet]
 
 composition_hierarchy: .{
  note = `Each level is a named unit with its own semantic identity, attentional weight, and participation in the gradient field.`
  page = .{
   definition = `A routable surface. Has a URL, a semantic role, and a shell. The outermost gradient field anchor.`
-  semantic_identity = #[role, context, `liminality at entry`][reg=set]
+  semantic_identity = #[surface, page_family, page_role, route_family, context, layout][reg=set]
   field_role = `Sets the root attentional baseline. Determines which wonder types are available at all.`
-  html_contract = `body[data-spw-role] and main carry the page-level semantic truth.`
+  html_contract = `body[data-spw-surface], body[data-spw-page-family], body[data-spw-page-role], body[data-spw-route-family], body[data-spw-context], and body[data-spw-layout] carry page-level truth. main begins the primary reading surface but is not the canonical owner of page identity.`
   authoring_contract = `Pages may declare head and shell chrome with <spw-page>, <spw-site-head>, and <spw-site-header>. The route source stays HTML-native while build/dev rendering expands shared metadata, navigation, JSON-LD, and microinteraction hooks.`
  }[reg=facet]
  region = .{
@@ -38,12 +38,12 @@ composition_hierarchy: .{
   note = `Regions are the granularity at which attentional topography is most actionable — their harmony value is already a design-facing signal.`
  }[reg=facet]
  feature = .{
- definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose.`
-  semantic_identity = #[`feature-role`, `feature-kind`, `purpose description`][reg=set]
+ definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose and should remain identifiable across CSS, JS, QA links, and editor inspection.`
+  semantic_identity = #[feature_name, `feature-role`, `feature-kind`, `purpose description`][reg=set]
   field_role = `Features are the primary attractor units. When a visitor's attention enters a feature, the feature's tokens enter the wonder field.`
-  html_contract = `data-spw-feature='name' on the outermost element of a functional cluster. Selected high-traffic routes now author this explicitly; coverage is still partial.`
+  html_contract = `data-spw-feature='name' on the outermost element of a functional cluster. This is now a real structural layer used by authored routes, debug overlays, and instrumentation surfaces.`
   note = `Prompt decks, trope boxes, and direct-wiring demo banks are feature-level attractors: they bundle copy, controls, and nearby routes into one replayable unit instead of scattering affordances across a whole page.`
-  gap = `Feature naming now exists in markup, but there is no sitewide JS model yet and many routes still rely on implicit clustering.`
+  gap = `Coverage is still partial and feature taxonomy is not yet audited. The next risk is not absence but uncontrolled proliferation of feature names without role/kind guidance.`
  }[reg=facet]
  component = .{
   definition = `A reusable semantic element that participates in the attentional grammar.`
@@ -71,7 +71,34 @@ composition_hierarchy: .{
   html_contract = `data-spw-interaction-context='reading|browsing|inspecting|collecting|comparing'. Currently set by JS; could be inferred from interaction patterns.`
   note = `This is the level at which guide-badge interaction should be specified. A badge in a collecting context behaves differently from one in a browsing context.`
  }[reg=facet]
+ out_of_flow = .{
+  definition = `A composition role for descendants whose geometry is not governed by ordinary content flow.`
+  classes = .{
+   slot_bearing_content = `Normal card or frame anatomy. Participates in reading order and may be lifted above substrate layers by shared child-lifting selectors.`
+   overlay = `Host-local plane. Uses data-spw-overlay or region-flow overlay when a child shares the host's semantic boundary but occupies a different layer.`
+   popout = `Host-edge escape. Uses data-spw-region-flow='popout' when content remains semantically attached to the host but intentionally crosses its interior boundary.`
+   floating_chrome = `Viewport- or shell-edge affordance. Uses data-spw-floating-chrome='true' and data-spw-layout-owner='floating-chrome'. Examples: skip links, section handles, toast stacks, non-modal notices.`
+   modal = `Context-owning dialog. Temporarily becomes the dominant reading/focus surface rather than ambient chrome.`
+  }[reg=facet]
+  precedence = #[
+   `If removing the element would collapse the reading order, it is slot-bearing content.`,
+   `If the element belongs to a host but sits on another plane, it is an overlay.`,
+   `If it escapes the host edge but still belongs to that host, it is a popout.`,
+   `If it belongs to the viewport or shell rather than the card body, it is floating chrome.`,
+   `If it temporarily owns focus and page context, it is modal.`
+  ][reg=set]
+ }[reg=facet]
 }[reg=facet]
+
+composition_ladder: #[
+ `page metadata -> region flow -> feature -> component -> slot -> out-of-flow role -> runtime state`,
+ `Page metadata establishes route identity and broad reading conditions.`,
+ `Region flow decides how repeated children occupy a host.`,
+ `Feature gives a coherent cluster a reusable name for CSS, JS, QA, and editor inspection.`,
+ `Component and slot anatomy own readable structure.`,
+ `Out-of-flow role declares geometry exceptions before selectors start guessing.`,
+ `Runtime state should tune the declared structure, not redefine it.`
+][reg=set]
 
 data_flow: .{
  note = `How semantic information moves through the composition hierarchy — from authored HTML to rendered field state.`

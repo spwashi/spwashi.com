@@ -18,6 +18,7 @@
 @wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
 @accent_palette: ~"../../../public/js/spw-accent-palette.js"
 @ontology: ~"./ontology.spw"
+@composition_ownership: ~"./composition-ownership.spw"
 @seams: ~"./seams.spw"
 @lifecycles: ~"./lifecycles.spw"
 @settings_state: ~"./settings-state.spw"
@@ -30,6 +31,7 @@ intent: .{
 
 dispatch: .{
  ontology = @ontology
+ composition_ownership = @composition_ownership
  seams = @seams
  lifecycles = @lifecycles
  settings_state = @settings_state
@@ -60,10 +62,11 @@ finding_index: .{
  ][reg=set]
 }[reg=facet]
 
-inspection_order: ?< @ontology, @seams, @lifecycles, @settings_state >[reg=stream]
+inspection_order: ?< @ontology, @composition_ownership, @seams, @lifecycles, @settings_state >[reg=stream]
 
 topic_summary: .{
  ontology = `The site currently has multiple semantic authorities for role, context, and category meaning.`
+ composition_ownership = `Leaky rules come from unclear ownership boundaries between page truth, feature identity, slot anatomy, and out-of-flow geometry roles.`
  seams = `The handoff points between authored HTML, metadata normalization, region profiling, component semantics, and contextual UI are real but under-specified.`
  lifecycles = `The runtime exposes a clean boot/destroy story, but some modules only partially obey that contract.`
  settings_state = `The settings manager is close to canonical, but at least one module still bypasses it and one event contract is shape-fragile.`

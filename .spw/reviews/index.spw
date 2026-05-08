@@ -6,6 +6,7 @@
 #:layer #!pragmatics
 
 @runtime_audit: ~"./runtime-audit/index.spw"
+@composition_ownership: ~"./runtime-audit/composition-ownership.spw"
 
 intent: .{
  goal = `Keep review surfaces grouped and easy to traverse in an editor.`
@@ -14,6 +15,7 @@ intent: .{
 
 dispatch: .{
  runtime_audit = @runtime_audit
+ composition_ownership = @composition_ownership
 }[reg=facet]
 
 invariants: #[

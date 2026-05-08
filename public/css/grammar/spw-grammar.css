@@ -111,16 +111,17 @@
   min-width: 0;
 }
 
-/* Lift content above generated braces, rails, and ornaments. */
+/* Lift ordinary flow content above generated braces, rails, and ornaments.
+   Out-of-flow roles keep their own geometry contract. */
 :where(
-  .site-frame > *,
-  .frame-panel > *,
-  .frame-card > *,
-  .software-card > *,
-  .mode-panel > *,
-  .plan-card > *,
-  .compare-card > *,
-  .spec-column > *
+  .site-frame > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .frame-panel > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .frame-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .software-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .mode-panel > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .plan-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .compare-card > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"]),
+  .spec-column > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
   z-index: 1;

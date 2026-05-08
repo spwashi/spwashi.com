@@ -75,13 +75,14 @@
 }
 
 ^"public_starter_topography"{
-  rule: "The site should be explainable to another developer as route -> shell -> region -> component -> slot -> module."
+  rule: "The site should be explainable to another developer as route -> shell -> region -> feature -> component -> slot -> module."
   source_contract: "../../../public/js/spw-dom-contracts.js"
   docs: "../../../docs/developer-topography.md"
   layers: {
     route: "A public URL and business purpose."
     shell: "Persistent header, navigation, footer, and global controls."
     region: "A named page section that can receive harmony, tempo, density, and attention state."
+    feature: "A named functional cluster that can be inspected, tuned, linked, or debugged as one thing."
     component: "A reusable block such as a frame, panel, card, surface, lens, or control."
     slot: "A named internal component part: header, body, figure, actions, footer."
     module: "A progressive JavaScript behavior mounted only when the route or DOM proves it is needed."
@@ -111,6 +112,31 @@
   modal_relation: "Modal dialogs temporarily own focus and reading order. Floating chrome stays ambient or dismissable without becoming the whole page context."
   toast_relation: "A toast is one presentation of floating chrome: brief, edge-pinned, and non-blocking. A persistent notice or locomotion handle can share the same ownership contract while differing in copy and lifecycle."
   selector_rule: "Broad flow-child selectors should exclude floating chrome by contract instead of relying on ad hoc class exceptions after the fact."
+}
+
+^"out_of_flow_precedence"{
+  rule: "Overlay, popout, floating chrome, and modal are related but not interchangeable roles."
+  ordering = #[
+    `slot-bearing content -> overlay -> popout -> floating chrome -> modal`
+  ][reg=set]
+  overlay = "Host-local alternate plane inside the same semantic boundary."
+  popout = "Host-attached surface that intentionally escapes the host's interior edge."
+  floating_chrome = "Viewport- or shell-edge affordance that is not card anatomy."
+  modal = "Dialog or context-owning surface that temporarily becomes the dominant reading/focus owner."
+  composition_consequence = "If the role is chosen correctly, selectors can stay broad without becoming leaky."
+}
+
+^"page_truth_contract"{
+  rule: "Page identity belongs on body metadata before any runtime inference layer adds nuance."
+  canonical_fields = #[
+    `data-spw-surface`,
+    `data-spw-page-family`,
+    `data-spw-page-role`,
+    `data-spw-route-family`,
+    `data-spw-context`,
+    `data-spw-layout`
+  ][reg=set]
+  noncanonical_counterexample = "Treating body[data-spw-role] as the main page truth invites drift because route pages mostly author data-spw-page-role instead."
 }
 
 ^"region_flow_contract"{

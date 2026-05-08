@@ -119,12 +119,12 @@ runtime_exposure_contract: .{
  }[reg=facet]
  gaps = .{
   missing_exposure = #[
-   `No CSS var currently exposes per-component field intensity.`,
-   `No data attribute currently marks interaction context canonically for ornaments.`,
-   `No deviation register is surfaced to CSS or ornament layers.`,
-   `No explicit collection state exists in the current runtime.`
+   `Per-component field intensity currently exists as a CSS-facing consequence of interaction context, but the runtime provenance is still thinly documented.`,
+   `Collection and interaction context contracts exist in CSS and semantics, but their lifecycle and producers are not yet described in one canonical runtime note.`,
+   `Deviation state is partially surfaced through root-level counts and local markers, but the register model remains underspecified for ornament consumers.`,
+   `Ornament consumers still have to infer which producer last wrote a visible state unless instrumentation is enabled.`
   ][reg=set]
-  implication = `Ornaments that want to show resonance, collection, or deviation must currently track their own state instead of reading a canonical attribute.`
+  implication = `The main risk is no longer absence of contracts. It is partial documentation of producers, lifecycle, and precedence.`
  }[reg=facet]
 }[reg=facet]
 

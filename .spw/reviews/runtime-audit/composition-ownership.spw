@@ -1,0 +1,53 @@
+# composition-ownership
+# Structural audit note for preventing leaky rules and clarifying composition.
+
+#>runtime_audit_composition_ownership
+#:review #!structure
+#:layer #!pragmatics
+
+@site_semantics: ~"../../conventions/site-semantics.spw"
+@page_model: ~"../../surfaces/page-model.spw"
+@css_instruction: ~"../../conventions/css-instruction.spw"
+@components_css: ~"../../../public/css/components/spw-components.css"
+@debug_css: ~"../../../public/css/effects/spw-debug.css"
+@instrumentation: ~"../../../public/js/kernel/spw-instrumentation.js"
+
+thesis: .{
+ claim = `Preventing leaky rules and enabling design composition require the same thing: a declared ownership ladder that selectors and runtime modules can read before they infer.`
+ implication = `When page truth, feature identity, and out-of-flow roles are explicit, broad CSS can stay useful without silently reclassifying structure.`
+}[reg=facet]
+
+composition_ladder: #[
+ `page metadata -> region flow -> feature -> component -> slot -> out-of-flow role -> runtime state`
+][reg=set]
+
+priority_rules: .{
+ page_truth = `Route identity should be read from body[data-spw-surface], data-spw-page-family, data-spw-page-role, data-spw-route-family, data-spw-context, and data-spw-layout before downstream layers infer anything broader.`
+ feature_truth = `A named data-spw-feature cluster is a real composition unit, not only a debug convenience.`
+ slot_truth = `Slot-bearing content owns reading order and should be the default target of shared child-lifting selectors.`
+ floating_truth = `Overlays, popouts, floating chrome, and modals are geometry roles. They must be declared before generic selectors start assigning position, z-index, min-width, or contain values.`
+}[reg=facet]
+
+out_of_flow_precedence: .{
+ overlay = `Host-local alternate plane. Same semantic boundary, different layer.`
+ popout = `Host-edge escape. Same owner, intentional boundary crossing.`
+ floating_chrome = `Viewport- or shell-edge affordance. Not card content.`
+ modal = `Context-owning dialog. Dominates focus and reading order.`
+ selector_rule = `Shared selectors should exclude the declared geometry role, not patch around individual classes after the fact.`
+}[reg=facet]
+
+leak_sources: #[
+ `Broad > * selectors that assign position, z-index, min-width, or contain.`,
+ `Page-level docs that describe provisional concepts long after the runtime depends on them.`,
+ `Role vocabularies that mix structural roles with local authored labels without tiering.`,
+ `Debug overlays that expose ownership categories not yet made canonical in the ontology.`
+][reg=set]
+
+inspection_paths: .{
+ css = @components_css
+ debug = @debug_css
+ instrumentation = @instrumentation
+ site_semantics = @site_semantics
+ page_model = @page_model
+ css_instruction = @css_instruction
+}[reg=facet]

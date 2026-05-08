@@ -17,6 +17,11 @@
   [data-spw-debug~="css"],
   [data-spw-debug~="layout"]
 ) :where(
+  [data-spw-page-role],
+  [data-spw-page-family],
+  [data-spw-route-family],
+  [data-spw-layout],
+  [data-spw-context],
   [data-spw-surface],
   [data-spw-feature],
   [data-spw-module],
@@ -37,6 +42,11 @@
   [data-spw-debug~="css"],
   [data-spw-debug~="layout"]
 ) :where(
+  [data-spw-page-role],
+  [data-spw-page-family],
+  [data-spw-route-family],
+  [data-spw-layout],
+  [data-spw-context],
   [data-spw-feature],
   [data-spw-module],
   [data-spw-slot],
@@ -54,6 +64,11 @@
   [data-spw-debug~="css"],
   [data-spw-debug~="layout"]
 ) :where(
+  [data-spw-page-role],
+  [data-spw-page-family],
+  [data-spw-route-family],
+  [data-spw-layout],
+  [data-spw-context],
   [data-spw-feature],
   [data-spw-module],
   [data-spw-slot],
@@ -88,6 +103,26 @@
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-feature]::before {
   content: "feature:" attr(data-spw-feature);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-role]::before {
+  content: "page-role:" attr(data-spw-page-role);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-family]::before {
+  content: "page-family:" attr(data-spw-page-family);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-route-family]::before {
+  content: "route-family:" attr(data-spw-route-family);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-layout]::before {
+  content: "layout:" attr(data-spw-layout);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-context]::before {
+  content: "context:" attr(data-spw-context);
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module]::before {
@@ -128,6 +163,17 @@
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-feature] {
   --spw-css-debug-color: var(--op-frame-color, #008080);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-role] {
+  --spw-css-debug-color: var(--op-object-color, #a67c00);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-family],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-route-family],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-layout],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-context] {
+  --spw-css-debug-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 72%, var(--teal, #008080));
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module] {
