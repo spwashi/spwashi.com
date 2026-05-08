@@ -1505,6 +1505,47 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   letter-spacing: normal;
 }
 
+.site-footer__page-architecture {
+  display: grid;
+  gap: 0.12rem;
+  margin-top: 0.18rem;
+  padding-top: 0.36rem;
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+}
+
+.site-footer__page-architecture-kicker,
+.site-footer__page-architecture-copy,
+.site-footer__page-architecture-meta {
+  margin: 0;
+}
+
+.site-footer__page-architecture-kicker {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-footer__page-architecture-copy {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: var(--text-size-xs, 0.84rem);
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+.site-footer__page-architecture-copy strong {
+  color: var(--active-op-color, var(--teal, #008080));
+  font-weight: 600;
+}
+
+.site-footer__page-architecture-meta {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
 .site-footer__settings {
   display: flex;
   flex-wrap: wrap;

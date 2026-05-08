@@ -20,6 +20,10 @@
   [data-spw-page-role],
   [data-spw-page-family],
   [data-spw-route-family],
+  [data-spw-page-zone],
+  [data-spw-page-status],
+  [data-spw-page-responsibility],
+  [data-spw-page-primary-action],
   [data-spw-layout],
   [data-spw-context],
   [data-spw-surface],
@@ -45,6 +49,10 @@
   [data-spw-page-role],
   [data-spw-page-family],
   [data-spw-route-family],
+  [data-spw-page-zone],
+  [data-spw-page-status],
+  [data-spw-page-responsibility],
+  [data-spw-page-primary-action],
   [data-spw-layout],
   [data-spw-context],
   [data-spw-feature],
@@ -67,6 +75,10 @@
   [data-spw-page-role],
   [data-spw-page-family],
   [data-spw-route-family],
+  [data-spw-page-zone],
+  [data-spw-page-status],
+  [data-spw-page-responsibility],
+  [data-spw-page-primary-action],
   [data-spw-layout],
   [data-spw-context],
   [data-spw-feature],
@@ -111,6 +123,22 @@
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-family]::before {
   content: "page-family:" attr(data-spw-page-family);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-zone]::before {
+  content: "page-zone:" attr(data-spw-page-zone);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-status]::before {
+  content: "page-status:" attr(data-spw-page-status);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-responsibility]::before {
+  content: "page-responsibility:" attr(data-spw-page-responsibility);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-primary-action]::before {
+  content: "page-primary-action:" attr(data-spw-page-primary-action);
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-route-family]::before {
@@ -169,7 +197,27 @@
   --spw-css-debug-color: var(--op-object-color, #a67c00);
 }
 
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-zone] {
+  --spw-css-debug-color: var(--op-frame-color, #008080);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-status] {
+  --spw-css-debug-color: var(--op-action-color, #005959);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-responsibility] {
+  --spw-css-debug-color: var(--op-probe-color, #4a2180);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-primary-action] {
+  --spw-css-debug-color: color-mix(in srgb, var(--op-object-color, #a67c00) 72%, var(--teal, #008080));
+}
+
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-family],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-zone],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-status],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-responsibility],
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-page-primary-action],
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-route-family],
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-layout],
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-context] {

@@ -30,6 +30,116 @@ const ROLE_CLUSTER_BY_ROLE = Object.freeze({
   rationale: 'pragma',
   pragma: 'pragma',
 });
+const PAGE_ZONE_BY_PATH = Object.freeze([
+  {
+    test: (pathname) => pathname === '/' || pathMatchesPrefix(pathname, '/services') || pathMatchesPrefix(pathname, '/cards') || pathMatchesPrefix(pathname, '/membership') || pathMatchesPrefix(pathname, '/contact') || pathMatchesPrefix(pathname, '/now'),
+    meta: {
+      pageZone: 'funnel',
+      pageStatus: 'active',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/about') || pathMatchesPrefix(pathname, '/settings') || pathMatchesPrefix(pathname, '/tools') || pathMatchesPrefix(pathname, '/design'),
+    meta: {
+      pageZone: 'kernel',
+      pageStatus: 'reference',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/topics') || pathMatchesPrefix(pathname, '/research') || pathMatchesPrefix(pathname, '/blog') || pathMatchesPrefix(pathname, '/play'),
+    meta: {
+      pageZone: 'lattice',
+      pageStatus: 'active',
+    },
+  },
+]);
+
+const PAGE_RESPONSIBILITY_BY_PATH = Object.freeze([
+  {
+    test: (pathname) => pathname === '/',
+    meta: {
+      pageResponsibility: 'route sorter',
+      pagePrimaryAction: 'Pick a route',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/now'),
+    meta: {
+      pageResponsibility: 'status board',
+      pagePrimaryAction: 'Support the sprint',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/cards'),
+    meta: {
+      pageResponsibility: 'product surface',
+      pagePrimaryAction: 'Create or share a card',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/services'),
+    meta: {
+      pageResponsibility: 'commercial router',
+      pagePrimaryAction: 'Compare an offer',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/membership'),
+    meta: {
+      pageResponsibility: 'role model',
+      pagePrimaryAction: 'Choose a role',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/about'),
+    meta: {
+      pageResponsibility: 'kernel explanation',
+      pagePrimaryAction: 'Understand the system',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/topics'),
+    meta: {
+      pageResponsibility: 'atlas',
+      pagePrimaryAction: 'Choose a domain',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/research'),
+    meta: {
+      pageResponsibility: 'evidence shelf',
+      pagePrimaryAction: 'Browse references',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/contact'),
+    meta: {
+      pageResponsibility: 'intake fallback',
+      pagePrimaryAction: 'Send a structured inquiry',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/settings'),
+    meta: {
+      pageResponsibility: 'performance console',
+      pagePrimaryAction: 'Tune the surface',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/blog'),
+    meta: {
+      pageResponsibility: 'field notes',
+      pagePrimaryAction: 'Read the current thread',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/play'),
+    meta: {
+      pageResponsibility: 'experiment stage',
+      pagePrimaryAction: 'Inspect the experiment',
+    },
+  },
+]);
 const CONTEXT_STOP_WORDS = new Set([
   'a',
   'all',
@@ -630,6 +740,40 @@ function inferPageRole(pathname, surface) {
   return `${surface || 'page'}-surface`;
 }
 
+function inferPageZone(pathname, surface) {
+  const matched = PAGE_ZONE_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta?.pageZone;
+  if (matched) return matched;
+  if (surface === 'about' || surface === 'settings' || surface === 'tools' || surface === 'design') return 'kernel';
+  if (surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'lattice';
+  return 'funnel';
+}
+
+function inferPageStatus(pathname, surface) {
+  if (surface === 'settings') return 'serviceable';
+  if (surface === 'tools' || surface === 'design') return 'serviceable';
+  const matched = PAGE_ZONE_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta?.pageStatus;
+  if (matched) return matched;
+  if (surface === 'play') return 'experimental';
+  return 'active';
+}
+
+function inferPageResponsibility(pathname, surface) {
+  const matched = PAGE_RESPONSIBILITY_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta || {};
+  if (matched.pageResponsibility) return matched.pageResponsibility;
+  if (surface === 'about' || surface === 'settings') return 'kernel explanation';
+  if (surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'atlas';
+  return 'route sorter';
+}
+
+function inferPagePrimaryAction(pathname, surface) {
+  const matched = PAGE_RESPONSIBILITY_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta || {};
+  if (matched.pagePrimaryAction) return matched.pagePrimaryAction;
+  if (surface === 'about') return 'Understand the system';
+  if (surface === 'settings') return 'Tune the surface';
+  if (surface === 'topics') return 'Choose a domain';
+  return 'Pick a route';
+}
+
 function isLikelyAssetPath(pathname = '') {
   return ASSET_PATH_RE.test(pathname);
 }
@@ -745,6 +889,10 @@ function resolvePageMetadata({ body = document.body, main = document.querySelect
     heroRole: context === 'routing' ? 'routing' : 'orientation',
     heroCategoryFamily: context === 'routing' ? 'register' : 'nook',
     heroLiminality: 'entry',
+    pageZone: inferPageZone(pathname, surface),
+    pageStatus: inferPageStatus(pathname, surface),
+    pageResponsibility: inferPageResponsibility(pathname, surface),
+    pagePrimaryAction: inferPagePrimaryAction(pathname, surface),
   };
 
   const matched = PAGE_METADATA_RULES.find((rule) => rule.test(pathname, surface, segments))?.meta || {};
@@ -883,6 +1031,10 @@ function normalizeHeadMetadata(pageMeta, { body = document.body, main = document
       { '@type': 'PropertyValue', name: 'spwSurface', value: body?.dataset?.spwSurface || 'default' },
       { '@type': 'PropertyValue', name: 'spwPageFamily', value: pageMeta.pageFamily },
       { '@type': 'PropertyValue', name: 'spwPageRole', value: pageMeta.pageRole },
+      { '@type': 'PropertyValue', name: 'spwPageZone', value: pageMeta.pageZone },
+      { '@type': 'PropertyValue', name: 'spwPageStatus', value: pageMeta.pageStatus },
+      { '@type': 'PropertyValue', name: 'spwPageResponsibility', value: pageMeta.pageResponsibility },
+      { '@type': 'PropertyValue', name: 'spwPagePrimaryAction', value: pageMeta.pagePrimaryAction },
       { '@type': 'PropertyValue', name: 'spwWonder', value: pageMeta.wonder },
     ],
   });
@@ -1130,7 +1282,38 @@ function applyPageMetadata(pageMeta, body = document.body) {
   setDataIfMissing(body, 'spwPageModes', pageMeta.pageModes);
   setDataIfMissing(body, 'spwPageSeed', pageMeta.pageSeed);
   setDataIfMissing(body, 'spwPageRole', pageMeta.pageRole);
+  setDataIfMissing(body, 'spwPageZone', pageMeta.pageZone);
+  setDataIfMissing(body, 'spwPageStatus', pageMeta.pageStatus);
+  setDataIfMissing(body, 'spwPageResponsibility', pageMeta.pageResponsibility);
+  setDataIfMissing(body, 'spwPagePrimaryAction', pageMeta.pagePrimaryAction);
   if (pageMeta.relatedRoutes) setDataIfMissing(body, 'spwRelatedRoutes', pageMeta.relatedRoutes);
+}
+
+function formatPageLabel(value = '') {
+  return String(value)
+    .trim()
+    .replace(/[_-]+/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function syncPageArchitectureFooter(pageMeta, body = document.body) {
+  if (!body) return;
+
+  const mappings = [
+    ['[data-spw-page-zone-label]', formatPageLabel(pageMeta.pageZone)],
+    ['[data-spw-page-status-label]', formatPageLabel(pageMeta.pageStatus)],
+    ['[data-spw-page-responsibility-label]', formatPageLabel(pageMeta.pageResponsibility)],
+    ['[data-spw-page-primary-action-label]', pageMeta.pagePrimaryAction],
+  ];
+
+  mappings.forEach(([selector, value]) => {
+    const node = body.querySelector(selector);
+    if (!node || !value) return;
+    node.textContent = value;
+  });
 }
 
 export function normalizeDocumentMetadata() {
@@ -1157,6 +1340,7 @@ export function normalizeDocumentMetadata() {
   normalizeShellMetadata(pageMeta, { body });
   normalizeRegionMetadata(pageMeta, { body });
   normalizeRegionAccessibility(pageMeta, { body });
+  syncPageArchitectureFooter(pageMeta, body);
 
   return {
     pageMeta,
