@@ -1844,6 +1844,46 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.5;
 }
 
+/* Portable literary surfaces. Safe to copy into a rogue page or generator
+   output when the stylesheet itself needs to read like an annotated text. */
+:where(.spw-literary-note, [data-spw-textual-role="note"]) {
+  max-inline-size: var(--component-measure);
+  line-height: 1.68;
+  text-wrap: pretty;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.spw-literary-verse, .spw-literary-stanza, [data-spw-textual-role="verse"]) {
+  display: block;
+  padding: 0.9rem 1rem;
+  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--component-accent) 34%, transparent);
+  border-radius: var(--component-radius-tight);
+  background: color-mix(in srgb, var(--component-surface-strong) 94%, transparent);
+  color: color-mix(in srgb, var(--ink, currentColor) 92%, var(--component-accent) 8%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  line-height: 1.62;
+  text-wrap: pretty;
+  white-space: pre-wrap;
+}
+
+:where(.spw-literary-verse code, .spw-literary-stanza code) {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+:where(.spw-literary-chapter, [data-spw-textual-role="chapter"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--component-text-soft);
+  font-size: var(--text-size-2xs, 0.66rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 
 /* ==========================================================================
    22. Media cards and figures
