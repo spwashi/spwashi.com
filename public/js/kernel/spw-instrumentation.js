@@ -106,6 +106,54 @@ export const SPW_MEANING_PRESETS = Object.freeze({
   }),
 });
 
+export const SPW_QUERY_PRESETS = Object.freeze({
+  quiet: Object.freeze({
+    label: 'Quiet view',
+    href: '?view=quiet&meaning=quiet',
+    description: 'Lower semantic density and quieter ornament.',
+  }),
+  readable: Object.freeze({
+    label: 'Readable view',
+    href: '?view=readable&meaning=readable',
+    description: 'Balanced reading mode with stable meaning and low motion.',
+  }),
+  inspect: Object.freeze({
+    label: 'Inspect view',
+    href: '?view=inspect&meaning=inspect&debug=css,layout',
+    description: 'Show CSS and layout ownership with richer metadata.',
+  }),
+  screenshot: Object.freeze({
+    label: 'Screenshot view',
+    href: '?view=screenshot&interaction=screenshot&palette=software',
+    description: 'Stabilize the surface for capture and comparison.',
+  }),
+  calm: Object.freeze({
+    label: 'Calm interaction',
+    href: '?view=readable&interaction=calm',
+    description: 'Reduce motion and make the surface gentler to browse.',
+  }),
+  tactile: Object.freeze({
+    label: 'Tactile interaction',
+    href: '?view=readable&interaction=tactile',
+    description: 'Use a responsive but still readable interaction posture.',
+  }),
+  puppet: Object.freeze({
+    label: 'Puppet interaction',
+    href: '?view=inspect&interaction=puppet&debug=layout',
+    description: 'Emphasize performative, inspectable motion.',
+  }),
+  css: Object.freeze({
+    label: 'CSS debug',
+    href: '?view=inspect&debug=css',
+    description: 'Show semantic structure and CSS ownership tags.',
+  }),
+  layout: Object.freeze({
+    label: 'Layout debug',
+    href: '?view=inspect&debug=layout',
+    description: 'Show layout ownership and floating chrome boundaries.',
+  }),
+});
+
 export const SPW_LOG_LEVELS = Object.freeze({
   DEBUG: 'debug',
   INFO: 'info',
@@ -236,6 +284,17 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     viewingPreset: 'spw-view|view=<quiet|readable|inspect|screenshot>',
     tuningAttribute: 'spw-tune-<name>=<value>',
     reflowReason: 'spw-reflow|reflow=<reason>',
+  }),
+  queryPresets: Object.freeze({
+    quiet: SPW_QUERY_PRESETS.quiet.href,
+    readable: SPW_QUERY_PRESETS.readable.href,
+    inspect: SPW_QUERY_PRESETS.inspect.href,
+    screenshot: SPW_QUERY_PRESETS.screenshot.href,
+    calm: SPW_QUERY_PRESETS.calm.href,
+    tactile: SPW_QUERY_PRESETS.tactile.href,
+    puppet: SPW_QUERY_PRESETS.puppet.href,
+    css: SPW_QUERY_PRESETS.css.href,
+    layout: SPW_QUERY_PRESETS.layout.href,
   }),
   queryAliases: SPW_QUERY_ALIASES,
   queryExtension: Object.freeze({
@@ -626,11 +685,25 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
   const logger = createSpwLogger(options.namespace || 'spw-compose', options);
   const apiName = options.name || 'spwCompose';
   const existing = globalObject[apiName] || {};
+  const queryPresets = Object.freeze({
+    ...SPW_QUERY_PRESETS,
+  });
+  const debugPresets = Object.freeze({
+    layout: queryPresets.layout.href,
+    css: queryPresets.css.href,
+    inspect: queryPresets.inspect.href,
+    screenshot: queryPresets.screenshot.href,
+    readable: queryPresets.readable.href,
+    calm: queryPresets.calm.href,
+    puppet: queryPresets.puppet.href,
+  });
 
   const api = Object.freeze({
     ...existing,
     contract: options.contract || null,
     inspect: (target, inspectOptions = {}) => snapshotInstrumentationTarget(target, inspectOptions),
+    queryPresets,
+    debugPresets,
     log: logger,
     logger: (namespace, loggerOptions = {}) => createSpwLogger(namespace, loggerOptions),
     mark: (target, details = {}) => markInstrumented(target, options.namespace || 'spw-compose', details),
@@ -640,5 +713,6 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
   });
 
   globalObject[apiName] = api;
+  globalObject.spwDebugPresets = debugPresets;
   return api;
 }

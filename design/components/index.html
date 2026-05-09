@@ -142,6 +142,7 @@
                     <a class="operator-chip" href="#demo-rails">#&gt;demo rails</a>
                     <a class="operator-chip" href="#operator-intent-registry">#&gt;operators</a>
                     <a class="operator-chip" href="#component-anatomy-slots">#&gt;anatomy</a>
+                    <a class="operator-chip" href="#markup-model-kit">#&gt;model kit</a>
                     <a class="operator-chip" href="#brace-grammar-specimens">#&gt;braces</a>
                     <a class="operator-chip" href="#data-attribute-decoration">#&gt;data attrs</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">* RPG Wednesday</a>
@@ -763,6 +764,40 @@
                             <li><strong>Footer:</strong> Secondary metadata or citation links.</li>
                         </ol>
                     </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="markup-model-kit" data-spw-role="modeling" data-spw-kind="frame" data-spw-context="analysis">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#markup-model-kit">#&gt;"markup_model_kit"</a>
+                    <h2>Model the markup, then adapt it</h2>
+                </header>
+                <p class="frame-note">When a human or external model wants to design a new component, the safest starting point is usually an existing Spw specimen. Copy the slot order, keep the same semantic family, and only change the pieces that the new job truly needs.</p>
+
+                <div class="frame-grid frame-grid--2up">
+                    <article class="frame-panel">
+                        <p class="frame-note">what to preserve</p>
+                        <h3>Canonical structure</h3>
+                        <p>Keep <code>header</code>, <code>meta</code>, <code>body</code>, <code>figure</code>, <code>actions</code>, and <code>footer</code> in the same order unless the new component has a different responsibility. Broad selectors and runtime projections already expect that slot rhythm.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">what to change</p>
+                        <h3>Semantic responsibility</h3>
+                        <p>Change the <code>data-spw-kind</code>, <code>data-spw-role</code>, and route-local labels to match the actual job: route sorter, status board, product surface, commercial router, role model, kernel explanation, atlas, evidence shelf, or intake fallback.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">what models need</p>
+                        <h3>Readable intent</h3>
+                        <p>A component should explain itself in the markup. If the purpose is hidden in a stylesheet or script, the surface is harder to reuse, harder to review, and harder for an external model to summarize accurately.</p>
+                    </article>
+
+                    <article class="frame-panel">
+                        <p class="frame-note">where to inspect</p>
+                        <h3>Reference surfaces</h3>
+                        <p>Use the <a href="/design/runtime/">runtime design page</a> for query presets and the <a href="/design/composition/">composition notes</a> for portable bundles. Those pages show the same contracts with a smaller shell around them.</p>
+                    </article>
                 </div>
             </section>
 

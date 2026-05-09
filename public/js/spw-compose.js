@@ -97,6 +97,7 @@ export {
   SPW_LOG_RELATIONSHIPS,
   SPW_QUERY_ALIASES,
   SPW_QUERY_CONTRACT,
+  SPW_QUERY_PRESETS,
   SPW_REFLOW_REASONS,
   applySpwQueryDisposition,
   createSpwQueryContract,
