@@ -226,6 +226,39 @@
 }
 
 /* ==========================================================================
+   4b. Lore routing
+   ========================================================================== */
+
+:where([data-spw-lore-role]) {
+  --material-prime-color: var(--amber, #c9a86e);
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-prime-color) 10%, transparent) 0%,
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--material-surface-strong) 96%, var(--material-prime-color) 4%) 0%,
+      var(--material-surface) 100%
+    );
+  --material-local-border-color: color-mix(in srgb, var(--material-prime-color) 24%, var(--material-line));
+  --material-local-shadow: var(--material-shadow-rest), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+:where([data-spw-lore-role="origin"]) {
+  --material-prime-color: var(--amber, #c9a86e);
+}
+
+:where([data-spw-lore-role="bridge"]) {
+  --material-prime-color: var(--teal, #008080);
+}
+
+:where([data-spw-lore-role="hook"]) {
+  --material-prime-color: var(--op-ref-color, #1d57a3);
+}
+
+/* ==========================================================================
    5. Depth routing
    ========================================================================== */
 
