@@ -298,6 +298,52 @@
   border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--active-op-color) 42%, transparent);
 }
 
+[data-spw-page-family="experiment-lab"] .design-literary-grid {
+  display: grid;
+  gap: var(--gap-surface);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+[data-spw-page-family="experiment-lab"] .design-literary-card {
+  display: grid;
+  gap: var(--gap-block-tight);
+  padding: var(--inset-panel);
+  border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+  border-radius: var(--shape-surface);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, var(--active-op-color) 6%), color-mix(in srgb, var(--surface) 96%, transparent));
+  box-shadow:
+    0 8px 20px rgba(10, 18, 24, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+[data-spw-page-family="experiment-lab"] .design-literary-card h3 {
+  margin: 0;
+  font-size: var(--text-size-base);
+}
+
+[data-spw-page-family="experiment-lab"] .design-literary-card p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+[data-spw-page-family="experiment-lab"] .design-literary-card--stanza {
+  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--op-ref-color) 38%, transparent);
+}
+
+[data-spw-page-family="experiment-lab"] .design-literary-stanza {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border-radius: var(--shape-component);
+  background: color-mix(in srgb, var(--surface-code) 88%, transparent);
+  color: color-mix(in srgb, white 90%, var(--active-op-color) 10%);
+  font-family: var(--site-mono-font);
+  font-size: var(--text-size-sm);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
 [data-spw-page-family="experiment-lab"] .design-rule-stage {
   --design-rule-accent: var(--active-op-color);
   display: grid;
