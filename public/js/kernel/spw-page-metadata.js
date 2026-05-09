@@ -46,7 +46,7 @@ const PAGE_ZONE_BY_PATH = Object.freeze([
     },
   },
   {
-    test: (pathname) => pathMatchesPrefix(pathname, '/topics') || pathMatchesPrefix(pathname, '/research') || pathMatchesPrefix(pathname, '/blog') || pathMatchesPrefix(pathname, '/play'),
+    test: (pathname) => pathMatchesPrefix(pathname, '/town') || pathMatchesPrefix(pathname, '/topics') || pathMatchesPrefix(pathname, '/research') || pathMatchesPrefix(pathname, '/blog') || pathMatchesPrefix(pathname, '/play'),
     meta: {
       pageZone: 'lattice',
       pageStatus: 'active',
@@ -95,6 +95,13 @@ const PAGE_RESPONSIBILITY_BY_PATH = Object.freeze([
     meta: {
       pageResponsibility: 'kernel explanation',
       pagePrimaryAction: 'Understand the system',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/town'),
+    meta: {
+      pageResponsibility: 'town atlas',
+      pagePrimaryAction: 'Choose a district',
     },
   },
   {
@@ -352,6 +359,20 @@ const PAGE_METADATA_RULES = [
       pageRole: 'craft-register',
       heroRole: 'orientation',
       heroCategoryFamily: 'workshop',
+      heroLiminality: 'entry',
+    },
+  },
+  {
+    test: (pathname) => pathMatchesPrefix(pathname, '/town'),
+    meta: {
+      routeFamily: 'editorial story atlas',
+      context: 'reading',
+      wonder: 'orientation comparison consequence',
+      pageFamily: 'atlas',
+      pageModes: 'reading compare navigate document',
+      pageRole: 'town-atlas',
+      heroRole: 'orientation',
+      heroCategoryFamily: 'register',
       heroLiminality: 'entry',
     },
   },
@@ -674,6 +695,7 @@ function inferContextFromSurface(surface, pathname) {
   if (surface === 'blog') return 'publishing';
   if (surface === 'contact' || surface === 'services') return 'routing';
   if (surface === 'settings') return 'settings';
+  if (surface === 'town') return 'reading';
   if (surface === 'play') return 'play';
   if (surface === 'recipes') return 'ritual';
   if (surface === 'tools') return 'analysis';
@@ -729,6 +751,7 @@ function inferPageModes(context) {
 
 function inferPageRole(pathname, surface) {
   if (pathname === '/') return 'portal-register';
+  if (surface === 'town') return 'town-atlas';
   if (surface === 'contact') return 'contact-register';
   if (surface === 'services') return 'service-register';
   if (surface === 'blog') return 'editorial-lab';
@@ -744,7 +767,7 @@ function inferPageZone(pathname, surface) {
   const matched = PAGE_ZONE_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta?.pageZone;
   if (matched) return matched;
   if (surface === 'about' || surface === 'settings' || surface === 'tools' || surface === 'design') return 'kernel';
-  if (surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'lattice';
+  if (surface === 'town' || surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'lattice';
   return 'funnel';
 }
 
@@ -761,7 +784,7 @@ function inferPageResponsibility(pathname, surface) {
   const matched = PAGE_RESPONSIBILITY_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta || {};
   if (matched.pageResponsibility) return matched.pageResponsibility;
   if (surface === 'about' || surface === 'settings') return 'kernel explanation';
-  if (surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'atlas';
+  if (surface === 'town' || surface === 'topics' || surface === 'research' || surface === 'blog' || surface === 'play') return 'atlas';
   return 'route sorter';
 }
 
@@ -769,6 +792,7 @@ function inferPagePrimaryAction(pathname, surface) {
   const matched = PAGE_RESPONSIBILITY_BY_PATH.find((rule) => rule.test(pathname, surface))?.meta || {};
   if (matched.pagePrimaryAction) return matched.pagePrimaryAction;
   if (surface === 'about') return 'Understand the system';
+  if (surface === 'town') return 'Explore the atlas';
   if (surface === 'settings') return 'Tune the surface';
   if (surface === 'topics') return 'Choose a domain';
   return 'Pick a route';
