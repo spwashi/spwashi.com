@@ -154,10 +154,23 @@
   --spw-reading-rest-shift: 0rem;
   --spw-reading-near-shift: 0.14rem;
   --spw-reading-lead-shift: 0.24rem;
+  --spw-reading-rest-color:
+    color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 92%, transparent);
+  --spw-reading-near-color:
+    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 90%, var(--active-op-color, #008080) 10%);
+  --spw-reading-lead-color:
+    color-mix(in oklab, var(--ink-strong, #090b0c) 84%, var(--active-op-color, #008080) 16%);
   --spw-reading-lead-accent:
-    color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent);
+    color-mix(in oklab, var(--active-op-color, #008080) 26%, transparent);
   --spw-reading-near-accent:
-    color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+    color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
+  --spw-reading-lead-wash:
+    color-mix(in oklab, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--active-op-color, #008080) 10%);
+  --spw-reading-near-wash:
+    color-mix(in oklab, var(--surface-soft, rgba(255, 255, 255, 0.68)) 92%, var(--active-op-color, #008080) 8%);
+  --spw-reading-lead-glow:
+    0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent),
+    0 0.35rem 1.25rem color-mix(in oklab, var(--active-op-color, #008080) 10%, transparent);
 }
 
 :where(html[data-spw-reading-groove="off"], body[data-spw-reading-groove="off"]) {
@@ -202,24 +215,32 @@
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
   opacity: var(--spw-reading-rest-opacity, 0.74);
+  color: var(--spw-reading-rest-color, inherit);
   filter: saturate(0.92);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
   opacity: var(--spw-reading-near-opacity, 0.92);
+  color: var(--spw-reading-near-color, inherit);
   transform: translateX(var(--spw-reading-near-shift, 0.14rem));
   background-image:
-    linear-gradient(90deg, var(--spw-reading-near-accent, transparent) 0%, transparent 68%);
+    linear-gradient(90deg, var(--spw-reading-near-accent, transparent) 0%, transparent 68%),
+    linear-gradient(180deg, var(--spw-reading-near-wash, transparent) 0%, transparent 100%);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
   opacity: var(--spw-reading-lead-opacity, 1);
-  color: var(--ink-strong, #090b0c);
+  color: var(--spw-reading-lead-color, var(--ink-strong, #090b0c));
   transform: translateX(var(--spw-reading-lead-shift, 0.24rem));
   background-image:
-    linear-gradient(90deg, var(--spw-reading-lead-accent, transparent) 0%, transparent 76%);
-  text-shadow: 0 0 0.02em color-mix(in srgb, var(--ink-strong, #090b0c) 18%, transparent);
-  box-shadow: inset 0.16rem 0 0 var(--spw-reading-lead-accent, transparent);
+    linear-gradient(90deg, var(--spw-reading-lead-accent, transparent) 0%, transparent 76%),
+    linear-gradient(180deg, var(--spw-reading-lead-wash, transparent) 0%, transparent 100%);
+  text-shadow:
+    0 0 0.02em color-mix(in oklab, var(--ink-strong, #090b0c) 18%, transparent),
+    0 0 0.8rem color-mix(in oklab, var(--active-op-color, #008080) 10%, transparent);
+  box-shadow:
+    inset 0.16rem 0 0 var(--spw-reading-lead-accent, transparent),
+    var(--spw-reading-lead-glow);
 }
 
 :where(

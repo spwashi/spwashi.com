@@ -2269,6 +2269,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state]) {
   position: relative;
+  overflow: clip;
 }
 
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before {
@@ -2293,6 +2294,20 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   pointer-events: none;
 }
 
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 16%, color-mix(in oklab, var(--component-accent) 9%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in oklab, var(--component-accent) 4%, transparent), transparent 26%);
+  opacity: 0;
+  transition:
+    opacity var(--component-transition-deliberate),
+    filter var(--component-transition-deliberate);
+  pointer-events: none;
+}
+
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"])::before {
   opacity: 0.34;
   transform: scaleY(0.56);
@@ -2304,6 +2319,11 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   filter: saturate(1.08);
 }
 
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::after {
+  opacity: 1;
+  filter: saturate(1.06);
+}
+
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
   transition:
     transform var(--component-transition-deliberate),
@@ -2313,6 +2333,14 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3) {
   transform: translateX(0.12rem);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) {
+  border-color: color-mix(in oklab, var(--component-accent) 26%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 16%, transparent),
+    0 0.8rem 2.2rem color-mix(in oklab, var(--component-accent) 9%, transparent),
+    var(--component-shadow-active);
 }
 
 :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"]) :where(.inline-note, .frame-note) {
