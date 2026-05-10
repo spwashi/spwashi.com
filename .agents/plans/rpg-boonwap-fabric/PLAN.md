@@ -7,7 +7,7 @@ Extend the public RPG Wednesday fabric so BoonWAP, Slibbon Bap, Mr. BaneWAP, WAP
 RPG Wednesday and its neighboring public surfaces should make the combinatoric fabric legible enough that players, collaborators, designers, and read-aloud agents can all follow the same canon pressure. The public copy should make six things legible:
 
 - Mr. BoonWAP already exists in the campaign logic and should be treated as a touchy reality question rather than a joke about whether he is "real"
-- the relational development is closer to flirtation, offers, refusals, and repairs over time than explicit moral lecture
+- the relational development is closer to attraction, offers, refusals, and repairs over time than explicit moral lecture
 - boon, bane, bone, bonk, and honk behave like operational transforms that can recombine into names, moods, and capture-card logic
 - WAP means Wonder About Pi(e), and WAPboy / Gravy Davis / Honk Bazongas should read like a usable serial-lore triangle instead of throwaway jokes
 - capture cards should stay screenshottable, read-aloud friendly, and handoff-ready for SVG, JSON, and later video or wizard surfaces

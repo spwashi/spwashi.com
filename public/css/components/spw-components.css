@@ -1884,6 +1884,47 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   text-transform: uppercase;
 }
 
+:where(.spw-narration, [data-spw-textual-role="narration"]) {
+  display: grid;
+  gap: 0.45rem;
+  max-inline-size: var(--component-measure-wide);
+  padding: 0.95rem 1rem 1rem;
+  border-inline-start: var(--boundary-rail-width-strong) solid color-mix(in srgb, var(--component-accent) 30%, transparent);
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--component-surface-strong) 98%, transparent), color-mix(in srgb, var(--component-surface-strong) 94%, transparent)),
+    var(--component-surface);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-narration__cue, [data-spw-textual-role="cue"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--component-route-marker-text);
+  font-size: var(--text-size-2xs, 0.66rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.spw-narration__text, .spw-cold-read, [data-spw-textual-role="narration-text"], [data-spw-textual-role="aside"]) {
+  margin: 0;
+  max-inline-size: var(--component-measure-wide);
+  line-height: 1.68;
+  text-wrap: pretty;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where(.spw-narration__text strong, .spw-cold-read strong, [data-spw-textual-role="narration-text"] strong, [data-spw-textual-role="aside"] strong) {
+  color: var(--component-accent);
+  font-weight: 700;
+}
+
+:where(.spw-narration__text em, .spw-cold-read em, [data-spw-textual-role="narration-text"] em, [data-spw-textual-role="aside"] em) {
+  color: color-mix(in srgb, var(--ink, currentColor) 80%, var(--component-accent) 20%);
+}
+
 
 /* ==========================================================================
    22. Media cards and figures
