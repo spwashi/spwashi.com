@@ -144,6 +144,116 @@
 }
 
 /* ==========================================================================
+   3b. Reading Groove (Scroll Activation)
+   ========================================================================== */
+
+:where(html[data-spw-reading-groove="on"], body[data-spw-reading-groove="on"]) {
+  --spw-reading-rest-opacity: 0.74;
+  --spw-reading-near-opacity: 0.92;
+  --spw-reading-lead-opacity: 1;
+  --spw-reading-rest-shift: 0rem;
+  --spw-reading-near-shift: 0.14rem;
+  --spw-reading-lead-shift: 0.24rem;
+  --spw-reading-lead-accent:
+    color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent);
+  --spw-reading-near-accent:
+    color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+}
+
+:where(
+  html[data-spw-reading-groove="on"] main article p,
+  html[data-spw-reading-groove="on"] main article li,
+  html[data-spw-reading-groove="on"] main article blockquote,
+  html[data-spw-reading-groove="on"] main article figcaption,
+  html[data-spw-reading-groove="on"] main article .inline-note,
+  html[data-spw-reading-groove="on"] main article .frame-note,
+  html[data-spw-reading-groove="on"] main article h2,
+  html[data-spw-reading-groove="on"] main article h3,
+  html[data-spw-reading-groove="on"] main > section p,
+  html[data-spw-reading-groove="on"] main > section li,
+  html[data-spw-reading-groove="on"] main > section blockquote,
+  html[data-spw-reading-groove="on"] main > section figcaption,
+  html[data-spw-reading-groove="on"] main > section .inline-note,
+  html[data-spw-reading-groove="on"] main > section .frame-note,
+  html[data-spw-reading-groove="on"] main > section h2,
+  html[data-spw-reading-groove="on"] main > section h3
+) {
+  transition:
+    opacity 320ms var(--ease-settle, ease),
+    transform 420ms var(--ease-settle, ease),
+    filter 320ms var(--ease-settle, ease),
+    color 260ms var(--ease-settle, ease),
+    text-shadow 320ms var(--ease-settle, ease),
+    background-size 420ms var(--ease-settle, ease),
+    background-position 420ms var(--ease-settle, ease),
+    box-shadow 420ms var(--ease-settle, ease);
+  background-image:
+    linear-gradient(90deg, transparent 0%, transparent 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 100%;
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
+  opacity: var(--spw-reading-rest-opacity, 0.74);
+  filter: saturate(0.92);
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
+  opacity: var(--spw-reading-near-opacity, 0.92);
+  transform: translateX(var(--spw-reading-near-shift, 0.14rem));
+  background-image:
+    linear-gradient(90deg, var(--spw-reading-near-accent, transparent) 0%, transparent 68%);
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
+  opacity: var(--spw-reading-lead-opacity, 1);
+  color: var(--ink-strong, #090b0c);
+  transform: translateX(var(--spw-reading-lead-shift, 0.24rem));
+  background-image:
+    linear-gradient(90deg, var(--spw-reading-lead-accent, transparent) 0%, transparent 76%);
+  text-shadow: 0 0 0.02em color-mix(in srgb, var(--ink-strong, #090b0c) 18%, transparent);
+  box-shadow: inset 0.16rem 0 0 var(--spw-reading-lead-accent, transparent);
+}
+
+:where(
+  html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="heading"][data-spw-reading-beat="lead"],
+  html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="note"][data-spw-reading-beat="lead"]
+) {
+  letter-spacing: -0.012em;
+}
+
+:where(html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="list"][data-spw-reading-beat="lead"]) {
+  transform: translateX(0.18rem);
+}
+
+@media (max-width: 52rem) {
+  :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
+    transform: translateX(0.08rem);
+  }
+
+  :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
+    transform: translateX(0.12rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    html[data-spw-reading-groove="on"] [data-spw-reading-beat],
+    body[data-spw-reading-groove="on"] [data-spw-reading-beat]
+  ) {
+    transition: none;
+    transform: none;
+    filter: none;
+    text-shadow: none;
+  }
+
+  :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
+    opacity: 0.92;
+  }
+}
+
+/* ==========================================================================
    4. Marginalia (Responsive Outer Columns)
    ========================================================================== */
 
