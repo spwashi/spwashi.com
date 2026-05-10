@@ -160,6 +160,12 @@
     color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
 }
 
+:where(html[data-spw-reading-groove="off"], body[data-spw-reading-groove="off"]) {
+  --spw-reading-rest-opacity: 1;
+  --spw-reading-near-opacity: 1;
+  --spw-reading-lead-opacity: 1;
+}
+
 :where(
   html[data-spw-reading-groove="on"] main article p,
   html[data-spw-reading-groove="on"] main article li,
@@ -251,6 +257,10 @@
   :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
     opacity: 0.92;
   }
+}
+
+:where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
+  cursor: ns-resize;
 }
 
 /* ==========================================================================

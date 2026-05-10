@@ -2267,6 +2267,66 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
 }
 
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state]) {
+  position: relative;
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before {
+  content: "";
+  position: absolute;
+  inset-block: 1rem;
+  inset-inline-start: 0.55rem;
+  width: 0.18rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--component-accent) 72%, transparent) 0%,
+    color-mix(in srgb, var(--component-accent) 18%, transparent) 100%
+  );
+  opacity: 0;
+  transform: scaleY(0.24);
+  transform-origin: center top;
+  transition:
+    opacity var(--component-transition-deliberate),
+    transform var(--component-transition-deliberate),
+    filter var(--component-transition-deliberate);
+  pointer-events: none;
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"])::before {
+  opacity: 0.34;
+  transform: scaleY(0.56);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::before {
+  opacity: 0.8;
+  transform: scaleY(1);
+  filter: saturate(1.08);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+  transition:
+    transform var(--component-transition-deliberate),
+    color var(--component-transition-deliberate),
+    opacity var(--component-transition-deliberate);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3) {
+  transform: translateX(0.12rem);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"]) :where(.inline-note, .frame-note) {
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before,
+  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+    transition: none;
+    transform: none;
+  }
+}
+
 :where([data-spw-selection="focused"]) {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
 }

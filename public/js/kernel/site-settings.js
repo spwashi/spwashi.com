@@ -369,6 +369,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   lineSpacing: 'normal',
   monospaceVariant: 'jetbrains',
   typesettingMode: 'default',
+  readingGrooveMode: 'on',
+  scrollCadence: 'on',
+  pinchTextScale: 'on',
 
   showFooter: 'on',
   headerOpacity: 'normal',
@@ -429,10 +432,13 @@ const SETTING_OPTIONS = Object.freeze({
   showFrameMetadata: new Set(['off', 'on']),
   verboseLogging: new Set(['off', 'on']),
 
-  fontSizeScale: new Set(['80', '90', '100', '110', '120']),
+  fontSizeScale: new Set(['70', '80', '90', '100', '110', '120']),
   lineSpacing: new Set(['compact', 'normal', 'loose']),
   monospaceVariant: new Set(['system', 'jetbrains', 'courier']),
   typesettingMode: new Set(['default', 'editorial']),
+  readingGrooveMode: new Set(['off', 'on']),
+  scrollCadence: new Set(['off', 'on']),
+  pinchTextScale: new Set(['off', 'on']),
 
   showFooter: new Set(['on', 'off']),
   headerOpacity: new Set(['low', 'normal', 'high']),
@@ -620,10 +626,13 @@ const SETTING_VALUE_LABELS = Object.freeze({
   debugMode: Object.freeze({off: 'Off', on: 'On'}),
   showFrameMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
   verboseLogging: Object.freeze({off: 'Off', on: 'On'}),
-  fontSizeScale: Object.freeze({80: '80%', 90: '90%', 100: '100%', 110: '110%', 120: '120%'}),
+  fontSizeScale: Object.freeze({70: '70%', 80: '80%', 90: '90%', 100: '100%', 110: '110%', 120: '120%'}),
   lineSpacing: Object.freeze({compact: 'Compact', normal: 'Normal', loose: 'Loose'}),
   monospaceVariant: Object.freeze({system: 'System mono', jetbrains: 'JetBrains Mono', courier: 'Courier'}),
   typesettingMode: Object.freeze({default: 'Default', editorial: 'Editorial'}),
+  readingGrooveMode: Object.freeze({off: 'Off', on: 'On'}),
+  scrollCadence: Object.freeze({off: 'Off', on: 'On'}),
+  pinchTextScale: Object.freeze({off: 'Off', on: 'On'}),
   showFooter: Object.freeze({on: 'Shown', off: 'Hidden'}),
   headerOpacity: Object.freeze({low: 'Low', normal: 'Normal', high: 'High'}),
   showSpecPills: Object.freeze({on: 'Shown', off: 'Hidden'}),
@@ -685,6 +694,9 @@ const UX_RECIPES = Object.freeze({
       authorMode: 'draft',
       currentDevelopmentalClimate: 'orient',
       typesettingMode: 'editorial',
+      readingGrooveMode: 'on',
+      scrollCadence: 'on',
+      pinchTextScale: 'on',
       semanticDensity: 'minimal',
       wonderMemory: 'nearby',
       showSemanticMetadata: 'off',
@@ -698,6 +710,9 @@ const UX_RECIPES = Object.freeze({
       authorMode: 'revise',
       currentDevelopmentalClimate: 'rehearse',
       typesettingMode: 'editorial',
+      readingGrooveMode: 'on',
+      scrollCadence: 'on',
+      pinchTextScale: 'on',
       semanticDensity: 'normal',
       operatorHighlighting: 'on',
       relationalVisualization: 'on',
@@ -710,6 +725,9 @@ const UX_RECIPES = Object.freeze({
       authorMode: 'publish',
       currentDevelopmentalClimate: 'offer',
       typesettingMode: 'editorial',
+      readingGrooveMode: 'on',
+      scrollCadence: 'on',
+      pinchTextScale: 'on',
       semanticDensity: 'normal',
       enhancementLevel: 'balanced',
       showSemanticMetadata: 'on',
@@ -738,7 +756,10 @@ const UX_RECIPES = Object.freeze({
       fontSizeScale: '110',
       lineSpacing: 'loose',
       componentDensity: 'roomy',
-      typesettingMode: 'editorial'
+      typesettingMode: 'editorial',
+      readingGrooveMode: 'on',
+      scrollCadence: 'on',
+      pinchTextScale: 'on'
     })
   }),
   accessible: Object.freeze({
@@ -752,7 +773,8 @@ const UX_RECIPES = Object.freeze({
       animationIntensity: 'reduced',
       animationThrottling: 'heavy',
       strokeProfile: 'bold',
-      grainIntensity: 'none'
+      grainIntensity: 'none',
+      pinchTextScale: 'off'
     })
   }),
   expressive: Object.freeze({
@@ -1251,6 +1273,9 @@ class SiteSettingsManager {
       spwLineSpacing: normalized.lineSpacing,
       spwMonospaceVariant: normalized.monospaceVariant,
       spwTypeset: normalized.typesettingMode,
+      spwReadingGrooveMode: normalized.readingGrooveMode,
+      spwScrollCadence: normalized.scrollCadence,
+      spwPinchTextScale: normalized.pinchTextScale,
       spwShowFooter: normalized.showFooter,
       spwHeaderOpacity: normalized.headerOpacity,
       spwShowSpecPills: normalized.showSpecPills,

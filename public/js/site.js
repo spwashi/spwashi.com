@@ -1480,7 +1480,7 @@ const ENHANCEMENT_DEFS = [
     id: 'attention-architecture',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: '.spw-section-handle, [data-spw-operator]',
+    selector: 'main, .spw-section-handle, [data-spw-operator]',
     rootMode: 'single',
     load: () => import('./runtime/spw-attention-architecture.js'),
     mount: (mod, ctx) => {

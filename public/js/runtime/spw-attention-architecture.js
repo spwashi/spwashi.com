@@ -28,6 +28,7 @@ import {
   createSpwLogger,
 } from '/public/js/kernel/spw-instrumentation.js';
 
+const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const HANDLE_SELECTOR = '.spw-section-handle';
 const HANDLE_SHELL_CLASS = 'spw-section-handle-shell';
 const OPERATOR_SECTION_SELECTOR = [
@@ -57,11 +58,15 @@ const PAGE_SECTION_PHASE_ATTR = 'data-spw-page-section-phase';
 const PAGE_SECTION_EDGE_ATTR = 'data-spw-page-section-edge';
 const READING_GROOVE_ATTR = 'data-spw-reading-groove';
 const READING_GROOVE_COUNT_ATTR = 'data-spw-reading-groove-count';
+const READING_GROOVE_MODE_ATTR = 'data-spw-reading-groove-mode';
 const READING_BEAT_STATE_ATTR = 'data-spw-reading-beat';
 const READING_BEAT_INDEX_ATTR = 'data-spw-reading-beat-index';
 const READING_BEAT_ROLE_ATTR = 'data-spw-reading-beat-role';
 const READING_BEAT_CURRENT_ATTR = 'data-spw-reading-current';
 const READING_BEAT_FOCUS_ATTR = 'data-spw-reading-focus';
+const SCROLL_CADENCE_ATTR = 'data-spw-scroll-cadence';
+const PINCH_TEXT_SCALE_ATTR = 'data-spw-pinch-text-scale';
+const PINCH_ACTIVE_ATTR = 'data-spw-pinch-scaling';
 const PAGE_SECTION_EVENT = 'spw:section-locomotion-state';
 const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
@@ -118,11 +123,15 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     pageSectionEdge: PAGE_SECTION_EDGE_ATTR,
     readingGroove: READING_GROOVE_ATTR,
     readingGrooveCount: READING_GROOVE_COUNT_ATTR,
+    readingGrooveMode: READING_GROOVE_MODE_ATTR,
     readingBeat: READING_BEAT_STATE_ATTR,
     readingBeatIndex: READING_BEAT_INDEX_ATTR,
     readingBeatRole: READING_BEAT_ROLE_ATTR,
     readingCurrent: READING_BEAT_CURRENT_ATTR,
     readingFocus: READING_BEAT_FOCUS_ATTR,
+    scrollCadence: SCROLL_CADENCE_ATTR,
+    pinchTextScale: PINCH_TEXT_SCALE_ATTR,
+    pinchScaling: PINCH_ACTIVE_ATTR,
   }),
   thresholds: Object.freeze({
     autoHandleMinSections: AUTO_HANDLE_MIN_SECTIONS,
@@ -166,6 +175,37 @@ function clearAttributes(node, names = []) {
     if (!node.hasAttribute(name)) return;
     node.removeAttribute(name);
   });
+}
+
+function getRootPreference(name, fallback = 'off') {
+  const htmlValue = document.documentElement?.dataset?.[name];
+  const bodyValue = document.body?.dataset?.[name];
+  return String(htmlValue || bodyValue || fallback);
+}
+
+function isReadingGrooveEnabled() {
+  return getRootPreference('spwReadingGrooveMode', 'on') !== 'off';
+}
+
+function isPinchTextScaleEnabled() {
+  return getRootPreference('spwPinchTextScale', 'on') !== 'off';
+}
+
+function getCurrentFontScale() {
+  const current = window.spwSettings?.get?.()?.fontSizeScale
+    || document.documentElement.dataset.spwFontSizeScale
+    || '100';
+  return FONT_SCALE_STEPS.includes(String(current)) ? String(current) : '100';
+}
+
+function clampFontScaleIndex(index) {
+  return Math.max(0, Math.min(FONT_SCALE_STEPS.length - 1, index));
+}
+
+function getTouchDistance(touches) {
+  if (!touches || touches.length < 2) return 0;
+  const [first, second] = touches;
+  return Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY);
 }
 
 function getSectionLifecycleState(index, activeIndex) {
@@ -824,12 +864,16 @@ function initReadingGroove(root) {
   const beats = collectReadingBeats(root);
   if (beats.length < READING_GROOVE_MIN_BEATS) return () => {};
 
-  [document.documentElement, document.body].forEach((node) => {
-    writeAttributes(node, {
-      [READING_GROOVE_ATTR]: 'on',
-      [READING_GROOVE_COUNT_ATTR]: beats.length,
+  const syncReadingGroovePreference = () => {
+    [document.documentElement, document.body].forEach((node) => {
+      writeAttributes(node, {
+        [READING_GROOVE_ATTR]: isReadingGrooveEnabled() ? 'on' : 'off',
+        [READING_GROOVE_COUNT_ATTR]: beats.length,
+      });
     });
-  });
+  };
+
+  syncReadingGroovePreference();
 
   beats.forEach((beat, index) => {
     writeAttributes(beat, {
@@ -897,11 +941,20 @@ function initReadingGroove(root) {
   update();
 
   const onResize = () => scheduleUpdate();
+  const preferenceObserver = new MutationObserver(() => {
+    syncReadingGroovePreference();
+  });
+
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('orientationchange', onResize);
+  preferenceObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: [READING_GROOVE_MODE_ATTR],
+  });
 
   return () => {
     observer.disconnect();
+    preferenceObserver.disconnect();
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
     if (state.raf) {
@@ -926,6 +979,94 @@ function initReadingGroove(root) {
   };
 }
 
+function initPinchTextScale(root) {
+  const main = root.querySelector?.('main');
+  if (!(main instanceof HTMLElement)) return () => {};
+
+  const state = {
+    active: false,
+    startDistance: 0,
+    startIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale())),
+    previewIndex: clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale())),
+  };
+
+  const clearPinchState = () => {
+    state.active = false;
+    state.startDistance = 0;
+    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
+    state.previewIndex = state.startIndex;
+    [document.documentElement, document.body, main].forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      node.removeAttribute(PINCH_ACTIVE_ATTR);
+    });
+  };
+
+  const isAllowedTarget = (target) => {
+    if (!(target instanceof Element)) return false;
+    if (!main.contains(target)) return false;
+    return !target.closest(
+      'a, button, input, select, textarea, label, summary, details, video, audio, iframe, [contenteditable="true"]'
+    );
+  };
+
+  const handleTouchStart = (event) => {
+    if (!isPinchTextScaleEnabled()) return;
+    if (event.touches.length !== 2) return;
+    if (!isAllowedTarget(event.target)) return;
+
+    state.active = true;
+    state.startDistance = getTouchDistance(event.touches);
+    state.startIndex = clampFontScaleIndex(FONT_SCALE_STEPS.indexOf(getCurrentFontScale()));
+    state.previewIndex = state.startIndex;
+
+    [document.documentElement, document.body, main].forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      writeAttributes(node, {
+        [PINCH_ACTIVE_ATTR]: 'true',
+      });
+    });
+  };
+
+  const handleTouchMove = (event) => {
+    if (!state.active || event.touches.length !== 2) return;
+    if (!isPinchTextScaleEnabled()) return;
+
+    const distance = getTouchDistance(event.touches);
+    if (!(distance > 0) || !(state.startDistance > 0)) return;
+
+    const delta = Math.log2(distance / state.startDistance);
+    const stepChange = Math.round(delta / 0.12);
+    const nextIndex = clampFontScaleIndex(state.startIndex + stepChange);
+    event.preventDefault();
+
+    if (nextIndex === state.previewIndex) return;
+    state.previewIndex = nextIndex;
+
+    const nextScale = FONT_SCALE_STEPS[nextIndex];
+    if (nextScale && nextScale !== getCurrentFontScale()) {
+      window.spwSettings?.save?.({ fontSizeScale: nextScale });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!state.active) return;
+    clearPinchState();
+  };
+
+  main.addEventListener('touchstart', handleTouchStart, { passive: true });
+  main.addEventListener('touchmove', handleTouchMove, { passive: false });
+  main.addEventListener('touchend', handleTouchEnd, { passive: true });
+  main.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+  return () => {
+    main.removeEventListener('touchstart', handleTouchStart);
+    main.removeEventListener('touchmove', handleTouchMove);
+    main.removeEventListener('touchend', handleTouchEnd);
+    main.removeEventListener('touchcancel', handleTouchEnd);
+    clearPinchState();
+  };
+}
+
 export function initSpwAttentionArchitecture(ctx) {
   const root = (ctx && ctx.root) || document;
   const cleanups = [];
@@ -933,6 +1074,7 @@ export function initSpwAttentionArchitecture(ctx) {
   try { cleanups.push(initSectionHandle(root)); } catch (_) {}
   try { cleanups.push(initResonanceProbe(root)); } catch (_) {}
   try { cleanups.push(initReadingGroove(root)); } catch (_) {}
+  try { cleanups.push(initPinchTextScale(root)); } catch (_) {}
 
   return () => {
     for (const cleanup of cleanups) {

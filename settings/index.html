@@ -874,6 +874,10 @@
                             <legend>Font size scale</legend>
                             <div class="settings-scale-group">
                                 <label class="settings-option">
+                                    <input name="fontSizeScale" type="radio" value="70" />
+                                    <span class="settings-option-copy"><strong>70%</strong></span>
+                                </label>
+                                <label class="settings-option">
                                     <input name="fontSizeScale" type="radio" value="80" />
                                     <span class="settings-option-copy"><strong>80%</strong></span>
                                 </label>
@@ -960,6 +964,63 @@
                     <span>Applies to editorial-capable reading surfaces: focus lenses, pull quotes, optical sizing, and drop caps.</span>
                   </span>
                             </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Reading groove</legend>
+                            <label class="settings-option">
+                                <input name="readingGrooveMode" type="radio" value="off" />
+                                <span class="settings-option-copy">
+                    <strong>Off</strong>
+                    <span>Keep scroll reading static.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="readingGrooveMode" type="radio" value="on" />
+                                <span class="settings-option-copy">
+                    <strong>On</strong>
+                    <span>Let nearby lines warm up while the current beat leads.</span>
+                  </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Scroll cadence</legend>
+                            <label class="settings-option">
+                                <input name="scrollCadence" type="radio" value="off" />
+                                <span class="settings-option-copy">
+                    <strong>Off</strong>
+                    <span>Keep frame activation quiet.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="scrollCadence" type="radio" value="on" />
+                                <span class="settings-option-copy">
+                    <strong>On</strong>
+                    <span>Give the active section a stronger cue rail and phrasing.</span>
+                  </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Pinch text size</legend>
+                            <label class="settings-option">
+                                <input name="pinchTextScale" type="radio" value="off" />
+                                <span class="settings-option-copy">
+                    <strong>Off</strong>
+                    <span>Leave two-finger pinch to the browser.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="pinchTextScale" type="radio" value="on" />
+                                <span class="settings-option-copy">
+                    <strong>On</strong>
+                    <span>Use a two-finger pinch over main content to step the text scale.</span>
+                  </span>
+                            </label>
+                            <p class="settings-option-hint">
+                                This writes to the same browser-local <code>fontSizeScale</code> setting used by the shell controls.
+                            </p>
                         </fieldset>
                     </div>
                 </details>
@@ -1555,6 +1616,21 @@
                 <article class="settings-state-card">
                     <span class="settings-state-label">typeset mode</span>
                     <strong data-settings-state="typesettingMode">default</strong>
+                </article>
+
+                <article class="settings-state-card">
+                    <span class="settings-state-label">reading groove</span>
+                    <strong data-settings-state="readingGrooveMode">on</strong>
+                </article>
+
+                <article class="settings-state-card">
+                    <span class="settings-state-label">scroll cadence</span>
+                    <strong data-settings-state="scrollCadence">on</strong>
+                </article>
+
+                <article class="settings-state-card">
+                    <span class="settings-state-label">pinch text size</span>
+                    <strong data-settings-state="pinchTextScale">on</strong>
                 </article>
 
                 <article class="settings-state-card">

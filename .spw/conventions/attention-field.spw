@@ -161,6 +161,21 @@ tunable_parameters: .{
   meaning = `User-facing discrete control over how far resonance travels and how quickly it decays.`
   css_vars = `--attention-field-radius, --attention-field-decay, --attention-echo-duration, --spw-wonder-memory-reach`
  }[reg=facet]
+ reading_groove_mode = .{
+  default = `on`
+  meaning = `Whether scroll-ranked text beats are visibly phrased as lead / near / rest while reading.`
+  html_attr = `data-spw-reading-groove-mode`
+ }[reg=facet]
+ scroll_cadence = .{
+  default = `on`
+  meaning = `Whether active, previous, and next sections receive stronger cadence cues while the visitor scrolls.`
+  html_attr = `data-spw-scroll-cadence`
+ }[reg=facet]
+ pinch_text_scale = .{
+  default = `on`
+  meaning = `Whether a two-finger pinch over main reading surfaces steps the canonical browser-local text scale.`
+  html_attr = `data-spw-pinch-text-scale`
+ }[reg=facet]
 }[reg=facet]
 
 open_questions: #[

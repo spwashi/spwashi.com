@@ -98,7 +98,7 @@ const MENU_DATASET_KEYS = Object.freeze([
   'spwMenuReturnPaths',
 ]);
 
-const FONT_SCALE_STEPS = Object.freeze(['80', '90', '100', '110', '120']);
+const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
 const FOCUSABLE_SELECTOR = [
   'a[href]',
