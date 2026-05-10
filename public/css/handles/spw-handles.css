@@ -463,8 +463,37 @@ html[data-spw-color-mode="dark"] .operator-chip {
   .header-annotation
 )[data-spw-grounded="true"]:not([aria-current="page"]) {
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
-  border-color: var(--handle-line-soft);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 68%),
+    color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.24),
+    0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+)[data-spw-grounded="true"]:not([aria-current="page"])::before {
+  content: "";
+  inline-size: 0.36rem;
+  block-size: 0.36rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  margin-inline-end: 0.14rem;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), transparent 38%),
+    color-mix(in oklab, var(--active-op-color, var(--teal)) 72%, transparent);
+  box-shadow: 0 0 0.5rem color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
 }
 
 .spw-component-tag {
