@@ -40,7 +40,7 @@
 >
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-<spw-site-header></spw-site-header>
+<spw-site-header header_annotation="state lab"></spw-site-header>
 
 <main
     aria-labelledby="settings-title"
@@ -109,6 +109,7 @@
                 data-spw-feature="settings-section-index"
             >
                 <a class="operator-chip" href="#presets">quick start</a>
+                <a class="operator-chip" href="#reader-builder-modes">reader + builder modes</a>
                 <a class="operator-chip" href="#author-workflow-settings">author workflow</a>
                 <a class="operator-chip" href="#climate-settings">developmental climate</a>
                 <a class="operator-chip" href="#runtime-preferences">tune the site</a>
@@ -174,6 +175,23 @@
                         </button>
                     </div>
                     <span aria-live="polite" class="settings-status vibe-widget-status" data-site-settings-status role="status"></span>
+                </article>
+
+                <article class="vibe-widget" data-site-settings-panel id="reader-builder-modes">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Bespoke modes</p>
+                        <h3 class="vibe-widget-title">Choose a reader, builder, or inspector posture</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        Reader mode keeps the surface calmer. Builder mode exposes CSS and layout ownership. Inspector mode
+                        adds the full debug layer, and lab mode pushes further into motion and palette bias.
+                    </p>
+                    <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
+                        <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=puppet">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspector view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                    </div>
                 </article>
 
                 <article class="vibe-widget" data-site-settings-panel>
@@ -1744,13 +1762,13 @@
                 <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab">
                     <h3>Query recipes</h3>
                     <p>
-                        These links use the same query contract as the runtime. They are handy when you want to compare a quiet
-                        page, a readable page, an inspect-first page, or a more lab-like debugging posture.
+                        These links use the same query contract as the runtime. They are handy when you want to compare a reader
+                        page, a builder page, an inspect-first page, or a more lab-like debugging posture.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
-                        <a class="operator-chip" data-site-settings-query-mode="quiet" href="?view=quiet&amp;meaning=quiet">Quiet view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="readable" href="?view=readable&amp;meaning=readable">Readable view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspect view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=puppet">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspector view</a>
                         <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
                     </div>
                     <p class="settings-query-preview-copy">

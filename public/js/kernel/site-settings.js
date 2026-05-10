@@ -817,6 +817,15 @@ const SETTINGS_QUERY_RECIPES = Object.freeze({
       meaning: 'readable'
     })
   }),
+  reader: Object.freeze({
+    label: 'Reader view',
+    description: 'A calm, prose-forward surface for readers who want less chrome.',
+    params: Object.freeze({
+      view: 'readable',
+      meaning: 'readable',
+      interaction: 'calm'
+    })
+  }),
   inspect: Object.freeze({
     label: 'Inspect view',
     description: 'The page explains itself, shows debug chrome, and logs more detail.',
@@ -826,6 +835,16 @@ const SETTINGS_QUERY_RECIPES = Object.freeze({
       debug: 'css,layout',
       log: 'site-settings',
       'log-level': 'debug'
+    })
+  }),
+  builder: Object.freeze({
+    label: 'Builder view',
+    description: 'Expose structural chrome for visitors who want the mechanics visible.',
+    params: Object.freeze({
+      view: 'inspect',
+      meaning: 'inspect',
+      debug: 'css,layout',
+      physics: 'puppet'
     })
   }),
   lab: Object.freeze({

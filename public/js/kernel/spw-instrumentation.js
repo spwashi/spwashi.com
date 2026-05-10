@@ -117,10 +117,20 @@ export const SPW_QUERY_PRESETS = Object.freeze({
     href: '?view=readable&meaning=readable',
     description: 'Balanced reading mode with stable meaning and low motion.',
   }),
+  reader: Object.freeze({
+    label: 'Reader view',
+    href: '?view=readable&meaning=readable&interaction=calm',
+    description: 'A calm, prose-forward surface for readers who want less chrome.',
+  }),
   inspect: Object.freeze({
     label: 'Inspect view',
     href: '?view=inspect&meaning=inspect&debug=css,layout',
     description: 'Show CSS and layout ownership with richer metadata.',
+  }),
+  builder: Object.freeze({
+    label: 'Builder view',
+    href: '?view=inspect&meaning=inspect&debug=css,layout&physics=puppet',
+    description: 'Expose structural chrome for visitors who want the mechanics visible.',
   }),
   screenshot: Object.freeze({
     label: 'Screenshot view',
@@ -288,7 +298,9 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
   queryPresets: Object.freeze({
     quiet: SPW_QUERY_PRESETS.quiet.href,
     readable: SPW_QUERY_PRESETS.readable.href,
+    reader: SPW_QUERY_PRESETS.reader.href,
     inspect: SPW_QUERY_PRESETS.inspect.href,
+    builder: SPW_QUERY_PRESETS.builder.href,
     screenshot: SPW_QUERY_PRESETS.screenshot.href,
     calm: SPW_QUERY_PRESETS.calm.href,
     tactile: SPW_QUERY_PRESETS.tactile.href,

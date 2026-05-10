@@ -31,8 +31,8 @@ const HTML = document.documentElement;
 
 const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/', label: 'Home', token: '#>home', note: 'Channel summary, active routes, and nearby materials.' },
-  { href: '/about/', label: 'About', token: '.about', note: 'Practice, direction, and the wider Spwashi constellation.' },
-  { href: '/design/', label: 'Design', token: '#>design', note: 'Team communication, rendering-context tests, and route circuits.' },
+  { href: '/about/', label: 'About', token: '.about', note: 'Read the method, the kernel, and the route model.' },
+  { href: '/design/', label: 'Design', token: '#>design', note: 'Compare CSS, SVG, layout, and inspection surfaces.' },
   { href: '/topics/', label: 'Topics', token: '<topics>', note: 'The atlas across software, math, craft, and design.' },
   { href: '/topics/software/', label: 'Software', token: '^software', note: 'spw-workbench, parsers, renderers, and language tools.' },
   { href: '/topics/math/', label: 'Math', token: '~math', note: 'Intuition routes for invariants, collapse, and structure.' },
@@ -45,7 +45,7 @@ const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/play/', label: 'Play', token: '~play', note: 'RPG Wednesday, experiments, and looser systems.' },
   { href: '/tools/', label: 'Tools', token: '^tools', note: 'Utilities, profiles, and reusable helpers.' },
   { href: '/services/', label: 'Services', token: '@services', note: 'Ways to collaborate on readable systems and publishing surfaces.' },
-  { href: '/settings/', label: 'Settings', token: '=settings', note: 'Tune the browser-local reading atmosphere.' },
+  { href: '/settings/', label: 'Settings', token: '=settings', note: 'Tune browser-local reading modes and inspector presets.' },
 ]);
 
 const PERSPECTIVE_WEIGHTS = Object.freeze({

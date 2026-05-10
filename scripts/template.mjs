@@ -64,14 +64,15 @@ const PAGE_JSON_LD_RE = /<script\b(?=[^>]*type=["']application\/ld\+json["'])(?=
 const MAX_INCLUDE_DEPTH = 8;
 
 const PRIMARY_NAV_ITEMS = Object.freeze([
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/topics/', label: 'Topics' },
-  { href: '/topics/software/', label: 'Software' },
-  { href: '/topics/math/', label: 'Math' },
-  { href: '/blog/', label: 'Blog' },
-  { href: '/about/domains/lore.land/', label: 'lore.land' },
-  { href: '/settings/', label: 'Settings' },
+  { href: '/', label: 'Home', note: 'Route sorter, current context, and nearby entrances.' },
+  { href: '/about/', label: 'About', note: 'Read the method, the kernel, and the route model.' },
+  { href: '/design/', label: 'Design', note: 'Compare CSS, SVG, layout, and inspection surfaces.' },
+  { href: '/topics/', label: 'Topics', note: 'Browse the atlas across software, math, craft, and design.' },
+  { href: '/topics/software/', label: 'Software', note: 'spw-workbench, parsers, renderers, and language tools.' },
+  { href: '/topics/math/', label: 'Math', note: 'Intuition routes for invariants, collapse, and structure.' },
+  { href: '/blog/', label: 'Blog', note: 'Working threads, copy drafts, and public process.' },
+  { href: '/about/domains/lore.land/', label: 'lore.land', note: 'A public bridge from notes into ebooks, lore, and narrative surfaces.' },
+  { href: '/settings/', label: 'Settings', note: 'Tune browser-local reading modes and inspector presets.' },
 ]);
 
 const DERIVED_META_FIELDS = [
@@ -528,9 +529,17 @@ function renderSiteHeader(vars) {
   ].filter(Boolean).join(' ');
   const navItems = navSource.map((item) => {
     const hrefPath = normalizeUrlPath(item.href);
+    const routeInfo = PRIMARY_NAV_ITEMS.find((route) => (
+      normalizeUrlPath(route.href) === hrefPath
+      || route.label.toLowerCase() === String(item.label || '').toLowerCase()
+    ));
     const isCurrent = item.label.toLowerCase() === currentLabel || (currentHref && hrefPath === currentHref);
     const aria = isCurrent ? ' aria-current="page"' : '';
-    return `            <li><a${aria} href="${attrEscape(item.href)}">${htmlEscape(item.label)}</a></li>`;
+    const note = firstValue(item.note, routeInfo?.note);
+    const noteAttrs = note
+      ? ` title="${attrEscape(note)}" data-spw-route-note="${attrEscape(note)}" aria-label="${attrEscape(`${item.label}${isCurrent ? ', current page' : ''}. ${note}`)}"`
+      : '';
+    return `            <li><a${aria}${noteAttrs} href="${attrEscape(item.href)}">${htmlEscape(item.label)}</a></li>`;
   }).join('\n');
 
   return `<header ${attrs}>\n`
