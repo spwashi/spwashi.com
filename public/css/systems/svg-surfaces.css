@@ -52,6 +52,8 @@
     --spw-svg-node-fill-mix: 10%;
     --spw-svg-brand-accent: var(--active-op-color, #008080);
     --spw-svg-brand-field: var(--surface, #ffffff);
+    --spw-svg-surface-border: var(--spw-shell-line, rgba(14, 18, 20, 0.14));
+    --spw-svg-surface-shadow: var(--component-shadow, 0 1px 3px rgba(0,0,0,0.05));
     display: grid;
     gap: var(--spw-svg-space, var(--space-sm, 0.6rem));
     margin: 0;
@@ -65,17 +67,16 @@
     width: 100%;
     max-width: var(--measure-panel, 52rem);
     height: auto;
-    border: 1px solid var(--spw-shell-line, rgba(14, 18, 20, 0.14));
+    border: 1px solid var(--spw-svg-surface-border);
     border-radius: var(--shape-surface, 10px);
-    background: var(--surface, #ffffff);
     background:
-        radial-gradient(
-            circle at var(--spw-svg-pointer-x, 50%) var(--spw-svg-pointer-y, 50%),
-            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) calc(var(--spw-svg-pointer-intensity, 0) * 9%), transparent),
-            transparent 42%
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 4%, transparent) 0%,
+            transparent 24%
         ),
         var(--spw-svg-brand-field, var(--surface, #ffffff));
-    box-shadow: var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05));
+    box-shadow: var(--spw-svg-surface-shadow);
     color: var(--ink, #161c1d);
     transform:
         translate3d(0, calc(var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-pointer-lift, 0) * -0.18rem), 0)
@@ -88,6 +89,13 @@
         color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
         background var(--duration-base, 200ms) var(--ease-mechanical, ease),
         transform var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface:is(:hover, :focus-within) {
+    --spw-svg-surface-border: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 28%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 10%, transparent),
+        0 10px 28px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 8%, transparent);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-surface text {
@@ -173,12 +181,12 @@
     z-index: 2;
     pointer-events: none;
     border-radius: var(--shape-surface, 10px);
-    opacity: calc(var(--spw-svg-pointer-intensity, 0) * 0.72);
+    opacity: calc(var(--spw-svg-pointer-intensity, 0) * 0.48);
     background:
         radial-gradient(
             circle at var(--spw-svg-pointer-x, 50%) var(--spw-svg-pointer-y, 50%),
-            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 18%, transparent),
-            transparent 34%
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 14%, transparent),
+            transparent 38%
         );
     mix-blend-mode: multiply;
     transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
@@ -192,7 +200,7 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer="field"][data-spw-svg-pointer-state="active"] .spw-svg-surface {
     border-color: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 32%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
     box-shadow:
-        var(--card-shadow, 0 1px 3px rgba(0,0,0,0.05)),
+        var(--spw-svg-surface-shadow),
         0 10px 28px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 10%, transparent);
 }
 

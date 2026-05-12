@@ -21,6 +21,19 @@
 
 :where(.frame-card, .frame-card > a:first-child) {
   justify-items: start;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-route-accent) 5%, transparent) 0%,
+      transparent 22%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 95%, var(--component-route-accent) 5%);
+  box-shadow: var(--component-shadow);
+  transition:
+    background var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    box-shadow var(--component-transition-deliberate),
+    transform var(--component-transition-fast);
 }
 
 :where(.frame-card, .frame-card > a:first-child) > :where(
@@ -58,6 +71,10 @@
   text-decoration: none;
 }
 
+:where(a.frame-card, .frame-card > a:first-child):is(:hover, :focus-visible) {
+  box-shadow: var(--component-shadow-active);
+}
+
 .frame-card > a:first-child:last-child {
   min-block-size: 100%;
 }
@@ -65,6 +82,7 @@
 :where(.frame-card-sigil, .operator-symbol, .ref-card-sigil) {
   display: inline-block;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--active-op-color, var(--component-accent)) 28%);
   transition: color var(--component-transition-fast);
 }

@@ -147,6 +147,7 @@
   border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
   box-shadow: var(--component-shadow-active);
   transform: translateY(calc(var(--projection-lift-xs, 1px) * -1));
+  z-index: var(--component-layer-raised, 1);
 }
 
 :where(.media-focus-card) {

@@ -92,6 +92,11 @@
   --component-rail-width: 3px;
   --component-header-min-height: 1.5rem;
   --component-chip-height: var(--spw-control-min-height, 2rem);
+
+  /* Layering */
+  --component-layer-base: 0;
+  --component-layer-raised: 1;
+  --component-layer-overlay: 2;
 }
 
 
@@ -125,6 +130,7 @@
   .payment-card
 ) {
   position: relative;
+  z-index: var(--component-layer-base);
   min-width: 0;
   isolation: isolate;
   box-sizing: border-box;
@@ -394,6 +400,7 @@ header.frame-heading > :is(h1, h2, h3) {
 :where([data-spw-module][data-spw-salience-state="active"]) {
   --component-module-rail-width: 3px;
   --component-module-rail-opacity: 0.56;
+  z-index: var(--component-layer-raised);
   transform: translateY(-1px);
   box-shadow: inset 0 0 0 1px var(--component-module-active-ring),
   var(--component-shadow-active);
