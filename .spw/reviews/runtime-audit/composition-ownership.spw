@@ -8,8 +8,8 @@
 @site_semantics: ~"../../conventions/site-semantics.spw"
 @page_model: ~"../../surfaces/page-model.spw"
 @css_instruction: ~"../../conventions/css-instruction.spw"
-@components_css: ~"../../../public/css/components/spw-components.css"
-@debug_css: ~"../../../public/css/effects/spw-debug.css"
+@components_css: ~"../../../public/css/components/foundation.css"
+@debug_css: ~"../../../public/css/effects/debug.css"
 @instrumentation: ~"../../../public/js/kernel/spw-instrumentation.js"
 
 thesis: .{

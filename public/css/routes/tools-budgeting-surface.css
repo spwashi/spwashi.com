@@ -9,7 +9,7 @@
 
    Debugging notes
    - Use route scope first, then component nouns.
-   - Promote reusable table/card/control behavior to spw-components.css.
+   - Promote reusable table/card/control behavior to component-family CSS.
    ========================================================================== */
 
 :where(body[data-spw-surface="tools-budgeting"]) .budget-dashboard {

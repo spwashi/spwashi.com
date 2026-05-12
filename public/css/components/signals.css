@@ -1,0 +1,166 @@
+/* ==========================================================================
+   components/signals.css
+   --------------------------------------------------------------------------
+   Operator accent mapping, arrival states, and component presence signals.
+   ========================================================================== */
+
+/* ==========================================================================
+   8. Operator / route accent mapping
+   ========================================================================== */
+
+:where([data-spw-primary-operator="probe"]) {
+  --component-route-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="action"]) {
+  --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="merge"]) {
+  --component-route-accent: var(--op-merge-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="binding"]) {
+  --component-route-accent: var(--op-binding-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="frame"]) {
+  --component-route-accent: var(--op-frame-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="surface"]) {
+  --component-route-accent: var(--op-surface-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="ref"]) {
+  --component-route-accent: var(--op-ref-color, var(--component-accent));
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]) {
+  padding-block-start: calc(var(--component-pad) + 0.82rem);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card)::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"])::after {
+  content: attr(data-spw-route-marker);
+  position: absolute;
+  inset: 0.46rem 0.58rem auto auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.3rem;
+  max-inline-size: calc(100% - 1.16rem);
+  padding: 0.08rem 0.42rem;
+  overflow: hidden;
+  border: 1px solid var(--component-route-marker-line);
+  border-radius: 999px;
+  background: var(--component-route-marker-bg);
+  color: var(--component-route-marker-text);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.88;
+  transition: border-color var(--component-transition-fast),
+  background var(--component-transition-fast),
+  color var(--component-transition-fast),
+  opacity var(--component-transition-fast),
+  transform var(--component-transition-fast);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state="branching"] {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 12%, transparent),
+  var(--component-shadow);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state="branching"] :where(.card-sub-links, .frame-operators, [data-spw-slot="actions"]) {
+  padding-top: 0.14rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-route-accent) 18%, transparent);
+}
+
+:where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]):not(.media-focus-card):not(.plan-card):is(:hover, :focus-within)::before,
+:where(.media-focus-card, .plan-card)[data-spw-route-state]:not([data-spw-route-state="none"]):is(:hover, :focus-within)::after {
+  border-color: color-mix(in srgb, var(--component-route-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--component-surface-strong) 88%, var(--component-route-accent) 12%);
+  color: color-mix(in srgb, var(--component-route-accent) 86%, var(--ink, rgba(14, 18, 20, 0.92)) 14%);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   9. Arrival / presence states
+   ========================================================================== */
+
+:where(
+  html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
+  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
+) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+) {
+  --component-transition-arrival: var(--spw-component-arrival-transition, 180ms steps(3, end));
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 3px;
+  --component-arrival-opacity: 0.93;
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 1px;
+  --component-arrival-opacity: 0.97;
+}
+
+:where(
+  html[data-spw-page-presence="background"],
+  html[data-spw-page-transition-phase="background"]
+) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: 0px;
+  --component-arrival-opacity: 0.98;
+}

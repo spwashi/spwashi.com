@@ -10,8 +10,8 @@
 
    Debugging notes
    - Prefer data-spw-feature or data-spw-slot for durable clusters.
-   - If a rule would help more than one route, move it to spw-components.css
-     or spw-surfaces.css instead of widening this file.
+   - If a rule would help more than one route, move it to components or
+     systems/surfaces instead of widening this file.
    ========================================================================== */
 
 [data-spw-page-family="experiment-lab"] .design-experiment-hero,

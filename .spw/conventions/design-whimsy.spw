@@ -215,7 +215,7 @@
 ^"css_organization"{
   ~#note: "Whimsy CSS lives separately from core styles for clarity and iteration."
 
-  file: "public/css/spw-whimsy.css"
+  file: "public/css/whimsy.css"
   sections: [
     "Typography whimsy (operator sigils, breathing)",
     "Frame & panel whimsy (perspective shifts, heading accents)",

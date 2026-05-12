@@ -1,0 +1,273 @@
+/* ==========================================================================
+   components/runtime-states.css
+   --------------------------------------------------------------------------
+   Selection, active, accessibility, visibility, and responsive component states.
+   ========================================================================== */
+
+/* ==========================================================================
+   25. Selection, active, and section states
+   ========================================================================== */
+
+:where(main > section[id], main > article > section[id]) {
+  scroll-margin-top: calc(var(--shell-header-height, var(--header-height, 4rem)) + 1.1rem);
+}
+
+:where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
+  transition: box-shadow var(--component-transition-deliberate),
+  border-color var(--component-transition-deliberate),
+  transform var(--component-transition-deliberate);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent),
+  var(--component-shadow-active);
+}
+
+:where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) :where(h1, h2, h3) {
+  color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state]) {
+  position: relative;
+  overflow: clip;
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before {
+  content: "";
+  position: absolute;
+  inset-block: 1rem;
+  inset-inline-start: 0.55rem;
+  width: 0.18rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--component-accent) 72%, transparent) 0%,
+    color-mix(in srgb, var(--component-accent) 18%, transparent) 100%
+  );
+  opacity: 0;
+  transform: scaleY(0.24);
+  transform-origin: center top;
+  transition:
+    opacity var(--component-transition-deliberate),
+    transform var(--component-transition-deliberate),
+    filter var(--component-transition-deliberate);
+  pointer-events: none;
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 16%, color-mix(in oklab, var(--component-accent) 9%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in oklab, var(--component-accent) 4%, transparent), transparent 26%);
+  opacity: 0;
+  transition:
+    opacity var(--component-transition-deliberate),
+    filter var(--component-transition-deliberate);
+  pointer-events: none;
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"])::before {
+  opacity: 0.34;
+  transform: scaleY(0.56);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::before {
+  opacity: 0.8;
+  transform: scaleY(1);
+  filter: saturate(1.08);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::after {
+  opacity: 1;
+  filter: saturate(1.06);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+  transition:
+    transform var(--component-transition-deliberate),
+    color var(--component-transition-deliberate),
+    opacity var(--component-transition-deliberate);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3) {
+  transform: translateX(0.12rem);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) {
+  border-color: color-mix(in oklab, var(--component-accent) 26%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 16%, transparent),
+    0 0.8rem 2.2rem color-mix(in oklab, var(--component-accent) 9%, transparent),
+    var(--component-shadow-active);
+}
+
+:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"]) :where(.inline-note, .frame-note) {
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before,
+  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+    transition: none;
+    transform: none;
+  }
+}
+
+:where([data-spw-selection="focused"]) {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
+}
+
+:where([data-spw-selection="active"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 34%, transparent);
+}
+
+:where([data-spw-selection="selected"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 22%, transparent),
+  0 0 0 4px color-mix(in srgb, var(--component-accent) 7%, transparent);
+}
+
+
+/* ==========================================================================
+   26. Accessibility and visibility
+   ========================================================================== */
+
+:where([hidden]) {
+  display: none !important;
+}
+
+:where(:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+}
+
+:where(button, a, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where(button, summary, input[type="button"], input[type="submit"], input[type="reset"], [role="button"]) {
+  cursor: pointer;
+}
+
+:where(html[data-spw-high-contrast="on"]) {
+  --component-border: 1px solid color-mix(in srgb, var(--ink, currentColor) 34%, var(--line, transparent));
+  --component-border-strong: 2px solid color-mix(in srgb, var(--component-accent) 58%, var(--ink, currentColor));
+}
+
+:where(html[data-spw-high-contrast="on"]) :where(.operator-chip, .spec-pill, .settings-option, .settings-fieldset) {
+  border-width: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(*, *::before, *::after) {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(*, *::before, *::after) {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 1ms !important;
+}
+
+
+/* ==========================================================================
+   27. Responsive container behavior
+   ========================================================================== */
+
+@container (max-width: 36rem) {
+  :where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+  }
+
+  :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+    width: 100%;
+    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+  }
+
+  :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+    gap: var(--component-gap);
+  }
+
+  :where(.site-lede, .page-lede) {
+    font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 760px) {
+  :where(.site-frame) {
+    --surface-padding: var(--spw-surface-padding, 0.82rem);
+    border-radius: var(--component-radius-tight);
+  }
+
+  :where(.site-frame)::before {
+    inset-inline: var(--surface-padding);
+  }
+
+  :where(.frame-grid--2up, .frame-grid--3up) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.settings-grid) {
+    grid-template-columns: 1fr;
+    padding: var(--component-pad-tight);
+  }
+
+  :where(.settings-category-header) {
+    padding-inline: var(--component-pad-tight);
+  }
+
+  :where(.operator-chip, .spec-pill) {
+    white-space: normal;
+  }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    gap: 0.4rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex: 1 1 11rem;
+    justify-content: flex-start;
+    min-height: 2.55rem;
+    padding-inline: 0.82rem;
+    text-align: left;
+  }
+
+  :where(.frame-operators, .card-sub-links, .ref-links, .plan-links) {
+    padding: 0.14rem;
+    border: 1px solid color-mix(in srgb, var(--component-route-marker-line) 60%, transparent);
+    border-radius: calc(var(--component-radius, 10px) + 2px);
+    background: color-mix(in srgb, var(--component-surface-strong) 84%, transparent);
+  }
+}
+
+@media (max-width: 420px) {
+  :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
+    --component-pad: 0.68rem;
+    --component-gap-tight: 0.42rem;
+  }
+
+  :where(.frame-operators > .operator-chip, .card-sub-links a, .ref-links a, .plan-links a) {
+    flex-basis: 100%;
+  }
+
+  :where(.settings-shortcuts) {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid, .settings-quickstart-grid) {
+    grid-template-columns: 1fr;
+  }
+}

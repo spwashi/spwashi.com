@@ -9,9 +9,9 @@ Use this map before editing:
 | Layer | Meaning | Main files |
 | --- | --- | --- |
 | Route | A public page and its business purpose | `*/index.html` |
-| Shell | Header, nav, footer, settings chrome | `public/css/spw-chrome.css`, `public/js/spw-shell-disclosure.js` |
+| Shell | Header, nav, footer, settings chrome | `public/css/shell/chrome.css`, `public/js/spw-shell-disclosure.js` |
 | Region | A named section of a page | route HTML, `public/js/site.js`, `public/js/spw-page-metadata.js` |
-| Component | A reusable card, panel, frame, image surface, or control | `public/css/spw-components.css`, `public/js/spw-component-semantics.js` |
+| Component | A reusable card, panel, frame, image surface, or control | `public/css/components/*.css`, `public/js/spw-component-semantics.js` |
 | Module | A progressive JS behavior mounted only when the route/DOM needs it | `public/js/site.js` module definitions |
 | Slot | A stable internal part of a component | `data-spw-slot="header|body|figure|actions|footer"` |
 
@@ -51,10 +51,10 @@ Prefer this ownership order:
 
 | File | Owns |
 | --- | --- |
-| `tokens/spw-tokens.css` | colors, spacing, timing, depth, semantic aliases |
-| `shell/spw-shell.css` / `shell/spw-chrome.css` | page shell, nav, footer, global chrome |
-| `components/spw-components.css` and component folders | reusable cards, panels, slots, route markers, component timing |
-| `grammar/spw-grammar.css` | Spw operator/brace grammar |
+| `tokens/core.css` | colors, spacing, timing, depth, semantic aliases |
+| `shell/layout.css` / `shell/chrome.css` | page shell, nav, footer, global chrome |
+| `components/foundation.css` and component-family files | reusable cards, panels, slots, route markers, component timing |
+| `grammar/syntax.css` | Spw operator/brace grammar |
 | `systems/surfaces/*.css` | shared page-surface layouts that are not one route only |
 | `routes/*.css` and `routes/surfaces/*.css` | route-specific atmosphere and layout exceptions |
 

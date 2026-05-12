@@ -23,7 +23,7 @@
  *   copy:succeeded      → action (commit  — export/emit)
  *
  * CSS charge classes applied to SVG nodes mirror the existing
- * data-spw-charge vocabulary so spw-cinematic.css rules apply.
+ * data-spw-charge vocabulary so cinematic.css rules apply.
  */
 
 import { bus } from '/public/js/kernel/spw-bus.js';

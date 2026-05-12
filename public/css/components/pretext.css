@@ -1,0 +1,148 @@
+/* ==========================================================================
+   components/pretext.css
+   --------------------------------------------------------------------------
+   Pretext flow host styles and grammar-aware text presentation.
+   ========================================================================== */
+
+/* ==========================================================================
+   16. Pretext flow host
+   ========================================================================== */
+
+:where([data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0;
+  --pretext-local-radius: var(--component-radius-tight);
+
+  position: relative;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  contain: layout paint style;
+  isolation: isolate;
+  padding: var(--pretext-local-pad);
+  border-radius: var(--pretext-local-radius);
+  color: inherit;
+  transition: color var(--component-transition-fast),
+  background-color var(--component-transition-fast),
+  box-shadow var(--component-transition-base);
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-lines) {
+  display: grid;
+  gap: var(--pretext-line-gap);
+  min-width: 0;
+  align-content: start;
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-line) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38em;
+  min-width: 0;
+  max-width: 100%;
+  line-height: var(--pretext-line-height);
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+:where([data-spw-flow="pretext"] .pretext-flow-line-text) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+:where([data-spw-flow="pretext"] .line-decor) {
+  flex: 0 0 auto;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.92em;
+  opacity: 0.42;
+  color: color-mix(in srgb, currentColor 72%, transparent);
+  transition: opacity var(--component-transition-fast),
+  color var(--component-transition-fast);
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="resting"]) {
+  --pretext-line-gap: 0.16rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="approach"]) {
+  --pretext-line-gap: 0.2rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="contact"]) {
+  --pretext-line-gap: 0.22rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="projecting"]) {
+  --pretext-line-gap: 0.24rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-mode="settling"]) {
+  --pretext-line-gap: 0.18rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="operator-dense"]) {
+  --pretext-local-pad: 0.35rem 0.45rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-kind="question"]) {
+  --pretext-local-pad: 0.25rem 0.35rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="dense"]) {
+  --pretext-line-gap: 0.12rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-density="soft"]) {
+  --pretext-line-gap: 0.24rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="volatile"]) {
+  border-left: 2px solid color-mix(in srgb, var(--component-accent) 24%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-wrap="responsive"]) {
+  border-left: 1px solid color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="xs"]) {
+  max-inline-size: 20rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="sm"]) {
+  max-inline-size: 28rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="md"]) {
+  max-inline-size: 40rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="lg"]) {
+  max-inline-size: 54rem;
+}
+
+:where([data-spw-flow="pretext"][data-text-width-class="xl"]) {
+  max-inline-size: min(100%, 72rem);
+}
+
+:where(.pretext-flow-scaffold) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  margin-top: 0.45rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  opacity: var(--pretext-scaffold-opacity);
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.6)) 88%, transparent);
+}
+
+:where([data-spw-debug~="pretext"] .pretext-flow-scaffold),
+:where([data-spw-pretext-scaffold] .pretext-flow-scaffold) {
+  padding-top: 0.4rem;
+  border-top: 1px dashed color-mix(in srgb, var(--component-accent) 18%, transparent);
+}
+
+:where(.pretext-flow-scaffold > span) {
+  white-space: nowrap;
+}

@@ -9,5 +9,5 @@ Future CSS refactors can move authored sources here before changing public outpu
 
 Current proof entries:
 - `design-experiments.css`
-- `spw-debug.css`
+- `debug.css`
 - `tools-budgeting-surface.css`

@@ -11,7 +11,7 @@
  *   2. Resonance probe pinning — when an operator chip receives keyboard
  *      focus or sustained hover, write [data-spw-resonance-probe] to <html>
  *      so same-operator elements across the page hold a soft echo. The CSS
- *      contract lives in spw-wonder.css.
+ *      contract lives in wonder.css.
  *
  * Both features degrade cleanly. Mount is idempotent: the mount function
  * returns a cleanup fn that the site.js lifecycle can call to refresh.

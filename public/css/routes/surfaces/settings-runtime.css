@@ -6,20 +6,28 @@
    8. Runtime map / navigators / structures
    ========================================================================== */
 
-:where(body[data-spw-surface="settings"] .settings-system-map),
-:where(body[data-spw-surface="settings"] .settings-navigator-grid),
-:where(body[data-spw-surface="settings"] .settings-structures-grid),
-:where(body[data-spw-surface="settings"] .settings-state-grid) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-system-map,
+    .settings-navigator-grid,
+    .settings-structures-grid,
+    .settings-state-grid
+  )
+) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: var(--space-md, 1rem);
   margin-top: var(--space-md, 1rem);
 }
 
-:where(body[data-spw-surface="settings"] .settings-map-card),
-:where(body[data-spw-surface="settings"] .settings-nav-card),
-:where(body[data-spw-surface="settings"] .settings-structure-card),
-:where(body[data-spw-surface="settings"] .settings-state-card) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-map-card,
+    .settings-nav-card,
+    .settings-structure-card,
+    .settings-state-card
+  )
+) {
   position: relative;
   min-width: 0;
   padding: var(--inset-component, 1.1rem);
@@ -33,10 +41,14 @@
     0 6px 16px rgba(0,0,0,0.04);
 }
 
-:where(body[data-spw-surface="settings"] .settings-map-card::before),
-:where(body[data-spw-surface="settings"] .settings-nav-card::before),
-:where(body[data-spw-surface="settings"] .settings-structure-card::before),
-:where(body[data-spw-surface="settings"] .settings-state-card::before) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-map-card,
+    .settings-nav-card,
+    .settings-structure-card,
+    .settings-state-card
+  )::before
+) {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -46,25 +58,37 @@
   opacity: 0.88;
 }
 
-:where(body[data-spw-surface="settings"] .settings-map-card h3),
-:where(body[data-spw-surface="settings"] .settings-nav-card h3),
-:where(body[data-spw-surface="settings"] .settings-structure-card h3),
-:where(body[data-spw-surface="settings"] .settings-state-card strong) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-map-card h3,
+    .settings-nav-card h3,
+    .settings-structure-card h3,
+    .settings-state-card strong
+  )
+) {
   margin: 0 0 0.45rem;
   color: var(--ink-strong, #090b0c);
 }
 
-:where(body[data-spw-surface="settings"] .settings-map-card p),
-:where(body[data-spw-surface="settings"] .settings-nav-card p),
-:where(body[data-spw-surface="settings"] .settings-structure-card p) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-map-card p,
+    .settings-nav-card p,
+    .settings-structure-card p
+  )
+) {
   margin: 0 0 0.65rem;
   color: var(--ink-soft, rgba(14,18,20,0.68));
   line-height: 1.52;
 }
 
-:where(body[data-spw-surface="settings"] .settings-map-card code),
-:where(body[data-spw-surface="settings"] .settings-structure-card code),
-:where(body[data-spw-surface="settings"] .settings-nav-card code) {
+:where(
+  body[data-spw-surface="settings"] :is(
+    .settings-map-card code,
+    .settings-structure-card code,
+    .settings-nav-card code
+  )
+) {
   display: inline-block;
   max-width: 100%;
   padding: 0.2rem 0.45rem;

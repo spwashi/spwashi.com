@@ -57,7 +57,7 @@ function outputPathForEntry(entryPath) {
     const relativeEntryPath = toPosixPath(path.relative(SOURCE_ENTRIES_DIR, entryPath));
     const cssRelativePath = relativeEntryPath.replace(/\.(?:pcss|postcss)$/i, '.css');
     const outputRelativePath = (() => {
-        if (cssRelativePath === 'spw-debug.css')
+        if (cssRelativePath === 'debug.css')
             return `effects/${cssRelativePath}`;
         if (cssRelativePath === 'design-experiments.css')
             return `routes/${cssRelativePath}`;

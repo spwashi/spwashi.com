@@ -1,0 +1,37 @@
+/* ==========================================================================
+ * compose.css
+ * --------------------------------------------------------------------------
+ * Portable composition entrypoint.
+ *
+ * Use this when another site wants Spw theming, component grammar, and handle
+ * styling without the full spwashi.com shell, route surfaces, or ornament
+ * layer. Keep this file import-only so it stays useful as a standalone bundle.
+ * ========================================================================== */
+
+@layer tokens, typography, grammar, components, handles, effects;
+
+@import url('./tokens/core.css') layer(tokens);
+
+@import url('./typography/base.css') layer(typography);
+@import url('./typography/context.css') layer(typography);
+@import url('./typography/typesetting.css') layer(typography);
+
+@import url('./grammar/syntax.css') layer(grammar);
+
+@import url('./components/foundation.css') layer(components);
+@import url('./components/surfaces.css') layer(components);
+@import url('./components/signals.css') layer(components);
+@import url('./components/cards.css') layer(components);
+@import url('./components/frames.css') layer(components);
+@import url('./components/pretext.css') layer(components);
+@import url('./components/content.css') layer(components);
+@import url('./components/controls.css') layer(components);
+@import url('./components/runtime-states.css') layer(components);
+
+@import url('./handles/cognitive-handles.css') layer(handles);
+@import url('./handles/operators.css') layer(handles);
+@import url('./handles/phase-controls.css') layer(handles);
+
+@import url('./effects/material.css') layer(effects);
+@import url('./effects/enhancements.css') layer(effects);
+@import url('./effects/wonder.css') layer(effects);

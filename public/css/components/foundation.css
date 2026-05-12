@@ -1,0 +1,479 @@
+/* ==========================================================================
+   components/foundation.css
+   --------------------------------------------------------------------------
+   Component-layer foundations: tokens, ownership boundaries, slots, module semantics, bleed, and stance utilities.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Component tokens
+   ========================================================================== */
+
+:root {
+  /* Spacing */
+  --component-gap: var(--spw-component-gap, 0.9rem);
+  --component-gap-tight: var(--spw-component-gap-tight, 0.55rem);
+  --component-gap-loose: var(--spw-component-gap-loose, 1.2rem);
+  --component-gap-roomy: var(--spw-component-gap-roomy, 1.6rem);
+
+  --component-pad: var(--spw-component-pad, 0.9rem);
+  --component-pad-tight: var(--spw-component-pad-tight, 0.65rem);
+  --component-pad-loose: var(--spw-component-pad-loose, 1.15rem);
+  --component-pad-roomy: var(--spw-component-pad-roomy, 1.45rem);
+
+  /* Shape */
+  --component-radius: var(--shape-surface, 10px);
+  --component-radius-tight: var(--shape-component, 6px);
+  --component-radius-loose: var(--shape-floating, 16px);
+  --component-radius-pill: var(--shape-control, 999px);
+
+  /* Line */
+  --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
+  --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
+  --component-border-quiet: 1px solid color-mix(in srgb, var(--line, rgba(0, 128, 128, 0.18)) 72%, transparent);
+
+  /* Surface */
+  --component-surface: var(--surface, rgba(255, 255, 255, 0.92));
+  --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
+  --component-surface-matte: color-mix(in srgb, var(--component-surface-strong) 94%, var(--bg, #f7f4ee));
+  --component-surface-elevated: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
+  var(--component-surface-strong);
+
+  /* Shadow */
+  --component-shadow: var(--spw-depth-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
+  --component-shadow-active: var(--spw-depth-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
+  --component-shadow-quiet: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.03));
+  --component-frame-shadow: var(--spw-depth-frame-shadow, var(--component-shadow));
+  --component-frame-shadow-active: var(--spw-depth-frame-shadow-active, var(--component-shadow-active));
+
+  /* Accent */
+  --component-accent: var(--active-op-color, var(--teal, #008080));
+  --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
+  --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  --component-accent-wash: color-mix(in srgb, var(--component-accent) 8%, transparent);
+
+  /* Route accent */
+  --component-route-accent: var(--component-accent);
+  --component-route-marker-bg: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
+  --component-route-marker-line: color-mix(in srgb, var(--component-route-accent) 18%, transparent);
+  --component-route-marker-text: color-mix(in srgb, var(--component-route-accent) 78%, var(--ink-soft, rgba(14, 18, 20, 0.68)) 22%);
+
+  /* Module semantics */
+  --component-module-rail-start: color-mix(in srgb, var(--component-accent) 28%, transparent);
+  --component-module-rail-end: color-mix(in srgb, var(--component-accent) 18%, transparent);
+  --component-module-hydration-ring: color-mix(in srgb, var(--component-accent) 10%, transparent);
+  --component-module-active-ring: color-mix(in srgb, var(--component-accent) 16%, transparent);
+  --component-module-context-ring: color-mix(in srgb, var(--component-accent) 18%, transparent);
+
+  /* Measures */
+  --component-measure: 68ch;
+  --component-measure-tight: 58ch;
+  --component-measure-wide: 78ch;
+  --component-code-measure: 84ch;
+
+  /* Motion */
+  --component-transition-fast: var(--spw-control-transition-fast, var(--spw-motion-quick, var(--duration-fast, 120ms) var(--ease-mechanical, ease)));
+  --component-transition-base: var(--spw-control-transition-base, var(--spw-motion-settle, var(--duration-base, 180ms) var(--ease-mechanical, ease)));
+  --component-transition-deliberate: var(--spw-motion-expressive, var(--duration-deliberate, 260ms) var(--ease-mechanical, ease));
+  --component-transition-arrival: var(--spw-component-settle-transition, var(--component-transition-fast));
+
+  /* Pretext */
+  --pretext-line-gap: 0.18rem;
+  --pretext-line-height: 1.55;
+  --pretext-width: auto;
+  --pretext-canonical-width: auto;
+  --pretext-projected-width: auto;
+  --pretext-influence: 0;
+  --pretext-direction: 0;
+  --pretext-scaffold-opacity: 0.74;
+
+  /* Component chrome */
+  --component-rail-width: 3px;
+  --component-header-min-height: 1.5rem;
+  --component-chip-height: var(--spw-control-min-height, 2rem);
+}
+
+
+/* ==========================================================================
+   2. Base component ownership
+   ========================================================================== */
+
+/* Shared registry: add only route-portable component nouns. */
+:where(
+  [data-spw-component-kind],
+  [data-spw-kind],
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card
+) {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+  box-sizing: border-box;
+}
+
+:where(
+  [data-spw-component-kind],
+  [data-spw-kind],
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
+) {
+  container-type: inline-size;
+}
+
+/* Region flow utilities: opt in when a region or component needs explicit
+   containment behavior rather than inheriting the route default. */
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card,
+  .seed-card,
+  .spw-region-shell
+)[data-spw-region-flow="popout"] {
+  overflow: visible;
+}
+
+:where(
+  .site-frame,
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .vibe-widget,
+  .pwa-status-card,
+  .payment-card,
+  .seed-card,
+  .spw-region-shell
+)[data-spw-region-flow="clip"] {
+  overflow: clip;
+}
+
+:where([data-spw-region-flow="stack"], .spw-region-stack) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--surface-gap, 1rem);
+  min-width: 0;
+}
+
+:where([data-spw-region-flow="cluster"], .spw-region-cluster) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--component-gap-tight, 0.55rem);
+  min-width: 0;
+}
+
+:where([data-spw-region-flow="overlay"], .spw-region-overlay) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  justify-items: stretch;
+  min-width: 0;
+}
+
+:where([data-spw-region-flow="overlay"] > *, .spw-region-overlay > *) {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+/* Lift ordinary flow content above generated rails, seams, and debug labels.
+   Floating chrome keeps its own geometry contract and must opt out here. */
+:where(
+  [data-spw-component-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .site-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .media-focus-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .software-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .operator-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .frame-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .mode-panel > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .plan-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .compare-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .spec-column > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  .ref-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell)
+) {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   3. Slot conventions
+   ========================================================================== */
+
+/* Slots are stable anatomy; prefer them over child-order selectors. */
+:where([data-spw-slot]) {
+  min-width: 0;
+}
+
+:where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
+  min-width: 0;
+}
+
+:where(.frame-topline) {
+  align-items: center;
+  min-height: var(--component-header-min-height);
+  margin-bottom: -0.08rem;
+  padding-bottom: 0.34rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
+  transition: border-color var(--component-transition-base);
+}
+
+:where(.site-frame.is-active-frame .frame-topline) {
+  border-bottom-color: color-mix(in srgb, var(--component-accent) 32%, transparent);
+}
+
+header.frame-heading > :is(h1, h2, h3) {
+  margin: 0;
+}
+
+:where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
+  min-width: 0;
+}
+
+:where([data-spw-slot="figure"]) {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Captions share measure across figure-like surfaces. */
+:where([data-spw-slot="caption"]) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.6));
+  font-size: 0.88em;
+  max-inline-size: 65ch;
+}
+
+:where(.spw-semantic-seam) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spw-slot-gap-tight, 0.45rem 0.8rem);
+  width: fit-content;
+  max-width: 100%;
+  align-self: flex-start;
+  min-width: 0;
+}
+
+:where(.spw-semantic-seam:empty, .spw-semantic-seam[hidden], .spw-semantic-seam[data-spw-empty="true"]) {
+  display: none;
+}
+
+:where(.spw-semantic-seam[data-spw-generated="semantic-chrome"]) {
+  display: none;
+}
+
+/* Semantic chrome stays hidden until metadata or debug mode asks for it. */
+:where(
+  html[data-spw-show-semantic-metadata="on"],
+  html[data-spw-debug-mode="on"]
+) :where(.spw-semantic-seam[data-spw-generated="semantic-chrome"][data-spw-empty="false"]) {
+  display: flex;
+}
+
+:where(.spw-semantic-seam > .spw-component-guides) {
+  margin-inline-start: 0;
+  justify-content: flex-start;
+}
+
+
+/* ==========================================================================
+   4. Module semantics
+   ========================================================================== */
+
+/* Module rails mark machine-readable ownership without crowding content. */
+:where(
+  [data-spw-module],
+  [data-spw-component-genome]
+) {
+  --spw-perspective-weight: 0.5;
+  --spw-potential-weight: 0.5;
+  --spw-salience-weight: 0.34;
+  --spw-dimension-count: 1;
+  --component-module-rail-width: 2px;
+  --component-module-rail-opacity: 0.32;
+}
+
+:where([data-spw-module])::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--component-module-rail-width);
+  opacity: var(--component-module-rail-opacity);
+  pointer-events: none;
+  background: linear-gradient(
+      180deg,
+      var(--component-module-rail-start),
+      var(--component-module-rail-end)
+  );
+}
+
+/* Hydration/context states are visual confidence cues, not layout states. */
+:where([data-spw-module][data-spw-module-hydration="ready"]) {
+  --component-module-rail-opacity: 0.44;
+  box-shadow: inset 0 0 0 1px var(--component-module-hydration-ring),
+  var(--component-shadow-quiet);
+}
+
+:where([data-spw-module][data-spw-salience-state="active"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.56;
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px var(--component-module-active-ring),
+  var(--component-shadow-active);
+}
+
+:where([data-spw-module][data-spw-context-match="active"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.5;
+  box-shadow: inset 0 0 0 1px var(--component-module-context-ring),
+  var(--component-shadow);
+}
+
+:where([data-spw-component-genome~="importance-primary"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: 0.5;
+}
+
+:where([data-spw-component-genome~="interactivity-controllable"]) {
+  --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-component-genome~="interactivity-inspectable"]) {
+  --component-route-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-region-genome~="harmony-indexed"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 20%, transparent);
+}
+
+:where([data-spw-region-genome~="harmony-structured"]) {
+  --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
+}
+
+
+/* ==========================================================================
+   5. Bleed utilities
+   ========================================================================== */
+
+:where(.spw-bleed) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  width: calc(100% + (var(--local-bleed-offset) * 2));
+  margin-inline: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.spw-bleed-block) {
+  --local-bleed-offset: var(--surface-padding, var(--component-pad));
+  margin-block: calc(var(--local-bleed-offset) * -1);
+}
+
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:first-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:first-child {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed:last-child,
+:where(.site-frame, .frame-panel, .frame-card, .plan-card) > .spw-bleed-block:last-child {
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+}
+
+
+/* ==========================================================================
+   6. Stance utilities
+   ========================================================================== */
+
+:where([data-spw-stance="entry"]) {
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--ink, currentColor) 78%, transparent);
+  transition: color var(--component-transition-deliberate);
+}
+
+:where([data-spw-stance="ground"]) {
+  letter-spacing: 0.01em;
+  transition: color var(--component-transition-deliberate);
+}
+
+:where([data-spw-stance="exit"]) {
+  opacity: 0.76;
+  letter-spacing: 0.01em;
+  transition: opacity var(--component-transition-deliberate),
+  color var(--component-transition-deliberate);
+}

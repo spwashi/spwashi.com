@@ -2,7 +2,7 @@
 
 `style.css` is the public stylesheet entrypoint and owns cascade layer order. Route HTML should link either `style.css` or a concrete layer file; root-level compatibility wrappers are no longer part of the source layout.
 
-`spw-compose.css` is the portable composition entrypoint. It exposes tokens, typography, grammar, components, handles, and light effects without the full site shell, route surfaces, or ornament layer.
+`compose.css` is the portable composition entrypoint. It exposes tokens, typography, grammar, components, handles, and light effects without the full site shell, route surfaces, or ornament layer.
 
 Implementation files live in folders that match the cascade layers:
 
@@ -22,9 +22,9 @@ When changing shared visual behavior, edit the layered implementation file first
 
 Route surfaces can split under `routes/surfaces/` when a route grows into clear domains. Import those fragments directly from `style.css`; do not add one-file aliases or route shims.
 
-Reusable component styles belong under `components/`. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
+Reusable component styles belong under `components/`. The component layer is split by family (`foundation`, `surfaces`, `signals`, `cards`, `frames`, `pretext`, `content`, `controls`, and `runtime-states`) so filenames describe the local contract instead of repeating the project prefix. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
 
-Use `spw-compose.css` when another site wants the theme/component language but should keep its own page shell and route layout.
+Use `compose.css` when another site wants the theme/component language but should keep its own page shell and route layout.
 
 Documentation route: `/design/composition/`.
 
@@ -47,7 +47,7 @@ SVG surfaces add a narrower, screenshot-friendly layer of tuning through
 `--spw-svg-space`, `--spw-svg-flow-dash`, and `--spw-svg-flow-gap` through
 `applySvgQueryTunability`.
 
-Use `.spw-demo-rail` and `.spw-demo-card` from `public/css/effects/spw-demos.css`
+Use `.spw-demo-rail` and `.spw-demo-card` from `public/css/effects/demos.css`
 when a route needs tasteful internal marketing: a short reason, a reproducible
 demo link, and an honest next step. These are meant for discoverability and QA,
 not broad campaign banners.

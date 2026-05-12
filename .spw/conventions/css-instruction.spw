@@ -42,7 +42,7 @@
   global_toggle: "html[data-spw-debug-mode=\"on\"] enables inspection-forward CSS projected from public/js/site-settings.js."
   local_toggle: "[data-spw-debug~=\"css\"] opts a subtree into CSS structure overlays without changing settings."
   layout_toggle: "[data-spw-debug~=\"layout\"] highlights ownership roles such as data-spw-layout-owner and data-spw-floating-chrome."
-  owner: "public/css/spw-debug.css exposes structure only. It must not become required for layout or comprehension."
+  owner: "public/css/debug.css exposes structure only. It must not become required for layout or comprehension."
   devtools_path: [
     "Find the visible element.",
     "Read data-spw-surface / data-spw-feature / data-spw-slot / data-spw-module.",
@@ -80,7 +80,7 @@
 
 ^"dispatch"{
   @style_manifest: ~"../../../public/css/style.css"
-  @debug_css: ~"../../../public/css/effects/spw-debug.css"
+  @debug_css: ~"../../../public/css/effects/debug.css"
   @css_source_plan: ~"../../.agents/plans/css-semantic-modules/PLAN.md"
   @style_development: ~"./style-development.spw"
   @site_semantics: ~"./site-semantics.spw"

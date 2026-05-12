@@ -8,7 +8,7 @@
 
 export const SPW_COMPOSITION_CONTRACT = Object.freeze({
   entrypoints: Object.freeze({
-    css: '/public/css/spw-compose.css',
+    css: '/public/css/compose.css',
     js: '/public/js/spw-compose.js',
     siteCss: '/public/css/style.css',
     siteJs: '/public/js/site.js',

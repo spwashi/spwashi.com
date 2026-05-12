@@ -1,0 +1,286 @@
+/* ==========================================================================
+   components/controls.css
+   --------------------------------------------------------------------------
+   Interactive component families for settings controls, vibe widgets, and local note surfaces.
+   ========================================================================== */
+
+/* ==========================================================================
+   23. Settings components
+   ========================================================================== */
+
+:where(.settings-form) {
+  display: grid;
+  gap: var(--component-gap);
+}
+
+:where(.settings-category) {
+  border: var(--component-border);
+  border-radius: var(--component-radius);
+  background: var(--component-surface-soft);
+  overflow: clip;
+}
+
+:where(.settings-category-header) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: var(--component-pad-tight) var(--component-pad);
+  cursor: pointer;
+  font-weight: 750;
+  color: var(--ink, currentColor);
+}
+
+:where(.settings-category[open] > .settings-category-header) {
+  border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
+}
+
+:where(.settings-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--component-gap);
+  padding: var(--component-pad);
+}
+
+:where(.settings-fieldset) {
+  display: grid;
+  gap: 0.52rem;
+  min-width: 0;
+  padding: var(--component-pad);
+  border: var(--component-border-quiet);
+  border-radius: var(--component-radius-tight);
+  background: color-mix(in srgb, var(--component-surface-strong) 82%, transparent);
+}
+
+:where(.settings-fieldset legend) {
+  padding-inline: 0.24rem;
+  font-weight: 750;
+  color: var(--ink, currentColor);
+}
+
+:where(.settings-option) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  min-width: 0;
+  padding: 0.52rem 0.58rem;
+  border: 1px solid transparent;
+  border-radius: var(--component-radius-tight);
+  cursor: pointer;
+}
+
+:where(.settings-option:is(:hover, :focus-within)) {
+  border-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 5%, transparent);
+}
+
+:where(.settings-option input) {
+  margin-block-start: 0.14rem;
+}
+
+:where(.settings-option-copy) {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+:where(.settings-option-copy strong) {
+  line-height: 1.2;
+}
+
+:where(.settings-option-copy span, .settings-option-hint) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.42;
+}
+
+:where(.settings-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  padding-top: var(--component-gap-tight);
+}
+
+:where(.settings-status) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+}
+
+:where(.settings-status[data-status="success"]) {
+  color: var(--valence-pos, hsl(160 45% 34%));
+}
+
+:where(.settings-status[data-status="error"]) {
+  color: var(--valence-neg, hsl(8 54% 42%));
+}
+
+:where(.settings-presets) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.settings-preset-btn) {
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+}
+
+:where(.settings-preset-btn strong) {
+  display: block;
+}
+
+:where(.settings-preset-btn span) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.42;
+}
+
+:where(.settings-preset-btn[data-site-setting-active="true"], .settings-preset-btn[data-preset-active="exact"]) {
+  border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 9%, var(--component-surface-strong));
+}
+
+:where(.settings-shortcuts) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.72rem;
+}
+
+:where(.settings-shortcut-card) {
+  display: grid;
+  gap: 0.28rem;
+  padding: var(--component-pad);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  background: var(--component-surface-soft);
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.settings-shortcut-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--component-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--component-accent) 6%, var(--component-surface-strong));
+  text-decoration: none;
+}
+
+:where(.settings-shortcut-kicker, .settings-state-label, .vibe-widget-kicker) {
+  color: var(--ink-faint, rgba(14, 18, 20, 0.42));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.settings-state-card strong) {
+  font-size: var(--text-size-lg, 1.1rem);
+  line-height: 1.2;
+}
+
+:where(.settings-nav-card, .settings-structure-card, .settings-map-card) {
+  gap: 0.55rem;
+}
+
+:where(.settings-nav-card code, .settings-structure-card code, .settings-map-card code) {
+  width: fit-content;
+}
+
+
+/* ==========================================================================
+   24. Vibe widgets and local note surfaces
+   ========================================================================== */
+
+:where(.vibe-widget) {
+  gap: var(--component-gap-tight);
+}
+
+:where(.vibe-widget-header) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.vibe-widget-title) {
+  margin: 0;
+}
+
+:where(.vibe-widget-copy) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.5;
+  margin: 0;
+}
+
+:where(.vibe-widget-actions, .vibe-widget-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+:where(.site-deviation-surface, .settings-note-list) {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+:where(.site-deviation-list) {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+:where(.site-deviation-item) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.45rem;
+  border: var(--component-border-quiet);
+  border-radius: var(--component-radius-tight);
+  background: color-mix(in srgb, var(--component-surface-strong) 72%, transparent);
+}
+
+:where(.site-deviation-reset) {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--component-accent) 20%, transparent);
+  border-radius: var(--component-radius-pill);
+  background: transparent;
+  color: var(--component-accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.12rem 0.46rem;
+}
+
+:where(.settings-note-form) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.settings-note-form__label) {
+  font-weight: 700;
+}
+
+:where(.settings-note-form__input) {
+  width: 100%;
+  min-height: 8rem;
+  resize: vertical;
+  padding: var(--component-pad-tight);
+  border: var(--component-border);
+  border-radius: var(--component-radius-tight);
+  background: var(--component-surface-strong);
+  color: var(--ink, currentColor);
+  font: inherit;
+  line-height: 1.5;
+}
+
+:where(.settings-note-form__actions, .settings-note-form__meta) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
