@@ -107,13 +107,17 @@ const activateFrame = (target) => {
         window.spwInterface.activateFrame(target, { source: 'navigator', force: true });
         return;
     }
-    document.querySelectorAll('.site-frame').forEach(frame =>
-        frame.classList.toggle('is-active-frame', frame === target)
-    );
+    document.querySelectorAll('.site-frame').forEach(frame => {
+        if (frame === target) {
+            frame.dataset.state = 'active';
+        } else {
+            delete frame.dataset.state;
+        }
+    });
 };
 
 const getActiveFrame = () =>
-    window.spwInterface?.getActiveFrame?.() || document.querySelector('.site-frame.is-active-frame');
+    window.spwInterface?.getActiveFrame?.() || document.querySelector('.site-frame[data-state~="active"]');
 
 // ─── Core Navigator Class ───────────────────────────────────────────────────
 class SpwFrameNavigator {

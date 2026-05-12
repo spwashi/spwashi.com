@@ -290,7 +290,7 @@
   transition: border-color var(--component-transition-base);
 }
 
-:where(.site-frame.is-active-frame .frame-topline) {
+:where(.site-frame[data-state~="active"] .frame-topline) {
   border-bottom-color: color-mix(in srgb, var(--component-accent) 32%, transparent);
 }
 

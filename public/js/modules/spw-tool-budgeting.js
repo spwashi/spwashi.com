@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const amount = document.createElement('span');
         const sign = entry.type === 'income' ? '+' : '-';
 
-        amount.className = 'budget-item-amount';
+        amount.className = 'budget-item__amount';
         amount.textContent = `${sign}${formatCurrency(entry.amount)}`;
 
         return amount;
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buildEntryNode(entry) {
         const item = document.createElement('li');
-        const copy = document.createElement('div');
+        const content = document.createElement('div');
         const title = document.createElement('strong');
         const amount = buildAmountNode(entry);
         const removeButton = document.createElement('button');
@@ -133,17 +133,17 @@ document.addEventListener('DOMContentLoaded', () => {
         item.className = 'budget-item';
         item.dataset.type = entry.type;
 
-        copy.className = 'budget-item-copy';
+        content.className = 'budget-item__content';
         title.textContent = entry.desc;
 
-        removeButton.className = 'budget-item-remove';
+        removeButton.className = 'budget-item__remove';
         removeButton.type = 'button';
         removeButton.textContent = '×';
         removeButton.setAttribute('aria-label', `Remove ${entry.desc}`);
         removeButton.addEventListener('click', () => removeEntry(entry.id));
 
-        copy.append(title, amount);
-        item.append(copy, removeButton);
+        content.append(title, amount);
+        item.append(content, removeButton);
 
         return item;
     }
@@ -191,7 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tierCards.forEach((card) => {
             const cost = Number.parseInt(card.dataset.cost || '0', 10);
-            card.classList.toggle('is-unlocked', netValue >= cost);
+            if (netValue >= cost) {
+                card.dataset.state = 'unlocked';
+            } else {
+                delete card.dataset.state;
+            }
         });
     }
 

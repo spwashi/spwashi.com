@@ -22,7 +22,7 @@
    - [data-svc-price-shift="stable|rising|falling|floating"]
    - [data-svc-axis-state="quiet|active|locked"]
    - [data-svc-combinatorics="simple|layered|advanced"]
-   - .is-resolved / .is-projecting / .is-comparing / .is-hovering-node
+   - [data-state~="resolved"] / [data-state~="projecting"] / [data-state~="comparing"] / [data-state~="hovering-node"]
    ========================================================================== */
 
 /* ==========================================================================
@@ -79,36 +79,23 @@
     box-shadow var(--svc-duration-deliberate) var(--svc-settle-ease),
     background var(--svc-duration-base) var(--svc-ease),
     transform var(--svc-duration-fast) var(--svc-settle-ease);
-}
 
-.svc-wrapper:is(:hover, :focus-within) {
-  border-color: var(--svc-line-strong);
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--svc-accent) 12%, transparent),
-    0 8px 24px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-}
+  &:is(:hover, :focus-within) {
+    border-color: var(--svc-line-strong);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--svc-accent) 12%, transparent),
+      0 8px 24px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
 
-.svc-wrapper[data-svc-state="probing"] {
-  --svc-charge: 0.18;
-}
+  &[data-svc-state="probing"] { --svc-charge: 0.18; }
+  &[data-svc-state="weighted"] { --svc-charge: 0.34; }
+  &[data-svc-state="resolved"], & .svc-svg[data-state~="resolved"] { --svc-charge: 0.62; }
+  &[data-svc-state="projecting"], & .svc-svg[data-state~="projecting"] { --svc-charge: 0.82; }
 
-.svc-wrapper[data-svc-state="weighted"] {
-  --svc-charge: 0.34;
-}
-
-.svc-wrapper[data-svc-state="resolved"],
-.svc-wrapper .svc-svg.is-resolved {
-  --svc-charge: 0.62;
-}
-
-.svc-wrapper[data-svc-state="projecting"],
-.svc-wrapper .svc-svg.is-projecting {
-  --svc-charge: 0.82;
-}
-
-.svc-wrapper[data-svc-combinatorics="advanced"] {
-  --svc-utility-alpha: calc(0.14 + (var(--svc-charge) * 0.24));
+  &[data-svc-combinatorics="advanced"] {
+    --svc-utility-alpha: calc(0.14 + (var(--svc-charge) * 0.24));
+  }
 }
 
 /* ==========================================================================
@@ -120,10 +107,74 @@
   height: auto;
   overflow: visible;
   cursor: default;
-}
 
-.svc-svg[data-svc-focus="center"] {
-  --svc-center-scale: 1.03;
+  &[data-svc-focus="center"] {
+    --svc-center-scale: 1.03;
+  }
+
+  &[data-svc-state="weighted"] .svc-polygon,
+  &[data-state~="comparing"] .svc-polygon {
+    filter: drop-shadow(0 0 8px color-mix(in oklab, var(--svc-accent) 8%, transparent));
+  }
+
+  &[data-svc-combinatorics="advanced"] {
+    & .svc-spoke {
+      stroke-dasharray: 2 3;
+      opacity: 0.72;
+    }
+
+    & .svc-node[data-state~="active"] ~ .svc-spoke {
+      stroke-dasharray: 4 2;
+    }
+  }
+
+  &[data-state~="hovering-node"] .svc-spoke {
+    stroke-dasharray: 4 2;
+  }
+
+  &[data-state~="resolved"] {
+    & .svc-center {
+      filter: drop-shadow(0 0 8px color-mix(in oklab, currentColor 40%, transparent));
+    }
+    & .svc-center-hit { cursor: pointer; }
+    & .svc-center-tier { fill: white; }
+  }
+
+  &[data-state~="projecting"] {
+    & .svc-center {
+      filter:
+        drop-shadow(0 0 10px color-mix(in oklab, currentColor 26%, transparent))
+        drop-shadow(0 0 22px color-mix(in oklab, currentColor 10%, transparent));
+      transform: scale(1.05);
+    }
+    & .svc-center-hit { cursor: pointer; }
+    & :is(.svc-center-utility, .svc-center-reason, .svc-center-shift) {
+      opacity: 0.86;
+    }
+  }
+
+  &[data-svc-price-shift="rising"] {
+    --svc-price-y: -4px;
+    --svc-tier-y: 1px;
+  }
+
+  &[data-svc-price-shift="falling"] {
+    --svc-price-y: 4px;
+    --svc-tier-y: -1px;
+  }
+
+  &[data-svc-price-shift="floating"] .svc-center-price {
+    font-size: 10px;
+    opacity: 0.92;
+  }
+
+  &[data-svc-utility="magnified"] {
+    & .svc-center-tier, & .svc-center-price { letter-spacing: 0.03em; }
+  }
+
+  &[data-svc-combinatorics="advanced"] :is(.svc-center-utility, .svc-center-reason) {
+    opacity: 0.86;
+  }
 }
 
 .svc-field {
@@ -134,11 +185,11 @@
     fill var(--svc-duration-deliberate) var(--svc-ease),
     stroke var(--svc-duration-base) var(--svc-ease),
     opacity var(--svc-duration-base) var(--svc-ease);
-}
 
-.svc-field[data-svc-utility="magnified"] {
-  fill: color-mix(in oklab, var(--svc-accent) 8%, var(--page-bg, #f8f7f5));
-  stroke: color-mix(in oklab, var(--svc-accent) 18%, transparent);
+  .svc-svg[data-svc-utility="magnified"] & {
+    fill: color-mix(in oklab, var(--svc-accent) 8%, var(--page-bg, #f8f7f5));
+    stroke: color-mix(in oklab, var(--svc-accent) 18%, transparent);
+  }
 }
 
 .svc-polygon {
@@ -149,11 +200,6 @@
     filter var(--svc-duration-base) var(--svc-settle-ease);
 }
 
-.svc-svg[data-svc-state="weighted"] .svc-polygon,
-.svc-svg.is-comparing .svc-polygon {
-  filter: drop-shadow(0 0 8px color-mix(in oklab, var(--svc-accent) 8%, transparent));
-}
-
 .svc-spoke {
   transition:
     stroke-width 240ms ease,
@@ -161,20 +207,8 @@
     stroke var(--svc-duration-base) var(--svc-ease);
 }
 
-.svc-svg[data-svc-combinatorics="advanced"] .svc-spoke {
-  stroke-dasharray: 2 3;
-  opacity: 0.72;
-}
-
-.svc-svg[data-svc-combinatorics="advanced"] .svc-node.is-active ~ .svc-spoke,
-.svc-svg.is-hovering-node .svc-spoke {
-  stroke-dasharray: 4 2;
-}
-
 /* ==========================================================================
    3. Center / resolved tier / price logic
-   --------------------------------------------------------------------------
-   Designed to support price moving location, charge, and magnified utility.
    ========================================================================== */
 
 .svc-center {
@@ -187,30 +221,10 @@
     filter var(--svc-duration-deliberate) var(--svc-settle-ease);
 }
 
-.svc-svg.is-resolved .svc-center,
-.svc-svg[data-svc-state="resolved"] .svc-center {
-  filter: drop-shadow(0 0 8px color-mix(in oklab, currentColor 40%, transparent));
-}
-
-.svc-svg.is-projecting .svc-center,
-.svc-svg[data-svc-state="projecting"] .svc-center {
-  filter:
-    drop-shadow(0 0 10px color-mix(in oklab, currentColor 26%, transparent))
-    drop-shadow(0 0 22px color-mix(in oklab, currentColor 10%, transparent));
-  transform: scale(1.05);
-}
-
 .svc-center-hit {
   fill: transparent;
   cursor: default;
   transition: cursor 0ms;
-}
-
-.svc-svg.is-resolved .svc-center-hit,
-.svc-svg[data-svc-state="resolved"] .svc-center-hit,
-.svc-svg.is-projecting .svc-center-hit,
-.svc-svg[data-svc-state="projecting"] .svc-center-hit {
-  cursor: pointer;
 }
 
 .svc-center-tier {
@@ -243,33 +257,6 @@
     font-size var(--svc-duration-deliberate) var(--svc-settle-ease);
 }
 
-/* Elegant price relocation / reasoning states */
-.svc-svg[data-svc-price-shift="rising"] {
-  --svc-price-y: -4px;
-  --svc-tier-y: 1px;
-}
-
-.svc-svg[data-svc-price-shift="falling"] {
-  --svc-price-y: 4px;
-  --svc-tier-y: -1px;
-}
-
-.svc-svg[data-svc-price-shift="floating"] .svc-center-price {
-  font-size: 10px;
-  opacity: 0.92;
-}
-
-.svc-svg[data-svc-utility="magnified"] .svc-center-tier,
-.svc-svg[data-svc-utility="magnified"] .svc-center-price {
-  letter-spacing: 0.03em;
-}
-
-.svc-svg.is-resolved .svc-center-tier,
-.svc-svg[data-svc-state="resolved"] .svc-center-tier {
-  fill: white;
-}
-
-/* Optional satellite labels for future markup */
 .svc-center-utility,
 .svc-center-reason,
 .svc-center-shift {
@@ -285,20 +272,42 @@
     transform var(--svc-duration-deliberate) var(--svc-settle-ease);
 }
 
-.svc-svg[data-svc-state="projecting"] :is(.svc-center-utility, .svc-center-reason, .svc-center-shift),
-.svc-svg[data-svc-combinatorics="advanced"] :is(.svc-center-utility, .svc-center-reason) {
-  opacity: 0.86;
-}
-
 /* ==========================================================================
    4. Nodes
-   --------------------------------------------------------------------------
-   Nodes should make dimensions feel weighted, precise, and inspectable.
    ========================================================================== */
 
 .svc-node {
   cursor: pointer;
   outline: none;
+
+  &:focus-visible .svc-node-dot {
+    stroke: white;
+    stroke-width: 3;
+  }
+
+  &:hover .svc-node-dot {
+    filter: brightness(1.15);
+  }
+
+  &[data-state~="active"] {
+    & .svc-node-dot { filter: drop-shadow(0 0 5px currentColor); }
+    & .svc-node-label { opacity: 1; }
+    & .svc-node-step { opacity: 1; }
+    & :is(.svc-node-note, .svc-node-weight, .svc-node-reason) { opacity: 0.84; }
+  }
+
+  &[data-svc-axis-state="locked"] .svc-node-dot {
+    stroke-dasharray: 0;
+    stroke-width: 2.2;
+  }
+
+  &[data-svc-utility="magnified"] {
+    & .svc-node-dot {
+      filter:
+        drop-shadow(0 0 6px color-mix(in oklab, currentColor 22%, transparent))
+        brightness(1.08);
+    }
+  }
 }
 
 .svc-node-hit {
@@ -316,30 +325,6 @@
     stroke var(--svc-duration-base) var(--svc-ease);
 }
 
-.svc-node:focus-visible .svc-node-dot {
-  stroke: white;
-  stroke-width: 3;
-}
-
-.svc-node:hover .svc-node-dot {
-  filter: brightness(1.15);
-}
-
-.svc-node.is-active .svc-node-dot {
-  filter: drop-shadow(0 0 5px currentColor);
-}
-
-.svc-node[data-svc-axis-state="locked"] .svc-node-dot {
-  stroke-dasharray: 0;
-  stroke-width: 2.2;
-}
-
-.svc-node[data-svc-utility="magnified"] .svc-node-dot {
-  filter:
-    drop-shadow(0 0 6px color-mix(in oklab, currentColor 22%, transparent))
-    brightness(1.08);
-}
-
 .svc-node-label {
   fill: var(--svc-text);
   font-family: var(--site-mono-font, var(--font-mono, monospace));
@@ -355,10 +340,6 @@
     fill var(--svc-duration-fast) var(--svc-ease);
 }
 
-.svc-node.is-active .svc-node-label {
-  opacity: 1;
-}
-
 .svc-node-step {
   fill: var(--svc-text-soft);
   font-family: var(--site-mono-font, var(--font-mono, monospace));
@@ -372,11 +353,6 @@
     fill var(--svc-duration-fast) var(--svc-ease);
 }
 
-.svc-node.is-active .svc-node-step {
-  opacity: 1;
-}
-
-/* Optional axis descriptions for later markup */
 .svc-node-note,
 .svc-node-weight,
 .svc-node-reason {
@@ -387,17 +363,14 @@
   user-select: none;
   opacity: 0;
   transition: opacity var(--svc-duration-base) var(--svc-ease);
-}
 
-.svc-node.is-active :is(.svc-node-note, .svc-node-weight, .svc-node-reason),
-.svc-svg[data-svc-combinatorics="advanced"] .svc-node :is(.svc-node-weight) {
-  opacity: 0.84;
+  .svc-svg[data-svc-combinatorics="advanced"] .svc-node & {
+    &.svc-node-weight { opacity: 0.84; }
+  }
 }
 
 /* ==========================================================================
    5. Legend
-   --------------------------------------------------------------------------
-   Legend should eventually support richer combinatorics and reasoning states.
    ========================================================================== */
 
 .svc-legend {
@@ -429,36 +402,34 @@
     color var(--svc-duration-fast) var(--svc-ease),
     box-shadow var(--svc-duration-base) var(--svc-settle-ease),
     transform var(--svc-duration-fast) var(--svc-settle-ease);
-}
 
-a.svc-legend__chip:hover,
-.svc-legend__chip[data-svc-active="true"] {
-  background: color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
-  border-color: color-mix(in oklab, var(--node-color, currentColor) 28%, transparent);
-  color: var(--svc-text);
-  transform: translateY(-1px);
-}
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--node-color, currentColor);
+  }
 
-.svc-legend__chip::before {
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--node-color, currentColor);
-}
+  &:is(a):hover,
+  &[data-svc-active="true"] {
+    background: color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+    border-color: color-mix(in oklab, var(--node-color, currentColor) 28%, transparent);
+    color: var(--svc-text);
+    transform: translateY(-1px);
+  }
 
-.svc-legend__chip[data-svc-utility="magnified"] {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--node-color, currentColor) 18%, transparent),
-    0 0 10px color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+  &[data-svc-utility="magnified"] {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--node-color, currentColor) 18%, transparent),
+      0 0 10px color-mix(in oklab, var(--node-color, currentColor) 10%, transparent);
+  }
 }
 
 /* ==========================================================================
-   6. Reasoning readout
-   --------------------------------------------------------------------------
-   For future HTML, but useful now as a CSS contract.
+   6. Reasoning readout / CTA
    ========================================================================== */
 
 .svc-readout {
@@ -476,11 +447,12 @@ a.svc-legend__chip:hover,
   font-family: var(--site-mono-font, var(--font-mono, monospace));
   font-size: 0.72rem;
   color: var(--svc-text-soft);
+
+  &[data-svc-tier="premium"] { --svc-accent: var(--op-surface-color, #1a9999); }
 }
 
-.svc-readout__label {
-  color: var(--svc-text);
-}
+.svc-readout__label { color: var(--svc-text); }
+.svc-readout__value { color: var(--svc-text); }
 
 .svc-readout__bar {
   position: relative;
@@ -488,34 +460,22 @@ a.svc-legend__chip:hover,
   border-radius: 999px;
   overflow: hidden;
   background: color-mix(in oklab, var(--svc-accent) 8%, transparent);
-}
 
-.svc-readout__bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: calc(var(--svc-score, 0.32) * 100%);
-  border-radius: inherit;
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in oklab, var(--svc-accent) 48%, transparent),
-      color-mix(in oklab, var(--svc-accent) 78%, transparent)
-    );
-  transition: width var(--svc-duration-deliberate) var(--svc-settle-ease);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: calc(var(--svc-score, 0.32) * 100%);
+    border-radius: inherit;
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--svc-accent) 48%, transparent),
+        color-mix(in oklab, var(--svc-accent) 78%, transparent)
+      );
+    transition: width var(--svc-duration-deliberate) var(--svc-settle-ease);
+  }
 }
-
-.svc-readout__value {
-  color: var(--svc-text);
-}
-
-.svc-readout__row[data-svc-tier="premium"] {
-  --svc-accent: var(--op-surface-color, #1a9999);
-}
-
-/* ==========================================================================
-   7. CTA panel
-   ========================================================================== */
 
 .svc-cta {
   width: 100%;
@@ -531,23 +491,17 @@ a.svc-legend__chip:hover,
     background var(--svc-duration-base) var(--svc-ease),
     border-color var(--svc-duration-base) var(--svc-ease),
     box-shadow var(--svc-duration-deliberate) var(--svc-settle-ease);
+
+  &[data-svc-utility="magnified"] {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--svc-accent) 16%, transparent),
+      0 0 20px color-mix(in oklab, var(--svc-accent) 10%, transparent);
+  }
 }
 
 @keyframes svc-cta-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.svc-cta[data-svc-utility="magnified"] {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--svc-accent) 16%, transparent),
-    0 0 20px color-mix(in oklab, var(--svc-accent) 10%, transparent);
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .svc-cta__title {
@@ -573,11 +527,7 @@ a.svc-legend__chip:hover,
   line-height: 1.45;
 }
 
-.svc-cta__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+.svc-cta__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 .svc-cta__btn {
   display: inline-flex;
@@ -594,32 +544,25 @@ a.svc-legend__chip:hover,
     border-color var(--svc-duration-fast) var(--svc-ease),
     transform var(--svc-duration-fast) var(--svc-settle-ease),
     box-shadow var(--svc-duration-base) var(--svc-settle-ease);
-}
 
-.svc-cta__btn:hover,
-.svc-cta__btn:focus-visible {
-  transform: translateY(-1px);
-}
+  &:is(:hover, :focus-visible) { transform: translateY(-1px); }
 
-.svc-cta__btn--primary {
-  background: var(--svc-accent);
-  color: white;
-  border: 1px solid transparent;
-}
+  &--primary {
+    background: var(--svc-accent);
+    color: white;
+    border: 1px solid transparent;
+    &:hover { filter: brightness(1.08); }
+  }
 
-.svc-cta__btn--primary:hover {
-  filter: brightness(1.08);
-}
-
-.svc-cta__btn--secondary {
-  background: transparent;
-  color: var(--svc-text);
-  border: 1px solid color-mix(in oklab, var(--svc-line) 90%, transparent);
-}
-
-.svc-cta__btn--secondary:hover {
-  background: color-mix(in oklab, var(--svc-accent) 8%, transparent);
-  border-color: var(--svc-accent);
+  &--secondary {
+    background: transparent;
+    color: var(--svc-text);
+    border: 1px solid color-mix(in oklab, var(--svc-line) 90%, transparent);
+    &:hover {
+      background: color-mix(in oklab, var(--svc-accent) 8%, transparent);
+      border-color: var(--svc-accent);
+    }
+  }
 }
 
 /* ==========================================================================
@@ -645,10 +588,8 @@ a.svc-legend__chip:hover,
   text-underline-offset: 2px;
   font-family: var(--site-mono-font, var(--font-mono, monospace));
   font-size: 0.72rem;
-}
 
-.svc-nudge__btn:hover {
-  opacity: 0.8;
+  &:hover { opacity: 0.8; }
 }
 
 .svc-note {
@@ -695,13 +636,8 @@ a.svc-legend__chip:hover,
     border-color: rgba(255, 255, 255, 0.08);
   }
 
-  .svc-node-label {
-    fill: rgba(255, 255, 255, 0.7);
-  }
-
-  .svc-node-step {
-    fill: rgba(255, 255, 255, 0.5);
-  }
+  .svc-node-label { color: rgba(255, 255, 255, 0.7); }
+  .svc-node-step { color: rgba(255, 255, 255, 0.5); }
 
   .svc-legend__chip {
     background: rgba(255, 255, 255, 0.04);
@@ -713,9 +649,7 @@ a.svc-legend__chip:hover,
     background: color-mix(in oklab, var(--svc-accent) 8%, rgba(10, 20, 18, 0.9));
   }
 
-  .svc-cta__title {
-    color: rgba(255, 255, 255, 0.92);
-  }
+  .svc-cta__title { color: rgba(255, 255, 255, 0.92); }
 
   .svc-cta__note,
   .svc-cta__reasoning,

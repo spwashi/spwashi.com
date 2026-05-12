@@ -1764,7 +1764,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     color var(--handle-duration-fast) var(--handle-ease);
 }
 
-:where([data-spw-features~="metrics"] .site-frame.is-active-frame .frame-metrics-bar,
+:where([data-spw-features~="metrics"] .site-frame[data-state~="active"] .frame-metrics-bar,
        [data-spw-features~="metrics"] .frame-metrics-bar:hover) {
   opacity: 1;
 }

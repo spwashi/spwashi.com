@@ -880,7 +880,11 @@ function bindExplicitFrameActivation(ctx) {
   function setActiveFrame(nextFrame) {
     for (const frame of frames) {
       const isActive = frame === nextFrame;
-      frame.classList.toggle('is-active-frame', isActive);
+      if (isActive) {
+        frame.dataset.state = 'active';
+      } else {
+        delete frame.dataset.state;
+      }
       frame.dataset.spwActive = isActive ? 'true' : 'false';
     }
 
@@ -932,7 +936,7 @@ function bindHashLandingState(ctx) {
   function applyHashState() {
     const frame = resolveHashTargetFrame();
     if (!frame) return;
-    frame.classList.add('is-active-frame');
+    frame.dataset.state = 'active';
     frame.dataset.spwActive = 'true';
     frame.dataset.spwAttention = 'focused';
     ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
@@ -948,7 +952,7 @@ function bindHashChangeRefresh(ctx) {
   const handler = () => {
     const frame = resolveHashTargetFrame();
     if (!frame) return;
-    frame.classList.add('is-active-frame');
+    frame.dataset.state = 'active';
     frame.dataset.spwActive = 'true';
     frame.dataset.spwAttention = 'focused';
     ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
@@ -1907,6 +1911,10 @@ async function bootSite() {
   runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
 
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
+
+  // Initialize relational state and global interactions
+  const { bindGlobalInteractions } = await import('./runtime/spw-state-orchestrator.js');
+  bindGlobalInteractions();
 
   primeRegions(runtimeCtx);
 

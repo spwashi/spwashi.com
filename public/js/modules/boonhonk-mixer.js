@@ -388,7 +388,11 @@ class BoonhonkMixer {
             const nodeData = this.nodeGroups.get(op.id);
             if (!nodeData) return;
             const { group, dot } = nodeData;
-            group.classList.toggle('is-active', weight > 0);
+            if (weight > 0) {
+                group.dataset.state = 'active';
+            } else {
+                delete group.dataset.state;
+            }
             if (dot) dot.setAttribute('opacity', 0.3 + weight * 0.7);
         });
     }
@@ -420,7 +424,10 @@ class BoonhonkMixer {
         OPERATORS.forEach(op => {
             const weight = this.weights[op.id] ?? 0;
             const chip = document.createElement('span');
-            chip.className = `bhm-op-chip bhm-op-chip--${op.id} ${weight > 0 ? 'is-active' : ''}`;
+            chip.className = `bhm-op-chip bhm-op-chip--${op.id}`;
+            if (weight > 0) {
+                chip.dataset.state = 'active';
+            }
             chip.title = op.note;
 
             const sigilSpan = document.createElement('span');

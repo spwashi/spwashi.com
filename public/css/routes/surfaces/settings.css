@@ -76,7 +76,7 @@
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 
-:where(body[data-spw-surface="settings"] .site-frame.is-active-frame) {
+:where(body[data-spw-surface="settings"] .site-frame[data-state~="active"]) {
   box-shadow: 
     0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent), 
     var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));

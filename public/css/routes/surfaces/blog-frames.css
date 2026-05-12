@@ -58,7 +58,7 @@
 }
 
 :where(body[data-spw-surface="blog"]) :is(
-  .site-frame.is-active-frame,
+  .site-frame[data-state~="active"],
   .site-frame:focus-within,
   .site-frame:target
 ) {

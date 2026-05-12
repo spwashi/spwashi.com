@@ -676,7 +676,11 @@ class ServicesConfigurator {
         this.centerTierEl.textContent = clear ? tier.label : '—';
         this.centerPriceEl.textContent = clear ? tier.price : '···';
         this.centerHit.setAttribute('tabindex', clear ? '0' : '-1');
-        this.svg.classList.toggle('is-resolved', clear);
+        if (clear) {
+            this.svg.dataset.state = 'resolved';
+        } else {
+            delete this.svg.dataset.state;
+        }
 
         // Spokes + polygon (smooth via CSS transition in stylesheet)
         const points = this.dims.map((dim, i) => {
@@ -699,7 +703,11 @@ class ServicesConfigurator {
             const stepIdx = this.stepIndices[dim.id];
             const step = dim.steps[stepIdx];
             nodeData.stepEl.textContent = step ? step.label : '';
-            nodeData.group.classList.toggle('is-active', (this.vals[dim.id] ?? 0) > 0.05);
+            if ((this.vals[dim.id] ?? 0) > 0.05) {
+                nodeData.group.dataset.state = 'active';
+            } else {
+                delete nodeData.group.dataset.state;
+            }
             nodeData.group.dataset.svcUtility = i === this.selectedDimIndex ? 'magnified' : 'medium';
         });
 

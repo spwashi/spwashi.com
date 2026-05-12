@@ -222,7 +222,7 @@ function registerDefaultSignalProviders(runtime) {
         const frameSource =
             source.frame
             || window.spwInterface?.getActiveFrame?.()
-            || document.querySelector('.site-frame.is-active-frame');
+            || document.querySelector('.site-frame[data-state~="active"]');
 
         if (!frameSource) return { frame: null };
 
@@ -249,7 +249,7 @@ function registerDefaultSignalProviders(runtime) {
     runtime.signalProviders.set('guidance', (_, source, config) => {
         const guidedNodes = Array.from(document.querySelectorAll(config.guidedSelector));
         const activeGuided = guidedNodes
-            .filter((node) => node.closest('.site-frame.is-active-frame') || node.matches('.site-frame.is-active-frame'));
+            .filter((node) => node.closest('.site-frame[data-state~="active"]') || node.matches('.site-frame[data-state~="active"]'));
 
         const reasons = activeGuided
             .map((node) => normalizeText(node.querySelector('.spw-component-meta')?.dataset.spwGuideReason || node.dataset.spwGuideReason || ''))

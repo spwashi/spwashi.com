@@ -43,7 +43,7 @@
   opacity: 0.92;
 }
 
-:where(.site-frame.is-active-frame) {
+:where(.site-frame[data-state~="active"]) {
   border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
   background: var(--component-surface-strong);
   box-shadow: var(--component-frame-shadow-active);

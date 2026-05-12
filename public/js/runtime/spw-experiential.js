@@ -173,7 +173,7 @@ function renderBreadcrumbSpell() {
   syncBreadcrumbViewportPreference();
 
   const activeFrame =
-    document.querySelector('.site-frame.is-active-frame')
+    document.querySelector('.site-frame[data-state~="active"]')
     || (url.hash ? document.querySelector(url.hash) : null);
 
   const activeFrameSigil =
