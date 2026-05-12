@@ -1,0 +1,121 @@
+/* ==========================================================================
+   surfaces/base.css
+   --------------------------------------------------------------------------
+   Shared shell variables and macro-layout normalization.
+   ========================================================================== */
+
+:root {
+  --spw-shell-card-gap:   var(--gap-inline-flow, clamp(0.75rem, 1.4vw, 1rem));
+  --spw-shell-panel-gap:  var(--gap-surface, clamp(0.85rem, 1.8vw, 1.15rem));
+  --spw-shell-inline-gap: var(--space-xs, 0.55rem);
+
+  --spw-shell-card-pad:   var(--inset-component, 1rem);
+  --spw-shell-panel-pad:  var(--inset-surface, 0.9rem);
+  
+  --spw-shell-soft-bg:        var(--spw-surface-fill-soft, var(--surface-soft, rgba(255, 255, 255, 0.44)));
+  --spw-shell-card-bg:        var(--spw-surface-fill-rest, var(--surface, rgba(255, 255, 255, 0.68)));
+  --spw-shell-card-bg-strong: var(--spw-surface-fill-strong, var(--surface-strong, rgba(255, 255, 255, 0.74)));
+  --spw-shell-panel-bg:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-shell-card-bg-strong) 92%, transparent),
+      color-mix(in srgb, var(--spw-shell-card-bg) 92%, transparent)
+    );
+  --spw-shell-panel-bg-strong:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-panel-strong, var(--spw-shell-card-bg-strong)) 94%, transparent),
+      color-mix(in srgb, var(--surface-panel, var(--spw-shell-card-bg)) 94%, transparent)
+    );
+  --spw-shell-sheen: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.78)) 22%, transparent);
+  --spw-shell-overlay: var(--overlay-gradient-fade-bottom);
+
+  --spw-shell-line:        var(--spw-surface-line-rest, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-shell-line-strong: var(--spw-surface-line-active, var(--line-strong, rgba(0, 128, 128, 0.34)));
+  --spw-shell-card-shadow: var(--spw-surface-shadow-rest, var(--card-shadow));
+  --spw-shell-card-shadow-raised: var(--spw-surface-shadow-raised, var(--card-shadow-hover));
+  --spw-shell-card-transition:
+    transform var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease);
+  --spw-palette-probe-1: var(--active-op-color, #008080);
+  --spw-palette-probe-2: var(--op-object-color, #c68a22);
+  --spw-palette-probe-3: var(--op-ref-color, #1d57a3);
+  --spw-palette-probe-4: var(--op-probe-color, #6a3fb8);
+}
+
+/* Generic shell card/panel rhythm */
+:where(
+  .media-focus-card,
+  .media-card,
+  .pretext-controls-panel,
+  .pretext-summary-panel,
+  .pretext-surface,
+  .rpg-gameplay-panel,
+  .settings-category,
+  .settings-fieldset,
+  .pwa-status-card,
+  .spw-nav-panel,
+  .spw-console
+) {
+  min-width: 0;
+}
+
+:where(.media-focus-card, .media-card, .topic-reference-card) {
+  position: relative;
+  min-height: 100%;
+  padding: var(--spw-shell-card-pad);
+  border: 1px solid var(--spw-shell-line);
+  border-radius: var(--shape-surface, 10px);
+  background: var(--spw-shell-panel-bg);
+  color: inherit;
+  box-sizing: border-box;
+  box-shadow: var(--spw-shell-card-shadow);
+  overflow: hidden;
+  transition: var(--spw-shell-card-transition);
+}
+
+:where(.media-focus-card, .media-card) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.62rem);
+}
+
+:where(.topic-reference-card) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.frame-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 16rem)), 1fr));
+  gap: var(--spw-shell-panel-gap, var(--component-gap, 0.9rem));
+  min-width: 0;
+}
+
+:where(.frame-grid--dense) {
+  gap: var(--component-gap-tight, 0.55rem);
+}
+
+:where(
+  .frame-grid,
+  .media-card-grid,
+  .media-focus-layout,
+  .feature-map,
+  .domain-grid,
+  .spec-grid
+) {
+  align-items: stretch;
+}
+
+:where(
+  .frame-grid > :is(.frame-card, .software-card),
+  .media-card-grid > .media-card,
+  .media-focus-layout > * > .media-focus-card,
+  .feature-map > .frame-card,
+  .domain-grid > .frame-panel,
+  .spec-grid > :is(.software-card, .frame-panel)
+) {
+  height: 100%;
+}

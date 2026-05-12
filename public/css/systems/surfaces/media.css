@@ -1,0 +1,73 @@
+/* ==========================================================================
+   surfaces/media.css
+   --------------------------------------------------------------------------
+   Media publishing and collection layouts.
+   ========================================================================== */
+
+:where([data-spw-features~="media-publishing"] .media-publishing-frame) {
+  gap: var(--space-md, 1rem);
+}
+
+:where([data-spw-features~="media-publishing"] :is(.media-focus-layout, .media-card-grid)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+  gap: var(--spw-shell-panel-gap);
+}
+
+:where([data-spw-features~="media-publishing"] .media-collection-stack) {
+  display: grid;
+  gap: var(--gap-block-flow, 1.1rem);
+}
+
+:where([data-spw-features~="media-publishing"] :is(.media-focus-card, .media-card)) {
+  background: var(--spw-shell-card-bg);
+}
+
+:where([data-spw-features~="media-publishing"] a.media-card) {
+  text-decoration: none;
+}
+
+:where([data-spw-features~="media-publishing"] a.media-card:is(:hover, :focus-visible)) {
+  transform: translateY(-2px);
+  border-color: var(--card-border-hover, var(--line-strong));
+  background: var(--card-bg-hover, var(--surface-strong));
+  box-shadow: var(--spw-shell-card-shadow-raised);
+}
+
+:where([data-spw-features~="media-publishing"] .media-focus-card--daily) {
+  background: var(--spw-shell-card-bg-strong);
+  box-shadow: var(--spw-shell-card-shadow);
+}
+
+:where([data-spw-features~="media-publishing"] :is(.media-focus-title, .media-card-topline)) {
+  display: flex;
+  align-items: center;
+  gap: var(--spw-shell-inline-gap);
+  flex-wrap: wrap;
+}
+
+:where([data-spw-features~="media-publishing"] :is(.media-focus-title h3, .media-card-title)) {
+  margin: 0;
+}
+
+:where([data-spw-features~="media-publishing"] .media-card-tag) {
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.72rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where([data-spw-features~="media-publishing"] .media-card-summary) {
+  color: var(--ink-soft);
+  font-size: var(--text-size-sm, 0.92rem);
+  line-height: var(--site-line-height, 1.55);
+}
+
+:where([data-spw-features~="media-publishing"] .media-card-cta) {
+  margin-top: auto;
+  color: var(--active-op-color, #008080);
+  font-size: var(--text-size-xs, 0.78rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}

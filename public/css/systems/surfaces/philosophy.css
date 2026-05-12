@@ -1,0 +1,160 @@
+/* ==========================================================================
+   surfaces/philosophy.css
+   --------------------------------------------------------------------------
+   Intent lattices, context edges, and semantic contracts.
+   ========================================================================== */
+
+:where(body[data-spw-surface="software"]) {
+  --spw-philosophy-panel:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 94%, transparent),
+      color-mix(in srgb, var(--surface-panel, rgba(244, 241, 236, 0.96)) 94%, transparent)
+    );
+  --spw-philosophy-paper:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.96)) 96%, transparent),
+      color-mix(in srgb, var(--surface-panel-strong, rgba(246, 244, 240, 0.96)) 96%, transparent)
+    );
+  --spw-philosophy-line:
+    color-mix(in srgb, var(--active-op-color, #008080) 20%, var(--spw-shell-line));
+}
+
+:where(.intent-lattice, .context-edges, .semantic-contract-grid) {
+  display: grid;
+  gap: var(--spw-shell-panel-gap);
+  margin-block: var(--space-sm, 0.8rem) var(--space-md, 1rem);
+}
+
+:where(.intent-lattice, .semantic-contract-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+:where(.semantic-contract-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+:where(.intent-cluster, .context-edge-card, .semantic-contract-card) {
+  display: grid;
+  gap: 0.72rem;
+  min-width: 0;
+  padding: clamp(0.95rem, 1.7vw, 1.15rem);
+  border: 1px solid var(--spw-philosophy-line, var(--spw-shell-line));
+  border-radius: calc(var(--shape-surface, 10px) - 1px);
+  box-shadow: var(--card-highlight), var(--card-shadow);
+}
+
+:where(.intent-cluster, .semantic-contract-card) {
+  background: var(--spw-philosophy-panel, var(--spw-shell-card-bg-strong));
+}
+
+:where(.intent-cluster) {
+  --intent-accent: var(--active-op-color, #008080);
+  border-color: color-mix(in srgb, var(--intent-accent) 22%, var(--spw-philosophy-line, var(--spw-shell-line)));
+}
+
+:where(.intent-cluster[data-spw-intent="orient"])  { --intent-accent: var(--op-frame-color, #178282); }
+:where(.intent-cluster[data-spw-intent="inspect"]) { --intent-accent: var(--op-probe-color, #4a2180); }
+:where(.intent-cluster[data-spw-intent="commit"])  { --intent-accent: var(--op-action-color, #0c5f5f); }
+:where(.intent-cluster[data-spw-intent="project"]) { --intent-accent: var(--op-surface-color, #178282); }
+
+:where(.intent-cluster-kicker) {
+  margin: 0;
+  color: color-mix(in srgb, var(--intent-accent) 70%, var(--ink-soft));
+  font-size: var(--text-size-xs, 0.76rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:where(.intent-cluster h3, .context-edge-card h3) {
+  margin: 0;
+  font-size: clamp(1rem, 1.1rem + 0.22vw, 1.18rem);
+  text-wrap: balance;
+}
+
+:where(.intent-cluster ul, .context-edge-list) {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.intent-cluster li > a, .context-edge-list li > a) {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.intent-cluster li > a:is(:hover, :focus-visible),
+       .context-edge-list li > a:is(:hover, :focus-visible)) {
+  text-decoration: underline;
+}
+
+:where(.intent-token, .semantic-contract-token) {
+  flex: 0 0 auto;
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, currentColor 74%, var(--ink-soft));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+:where(.intent-link-note, .context-edge-note) {
+  display: block;
+  margin-top: 0.24rem;
+  color: var(--ink-soft);
+  font-size: var(--text-size-sm, 0.9rem);
+  line-height: 1.5;
+}
+
+/* Context Edges */
+:where(.context-edges) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(.context-edge-card) {
+  --edge-accent: var(--active-op-color, #008080);
+  border-color: color-mix(in srgb, var(--edge-accent) 24%, var(--spw-philosophy-line, var(--spw-shell-line)));
+  background: var(--spw-philosophy-paper, var(--spw-shell-card-bg));
+}
+
+:where(.context-edge-card[data-spw-edge="nearby"])     { --edge-accent: var(--op-ref-color, #1d57a3); }
+:where(.context-edge-card[data-spw-edge="subsequent"]) { --edge-accent: var(--op-probe-color, #4a2180); }
+:where(.context-edge-card[data-spw-edge="projected"])  { --edge-accent: var(--op-surface-color, #178282); }
+
+/* Semantic Contracts */
+:where(.semantic-contract-card) {
+  border-color: color-mix(in srgb, var(--spw-philosophy-line, var(--spw-shell-line-strong)) 70%, transparent);
+}
+
+:where(.semantic-contract-token) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.22rem 0.55rem;
+  background: color-mix(in srgb, var(--active-op-color, #008080) 6%, var(--surface-strong, rgba(255, 255, 255, 0.72)));
+  color: color-mix(in srgb, var(--active-op-color, #008080) 76%, var(--ink) 24%);
+  font-size: 0.76rem;
+}
+
+:where(.semantic-contract-card strong) {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+:where(.semantic-contract-card p) {
+  margin: 0;
+  color: var(--ink-soft);
+}
