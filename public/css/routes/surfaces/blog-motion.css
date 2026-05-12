@@ -1,0 +1,19 @@
+/* ==========================================================================
+   routes/surfaces/blog-motion.css
+   --------------------------------------------------------------------------
+   Blog route motion guardrails and responsive adjustments.
+
+   9. Reduced motion
+   ========================================================================== */
+
+:where(html[data-spw-reduce-motion="on"] body[data-spw-surface="blog"]) :is(
+  .site-frame,
+  .mode-switch button,
+  [data-mode-group][data-set-mode],
+  [data-spw-flow="pretext"],
+  [data-spw-flow="pretext"] .line-decor
+) {
+  transition: none;
+  animation: none;
+  transform: none;
+}

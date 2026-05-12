@@ -1,0 +1,98 @@
+/* ==========================================================================
+   routes/surfaces/settings-runtime.css
+   --------------------------------------------------------------------------
+   Settings route runtime maps, navigators, and structure/state grids.
+
+   8. Runtime map / navigators / structures
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-system-map),
+:where(body[data-spw-surface="settings"] .settings-navigator-grid),
+:where(body[data-spw-surface="settings"] .settings-structures-grid),
+:where(body[data-spw-surface="settings"] .settings-state-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card),
+:where(body[data-spw-surface="settings"] .settings-nav-card),
+:where(body[data-spw-surface="settings"] .settings-structure-card),
+:where(body[data-spw-surface="settings"] .settings-state-card) {
+  position: relative;
+  min-width: 0;
+  padding: var(--inset-component, 1.1rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0,128,128,0.34)) 62%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 94%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 6px 16px rgba(0,0,0,0.04);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card::before),
+:where(body[data-spw-surface="settings"] .settings-nav-card::before),
+:where(body[data-spw-surface="settings"] .settings-structure-card::before),
+:where(body[data-spw-surface="settings"] .settings-state-card::before) {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: color-mix(in srgb, var(--settings-accent) 72%, transparent);
+  border-radius: inherit 0 0 inherit;
+  opacity: 0.88;
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card h3),
+:where(body[data-spw-surface="settings"] .settings-nav-card h3),
+:where(body[data-spw-surface="settings"] .settings-structure-card h3),
+:where(body[data-spw-surface="settings"] .settings-state-card strong) {
+  margin: 0 0 0.45rem;
+  color: var(--ink-strong, #090b0c);
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card p),
+:where(body[data-spw-surface="settings"] .settings-nav-card p),
+:where(body[data-spw-surface="settings"] .settings-structure-card p) {
+  margin: 0 0 0.65rem;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+  line-height: 1.52;
+}
+
+:where(body[data-spw-surface="settings"] .settings-map-card code),
+:where(body[data-spw-surface="settings"] .settings-structure-card code),
+:where(body[data-spw-surface="settings"] .settings-nav-card code) {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--settings-accent) 8%, transparent);
+  color: var(--settings-accent);
+  overflow-wrap: anywhere;
+}
+
+:where(body[data-spw-surface="settings"] .settings-state-card) {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  min-height: 6.5rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-state-label) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-soft, rgba(14,18,20,0.68));
+}
+
+:where(body[data-spw-surface="settings"] .settings-nav-card .frame-list) {
+  margin: 0.5rem 0 0.8rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-nav-card .operator-chip) {
+  margin-top: auto;
+}

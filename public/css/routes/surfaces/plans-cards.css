@@ -1,0 +1,213 @@
+/* ==========================================================================
+   routes/surfaces/plans-cards.css
+   --------------------------------------------------------------------------
+   Plans route card and stage-grid composition.
+
+   5. Plans grid and plan cards
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plans-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+[data-spw-surface="plans"] .plan-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--plans-line) 96%, transparent);
+  border-radius: 14px;
+  padding: 1.15rem 1.15rem 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-strong) 97%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 6px 16px rgba(34, 22, 14, 0.038);
+  transition:
+    border-color var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-surface="plans"] .plan-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: color-mix(in srgb, var(--plans-accent) 60%, transparent);
+  opacity: 0.92;
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="foundation"]::before {
+  background: color-mix(in srgb, var(--plans-stage-foundation-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="active"]::before {
+  background: color-mix(in srgb, var(--plans-stage-active-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card[data-plan-stage="planning"]::before {
+  background: color-mix(in srgb, var(--plans-stage-planning-ink) 76%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-card:hover,
+[data-spw-surface="plans"] .plan-card:focus-within {
+  border-color: color-mix(in srgb, var(--plans-accent) 20%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--plans-accent) 8%, transparent),
+    0 14px 26px rgba(34, 22, 14, 0.06);
+  transform: translateY(-1px);
+}
+
+[data-spw-surface="plans"] .plan-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-spw-surface="plans"] .plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+[data-spw-surface="plans"] .plan-header h3 {
+  margin: 0;
+  flex: 1;
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent-2));
+  font-size: 1.08rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+[data-spw-surface="plans"] .plan-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.6rem;
+  padding: 0.18rem 0.58rem;
+  border-radius: 999px;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="foundation"] {
+  background: var(--plans-stage-foundation-bg);
+  color: var(--plans-stage-foundation-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-foundation-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="active"] {
+  background: var(--plans-stage-active-bg);
+  color: var(--plans-stage-active-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-active-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-status[data-status="planning"] {
+  background: var(--plans-stage-planning-bg);
+  color: var(--plans-stage-planning-ink);
+  border-color: color-mix(in srgb, var(--plans-stage-planning-ink) 18%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-thesis {
+  margin: 0 0 0.9rem 0;
+  color: var(--plans-ink);
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+/* ==========================================================================
+   6. Verb strips on plans
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plan-verb-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1rem 0;
+}
+
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill {
+  border-radius: 999px;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid color-mix(in srgb, var(--plans-line) 92%, transparent);
+  color: var(--plans-ink-soft);
+}
+
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(1) {
+  border-color: color-mix(in srgb, var(--plans-verb-refine) 24%, transparent);
+}
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(2) {
+  border-color: color-mix(in srgb, var(--plans-verb-build) 24%, transparent);
+}
+[data-spw-surface="plans"] .plan-verb-strip .spec-pill:nth-child(3) {
+  border-color: color-mix(in srgb, var(--plans-verb-map) 24%, transparent);
+}
+
+/* ==========================================================================
+   7. Considerations / wonder / links
+   ========================================================================== */
+
+[data-spw-surface="plans"] .plan-considerations,
+[data-spw-surface="plans"] .plan-wonder {
+  margin-top: 1rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--plans-line) 90%, transparent);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in srgb, var(--plans-surface-matte) 97%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-considerations {
+  border-left: 3px solid color-mix(in srgb, var(--plans-accent) 52%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-wonder {
+  border-left: 3px solid color-mix(in srgb, var(--plans-accent-2) 44%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--plans-accent-4-soft) 42%, transparent), transparent 68%),
+    color-mix(in srgb, var(--plans-surface-matte) 95%, transparent);
+}
+
+[data-spw-surface="plans"] .plan-considerations strong,
+[data-spw-surface="plans"] .plan-wonder strong {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: color-mix(in srgb, var(--plans-ink) 90%, var(--plans-accent));
+  font-size: 0.88rem;
+}
+
+[data-spw-surface="plans"] .plan-considerations ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+[data-spw-surface="plans"] .plan-considerations li {
+  margin: 0.45rem 0;
+  color: var(--plans-ink-mid);
+}
+
+[data-spw-surface="plans"] .plan-wonder p {
+  margin: 0;
+  color: var(--plans-ink-mid);
+  line-height: 1.58;
+}
+
+[data-spw-surface="plans"] .plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.65rem;
+  margin-top: 1rem;
+}

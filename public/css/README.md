@@ -1,6 +1,6 @@
 # CSS Tree
 
-`style.css` is the public stylesheet entrypoint and owns cascade layer order. Root-level CSS files are compatibility wrappers for older direct links from route HTML.
+`style.css` is the public stylesheet entrypoint and owns cascade layer order. Route HTML should link either `style.css` or a concrete layer file; root-level compatibility wrappers are no longer part of the source layout.
 
 `spw-compose.css` is the portable composition entrypoint. It exposes tokens, typography, grammar, components, handles, and light effects without the full site shell, route surfaces, or ornament layer.
 
@@ -18,7 +18,11 @@ Implementation files live in folders that match the cascade layers:
 - `effects/`
 - `ornament/`
 
-When changing shared visual behavior, edit the layered implementation file first. Keep `style.css` as the ordered import registry, and keep root wrappers only for stable public URLs.
+When changing shared visual behavior, edit the layered implementation file first. Keep `style.css` as the ordered import registry.
+
+Route surfaces can split under `routes/surfaces/` when a route grows into clear domains. Import those fragments directly from `style.css`; do not add one-file aliases or route shims.
+
+Reusable component styles belong under `components/`. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
 
 Use `spw-compose.css` when another site wants the theme/component language but should keep its own page shell and route layout.
 

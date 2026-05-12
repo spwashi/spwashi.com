@@ -1,0 +1,243 @@
+/* ==========================================================================
+   routes/surfaces/blog-frames.css
+   --------------------------------------------------------------------------
+   Blog route frame treatments: brace perspective, registers, and demo panels.
+
+   3. Brace perspective frames
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) .site-frame {
+  --blog-frame-objective-opacity: 0.22;
+  --blog-frame-subjective-opacity: 0.18;
+
+  position: relative;
+  border-color: var(--blog-line);
+  border-left-color: var(--blog-objective-line);
+  border-right-color: var(--blog-subjective-line);
+  border-radius: var(--blog-radius);
+  background: var(--blog-bg-card);
+  transition:
+    border-color var(--blog-transition-ui),
+    box-shadow var(--blog-transition-ui),
+    background-color var(--blog-transition-ui),
+    transform var(--blog-transition-ui);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::before,
+:where(body[data-spw-surface="blog"]) .site-frame::after {
+  position: absolute;
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: 0.88rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity var(--blog-transition-ui);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::before {
+  content: "{";
+  top: 0.55rem;
+  left: 0.65rem;
+  color: var(--blog-accent);
+  opacity: var(--blog-frame-objective-opacity);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame::after {
+  content: "}";
+  right: 0.65rem;
+  bottom: 0.5rem;
+  color: var(--blog-wonder);
+  opacity: var(--blog-frame-subjective-opacity);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame:hover::before {
+  opacity: max(var(--blog-frame-objective-opacity), 0.34);
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame:hover::after {
+  opacity: max(var(--blog-frame-subjective-opacity), 0.34);
+}
+
+:where(body[data-spw-surface="blog"]) :is(
+  .site-frame.is-active-frame,
+  .site-frame:focus-within,
+  .site-frame:target
+) {
+  --blog-frame-objective-opacity: 0.48;
+  --blog-frame-subjective-opacity: 0.48;
+  
+  border-color: color-mix(in srgb, var(--blog-accent) calc(48% + var(--blog-rhythm-accent-mix, 0%)), var(--blog-line));
+  box-shadow:
+    0 0 0 3px var(--blog-focus-ring),
+    0 0.6rem 1.6rem rgba(0, 0, 0, var(--blog-rhythm-shadow-strength, 0.06));
+}
+
+/* Perspective Routing */
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-liminality="threshold"], .site-frame[data-wonder-level="w0"]) {
+  --blog-frame-objective-opacity: 0.16;
+  --blog-frame-subjective-opacity: 0.16;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="objective"], .site-frame[data-wonder-level="w1"]) {
+  --blog-frame-objective-opacity: 0.36;
+  --blog-frame-subjective-opacity: 0.18;
+}
+
+:where(body[data-spw-surface="blog"]) .site-frame[data-wonder-level="w2"] {
+  --blog-frame-objective-opacity: 0.32;
+  --blog-frame-subjective-opacity: 0.22;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="balanced"], .site-frame[data-wonder-level="w3"]) {
+  --blog-frame-objective-opacity: 0.28;
+  --blog-frame-subjective-opacity: 0.28;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.site-frame[data-spw-perspective="subjective"], .site-frame[data-wonder-level="w5"]) {
+  --blog-frame-objective-opacity: 0.22;
+  --blog-frame-subjective-opacity: 0.38;
+}
+
+/* ==========================================================================
+   4. Semantic charge terms & References
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) [data-spw-charge-key] {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--blog-line-strong);
+  transition:
+    background-color var(--blog-transition-fast),
+    border-color var(--blog-transition-fast),
+    color var(--blog-transition-fast),
+    box-shadow var(--blog-transition-fast);
+}
+
+:where(body[data-spw-surface="blog"]) [data-spw-charge-key]:focus-visible {
+  outline: var(--blog-focus-outline);
+  outline-offset: 3px;
+}
+
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="preview"], [data-spw-charge-state="resonant"]) {
+  color: var(--blog-accent);
+  background-color: var(--blog-spw-bg);
+  border-bottom-color: var(--blog-accent);
+}
+
+:where(body[data-spw-surface="blog"]) :is([data-spw-charge-state="pinned"]) {
+  color: var(--blog-wonder);
+  background-color: var(--blog-wonder-bg);
+  border-bottom-color: var(--blog-wonder);
+  box-shadow: inset 0 -0.38em 0 var(--blog-wonder-bg);
+}
+
+:where(body[data-spw-surface="blog"]) [data-attn-active] {
+  outline: 2px solid var(--blog-accent);
+  outline-offset: 1px;
+}
+
+:where(body[data-spw-surface="blog"]) .blog-transition {
+  margin: 0.2rem 0 0.6rem;
+  padding-left: 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--blog-ink-soft);
+  border-left: 2px solid var(--blog-line);
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note a, .blog-transition a) {
+  color: var(--blog-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blog-line);
+  transition: border-color var(--blog-transition-fast);
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note a:hover, .blog-transition a:hover) {
+  border-color: var(--blog-accent);
+}
+
+/* ==========================================================================
+   5. Runtime-aligned preset + rhythm bridge
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) {
+  --blog-readable-width: min(var(--blog-measure), calc(var(--spw-preset-panel-readable-width, 42rem) * 1px));
+  --blog-card-readable-width: min(100%, calc(var(--spw-preset-card-readable-width, 34rem) * 1px));
+
+  /* pretext rhythm bridge */
+  --blog-pretext-line-gap-resting: 0.14rem;
+  --blog-pretext-line-gap-approach: 0.18rem;
+  --blog-pretext-line-gap-projecting: 0.24rem;
+  --blog-pretext-line-gap-contact: 0.2rem;
+
+  --blog-rhythm-accent-mix: 0%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.22;
+}
+
+/* Phase-aware site surface bias */
+:where(html[data-spw-phase="ambient"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 4%;
+  --blog-rhythm-shadow-strength: 0.06;
+  --blog-rhythm-border-strength: 0.20;
+}
+
+:where(html[data-spw-phase="verse"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 7%;
+  --blog-rhythm-shadow-strength: 0.07;
+  --blog-rhythm-border-strength: 0.24;
+}
+
+:where(html[data-spw-phase="chorus"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 12%;
+  --blog-rhythm-shadow-strength: 0.11;
+  --blog-rhythm-border-strength: 0.32;
+}
+
+:where(html[data-spw-phase="drop"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: 15%;
+  --blog-rhythm-shadow-strength: 0.14;
+  --blog-rhythm-border-strength: 0.36;
+}
+
+/* ==========================================================================
+   6. Route-specific pretext host specialization
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"]) {
+  --pretext-local-pad: 0.18rem;
+  --pretext-local-radius: var(--blog-radius-tight);
+  --pretext-line-gap: var(--blog-pretext-line-gap-resting);
+  --pretext-line-height: var(--spw-preset-body-line-height, 1.55rem);
+  --pretext-line-max-inline-size: var(--blog-readable-width);
+
+  max-width: 100%;
+  color: inherit;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--blog-bg-card-strong) 92%, transparent) 0%, color-mix(in srgb, var(--blog-bg-card) 96%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--blog-line) calc(100% + var(--blog-rhythm-border-strength) * 0%), transparent);
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"] .line-decor) {
+  opacity: calc(0.18 + (var(--pretext-influence, 0) * 0.42));
+}
+
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="responsive"]) { border-color: color-mix(in srgb, var(--blog-accent) 28%, var(--blog-line)); }
+:where(body[data-spw-surface="blog"] [data-spw-flow="pretext"][data-text-wrap="volatile"]) { 
+  border-color: color-mix(in srgb, var(--blog-wonder) 30%, var(--blog-line));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blog-wonder) 18%, transparent);
+}
+
+/* ==========================================================================
+   7. Beat-aware ambient emphasis
+   ========================================================================== */
+
+:where(html[data-spw-playing="on"][data-spw-beat="1"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 3%);
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat="5"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="9"] body[data-spw-surface="blog"]),
+:where(html[data-spw-playing="on"][data-spw-beat="13"] body[data-spw-surface="blog"]) {
+  --blog-rhythm-accent-mix: calc(var(--blog-rhythm-accent-mix) + 2%);
+}

@@ -1,0 +1,166 @@
+/* ==========================================================================
+ * settings-surface.css
+ * --------------------------------------------------------------------------
+ * Purpose
+ * - Route-scoped surface system for body[data-spw-surface="settings"].
+ * - A highly legible, structured space focused on inspection and control.
+ * - Differs from reading (blog) or play surfaces by emphasizing rigid
+ * containment, interactive feedback, and high-contrast boundaries.
+ * ========================================================================== */
+
+/* ==========================================================================
+   1. Root scope + tokens
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"]) {
+  /* Geometric rhythm */
+  --settings-measure: 72ch;
+  --settings-pad-inline: clamp(1rem, 4vw, 2.5rem);
+  --settings-pad-block: clamp(1.2rem, 3vw, 2rem);
+  --settings-gap: var(--space-md, 1.25rem);
+
+  /* The "control" operator (action/pragma) colors dominate */
+  --settings-accent: var(--op-action-color, hsl(180 100% 22%));
+  --settings-accent-soft: var(--op-action-bg-soft, rgba(230, 248, 248, 0.72));
+  --active-op-color: var(--settings-accent);
+  --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.94)) 96%, var(--settings-accent-soft) 4%);
+  --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(255, 255, 255, 0.84)) 94%, transparent);
+  --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--settings-accent-soft) 8%);
+  --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 84%, var(--settings-accent) 16%);
+  --settings-control-line: color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, var(--line, rgba(14, 18, 20, 0.14)) 42%);
+  --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 64%, transparent);
+  --settings-ink-strong: var(--ink-strong, rgba(14, 18, 20, 0.96));
+  --settings-ink: var(--ink, rgba(14, 18, 20, 0.92));
+  --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--settings-accent) 16%);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 68%, transparent);
+
+  /* Force the background to slightly distinguish from standard reading routes */
+  background: color-mix(in srgb, var(--bg, #f4e2b5) 85%, #fff 15%);
+}
+
+/* Dark theme specific background tint */
+:where(html[data-spw-color-mode="dark"] body[data-spw-surface="settings"]) {
+  --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(30, 38, 44, 0.95)) 94%, var(--settings-accent) 6%);
+  --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(24, 31, 36, 0.9)) 94%, transparent);
+  --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--settings-accent) 10%);
+  --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 78%, var(--settings-accent) 22%);
+  --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
+  --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
+  --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+  background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="settings"]) {
+    --settings-panel-bg: color-mix(in srgb, var(--surface-panel-strong, rgba(30, 38, 44, 0.95)) 94%, var(--settings-accent) 6%);
+    --settings-panel-bg-quiet: color-mix(in srgb, var(--surface-panel, rgba(24, 31, 36, 0.9)) 94%, transparent);
+    --settings-control-bg: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--settings-accent) 10%);
+    --settings-control-bg-active: color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 78%, var(--settings-accent) 22%);
+    --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
+    --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
+    --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
+    --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+    background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
+  }
+}
+
+/* ==========================================================================
+   2. Base Frame Modifications
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .site-frame) {
+  padding: var(--settings-pad-block) var(--settings-pad-inline);
+  background: var(--settings-panel-bg);
+  border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+}
+
+:where(body[data-spw-surface="settings"] .site-frame.is-active-frame) {
+  box-shadow: 
+    0 0 0 2px color-mix(in srgb, var(--settings-accent) 20%, transparent), 
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}
+
+:where(body[data-spw-surface="settings"] h2) {
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  letter-spacing: -0.01em;
+}
+
+:where(body[data-spw-surface="settings"] .settings-prose) {
+  max-inline-size: 66ch;
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-start-note) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid) {
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-quickstart-grid .vibe-widget-status) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+}
+
+:where(body[data-spw-surface="settings"] .settings-hero-actions) {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcuts) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card) {
+  display: grid;
+  gap: 0.28rem;
+  min-height: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--settings-accent) 16%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, var(--settings-accent-soft));
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  transition:
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card strong) {
+  color: var(--ink-strong, #090b0c);
+  font-size: var(--text-size-sm, 0.95rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card > span:last-child) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-kicker) {
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-shortcut-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--settings-accent) 44%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+  outline: none;
+  transform: translateY(-1px);
+}

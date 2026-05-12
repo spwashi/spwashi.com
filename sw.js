@@ -90,8 +90,8 @@ const CORE_ASSETS = [
   '/manifest.webmanifest',
 
   '/public/css/style.css',
-  '/public/css/enhancements.css',
-  '/public/css/design-experiments.css',
+  '/public/css/effects/enhancements.css',
+  '/public/css/routes/design-experiments.css',
 
   '/public/js/site.js',
   '/public/js/kernel/spw-dom-contracts.js',

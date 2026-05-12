@@ -1,0 +1,189 @@
+/* ==========================================================================
+   blog-surface.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Route-scoped surface system for body[data-spw-surface="blog"].
+   - Orchestrates reading-first defaults, semantic theming, and route-specific
+     rhythm/phase bridges.
+   - Discrete UI components (Interpreter, Demos, Registers) have been extracted.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root scope + tokens
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"]) {
+  /* surface identity */
+  --blog-measure: 68ch;
+  --spw-main-width: 1100px;
+  --blog-radius: var(--shape-surface, 8px);
+  --blog-radius-tight: var(--shape-element, 4px);
+  --blog-radius-loose: var(--shape-floating, 10px);
+  --blog-gap-1: var(--space-2xs, 0.35rem);
+  --blog-gap-2: var(--space-xs, 0.55rem);
+  --blog-gap-3: var(--space-sm, 0.8rem);
+  --blog-gap-4: var(--space-md, 1rem);
+  --blog-gap-5: var(--space-lg, 1.2rem);
+  --blog-panel-pad: var(--inset-component, 1rem);
+  --blog-shadow-soft: var(--shadow-active, 0 4px 20px rgba(0, 0, 0, 0.10));
+  --blog-shadow-card: var(--shadow-base, 0 2px 10px rgba(0, 0, 0, 0.05));
+  --blog-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+  --blog-transition-ui: var(--duration-base, 180ms) var(--ease-mechanical, ease);
+
+  /* semantic palette: light */
+  --blog-bg: hsl(188 32% 97%);
+  --blog-bg-deep: hsl(146 24% 93%);
+  --blog-bg-card: rgba(255, 255, 255, 0.80);
+  --blog-bg-card-strong: rgba(255, 255, 255, 0.92);
+  --blog-field-bg: rgba(255, 255, 255, 0.84);
+
+  --blog-ink: hsl(178 16% 15%);
+  --blog-ink-soft: hsl(178 9% 38%);
+  --blog-line: rgba(18, 52, 50, 0.14);
+  --blog-line-strong: rgba(24, 123, 135, 0.34);
+
+  --blog-accent: hsl(188 64% 32%);
+  --blog-wonder: hsl(342 58% 38%);
+  --blog-spw: hsl(188 64% 32%);
+  --blog-draft: hsl(150 54% 30%);
+  --blog-play: hsl(271 46% 43%);
+  --blog-warn: hsl(1 62% 46%);
+
+  --blog-focus-ring: rgba(24, 123, 135, 0.18);
+  --blog-focus-outline: 2px solid var(--blog-accent);
+  
+  --blog-wonder-bg: rgba(160, 42, 77, 0.10);
+  --blog-spw-bg: rgba(24, 123, 135, 0.10);
+  --blog-draft-bg: rgba(35, 118, 82, 0.10);
+  --blog-warn-bg: rgba(192, 48, 44, 0.10);
+
+  --blog-objective-line: rgba(24, 123, 135, 0.26);
+  --blog-subjective-line: rgba(160, 42, 77, 0.20);
+  --spw-prompt-block-bg: var(--blog-bg-card-strong);
+  --spw-prompt-block-line: color-mix(in srgb, var(--blog-accent) 24%, var(--blog-line));
+  --spw-prompt-block-ink: var(--blog-ink);
+
+  background-color: var(--blog-bg);
+  color: var(--blog-ink);
+  line-height: var(--site-line-height, 1.65);
+  overflow-wrap: break-word;
+}
+
+/* Dark theme token override */
+:where(
+  html[data-spw-color-mode="dark"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"]),
+  body[data-spw-surface="blog"][data-theme="atelier-dark"]
+) {
+  --blog-bg: hsl(178 14% 11%);
+  --blog-bg-deep: hsl(326 18% 14%);
+  --blog-bg-card: rgba(255, 255, 255, 0.07);
+  --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
+  --blog-field-bg: rgba(255, 255, 255, 0.08);
+
+  --blog-ink: hsl(172 24% 88%);
+  --blog-ink-soft: hsl(168 13% 68%);
+  --blog-line: rgba(255, 255, 255, 0.14);
+  --blog-line-strong: rgba(103, 212, 222, 0.38);
+
+  --blog-accent: hsl(188 68% 62%);
+  --blog-wonder: hsl(342 66% 66%);
+  --blog-spw: hsl(188 68% 62%);
+  --blog-draft: hsl(150 58% 58%);
+  --blog-play: hsl(271 52% 70%);
+  --blog-warn: hsl(1 70% 68%);
+
+  --blog-focus-ring: rgba(103, 212, 222, 0.24);
+  --blog-wonder-bg: rgba(228, 108, 144, 0.13);
+  --blog-spw-bg: rgba(103, 212, 222, 0.13);
+  --blog-draft-bg: rgba(95, 213, 157, 0.13);
+  --blog-warn-bg: rgba(238, 112, 108, 0.13);
+
+  --blog-objective-line: rgba(103, 212, 222, 0.30);
+  --blog-subjective-line: rgba(228, 108, 144, 0.26);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="blog"]:not([data-theme="atelier-light"])) {
+    --blog-bg: hsl(178 14% 11%);
+    --blog-bg-deep: hsl(326 18% 14%);
+    --blog-bg-card: rgba(255, 255, 255, 0.07);
+    --blog-bg-card-strong: rgba(255, 255, 255, 0.10);
+    --blog-field-bg: rgba(255, 255, 255, 0.08);
+
+    --blog-ink: hsl(172 24% 88%);
+    --blog-ink-soft: hsl(168 13% 68%);
+    --blog-line: rgba(255, 255, 255, 0.14);
+    --blog-line-strong: rgba(103, 212, 222, 0.38);
+
+    --blog-accent: hsl(188 68% 62%);
+    --blog-wonder: hsl(342 66% 66%);
+    --blog-spw: hsl(188 68% 62%);
+    --blog-draft: hsl(150 58% 58%);
+    --blog-play: hsl(271 52% 70%);
+    --blog-warn: hsl(1 70% 68%);
+
+    --blog-focus-ring: rgba(103, 212, 222, 0.24);
+    --blog-wonder-bg: rgba(228, 108, 144, 0.13);
+    --blog-spw-bg: rgba(103, 212, 222, 0.13);
+    --blog-draft-bg: rgba(95, 213, 157, 0.13);
+    --blog-warn-bg: rgba(238, 112, 108, 0.13);
+
+    --blog-objective-line: rgba(103, 212, 222, 0.30);
+    --blog-subjective-line: rgba(228, 108, 144, 0.26);
+  }
+}
+
+:where(html[data-spw-high-contrast="on"] body[data-spw-surface="blog"]) {
+  --blog-line: currentColor;
+  --blog-line-strong: currentColor;
+  --blog-objective-line: currentColor;
+  --blog-subjective-line: currentColor;
+  --blog-focus-ring: transparent;
+  --blog-shadow-soft: none;
+  --blog-shadow-card: none;
+}
+
+/* ==========================================================================
+   2. Normalization + low-specificity route defaults
+   ========================================================================== */
+
+:where(body[data-spw-surface="blog"] main > article) {
+  display: grid;
+  gap: clamp(0.95rem, 2vw, 1.35rem);
+}
+
+:where(body[data-spw-surface="blog"]) :is(img, video) {
+  display: block;
+  max-width: 100%;
+}
+
+:where(body[data-spw-surface="blog"]) :is(.frame-note, .blog-transition) {
+  max-width: var(--blog-measure);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues) {
+  background:
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--blog-wonder) 11%, transparent), transparent 24%),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--blog-accent) 8%, transparent), transparent 28%),
+    var(--blog-bg-card);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .demo-control-group),
+:where(body[data-spw-surface="blog"] #recording-cues .trope-box) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 72%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--blog-accent) 7%, transparent), transparent 28%),
+    var(--blog-bg-card-strong);
+}
+
+:where(body[data-spw-surface="blog"] #recording-cues .context-readout > div) {
+  border-color: color-mix(in srgb, var(--blog-line-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--blog-bg-card-strong) 96%, transparent);
+}
+
+:where(body[data-spw-surface="blog"]) .blog-svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}

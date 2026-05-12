@@ -1,0 +1,58 @@
+/* ==========================================================================
+   routes/surfaces/plans-responsive.css
+   --------------------------------------------------------------------------
+   Plans route responsive and narrow-screen composition.
+
+   11. Responsive
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  [data-spw-surface="plans"] #plans-title {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  [data-spw-surface="plans"] .plan-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  [data-spw-surface="plans"] .plan-status {
+    align-self: flex-start;
+  }
+
+  [data-spw-surface="plans"] #verb-register .frame-grid,
+  [data-spw-surface="plans"] #plan-relationships .frame-grid,
+  [data-spw-surface="plans"] #plan-discovery .frame-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  [data-spw-surface="plans"] .plans-grid {
+    gap: 0.8rem;
+  }
+
+  [data-spw-surface="plans"] .plan-card {
+    padding: 1rem;
+  }
+
+  [data-spw-surface="plans"] .plan-links {
+    gap: 0.45rem 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   12. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-surface="plans"] .site-frame,
+  [data-spw-surface="plans"] .plan-card,
+  [data-spw-surface="plans"] .frame-panel,
+  [data-spw-surface="plans"] .operator-chip {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

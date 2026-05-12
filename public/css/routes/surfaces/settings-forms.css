@@ -1,0 +1,192 @@
+/* ==========================================================================
+   routes/surfaces/settings-forms.css
+   --------------------------------------------------------------------------
+   Settings route form groups, controls, and control-grid affordances.
+
+   3. Settings Forms & Categories
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-form) {
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category) {
+  background: var(--settings-panel-bg-quiet);
+  border: 1px solid var(--settings-control-line-soft);
+  margin-bottom: var(--space-sm, 0.75rem);
+  scroll-margin-top: calc(var(--shell-header-height, 4rem) + 1rem);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  transition:
+    background-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
+    border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[open]) {
+  border-color: var(--settings-control-line);
+  background: var(--settings-panel-bg);
+  box-shadow: var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[data-settings-targeted="true"]) {
+  border-color: color-mix(in srgb, var(--settings-accent) 58%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--settings-accent) 14%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm, 0.75rem);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-sm, 0.85rem);
+  color: var(--settings-ink);
+  letter-spacing: 0.08em;
+  padding: var(--inset-component, 1rem 1.25rem);
+  outline: none;
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header::after) {
+  content: "";
+  inline-size: 0.5rem;
+  aspect-ratio: 1;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  opacity: 0.62;
+  transform: rotate(45deg) translateY(-0.1rem);
+  transition:
+    opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category[open] > .settings-category-header::after) {
+  opacity: 0.86;
+  transform: rotate(225deg) translate(-0.12rem, -0.12rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header:is(:hover, :focus-visible)) {
+  color: var(--settings-ink-strong);
+  background: color-mix(in srgb, var(--settings-accent) 7%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-category-header:focus-visible) {
+  outline: 2px solid var(--settings-accent);
+  outline-offset: -2px;
+}
+
+/* ==========================================================================
+   4. Fieldsets & Options
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-fieldset) {
+  border: 1px solid var(--settings-control-line-soft);
+  background: var(--settings-control-bg);
+  padding: var(--inset-component, 1.2rem);
+  margin-bottom: var(--space-md, 1rem);
+  border-radius: var(--shape-component, 6px);
+}
+
+:where(body[data-spw-surface="settings"] .settings-fieldset legend) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-weight: 600;
+  color: var(--settings-accent);
+  padding: 0.08rem var(--space-xs, 0.5rem);
+  border: 1px solid color-mix(in srgb, var(--settings-control-line) 62%, transparent);
+  border-radius: var(--shape-element, 4px);
+  background: var(--settings-panel-bg);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option) {
+  padding: var(--space-sm, 0.65rem) var(--space-xs, 0.5rem);
+  border: 1px solid transparent;
+  border-radius: var(--shape-element, 4px);
+  color: var(--settings-ink);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option:hover,
+       body[data-spw-surface="settings"] .settings-option:focus-within) {
+  border-color: color-mix(in srgb, var(--settings-control-line) 82%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 8%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option:has(input:checked)) {
+  border-color: var(--settings-control-line);
+  background: var(--settings-control-bg-active);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option input[type="radio"],
+       body[data-spw-surface="settings"] .settings-option input[type="checkbox"]) {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--settings-accent);
+  cursor: pointer;
+}
+
+:where(body[data-spw-surface="settings"] .settings-option input:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 128, 128, 0.18));
+  border-radius: var(--shape-element, 4px);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option-copy strong) {
+  display: block;
+  font-size: var(--text-size-sm, 0.95rem);
+  margin-bottom: 0.15rem;
+  color: var(--settings-ink-strong);
+}
+
+:where(body[data-spw-surface="settings"] .settings-option-copy span) {
+  display: block;
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+  color: var(--settings-muted);
+}
+
+/* ==========================================================================
+   5. Actions & Status
+   ========================================================================== */
+
+:where(body[data-spw-surface="settings"] .settings-actions) {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-xl, 2rem);
+  padding-top: var(--space-lg, 1.5rem);
+  border-top: 2px dashed var(--line, rgba(14, 18, 20, 0.14));
+}
+
+:where(body[data-spw-surface="settings"] .settings-status) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-xs, 0.8rem);
+  padding: var(--space-2xs, 0.4rem) var(--space-sm, 0.8rem);
+  border-radius: var(--shape-element, 4px);
+  transition: opacity var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-surface="settings"] .settings-status[data-status="success"]) {
+  background: color-mix(in srgb, var(--op-action-color, #005959) 12%, transparent);
+  color: var(--op-action-color, #005959);
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #005959) 30%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-status[data-status="info"]) {
+  background: color-mix(in srgb, var(--op-probe-color, #4a2180) 12%, transparent);
+  color: var(--op-probe-color, #4a2180);
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 30%, transparent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-preset-btn.is-applied) {
+  border-color: color-mix(in srgb, var(--settings-accent) 64%, transparent);
+  background: color-mix(in srgb, var(--settings-accent) 10%, var(--surface-strong, rgba(255, 255, 255, 0.94)));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--settings-accent) 16%, transparent),
+    var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
+}

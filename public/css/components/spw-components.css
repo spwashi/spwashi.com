@@ -25,11 +25,11 @@
    - Keep :where() selector lists closed, non-empty, and comma-separated.
 
    Expected collaborators
-   - /public/css/spw-reset.css
-   - /public/css/spw-tokens.css
-   - /public/css/spw-typography.css
-   - /public/css/spw-typography-context.css
-   - /public/css/spw-developmental-climate.css
+   - /public/css/reset/spw-reset.css
+   - /public/css/tokens/spw-tokens.css
+   - /public/css/typography/spw-typography.css
+   - /public/css/typography/spw-typography-context.css
+   - /public/css/effects/spw-developmental-climate.css
    - route surface files
    ========================================================================== */
 

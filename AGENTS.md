@@ -75,7 +75,7 @@ This site uses a layered CSS architecture and an ES module JavaScript system bui
 
 ### CSS layer order (lowest -> highest priority)
 ```text
-reset -> tokens -> shell -> typography -> grammar -> components -> surfaces -> handles -> ornament
+reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament
 ```
 New styles override lower layers. Add to `ornament` only if you need to override everything else.
 
@@ -83,17 +83,18 @@ New styles override lower layers. Add to `ornament` only if you need to override
 
 | Task | File |
 |------|------|
-| Change shared colors, spacing, thresholds, or semantic tokens | `public/css/spw-tokens.css` |
-| Change card glass/matte behavior | `public/css/spw-material.css` |
-| Change brace forms or structural grammar | `public/css/spw-grammar.css` |
-| Change shared surface layout or feature-gated component layout | `public/css/spw-surfaces.css` |
-| Change wonder-memory propagation, accent memory, or ornament response | `public/js/spw-wonder-memory.js` + `public/css/spw-wonder.css` + `public/css/spw-ornament.css` |
+| Change shared colors, spacing, thresholds, or semantic tokens | `public/css/tokens/spw-tokens.css` |
+| Change card glass/matte behavior | `public/css/effects/spw-material.css` |
+| Change brace forms or structural grammar | `public/css/grammar/spw-grammar.css` |
+| Change shared surface layout or feature-gated component layout | `public/css/systems/surfaces/*.css` or `public/css/components/*.css` |
+| Change route-only surface layout | `public/css/routes/*.css` or `public/css/routes/surfaces/*.css` |
+| Change wonder-memory propagation, accent memory, or ornament response | `public/js/spw-wonder-memory.js` + `public/css/effects/spw-wonder.css` + `public/css/ornament/spw-ornament.css` |
 | Change settings defaults, root data attributes, or deviation handling | `public/js/site-settings.js` + `settings/index.html` |
 | Change navigation tokenization or grounded route behavior | `public/js/spw-navigation-spells.js` + `public/js/frame-navigator.js` |
 | Change spell, checkpoint, or bookmark behavior | `public/js/spw-spells.js` + `public/js/spw-haptics.js` + `public/js/spw-experiential.js` |
-| Change guide badge, interaction-context, or collection behavior | `public/js/spw-guide-badge.js` + `public/css/spw-ornament.css` |
+| Change guide badge, interaction-context, or collection behavior | `public/js/spw-guide-badge.js` + `public/css/ornament/spw-ornament.css` |
 | Add a canvas accent to a frame | add `data-spw-accent="wave|vortex|crystal|lattice|flow"` to the element and tune shared accent CSS/JS only if needed |
-| Add a new operator type | `public/js/spw-shared.js` (`OPERATOR_DEFINITIONS`) + `public/css/spw-tokens.css` + any relevant shared CSS projection files |
+| Add a new operator type | `public/js/spw-shared.js` (`OPERATOR_DEFINITIONS`) + `public/css/tokens/spw-tokens.css` + any relevant shared CSS projection files |
 | Add or rename a reusable feature cluster | route HTML + `.spw/surfaces/page-model.spw` when the model matters beyond one patch |
 
 ### Page shell metadata

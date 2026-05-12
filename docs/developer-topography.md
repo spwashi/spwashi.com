@@ -51,12 +51,12 @@ Prefer this ownership order:
 
 | File | Owns |
 | --- | --- |
-| `spw-tokens.css` | colors, spacing, timing, depth, semantic aliases |
-| `spw-shell.css` / `spw-chrome.css` | page shell, nav, footer, global chrome |
-| `spw-components.css` | reusable cards, panels, slots, route markers, component timing |
-| `spw-grammar.css` | Spw operator/brace grammar |
-| `spw-surfaces.css` | shared page-surface layouts that are not one route only |
-| route CSS files | route-specific atmosphere and layout exceptions |
+| `tokens/spw-tokens.css` | colors, spacing, timing, depth, semantic aliases |
+| `shell/spw-shell.css` / `shell/spw-chrome.css` | page shell, nav, footer, global chrome |
+| `components/spw-components.css` and component folders | reusable cards, panels, slots, route markers, component timing |
+| `grammar/spw-grammar.css` | Spw operator/brace grammar |
+| `systems/surfaces/*.css` | shared page-surface layouts that are not one route only |
+| `routes/*.css` and `routes/surfaces/*.css` | route-specific atmosphere and layout exceptions |
 
 Avoid broad selectors like `.card, .panel, .thing, [data-*]` unless they are inside `:where()` and backed by a shared contract. If a selector list appears in more than one JS or CSS file, it probably belongs in a contract or a component class.
 
