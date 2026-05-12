@@ -312,6 +312,40 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   background: var(--topics-svg-bg);
 }
 
+:where(body[data-spw-surface="topics"] #learning-postures-diagram) {
+  margin-block: 0.9rem 1.1rem;
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .spw-svg-surface) {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 46%),
+    color-mix(in srgb, var(--topics-surface-panel-strong) 92%, var(--topics-accent-soft));
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node) {
+  color: var(--topics-ink);
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node--center) {
+  color: var(--topics-accent);
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node--study) {
+  color: var(--op-probe-color);
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node--stabilize) {
+  color: var(--op-ref-color);
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node--build) {
+  color: var(--op-action-color);
+}
+
+:where(body[data-spw-surface="topics"] #learning-postures-diagram .posture-node--play) {
+  color: var(--op-frame-color);
+}
+
 :where(body[data-spw-surface="topics"] .math-lens-grid) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));

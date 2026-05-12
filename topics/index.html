@@ -98,7 +98,7 @@
         }
     </script>
 </head>
-<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial topic atlas onboarding" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-page-family="atlas" data-spw-page-modes="navigate compare collect read onboard" data-spw-page-seed="page_topics_topics" data-spw-page-role="topic-portal" data-spw-context-relevance="atlas topics software craft math research funding cards membership services onboarding" data-spw-related-routes="/|/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/knowledge-bases/|/topics/architecture/|/topics/pedagogy/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
+<body data-spw-surface="topics" data-spw-features="operators navigator console svg-surfaces" data-spw-route-family="editorial topic atlas onboarding" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-page-family="atlas" data-spw-page-modes="navigate compare collect read onboard" data-spw-page-seed="page_topics_topics" data-spw-page-role="topic-portal" data-spw-context-relevance="atlas topics software craft math research funding cards membership services onboarding" data-spw-related-routes="/|/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/knowledge-bases/|/topics/architecture/|/topics/pedagogy/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -189,6 +189,76 @@
             <h2 id="learning-postures-title">Choose a learning posture, not only a topic.</h2>
         </header>
         <p class="inline-note">A route atlas is more useful when it helps you name how you want to learn right now: study, stabilize, build, or play.</p>
+        <figure
+            class="spw-svg-figure"
+            id="learning-postures-diagram"
+            data-spw-svg-companion="rail"
+            data-spw-svg-pointer="trace"
+            data-spw-svg-pointer-state="active"
+        >
+            <svg
+                class="spw-svg-surface"
+                viewBox="0 0 720 280"
+                role="img"
+                aria-labelledby="learning-postures-title-figure learning-postures-desc"
+            >
+                <title id="learning-postures-title-figure">Learning posture atlas</title>
+                <desc id="learning-postures-desc">
+                    Four route postures gathered around a central focus, with flows that make study, stabilization, build, and play legible.
+                </desc>
+                <defs>
+                    <linearGradient id="posture-bg" x1="0%" x2="100%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="var(--topics-accent)" stop-opacity="0.12"/>
+                    </linearGradient>
+                    <radialGradient id="posture-glow" cx="50%" cy="48%" r="65%">
+                        <stop offset="0%" stop-color="var(--topics-accent)" stop-opacity="0.16"/>
+                        <stop offset="70%" stop-color="transparent"/>
+                    </radialGradient>
+                </defs>
+                <rect x="16" y="16" width="688" height="248" rx="26" fill="url(#posture-bg)"/>
+                <ellipse cx="360" cy="136" rx="190" ry="90" fill="url(#posture-glow)" opacity="0.72"/>
+                <path class="spw-svg-flow" d="M360 136 C 296 116, 244 94, 188 74"/>
+                <path class="spw-svg-flow" d="M360 136 C 423 100, 482 88, 536 76"/>
+                <path class="spw-svg-flow" d="M360 136 C 424 160, 480 188, 540 214"/>
+                <path class="spw-svg-flow" d="M360 136 C 292 164, 228 190, 174 208"/>
+                <g class="posture-node posture-node--center">
+                    <circle cx="360" cy="136" r="34" fill="currentColor" opacity="0.18"/>
+                    <circle cx="360" cy="136" r="20" fill="currentColor"/>
+                    <text x="360" y="141" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">focus</text>
+                </g>
+                <g class="posture-node posture-node--study">
+                    <circle cx="188" cy="74" r="28" fill="currentColor" opacity="0.18"/>
+                    <circle cx="188" cy="74" r="16" fill="currentColor"/>
+                    <text x="188" y="79" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">study</text>
+                </g>
+                <g class="posture-node posture-node--stabilize">
+                    <circle cx="536" cy="76" r="28" fill="currentColor" opacity="0.18"/>
+                    <circle cx="536" cy="76" r="16" fill="currentColor"/>
+                    <text x="536" y="81" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">stabilize</text>
+                </g>
+                <g class="posture-node posture-node--build">
+                    <circle cx="540" cy="214" r="28" fill="currentColor" opacity="0.18"/>
+                    <circle cx="540" cy="214" r="16" fill="currentColor"/>
+                    <text x="540" y="219" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">build</text>
+                </g>
+                <g class="posture-node posture-node--play">
+                    <circle cx="174" cy="208" r="28" fill="currentColor" opacity="0.18"/>
+                    <circle cx="174" cy="208" r="16" fill="currentColor"/>
+                    <text x="174" y="213" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">play</text>
+                </g>
+            </svg>
+            <div class="spw-svg-rail" aria-label="Learning posture legend">
+                <span class="spec-pill">study = model</span>
+                <span class="spec-pill">stabilize = baseline</span>
+                <span class="spec-pill">build = craft</span>
+                <span class="spec-pill">play = probe</span>
+            </div>
+            <figcaption>
+                <strong>Postures over labels</strong>
+                <span>The atlas gets easier to navigate when the diagram tells you what kind of attention you want to practice before you choose the route.</span>
+            </figcaption>
+        </figure>
         <div class="frame-grid frame-grid--dense">
             <article class="frame-panel">
                 <h3>Study</h3>

@@ -536,6 +536,40 @@ body[data-spw-surface="about"] {
   max-inline-size: var(--measure-panel);
 }
 
+[data-spw-surface="about"] #boonhonk-disposition-diagram {
+  margin-block: 1rem 1.15rem;
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .spw-svg-surface {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 44%),
+    color-mix(in srgb, var(--about-surface-strong) 92%, var(--about-accent-soft));
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node {
+  color: var(--about-ink);
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node--bone {
+  color: var(--bone-color);
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node--boon {
+  color: var(--boon-color);
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node--bane {
+  color: var(--bane-color);
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node--bonk {
+  color: var(--bonk-color);
+}
+
+[data-spw-surface="about"] #boonhonk-disposition-diagram .boonhonk-node--honk {
+  color: var(--honk-color);
+}
+
 /* ==========================================================================
    10. World creatures / images
    ========================================================================== */

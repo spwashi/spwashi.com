@@ -82,6 +82,7 @@ const OPERATORS = [
 
 const WEIGHT_STEPS = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
 const CX = 140, CY = 140, R_NODE = 88, R_DOT = 18, R_CENTER = 32;
+const SESSION_MEMORY_PREFIX = 'spw-boonhonk-mixer';
 
 // ── Math ──────────────────────────────────────────────────────────────────────
 function computeColor(weights) {
@@ -117,10 +118,12 @@ function svgEl(tag, attrs = {}) {
 class BoonhonkMixer {
     constructor(container) {
         this.container = container;
+        this.memoryKey = this.resolveMemoryKey();
         this.weights = Object.fromEntries(
             OPERATORS.map(op => [op.id, op.defaultWeight])
         );
         this.hoveredId = null;
+        this.memoryState = 'fresh';
         this.svg = null;
         this.polyEl = null;
         this.spokeEls = [];
@@ -137,6 +140,7 @@ class BoonhonkMixer {
     init() {
         if (this.initialized) return;
         try {
+            this.restoreSessionState();
             this.buildUI();
             this.container.appendChild(this.wrapper);
             this.attachListeners();
@@ -146,6 +150,54 @@ class BoonhonkMixer {
             console.log(`[Spw Boonhonk Mixer] Initialized on ${this.container.tagName}`);
         } catch (err) {
             console.warn('[Spw Boonhonk Mixer] Failed to initialize (non-fatal)', err);
+        }
+    }
+
+    resolveMemoryKey() {
+        const seed = this.container?.dataset?.spwSeed || this.container?.id || this.container?.getAttribute?.('aria-labelledby');
+        if (!seed) return null;
+        return `${SESSION_MEMORY_PREFIX}:${seed}`;
+    }
+
+    readSessionState() {
+        if (!this.memoryKey || typeof sessionStorage === 'undefined') return null;
+        try {
+            const raw = sessionStorage.getItem(this.memoryKey);
+            return raw ? JSON.parse(raw) : null;
+        } catch {
+            return null;
+        }
+    }
+
+    restoreSessionState() {
+        const state = this.readSessionState();
+        if (!state || typeof state !== 'object') return;
+
+        if (state.weights && typeof state.weights === 'object') {
+            OPERATORS.forEach((op) => {
+                const value = Number(state.weights[op.id]);
+                if (Number.isFinite(value)) {
+                    this.weights[op.id] = Math.max(0, Math.min(1, value));
+                }
+            });
+        }
+
+        if (typeof state.hoveredId === 'string' && OPERATORS.some((op) => op.id === state.hoveredId)) {
+            this.hoveredId = state.hoveredId;
+        }
+
+        this.memoryState = 'restored';
+    }
+
+    saveSessionState() {
+        if (!this.memoryKey || typeof sessionStorage === 'undefined') return;
+        try {
+            sessionStorage.setItem(this.memoryKey, JSON.stringify({
+                weights: this.weights,
+                hoveredId: this.hoveredId,
+            }));
+        } catch {
+            // Session memory is best-effort.
         }
     }
 
@@ -354,6 +406,7 @@ class BoonhonkMixer {
         const idx = WEIGHT_STEPS.findLastIndex(s => s <= current + 0.001);
         const nextIdx = (idx + 1) % WEIGHT_STEPS.length;
         this.weights[id] = WEIGHT_STEPS[nextIdx];
+        this.memoryState = 'held';
         this.refresh();
     }
 
@@ -361,6 +414,7 @@ class BoonhonkMixer {
         OPERATORS.forEach(op => {
             this.weights[op.id] = op.defaultWeight;
         });
+        this.memoryState = 'held';
         this.refresh();
     }
 
@@ -369,6 +423,7 @@ class BoonhonkMixer {
         this.updateReadout();
         this.updateCssVariables();
         this.syncInteractionState();
+        this.saveSessionState();
     }
 
     updateSvg() {
@@ -488,12 +543,14 @@ class BoonhonkMixer {
     setHoveredOperator(id) {
         if (this.hoveredId === id) return;
         this.hoveredId = id;
+        this.memoryState = 'held';
         this.syncInteractionState();
     }
 
     clearHoveredOperator(id) {
         if (this.hoveredId !== id) return;
         this.hoveredId = null;
+        this.memoryState = 'held';
         this.syncInteractionState();
     }
 
@@ -506,6 +563,7 @@ class BoonhonkMixer {
             this.wrapper.dataset.bhmState = state;
             this.wrapper.dataset.state = state;
             this.wrapper.dataset.bhmDisposition = disposition;
+            this.wrapper.dataset.bhmMemoryState = this.memoryState;
             if (focus) {
                 this.wrapper.dataset.bhmFocus = focus;
             } else {
@@ -516,6 +574,7 @@ class BoonhonkMixer {
         if (this.svg) {
             this.svg.dataset.state = focus ? `${state} hovering-node` : state;
             this.svg.dataset.bhmDisposition = disposition;
+            this.svg.dataset.bhmMemoryState = this.memoryState;
             if (focus) {
                 this.svg.dataset.bhmFocus = focus;
             } else {
