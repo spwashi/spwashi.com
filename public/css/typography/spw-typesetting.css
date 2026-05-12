@@ -180,22 +180,9 @@
 }
 
 :where(
-  html[data-spw-reading-groove="on"] main article p,
-  html[data-spw-reading-groove="on"] main article li,
-  html[data-spw-reading-groove="on"] main article blockquote,
-  html[data-spw-reading-groove="on"] main article figcaption,
-  html[data-spw-reading-groove="on"] main article .inline-note,
-  html[data-spw-reading-groove="on"] main article .frame-note,
-  html[data-spw-reading-groove="on"] main article h2,
-  html[data-spw-reading-groove="on"] main article h3,
-  html[data-spw-reading-groove="on"] main > section p,
-  html[data-spw-reading-groove="on"] main > section li,
-  html[data-spw-reading-groove="on"] main > section blockquote,
-  html[data-spw-reading-groove="on"] main > section figcaption,
-  html[data-spw-reading-groove="on"] main > section .inline-note,
-  html[data-spw-reading-groove="on"] main > section .frame-note,
-  html[data-spw-reading-groove="on"] main > section h2,
-  html[data-spw-reading-groove="on"] main > section h3
+  html[data-spw-reading-groove="on"] main :is(article, > section) :is(
+    p, li, blockquote, figcaption, .inline-note, .frame-note, h2, h3
+  )
 ) {
   transition:
     opacity 320ms var(--ease-settle, ease),

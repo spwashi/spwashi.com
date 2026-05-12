@@ -99,26 +99,17 @@
 }
 
 :where(
-  article p,
-  article li,
-  article blockquote,
-  article pre,
-  article code,
-  article kbd,
-  article samp,
+  article :is(p, li, blockquote, pre, code, kbd, samp),
   .site-lede,
   .page-lede,
-  .frame-panel p,
+  :is(.frame-panel, .frame-details) p,
   .frame-panel li,
-  .frame-details p,
   .inline-note,
   .frame-note,
   .plan-thesis,
   .plan-wonder p,
   .plan-considerations li,
-  [data-reading-region],
-  [data-spw-readable],
-  [contenteditable]
+  :is([data-reading-region], [data-spw-readable], [contenteditable])
 ) {
   user-select: text;
   -webkit-user-select: text;
@@ -282,18 +273,11 @@
   --type-tracking-range: -0.02em;
 }
 
-:where(
-  [data-spw-charge='active'][data-spw-operator='action'],
-  [data-spw-charge='sustained'][data-spw-operator='action'],
-  [data-spw-charge='manifest'][data-spw-operator='action']
-) {
+:where([data-spw-charge]:is([data-spw-charge='active'], [data-spw-charge='sustained'], [data-spw-charge='manifest'])[data-spw-operator='action']) {
   font-variant-caps: all-small-caps;
 }
 
-:where(
-  [data-spw-charge='sustained'][data-spw-operator='action'],
-  [data-spw-charge='manifest'][data-spw-operator='action']
-) {
+:where([data-spw-charge]:is([data-spw-charge='sustained'], [data-spw-charge='manifest'])[data-spw-operator='action']) {
   text-transform: uppercase;
   font-variant-caps: normal;
 }
@@ -324,10 +308,7 @@
   font-variant-caps: small-caps;
 }
 
-:where(
-  [data-spw-charge='active'][data-spw-operator='pragma'],
-  [data-spw-charge='sustained'][data-spw-operator='pragma']
-) {
+:where([data-spw-charge]:is([data-spw-charge='active'], [data-spw-charge='sustained'])[data-spw-operator='pragma']) {
   font-variant-caps: all-small-caps;
 }
 
@@ -354,10 +335,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-:where(
-  [data-spw-charge='active'][data-spw-operator='binding'],
-  [data-spw-charge='sustained'][data-spw-operator='binding']
-) {
+:where([data-spw-charge]:is([data-spw-charge='active'], [data-spw-charge='sustained'])[data-spw-operator='binding']) {
   font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
   font-variant-ligatures: none;
 }
