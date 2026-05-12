@@ -471,6 +471,14 @@ body[data-spw-surface="about"] {
     var(--about-surface);
 }
 
+[data-spw-surface="about"] #boonhonk-register .boonhonk-mixer-panel {
+  margin-block-start: 1rem;
+  border-color: color-mix(in srgb, var(--boon-border) 44%, var(--about-line));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 52%),
+    color-mix(in srgb, var(--about-surface-strong) 92%, var(--boon-bg-soft) 8%);
+}
+
 [data-spw-surface="about"] .syntax-list {
   display: grid;
   gap: 0.55rem;

@@ -53,6 +53,7 @@
 @import url('/public/css/routes/topics-surface.css') layer(routes);
 @import url('/public/css/routes/website-surface.css') layer(routes);
 @import url('/public/css/routes/design-surface.css') layer(routes);
+@import url('/public/css/routes/boonhonk-mixer.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans-cards.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans-relationships.css') layer(routes);

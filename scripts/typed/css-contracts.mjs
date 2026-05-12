@@ -13,6 +13,9 @@ const CSS_DIR = path.join(ROOT_DIR, 'public/css');
 const STYLE_SOURCE_DIR = path.join(ROOT_DIR, 'src/styles');
 const STYLE_MANIFEST = path.join(CSS_DIR, 'style.css');
 const EXPECTED_LAYER_ORDER = 'reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament';
+const INTENTIONAL_STANDALONE_CSS = new Set([
+    '/public/css/compose.css',
+]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }
@@ -155,7 +158,7 @@ export async function collectCssContractReport() {
         if (!compatibilityWrapper && referencesSemanticCss(source) && !hasTopFileContract(source)) {
             warnings.push(`${relativePath} uses semantic CSS hooks without an obvious top-of-file contract.`);
         }
-        if (!compatibilityWrapper && !knownReferences.has(rootPath)) {
+        if (!compatibilityWrapper && !knownReferences.has(rootPath) && !INTENTIONAL_STANDALONE_CSS.has(rootPath)) {
             warnings.push(`${relativePath} is not imported by style.css or linked by rendered routes.`);
         }
     }

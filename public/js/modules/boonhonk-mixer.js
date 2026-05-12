@@ -120,11 +120,13 @@ class BoonhonkMixer {
         this.weights = Object.fromEntries(
             OPERATORS.map(op => [op.id, op.defaultWeight])
         );
+        this.hoveredId = null;
         this.svg = null;
         this.polyEl = null;
         this.spokeEls = [];
         this.centerEl = null;
         this.nodeGroups = new Map();
+        this.operatorChips = new Map();
         this.readoutEl = null;
         this.colorPreview = null;
         this.formulaLines = {};
@@ -207,6 +209,8 @@ class BoonhonkMixer {
                 tabindex: '0',
                 'aria-label': `${op.label}: adjust weight`,
             });
+            group.dataset.bhmOperator = op.id;
+            group.setAttribute('aria-pressed', 'false');
 
             // Hit area
             group.appendChild(svgEl('circle', {
@@ -265,7 +269,7 @@ class BoonhonkMixer {
         // Note
         const note = document.createElement('p');
         note.className = 'bhm-note';
-        note.textContent = 'Tap each operator to step its weight. Tap the center to reset.';
+        note.textContent = 'Hover or focus an operator to preview its disposition. Tap or press Enter / Space to step its weight. Tap the center to reset.';
 
         this.wrapper.append(this.svg, this.readoutEl, note);
     }
@@ -276,6 +280,9 @@ class BoonhonkMixer {
 
         this.colorPreview = document.createElement('div');
         this.colorPreview.className = 'bhm-color-preview';
+
+        this.statePill = document.createElement('div');
+        this.statePill.className = 'bhm-state-pill';
 
         const formula = document.createElement('div');
         formula.className = 'bhm-formula';
@@ -292,11 +299,12 @@ class BoonhonkMixer {
         this.operatorRow = document.createElement('div');
         this.operatorRow.className = 'bhm-operator-row';
 
-        el.append(this.colorPreview, formula, this.operatorRow);
+        el.append(this.colorPreview, this.statePill, formula, this.operatorRow);
 
         return {
             el,
             colorPreview: this.colorPreview,
+            statePill: this.statePill,
             formulaLines: { hue: hueLine, sat: satLine, light: lightLine },
             operatorRow: this.operatorRow,
         };
@@ -309,6 +317,8 @@ class BoonhonkMixer {
             if (!nodeData) return;
 
             const { group } = nodeData;
+            const preview = () => this.setHoveredOperator(op.id);
+            const clearPreview = () => this.clearHoveredOperator(op.id);
             const step = () => {
                 this.stepWeight(op.id);
                 // Brief visual feedback
@@ -316,6 +326,10 @@ class BoonhonkMixer {
                 setTimeout(() => group.classList.remove('bhm-tapped'), 180);
             };
 
+            group.addEventListener('pointerenter', preview);
+            group.addEventListener('focusin', preview);
+            group.addEventListener('pointerleave', clearPreview);
+            group.addEventListener('focusout', clearPreview);
             group.addEventListener('click', step);
             group.addEventListener('keydown', e => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -354,6 +368,7 @@ class BoonhonkMixer {
         this.updateSvg();
         this.updateReadout();
         this.updateCssVariables();
+        this.syncInteractionState();
     }
 
     updateSvg() {
@@ -387,12 +402,7 @@ class BoonhonkMixer {
             const weight = this.weights[op.id] ?? 0;
             const nodeData = this.nodeGroups.get(op.id);
             if (!nodeData) return;
-            const { group, dot } = nodeData;
-            if (weight > 0) {
-                group.dataset.state = 'active';
-            } else {
-                delete group.dataset.state;
-            }
+            const { dot } = nodeData;
             if (dot) dot.setAttribute('opacity', 0.3 + weight * 0.7);
         });
     }
@@ -425,9 +435,7 @@ class BoonhonkMixer {
             const weight = this.weights[op.id] ?? 0;
             const chip = document.createElement('span');
             chip.className = `bhm-op-chip bhm-op-chip--${op.id}`;
-            if (weight > 0) {
-                chip.dataset.state = 'active';
-            }
+            chip.dataset.bhmOperator = op.id;
             chip.title = op.note;
 
             const sigilSpan = document.createElement('span');
@@ -437,6 +445,7 @@ class BoonhonkMixer {
 
             chip.append(sigilSpan, valSpan);
             this.operatorRow.appendChild(chip);
+            this.operatorChips.set(op.id, chip);
         });
     }
 
@@ -445,6 +454,128 @@ class BoonhonkMixer {
         span.className = 'bhm-val';
         span.textContent = text;
         return span;
+    }
+
+    isPristine() {
+        return OPERATORS.every(op => Math.abs((this.weights[op.id] ?? 0) - op.defaultWeight) < 0.0001);
+    }
+
+    getCompositionState() {
+        if (this.hoveredId) return 'projecting';
+        return this.isPristine() ? 'bone' : 'mixing';
+    }
+
+    getDisposition() {
+        if (this.hoveredId) return this.hoveredId;
+
+        const totalWeight = OPERATORS.reduce((sum, op) => sum + (this.weights[op.id] ?? 0), 0);
+        if (totalWeight <= 0) return 'bone';
+
+        let winner = 'bone';
+        let winnerWeight = -1;
+
+        OPERATORS.forEach(op => {
+            const weight = this.weights[op.id] ?? 0;
+            if (weight > winnerWeight) {
+                winner = op.id;
+                winnerWeight = weight;
+            }
+        });
+
+        return winner;
+    }
+
+    setHoveredOperator(id) {
+        if (this.hoveredId === id) return;
+        this.hoveredId = id;
+        this.syncInteractionState();
+    }
+
+    clearHoveredOperator(id) {
+        if (this.hoveredId !== id) return;
+        this.hoveredId = null;
+        this.syncInteractionState();
+    }
+
+    syncInteractionState() {
+        const state = this.getCompositionState();
+        const focus = this.hoveredId;
+        const disposition = this.getDisposition();
+
+        if (this.wrapper) {
+            this.wrapper.dataset.bhmState = state;
+            this.wrapper.dataset.state = state;
+            this.wrapper.dataset.bhmDisposition = disposition;
+            if (focus) {
+                this.wrapper.dataset.bhmFocus = focus;
+            } else {
+                delete this.wrapper.dataset.bhmFocus;
+            }
+        }
+
+        if (this.svg) {
+            this.svg.dataset.state = focus ? `${state} hovering-node` : state;
+            this.svg.dataset.bhmDisposition = disposition;
+            if (focus) {
+                this.svg.dataset.bhmFocus = focus;
+            } else {
+                delete this.svg.dataset.bhmFocus;
+            }
+        }
+
+        OPERATORS.forEach(op => {
+            const weight = this.weights[op.id] ?? 0;
+            const isActive = weight > 0;
+            const isFocused = focus === op.id;
+            const selection = isFocused ? 'focused' : isActive ? 'selected' : null;
+            const nodeData = this.nodeGroups.get(op.id);
+            const chip = this.operatorChips.get(op.id);
+
+            if (nodeData) {
+                const { group } = nodeData;
+                if (isActive) {
+                    group.dataset.state = 'active';
+                } else {
+                    delete group.dataset.state;
+                }
+                if (selection) {
+                    group.dataset.spwSelection = selection;
+                } else {
+                    delete group.dataset.spwSelection;
+                }
+                group.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+
+            if (chip) {
+                if (isActive) {
+                    chip.dataset.state = 'active';
+                } else {
+                    delete chip.dataset.state;
+                }
+                if (selection) {
+                    chip.dataset.spwSelection = selection;
+                } else {
+                    delete chip.dataset.spwSelection;
+                }
+            }
+        });
+
+        if (this.statePill) {
+            const label = this.hoveredId
+                ? `${disposition} · preview`
+                : state === 'bone'
+                    ? 'bone · skeleton'
+                    : disposition === 'honk'
+                        ? 'honk · discovery'
+                        : disposition === 'bonk'
+                            ? 'bonk · experiment'
+                            : disposition === 'bane'
+                                ? 'bane · constraint'
+                                : 'boon · arrival';
+            this.statePill.textContent = label;
+            this.statePill.dataset.bhmDisposition = disposition;
+            this.statePill.dataset.state = state;
+        }
     }
 
     updateCssVariables() {

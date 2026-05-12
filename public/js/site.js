@@ -1307,6 +1307,19 @@ const FEATURE_DEFS = [
       return fn();
     },
   },
+  {
+    id: 'boonhonk-mixer',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-boonhonk-mixer]',
+    rootMode: 'single',
+    load: () => import('./modules/boonhonk-mixer.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initBoonhonkMixers;
+      if (!isFn(fn)) return;
+      return fn(ctx?.root || document);
+    },
+  },
 ];
 
 const REGION_DEFS = [
