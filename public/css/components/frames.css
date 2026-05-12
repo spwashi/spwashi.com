@@ -21,12 +21,7 @@
   padding: var(--surface-padding);
   border: var(--component-border);
   border-radius: var(--component-radius);
-  background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--component-accent) 6%, transparent),
-      transparent 22%
-  ),
-  var(--component-surface);
+  background: color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
   box-shadow: var(--component-frame-shadow);
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
   transition: background var(--component-transition-deliberate),

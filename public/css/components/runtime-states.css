@@ -27,89 +27,88 @@
   color: color-mix(in srgb, var(--ink, currentColor) 90%, var(--component-accent) 10%);
 }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state]) {
-  position: relative;
-  overflow: clip;
-}
+:where(html[data-spw-scroll-cadence="on"]) {
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state] {
+    position: relative;
+    overflow: clip;
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before {
-  content: "";
-  position: absolute;
-  inset-block: 1rem;
-  inset-inline-start: 0.55rem;
-  width: 0.18rem;
-  border-radius: 999px;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--component-accent) 72%, transparent) 0%,
-    color-mix(in srgb, var(--component-accent) 18%, transparent) 100%
-  );
-  opacity: 0;
-  transform: scaleY(0.24);
-  transform-origin: center top;
-  transition:
-    opacity var(--component-transition-deliberate),
-    transform var(--component-transition-deliberate),
-    filter var(--component-transition-deliberate);
-  pointer-events: none;
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state]::before {
+    content: "";
+    position: absolute;
+    inset-block: 1rem;
+    inset-inline-start: 0.55rem;
+    width: 0.16rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--component-accent) 46%, transparent);
+    opacity: 0;
+    transform: scaleY(0.24);
+    transform-origin: center top;
+    transition:
+      opacity var(--component-transition-deliberate),
+      transform var(--component-transition-deliberate);
+    pointer-events: none;
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 12% 16%, color-mix(in oklab, var(--component-accent) 9%, transparent), transparent 28%),
-    linear-gradient(180deg, color-mix(in oklab, var(--component-accent) 4%, transparent), transparent 26%);
-  opacity: 0;
-  transition:
-    opacity var(--component-transition-deliberate),
-    filter var(--component-transition-deliberate);
-  pointer-events: none;
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: color-mix(in oklab, var(--component-accent) 2.5%, transparent);
+    opacity: 0;
+    transition: opacity var(--component-transition-deliberate);
+    pointer-events: none;
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"])::before {
-  opacity: 0.34;
-  transform: scaleY(0.56);
-}
+  & main > :is(section.site-frame, article > section.site-frame):is(
+    [data-spw-section-state="previous"],
+    [data-spw-section-state="next"]
+  )::before {
+    opacity: 0.24;
+    transform: scaleY(0.56);
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::before {
-  opacity: 0.8;
-  transform: scaleY(1);
-  filter: saturate(1.08);
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"] {
+    border-color: color-mix(in oklab, var(--component-accent) 18%, transparent);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 10%, transparent),
+      0 0.55rem 1.4rem color-mix(in oklab, var(--component-accent) 5%, transparent),
+      var(--component-shadow-active);
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"])::after {
-  opacity: 1;
-  filter: saturate(1.06);
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]::before {
+    opacity: 0.58;
+    transform: scaleY(1);
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
-  transition:
-    transform var(--component-transition-deliberate),
-    color var(--component-transition-deliberate),
-    opacity var(--component-transition-deliberate);
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]::after {
+    opacity: 1;
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3) {
-  transform: translateX(0.12rem);
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]
+    :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+    transition:
+      transform var(--component-transition-deliberate),
+      color var(--component-transition-deliberate),
+      opacity var(--component-transition-deliberate);
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) {
-  border-color: color-mix(in oklab, var(--component-accent) 26%, transparent);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in oklab, var(--component-accent) 16%, transparent),
-    0 0.8rem 2.2rem color-mix(in oklab, var(--component-accent) 9%, transparent),
-    var(--component-shadow-active);
-}
+  & main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]
+    :where(.frame-sigil, h1, h2, h3) {
+    transform: translateX(0.08rem);
+  }
 
-:where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="previous"], html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="next"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="next"]) :where(.inline-note, .frame-note) {
-  opacity: 0.9;
+  & main > :is(section.site-frame, article > section.site-frame):is(
+    [data-spw-section-state="previous"],
+    [data-spw-section-state="next"]
+  ) :where(.inline-note, .frame-note) {
+    opacity: 0.94;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state])::before,
-  :where(html[data-spw-scroll-cadence="on"] main > section.site-frame[data-spw-section-state="active"], html[data-spw-scroll-cadence="on"] main > article > section.site-frame[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
+  :where(html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state])::before,
+  :where(html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state="active"]) :where(.frame-sigil, h1, h2, h3, .inline-note, .frame-note) {
     transition: none;
     transform: none;
   }

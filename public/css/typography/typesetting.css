@@ -152,25 +152,20 @@
   --spw-reading-near-opacity: 0.92;
   --spw-reading-lead-opacity: 1;
   --spw-reading-rest-shift: 0rem;
-  --spw-reading-near-shift: 0.14rem;
-  --spw-reading-lead-shift: 0.24rem;
+  --spw-reading-near-shift: 0.06rem;
+  --spw-reading-lead-shift: 0.1rem;
   --spw-reading-rest-color:
     color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 92%, transparent);
   --spw-reading-near-color:
-    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 90%, var(--active-op-color, #008080) 10%);
+    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 96%, var(--active-op-color, #008080) 4%);
   --spw-reading-lead-color:
-    color-mix(in oklab, var(--ink-strong, #090b0c) 84%, var(--active-op-color, #008080) 16%);
+    color-mix(in oklab, var(--ink-strong, #090b0c) 94%, var(--active-op-color, #008080) 6%);
   --spw-reading-lead-accent:
-    color-mix(in oklab, var(--active-op-color, #008080) 26%, transparent);
+    color-mix(in oklab, var(--active-op-color, #008080) 18%, transparent);
   --spw-reading-near-accent:
-    color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
-  --spw-reading-lead-wash:
-    color-mix(in oklab, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--active-op-color, #008080) 10%);
-  --spw-reading-near-wash:
-    color-mix(in oklab, var(--surface-soft, rgba(255, 255, 255, 0.68)) 92%, var(--active-op-color, #008080) 8%);
+    color-mix(in oklab, var(--active-op-color, #008080) 7%, transparent);
   --spw-reading-lead-glow:
-    0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent),
-    0 0.35rem 1.25rem color-mix(in oklab, var(--active-op-color, #008080) 10%, transparent);
+    inset 0.12rem 0 0 var(--spw-reading-lead-accent, transparent);
 }
 
 :where(html[data-spw-reading-groove="off"], body[data-spw-reading-groove="off"]) {
@@ -190,14 +185,7 @@
     filter 320ms var(--ease-settle, ease),
     color 260ms var(--ease-settle, ease),
     text-shadow 320ms var(--ease-settle, ease),
-    background-size 420ms var(--ease-settle, ease),
-    background-position 420ms var(--ease-settle, ease),
     box-shadow 420ms var(--ease-settle, ease);
-  background-image:
-    linear-gradient(90deg, transparent 0%, transparent 100%);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 100%;
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
@@ -210,24 +198,15 @@
   opacity: var(--spw-reading-near-opacity, 0.92);
   color: var(--spw-reading-near-color, inherit);
   transform: translateX(var(--spw-reading-near-shift, 0.14rem));
-  background-image:
-    linear-gradient(90deg, var(--spw-reading-near-accent, transparent) 0%, transparent 68%),
-    linear-gradient(180deg, var(--spw-reading-near-wash, transparent) 0%, transparent 100%);
+  text-shadow: 0 0 0.45rem var(--spw-reading-near-accent, transparent);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
   opacity: var(--spw-reading-lead-opacity, 1);
   color: var(--spw-reading-lead-color, var(--ink-strong, #090b0c));
   transform: translateX(var(--spw-reading-lead-shift, 0.24rem));
-  background-image:
-    linear-gradient(90deg, var(--spw-reading-lead-accent, transparent) 0%, transparent 76%),
-    linear-gradient(180deg, var(--spw-reading-lead-wash, transparent) 0%, transparent 100%);
-  text-shadow:
-    0 0 0.02em color-mix(in oklab, var(--ink-strong, #090b0c) 18%, transparent),
-    0 0 0.8rem color-mix(in oklab, var(--active-op-color, #008080) 10%, transparent);
-  box-shadow:
-    inset 0.16rem 0 0 var(--spw-reading-lead-accent, transparent),
-    var(--spw-reading-lead-glow);
+  text-shadow: 0 0 0.02em color-mix(in oklab, var(--ink-strong, #090b0c) 12%, transparent);
+  box-shadow: var(--spw-reading-lead-glow);
 }
 
 :where(
@@ -238,16 +217,16 @@
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat-role="list"][data-spw-reading-beat="lead"]) {
-  transform: translateX(0.18rem);
+  transform: translateX(0.08rem);
 }
 
 @media (max-width: 52rem) {
   :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
-    transform: translateX(0.08rem);
+    transform: translateX(0.04rem);
   }
 
   :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
-    transform: translateX(0.12rem);
+    transform: translateX(0.06rem);
   }
 }
 

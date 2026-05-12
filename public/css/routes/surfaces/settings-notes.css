@@ -31,9 +31,7 @@
   padding: var(--inset-component, 1rem);
   border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 56%, transparent);
   border-radius: var(--shape-component, 6px);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 58%),
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 98%, var(--settings-accent) 2%);
   color: var(--ink, #161c1d);
   font: inherit;
   resize: vertical;
@@ -133,9 +131,7 @@
   padding: var(--inset-component, 1rem);
   border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, transparent);
   border-radius: var(--shape-component, 6px);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.15), transparent 60%),
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 96%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 98%, var(--settings-accent) 2%);
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 

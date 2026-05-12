@@ -6,96 +6,91 @@
    8. Dimensional section cues
    ========================================================================== */
 
-:where(body[data-spw-surface="settings"] #runtime-map) {
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--settings-accent) 7%, transparent), transparent 34%),
-    var(--surface-strong, rgba(255,255,255,0.94));
-}
+:where(body[data-spw-surface="settings"]) {
+  & :is(#runtime-map, #token-navigator, #data-structures, #applied-state) {
+    background: var(--surface-strong, rgba(255,255,255,0.94));
+  }
 
-:where(body[data-spw-surface="settings"] #token-navigator) {
-  background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--op-binding-color, #8f401f) 6%, transparent), transparent 32%),
-    var(--surface-strong, rgba(255,255,255,0.94));
-}
+  & #runtime-map {
+    background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 97%, var(--settings-accent) 3%);
+  }
 
-:where(body[data-spw-surface="settings"] #data-structures) {
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--op-ref-color, #1d57a3) 6%, transparent), transparent 32%),
-    var(--surface-strong, rgba(255,255,255,0.94));
-}
+  & #token-navigator {
+    background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 97%, var(--op-binding-color, #8f401f) 3%);
+  }
 
-:where(body[data-spw-surface="settings"] #applied-state) {
-  background:
-    radial-gradient(circle at top center, color-mix(in srgb, var(--op-probe-color, #4a2180) 7%, transparent), transparent 32%),
-    var(--surface-strong, rgba(255,255,255,0.94));
-}
+  & #data-structures {
+    background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 97%, var(--op-ref-color, #1d57a3) 3%);
+  }
 
-/* ==========================================================================
-   9. Better details readability
-   ========================================================================== */
+  & #applied-state {
+    background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 97%, var(--op-probe-color, #4a2180) 3%);
+  }
 
-:where(body[data-spw-surface="settings"] .settings-category) {
-  overflow: clip;
-  border-radius: var(--shape-component, 6px);
-}
+  /* Better details readability */
+  & .settings-category {
+    overflow: clip;
+    border-radius: var(--shape-component, 6px);
+  }
 
-:where(body[data-spw-surface="settings"] .settings-grid) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: var(--space-md, 1rem);
-  padding: 0 var(--space-md, 1rem) var(--space-md, 1rem);
-}
+  & .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-md, 1rem);
+    padding: 0 var(--space-md, 1rem) var(--space-md, 1rem);
+  }
 
-:where(body[data-spw-surface="settings"] .settings-scale-group) {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.4rem;
+  & .settings-scale-group {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
 }
 
 @media (max-width: 720px) {
-  :where(body[data-spw-surface="settings"] .settings-scale-group) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  :where(body[data-spw-surface="settings"]) {
+    & .settings-scale-group {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-  :where(body[data-spw-surface="settings"] .site-frame) {
-    --settings-pad-inline: 0.9rem;
-    --settings-pad-block: 1rem;
-  }
+    & .site-frame {
+      --settings-pad-inline: 0.9rem;
+      --settings-pad-block: 1rem;
+    }
 
-  :where(body[data-spw-surface="settings"] .settings-grid) {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
+    & :is(
+      .settings-grid,
+      .settings-system-map,
+      .settings-navigator-grid,
+      .settings-structures-grid,
+      .settings-state-grid,
+      .pwa-status-grid
+    ) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
 
-  :where(body[data-spw-surface="settings"] .settings-fieldset) {
-    padding: 0.9rem;
-    margin-bottom: 0.75rem;
-  }
+    & .settings-fieldset {
+      padding: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
 
-  :where(body[data-spw-surface="settings"] .settings-note-form__meta) {
-    grid-template-columns: 1fr;
-  }
+    & .settings-note-form__meta {
+      grid-template-columns: 1fr;
+    }
 
-  :where(body[data-spw-surface="settings"] .local-note-card__meta) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    & .local-note-card__meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-  :where(body[data-spw-surface="settings"] .settings-actions) {
-    align-items: stretch;
-    gap: 0.7rem;
-  }
+    & .settings-actions {
+      align-items: stretch;
+      gap: 0.7rem;
+    }
 
-  :where(body[data-spw-surface="settings"] .settings-actions > *) {
-    width: 100%;
-  }
-
-  :where(body[data-spw-surface="settings"] .settings-system-map),
-  :where(body[data-spw-surface="settings"] .settings-navigator-grid),
-  :where(body[data-spw-surface="settings"] .settings-structures-grid),
-  :where(body[data-spw-surface="settings"] .settings-state-grid),
-  :where(body[data-spw-surface="settings"] .pwa-status-grid) {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    & .settings-actions > * {
+      width: 100%;
+    }
   }
 }

@@ -37,8 +37,8 @@
   --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
   --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
   --component-surface-matte: color-mix(in srgb, var(--component-surface-strong) 94%, var(--bg, #f7f4ee));
-  --component-surface-elevated: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
-  var(--component-surface-strong);
+  --component-surface-elevated:
+    color-mix(in srgb, var(--component-surface-strong) 96%, var(--component-accent) 4%);
 
   /* Shadow */
   --component-shadow: var(--spw-depth-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
