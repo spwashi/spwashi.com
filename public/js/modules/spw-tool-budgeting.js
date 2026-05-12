@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDashboard(total);
     }
 
-    function setTierMessage(text, color) {
+    function setTierMessage(text, state) {
         messageEl.textContent = text;
-        messageEl.style.color = color;
+        messageEl.dataset.state = state;
     }
 
     function updateDashboard(netValue) {
@@ -179,14 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
         totalDisplay.textContent = formatCurrency(netValue);
 
         if (netValue < 0) {
-            setTierMessage(`You are ${formatCurrency(Math.abs(netValue))} below zero. Restore baseline first, then map the next threshold.`, 'var(--op-object-color, #bd7f23)');
+            setTierMessage(`You are ${formatCurrency(Math.abs(netValue))} below zero. Restore baseline first, then map the next threshold.`, 'negative');
         } else if (!nextTier) {
-            setTierMessage('Staff-level consulting is within reach. You can plan around architecture or diligence instead of only the minimum viable scope.', 'var(--op-probe-color, #6b4bb6)');
+            setTierMessage('Staff-level consulting is within reach. You can plan around architecture or diligence instead of only the minimum viable scope.', 'complete');
         } else if (nextTier.id === 'creator') {
-            setTierMessage(`Need ${formatCurrency(nextTier.cost - netValue)} more to reach creator packages.`, 'var(--ink-soft, rgba(18, 36, 32, 0.68))');
+            setTierMessage(`Need ${formatCurrency(nextTier.cost - netValue)} more to reach creator packages.`, 'neutral');
         } else {
             const unlockedTier = TIERS[TIERS.findIndex((tier) => tier.id === nextTier.id) - 1];
-            setTierMessage(`${unlockedTier.message} ${formatCurrency(nextTier.cost - netValue)} more reaches ${nextTier.id === 'business' ? 'Business Web' : 'staff-level consulting'}.`, unlockedTier.color);
+            setTierMessage(`${unlockedTier.message} ${formatCurrency(nextTier.cost - netValue)} more reaches ${nextTier.id === 'business' ? 'Business Web' : 'staff-level consulting'}.`, unlockedTier.id === 'creator' ? 'growth' : 'complete');
         }
 
         tierCards.forEach((card) => {
