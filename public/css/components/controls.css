@@ -18,6 +18,10 @@
   border-radius: var(--component-radius);
   background: var(--component-surface-soft);
   overflow: clip;
+
+  &[open] > .settings-category-header {
+    border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
+  }
 }
 
 :where(.settings-category-header) {
@@ -29,10 +33,6 @@
   cursor: pointer;
   font-weight: 750;
   color: var(--ink, currentColor);
-}
-
-:where(.settings-category[open] > .settings-category-header) {
-  border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
 }
 
 :where(.settings-grid) {
@@ -50,12 +50,12 @@
   border: var(--component-border-quiet);
   border-radius: var(--component-radius-tight);
   background: color-mix(in srgb, var(--component-surface-strong) 82%, transparent);
-}
 
-:where(.settings-fieldset legend) {
-  padding-inline: 0.24rem;
-  font-weight: 750;
-  color: var(--ink, currentColor);
+  & legend {
+    padding-inline: 0.24rem;
+    font-weight: 750;
+    color: var(--ink, currentColor);
+  }
 }
 
 :where(.settings-option) {
@@ -68,25 +68,25 @@
   border: 1px solid transparent;
   border-radius: var(--component-radius-tight);
   cursor: pointer;
-}
 
-:where(.settings-option:is(:hover, :focus-within)) {
-  border-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
-  background: color-mix(in srgb, var(--component-accent) 5%, transparent);
-}
+  &:is(:hover, :focus-within) {
+    border-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
+    background: color-mix(in srgb, var(--component-accent) 5%, transparent);
+  }
 
-:where(.settings-option input) {
-  margin-block-start: 0.14rem;
+  & input {
+    margin-block-start: 0.14rem;
+  }
 }
 
 :where(.settings-option-copy) {
   display: grid;
   gap: 0.18rem;
   min-width: 0;
-}
 
-:where(.settings-option-copy strong) {
-  line-height: 1.2;
+  & strong {
+    line-height: 1.2;
+  }
 }
 
 :where(.settings-option-copy span, .settings-option-hint) {
@@ -106,14 +106,14 @@
 :where(.settings-status) {
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
   font-size: var(--text-size-sm, 0.88rem);
-}
 
-:where(.settings-status[data-status="success"]) {
-  color: var(--valence-pos, hsl(160 45% 34%));
-}
+  &[data-status="success"] {
+    color: var(--valence-pos, hsl(160 45% 34%));
+  }
 
-:where(.settings-status[data-status="error"]) {
-  color: var(--valence-neg, hsl(8 54% 42%));
+  &[data-status="error"] {
+    color: var(--valence-neg, hsl(8 54% 42%));
+  }
 }
 
 :where(.settings-presets) {
@@ -125,21 +125,21 @@
   text-align: left;
   cursor: pointer;
   appearance: none;
-}
 
-:where(.settings-preset-btn strong) {
-  display: block;
-}
+  & strong {
+    display: block;
+  }
 
-:where(.settings-preset-btn span) {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-size: var(--text-size-sm, 0.88rem);
-  line-height: 1.42;
-}
+  & span {
+    color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    font-size: var(--text-size-sm, 0.88rem);
+    line-height: 1.42;
+  }
 
-:where(.settings-preset-btn[data-site-setting-active="true"], .settings-preset-btn[data-preset-active="exact"]) {
-  border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
-  background: color-mix(in srgb, var(--component-accent) 9%, var(--component-surface-strong));
+  &:is([data-site-setting-active="true"], [data-preset-active="exact"]) {
+    border-color: color-mix(in srgb, var(--component-accent) 42%, transparent);
+    background: color-mix(in srgb, var(--component-accent) 9%, var(--component-surface-strong));
+  }
 }
 
 :where(.settings-shortcuts) {
@@ -157,12 +157,12 @@
   background: var(--component-surface-soft);
   color: inherit;
   text-decoration: none;
-}
 
-:where(.settings-shortcut-card:is(:hover, :focus-visible)) {
-  border-color: color-mix(in srgb, var(--component-accent) 30%, transparent);
-  background: color-mix(in srgb, var(--component-accent) 6%, var(--component-surface-strong));
-  text-decoration: none;
+  &:is(:hover, :focus-visible) {
+    border-color: color-mix(in srgb, var(--component-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--component-accent) 6%, var(--component-surface-strong));
+    text-decoration: none;
+  }
 }
 
 :where(.settings-shortcut-kicker, .settings-state-label, .vibe-widget-kicker) {
@@ -181,10 +181,10 @@
 
 :where(.settings-nav-card, .settings-structure-card, .settings-map-card) {
   gap: 0.55rem;
-}
 
-:where(.settings-nav-card code, .settings-structure-card code, .settings-map-card code) {
-  width: fit-content;
+  & code {
+    width: fit-content;
+  }
 }
 
 
@@ -259,23 +259,23 @@
 :where(.settings-note-form) {
   display: grid;
   gap: 0.55rem;
-}
 
-:where(.settings-note-form__label) {
-  font-weight: 700;
-}
+  & .settings-note-form__label {
+    font-weight: 700;
+  }
 
-:where(.settings-note-form__input) {
-  width: 100%;
-  min-height: 8rem;
-  resize: vertical;
-  padding: var(--component-pad-tight);
-  border: var(--component-border);
-  border-radius: var(--component-radius-tight);
-  background: var(--component-surface-strong);
-  color: var(--ink, currentColor);
-  font: inherit;
-  line-height: 1.5;
+  & .settings-note-form__input {
+    width: 100%;
+    min-height: 8rem;
+    resize: vertical;
+    padding: var(--component-pad-tight);
+    border: var(--component-border);
+    border-radius: var(--component-radius-tight);
+    background: var(--component-surface-strong);
+    color: var(--ink, currentColor);
+    font: inherit;
+    line-height: 1.5;
+  }
 }
 
 :where(.settings-note-form__actions, .settings-note-form__meta) {
