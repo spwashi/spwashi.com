@@ -7,6 +7,7 @@ export type BuildOptions = {
   imageCheck: boolean;
   sitemap: boolean;
   catalog: boolean;
+  fingerprintAssets: boolean;
   quiet: boolean;
   copyConcurrency: number;
   progressInterval: number;

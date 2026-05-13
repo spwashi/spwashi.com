@@ -52,15 +52,32 @@ function fingerprint(content: string | Buffer): string {
   return createHash('sha256').update(content).digest('hex').slice(0, 10);
 }
 
-async function hashAndRewritePublicAssets(outDir: string): Promise<Record<string, string>> {
+type AssetRewrite = {
+  source: string;
+  original: string;
+  targetDir: string;
+  targetBase: string;
+  extension: string;
+  chunk: string;
+};
+
+type AssetManifest = {
+  fingerprinted: boolean;
+  assets: Record<string, string>;
+  chunks: Record<string, string[]>;
+};
+
+async function hashAndRewritePublicAssets(outDir: string, options: { fingerprintAssets: boolean }): Promise<AssetManifest> {
   const assetMap: Record<string, string> = {};
-  const rewrites = [
+  const chunkMap = new Map<string, string[]>();
+  const rewrites: AssetRewrite[] = [
     {
       source: path.join(outDir, 'public/css/style.css'),
       original: '/public/css/style.css',
       targetDir: path.join(outDir, 'public/css'),
       targetBase: 'style',
       extension: '.css',
+      chunk: 'shell-css',
     },
     {
       source: path.join(outDir, 'public/js/site.js'),
@@ -68,12 +85,22 @@ async function hashAndRewritePublicAssets(outDir: string): Promise<Record<string
       targetDir: path.join(outDir, 'public/js'),
       targetBase: 'site',
       extension: '.js',
+      chunk: 'site-runtime',
     },
   ];
 
   for (const rewrite of rewrites) {
+    const chunkEntries = chunkMap.get(rewrite.chunk) || [];
+    chunkEntries.push(rewrite.original);
+    chunkMap.set(rewrite.chunk, chunkEntries);
+
     try {
       const content = await fs.readFile(rewrite.source);
+      if (!options.fingerprintAssets) {
+        assetMap[rewrite.original] = rewrite.original;
+        continue;
+      }
+
       const hash = fingerprint(content);
       const hashedName = `${rewrite.targetBase}.${hash}${rewrite.extension}`;
       const target = path.join(rewrite.targetDir, hashedName);
@@ -98,8 +125,14 @@ async function hashAndRewritePublicAssets(outDir: string): Promise<Record<string
     }
   }
 
-  await fs.writeFile(path.join(outDir, 'asset-manifest.json'), `${JSON.stringify({ assets: assetMap }, null, 2)}\n`, 'utf8');
-  return assetMap;
+  const manifest: AssetManifest = {
+    fingerprinted: options.fingerprintAssets,
+    assets: assetMap,
+    chunks: Object.fromEntries([...chunkMap.entries()].map(([chunk, assets]) => [chunk, assets.sort()])),
+  };
+
+  await fs.writeFile(path.join(outDir, 'asset-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  return manifest;
 }
 
 export async function main(): Promise<void> {
@@ -137,11 +170,11 @@ export async function main(): Promise<void> {
 
   await writeNoJekyll(options.outDir);
 
-  const assetMap = await hashAndRewritePublicAssets(options.outDir);
-  if (Object.keys(assetMap).length) {
-    logger.info(`[build] fingerprinted ${Object.keys(assetMap).length} core asset(s)`);
+  const assetManifest = await hashAndRewritePublicAssets(options.outDir, options);
+  if (assetManifest.fingerprinted) {
+    logger.info(`[build] fingerprinted ${Object.keys(assetManifest.assets).length} core asset(s)`);
   } else {
-    logger.info('[build] no core assets fingerprinted');
+    logger.info(`[build] preserved ${Object.keys(assetManifest.assets).length} core asset(s) for local caching`);
   }
 
   if (options.sitemap) {

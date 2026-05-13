@@ -42,6 +42,6 @@ npm run dev
 Other useful commands:
 
 - `npm run build`
+- `npm run build -- --skip-fingerprint`
 - `npm run check`
 - `npm run test:engagement`
-

@@ -38,6 +38,20 @@ function toPosixPath(value: string): string {
   return value.split(path.sep).join('/');
 }
 
+function resolveManualChunk(id: string): string | undefined {
+  const normalized = toPosixPath(id);
+
+  if (normalized.includes('/node_modules/')) return 'vendor';
+  if (normalized.includes('/public/js/kernel/')) return 'kernel';
+  if (normalized.includes('/public/js/runtime/')) return 'runtime';
+  if (normalized.includes('/public/js/interface/')) return 'interface';
+  if (normalized.includes('/public/js/modules/')) return 'modules';
+  if (normalized.includes('/public/js/semantic/')) return 'semantic';
+  if (normalized.includes('/public/js/media/')) return 'media';
+
+  return undefined;
+}
+
 function shouldIgnoreEntry(relativePath: string): boolean {
   const normalizedPath = toPosixPath(relativePath).replace(/^\/+/, '');
   if (!normalizedPath) return true;
@@ -180,6 +194,9 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: htmlInputs,
+      output: {
+        manualChunks: resolveManualChunk,
+      },
     },
   },
 });

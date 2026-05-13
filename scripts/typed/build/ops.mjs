@@ -26,6 +26,7 @@ export function parseArgs(argv) {
         imageCheck: true,
         sitemap: true,
         catalog: true,
+        fingerprintAssets: true,
         quiet: false,
         copyConcurrency: parsePositiveInteger(process.env.BUILD_COPY_CONCURRENCY, DEFAULT_COPY_CONCURRENCY),
         progressInterval: parsePositiveInteger(process.env.BUILD_PROGRESS_INTERVAL, DEFAULT_COPY_PROGRESS_INTERVAL),
@@ -55,6 +56,10 @@ export function parseArgs(argv) {
         }
         if (arg === '--skip-catalog') {
             options.catalog = false;
+            continue;
+        }
+        if (arg === '--skip-fingerprint') {
+            options.fingerprintAssets = false;
             continue;
         }
         if (arg === '--quiet') {
@@ -96,6 +101,7 @@ Options:
   --skip-image-check       Skip duplicate image detection.
   --skip-sitemap           Skip sitemap generation.
   --skip-catalog           Skip design catalog generation.
+  --skip-fingerprint       Preserve core asset filenames instead of hashing them.
   --concurrency <n>        Copy concurrency. Default: ${DEFAULT_COPY_CONCURRENCY}
   --progress-interval <n>  Copy progress log interval. Default: ${DEFAULT_COPY_PROGRESS_INTERVAL}
   --quiet                  Suppress non-error logs.
