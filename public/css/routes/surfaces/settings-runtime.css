@@ -67,7 +67,7 @@
   )
 ) {
   margin: 0 0 0.45rem;
-  color: var(--ink-strong, #090b0c);
+  color: var(--settings-ink-strong);
 }
 
 :where(
@@ -78,7 +78,7 @@
   )
 ) {
   margin: 0 0 0.65rem;
-  color: var(--ink-soft, rgba(14,18,20,0.68));
+  color: var(--settings-ink-soft);
   line-height: 1.52;
 }
 
@@ -110,7 +110,7 @@
   font-size: var(--text-size-label, 0.72rem);
   letter-spacing: 0.06em;
   text-transform: lowercase;
-  color: var(--ink-soft, rgba(14,18,20,0.68));
+  color: var(--settings-muted);
 }
 
 :where(body[data-spw-surface="settings"] .settings-nav-card .frame-list) {

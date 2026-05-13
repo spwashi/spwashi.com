@@ -32,7 +32,7 @@
   --settings-ink-strong: var(--ink-strong, rgba(14, 18, 20, 0.96));
   --settings-ink: var(--ink, rgba(14, 18, 20, 0.92));
   --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--settings-accent) 16%);
-  --settings-muted: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 68%, transparent);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 78%, transparent);
 
   /* Force the background to slightly distinguish from standard reading routes */
   background: color-mix(in srgb, var(--bg, #f4e2b5) 85%, #fff 15%);
@@ -47,7 +47,7 @@
   --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
   --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
   --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
-  --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+  --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, transparent);
   background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
 }
 
@@ -60,7 +60,7 @@
     --settings-control-line: color-mix(in srgb, var(--settings-accent) 44%, rgba(255, 255, 255, 0.18) 56%);
     --settings-control-line-soft: color-mix(in srgb, var(--settings-control-line) 72%, transparent);
     --settings-ink-soft: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, var(--settings-accent) 22%);
-    --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 66%, transparent);
+    --settings-muted: color-mix(in srgb, var(--ink, rgba(228, 235, 232, 0.92)) 78%, transparent);
     background: color-mix(in srgb, var(--bg, #1e2429) 85%, #000 15%);
   }
 }
@@ -94,7 +94,7 @@
 
 :where(body[data-spw-surface="settings"] .settings-start-note) {
   margin: 0;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.7));
+  color: var(--settings-ink-soft);
 }
 
 :where(body[data-spw-surface="settings"] .settings-quickstart-grid) {
@@ -125,10 +125,10 @@
   gap: 0.28rem;
   min-height: 100%;
   padding: 0.95rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--settings-accent) 16%, var(--line, rgba(14, 18, 20, 0.14)));
+  border: 1px solid var(--settings-control-line-soft);
   border-radius: var(--shape-component, 6px);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, var(--settings-accent-soft));
-  color: inherit;
+  background: var(--settings-control-bg);
+  color: var(--settings-ink);
   text-decoration: none;
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
   transition:
@@ -138,12 +138,12 @@
 }
 
 :where(body[data-spw-surface="settings"] .settings-shortcut-card strong) {
-  color: var(--ink-strong, #090b0c);
+  color: var(--settings-ink-strong);
   font-size: var(--text-size-sm, 0.95rem);
 }
 
 :where(body[data-spw-surface="settings"] .settings-shortcut-card > span:last-child) {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--settings-ink-soft);
   font-size: var(--text-size-xs, 0.82rem);
   line-height: 1.45;
 }
@@ -158,6 +158,7 @@
 
 :where(body[data-spw-surface="settings"] .settings-shortcut-card:is(:hover, :focus-visible)) {
   border-color: color-mix(in srgb, var(--settings-accent) 44%, transparent);
+  background: var(--settings-control-bg-active);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--settings-accent) 12%, transparent),
     var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));

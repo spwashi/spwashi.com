@@ -289,7 +289,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
   max-inline-size: var(--component-measure);
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--ink-mid, rgba(14, 18, 20, 0.68));
   line-height: 1.58;
   text-wrap: pretty;
 }
@@ -318,7 +318,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   max-inline-size: var(--component-measure);
   line-height: 1.68;
   text-wrap: pretty;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--ink-mid, rgba(14, 18, 20, 0.68));
 }
 
 :where(.spw-literary-verse, .spw-literary-stanza, [data-spw-textual-role="verse"]) {

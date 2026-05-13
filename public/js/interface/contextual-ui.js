@@ -503,8 +503,10 @@ function createRouteMenu(hostHeader, navList) {
   });
 
   panel.addEventListener('click', () => {
-    details.open = false;
-    syncRouteMenuMode(details);
+    window.requestAnimationFrame(() => {
+      details.open = false;
+      syncRouteMenuMode(details);
+    });
   });
 
   summary.addEventListener('keydown', (event) => {

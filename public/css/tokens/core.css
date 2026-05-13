@@ -1036,9 +1036,9 @@ html[data-spw-color-mode="dark"] {
 
   --ink-strong: rgba(236, 241, 238, 0.96);
   --ink: rgba(228, 235, 232, 0.92);
-  --ink-soft: rgba(190, 202, 198, 0.78);
-  --ink-mid: rgba(190, 202, 198, 0.6);
-  --ink-faint: rgba(190, 202, 198, 0.36);
+  --ink-soft: rgba(202, 214, 210, 0.84);
+  --ink-mid: rgba(202, 214, 210, 0.68);
+  --ink-faint: rgba(202, 214, 210, 0.52);
   --ink-speculative: rgba(190, 202, 198, 0.18);
   --ink-disabled: rgba(190, 202, 198, 0.24);
 

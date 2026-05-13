@@ -37,7 +37,7 @@
   min-width: 0;
   min-height: 100%;
   padding: var(--component-pad);
-  color: color-mix(in srgb, var(--ink, inherit) 96%, #000 4%);
+  color: var(--ink, currentColor);
   background: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
   border: var(--component-border);
   border-radius: var(--component-radius-tight);
@@ -67,8 +67,8 @@
   .spec-column,
   .ref-card
 ) {
-  --component-text: color-mix(in srgb, var(--ink, currentColor) 94%, #000 6%);
-  --component-text-soft: color-mix(in srgb, var(--ink-soft, currentColor) 88%, #000 12%);
+  --component-text: var(--ink-strong, currentColor);
+  --component-text-soft: var(--ink-mid, currentColor);
 }
 
 :where(

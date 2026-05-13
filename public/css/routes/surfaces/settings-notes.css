@@ -32,7 +32,7 @@
   border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 56%, transparent);
   border-radius: var(--shape-component, 6px);
   background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 98%, var(--settings-accent) 2%);
-  color: var(--ink, #161c1d);
+  color: var(--settings-ink);
   font: inherit;
   resize: vertical;
 }
@@ -62,13 +62,13 @@
   border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
   border-radius: var(--shape-component, 6px);
   background: color-mix(in srgb, var(--surface, #fff) 94%, transparent);
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--settings-ink-soft);
   font-size: var(--text-size-xs, 0.82rem);
   line-height: 1.45;
 }
 
 :where(body[data-spw-surface="settings"] .settings-note-form__meta strong) {
-  color: var(--ink, #161c1d);
+  color: var(--settings-ink-strong);
 }
 
 :where(body[data-spw-surface="settings"] .settings-note-list) {
@@ -83,12 +83,12 @@
 
 :where(body[data-spw-surface="settings"] .settings-query-panel > h3) {
   margin: 0;
-  color: var(--ink-strong, #090b0c);
+  color: var(--settings-ink-strong);
 }
 
 :where(body[data-spw-surface="settings"] .settings-query-panel > p) {
   margin: 0;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--settings-ink-soft);
   line-height: 1.52;
 }
 
@@ -102,17 +102,17 @@
   display: grid;
   gap: 0.35rem;
   margin: 0;
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--settings-ink-soft);
 }
 
 :where(body[data-spw-surface="settings"] .settings-query-preview) {
   display: block;
   overflow-x: auto;
   padding: 0.75rem 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  border: 1px solid var(--settings-control-line-soft);
   border-radius: var(--shape-element, 4px);
-  background: color-mix(in srgb, var(--settings-accent) 7%, transparent);
-  color: var(--ink-strong, #090b0c);
+  background: var(--settings-control-bg);
+  color: var(--settings-ink-strong);
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: var(--text-size-sm, 0.86rem);
   line-height: 1.45;
@@ -129,9 +129,9 @@
   display: grid;
   gap: 0.7rem;
   padding: var(--inset-component, 1rem);
-  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.34)) 58%, transparent);
+  border: 1px solid var(--settings-control-line-soft);
   border-radius: var(--shape-component, 6px);
-  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 98%, var(--settings-accent) 2%);
+  background: var(--settings-control-bg);
   box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
 }
 
@@ -152,13 +152,13 @@
 }
 
 :where(body[data-spw-surface="settings"] .local-note-card__time) {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  color: var(--settings-muted);
   font-size: var(--text-size-2xs, 0.72rem);
 }
 
 :where(body[data-spw-surface="settings"] .local-note-card__text) {
   margin: 0;
-  color: var(--ink, #161c1d);
+  color: var(--settings-ink);
   line-height: 1.6;
   white-space: pre-wrap;
 }
@@ -182,20 +182,20 @@
 
 :where(body[data-spw-surface="settings"] .pwa-status-card) {
   padding: var(--inset-component, 1.25rem);
-  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
-  background: var(--surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--settings-control-line-soft);
+  background: var(--settings-panel-bg-quiet);
   border-radius: var(--shape-component, 6px);
 }
 
 :where(body[data-spw-surface="settings"] .pwa-status-label) {
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: var(--text-size-label, 0.75rem);
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--settings-muted);
   margin-bottom: var(--space-2xs, 0.4rem);
 }
 
 :where(body[data-spw-surface="settings"] .pwa-status-value) {
   font-size: var(--text-size-lg, 1.1rem);
   font-weight: 600;
-  color: var(--ink, #161c1d);
+  color: var(--settings-ink);
 }

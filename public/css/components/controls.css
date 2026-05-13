@@ -206,7 +206,7 @@
 }
 
 :where(.vibe-widget-copy) {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--ink-mid, rgba(14, 18, 20, 0.68));
   line-height: 1.5;
   margin: 0;
 }
