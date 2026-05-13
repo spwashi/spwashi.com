@@ -247,6 +247,27 @@
 :where([data-spw-operator="layer"])     { --spw-operator-color: var(--op-layer-color, #404040); }
 :where([data-spw-operator="baseline"])  { --spw-operator-color: var(--op-baseline-color, #594d3f); }
 :where([data-spw-operator="topic"])     { --spw-operator-color: var(--op-topic-color, #1f6b80); }
+:where([data-spw-operator="potential"])   { --spw-operator-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
+:where([data-spw-operator="vibration"])   { --spw-operator-color: var(--op-vibration-color, var(--op-frame-color, #008080)); }
+:where([data-spw-operator="ground"])      { --spw-operator-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }
+:where([data-spw-operator="wonder"])      { --spw-operator-color: var(--op-wonder-color, var(--op-probe-color, #4a2180)); }
+:where([data-spw-operator="value"])       { --spw-operator-color: var(--op-value-color, var(--op-stream-color, #208259)); }
+:where([data-spw-operator="subject"])     { --spw-operator-color: var(--op-subject-color, var(--op-merge-color, #277a87)); }
+:where([data-spw-operator="perspective"]) { --spw-operator-color: var(--op-perspective-color, var(--op-action-color, #005959)); }
+:where([data-spw-operator="integration"]) { --spw-operator-color: var(--op-integration-color, var(--op-object-color, #a67c00)); }
+:where([data-spw-operator="concept"])     { --spw-operator-color: var(--op-concept-color, var(--op-topic-color, #1f6b80)); }
+:where([data-spw-operator="scene"])       { --spw-operator-color: var(--op-scene-color, var(--op-surface-color, #178282)); }
+:where([data-spw-operator="mode"])        { --spw-operator-color: var(--op-mode-color, var(--op-probe-color, #4a2180)); }
+:where([data-spw-operator="direction"])   { --spw-operator-color: var(--op-direction-color, var(--op-frame-color, #008080)); }
+:where([data-spw-sigil^="~"]) { --spw-operator-color: var(--op-potential-color, var(--op-ref-color, #1d57a3)); }
+:where([data-spw-sigil^="#"]) { --spw-operator-color: var(--op-vibration-color, var(--op-frame-color, #008080)); }
+:where([data-spw-sigil^="."]) { --spw-operator-color: var(--op-ground-color, var(--op-baseline-color, #594d3f)); }
+:where([data-spw-sigil^="?"]) { --spw-operator-color: var(--op-wonder-color, var(--op-probe-color, #4a2180)); }
+:where([data-spw-sigil^="!"]) { --spw-operator-color: var(--op-action-color, #005959); }
+:where([data-spw-sigil^="*"]) { --spw-operator-color: var(--op-value-color, var(--op-stream-color, #208259)); }
+:where([data-spw-sigil^="&"]) { --spw-operator-color: var(--op-subject-color, var(--op-merge-color, #277a87)); }
+:where([data-spw-sigil^="@"]) { --spw-operator-color: var(--op-perspective-color, var(--op-action-color, #005959)); }
+:where([data-spw-sigil^="^"]) { --spw-operator-color: var(--op-integration-color, var(--op-object-color, #a67c00)); }
 
 /* ==========================================================================
    6. Shared charged field

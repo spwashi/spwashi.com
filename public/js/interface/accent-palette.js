@@ -155,31 +155,49 @@ function extractOperatorToken(value = '') {
     const raw = String(value).trim();
     if (!raw) return '';
     if (raw.startsWith('#')) return 'frame';
-    if (raw.startsWith('?')) return 'probe';
-    if (raw.startsWith('~')) return 'ref';
-    if (raw.startsWith('@')) return 'action';
-    if (raw.startsWith('!')) return 'pragma';
-    if (raw.startsWith('<')) return 'topic';
-    if (raw.startsWith('.')) return 'baseline';
+    if (raw.startsWith('?')) return 'wonder';
+    if (raw.startsWith('~')) return 'potential';
+    if (raw.startsWith('@')) return 'perspective';
+    if (raw.startsWith('!')) return 'action';
+    if (raw.startsWith('*')) return 'value';
+    if (raw.startsWith('&')) return 'subject';
+    if (raw.startsWith('^')) return 'integration';
+    if (raw.startsWith('<')) return 'concept';
+    if (raw.startsWith('(')) return 'scene';
+    if (raw.startsWith('[')) return 'mode';
+    if (raw.startsWith('{')) return 'direction';
+    if (raw.startsWith('.')) return 'ground';
     return normalizeAccentToken(raw);
 }
 
 const WONDER_BY_OPERATOR = Object.freeze({
-    frame: 'orientation',
-    layer: 'constraint',
+    frame: 'resonance',
+    vibration: 'resonance',
+    layer: 'resonance',
     baseline: 'memory',
-    object: 'memory',
-    ref: 'resonance',
+    ground: 'memory',
+    object: 'comparison',
+    integration: 'comparison',
+    ref: 'projection',
+    potential: 'projection',
     probe: 'inquiry',
+    wonder: 'inquiry',
     action: 'projection',
-    stream: 'resonance',
+    perspective: 'orientation',
+    stream: 'memory',
+    value: 'memory',
     merge: 'comparison',
+    subject: 'comparison',
     binding: 'constraint',
     meta: 'comparison',
     normalize: 'constraint',
-    pragma: 'constraint',
-    surface: 'projection',
-    topic: 'resonance'
+    pragma: 'projection',
+    surface: 'orientation',
+    topic: 'orientation',
+    concept: 'orientation',
+    scene: 'projection',
+    mode: 'constraint',
+    direction: 'orientation'
 });
 
 export function inferWonderFromOperation(operator = '', tokens = []) {

@@ -187,20 +187,24 @@
 
 ^"operator_interaction_semantics"{
   rule: "Every visible operator must carry an interaction meaning, even if that meaning is inspect-only or unavailable in the current context."
-  baseline: { token: ".", intent: "settle", interaction: "return to a local baseline, member, or default lens" }
-  frame: { token: "#", intent: "orient", interaction: "activate or inspect a named frame or schema" }
-  layer: { token: "#:", intent: "qualify", interaction: "inspect interpretive role, layer, or runtime constraint" }
-  object: { token: "^", intent: "elevate", interaction: "open or inspect structured content" }
-  ref: { token: "~", intent: "refer", interaction: "resolve reference without forcing commitment" }
-  probe: { token: "?", intent: "inquire", interaction: "ask, filter, or reveal an exploratory lens" }
-  action: { token: "@", intent: "act", interaction: "commit a local action or projection" }
-  stream: { token: "*", intent: "flow", interaction: "connect to dynamic or event-like content" }
-  merge: { token: "&", intent: "integrate", interaction: "overlay, compare, or combine fields" }
+  potential: { token: "~", intent: "hold", interaction: "keep a possible path available without collapsing it" }
+  vibration: { token: "#", intent: "resonate", interaction: "name a structure so it can be recognized by resonance" }
+  ground: { token: ".", intent: "settle", interaction: "return to local ground, baseline, or center of gravity" }
+  wonder: { token: "?", intent: "wonder", interaction: "open curiosity, uncertainty, or an exploratory aperture" }
+  action: { token: "!", intent: "act", interaction: "commit a visible move and make the consequence observable" }
+  value: { token: "*", intent: "value", interaction: "mark material salience, substance, or concrete worth" }
+  subject: { token: "&", intent: "subject", interaction: "name the subject or binding focus of a relation" }
+  perspective: { token: "@", intent: "situate", interaction: "shift or inspect the viewpoint shaping an observation" }
+  integration: { token: "^", intent: "integrate", interaction: "lift parts into an inspectable integrated relation" }
+  concept: { token: "<>", intent: "concept", interaction: "hold a conceptual boundary or conduit" }
+  scene: { token: "()", intent: "stage", interaction: "enter a scene where structure becomes observable" }
+  mode: { token: "[]", intent: "select", interaction: "choose a mode while alternatives remain discoverable" }
+  direction: { token: "{}", intent: "direct", interaction: "hold bounded motion, category, or belonging" }
+  frame_compatibility: { token: "#>", intent: "address", interaction: "legacy site frame/address syntax; should teach vibration rather than replacing it" }
+  layer_compatibility: { token: "#:", intent: "address", interaction: "legacy layer/address syntax; should teach vibration rather than replacing it" }
   binding: { token: "=", intent: "bind", interaction: "name, pin, or categorize a local value" }
   meta: { token: "$", intent: "reflect", interaction: "inspect the medium, trace, or register itself" }
   normalize: { token: "%", intent: "scale", interaction: "compare, normalize, or adjust salience" }
-  pragma: { token: "!", intent: "constrain", interaction: "apply or inspect a runtime force or constraint" }
-  surface: { token: ">", intent: "project", interaction: "move into or inspect a rendered projection" }
   counterexample: "A sigil receives an operator color but clicking, focusing, or inspecting it gives no semantic account of what the operator could do."
 }
 

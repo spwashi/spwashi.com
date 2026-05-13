@@ -14,33 +14,35 @@
     "* value — substance, materiality, concrete content or flow",
     "& subject — binding, integration, subject of relation or frame",
     "@ perspective — point of view, context, anchoring an observation",
-    "^ ascension — elevation, structuring, making the implicit inspectable",
-    "< > concept/scene — angle brackets for projection and conduit",
+    "^ integration — lifting parts into relationship, making the implicit inspectable",
+    "< > concept — angle brackets for conceptual boundary and conduit",
+    "( ) scene — staged context where structure becomes observable",
     "[ ] mode — selection, choosing without consuming",
-    "{} definition — containment, brace, bounded region with inside/outside"
+    "{ } direction — containment, brace, bounded motion with inside/outside"
   ]
 
   current_site_alignment: {
-    ~: "ref — refer, resolve reference without forcing commitment"
-    #: "frame — orient, activate or inspect a named frame or schema"
-    .: "baseline — settle, return to local baseline or default"
-    "?": "probe — inquire, ask or reveal exploratory lens"
-    "!": "pragma — constrain, apply or inspect runtime force"
-    "*": "stream — flow, connect to dynamic or event-like content"
-    "&": "merge — integrate, overlay or combine fields"
-    "@": "action — act, commit a local action or projection"
-    "^": "object — elevate, open or inspect structured content"
-    "<>": "conduit — project, move into or inspect rendered projection"
-    "[]": "selection — select, pin coordinate in possibility space"
-    "{}": "brace — contain, place in bounded region with inside/outside"
+    ~: "potential — keep a possible path available without collapsing it"
+    #: "vibration — name a structure so it can be recognized by resonance"
+    .: "ground — settle or return to local center of gravity"
+    "?": "wonder — open inquiry without forcing immediate closure"
+    "!": "action — commit a visible move with observable consequence"
+    "*": "value — mark material salience, substance, or concrete worth"
+    "&": "subject — name the binding focus of a relation"
+    "@": "perspective — situate the viewpoint shaping an observation"
+    "^": "integration — lift parts into an inspectable relation"
+    "<>": "concept — hold a conceptual boundary or conduit"
+    "()": "scene — stage a context where structure becomes observable"
+    "[]": "mode — select a posture while alternatives remain discoverable"
+    "{}": "direction — hold bounded motion, category, or belonging"
   }
 
   button_speech_and_reversibility: {
     runtime_rule: "When a visible control starts with an operator, the runtime should expose its operator family, speech role, and reversibility as inspectable data attributes."
-    "#": "Anchor speech. The # family names or stabilizes a structure so it can be returned to."
-    "?": "Question speech. A probe should open a reversible lens, filter, or inquiry path without forcing commitment."
-    "!": "Constraint speech. A pragma should announce a stronger local force, reset, or rule that has visible consequence."
-    note: "Question and constraint should not feel interchangeable even when both are rendered as compact chips."
+    "#": "Vibration speech. The # family names or tones a structure so it can be found by resonance."
+    "?": "Wonder speech. A wonder control should open a reversible lens, filter, or inquiry path without forcing commitment."
+    "!": "Action speech. An action should announce a visible move, reset, or rule with observable consequence."
+    note: "Wonder and action should not feel interchangeable even when both are rendered as compact chips."
   }
 
   physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."

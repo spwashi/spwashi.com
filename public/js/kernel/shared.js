@@ -65,100 +65,111 @@ const OPERATOR_DEFINITIONS = Object.freeze([
   {
     pattern: /^#>/,
     type: 'frame',
-    label: 'frame declaration',
+    label: 'frame address',
     prefix: '#>',
-    intent: 'orient',
-    interaction: 'activate or inspect a named frame',
-    family: 'structural',
-    speech: 'anchor',
+    intent: 'vibrate',
+    interaction: 'activate or inspect a named resonance handle',
+    family: 'resonance',
+    speech: 'vibration',
     reversibility: 'returnable'
   },
   {
     pattern: /^#:/,
     type: 'layer',
-    label: 'layer marker',
+    label: 'layer vibration',
     prefix: '#:',
-    intent: 'qualify',
-    interaction: 'inspect the interpretive layer or runtime constraint',
-    family: 'structural',
-    speech: 'qualifier',
+    intent: 'vibrate',
+    interaction: 'inspect the layer as a named resonance field',
+    family: 'resonance',
+    speech: 'vibration',
     reversibility: 'inspectable'
   },
   {
+    pattern: /^#/,
+    type: 'vibration',
+    label: 'vibration',
+    prefix: '#',
+    intent: 'resonate',
+    interaction: 'name a structure so it can be recognized by resonance',
+    family: 'resonance',
+    speech: 'tone',
+    reversibility: 'returnable'
+  },
+  {
     pattern: /^\./,
-    type: 'baseline',
-    label: 'baseline member',
+    type: 'ground',
+    label: 'ground',
     prefix: '.',
     intent: 'settle',
-    interaction: 'return to the local baseline, member, or default lens',
+    interaction: 'return to the local ground, baseline, or center of gravity',
     family: 'grounding',
     speech: 'ground',
     reversibility: 'recoverable'
   },
   {
     pattern: /^\^/,
-    type: 'object',
-    label: 'object',
+    type: 'integration',
+    label: 'integration',
     prefix: '^',
-    intent: 'elevate',
-    interaction: 'open or inspect structured content',
-    family: 'structural',
-    speech: 'noun',
+    intent: 'integrate',
+    interaction: 'lift parts into an inspectable integrated relation',
+    family: 'relational',
+    speech: 'synthesis',
     reversibility: 'inspectable'
   },
   {
     pattern: /^~/,
-    type: 'ref',
-    label: 'reference',
+    type: 'potential',
+    label: 'potential',
     prefix: '~',
-    intent: 'refer',
-    interaction: 'resolve a reference without forcing commitment',
-    family: 'relational',
-    speech: 'pointer',
+    intent: 'hold',
+    interaction: 'keep a possible path available without collapsing it',
+    family: 'possibility',
+    speech: 'thread',
     reversibility: 'deferrable'
   },
   {
     pattern: /^\?/,
-    type: 'probe',
-    label: 'probe',
+    type: 'wonder',
+    label: 'wonder',
     prefix: '?',
-    intent: 'inquire',
-    interaction: 'ask, filter, or reveal an exploratory lens',
+    intent: 'wonder',
+    interaction: 'open curiosity, uncertainty, or an exploratory aperture',
     family: 'inquiry',
     speech: 'question',
     reversibility: 'reversible'
   },
   {
     pattern: /^@/,
-    type: 'action',
-    label: 'action',
+    type: 'perspective',
+    label: 'perspective',
     prefix: '@',
-    intent: 'act',
-    interaction: 'commit a local action or projection',
-    family: 'operative',
-    speech: 'verb',
-    reversibility: 'committing'
+    intent: 'situate',
+    interaction: 'shift or inspect the viewpoint shaping an observation',
+    family: 'perspective',
+    speech: 'viewpoint',
+    reversibility: 'revisable'
   },
   {
     pattern: /^\*/,
-    type: 'stream',
-    label: 'stream',
+    type: 'value',
+    label: 'value',
     prefix: '*',
-    intent: 'flow',
-    interaction: 'connect to dynamic or event-like content',
-    family: 'relational',
-    speech: 'flow',
+    intent: 'value',
+    interaction: 'mark material salience, substance, or concrete worth',
+    family: 'material',
+    speech: 'value',
     reversibility: 'replayable'
   },
   {
     pattern: /^&/,
-    type: 'merge',
-    label: 'merge',
+    type: 'subject',
+    label: 'subject',
     prefix: '&',
-    intent: 'integrate',
-    interaction: 'overlay, compare, or combine fields',
+    intent: 'subject',
+    interaction: 'name the subject or binding focus of a relation',
     family: 'relational',
-    speech: 'junction',
+    speech: 'subject',
     reversibility: 'revisable'
   },
   {
@@ -196,36 +207,69 @@ const OPERATOR_DEFINITIONS = Object.freeze([
   },
   {
     pattern: /^!/,
-    type: 'pragma',
-    label: 'pragma',
+    type: 'action',
+    label: 'action',
     prefix: '!',
-    intent: 'constrain',
-    interaction: 'apply or inspect a runtime force or constraint',
+    intent: 'act',
+    interaction: 'commit a move and make the consequence observable',
     family: 'operative',
-    speech: 'constraint',
-    reversibility: 'constraining'
+    speech: 'verb',
+    reversibility: 'committing'
   },
   {
     pattern: /^>/,
-    type: 'surface',
-    label: 'surface',
+    type: 'concept-edge',
+    label: 'concept edge',
     prefix: '>',
-    intent: 'project',
-    interaction: 'move into or inspect a rendered projection',
-    family: 'projective',
-    speech: 'projection',
+    intent: 'concept',
+    interaction: 'mark the closing edge of a concept bracket',
+    family: 'conceptual',
+    speech: 'concept',
     reversibility: 'projected'
   },
   {
     pattern: /^</,
-    type: 'topic',
-    label: 'topic lens',
+    type: 'concept',
+    label: 'concept',
     prefix: '<',
-    intent: 'scope',
-    interaction: 'enter or define a topical boundary — <topic> or (scene) <> (scene)',
-    family: 'scoping',
-    speech: 'subject',
+    intent: 'concept',
+    interaction: 'open a concept bracket or topical boundary',
+    family: 'conceptual',
+    speech: 'concept',
     reversibility: 'scoping'
+  },
+  {
+    pattern: /^\(/,
+    type: 'scene',
+    label: 'scene',
+    prefix: '(',
+    intent: 'stage',
+    interaction: 'enter a scene where structure becomes observable',
+    family: 'situational',
+    speech: 'scene',
+    reversibility: 'enterable'
+  },
+  {
+    pattern: /^\[/,
+    type: 'mode',
+    label: 'mode',
+    prefix: '[',
+    intent: 'select',
+    interaction: 'choose a mode while keeping alternatives discoverable',
+    family: 'modal',
+    speech: 'mode',
+    reversibility: 'switchable'
+  },
+  {
+    pattern: /^\{/,
+    type: 'direction',
+    label: 'direction',
+    prefix: '{',
+    intent: 'direct',
+    interaction: 'hold direction, bounded motion, or what belongs together',
+    family: 'directional',
+    speech: 'direction',
+    reversibility: 'bounded'
   }
 ]);
 
@@ -236,6 +280,18 @@ const OPERATOR_BY_TYPE = Object.freeze(
 const OPERATOR_BY_PREFIX = Object.freeze(
   Object.fromEntries(OPERATOR_DEFINITIONS.map((definition) => [definition.prefix, definition]))
 );
+
+const OPERATOR_TYPE_ALIASES = Object.freeze({
+  baseline: 'ground',
+  object: 'integration',
+  ref: 'potential',
+  probe: 'wonder',
+  stream: 'value',
+  merge: 'subject',
+  pragma: 'action',
+  topic: 'concept',
+  surface: 'concept-edge'
+});
 
 const OPERATOR_PREFIXES = Object.freeze(
   Object.fromEntries(OPERATOR_DEFINITIONS.map(({ type, prefix }) => [type, prefix]))
@@ -249,7 +305,7 @@ const OPERATOR_FAMILIES = Object.freeze(
   Object.fromEntries(OPERATOR_DEFINITIONS.map(({ type, family }) => [type, family]))
 );
 
-const OPERATOR_PREFIX_RE = /^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<)/;
+const OPERATOR_PREFIX_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 
 /* ==========================================================================
    3. Shared taxonomies
@@ -957,7 +1013,9 @@ const detectOperator = (text = '') => {
 };
 
 const getOperatorDefinition = (type = '') => (
-  OPERATOR_BY_TYPE[normalizeToken(type)] || null
+  OPERATOR_BY_TYPE[normalizeToken(type)]
+  || OPERATOR_BY_TYPE[OPERATOR_TYPE_ALIASES[normalizeToken(type)]]
+  || null
 );
 
 const detectOperatorFromElement = (element) => {
@@ -969,8 +1027,9 @@ const detectOperatorFromElement = (element) => {
     || ''
   );
 
-  if (explicitType && OPERATOR_BY_TYPE[explicitType]) {
-    return OPERATOR_BY_TYPE[explicitType];
+  if (explicitType) {
+    const explicitDefinition = getOperatorDefinition(explicitType);
+    if (explicitDefinition) return explicitDefinition;
   }
 
   const text = (

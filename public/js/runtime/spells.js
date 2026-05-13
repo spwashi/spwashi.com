@@ -9,7 +9,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
-import { getGroundedCouplings, getGroundedRegistry, restoreCheckpoint } from '/public/js/interface/haptics.js';
+import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const SPELL_ACTION = Object.freeze({
@@ -97,7 +97,7 @@ function inferExpressionFromKey(key = '') {
 }
 
 function inferPrefix(expression = '') {
-  return expression.match(/^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<)/)?.[0] || '~';
+  return expression.match(/^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/)?.[0] || '~';
 }
 
 function inferPostfix(expression = '', prefix = '') {
@@ -190,10 +190,10 @@ function buildSpellCombos(entries) {
 function constructSpell(entries, cognitiveState = null) {
   const timestamp = new Date().toISOString();
   const lines = [
-    '@cast_spell("navigation_lattice")',
-    `#:surface !${getSpellSurface()}`,
+    '!cast_spell("navigation_lattice")',
+    `#surface "${getSpellSurface()}"`,
     `=grounded ${entries.length}`,
-    `#:at "${timestamp}"`,
+    `@timestamp "${timestamp}"`,
     '',
     '^"replayable_navigation"{',
   ];
@@ -236,11 +236,11 @@ function buildProjectionNotes(entries, cognitiveState = null) {
   if (lensCount) notes.push(`<topic_lenses> =${lensCount}`);
 
   if (scopeCount && projectionCount) {
-    notes.push('@"carry_local_scope_into_surface"');
+    notes.push('!"carry_local_scope_into_surface"');
   } else if (projectionCount) {
-    notes.push('@"continue_across_pages"');
+    notes.push('!"continue_across_pages"');
   } else if (scopeCount) {
-    notes.push('@"read_down_into_sections"');
+    notes.push('!"read_down_into_sections"');
   }
 
   if (!notes.length) {
@@ -248,15 +248,15 @@ function buildProjectionNotes(entries, cognitiveState = null) {
   }
 
   if (cognitiveState?.familiarity === 'fresh') {
-    notes.push('@"learn_the_shape"');
+    notes.push('!"learn_the_shape"');
   } else if (['familiar', 'practiced'].includes(cognitiveState?.familiarity)) {
-    notes.push('@"return_to_familiar_ground"');
+    notes.push('!"return_to_familiar_ground"');
   } else if (['fluent', 'habitual'].includes(cognitiveState?.familiarity)) {
-    notes.push('@"customize_with_confidence"');
+    notes.push('!"customize_with_confidence"');
   }
 
   if (cognitiveState?.liminality && cognitiveState.liminality !== 'settled') {
-    notes.push('@"hold_threshold_open"');
+    notes.push('!"hold_threshold_open"');
   }
 
   return notes;
@@ -338,13 +338,14 @@ function updateSpellDock(model) {
     compactViewport ? model.destinationCounts.slice(0, 2) : model.destinationCounts
   );
   const cognitive = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
+  const collection = renderSigilCollectionRegister();
 
   if (compactViewport) {
-    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, destinations, model.narrationMode);
+    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, destinations, collection, model.narrationMode);
     return;
   }
 
-  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, destinations, model.snippet, model.narrationMode);
+  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, destinations, collection, model.snippet, model.narrationMode);
 }
 
 function getSpellDockParts(dock) {
@@ -387,7 +388,21 @@ function renderCognitiveRegisters(cognitiveState, narrationMode = 'readable') {
   ].join('');
 }
 
-function renderCompactSpellDock(preview, cognitive, destinations, narrationMode = 'readable') {
+function renderSigilCollectionRegister() {
+  const sigils = Object.values(getSigilCollection())
+    .sort((a, b) => Number(b.lastCollectedAt || 0) - Number(a.lastCollectedAt || 0))
+    .slice(0, 6);
+
+  if (!sigils.length) {
+    return '<span class="spell-register">sigils · ground chips to collect</span>';
+  }
+
+  return sigils.map((sigil) => (
+    `<span class="spell-register" data-spw-operator="${escapeHtml(sigil.type || '')}" data-spw-collected="true">${escapeHtml(sigil.prefix || '')} · ${escapeHtml(sigil.label || sigil.type || 'sigil')} ×${Number(sigil.count || 1)}</span>`
+  )).join('');
+}
+
+function renderCompactSpellDock(preview, cognitive, destinations, collection, narrationMode = 'readable') {
   const narrationNote = narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
     : narrationMode === 'quiet'
@@ -397,12 +412,13 @@ function renderCompactSpellDock(preview, cognitive, destinations, narrationMode 
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
+    <div class="spell-register-strip spell-register-strip--sigils">${collection}</div>
     <div class="spell-register-strip">${destinations}</div>
     <p class="spell-note spell-note--compact"><strong>Replayable</strong> cognitive lines. Familiar paths help you return; liminal paths show the edge you are crossing.${narrationNote}</p>
   `;
 }
 
-function renderExpandedSpellDock(preview, cognitive, destinations, snippet, narrationMode = 'readable') {
+function renderExpandedSpellDock(preview, cognitive, destinations, collection, snippet, narrationMode = 'readable') {
   const narrationNote = narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
     : narrationMode === 'quiet'
@@ -412,6 +428,7 @@ function renderExpandedSpellDock(preview, cognitive, destinations, snippet, narr
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
+    <div class="spell-register-strip spell-register-strip--sigils">${collection}</div>
     <div class="spell-register-strip">${destinations}</div>
     ${narrationNote ? `<p class="spell-note spell-note--compact">${narrationNote}</p>` : ''}
     <pre class="spell-source spell-source--compact"><code>${escapeHtml(snippet)}</code></pre>
@@ -457,6 +474,7 @@ function renderSpellBoard(board, model) {
     )).join('')
     : '<span class="spell-register">ground another token to complete the sequence</span>';
   const cognitiveSummary = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
+  const collectionSummary = renderSigilCollectionRegister();
   const narrationNote = model.narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible so the shape is easier to learn.'
     : model.narrationMode === 'quiet'
@@ -470,6 +488,7 @@ function renderSpellBoard(board, model) {
     <div class="spell-ledger">
       <p class="spell-note"><strong>A spell is a small replayable outcome.</strong> Prefix notation shapes intent. Postfix notation shapes what the interaction does next. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
       <div class="spell-register-strip spell-register-strip--cognitive">${cognitiveSummary}</div>
+      <div class="spell-register-strip spell-register-strip--sigils">${collectionSummary}</div>
       <div class="spell-register-strip">${prefixSummary}</div>
       <div class="spell-register-strip">${destinationSummary}</div>
       <div class="spell-register-strip">${comboSummary}</div>
@@ -477,7 +496,7 @@ function renderSpellBoard(board, model) {
     <pre class="spell-source"><code>${escapeHtml(model.snippet)}</code></pre>
     <div class="spell-actions">
       <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action">
-        @ cast_spell
+        ! cast_spell
       </button>
       <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="pragma">
         ! checkpoint
@@ -602,7 +621,7 @@ function registerSpellActions() {
 
       if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(snippet).then(() => {
-          if (button instanceof HTMLElement) button.textContent = '@ cast (copied)';
+          if (button instanceof HTMLElement) button.textContent = '! cast (copied)';
         }).catch(() => {});
       }
     },

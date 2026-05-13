@@ -198,7 +198,7 @@ function renderCognitiveSurface(mount) {
         <div class="cognitive-surface-frame" data-spw-operator="frame" data-spw-form="brace">
             <header class="cognitive-surface-header">
                 <span class="frame-sigil" data-spw-operator="frame">#&gt;cognitive_web</span>
-                <span class="cognitive-phase-badge" data-spw-operator="action">@phase .${escapeHtml(phase)}</span>
+                <span class="cognitive-phase-badge" data-spw-operator="perspective">@phase .${escapeHtml(phase)}</span>
                 <button class="cognitive-surface-close" type="button" aria-label="Close cognitive web">×</button>
             </header>
             <div class="cognitive-page-meta">
@@ -259,8 +259,8 @@ function renderCognitiveSurface(mount) {
 
             <footer class="cognitive-surface-footer">
                 <div class="cognitive-action-row">
-                    <button class="operator-chip" data-spw-operator="action" onclick="spwSpells?.cast()">@cast_spell</button>
-                    <button class="operator-chip" data-spw-operator="pragma" onclick="spwSpells?.checkpoint()">!checkpoint</button>
+                    <button class="operator-chip" data-spw-operator="action" onclick="spwSpells?.cast()">!cast_spell</button>
+                    <button class="operator-chip" data-spw-operator="action" onclick="spwSpells?.checkpoint()">!checkpoint</button>
                 </div>
             </footer>
 

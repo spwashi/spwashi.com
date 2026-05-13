@@ -25,8 +25,10 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 
 const STORAGE_KEY = 'spw-grounded-registry';
+const SIGIL_COLLECTION_KEY = 'spw-sigil-collection';
 const CHECKPOINT_PREFIX = 'spw-checkpoint:';
 const COUPLING_KEY = (path = window.location.pathname) => `spw-coupling:${path}`;
 const GLOBAL_COUPLING_KEY = 'spw-coupling:global';
@@ -90,8 +92,10 @@ function setGroundedMetadata(el, substrate = '', wonder = '') {
 
 function clearGroundedMetadata(el) {
   delete el.dataset.spwVisited;
+  delete el.dataset.spwCollected;
   delete el.dataset.spwGroundedIn;
   delete el.dataset.spwGroundedWonder;
+  el.style.removeProperty('--spw-collection-strength');
   if (el.dataset.spwSuccession === 'latched') {
     delete el.dataset.spwSuccession;
   }
@@ -118,6 +122,7 @@ export function initSpwHaptics() {
   initialized = true;
 
   restoreGroundedState(document);
+  syncSigilCollectionState();
   initRestoreObserver();
 
   document.addEventListener('click', onGroundToggleClick, true);
@@ -238,8 +243,11 @@ export function groundElement(el, overrides = {}) {
   el.dataset.spwSuccession = 'latched';
   el.dataset.spwVisited = 'true';
   setGroundedMetadata(el, detail.substrate || '', detail.wonder || '');
+  el.dataset.spwCollected = 'true';
+  el.style.setProperty('--spw-collection-strength', '1');
 
   addToRegistry(detail.key);
+  collectSigil(detail);
   writeCoupling(detail.key, {
     text: detail.text,
     label: detail.label,
@@ -287,6 +295,8 @@ function applyGroundedState(el, coupling = null) {
   setGroundedFlags(el, true);
   el.dataset.spwVisited = 'true';
   el.dataset.spwSuccession = 'latched';
+  el.dataset.spwCollected = 'true';
+  el.style.setProperty('--spw-collection-strength', '0.75');
   setGroundedMetadata(el, coupling?.substrate || '', coupling?.wonder || '');
 }
 
@@ -492,6 +502,58 @@ export function resetHaptics() {
   });
 }
 
+export function getSigilCollection() {
+  return readJsonStorage(SIGIL_COLLECTION_KEY, {});
+}
+
+function collectSigil(detail = {}) {
+  const definition = resolveSigilDefinition(detail);
+  if (!definition?.prefix) return;
+
+  const collection = getSigilCollection();
+  const current = collection[definition.prefix] || {};
+  const next = {
+    ...collection,
+    [definition.prefix]: {
+      prefix: definition.prefix,
+      type: definition.type,
+      label: definition.label,
+      count: Number(current.count || 0) + 1,
+      lastContext: detail.context || '',
+      lastExpression: detail.expression || detail.label || '',
+      lastCollectedAt: Date.now(),
+    }
+  };
+
+  writeJsonStorage(SIGIL_COLLECTION_KEY, next);
+  document.documentElement.dataset.spwSigilCollectionCount = String(Object.keys(next).length);
+
+  bus.emit(
+    'sigil:collected',
+    { sigil: next[definition.prefix], total: Object.keys(next).length },
+    { target: document }
+  );
+}
+
+function syncSigilCollectionState() {
+  const count = Object.keys(getSigilCollection()).length;
+  if (count) {
+    document.documentElement.dataset.spwSigilCollectionCount = String(count);
+  } else {
+    delete document.documentElement.dataset.spwSigilCollectionCount;
+  }
+}
+
+function resolveSigilDefinition(detail = {}) {
+  const expression = detail.expression || detail.label || detail.text || '';
+  return (
+    detectOperator(expression)
+    || getOperatorDefinition(detail.substrate || '')
+    || detectOperator(detail.prefix || '')
+    || null
+  );
+}
+
 /* ==========================================================================
    Semantics
    ========================================================================== */
@@ -523,13 +585,7 @@ function buildSemanticDetail(el, overrides = {}) {
       ?? null,
     grounded: isGrounded(el),
     substrate:
-      overrides.substrate
-      ?? el.dataset.spwGroundSubstrate
-      ?? el.dataset.spwSubstrate
-      ?? el.closest('[data-spw-substrate]')?.dataset.spwSubstrate
-      ?? el.dataset.spwOperator
-      ?? el.closest('[data-spw-operator]')?.dataset.spwOperator
-      ?? null,
+      inferSubstrate(el, overrides),
     context:
       overrides.context
       ?? el.dataset.spwContext
@@ -586,6 +642,28 @@ function buildSemanticDetail(el, overrides = {}) {
 
 function getInteractiveTarget(target, selector) {
   return target instanceof Element ? target.closest(selector) : null;
+}
+
+function inferSubstrate(el, overrides = {}) {
+  if (overrides.substrate) return overrides.substrate;
+
+  const expression = (
+    el.dataset.spwGroundExpression
+    || el.dataset.spwNavExpression
+    || el.dataset.spwSigil
+    || getElementText(el)
+  );
+  const detected = detectOperator(expression);
+  if (detected?.type) return detected.type;
+
+  return (
+    el.dataset.spwGroundSubstrate
+    || el.dataset.spwSubstrate
+    || el.closest('[data-spw-substrate]')?.dataset.spwSubstrate
+    || el.dataset.spwOperator
+    || el.closest('[data-spw-operator]')?.dataset.spwOperator
+    || null
+  );
 }
 
 function getFieldRoot(el) {

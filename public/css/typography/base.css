@@ -250,7 +250,7 @@
    6. Operator Specific Typographic Axes
    ========================================================================== */
 
-:where([data-spw-operator='frame']) {
+:where([data-spw-operator='frame'], [data-spw-operator='vibration']) {
   --type-weight-base: 500;
   --type-weight-range: 300;
   --type-tracking-base: 0.04em;
@@ -258,7 +258,7 @@
   --type-size-surge: 0.04;
 }
 
-:where([data-spw-operator='probe']) {
+:where([data-spw-operator='probe'], [data-spw-operator='wonder']) {
   --type-weight-base: 400;
   --type-weight-range: 100;
   --type-tracking-base: 0.03em;
@@ -282,7 +282,7 @@
   font-variant-caps: normal;
 }
 
-:where([data-spw-operator='ref']) {
+:where([data-spw-operator='ref'], [data-spw-operator='potential']) {
   --type-weight-base: 400;
   --type-weight-range: 100;
   --type-tracking-base: 0.02em;
@@ -290,7 +290,7 @@
   --type-oblique-range: 12;
 }
 
-:where([data-spw-operator='stream']) {
+:where([data-spw-operator='stream'], [data-spw-operator='value']) {
   --type-weight-base: 400;
   --type-weight-range: 200;
   --type-tracking-base: 0.04em;
@@ -312,7 +312,7 @@
   font-variant-caps: all-small-caps;
 }
 
-:where([data-spw-operator='object']) {
+:where([data-spw-operator='object'], [data-spw-operator='integration']) {
   --type-weight-base: 400;
   --type-weight-range: 300;
   --type-tracking-base: 0.01em;
@@ -320,7 +320,7 @@
   --type-size-surge: 0.12;
 }
 
-:where([data-spw-operator='merge']) {
+:where([data-spw-operator='merge'], [data-spw-operator='subject']) {
   --type-weight-base: 400;
   --type-weight-range: 0;
   --type-tracking-base: 0.04em;
@@ -348,7 +348,7 @@
   --type-oblique-range: 16;
 }
 
-:where([data-spw-operator='surface']) {
+:where([data-spw-operator='surface'], [data-spw-operator='scene']) {
   --type-weight-base: 500;
   --type-weight-range: 300;
   --type-tracking-base: 0.03em;
@@ -364,13 +364,43 @@
   font-variant-caps: small-caps;
 }
 
-:where([data-spw-operator='baseline']) {
+:where([data-spw-operator='baseline'], [data-spw-operator='ground']) {
   --type-weight-base: 400;
   --type-weight-range: -100;
   --type-tracking-base: 0.01em;
   --type-tracking-range: -0.01em;
   --type-size-surge: -0.06;
   opacity: calc(0.88 - var(--charge, 0) * 0.08);
+}
+
+:where([data-spw-operator='perspective']) {
+  --type-weight-base: 450;
+  --type-weight-range: 160;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: 0.05em;
+  --type-oblique-range: 10;
+}
+
+:where([data-spw-operator='concept']) {
+  --type-weight-base: 480;
+  --type-weight-range: 180;
+  --type-tracking-base: 0.03em;
+  --type-tracking-range: 0.08em;
+}
+
+:where([data-spw-operator='mode']) {
+  --type-weight-base: 500;
+  --type-weight-range: 120;
+  --type-tracking-base: 0.06em;
+  --type-tracking-range: -0.02em;
+  font-variant-caps: small-caps;
+}
+
+:where([data-spw-operator='direction']) {
+  --type-weight-base: 500;
+  --type-weight-range: 220;
+  --type-tracking-base: 0.02em;
+  --type-tracking-range: -0.03em;
 }
 
 :where([data-spw-operator='normalize']) {

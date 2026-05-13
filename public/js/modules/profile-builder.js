@@ -24,12 +24,15 @@ export const STATUS_OPTIONS = [
 ];
 
 export const OPERATOR_OPTIONS = [
-  { value: '^',  label: '^ object',   hint: 'I build stable, lasting systems.' },
-  { value: '~',  label: '~ relay',    hint: 'I connect, translate, and transmit.' },
-  { value: '@',  label: '@ event',    hint: 'I make things happen at the right moment.' },
-  { value: '?[', label: '?[ probe',   hint: 'I investigate, question, and discover.' },
-  { value: '>',  label: '> boon',     hint: 'I bring arrival — resources, possibility.' },
-  { value: '!',  label: '! pragma',   hint: 'I enforce constraints and make things correct.' },
+  { value: '~',  label: '~ potential',   hint: 'I keep useful possibilities visible.' },
+  { value: '#',  label: '# vibration',   hint: 'I help ideas resonate and become recognizable.' },
+  { value: '.',  label: '. ground',      hint: 'I stabilize work so people can stand on it.' },
+  { value: '?',  label: '? wonder',      hint: 'I investigate, question, and discover.' },
+  { value: '!',  label: '! action',      hint: 'I make consequential moves inspectable.' },
+  { value: '*',  label: '* value',       hint: 'I make the concrete value legible.' },
+  { value: '&',  label: '& subject',     hint: 'I name the person, system, or relation at stake.' },
+  { value: '@',  label: '@ perspective', hint: 'I shift viewpoint and make context explicit.' },
+  { value: '^',  label: '^ integration', hint: 'I combine parts into learnable systems.' },
 ];
 
 export const BADGE_CLUSTERS = [

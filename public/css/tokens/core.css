@@ -650,6 +650,45 @@
   --op-surface-color: hsl(180 52% 30%);
   --op-surface-border: hsla(180, 52%, 30%, 0.24);
   --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
+
+  /* Canonical Spw sigil aliases. Older component names remain as CSS
+     compatibility handles while public semantics use the learnable map. */
+  --op-potential-color: var(--op-ref-color);
+  --op-potential-border: var(--op-ref-border);
+  --op-potential-bg-soft: var(--op-ref-bg-soft);
+  --op-vibration-color: var(--op-frame-color);
+  --op-vibration-border: var(--op-frame-border);
+  --op-vibration-bg-soft: var(--op-frame-bg-soft);
+  --op-ground-color: var(--op-baseline-color);
+  --op-ground-border: var(--op-baseline-border);
+  --op-ground-bg-soft: var(--op-baseline-bg-soft);
+  --op-wonder-color: var(--op-probe-color);
+  --op-wonder-border: var(--op-probe-border);
+  --op-wonder-bg-soft: var(--op-probe-bg-soft);
+  --op-value-color: var(--op-stream-color);
+  --op-value-border: var(--op-stream-border);
+  --op-value-bg-soft: var(--op-stream-bg-soft);
+  --op-subject-color: var(--op-merge-color);
+  --op-subject-border: var(--op-merge-border);
+  --op-subject-bg-soft: var(--op-merge-bg-soft);
+  --op-perspective-color: var(--op-action-color);
+  --op-perspective-border: var(--op-action-border);
+  --op-perspective-bg-soft: var(--op-action-bg-soft);
+  --op-integration-color: var(--op-object-color);
+  --op-integration-border: var(--op-object-border);
+  --op-integration-bg-soft: var(--op-object-bg-soft);
+  --op-concept-color: var(--op-topic-color);
+  --op-concept-border: var(--op-topic-border);
+  --op-concept-bg-soft: var(--op-topic-bg-soft);
+  --op-scene-color: var(--op-surface-color);
+  --op-scene-border: var(--op-surface-border);
+  --op-scene-bg-soft: var(--op-surface-bg-soft);
+  --op-mode-color: var(--op-probe-color);
+  --op-mode-border: var(--op-probe-border);
+  --op-mode-bg-soft: var(--op-probe-bg-soft);
+  --op-direction-color: var(--op-frame-color);
+  --op-direction-border: var(--op-frame-border);
+  --op-direction-bg-soft: var(--op-frame-bg-soft);
 }
 
 
