@@ -47,6 +47,7 @@ const LAYER_IMPORT_RE = /@import\s+(?:url\(\s*)?['"]([^'"]+)['"]\s*\)?\s+layer\(
 const DATA_SPW_ATTR_NAME_RE = /^data-spw-[a-z0-9-]+$/;
 const DOC_ATTR_RE = /data-spw-([a-z0-9-]+)/g;
 const DOC_TOKEN_RE = /(--[a-z][a-z0-9-]{2,})/g;
+const IMAGE_ASSET_EXTENSIONS = new Set(['.avif', '.gif', '.ico', '.jpeg', '.jpg', '.png', '.svg', '.webp']);
 
 function toPosix(value) {
   return value.split(path.sep).join('/');
@@ -54,6 +55,28 @@ function toPosix(value) {
 
 function relRepo(absPath) {
   return toPosix(path.relative(ROOT_DIR, absPath));
+}
+
+function humanizeBytes(bytes) {
+  if (!Number.isFinite(bytes)) return '—';
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MiB`;
+  if (bytes >= 1024) return `${(bytes / 1024).toFixed(1)} KiB`;
+  return `${bytes} B`;
+}
+
+function titleFromStem(stem) {
+  return stem
+    .split('/')
+    .pop()
+    ?.replace(/[-_]+/g, ' ')
+    .trim() || stem;
+}
+
+function slugifyCatalogId(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 function parseArgs(argv) {
@@ -107,6 +130,71 @@ Options:
   --quiet         Suppress summary output.
   -h, --help      Show this help.
 `);
+}
+
+function imageBucketForPath(relativePath) {
+  const normalized = toPosix(relativePath).replace(/^\/+/, '');
+  const parts = normalized.split('/');
+  const imageRootIndex = parts.indexOf('images');
+  const imageParts = imageRootIndex >= 0 ? parts.slice(imageRootIndex + 1) : [];
+  const family = imageParts[0] || 'images';
+  const bucketParts = imageParts.slice(0, -1);
+
+  if (bucketParts.length > 1) {
+    return bucketParts.join('/');
+  }
+
+  return family;
+}
+
+function imageStateForBucket(bucket) {
+  if (bucket === 'renders/_raw' || bucket === 'renders/_raw-2x2') return 'raw';
+  if (bucket === 'renders/unsorted-curation') return 'review';
+  if (bucket.startsWith('renders/')) return 'generated';
+  return 'published';
+}
+
+async function collectImageAssets(filePaths) {
+  const assets = [];
+
+  for (const filePath of filePaths) {
+    const relativePath = relRepo(filePath);
+    if (!relativePath.startsWith('public/images/')) continue;
+
+    const extension = path.extname(relativePath).toLowerCase();
+    if (!IMAGE_ASSET_EXTENSIONS.has(extension)) continue;
+
+    const stat = await fs.stat(filePath);
+    const stem = relativePath.slice(0, -extension.length);
+    const bucket = imageBucketForPath(relativePath);
+    const state = imageStateForBucket(bucket);
+    const sidecarCandidates = [`${stem}.spw`, `${stem}.json`];
+    const sidecars = [];
+
+    for (const candidate of sidecarCandidates) {
+      try {
+        await fs.access(path.join(ROOT_DIR, candidate));
+        sidecars.push(candidate);
+      } catch {
+        // Ignore missing sidecars.
+      }
+    }
+
+    assets.push({
+      alt: titleFromStem(stem),
+      bucket,
+      bytes: stat.size,
+      extension: extension.slice(1),
+      family: bucket.split('/')[0],
+      href: `/${relativePath}`,
+      path: relativePath,
+      sidecars,
+      state,
+      stem,
+    });
+  }
+
+  return assets.sort((a, b) => a.path.localeCompare(b.path));
 }
 
 function getGeneratedAt() {
@@ -629,10 +717,24 @@ function computeOrphans(attrs) {
   };
 }
 
-function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, counts}) {
+function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, generatedAt, counts}) {
   const attrEntries = Object.values(attrs);
   const tokenEntries = [...tokens.values()].sort((a, b) => a.name.localeCompare(b.name));
   const docEntries = Object.entries(docs).sort(([a], [b]) => a.localeCompare(b));
+  const imageBucketMap = new Map();
+
+  for (const asset of imageAssets) {
+    const bucket = imageBucketMap.get(asset.bucket) || [];
+    bucket.push(asset);
+    imageBucketMap.set(asset.bucket, bucket);
+  }
+
+  const imageBucketEntries = [...imageBucketMap.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([bucket, assets]) => ({
+      bucket,
+      assets: assets.sort((left, right) => left.path.localeCompare(right.path)),
+    }));
 
   const attrRows = attrEntries
     .sort((a, b) => b.htmlUsageCount - a.htmlUsageCount || a.name.localeCompare(b.name))
@@ -668,6 +770,32 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, c
       </article>
     `)
     .join('\n');
+
+  const imageAssetRows = imageBucketEntries.map(({bucket, assets}) => `
+    <section class="catalog-asset-bucket" id="images-${esc(slugifyCatalogId(bucket))}">
+      <header class="catalog-asset-bucket__header">
+        <h3><code>${esc(bucket)}</code></h3>
+        <p class="catalog-asset-bucket__meta">${assets.length} asset${assets.length === 1 ? '' : 's'}</p>
+      </header>
+      <div class="catalog-asset-grid">
+        ${assets.map((asset) => `
+          <article class="catalog-entry catalog-entry--asset" data-spw-catalog-kind="image-asset" id="image-${esc(slugifyCatalogId(asset.path))}">
+            <header class="catalog-entry__header">
+              <code class="catalog-entry__name"><a href="${esc(asset.href)}">${esc(asset.path)}</a></code>
+              <span class="catalog-entry__meta">${esc(asset.state)} • ${esc(asset.extension)} • ${humanizeBytes(asset.bytes)}</span>
+            </header>
+            <a class="catalog-entry__preview" href="${esc(asset.href)}" aria-label="Open ${esc(asset.path)}">
+              <img src="${esc(asset.href)}" alt="${esc(asset.alt)}" loading="lazy" decoding="async">
+            </a>
+            <div class="catalog-asset-chips">
+              <span class="catalog-chip">bucket: ${esc(asset.bucket)}</span>
+              ${asset.sidecars.map((sidecar) => `<a class="catalog-chip catalog-chip--link" href="/${esc(sidecar)}">sidecar: ${esc(path.basename(sidecar))}</a>`).join('')}
+            </div>
+          </article>
+        `).join('\n')}
+      </div>
+    </section>
+  `).join('\n');
 
   const orphanBlock = `
     <section class="catalog-section" id="orphans">
@@ -725,12 +853,13 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, c
       <time datetime="${esc(generatedAt)}">${esc(generatedAt)}</time>.
     </p>
     <p class="catalog-masthead__counts">
-      ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} CSS files • ${counts.docs} philosophy docs
+      ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} CSS files • ${counts.docs} philosophy docs • ${counts.imageAssets} images
     </p>
     <nav class="catalog-toc" aria-label="Catalog sections">
       <a href="#attributes">Attributes</a>
       <a href="#tokens">Tokens</a>
       <a href="#css-files">CSS files</a>
+      <a href="#assets">Assets</a>
       <a href="#docs">Philosophy docs</a>
       <a href="#orphans">Orphans</a>
     </nav>
@@ -748,6 +877,12 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, orphans, generatedAt, c
     <h2>CSS files</h2>
     <p>Each CSS file with its layer, attributes it reads, and tokens it defines.</p>
     <div class="catalog-entries">${cssFileRows}</div>
+  </section>
+
+  <section class="catalog-section" id="assets">
+    <h2>Assets</h2>
+    <p>Public image assets and review-side renders. This section is meant for local and production review of the site media inventory.</p>
+    <div class="catalog-asset-buckets">${imageAssetRows || '<p><em>No image assets found.</em></p>'}</div>
   </section>
 
   <section class="catalog-section" id="tokens">
@@ -792,10 +927,16 @@ const CATALOG_CSS = `
 .catalog-masthead__lede { color: var(--ink-soft, #556); max-width: 60ch; }
 .catalog-masthead__counts { font-size: 0.9rem; color: var(--ink-soft, #667); font-variant-numeric: tabular-nums; }
 .catalog-toc { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; font-size: 0.9rem; }
+.catalog-toc--compact { gap: 0.5rem 0.75rem; font-size: 0.8rem; }
 .catalog-toc a { text-decoration: none; border-bottom: 1px dotted currentColor; }
 .catalog-section { display: grid; gap: 1rem; }
 .catalog-section h2 { margin: 0; }
 .catalog-entries { display: grid; gap: 0.75rem; }
+.catalog-asset-buckets { display: grid; gap: 1.5rem; }
+.catalog-asset-bucket { display: grid; gap: 0.75rem; }
+.catalog-asset-bucket__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+.catalog-asset-bucket__meta { margin: 0; font-size: 0.85rem; color: var(--ink-soft, #667); }
+.catalog-asset-grid { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
 .catalog-entry {
   padding: 0.75rem 1rem;
   border: 1px solid var(--line, rgba(0,0,0,0.1));
@@ -803,6 +944,7 @@ const CATALOG_CSS = `
   background: var(--surface, rgba(255,255,255,0.6));
   display: grid; gap: 0.35rem;
 }
+.catalog-entry--asset { gap: 0.6rem; }
 .catalog-entry__header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
 .catalog-entry__name { font-weight: 600; }
 .catalog-entry__meta { font-size: 0.8rem; color: var(--ink-soft, #667); font-variant-numeric: tabular-nums; }
@@ -812,6 +954,11 @@ const CATALOG_CSS = `
 .catalog-entry__doc { margin: 0; font-size: 0.85rem; color: var(--ink-soft, #556); font-style: italic; }
 .orphan-list dt { font-weight: 600; margin-top: 0.5rem; }
 .orphan-list dd { margin: 0.15rem 0 0.5rem 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.catalog-entry__preview { display: block; border-radius: 0.45rem; overflow: hidden; aspect-ratio: 4 / 3; background: var(--surface-soft, rgba(0,0,0,0.04)); border: 1px solid var(--line, rgba(0,0,0,0.1)); }
+.catalog-entry__preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.catalog-asset-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.catalog-chip { display: inline-flex; align-items: center; padding: 0.15rem 0.45rem; border-radius: 999px; background: var(--surface-soft, rgba(0,0,0,0.05)); font-size: 0.75rem; }
+.catalog-chip--link { text-decoration: none; color: inherit; }
 `;
 
 function serializeTokens(tokens) {
@@ -887,6 +1034,7 @@ async function main() {
     return (filePath.endsWith('.js') || filePath.endsWith('.mjs')) && !rel.startsWith('scripts/');
   });
   const spwFiles = allFiles.filter((filePath) => filePath.endsWith('.spw'));
+  const imageAssets = await collectImageAssets(allFiles);
 
   const {attributes, cssFiles: cssFileInfo, tokens} = await parseCss(cssFiles, fileToLayer);
   await scanHtml(htmlFiles, attributes);
@@ -904,6 +1052,8 @@ async function main() {
     docs: Object.keys(docs).length,
     htmlFilesScanned: htmlFiles.length,
     jsFilesScanned: jsFiles.length,
+    imageAssets: imageAssets.length,
+    imageBuckets: new Set(imageAssets.map((asset) => asset.bucket)).size,
   };
 
   const catalog = {
@@ -914,6 +1064,7 @@ async function main() {
     tokens: tokensSerialized,
     docs,
     orphans,
+    imageAssets,
   };
 
   const outputs = {
@@ -925,6 +1076,7 @@ async function main() {
       tokens,
       docs,
       orphans,
+      imageAssets,
       generatedAt: catalog.generatedAt,
       counts,
     }),
@@ -934,7 +1086,7 @@ async function main() {
 
   if (!options.quiet) {
     console.log(`[catalog] ${options.check ? 'checked' : 'wrote'} ${relRepo(path.join(options.outDir, 'index.html'))}`);
-    console.log(`[catalog] ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} css files • ${counts.docs} spw docs`);
+    console.log(`[catalog] ${counts.attributes} attributes • ${counts.tokens} tokens • ${counts.cssFiles} css files • ${counts.docs} spw docs • ${counts.imageAssets} images`);
     console.log(`[catalog] scanned ${counts.htmlFilesScanned} html • ${counts.jsFilesScanned} js • ${cssFiles.length} css • ${spwFiles.length} spw`);
     console.log(`[catalog] orphans: css-only=${orphans.attrsInCssNotHtml.length} html-only=${orphans.attrsInHtmlNotCss.length} no-doc=${orphans.attrsWithNoDoc.length}`);
   }

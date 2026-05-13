@@ -10,3 +10,4 @@
   - `studio-house-hero.json`
 - Favor route or subject buckets first. If an image later becomes more general, move it only after references and sidecars are in place.
 - If artwork is by someone else, publish it under a collaborator bucket such as `public/images/collaborators/raven-of-the-broken-biscuits/` and keep attribution in the sidecar. Do not imply authorship in filename, alt text, or surrounding copy.
+- Use `/design/catalog/` as the review surface for public images, generated variants, and sidecars before promoting a path as canonical.
