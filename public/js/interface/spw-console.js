@@ -280,6 +280,16 @@ const readLayoutShiftAudit = () => {
     };
 };
 
+const renderCollapseControls = (nodes, isCollapsed) => {
+    const label = isCollapsed ? 'Expand Spw console' : 'Collapse Spw console';
+    const openGlyph = isCollapsed ? '▼' : '▲';
+    const closeGlyph = isCollapsed ? '▲' : '▼';
+
+    nodes.expandBtn.setAttribute('aria-label', label);
+    nodes.expandBtn.textContent = openGlyph;
+    nodes.collapseBtn.textContent = closeGlyph;
+};
+
 const describeLayoutShiftAction = (detail = {}) => {
     if (detail.state === 'unsupported') {
         return [
@@ -301,6 +311,7 @@ const describeLayoutShiftAction = (detail = {}) => {
 
     const batchValue = formatLayoutShiftValue(detail.batchValue ?? detail.value ?? 0);
     const totalValue = formatLayoutShiftValue(detail.totalValue ?? detail.total ?? 0);
+    const metric = detail.metric || 'CLS';
     const counted = detail.count ?? detail.entries?.filter((entry) => !entry.hadRecentInput).length ?? 0;
     const ignored = detail.recentInputCount
         ?? detail.entries?.filter((entry) => entry.hadRecentInput).length
@@ -317,7 +328,7 @@ const describeLayoutShiftAction = (detail = {}) => {
 
     return [
         '!layout.shift',
-        `${outcomeCopy}: ${batchValue} CLS; ${counted} counted${suffix}; total ${totalValue}${sourceSuffix}${defaultsSuffix}`,
+        `${outcomeCopy}: ${batchValue} ${metric}; ${counted} counted${suffix}; total ${totalValue}${sourceSuffix}${defaultsSuffix}`,
     ];
 };
 
@@ -387,9 +398,7 @@ const initSpwConsole = () => {
         }
         nodes.root.classList.toggle('is-collapsed', value);
         if (animate) nodes.root.classList.add('is-animating');
-        nodes.expandBtn.setAttribute('aria-label', value ? 'Expand Spw console' : 'Collapse Spw console');
-        nodes.expandBtn.textContent = value ? '▲' : '▲';
-        nodes.collapseBtn.textContent = value ? '▲' : '▼';
+        renderCollapseControls(nodes, value);
         wake();
     };
 
@@ -411,8 +420,8 @@ const initSpwConsole = () => {
 
     // ── Initial state ──
     const sync = (detail) => {
-        const frame  = detail?.frame || api.getActiveFrame();
-        const meta   = detail || (frame ? api.getFrameMeta(frame) : null);
+        const frame = detail?.frame || api.getActiveFrame();
+        const meta = detail || (frame ? api.getFrameMeta(frame) : null);
         if (meta) updateFrame(nodes, meta);
         renderModes(nodes, frame, api);
     };

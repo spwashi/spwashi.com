@@ -333,6 +333,17 @@ const normalizeReflowReason = (reason = SPW_REFLOW_REASONS.INTERACTION) => {
     : SPW_REFLOW_REASONS.INTERACTION;
 };
 
+const applyPresetBundle = (disposition, preset, bundleMap, familyKey, tuningKey) => {
+  const bundle = bundleMap[preset];
+  if (!bundle) return false;
+
+  Object.assign(disposition.cssVars, bundle.cssVars);
+  Object.assign(disposition.data, bundle.data);
+  disposition.presets[familyKey] = preset;
+  disposition.tuning[tuningKey] = preset;
+  return true;
+};
+
 const readDebugTokens = (value = '') => (
   String(value)
     .split(/[,\s]+/)
@@ -526,45 +537,25 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
 
     if (queryContract.aliases.physics?.has(key)) {
       const preset = normalizeToken(value);
-      if (queryContract.physicsPresets[preset]) {
-        Object.assign(disposition.cssVars, queryContract.physicsPresets[preset].cssVars);
-        Object.assign(disposition.data, queryContract.physicsPresets[preset].data);
-        disposition.presets.physics = preset;
-        disposition.tuning.physics = preset;
-      }
+      applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'physics');
       continue;
     }
 
     if (queryContract.aliases.meaning?.has(key)) {
       const preset = normalizeToken(value);
-      if (queryContract.meaningPresets[preset]) {
-        Object.assign(disposition.cssVars, queryContract.meaningPresets[preset].cssVars);
-        Object.assign(disposition.data, queryContract.meaningPresets[preset].data);
-        disposition.presets.meaning = preset;
-        disposition.tuning.meaning = preset;
-      }
+      applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'meaning');
       continue;
     }
 
     if (queryContract.aliases.view?.has(key)) {
       const preset = normalizeToken(value);
-      if (queryContract.meaningPresets[preset]) {
-        Object.assign(disposition.cssVars, queryContract.meaningPresets[preset].cssVars);
-        Object.assign(disposition.data, queryContract.meaningPresets[preset].data);
-        disposition.presets.meaning = preset;
-        disposition.tuning.view = preset;
-      }
+      applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'view');
       continue;
     }
 
     if (queryContract.aliases.interaction?.has(key)) {
       const preset = normalizeToken(value);
-      if (queryContract.physicsPresets[preset]) {
-        Object.assign(disposition.cssVars, queryContract.physicsPresets[preset].cssVars);
-        Object.assign(disposition.data, queryContract.physicsPresets[preset].data);
-        disposition.presets.physics = preset;
-        disposition.tuning.interaction = preset;
-      }
+      applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'interaction');
       continue;
     }
 

@@ -24,6 +24,7 @@ const DATASET_KEYS = Object.freeze({
   total: 'spwLayoutShiftTotal',
   last: 'spwLayoutShiftLast',
   recent: 'spwLayoutShiftRecentInputCount',
+  outcome: 'spwLayoutShiftOutcome',
 });
 const HISTORY_LIMIT = 12;
 const SOURCE_LIMIT = 3;
@@ -93,6 +94,53 @@ const describeOutcome = (detail = {}) => {
   };
 };
 
+const createAuditDetail = (ctx, state, extras = {}) => ({
+  state,
+  route: getRouteLabel(ctx),
+  diagnosticsLevel: getDiagnosticsLevel(ctx),
+  outcome: extras.outcome || 'stable',
+  outcomeSummary: extras.outcomeSummary || 'no measurable shift',
+  measurement: MEASUREMENT.name,
+  metric: MEASUREMENT.metric,
+  evaluator: MEASUREMENT.evaluator,
+  cssDefaults: MEASUREMENT.cssDefaults,
+  batchValue: extras.batchValue || 0,
+  totalValue: extras.totalValue || 0,
+  count: extras.count || 0,
+  recentInputCount: extras.recentInputCount || 0,
+  largestValue: extras.largestValue || 0,
+  entries: extras.entries || [],
+  sourceCount: extras.sourceCount || 0,
+  primarySource: extras.primarySource || null,
+  sources: extras.sources || [],
+  latestEntry: extras.latestEntry || null,
+  hadRecentInput: Boolean(extras.hadRecentInput),
+  error: extras.error || '',
+});
+
+const createUnsupportedDetail = (ctx, error = null) => createAuditDetail(ctx, AUDIT_STATE.UNSUPPORTED, {
+  outcome: 'unsupported',
+  outcomeSummary: 'layout stability measurement unavailable',
+  batchValue: 0,
+  totalValue: 0,
+  entries: [],
+  sources: [],
+  sourceCount: 0,
+  hadRecentInput: false,
+  error: error ? String(error?.message || error) : '',
+});
+
+const createObservingDetail = (ctx) => createAuditDetail(ctx, AUDIT_STATE.OBSERVING, {
+  outcome: 'stable',
+  outcomeSummary: 'no measurable shift',
+  batchValue: 0,
+  totalValue: 0,
+  entries: [],
+  sources: [],
+  sourceCount: 0,
+  hadRecentInput: false,
+});
+
 const writeAuditDataset = (ctx, detail) => {
   const state = detail.state || AUDIT_STATE.OBSERVING;
 
@@ -103,7 +151,7 @@ const writeAuditDataset = (ctx, detail) => {
     writeDatasetValue(target, DATASET_KEYS.total, formatValue(detail.totalValue || 0));
     writeDatasetValue(target, DATASET_KEYS.last, formatValue(detail.batchValue || 0));
     writeDatasetValue(target, DATASET_KEYS.recent, String(detail.recentInputCount || 0));
-    writeDatasetValue(target, 'spwLayoutShiftOutcome', detail.outcome || 'stable');
+    writeDatasetValue(target, DATASET_KEYS.outcome, detail.outcome || 'stable');
   }
 };
 
@@ -180,19 +228,11 @@ const buildAuditDetail = (ctx, entries, state, history) => {
   const count = history.count + summary.countedEntries.length;
   const recentInputCount = history.recentInputCount + summary.recentInputCount;
   const latestEntry = summary.entries[summary.entries.length - 1] || null;
-  const diagnosticsLevel = getDiagnosticsLevel(ctx);
   const outcome = describeOutcome({ state, count, totalValue, recentInputCount });
 
-  return {
-    state,
-    route: getRouteLabel(ctx),
-    diagnosticsLevel,
+  return createAuditDetail(ctx, state, {
     outcome: outcome.outcome,
     outcomeSummary: outcome.summary,
-    measurement: MEASUREMENT.name,
-    metric: MEASUREMENT.metric,
-    evaluator: MEASUREMENT.evaluator,
-    cssDefaults: MEASUREMENT.cssDefaults,
     batchValue,
     totalValue,
     count,
@@ -204,7 +244,7 @@ const buildAuditDetail = (ctx, entries, state, history) => {
     sources: summary.sources,
     latestEntry,
     hadRecentInput: summary.entries.some((entry) => entry.hadRecentInput),
-  };
+  });
 };
 
 export function initSpwLayoutShiftAudit(ctx = {}) {
@@ -313,25 +353,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
 
   const supported = globalThis.PerformanceObserver?.supportedEntryTypes?.includes?.('layout-shift');
   if (!supported) {
-    const detail = {
-      state: AUDIT_STATE.UNSUPPORTED,
-      route: getRouteLabel(ctx),
-      diagnosticsLevel: getDiagnosticsLevel(ctx),
-      outcome: 'unsupported',
-      outcomeSummary: 'layout stability measurement unavailable',
-      measurement: MEASUREMENT.name,
-      metric: MEASUREMENT.metric,
-      evaluator: MEASUREMENT.evaluator,
-      cssDefaults: MEASUREMENT.cssDefaults,
-      batchValue: 0,
-      totalValue: 0,
-      count: 0,
-      recentInputCount: 0,
-      sourceCount: 0,
-      sources: [],
-      entries: [],
-      hadRecentInput: false,
-    };
+    const detail = createUnsupportedDetail(ctx);
     syncState(detail);
     emit(detail, 'warn');
     return cleanup;
@@ -343,26 +365,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     });
     observer.observe({ type: 'layout-shift', buffered: true });
   } catch (error) {
-    const detail = {
-      state: AUDIT_STATE.UNSUPPORTED,
-      route: getRouteLabel(ctx),
-      diagnosticsLevel: getDiagnosticsLevel(ctx),
-      outcome: 'unsupported',
-      outcomeSummary: 'layout stability measurement unavailable',
-      measurement: MEASUREMENT.name,
-      metric: MEASUREMENT.metric,
-      evaluator: MEASUREMENT.evaluator,
-      cssDefaults: MEASUREMENT.cssDefaults,
-      batchValue: 0,
-      totalValue: 0,
-      count: 0,
-      recentInputCount: 0,
-      sourceCount: 0,
-      sources: [],
-      entries: [],
-      hadRecentInput: false,
-      error: String(error?.message || error),
-    };
+    const detail = createUnsupportedDetail(ctx, error);
     syncState(detail);
     emit(detail, 'warn');
     return cleanup;
@@ -370,27 +373,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
 
   ctx?.addObserver?.(observer);
 
-  const detail = {
-    state: AUDIT_STATE.OBSERVING,
-    route: getRouteLabel(ctx),
-    diagnosticsLevel: getDiagnosticsLevel(ctx),
-    outcome: 'stable',
-    outcomeSummary: 'no measurable shift',
-    measurement: MEASUREMENT.name,
-    metric: MEASUREMENT.metric,
-    evaluator: MEASUREMENT.evaluator,
-    cssDefaults: MEASUREMENT.cssDefaults,
-    batchValue: 0,
-    totalValue: 0,
-    count: 0,
-    recentInputCount: 0,
-    largestValue: 0,
-    entries: [],
-    sourceCount: 0,
-    primarySource: null,
-    sources: [],
-    hadRecentInput: false,
-  };
+  const detail = createObservingDetail(ctx);
 
   syncState(detail);
   emit(detail, 'info');
