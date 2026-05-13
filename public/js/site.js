@@ -1781,7 +1781,7 @@ async function bootSite() {
         annotateFloatingChrome,
         clear: clearPageState,
         init: initPageAttentionLifecycle,
-        scheduleArrival,
+        scheduleArrival: schedulePageArrival,
         setPageState,
         setAttentionState: setPageAttentionState,
         snapshot: snapshotPageState,
