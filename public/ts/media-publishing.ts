@@ -4,7 +4,7 @@ import {
   createJsonFeedLoader,
   el,
   type DayKey,
-} from './spw-feed-utils.js';
+} from './feed-utils.js';
 
 type LocaleCode = string;
 

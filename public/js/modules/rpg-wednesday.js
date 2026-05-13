@@ -1,4 +1,4 @@
-import { emitSpwAction } from '/public/js/kernel/spw-shared.js';
+import { emitSpwAction } from '/public/js/kernel/shared.js';
 import { createAssetAtlasController } from '/public/js/modules/rpg-wednesday-asset-atlas.js';
 import { initRpgCharacterLab } from '/public/js/modules/rpg-wednesday-character-lab.js';
 import { createElement, createField, createShortcutToken } from '/public/js/modules/rpg-wednesday-dom.js';

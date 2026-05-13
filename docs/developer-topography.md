@@ -9,15 +9,15 @@ Use this map before editing:
 | Layer | Meaning | Main files |
 | --- | --- | --- |
 | Route | A public page and its business purpose | `*/index.html` |
-| Shell | Header, nav, footer, settings chrome | `public/css/shell/chrome.css`, `public/js/spw-shell-disclosure.js` |
-| Region | A named section of a page | route HTML, `public/js/site.js`, `public/js/spw-page-metadata.js` |
-| Component | A reusable card, panel, frame, image surface, or control | `public/css/components/*.css`, `public/js/spw-component-semantics.js` |
+| Shell | Header, nav, footer, settings chrome | `public/css/shell/chrome.css`, `public/js/shell-disclosure.js` |
+| Region | A named section of a page | route HTML, `public/js/site.js`, `public/js/page-metadata.js` |
+| Component | A reusable card, panel, frame, image surface, or control | `public/css/components/*.css`, `public/js/component-semantics.js` |
 | Module | A progressive JS behavior mounted only when the route/DOM needs it | `public/js/site.js` module definitions |
 | Slot | A stable internal part of a component | `data-spw-slot="header|body|figure|actions|footer"` |
 
 ## Shared JS Contracts
 
-`public/js/spw-dom-contracts.js` is the naming registry for the DOM. Add selector families there before duplicating long selector lists in multiple modules.
+`public/js/dom-contracts.js` is the naming registry for the DOM. Add selector families there before duplicating long selector lists in multiple modules.
 
 Key exports:
 
@@ -88,6 +88,6 @@ When adapting this for someone starting a business:
 
 1. Keep the route/region/component/module map.
 2. Replace copy, imagery, payment links, and page metadata.
-3. Keep `spw-dom-contracts.js` as the selector registry.
+3. Keep `dom-contracts.js` as the selector registry.
 4. Keep route-specific styling out of shared CSS unless a second page needs it.
 5. Add behavior by mounting a module from `site.js`, not by scattering one-off script tags.

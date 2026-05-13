@@ -352,11 +352,11 @@ function renderAnalyticsScript(vars) {
 }
 
 function renderSettingsPreflightScript() {
-  return '    <script data-spw-settings-preflight src="/public/js/runtime/spw-prepaint-state.js"></script>';
+  return '    <script data-spw-settings-preflight src="/public/js/runtime/prepaint-state.js"></script>';
 }
 
 function injectSettingsPreflight(source) {
-  if (source.includes('data-spw-settings-preflight') || source.includes('/public/js/runtime/spw-prepaint-state.js')) return source;
+  if (source.includes('data-spw-settings-preflight') || source.includes('/public/js/runtime/prepaint-state.js')) return source;
   const script = renderSettingsPreflightScript();
   const styleLinkPattern = /(\s*<link\b[^>]*\bhref=["']\/public\/css\/style\.css[^>]*>)/i;
   if (styleLinkPattern.test(source)) {

@@ -1,4 +1,4 @@
-import { deleteImage, storeImage } from '/public/js/media/spw-image-store.js';
+import { deleteImage, storeImage } from '/public/js/media/image-store.js';
 import {
     ASSET_KIND_OPTIONS,
     ASSET_PRESET_OPTIONS,

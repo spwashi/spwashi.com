@@ -4,7 +4,7 @@ import {
   createJsonFeedLoader,
   el,
   getWeekIndex,
-} from './spw-feed-utils.js';
+} from './feed-utils.js';
 
 type PromoWonderKind = 'promo' | 'wonder';
 type TemporalCadence = 'daily' | 'weekly';

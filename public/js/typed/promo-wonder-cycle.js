@@ -1,4 +1,4 @@
-import { cleanText, clampIndex, createJsonFeedLoader, el, getWeekIndex, } from './spw-feed-utils.js';
+import { cleanText, clampIndex, createJsonFeedLoader, el, getWeekIndex, } from './feed-utils.js';
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const SOURCE_LOCALE = 'en';
 const DEFAULT_FEED = Object.freeze({

@@ -49,7 +49,7 @@ composition_hierarchy: .{
   definition = `A reusable semantic element that participates in the attentional grammar.`
   semantic_identity = #[component_id, component_name, component_address, kind, form, role, liminality, selection, value_layer, semantic_owner, instrumentation][reg=set]
   field_role = `Components are the primary resonance targets. They expose receptors via tokens inferred from role, kind, text, href, and manual anchors and respond when field charge matches their receptors.`
-  html_contract = `data-spw-* attributes. Enriched by spw-component-semantics.js. Instrumentation exposes machine-facing producer/debug hints through data-spw-instrumentation and data-spw-debug-source without requiring the public chrome to stay visible. Runtime registration also writes data-spw-component-id, data-spw-component-name, data-spw-component-address, and data-spw-semantic-owner so console inspection can tell stories about coherent components instead of loose DOM nodes.`
+  html_contract = `data-spw-* attributes. Enriched by component-semantics.js. Instrumentation exposes machine-facing producer/debug hints through data-spw-instrumentation and data-spw-debug-source without requiring the public chrome to stay visible. Runtime registration also writes data-spw-component-id, data-spw-component-name, data-spw-component-address, and data-spw-semantic-owner so console inspection can tell stories about coherent components instead of loose DOM nodes.`
   examples = #[
    `.operator-chip`,
    `.frame-sigil`,

@@ -1,9 +1,9 @@
-import { bus } from '/public/js/kernel/spw-bus.js';
+import { bus } from '/public/js/kernel/bus.js';
 import {
   createSpwLogger,
   markInstrumented,
   snapshotInstrumentationTarget,
-} from '/public/js/kernel/spw-instrumentation.js';
+} from '/public/js/kernel/instrumentation.js';
 import {
   getSiteSettings,
   saveSiteSettings,

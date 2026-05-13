@@ -88,13 +88,13 @@ New styles override lower layers. Add to `ornament` only if you need to override
 | Change brace forms or structural grammar | `public/css/grammar/syntax.css` |
 | Change shared surface layout or feature-gated component layout | `public/css/systems/surfaces/*.css` or `public/css/components/*.css` |
 | Change route-only surface layout | `public/css/routes/*.css` or `public/css/routes/surfaces/*.css` |
-| Change wonder-memory propagation, accent memory, or ornament response | `public/js/spw-wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
+| Change wonder-memory propagation, accent memory, or ornament response | `public/js/wonder-memory.js` + `public/css/effects/wonder.css` + `public/css/ornament/ornament.css` |
 | Change settings defaults, root data attributes, or deviation handling | `public/js/site-settings.js` + `settings/index.html` |
-| Change navigation tokenization or grounded route behavior | `public/js/spw-navigation-spells.js` + `public/js/frame-navigator.js` |
-| Change spell, checkpoint, or bookmark behavior | `public/js/spw-spells.js` + `public/js/spw-haptics.js` + `public/js/spw-experiential.js` |
-| Change guide badge, interaction-context, or collection behavior | `public/js/spw-guide-badge.js` + `public/css/ornament/ornament.css` |
+| Change navigation tokenization or grounded route behavior | `public/js/navigation-spells.js` + `public/js/frame-navigator.js` |
+| Change spell, checkpoint, or bookmark behavior | `public/js/spells.js` + `public/js/haptics.js` + `public/js/experiential.js` |
+| Change guide badge, interaction-context, or collection behavior | `public/js/guide-badge.js` + `public/css/ornament/ornament.css` |
 | Add a canvas accent to a frame | add `data-spw-accent="wave|vortex|crystal|lattice|flow"` to the element and tune shared accent CSS/JS only if needed |
-| Add a new operator type | `public/js/spw-shared.js` (`OPERATOR_DEFINITIONS`) + `public/css/tokens/core.css` + any relevant shared CSS projection files |
+| Add a new operator type | `public/js/shared.js` (`OPERATOR_DEFINITIONS`) + `public/css/tokens/core.css` + any relevant shared CSS projection files |
 | Add or rename a reusable feature cluster | route HTML + `.spw/surfaces/page-model.spw` when the model matters beyond one patch |
 
 ### Page shell metadata
@@ -276,7 +276,7 @@ Progressive-enhancement system for section-context awareness and operator resona
 
 Mobile-first sticky chip that surfaces the current visible section by reading `data-spw-operator` and heading text.
 
-**Files:** `public/js/spw-attention-architecture.js`, `public/css/chrome.css`
+**Files:** `public/js/attention-architecture.js`, `public/css/chrome.css`
 
 **HTML contract:**
 
@@ -302,7 +302,7 @@ Mobile-first sticky chip that surfaces the current visible section by reading `d
 
 Pinned operator focus/hover state that sets `html[data-spw-resonance-probe="operator-name"]` to trigger soft echo glow on matching operators across the page.
 
-**Files:** `public/js/spw-attention-architecture.js`, `public/css/effects/wonder.css`
+**Files:** `public/js/attention-architecture.js`, `public/css/effects/wonder.css`
 
 **Behavior:**
 - `focusin` on any `[data-spw-operator]` immediately pins that operator

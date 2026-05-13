@@ -1,7 +1,7 @@
 import {
   PAGE_METADATA_REGION_SELECTOR,
   normalizeDocumentMetadata,
-} from './kernel/spw-page-metadata.js';
+} from './kernel/page-metadata.js';
 import {
   FRAME_SELECTOR,
   buildAxisGenome,
@@ -9,12 +9,12 @@ import {
   writeDatasetValue,
   writeDatasetValueIfMissing,
   writeStyleValue,
-} from './kernel/spw-dom-contracts.js';
+} from './kernel/dom-contracts.js';
 import {
   applySpwQueryDisposition,
   installSpwCompositionConsole,
-} from './kernel/spw-instrumentation.js';
-import { bus as sharedBus } from './kernel/spw-bus.js';
+} from './kernel/instrumentation.js';
+import { bus as sharedBus } from './kernel/bus.js';
 
 /**
  * site.js
@@ -1123,7 +1123,7 @@ const CORE_DEFS = [
     id: 'pwa-update-handler',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
-    load: () => import('./runtime/spw-pwa-update-handler.js'),
+    load: () => import('./runtime/pwa-update-handler.js'),
     mount: (mod) => {
       const fn = mod?.initPwaUpdateHandler;
       if (!isFn(fn)) return;
@@ -1134,7 +1134,7 @@ const CORE_DEFS = [
     id: 'shell-disclosure',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
-    load: () => import('./runtime/spw-shell-disclosure.js'),
+    load: () => import('./runtime/shell-disclosure.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwShellDisclosure;
       if (!isFn(fn)) return;
@@ -1162,7 +1162,7 @@ const FEATURE_DEFS = [
     selector: '[data-blog-interpreter]',
     route: 'blog',
     rootMode: 'each',
-    load: () => import('./modules/spw-blog-interpreter.js'),
+    load: () => import('./modules/blog-interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
       if (!isFn(fn)) return;
@@ -1176,7 +1176,7 @@ const FEATURE_DEFS = [
     selector: '.specimen-card, #specimen-index',
     route: 'blog',
     rootMode: 'single',
-    load: () => import('./modules/spw-blog-specimens.js'),
+    load: () => import('./modules/blog-specimens.js'),
     mount: (mod) => {
       const fn = mod?.initBlogSpecimens;
       if (!isFn(fn)) return;
@@ -1189,7 +1189,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'blog',
     selector: '[data-blog-interpreter], #specimen-index',
-    load: () => import('./modules/spw-attn-register.js'),
+    load: () => import('./modules/attn-register.js'),
     mount: (mod) => {
       const fn = mod?.initAttnRegister;
       if (!isFn(fn)) return;
@@ -1202,7 +1202,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: ['services', 'newyear'],
     selector: '[data-seed-card]',
-    load: () => import('./modules/spw-seed-card.js'),
+    load: () => import('./modules/seed-card.js'),
     mount: (mod) => {
       const fn = mod?.initSeedCards;
       if (!isFn(fn)) return;
@@ -1215,7 +1215,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'services',
     selector: '[data-payment-card]',
-    load: () => import('./modules/spw-payment-card.js'),
+    load: () => import('./modules/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentCards;
       if (!isFn(fn)) return;
@@ -1228,7 +1228,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'services',
     selector: '[data-services-configurator]',
-    load: () => import('./modules/spw-services-configurator.js'),
+    load: () => import('./modules/services-configurator.js'),
     mount: (mod) => {
       const fn = mod?.initServicesConfigurators;
       if (!isFn(fn)) return;
@@ -1267,7 +1267,7 @@ const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'settings',
     selector: '#payment-settings-container',
-    load: () => import('./modules/spw-payment-card.js'),
+    load: () => import('./modules/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentSettings;
       if (!isFn(fn)) return;
@@ -1318,7 +1318,7 @@ const FEATURE_DEFS = [
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-pivot]',
-    load: () => import('./runtime/spw-brace-pivots.js'),
+    load: () => import('./runtime/brace-pivots.js'),
     mount: (mod) => {
       const fn = mod?.initBracePivots;
       if (!isFn(fn)) return;
@@ -1330,7 +1330,7 @@ const FEATURE_DEFS = [
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-local-note-entry], [data-spw-local-notes-root], [data-local-note-preview]',
-    load: () => import('./interface/spw-local-notes.js'),
+    load: () => import('./interface/local-notes.js'),
     mount: (mod) => {
       const fn = mod?.initSpwLocalNotes;
       if (!isFn(fn)) return;
@@ -1373,7 +1373,7 @@ const ENHANCEMENT_DEFS = [
     id: 'layout-shift-audit',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    load: () => import('./runtime/spw-layout-shift-audit.js'),
+    load: () => import('./runtime/layout-shift-audit.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLayoutShiftAudit;
       if (!isFn(fn)) return;
@@ -1386,7 +1386,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.spw-svg-figure, .image-study, [data-spw-image-surface]',
     rootMode: 'single',
-    load: () => import('./media/spw-svg-filters.js'),
+    load: () => import('./media/svg-filters.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSvgFilters;
       if (!isFn(fn)) return;
@@ -1399,7 +1399,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer]',
     rootMode: 'single',
-    load: () => import('./media/spw-svg-tunability.js'),
+    load: () => import('./media/svg-tunability.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSvgTunability;
       if (!isFn(fn)) return;
@@ -1412,7 +1412,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-accent]',
     rootMode: 'single',
-    load: () => import('./interface/spw-canvas-accents.js'),
+    load: () => import('./interface/canvas-accents.js'),
     mount: (mod) => {
       const fn = mod?.initSpwCanvasAccents;
       if (!isFn(fn)) return;
@@ -1425,7 +1425,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.image-study, .spw-svg-figure, [data-spw-image-surface], .domain-visual, .spw-scaffold',
     rootMode: 'single',
-    load: () => import('./media/spw-image-metaphysics.js'),
+    load: () => import('./media/image-metaphysics.js'),
     mount: (mod) => {
       const fn = mod?.initSpwImageMetaphysics;
       if (!isFn(fn)) return;
@@ -1438,7 +1438,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: '.spw-logo, [data-spw-logo]',
     rootMode: 'single',
-    load: () => import('./interface/spw-logo-runtime.js'),
+    load: () => import('./interface/logo-runtime.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;
       if (!isFn(fn)) return;
@@ -1451,7 +1451,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: '.spw-topic, [data-spw-topic]',
     rootMode: 'single',
-    load: () => import('./interface/spw-topic-discovery.js'),
+    load: () => import('./interface/topic-discovery.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwTopicDiscovery || mod?.initTopicDiscovery;
       if (!isFn(fn)) return;
@@ -1464,7 +1464,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
-    load: () => import('./semantic/spw-component-semantics.js'),
+    load: () => import('./semantic/component-semantics.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwComponentSemantics;
       if (!isFn(fn)) return;
@@ -1477,7 +1477,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.operator-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
     rootMode: 'single',
-    load: () => import('./interface/spw-guide-badge.js'),
+    load: () => import('./interface/guide-badge.js'),
     mount: (mod) => {
       const fn = mod?.initGuideBadges;
       if (!isFn(fn)) return;
@@ -1488,7 +1488,7 @@ const ENHANCEMENT_DEFS = [
     id: 'discovery-notices',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    load: () => import('./interface/spw-discovery-notices.js'),
+    load: () => import('./interface/discovery-notices.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwDiscoveryNotices;
       if (!isFn(fn)) return;
@@ -1501,7 +1501,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
-    load: () => import('./interface/spw-semantic-chrome.js'),
+    load: () => import('./interface/semantic-chrome.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwSemanticChrome;
       if (!isFn(fn)) return;
@@ -1514,7 +1514,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'main, .site-header',
     rootMode: 'single',
-    load: () => import('./interface/spw-contextual-ui.js'),
+    load: () => import('./interface/contextual-ui.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwContextualUi;
       if (!isFn(fn)) return;
@@ -1553,7 +1553,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'main, .spw-section-handle, [data-spw-operator]',
     rootMode: 'single',
-    load: () => import('./runtime/spw-attention-architecture.js'),
+    load: () => import('./runtime/attention-architecture.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAttentionArchitecture;
       if (!isFn(fn)) return;
@@ -1566,7 +1566,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-annotation-handle], [data-spw-header-annotation]',
     rootMode: 'single',
-    load: () => import('./runtime/spw-annotation-layer.js'),
+    load: () => import('./runtime/annotation-layer.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAnnotationLayer;
       if (!isFn(fn)) return;
@@ -1579,7 +1579,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'header nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
     rootMode: 'single',
-    load: () => import('./runtime/spw-navigation-spells.js'),
+    load: () => import('./runtime/navigation-spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwNavigationSpells;
       if (!isFn(fn)) return;
@@ -1592,7 +1592,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.frame-sigil, .frame-card-sigil, .syntax-token',
     rootMode: 'single',
-    load: () => import('./semantic/spw-operators.js'),
+    load: () => import('./semantic/operators.js'),
     mount: (mod) => {
       const fn = mod?.initSpwOperators;
       if (!isFn(fn)) return;
@@ -1605,7 +1605,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-groundable=\"true\"], .operator-chip, .syntax-token, .frame-sigil',
     rootMode: 'single',
-    load: () => import('./interface/spw-haptics.js'),
+    load: () => import('./interface/haptics.js'),
     mount: (mod) => {
       const fn = mod?.initSpwHaptics;
       if (!isFn(fn)) return;
@@ -1618,7 +1618,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-memory-action]',
     rootMode: 'single',
-    load: () => import('./interface/spw-local-memory-controls.js'),
+    load: () => import('./interface/local-memory-controls.js'),
     mount: (mod) => {
       const fn = mod?.initSpwLocalMemoryControls;
       if (!isFn(fn)) return;
@@ -1631,7 +1631,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-promptability="visible"], [data-spw-prompt-host]',
     rootMode: 'single',
-    load: () => import('./interface/spw-prompt-utils.js'),
+    load: () => import('./interface/prompt-utils.js'),
     mount: (mod) => {
       const fn = mod?.initSpwPromptUtils;
       if (!isFn(fn)) return;
@@ -1644,7 +1644,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'header, main',
     rootMode: 'single',
-    load: () => import('./runtime/spw-experiential.js'),
+    load: () => import('./runtime/experiential.js'),
     mount: (mod) => {
       const fn = mod?.initSpwExperiential;
       if (!isFn(fn)) return;
@@ -1657,7 +1657,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.spell-board-content, header',
     rootMode: 'single',
-    load: () => import('./runtime/spw-spells.js'),
+    load: () => import('./runtime/spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpells;
       if (!isFn(fn)) return;
@@ -1670,7 +1670,7 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
-    load: () => import('./interface/spw-guide.js'),
+    load: () => import('./interface/guide.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwGuide;
       if (!isFn(fn)) return;
@@ -1992,7 +1992,7 @@ async function bootSite() {
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
 
   // Initialize relational state and global interactions
-  const { bindGlobalInteractions } = await import('./runtime/spw-state-orchestrator.js');
+  const { bindGlobalInteractions } = await import('./runtime/state-orchestrator.js');
   bindGlobalInteractions();
 
   primeRegions(runtimeCtx);

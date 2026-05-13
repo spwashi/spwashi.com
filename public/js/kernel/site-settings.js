@@ -13,19 +13,19 @@
  * controls anywhere on the site.
  */
 
-import { bus } from '/public/js/kernel/spw-bus.js';
+import { bus } from '/public/js/kernel/bus.js';
 import {
   AUTHOR_WORKFLOW_DEFINITIONS,
   AUTHOR_WORKFLOW_MODES,
   normalizeAuthorMode,
   normalizeDevelopmentalClimate
-} from '/public/js/kernel/spw-shared.js';
+} from '/public/js/kernel/shared.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteResonanceSwatches
-} from '/public/js/interface/spw-palette-resonance.js';
-import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/spw-runtime-environment.js';
+} from '/public/js/interface/palette-resonance.js';
+import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 
@@ -2328,7 +2328,7 @@ const bindSettingsQueryLab = (root = document) => {
   const handleCopy = async () => {
     const activeMode = panel.dataset.siteSettingsQueryMode || copyButton?.getAttribute('data-site-settings-query-copy') || 'inspect';
     const text = buildSettingsQueryHref(activeMode, window.location);
-    const {handleCopyButton} = await import('/public/js/kernel/spw-copy.js');
+    const {handleCopyButton} = await import('/public/js/kernel/copy.js');
     await handleCopyButton({
       text,
       button: copyButton || undefined,

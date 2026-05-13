@@ -11,8 +11,8 @@
 @page_model: ~"../surfaces/page-model.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 @site_semantics: ~"./site-semantics.spw"
-@wonder_memory_runtime: ~"../../public/js/spw-wonder-memory.js"
-@accent_palette_runtime: ~"../../public/js/spw-accent-palette.js"
+@wonder_memory_runtime: ~"../../public/js/wonder-memory.js"
+@accent_palette_runtime: ~"../../public/js/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 

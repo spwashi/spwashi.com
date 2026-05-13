@@ -10,7 +10,7 @@
 @css_instruction: ~"../../conventions/css-instruction.spw"
 @components_css: ~"../../../public/css/components/foundation.css"
 @debug_css: ~"../../../public/css/effects/debug.css"
-@instrumentation: ~"../../../public/js/kernel/spw-instrumentation.js"
+@instrumentation: ~"../../../public/js/kernel/instrumentation.js"
 
 thesis: .{
  claim = `Preventing leaky rules and enabling design composition require the same thing: a declared ownership ladder that selectors and runtime modules can read before they infer.`

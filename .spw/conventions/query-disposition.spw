@@ -31,8 +31,8 @@ anti_commitments: #[
 ][reg=set]
 
 implementation: .{
- portable_entry = ~"../../public/js/spw-compose.js"
- parser = ~"../../public/js/kernel/spw-instrumentation.js"
+ portable_entry = ~"../../public/js/compose.js"
+ parser = ~"../../public/js/kernel/instrumentation.js"
  design_surface = ~"../../design/index.html#query-disposition"
  api = `createSpwQueryContract({ aliases, physicsPresets, meaningPresets, handlers })`
 }[reg=facet]

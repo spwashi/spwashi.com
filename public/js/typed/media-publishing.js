@@ -1,4 +1,4 @@
-import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './spw-feed-utils.js';
+import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './feed-utils.js';
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
 const SOURCE_LOCALE = 'en';
 const loadMediaConfig = createJsonFeedLoader(MEDIA_FOCUS_URL, null);

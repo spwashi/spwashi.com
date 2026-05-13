@@ -6,14 +6,14 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@page_metadata: ~"../../../public/js/spw-page-metadata.js"
-@component_semantics: ~"../../../public/js/spw-component-semantics.js"
-@semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
-@contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
+@page_metadata: ~"../../../public/js/page-metadata.js"
+@component_semantics: ~"../../../public/js/component-semantics.js"
+@semantic_chrome: ~"../../../public/js/semantic-chrome.js"
+@contextual_ui: ~"../../../public/js/contextual-ui.js"
 @settings: ~"../../../public/js/site-settings.js"
-@brace_pivots: ~"../../../public/js/spw-brace-pivots.js"
-@wonder_memory: ~"../../../public/js/spw-wonder-memory.js"
-@accent_palette: ~"../../../public/js/spw-accent-palette.js"
+@brace_pivots: ~"../../../public/js/brace-pivots.js"
+@wonder_memory: ~"../../../public/js/wonder-memory.js"
+@accent_palette: ~"../../../public/js/accent-palette.js"
 
 thesis: .{
  claim = `The application's seams are real and mostly well-intentioned, but several are implicit rather than declared.`
@@ -22,11 +22,11 @@ thesis: .{
 
 handoff_stream: ?<
  `page HTML authors explicit data-spw-* fields`,
- `spw-page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
+ `page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
  `site.js collects regions and assigns region state, harmony, tempo, and density`,
- `spw-component-semantics.js snapshots richer component semantics onto datasets`,
- `spw-semantic-chrome.js projects those semantics into helper controls and meta tags`,
- `spw-contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context`,
+ `component-semantics.js snapshots richer component semantics onto datasets`,
+ `semantic-chrome.js projects those semantics into helper controls and meta tags`,
+ `contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context`,
  `site-settings.js and wonder-memory / accent systems bias the resulting field with browser-local state`
 >[reg=stream]
 
@@ -82,13 +82,13 @@ implicit_contracts: .{
 }[reg=facet]
 
 where_the_seams_are_good: #[
- `spw-component-semantics.js -> spw-semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
+ `component-semantics.js -> semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
  `site.js module records and normalized mount handles give the runtime a strong cleanup shape when modules actually return cleanup handles.`,
- `spw-page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`
+ `page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`
 ][reg=set]
 
 where_the_seams_are_soft: #[
- `Role inference exists in both site.js and spw-page-metadata.js with nearly the same heuristics but no shared helper.`,
+ `Role inference exists in both site.js and page-metadata.js with nearly the same heuristics but no shared helper.`,
  `The move from role to harmony in site.js and role to valueLayer or affordances in component semantics is conceptually related but not declared as one bridge.`,
  `contextual-ui writes long-lived dataset state but does not currently advertise which of those writes are transient lifecycle projection versus canonical semantic identity.`
 ][reg=set]
@@ -125,7 +125,7 @@ brand_expression_pathways: .{
   ][reg=set]
   to = `visible palette accent colors site-wide — the most personal brand expression surface`
   brand_stake = `When brace-pivots bypasses the manager, palette resonance does not flow through the canonical channel. The brand expression surface the user is engaging with only partially updates.`
-  current_risk = `spw-brace-pivots.js writes localStorage('spw-site-settings') directly and emits a partial settings:changed payload.`
+  current_risk = `brace-pivots.js writes localStorage('spw-site-settings') directly and emits a partial settings:changed payload.`
  }[reg=facet]
  wonder_memory_channel = .{
   from = `user settings (wonder memory strength and reach)`

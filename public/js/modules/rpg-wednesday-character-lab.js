@@ -1,4 +1,4 @@
-import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/spw-image-store.js';
+import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/image-store.js';
 import {
     buildCharacterImageKey,
     createCharacterStorage,

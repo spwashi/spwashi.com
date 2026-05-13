@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { clampIndex, getWeekIndex } from '../../public/js/typed/spw-feed-utils.js';
+import { clampIndex, getWeekIndex } from '../../public/js/typed/feed-utils.js';
 import {
   buildDismissKey,
   buildVisibleNotices,
@@ -10,7 +10,7 @@ import {
   selectScheduleItems,
   slugify,
   shouldSuppressNotice,
-} from '../../public/js/interface/spw-discovery-notices.js';
+} from '../../public/js/interface/discovery-notices.js';
 import {
   feedLocale,
   pickDaily,

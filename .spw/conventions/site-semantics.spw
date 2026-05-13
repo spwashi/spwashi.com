@@ -76,7 +76,7 @@
 
 ^"public_starter_topography"{
   rule: "The site should be explainable to another developer as route -> shell -> region -> feature -> component -> slot -> module."
-  source_contract: "../../../public/js/spw-dom-contracts.js"
+  source_contract: "../../../public/js/dom-contracts.js"
   docs: "../../../docs/developer-topography.md"
   layers: {
     route: "A public URL and business purpose."
@@ -92,7 +92,7 @@
     component_address: "Compact route through kind, role, context, and value layer."
     region_genome: "Region-level axis bundle for CSS and inspection."
   }
-  starter_rule: "If a selector family is needed by more than one runtime module, put it in spw-dom-contracts.js before adding another local selector list."
+  starter_rule: "If a selector family is needed by more than one runtime module, put it in dom-contracts.js before adding another local selector list."
   counterexample: "A new business starter route copies three long card selector lists into CSS, semantic JS, and contextual JS, then each list drifts independently."
 }
 
@@ -278,7 +278,7 @@
 
 ^"translation_contract"{
   sources: [@selection, @naming, @brace_physics, @literate_ui, @symmetry_ui]
-  ui_binding: "public/js/spw-component-semantics.js and public/css/style.css should express these axes declaratively."
+  ui_binding: "public/js/component-semantics.js and public/css/style.css should express these axes declaratively."
   authoring_binding: "HTML may override kind, form, role, liminality, and selection explicitly through data-spw-* attributes."
   screenshot_rule: "A screenshot should still reveal what kind of component is present, what phase it occupies, and how deeply it is being addressed."
 }

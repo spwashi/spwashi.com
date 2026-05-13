@@ -7,9 +7,9 @@
 
 @runtime: ~"../../../public/js/site.js"
 @settings: ~"../../../public/js/site-settings.js"
-@contextual_ui: ~"../../../public/js/spw-contextual-ui.js"
-@semantic_chrome: ~"../../../public/js/spw-semantic-chrome.js"
-@component_semantics: ~"../../../public/js/spw-component-semantics.js"
+@contextual_ui: ~"../../../public/js/contextual-ui.js"
+@semantic_chrome: ~"../../../public/js/semantic-chrome.js"
+@component_semantics: ~"../../../public/js/component-semantics.js"
 @design_whimsy: ~"../../conventions/design-whimsy.spw"
 
 thesis: .{

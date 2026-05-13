@@ -76,7 +76,7 @@
         <section class="frame-panel" aria-labelledby="js-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
             <h2 id="js-bundle-title">JavaScript composition bundle</h2>
             <p>
-                <code>/public/js/spw-compose.js</code> exports selector contracts, dataset/style writers, interaction-loop
+                <code>/public/js/compose.js</code> exports selector contracts, dataset/style writers, interaction-loop
                 records, palette helpers, and attention architecture contracts without mounting <code>site.js</code>.
                 Treat scripts here as spells: small repeatable gestures that change the document in inspectable ways.
             </p>
@@ -85,9 +85,9 @@
   writeDatasetValue,
   createLoopRecord,
   getPaletteResonanceSwatches
-} from '/public/js/spw-compose.js';</code></pre>
+} from '/public/js/compose.js';</code></pre>
             <p class="frame-note">
-                Direct file: <a href="/public/js/spw-compose.js">spw-compose.js</a>
+                Direct file: <a href="/public/js/compose.js">compose.js</a>
             </p>
         </section>
 
@@ -101,7 +101,7 @@
             <pre><code>import {
   installSpwCompositionConsole,
   markInstrumented
-} from '/public/js/spw-compose.js';
+} from '/public/js/compose.js';
 
 installSpwCompositionConsole(window);
 markInstrumented('[data-spw-kind="card"]', 'demo-spell');

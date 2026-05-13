@@ -70,7 +70,7 @@ puppet.reflow('#runtime-lab', 'interaction', { scope: 'stage' });</code></pre>
             <pre><code>import {
   applySvgQueryTunability,
   SPW_SVG_PALETTES
-} from '/public/js/spw-compose.js';
+} from '/public/js/compose.js';
 
 applySvgQueryTunability(document);
 console.table(SPW_SVG_PALETTES);</code></pre>
@@ -120,7 +120,7 @@ console.table(SPW_SVG_PALETTES);</code></pre>
         <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
             <h2 id="console-contract-title">Console contract</h2>
             <p>The portable bundle exposes a deliberate console API. Install it when a lab page needs inspection without mounting the whole site runtime.</p>
-            <pre><code>import { installSpwCompositionConsole } from '/public/js/spw-compose.js';
+            <pre><code>import { installSpwCompositionConsole } from '/public/js/compose.js';
 
 installSpwCompositionConsole(window);
 spwCompose.query(document.documentElement);

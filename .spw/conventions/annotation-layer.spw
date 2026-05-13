@@ -25,11 +25,11 @@ html_contract: .{
 }
 
 module_contract: .{
- attention = `spw-attention-architecture.js owns current section state and emits spw:section-locomotion-state.`
- annotation = `spw-annotation-layer.js listens for section state, handles gestures, writes annotation state, and exposes window.spwAnnotations.`
- semantic_chrome = `spw-semantic-chrome.js owns semantic popovers for generated semantic chips. Annotation handles should stay compatible with that interaction language.`
- guide_badge = `spw-guide-badge.js owns browse, inspect, and collect vocabulary for small handles. Annotation handles participate as ambient guide targets.`
- disclosure = `spw-shell-disclosure.js owns shell pressure, topology, and menu disclosure. It should not own annotation meaning, but annotation state may respond to shell context.`
+ attention = `attention-architecture.js owns current section state and emits spw:section-locomotion-state.`
+ annotation = `annotation-layer.js listens for section state, handles gestures, writes annotation state, and exposes window.spwAnnotations.`
+ semantic_chrome = `semantic-chrome.js owns semantic popovers for generated semantic chips. Annotation handles should stay compatible with that interaction language.`
+ guide_badge = `guide-badge.js owns browse, inspect, and collect vocabulary for small handles. Annotation handles participate as ambient guide targets.`
+ disclosure = `shell-disclosure.js owns shell pressure, topology, and menu disclosure. It should not own annotation meaning, but annotation state may respond to shell context.`
 }
 
 open_questions: #[
