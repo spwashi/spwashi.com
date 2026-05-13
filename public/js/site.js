@@ -14,6 +14,7 @@ import {
   applySpwQueryDisposition,
   installSpwCompositionConsole,
 } from './kernel/spw-instrumentation.js';
+import { bus as sharedBus } from './kernel/spw-bus.js';
 
 /**
  * site.js
@@ -211,10 +212,13 @@ function setPageAttentionState(ctx, detail = {}) {
     route: ctx?.route || SITE_SURFACE,
   };
 
-  ctx?.bus?.emit?.(PAGE_ATTENTION_EVENT, payload);
-  ctx?.bus?.emit?.(PAGE_TRANSITION_EVENT, payload);
-  document.dispatchEvent(new CustomEvent(PAGE_ATTENTION_EVENT, { detail: payload }));
-  document.dispatchEvent(new CustomEvent(PAGE_TRANSITION_EVENT, { detail: payload }));
+  if (ctx?.bus?.emit) {
+    ctx.bus.emit(PAGE_ATTENTION_EVENT, payload);
+    ctx.bus.emit(PAGE_TRANSITION_EVENT, payload);
+  } else {
+    document.dispatchEvent(new CustomEvent(PAGE_ATTENTION_EVENT, { detail: payload }));
+    document.dispatchEvent(new CustomEvent(PAGE_TRANSITION_EVENT, { detail: payload }));
+  }
 }
 
 function clearPageAttentionSequence(ctx) {
@@ -434,19 +438,45 @@ function readSet(...values) {
 }
 
 /* ==========================================================================
-   3. Tiny event bus
+   3. Bus facade
    ========================================================================== */
 
-function createBus() {
-  const target = new EventTarget();
+function normalizeBusEventName(type = '') {
+  const name = String(type || '').trim();
+  return name.startsWith('spw:') ? name.slice(4) : name;
+}
 
+function createBus() {
   return {
-    on(type, handler, options) {
-      target.addEventListener(type, handler, options);
-      return () => target.removeEventListener(type, handler, options);
+    on(type, handler, options = {}) {
+      return sharedBus.on(normalizeBusEventName(type), handler, options);
     },
-    emit(type, detail = {}) {
-      target.dispatchEvent(new CustomEvent(type, { detail }));
+    onAny(handler) {
+      return sharedBus.onAny(handler);
+    },
+    recent(filter = null) {
+      return sharedBus.recent(filter);
+    },
+    clearHistory() {
+      sharedBus.clearHistory();
+    },
+    emit(type, detail = {}, options = {}) {
+      const dispatchOptions = { ...options };
+      if (!dispatchOptions.target) {
+        dispatchOptions.target = document;
+      }
+      return sharedBus.emit(normalizeBusEventName(type), detail, {
+        ...dispatchOptions,
+      });
+    },
+    getDiagnostics() {
+      return sharedBus.getDiagnostics();
+    },
+    setHistoryLimit(limit) {
+      return sharedBus.setHistoryLimit(limit);
+    },
+    setMirrorToConsole(value) {
+      return sharedBus.setMirrorToConsole(value);
     },
   };
 }

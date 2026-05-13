@@ -98,29 +98,29 @@ const createAuditDetail = (ctx, state, extras = {}) => ({
   state,
   route: getRouteLabel(ctx),
   diagnosticsLevel: getDiagnosticsLevel(ctx),
-  outcome: extras.outcome || 'stable',
-  outcomeSummary: extras.outcomeSummary || 'no measurable shift',
+  outcome: extras.outcome ?? 'stable',
+  outcomeSummary: extras.outcomeSummary ?? 'no measurable shift',
   measurement: MEASUREMENT.name,
   metric: MEASUREMENT.metric,
   evaluator: MEASUREMENT.evaluator,
   cssDefaults: MEASUREMENT.cssDefaults,
-  batchValue: extras.batchValue || 0,
-  totalValue: extras.totalValue || 0,
-  count: extras.count || 0,
-  recentInputCount: extras.recentInputCount || 0,
-  largestValue: extras.largestValue || 0,
-  entries: extras.entries || [],
-  sourceCount: extras.sourceCount || 0,
-  primarySource: extras.primarySource || null,
-  sources: extras.sources || [],
-  latestEntry: extras.latestEntry || null,
+  nativeDefaults: extras.nativeDefaults ?? MEASUREMENT.cssDefaults,
+  batchValue: extras.batchValue ?? 0,
+  totalValue: extras.totalValue ?? 0,
+  count: extras.count ?? 0,
+  recentInputCount: extras.recentInputCount ?? 0,
+  largestValue: extras.largestValue ?? 0,
+  entries: extras.entries ?? [],
+  sourceCount: extras.sourceCount ?? 0,
+  primarySource: extras.primarySource ?? null,
+  sources: extras.sources ?? [],
+  latestEntry: extras.latestEntry ?? null,
   hadRecentInput: Boolean(extras.hadRecentInput),
-  error: extras.error || '',
+  error: extras.error ?? '',
 });
 
 const createUnsupportedDetail = (ctx, error = null) => createAuditDetail(ctx, AUDIT_STATE.UNSUPPORTED, {
-  outcome: 'unsupported',
-  outcomeSummary: 'layout stability measurement unavailable',
+  ...describeOutcome({ state: AUDIT_STATE.UNSUPPORTED }),
   batchValue: 0,
   totalValue: 0,
   entries: [],
@@ -131,8 +131,7 @@ const createUnsupportedDetail = (ctx, error = null) => createAuditDetail(ctx, AU
 });
 
 const createObservingDetail = (ctx) => createAuditDetail(ctx, AUDIT_STATE.OBSERVING, {
-  outcome: 'stable',
-  outcomeSummary: 'no measurable shift',
+  ...describeOutcome({ state: AUDIT_STATE.OBSERVING }),
   batchValue: 0,
   totalValue: 0,
   entries: [],
@@ -278,6 +277,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
         metric: MEASUREMENT.metric,
         evaluator: MEASUREMENT.evaluator,
         cssDefaults: MEASUREMENT.cssDefaults,
+        nativeDefaults: MEASUREMENT.cssDefaults,
         count: Number(root.spwLayoutShiftCount || 0),
         totalValue: Number(root.spwLayoutShiftTotal || 0),
         lastValue: Number(root.spwLayoutShiftLast || 0),
@@ -308,8 +308,11 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
 
     logger[level](message, payload, SPW_LOG_RELATIONSHIPS.MEASURE);
 
-    ctx?.bus?.emit?.(EVENT_NAME, payload);
-    document.dispatchEvent(new CustomEvent(EVENT_NAME, { detail: payload }));
+    if (ctx?.bus?.emit) {
+      ctx.bus.emit(EVENT_NAME, payload);
+    } else {
+      document.dispatchEvent(new CustomEvent(EVENT_NAME, { detail: payload }));
+    }
     return payload;
   };
 
@@ -361,7 +364,7 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
 
   try {
     observer = new PerformanceObserver((list) => {
-      recordBatch(list.getEntries(), AUDIT_STATE.SHIFTED);
+      recordBatch(list.getEntries());
     });
     observer.observe({ type: 'layout-shift', buffered: true });
   } catch (error) {

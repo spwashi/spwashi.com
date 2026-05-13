@@ -277,6 +277,7 @@ const readLayoutShiftAudit = () => {
         recentInputCount,
         outcome,
         cssDefaults: [...DEFAULT_LAYOUT_SHIFT_DEFAULTS],
+        nativeDefaults: [...DEFAULT_LAYOUT_SHIFT_DEFAULTS],
     };
 };
 
@@ -319,10 +320,12 @@ const describeLayoutShiftAction = (detail = {}) => {
     const sources = detail.sourceCount ?? detail.sources?.length ?? 0;
     const outcome = detail.outcome || 'stable';
     const outcomeCopy = detail.outcomeSummary || outcome;
-    const defaults = detail.cssDefaults?.length
-        ? detail.cssDefaults.join(', ')
-        : DEFAULT_LAYOUT_SHIFT_DEFAULTS.join(', ');
-    const defaultsSuffix = detail.diagnosticsLevel === 'verbose' ? `; defaults ${defaults}` : '';
+    const defaults = detail.nativeDefaults?.length
+        ? detail.nativeDefaults.join(', ')
+        : detail.cssDefaults?.length
+            ? detail.cssDefaults.join(', ')
+            : DEFAULT_LAYOUT_SHIFT_DEFAULTS.join(', ');
+    const defaultsSuffix = detail.diagnosticsLevel === 'verbose' ? `; native defaults ${defaults}` : '';
     const suffix = ignored ? `, ${ignored} ignored` : '';
     const sourceSuffix = sources ? `; ${sources} source${sources === 1 ? '' : 's'}` : '';
 

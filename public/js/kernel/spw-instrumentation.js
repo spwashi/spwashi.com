@@ -665,8 +665,7 @@ export function createSpwLogger(namespace = DEFAULT_NAMESPACE, options = {}) {
       message,
       detail,
     };
-    const payload = detail === undefined ? [label, message, record] : [label, message, record];
-    writer?.[method]?.(...payload);
+    writer?.[method]?.(label, message, record);
     return { level, ...record };
   };
 
