@@ -68,6 +68,7 @@
 @import url('/public/css/routes/surfaces/settings-notes.css') layer(routes);
 @import url('/public/css/routes/surfaces/settings-runtime.css') layer(routes);
 @import url('/public/css/routes/surfaces/settings-cues.css') layer(routes);
+@import url('/public/css/routes/surfaces/review-surfaces.css') layer(routes);
 @import url('/public/css/routes/recipes-surface.css') layer(routes);
 @import url('/public/css/routes/play-surface.css') layer(routes);
 @import url('/public/css/routes/rpg-wednesday-surface.css') layer(routes);

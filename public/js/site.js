@@ -1494,6 +1494,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'design-review-surfaces',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'body[data-spw-page-role="asset-review"], body[data-spw-page-role="token-review"], body[data-spw-page-role="design-lab"]',
+    rootMode: 'single',
+    load: () => import('./modules/design-review-surfaces.js'),
+    mount: (mod) => {
+      const fn = mod?.initDesignReviewSurfaces;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'attention-architecture',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

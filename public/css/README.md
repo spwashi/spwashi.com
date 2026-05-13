@@ -22,6 +22,8 @@ When changing shared visual behavior, edit the layered implementation file first
 
 Route surfaces can split under `routes/surfaces/` when a route grows into clear domains. Import those fragments directly from `style.css`; do not add one-file aliases or route shims.
 
+Focused review slices can live under `routes/surfaces/` as well when they are meant to sit beside a longer catalog or experiment page. Keep them narrow and route-local, and let shared enhancement JS fill in any generated rail or SVG summary.
+
 Reusable component styles belong under `components/`. The component layer is split by family (`foundation`, `surfaces`, `signals`, `cards`, `frames`, `pretext`, `content`, `controls`, and `runtime-states`) so filenames describe the local contract instead of repeating the project prefix. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
 
 Use `compose.css` when another site wants the theme/component language but should keep its own page shell and route layout.

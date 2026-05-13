@@ -1,0 +1,176 @@
+/* ==========================================================================
+   routes/surfaces/review-surfaces.css
+   --------------------------------------------------------------------------
+   Focused review surfaces for split catalog and experiment slices.
+   The JS enhancer injects the rail; this file gives it the right material,
+   rhythm, and SVG readability.
+   ========================================================================== */
+
+:where(
+  body[data-spw-page-role="asset-review"],
+  body[data-spw-page-role="token-review"],
+  body[data-spw-page-role="design-lab"]
+) {
+  --review-rail-accent: var(--active-op-color, var(--teal, #008080));
+  --review-rail-line: color-mix(in srgb, var(--review-rail-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  --review-rail-line-strong: color-mix(in srgb, var(--review-rail-accent) 34%, var(--line, rgba(14, 18, 20, 0.14)));
+  --review-rail-surface:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.88)) 98%, transparent),
+      color-mix(in srgb, var(--surface, rgba(255, 255, 255, 0.72)) 94%, transparent)
+    );
+  --review-rail-shadow:
+    0 10px 26px rgba(10, 18, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+:where(body[data-spw-page-role="asset-review"]) {
+  --review-rail-accent: var(--op-surface-color, #178282);
+}
+
+:where(body[data-spw-page-role="token-review"]) {
+  --review-rail-accent: var(--op-probe-color, #4a2180);
+}
+
+:where(body[data-spw-page-role="design-lab"]) {
+  --review-rail-accent: var(--op-frame-color, #008080);
+}
+
+:where(.spw-review-rail) {
+  display: grid;
+  gap: var(--gap-surface, 1rem);
+  align-self: start;
+  min-width: 0;
+  padding: var(--inset-panel, 1rem);
+  border: 1px solid var(--review-rail-line);
+  border-radius: var(--shape-surface, 10px);
+  background: var(--review-rail-surface);
+  box-shadow: var(--review-rail-shadow);
+}
+
+:where(.review-surface-card) {
+  display: grid;
+  gap: var(--gap-block-tight, 0.45rem);
+  min-width: 0;
+  padding: 0;
+}
+
+:where(.review-surface-kicker) {
+  margin: 0;
+  color: color-mix(in srgb, var(--review-rail-accent) 62%, var(--ink-soft, rgba(14, 18, 20, 0.68)));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(.review-surface-title) {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+:where(.review-surface-subtitle) {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+:where(.review-surface-lede, .review-surface-note) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+:where(.review-verb-row, .review-link-grid) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem 0.45rem;
+  min-width: 0;
+}
+
+:where(.review-verb-chip, .review-link-chip) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--review-rail-line) 86%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.88)) 94%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+:where(.review-link-chip:is(:hover, :focus-visible), .review-verb-chip[data-review-active="true"], .review-link-chip[data-review-active="true"]) {
+  color: color-mix(in srgb, var(--review-rail-accent) 72%, var(--ink, rgba(14, 18, 20, 0.92)));
+  border-color: color-mix(in srgb, var(--review-rail-accent) 34%, var(--review-rail-line));
+  background: color-mix(in srgb, var(--review-rail-accent) 8%, var(--surface-strong, rgba(255, 255, 255, 0.88)));
+}
+
+:where(.review-constellation) {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+:where(.review-constellation__svg) {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 5 / 4;
+}
+
+:where(.review-constellation__caption) {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+:where(.review-constellation__flow) {
+  opacity: 0.36;
+  transition: opacity var(--duration-base, 200ms) var(--ease-mechanical, ease);
+}
+
+:where(.review-constellation__node) {
+  transition:
+    transform var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    fill var(--duration-base, 200ms) var(--ease-mechanical, ease),
+    stroke var(--duration-base, 200ms) var(--ease-mechanical, ease);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+:where(.review-constellation__label) {
+  pointer-events: none;
+}
+
+:where(.review-constellation__link):is(:hover, :focus-visible) .review-constellation__node,
+:where(.review-constellation__link[data-review-active="true"]) .review-constellation__node {
+  transform: translateY(-1px) scale(1.06);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--review-rail-accent) 20%, transparent));
+}
+
+:where(.review-constellation__link):is(:hover, :focus-visible) .review-constellation__flow,
+:where(.review-constellation__link[data-review-active="true"]) .review-constellation__flow {
+  opacity: 0.82;
+}
+
+:where(.review-constellation__link[data-review-active="true"]) .review-constellation__label,
+:where(.review-link-chip[data-review-active="true"]) {
+  color: color-mix(in srgb, var(--review-rail-accent) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+}
+
+@media (max-width: 760px) {
+  :where(.spw-review-rail) {
+    padding: 0.9rem;
+  }
+}
