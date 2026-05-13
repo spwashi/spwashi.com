@@ -32,13 +32,19 @@ function collectChangedFiles(args: string[]): string[] {
     .filter(Boolean);
 }
 
+function collectCssGeneratedPaths(cssPlan: Awaited<ReturnType<typeof collectCssBuildPlan>>): string[] {
+  return [...new Set(cssPlan.flatMap((entry) => (
+    [entry.output, entry.mapOutput].filter((value): value is string => Boolean(value))
+  )))].sort();
+}
+
 export async function collectGeneratedGroups(): Promise<GeneratedGroup[]> {
   const cssPlan = await collectCssBuildPlan();
   return [
     ...GENERATED_TS_GROUPS,
     {
       label: 'css',
-      paths: cssPlan.map((entry) => entry.output).sort(),
+      paths: collectCssGeneratedPaths(cssPlan),
     },
   ];
 }

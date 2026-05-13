@@ -17,14 +17,18 @@ const POSTCSS_CONFIG_PATH = path.join(ROOT_DIR, 'postcss.config.mjs');
 type CssBuildResult = {
   output: string;
   source: string;
+  map?: string;
   transformed: boolean;
   written: boolean;
+  mapWritten?: boolean;
 };
 
 type CssBuildPlanEntry = {
   mode: 'copy' | 'postcss';
   output: string;
   outputPath: string;
+  mapOutput?: string;
+  mapOutputPath?: string;
   source: string;
   sourcePath: string;
 };
@@ -95,15 +99,22 @@ function outputPathForEntry(entryPath: string): string {
   return path.join(PUBLIC_CSS_DIR, outputRelativePath);
 }
 
+function outputMapPathForEntry(entryPath: string): string {
+  return `${outputPathForEntry(entryPath)}.map`;
+}
+
 export async function collectCssBuildPlan(): Promise<CssBuildPlanEntry[]> {
   const entries = (await walk(SOURCE_ENTRIES_DIR)).sort();
   const hasPostcssConfig = await pathExists(POSTCSS_CONFIG_PATH);
   return entries.map((entry) => {
     const outputPath = outputPathForEntry(entry);
+    const mapOutputPath = outputMapPathForEntry(entry);
     return {
       mode: hasPostcssConfig ? 'postcss' : 'copy',
       output: relativeRepoPath(outputPath),
       outputPath,
+      mapOutput: hasPostcssConfig ? relativeRepoPath(mapOutputPath) : undefined,
+      mapOutputPath: hasPostcssConfig ? mapOutputPath : undefined,
       source: relativeRepoPath(entry),
       sourcePath: entry,
     };
@@ -184,27 +195,44 @@ export async function buildCssSources(options: CssBuildOptions = { check: false,
 
   for (const entry of plan) {
     const source = await fs.readFile(entry.sourcePath, 'utf8');
-    const output = pipeline
-      ? (await pipeline.process(source, { from: entry.sourcePath, to: entry.outputPath })).css
-      : source;
+    const processed = pipeline
+      ? await pipeline.process(source, {
+        from: entry.sourcePath,
+        to: entry.outputPath,
+        map: {
+          annotation: true,
+          inline: false,
+          sourcesContent: true,
+        },
+      })
+      : null;
+    const output = processed?.css || source;
+    const map = processed?.map?.toString() || null;
     const normalizedOutput = output.endsWith('\n') ? output : `${output}\n`;
     const currentOutput = await readIfExists(entry.outputPath);
+    const currentMap = entry.mapOutputPath ? await readIfExists(entry.mapOutputPath) : null;
     const isFresh = currentOutput === normalizedOutput;
+    const isMapFresh = !entry.mapOutputPath || currentMap === map;
 
-    if (options.check && !isFresh) {
+    if (options.check && (!isFresh || !isMapFresh)) {
       throw new Error(`[css-build] stale output: ${entry.output}`);
     }
 
-    if (!options.check && !isFresh) {
+    if (!options.check && (!isFresh || !isMapFresh)) {
       await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
       await fs.writeFile(entry.outputPath, normalizedOutput, 'utf8');
+      if (entry.mapOutputPath && map) {
+        await fs.writeFile(entry.mapOutputPath, `${map}\n`, 'utf8');
+      }
     }
 
     results.push({
       output: entry.output,
       source: entry.source,
+      map: entry.mapOutput,
       transformed: Boolean(pipeline),
       written: !options.check && !isFresh,
+      mapWritten: Boolean(!options.check && entry.mapOutputPath && !isMapFresh),
     });
   }
 
@@ -224,8 +252,9 @@ export async function main(): Promise<void> {
   console.log(`[css-build] ${verb} ${results.length} stylesheet source(s)`);
   for (const result of results) {
     const mode = result.transformed ? 'postcss' : 'copy';
-    const suffix = options.check ? '' : result.written ? ' updated' : ' fresh';
-    console.log(`  ${mode}: ${result.source} -> ${result.output}${suffix}`);
+    const suffix = options.check ? '' : (result.written || result.mapWritten) ? ' updated' : ' fresh';
+    const mapNote = result.map ? ` (+ ${result.map})` : '';
+    console.log(`  ${mode}: ${result.source} -> ${result.output}${mapNote}${suffix}`);
   }
 
   if (!options.watch) return;

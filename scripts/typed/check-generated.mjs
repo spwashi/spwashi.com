@@ -21,13 +21,16 @@ function collectChangedFiles(args) {
         .map((item) => item.trim())
         .filter(Boolean);
 }
+function collectCssGeneratedPaths(cssPlan) {
+    return [...new Set(cssPlan.flatMap((entry) => ([entry.output, entry.mapOutput].filter((value) => Boolean(value)))))].sort();
+}
 export async function collectGeneratedGroups() {
     const cssPlan = await collectCssBuildPlan();
     return [
         ...GENERATED_TS_GROUPS,
         {
             label: 'css',
-            paths: cssPlan.map((entry) => entry.output).sort(),
+            paths: collectCssGeneratedPaths(cssPlan),
         },
     ];
 }
