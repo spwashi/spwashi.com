@@ -13,6 +13,9 @@
  * - Keep everything optional and progressive.
  */
 
+import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
+import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
+
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
 const BOOKMARKS_KEY = 'spw-pins';
@@ -130,11 +133,18 @@ function initSpellBreadcrumbs() {
 
   runtime.headerMemo = headerMemo;
 
-  const update = () => renderBreadcrumbSpell();
+  const update = () => {
+    renderBreadcrumbSpell();
+    syncExperientialSurface();
+  };
 
   window.addEventListener('popstate', update);
   window.addEventListener('hashchange', update);
   window.addEventListener('resize', update);
+  document.addEventListener('spw:memory:recent-path', update);
+  document.addEventListener('spw:page-attention-state', update);
+  document.addEventListener('spw:page-transition-state', update);
+  document.addEventListener('spw:settings:changed', update);
   document.addEventListener('spw:frame-change', update);
   document.addEventListener('spw:mode-change', update);
   document.addEventListener('brace:committed', update);
@@ -184,6 +194,7 @@ function renderBreadcrumbSpell() {
   const activeModeButton = document.querySelector('[data-mode-group][data-set-mode][aria-pressed="true"]');
   const activeMode = activeModeButton?.dataset.setMode || null;
   const activeModeSelector = ensureStableId(activeModeButton, 'spw-mode');
+  const narrationMode = document.documentElement.dataset.spwMeaningMode || 'readable';
   const items = [];
 
   items.push(renderBreadcrumbLink({
@@ -236,11 +247,22 @@ function renderBreadcrumbSpell() {
     }));
   }
 
+  const cognitiveState = describeCognitiveState({
+    signalCount: items.length + (activeFrameSigil ? 1 : 0) + (activeMode ? 1 : 0),
+    recentPath: getActiveRecentPathMemory(),
+    currentPath: url.pathname,
+    currentSurface: surface,
+    pageArrival: document.documentElement.dataset.spwPageArrival || '',
+    pageTransitionPhase: document.documentElement.dataset.spwPageTransitionPhase || '',
+    pageLiminality: document.body?.dataset.spwLiminality || '',
+  });
   const meaning = describeBreadcrumbMeaning({
     surface,
     activeFrameSigil,
     activeMode,
     shellSnapshot,
+    cognitiveState,
+    narrationMode,
   });
   const compactSummary = describeBreadcrumbSummary({
     surface,
@@ -264,6 +286,10 @@ function renderBreadcrumbSpell() {
   pathBar.dataset.spwBreadcrumbMenuPressure = shellSnapshot.pressure;
   pathBar.dataset.spwBreadcrumbMenuIntent = shellSnapshot.intent;
   pathBar.dataset.spwBreadcrumbReversible = shellSnapshot.reversible ? 'true' : 'false';
+  pathBar.dataset.spwBreadcrumbFamiliarity = cognitiveState.familiarity;
+  pathBar.dataset.spwBreadcrumbLiminality = cognitiveState.liminality;
+  pathBar.dataset.spwBreadcrumbCognitive = cognitiveState.gradient;
+  pathBar.dataset.spwBreadcrumbMeaningMode = narrationMode;
   pathBar.dataset.spwBreadcrumbState = pathState;
   pathBar.dataset.spwBreadcrumbViewport = compact ? 'compact' : 'roomy';
 
@@ -274,7 +300,7 @@ function renderBreadcrumbSpell() {
         type="button"
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
-        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} spell path. ${compactSummary}.`)}">
+        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} spell path. ${compactSummary}. ${cognitiveState.gradient}.${narrationMode !== 'readable' ? ` ${narrationMode} meaning mode.` : ''}`)}">
         <span class="spw-spell-path__title">spell path</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
@@ -375,16 +401,22 @@ function describeBreadcrumbSummary({ surface, routeParts, activeFrameSigil, acti
   return routeLabel;
 }
 
-function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shellSnapshot }) {
+function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode }) {
   const parts = [
     `surface ${surface}`,
     activeFrameSigil ? `frame ${stripWhitespace(activeFrameSigil)}` : 'frame route-level',
     activeMode ? `mode ${humanizePathPart(activeMode)}` : 'mode ambient',
     `menu ${humanizePathPart(shellSnapshot.topology)} ${shellSnapshot.state}`,
+    `memory ${cognitiveState.familiarity}`,
+    `liminality ${cognitiveState.liminality}`,
   ];
 
   if (shellSnapshot.reversible) {
     parts.push(`return via ${shellSnapshot.returnHint}`);
+  }
+
+  if (narrationMode && narrationMode !== 'readable') {
+    parts.push(`meaning ${narrationMode}`);
   }
 
   return parts.join(' · ');
@@ -777,6 +809,56 @@ function groupPins(pins) {
 function syncExperientialSurface() {
   const surface = document.body?.dataset.spwSurface || 'root';
   document.documentElement.dataset.spwExperientialSurface = surface;
+  updateCognitiveCopyHooks(surface);
+}
+
+function updateCognitiveCopyHooks(surface = document.body?.dataset.spwSurface || 'root') {
+  const note = document.querySelector('[data-spw-page-hook="settings-cognitive-note"]');
+  if (!(note instanceof HTMLElement)) return;
+
+  const cognitiveState = describeCognitiveState({
+    signalCount: document.querySelectorAll('.operator-chip[data-spw-grounded="true"], .frame-sigil[data-spw-grounded="true"], .spell-ingredient[data-spw-grounded="true"]').length,
+    recentPath: getActiveRecentPathMemory(),
+    currentPath: window.location.pathname,
+    currentSurface: surface,
+    pageArrival: document.documentElement.dataset.spwPageArrival || '',
+    pageTransitionPhase: document.documentElement.dataset.spwPageTransitionPhase || '',
+    pageLiminality: document.body?.dataset.spwLiminality || '',
+  });
+  const narrationMode = document.documentElement.dataset.spwMeaningMode || 'readable';
+
+  const lead =
+    cognitiveState.familiarity === 'fresh'
+      ? 'The page starts <strong>fresh</strong>: keep it calm until you need more handles.'
+      : cognitiveState.familiarity === 'familiar'
+        ? 'The page is becoming <strong>familiar</strong>: the shape can show a little more of itself without getting louder.'
+        : cognitiveState.familiarity === 'practiced'
+          ? 'The page feels <strong>practiced</strong>: you can return without rebuilding the route from scratch.'
+          : cognitiveState.familiarity === 'fluent'
+            ? 'The page is <strong>fluent</strong> enough to expose more of its internal grammar.'
+            : 'The page is <strong>habitual</strong>: the same surface can stay readable while you customize it with confidence.';
+
+  const liminality =
+    cognitiveState.liminality === 'entry'
+      ? 'You are at an <strong>entry</strong> seam.'
+      : cognitiveState.liminality === 'threshold'
+        ? 'You are at a <strong>threshold</strong>, where extra detail can appear without overwhelming the page.'
+        : cognitiveState.liminality === 'settled'
+          ? 'The surface is <strong>settled</strong> and ready for calm reuse.'
+          : cognitiveState.liminality === 'nested'
+            ? 'The surface is <strong>nested</strong> enough to hold deeper controls.'
+            : cognitiveState.liminality === 'projected'
+              ? 'The surface is <strong>projected</strong> and visible enough for inspection.'
+              : 'The surface is <strong>deep</strong>: it can keep more of its mechanics visible.';
+
+  const meaning =
+    narrationMode === 'inspect'
+      ? 'Inspect mode keeps the scaffold visible so the same shape is easier to learn.'
+      : narrationMode === 'quiet'
+        ? 'Quiet mode keeps the surface lean while preserving the return path.'
+        : 'Readable mode keeps the page calm while still leaving room for stronger handles when you want them.';
+
+  note.innerHTML = `${lead} ${liminality} ${meaning}`;
 }
 
 function applyFieldAttrs(meta) {

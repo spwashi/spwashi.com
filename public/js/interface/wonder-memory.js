@@ -10,6 +10,7 @@ import {
     tokensFromHref,
     uniqueAccentValues
 } from './accent-palette.js';
+import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const MEMORY_TARGET_SELECTOR = [
     '.topic-photo-card',
@@ -125,6 +126,11 @@ function inferTargetTokens(target) {
 function clearRootState(root) {
     delete root.dataset.spwWonderMemoryState;
     delete root.dataset.spwWonderMemoryWonder;
+    delete root.dataset.spwWonderMemoryFamiliarity;
+    delete root.dataset.spwWonderMemoryLiminality;
+    delete root.dataset.spwWonderMemoryGradient;
+    delete root.dataset.spwWonderMemorySignals;
+    delete root.dataset.spwWonderMemoryMeaningMode;
     root.style.removeProperty('--wonder-accent-color');
     root.style.removeProperty('--delight-color');
     root.style.removeProperty('--spw-wonder-memory-color');
@@ -172,9 +178,23 @@ export function applyWonderMemoryState(root = document) {
     const activeTokens = new Set(
         uniqueAccentValues([...recent.tokens, recent.operator].map(normalizeAccentToken))
     );
+    const cognitiveState = describeCognitiveState({
+        signalCount: recent.tokens.length,
+        recentPath: recent,
+        currentPath: window.location.pathname,
+        currentSurface: document.body?.dataset?.spwSurface || '',
+        pageArrival: document.documentElement.dataset.spwPageArrival || '',
+        pageTransitionPhase: document.documentElement.dataset.spwPageTransitionPhase || '',
+        pageLiminality: document.body?.dataset?.spwLiminality || '',
+    });
 
     host.dataset.spwWonderMemoryState = 'active';
     host.dataset.spwWonderMemoryWonder = wonder;
+    host.dataset.spwWonderMemoryFamiliarity = cognitiveState.familiarity;
+    host.dataset.spwWonderMemoryLiminality = cognitiveState.liminality;
+    host.dataset.spwWonderMemoryGradient = cognitiveState.gradient;
+    host.dataset.spwWonderMemorySignals = String(recent.tokens.length);
+    host.dataset.spwWonderMemoryMeaningMode = document.documentElement.dataset.spwMeaningMode || 'readable';
     host.style.setProperty('--wonder-accent-color', primary);
     host.style.setProperty('--delight-color', secondary);
     host.style.setProperty('--spw-wonder-memory-color', primary);

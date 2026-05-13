@@ -8,7 +8,9 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
+import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, restoreCheckpoint } from '/public/js/interface/haptics.js';
+import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',
@@ -131,13 +133,28 @@ function buildSpellModel() {
   const prefixCounts = countBy(entries, (entry) => entry.prefix || '.');
   const destinationCounts = countBy(entries, (entry) => entry.destination);
   const combos = buildSpellCombos(entries);
+  const narrationMode = document.documentElement.dataset.spwMeaningMode || 'readable';
+  const cognitiveState = {
+    ...describeCognitiveState({
+    signalCount: entries.length,
+    recentPath: getActiveRecentPathMemory(),
+    currentPath: window.location.pathname,
+    currentSurface: getSpellSurface(),
+    pageArrival: document.documentElement.dataset.spwPageArrival || '',
+    pageTransitionPhase: document.documentElement.dataset.spwPageTransitionPhase || '',
+    pageLiminality: document.body?.dataset.spwLiminality || '',
+    }),
+    narrationMode,
+  };
 
   return {
     entries,
     prefixCounts,
     destinationCounts,
     combos,
-    snippet: constructSpell(entries),
+    narrationMode,
+    cognitiveState,
+    snippet: constructSpell(entries, cognitiveState),
   };
 }
 
@@ -170,7 +187,7 @@ function buildSpellCombos(entries) {
   return [...combos.values()];
 }
 
-function constructSpell(entries) {
+function constructSpell(entries, cognitiveState = null) {
   const timestamp = new Date().toISOString();
   const lines = [
     '@cast_spell("navigation_lattice")',
@@ -191,15 +208,23 @@ function constructSpell(entries) {
   lines.push('');
   lines.push('&"processing_hints"{');
 
-  buildProjectionNotes(entries).forEach((note) => {
+  buildProjectionNotes(entries, cognitiveState).forEach((note) => {
     lines.push(`  ${note}`);
   });
+
+  if (cognitiveState) {
+    lines.push(`  ~"familiarity" =${cognitiveState.familiarity}`);
+    lines.push(`  ~"liminality" =${cognitiveState.liminality}`);
+    if (cognitiveState.narrationMode && cognitiveState.narrationMode !== 'readable') {
+      lines.push(`  ~"meaning_mode" =${cognitiveState.narrationMode}`);
+    }
+  }
 
   lines.push('}');
   return lines.join('\n');
 }
 
-function buildProjectionNotes(entries) {
+function buildProjectionNotes(entries, cognitiveState = null) {
   const destinationCounts = new Map(countBy(entries, (entry) => entry.destination));
   const scopeCount = destinationCounts.get('scope') || 0;
   const projectionCount = destinationCounts.get('projection') || 0;
@@ -220,6 +245,18 @@ function buildProjectionNotes(entries) {
 
   if (!notes.length) {
     notes.push('.gather_more_routes');
+  }
+
+  if (cognitiveState?.familiarity === 'fresh') {
+    notes.push('@"learn_the_shape"');
+  } else if (['familiar', 'practiced'].includes(cognitiveState?.familiarity)) {
+    notes.push('@"return_to_familiar_ground"');
+  } else if (['fluent', 'habitual'].includes(cognitiveState?.familiarity)) {
+    notes.push('@"customize_with_confidence"');
+  }
+
+  if (cognitiveState?.liminality && cognitiveState.liminality !== 'settled') {
+    notes.push('@"hold_threshold_open"');
   }
 
   return notes;
@@ -282,6 +319,10 @@ function updateSpellDock(model) {
   const parts = getSpellDockParts(dock);
 
   dock.dataset.spwViewport = compactViewport ? 'compact' : 'default';
+  dock.dataset.spwSpellFamiliarity = model.cognitiveState.familiarity;
+  dock.dataset.spwSpellLiminality = model.cognitiveState.liminality;
+  dock.dataset.spwSpellCognitive = model.cognitiveState.gradient;
+  dock.dataset.spwSpellMeaningMode = model.narrationMode;
   if (parts.count) parts.count.textContent = String(model.entries.length);
   if (parts.label) parts.label.textContent = model.entries.length ? 'spellbook' : 'ground lines';
 
@@ -296,13 +337,14 @@ function updateSpellDock(model) {
   const destinations = renderDestinationRegisters(
     compactViewport ? model.destinationCounts.slice(0, 2) : model.destinationCounts
   );
+  const cognitive = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
 
   if (compactViewport) {
-    parts.body.innerHTML = renderCompactSpellDock(preview, destinations);
+    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, destinations, model.narrationMode);
     return;
   }
 
-  parts.body.innerHTML = renderExpandedSpellDock(preview, destinations, model.snippet);
+  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, destinations, model.snippet, model.narrationMode);
 }
 
 function getSpellDockParts(dock) {
@@ -315,7 +357,7 @@ function getSpellDockParts(dock) {
 
 function renderEmptySpellDock() {
   return `
-    <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell you can replay.</p>
+    <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell. The dock will tell you when the path still feels <strong>fresh</strong>, when it starts to feel <strong>familiar</strong>, and when it is settled enough to replay quickly.</p>
   `;
 }
 
@@ -333,18 +375,45 @@ function renderDestinationRegisters(destinationCounts = []) {
   }).join('');
 }
 
-function renderCompactSpellDock(preview, destinations) {
+function renderCognitiveRegisters(cognitiveState, narrationMode = 'readable') {
+  const narrationRegisters = narrationMode && narrationMode !== 'readable'
+    ? [`<span class="spell-register">meaning · ${escapeHtml(narrationMode)}</span>`]
+    : [];
+
+  return [
+    `<span class="spell-register">familiarity · ${escapeHtml(cognitiveState.familiarity)}</span>`,
+    `<span class="spell-register">liminality · ${escapeHtml(cognitiveState.liminality)}</span>`,
+    ...narrationRegisters,
+  ].join('');
+}
+
+function renderCompactSpellDock(preview, cognitive, destinations, narrationMode = 'readable') {
+  const narrationNote = narrationMode === 'inspect'
+    ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
+    : narrationMode === 'quiet'
+      ? ' <strong>Quiet mode</strong> keeps the dock lean while it still carries the same memory.'
+      : '';
+
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
+    <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
     <div class="spell-register-strip">${destinations}</div>
-    <p class="spell-note spell-note--compact">Replayable navigation lines. Use the full spell board on a wider surface when you want the serialized source.</p>
+    <p class="spell-note spell-note--compact"><strong>Replayable</strong> cognitive lines. Familiar paths help you return; liminal paths show the edge you are crossing.${narrationNote}</p>
   `;
 }
 
-function renderExpandedSpellDock(preview, destinations, snippet) {
+function renderExpandedSpellDock(preview, cognitive, destinations, snippet, narrationMode = 'readable') {
+  const narrationNote = narrationMode === 'inspect'
+    ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
+    : narrationMode === 'quiet'
+      ? ' <strong>Quiet mode</strong> keeps the dock lean while it still carries the same memory.'
+      : '';
+
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
+    <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
     <div class="spell-register-strip">${destinations}</div>
+    ${narrationNote ? `<p class="spell-note spell-note--compact">${narrationNote}</p>` : ''}
     <pre class="spell-source spell-source--compact"><code>${escapeHtml(snippet)}</code></pre>
   `;
 }
@@ -357,11 +426,15 @@ function updateSpellBoards(model) {
 
 function renderSpellBoard(board, model) {
   if (!(board instanceof HTMLElement)) return;
+  board.dataset.spwSpellFamiliarity = model.cognitiveState.familiarity;
+  board.dataset.spwSpellLiminality = model.cognitiveState.liminality;
+  board.dataset.spwSpellCognitive = model.cognitiveState.gradient;
+  board.dataset.spwSpellMeaningMode = model.narrationMode;
 
   if (!model.entries.length) {
     board.innerHTML = `
       <p class="frame-note">
-        No navigation spell assembled yet. Follow routes, section lines, or operator chips to build a readable sequence you can replay.
+        No navigation spell assembled yet. Follow routes, section lines, or operator chips to build a readable sequence you can replay. Fresh paths become familiar when you ground a few more signals.
       </p>
     `;
     return;
@@ -383,13 +456,20 @@ function renderSpellBoard(board, model) {
       `<span class="spell-register">${escapeHtml(combo.from)} → ${escapeHtml(combo.to)}</span>`
     )).join('')
     : '<span class="spell-register">ground another token to complete the sequence</span>';
+  const cognitiveSummary = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
+  const narrationNote = model.narrationMode === 'inspect'
+    ? ' <strong>Inspect mode</strong> keeps the scaffold visible so the shape is easier to learn.'
+    : model.narrationMode === 'quiet'
+      ? ' <strong>Quiet mode</strong> keeps the spellboard compact while it still rewards return visits.'
+      : '';
 
   board.innerHTML = `
     <div class="spell-visual">
       ${model.entries.map(renderSpellAtom).join('')}
     </div>
     <div class="spell-ledger">
-      <p class="spell-note">A spell is a small replayable outcome. Prefix notation shapes intent. Postfix notation shapes what the interaction does next.</p>
+      <p class="spell-note"><strong>A spell is a small replayable outcome.</strong> Prefix notation shapes intent. Postfix notation shapes what the interaction does next. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
+      <div class="spell-register-strip spell-register-strip--cognitive">${cognitiveSummary}</div>
       <div class="spell-register-strip">${prefixSummary}</div>
       <div class="spell-register-strip">${destinationSummary}</div>
       <div class="spell-register-strip">${comboSummary}</div>
@@ -440,7 +520,7 @@ function parseSpellBundleEntry(key) {
 function renderSavedBundles(bundles) {
   return `
     <div class="spell-bundle-bank">
-      <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path.</p>
+      <p class="spell-note">Saved working sets preserve named learning or build threads so you can return without rebuilding the whole path. A good bundle should feel <strong>easier to resume than to rediscover</strong>.</p>
       <div class="spell-bundle-grid">
         ${bundles.map(renderSavedBundleCard).join('')}
       </div>
@@ -567,6 +647,10 @@ export function initSpwSpells() {
   renderAllSpellSurfaces();
 
   cleanupCallbacks = [
+    bus.on('memory:recent-path', renderAllSpellSurfaces),
+    bus.on('settings:changed', renderAllSpellSurfaces),
+    bus.on('page-attention-state', renderAllSpellSurfaces),
+    bus.on('page-transition-state', renderAllSpellSurfaces),
     bus.on('spell:reset', renderAllSpellSurfaces),
     bus.on('spell:grounded', renderAllSpellSurfaces),
     bus.on('spell:ungrounded', renderAllSpellSurfaces),

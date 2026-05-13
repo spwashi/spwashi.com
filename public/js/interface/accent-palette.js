@@ -2,6 +2,7 @@ import {
     DEFAULT_PALETTE_RESONANCE,
     getPaletteResonanceTokens
 } from '/public/js/interface/palette-resonance.js';
+import { bus } from '/public/js/kernel/bus.js';
 
 /**
  * Spw Accent Palette
@@ -243,6 +244,7 @@ export function initRecentPathTracker(onChange) {
             const payload = inferOperationalPayload(event.target);
             if (!payload) return;
             recentPathMemory = payload;
+            bus.emit('memory:recent-path', payload, { target: document });
             listeners.forEach((listener) => {
                 try {
                     listener(payload);
