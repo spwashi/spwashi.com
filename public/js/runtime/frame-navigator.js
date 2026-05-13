@@ -19,7 +19,7 @@
  * • Performance: Efficient re-rendering, cached frame list, lightweight per-frame observers
  * • Accessibility: Full keyboard navigation (arrows, Home, End), improved ARIA, focus management, live counter
  * • Resilience: Graceful degradation if no frames, try/catch around DOM/observer ops, idempotent init
- * • UX polish: Subtle debounce on search, prevents default on route clicks (fixes SPA navigation), better empty state, auto-scroll to active item
+ * • UX polish: Subtle debounce on search, better empty state, auto-scroll to active item
  * • Extensibility: window.spwNavigator API exposed for manual control/debugging
  * • Bug fixes: Stale frame references eliminated, duplicate listeners prevented, route clicks no longer trigger double navigation
  * • Code quality: Fully sectioned, modern JS patterns, detailed comments, consistent error handling
@@ -448,8 +448,6 @@ class SpwFrameNavigator {
         } else {
             control.href = entry.href;
             control.setAttribute('data-route-key', entry.key);
-            // Prevent default navigation (SPA handling via emitSpwAction)
-            control.addEventListener('click', e => e.preventDefault());
         }
 
         if (entry.prefix) {
