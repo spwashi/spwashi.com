@@ -21,7 +21,7 @@ thesis: .{
 declared_page_lifecycle: .{
  states = ?< booting, interactive, hydrated, region-enhanced, enhanced >[reg=stream]
  source = @runtime
- note = `These are declared in site.js and then written onto html[data-spw-page-state].`
+ note = `These are declared in public/js/runtime/page-state.js, written onto html[data-spw-page-state], and exposed through the composition console for console/extension tuning.`
 }[reg=facet]
 
 declared_region_lifecycle: .{
@@ -87,7 +87,7 @@ lifecycle_risks: .{
 }[reg=facet]
 
 teardown_contract: .{
- runtime_destroy = .{
+  runtime_destroy = .{
   path = @runtime
   responsibilities = #[
    `registry.cleanupAll()`,
@@ -95,7 +95,7 @@ teardown_contract: .{
    `clear timers`,
    `run cleanup stack`,
    `clear ctx.regions`,
-   `remove page-state / harmony / tempo datasets from html`
+   `remove page-state / harmony / tempo datasets from html through the page-state module`
   ][reg=set]
  }[reg=facet]
  missing_symmetry = #[

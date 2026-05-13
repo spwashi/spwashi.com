@@ -1,91 +1,73 @@
 /* ==========================================================================
-   state-orchestrator.js
+   frame-state.js
    --------------------------------------------------------------------------
-   Core runtime for managing Genetic CSS states and relational interactions.
-   Exposes high-level state primitives (Resonance, Charge, Drift) to the DOM.
+   Shared runtime for frame state toggles and relational focus behavior.
+   The helpers are exported individually so console scripts and extensions can
+   call the smallest useful primitive instead of always routing through a
+   mutable object wrapper.
    ========================================================================== */
 
 const STATE_ATTR = 'data-state';
 const ATTENTION_ATTR = 'data-spw-attention';
 
-/**
- * Registry of active observers and their state-matching rules.
- */
-const orchestrator = {
-  observers: new Set(),
-  
-  /**
-   * Broadcasts a state change to the environment.
-   * @param {Element} el - Target element.
-   * @param {string} state - State token to toggle/set.
-   * @param {boolean} active - Presence of state.
-   */
-  setState(el, state, active = true) {
-    if (!el) return;
-    const current = el.getAttribute(STATE_ATTR) || '';
-    const states = new Set(current.split(' ').filter(Boolean));
-    
-    if (active) {
-      states.add(state);
-    } else {
-      states.delete(state);
-    }
-    
-    const next = Array.from(states).join(' ');
-    if (next) {
-      el.setAttribute(STATE_ATTR, next);
-    } else {
-      el.removeAttribute(STATE_ATTR);
-    }
-  },
+export function setState(el, state, active = true) {
+  if (!el) return;
+  const current = el.getAttribute(STATE_ATTR) || '';
+  const states = new Set(current.split(' ').filter(Boolean));
 
-  /**
-   * Batch update multiple states.
-   */
-  setStates(el, stateMap) {
-    Object.entries(stateMap).forEach(([s, a]) => this.setState(el, s, a));
-  },
-
-  /**
-   * Pulse a state (add temporarily then remove).
-   */
-  pulse(el, state, duration = 600) {
-    this.setState(el, state, true);
-    setTimeout(() => this.setState(el, state, false), duration);
-  },
-
-  /**
-   * Manages relational "Attention" scaling.
-   * Sets focus on an element and dims neighbors.
-   */
-  focus(el, scope = 'main') {
-    const parent = el.closest(scope) || document.body;
-    const siblings = parent.querySelectorAll(`.site-frame, [data-spw-kind="surface"]`);
-    
-    siblings.forEach(s => {
-      if (s === el) {
-        s.setAttribute(ATTENTION_ATTR, 'focused');
-        this.setState(s, 'active', true);
-      } else {
-        s.setAttribute(ATTENTION_ATTR, 'dimmed');
-        this.setState(s, 'active', false);
-      }
-    });
+  if (active) {
+    states.add(state);
+  } else {
+    states.delete(state);
   }
-};
 
-/**
- * Global click handler for grounded interactive elements.
- * Automatically handles focus transitions and arrival pulses.
- */
-function bindGlobalInteractions() {
-  document.addEventListener('click', (e) => {
-    const frame = e.target.closest('.site-frame');
+  const next = Array.from(states).join(' ');
+  if (next) {
+    el.setAttribute(STATE_ATTR, next);
+  } else {
+    el.removeAttribute(STATE_ATTR);
+  }
+}
+
+export function setStates(el, stateMap = {}) {
+  Object.entries(stateMap).forEach(([state, active]) => setState(el, state, active));
+}
+
+export function pulseState(el, state, duration = 600) {
+  setState(el, state, true);
+  setTimeout(() => setState(el, state, false), duration);
+}
+
+export function focusFrame(el, scope = 'main') {
+  if (!el) return;
+  const parent = el.closest(scope) || document.body;
+  const siblings = parent.querySelectorAll('.site-frame, [data-spw-kind="surface"]');
+
+  siblings.forEach((sibling) => {
+    if (sibling === el) {
+      sibling.setAttribute(ATTENTION_ATTR, 'focused');
+      setState(sibling, 'active', true);
+    } else {
+      sibling.setAttribute(ATTENTION_ATTR, 'dimmed');
+      setState(sibling, 'active', false);
+    }
+  });
+}
+
+export const orchestrator = Object.freeze({
+  observers: new Set(),
+  setState,
+  setStates,
+  pulse: pulseState,
+  focus: focusFrame,
+});
+
+export function bindGlobalInteractions() {
+  document.addEventListener('click', (event) => {
+    const frame = event.target.closest('.site-frame');
     if (frame && !frame.matches('[data-state~="active"]')) {
-      orchestrator.focus(frame);
-      orchestrator.pulse(frame, 'arrival', 420);
+      focusFrame(frame);
+      pulseState(frame, 'arrival', 420);
     }
   }, { capture: true });
 }
-
-export { orchestrator, bindGlobalInteractions };

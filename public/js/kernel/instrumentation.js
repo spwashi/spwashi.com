@@ -699,6 +699,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
   const logger = createSpwLogger(options.namespace || 'spw-compose', options);
   const apiName = options.name || 'spwCompose';
   const existing = globalObject[apiName] || {};
+  const controls = Object.freeze({ ...(options.controls || {}) });
   const queryPresets = Object.freeze({
     ...SPW_QUERY_PRESETS,
   });
@@ -715,6 +716,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
   const api = Object.freeze({
     ...existing,
     contract: options.contract || null,
+    controls,
     inspect: (target, inspectOptions = {}) => snapshotInstrumentationTarget(target, inspectOptions),
     queryPresets,
     debugPresets,

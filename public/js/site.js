@@ -15,6 +15,22 @@ import {
   installSpwCompositionConsole,
 } from './kernel/instrumentation.js';
 import { bus as sharedBus } from './kernel/bus.js';
+import {
+  PAGE_ARRIVAL,
+  PAGE_ATTENTION_EVENT,
+  PAGE_PRESENCE,
+  PAGE_STATES,
+  PAGE_TRANSITION_EVENT,
+  annotateFloatingChrome,
+  clearPageState,
+  clearPageAttentionSequence,
+  initPageAttentionLifecycle,
+  schedulePageArrival,
+  setPageState,
+  setPageAttentionState,
+  snapshotPageState,
+} from './runtime/page-state.js';
+import { annotatePageHooks } from './runtime/page-hooks.js';
 
 /**
  * site.js
@@ -72,26 +88,6 @@ import { bus as sharedBus } from './kernel/bus.js';
    1. Runtime constants
    ========================================================================== */
 
-const PAGE_STATES = {
-  BOOTING: 'booting',
-  INTERACTIVE: 'interactive',
-  HYDRATED: 'hydrated',
-  REGION_ENHANCED: 'region-enhanced',
-  ENHANCED: 'enhanced',
-};
-
-const PAGE_PRESENCE = {
-  FOREGROUND: 'foreground',
-  BACKGROUND: 'background',
-};
-
-const PAGE_ARRIVAL = {
-  ENTERING: 'entering',
-  RETURNING: 'returning',
-  RESTORED: 'restored',
-  SETTLED: 'settled',
-};
-
 const REGION_STATES = {
   QUEUED: 'queued',
   PRIMED: 'primed',
@@ -120,220 +116,14 @@ const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
 let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
-const FLOATING_CHROME_SELECTOR = '.skip-link, .spw-section-handle, .spw-section-handle-shell';
-const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
-const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
-  { step: '1', token: '--spw-page-arrival-step-1-delay', fallback: 0 },
-  { step: '2', token: '--spw-page-arrival-step-2-delay', fallback: 96 },
-  { step: '3', token: '--spw-page-arrival-step-3-delay', fallback: 212 },
-]);
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
-const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
+annotateFloatingChrome(document);
+annotatePageHooks(document);
 
 /* ==========================================================================
    2. Small runtime helpers
    ========================================================================== */
-
-function setPageState(state) {
-  writeDatasetValue(HTML, 'spwPageState', state);
-}
-
-function annotateFloatingChrome(root = document) {
-  if (!root?.querySelectorAll) return;
-  root.querySelectorAll(FLOATING_CHROME_SELECTOR).forEach((element) => {
-    writeDatasetValueIfMissing(element, 'spwFloatingChrome', 'true');
-    writeDatasetValueIfMissing(element, 'spwLayoutOwner', 'floating-chrome');
-  });
-}
-
-function parseCssTimeMs(value, fallback = 0) {
-  const raw = String(value || '').trim();
-  if (!raw) return fallback;
-  const numeric = Number.parseFloat(raw);
-  if (!Number.isFinite(numeric)) return fallback;
-  return raw.endsWith('s') && !raw.endsWith('ms') ? numeric * 1000 : numeric;
-}
-
-annotateFloatingChrome(document);
-
-function readRootTimeToken(name, fallback = 0) {
-  if (!name || typeof getComputedStyle !== 'function') return fallback;
-  return parseCssTimeMs(getComputedStyle(HTML).getPropertyValue(name), fallback);
-}
-
-function prefersReducedMotion() {
-  return (
-    HTML.dataset.spwReduceMotion === 'on'
-    || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  );
-}
-
-function derivePageTransitionState(detail = {}) {
-  const presence = detail.presence || HTML.dataset.spwPagePresence || PAGE_PRESENCE.FOREGROUND;
-  const arrival = detail.arrival || HTML.dataset.spwPageArrival || PAGE_ARRIVAL.SETTLED;
-  const step = String(detail.step ?? HTML.dataset.spwPageArrivalStep ?? '0');
-  const phase = presence === PAGE_PRESENCE.BACKGROUND
-    ? PAGE_PRESENCE.BACKGROUND
-    : arrival === PAGE_ARRIVAL.SETTLED
-      ? PAGE_ARRIVAL.SETTLED
-      : arrival;
-  const transition = presence === PAGE_PRESENCE.BACKGROUND
-    ? PAGE_PRESENCE.BACKGROUND
-    : `${phase}${step !== '0' && phase !== PAGE_ARRIVAL.SETTLED ? `-${step}` : ''}`;
-  return {
-    presence,
-    arrival,
-    step,
-    phase,
-    transition,
-  };
-}
-
-function setPageAttentionState(ctx, detail = {}) {
-  const transition = derivePageTransitionState(detail);
-
-  writeDatasetValue(HTML, 'spwPagePresence', transition.presence);
-  writeDatasetValue(HTML, 'spwPageArrival', transition.arrival);
-  writeDatasetValue(HTML, 'spwPageArrivalStep', transition.step);
-  writeDatasetValue(HTML, 'spwPageTransition', transition.transition);
-  writeDatasetValue(HTML, 'spwPageTransitionPhase', transition.phase);
-  writeDatasetValue(HTML, 'spwAttentionContext',
-    transition.presence === PAGE_PRESENCE.BACKGROUND
-      ? 'background'
-      : transition.phase === PAGE_ARRIVAL.SETTLED
-        ? 'settled'
-        : transition.phase
-  );
-
-  const payload = {
-    ...transition,
-    reason: detail.reason || 'runtime',
-    route: ctx?.route || SITE_SURFACE,
-  };
-
-  if (ctx?.bus?.emit) {
-    ctx.bus.emit(PAGE_ATTENTION_EVENT, payload);
-    ctx.bus.emit(PAGE_TRANSITION_EVENT, payload);
-  } else {
-    document.dispatchEvent(new CustomEvent(PAGE_ATTENTION_EVENT, { detail: payload }));
-    document.dispatchEvent(new CustomEvent(PAGE_TRANSITION_EVENT, { detail: payload }));
-  }
-}
-
-function clearPageAttentionSequence(ctx) {
-  if (!ctx?.pageAttentionTimers?.size) return;
-  ctx.pageAttentionTimers.forEach((timerId) => {
-    window.clearTimeout(timerId);
-    ctx.timers.delete(timerId);
-  });
-  ctx.pageAttentionTimers.clear();
-}
-
-function addManagedTimeout(ctx, callback, delay) {
-  const timerId = window.setTimeout(() => {
-    ctx?.pageAttentionTimers?.delete(timerId);
-    ctx?.timers?.delete(timerId);
-    callback();
-  }, delay);
-
-  ctx?.pageAttentionTimers?.add(timerId);
-  ctx?.addTimer?.(timerId);
-  return timerId;
-}
-
-function schedulePageArrival(ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'page-enter') {
-  if (!ctx) return;
-
-  clearPageAttentionSequence(ctx);
-
-  if (prefersReducedMotion()) {
-    setPageAttentionState(ctx, {
-      presence: PAGE_PRESENCE.FOREGROUND,
-      arrival: PAGE_ARRIVAL.SETTLED,
-      step: '0',
-      reason,
-    });
-    return;
-  }
-
-  PAGE_ARRIVAL_STEP_SEQUENCE.forEach(({ step, token, fallback }) => {
-    addManagedTimeout(ctx, () => {
-      setPageAttentionState(ctx, {
-        presence: PAGE_PRESENCE.FOREGROUND,
-        arrival,
-        step,
-        reason,
-      });
-    }, readRootTimeToken(token, fallback));
-  });
-
-  const settleDelayToken = arrival === PAGE_ARRIVAL.RETURNING
-    ? '--spw-page-return-duration'
-    : '--spw-page-arrival-duration';
-  const settleDelayFallback = arrival === PAGE_ARRIVAL.RETURNING ? 280 : 420;
-
-  addManagedTimeout(ctx, () => {
-    setPageAttentionState(ctx, {
-      presence: PAGE_PRESENCE.FOREGROUND,
-      arrival: PAGE_ARRIVAL.SETTLED,
-      step: '0',
-      reason: `${reason}-settled`,
-    });
-  }, readRootTimeToken(settleDelayToken, settleDelayFallback));
-}
-
-function initPageAttentionLifecycle(ctx) {
-  if (!ctx) return () => {};
-
-  const handleVisibilityChange = () => {
-    if (document.hidden) {
-      clearPageAttentionSequence(ctx);
-      setPageAttentionState(ctx, {
-        presence: PAGE_PRESENCE.BACKGROUND,
-        arrival: PAGE_ARRIVAL.SETTLED,
-        step: '0',
-        reason: 'visibility-hidden',
-      });
-      return;
-    }
-
-    schedulePageArrival(ctx, PAGE_ARRIVAL.RETURNING, 'visibility-visible');
-  };
-
-  const handlePageShow = (event) => {
-    if (!event.persisted) return;
-    schedulePageArrival(ctx, PAGE_ARRIVAL.RESTORED, 'pageshow-restored');
-  };
-
-  const handlePageHide = () => {
-    clearPageAttentionSequence(ctx);
-    setPageAttentionState(ctx, {
-      presence: PAGE_PRESENCE.BACKGROUND,
-      arrival: PAGE_ARRIVAL.SETTLED,
-      step: '0',
-      reason: 'pagehide',
-    });
-  };
-
-  document.addEventListener('visibilitychange', handleVisibilityChange);
-  window.addEventListener('pageshow', handlePageShow);
-  window.addEventListener('pagehide', handlePageHide);
-
-  setPageAttentionState(ctx, {
-    presence: document.hidden ? PAGE_PRESENCE.BACKGROUND : PAGE_PRESENCE.FOREGROUND,
-    arrival: PAGE_ARRIVAL.SETTLED,
-    step: '0',
-    reason: 'page-init',
-  });
-
-  return () => {
-    clearPageAttentionSequence(ctx);
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
-    window.removeEventListener('pageshow', handlePageShow);
-    window.removeEventListener('pagehide', handlePageHide);
-  };
-}
 
 function setRegionState(el, state) {
   if (!el || !(el instanceof HTMLElement)) return;
@@ -1945,15 +1735,7 @@ function destroyRuntime() {
   if (!runtimeCtx) return;
   runtimeCtx.destroy();
   runtimeCtx = null;
-  delete HTML.dataset.spwPageState;
-  delete HTML.dataset.spwPagePresence;
-  delete HTML.dataset.spwPageArrival;
-  delete HTML.dataset.spwPageArrivalStep;
-  delete HTML.dataset.spwPageTransition;
-  delete HTML.dataset.spwPageTransitionPhase;
-  delete HTML.dataset.spwAttentionContext;
-  delete HTML.dataset.spwHarmonyField;
-  delete HTML.dataset.spwTempoField;
+  clearPageState(HTML, BODY);
   delete HTML.dataset.spwLayoutShiftState;
   delete HTML.dataset.spwLayoutShiftCount;
   delete HTML.dataset.spwLayoutShiftTotal;
@@ -1974,11 +1756,50 @@ async function bootSite() {
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
-  const composeApi = installSpwCompositionConsole(window, {
-    namespace: 'site-runtime',
-    role: 'runtime',
-    metaphor: 'composition-console',
-    owns: 'query disposition, runtime inspection, tuning hooks',
+    const [
+      { orchestrator: frameState, bindGlobalInteractions },
+      pageHooks,
+    ] = await Promise.all([
+      import('./runtime/state-orchestrator.js'),
+      import('./runtime/page-hooks.js'),
+    ]);
+    const composeApi = installSpwCompositionConsole(window, {
+      namespace: 'site-runtime',
+      role: 'runtime',
+      metaphor: 'composition-console',
+      owns: 'query disposition, runtime inspection, tuning hooks',
+    controls: {
+      pageState: {
+        clearAttentionSequence: clearPageAttentionSequence,
+        states: PAGE_STATES,
+        presence: PAGE_PRESENCE,
+        arrival: PAGE_ARRIVAL,
+        events: {
+          attention: PAGE_ATTENTION_EVENT,
+          transition: PAGE_TRANSITION_EVENT,
+        },
+        annotateFloatingChrome,
+        clear: clearPageState,
+        init: initPageAttentionLifecycle,
+        scheduleArrival,
+        setPageState,
+        setAttentionState: setPageAttentionState,
+        snapshot: snapshotPageState,
+      },
+      pageHooks: {
+        annotate: pageHooks.annotatePageHooks,
+        focus: pageHooks.focusPageHook,
+        list: pageHooks.listPageHooks,
+        pulse: pageHooks.pulsePageHook,
+        resolve: pageHooks.resolvePageHook,
+        snapshot: pageHooks.snapshotPageHooks,
+        states: pageHooks.PAGE_HOOK_STATES,
+      },
+      frameState: {
+        ...frameState,
+        bindGlobalInteractions,
+      },
+    },
   });
   const queryDisposition = applySpwQueryDisposition(HTML, {
     source: 'site-runtime',
@@ -1992,7 +1813,6 @@ async function bootSite() {
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
 
   // Initialize relational state and global interactions
-  const { bindGlobalInteractions } = await import('./runtime/state-orchestrator.js');
   bindGlobalInteractions();
 
   primeRegions(runtimeCtx);

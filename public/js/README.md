@@ -22,16 +22,19 @@ If you are trying to learn the runtime, read in this order:
 1. `public/js/site.js` for the bootstrap lifecycle and module loading policy.
 2. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
 3. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
-4. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
-5. `public/js/interface/` for visible affordances and user-facing controls.
-6. `public/js/semantic/` for projection, inference, and semantic helpers.
-7. `public/js/modules/` for route-specific feature bundles.
+4. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
+5. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
+6. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
+7. `public/js/interface/` for visible affordances and user-facing controls.
+8. `public/js/semantic/` for projection, inference, and semantic helpers.
+9. `public/js/modules/` for route-specific feature bundles.
 
 ## Folder Roles
 
 - `kernel/`: durable primitives, settings, shared contracts, and runtime bridges.
 - `semantic/`: operator grammar, projection machinery, semantic inference, and pretext helpers.
-- `runtime/`: active processes, route grounding, spells, inspectors, gates, and lifecycle loops.
+- `runtime/`: active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
+- `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
 - `modules/`: page or feature bundles such as blog, services, RPG Wednesday, tools, profile, and care.
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
@@ -44,7 +47,10 @@ These are the best candidates when you want to reuse a file on another site:
 - `compose.js` for a single import surface over the portable runtime helpers.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/interaction-loop.js` for small interaction-state records and refresh events.
+- `runtime/page-state.js` for page state, attention timing, and visibility hooks.
+- `runtime/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
 - `runtime/attention-architecture.js` for section locomotion and resonance pinning.
+- `runtime/state-orchestrator.js` for frame-state toggles and relational focus helpers.
 - `media/svg-tunability.js` for declarative SVG palette, pointer, stroke, spacing, and screenshot tuning.
 - `media/image-store.js` for IndexedDB-backed image persistence.
 - `semantic/pretext-utils.js` for CDN loading and pretext data fetch helpers.
@@ -73,12 +79,25 @@ Console helpers should reveal the same model:
   `data-spw-debug-source`.
 - `snapshotInstrumentationTarget(target)` returns tag, classes, Spw dataset, and
   optional CSS token values.
-- `installSpwCompositionConsole(window)` exposes `window.spwCompose.inspect`,
-  `window.spwCompose.mark`, and `window.spwCompose.log`.
+- `installSpwCompositionConsole(window, { controls })` exposes
+  `window.spwCompose.inspect`, `window.spwCompose.mark`, `window.spwCompose.log`,
+  and any supplied `controls` namespaces for console or extension tuning.
+- `window.spwCompose.controls.pageState` can expose page lifecycle and attention
+  helpers such as `snapshot()`, `setPageState()`, `scheduleArrival()`, and the
+  `states` / `presence` / `arrival` vocabularies.
+- `window.spwCompose.controls.frameState` can expose frame focus helpers such as
+  `focus()`, `pulse()`, and `setState()`.
+- `window.spwCompose.controls.pageHooks` can expose page-unique landmarks and
+  generalizable handles through `list()`, `resolve()`, `focus()`, and `pulse()`;
+  this is a good discovery loop for incremental learning and page familiarity.
 - `applySpwQueryDisposition(root)` applies opt-in query parameters such as
   `spw-palette=craft`, `spw-color-active-op=%23008080`,
   `spw-var-shape-component=8px`, `spw-tune-density=compact`, and
   `spw-reflow=density`.
+- Page-state datasets can also be preseeded through `spw-data-*` query values
+  such as `spw-data-page-state=interactive`, `spw-data-page-presence=foreground`,
+  and `spw-data-page-arrival=returning` when you need a reproducible browser
+  console or extension setup.
 - Query presets compose with the same mechanism. The canonical form is
   `spw-physics=calm|tactile|puppet|screenshot` and
   `spw-meaning=quiet|readable|inspect|screenshot`, while ergonomic aliases

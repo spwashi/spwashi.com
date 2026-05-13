@@ -1438,11 +1438,19 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="runtime-diagnostics-settings">
+                <details class="settings-category" id="runtime-diagnostics-settings" data-spw-page-hook="runtime-diagnostics" data-spw-page-hook-label="Runtime diagnostics">
                     <summary class="settings-category-header">Internal Runtime / Bus</summary>
                     <p class="frame-note">
                         Power-user diagnostics for runtime coordination. Reader-facing defaults stay on native CSS flow and
                         sizing; these controls only change how much measured runtime state is surfaced for inspection.
+                    </p>
+                    <p class="frame-note">
+                        The same model is also available in the browser console through
+                        <code>window.spwCompose.controls.pageState</code>,
+                        <code>window.spwCompose.controls.frameState</code>, and
+                        <code>window.spwCompose.controls.pageHooks</code>, plus query values such as
+                        <code>diagnostics=basic</code>, <code>log=layout-shift</code>, or
+                        <code>spw-data-page-state=interactive</code> for repeatable QA, extension workflows, and page play.
                     </p>
 
                     <div class="settings-grid">
@@ -1502,6 +1510,22 @@
                             </label>
                         </fieldset>
                     </div>
+
+                    <article class="frame-panel settings-console-snippets" data-spw-page-hook="console-snippets" data-spw-page-hook-label="Console snippets">
+                        <h3>Console snippets</h3>
+                        <p>
+                            Hobbyists and extension authors can paste these into DevTools to inspect the same shared runtime
+                            model the site uses for settings, query recipes, and page play.
+                        </p>
+                        <p>
+                            Used this way, the console becomes a discovery loop: list hooks, inspect state, focus a
+                            section, and build familiarity with the page in small, repeatable steps.
+                        </p>
+                        <pre><code>spwCompose.controls.pageState.snapshot()
+spwCompose.controls.pageHooks.list()
+spwCompose.controls.pageHooks.focus('runtime-diagnostics')
+spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
+                    </article>
                 </details>
 
                 <div class="settings-actions" data-spw-feature="settings-form-actions">
@@ -1836,11 +1860,16 @@
                     <code>bus.emit("settings:changed", settings)</code>
                 </article>
 
-                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab">
+                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
                     <h3>Query recipes</h3>
                     <p>
                         These links use the same query contract as the runtime. Reader mode keeps the native CSS defaults
                         quiet; the builder, inspect, and lab recipes add explicit diagnostics for practice and comparison.
+                    </p>
+                    <p>
+                        When this site is discovered out of context, these recipes are intended to act as landing modes:
+                        a calm reader surface for casual browsing, plus inspect and lab surfaces for hobbyists, QA, and
+                        language models that need a page with a clear console story.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
@@ -1850,10 +1879,10 @@
                     </div>
                     <p class="settings-query-preview-copy">
                         Current query:
-                        <code class="settings-query-preview" data-site-settings-query-preview>?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug</code>
+                        <code class="settings-query-preview" data-site-settings-query-preview data-spw-handle="query-preview" data-spw-page-hook-label="Current query">?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug</code>
                     </p>
                     <div class="settings-query-footer">
-                        <button class="operator-chip" data-site-settings-query-copy="inspect" type="button">Copy inspect query</button>
+                        <button class="operator-chip" data-site-settings-query-copy="inspect" data-spw-handle="query-copy" data-spw-page-hook-label="Copy inspect query" type="button">Copy inspect query</button>
                     </div>
                 </article>
             </div>
