@@ -149,6 +149,10 @@ export async function main(): Promise<void> {
   const startedAt = Date.now();
   const sourcePaths = listSourceRepoPaths(options);
 
+  if (options.local) {
+    logger.info('[build] local mode: skipping image checks, sitemap, catalog, and fingerprinting');
+  }
+
   if (options.clean) {
     logger.info(`[build] cleaning ${relRepo(options.outDir)}/`);
     await rmrf(options.outDir);

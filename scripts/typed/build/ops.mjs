@@ -19,6 +19,19 @@ export function parsePositiveInteger(value, fallback) {
     const parsed = Number.parseInt(String(value), 10);
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
+function requireOptionValue(argv, index, flag) {
+    const value = argv[index + 1];
+    if (!value || value.startsWith('--')) {
+        throw new Error(`[build] ${flag} requires a value`);
+    }
+    return value;
+}
+function applyLocalDefaults(options) {
+    options.imageCheck = false;
+    options.sitemap = false;
+    options.catalog = false;
+    options.fingerprintAssets = false;
+}
 export function parseArgs(argv) {
     const options = {
         outDir: DEFAULT_OUT_DIR,
@@ -27,14 +40,15 @@ export function parseArgs(argv) {
         sitemap: true,
         catalog: true,
         fingerprintAssets: true,
+        local: false,
         quiet: false,
         copyConcurrency: parsePositiveInteger(process.env.BUILD_COPY_CONCURRENCY, DEFAULT_COPY_CONCURRENCY),
         progressInterval: parsePositiveInteger(process.env.BUILD_PROGRESS_INTERVAL, DEFAULT_COPY_PROGRESS_INTERVAL),
     };
     for (let index = 0; index < argv.length; index += 1) {
         const arg = argv[index];
-        if (arg === '--out' && argv[index + 1]) {
-            options.outDir = path.resolve(argv[index + 1]);
+        if (arg === '--out') {
+            options.outDir = path.resolve(requireOptionValue(argv, index, '--out'));
             index += 1;
             continue;
         }
@@ -44,6 +58,11 @@ export function parseArgs(argv) {
         }
         if (arg === '--no-clean') {
             options.clean = false;
+            continue;
+        }
+        if (arg === '--local') {
+            options.local = true;
+            applyLocalDefaults(options);
             continue;
         }
         if (arg === '--skip-image-check') {
@@ -62,12 +81,16 @@ export function parseArgs(argv) {
             options.fingerprintAssets = false;
             continue;
         }
+        if (arg === '--preserve-asset-names') {
+            options.fingerprintAssets = false;
+            continue;
+        }
         if (arg === '--quiet') {
             options.quiet = true;
             continue;
         }
-        if (arg === '--concurrency' && argv[index + 1]) {
-            options.copyConcurrency = parsePositiveInteger(argv[index + 1], options.copyConcurrency);
+        if (arg === '--concurrency') {
+            options.copyConcurrency = parsePositiveInteger(requireOptionValue(argv, index, '--concurrency'), options.copyConcurrency);
             index += 1;
             continue;
         }
@@ -75,8 +98,8 @@ export function parseArgs(argv) {
             options.copyConcurrency = parsePositiveInteger(arg.slice('--concurrency='.length), options.copyConcurrency);
             continue;
         }
-        if (arg === '--progress-interval' && argv[index + 1]) {
-            options.progressInterval = parsePositiveInteger(argv[index + 1], options.progressInterval);
+        if (arg === '--progress-interval') {
+            options.progressInterval = parsePositiveInteger(requireOptionValue(argv, index, '--progress-interval'), options.progressInterval);
             index += 1;
             continue;
         }
@@ -88,24 +111,40 @@ export function parseArgs(argv) {
             options.help = true;
             continue;
         }
-        throw new Error(`[build] unknown argument: ${arg}`);
+        throw new Error(`[build] unknown argument: ${arg}. Run with --help for supported options.`);
     }
     return options;
 }
 export function printHelp() {
     console.log(`Usage: node scripts/build.mjs [options]
 
-Options:
+Modes:
+  --local                  Fast local build: skip image checks, sitemap, catalog,
+                           and asset fingerprinting.
+  --skip-fingerprint       Preserve core asset filenames instead of hashing them.
+  --preserve-asset-names   Alias for --skip-fingerprint.
+
+Paths:
   --out <dir>              Output directory. Default: dist
+
+Checks:
   --no-clean               Do not delete the output directory before copying.
   --skip-image-check       Skip duplicate image detection.
+
+Outputs:
   --skip-sitemap           Skip sitemap generation.
   --skip-catalog           Skip design catalog generation.
-  --skip-fingerprint       Preserve core asset filenames instead of hashing them.
+
+Tuning:
   --concurrency <n>        Copy concurrency. Default: ${DEFAULT_COPY_CONCURRENCY}
   --progress-interval <n>  Copy progress log interval. Default: ${DEFAULT_COPY_PROGRESS_INTERVAL}
   --quiet                  Suppress non-error logs.
   -h, --help               Show this help.
+
+Examples:
+  node scripts/build.mjs
+  node scripts/build.mjs --local
+  node scripts/build.mjs --out dist-preview
 
 Environment:
   BUILD_COPY_CONCURRENCY   Default copy concurrency.

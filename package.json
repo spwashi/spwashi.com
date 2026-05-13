@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "npm run typecheck && npm run build:runtime && npm run build:css && npm run build:site",
+    "build:local": "npm run build -- --local",
     "build:css": "npm run build:tools && node scripts/css-build.mjs",
     "build:css:check": "npm run build:tools && node scripts/css-build.mjs --check",
     "build:runtime": "tsc -p tsconfig.runtime.json",

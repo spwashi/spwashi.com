@@ -8,6 +8,7 @@ export type BuildOptions = {
   sitemap: boolean;
   catalog: boolean;
   fingerprintAssets: boolean;
+  local: boolean;
   quiet: boolean;
   copyConcurrency: number;
   progressInterval: number;
