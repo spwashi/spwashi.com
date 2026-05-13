@@ -1340,6 +1340,17 @@ const REGION_DEFS = [
 
 const ENHANCEMENT_DEFS = [
   {
+    id: 'layout-shift-audit',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: () => import('./runtime/spw-layout-shift-audit.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwLayoutShiftAudit;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'svg-filters',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -1913,6 +1924,18 @@ function destroyRuntime() {
   delete HTML.dataset.spwAttentionContext;
   delete HTML.dataset.spwHarmonyField;
   delete HTML.dataset.spwTempoField;
+  delete HTML.dataset.spwLayoutShiftState;
+  delete HTML.dataset.spwLayoutShiftCount;
+  delete HTML.dataset.spwLayoutShiftTotal;
+  delete HTML.dataset.spwLayoutShiftLast;
+  delete HTML.dataset.spwLayoutShiftRecentInputCount;
+  if (BODY?.dataset) {
+    delete BODY.dataset.spwLayoutShiftState;
+    delete BODY.dataset.spwLayoutShiftCount;
+    delete BODY.dataset.spwLayoutShiftTotal;
+    delete BODY.dataset.spwLayoutShiftLast;
+    delete BODY.dataset.spwLayoutShiftRecentInputCount;
+  }
 }
 
 async function bootSite() {

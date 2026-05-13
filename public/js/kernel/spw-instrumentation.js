@@ -10,6 +10,7 @@ const QUERY_PREFIXES = Object.freeze({
 });
 export const SPW_QUERY_ALIASES = Object.freeze({
   debug: Object.freeze(['spw-debug', 'debug']),
+  diagnostics: Object.freeze(['spw-diagnostics', 'diagnostics']),
   interaction: Object.freeze(['spw-interaction', 'interaction']),
   log: Object.freeze(['spw-log', 'log']),
   logLevel: Object.freeze(['spw-log-level', 'log-level']),
@@ -124,13 +125,13 @@ export const SPW_QUERY_PRESETS = Object.freeze({
   }),
   inspect: Object.freeze({
     label: 'Inspect view',
-    href: '?view=inspect&meaning=inspect&debug=css,layout',
-    description: 'Show CSS and layout ownership with richer metadata.',
+    href: '?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug',
+    description: 'Show CSS and layout ownership with richer metadata and stability summaries.',
   }),
   builder: Object.freeze({
     label: 'Builder view',
-    href: '?view=inspect&meaning=inspect&debug=css,layout&physics=puppet',
-    description: 'Expose structural chrome for visitors who want the mechanics visible.',
+    href: '?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=layout-shift&log-level=debug&physics=puppet',
+    description: 'Expose structural chrome and repeatable layout-stability logs for visitors who want the mechanics visible.',
   }),
   screenshot: Object.freeze({
     label: 'Screenshot view',
@@ -159,8 +160,8 @@ export const SPW_QUERY_PRESETS = Object.freeze({
   }),
   layout: Object.freeze({
     label: 'Layout debug',
-    href: '?view=inspect&debug=layout',
-    description: 'Show layout ownership and floating chrome boundaries.',
+    href: '?view=inspect&debug=layout&diagnostics=basic&log=layout-shift&log-level=debug',
+    description: 'Show layout ownership, floating chrome boundaries, and native defaults.',
   }),
 });
 
@@ -175,6 +176,7 @@ export const SPW_LOG_RELATIONSHIPS = Object.freeze({
   CONTRACT: 'contract',
   GESTURE: 'gesture',
   LIFECYCLE: 'lifecycle',
+  MEASURE: 'measure',
   QUERY: 'query',
   REFLOW: 'reflow',
   THEME: 'theme',
@@ -285,6 +287,7 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     colorVariable: 'spw-color-<token>=<color>',
     dataAttribute: 'spw-data-<name>=<value>',
     debugView: 'spw-debug|debug=<on|off|css|layout|css,layout>',
+    diagnosticsMode: 'spw-diagnostics|diagnostics=<off|basic|verbose>',
     interactionPreset: 'spw-interaction|interaction=<calm|tactile|puppet|screenshot>',
     logNamespaces: 'spw-log|log=<on|*|namespace[,namespace]>',
     logLevel: 'spw-log-level|log-level=<debug|info|warn|error>',
@@ -502,6 +505,15 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
       } else if (debugTokens.includes('on')) {
         disposition.data.spwDebug = 'css';
         disposition.tuning.debug = 'css';
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.diagnostics?.has(key)) {
+      const diagnostics = normalizeToken(value);
+      if (['off', 'basic', 'verbose'].includes(diagnostics)) {
+        disposition.data.spwBusDiagnostics = diagnostics;
+        disposition.tuning.diagnostics = diagnostics;
       }
       continue;
     }

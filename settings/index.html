@@ -189,9 +189,9 @@
                     </p>
                     <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=puppet">Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=puppet">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug">Inspector view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
                     </div>
                 </article>
 
@@ -1441,8 +1441,8 @@
                 <details class="settings-category" id="runtime-diagnostics-settings">
                     <summary class="settings-category-header">Internal Runtime / Bus</summary>
                     <p class="frame-note">
-                        Power-user diagnostics for runtime coordination. These do not change canonical event vocabulary; they only
-                        change how much of the bus is surfaced for inspection.
+                        Power-user diagnostics for runtime coordination. Reader-facing defaults stay on native CSS flow and
+                        sizing; these controls only change how much measured runtime state is surfaced for inspection.
                     </p>
 
                     <div class="settings-grid">
@@ -1459,14 +1459,14 @@
                                 <input name="busDiagnostics" type="radio" value="basic" />
                                 <span class="settings-option-copy">
                     <strong>Basic</strong>
-                    <span>Show current bus state and recent event count.</span>
+                    <span>Show current bus state, recent event count, and layout-shift summaries.</span>
                   </span>
                             </label>
                             <label class="settings-option">
                                 <input name="busDiagnostics" type="radio" value="verbose" />
-                                <span class="settings-option-copy">
+                    <span class="settings-option-copy">
                     <strong>Verbose</strong>
-                    <span>Show richer event diagnostics and timing metadata.</span>
+                    <span>Show richer event diagnostics, timing metadata, and layout-shift sources for QA and practice sessions.</span>
                   </span>
                             </label>
                         </fieldset>
@@ -1839,18 +1839,18 @@
                 <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab">
                     <h3>Query recipes</h3>
                     <p>
-                        These links use the same query contract as the runtime. They are handy when you want to compare a reader
-                        page, a builder page, an inspect-first page, or a more lab-like debugging posture.
+                        These links use the same query contract as the runtime. Reader mode keeps the native CSS defaults
+                        quiet; the builder, inspect, and lab recipes add explicit diagnostics for practice and comparison.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=puppet">Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=puppet">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug">Inspector view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
                     </div>
                     <p class="settings-query-preview-copy">
                         Current query:
-                        <code class="settings-query-preview" data-site-settings-query-preview>?view=inspect&meaning=inspect&debug=css,layout&log=site-settings&log-level=debug</code>
+                        <code class="settings-query-preview" data-site-settings-query-preview>?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug</code>
                     </p>
                     <div class="settings-query-footer">
                         <button class="operator-chip" data-site-settings-query-copy="inspect" type="button">Copy inspect query</button>

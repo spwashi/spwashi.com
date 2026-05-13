@@ -232,10 +232,97 @@ const describeRuntimeRefresh = (detail = {}) => {
     return ['@runtime.refresh', `${route} regions and component projections resynced`];
 };
 
-const diagnosticsLevel = () => getSiteSettings().busDiagnostics || 'off';
+const DEFAULT_LAYOUT_SHIFT_DEFAULTS = Object.freeze(['normal flow', 'intrinsic sizing', 'auto layout']);
+
+const readDiagnosticsLevel = () => (
+    document.documentElement.dataset.spwBusDiagnostics
+    || document.body?.dataset?.spwBusDiagnostics
+    || getSiteSettings().busDiagnostics
+    || 'off'
+);
+
+const formatLayoutShiftValue = (value = 0) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return '0';
+    const digits = numeric < 0.01 ? 4 : 3;
+    return numeric.toFixed(digits).replace(/\.?0+$/, '');
+};
+
+const readLayoutShiftAudit = () => {
+    const { dataset } = document.documentElement;
+    const state = dataset.spwLayoutShiftState || '';
+    if (!state) return null;
+
+    const count = Number(dataset.spwLayoutShiftCount || 0);
+    const totalValue = Number(dataset.spwLayoutShiftTotal || 0);
+    const lastValue = Number(dataset.spwLayoutShiftLast || 0);
+    const recentInputCount = Number(dataset.spwLayoutShiftRecentInputCount || 0);
+    const outcome = dataset.spwLayoutShiftOutcome || 'stable';
+
+    if (
+        state === 'observing'
+        && !count
+        && !recentInputCount
+        && !totalValue
+        && !lastValue
+    ) {
+        return null;
+    }
+
+    return {
+        state,
+        count,
+        totalValue,
+        lastValue,
+        recentInputCount,
+        outcome,
+        cssDefaults: [...DEFAULT_LAYOUT_SHIFT_DEFAULTS],
+    };
+};
+
+const describeLayoutShiftAction = (detail = {}) => {
+    if (detail.state === 'unsupported') {
+        return [
+            '!layout.audit',
+            detail.error
+                ? `layout stability observer unsupported: ${detail.error}`
+                : 'layout stability observer unsupported',
+        ];
+    }
+
+    if (
+        detail.state === 'observing'
+        && !detail.count
+        && !detail.recentInputCount
+        && !detail.totalValue
+    ) {
+        return ['!layout.audit', 'layout stability observer active'];
+    }
+
+    const batchValue = formatLayoutShiftValue(detail.batchValue ?? detail.value ?? 0);
+    const totalValue = formatLayoutShiftValue(detail.totalValue ?? detail.total ?? 0);
+    const counted = detail.count ?? detail.entries?.filter((entry) => !entry.hadRecentInput).length ?? 0;
+    const ignored = detail.recentInputCount
+        ?? detail.entries?.filter((entry) => entry.hadRecentInput).length
+        ?? 0;
+    const sources = detail.sourceCount ?? detail.sources?.length ?? 0;
+    const outcome = detail.outcome || 'stable';
+    const outcomeCopy = detail.outcomeSummary || outcome;
+    const defaults = detail.cssDefaults?.length
+        ? detail.cssDefaults.join(', ')
+        : DEFAULT_LAYOUT_SHIFT_DEFAULTS.join(', ');
+    const defaultsSuffix = detail.diagnosticsLevel === 'verbose' ? `; defaults ${defaults}` : '';
+    const suffix = ignored ? `, ${ignored} ignored` : '';
+    const sourceSuffix = sources ? `; ${sources} source${sources === 1 ? '' : 's'}` : '';
+
+    return [
+        '!layout.shift',
+        `${outcomeCopy}: ${batchValue} CLS; ${counted} counted${suffix}; total ${totalValue}${sourceSuffix}${defaultsSuffix}`,
+    ];
+};
 
 const shouldNarrateDiagnostics = (level = 'basic') => {
-    const current = diagnosticsLevel();
+    const current = readDiagnosticsLevel();
     if (current === 'verbose') return true;
     return level === 'basic' && current === 'basic';
 };
@@ -332,6 +419,12 @@ const initSpwConsole = () => {
 
     const initial = api.getActiveFrame();
     sync(initial ? api.getFrameMeta(initial) : null);
+    if (shouldNarrateDiagnostics('basic')) {
+        const layoutShiftAudit = readLayoutShiftAudit();
+        if (layoutShiftAudit) {
+            setAction(nodes, history, ...describeLayoutShiftAction(layoutShiftAudit));
+        }
+    }
     wake();
 
     // ── Event subscriptions ──
@@ -378,6 +471,12 @@ const initSpwConsole = () => {
     document.addEventListener('spw:runtime-refresh', (event) => {
         if (!shouldNarrateDiagnostics('verbose')) return;
         setAction(nodes, history, ...describeRuntimeRefresh(event.detail));
+        wake();
+    });
+
+    document.addEventListener('spw:layout-shift', (event) => {
+        if (!shouldNarrateDiagnostics('basic')) return;
+        setAction(nodes, history, ...describeLayoutShiftAction(event.detail));
         wake();
     });
 };

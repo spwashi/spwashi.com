@@ -855,27 +855,34 @@ const SETTINGS_QUERY_RECIPES = Object.freeze({
       view: 'inspect',
       meaning: 'inspect',
       debug: 'css,layout',
-      log: 'site-settings',
-      'log-level': 'debug'
+      diagnostics: 'basic',
+      log: 'site-settings,layout-shift',
+      'log-level': 'debug',
     })
   }),
   builder: Object.freeze({
     label: 'Builder view',
-    description: 'Expose structural chrome for visitors who want the mechanics visible.',
+    description: 'Expose structural chrome for visitors who want the mechanics visible and repeatable.',
     params: Object.freeze({
       view: 'inspect',
       meaning: 'inspect',
       debug: 'css,layout',
+      diagnostics: 'basic',
+      log: 'layout-shift',
+      'log-level': 'debug',
       physics: 'puppet'
     })
   }),
   lab: Object.freeze({
     label: 'Lab view',
-    description: 'Inspection plus physics and palette bias for design work and QA.',
+    description: 'Inspection plus physics and palette bias for design work, QA, and recorded practice.',
     params: Object.freeze({
       view: 'inspect',
       meaning: 'inspect',
       debug: 'css,layout',
+      diagnostics: 'verbose',
+      log: 'site-settings,layout-shift',
+      'log-level': 'debug',
       physics: 'screenshot',
       palette: 'craft',
       reflow: 'interaction'
