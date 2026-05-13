@@ -190,3 +190,10 @@
     0 0 0 1px color-mix(in srgb, var(--settings-accent) 16%, transparent),
     var(--shadow-active, 0 8px 24px rgba(0,0,0,0.08));
 }
+
+@media (max-width: 720px) {
+  :where(body[data-spw-surface="settings"] .settings-category-header) {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}

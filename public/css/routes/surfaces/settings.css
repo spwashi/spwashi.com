@@ -164,3 +164,10 @@
   outline: none;
   transform: translateY(-1px);
 }
+
+@media (max-width: 720px) {
+  :where(body[data-spw-surface="settings"] .settings-hero-actions) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+  }
+}
