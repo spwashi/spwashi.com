@@ -138,6 +138,34 @@
   margin-block: var(--component-gap) var(--component-gap-loose);
 }
 
+:where(.spw-copy-motif-strip) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.38rem;
+  min-width: 0;
+  margin: var(--component-gap-tight) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.spw-copy-motif-strip li) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.18rem 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 86%, transparent);
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--component-surface-soft) 84%, var(--active-op-color, var(--component-accent)) 6%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 76%, var(--active-op-color, var(--component-accent)) 24%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
 :where(.spw-reason-strip > *, .spw-role-hooks > *) {
   min-width: 0;
   padding: var(--component-pad-tight);
