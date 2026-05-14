@@ -17,6 +17,7 @@
 @precipitates_projections: ~"./precipitates-and-projections.spw"
 @asset_management: ~"./asset-management.spw"
 @copy_localization: ~"./copy-localization.spw"
+@living_medium_copy: ~"./living-medium-copy.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
@@ -30,6 +31,7 @@ dispatch: .{
  style = @style_development
  assets = @asset_management
  localization = @copy_localization
+ living_medium_copy = @living_medium_copy
  operators = @operator_semantics
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition

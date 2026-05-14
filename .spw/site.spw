@@ -14,6 +14,7 @@
 @style_development: ~"./conventions/style-development.spw"
 @asset_management: ~"./conventions/asset-management.spw"
 @copy_localization: ~"./conventions/copy-localization.spw"
+@living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
 @reviews: ~"./reviews/index.spw"
 @page_model: ~"./surfaces/page-model.spw"
@@ -89,6 +90,7 @@ dispatch: .{
  conventions = @conventions
  site_semantics = @site_semantics
  localization = @copy_localization
+ living_medium_copy = @living_medium_copy
  style_development = @style_development
  reviews = @reviews
  page_model = @page_model

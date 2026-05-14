@@ -1,0 +1,29 @@
+# Living Medium Copy
+#
+# Editorial contract for public copy that treats spwashi.com as a readable
+# medium, not just a route index. The goal is to keep lore, documentation,
+# and practice legible in the same surface.
+
+#>spw_living_medium_copy
+#:convention #!pragmatics
+
+@site_bridge: ~"./site-semantics.spw"
+@copy_localization: ~"./copy-localization.spw"
+
+^"copy_contract"{
+  rule: "Major landing surfaces should answer what this is, why it exists, who it is for, what can happen here, what it connects to, and what it can produce."
+  microformats: #[
+    `This surface exists because...`,
+    `Use this when...`,
+    `This card helps...`,
+    `This route connects to...`,
+    `This can produce...`,
+    `Return here after...`
+  ][reg=set]
+  playable_hook: "Each major surface should include at least one line that can survive being read aloud as a scene prompt, field note, or next action."
+  reason_copy: "Cards and banners should explain their own presence before they ask the reader to navigate elsewhere."
+  disclosure_rule: "Expandable details are allowed only when the same essential information remains visible in the HTML by default."
+  role_rule: "Whenever it fits, address developers, illustrators, painters, performers, RPG players, and worldbuilders as active participants rather than passive visitors."
+  spw_charge_rule: "Use Spw charge for technical-symbolic intensity and boonhonk disposition for playful-social generosity."
+  setting_resonance: "Settings may tune copy density, familiarity, and immersion, but they should not become the only path to understanding a page."
+}
