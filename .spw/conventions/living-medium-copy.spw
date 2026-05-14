@@ -26,4 +26,6 @@
   role_rule: "Whenever it fits, address developers, illustrators, painters, performers, RPG players, and worldbuilders as active participants rather than passive visitors."
   spw_charge_rule: "Use Spw charge for technical-symbolic intensity and boonhonk disposition for playful-social generosity."
   setting_resonance: "Settings may tune copy density, familiarity, and immersion, but they should not become the only path to understanding a page."
+  motif_rule: "Repeat a small set of route-specific motifs in metadata or a short visible note so readers can build familiarity without every page sounding identical."
+  motif_storage: "Use body data-spw-copy-motifs, JSON-LD about lists, meta keywords, or compact motif strips to surface the repeated vocabulary."
 }

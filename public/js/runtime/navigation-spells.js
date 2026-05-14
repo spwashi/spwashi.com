@@ -2,12 +2,10 @@ import { detectOperator } from '/public/js/kernel/shared.js';
 
 const TOKEN_SELECTOR = [
   '.header-sigil[href]',
-  'header nav a[href]',
   '.page-index a[href]',
   '.section-atlas a[href]',
   '.card-sub-links a[href]',
   '.frame-operators a[href]',
-  '.spw-route-menu-panel a[href]',
 ].join(', ');
 
 const TOP_ROUTE_TOKENS = Object.freeze({
