@@ -41,6 +41,9 @@ import {
   normalizeToken,
   unique,
 } from '/public/js/semantic/semantic-utils.js';
+import {
+  deriveSemanticBraceExpression,
+} from '/public/js/semantic/semantic-braces.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
@@ -321,6 +324,10 @@ function inferContext(el, role) {
   return 'analysis';
 }
 
+function inferSemanticBrace(el) {
+  return deriveSemanticBraceExpression(el);
+}
+
 function inferSubstrate(el, role) {
   if (el.dataset.spwSubstrate) return normalizeToken(el.dataset.spwSubstrate);
   return (ROLE_DEFAULTS[role] || ROLE_DEFAULTS.reference).substrate;
@@ -570,6 +577,7 @@ function snapshotComponentSemantics(el, options = {}) {
   const meaning = inferMeaning(el, kind);
   const form = inferForm(el, kind);
   const context = inferContext(el, role);
+  const semanticBrace = inferSemanticBrace(el);
   const substrate = inferSubstrate(el, role);
   const phrase = inferPhrase(el, role);
   const features = inferFeatures(el, kind, role, context);
@@ -598,7 +606,8 @@ function snapshotComponentSemantics(el, options = {}) {
     instrumentation,
     debugSource,
     primaryExpression: relationship.primaryExpression,
-    primaryLabel: relationship.primaryLabel
+    primaryLabel: relationship.primaryLabel,
+    semanticBrace
   };
   const componentId = inferComponentId(el, componentBase);
   const componentName = inferComponentName(el, componentBase);
@@ -658,6 +667,7 @@ function snapshotComponentSemantics(el, options = {}) {
     primaryExpression: relationship.primaryExpression,
     primaryLabel: relationship.primaryLabel,
     routeMarker: relationship.routeMarker,
+    semanticBrace,
     semanticTagged: 'true',
     semanticVersion: options.semanticVersion || SEMANTIC_REGISTRY_VERSION
   };
@@ -700,6 +710,17 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   if (snapshot.primaryExpression) writer(el, 'spwPrimaryExpression', snapshot.primaryExpression);
   if (snapshot.primaryLabel) writer(el, 'spwPrimaryLabel', snapshot.primaryLabel);
   if (snapshot.routeMarker) writer(el, 'spwRouteMarker', snapshot.routeMarker);
+  if (snapshot.semanticBrace?.expression) writer(el, 'spwSemanticExpression', snapshot.semanticBrace.expression);
+  if (snapshot.semanticBrace?.key) writer(el, 'spwSemanticKey', snapshot.semanticBrace.key);
+  if (snapshot.semanticBrace?.family) writer(el, 'spwSemanticFamily', snapshot.semanticBrace.family);
+  if (snapshot.semanticBrace?.root) writer(el, 'spwSemanticRoot', snapshot.semanticBrace.root);
+  if (snapshot.semanticBrace?.rootLabel) writer(el, 'spwSemanticRootLabel', snapshot.semanticBrace.rootLabel);
+  if (snapshot.semanticBrace?.variant) writer(el, 'spwSemanticVariant', snapshot.semanticBrace.variant);
+  if (snapshot.semanticBrace?.variantLabel) writer(el, 'spwSemanticVariantLabel', snapshot.semanticBrace.variantLabel);
+  if (snapshot.semanticBrace?.behavior) writer(el, 'spwSemanticBehavior', snapshot.semanticBrace.behavior);
+  if (snapshot.semanticBrace?.behaviorLabel) writer(el, 'spwSemanticBehaviorLabel', snapshot.semanticBrace.behaviorLabel);
+  if (snapshot.semanticBrace?.lens) writer(el, 'spwSemanticLens', snapshot.semanticBrace.lens);
+  if (snapshot.semanticBrace?.lensLabel) writer(el, 'spwSemanticLensLabel', snapshot.semanticBrace.lensLabel);
 
   if (snapshot.configKeys.length) writer(el, 'spwConfigKeys', snapshot.configKeys.join(' '));
   if (snapshot.inspectTarget) writer(el, 'spwInspect', snapshot.inspectTarget);
@@ -805,6 +826,7 @@ function makePublicSnapshot(element, snapshot) {
     primaryExpression: snapshot.primaryExpression,
     primaryLabel: snapshot.primaryLabel,
     routeMarker: snapshot.routeMarker,
+    semanticBrace: snapshot.semanticBrace,
     semanticVersion: snapshot.semanticVersion
   };
 }

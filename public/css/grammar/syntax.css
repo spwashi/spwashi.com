@@ -852,6 +852,23 @@
   --brace-close-color: color-mix(in srgb, var(--op-baseline-color) 16%, transparent);
 }
 
+:where([data-spw-form="brace"][data-spw-semantic-expanded="true"]) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 52%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 28%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 14%, transparent),
+    var(--container-shadow, none);
+}
+
+:where([data-spw-form="brace"][data-spw-semantic-focused="true"]) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 64%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 36%, transparent);
+}
+
+:where([data-spw-form="brace"][data-spw-semantic-match="true"]) {
+  opacity: 0.96;
+}
+
 :where(.frame-card[data-spw-form="brace"]) {
   --brace-corner-offset: 0.4rem;
   --brace-corner-width: 1.55rem;

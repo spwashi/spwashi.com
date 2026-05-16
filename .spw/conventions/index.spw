@@ -15,6 +15,7 @@
 @cognitive_navigation: ~"./cognitive-navigation.spw"
 @electromagnetic_containers: ~"./electromagnetic-containers.spw"
 @precipitates_projections: ~"./precipitates-and-projections.spw"
+@semantic_braces: ~"./semantic-braces.spw"
 @asset_management: ~"./asset-management.spw"
 @copy_localization: ~"./copy-localization.spw"
 @living_medium_copy: ~"./living-medium-copy.spw"
@@ -38,6 +39,7 @@ dispatch: .{
  cognition = @cognitive_navigation
  containers = @electromagnetic_containers
  versioning = @precipitates_projections
+ semantic_braces = @semantic_braces
  selection = @workbench_selection
  naming = @workbench_naming
  submodule = @workbench_submodule

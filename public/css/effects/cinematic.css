@@ -452,6 +452,23 @@
   100% { filter: brightness(1) scale(1); }
 }
 
+:where([data-spw-form="brace"][data-spw-semantic-expanded="true"]) {
+  --cinematic-outline-scale: 1.1;
+  --cinematic-depth-scale: 1.04;
+  --cinematic-wash-scale: 0.96;
+}
+
+:where([data-spw-form="brace"][data-spw-semantic-focused="true"]) {
+  --cinematic-outline-scale: 1.16;
+  --cinematic-glow-scale: 1.06;
+  --cinematic-depth-scale: 1.06;
+}
+
+:where([data-spw-form="brace"][data-spw-semantic-match="true"]) {
+  --cinematic-wash-scale: 0.92;
+  --cinematic-glow-scale: 0.96;
+}
+
 /* ==========================================================================
    10. Grounding / pinning / latching
    ========================================================================== */

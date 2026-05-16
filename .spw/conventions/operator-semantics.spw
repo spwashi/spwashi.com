@@ -156,7 +156,7 @@
     original_meaning: "mode — selection, choosing one from many without closing off the others"
     spatial_act: "pinning a coordinate in possibility space; illuminating one alternative without claiming all others are unavailable"
     priming_property: "[] announces selection. It sets up the expectation that what is shown is one choice among multiple available alternatives."
-    interaction_semantics: "A mode can be switched without destroying the previous choice, can be combined with other modes, or can be queried for what else is available."
+    interaction_semantics: "A mode can be switched without destroying the previous choice, can be combined with other modes, or can be queried for what else is available. In semantic annotations, a bracketed suffix can name a discoverable variant that remains close to its root."
     symmetry_partner: "[] pairs with <> (conduit). Mode selects which conduit or presentation; conduit delivers the selected content."
     physical_rule: "Alternatives should be discoverable. When a mode is active, the viewer should be able to see what other modes exist without fully committing to them."
   }
@@ -166,7 +166,7 @@
     original_meaning: "definition — containment, the bounded region that defines what belongs together"
     spatial_act: "placing something inside a region; creating an inside and an outside; establishing category and belonging"
     priming_property: "{} announces containment. It sets up the expectation that what is inside shares a category or context that what is outside does not."
-    interaction_semantics: "A brace can be opened and closed, can be navigated to see what is contained, or can be composed with other braces."
+    interaction_semantics: "A brace can be opened and closed, can be navigated to see what is contained, or can be composed with other braces. In semantic annotations, a braced suffix can name behavior or direction without changing the root concept."
     symmetry_partner: "{} pairs with () (scene). Brace defines structure; scene renders it. Together they create the architectural and performative aspects of the system."
     physical_rule: "Containment should be visible. The boundary of a brace should be clear so the user can see what belongs together and what is adjacent but separate."
   }

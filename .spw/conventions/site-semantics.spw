@@ -41,6 +41,18 @@
   aria_contract: "Decorative brace marks stay aria-hidden or pseudo-rendered; interactive perspective controls must be buttons, links, or named controls."
 }
 
+^"semantic_brace_annotation"{
+  rule: "Semantic brace notation extends the local grammar with discoverable suffixes for variants, behaviors, and lenses."
+  syntax: "root[variant]{behavior}<lens>"
+  root: "The stable concept label that should stay familiar across routes."
+  variant: "A sibling form of the root that preserves recognizability while changing a detail."
+  behavior: "An action, mode, or affordance that explains what the concept does."
+  lens: "A reading or interpretive filter that explains how the concept should be taken up."
+  html_contract: "Prefer data-spw-semantic-expression or related data-spw-semantic-* attributes for authored markup; literal angle brackets should remain markup-safe."
+  learnability_rule: "Use semantic suffixes when they add a discoverable distinction. Do not mint them just to decorate prose."
+  navigation_rule: "When a semantic family is expanded, the user should be able to move between same-root instances without losing the root label."
+}
+
 ^"component_grammar"{
   frame: {
     default_form: "brace"

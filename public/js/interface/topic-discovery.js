@@ -51,13 +51,21 @@ function buildIndex() {
     getAllTopics().forEach(el => {
         const text = getTopicText(el);
         if (!text) return;
+        const semanticRoot = el.closest('[data-spw-semantic-root]')?.dataset.spwSemanticRoot ?? '';
+        const semanticFamily = el.closest('[data-spw-semantic-family]')?.dataset.spwSemanticFamily ?? semanticRoot;
+        const semanticKey = el.closest('[data-spw-semantic-key]')?.dataset.spwSemanticKey ?? '';
+        const semanticExpression = el.closest('[data-spw-semantic-expression]')?.dataset.spwSemanticExpression ?? '';
         if (!map.has(text)) map.set(text, []);
         map.get(text).push({
             element: el,
             operator: el.closest('[data-spw-operator]')?.dataset.spwOperator ?? '',
             brace: el.closest('[data-spw-brace]')?.dataset.spwBrace ?? '',
             section: el.closest('.site-frame')?.id ?? '',
-            sigil: el.closest('.site-frame')?.querySelector('.frame-sigil')?.textContent.trim() ?? ''
+            sigil: el.closest('.site-frame')?.querySelector('.frame-sigil')?.textContent.trim() ?? '',
+            semanticRoot,
+            semanticFamily,
+            semanticKey,
+            semanticExpression
         });
     });
     return map;
@@ -209,7 +217,8 @@ function showPopover(el) {
     bus.emit('topic:context', {
         text,
         occurrences: occurrences.map(({ element, ...rest }) => rest),
-        operatorContext: operators
+        operatorContext: operators,
+        semanticContext: [...new Set(occurrences.map((o) => o.semanticFamily).filter(Boolean))]
     });
 }
 

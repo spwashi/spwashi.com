@@ -1,0 +1,59 @@
+# Semantic Braces
+#
+# A local contract for how brace-like notation can describe discoverable
+# familiarity, nested meaning, and low-noise semantic jumping on spwashi.com.
+
+#>spw_semantic_braces
+#:semantics #!surface
+#:layer #!pragmatics
+
+^"grammar"{
+  root: "The stable concept anchor. This is the thing that should resonate across instances."
+  variant: "A distinguishable form of the root. Variants are siblings, not new roots."
+  behavior: "An operational mode or affordance. Behaviors describe what the concept does."
+  lens: "A reading lens or interpretive conduit. Lenses describe how the concept is being taken up."
+  expression: "root[variant]{behavior}<lens>"
+  rule: "If a surface can be understood without the suffix, the suffix should add a teachable distinction rather than decorative noise."
+}
+
+^"operator_physics"{
+  brackets: "[] separate discoverable variants and support resonance across sibling forms."
+  braces: "{} attach behavior, direction, or action to the root without changing the root."
+  parens: "() stage scenes and performative contexts."
+  angles: "<> carry lenses, conduits, or interpretive filters; in authored HTML, prefer data attributes or escaped text so markup stays valid."
+  discoverability: "A reader should be able to jump from one instance to another by shared root, then narrow by variant or behavior."
+}
+
+^"runtime_contract"{
+  html_attributes: [
+    "data-spw-semantic-expression",
+    "data-spw-semantic-key",
+    "data-spw-semantic-family",
+    "data-spw-semantic-root",
+    "data-spw-semantic-variant",
+    "data-spw-semantic-behavior",
+    "data-spw-semantic-lens"
+  ]
+  runtime_state: [
+    "data-spw-semantic-expanded",
+    "data-spw-semantic-focused",
+    "data-spw-semantic-match"
+  ]
+  interaction_rule: "When a semantic family is expanded, matching instances may become visible together, but authored text remains the source of truth."
+  scale_rule: "Use only high-signal concepts. Semantic braces should make navigation easier, not turn every repeated noun into a target."
+}
+
+^"learnability"{
+  rule: "The same concept should look familiar across routes even when its role changes."
+  use_cases: [
+    "jump between same-root concepts on the page",
+    "compare variant forms without flattening them",
+    "attach behavior labels that help subvocalize a phrase while reading",
+    "describe liminality or nesting without forcing prose to carry all the structure"
+  ]
+  counterexample: "A surface invents a new brace pattern for every page, so no one learns the grammar and nothing resonates."
+}
+
+@site_semantics: ~"./site-semantics.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+

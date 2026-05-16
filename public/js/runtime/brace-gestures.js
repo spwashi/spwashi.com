@@ -29,6 +29,7 @@
  * - data-spw-resolved-wonder
  * - data-spw-last-gesture
  * - data-spw-resolved-context
+ * - data-spw-semantic-expression / family / key / root / variant / behavior
  *
  * Local field hormones
  * - Updates nearest .site-frame / [data-spw-field-root] with lightweight
@@ -44,6 +45,10 @@ import {
   writeDatasetValue,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
+import {
+  collectSemanticBraceMatches,
+  deriveSemanticBraceExpression,
+} from '/public/js/semantic/semantic-braces.js';
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
@@ -153,6 +158,7 @@ function classifyTarget(el) {
   const affordances = resolveAffordances(el, targetKind);
   const wonder = resolveWonder(el, operator, targetKind, affordances);
   const context = resolveContext(el);
+  const semantic = deriveSemanticBraceExpression(el);
   const fieldRoot =
     el.closest?.('[data-spw-field-root], .site-frame, main, body') || document.body;
 
@@ -167,6 +173,7 @@ function classifyTarget(el) {
     swappable: el.hasAttribute('data-spw-swappable'),
     pinnable: affordances.includes('pin'),
     id: resolveStableId(el),
+    semantic,
   };
 
   syncDiscoveredMarkup(el, meta);
@@ -400,6 +407,17 @@ function syncDiscoveredMarkup(el, meta, extra = {}) {
   if (meta?.affordances?.length) {
     writeDatasetValue(el, DISCOVERED_META_DATA_KEYS.affordance, meta.affordances.join(' '));
   }
+  if (meta?.semantic?.expression) writeDatasetValue(el, 'spwSemanticExpression', meta.semantic.expression);
+  if (meta?.semantic?.key) writeDatasetValue(el, 'spwSemanticKey', meta.semantic.key);
+  if (meta?.semantic?.family) writeDatasetValue(el, 'spwSemanticFamily', meta.semantic.family);
+  if (meta?.semantic?.root) writeDatasetValue(el, 'spwSemanticRoot', meta.semantic.root);
+  if (meta?.semantic?.rootLabel) writeDatasetValue(el, 'spwSemanticRootLabel', meta.semantic.rootLabel);
+  if (meta?.semantic?.variant) writeDatasetValue(el, 'spwSemanticVariant', meta.semantic.variant);
+  if (meta?.semantic?.variantLabel) writeDatasetValue(el, 'spwSemanticVariantLabel', meta.semantic.variantLabel);
+  if (meta?.semantic?.behavior) writeDatasetValue(el, 'spwSemanticBehavior', meta.semantic.behavior);
+  if (meta?.semantic?.behaviorLabel) writeDatasetValue(el, 'spwSemanticBehaviorLabel', meta.semantic.behaviorLabel);
+  if (meta?.semantic?.lens) writeDatasetValue(el, 'spwSemanticLens', meta.semantic.lens);
+  if (meta?.semantic?.lensLabel) writeDatasetValue(el, 'spwSemanticLensLabel', meta.semantic.lensLabel);
 
   Object.entries(extra).forEach(([key, value]) => {
     if (CSS_OBSERVED_SEMANTIC_DATA_KEYS.includes(key) && !commitCssObserved) {
@@ -412,6 +430,85 @@ function syncDiscoveredMarkup(el, meta, extra = {}) {
 /* ==========================================================================
    Operator swap + pin system
    ========================================================================== */
+
+function clearSemanticExpansion(root = document) {
+  const scope = root instanceof Element ? root : document;
+  const selector = [
+    '[data-spw-semantic-focused="true"]',
+    '[data-spw-semantic-match="true"]',
+    '[data-spw-semantic-expanded="true"]',
+  ].join(', ');
+  const nodes = [];
+  if (scope instanceof Element && scope.matches?.(selector)) {
+    nodes.push(scope);
+  }
+  scope.querySelectorAll?.(selector).forEach((node) => {
+    nodes.push(node);
+  });
+  nodes.forEach((node) => {
+    writeDatasetValue(node, 'spwSemanticFocused', null);
+    writeDatasetValue(node, 'spwSemanticMatch', null);
+    writeDatasetValue(node, 'spwSemanticExpanded', null);
+  });
+
+  const host = scope instanceof HTMLElement ? scope : document.documentElement;
+  if (host) {
+    writeDatasetValue(host, 'spwSemanticFocusRoot', null);
+    writeDatasetValue(host, 'spwSemanticFocusKey', null);
+  }
+}
+
+function applySemanticExpansion(target, meta, nextExpanded) {
+  const semantic = meta?.semantic;
+  const family = semantic?.family;
+  if (!family) return false;
+
+  const scope = meta?.fieldRoot instanceof Element ? meta.fieldRoot : document;
+  const matches = collectSemanticBraceMatches(scope, family);
+  if (!matches.length) return false;
+
+  clearSemanticExpansion(scope);
+
+  const activeMatch = target instanceof Element && matches.includes(target) ? target : matches[0];
+
+  matches.forEach((node) => {
+    writeDatasetValue(node, 'spwSemanticExpanded', nextExpanded ? 'true' : null);
+    writeDatasetValue(node, 'spwSemanticFamily', family);
+    writeDatasetValue(node, 'spwSemanticRoot', semantic.root || family);
+    if (semantic.rootLabel) writeDatasetValue(node, 'spwSemanticRootLabel', semantic.rootLabel);
+    if (semantic.variant) writeDatasetValue(node, 'spwSemanticVariant', semantic.variant);
+    if (semantic.variantLabel) writeDatasetValue(node, 'spwSemanticVariantLabel', semantic.variantLabel);
+    if (semantic.behavior) writeDatasetValue(node, 'spwSemanticBehavior', semantic.behavior);
+    if (semantic.behaviorLabel) writeDatasetValue(node, 'spwSemanticBehaviorLabel', semantic.behaviorLabel);
+    if (semantic.lens) writeDatasetValue(node, 'spwSemanticLens', semantic.lens);
+    if (semantic.lensLabel) writeDatasetValue(node, 'spwSemanticLensLabel', semantic.lensLabel);
+  });
+
+  if (nextExpanded) {
+    matches.forEach((node) => {
+      writeDatasetValue(node, 'spwSemanticMatch', node === activeMatch ? null : 'true');
+      writeDatasetValue(node, 'spwSemanticFocused', node === activeMatch ? 'true' : null);
+    });
+
+    const host = scope instanceof HTMLElement ? scope : document.documentElement;
+    writeDatasetValue(host, 'spwSemanticFocusRoot', family);
+    writeDatasetValue(host, 'spwSemanticFocusKey', semantic.key || family);
+  }
+
+  emitBraceEvents(
+    [nextExpanded ? 'brace:expanded' : 'brace:collapsed'],
+    buildDetail(meta, {
+      committed: true,
+      expanded: nextExpanded,
+      semanticFamily: family,
+      semanticKey: semantic.key || family,
+      matchCount: matches.length,
+    }),
+    target
+  );
+
+  return true;
+}
 
 function handleOperatorSwap(el, meta) {
   const swappable = el.dataset.spwSwappable;
@@ -542,6 +639,9 @@ function buildDetail(meta, extra = {}) {
     wonder: meta.wonder,
     context: meta.context,
     affordances: meta.affordances,
+    semanticFamily: meta.semantic?.family || '',
+    semanticKey: meta.semantic?.key || '',
+    semanticRoot: meta.semantic?.root || '',
     ...extra,
   };
 }
@@ -699,6 +799,10 @@ function onPointerUp(event) {
     }
   }
 
+  if (meta.semantic?.family && !state?.dragging && !state?.armed) {
+    applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+  }
+
   gestureState.delete(target);
 
   try {
@@ -755,7 +859,10 @@ function commitArmedInteraction(target, state) {
   let committed = false;
   let action = null;
 
-  if (meta.affordances.includes('swap')) {
+  if (meta.semantic?.family) {
+    committed = applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+    action = committed ? 'semantic-expand' : null;
+  } else if (meta.affordances.includes('swap')) {
     committed = handleOperatorSwap(target, meta);
     action = committed ? 'swap' : null;
   } else if (meta.affordances.includes('pin')) {
@@ -851,4 +958,8 @@ function onKeyUp(event) {
     buildDetail(meta, { keyboard: true }),
     target
   );
+
+  if (meta.semantic?.family && !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey) {
+    applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+  }
 }

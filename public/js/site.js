@@ -1116,6 +1116,19 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'brace-physics',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-form="brace"], .spw-delimiter',
+    rootMode: 'single',
+    load: () => import('./runtime/brace-gestures.js'),
+    mount: (mod) => {
+      const fn = mod?.initBraceGestures;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'local-notes',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

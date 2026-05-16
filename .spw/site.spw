@@ -24,6 +24,7 @@
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @annotation_layer: ~"./conventions/annotation-layer.spw"
+@semantic_braces: ~"./conventions/semantic-braces.spw"
 @query_disposition: ~"./conventions/query-disposition.spw"
 @philosophy: ~"./philosophy/index.spw"
 @timing_data_localization: ~"./philosophy/timing-data-localization.spw"
@@ -58,7 +59,7 @@ frame_patterns: #[
  `Operator color tokens (--op-*-color) drive semantic visual hierarchy.`,
  `Operator pages expose interaction, metaphysics, brace physics, and prefix/postfix symmetry before runtime behavior.`,
  `The g key toggles the surface map; [ ] traverses frames.`,
- `data-spw-role, data-spw-liminality, and data-spw-meaning carry semantic metadata on frames.`
+ `data-spw-role, data-spw-liminality, data-spw-meaning, and data-spw-semantic-* carry semantic metadata on frames and brace-bearing components.`
 ][reg=set]
 
 translations: .{
@@ -100,6 +101,7 @@ dispatch: .{
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
  annotation_layer = @annotation_layer
+ semantic_braces = @semantic_braces
  query_disposition = @query_disposition
  philosophy = @philosophy
  timing_data_localization = @timing_data_localization
