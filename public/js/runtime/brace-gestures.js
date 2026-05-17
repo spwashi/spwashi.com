@@ -149,7 +149,7 @@ export function initBraceGestures() {
    ========================================================================== */
 
 function braceTarget(node) {
-  return node?.closest?.('[data-spw-form], .spw-delimiter') || null;
+  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression]') || null;
 }
 
 function classifyTarget(el) {

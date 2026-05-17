@@ -1261,13 +1261,27 @@ const FEATURE_DEFS = [
     id: 'brace-physics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: '[data-spw-form="brace"], .spw-delimiter',
+    selector: '[data-spw-form="brace"], .spw-delimiter, .frame-sigil, [data-spw-semantic-expression]',
     rootMode: 'single',
     load: () => import('./runtime/brace-gestures.js'),
     mount: (mod) => {
       const fn = mod?.initBraceGestures;
       if (!isFn(fn)) return;
       return fn();
+    },
+  },
+  {
+    id: 'region-menu',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.spw-delimiter, .frame-sigil, .operator-chip, [data-spw-semantic-expression]',
+    rootMode: 'single',
+    evaluates: 'semantics navigation interaction region-menu',
+    load: () => import('./runtime/region-menu.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwRegionMenu;
+      if (!isFn(fn)) return;
+      return fn(document);
     },
   },
   {

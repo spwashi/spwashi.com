@@ -138,6 +138,7 @@ header,
 ) {
   --handle-arrival-lift: 0px;
   --handle-arrival-opacity: 1;
+  --interaction-excitement: 0;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -156,8 +157,10 @@ header,
   text-decoration: none;
   text-shadow: none;
   opacity: var(--handle-arrival-opacity);
-  box-shadow: var(--handle-shadow-rest);
-  transform: translateY(var(--handle-arrival-lift));
+  box-shadow:
+      var(--handle-shadow-rest),
+      0 0 calc(var(--interaction-excitement) * 12px) color-mix(in srgb, currentColor calc(var(--interaction-excitement) * 40%), transparent);
+  transform: translateY(calc(var(--handle-arrival-lift) + (var(--interaction-excitement) * -2px)));
   cursor: pointer;
   contain: paint style;
   transition:
@@ -168,6 +171,72 @@ header,
     transform var(--handle-duration-fast) var(--handle-settle-ease),
     opacity var(--handle-duration-fast) var(--handle-ease),
     filter var(--handle-duration-base) var(--handle-settle-ease);
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"]
+):is(:hover, :focus-visible) {
+  --interaction-excitement: 0.82;
+}
+
+@keyframes spw-operator-breath {
+  0%, 100% {
+    box-shadow:
+      var(--handle-shadow-rest),
+      0 0 8px color-mix(in srgb, currentColor 20%, transparent);
+  }
+  50% {
+    box-shadow:
+      var(--handle-shadow-rest),
+      0 0 16px color-mix(in srgb, currentColor 40%, transparent);
+  }
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"]
+):is([data-spw-selection="active"], [data-spw-selection="selected"], [aria-current="page"], [aria-pressed="true"]) {
+  --interaction-excitement: 1;
+  animation: spw-operator-breath 2s ease-in-out infinite;
+}
+
+@keyframes spw-operator-ripple {
+  0% { box-shadow: 0 0 0 0px color-mix(in srgb, currentColor 40%, transparent); }
+  100% { box-shadow: 0 0 0 12px transparent; }
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .frame-sigil,
+  .frame-card-sigil
+):active {
+  animation: spw-operator-ripple 0.4s ease-out;
 }
 
 /* Inline handles should read like annotated language before they read as pills. */

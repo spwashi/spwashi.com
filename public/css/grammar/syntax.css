@@ -335,6 +335,301 @@
   opacity: 0.6;
 }
 
+:where(.frame-topline, .frame-heading) > .spw-delimiter {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 1.28rem;
+  min-block-size: 1.9rem;
+  margin-inline-end: -0.18rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
+  border-inline-end: 0;
+  border-radius: var(--shape-small, 0.55rem) 0 0 var(--shape-small, 0.55rem);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 11%, transparent),
+      transparent 74%
+    ),
+    color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
+  box-shadow: inset 0.12rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  opacity: 0.72;
+}
+
+:where(.frame-actions > .spw-delimiter) {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 1.28rem;
+  min-block-size: 1.9rem;
+  justify-self: end;
+  margin-inline-start: auto;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent);
+  border-inline-start: 0;
+  border-radius: 0 var(--shape-small, 0.55rem) var(--shape-small, 0.55rem) 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 7%, transparent),
+      transparent 76%
+    ),
+    color-mix(in srgb, var(--surface-strong, #fff) 84%, transparent);
+  box-shadow: inset -0.12rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  opacity: 0.62;
+}
+
+:where(.site-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter)) {
+  position: relative;
+}
+
+:where(.site-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter))::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 0.7rem auto 0.7rem 0.72rem;
+  inline-size: 1px;
+  border-radius: var(--shape-small, 0.55rem);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent),
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 7%, transparent) 46%,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, transparent)
+    );
+  opacity: 0.26;
+}
+
+:where(.site-frame:has(> :where(.frame-topline, .frame-heading) > .spw-delimiter):is(:hover, :focus-within))::after {
+  opacity: 0.48;
+}
+
+:where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator]) {
+  --spw-sigil-accent: var(--spw-operator-color, var(--active-op-color, var(--teal, #008080)));
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--shape-micro, 0.35rem);
+  transition:
+    opacity var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    color var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    text-shadow var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    transform var(--grammar-duration-fast) var(--grammar-ease-settle);
+}
+
+:where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator])::after {
+  content: attr(data-spw-operator);
+  position: absolute;
+  z-index: 1;
+  inset: calc(100% + 0.22rem) auto auto 0;
+  max-inline-size: 18ch;
+  padding: 0.12rem 0.34rem;
+  border: 1px solid color-mix(in srgb, var(--spw-sigil-accent) 28%, transparent);
+  border-radius: var(--shape-micro, 0.35rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--spw-sigil-accent) 8%);
+  box-shadow: 0 0.35rem 1rem color-mix(in srgb, var(--shadow-color, #111) 10%, transparent);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--spw-sigil-accent) 22%);
+  font-family: var(--grammar-mono-font);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  opacity: 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform: translateY(-0.18rem);
+  transition:
+    opacity var(--grammar-duration-fast) var(--grammar-ease-mechanical),
+    transform var(--grammar-duration-fast) var(--grammar-ease-settle);
+}
+
+:where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator]):is(:hover, :focus-visible) {
+  opacity: 1;
+  text-shadow: 0 0 0.72rem color-mix(in srgb, var(--spw-sigil-accent) 34%, transparent);
+  transform: translateY(-0.04rem);
+}
+
+:where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator]):is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:where(.frame-heading:has(> .frame-sigil:is(:hover, :focus-visible)),
+       .frame-topline:has(> .frame-sigil:is(:hover, :focus-visible))) > .spw-delimiter,
+:where(.site-frame:focus-within > .frame-actions > .spw-delimiter) {
+  opacity: 0.9;
+  text-shadow: 0 0 0.66rem color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 32%, transparent);
+}
+
+:where([data-spw-region-menu-target="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 52%, transparent);
+  outline-offset: 0.18rem;
+}
+
+:where([data-spw-region-preview="true"]) {
+  --spw-region-preview: 1;
+  text-decoration-thickness: max(1px, 0.08em);
+  text-underline-offset: 0.22em;
+}
+
+:where(.frame-sigil[data-spw-region-preview="true"],
+       .operator-chip[data-spw-region-preview="true"],
+       [data-spw-semantic-expression][data-spw-region-preview="true"]) {
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 34%, transparent),
+    0 0 1.1rem color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 12%, transparent);
+}
+
+:where(.frame-sigil[data-spw-region-preview="true"], .operator-chip[data-spw-region-preview="true"])::before {
+  content: "?";
+  position: absolute;
+  z-index: 2;
+  inset: -0.46rem -0.42rem auto auto;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1rem;
+  block-size: 1rem;
+  border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 86%, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 14%);
+  color: color-mix(in srgb, var(--ink, #111) 72%, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 28%);
+  font: 800 0.62rem/1 var(--grammar-mono-font);
+  pointer-events: none;
+}
+
+:where(.site-frame[data-spw-region-charge="active"]) {
+  --spw-region-current: 1;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, var(--card-border));
+  box-shadow:
+    var(--shadow-sm),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+    0 0 2rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+}
+
+:where(.site-frame[data-spw-region-charge="active"]) > :where(.frame-topline, .frame-heading) > .spw-delimiter,
+:where(.site-frame[data-spw-region-charge="active"]) > .frame-actions > .spw-delimiter {
+  opacity: 0.96;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 72%, var(--ink));
+}
+
+:where([data-spw-semantic-focused="true"]) {
+  --spw-expression-focus: 1;
+  outline: 2px solid color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 48%, transparent);
+  outline-offset: 0.16rem;
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0.82rem color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+}
+
+:where([data-spw-semantic-match="true"]) {
+  --spw-expression-match: 1;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal, #008080))) 9%, transparent),
+      transparent 72%
+    ),
+    var(--spw-local-bg, transparent);
+}
+
+.spw-region-menu {
+  position: fixed;
+  z-index: var(--z-popover, 50);
+  display: grid;
+  gap: 0.42rem;
+  inline-size: min(19rem, calc(100vw - 1.5rem));
+  max-block-size: min(26rem, calc(100vh - 1.5rem));
+  overflow: auto;
+  padding: 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, var(--card-border));
+  border-radius: var(--shape-medium, 0.85rem);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent),
+      transparent 56%
+    ),
+    color-mix(in srgb, var(--surface-strong, #fff) 93%, var(--matte-surface, #f5efe4) 7%);
+  box-shadow:
+    0 0.8rem 2.2rem color-mix(in srgb, var(--shadow-color, #111) 18%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 36%, transparent);
+  color: var(--ink, #111);
+}
+
+.spw-region-menu[data-spw-state="closed"] {
+  display: none;
+}
+
+.spw-region-menu__title,
+.spw-region-menu__summary {
+  margin: 0;
+}
+
+.spw-region-menu__title {
+  font-family: var(--grammar-mono-font);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.spw-region-menu__summary {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.spw-region-menu__contract {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.18rem 0.55rem;
+  margin: 0.08rem 0 0.12rem;
+  padding: 0.48rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, var(--card-border));
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in srgb, var(--surface, #fff) 86%, transparent);
+}
+
+.spw-region-menu__contract dt,
+.spw-region-menu__contract dd {
+  margin: 0;
+  font-size: 0.69rem;
+  line-height: 1.35;
+}
+
+.spw-region-menu__contract dt {
+  color: color-mix(in srgb, var(--ink-muted) 76%, var(--active-op-color, var(--teal, #008080)) 24%);
+  font-family: var(--grammar-mono-font);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spw-region-menu__contract dd {
+  color: var(--ink);
+}
+
+.spw-region-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: 2.1rem;
+  padding: 0.45rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border));
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in srgb, var(--surface, #fff) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  color: var(--ink);
+  cursor: pointer;
+  font: 700 0.75rem/1.2 var(--grammar-mono-font);
+  letter-spacing: 0.035em;
+  text-align: start;
+}
+
+.spw-region-menu button:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 44%, var(--card-border));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  outline: none;
+  transform: translateY(-0.03rem);
+}
+
 @container (max-width: 38rem) {
   :where(.frame-topline, .frame-heading) {
     align-items: stretch;
