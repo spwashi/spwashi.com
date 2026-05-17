@@ -116,7 +116,7 @@
 
 <main id="main-content" tabindex="-1" aria-labelledby="home-title">
     <section
-        class="site-frame site-hero"
+        class="site-frame site-hero site-hero--split-figure"
         id="home-frame"
         aria-labelledby="home-title"
         aria-describedby="home-frame-note"
@@ -147,27 +147,31 @@
         data-spw-materiality="paper texture svg print web"
         data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/software/spw/|/topics/craft/|/play/rpg-wednesday/library/|https://texture.website|https://spw.quest"
     >
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#home-frame">#&gt;home_frame</a>
+        <header class="frame-topline" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#home-frame" data-spw-operator="address">#&gt;home_frame</a>
             <div class="mode-switch" role="group" aria-label="Home lens">
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="surface"
-                        aria-pressed="true">.surface
+                        aria-pressed="true" data-spw-operator="select" data-spw-operator-reversibility="reversible">.surface
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="syntax"
-                        aria-pressed="false">^syntax
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">^syntax
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="artifacts"
-                        aria-pressed="false">*artifacts
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">*artifacts
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="website"
-                        aria-pressed="false">@website
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">@website
                 </button>
             </div>
-        </div>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="kernel" data-spw-stance="entry">kernel_entry</span>
+            </div>
+        </header>
 
-        <div class="home-hero-grid">
+        <div class="home-hero-grid" data-spw-slot="body">
             <div class="home-hero-copy">
-                <p class="page-kicker">kernel entry</p>
+                <p class="page-kicker" data-spw-semantic-expression="kernel[entry]{orient}">kernel entry</p>
                 <h1 id="home-title">
                     I'm Spwashi.
                 </h1>
@@ -176,37 +180,37 @@
                 </h2>
 
                 <p id="home-frame-note" class="page-lede">
-                    This site is a literate cookbook for software, art, research, recipes, and RPG Wednesday: a place
-                    where patterns are prepared, tested, reduced, served, and revised until they become useful prompts,
-                    routes, proof, lore, or reusable components.
+                    This site is a living magazine for culinary software: a literate cookbook, theory guide, art atlas,
+                    and RPG Wednesday notebook for staying sharp, practicing pivots on classics, and turning private
+                    wonder into shared meals, prompts, routes, lore, and reusable components.
                 </p>
 
-                <p class="spw-playable-hook">
-                    Playable hook: every good surface should give the reader a place to stand, a reason to return, and
-                    one handle they can tune into frame.
+                <p class="spw-playable-hook" data-spw-semantic-expression="surface[readable]{interact}">
+                    Playable hook: once upon a time, a good surface gave the reader a place to stand, a reason to
+                    return, and one handle they could tune into frame.
                 </p>
                 <p class="frame-note">
                     Try this as a tunable reading surface:
-                    <a data-spw-link-intent="query" href="?flavor=culinary&amp;lighting=balanced&amp;layout=reading">culinary reading</a>,
-                    <a data-spw-link-intent="query" href="?flavor=garden&amp;spacing=roomy&amp;layout=wide">garden room</a>, or
-                    <a data-spw-link-intent="query" href="?flavor=runtime&amp;lighting=guarded&amp;layout=atlas&amp;interaction=responsive">runtime atlas</a>.
+                    <a data-spw-link-intent="query" data-spw-operator="probe" href="?flavor=culinary&amp;lighting=balanced&amp;layout=reading">culinary reading</a>,
+                    <a data-spw-link-intent="query" data-spw-operator="probe" href="?flavor=garden&amp;spacing=roomy&amp;layout=wide">garden room</a>, or
+                    <a data-spw-link-intent="query" data-spw-operator="probe" href="?flavor=runtime&amp;lighting=guarded&amp;layout=atlas&amp;interaction=responsive">runtime atlas</a>.
                 </p>
-                <ul class="spw-copy-motif-strip" aria-label="Home copy motifs">
+                <ul class="spw-copy-motif-strip" aria-label="Home copy motifs" data-spw-vocab="culinary research engineering">
                     <li>cookbook</li>
+                    <li>magazine</li>
                     <li>research</li>
                     <li>prompt</li>
                     <li>lore</li>
-                    <li>tuning</li>
                 </ul>
 
-                <div class="spw-reason-strip" aria-label="Home surface reasons">
+                <div class="spw-reason-strip" aria-label="Home surface reasons" data-spw-role="schema">
                     <div>
                         <strong>This surface exists because</strong>
                         <p>the site needs one clear place where software engineering, art practice, culinary metaphor, and story seeds can stay readable together.</p>
                     </div>
                     <div>
                         <strong>Who it is for</strong>
-                        <p>developers, illustrators, performers, RPG players, cooks, researchers, and worldbuilders who need a practical first route.</p>
+                        <p>developers, parents, returning students, illustrators, performers, RPG players, cooks, researchers, and worldbuilders who need a practical first route.</p>
                     </div>
                     <div>
                         <strong>What it can produce</strong>
@@ -223,15 +227,22 @@
                         whether a pattern can be read, reused, revised, and served to someone else without losing its
                         source.
                     </p>
+                    <p class="spw-narration__text" data-spw-textual-role="narration-text"
+                       data-spw-semantic-expression="adult[study]{stay.sharp.return}">
+                        I want the site to work for adults who are still learning in the middle of ordinary life:
+                        parents keeping their minds warm in case another degree becomes possible, engineers who want
+                        theory without losing craft, and people who need nutrition, romance, humor, and fantasy to stay
+                        connected to practice instead of becoming separate hobbies.
+                    </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         I think of the whole thing as a recursive editorial loop: make, inspect, reroute, repeat.
-                        The center of gravity is <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>,
-                        with projections into <a href="/topics/software/spw/">Spw language design</a>,
-                        <a href="/topics/software/">software routes</a>, <a href="/topics/craft/">author craft</a>,
-                        <a href="/topics/math/">math</a>, <a href="/tools/">tools</a>,
-                        <a href="https://texture.website">texture.website</a>,
-                        <a href="/play/rpg-wednesday/">RPG Wednesday</a>,
-                        <a href="/about/domains/lore.land/">lore.land</a>.
+                        The center of gravity is <a href="https://github.com/spwashi/spw-workbench" data-spw-operator="ref">spw-workbench</a>,
+                        with projections into <a href="/topics/software/spw/" data-spw-operator="frame">Spw language design</a>,
+                        <a href="/topics/software/" data-spw-operator="route">software routes</a>, <a href="/topics/craft/" data-spw-operator="action">author craft</a>,
+                        <a href="/topics/math/" data-spw-operator="stream">math</a>, <a href="/tools/" data-spw-operator="object">tools</a>,
+                        <a href="https://texture.website" data-spw-operator="surface">texture.website</a>,
+                        <a href="/play/rpg-wednesday/" data-spw-operator="stream">RPG Wednesday</a>,
+                        <a href="/about/domains/lore.land/" data-spw-operator="frame">lore.land</a>.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         One reason the website matters so much is stability. It lets me centralize digital structures
@@ -246,6 +257,21 @@
                         a CSS state, a research question, or a trade ingredient and still find the same underlying
                         move. Stock becomes context. Reduction becomes compression. Sauce becomes byproduct recovery.
                         Mise en place becomes dependency clarity. A session becomes a test kitchen for lore.
+                    </p>
+                    <p class="spw-narration__text" data-spw-textual-role="narration-text"
+                       data-spw-semantic-expression="technique[list]{shop.remember.scene}">
+                        Culinary techniques are useful because they ask for inventory. If a page says bloom, temper,
+                        deglaze, ferment, fold, or reduce, it can also suggest a shopping list, a memory character, and
+                        a scene. A cook learns what to buy; a software engineer learns what operation is happening; an
+                        RPG table gets a mnemonic creature or ritual that makes the concept easier to recall.
+                    </p>
+                    <p class="spw-narration__text" data-spw-textual-role="narration-text"
+                       data-spw-semantic-expression="handle[field-guide]{clear.without.widget}">
+                        I want the interface to feel less like a pile of controls and more like a marked-up field
+                        guide. Links should still navigate plainly. Buttons should still announce themselves to
+                        assistive technology. But the visible language can call them handles, lenses, provisions, route
+                        clues, spell marks, and pantry notes when that helps the page feel like a place someone can
+                        mosey through instead of operate.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         A lot of this gets worked out in video. I do not treat speaking as a polished trait I either
@@ -268,27 +294,57 @@
                     </p>
                 </div>
 
-                <nav class="frame-operators" aria-label="Quick start actions">
-                    <a class="operator-chip" href="/cards/">^ make a proof card</a>
-                    <a class="operator-chip" href="/services/">@ commission work</a>
-                    <a class="operator-chip" href="/about/">? understand the system</a>
-                    <a class="operator-chip" href="/now/">$ current sprint</a>
-                    <a class="operator-chip" href="/membership/">#&gt; membership</a>
+                <nav class="frame-operators" aria-label="Quick start actions" data-spw-slot="actions">
+                    <a class="operator-chip" href="/cards/" data-spw-operator="integrate" data-spw-operator-reversibility="revisable">^ make a proof card</a>
+                    <a class="operator-chip" href="/services/" data-spw-operator="situate" data-spw-operator-reversibility="inspectable">@ commission work</a>
+                    <a class="operator-chip" href="/about/" data-spw-operator="wonder" data-spw-operator-reversibility="reversible">? understand the system</a>
+                    <a class="operator-chip" href="/now/" data-spw-operator="value" data-spw-operator-reversibility="returnable">$ current sprint</a>
+                    <a class="operator-chip" href="/membership/" data-spw-operator="address" data-spw-operator-reversibility="inspectable">#&gt; membership</a>
                 </nav>
             </div>
 
-            <figure class="home-brand-plate">
+            <figure class="home-brand-plate" data-spw-slot="figure">
                 <img
                     src="/public/images/logo/spw-brand-plate.svg"
                     alt="Spwashi logo plate showing the Spwashi mark and wordmark in teal and gold on a warm paper field."
                 />
                 <figcaption class="home-brand-plate-links">
                     <span class="home-brand-plate-links__label">Logo concepts</span>
-                    <a class="operator-chip" href="/public/images/logo/spwashi.logo-concept.common.png">Common</a>
-                    <a class="operator-chip" href="/public/images/logo/spwashi.logo-concept.premium.png">Premium</a>
+                    <a class="operator-chip" href="/public/images/logo/spwashi.logo-concept.common.png" data-spw-operator="ref">Common</a>
+                    <a class="operator-chip" href="/public/images/logo/spwashi.logo-concept.premium.png" data-spw-operator="ref">Premium</a>
+                </figcaption>
+            </figure>
+
+            <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="supporting"
+                    data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="warm"
+                    data-spw-accent-anchor="occasion threshold celebration route" data-spw-accent-operator="surface"
+                    data-spw-semantic-expression="occasion[threshold]{celebrate.return}">
+                <picture>
+                    <source
+                        srcset="/public/images/routes/home/occasion-threshold-field-source-thumb.avif 256w,
+                                /public/images/routes/home/occasion-threshold-field-source-display.avif 512w,
+                                /public/images/routes/home/occasion-threshold-field-source-hero.avif 1024w"
+                        sizes="(max-width: 48rem) 92vw, 32rem"
+                        type="image/avif">
+                    <source
+                        srcset="/public/images/routes/home/occasion-threshold-field-source-thumb.webp 256w,
+                                /public/images/routes/home/occasion-threshold-field-source-display.webp 512w,
+                                /public/images/routes/home/occasion-threshold-field-source-hero.webp 1024w"
+                        sizes="(max-width: 48rem) 92vw, 32rem"
+                        type="image/webp">
+                    <img src="/public/images/routes/home/occasion-threshold-field-source-display.webp"
+                         alt="A wide teal and amber threshold scene with small glowing structures and a celebratory field-like atmosphere."
+                         loading="lazy" decoding="async" width="512" height="219">
+                </picture>
+                <figcaption>
+                    <strong>Occasion threshold</strong>
+                    <span>A landing image for the holiday feeling without naming the holiday: a page can invite return, preparation, and shared practice before the next occasion arrives.</span>
                 </figcaption>
             </figure>
         </div>
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -307,9 +363,13 @@
         data-spw-collectability="medium"
         data-spw-feature="home-entrance-sorter"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#choose-your-entrance">#&gt;entrance_sorter</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#choose-your-entrance" data-spw-operator="address">#&gt;entrance_sorter</a>
             <h2 id="choose-your-entrance-title">Choose your entrance</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="threshold">threshold</span>
+            </div>
         </header>
 
         <p class="inline-note">
@@ -317,7 +377,7 @@
             first screen should not ask you to classify yourself alone. Pick one need, not your entire identity.
         </p>
 
-        <div class="spw-role-hooks" aria-label="Home entry roles">
+        <div class="spw-role-hooks" aria-label="Home entry roles" data-spw-vocab="learning collaboration">
             <div>
                 <strong>For developers</strong>
                 <p>Use About, Software, and the Website Field Guide when you need route structure, reusable components, or something that can become a prompt later.</p>
@@ -332,16 +392,16 @@
             </div>
         </div>
 
-        <aside class="spw-resonance-lab" aria-label="Resonance practice paths">
-            <div data-spw-resonance-axis="ground">
+        <aside class="spw-resonance-lab" aria-label="Resonance practice paths" data-spw-role="probe">
+            <div data-spw-resonance-axis="ground" data-spw-semantic-expression="resonance[ground]{stable}">
                 <h3>Stable ground</h3>
                 <p>Read the page normally first. The route, headings, and links should make sense before any runtime feature adds texture.</p>
             </div>
-            <div data-spw-resonance-axis="precision">
+            <div data-spw-resonance-axis="precision" data-spw-semantic-expression="resonance[precision]{tune}">
                 <h3>Precision tuning</h3>
-                <p>Use settings and inspect links when you need to see which scripts, states, touch affordances, and CSS dimensions are shaping a component.</p>
+                <p>Use settings and inspect links when you need the hidden machinery to name itself: scripts, states, touch affordances, and CSS dimensions can become visible without turning the whole page into a dashboard.</p>
             </div>
-            <div data-spw-resonance-axis="projection">
+            <div data-spw-resonance-axis="projection" data-spw-semantic-expression="resonance[projection]{practice}">
                 <h3>Projection practice</h3>
                 <p>Turn a card into a prompt, a soup into a system metaphor, a session into a recap, or a visual motif into a reusable component without losing the source.</p>
             </div>
@@ -358,86 +418,90 @@
             also hold a story seed when the ingredients are named well enough for another person or model to expand.
         </p>
 
-        <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge">
-            <header>
-                <h3>Follow the next useful relation</h3>
-                <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
-            </header>
-            <ul class="spw-route-bridge__links">
-                <li><a href="/topics/software/"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
-                <li><a href="/topics/pedagogy/"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
-                <li><a href="/recipes/"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, timing, texture, and shared company.</span></a></li>
-                <li><a href="/play/rpg-wednesday/"><strong>RPG Wednesday</strong><span>Promptable lore, session memory, trade ingredients, character pressure, and table-tested mechanics.</span></a></li>
-            </ul>
-        </aside>
+            <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge">
+                <header>
+                    <h3>Follow the next useful relation</h3>
+                    <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
+                </header>
+                <ul class="spw-route-bridge__links">
+                    <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
+                    <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
+                    <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, timing, texture, and shared company.</span></a></li>
+                    <li><a href="/play/rpg-wednesday/" data-spw-operator="route"><strong>RPG Wednesday</strong><span>Promptable lore, session memory, trade ingredients, character pressure, and table-tested mechanics.</span></a></li>
+                </ul>
+            </aside>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-panel">
-                <h3>I need work or support.</h3>
-                <p>Open Services, Cards, Now, or Contact when the goal is a commission, a referral, or a direct ask. This path helps when the page needs to become an offer, a proof card, or a concrete next move.</p>
-                <p><a class="operator-chip" href="/services/">@ services</a> <a class="operator-chip" href="/cards/">^ cards</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This route gives a collaborator a direct way to ask for help without first learning the rest of the atlas.</p>
-                    <p>It produces a live offer path, a proof surface, or a small next action that can be completed quickly.</p>
-                </details>
-            </article>
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I need work or support.</h3>
+                    <p>Open Services, Cards, Now, or Contact when the goal is a commission, a referral, or a direct ask. This path helps when the page needs to become an offer, a proof card, or a concrete next move.</p>
+                    <p><a class="operator-chip" href="/services/" data-spw-operator="situate">@ services</a> <a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ cards</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This route gives a collaborator a direct way to ask for help without first learning the rest of the atlas.</p>
+                        <p>It produces a live offer path, a proof surface, or a small next action that can be completed quickly.</p>
+                    </details>
+                </article>
 
-            <article class="frame-panel">
-                <h3>I want to support or coordinate.</h3>
-                <p>Use the current sprint, membership, and proof cards when the task is to help the work move forward. This route connects to the work-in-progress state, the recurring release cadence, and the small actions that keep the system alive.</p>
-                <p><a class="operator-chip" href="/now/">$ now</a> <a class="operator-chip" href="/membership/">#&gt; membership</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This card helps when support is logistical rather than expressive.</p>
-                    <p>It keeps coordination visible enough to share without turning it into a bigger task than it needs to be.</p>
-                </details>
-            </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I want to support or coordinate.</h3>
+                    <p>Use the current sprint, membership, and proof cards when the task is to help the work move forward. This route connects to the work-in-progress state, the recurring release cadence, and the small actions that keep the system alive.</p>
+                    <p><a class="operator-chip" href="/now/" data-spw-operator="value">$ now</a> <a class="operator-chip" href="/membership/" data-spw-operator="address">#&gt; membership</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This card helps when support is logistical rather than expressive.</p>
+                        <p>It keeps coordination visible enough to share without turning it into a bigger task than it needs to be.</p>
+                    </details>
+                </article>
 
-            <article class="frame-panel">
-                <h3>I want to understand the system.</h3>
-                <p>Use About, Software, and the Website Field Guide when the goal is method, architecture, or inspection. This card helps when a route should explain itself before it asks for trust.</p>
-                <p><a class="operator-chip" href="/about/">? about</a> <a class="operator-chip" href="/about/website/">#&gt; field guide</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This surface exists because a reusable medium should teach its own structure.</p>
-                    <p>Developers and curious readers can use it to find the method before they commit to the whole site.</p>
-                </details>
-            </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I want to understand the system.</h3>
+                    <p>Use About, Software, and the Website Field Guide when the goal is method, architecture, or inspection. This card helps when a route should explain itself before it asks for trust.</p>
+                    <p><a class="operator-chip" href="/about/" data-spw-operator="wonder">? about</a> <a class="operator-chip" href="/about/website/" data-spw-operator="address">#&gt; field guide</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This surface exists because a reusable medium should teach its own structure.</p>
+                        <p>Developers and curious readers can use it to find the method before they commit to the whole site.</p>
+                    </details>
+                </article>
 
-            <article class="frame-panel">
-                <h3>I need a steadier next step.</h3>
-                <p>Use Care, Topics, and proof cards when the problem is not only knowledge but getting your footing back well enough to act. Return here after the immediate pressure has been named, because the next move should be small enough to finish.</p>
-                <p><a class="operator-chip" href="/care/">! care</a> <a class="operator-chip" href="/topics/">* topics</a> <a class="operator-chip" href="/cards/">^ cards</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This route exists for moments when the page should lower friction before it asks for a decision.</p>
-                    <p>It can produce a steadier entry path, a topic neighbor, or a proof card that makes progress visible.</p>
-                </details>
-            </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I need a steadier next step.</h3>
+                    <p>Use Care, Topics, and proof cards when the problem is not only knowledge but getting your footing back well enough to act. Return here after the immediate pressure has been named, because the next move should be small enough to finish.</p>
+                    <p><a class="operator-chip" href="/care/" data-spw-operator="act">! care</a> <a class="operator-chip" href="/topics/" data-spw-operator="stream">* topics</a> <a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ cards</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This route exists for moments when the page should lower friction before it asks for a decision.</p>
+                        <p>It can produce a steadier entry path, a topic neighbor, or a proof card that makes progress visible.</p>
+                    </details>
+                </article>
 
-            <article class="frame-panel">
-                <h3>I am here to explore.</h3>
-                <p>Topics, Town Atlas, Blog, Play, Research, and Tools are the broader lattice when you want to learn sideways. This surface produces neighboring routes, not just more labels.</p>
-                <p><a class="operator-chip" href="/topics/">* topics</a> <a class="operator-chip" href="/town/">#&gt; town atlas</a> <a class="operator-chip" href="/play/">~ play</a> <a class="operator-chip" href="/research/">? research</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This is the exploratory route for when a visitor wants to move by relation instead of by category.</p>
-                    <p>It helps the site remain a field guide rather than a single-path funnel.</p>
-                </details>
-            </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I am here to explore.</h3>
+                    <p>Topics, Town Atlas, Blog, Play, Research, and Tools are the broader lattice when you want to learn sideways. This surface produces neighboring routes, not just more labels.</p>
+                    <p><a class="operator-chip" href="/topics/" data-spw-operator="stream">* topics</a> <a class="operator-chip" href="/town/" data-spw-operator="address">#&gt; town atlas</a> <a class="operator-chip" href="/play/" data-spw-operator="potential">~ play</a> <a class="operator-chip" href="/research/" data-spw-operator="wonder">? research</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This is the exploratory route for when a visitor wants to move by relation instead of by category.</p>
+                        <p>It helps the site remain a field guide rather than a single-path funnel.</p>
+                    </details>
+                </article>
 
-            <article class="frame-panel">
-                <h3>I want to think in boonhonk.</h3>
-                <p>Use the boonhonk register when the question is how a system behaves once disposition, signal, and recombination are part of the interface. This is the route for playful-social generosity with enough structure to stay useful.</p>
-                <p><a class="operator-chip" href="/about/#boonhonk-register">* boonhonk register</a> <a class="operator-chip" href="/play/rpg-wednesday/">~ rpg Wednesday</a></p>
-                <details class="spw-card-reason">
-                    <summary>Why this card exists</summary>
-                    <p>This card exists to show that tone is part of system design here, not an afterthought.</p>
-                    <p>It gives the site a way to surface wonder, recombination, and public play without losing the practical route.</p>
-                </details>
-            </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>I want to think in boonhonk.</h3>
+                    <p>Use the boonhonk register when the question is how a system behaves once disposition, signal, and recombination are part of the interface. This is the route for playful-social generosity with enough structure to stay useful.</p>
+                    <p><a class="operator-chip" href="/about/#boonhonk-register" data-spw-operator="stream">* boonhonk register</a> <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="potential">~ rpg Wednesday</a></p>
+                    <details class="spw-card-reason" data-spw-operator="probe">
+                        <summary>Why this card exists</summary>
+                        <p>This card exists to show that tone is part of system design here, not an afterthought.</p>
+                        <p>It gives the site a way to surface wonder, recombination, and public play without losing the practical route.</p>
+                    </details>
+                </article>
+            </div>
         </div>
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -457,52 +521,61 @@
         data-spw-collectability="medium"
         data-spw-feature="home-learning-use-pattern"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#learning-use-pattern">^learning_loop</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#learning-use-pattern" data-spw-operator="address">^learning_loop</a>
             <h2 id="learning-use-pattern-title">Use the site like a learning surface.</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="education" data-spw-stance="entry">gateway</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            Learning science is more useful here as a reading habit than as a slogan: start with one question, leave
-            with one artifact, then revisit from a neighboring route.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                Learning science is more useful here as a reading habit than as a slogan: start with one question, leave
+                with one artifact, then revisit from a neighboring route.
+            </p>
 
-        <div class="spw-reason-strip" aria-label="Learning surface reasons">
-            <div>
-                <strong>This surface exists because</strong>
-                <p>the site should help people learn something that survives the visit.</p>
+            <div class="spw-reason-strip" aria-label="Learning surface reasons" data-spw-role="schema">
+                <div>
+                    <strong>This surface exists because</strong>
+                    <p>the site should help people learn something that survives the visit.</p>
+                </div>
+                <div>
+                    <strong>Use this when</strong>
+                    <p>you need a visible loop from question to artifact to return path.</p>
+                </div>
+                <div>
+                    <strong>What it can produce</strong>
+                    <p>proof cards, route maps, prompts, and recurring habits that make the site easier to revisit.</p>
+                </div>
             </div>
-            <div>
-                <strong>Use this when</strong>
-                <p>you need a visible loop from question to artifact to return path.</p>
-            </div>
-            <div>
-                <strong>What it can produce</strong>
-                <p>proof cards, route maps, prompts, and recurring habits that make the site easier to revisit.</p>
+
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="learning.step[1]{question}">
+                    <h3>1. Start with the smallest honest question.</h3>
+                    <p>Pick the route that matches your actual pressure now, not the most prestigious topic on the page.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="learning.step[2]{artifact}">
+                    <h3>2. Turn the visit into a visible artifact.</h3>
+                    <p>Make a card, note, screenshot, route map, or quest so the learning can survive mood drift and time passing.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="learning.step[3]{transfer}">
+                    <h3>3. Re-enter through a neighbor.</h3>
+                    <p>Use topics, play, care, or software to test whether the pattern transfers when the context changes.</p>
+                </article>
             </div>
         </div>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-panel">
-                <h3>1. Start with the smallest honest question.</h3>
-                <p>Pick the route that matches your actual pressure now, not the most prestigious topic on the page.</p>
-            </article>
-            <article class="frame-panel">
-                <h3>2. Turn the visit into a visible artifact.</h3>
-                <p>Make a card, note, screenshot, route map, or quest so the learning can survive mood drift and time passing.</p>
-            </article>
-            <article class="frame-panel">
-                <h3>3. Re-enter through a neighbor.</h3>
-                <p>Use topics, play, care, or software to test whether the pattern transfers when the context changes.</p>
-            </article>
-        </div>
-
-        <nav class="frame-operators" aria-label="Learning surface routes">
-            <a class="operator-chip" href="/topics/pedagogy/">? learning science</a>
-            <a class="operator-chip" href="/cards/">^ make an artifact</a>
-            <a class="operator-chip" href="/topics/">* change routes</a>
-            <a class="operator-chip" href="/play/">~ keep play alive</a>
-        </nav>
+        <footer class="frame-actions" data-spw-slot="actions">
+            <nav class="frame-operators" aria-label="Learning surface routes">
+                <a class="operator-chip" href="/topics/pedagogy/" data-spw-operator="wonder">? learning science</a>
+                <a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ make an artifact</a>
+                <a class="operator-chip" href="/topics/" data-spw-operator="stream">* change routes</a>
+                <a class="operator-chip" href="/play/" data-spw-operator="potential">~ keep play alive</a>
+            </nav>
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -524,51 +597,61 @@
         data-spw-collectability="medium"
         data-spw-feature="reader-builder-paths"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#reader-builder-paths">#&gt;reader_builder</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#reader-builder-paths" data-spw-operator="address">#&gt;reader_builder</a>
             <h2 id="reader-builder-paths-title">Read the method or inspect the mechanism</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="entry">paths</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            Some visitors want the prose and canon. Others want the route model and runtime. Both get a first-class
-            path, and both should leave with a smaller next move than they arrived with.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                Some visitors want the prose and canon. Others want the route model and runtime. Both get a first-class
+                path, and both should leave with a smaller next move than they arrived with.
+            </p>
 
-        <p class="spw-playable-hook">
-            A component is a small machine for arranging attention.
-        </p>
+            <p class="spw-playable-hook" data-spw-semantic-expression="component[machine]{attention}">
+                A component is a small machine for arranging attention.
+            </p>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-panel" data-spw-textual-role="narration">
-                <p class="spw-narration__cue" data-spw-textual-role="cue">For readers</p>
-                <p class="spw-narration__text" data-spw-textual-role="narration-text">
-                    Start with About, the Website Field Guide, the Town Atlas, and Recipes when you want the site’s
-                    story, method, and reusable craft to stay close together. This path connects to lore, practical
-                    routes, and the material practice behind the pages.
-                </p>
-                <p>
-                    <a class="operator-chip" href="/about/">? about</a>
-                    <a class="operator-chip" href="/about/website/">#&gt; website guide</a>
-                    <a class="operator-chip" href="/town/">^ town atlas</a>
-                    <a class="operator-chip" href="/recipes/">. recipes</a>
-                </p>
-            </article>
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-panel" data-spw-textual-role="narration" data-spw-kind="panel" data-spw-role="reference">
+                    <p class="spw-narration__cue" data-spw-textual-role="cue">For readers</p>
+                    <p class="spw-narration__text" data-spw-textual-role="narration-text">
+                        Start with About, the Website Field Guide, the Town Atlas, and Recipes when you want the site’s
+                        story, method, and reusable craft to stay close together. This path connects to lore, practical
+                        routes, and the material practice behind the pages.
+                    </p>
+                    <p>
+                        <a class="operator-chip" href="/about/" data-spw-operator="wonder">? about</a>
+                        <a class="operator-chip" href="/about/website/" data-spw-operator="address">#&gt; website guide</a>
+                        <a class="operator-chip" href="/town/" data-spw-operator="integrate">^ town atlas</a>
+                        <a class="operator-chip" href="/recipes/" data-spw-operator="ground">. recipes</a>
+                    </p>
+                </article>
 
-            <article class="frame-panel" data-spw-textual-role="narration">
-                <p class="spw-narration__cue" data-spw-textual-role="cue">For builders</p>
-                <p class="spw-narration__text" data-spw-textual-role="narration-text">
-                    Start with Design, Settings, Software, and the inspect query when you want the browser-local controls,
-                    CSS, and layout behavior to stay legible. This surface helps the site feel like a system that can
-                    explain itself, not just render itself.
-                </p>
-                <p>
-                    <a class="operator-chip" href="/design/">#&gt; design</a>
-                    <a class="operator-chip" href="/settings/">= settings</a>
-                    <a class="operator-chip" href="/topics/software/">^ software</a>
-                    <a class="operator-chip" href="/settings/?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug">? inspect query</a>
-                </p>
-            </article>
+                <article class="frame-panel" data-spw-textual-role="narration" data-spw-kind="panel" data-spw-role="reference">
+                    <p class="spw-narration__cue" data-spw-textual-role="cue">For builders</p>
+                    <p class="spw-narration__text" data-spw-textual-role="narration-text">
+                        Start with Design, Settings, Software, and the inspect query when you want the browser-local controls,
+                        CSS, and layout behavior to stay legible. This surface helps the site feel like a system that can
+                        explain itself, not just render itself.
+                    </p>
+                    <p>
+                        <a class="operator-chip" href="/design/" data-spw-operator="address">#&gt; design</a>
+                        <a class="operator-chip" href="/settings/" data-spw-operator="bind">= settings</a>
+                        <a class="operator-chip" href="/topics/software/" data-spw-operator="integrate">^ software</a>
+                        <a class="operator-chip" href="/settings/?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;log=site-settings&amp;log-level=debug" data-spw-operator="wonder">? inspect query</a>
+                    </p>
+                </article>
+            </div>
         </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -588,54 +671,64 @@
         data-spw-collectability="medium"
         data-spw-feature="returner-drift"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#returner-drift">~"returner_drift"</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#returner-drift" data-spw-operator="potential">~"returner_drift"</a>
             <h2 id="returner-drift-title">If you are returning, let the route change.</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="threshold">re-entry</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            The center of gravity moves. Learning weeks, research weeks, playtest weeks, and publishing weeks should not
-            all ask you to enter through the same door.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                The center of gravity moves. Learning weeks, research weeks, playtest weeks, and publishing weeks should not
+                all ask you to enter through the same door.
+            </p>
 
-        <div class="returner-grid">
-            <article class="returner-card">
-                <p class="returner-card-kicker">Changed center</p>
-                <h3>Follow whatever has pressure now.</h3>
-                <p>Some visits are about support, some about proof, some about learning, and some about finding a route
-                    you ignored the first time because it was not ripe yet.</p>
-                <nav class="returner-chip-row" aria-label="Changed center routes">
-                    <a class="operator-chip" href="/now/">$ current sprint</a>
-                    <a class="operator-chip" href="/services/">@ services</a>
-                    <a class="operator-chip" href="/research/">? research</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="frame" data-spw-sigil="#&gt;town_library">#&gt; town library</a>
-                </nav>
-            </article>
+            <div class="returner-grid">
+                <article class="returner-card" data-spw-kind="card" data-spw-role="reference">
+                    <p class="returner-card-kicker">Changed center</p>
+                    <h3>Follow whatever has pressure now.</h3>
+                    <p>Some visits are about support, some about proof, some about learning, and some about finding a route
+                        you ignored the first time because it was not ripe yet.</p>
+                    <nav class="returner-chip-row" aria-label="Changed center routes">
+                        <a class="operator-chip" href="/now/" data-spw-operator="value">$ current sprint</a>
+                        <a class="operator-chip" href="/services/" data-spw-operator="situate">@ services</a>
+                        <a class="operator-chip" href="/research/" data-spw-operator="wonder">? research</a>
+                        <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="address" data-spw-sigil="#&gt;town_library">#&gt; town library</a>
+                    </nav>
+                </article>
 
-            <div class="returner-ledger" aria-label="Return cues">
-                <h3 class="returner-ledger-title">Reasons to re-enter</h3>
-                <div class="returner-ledger-item">
-                    <strong>Change is welcome.</strong>
-                    <p>Use a different route than last time on purpose. The atlas is healthier when it supports drift.</p>
+                <div class="returner-ledger" aria-label="Return cues" data-spw-role="schema">
+                    <h3 class="returner-ledger-title">Reasons to re-enter</h3>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[change]{welcome}">
+                        <strong>Change is welcome.</strong>
+                        <p>Use a different route than last time on purpose. The atlas is healthier when it supports drift.</p>
+                    </div>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[wonder]{neighbor}">
+                        <strong>Wonder needs neighbors.</strong>
+                        <p>Software should be close to math, craft, care, and play so the questions can mutate.</p>
+                    </div>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[proof]{artifact}">
+                        <strong>Proof beats vague intention.</strong>
+                        <p>When a thought matters, turn it into a page, card, quest, prompt, or small spell someone else can point at and replay.</p>
+                    </div>
                 </div>
-                <div class="returner-ledger-item">
-                    <strong>Wonder needs neighbors.</strong>
-                    <p>Software should be close to math, craft, care, and play so the questions can mutate.</p>
-                </div>
-                <div class="returner-ledger-item">
-                    <strong>Proof beats vague intention.</strong>
-                    <p>When a thought matters, turn it into a page, card, quest, prompt, or small spell someone else can point at and replay.</p>
-                </div>
+
+                <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference">
+                    <p class="returner-card-kicker">Fresh entry</p>
+                    <h3>Pick the route that makes your next question stranger and smaller.</h3>
+                    <p>That might be <a href="/topics/" data-spw-operator="stream">topics</a> if you need a map, <a href="/cards/" data-spw-operator="integrate">cards</a> if you
+                        need a proof surface, or <a href="/blog/" data-spw-operator="stream">the blog</a> if you need to watch fragments turn into
+                        public form.</p>
+                </article>
             </div>
-
-            <article class="returner-card returner-card--warm">
-                <p class="returner-card-kicker">Fresh entry</p>
-                <h3>Pick the route that makes your next question stranger and smaller.</h3>
-                <p>That might be <a href="/topics/">topics</a> if you need a map, <a href="/cards/">cards</a> if you
-                    need a proof surface, or <a href="/blog/">the blog</a> if you need to watch fragments turn into
-                    public form.</p>
-            </article>
         </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -659,39 +752,49 @@
         data-spw-seed="home_town_library_gateway"
         data-spw-feature="town-library-gateway"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#town-library-gateway" data-spw-operator="frame" data-spw-sigil="#&gt;town_library">#&gt;town_library</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#town-library-gateway" data-spw-operator="address" data-spw-sigil="#&gt;town_library">#&gt;town_library</a>
             <h2 id="town-library-gateway-title">Enter the Town Library.</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="education" data-spw-stance="entry">library</span>
+            </div>
         </header>
 
-        <p class="page-lede">
-            Build your way into college-level thinking through a playable library, session notes, guide characters,
-            studio quests, garden prompts, and portfolio-ready artifacts.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="page-lede" data-spw-copy-depth="normal">
+                Build your way into college-level thinking through a playable library, session notes, guide characters,
+                studio quests, garden prompts, and portfolio-ready artifacts.
+            </p>
 
-        <p class="frame-note">
-            For the story substrate itself, move to the <a href="/town/">Town Atlas</a>. That keeps the practical
-            library and the world bible separate enough for humans and models to review without guessing which page is
-            doing which job.
-        </p>
+            <p class="frame-note" data-spw-semantic-expression="library[story]{atlas}">
+                For the story substrate itself, move to the <a href="/town/" data-spw-operator="address">Town Atlas</a>. That keeps the practical
+                library and the world bible separate enough for humans and models to review without guessing which page is
+                doing which job.
+            </p>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-panel">
-                <h3>Start a first quest</h3>
-                <p>Make a route map, quest seed, or systems diagram in one sitting.</p>
-                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#starter-quests" data-spw-operator="action" data-spw-sigil="@starter_quests">@ choose quest</a></p>
-            </article>
-            <article class="frame-panel">
-                <h3>Meet the guides</h3>
-                <p>Use Grounding Rod, Cask, and Avalanche Evan as learning interfaces, not only character art.</p>
-                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="ref" data-spw-sigil="~guide_cards">~ guide cards</a></p>
-            </article>
-            <article class="frame-panel">
-                <h3>Practice the college bridge</h3>
-                <p>Notice, name, build, document, connect, and extend before committing to a major label.</p>
-                <p><a class="operator-chip" href="/play/rpg-wednesday/library/#college-wonder-path" data-spw-operator="probe" data-spw-sigil="?college_wonder_path">? wonder path</a></p>
-            </article>
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Start a first quest</h3>
+                    <p>Make a route map, quest seed, or systems diagram in one sitting.</p>
+                    <p><a class="operator-chip" href="/play/rpg-wednesday/library/#starter-quests" data-spw-operator="action" data-spw-sigil="@starter_quests">@ choose quest</a></p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Meet the guides</h3>
+                    <p>Use Grounding Rod, Cask, and Avalanche Evan as learning interfaces, not only character art.</p>
+                    <p><a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="potential" data-spw-sigil="~guide_cards">~ guide cards</a></p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Practice the college bridge</h3>
+                    <p>Notice, name, build, document, connect, and extend before committing to a major label.</p>
+                    <p><a class="operator-chip" href="/play/rpg-wednesday/library/#college-wonder-path" data-spw-operator="wonder" data-spw-sigil="?college_wonder_path">? wonder path</a></p>
+                </article>
+            </div>
         </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -714,38 +817,48 @@
         data-spw-collectability="medium"
         data-spw-seed="home_local_record_thesis"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#local-record-thesis">^local_record</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#local-record-thesis" data-spw-operator="address">^local_record</a>
             <h2 id="local-record-thesis-title">A screenshot can explain intent.</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="conversion" data-spw-stance="entry">record</span>
+            </div>
         </header>
 
-        <p class="page-lede">
-            It can be a local record of an ask, offer, agreement, reference point, or chosen disposition.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="page-lede" data-spw-copy-depth="normal">
+                It can be a local record of an ask, offer, agreement, reference point, or chosen disposition.
+            </p>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-panel">
-                <h3>Fund the current sprint</h3>
-                <p>See the active target, what it unlocks, and how someone can help in thirty seconds.</p>
-                <p><a class="operator-chip" href="/now/">$ open /now/</a></p>
-            </article>
-            <article class="frame-panel">
-                <h3>Create a local record card</h3>
-                <p>Make a screenshot-ready record for an ask, offer, pledge, reference, decision, or membership signal.</p>
-                <p><a class="operator-chip" href="/cards/">^ open /cards/</a></p>
-            </article>
-            <article class="frame-panel">
-                <h3>Join the working field</h3>
-                <p>Choose an observer, reference, working, sponsor, or collaborator role without turning membership into a fan club.</p>
-                <p><a class="operator-chip" href="/membership/">#&gt; open /membership/</a></p>
-            </article>
-            <article class="frame-panel">
-                <h3>Commission work</h3>
-                <p>Use creator packages, business web work, consulting, or a direct support path to fund useful output.</p>
-                <p><a class="operator-chip" href="/services/">@ open /services/</a></p>
-            </article>
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Fund the current sprint</h3>
+                    <p>See the active target, what it unlocks, and how someone can help in thirty seconds.</p>
+                    <p><a class="operator-chip" href="/now/" data-spw-operator="value">$ open /now/</a></p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Create a local record card</h3>
+                    <p>Make a screenshot-ready record for an ask, offer, pledge, reference, decision, or membership signal.</p>
+                    <p><a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ open /cards/</a></p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Join the working field</h3>
+                    <p>Choose an observer, reference, working, sponsor, or collaborator role without turning membership into a fan club.</p>
+                    <p><a class="operator-chip" href="/membership/" data-spw-operator="address">#&gt; open /membership/</a></p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
+                    <h3>Commission work</h3>
+                    <p>Use creator packages, business web work, consulting, or a direct support path to fund useful output.</p>
+                    <p><a class="operator-chip" href="/services/" data-spw-operator="situate">@ open /services/</a></p>
+                </article>
+            </div>
+            <p class="frame-note" data-spw-semantic-expression="privacy[direct]{local}">Privacy stays direct: drafts are not automatically public, screenshots should say why they exist, and shared records should expose only the context someone needs to act well.</p>
         </div>
-        <p class="frame-note">Privacy stays direct: drafts are not automatically public, screenshots should say why they exist, and shared records should expose only the context someone needs to act well.</p>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -768,30 +881,40 @@
         data-spw-collectability="medium"
         data-spw-seed="home_operator_field"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#operator-field">? "operator_field"</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#operator-field" data-spw-operator="wonder">? "operator_field"</a>
             <h2 id="operator-field-title">Choose a first route</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="entry">field</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            This is the action layer. Start with the workbench, a topic route, a live playtest, a texture-facing
-            surface, or the tools that help someone describe their work well.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                This is the action layer. Start with the workbench, a topic route, a live playtest, a texture-facing
+                surface, or the tools that help someone describe their work well.
+            </p>
 
-        <nav class="frame-operators frame-operators--probe" aria-label="Start here">
-            <a class="operator-chip" href="https://github.com/spwashi/spw-workbench" data-spw-form="angle"
-               data-spw-operator="object">^spw_workbench</a>
-            <a class="operator-chip" href="/topics/software/" data-spw-form="angle" data-spw-operator="probe">?software_surface</a>
-            <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;spw_language</a>
-            <a class="operator-chip" href="/topics/math/" data-spw-form="angle"
-               data-spw-operator="stream">*math_routes</a>
-            <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="action">@craft</a>
-            <a class="operator-chip" href="/design/" data-spw-form="angle" data-spw-operator="frame">#&gt;design_hub</a>
-            <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="stream">*rpg_wednesday</a>
-            <a class="operator-chip" href="/about/website/" data-spw-form="angle" data-spw-operator="frame">#&gt;website_guide</a>
-            <a class="operator-chip" href="https://texture.website" data-spw-form="angle" data-spw-operator="surface">&gt;texture.website</a>
-            <a class="operator-chip" href="https://spw.quest" data-spw-form="angle" data-spw-operator="frame">#&gt;spw.quest</a>
-        </nav>
+            <nav class="frame-operators frame-operators--probe" aria-label="Start here" data-spw-slot="actions">
+                <a class="operator-chip" href="https://github.com/spwashi/spw-workbench" data-spw-form="angle"
+                   data-spw-operator="object">^spw_workbench</a>
+                <a class="operator-chip" href="/topics/software/" data-spw-form="angle" data-spw-operator="probe">?software_surface</a>
+                <a class="operator-chip" href="/topics/software/spw/" data-spw-form="angle" data-spw-operator="frame">#&gt;spw_language</a>
+                <a class="operator-chip" href="/topics/math/" data-spw-form="angle"
+                   data-spw-operator="stream">*math_routes</a>
+                <a class="operator-chip" href="/topics/craft/" data-spw-form="angle" data-spw-operator="action">@craft</a>
+                <a class="operator-chip" href="/design/" data-spw-form="angle" data-spw-operator="frame">#&gt;design_hub</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-form="angle" data-spw-operator="stream">*rpg_wednesday</a>
+                <a class="operator-chip" href="/about/website/" data-spw-form="angle" data-spw-operator="frame">#&gt;website_guide</a>
+                <a class="operator-chip" href="https://texture.website" data-spw-form="angle" data-spw-operator="surface">&gt;texture.website</a>
+                <a class="operator-chip" href="https://spw.quest" data-spw-form="angle" data-spw-operator="frame">#&gt;spw.quest</a>
+            </nav>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -811,71 +934,81 @@
         data-spw-collectability="medium"
         data-spw-feature="wonder-rewards"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#wonder-rewards">* "wonder_rewards"</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#wonder-rewards" data-spw-operator="value">* "wonder_rewards"</a>
             <h2 id="wonder-rewards-title">Thanks for wondering through the skills.</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="gratitude" data-spw-stance="settled">memory</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            A skill surface should give something back for the attention it asks of you: a clearer question, a usable
-            pattern, a replayable spell, or a next move you can actually take.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                A skill surface should give something back for the attention it asks of you: a clearer question, a usable
+                pattern, a replayable spell, or a next move you can actually take.
+            </p>
 
-        <div class="spw-learning-game" data-spw-feature="learning-game" data-spw-semantic-cluster="learning metacognition prompts genre">
-            <header>
-                <p class="gratitude-kicker">Learning game</p>
-                <h3>Notice, name, fold, note, return.</h3>
-            </header>
-            <ol>
-                <li><strong>Notice</strong><span>Find a word, ingredient, operator, prompt, scene, or interface behavior that makes you curious.</span></li>
-                <li><strong>Name</strong><span>Use the visible label, Spw sigil, or nearby copy to give the discovery a handle.</span></li>
-                <li><strong>Fold</strong><span>Open the details, related route, or resonance peer that keeps the idea one handle away.</span></li>
-                <li><strong>Note</strong><span>Write the smallest useful question, recipe, sketch prompt, or genre move before the context evaporates.</span></li>
-                <li><strong>Return</strong><span>Reset the page, change the climate, or revisit the route later to test whether the idea stayed legible.</span></li>
-            </ol>
+            <div class="spw-learning-game" data-spw-feature="learning-game" data-spw-semantic-cluster="learning metacognition prompts genre" data-spw-role="schema">
+                <header>
+                    <p class="gratitude-kicker">Learning game</p>
+                    <h3>Notice, name, fold, note, return.</h3>
+                </header>
+                <ol>
+                    <li><strong>Notice</strong><span>Find a word, ingredient, operator, prompt, scene, or interface behavior that makes you curious.</span></li>
+                    <li><strong>Name</strong><span>Use the visible label, Spw sigil, or nearby copy to give the discovery a handle.</span></li>
+                    <li><strong>Fold</strong><span>Open the details, related route, or resonance peer that keeps the idea one handle away.</span></li>
+                    <li><strong>Note</strong><span>Write the smallest useful question, recipe, sketch prompt, or genre move before the context evaporates.</span></li>
+                    <li><strong>Return</strong><span>Reset the page, change the climate, or revisit the route later to test whether the idea stayed legible.</span></li>
+                </ol>
+            </div>
+
+            <div class="gratitude-grid">
+                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference">
+                    <p class="gratitude-kicker">Gratitude</p>
+                    <h3>Thanks for staying with the strange routes long enough to find a handle.</h3>
+                    <p>Wonder is useful here because it keeps software, art, care, and play from sealing themselves off too early.</p>
+                </article>
+
+                <article class="gratitude-card gratitude-card--reward" data-spw-kind="card" data-spw-role="reference">
+                    <p class="gratitude-kicker">Rewards</p>
+                    <div class="gratitude-list" aria-label="Wonder rewards">
+                        <div class="gratitude-item" data-spw-semantic-expression="reward[next.step]{action}">
+                            <strong>A smaller next step</strong>
+                            <p>A route, card, or tool that makes the work feel startable.</p>
+                        </div>
+                        <div class="gratitude-item" data-spw-semantic-expression="reward[cross-link]{transfer}">
+                            <strong>A cross-link worth testing</strong>
+                            <p>A neighboring skill surface to borrow from before the thought stiffens.</p>
+                        </div>
+                        <div class="gratitude-item" data-spw-semantic-expression="reward[spell]{replay}">
+                            <strong>A replayable spell</strong>
+                            <p>A screenshot, prompt packet, card, or route sequence you can run again under different conditions.</p>
+                        </div>
+                        <div class="gratitude-item" data-spw-semantic-expression="reward[collection]{notice}">
+                            <strong>A reason to collect</strong>
+                            <p>Collection should mean “this helped me notice,” not “the page awarded a score.”</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference">
+                    <p class="gratitude-kicker">Take it sideways</p>
+                    <h3>Turn the wondering into movement.</h3>
+                    <nav class="returner-chip-row" aria-label="Wonder reward routes">
+                        <a class="operator-chip" href="/topics/software/" data-spw-operator="route">software</a>
+                        <a class="operator-chip" href="/topics/craft/" data-spw-operator="route">craft</a>
+                        <a class="operator-chip" href="/topics/math/" data-spw-operator="route">math</a>
+                        <a class="operator-chip" href="/cards/" data-spw-operator="integrate">proof cards</a>
+                        <a class="operator-chip" href="/settings/#semantic- lsettings" data-spw-operator="wonder">vocabulary lenses</a>
+                    </nav>
+                </article>
+            </div>
         </div>
 
-        <div class="gratitude-grid">
-            <article class="gratitude-card">
-                <p class="gratitude-kicker">Gratitude</p>
-                <h3>Thanks for staying with the strange routes long enough to find a handle.</h3>
-                <p>Wonder is useful here because it keeps software, art, care, and play from sealing themselves off too early.</p>
-            </article>
-
-            <article class="gratitude-card gratitude-card--reward">
-                <p class="gratitude-kicker">Rewards</p>
-                <div class="gratitude-list" aria-label="Wonder rewards">
-                    <div class="gratitude-item">
-                        <strong>A smaller next step</strong>
-                        <p>A route, card, or tool that makes the work feel startable.</p>
-                    </div>
-                    <div class="gratitude-item">
-                        <strong>A cross-link worth testing</strong>
-                        <p>A neighboring skill surface to borrow from before the thought stiffens.</p>
-                    </div>
-                    <div class="gratitude-item">
-                        <strong>A replayable spell</strong>
-                        <p>A screenshot, prompt packet, card, or route sequence you can run again under different conditions.</p>
-                    </div>
-                    <div class="gratitude-item">
-                        <strong>A reason to collect</strong>
-                        <p>Collection should mean “this helped me notice,” not “the page awarded a score.”</p>
-                    </div>
-                </div>
-            </article>
-
-            <article class="gratitude-card">
-                <p class="gratitude-kicker">Take it sideways</p>
-                <h3>Turn the wondering into movement.</h3>
-                <nav class="returner-chip-row" aria-label="Wonder reward routes">
-                    <a class="operator-chip" href="/topics/software/">software</a>
-                    <a class="operator-chip" href="/topics/craft/">craft</a>
-                    <a class="operator-chip" href="/topics/math/">math</a>
-                    <a class="operator-chip" href="/cards/">proof cards</a>
-                    <a class="operator-chip" href="/settings/#semantic-settings">vocabulary lenses</a>
-                </nav>
-            </article>
-        </div>
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -899,126 +1032,136 @@
         data-spw-collectability="medium"
         data-spw-seed="home_climate_tuning"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#climate-tuning">~"climate_tuning"</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#climate-tuning" data-spw-operator="potential">~"climate_tuning"</a>
             <h2 id="climate-tuning-title">Tune the atlas</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="control" data-spw-stance="entry">tuning</span>
+            </div>
         </header>
 
-        <p class="frame-note">
-            These settings stay in this browser. Use them to set route bias, color atmosphere, and wonder memory without
-            mixing tuning controls into the kernel statement.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="frame-note" data-spw-copy-depth="normal">
+                These settings stay in this browser. Use them to set route bias, color atmosphere, and wonder memory without
+                mixing tuning controls into the kernel statement.
+            </p>
 
-        <div class="vibe-widget-grid vibe-widget-grid--compact">
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Current state</p>
-                    <h3 class="vibe-widget-title">Read the active environment</h3>
-                </div>
-                <div class="vibe-widget-meta">
-                    <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
-                    <span class="spec-pill">pack: <span data-settings-state="themePack">neutral paper</span></span>
-                    <span class="spec-pill">palette: <span data-settings-state="paletteResonance">route</span></span>
-                    <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
-                </div>
-            </article>
+            <div class="vibe-widget-grid vibe-widget-grid--compact">
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Current state</p>
+                        <h3 class="vibe-widget-title">Read the active environment</h3>
+                    </div>
+                    <div class="vibe-widget-meta" data-spw-role="schema">
+                        <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
+                        <span class="spec-pill">pack: <span data-settings-state="themePack">neutral paper</span></span>
+                        <span class="spec-pill">palette: <span data-settings-state="paletteResonance">route</span></span>
+                        <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
+                    </div>
+                </article>
 
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Resonance dimension</p>
-                    <h3 class="vibe-widget-title">Choose a reading bias</h3>
-                </div>
-                <div class="vibe-widget-actions" role="group" aria-label="Homepage dimensional resonance variants">
-                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">
-                        Context-led
-                    </button>
-                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">
-                        Craft-led
-                    </button>
-                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">
-                        Software-led
-                    </button>
-                    <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led
-                    </button>
-                </div>
-            </article>
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Resonance dimension</p>
+                        <h3 class="vibe-widget-title">Choose a reading bias</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="Homepage dimensional resonance variants" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">
+                            Context-led
+                        </button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">
+                            Craft-led
+                        </button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="select">
+                            Software-led
+                        </button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led
+                        </button>
+                    </div>
+                </article>
 
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Theme</p>
-                    <h3 class="vibe-widget-title">Set light and material family</h3>
-                </div>
-                <div class="vibe-widget-actions" role="group" aria-label="Homepage color mode variants">
-                    <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
-                </div>
-                <div class="theme-pack-chip-row" role="group" aria-label="Homepage theme pack variants">
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper"
-                            data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger"
-                            data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio"
-                            data-theme-pack-preview="electric-studio"
-                            aria-label="Choose electric studio theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum"
-                            data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace"
-                            data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme"></button>
-                    <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console"
-                            data-theme-pack-preview="glass-console" aria-label="Choose glass console theme"></button>
-                </div>
-            </article>
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Theme</p>
+                        <h3 class="vibe-widget-title">Set light and material family</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="Homepage color mode variants" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="select">Adaptive</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:light" data-spw-operator="select">Light</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="select">Dark</button>
+                    </div>
+                    <div class="theme-pack-chip-row" role="group" aria-label="Homepage theme pack variants" data-spw-slot="actions">
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:neutral-paper"
+                                data-theme-pack-preview="neutral-paper" aria-label="Choose neutral paper theme" data-spw-operator="select"></button>
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:oxide-ledger"
+                                data-theme-pack-preview="oxide-ledger" aria-label="Choose oxide ledger theme" data-spw-operator="select"></button>
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:electric-studio"
+                                data-theme-pack-preview="electric-studio"
+                                aria-label="Choose electric studio theme" data-spw-operator="select"></button>
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:ritual-vellum"
+                                data-theme-pack-preview="ritual-vellum" aria-label="Choose ritual vellum theme" data-spw-operator="select"></button>
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:copper-brace"
+                                data-theme-pack-preview="copper-brace" aria-label="Choose copper brace theme" data-spw-operator="select"></button>
+                        <button class="theme-pack-chip-btn" type="button" data-site-setting-set="themePack:glass-console"
+                                data-theme-pack-preview="glass-console" aria-label="Choose glass console theme" data-spw-operator="select"></button>
+                    </div>
+                </article>
 
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Wonder memory</p>
-                    <h3 class="vibe-widget-title">Control resonance carry</h3>
-                </div>
-                <div class="vibe-widget-actions" role="group" aria-label="Homepage wonder memory controls">
-                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Focused
-                    </button>
-                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Connected
-                    </button>
-                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">
-                        Immersive
-                    </button>
-                </div>
-            </article>
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Wonder memory</p>
+                        <h3 class="vibe-widget-title">Control resonance carry</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="Homepage wonder memory controls" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="select">Focused
+                        </button>
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="select">Connected
+                        </button>
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="select">
+                            Immersive
+                        </button>
+                    </div>
+                </article>
 
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Vocabulary discovery</p>
-                    <h3 class="vibe-widget-title">Choose how loudly concepts answer back</h3>
-                </div>
-                <p class="vibe-widget-copy">
-                    Minimal keeps the page quiet. Field shows nearby relation cues. Rich turns vocabulary, prompts,
-                    ingredients, and Spw handles into a more collectible learning surface.
-                </p>
-                <div class="vibe-widget-actions" role="group" aria-label="Homepage semantic density controls">
-                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:minimal">Minimal</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:normal">Field</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:rich">Rich</button>
-                </div>
-            </article>
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Vocabulary discovery</p>
+                        <h3 class="vibe-widget-title">Choose how loudly concepts answer back</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        Minimal keeps the page quiet. Field shows nearby relation cues. Rich turns vocabulary, prompts,
+                        ingredients, and Spw handles into a more collectible learning surface.
+                    </p>
+                    <div class="vibe-widget-actions" role="group" aria-label="Homepage semantic density controls" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:minimal" data-spw-operator="select">Minimal</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:normal" data-spw-operator="select">Field</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:rich" data-spw-operator="select">Rich</button>
+                    </div>
+                </article>
 
-            <article class="vibe-widget">
-                <div class="vibe-widget-header">
-                    <p class="vibe-widget-kicker">Runtime plumbing</p>
-                    <h3 class="vibe-widget-title">Show why scripts are present</h3>
-                </div>
-                <p class="vibe-widget-copy">
-                    Turn on module visuals when you want rails, seams, and handles to say which scripts evaluate
-                    semantics, layout, state, visuals, routing, or interaction.
-                </p>
-                <div class="vibe-widget-actions" role="group" aria-label="Homepage module visual query links">
-                    <a class="operator-chip" href="?module-audit=on&amp;module-visuals=on&amp;meaning=inspect">Show plumbing</a>
-                    <a class="operator-chip" href="?module-skip=semantic-crossrefs&amp;module-audit=on">Skip crossrefs</a>
-                </div>
-            </article>
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Runtime plumbing</p>
+                        <h3 class="vibe-widget-title">Show why scripts are present</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        Turn on module visuals when you want rails, seams, and handles to say which scripts evaluate
+                        semantics, layout, state, visuals, routing, or interaction.
+                    </p>
+                    <div class="vibe-widget-actions" role="group" aria-label="Homepage module visual query links" data-spw-slot="actions">
+                        <a class="operator-chip" href="?module-audit=on&amp;module-visuals=on&amp;meaning=inspect" data-spw-operator="wonder">Show plumbing</a>
+                        <a class="operator-chip" href="?module-skip=semantic-crossrefs&amp;module-audit=on" data-spw-operator="wonder">Skip crossrefs</a>
+                    </div>
+                </article>
+            </div>
+
+            <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
         </div>
 
-        <span class="vibe-widget-status" data-site-settings-status role="status" aria-live="polite"></span>
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -1040,74 +1183,84 @@
         data-spw-collectability="medium"
         data-spw-seed="home_entry_loops"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#entry-loops">#&gt;"entry_loops"</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#entry-loops" data-spw-operator="address">#&gt;"entry_loops"</a>
             <h2 id="entry-loops-title">Three good first loops</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="entry">loops</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            Read one route as a component kit, one as a live playtest, and one as a texture or support surface.
-        </p>
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                Read one route as a component kit, one as a live playtest, and one as a texture or support surface.
+            </p>
 
-        <div class="frame-grid frame-grid--dense">
-            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-components"
-                     data-spw-form="block" data-spw-category-family="register">
-                <a href="/design/components/" id="card-entry-components">
-                    <figure class="frame-card-media">
-                        <img
-                            src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp"
-                            alt="A corridor-like structural image with luminous paper seams, suitable for a component glossary or onboarding route."
-                            loading="lazy"
-                            decoding="async"
-                            width="1024"
-                            height="1024"
-                        />
-                    </figure>
-                    <span class="frame-card-sigil">#&gt;component_glossary</span>
-                    <strong>Design components</strong>
-                    <span>A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
-                </a>
-            </article>
+            <div class="frame-grid frame-grid--dense">
+                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-components"
+                         data-spw-form="block" data-spw-category-family="register" data-spw-kind="card" data-spw-role="reference">
+                    <a href="/design/components/" id="card-entry-components" data-spw-operator="address">
+                        <figure class="frame-card-media" data-spw-slot="figure">
+                            <img
+                                src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp"
+                                alt="A corridor-like structural image with luminous paper seams, suitable for a component glossary or onboarding route."
+                                loading="lazy"
+                                decoding="async"
+                                width="1024"
+                                height="1024"
+                            />
+                        </figure>
+                        <span class="frame-card-sigil">#&gt;component_glossary</span>
+                        <strong>Design components</strong>
+                        <span>A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
+                    </a>
+                </article>
 
-            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block"
-                     data-spw-category-family="encounter">
-                <a href="/play/rpg-wednesday/" id="card-entry-rpgw">
-                    <figure class="frame-card-media">
-                        <img
-                            src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"
-                            alt="An energetic RPG Wednesday signal image with green and amber light, like a social playtest surface gathering momentum."
-                            loading="lazy"
-                            decoding="async"
-                            width="1024"
-                            height="1024"
-                        />
-                    </figure>
-                    <span class="frame-card-sigil">*rpg_wednesday</span>
-                    <strong>RPG Wednesday</strong>
-                    <span>A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
-                </a>
-            </article>
+                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block"
+                         data-spw-category-family="encounter" data-spw-kind="card" data-spw-role="reference">
+                    <a href="/play/rpg-wednesday/" id="card-entry-rpgw" data-spw-operator="stream">
+                        <figure class="frame-card-media" data-spw-slot="figure">
+                            <img
+                                src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"
+                                alt="An energetic RPG Wednesday signal image with green and amber light, like a social playtest surface gathering momentum."
+                                loading="lazy"
+                                decoding="async"
+                                width="1024"
+                                height="1024"
+                            />
+                        </figure>
+                        <span class="frame-card-sigil">*rpg_wednesday</span>
+                        <strong>RPG Wednesday</strong>
+                        <span>A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
+                    </a>
+                </article>
 
-            <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-texture"
-                     data-spw-form="block" data-spw-category-family="specimen"
-                     data-spw-seed-package=".spw/texture-portal">
-                <a href="https://texture.website" id="card-entry-texture">
-                    <figure class="frame-card-media">
-                        <img
-                            src="/public/images/renders/unsorted-curation/library-craft-register.webp"
-                            alt="A warm library-like craft register image suggesting texture, study, publishing material, and sustained independent work."
-                            loading="lazy"
-                            decoding="async"
-                            width="1024"
-                            height="1024"
-                        />
-                    </figure>
-                    <span class="frame-card-sigil">&gt;texture_surface</span>
-                    <strong>Texture surface</strong>
-                    <span>A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
-                </a>
-            </article>
+                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-texture"
+                         data-spw-form="block" data-spw-category-family="specimen"
+                         data-spw-seed-package=".spw/texture-portal" data-spw-kind="card" data-spw-role="reference">
+                    <a href="https://texture.website" id="card-entry-texture" data-spw-operator="surface">
+                        <figure class="frame-card-media" data-spw-slot="figure">
+                            <img
+                                src="/public/images/renders/unsorted-curation/library-craft-register.webp"
+                                alt="A warm library-like craft register image suggesting texture, study, publishing material, and sustained independent work."
+                                loading="lazy"
+                                decoding="async"
+                                width="1024"
+                                height="1024"
+                            />
+                        </figure>
+                        <span class="frame-card-sigil">&gt;texture_surface</span>
+                        <strong>Texture surface</strong>
+                        <span>A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
+                    </a>
+                </article>
+            </div>
         </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -1131,22 +1284,32 @@
         data-spw-collectability="medium"
         data-spw-seed="home_promo_wonder_cycle"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#promo-wonder-cycle">#&gt;promo_wonder_cycle</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#promo-wonder-cycle" data-spw-operator="address">#&gt;promo_wonder_cycle</a>
             <h2 id="promo-wonder-cycle-title">A reason to wonder today</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="promo" data-spw-stance="entry">cycle</span>
+            </div>
         </header>
 
-        <p class="inline-note">
-            One card keeps the work easy to start. One card gives the page a small reason to change tomorrow. Both
-            stay readable without JavaScript.
-        </p>
-
-        <noscript>
-            <p class="frame-note">
-                JavaScript is off, so this section will stay on its embedded fallback copy. The page still points to
-                a clear next step and a weekly question.
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                One card keeps the work easy to start. One card gives the page a small reason to change tomorrow. Both
+                stay readable without JavaScript.
             </p>
-        </noscript>
+
+            <noscript>
+                <p class="frame-note" data-spw-semantic-expression="runtime[noscript]{fallback}">
+                    JavaScript is off, so this section will stay on its embedded fallback copy. The page still points to
+                    a clear next step and a weekly question.
+                </p>
+            </noscript>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 
     <section
@@ -1169,47 +1332,52 @@
         data-spw-collectability="medium"
         data-spw-seed="home_reading_layers"
     >
-        <header class="frame-heading">
-            <a class="frame-sigil" href="#reading-layers">^"reading_layers"{</a>
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#reading-layers" data-spw-operator="integrate">^"reading_layers"{</a>
             <h2 id="reading-layers-title">Read the site through multiple lenses</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="reference" data-spw-stance="entry">layers</span>
+            </div>
         </header>
 
-        <div class="mode-panels" data-spw-feature="home-lens-panels">
-            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block"
-                     data-spw-liminality="projected" aria-labelledby="home-surface-title">
-                <h3 id="home-surface-title" class="sr-only">Surface view</h3>
-                <p>
-                    Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle"
-                                          data-spw-form="angle">&lt;</a><a href="/topics/software/spw/">Spw</a><span
-                    class="spw-delimiter spw-delimiter--angle" data-spw-form="angle">&gt;</span>
-                    is a cognitive gesture. A frame <span class="syntax-token"
-                                                          title="frame: orients a named unit of meaning">#&gt;</span>
-                    orients. A probe <span class="syntax-token" title="probe: opens inquiry without committing">?</span>
-                    opens inquiry.
-                    A reference <span class="syntax-token" title="ref: reaches without forcing commitment">~</span>
-                    reaches without binding.
-                    An action <span class="syntax-token" title="action: commits a local behavior">@</span> commits.
-                    A surface <span class="syntax-token"
-                                    title="surface: makes a layer available to perception">&gt;</span> projects.
-                </p>
-                <p>
-                    The same unit can be stressed differently depending on context. A word may be plain prose in one
-                    paragraph,
-                    a <span class="spw-topic" data-spw-topic="topic">topic handle</span> in another, an
-                    <span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">operator route</span>
-                    somewhere else,
-                    or a label inside an SVG.
-                </p>
-            </section>
+        <div class="frame-body" data-spw-slot="body">
+            <div class="mode-panels" data-spw-feature="home-lens-panels">
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block"
+                         data-spw-liminality="projected" aria-labelledby="home-surface-title" data-spw-kind="lens">
+                    <h3 id="home-surface-title" class="sr-only">Surface view</h3>
+                    <p>
+                        Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle"
+                                              data-spw-form="angle" data-spw-operator="concept">&lt;</a><a href="/topics/software/spw/" data-spw-operator="concept">Spw</a><span
+                        class="spw-delimiter spw-delimiter--angle" data-spw-form="angle" data-spw-operator="concept">&gt;</span>
+                        is a cognitive gesture. A frame <span class="syntax-token"
+                                                              title="frame: orients a named unit of meaning" data-spw-operator="address">#&gt;</span>
+                        orients. A probe <span class="syntax-token" title="probe: opens inquiry without committing" data-spw-operator="wonder">?</span>
+                        opens inquiry.
+                        A reference <span class="syntax-token" title="ref: reaches without forcing commitment" data-spw-operator="potential">~</span>
+                        reaches without binding.
+                        An action <span class="syntax-token" title="action: commits a local behavior" data-spw-operator="act">@</span> commits.
+                        A surface <span class="syntax-token"
+                                        title="surface: makes a layer available to perception" data-spw-operator="surface">&gt;</span> projects.
+                    </p>
+                    <p>
+                        The same unit can be stressed differently depending on context. A word may be plain prose in one
+                        paragraph,
+                        a <span class="spw-topic" data-spw-topic="topic">topic handle</span> in another, an
+                        <span class="operator-chip" data-spw-form="angle" data-spw-operator="probe">operator route</span>
+                        somewhere else,
+                        or a label inside an SVG.
+                    </p>
+                </section>
 
-            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden
-                     aria-labelledby="home-syntax-title">
-                <h3 id="home-syntax-title" class="sr-only">Syntax view</h3>
-                <p class="frame-note">
-                    Each line is a gesture in a grammar that stays readable as plain text. Operators are vocabulary.
-                    Braces are containment.
-                </p>
-                <pre><code>#>home_frame &lt; orients this unit of meaning
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden
+                         aria-labelledby="home-syntax-title" data-spw-kind="lens">
+                    <h3 id="home-syntax-title" class="sr-only">Syntax view</h3>
+                    <p class="frame-note" data-spw-copy-depth="normal">
+                        Each line is a gesture in a grammar that stays readable as plain text. Operators are vocabulary.
+                        Braces are containment.
+                    </p>
+                    <pre><code>#>home_frame &lt; orients this unit of meaning
 #:layer pragmatics &lt; qualifies interpretive layer
 ^"reading_layers"{
   ?[word] &lt; asks what a word is doing here
@@ -1223,55 +1391,60 @@
   $meta "panel|caption|card|image|route"
   !constraint "stay readable in plain text"
 }</code></pre>
-            </section>
+                </section>
 
-            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden
-                     data-spw-form="square" data-spw-liminality="deep" aria-labelledby="home-artifacts-title">
-                <h3 id="home-artifacts-title" class="sr-only">Artifact view</h3>
-                <div class="frame-grid" role="list">
-                    <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-workbench"
-                             data-spw-category-family="workshop">
-                        <a href="https://github.com/spwashi/spw-workbench" id="home-card-spw-workbench">
-                            <span class="frame-card-sigil">#&gt;spw_workbench</span>
-                            <strong>spw-workbench</strong>
-                            <span>TypeScript workbench for parser, runtime, projection, and operator systems: the small stable kernel beneath the larger semantic lattice.</span>
-                        </a>
-                    </article>
-                    <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-quest"
-                             data-spw-category-family="workshop">
-                        <a href="https://spw.quest" id="home-card-spw-quest">
-                            <span class="frame-card-sigil">#&gt;spw_quest</span>
-                            <strong>spw.quest</strong>
-                            <span>Language documentation for Spw as a plain-text grammar with visible structure and operator precedence.</span>
-                        </a>
-                    </article>
-                    <article class="frame-card" role="listitem" aria-labelledby="home-card-pretext"
-                             data-spw-category-family="specimen">
-                        <a href="/topics/software/pretext/" id="home-card-pretext">
-                            <span class="frame-card-sigil">&gt;pretext_surface</span>
-                            <strong>Pretext physics</strong>
-                            <span>Projection, rhythm, and measurable whimsy for genre-aware rendering and media studies.</span>
-                        </a>
-                    </article>
-                </div>
-            </section>
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden
+                         data-spw-form="square" data-spw-liminality="deep" aria-labelledby="home-artifacts-title" data-spw-kind="lens">
+                    <h3 id="home-artifacts-title" class="sr-only">Artifact view</h3>
+                    <div class="frame-grid" role="list">
+                        <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-workbench"
+                                 data-spw-category-family="workshop" data-spw-kind="card" data-spw-role="reference">
+                            <a href="https://github.com/spwashi/spw-workbench" id="home-card-spw-workbench" data-spw-operator="integrate">
+                                <span class="frame-card-sigil">#&gt;spw_workbench</span>
+                                <strong>spw-workbench</strong>
+                                <span>TypeScript workbench for parser, runtime, projection, and operator systems: the small stable kernel beneath the larger semantic lattice.</span>
+                            </a>
+                        </article>
+                        <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-quest"
+                                 data-spw-category-family="workshop" data-spw-kind="card" data-spw-role="reference">
+                            <a href="https://spw.quest" id="home-card-spw-quest" data-spw-operator="address">
+                                <span class="frame-card-sigil">#&gt;spw_quest</span>
+                                <strong>spw.quest</strong>
+                                <span>Language documentation for Spw as a plain-text grammar with visible structure and operator precedence.</span>
+                            </a>
+                        </article>
+                        <article class="frame-card" role="listitem" aria-labelledby="home-card-pretext"
+                                 data-spw-category-family="specimen" data-spw-kind="card" data-spw-role="reference">
+                            <a href="/topics/software/pretext/" id="home-card-pretext" data-spw-operator="surface">
+                                <span class="frame-card-sigil">&gt;pretext_surface</span>
+                                <strong>Pretext physics</strong>
+                                <span>Projection, rhythm, and measurable whimsy for genre-aware rendering and media studies.</span>
+                            </a>
+                        </article>
+                    </div>
+                </section>
 
-            <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="website" hidden
-                     aria-labelledby="home-website-title">
-                <h3 id="home-website-title" class="sr-only">Website view</h3>
-                <p>
-                    The website itself is part of the practice. It is a field guide, a publishing surface, an
-                    observatory for settings and states,
-                    and a test for whether a site can stay readable while becoming more semantic, promptable, and
-                    cross-referenceable.
-                </p>
-                <p class="frame-note">
-                    The practical thesis: readable syntax can give people and tools the same map. A typographic layer
-                    becomes more valuable
-                    when it is also a semantic layer.
-                </p>
-            </section>
+                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="website" hidden
+                         aria-labelledby="home-website-title" data-spw-kind="lens">
+                    <h3 id="home-website-title" class="sr-only">Website view</h3>
+                    <p>
+                        The website itself is part of the practice. It is a field guide, a publishing surface, an
+                        observatory for settings and states,
+                        and a test for whether a site can stay readable while becoming more semantic, promptable, and
+                        cross-referenceable.
+                    </p>
+                    <p class="frame-note" data-spw-copy-depth="normal" data-spw-semantic-expression="website[practice]{semantic}">
+                        The practical thesis: readable syntax can give people and tools the same map. A typographic layer
+                        becomes more valuable
+                        when it is also a semantic layer.
+                    </p>
+                </section>
+            </div>
         </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
     </section>
 </main>
 
