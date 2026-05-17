@@ -1431,6 +1431,19 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'ingredient-lab',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-ingredient-lab]',
+    rootMode: 'single',
+    load: () => import('./runtime/ingredient-lab.js'),
+    mount: (mod) => {
+      const fn = mod?.initIngredientLabs;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'guide-badge',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

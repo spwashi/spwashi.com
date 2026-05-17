@@ -870,6 +870,38 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   --spw-wisdom-accent: var(--op-stream-color, var(--op-ref-color, #1d57a3));
 }
 
+:where(.spw-wisdom-card[data-spw-background-motion="pie-attention"]) {
+  background:
+    radial-gradient(
+      ellipse at 18% 16%,
+      color-mix(in srgb, var(--spw-wisdom-accent) 12%, transparent),
+      transparent 34%
+    ),
+    conic-gradient(
+      from 0.12turn at 84% 18%,
+      color-mix(in srgb, var(--spw-wisdom-accent) 10%, transparent),
+      transparent 0.18turn,
+      color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent),
+      transparent 0.42turn
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-wisdom-accent) 4%);
+}
+
+:where(.spw-wisdom-card[data-spw-background-motion="pie-attention"])::before {
+  content: "";
+  inline-size: 2.6rem;
+  block-size: 2.6rem;
+  grid-row: 1 / span 3;
+  justify-self: end;
+  align-self: start;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 24%, transparent);
+  border-radius: 50%;
+  background:
+    linear-gradient(36deg, transparent 48%, color-mix(in srgb, var(--spw-wisdom-accent) 34%, transparent) 49% 51%, transparent 52%),
+    linear-gradient(108deg, transparent 48%, color-mix(in srgb, var(--op-object-color, #a67c00) 26%, transparent) 49% 51%, transparent 52%);
+  opacity: 0.72;
+}
+
 :where(.spw-wisdom-card strong) {
   color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-wisdom-accent) 18%);
   font-size: 1rem;
