@@ -1475,6 +1475,46 @@ html[data-spw-semantic-density="rich"] {
   --semantic-metadata-line: color-mix(in srgb, var(--line-strong) 60%, transparent);
 }
 
+/* Presentation QA / mood-reading tuner */
+:root {
+  --spw-lighting-guard: 0.34;
+  --spw-region-frame-alpha: 0.26;
+  --spw-region-fill-alpha: 0.07;
+  --spw-control-contrast-lift: 0.16;
+  --spw-spacing-scale: 1;
+  --spw-layout-measure: 72ch;
+  --spw-layout-frame-max: var(--page-width-reading, 68rem);
+  --spw-layout-column-min: 16rem;
+  --spw-interaction-scale: 1;
+  --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-frame-alpha) * 100%), var(--line));
+  --spw-region-frame-fill: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-fill-alpha) * 100%), var(--surface-panel));
+  --spw-control-safe-bg: color-mix(in srgb, var(--surface-strong) calc(94% - (var(--spw-control-contrast-lift) * 12%)), var(--ink) calc(var(--spw-control-contrast-lift) * 10%));
+  --spw-control-safe-ink: color-mix(in srgb, var(--ink) calc(92% + (var(--spw-control-contrast-lift) * 8%)), var(--active-op-color));
+}
+
+html[data-spw-color-tuner="guarded"],
+html[data-spw-high-contrast="on"] {
+  --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) 44%, var(--line-strong));
+  --spw-control-safe-bg: var(--surface-panel-strong);
+  --spw-control-safe-ink: var(--ink-strong);
+}
+
+html[data-spw-pedagogical-flavor="culinary"] {
+  --spw-flavor-accent: var(--op-object-color);
+}
+
+html[data-spw-pedagogical-flavor="garden"] {
+  --spw-flavor-accent: var(--op-stream-color);
+}
+
+html[data-spw-pedagogical-flavor="studio"] {
+  --spw-flavor-accent: var(--op-probe-color);
+}
+
+html[data-spw-pedagogical-flavor="runtime"] {
+  --spw-flavor-accent: var(--op-frame-color);
+}
+
 /* High contrast */
 html[data-spw-high-contrast="on"] {
   --ink-strong: rgba(var(--charcoal-rgb), 1);

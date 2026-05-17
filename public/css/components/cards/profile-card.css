@@ -804,6 +804,41 @@
   padding-right: 1.8rem;
 }
 
+.profile-attribute-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  justify-content: flex-end;
+  margin-block-start: -0.08rem;
+}
+
+.profile-attribute-tool {
+  min-height: 1.85rem;
+  padding: 0.2rem 0.48rem;
+  border: var(--line-thin, 1px) solid color-mix(in srgb, var(--profile-accent) 24%, transparent);
+  border-radius: calc(var(--profile-radius) * 0.46);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
+  color: color-mix(in srgb, var(--profile-ink) 84%, var(--profile-accent) 16%);
+  cursor: pointer;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition:
+    border-color 90ms,
+    color 90ms,
+    transform var(--profile-duration-fast) var(--profile-settle-ease),
+    box-shadow var(--profile-duration-base) var(--profile-settle-ease);
+}
+
+.profile-attribute-tool:hover,
+.profile-attribute-tool:focus-visible {
+  border-color: var(--profile-accent);
+  color: var(--profile-accent);
+  transform: translateY(-1px);
+  box-shadow: var(--profile-shadow-focus);
+}
+
 .badge-input-row select,
 .profile-link-row select {
   cursor: pointer;

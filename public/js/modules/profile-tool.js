@@ -7,6 +7,75 @@ import {
 } from '/public/js/modules/profile-builder.js';
 
 const DEFAULT_STORAGE_PREFIX = 'spw-profile-tool';
+const ATTRIBUTE_RANDOM_VALUES = {
+  'f-name': [
+    'Unnamed threshold walker',
+    'Field apprentice',
+    'Sauce cartographer',
+    'Garden witness',
+    'Signal courier'
+  ],
+  'f-role': [
+    'character pressure under study',
+    'scene-builder with a repair habit',
+    'runtime gardener learning the terrain',
+    'performer-engineer translating timing into structure',
+    'illustrator of objects that change the room'
+  ],
+  'f-tagline': [
+    'I turn small observations into playable structure.',
+    'I notice where a scene wants a better handle.',
+    'I carry one useful constraint until it becomes a pattern.',
+    'I am learning how support, failure, and reward change a room.',
+    'I make the hidden recipe of a character easier to rehearse.'
+  ],
+  'f-contact': [
+    'local draft only',
+    'share after review',
+    'ask before reposting',
+    '/contact/'
+  ],
+  'badge-input': [
+    'timing, visual depth, soup logic',
+    'accessibility, worldbuilding, note-taking',
+    'gesture study, prop logic, scene pressure',
+    'mise en place, refactor, rehearsal',
+    'privacy-minded, local-first, screenshot-ready'
+  ],
+  'link-input': [
+    'session notes',
+    'character art',
+    'world rules',
+    'recipe metaphor',
+    'current route'
+  ],
+  'link-href': [
+    '/play/rpg-wednesday/',
+    '/play/rpg-wednesday/sessions/',
+    '/play/rpg-wednesday/cast/',
+    '/recipes/',
+    '/settings/'
+  ],
+  sectionHeading: [
+    'Identity and current mask',
+    'Disposition under pressure',
+    'Constraint that ages well',
+    'Relationship to repair',
+    'Scene use',
+    'Illustrator hook',
+    'Performer hook',
+    'Engineer hook',
+    'Evidence and share state',
+    'Next question'
+  ],
+  sectionBody: [
+    'Use this space to name the specific behavior someone can play, draw, rehearse, or implement without needing the whole backstory first.',
+    'The useful pressure is not a verdict. It is a repeatable condition that changes what choices become available.',
+    'A good trope should survive translation: one sentence for the table, one image cue for art, and one state transition for software.',
+    'This character becomes clearer when support, constraint, experiment, and reward are each visible enough to tune.',
+    'Keep private material private. Share only the line, image, or route that helps the next collaborator understand the intent.'
+  ]
+};
 
 export function initSpwProfileTool(options = {}) {
   const root = options.root || document;
@@ -61,6 +130,74 @@ export function initSpwProfileTool(options = {}) {
       const isActive = field.contains(document.activeElement);
       field.dataset.fieldState = hasValue ? 'complete' : isActive ? 'active' : 'draft';
     });
+  }
+
+  function bindAttributeTools() {
+    root.querySelectorAll('.profile-field').forEach((field) => {
+      if (field.querySelector('.profile-attribute-tools')) return;
+      const controls = [...field.querySelectorAll('input, textarea, select')]
+        .filter((control) => !control.matches('#badge-cluster, #link-href'));
+      if (!controls.length) return;
+
+      const tools = document.createElement('div');
+      tools.className = 'profile-attribute-tools';
+      tools.setAttribute('aria-label', 'Attribute tools');
+
+      const randomButton = document.createElement('button');
+      randomButton.type = 'button';
+      randomButton.className = 'profile-attribute-tool';
+      randomButton.dataset.profileAttributeAction = 'random';
+      randomButton.textContent = '~ random';
+
+      const clearButton = document.createElement('button');
+      clearButton.type = 'button';
+      clearButton.className = 'profile-attribute-tool';
+      clearButton.dataset.profileAttributeAction = 'clear';
+      clearButton.textContent = '! clear';
+
+      tools.append(randomButton, clearButton);
+      field.appendChild(tools);
+
+      randomButton.addEventListener('click', () => {
+        controls.forEach((control) => {
+          setControlValue(control, randomValueForControl(control));
+        });
+      });
+
+      clearButton.addEventListener('click', () => {
+        controls.forEach((control) => {
+          setControlValue(control, clearValueForControl(control));
+        });
+      });
+    });
+  }
+
+  function randomValueForControl(control) {
+    if (control.matches('select')) {
+      const options = [...control.options].filter((option) => option.value);
+      return randomChoice(options)?.value || control.value || '';
+    }
+
+    if (control.classList.contains('section-heading')) {
+      return randomChoice(ATTRIBUTE_RANDOM_VALUES.sectionHeading);
+    }
+
+    if (control.classList.contains('section-body')) {
+      return randomChoice(ATTRIBUTE_RANDOM_VALUES.sectionBody);
+    }
+
+    return randomChoice(ATTRIBUTE_RANDOM_VALUES[control.id]) || '';
+  }
+
+  function clearValueForControl(control) {
+    if (!control.matches('select')) return '';
+    return control.options[0]?.value || '';
+  }
+
+  function setControlValue(control, value) {
+    control.value = value;
+    control.dispatchEvent(new Event(control.matches('select') ? 'change' : 'input', { bubbles: true }));
+    control.focus({ preventScroll: true });
   }
 
   function renderBadgeStrip() {
@@ -363,6 +500,7 @@ export function initSpwProfileTool(options = {}) {
   }
 
   load();
+  bindAttributeTools();
   bindFields();
   bindBadges();
   bindLinks();
@@ -489,6 +627,11 @@ function normalizeLink(link) {
 
 function cloneProfile(profile) {
   return JSON.parse(JSON.stringify(profile));
+}
+
+function randomChoice(values = []) {
+  if (!values.length) return '';
+  return values[Math.floor(Math.random() * values.length)];
 }
 
 function readJSONScript(scriptId, root = document) {

@@ -185,6 +185,12 @@
                     Playable hook: every good surface should give the reader a place to stand, a reason to return, and
                     one handle they can tune into frame.
                 </p>
+                <p class="frame-note">
+                    Try this as a tunable reading surface:
+                    <a data-spw-link-intent="query" href="?flavor=culinary&amp;lighting=balanced&amp;layout=reading">culinary reading</a>,
+                    <a data-spw-link-intent="query" href="?flavor=garden&amp;spacing=roomy&amp;layout=wide">garden room</a>, or
+                    <a data-spw-link-intent="query" href="?flavor=runtime&amp;lighting=guarded&amp;layout=atlas&amp;interaction=responsive">runtime atlas</a>.
+                </p>
                 <ul class="spw-copy-motif-strip" aria-label="Home copy motifs">
                     <li>cookbook</li>
                     <li>research</li>
@@ -690,8 +696,8 @@
 
     <section
         class="site-frame"
-        id="local-proof-thesis"
-        aria-labelledby="local-proof-thesis-title"
+        id="local-record-thesis"
+        aria-labelledby="local-record-thesis-title"
         data-spw-kind="frame"
         data-spw-role="conversion"
         data-spw-context="action"
@@ -706,15 +712,15 @@
         data-spw-consequence="conversion"
         data-spw-promptability="visible"
         data-spw-collectability="medium"
-        data-spw-seed="home_local_proof_thesis"
+        data-spw-seed="home_local_record_thesis"
     >
         <header class="frame-heading">
-            <a class="frame-sigil" href="#local-proof-thesis">^local_proof</a>
-            <h2 id="local-proof-thesis-title">A screenshot can be more than content.</h2>
+            <a class="frame-sigil" href="#local-record-thesis">^local_record</a>
+            <h2 id="local-record-thesis-title">A screenshot can explain intent.</h2>
         </header>
 
         <p class="page-lede">
-            It can be a local record of an ask, offer, agreement, or reference point.
+            It can be a local record of an ask, offer, agreement, reference point, or chosen disposition.
         </p>
 
         <div class="frame-grid frame-grid--dense">
@@ -724,7 +730,7 @@
                 <p><a class="operator-chip" href="/now/">$ open /now/</a></p>
             </article>
             <article class="frame-panel">
-                <h3>Create a Local Proof Card</h3>
+                <h3>Create a local record card</h3>
                 <p>Make a screenshot-ready record for an ask, offer, pledge, reference, decision, or membership signal.</p>
                 <p><a class="operator-chip" href="/cards/">^ open /cards/</a></p>
             </article>
@@ -739,6 +745,7 @@
                 <p><a class="operator-chip" href="/services/">@ open /services/</a></p>
             </article>
         </div>
+        <p class="frame-note">Privacy stays direct: drafts are not automatically public, screenshots should say why they exist, and shared records should expose only the context someone needs to act well.</p>
     </section>
 
     <section
@@ -814,6 +821,20 @@
             pattern, a replayable spell, or a next move you can actually take.
         </p>
 
+        <div class="spw-learning-game" data-spw-feature="learning-game" data-spw-semantic-cluster="learning metacognition prompts genre">
+            <header>
+                <p class="gratitude-kicker">Learning game</p>
+                <h3>Notice, name, fold, note, return.</h3>
+            </header>
+            <ol>
+                <li><strong>Notice</strong><span>Find a word, ingredient, operator, prompt, scene, or interface behavior that makes you curious.</span></li>
+                <li><strong>Name</strong><span>Use the visible label, Spw sigil, or nearby copy to give the discovery a handle.</span></li>
+                <li><strong>Fold</strong><span>Open the details, related route, or resonance peer that keeps the idea one handle away.</span></li>
+                <li><strong>Note</strong><span>Write the smallest useful question, recipe, sketch prompt, or genre move before the context evaporates.</span></li>
+                <li><strong>Return</strong><span>Reset the page, change the climate, or revisit the route later to test whether the idea stayed legible.</span></li>
+            </ol>
+        </div>
+
         <div class="gratitude-grid">
             <article class="gratitude-card">
                 <p class="gratitude-kicker">Gratitude</p>
@@ -836,6 +857,10 @@
                         <strong>A replayable spell</strong>
                         <p>A screenshot, prompt packet, card, or route sequence you can run again under different conditions.</p>
                     </div>
+                    <div class="gratitude-item">
+                        <strong>A reason to collect</strong>
+                        <p>Collection should mean “this helped me notice,” not “the page awarded a score.”</p>
+                    </div>
                 </div>
             </article>
 
@@ -847,6 +872,7 @@
                     <a class="operator-chip" href="/topics/craft/">craft</a>
                     <a class="operator-chip" href="/topics/math/">math</a>
                     <a class="operator-chip" href="/cards/">proof cards</a>
+                    <a class="operator-chip" href="/settings/#semantic-settings">vocabulary lenses</a>
                 </nav>
             </article>
         </div>
@@ -957,6 +983,37 @@
                     <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">
                         Immersive
                     </button>
+                </div>
+            </article>
+
+            <article class="vibe-widget">
+                <div class="vibe-widget-header">
+                    <p class="vibe-widget-kicker">Vocabulary discovery</p>
+                    <h3 class="vibe-widget-title">Choose how loudly concepts answer back</h3>
+                </div>
+                <p class="vibe-widget-copy">
+                    Minimal keeps the page quiet. Field shows nearby relation cues. Rich turns vocabulary, prompts,
+                    ingredients, and Spw handles into a more collectible learning surface.
+                </p>
+                <div class="vibe-widget-actions" role="group" aria-label="Homepage semantic density controls">
+                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:minimal">Minimal</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:normal">Field</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="semanticDensity:rich">Rich</button>
+                </div>
+            </article>
+
+            <article class="vibe-widget">
+                <div class="vibe-widget-header">
+                    <p class="vibe-widget-kicker">Runtime plumbing</p>
+                    <h3 class="vibe-widget-title">Show why scripts are present</h3>
+                </div>
+                <p class="vibe-widget-copy">
+                    Turn on module visuals when you want rails, seams, and handles to say which scripts evaluate
+                    semantics, layout, state, visuals, routing, or interaction.
+                </p>
+                <div class="vibe-widget-actions" role="group" aria-label="Homepage module visual query links">
+                    <a class="operator-chip" href="?module-audit=on&amp;module-visuals=on&amp;meaning=inspect">Show plumbing</a>
+                    <a class="operator-chip" href="?module-skip=semantic-crossrefs&amp;module-audit=on">Skip crossrefs</a>
                 </div>
             </article>
         </div>

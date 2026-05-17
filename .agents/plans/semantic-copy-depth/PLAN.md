@@ -12,6 +12,8 @@ Let readers tune how much copy is visible without splitting the site into separa
 - `data-spw-semantic-cluster` names resonance families such as `culinary`, `programming`, `learning`, and `genre`.
 - `data-spw-vocab` marks inline vocabulary that can resonate across routes.
 - `semantic-crossrefs` reads those annotations and marks same-token peers on hover/focus without changing link clicks.
+- `data-spw-emphasis="primary|secondary|tertiary"` marks importance tiers when CSS and copy need to agree about the current objective, supporting neighbor, or ambient context.
+- `spw-learning-game` gives the site a configurable metacognitive loop: notice, name, fold, note, return.
 
 ## Display Rules
 
@@ -27,6 +29,8 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Optional copy layers should explain, connect, or deepen; they should not hide required navigation.
 - Foodie vocabulary should motivate shared noticing, not gatekeep.
 - Internal route bridges should include reasons for links, not only labels.
+- Collection should represent useful awareness or return value; reset paths should make tuned runtime state comparable to authored defaults.
+- Navigation anchors should not receive semantic topic markers that alter their default link behavior.
 
 ## Follow-Up
 
@@ -34,3 +38,4 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Let route templates emit bridge sections with consistent `spw-route-bridge` markup.
 - Consider a topic index for vocabulary clusters once enough culinary, programming, and genre terms have accumulated.
 - Explore exporting annotated components as compact Spw recipe cards, e.g. `card[reason]{produce.artifact}`, for future model expansion and crawler-facing route briefs.
+- Expand emphasis-tier audits across route hubs so primary, secondary, and tertiary meaning can be inspected consistently in screenshots and generated design catalogs.

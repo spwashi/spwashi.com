@@ -224,8 +224,27 @@
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-default" aria-pressed="false">@ character lens</button>
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-translation" aria-pressed="false">~ translation lens</button>
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-application" aria-pressed="false">^ application lens</button>
-                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-deskar-null" aria-pressed="false">&gt; deskar null</button>
+                    <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-boonhonk-character" aria-pressed="false">&gt; boonhonk lens</button>
                 </div>
+                <aside class="spw-semantic-emphasis-map" aria-labelledby="character-taxonomy-title" data-spw-feature="character-taxonomy" data-spw-semantic-cluster="character trope performance illustration engineering" data-spw-semantic-expression="character[taxonomy]{navigate.tropes}">
+                    <header>
+                        <p class="eyebrow">Character taxonomy</p>
+                        <h3 id="character-taxonomy-title">Build tropes that can be played, drawn, rehearsed, and implemented.</h3>
+                        <p>Use the random and clear controls beside each attribute when the card needs a nudge without pretending the first value is canon. A durable character can stay simple: a role, a pressure, a relation, a share state, and one reason to return.</p>
+                    </header>
+                    <div class="spw-emphasis-tier" data-spw-emphasis="primary">
+                        <strong>Primary: playable pressure</strong>
+                        <span>Name the constraint, desire, obligation, or gift that changes available choices.</span>
+                    </div>
+                    <div class="spw-emphasis-tier" data-spw-emphasis="secondary">
+                        <strong>Secondary: collaborator handle</strong>
+                        <span>Give performers timing, illustrators a visual cue, and engineers a state transition.</span>
+                    </div>
+                    <div class="spw-emphasis-tier" data-spw-emphasis="tertiary">
+                        <strong>Tertiary: share intent</strong>
+                        <span>Clarify whether this is a private draft, session seed, screenshot, reference, or public card.</span>
+                    </div>
+                </aside>
                 <div class="profile-wizard">
                     <div class="profile-wizard-form">
                         <details class="profile-builder-panel" id="builder-panel-identity" open>
@@ -319,7 +338,7 @@
                                 <span class="profile-builder-panel__op">@</span>
                                 <span class="profile-builder-panel__copy">
                                     <span class="profile-builder-panel__title">Sections and beats</span>
-                                    <span class="profile-builder-panel__hint">origin, pressure, proof, next arc</span>
+                                    <span class="profile-builder-panel__hint">origin, pressure, evidence, next arc</span>
                                 </span>
                             </summary>
                             <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_sections">
@@ -398,9 +417,9 @@
                                             <option value="?[">?[</option>
                                             <option value=">">></option>
                                         </select>
-                                        <input class="section-heading" type="text" placeholder="Proof, notebooks, and world state" spellcheck="false"/>
+                                        <input class="section-heading" type="text" placeholder="Evidence, notebooks, and world state" spellcheck="false"/>
                                     </div>
-                                    <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms where the work is already visible." rows="3"></textarea>
+                                    <textarea class="section-body" placeholder="Point to the site, notes, repos, scene logs, public fragments, readings, or repeated production rhythms that make the work easier to understand." rows="3"></textarea>
                                 </div>
                             </div>
                         </details>
@@ -439,7 +458,7 @@
                         <div class="profile-export-actions">
                             <button class="profile-export-btn" data-export="json">copy JSON</button>
                             <button class="profile-export-btn" data-export="spw">copy Spw seed</button>
-                            <button class="profile-export-btn" data-export="screenshot">screenshot mode</button>
+                            <button class="profile-export-btn" data-export="screenshot">screenshot intent</button>
                             <button class="profile-export-btn" data-export="clear">clear</button>
                         </div>
                     </div>
@@ -533,7 +552,7 @@
                         { "heading": "Voice, habits, and contradiction", "body": "", "operator": "~" },
                         { "heading": "Pressure, wound, or private rule", "body": "", "operator": "@" },
                         { "heading": "Quest and next arc", "body": "", "operator": ">" },
-                        { "heading": "Proof, notebooks, and world state", "body": "", "operator": "@" }
+                        { "heading": "Evidence, notebooks, and world state", "body": "", "operator": "@" }
                     ],
                     "footer": {
                         "contact": "",
@@ -587,48 +606,47 @@
                     ]
                 }
             </script>
-            <script id="character-sheet-deskar-null" type="application/json">
+            <script id="character-sheet-boonhonk-character" type="application/json">
                 {
                     "header": {
-                        "name": "Deskar Null",
-                        "role": "Eternal trader, who can never give, or receive gifts",
-                        "status": "available",
+                        "role": "boonhonk relationship-pressure character",
+                        "status": "building",
                         "sigil": ">",
-                        "tagline": "I travel the dimensions, bringing things people want from one to the next, eternally wandering."
+                        "tagline": "I am learning what support, constraint, failure, experiment, and reward reveal about how I move through a scene."
                     },
                     "badges": [
-                        { "cluster": "role", "value": "mentorship applicant" },
-                        { "cluster": "approach", "value": "local-first" },
-                        { "cluster": "approach", "value": "worldbuilding" }
+                        { "cluster": "disposition", "value": "boon" },
+                        { "cluster": "structure", "value": "bone" },
+                        { "cluster": "experiment", "value": "bonk" }
                     ],
                     "sections": [
                         {
-                            "heading": "Origin and tradition",
-                            "body": "Deskar was raised in ancient Mesopotamia. He made a deal with Baal Mammon, god of wealth and desire, for an eternal life.",
+                            "heading": "Boon: what opens possibility",
+                            "body": "",
                             "operator": "^"
                         },
                         {
-                            "heading": "Party role",
-                            "body": "He makes deals, negotiates, and navigates through dimensions.",
+                            "heading": "Bone: what stays stable",
+                            "body": "",
                             "operator": "~"
                         },
                         {
-                            "heading": "Voice, habits, and contradiction",
-                            "body": "Deskar notices what draws people's attention. He quickly gauges desire, and he has a persistent desire to make a deal, which can turn into overpersistence.",
+                            "heading": "Bane: what constrains or fails",
+                            "body": "",
                             "operator": "~"
                         },
                         {
-                            "heading": "Pressure, wound, or private rule",
-                            "body": "Deskar cannot give or receive gifts, nor can he steal or commit violence. He has to make deals for everything.",
+                            "heading": "Bonk: what experiment teaches",
+                            "body": "",
                             "operator": "@"
                         },
                         {
-                            "heading": "Quest and next arc",
-                            "body": "Exploring a new potential market. Someone familiar with that space could teach him a lot.",
+                            "heading": "Honk: what rewards discovery",
+                            "body": "",
                             "operator": ">"
                         },
                         {
-                            "heading": "Proof, notebooks, and world state",
+                            "heading": "Evidence, notes, and session state",
                             "body": "",
                             "operator": "@"
                         }

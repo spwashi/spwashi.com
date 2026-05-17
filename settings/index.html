@@ -400,7 +400,13 @@
                 <a class="settings-shortcut-card" href="#semantic-settings">
                     <span class="settings-shortcut-kicker">Context and continuity</span>
                     <strong>Semantic Detail</strong>
-                    <span>Metadata, memory, profiles, and relation cues.</span>
+                    <span>Vocabulary lenses, emphasis tiers, memory, and relation cues.</span>
+                </a>
+
+                <a class="settings-shortcut-card" href="#pedagogical-flavor-settings">
+                    <span class="settings-shortcut-kicker">Metaphor flavor</span>
+                    <strong>Pedagogical Flavor</strong>
+                    <span>Culinary now; other linking metaphors can later take the lead.</span>
                 </a>
 
                 <a class="settings-shortcut-card" href="#runtime-diagnostics-settings">
@@ -415,6 +421,39 @@
                     <span>Analytics posture, local storage, service worker state, and reset paths.</span>
                 </a>
             </div>
+
+            <aside
+                class="spw-semantic-emphasis-map"
+                aria-label="Semantic emphasis map"
+                data-spw-feature="semantic-emphasis-map"
+                data-spw-module="semantic-emphasis"
+                data-spw-module-evaluates="semantics visual state"
+                data-spw-semantic-cluster="semantics css attributes runtime"
+            >
+                <header>
+                    <p class="vibe-widget-kicker">Emphasis audit</p>
+                    <h3>Primary, secondary, and tertiary meaning should be inspectable.</h3>
+                    <p>
+                        Spw markup names the role. CSS translates the role into weight, color, contour, and spacing.
+                        Runtime modules may highlight or fold the result, but they should not be the only source of meaning.
+                    </p>
+                </header>
+                <div class="spw-emphasis-tier" data-spw-emphasis="primary">
+                    <strong>Primary</strong>
+                    <p>Main task, active route, selected concept, or current learning objective.</p>
+                    <code>data-spw-emphasis="primary"</code>
+                </div>
+                <div class="spw-emphasis-tier" data-spw-emphasis="secondary">
+                    <strong>Secondary</strong>
+                    <p>Neighbor, supporting route, related concept, or tool that helps the primary surface.</p>
+                    <code>data-spw-emphasis="secondary"</code>
+                </div>
+                <div class="spw-emphasis-tier" data-spw-emphasis="tertiary">
+                    <strong>Tertiary</strong>
+                    <p>Ambient clue, glossary term, optional fold, decorative cue, or later path.</p>
+                    <code>data-spw-emphasis="tertiary"</code>
+                </div>
+            </aside>
 
             <form class="settings-form" data-site-settings-form data-spw-feature="settings-runtime-form">
                 <details class="settings-category" id="author-workflow-settings" open>
@@ -700,6 +739,51 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
+                            <legend>Color tuner</legend>
+                            <label class="settings-option">
+                                <input name="colorTuner" type="radio" value="soft" />
+                                <span class="settings-option-copy">
+                    <strong>Soft</strong>
+                    <span>Lower theatrical lighting while preserving readable controls.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="colorTuner" type="radio" value="balanced" />
+                                <span class="settings-option-copy">
+                    <strong>Balanced</strong>
+                    <span>Moderate tint, contrast, and region framing.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="colorTuner" type="radio" value="guarded" />
+                                <span class="settings-option-copy">
+                    <strong>Guarded</strong>
+                    <span>Prioritize text, border, and button contrast over palette flavor.</span>
+                  </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Pedagogical flavor</legend>
+                            <label class="settings-option">
+                                <input checked name="pedagogicalFlavor" type="radio" value="culinary" />
+                                <span class="settings-option-copy"><strong>Culinary</strong><span>Recipes, sauces, prep, and service metaphors.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="pedagogicalFlavor" type="radio" value="garden" />
+                                <span class="settings-option-copy"><strong>Garden</strong><span>Season, root, propagation, and tending metaphors.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="pedagogicalFlavor" type="radio" value="studio" />
+                                <span class="settings-option-copy"><strong>Studio</strong><span>Sketch, palette, rehearsal, and composition metaphors.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="pedagogicalFlavor" type="radio" value="runtime" />
+                                <span class="settings-option-copy"><strong>Runtime</strong><span>Module, event, state, and instrumentation metaphors.</span></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
                             <legend>Operator saturation</legend>
                             <label class="settings-option">
                                 <input name="operatorSaturation" type="radio" value="muted" />
@@ -897,6 +981,125 @@
                                 <span class="settings-option-copy"><strong>Enhanced</strong></span>
                             </label>
                         </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Spacing tuner</legend>
+                            <label class="settings-option">
+                                <input name="spacingTuner" type="radio" value="compact" />
+                                <span class="settings-option-copy"><strong>Compact</strong><span>Closer controls and denser region frames.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="spacingTuner" type="radio" value="balanced" />
+                                <span class="settings-option-copy"><strong>Balanced</strong><span>Default spacing for mixed reading and tuning.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="spacingTuner" type="radio" value="roomy" />
+                                <span class="settings-option-copy"><strong>Roomy</strong><span>More air for screenshots, touch, and narration.</span></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Layout tuner</legend>
+                            <label class="settings-option">
+                                <input checked name="layoutTuner" type="radio" value="reading" />
+                                <span class="settings-option-copy"><strong>Reading</strong><span>Use a restrained measure for prose and documentation.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="layoutTuner" type="radio" value="wide" />
+                                <span class="settings-option-copy"><strong>Wide</strong><span>Give grids, cards, and visual examples more room.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="layoutTuner" type="radio" value="atlas" />
+                                <span class="settings-option-copy"><strong>Atlas</strong><span>Use the broadest region frame for maps and relationship surfaces.</span></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Interaction tuner</legend>
+                            <label class="settings-option">
+                                <input checked name="interactionTuner" type="radio" value="calm" />
+                                <span class="settings-option-copy"><strong>Calm</strong><span>Minimize flourish; keep controls precise.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="interactionTuner" type="radio" value="responsive" />
+                                <span class="settings-option-copy"><strong>Responsive</strong><span>Clearer hover, focus, and tap feedback.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="interactionTuner" type="radio" value="expressive" />
+                                <span class="settings-option-copy"><strong>Expressive</strong><span>More visible semantic motion where supported.</span></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Component lifecycle</legend>
+                            <label class="settings-option">
+                                <input name="componentLifecycle" type="radio" value="draft" />
+                                <span class="settings-option-copy"><strong>Draft</strong><span>Show rougher seams and local uncertainty.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input checked name="componentLifecycle" type="radio" value="stable" />
+                                <span class="settings-option-copy"><strong>Stable</strong><span>Default: components read as settled but tunable.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="componentLifecycle" type="radio" value="active" />
+                                <span class="settings-option-copy"><strong>Active</strong><span>Surface interaction and instrumentation more clearly.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="componentLifecycle" type="radio" value="archived" />
+                                <span class="settings-option-copy"><strong>Archived</strong><span>Quiet evidence, fewer prompts, calmer contrast.</span></span>
+                            </label>
+                        </fieldset>
+                    </div>
+                </details>
+
+                <details class="settings-category" id="pedagogical-flavor-settings">
+                    <summary class="settings-category-header">Pedagogical Flavor</summary>
+                    <p class="frame-note">
+                        A pedagogical flavor is the metaphor family that helps concepts become memorable across routes.
+                        Culinary is the current strong flavor because recipes, mise en place, reduction, sauce, soup,
+                        fermentation, and service make software and RPG concepts tangible. Later, another topic can take
+                        the lead without removing the underlying semantic markup.
+                    </p>
+                    <div class="spw-cuisine-taxonomy" data-spw-semantic-cluster="culinary learning programming" data-spw-semantic-expression="pedagogy[flavor]{link.metaphor}">
+                        <header>
+                            <h3>Current flavor: culinary technique</h3>
+                            <p>
+                                Tune semantic density, field resonance, palette, and runtime posture to decide how strongly
+                                recipe names and technique vocabulary should echo while you read.
+                            </p>
+                        </header>
+                        <dl>
+                            <div data-spw-emphasis="primary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="mise[technique]{prepare.slots}">Mise en place</dt>
+                                <dd>Preparation as cognition before performance.</dd>
+                            </div>
+                            <div data-spw-emphasis="primary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="reduction[technique]{compress.signal}">Reduction</dt>
+                                <dd>Compression that makes flavor, evidence, or copy stronger.</dd>
+                            </div>
+                            <div data-spw-emphasis="secondary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="emulsion[technique]{bind.unlike}">Emulsion</dt>
+                                <dd>Binding unlike materials so they stay coherent under motion.</dd>
+                            </div>
+                            <div data-spw-emphasis="secondary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="fermentation[technique]{conditions.evolve}">Fermentation</dt>
+                                <dd>State change through conditions, patience, culture, and time.</dd>
+                            </div>
+                            <div data-spw-emphasis="tertiary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="soup[system]{integrate.leftovers}">Soup system</dt>
+                                <dd>Integration, leftovers, base notes, and repair after a session or sprint.</dd>
+                            </div>
+                            <div data-spw-emphasis="tertiary">
+                                <dt data-spw-vocab="culinary" data-spw-semantic-expression="sauce[byproduct]{recover.value}">Sauce recovery</dt>
+                                <dd>Use byproducts, drippings, fragments, and residue as the next artifact seed.</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="Pedagogical flavor tuning links">
+                        <button class="operator-chip" data-site-setting-set="semanticDensity:minimal" type="button">Quiet vocabulary</button>
+                        <button class="operator-chip" data-site-setting-set="semanticDensity:rich" type="button">Reveal vocabulary</button>
+                        <button class="operator-chip" data-site-setting-set="fieldResonance:choral" type="button">Echo related terms</button>
+                        <button class="operator-chip" data-site-setting-set="paletteResonance:craft" type="button">Craft palette</button>
                     </div>
                 </details>
 
@@ -2042,6 +2245,26 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
             <p class="frame-note">
                 The page is backed by registries and derived structures, not isolated form fields.
             </p>
+
+            <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-feature="settings-query-hub" data-spw-semantic-cluster="settings qa mood-reading layout contrast">
+                <header class="spw-settings-cluster__header">
+                    <p class="eyebrow">Configuration links</p>
+                    <h3 class="spw-settings-cluster__title">Share a mood-reading setup without explaining every control.</h3>
+                    <p class="spw-settings-cluster__copy">These links use query parameters for quick QA and teaching. They are not separate themes; they are named ways to inspect spacing, contrast, module behavior, and local region frames.</p>
+                </header>
+                <div class="spw-settings-cluster__actions" role="group" aria-label="Configuration links">
+                    <a class="operator-chip" href="?view=readable&amp;meaning=readable&amp;interaction=calm&amp;lighting=balanced">Readable</a>
+                    <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on&amp;layout=wide&amp;lighting=guarded">Inspect layout</a>
+                    <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;layout=atlas&amp;lighting=guarded">QA atlas</a>
+                    <a class="operator-chip" href="?view=readable&amp;meaning=rich&amp;flavor=culinary&amp;palette=craft">Culinary lens</a>
+                </div>
+                <div class="spw-settings-cluster__readout" aria-label="Active tuner readout">
+                    <span class="spec-pill">color <span data-settings-state="colorTuner">balanced</span></span>
+                    <span class="spec-pill">layout <span data-settings-state="layoutTuner">reading</span></span>
+                    <span class="spec-pill">spacing <span data-settings-state="spacingTuner">balanced</span></span>
+                    <span class="spec-pill">interaction <span data-settings-state="interactionTuner">calm</span></span>
+                </div>
+            </aside>
 
             <div class="settings-structures-grid">
                 <article class="settings-structure-card">

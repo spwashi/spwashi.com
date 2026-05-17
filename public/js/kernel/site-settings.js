@@ -111,6 +111,30 @@ const OPERATOR_PRESENTATION_FACTOR = Object.freeze({
   text: 0.82
 });
 
+const COLOR_TUNER_PROFILE = Object.freeze({
+  soft: Object.freeze({lightingGuard: 0.18, regionFrameAlpha: 0.18, regionFillAlpha: 0.04, controlContrastLift: 0.08}),
+  balanced: Object.freeze({lightingGuard: 0.34, regionFrameAlpha: 0.26, regionFillAlpha: 0.07, controlContrastLift: 0.16}),
+  guarded: Object.freeze({lightingGuard: 0.58, regionFrameAlpha: 0.38, regionFillAlpha: 0.1, controlContrastLift: 0.3})
+});
+
+const SPACING_TUNER_PROFILE = Object.freeze({
+  compact: Object.freeze({scale: 0.88}),
+  balanced: Object.freeze({scale: 1}),
+  roomy: Object.freeze({scale: 1.16})
+});
+
+const LAYOUT_TUNER_PROFILE = Object.freeze({
+  reading: Object.freeze({measure: '72ch', frameMax: 'var(--page-width-reading, 68rem)', columnMin: '16rem'}),
+  wide: Object.freeze({measure: '82ch', frameMax: 'var(--page-width-wide, 82rem)', columnMin: '18rem'}),
+  atlas: Object.freeze({measure: '92ch', frameMax: 'var(--page-width-atlas, 96rem)', columnMin: '20rem'})
+});
+
+const INTERACTION_TUNER_PROFILE = Object.freeze({
+  calm: Object.freeze({scale: 0.82}),
+  responsive: Object.freeze({scale: 1}),
+  expressive: Object.freeze({scale: 1.18})
+});
+
 const HEADER_OPACITY_VALUE = Object.freeze({
   low: '0.76',
   normal: '0.9',
@@ -350,7 +374,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   fontSize: 'normal',
 
   colorMode: 'auto',
+  colorTuner: 'balanced',
   themePack: 'neutral-paper',
+  pedagogicalFlavor: 'culinary',
   paletteResonance: DEFAULT_PALETTE_RESONANCE,
   baseMetamaterial: 'glass',
   baseAffordance: 'read',
@@ -360,6 +386,10 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   contourProfile: 'balanced',
   strokeProfile: 'structural',
   fieldResonance: 'field',
+  spacingTuner: 'balanced',
+  layoutTuner: 'reading',
+  interactionTuner: 'calm',
+  componentLifecycle: 'stable',
 
   debugMode: 'off',
   showFrameMetadata: 'off',
@@ -417,7 +447,9 @@ const SETTING_OPTIONS = Object.freeze({
   fontSize: new Set(['small', 'normal', 'large']),
 
   colorMode: new Set(['auto', 'light', 'dark']),
+  colorTuner: new Set(['soft', 'balanced', 'guarded']),
   themePack: new Set(THEME_PACK_OPTIONS),
+  pedagogicalFlavor: new Set(['culinary', 'garden', 'studio', 'runtime']),
   paletteResonance: new Set(PALETTE_RESONANCE_OPTIONS),
   baseMetamaterial: new Set(['paper', 'glass', 'matte', 'field']),
   baseAffordance: new Set(['read', 'tune', 'inspect', 'orient']),
@@ -427,6 +459,10 @@ const SETTING_OPTIONS = Object.freeze({
   contourProfile: new Set(['tight', 'balanced', 'soft']),
   strokeProfile: new Set(['hairline', 'structural', 'bold']),
   fieldResonance: new Set(['local', 'field', 'choral']),
+  spacingTuner: new Set(['compact', 'balanced', 'roomy']),
+  layoutTuner: new Set(['reading', 'wide', 'atlas']),
+  interactionTuner: new Set(['calm', 'responsive', 'expressive']),
+  componentLifecycle: new Set(['draft', 'stable', 'active', 'archived']),
 
   debugMode: new Set(['off', 'on']),
   showFrameMetadata: new Set(['off', 'on']),
@@ -481,12 +517,16 @@ const PRESETS = Object.freeze({
     navigatorDisplay: 'quiet',
     consoleDisplay: 'hidden',
     colorMode: 'auto',
+    colorTuner: 'balanced',
     themePack: 'neutral-paper',
+    pedagogicalFlavor: 'culinary',
     operatorSaturation: 'normal',
     animationIntensity: 'normal',
     contourProfile: 'balanced',
     strokeProfile: 'structural',
     fieldResonance: 'local',
+    spacingTuner: 'balanced',
+    interactionTuner: 'calm',
     grainIntensity: 'none',
     semanticDensity: 'minimal',
     operatorHighlighting: 'off',
@@ -516,11 +556,15 @@ const PRESETS = Object.freeze({
     semanticDensity: 'rich',
     grainIntensity: 'moderate',
     themePack: 'electric-studio',
+    colorTuner: 'balanced',
+    pedagogicalFlavor: 'studio',
     operatorSaturation: 'vibrant',
     animationIntensity: 'enhanced',
     contourProfile: 'soft',
     strokeProfile: 'structural',
     fieldResonance: 'choral',
+    spacingTuner: 'balanced',
+    interactionTuner: 'expressive',
     operatorHighlighting: 'on',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -545,10 +589,14 @@ const PRESETS = Object.freeze({
     navigatorDisplay: 'full',
     consoleDisplay: 'expanded',
     themePack: 'glass-console',
+    colorTuner: 'guarded',
+    pedagogicalFlavor: 'runtime',
     semanticDensity: 'rich',
     contourProfile: 'tight',
     strokeProfile: 'bold',
     fieldResonance: 'field',
+    spacingTuner: 'compact',
+    interactionTuner: 'responsive',
     operatorHighlighting: 'on',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -571,6 +619,8 @@ const PRESETS = Object.freeze({
     highContrast: 'on',
     reduceMotion: 'on',
     themePack: 'neutral-paper',
+    colorTuner: 'guarded',
+    pedagogicalFlavor: 'culinary',
     fontSize: 'large',
     fontSizeScale: '120',
     lineSpacing: 'loose',
@@ -579,6 +629,8 @@ const PRESETS = Object.freeze({
     contourProfile: 'balanced',
     strokeProfile: 'bold',
     fieldResonance: 'local',
+    spacingTuner: 'roomy',
+    interactionTuner: 'calm',
     grainIntensity: 'none',
     cognitiveHandles: 'on',
     showSemanticMetadata: 'on',
@@ -601,6 +653,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   highContrast: Object.freeze({off: 'Standard contrast', on: 'High contrast'}),
   fontSize: Object.freeze({small: 'Small', normal: 'Normal', large: 'Large'}),
   colorMode: Object.freeze({auto: 'Adaptive', light: 'Light', dark: 'Dark'}),
+  colorTuner: Object.freeze({soft: 'Soft light', balanced: 'Balanced light', guarded: 'Guarded contrast'}),
   themePack: Object.freeze({
     'neutral-paper': 'Neutral paper',
     'oxide-ledger': 'Oxide ledger',
@@ -609,6 +662,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
     'copper-brace': 'Copper brace',
     'glass-console': 'Glass console'
   }),
+  pedagogicalFlavor: Object.freeze({culinary: 'Culinary', garden: 'Garden', studio: 'Studio', runtime: 'Runtime'}),
   paletteResonance: Object.freeze({
     route: 'Context-led',
     craft: 'Craft-led',
@@ -623,6 +677,10 @@ const SETTING_VALUE_LABELS = Object.freeze({
   contourProfile: Object.freeze({tight: 'Tight', balanced: 'Balanced', soft: 'Soft'}),
   strokeProfile: Object.freeze({hairline: 'Hairline', structural: 'Structural', bold: 'Bold'}),
   fieldResonance: Object.freeze({local: 'Local', field: 'Field', choral: 'Choral'}),
+  spacingTuner: Object.freeze({compact: 'Compact', balanced: 'Balanced', roomy: 'Roomy'}),
+  layoutTuner: Object.freeze({reading: 'Reading', wide: 'Wide', atlas: 'Atlas'}),
+  interactionTuner: Object.freeze({calm: 'Calm', responsive: 'Responsive', expressive: 'Expressive'}),
+  componentLifecycle: Object.freeze({draft: 'Draft', stable: 'Stable', active: 'Active', archived: 'Archived'}),
   debugMode: Object.freeze({off: 'Off', on: 'On'}),
   showFrameMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
   verboseLogging: Object.freeze({off: 'Off', on: 'On'}),
@@ -911,6 +969,29 @@ const buildSettingsQueryHref = (name = 'inspect', location = window.location) =>
   return `${path}${query}${hash}`;
 };
 
+const QUERY_SETTING_ALIASES = Object.freeze({
+  lighting: 'colorTuner',
+  color: 'colorTuner',
+  layout: 'layoutTuner',
+  spacing: 'spacingTuner',
+  interaction: 'interactionTuner',
+  flavor: 'pedagogicalFlavor',
+  lifecycle: 'componentLifecycle'
+});
+
+const parseSettingsFromSearch = (search = window.location.search) => {
+  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  const next = {};
+
+  params.forEach((value, key) => {
+    const settingName = QUERY_SETTING_ALIASES[key] || key;
+    if (!isKnownSetting(settingName)) return;
+    if (validateSetting(settingName, value).valid) next[settingName] = value;
+  });
+
+  return next;
+};
+
 const storage = {
   get() {
     try {
@@ -1130,6 +1211,10 @@ const deriveArchitecturalModifiers = (settings) => {
   const contourProfile = CONTOUR_PROFILE[settings.contourProfile] || CONTOUR_PROFILE.balanced;
   const strokeProfile = STROKE_PROFILE[settings.strokeProfile] || STROKE_PROFILE.structural;
   const fieldResonance = FIELD_RESONANCE_PROFILE[settings.fieldResonance] || FIELD_RESONANCE_PROFILE.field;
+  const colorTuner = COLOR_TUNER_PROFILE[settings.colorTuner] || COLOR_TUNER_PROFILE.balanced;
+  const spacingTuner = SPACING_TUNER_PROFILE[settings.spacingTuner] || SPACING_TUNER_PROFILE.balanced;
+  const layoutTuner = LAYOUT_TUNER_PROFILE[settings.layoutTuner] || LAYOUT_TUNER_PROFILE.reading;
+  const interactionTuner = INTERACTION_TUNER_PROFILE[settings.interactionTuner] || INTERACTION_TUNER_PROFILE.calm;
   const materialBlur = `${clampNumber(contourProfile.materialBlurPx * fieldResonance.materialBlurScale, 2, 16)}px`;
 
   const ecology = Object.freeze({
@@ -1182,6 +1267,17 @@ const deriveArchitecturalModifiers = (settings) => {
       slow: getDuration(settings, 400)
     }),
     grain: Object.freeze({opacity: getGrainOpacity(settings)}),
+    tuning: Object.freeze({
+      lightingGuard: colorTuner.lightingGuard,
+      regionFrameAlpha: colorTuner.regionFrameAlpha,
+      regionFillAlpha: colorTuner.regionFillAlpha,
+      controlContrastLift: colorTuner.controlContrastLift,
+      spacingScale: spacingTuner.scale,
+      layoutMeasure: layoutTuner.measure,
+      layoutFrameMax: layoutTuner.frameMax,
+      layoutColumnMin: layoutTuner.columnMin,
+      interactionScale: interactionTuner.scale
+    }),
     ecology,
     semantic: Object.freeze({
       densityFactor: semanticDensityFactor,
@@ -1238,7 +1334,7 @@ class SiteSettingsManager {
   }
 
   get() {
-    return normalizeSiteSettings(storage.get());
+    return normalizeSiteSettings({...storage.get(), ...parseSettingsFromSearch(window.location.search)});
   }
 
   getModifiers(settings = this.get()) {
@@ -1263,7 +1359,9 @@ class SiteSettingsManager {
       spwHighContrast: normalized.highContrast,
       spwFontSize: normalized.fontSize,
       spwColorMode: normalized.colorMode,
+      spwColorTuner: normalized.colorTuner,
       spwThemePack: normalized.themePack,
+      spwPedagogicalFlavor: normalized.pedagogicalFlavor,
       spwPaletteResonance: normalized.paletteResonance,
       spwBaseMetamaterial: normalized.baseMetamaterial,
       spwBaseAffordance: normalized.baseAffordance,
@@ -1273,6 +1371,10 @@ class SiteSettingsManager {
       spwContourProfile: normalized.contourProfile,
       spwStrokeProfile: normalized.strokeProfile,
       spwFieldResonance: normalized.fieldResonance,
+      spwSpacingTuner: normalized.spacingTuner,
+      spwLayoutTuner: normalized.layoutTuner,
+      spwInteractionTuner: normalized.interactionTuner,
+      spwComponentLifecycle: normalized.componentLifecycle,
       spwDebugMode: normalized.debugMode,
       spwShowFrameMetadata: normalized.showFrameMetadata,
       spwVerboseLogging: normalized.verboseLogging,
@@ -1345,6 +1447,15 @@ class SiteSettingsManager {
       '--spw-cognitive-handle-factor': modifiers.semantic.cognitiveFactor,
       '--spw-relational-factor': modifiers.semantic.relationalFactor,
       '--spw-semantic-metadata-factor': modifiers.semantic.metadataFactor,
+      '--spw-lighting-guard': modifiers.tuning.lightingGuard,
+      '--spw-region-frame-alpha': modifiers.tuning.regionFrameAlpha,
+      '--spw-region-fill-alpha': modifiers.tuning.regionFillAlpha,
+      '--spw-control-contrast-lift': modifiers.tuning.controlContrastLift,
+      '--spw-spacing-scale': modifiers.tuning.spacingScale,
+      '--spw-layout-measure': modifiers.tuning.layoutMeasure,
+      '--spw-layout-frame-max': modifiers.tuning.layoutFrameMax,
+      '--spw-layout-column-min': modifiers.tuning.layoutColumnMin,
+      '--spw-interaction-scale': modifiers.tuning.interactionScale,
       '--shape-element': modifiers.contour.shapeElement,
       '--shape-component': modifiers.contour.shapeComponent,
       '--shape-surface': modifiers.contour.shapeSurface,
