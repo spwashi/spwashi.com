@@ -373,6 +373,18 @@ frame #semantic-clusters
   concept semantic_resonance vocabulary_clusters
   note "Use data-spw-semantic-cluster and data-spw-vocab to mark reusable vocabulary families such as culinary, programming, learning, genre, and runtime. CSS may highlight active clusters differently by palette, climate, semantic density, or runtime posture, but the words must remain readable without enhancement."
 
+frame #semantic-crossrefs
+  role convention
+  surface runtime/navigation
+  concept semantic_resonance cross_reference spw_expression
+  note "The semantic cross-reference runtime reads data-spw-semantic-cluster, data-spw-vocab, data-spw-semantic-expression, and topic markers. Hover or focus may mark nearby concepts as peers, but click behavior and normal navigation must remain untouched. This makes Spw annotation a lightweight way to serialize component meaning for humans, crawlers, screenshots, and future model expansion."
+
+frame #culinary-component-physics
+  role metaphor
+  surface design/components
+  concept cuisine programming component_genomics
+  note "Culinary physics can describe component lifecycle without hiding implementation: mise declares slots, reduction compresses signal, emulsion binds unlike materials, fermentation matures a reusable pattern under conditions, and service tests whether the component works in company."
+
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime

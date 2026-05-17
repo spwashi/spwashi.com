@@ -11,6 +11,7 @@ Let readers tune how much copy is visible without splitting the site into separa
 - `data-spw-semantic-expression` stores the compact Spw-shaped meaning label.
 - `data-spw-semantic-cluster` names resonance families such as `culinary`, `programming`, `learning`, and `genre`.
 - `data-spw-vocab` marks inline vocabulary that can resonate across routes.
+- `semantic-crossrefs` reads those annotations and marks same-token peers on hover/focus without changing link clicks.
 
 ## Display Rules
 
@@ -32,3 +33,4 @@ Let readers tune how much copy is visible without splitting the site into separa
 - Add a settings UI note or control that previews copy-depth behavior directly.
 - Let route templates emit bridge sections with consistent `spw-route-bridge` markup.
 - Consider a topic index for vocabulary clusters once enough culinary, programming, and genre terms have accumulated.
+- Explore exporting annotated components as compact Spw recipe cards, e.g. `card[reason]{produce.artifact}`, for future model expansion and crawler-facing route briefs.

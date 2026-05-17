@@ -363,6 +363,29 @@
   text-underline-offset: 0.16em;
 }
 
+:where([data-spw-crossref-source="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 50%, transparent);
+  outline-offset: 0.18rem;
+}
+
+:where([data-spw-crossref="peer"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 24%, transparent),
+    0 0 0.9rem color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 10%, transparent);
+}
+
+:where(
+  html[data-spw-runtime-posture="resonant"],
+  html[data-spw-runtime-posture="theatrical"]
+) :where([data-spw-crossref="peer"]) {
+  background-color: color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 6%, transparent);
+}
+
+:where([data-spw-crossref="peer"][data-spw-semantic-expression])::after {
+  border-color: color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 26%, transparent);
+  background: color-mix(in srgb, var(--component-surface-soft, #fff) 84%, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 8%);
+}
+
 :where(
   html[data-spw-palette-resonance="craft"],
   html[data-spw-palette-resonance="route"][data-spw-developmental-climate="weave"],
@@ -455,6 +478,126 @@
   color: var(--ink-soft, rgba(0, 0, 0, 0.62));
   font-size: 0.84rem;
   line-height: 1.35;
+}
+
+:where(.spw-wisdom-deck) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: var(--component-gap-tight);
+  margin-block: var(--component-gap) var(--component-gap-loose);
+}
+
+:where(.spw-wisdom-card) {
+  --spw-wisdom-accent: var(--active-op-color, var(--component-accent));
+  display: grid;
+  gap: 0.48rem;
+  min-width: 0;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-wisdom-accent) 7%, transparent),
+      transparent 46%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-wisdom-accent) 4%);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="culinary"]) {
+  --spw-wisdom-accent: var(--op-object-color, #a67c00);
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="garden"]) {
+  --spw-wisdom-accent: color-mix(in srgb, var(--op-topic-color, #2f7a5c) 88%, var(--op-frame-color, #008080));
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="play"]) {
+  --spw-wisdom-accent: var(--op-stream-color, var(--op-ref-color, #1d57a3));
+}
+
+:where(.spw-wisdom-card strong) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-wisdom-accent) 18%);
+  font-size: 1rem;
+  line-height: 1.18;
+}
+
+:where(.spw-wisdom-card p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.45;
+}
+
+:where(.spw-wisdom-card code) {
+  justify-self: start;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 22%, transparent);
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--component-surface-soft) 86%, var(--spw-wisdom-accent) 6%);
+  color: color-mix(in srgb, var(--ink, #111) 72%, var(--spw-wisdom-accent) 28%);
+  font-size: 0.72rem;
+}
+
+:where(.spw-cuisine-taxonomy) {
+  --spw-cuisine-accent: var(--op-object-color, #a67c00);
+  display: grid;
+  gap: 0.8rem;
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: clamp(0.85rem, 2vw, 1.05rem);
+  border: 1px solid color-mix(in srgb, var(--spw-cuisine-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--spw-cuisine-accent) 9%, transparent), transparent 42%),
+    color-mix(in srgb, var(--component-surface-strong, #fff) 92%, var(--spw-cuisine-accent) 4%);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-cuisine-taxonomy header) {
+  display: grid;
+  gap: 0.25rem;
+}
+
+:where(.spw-cuisine-taxonomy h3, .spw-cuisine-taxonomy p) {
+  margin: 0;
+}
+
+:where(.spw-cuisine-taxonomy h3) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-cuisine-accent) 18%);
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  line-height: 1.2;
+}
+
+:where(.spw-cuisine-taxonomy p) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.45;
+}
+
+:where(.spw-cuisine-taxonomy dl) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0.55rem;
+  margin: 0;
+}
+
+:where(.spw-cuisine-taxonomy dl > div) {
+  min-width: 0;
+  padding: 0.62rem 0.68rem;
+  border: 1px dashed color-mix(in srgb, var(--spw-cuisine-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft, #fff) 88%, var(--spw-cuisine-accent) 5%);
+}
+
+:where(.spw-cuisine-taxonomy dt) {
+  margin: 0 0 0.2rem;
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--spw-cuisine-accent) 22%);
+  font-weight: 850;
+}
+
+:where(.spw-cuisine-taxonomy dd) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.4;
 }
 
 :where([data-spw-transition-surface]) {

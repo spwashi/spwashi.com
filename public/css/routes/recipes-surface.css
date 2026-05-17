@@ -226,6 +226,17 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="figure"].recipe-hero-study) {
     width: 100%;
   }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-image-prominence="supporting"].recipe-hero-study) {
+    grid-column: 8 / -1;
+    grid-row: 3;
+    width: min(100%, 18rem);
+    justify-self: end;
+  }
+
+  :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="actions"].frame-operators) {
+    grid-row: 4;
+  }
 }
 
 @media (max-width: 54rem) {

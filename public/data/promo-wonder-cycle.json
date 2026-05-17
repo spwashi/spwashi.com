@@ -52,22 +52,22 @@
       "promo": {
         "label": "Daily promo",
         "operator": "@",
-        "title": "Help the next release land",
-        "summary": "Releases are scheduled for the 13th and 26th of each month. Small support keeps the work moving and makes the next page easier to ship.",
-        "href": "/services/#support",
-        "cta": "Open support",
-        "why": "A direct contribution keeps the monthly cadence steady.",
+        "title": "Open the culinary route into play",
+        "summary": "Recipes now carry cuisine taxonomy, soup systems, Mediterranean clusters, American cuisine clusters, wings, sauces, weekly vegetable snacks, trade ingredients, named dishes, and software metaphors that can feed RPG Wednesday scenes.",
+        "href": "/recipes/",
+        "cta": "Open recipes",
+        "why": "A public kitchen gives collaborators concrete vocabulary for screenshots, prompts, and table-ready imagination.",
         "presentation": "modal",
         "promotion": {
-          "kind": "support",
-          "audience": "people deciding whether to support the work",
-          "offer": "Help the release cadence stay dependable",
-          "proof": "The public cadence ships on the 13th and 26th.",
-          "objection": "It should be obvious what support changes.",
-          "urgency": "The next release window is already on the calendar.",
+          "kind": "service",
+          "audience": "collaborators looking for a concrete entry into cuisine, play, or media development",
+          "offer": "Use culinary technique, ingredient clusters, and named dishes as shared grammar for recipes, components, and RPG scenes",
+          "proof": "The recipes, play, RPG Wednesday, and component glossary surfaces now share the same cuisine handles.",
+          "objection": "It should feel useful, not decorative.",
+          "urgency": "The next session can use these handles immediately.",
           "tone": "clear",
           "theme": "glass",
-          "handles": ["support", "cadence", "modal", "clear"],
+          "handles": ["culinary", "rpg", "media", "guide"],
           "ctaStyle": "primary",
           "presentation": "modal"
         }
@@ -75,10 +75,10 @@
       "wonder": {
         "label": "Daily wonder",
         "operator": "?",
-        "title": "What changes if the page has a reason to return tomorrow?",
-        "summary": "A site can feel alive when one small surface changes on a schedule. This slot is here to make that return legible.",
-        "href": "/about/website/",
-        "cta": "See the system"
+        "title": "What changes when an ingredient arrives from elsewhere?",
+        "summary": "A hard-to-source flavor can become a trade route, a character debt, a magical substitute, or the reason a town remembers a visitor.",
+        "href": "/play/rpg-wednesday/",
+        "cta": "Take it to play"
       }
     },
     {
@@ -246,10 +246,10 @@
       "wonder": {
         "label": "Weekly wonder",
         "operator": "?",
-        "title": "What structure would make this week feel worth revisiting?",
-        "summary": "Weekly wonder should feel like a theme, not a slogan.",
-        "href": "/about/website/",
-        "cta": "Read the site map"
+        "title": "What if a media site could cook its own vocabulary?",
+        "summary": "A route can collect ingredients, reduce a theme, emulsify disciplines, ferment a pattern, and serve a screenshot-ready artifact.",
+        "href": "/design/components/",
+        "cta": "Inspect components"
       }
     },
     {

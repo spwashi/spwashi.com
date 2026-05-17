@@ -8,12 +8,12 @@
   "updated": "2026-04-10",
   "weekly": {
     "label": "Weekly focus",
-    "operator": "$",
-    "title": "Quiet controls, open doors",
-    "summary": "The map and console can now recede until summoned. The machine keeps its handles, but the page gets its air back.",
-    "href": "/settings/",
-    "cta": "Set the threshold",
-    "why": "A useful instrument should know when to speak and when to wait."
+    "operator": "*",
+    "title": "Cuisine as interface grammar",
+    "summary": "Mise, soup, reduction, emulsion, fermentation, service, Mediterranean clusters, American cuisine clusters, wings, sauces, weekly vegetable snacks, and named dishes now work as culinary technique, component metaphor, and RPG Wednesday gameplay language.",
+    "href": "/recipes/",
+    "cta": "Open recipes",
+    "why": "A media site gets more useful when its metaphors can generate copy, screenshots, scenes, and repeatable route structure."
   },
   "daily": {
     "monday": {
@@ -35,8 +35,8 @@
     "wednesday": {
       "label": "Wednesday focus",
       "operator": "@",
-      "title": "Wednesday table",
-      "summary": "Clocks tick, notes gather, and a table brief keeps the scene warm between turns.",
+      "title": "Wednesday table pantry",
+      "summary": "Session prep can behave like a kitchen station: ingredient clusters, clocks, substitutions, slow mysteries, and one serviceable scene.",
       "href": "/play/rpg-wednesday/",
       "cta": "Open the table"
     },
@@ -91,9 +91,16 @@
     {
       "operator": "@",
       "title": "RPG Wednesday",
-      "summary": "A table room with clocks, scene memory, cast paths, and future image frames.",
+      "summary": "A table room with clocks, scene memory, trade ingredients, cast paths, and future image frames.",
       "href": "/play/rpg-wednesday/",
       "tag": "play"
+    },
+    {
+      "operator": "*",
+      "title": "Recipes",
+      "summary": "A public kitchen for cuisine taxonomy, Mediterranean pantry clusters, American cuisine clusters, weekly vegetable snacks, garden clocks, and generative recipe prompts.",
+      "href": "/recipes/",
+      "tag": "culinary"
     }
   ],
   "featuredTopics": [
@@ -113,10 +120,10 @@
     },
     {
       "operator": "?",
-      "title": "Text has weather",
-      "summary": "Lines can be measured like pressure, rhythm, drift, and spill.",
-      "href": "/topics/software/pretext/",
-      "tag": "typography"
+      "title": "Technique becomes vocabulary",
+      "summary": "Stock, broth, simmer, reduction, bloom, proof, temper, ferment, and names like lantern broth or market-day stew are handles for cooking, code, composition, and scene design.",
+      "href": "/recipes/#composition-register",
+      "tag": "culinary"
     },
     {
       "operator": "~",
@@ -137,7 +144,7 @@
     {
       "operator": "$",
       "title": "Table brief",
-      "summary": "A compact dispatch from the table: scene, turn, pressure, and useful seeds.",
+      "summary": "A compact dispatch from the table: scene, turn, pressure, pantry rule, and useful seeds.",
       "href": "/play/rpg-wednesday/#local-gameplay-kit",
       "tag": "dispatch"
     },

@@ -1392,6 +1392,20 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'semantic-crossrefs',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-semantic-cluster], [data-spw-vocab], [data-spw-semantic-expression], [data-spw-topic], .spw-topic',
+    rootMode: 'single',
+    evaluates: 'semantics navigation interaction resonance',
+    load: () => import('./semantic/semantic-crossrefs.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwSemanticCrossrefs;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'guide-badge',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
