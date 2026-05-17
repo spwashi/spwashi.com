@@ -338,14 +338,15 @@ function updateSpellDock(model) {
     compactViewport ? model.destinationCounts.slice(0, 2) : model.destinationCounts
   );
   const cognitive = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
+  const effects = renderRuntimeEffectRegisters();
   const collection = renderSigilCollectionRegister();
 
   if (compactViewport) {
-    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, destinations, collection, model.narrationMode);
+    parts.body.innerHTML = renderCompactSpellDock(preview, cognitive, effects, destinations, collection, model.narrationMode);
     return;
   }
 
-  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, destinations, collection, model.snippet, model.narrationMode);
+  parts.body.innerHTML = renderExpandedSpellDock(preview, cognitive, effects, destinations, collection, model.snippet, model.narrationMode);
 }
 
 function getSpellDockParts(dock) {
@@ -388,6 +389,20 @@ function renderCognitiveRegisters(cognitiveState, narrationMode = 'readable') {
   ].join('');
 }
 
+function renderRuntimeEffectRegisters() {
+  const root = document.documentElement;
+  const values = [
+    ['timing', root.dataset.spwInteractionTuner || 'balanced'],
+    ['lighting', root.dataset.spwColorTuner || root.dataset.spwColorMode || 'system'],
+    ['density', root.dataset.spwSemanticDensity || 'medium'],
+    ['flavor', root.dataset.spwPedagogicalFlavor || 'neutral'],
+  ];
+
+  return values
+    .map(([key, value]) => `<span class="spell-register" data-spw-effect-axis="${escapeHtml(key)}">${escapeHtml(key)} · ${escapeHtml(value)}</span>`)
+    .join('');
+}
+
 function renderSigilCollectionRegister() {
   const sigils = Object.values(getSigilCollection())
     .sort((a, b) => Number(b.lastCollectedAt || 0) - Number(a.lastCollectedAt || 0))
@@ -402,7 +417,7 @@ function renderSigilCollectionRegister() {
   )).join('');
 }
 
-function renderCompactSpellDock(preview, cognitive, destinations, collection, narrationMode = 'readable') {
+function renderCompactSpellDock(preview, cognitive, effects, destinations, collection, narrationMode = 'readable') {
   const narrationNote = narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
     : narrationMode === 'quiet'
@@ -412,13 +427,14 @@ function renderCompactSpellDock(preview, cognitive, destinations, collection, na
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
+    <div class="spell-register-strip spell-register-strip--effects">${effects}</div>
     <div class="spell-register-strip spell-register-strip--sigils">${collection}</div>
     <div class="spell-register-strip">${destinations}</div>
     <p class="spell-note spell-note--compact"><strong>Replayable</strong> cognitive lines. Familiar paths help you return; liminal paths show the edge you are crossing.${narrationNote}</p>
   `;
 }
 
-function renderExpandedSpellDock(preview, cognitive, destinations, collection, snippet, narrationMode = 'readable') {
+function renderExpandedSpellDock(preview, cognitive, effects, destinations, collection, snippet, narrationMode = 'readable') {
   const narrationNote = narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible while the shape is still being learned.'
     : narrationMode === 'quiet'
@@ -428,6 +444,7 @@ function renderExpandedSpellDock(preview, cognitive, destinations, collection, s
   return `
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
+    <div class="spell-register-strip spell-register-strip--effects">${effects}</div>
     <div class="spell-register-strip spell-register-strip--sigils">${collection}</div>
     <div class="spell-register-strip">${destinations}</div>
     ${narrationNote ? `<p class="spell-note spell-note--compact">${narrationNote}</p>` : ''}
@@ -474,6 +491,7 @@ function renderSpellBoard(board, model) {
     )).join('')
     : '<span class="spell-register">ground another token to complete the sequence</span>';
   const cognitiveSummary = renderCognitiveRegisters(model.cognitiveState, model.narrationMode);
+  const effectSummary = renderRuntimeEffectRegisters();
   const collectionSummary = renderSigilCollectionRegister();
   const narrationNote = model.narrationMode === 'inspect'
     ? ' <strong>Inspect mode</strong> keeps the scaffold visible so the shape is easier to learn.'
@@ -488,6 +506,7 @@ function renderSpellBoard(board, model) {
     <div class="spell-ledger">
       <p class="spell-note"><strong>A spell is a small replayable outcome.</strong> Prefix notation shapes intent. Postfix notation shapes what the interaction does next. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
       <div class="spell-register-strip spell-register-strip--cognitive">${cognitiveSummary}</div>
+      <div class="spell-register-strip spell-register-strip--effects">${effectSummary}</div>
       <div class="spell-register-strip spell-register-strip--sigils">${collectionSummary}</div>
       <div class="spell-register-strip">${prefixSummary}</div>
       <div class="spell-register-strip">${destinationSummary}</div>

@@ -614,9 +614,9 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   syncShellOffset(header);
 
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
-  toggle.hidden = state.mode !== MODES.TOGGLE;
+  toggle.hidden = false;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  toggle.setAttribute('aria-hidden', state.mode === MODES.TOGGLE ? 'false' : 'true');
+  toggle.setAttribute('aria-hidden', 'false');
   toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
 
   writeMenuDatasets(header, snapshot, 'header');
@@ -695,11 +695,11 @@ export function initSpwShellDisclosure(options = {}) {
       <span class="spw-nav-toggle-meta" aria-hidden="true">routes</span>
     `;
 
-    const sigil = header.querySelector('.header-sigil');
-    if (sigil?.after) {
-      sigil.after(toggle);
+    const indicator = header.querySelector('.header-op-indicator');
+    if (indicator) {
+      header.insertBefore(toggle, indicator);
     } else {
-      header.prepend(toggle);
+      header.appendChild(toggle);
     }
   }
 
@@ -735,7 +735,11 @@ export function initSpwShellDisclosure(options = {}) {
     event.preventDefault();
     event.stopPropagation();
 
-    if (state.mode !== MODES.TOGGLE) return;
+    if (state.mode !== MODES.TOGGLE) {
+      nav.querySelector('a[href]')?.focus();
+      emitSpwAction('@shell.focus_routes', 'Route neighborhood is already visible; menu control moved focus into the page-authored links.');
+      return;
+    }
 
     state.userIntentOpen = !state.userIntentOpen;
     const snapshot = applyMenuState(header, nav, navList, toggle, state, state.userIntentOpen, 'user');
@@ -743,10 +747,12 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleToggleKeydown = (event) => {
-    if (state.mode !== MODES.TOGGLE) return;
-
     if (event.key === 'ArrowDown') {
       event.preventDefault();
+      if (state.mode !== MODES.TOGGLE) {
+        focusFirstMenuTarget(nav);
+        return;
+      }
       if (!state.userIntentOpen) openToggleMenu('toggle-key');
       window.requestAnimationFrame(() => {
         focusFirstMenuTarget(nav);

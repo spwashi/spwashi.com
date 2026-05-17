@@ -63,6 +63,8 @@ const CHARGE_SELECTORS = [
 let initialized = false;
 let restoreObserver = null;
 let unsubscribeBus = [];
+const passiveChargeTimers = new WeakMap();
+const PASSIVE_CHARGE_DELAY_MS = 220;
 
 function readJsonStorage(key, fallback) {
   try {
@@ -195,7 +197,7 @@ function onChargeEnter(event) {
   if (related && related === target) return;
   if (related instanceof Element && target.contains(related)) return;
 
-  setPassiveCharge(target, true, 'pointer');
+  schedulePassiveCharge(target, 'pointer');
 }
 
 function onChargeLeave(event) {
@@ -206,6 +208,7 @@ function onChargeLeave(event) {
   if (related && related === target) return;
   if (related instanceof Element && target.contains(related)) return;
 
+  cancelPassiveCharge(target);
   setPassiveCharge(target, false, 'pointer');
 }
 
@@ -218,6 +221,7 @@ function onChargeFocusIn(event) {
 function onChargeFocusOut(event) {
   const target = getInteractiveTarget(event.target, CHARGE_SELECTORS);
   if (!target) return;
+  cancelPassiveCharge(target);
   setPassiveCharge(target, false, 'focus');
 }
 
@@ -315,6 +319,8 @@ function setPassiveCharge(el, active, source = 'pointer') {
   if (active) {
     if (el.dataset.spwPassiveCharge === 'true') return;
     el.dataset.spwPassiveCharge = 'true';
+    el.dataset.spwCharge = 'preview';
+    el.dataset.spwChargeSource = source;
 
     const detail = buildSemanticDetail(el, { source, passive: true });
 
@@ -335,6 +341,8 @@ function setPassiveCharge(el, active, source = 'pointer') {
 
   if (el.dataset.spwPassiveCharge !== 'true') return;
   delete el.dataset.spwPassiveCharge;
+  delete el.dataset.spwCharge;
+  delete el.dataset.spwChargeSource;
 
   const detail = buildSemanticDetail(el, { source, passive: true });
 
@@ -343,6 +351,35 @@ function setPassiveCharge(el, active, source = 'pointer') {
     detail,
     { target: el, element: el }
   );
+}
+
+function schedulePassiveCharge(el, source = 'pointer') {
+  if (!el || isGrounded(el) || el.dataset.spwPassiveCharge === 'true') return;
+  cancelPassiveCharge(el);
+  el.dataset.spwChargePending = 'true';
+  el.dataset.spwCharge = 'arming';
+  el.dataset.spwChargeSource = source;
+
+  const timer = window.setTimeout(() => {
+    passiveChargeTimers.delete(el);
+    delete el.dataset.spwChargePending;
+    setPassiveCharge(el, true, source);
+  }, PASSIVE_CHARGE_DELAY_MS);
+
+  passiveChargeTimers.set(el, timer);
+}
+
+function cancelPassiveCharge(el) {
+  const timer = passiveChargeTimers.get(el);
+  if (timer) window.clearTimeout(timer);
+  passiveChargeTimers.delete(el);
+  if (el) {
+    delete el.dataset.spwChargePending;
+    if (el.dataset.spwPassiveCharge !== 'true') {
+      delete el.dataset.spwCharge;
+      delete el.dataset.spwChargeSource;
+    }
+  }
 }
 
 /* ==========================================================================
@@ -724,6 +761,7 @@ function shouldIgnoreGroundToggle(target, event) {
   if (!(target instanceof Element)) return true;
 
   if (target.closest('[data-spw-groundable="false"]')) return true;
+  if (isPlainNavigableLink(target, event)) return true;
 
   const activeTag = document.activeElement?.tagName;
   if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || document.activeElement?.isContentEditable) {
@@ -733,6 +771,17 @@ function shouldIgnoreGroundToggle(target, event) {
   if (event instanceof KeyboardEvent && event.repeat) return true;
 
   return false;
+}
+
+function isPlainNavigableLink(target, event) {
+  const link = target.closest('a[href]');
+  if (!(link instanceof HTMLAnchorElement)) return false;
+  if (link.dataset.spwGroundable === 'true') return false;
+
+  const href = link.getAttribute('href') || '';
+  if (!href || href.startsWith('#')) return false;
+
+  return true;
 }
 
 function animateSettle(el, className) {

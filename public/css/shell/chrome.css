@@ -73,7 +73,7 @@
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
   grid-template-areas:
-    "sigil nav indicator"
+    "sigil nav toggle"
     "trace trace trace";
   align-items: center;
   align-content: start;
@@ -113,12 +113,12 @@
 
 /* shell-trace is gated because it changes header geometry. */
 :where(body:not([data-spw-features~="shell-trace"]) .site-header, body:not([data-spw-features~="shell-trace"]) > header) {
-  grid-template-areas: "sigil nav indicator";
+  grid-template-areas: "sigil nav toggle";
 }
 
 :where(body[data-spw-features~="shell-trace"] .site-header, body[data-spw-features~="shell-trace"] > header) {
   grid-template-areas:
-    "sigil nav indicator"
+    "sigil nav toggle"
     "trace trace trace";
 }
 
@@ -248,7 +248,7 @@
 }
 
 .header-op-indicator {
-  grid-area: indicator;
+  grid-area: toggle;
   justify-self: end;
   display: inline-flex;
   align-items: center;
@@ -332,6 +332,7 @@
   min-block-size: 0;
   min-width: 0;
   padding-inline: 0;
+  justify-self: stretch;
   opacity: var(--spw-header-trace-opacity, 1);
   transform: translateY(var(--spw-header-trace-shift, 0px));
   transition:
@@ -351,8 +352,9 @@
 :where(.site-header, body > header) .spw-spell-path {
   margin: 0;
   min-width: 0;
-  padding: 0.08rem 0 0;
-  border-radius: 0;
+  max-inline-size: min(100%, 62rem);
+  padding: 0.12rem 0.16rem 0;
+  border-radius: var(--shape-control, 0.78rem);
   font-size: var(--text-size-label, 0.76rem);
 }
 
@@ -447,6 +449,10 @@
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
     var(--spw-depth-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+}
+
+:where(.site-header[data-spw-menu-mode="inline"] nav, body > header[data-spw-menu-mode="inline"] nav) {
+  justify-content: flex-start;
 }
 
 :where(.site-header nav, body > header nav)::-webkit-scrollbar {
@@ -563,12 +569,14 @@
 }
 
 .spw-nav-toggle {
-  display: none;
+  grid-area: toggle;
+  display: inline-flex;
+  justify-self: end;
   align-items: center;
   justify-content: center;
   gap: calc(var(--spw-shell-link-gap, 0.38rem) + 0.14rem);
   min-height: max(var(--shell-nav-min-height), var(--spw-control-min-height, 2.15rem));
-  margin-inline-end: calc(var(--subjective-brace-width, 28px) + 0.75rem);
+  margin-inline-end: 0;
   padding:
     calc(var(--spw-control-padding-block, 0.26rem) + 0.1rem)
     calc(var(--spw-control-padding-inline, 0.68rem) + 0.08rem);
@@ -734,6 +742,12 @@
   max-width: none;
 }
 
+:where(.site-header[data-spw-menu-mode="inline"] ul, body > header[data-spw-menu-mode="inline"] ul) {
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+}
+
 :where(.site-header li, body > header li) {
   margin: 0;
   min-width: 0;
@@ -884,6 +898,13 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   }
 }
 
+@media (min-width: 981px) and (max-width: 1240px) {
+  :where(.site-header[data-spw-menu-mode="inline"] ul, body > header[data-spw-menu-mode="inline"] ul) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
 :where(.site-header[data-spw-nav-fit="tight"], body > header[data-spw-nav-fit="tight"]) {
   --shell-nav-font-size: var(--text-size-chip, 0.84rem);
   --shell-nav-gap-inline: 0.48rem;
@@ -923,6 +944,10 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   grid-area: tools;
   grid-column: 1 / -1;
   justify-self: stretch;
+}
+
+:where(.site-header[data-spw-menu-mode="inline"] .spw-nav-toggle, body > header[data-spw-menu-mode="inline"] .spw-nav-toggle) {
+  opacity: 0.72;
 }
 
 .spw-shell-utility-row::-webkit-scrollbar {

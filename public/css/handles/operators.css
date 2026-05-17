@@ -1495,6 +1495,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   line-height: 1.45;
 }
 
+.spell-register-strip--effects .spell-register {
+  border-color: color-mix(in srgb, var(--teal, #008080) 22%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--teal, #008080) 10%);
+}
+
 .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-trail,
 .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-meaning {
   display: none;

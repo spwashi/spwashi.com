@@ -841,16 +841,41 @@ function bindExplicitFrameActivation(ctx) {
   }
 
   const handlers = [];
+  const pointerStarts = new WeakMap();
 
   for (const frame of frames) {
     const focusHandler = () => setActiveFrame(frame);
-    const pointerHandler = () => setActiveFrame(frame);
+    const pointerDownHandler = (event) => {
+      pointerStarts.set(frame, {
+        x: event.clientX,
+        y: event.clientY,
+      });
+    };
+    const pointerUpHandler = (event) => {
+      const start = pointerStarts.get(frame);
+      pointerStarts.delete(frame);
+      if (!start) return;
+      if (event.target instanceof Element && event.target.closest('a, button, input, textarea, select, summary, [role="button"]')) return;
+
+      const dx = event.clientX - start.x;
+      const dy = event.clientY - start.y;
+      if (Math.hypot(dx, dy) > 10) return;
+
+      setActiveFrame(frame);
+    };
+    const pointerCancelHandler = () => {
+      pointerStarts.delete(frame);
+    };
 
     frame.addEventListener('focusin', focusHandler);
-    frame.addEventListener('pointerdown', pointerHandler, { passive: true });
+    frame.addEventListener('pointerdown', pointerDownHandler, { passive: true });
+    frame.addEventListener('pointerup', pointerUpHandler, { passive: true });
+    frame.addEventListener('pointercancel', pointerCancelHandler, { passive: true });
 
     handlers.push(() => frame.removeEventListener('focusin', focusHandler));
-    handlers.push(() => frame.removeEventListener('pointerdown', pointerHandler));
+    handlers.push(() => frame.removeEventListener('pointerdown', pointerDownHandler));
+    handlers.push(() => frame.removeEventListener('pointerup', pointerUpHandler));
+    handlers.push(() => frame.removeEventListener('pointercancel', pointerCancelHandler));
   }
 
   const initialTarget = resolveHashTargetFrame() || frames[0] || null;
@@ -1850,6 +1875,58 @@ function recordModuleAudit(ctx, entry) {
   return record;
 }
 
+function snapshotEffectSummary() {
+  const root = document.documentElement;
+  return {
+    route: runtimeCtx?.route || BODY?.dataset.spwSurface || 'unknown',
+    timing: root.dataset.spwInteractionTuner || root.dataset.spwRuntimeTiming || 'balanced',
+    lighting: root.dataset.spwColorTuner || root.dataset.spwColorMode || 'system',
+    density: root.dataset.spwSemanticDensity || 'medium',
+    flavor: root.dataset.spwPedagogicalFlavor || 'neutral',
+    runtimePosture: root.dataset.spwRuntimePosture || 'minimal',
+    moduleVisuals: root.dataset.spwModuleVisuals || 'off',
+    moduleAudit: root.dataset.spwModuleAudit || 'off',
+    modules: snapshotRuntimeModules(runtimeCtx),
+    expressions: snapshotSemanticExpressions(),
+    projections: snapshotProjectionEquations(),
+  };
+}
+
+function snapshotSemanticExpressions() {
+  return safeQueryAll('[data-spw-semantic-expression], [data-spw-vocab], [data-spw-topic], [data-spw-operator]')
+    .map((el) => ({
+      tag: el.tagName.toLowerCase(),
+      text: normalizeWhitespace(el.textContent || '').slice(0, 120),
+      expression: el.dataset.spwSemanticExpression || null,
+      vocab: el.dataset.spwVocab || null,
+      topic: el.dataset.spwTopic || null,
+      operator: el.dataset.spwOperator || null,
+      href: el instanceof HTMLAnchorElement ? el.getAttribute('href') : null,
+      route: window.location.pathname,
+    }));
+}
+
+function snapshotProjectionEquations() {
+  const expressions = snapshotSemanticExpressions()
+    .map((entry) => entry.expression)
+    .filter(Boolean);
+
+  return expressions.map((expression) => {
+    const match = expression.match(/^([^\[\{\(]+)(?:\[([^\]]+)\])?(?:\{([^}]+)\})?(?:\(([^)]+)\))?/);
+    return {
+      expression,
+      noun: match?.[1]?.trim() || expression,
+      variant: match?.[2] || null,
+      behavior: match?.[3] || null,
+      scene: match?.[4] || null,
+    };
+  });
+}
+
+function normalizeWhitespace(value = '') {
+  return String(value).replace(/\s+/g, ' ').trim();
+}
+
 async function mountDefinition(def, ctx, root = null, index = 0) {
   const recordId = makeRecordId(def, root, index);
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
@@ -2275,6 +2352,11 @@ async function bootSite() {
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
       },
+      effects: {
+        expressions: snapshotSemanticExpressions,
+        projections: snapshotProjectionEquations,
+        summary: snapshotEffectSummary,
+      },
     },
   });
   const queryDisposition = applySpwQueryDisposition(HTML, {
@@ -2335,6 +2417,9 @@ window.__SPW_SITE__ = {
   listModules: () => listModuleDefinitions(runtimeCtx),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
+  effects: snapshotEffectSummary,
+  expressions: snapshotSemanticExpressions,
+  projections: snapshotProjectionEquations,
   refreshRuntime: () => runtimeCtx && refreshRuntime(runtimeCtx),
   getContext: () => runtimeCtx,
 };
