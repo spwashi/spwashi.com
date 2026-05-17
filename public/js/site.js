@@ -72,6 +72,7 @@ import { annotatePageHooks } from './runtime/page-hooks.js';
  * - when: "immediate" | "visible" | "idle" | "interaction" | "region"
  * - selector?: CSS selector
  * - route?: string | string[]
+ * - reason?: human-readable load reason for audit surfaces
  * - rootMode?: "single" | "each"
  * - load(): Promise<module>
  * - mount(mod, ctx, root?): cleanup fn | { cleanup?, refresh? } | void
@@ -111,6 +112,8 @@ const MOUNT_WHEN = {
   INTERACTION: 'interaction',
   REGION: 'region',
 };
+
+const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
 
 const HTML = document.documentElement;
 const BODY = document.body;
@@ -225,6 +228,100 @@ function setDataIfMissing(el, key, value) {
 
 function readSet(...values) {
   return new Set(values.filter(Boolean));
+}
+
+function normalizeRuntimeToken(value = '') {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function readDelimitedSet(value = '') {
+  return new Set(
+    String(value || '')
+      .split(/[\s,]+/)
+      .map(normalizeRuntimeToken)
+      .filter(Boolean)
+  );
+}
+
+function readModuleTimingMap(value = '') {
+  const map = new Map();
+  String(value || '')
+    .split(/[\s,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .forEach((item) => {
+      const [rawId, rawWhen] = item.split(':');
+      const id = normalizeRuntimeToken(rawId);
+      const when = normalizeRuntimeToken(rawWhen);
+      if (id && Object.values(MOUNT_WHEN).includes(when)) {
+        map.set(id, when);
+      }
+    });
+  return map;
+}
+
+function readRuntimePolicy() {
+  const params = new URLSearchParams(window.location.search);
+  const rawTiming =
+    params.get('spw-runtime-timing')
+    || params.get('runtime-timing')
+    || HTML?.dataset.spwRuntimeTiming
+    || BODY?.dataset.spwRuntimeTiming
+    || 'normal';
+  const timing = RUNTIME_TIMING_POLICIES.has(normalizeRuntimeToken(rawTiming))
+    ? normalizeRuntimeToken(rawTiming)
+    : 'normal';
+  const delay = Number.parseInt(
+    params.get('spw-module-delay')
+    || params.get('module-delay')
+    || HTML?.dataset.spwModuleDelay
+    || BODY?.dataset.spwModuleDelay
+    || '0',
+    10
+  );
+  const auditValue =
+    params.get('spw-module-audit')
+    || params.get('module-audit')
+    || HTML?.dataset.spwModuleAudit
+    || BODY?.dataset.spwModuleAudit
+    || '';
+  const visualValue =
+    params.get('spw-module-visuals')
+    || params.get('module-visuals')
+    || HTML?.dataset.spwModuleVisuals
+    || BODY?.dataset.spwModuleVisuals
+    || '';
+
+  return {
+    timing,
+    audit: ['1', 'true', 'on', 'yes', '*'].includes(String(auditValue).toLowerCase()),
+    visuals: ['1', 'true', 'on', 'yes', '*'].includes(String(visualValue).toLowerCase()),
+    delay: Number.isFinite(delay) && delay > 0 ? Math.min(delay, 5000) : 0,
+    only: readDelimitedSet(params.get('spw-module-only') || params.get('module-only')),
+    skip: readDelimitedSet(params.get('spw-module-skip') || params.get('module-skip')),
+    timingByModule: readModuleTimingMap(params.get('spw-module-timing') || params.get('module-timing')),
+  };
+}
+
+function inferRuntimePosture(policy) {
+  if (!policy) return 'minimal';
+  if (policy.visuals && policy.timing === 'eager') return 'theatrical';
+  if (policy.visuals) return 'resonant';
+  if (
+    policy.audit
+    || policy.timing !== 'normal'
+    || policy.delay
+    || policy.only.size
+    || policy.skip.size
+    || policy.timingByModule.size
+  ) {
+    return 'precision';
+  }
+  return 'minimal';
 }
 
 /* ==========================================================================
@@ -438,6 +535,14 @@ function inferRegionDensity(profile) {
   return 'medium';
 }
 
+function inferSpaceMotion() {
+  const width = window.innerWidth || document.documentElement.clientWidth || 0;
+  if (width && width < 520) return 'fold';
+  if (width && width < 840) return 'condense';
+  if (width && width > 1320) return 'expand';
+  return 'balance';
+}
+
 function buildRegionGenome(profile = {}) {
   return buildAxisGenome([
     ['kind', profile.kind],
@@ -505,6 +610,7 @@ function syncPageHarmony(ctx) {
 
   writeDatasetValue(HTML, 'spwHarmonyField', [...harmonies].join(' '));
   writeDatasetValue(HTML, 'spwTempoField', [...tempos].join(' '));
+  writeDatasetValue(HTML, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(HTML, '--region-count', String(profiles.length));
 }
 
@@ -528,12 +634,23 @@ function createRuntimeContext() {
     features: parseFeatureList(BODY?.dataset?.spwFeatures),
     routeFamily: parseFeatureList(BODY?.dataset?.spwRouteFamily),
     debug: parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug),
+    runtimePolicy: readRuntimePolicy(),
+    moduleAudit: [],
+    moduleSkipAuditKeys: new Set(),
     observers: new Set(),
     timers: new Set(),
     pageAttentionTimers: new Set(),
     cleanupStack: [],
     regions: [],
   };
+
+  writeDatasetValue(HTML, 'spwRuntimeTiming', ctx.runtimePolicy.timing);
+  writeDatasetValue(HTML, 'spwRuntimePosture', inferRuntimePosture(ctx.runtimePolicy));
+  writeDatasetValue(HTML, 'spwModuleAudit', ctx.runtimePolicy.audit ? 'on' : null);
+  writeDatasetValue(HTML, 'spwModuleVisuals', ctx.runtimePolicy.visuals ? 'on' : null);
+  if (ctx.runtimePolicy.delay) {
+    writeDatasetValue(HTML, 'spwModuleDelay', String(ctx.runtimePolicy.delay));
+  }
 
   ctx.addCleanup = (fn) => {
     if (!isFn(fn)) return () => {};
@@ -1482,9 +1599,88 @@ const ENHANCEMENT_DEFS = [
   },
 ];
 
+const MODULE_DEFS = [
+  ...CORE_DEFS,
+  ...FEATURE_DEFS,
+  ...REGION_DEFS,
+  ...ENHANCEMENT_DEFS,
+];
+
 /* ==========================================================================
    11. Module mounting
    ========================================================================== */
+
+function findModuleDefinition(id) {
+  const key = normalizeRuntimeToken(id);
+  return MODULE_DEFS.find((def) => normalizeRuntimeToken(def.id) === key) || null;
+}
+
+function getModuleRoots(def, options = {}) {
+  if (options.root instanceof HTMLElement) return [options.root];
+  if (typeof options.root === 'string') {
+    const root = safeQuery(options.root);
+    return root ? [root] : [];
+  }
+  return getRoots(def);
+}
+
+function listModuleDefinitions(ctx = runtimeCtx) {
+  return MODULE_DEFS.map((def) => {
+    const effectiveWhen = ctx ? getEffectiveMountWhen(def, ctx) : (def.when || MOUNT_WHEN.IMMEDIATE);
+    const record = ctx?.registry?.get(def.id);
+    return {
+      id: def.id,
+      layer: def.layer,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      route: def.route || null,
+      selector: def.selector || '',
+      rootMode: def.rootMode || 'single',
+      evaluates: inferModuleDimensions(def),
+      reason: ctx ? describeMountReason(def, ctx, null, effectiveWhen) : (def.reason || ''),
+      status: record?.status || 'defined',
+    };
+  });
+}
+
+function snapshotRuntimeModules(ctx = runtimeCtx) {
+  if (!ctx) return [];
+  return ctx.registry.values().map((record) => ({
+    id: record.id,
+    baseId: record.baseId || record.id,
+    layer: record.layer,
+    evaluates: record.evaluates,
+    requestedWhen: record.requestedWhen,
+    effectiveWhen: record.effectiveWhen,
+    status: record.status,
+    reason: record.reason,
+    mountedAt: record.mountedAt,
+    loadMs: record.loadMs,
+    mountMs: record.mountMs,
+    durationMs: record.durationMs,
+    root: record.root instanceof HTMLElement
+      ? record.root.id || record.root.dataset.spwRegionKey || record.root.tagName.toLowerCase()
+      : 'document',
+    error: record.error?.message || null,
+  }));
+}
+
+async function mountModuleById(id, ctx = runtimeCtx, options = {}) {
+  if (!ctx) return null;
+  const def = findModuleDefinition(id);
+  if (!def) return null;
+  const roots = getModuleRoots(def, options);
+
+  if (!roots.length || def.rootMode === 'single') {
+    return mountDefinition(def, ctx, roots[0] || null, 0);
+  }
+
+  const records = [];
+  for (const [index, root] of roots.entries()) {
+    records.push(await mountDefinition(def, ctx, root, index));
+  }
+  return records;
+}
 
 function makeRecordId(def, root = null, index = 0) {
   if (!root || root === document.body) return def.id;
@@ -1492,41 +1688,248 @@ function makeRecordId(def, root = null, index = 0) {
   return `${def.id}::${String(rootId)}`;
 }
 
+function getEffectiveMountWhen(def, ctx) {
+  const baseWhen = def.when || MOUNT_WHEN.IMMEDIATE;
+  const moduleOverride = ctx.runtimePolicy.timingByModule.get(def.id);
+  if (moduleOverride) return moduleOverride;
+
+  switch (ctx.runtimePolicy.timing) {
+    case 'eager':
+      if (baseWhen === MOUNT_WHEN.IDLE || baseWhen === MOUNT_WHEN.VISIBLE || baseWhen === MOUNT_WHEN.INTERACTION) {
+        return MOUNT_WHEN.IMMEDIATE;
+      }
+      return baseWhen;
+    case 'defer':
+      if (def.layer === MODULE_LAYERS.CORE || baseWhen === MOUNT_WHEN.REGION) return baseWhen;
+      if (baseWhen === MOUNT_WHEN.IMMEDIATE) return def.selector ? MOUNT_WHEN.VISIBLE : MOUNT_WHEN.IDLE;
+      return baseWhen;
+    case 'quiet':
+      if (def.layer === MODULE_LAYERS.CORE || baseWhen === MOUNT_WHEN.REGION) return baseWhen;
+      return MOUNT_WHEN.IDLE;
+    case 'manual':
+      return def.layer === MODULE_LAYERS.CORE ? baseWhen : 'manual';
+    default:
+      return baseWhen;
+  }
+}
+
+function describeMountReason(def, ctx, root = null, effectiveWhen = getEffectiveMountWhen(def, ctx)) {
+  const routeReason = def.route
+    ? `route:${Array.isArray(def.route) ? def.route.join('|') : def.route}`
+    : 'route:any';
+  const selectorReason = def.selector ? `selector:${def.selector}` : 'selector:document';
+  const rootReason =
+    root instanceof HTMLElement
+      ? `root:${root.id || root.dataset.spwRegionKey || root.dataset.spwKind || root.tagName.toLowerCase()}`
+      : 'root:document';
+  return def.reason || `${effectiveWhen} ${def.layer} ${routeReason} ${selectorReason} ${rootReason}`;
+}
+
+function inferModuleDimensions(def) {
+  const text = `${def.id || ''} ${def.selector || ''} ${def.layer || ''}`.toLowerCase();
+  const dimensions = new Set([def.layer]);
+
+  if (/nav|route|link|hash|frame/.test(text)) dimensions.add('routing');
+  if (/semantic|operator|topic|guide|annotation|brace/.test(text)) dimensions.add('semantics');
+  if (/semantic|component|genome|kind|role|slot|density/.test(text)) dimensions.add('semantic-density');
+  if (/layout|shift|region|canvas|svg|image|logo|promo|wonder/.test(text)) dimensions.add('visual');
+  if (/canvas|svg|image|logo|promo|wonder|visual|motif/.test(text)) dimensions.add('visual-model');
+  if (/layout|space|region|surface|grid|frame|fold/.test(text)) dimensions.add('spacing-semantics');
+  if (/settings|tune|local|memory|storage|pwa/.test(text)) dimensions.add('state');
+  if (/spell|haptic|gesture|experiential|interaction|pointer|mode/.test(text)) dimensions.add('interaction');
+  if (/payment|service|rpg|blog|media|design/.test(text)) dimensions.add('surface');
+
+  if (def.evaluates) {
+    String(def.evaluates)
+      .split(/[\s,]+/)
+      .map(normalizeRuntimeToken)
+      .filter(Boolean)
+      .forEach((token) => dimensions.add(token));
+  }
+
+  return [...dimensions].filter(Boolean).join(' ');
+}
+
+function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
+  const id = normalizeRuntimeToken(def.id);
+  const effectiveWhen = getEffectiveMountWhen(def, ctx);
+  const routeMatch = matchesRoute(def);
+  const selectorMatch = hasSelector(def);
+  const onlyMatch = !ctx.runtimePolicy.only.size || ctx.runtimePolicy.only.has(id);
+  const skipMatch = ctx.runtimePolicy.skip.has(id);
+  const whenMatch = expectedWhen ? effectiveWhen === expectedWhen : effectiveWhen !== 'manual';
+  const allowed = routeMatch && selectorMatch && onlyMatch && !skipMatch && whenMatch;
+
+  if (!allowed && ctx.runtimePolicy.audit) {
+    const reason = [
+      routeMatch ? '' : 'route-mismatch',
+      selectorMatch ? '' : 'selector-missing',
+      onlyMatch ? '' : 'outside-module-only',
+      skipMatch ? 'module-skip' : '',
+      whenMatch ? '' : `waiting-for-${effectiveWhen}`,
+    ].filter(Boolean).join(' ') || 'not-scheduled';
+    const auditKey = `${id}:${expectedWhen || 'any'}:${reason}`;
+    if (ctx.moduleSkipAuditKeys.has(auditKey)) return allowed;
+    ctx.moduleSkipAuditKeys.add(auditKey);
+    recordModuleAudit(ctx, {
+      id: def.id,
+      layer: def.layer,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      status: 'skipped',
+      reason,
+    });
+  }
+
+  return allowed;
+}
+
+function annotateModuleTarget(target, record) {
+  if (!(target instanceof HTMLElement)) return;
+  writeDatasetValue(target, 'spwModule', record.baseId);
+  writeDatasetValue(target, 'spwModuleId', record.id);
+  writeDatasetValue(target, 'spwModuleLayer', record.layer);
+  writeDatasetValue(target, 'spwModuleWhen', record.effectiveWhen);
+  writeDatasetValue(target, 'spwModuleStatus', record.status);
+  writeDatasetValue(target, 'spwModuleReason', record.reason);
+  writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
+  writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
+  if (Number.isFinite(record.durationMs)) {
+    writeDatasetValue(target, 'spwModuleDurationMs', String(Math.round(record.durationMs)));
+  }
+}
+
+function syncRuntimeModuleSummary(ctx, record) {
+  const records = ctx.registry.values();
+  const mounted = records.filter((entry) => entry.status === 'mounted').map((entry) => entry.baseId || entry.id);
+  const failed = records.filter((entry) => entry.status === 'failed').map((entry) => entry.baseId || entry.id);
+
+  writeDatasetValue(HTML, 'spwRuntimeLastModule', record.baseId || record.id);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleStatus', record.status);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleReason', record.reason);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleEvaluates', record.evaluates);
+  writeDatasetValue(HTML, 'spwRuntimeMountedModules', [...new Set(mounted)].join(' '));
+  writeDatasetValue(HTML, 'spwRuntimeFailedModules', [...new Set(failed)].join(' ') || null);
+  writeDatasetValue(HTML, 'spwRuntimeModuleCount', String(mounted.length));
+  if (BODY) {
+    writeDatasetValue(BODY, 'spwRuntimeLastModule', record.baseId || record.id);
+    writeDatasetValue(BODY, 'spwRuntimeLastModuleStatus', record.status);
+    writeDatasetValue(BODY, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
+    writeDatasetValue(BODY, 'spwRuntimeLastModuleReason', record.reason);
+    writeDatasetValue(BODY, 'spwRuntimeLastModuleEvaluates', record.evaluates);
+    writeDatasetValue(BODY, 'spwRuntimeModuleCount', String(mounted.length));
+  }
+}
+
+function recordModuleAudit(ctx, entry) {
+  const record = {
+    at: Math.round(performance.now()),
+    route: ctx.route,
+    ...entry,
+  };
+  ctx.moduleAudit.push(record);
+  if (ctx.moduleAudit.length > 160) ctx.moduleAudit.shift();
+  if (ctx.runtimePolicy.audit) {
+    console.info('[site.js] module audit', record);
+  }
+  return record;
+}
+
 async function mountDefinition(def, ctx, root = null, index = 0) {
   const recordId = makeRecordId(def, root, index);
+  const effectiveWhen = getEffectiveMountWhen(def, ctx);
+  const reason = describeMountReason(def, ctx, root, effectiveWhen);
+  const evaluates = inferModuleDimensions(def);
 
   if (ctx.registry.has(recordId)) return ctx.registry.get(recordId);
 
   ctx.registry.set(recordId, {
     id: recordId,
+    baseId: def.id,
     layer: def.layer,
+    evaluates,
+    requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+    effectiveWhen,
+    reason,
     status: 'idle',
     cleanup: null,
     refresh: null,
     root,
     mountedAt: null,
+    loadMs: null,
+    mountMs: null,
+    durationMs: null,
     error: null,
   });
 
   try {
     if (root instanceof HTMLElement) setRegionState(root, REGION_STATES.HYDRATING);
 
+    const startedAt = performance.now();
+    annotateModuleTarget(root, {
+      id: recordId,
+      baseId: def.id,
+      layer: def.layer,
+      evaluates,
+      effectiveWhen,
+      reason,
+      status: 'loading',
+    });
+    recordModuleAudit(ctx, {
+      id: recordId,
+      baseId: def.id,
+      layer: def.layer,
+      evaluates,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      status: 'loading',
+      reason,
+    });
+
+    const loadStartedAt = performance.now();
     const mod = await def.load();
+    const loadEndedAt = performance.now();
+    const mountStartedAt = performance.now();
     const result = await def.mount(mod, ctx, root);
+    const mountEndedAt = performance.now();
     const handle = normalizeMountHandle(result);
 
     const record = {
       id: recordId,
+      baseId: def.id,
       layer: def.layer,
+      evaluates,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      reason,
       status: 'mounted',
       cleanup: handle.cleanup,
       refresh: handle.refresh,
       root,
-      mountedAt: performance.now(),
+      mountedAt: mountEndedAt,
+      loadMs: loadEndedAt - loadStartedAt,
+      mountMs: mountEndedAt - mountStartedAt,
+      durationMs: mountEndedAt - startedAt,
       error: null,
     };
 
     ctx.registry.set(recordId, record);
+    annotateModuleTarget(root, record);
+    syncRuntimeModuleSummary(ctx, record);
+    recordModuleAudit(ctx, {
+      id: recordId,
+      baseId: def.id,
+      layer: def.layer,
+      evaluates: record.evaluates,
+      requestedWhen: record.requestedWhen,
+      effectiveWhen,
+      status: 'mounted',
+      reason,
+      loadMs: Math.round(record.loadMs),
+      mountMs: Math.round(record.mountMs),
+      durationMs: Math.round(record.durationMs),
+    });
 
     if (root instanceof HTMLElement) {
       const state =
@@ -1540,8 +1943,15 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       id: recordId,
       baseId: def.id,
       layer: def.layer,
+      evaluates: record.evaluates,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      reason,
       route: ctx.route,
       root,
+      loadMs: record.loadMs,
+      mountMs: record.mountMs,
+      durationMs: record.durationMs,
     });
 
     return record;
@@ -1550,16 +1960,37 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
 
     const record = {
       id: recordId,
+      baseId: def.id,
       layer: def.layer,
+      evaluates,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      reason,
       status: 'failed',
       cleanup: null,
       refresh: null,
       root,
       mountedAt: null,
+      loadMs: null,
+      mountMs: null,
+      durationMs: null,
       error,
     };
 
     ctx.registry.set(recordId, record);
+    annotateModuleTarget(root, record);
+    syncRuntimeModuleSummary(ctx, record);
+    recordModuleAudit(ctx, {
+      id: recordId,
+      baseId: def.id,
+      layer: def.layer,
+      evaluates: record.evaluates,
+      requestedWhen: record.requestedWhen,
+      effectiveWhen,
+      status: 'failed',
+      reason,
+      error: error?.message || String(error),
+    });
 
     if (root instanceof HTMLElement) setRegionState(root, REGION_STATES.QUEUED);
 
@@ -1567,6 +1998,10 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       id: recordId,
       baseId: def.id,
       layer: def.layer,
+      evaluates: record.evaluates,
+      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
+      effectiveWhen,
+      reason,
       route: ctx.route,
       root,
       error,
@@ -1578,13 +2013,13 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
 
 async function mountImmediateLayer(defs, ctx) {
   for (const def of defs) {
-    if (!matchesRoute(def) || !hasSelector(def)) continue;
+    if (!shouldScheduleDefinition(def, ctx, MOUNT_WHEN.IMMEDIATE)) continue;
     await mountDefinition(def, ctx, null, 0);
   }
 }
 
 async function mountVisibleFeatures(defs, ctx) {
-  const visibleDefs = defs.filter((def) => def.when === MOUNT_WHEN.VISIBLE && matchesRoute(def) && hasSelector(def));
+  const visibleDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, MOUNT_WHEN.VISIBLE));
   if (!visibleDefs.length) return;
 
   const observer = new IntersectionObserver(
@@ -1627,7 +2062,7 @@ async function mountVisibleFeatures(defs, ctx) {
 }
 
 async function mountInteractionFeatures(defs, ctx) {
-  const interactionDefs = defs.filter((def) => def.when === MOUNT_WHEN.INTERACTION && matchesRoute(def) && hasSelector(def));
+  const interactionDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, MOUNT_WHEN.INTERACTION));
   if (!interactionDefs.length) return;
 
   const activate = once(async () => {
@@ -1663,7 +2098,7 @@ async function mountInteractionFeatures(defs, ctx) {
 }
 
 async function mountRegionLayer(defs, ctx) {
-  const regionDefs = defs.filter((def) => def.when === MOUNT_WHEN.REGION && matchesRoute(def) && hasSelector(def));
+  const regionDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, MOUNT_WHEN.REGION));
   if (!regionDefs.length || !ctx.regions.length) return;
 
   const observer = new IntersectionObserver(
@@ -1696,10 +2131,17 @@ async function mountRegionLayer(defs, ctx) {
 }
 
 function queueIdleEnhancements(defs, ctx) {
-  const idleDefs = defs.filter((def) => def.when === MOUNT_WHEN.IDLE && matchesRoute(def) && hasSelector(def));
+  const idleDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, MOUNT_WHEN.IDLE));
   if (!idleDefs.length) return;
 
   const handle = onIdle(async () => {
+    if (ctx.runtimePolicy.delay) {
+      await new Promise((resolve) => {
+        const timer = window.setTimeout(resolve, ctx.runtimePolicy.delay);
+        ctx.addTimer(timer);
+      });
+    }
+
     for (const def of idleDefs) {
       const roots = getRoots(def);
 
@@ -1812,6 +2254,13 @@ async function bootSite() {
         ...frameState,
         bindGlobalInteractions,
       },
+      modules: {
+        audit: () => [...(runtimeCtx?.moduleAudit || [])],
+        definitions: () => listModuleDefinitions(runtimeCtx),
+        mount: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
+        policy: () => runtimeCtx?.runtimePolicy || null,
+        records: () => snapshotRuntimeModules(runtimeCtx),
+      },
     },
   });
   const queryDisposition = applySpwQueryDisposition(HTML, {
@@ -1831,14 +2280,8 @@ async function bootSite() {
   primeRegions(runtimeCtx);
 
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
-  await mountImmediateLayer(
-    FEATURE_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
-    runtimeCtx
-  );
-  await mountImmediateLayer(
-    ENHANCEMENT_DEFS.filter((def) => def.when === MOUNT_WHEN.IMMEDIATE),
-    runtimeCtx
-  );
+  await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
+  await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
   refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
 
   schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');
@@ -1874,6 +2317,10 @@ async function bootSite() {
 window.__SPW_SITE__ = {
   bootSite,
   destroyRuntime,
+  auditModules: () => [...(runtimeCtx?.moduleAudit || [])],
+  listModules: () => listModuleDefinitions(runtimeCtx),
+  mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
+  snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
   refreshRuntime: () => runtimeCtx && refreshRuntime(runtimeCtx),
   getContext: () => runtimeCtx,
 };

@@ -222,9 +222,9 @@
                     </p>
                     <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=puppet">Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug">Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on">Inspector view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager">Lab view</a>
                     </div>
                 </article>
 
@@ -1898,22 +1898,24 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                     <h3>Query recipes</h3>
                     <p>
                         These links use the same query contract as the runtime. Reader mode keeps the native CSS defaults
-                        quiet; the builder, inspect, and lab recipes add explicit diagnostics for practice and comparison.
+                        quiet; builder mode is a precise low-theatrics audit surface; inspect and lab mode add progressively
+                        more visible resonance for practice, screenshots, and comparison.
                     </p>
                     <p>
                         When this site is discovered out of context, these recipes are intended to act as landing modes:
-                        a calm reader surface for casual browsing, plus inspect and lab surfaces for hobbyists, QA, and
-                        language models that need a page with a clear console story.
+                        a calm reader surface for casual browsing, a precision surface for debugging what mounted, and
+                        resonant lab surfaces for hobbyists, QA, narrators, and language models that need a page with a
+                        clear console story.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=puppet">Builder view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug">Inspector view</a>
-                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction">Lab view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="builder" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=layout-shift&amp;log-level=debug&amp;physics=calm&amp;module-audit=on">Builder view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="inspect" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=basic&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;module-audit=on&amp;module-visuals=on">Inspector view</a>
+                        <a class="operator-chip" data-site-settings-query-mode="lab" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;log=site-settings,layout-shift&amp;log-level=debug&amp;physics=screenshot&amp;palette=craft&amp;reflow=interaction&amp;module-audit=on&amp;module-visuals=on&amp;runtime-timing=eager">Lab view</a>
                     </div>
                     <p class="settings-query-preview-copy">
                         Current query:
-                        <code class="settings-query-preview" data-site-settings-query-preview data-spw-handle="query-preview" data-spw-page-hook-label="Current query">?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug</code>
+                        <code class="settings-query-preview" data-site-settings-query-preview data-spw-handle="query-preview" data-spw-page-hook-label="Current query">?view=inspect&meaning=inspect&debug=css,layout&diagnostics=basic&log=site-settings,layout-shift&log-level=debug&module-audit=on&module-visuals=on</code>
                     </p>
                     <div class="settings-query-footer">
                         <button class="operator-chip" data-site-settings-query-copy="inspect" data-spw-handle="query-copy" data-spw-page-hook-label="Copy inspect query" type="button">Copy inspect query</button>

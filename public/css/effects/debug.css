@@ -29,6 +29,7 @@
   [data-spw-surface],
   [data-spw-feature],
   [data-spw-module],
+  [data-spw-module-evaluates],
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
@@ -57,6 +58,7 @@
   [data-spw-context],
   [data-spw-feature],
   [data-spw-module],
+  [data-spw-module-evaluates],
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
@@ -83,6 +85,7 @@
   [data-spw-context],
   [data-spw-feature],
   [data-spw-module],
+  [data-spw-module-evaluates],
   [data-spw-slot],
   [data-spw-kind],
   [data-spw-component-id],
@@ -154,7 +157,11 @@
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module]::before {
-  content: "module:" attr(data-spw-module);
+  content: "module:" attr(data-spw-module) " [" attr(data-spw-module-status) " / " attr(data-spw-module-when) "]";
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module][data-spw-module-evaluates]::before {
+  content: "module:" attr(data-spw-module) " {" attr(data-spw-module-evaluates) "}";
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-slot]::before {
@@ -226,6 +233,29 @@
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-module] {
   --spw-css-debug-color: var(--op-action-color, #005959);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) body::after {
+  position: fixed;
+  z-index: 200;
+  inset: auto 0.6rem 0.6rem auto;
+  max-inline-size: min(44ch, calc(100vw - 1.2rem));
+  padding: 0.48rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #005959) 34%, transparent);
+  border-radius: var(--shape-small, 8px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--op-action-color, #005959) 6%);
+  box-shadow: 0 0.5rem 1.6rem color-mix(in srgb, var(--shadow-color, #111) 14%, transparent);
+  color: color-mix(in srgb, var(--ink, #111) 88%, var(--op-action-color, #005959) 12%);
+  content:
+    "posture: " attr(data-spw-runtime-posture)
+    " | "
+    "runtime modules: " attr(data-spw-runtime-module-count)
+    " | last: " attr(data-spw-runtime-last-module)
+    " {" attr(data-spw-runtime-last-module-evaluates) "}";
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  pointer-events: none;
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) [data-spw-kind] {

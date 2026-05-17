@@ -12,6 +12,7 @@ claim = `Query parameters are a design surface when they describe reproducible c
 metaphors: .{
  lab = `A query string can record calibrated conditions: palette, physics, meaning density, logging, and reflow reason.`
  painting = `The same controls can feel like ground, wash, contrast, outline, and motion when the public vocabulary needs studio language.`
+ instrument = `The same page can be tuned from minimal reading to precise audit to resonant visual practice without changing the underlying route.`
  plugin = `Forks should be able to rename vocabulary or add instruments without editing parser internals.`
 }[reg=facet]
 
@@ -21,7 +22,13 @@ default_vocabulary: #[
  `spw-palette|palette`,
  `spw-log|log`,
  `spw-log-level|log-level`,
- `spw-reflow|reflow`
+ `spw-reflow|reflow`,
+ `spw-runtime-timing|runtime-timing`,
+ `spw-module-timing|module-timing`,
+ `spw-module-audit|module-audit`,
+ `spw-module-visuals|module-visuals`,
+ `spw-module-only|module-only`,
+ `spw-module-skip|module-skip`
 ][reg=set]
 
 anti_commitments: #[
@@ -41,5 +48,7 @@ invariants: #[
  `Canonical spw-* names remain available for collision-resistant embedding.`,
  `Readable aliases are for authored links and QA links.`,
  `Plugin handlers may extend query behavior but should leave inspectable data attributes, tuning attributes, or CSS variables behind.`,
+ `Runtime module timing and visuals are query-tunable so QA links and screenshots can explain which script ecology is active.`,
+ `Precision recipes should stay low-theatrics: explicit logs and data attributes before decorative motion.`,
  `A screenshot-worthy URL should explain what was tuned without requiring the console.`
 ][reg=set]

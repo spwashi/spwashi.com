@@ -98,6 +98,19 @@ Console helpers should reveal the same model:
   such as `spw-data-page-state=interactive`, `spw-data-page-presence=foreground`,
   and `spw-data-page-arrival=returning` when you need a reproducible browser
   console or extension setup.
+- Runtime modules are inspectable and query-tunable. Use
+  `spw-module-audit=on` to log why modules loaded or skipped,
+  `spw-module-visuals=on` to let module dimensions influence handles and rails,
+  `spw-runtime-timing=eager|defer|quiet|manual` to change global mount timing,
+  `spw-module-timing=topic-discovery:immediate` for one module, and
+  `spw-module-only=` or `spw-module-skip=` to isolate behavior in QA links.
+  Console helpers live at `window.__SPW_SITE__.listModules()`,
+  `snapshotModules()`, `auditModules()`, and `mountModule(id)`.
+  Keep the posture explicit: use audit-only URLs for precise, low-theatrics
+  debugging; add module visuals only when screenshot-legible rails and handles
+  help the page teach its script ecology. The runtime derives
+  `html[data-spw-runtime-posture="minimal|precision|resonant|theatrical"]`
+  from those choices so CSS and screenshots can name the current tuning posture.
 - Query presets compose with the same mechanism. The canonical form is
   `spw-physics=calm|tactile|puppet|screenshot` and
   `spw-meaning=quiet|readable|inspect|screenshot`, while ergonomic aliases

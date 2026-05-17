@@ -335,13 +335,37 @@ frame #runtime-behavior-lab
   role route
   surface design/runtime
   concept browser_runtime configurability console_instrumentation
-  note "The runtime behavior lab exposes query tuning, console inspection, and reflow reasons as documentation-first browser behavior."
+  note "The runtime behavior lab exposes query tuning, console inspection, module timing, module reasons, and reflow reasons as documentation-first browser behavior."
 
 frame #performance-puppetry
   role concept
   surface design/runtime
   concept performance puppetry browser_runtime
   note "Performance puppetry treats scripts as named controllers, query strings as stage setup, stylesheets as disposition, and logs as narration of which controller moved which surface."
+
+frame #module-fluency
+  role convention
+  surface design/runtime
+  concept script_ecology module_audit semantic_motion
+  note "Runtime modules expose what they evaluate: routing, semantics, visual treatment, state, interaction, or surface-specific behavior. CSS may translate those dimensions into rails, handles, and debug labels, while query parameters can defer, isolate, or narrate modules for screenshots and team review."
+
+frame #resonant-ground
+  role convention
+  surface design/runtime
+  concept learnability visual_resonance tuning_posture
+  note "The site can be complex, but it should keep a stable visual ground. Advanced behavior should feel learnable through repeated handles, consistent states, and opt-in resonance rather than surprise theatrics."
+
+frame #tuning-postures
+  role convention
+  surface settings/runtime
+  concept precision_mode resonance_mode theatrical_mode
+  note "Runtime query recipes should distinguish minimal reading, precise low-theatrics auditing, resonant visual inspection, and staged lab presentation. Precision favors snappy feedback and explicit data attributes. Resonance favors screenshot-legible rails, echoes, and semantic handles."
+
+frame #component-lifecycle-tropes
+  role convention
+  surface components/runtime
+  concept lifecycle component_genomics page_state
+  note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention."
 
 frame #svg-art-runtime
   role concept
