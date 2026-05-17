@@ -199,6 +199,302 @@
   text-wrap: pretty;
 }
 
+:where(.spw-resonance-lab) {
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 92%, var(--active-op-color, var(--component-accent)) 5%);
+  --spw-resonance-line: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--component-gap-tight);
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border: 1px solid var(--spw-resonance-line);
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--active-op-color, var(--component-accent)) 7%, transparent),
+      transparent 42%
+    ),
+    var(--spw-resonance-ground);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-resonance-lab > *) {
+  min-width: 0;
+  padding-block: 0.15rem;
+}
+
+:where(.spw-resonance-lab h3) {
+  margin: 0 0 0.35rem;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: clamp(0.98rem, 1.8vw, 1.16rem);
+  line-height: 1.2;
+}
+
+:where(.spw-resonance-lab p) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.62)) 90%, var(--ink, #111) 10%);
+  line-height: 1.48;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis]) {
+  position: relative;
+  padding-inline-start: 0.8rem;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis])::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem auto 0.18rem 0;
+  inline-size: 0.22rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 48%, transparent);
+  opacity: var(--spw-resonance-axis-opacity, 0.58);
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="ground"]) {
+  --spw-resonance-axis-opacity: 0.38;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="precision"]) {
+  --spw-resonance-axis-opacity: 0.7;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="projection"]) {
+  --spw-resonance-axis-opacity: 0.84;
+}
+
+:where([data-spw-copy-depth]) {
+  --spw-copy-depth-line: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-copy-depth-bg: color-mix(in srgb, var(--component-surface-strong) 90%, var(--active-op-color, var(--component-accent)) 4%);
+  display: none;
+  margin-block: 0.75rem;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--spw-copy-depth-line);
+  border-radius: var(--component-radius-loose);
+  background: var(--spw-copy-depth-bg);
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.62)) 88%, var(--ink, #111) 12%);
+  line-height: 1.5;
+}
+
+:where([data-spw-copy-depth])::before {
+  display: block;
+  margin-block-end: 0.32rem;
+  color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 72%, var(--ink, #111) 28%);
+  content: attr(data-spw-copy-label);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+:where(html[data-spw-semantic-density="normal"]) :where([data-spw-copy-depth="normal"]),
+:where(html[data-spw-semantic-density="rich"]) :where([data-spw-copy-depth="normal"]),
+:where(html[data-spw-semantic-density="rich"]) :where([data-spw-copy-depth="rich"]),
+:where(html[data-spw-runtime-posture="resonant"]) :where([data-spw-copy-depth="genre"]),
+:where(html[data-spw-runtime-posture="theatrical"]) :where([data-spw-copy-depth="genre"]) {
+  display: block;
+}
+
+:where([data-spw-copy-depth="normal"]) {
+  --spw-copy-depth-line: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where([data-spw-copy-depth="rich"]) {
+  --spw-copy-depth-line: color-mix(in srgb, var(--op-probe-color, var(--component-accent)) 28%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-copy-depth-bg: color-mix(in srgb, var(--component-surface-strong) 88%, var(--op-probe-color, var(--component-accent)) 5%);
+}
+
+:where([data-spw-copy-depth="genre"]) {
+  --spw-copy-depth-line: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 30%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-copy-depth-bg: color-mix(in srgb, var(--component-surface-strong) 86%, var(--op-object-color, var(--component-accent)) 7%);
+}
+
+:where([data-spw-copy-depth][data-spw-semantic-expression]) {
+  position: relative;
+}
+
+:where([data-spw-copy-depth][data-spw-semantic-expression])::after {
+  content: attr(data-spw-semantic-expression);
+  display: inline-flex;
+  margin-block-start: 0.55rem;
+  padding: 0.16rem 0.48rem;
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 10%, transparent);
+  color: color-mix(in srgb, var(--ink-soft, #555) 78%, var(--active-op-color, var(--component-accent)) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+:where([data-spw-semantic-cluster]) {
+  --spw-cluster-accent: var(--active-op-color, var(--component-accent));
+  --spw-cluster-line: color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent);
+}
+
+:where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  --spw-cluster-accent: var(--op-object-color, #a67c00);
+}
+
+:where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]) {
+  --spw-cluster-accent: var(--op-action-color, #005959);
+}
+
+:where([data-spw-semantic-cluster~="learning"], [data-spw-vocab="learning"]) {
+  --spw-cluster-accent: var(--op-probe-color, #4a2180);
+}
+
+:where([data-spw-semantic-cluster~="genre"], [data-spw-vocab="genre"]) {
+  --spw-cluster-accent: var(--op-stream-color, var(--op-ref-color, #1d57a3));
+}
+
+:where([data-spw-vocab]) {
+  border-radius: 0.22em;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 62%,
+      color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color)) 14%, transparent) 62%
+    );
+  text-decoration: underline dotted color-mix(in srgb, var(--spw-cluster-accent, currentColor) 34%, transparent);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.16em;
+}
+
+:where(
+  html[data-spw-palette-resonance="craft"],
+  html[data-spw-palette-resonance="route"][data-spw-developmental-climate="weave"],
+  html[data-spw-developmental-climate="offer"]
+) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 48%,
+      color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent) 48%
+    );
+  text-decoration-color: color-mix(in srgb, var(--spw-cluster-accent) 52%, transparent);
+}
+
+:where(html[data-spw-runtime-posture="precision"]) :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]),
+:where(html[data-spw-runtime-posture="resonant"]) :where([data-spw-semantic-cluster], [data-spw-vocab]),
+:where(html[data-spw-runtime-posture="theatrical"]) :where([data-spw-semantic-cluster], [data-spw-vocab]) {
+  box-shadow: inset 0 -0.12em 0 color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color)) 12%, transparent);
+}
+
+:where(.spw-route-bridge) {
+  --spw-route-bridge-accent: var(--active-op-color, var(--component-accent));
+  display: grid;
+  gap: 0.75rem;
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: clamp(0.8rem, 2vw, 1rem);
+  border: 1px solid color-mix(in srgb, var(--spw-route-bridge-accent) 20%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--spw-route-bridge-accent) 10%, transparent),
+      transparent 34%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-route-bridge-accent) 4%);
+  view-transition-name: var(--spw-route-transition-name, none);
+}
+
+:where(.spw-route-bridge header) {
+  display: grid;
+  gap: 0.22rem;
+}
+
+:where(.spw-route-bridge h3) {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  line-height: 1.2;
+}
+
+:where(.spw-route-bridge p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.48;
+}
+
+:where(.spw-route-bridge__links) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+:where(.spw-route-bridge__links a) {
+  display: grid;
+  gap: 0.2rem;
+  min-height: 100%;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--spw-route-bridge-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft) 88%, var(--spw-route-bridge-accent) 5%);
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(.spw-route-bridge__links a:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--spw-route-bridge-accent) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  transform: translateY(-1px);
+}
+
+:where(.spw-route-bridge__links strong) {
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--spw-route-bridge-accent) 20%);
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+:where(.spw-route-bridge__links span) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+:where([data-spw-transition-surface]) {
+  view-transition-name: var(--spw-transition-surface-name, none);
+  contain: layout paint;
+}
+
+:where([data-spw-transition-surface="hero"]) {
+  --spw-transition-surface-name: route-hero;
+}
+
+:where([data-spw-transition-surface="bridge"]) {
+  --spw-transition-surface-name: route-bridge;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-route-bridge__links a:is(:hover, :focus-visible)) {
+    transform: none;
+  }
+}
+
+:where(html[data-spw-runtime-posture="minimal"] .spw-resonance-lab) {
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 96%, var(--bg, #f7f4ee) 4%);
+  --spw-resonance-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 84%, transparent);
+}
+
+:where(html[data-spw-runtime-posture="precision"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 28%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(html[data-spw-runtime-posture="resonant"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-probe-color, var(--component-accent)) 34%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 88%, var(--op-probe-color, var(--component-accent)) 8%);
+}
+
+:where(html[data-spw-runtime-posture="theatrical"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 84%, var(--op-object-color, var(--component-accent)) 11%);
+}
+
 .spw-card-meta {
   display: grid;
   gap: 0.35rem;

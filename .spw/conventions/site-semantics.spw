@@ -361,6 +361,18 @@ frame #tuning-postures
   concept precision_mode resonance_mode theatrical_mode
   note "Runtime query recipes should distinguish minimal reading, precise low-theatrics auditing, resonant visual inspection, and staged lab presentation. Precision favors snappy feedback and explicit data attributes. Resonance favors screenshot-legible rails, echoes, and semantic handles."
 
+frame #copy-depth-layers
+  role convention
+  surface copy/runtime
+  concept semantic_density mood_reading theory_depth
+  note "Copy may declare optional layers with data-spw-copy-depth='normal|rich|genre'. Minimal copy remains visible. Normal and rich layers respond to semantic density. Genre layers respond to resonant or theatrical runtime posture when mood reading, trope reading, or combinatoric media practice should surface."
+
+frame #semantic-clusters
+  role convention
+  surface copy/runtime
+  concept semantic_resonance vocabulary_clusters
+  note "Use data-spw-semantic-cluster and data-spw-vocab to mark reusable vocabulary families such as culinary, programming, learning, genre, and runtime. CSS may highlight active clusters differently by palette, climate, semantic density, or runtime posture, but the words must remain readable without enhancement."
+
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime

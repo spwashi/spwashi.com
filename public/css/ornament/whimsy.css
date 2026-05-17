@@ -127,7 +127,13 @@
 :where(.operator-chip:hover, button:hover,
        input[type="button"]:hover, input[type="submit"]:hover) {
     border-color: var(--active-op-border, rgba(0, 128, 128, 0.34));
-    background: var(--spw-paper-wash);
+    background:
+        color-mix(
+            in srgb,
+            var(--surface-strong, #fff) 88%,
+            var(--active-op-color, #008080) 12%
+        );
+    color: var(--ink-strong, var(--ink, #161c1d));
 }
 
 :where(button:active, .operator-chip:active) {
@@ -144,6 +150,7 @@
     border: 1px solid var(--token-border, rgba(0, 128, 128, 0.55));
     border-radius: var(--spw-paper-corner);
     background: var(--token-bg, rgba(255, 255, 255, 0.82));
+    color: var(--ink, #161c1d);
     font-size: var(--text-size-sm, 0.8rem);
     font-weight: 600;
     transition:
@@ -157,7 +164,13 @@
 
 :where(.spec-strip:hover .spec-pill) {
     border-color: var(--token-border-strong, rgba(0, 128, 128, 0.8));
-    background: var(--token-bg-hover, rgba(255, 255, 255, 0.97));
+    background:
+        color-mix(
+            in srgb,
+            var(--surface-strong, #fff) 92%,
+            var(--active-op-color, #008080) 8%
+        );
+    color: var(--ink-strong, var(--ink, #161c1d));
 }
 
 /* ==========================================================================
@@ -179,6 +192,35 @@
 
 :where(label.settings-option:hover, .settings-option:hover) {
     background: var(--op-frame-bg-soft, rgba(0, 128, 128, 0.06));
+    color: var(--ink-strong, var(--ink, #161c1d));
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(.operator-chip:hover, button:hover,
+       input[type="button"]:hover, input[type="submit"]:hover),
+:where(html[data-spw-color-mode="dark"]) :where(.spec-strip:hover .spec-pill),
+:where(html[data-spw-color-mode="dark"]) :where(label.settings-option:hover, .settings-option:hover) {
+    background:
+        color-mix(
+            in srgb,
+            var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%,
+            var(--active-op-color, #7bd1d1) 22%
+        );
+    color: var(--ink-strong, rgba(245, 247, 250, 0.98));
+}
+
+@media (prefers-color-scheme: dark) {
+    :where(html[data-spw-color-mode="auto"]) :where(.operator-chip:hover, button:hover,
+           input[type="button"]:hover, input[type="submit"]:hover),
+    :where(html[data-spw-color-mode="auto"]) :where(.spec-strip:hover .spec-pill),
+    :where(html[data-spw-color-mode="auto"]) :where(label.settings-option:hover, .settings-option:hover) {
+        background:
+            color-mix(
+                in srgb,
+                var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%,
+                var(--active-op-color, #7bd1d1) 22%
+            );
+        color: var(--ink-strong, rgba(245, 247, 250, 0.98));
+    }
 }
 
 /* ==========================================================================
