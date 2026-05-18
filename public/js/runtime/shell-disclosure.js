@@ -803,7 +803,7 @@ export function initSpwShellDisclosure(options = {}) {
   const handleNavClick = (event) => {
     const link = event.target.closest('a[href]');
     if (!link) return;
-    window.requestAnimationFrame(() => closeToggleMenu('route'));
+    window.setTimeout(() => closeToggleMenu('route'), 0);
   };
 
   const handleDocumentClick = (event) => {
