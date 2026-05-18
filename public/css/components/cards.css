@@ -561,6 +561,29 @@
   gap: var(--gap-inline-tight, 0.45rem);
 }
 
+:where(.spw-settings-cluster__note) {
+  display: grid;
+  gap: 0.22rem;
+  max-inline-size: 74ch;
+  padding: 0.68rem 0.78rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color) 22%, var(--line));
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface-strong) 76%, var(--active-op-color) 4%);
+}
+
+:where(.spw-settings-cluster__note > *) {
+  margin: 0;
+}
+
+:where(.spw-settings-cluster__note kbd) {
+  padding: 0.04rem 0.24rem;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: var(--shape-micro, 4px);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.82em;
+}
+
 :where(.spw-settings-cluster :is(button, .operator-chip, .theme-pack-chip-btn)) {
   background-color: var(--spw-control-safe-bg);
   color: var(--spw-control-safe-ink);

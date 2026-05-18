@@ -1285,6 +1285,32 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'pronunciation-hints',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '.frame-sigil, .operator-chip, .syntax-token, .spw-delimiter',
+    rootMode: 'single',
+    evaluates: 'semantics learning interaction',
+    load: () => import('./interface/pronunciation.js'),
+    mount: (mod) => {
+      const fn = mod?.initPronunciationHints;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'composition-spell',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    evaluates: 'semantics composition learning',
+    load: () => import('./interface/composition.js'),
+    mount: (mod) => {
+      const fn = mod?.initCompositionSpell;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'local-notes',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

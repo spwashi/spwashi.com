@@ -71,7 +71,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'activate or inspect a named resonance handle',
     family: 'resonance',
     speech: 'vibration',
-    reversibility: 'returnable'
+    reversibility: 'returnable',
+    pronunciation: 'hash-gt',
+    mnemonic: 'Address the house.'
   },
   {
     pattern: /^#:/,
@@ -82,7 +84,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'inspect the layer as a named resonance field',
     family: 'resonance',
     speech: 'vibration',
-    reversibility: 'inspectable'
+    reversibility: 'inspectable',
+    pronunciation: 'layer',
+    mnemonic: 'Set the mood.'
   },
   {
     pattern: /^#/,
@@ -93,7 +97,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'name a structure so it can be recognized by resonance',
     family: 'resonance',
     speech: 'tone',
-    reversibility: 'returnable'
+    reversibility: 'returnable',
+    pronunciation: 'tone',
+    mnemonic: 'Find the frequency.'
   },
   {
     pattern: /^\./,
@@ -104,7 +110,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'return to the local ground, baseline, or center of gravity',
     family: 'grounding',
     speech: 'ground',
-    reversibility: 'recoverable'
+    reversibility: 'recoverable',
+    pronunciation: 'settle',
+    mnemonic: 'Back to earth.'
   },
   {
     pattern: /^\^/,
@@ -115,7 +123,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'lift parts into an inspectable integrated relation',
     family: 'relational',
     speech: 'synthesis',
-    reversibility: 'inspectable'
+    reversibility: 'inspectable',
+    pronunciation: 'lift',
+    mnemonic: 'Lasso the thought.'
   },
   {
     pattern: /^~/,
@@ -126,7 +136,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'keep a possible path available without collapsing it',
     family: 'possibility',
     speech: 'thread',
-    reversibility: 'deferrable'
+    reversibility: 'deferrable',
+    pronunciation: 'thread',
+    mnemonic: 'Reach out.'
   },
   {
     pattern: /^\?/,
@@ -137,7 +149,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'open curiosity, uncertainty, or an exploratory aperture',
     family: 'inquiry',
     speech: 'question',
-    reversibility: 'reversible'
+    reversibility: 'reversible',
+    pronunciation: 'ask',
+    mnemonic: 'Open the door.'
   },
   {
     pattern: /^@/,
@@ -148,7 +162,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'shift or inspect the viewpoint shaping an observation',
     family: 'perspective',
     speech: 'viewpoint',
-    reversibility: 'revisable'
+    reversibility: 'revisable',
+    pronunciation: 'commit',
+    mnemonic: 'Target locked.'
   },
   {
     pattern: /^\*/,
@@ -159,7 +175,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'mark material salience, substance, or concrete worth',
     family: 'material',
     speech: 'value',
-    reversibility: 'replayable'
+    reversibility: 'replayable',
+    pronunciation: 'flow',
+    mnemonic: 'Open the tap.'
   },
   {
     pattern: /^&/,
@@ -170,7 +188,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'name the subject or binding focus of a relation',
     family: 'relational',
     speech: 'subject',
-    reversibility: 'revisable'
+    reversibility: 'revisable',
+    pronunciation: 'bind',
+    mnemonic: 'Better together.'
   },
   {
     pattern: /^=/,
@@ -181,7 +201,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'name, pin, or categorize a local value',
     family: 'grounding',
     speech: 'assignment',
-    reversibility: 'sticky'
+    reversibility: 'sticky',
+    pronunciation: 'pin',
+    mnemonic: 'Keep this here.'
   },
   {
     pattern: /^\$/,
@@ -192,7 +214,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'inspect the medium, trace, or register itself',
     family: 'reflective',
     speech: 'aside',
-    reversibility: 'reversible'
+    reversibility: 'reversible',
+    pronunciation: 'reflect',
+    mnemonic: 'Check the map.'
   },
   {
     pattern: /^%/,
@@ -203,7 +227,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'compare, normalize, or adjust salience',
     family: 'reflective',
     speech: 'adverb',
-    reversibility: 'revisable'
+    reversibility: 'revisable',
+    pronunciation: 'scale',
+    mnemonic: 'Level the field.'
   },
   {
     pattern: /^!/,
@@ -214,7 +240,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'commit a move and make the consequence observable',
     family: 'operative',
     speech: 'verb',
-    reversibility: 'committing'
+    reversibility: 'committing',
+    pronunciation: 'force',
+    mnemonic: 'Follow the rule.'
   },
   {
     pattern: /^>/,
@@ -225,7 +253,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'mark the closing edge of a concept bracket',
     family: 'conceptual',
     speech: 'concept',
-    reversibility: 'projected'
+    reversibility: 'projected',
+    pronunciation: 'show',
+    mnemonic: 'Cast the light.'
   },
   {
     pattern: /^</,
@@ -236,7 +266,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'open a concept bracket or topical boundary',
     family: 'conceptual',
     speech: 'concept',
-    reversibility: 'scoping'
+    reversibility: 'scoping',
+    pronunciation: 'swoop',
+    mnemonic: 'Lasso the field.'
   },
   {
     pattern: /^\(/,
@@ -247,7 +279,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'enter a scene where structure becomes observable',
     family: 'situational',
     speech: 'scene',
-    reversibility: 'enterable'
+    reversibility: 'enterable',
+    pronunciation: 'scene',
+    mnemonic: 'Light the stage.'
   },
   {
     pattern: /^\[/,
@@ -258,7 +292,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'choose a mode while keeping alternatives discoverable',
     family: 'modal',
     speech: 'mode',
-    reversibility: 'switchable'
+    reversibility: 'switchable',
+    pronunciation: 'choose',
+    mnemonic: 'Pick a lens.'
   },
   {
     pattern: /^\{/,
@@ -269,7 +305,9 @@ const OPERATOR_DEFINITIONS = Object.freeze([
     interaction: 'hold direction, bounded motion, or what belongs together',
     family: 'directional',
     speech: 'direction',
-    reversibility: 'bounded'
+    reversibility: 'bounded',
+    pronunciation: 'brace',
+    mnemonic: 'Hold the space.'
   }
 ]);
 

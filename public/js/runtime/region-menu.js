@@ -1,4 +1,5 @@
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { bus } from '/public/js/kernel/bus.js';
 import {
   collectSemanticBraceMatches,
   deriveSemanticBraceExpression,
@@ -16,7 +17,11 @@ const TARGET_SELECTOR = [
 ].join(', ');
 
 const MENU_ID = 'spw-region-menu';
-const PREVIEW_DELAY_MS = 520;
+const PREVIEW_DELAY_MS = Object.freeze({
+  calm: 780,
+  responsive: 520,
+  expressive: 360,
+});
 
 let activeTarget = null;
 let activeMatches = [];
@@ -71,7 +76,7 @@ function onPointerEnter(event) {
     previewTarget = target;
     writeDatasetValue(target, 'spwRegionPreview', 'true');
     writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
-  }, PREVIEW_DELAY_MS);
+  }, getPreviewDelay());
 }
 
 function onPointerLeave(event) {
@@ -135,6 +140,12 @@ function openMenu(target) {
   writeDatasetValue(menu, 'spwState', 'open');
   writeDatasetValue(target, 'spwRegionMenuTarget', 'true');
   document.documentElement.dataset.spwRegionMenu = 'open';
+  bus.emit?.('region-menu:opened', {
+    target,
+    semantic,
+    matchCount: activeMatches.length,
+    contract: Object.fromEntries(buildContract(target, semantic, frame)),
+  });
 
   const firstButton = menu.querySelector('button');
   firstButton?.focus?.({ preventScroll: true });
@@ -179,10 +190,68 @@ function buildMenuContent(target, semantic, frame) {
     fragment.appendChild(list);
   }
 
+  if (shouldShowTuningHandles()) {
+    const handles = document.createElement('div');
+    handles.className = 'spw-region-menu__handles';
+    [
+      ['salience', 'Salience', '--spw-salience'],
+      ['charge', 'Charge', '--charge'],
+    ].forEach(([id, label, variable]) => {
+      const row = document.createElement('div');
+      row.className = 'spw-region-menu__handle-row';
+      const labelEl = document.createElement('label');
+      labelEl.textContent = label;
+      const input = document.createElement('input');
+      input.type = 'range';
+      input.min = '0';
+      input.max = '1';
+      input.step = '0.01';
+      input.value = readUnitValue(getComputedStyle(target).getPropertyValue(variable));
+      input.addEventListener('input', (event) => {
+        target.style.setProperty(variable, event.target.value);
+        writeDatasetValue(target, `spw${id.charAt(0).toUpperCase() + id.slice(1)}`, event.target.value);
+        bus.emit?.('region-menu:tuned', {
+          target,
+          id,
+          value: event.target.value,
+          variable,
+        });
+      });
+      row.append(labelEl, input);
+      handles.appendChild(row);
+    });
+    fragment.appendChild(handles);
+  }
+
+  // Composition Suggestions
+  const suggestions = buildSuggestions(semantic, target);
+  if (suggestions.length) {
+    const suggestTitle = document.createElement('p');
+    suggestTitle.className = 'spw-region-menu__subtitle';
+    suggestTitle.textContent = 'Suggested Spells';
+    fragment.appendChild(suggestTitle);
+
+    const list = document.createElement('div');
+    list.className = 'spw-region-menu__suggestions';
+    suggestions.forEach(([label, spell]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'spw-suggestion-chip';
+      button.textContent = label;
+      button.title = spell;
+      button.addEventListener('click', () => {
+        copyToClipboard(spell, button);
+      });
+      list.appendChild(button);
+    });
+    fragment.appendChild(list);
+  }
+
   const actions = [
     ['focus', 'Focus matches', () => focusMatches(target, semantic)],
     ['next', 'Next variant', () => moveMatch(1)],
     ['prev', 'Previous variant', () => moveMatch(-1)],
+    ['capture', 'Capture spell', () => captureSpell(target, semantic)],
     ['charge', 'Charge region', () => toggleRegionCharge(target)],
     ['copy', 'Copy Spw seed', () => copySeed(target, semantic, frame)],
     ['clear', 'Clear focus', () => clearRegionFocus()],
@@ -199,6 +268,44 @@ function buildMenuContent(target, semantic, frame) {
   });
 
   return fragment;
+}
+
+function captureSpell(target, semantic) {
+  bus.emit?.('spell:capture', {
+    expression: semantic.expression || readableTarget(target),
+    label: semantic.rootLabel || readableTarget(target),
+  });
+  writeDatasetValue(target, 'spwCaptured', 'true');
+  setTimeout(() => writeDatasetValue(target, 'spwCaptured', null), 800);
+}
+
+function buildSuggestions(semantic, target) {
+  const suggestions = [];
+  const family = semantic.family;
+  const operator = target.dataset.spwOperator || 'frame';
+
+  if (family) {
+    suggestions.push([`?${family}`, `?{${family}}`]);
+    suggestions.push([`@${family}`, `@action{${family}}`]);
+    suggestions.push([`*${family}`, `*stream{${family}}`]);
+  }
+
+  if (semantic.behavior) {
+    suggestions.push([`${semantic.root} -> ${semantic.behavior}`, `${operator}{${semantic.root}{${semantic.behavior}}}`]);
+  }
+
+  return suggestions;
+}
+
+async function copyToClipboard(text, element) {
+  try {
+    await navigator.clipboard?.writeText(text);
+    const originalText = element.textContent;
+    element.textContent = 'Copied!';
+    setTimeout(() => element.textContent = originalText, 1000);
+  } catch {
+    window.prompt('Copy Spw spell', text);
+  }
 }
 
 function resolveSemantic(target) {
@@ -313,6 +420,10 @@ function toggleRegionCharge(target) {
   if (!(frame instanceof HTMLElement)) return;
   const next = frame.dataset.spwRegionCharge === 'active' ? null : 'active';
   writeDatasetValue(frame, 'spwRegionCharge', next);
+  bus.emit?.('region-menu:charged', {
+    frame,
+    active: next === 'active',
+  });
 }
 
 async function copySeed(target, semantic, frame) {
@@ -392,4 +503,25 @@ function clearPreviewTimer() {
     window.clearTimeout(previewTimer);
     previewTimer = null;
   }
+}
+
+function getPreviewDelay() {
+  const tuner = document.documentElement.dataset.spwInteractionTuner || 'calm';
+  return PREVIEW_DELAY_MS[tuner] || PREVIEW_DELAY_MS.calm;
+}
+
+function shouldShowTuningHandles() {
+  const html = document.documentElement.dataset;
+  return (
+    html.spwShowSemanticMetadata === 'on'
+    || html.spwCognitiveHandles === 'on'
+    || html.spwInteractionTuner === 'expressive'
+    || html.spwSemanticDensity === 'rich'
+  );
+}
+
+function readUnitValue(value = '') {
+  const number = Number.parseFloat(String(value).trim());
+  if (!Number.isFinite(number)) return '0';
+  return String(Math.max(0, Math.min(1, number)));
 }

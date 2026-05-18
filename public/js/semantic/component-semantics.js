@@ -571,6 +571,60 @@ function setOrReplace(el, key, value) {
   writeDatasetValue(el, key, value);
 }
 
+function inferFunctionalContract(el, snapshotBase = {}) {
+  const semantic = snapshotBase.semanticBrace || inferSemanticBrace(el);
+  const label = normalizeText(
+    el.dataset.spwReadingCue
+    || el.getAttribute('aria-label')
+    || el.querySelector?.(':scope > header h1, :scope > header h2, :scope > h1, :scope > h2, :scope > h3')?.textContent
+    || snapshotBase.primaryLabel
+    || snapshotBase.meaning
+    || ''
+  );
+  const input = normalizeText(
+    el.dataset.spwInput
+    || semantic?.rootLabel
+    || snapshotBase.meaning
+    || snapshotBase.role
+    || ''
+  );
+  const operation = normalizeText(
+    el.dataset.spwOperation
+    || semantic?.behaviorLabel
+    || snapshotBase.interactivity
+    || snapshotBase.phrase
+    || ''
+  );
+  const output = normalizeText(
+    el.dataset.spwReturn
+    || el.dataset.spwConsequence
+    || semantic?.variantLabel
+    || snapshotBase.valueLayer
+    || ''
+  );
+  const tone = normalizeText(
+    el.dataset.spwTone
+    || el.dataset.spwContext
+    || snapshotBase.context
+    || ''
+  );
+
+  const signature = [
+    input || snapshotBase.kind || 'component',
+    operation ? `{${operation}}` : '',
+    output ? `-> ${output}` : '',
+  ].filter(Boolean).join(' ');
+
+  return {
+    readingCue: label,
+    input,
+    operation,
+    returnValue: output,
+    tone,
+    signature,
+  };
+}
+
 function snapshotComponentSemantics(el, options = {}) {
   const kind = getKind(el);
   const role = inferRole(el, kind);
@@ -596,6 +650,17 @@ function snapshotComponentSemantics(el, options = {}) {
   const valueLayer = inferValueLayer(role, context);
   const stance = inferStance(el, importance, interactivity);
   const relationship = describeRelationship(el);
+  const contract = inferFunctionalContract(el, {
+    kind,
+    role,
+    meaning,
+    phrase,
+    context,
+    interactivity,
+    valueLayer,
+    primaryLabel: relationship.primaryLabel,
+    semanticBrace
+  });
   const componentBase = {
     kind,
     role,
@@ -607,6 +672,7 @@ function snapshotComponentSemantics(el, options = {}) {
     debugSource,
     primaryExpression: relationship.primaryExpression,
     primaryLabel: relationship.primaryLabel,
+    signature: contract.signature,
     semanticBrace
   };
   const componentId = inferComponentId(el, componentBase);
@@ -667,6 +733,12 @@ function snapshotComponentSemantics(el, options = {}) {
     primaryExpression: relationship.primaryExpression,
     primaryLabel: relationship.primaryLabel,
     routeMarker: relationship.routeMarker,
+    readingCue: contract.readingCue,
+    input: contract.input,
+    operation: contract.operation,
+    returnValue: contract.returnValue,
+    tone: contract.tone,
+    signature: contract.signature,
     semanticBrace,
     semanticTagged: 'true',
     semanticVersion: options.semanticVersion || SEMANTIC_REGISTRY_VERSION
@@ -710,6 +782,12 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   if (snapshot.primaryExpression) writer(el, 'spwPrimaryExpression', snapshot.primaryExpression);
   if (snapshot.primaryLabel) writer(el, 'spwPrimaryLabel', snapshot.primaryLabel);
   if (snapshot.routeMarker) writer(el, 'spwRouteMarker', snapshot.routeMarker);
+  if (snapshot.readingCue) writer(el, 'spwReadingCue', snapshot.readingCue);
+  if (snapshot.input) writer(el, 'spwInput', snapshot.input);
+  if (snapshot.operation) writer(el, 'spwOperation', snapshot.operation);
+  if (snapshot.returnValue) writer(el, 'spwReturn', snapshot.returnValue);
+  if (snapshot.tone) writer(el, 'spwTone', snapshot.tone);
+  if (snapshot.signature) writer(el, 'spwSignature', snapshot.signature);
   if (snapshot.semanticBrace?.expression) writer(el, 'spwSemanticExpression', snapshot.semanticBrace.expression);
   if (snapshot.semanticBrace?.key) writer(el, 'spwSemanticKey', snapshot.semanticBrace.key);
   if (snapshot.semanticBrace?.family) writer(el, 'spwSemanticFamily', snapshot.semanticBrace.family);
@@ -826,6 +904,12 @@ function makePublicSnapshot(element, snapshot) {
     primaryExpression: snapshot.primaryExpression,
     primaryLabel: snapshot.primaryLabel,
     routeMarker: snapshot.routeMarker,
+    readingCue: snapshot.readingCue,
+    input: snapshot.input,
+    operation: snapshot.operation,
+    returnValue: snapshot.returnValue,
+    tone: snapshot.tone,
+    signature: snapshot.signature,
     semanticBrace: snapshot.semanticBrace,
     semanticVersion: snapshot.semanticVersion
   };

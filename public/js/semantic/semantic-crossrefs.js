@@ -38,6 +38,10 @@ function getElementTokens(el) {
     semantic?.variant || '',
     semantic?.behavior || '',
     semantic?.lens || '',
+    normalizeToken(el.dataset.spwInput || ''),
+    normalizeToken(el.dataset.spwOperation || ''),
+    normalizeToken(el.dataset.spwReturn || ''),
+    normalizeToken(el.dataset.spwTone || ''),
     getTopicToken(el),
   ];
 
@@ -58,6 +62,11 @@ function describeElement(el, tokens) {
     semanticVariant: semantic?.variant || '',
     semanticBehavior: semantic?.behavior || '',
     semanticLens: semantic?.lens || '',
+    input: normalizeText(el.dataset.spwInput || ''),
+    operation: normalizeText(el.dataset.spwOperation || ''),
+    returnValue: normalizeText(el.dataset.spwReturn || ''),
+    tone: normalizeText(el.dataset.spwTone || ''),
+    signature: normalizeText(el.dataset.spwSignature || ''),
     tokens,
   };
 }
@@ -187,6 +196,12 @@ function installConsoleApi(registry) {
       return result;
     },
     tokens: () => Array.from(registry.byToken.keys()).sort(),
+    describe: (token) => {
+      const normalized = normalizeToken(token);
+      return Array.from(registry.byToken.get(normalized) || [])
+        .map((el) => registry.metadata.get(el))
+        .filter(Boolean);
+    },
   };
 
   window.spwSemanticCrossrefs = api;
