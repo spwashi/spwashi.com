@@ -180,8 +180,8 @@
                 climate, reading comfort, or appearance before opening the deeper registers below.
             </p>
 
-            <div class="vibe-widget-grid settings-quickstart-grid" data-spw-feature="settings-quickstart">
-                <article class="vibe-widget vibe-widget--feature" data-site-settings-panel>
+            <div class="vibe-widget-grid settings-quickstart-grid" data-spw-box-model="choice-field" data-spw-composition-flow="grid" data-spw-feature="settings-quickstart">
+                <article class="vibe-widget vibe-widget--feature" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Quick presets</p>
                         <h3 class="vibe-widget-title">Choose a whole-site starting point</h3>
@@ -210,7 +210,7 @@
                     <span aria-live="polite" class="settings-status vibe-widget-status" data-site-settings-status role="status"></span>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel id="reader-builder-modes">
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card" id="reader-builder-modes">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Bespoke modes</p>
                         <h3 class="vibe-widget-title">Choose a reader, builder, or inspector posture</h3>
@@ -228,7 +228,7 @@
                     </div>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel>
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Author workflow</p>
                         <h3 class="vibe-widget-title">Choose what kind of writing work this surface should support</h3>
@@ -251,7 +251,7 @@
                     </div>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel>
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Writing recipes</p>
                         <h3 class="vibe-widget-title">Use task-first bundles</h3>
@@ -266,7 +266,7 @@
                     </div>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel>
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Common fixes</p>
                         <h3 class="vibe-widget-title">Apply practical bundles</h3>
@@ -284,7 +284,7 @@
                     </div>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel>
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="readout-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Current state</p>
                         <h3 class="vibe-widget-title">Read the active state</h3>
@@ -311,7 +311,7 @@
                     </div>
                 </article>
 
-                <article class="vibe-widget" data-site-settings-panel>
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="deviation-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Deviation register</p>
                         <h3 class="vibe-widget-title">What differs from the authored default</h3>
@@ -360,7 +360,7 @@
                 attention posture into appearance, reading comfort, accessibility, semantic detail, and diagnostics.
             </p>
 
-            <div class="settings-shortcuts" data-spw-feature="settings-shortcuts">
+            <div class="settings-shortcuts" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-feature="settings-shortcuts">
                 <a class="settings-shortcut-card" href="#author-workflow-settings">
                     <span class="settings-shortcut-kicker">Writing task</span>
                     <strong>Author Workflow</strong>
@@ -425,6 +425,8 @@
             <aside
                 class="spw-semantic-emphasis-map"
                 aria-label="Semantic emphasis map"
+                data-spw-box-model="semantic-map"
+                data-spw-composition-flow="grid"
                 data-spw-feature="semantic-emphasis-map"
                 data-spw-module="semantic-emphasis"
                 data-spw-module-evaluates="semantics visual state"
@@ -455,8 +457,8 @@
                 </div>
             </aside>
 
-            <form class="settings-form" data-site-settings-form data-spw-feature="settings-runtime-form">
-                <details class="settings-category" id="author-workflow-settings" open>
+            <form class="settings-form" data-site-settings-form data-spw-box-model="settings-instrument" data-spw-composition-flow="stack" data-spw-feature="settings-runtime-form">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="author-workflow-settings" open>
                     <summary class="settings-category-header">Author Workflow</summary>
                     <p class="frame-note">
                         Author workflow answers: what is the writer doing? It changes author-facing tokens such as annotation
@@ -523,7 +525,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="climate-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="climate-settings">
                     <summary class="settings-category-header">Developmental Climate</summary>
                     <p class="frame-note">
                         Developmental climate answers: what kind of attention is this surface inviting? It should behave like
@@ -637,7 +639,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="appearance-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="appearance-settings">
                     <summary class="settings-category-header">Appearance</summary>
 
                     <div class="settings-grid">
@@ -821,7 +823,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="interface-physics-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="interface-physics-settings">
                     <summary class="settings-category-header">Interface Physics</summary>
                     <p class="frame-note">
                         Tune structural attributes for components across the site: material, affordance, contour, stroke, density,
@@ -1052,7 +1054,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="pedagogical-flavor-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="pedagogical-flavor-settings">
                     <summary class="settings-category-header">Pedagogical Flavor</summary>
                     <p class="frame-note">
                         A pedagogical flavor is the metaphor family that helps concepts become memorable across routes.
@@ -1103,7 +1105,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="typography-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="typography-settings">
                     <summary class="settings-category-header">Typography</summary>
 
                     <div class="settings-grid">
@@ -1262,7 +1264,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="accessibility-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="accessibility-settings">
                     <summary class="settings-category-header">Accessibility</summary>
 
                     <div class="settings-grid">
@@ -1320,7 +1322,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="chrome-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="chrome-settings">
                     <summary class="settings-category-header">Interface Chrome</summary>
 
                     <div class="settings-grid">
@@ -1428,7 +1430,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="semantic-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="semantic-settings">
                     <summary class="settings-category-header">Semantic Detail</summary>
                     <p class="frame-note">
                         Tune how much the site explains itself: density, operator presentation, metadata, handles, relation,
@@ -1633,7 +1635,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="developer-settings">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="developer-settings">
                     <summary class="settings-category-header">Developer</summary>
 
                     <div class="settings-grid">
@@ -1675,7 +1677,7 @@
                     </div>
                 </details>
 
-                <details class="settings-category" id="runtime-diagnostics-settings" data-spw-page-hook="runtime-diagnostics" data-spw-page-hook-label="Runtime diagnostics">
+                <details class="settings-category" data-spw-box-model="settings-fold" id="runtime-diagnostics-settings" data-spw-page-hook="runtime-diagnostics" data-spw-page-hook-label="Runtime diagnostics">
                     <summary class="settings-category-header">Internal Runtime / Bus</summary>
                     <p class="frame-note">
                         Power-user diagnostics for runtime coordination. Reader-facing defaults stay on native CSS flow and
@@ -1685,7 +1687,8 @@
                         The same model is also available in the browser console through
                         <code>window.spwCompose.controls.pageState</code>,
                         <code>window.spwCompose.controls.frameState</code>, and
-                        <code>window.spwCompose.controls.pageHooks</code>, plus query values such as
+                        <code>window.spwCompose.controls.pageHooks</code>. Component composition is available through
+                        <code>window.spwCompose.controls.composition</code>, plus query values such as
                         <code>diagnostics=basic</code>, <code>log=layout-shift</code>, or
                         <code>spw-data-page-state=interactive</code> for repeatable QA, extension workflows, and page play.
                     </p>
@@ -1748,7 +1751,7 @@
                         </fieldset>
                     </div>
 
-                    <article class="frame-panel settings-console-snippets" data-spw-page-hook="console-snippets" data-spw-page-hook-label="Console snippets">
+                    <article class="frame-panel settings-console-snippets" data-spw-box-model="console-recipe" data-spw-page-hook="console-snippets" data-spw-page-hook-label="Console snippets">
                         <h3>Console snippets</h3>
                         <p>
                             Hobbyists and extension authors can paste these into DevTools to inspect the same shared runtime
@@ -1762,7 +1765,9 @@
 spwCompose.controls.pageState.scheduleArrival(spwCompose.controls.pageState.arrival.RETURNING)
 spwCompose.controls.pageHooks.list()
 spwCompose.controls.pageHooks.focus('runtime-diagnostics')
-spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
+spwCompose.controls.pageHooks.pulse('query-recipes')
+spwCompose.controls.composition.inspect('#runtime-map')
+spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                     </article>
                 </details>
 
@@ -1800,7 +1805,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                 A readable local summary of what the site is currently expressing in this browser.
             </p>
 
-            <div class="settings-state-grid" data-settings-state-grid data-spw-feature="settings-applied-state">
+            <div class="settings-state-grid" data-settings-state-grid data-spw-box-model="state-readout-grid" data-spw-composition-flow="grid" data-spw-feature="settings-applied-state">
                 <article class="settings-state-card">
                     <span class="settings-state-label">author workflow</span>
                     <strong data-settings-state="authorMode">draft</strong>
@@ -2073,32 +2078,46 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                 progressively enhanced modules.
             </p>
 
-            <div class="frame-grid">
-                <article class="frame-panel">
+            <aside class="frame-panel" data-spw-box-model="composition-note" data-spw-semantic-cluster="javascript layout storytelling settings">
+                <h3>Component composition is inspectable</h3>
+                <p>
+                    The Settings page now labels representative regions as stages, folds, choice fields, readouts, token cards,
+                    and query labs. JavaScript can read those labels, measure their boxes, and return a short story about
+                    whether a component is present, waiting, or overfull.
+                </p>
+                <p>
+                    This makes the page useful as a practice surface: an author can ask what a component is doing before
+                    changing copy, spacing, color, timing, or enhancement behavior.
+                </p>
+                <code>spwCompose.controls.composition.inspect('#runtime-map')</code>
+            </aside>
+
+            <div class="frame-grid" data-spw-box-model="runtime-sequence" data-spw-composition-flow="grid">
+                <article class="frame-panel" data-spw-box-model="runtime-step">
                     <h3>1. Normalize</h3>
                     <p>Stored values are merged with defaults and checked against allowed options.</p>
                     <code>normalizeSiteSettings(storage.get())</code>
                 </article>
 
-                <article class="frame-panel">
+                <article class="frame-panel" data-spw-box-model="runtime-step">
                     <h3>2. Derive</h3>
                     <p>Settings become author, climate, typography, motion, grain, ecology, semantic, field, and wonder modifiers.</p>
                     <code>deriveArchitecturalModifiers(settings)</code>
                 </article>
 
-                <article class="frame-panel">
+                <article class="frame-panel" data-spw-box-model="runtime-step">
                     <h3>3. Apply</h3>
                     <p>Datasets and CSS variables are written to the document root and body.</p>
                     <code>document.documentElement.dataset.spw*</code>
                 </article>
 
-                <article class="frame-panel">
+                <article class="frame-panel" data-spw-box-model="runtime-step">
                     <h3>4. Emit</h3>
                     <p>Canonical bus events announce settings, author mode, development shifts, and deviations.</p>
                     <code>bus.emit("settings:changed", settings)</code>
                 </article>
 
-                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
+                <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-box-model="query-recipe-lab" data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
                     <h3>Query recipes</h3>
                     <p>
                         These links use the same query contract as the runtime. Reader mode keeps the native CSS defaults
@@ -2155,8 +2174,8 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                 runtime token groups.
             </p>
 
-            <div class="settings-navigator-grid">
-                <article class="settings-nav-card">
+            <div class="settings-navigator-grid" data-spw-box-model="token-atlas" data-spw-composition-flow="grid">
+                <article class="settings-nav-card" data-spw-box-model="token-card">
                     <h3>Author + Climate Tokens</h3>
                     <p>Author workflow and developmental climate now expose separate token families.</p>
                     <ul class="frame-list">
@@ -2170,7 +2189,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                     <a class="operator-chip" href="#climate-settings">? climate controls</a>
                 </article>
 
-                <article class="settings-nav-card">
+                <article class="settings-nav-card" data-spw-box-model="token-card">
                     <h3>Typography Tokens</h3>
                     <p>Font size scale, preset multiplier, line spacing, and monospace choice.</p>
                     <ul class="frame-list">
@@ -2181,7 +2200,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                     <a class="operator-chip" href="#typography-settings">^ typography controls</a>
                 </article>
 
-                <article class="settings-nav-card">
+                <article class="settings-nav-card" data-spw-box-model="token-card">
                     <h3>Motion Tokens</h3>
                     <p>Reduce motion, animation intensity, throttling, and derived duration scales.</p>
                     <ul class="frame-list">
@@ -2193,7 +2212,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                     <a class="operator-chip" href="#accessibility-settings">~ motion controls</a>
                 </article>
 
-                <article class="settings-nav-card">
+                <article class="settings-nav-card" data-spw-box-model="token-card">
                     <h3>Semantic / Ecology Tokens</h3>
                     <p>Semantic density, enhancement level, infospace complexity, operator presentation, and memory.</p>
                     <ul class="frame-list">
@@ -2206,7 +2225,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                     <a class="operator-chip" href="#semantic-settings">? semantic controls</a>
                 </article>
 
-                <article class="settings-nav-card">
+                <article class="settings-nav-card" data-spw-box-model="token-card">
                     <h3>Material Tokens</h3>
                     <p>Grain intensity, header opacity, field response, contour, and structural stroke.</p>
                     <ul class="frame-list">
@@ -2246,7 +2265,7 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                 The page is backed by registries and derived structures, not isolated form fields.
             </p>
 
-            <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-feature="settings-query-hub" data-spw-semantic-cluster="settings qa mood-reading layout contrast">
+            <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-box-model="configuration-cluster" data-spw-composition-flow="stack" data-spw-feature="settings-query-hub" data-spw-semantic-cluster="settings qa mood-reading layout contrast">
                 <header class="spw-settings-cluster__header">
                     <p class="eyebrow">Configuration links</p>
                     <h3 class="spw-settings-cluster__title">Share a mood-reading setup without explaining every control.</h3>
@@ -2277,8 +2296,8 @@ spwCompose.controls.pageHooks.pulse('query-recipes')</code></pre>
                 </div>
             </aside>
 
-            <div class="settings-structures-grid">
-                <article class="settings-structure-card">
+            <div class="settings-structures-grid" data-spw-box-model="data-structure-atlas" data-spw-composition-flow="grid">
+                <article class="settings-structure-card" data-spw-box-model="structure-card">
                     <h3>Defaults</h3>
                     <p>Canonical fallback values for the full runtime settings model.</p>
                     <code>DEFAULT_SITE_SETTINGS</code>

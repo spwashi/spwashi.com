@@ -195,7 +195,7 @@
                     <a data-spw-link-intent="query" data-spw-operator="probe" href="?flavor=garden&amp;spacing=roomy&amp;layout=wide">garden room</a>, or
                     <a data-spw-link-intent="query" data-spw-operator="probe" href="?flavor=runtime&amp;lighting=guarded&amp;layout=atlas&amp;interaction=responsive">runtime atlas</a>.
                 </p>
-                <ul class="spw-copy-motif-strip" aria-label="Home copy motifs" data-spw-vocab="culinary research engineering">
+                <ul class="spw-copy-motif-strip" aria-label="Home copy motifs" data-spw-vocab="culinary research engineering" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
                     <li>cookbook</li>
                     <li>magazine</li>
                     <li>research</li>
@@ -203,7 +203,7 @@
                     <li>lore</li>
                 </ul>
 
-                <div class="spw-reason-strip" aria-label="Home surface reasons" data-spw-role="schema">
+                <div class="spw-reason-strip" aria-label="Home surface reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid">
                     <div>
                         <strong>This surface exists because</strong>
                         <p>the site needs one clear place where software engineering, art practice, culinary metaphor, and story seeds can stay readable together.</p>
@@ -218,7 +218,7 @@
                     </div>
                 </div>
 
-                <div class="spw-narration" data-spw-textual-role="narration" data-spw-form="brace">
+                <div class="spw-narration" data-spw-textual-role="narration" data-spw-form="brace" data-spw-box-model="narration-card" data-spw-composition-flow="stack">
                     <p class="spw-narration__cue" data-spw-textual-role="cue">Current direction</p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
                         A simple way to say it is: this site helps me wonder through recipes, components, spells,
@@ -377,7 +377,7 @@
             first screen should not ask you to classify yourself alone. Pick one need, not your entire identity.
         </p>
 
-        <div class="spw-role-hooks" aria-label="Home entry roles" data-spw-vocab="learning collaboration">
+        <div class="spw-role-hooks" aria-label="Home entry roles" data-spw-vocab="learning collaboration" data-spw-box-model="role-hook-grid" data-spw-composition-flow="grid">
             <div>
                 <strong>For developers</strong>
                 <p>Use About, Software, and the Website Field Guide when you need route structure, reusable components, or something that can become a prompt later.</p>
@@ -392,7 +392,7 @@
             </div>
         </div>
 
-        <aside class="spw-resonance-lab" aria-label="Resonance practice paths" data-spw-role="probe">
+        <aside class="spw-resonance-lab" aria-label="Resonance practice paths" data-spw-role="probe" data-spw-box-model="resonance-lab" data-spw-composition-flow="grid">
             <div data-spw-resonance-axis="ground" data-spw-semantic-expression="resonance[ground]{stable}">
                 <h3>Stable ground</h3>
                 <p>Read the page normally first. The route, headings, and links should make sense before any runtime feature adds texture.</p>
@@ -418,12 +418,12 @@
             also hold a story seed when the ingredients are named well enough for another person or model to expand.
         </p>
 
-            <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge">
+            <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
                 <header>
                     <h3>Follow the next useful relation</h3>
                     <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
                 </header>
-                <ul class="spw-route-bridge__links">
+                <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid">
                     <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
                     <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
                     <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, timing, texture, and shared company.</span></a></li>
@@ -431,7 +431,7 @@
                 </ul>
             </aside>
 
-            <div class="frame-grid frame-grid--dense">
+            <div class="frame-grid frame-grid--dense" data-spw-box-model="entry-card-grid" data-spw-composition-flow="grid">
                 <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference">
                     <h3>I need work or support.</h3>
                     <p>Open Services, Cards, Now, or Contact when the goal is a commission, a referral, or a direct ask. This path helps when the page needs to become an offer, a proof card, or a concrete next move.</p>

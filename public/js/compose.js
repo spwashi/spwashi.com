@@ -79,6 +79,15 @@ export {
 } from './runtime/interaction-loop.js';
 
 export {
+  SPW_COMPOSITION_BOX_MODEL_CONTRACT,
+  annotateCompositionBox,
+  annotateCompositionBoxes,
+  initSpwCompositionBoxModel,
+  snapshotCompositionBox,
+  snapshotCompositionBoxes,
+} from './runtime/composition-box-model.js';
+
+export {
   ATTENTION_ARCHITECTURE_CONTRACT,
   initSpwAttentionArchitecture,
 } from './runtime/attention-architecture.js';

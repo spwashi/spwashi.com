@@ -31,6 +31,11 @@ import {
   snapshotPageState,
 } from './runtime/page-state.js';
 import { annotatePageHooks } from './runtime/page-hooks.js';
+import {
+  annotateCompositionBoxes,
+  snapshotCompositionBox,
+  snapshotCompositionBoxes,
+} from './runtime/composition-box-model.js';
 
 /**
  * site.js
@@ -1457,6 +1462,20 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'composition-box-model',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-box-model], [data-spw-composition-flow], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
+    rootMode: 'single',
+    evaluates: 'layout semantics spacing-semantics state storytelling',
+    load: () => import('./runtime/composition-box-model.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSpwCompositionBoxModel;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'semantic-crossrefs',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -2405,6 +2424,11 @@ async function bootSite() {
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
       },
+      composition: {
+        annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
+        inspect: (target, options = {}) => snapshotCompositionBox(target, options),
+        snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+      },
       effects: {
         expressions: snapshotSemanticExpressions,
         projections: snapshotProjectionEquations,
@@ -2470,6 +2494,11 @@ window.__SPW_SITE__ = {
   listModules: () => listModuleDefinitions(runtimeCtx),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
+  composition: {
+    annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
+    inspect: (target, options = {}) => snapshotCompositionBox(target, options),
+    snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+  },
   effects: snapshotEffectSummary,
   expressions: snapshotSemanticExpressions,
   projections: snapshotProjectionEquations,

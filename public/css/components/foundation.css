@@ -498,6 +498,61 @@ header.frame-heading > :is(h1, h2, h3) {
   var(--component-shadow-active);
 }
 
+:where([data-spw-box-model]) {
+  --spw-box-model-accent: var(--component-accent, var(--active-op-color, var(--teal, #008080)));
+  --spw-box-model-rail-opacity: 0;
+  --spw-box-model-rail-width: 0;
+  position: relative;
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-box-model]) {
+  --spw-box-model-rail-opacity: 0.34;
+  --spw-box-model-rail-width: 2px;
+  box-shadow:
+    inset var(--spw-box-model-rail-width) 0 0 color-mix(in srgb, var(--spw-box-model-accent) calc(var(--spw-box-model-rail-opacity) * 100%), transparent),
+    var(--component-shadow-quiet);
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-box-presence="overfull"]) {
+  --spw-box-model-accent: var(--op-probe-color, #4a2180);
+  --spw-box-model-rail-opacity: 0.52;
+  outline: 1px dashed color-mix(in srgb, var(--spw-box-model-accent) 42%, transparent);
+  outline-offset: 3px;
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-flow="grid"]) {
+  --spw-box-model-accent: var(--op-object-color, #b17812);
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-flow="flex"]) {
+  --spw-box-model-accent: var(--op-ref-color, #276ea8);
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-box-model="control-card"], html[data-spw-module-visuals="on"] [data-spw-box-model="control-group"]) {
+  border-color: color-mix(in srgb, var(--spw-box-model-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-box-story])::after {
+  content: attr(data-spw-box-model) " · " attr(data-spw-composition-flow) " · " attr(data-spw-box-measure);
+  position: absolute;
+  inset-block-start: 0.42rem;
+  inset-inline-end: 0.5rem;
+  max-width: min(22ch, calc(100% - 1rem));
+  padding: 0.16rem 0.34rem;
+  border: 1px solid color-mix(in srgb, var(--spw-box-model-accent) 24%, transparent);
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--component-surface-strong) 92%, transparent);
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 82%, var(--spw-box-model-accent) 18%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0.78;
+  z-index: var(--component-layer-overlay);
+}
+
 :where([data-spw-module][data-spw-context-match="active"]) {
   --component-module-rail-width: 3px;
   --component-module-rail-opacity: 0.5;

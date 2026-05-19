@@ -49,6 +49,7 @@ These are the best candidates when you want to reuse a file on another site:
 - `runtime/interaction-loop.js` for small interaction-state records and refresh events.
 - `runtime/page-state.js` for page state, attention timing, and visibility hooks.
 - `runtime/page-hooks.js` for page-unique hook discovery, focus, and pulse helpers.
+- `runtime/composition-box-model.js` for component box-model snapshots, composition roles, and presence/overflow clues.
 - `runtime/attention-architecture.js` for section locomotion and resonance pinning.
 - `runtime/state-orchestrator.js` for frame-state toggles and relational focus helpers.
 - `media/svg-tunability.js` for declarative SVG palette, pointer, stroke, spacing, and screenshot tuning.
@@ -98,6 +99,14 @@ Console helpers should reveal the same model:
   such as `spw-data-page-state=interactive`, `spw-data-page-presence=foreground`,
   and `spw-data-page-arrival=returning` when you need a reproducible browser
   console or extension setup.
+- Composition boxes can be inspected without mounting a page-specific app. Use
+  `window.spwCompose.controls.composition.inspect('#runtime-map')` for one
+  component, `snapshot()` for the current page, and `annotate()` to write
+  `data-spw-box-model`, `data-spw-composition-flow`, `data-spw-box-measure`,
+  `data-spw-box-presence`, and `data-spw-box-story`. These snapshots are
+  deliberately narrative-friendly: they describe whether a component is a
+  stage, fold, control card, choice field, or readout, whether it is overfull,
+  and what kind of reading/tuning action it can support.
 - Runtime modules are inspectable and query-tunable. Use
   `spw-module-audit=on` to log why modules loaded or skipped,
   `spw-module-visuals=on` to let module dimensions influence handles and rails,

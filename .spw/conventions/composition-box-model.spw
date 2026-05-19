@@ -1,0 +1,34 @@
+# Composition Box Model
+
+#>composition_box_model
+#:contract #!runtime
+#:surface #!settings
+
+purpose: .{
+ plain = `Make component layout inspectable as part of the site's storytelling and tuning surface.`
+ utility = `A component should be able to say what kind of stage it is, how its children flow, whether it is overfull, and what kind of presence it supports.`
+}[reg=facet]
+
+attributes: .{
+ data_spw_box_model = `component role: stage, fold, control-card, control-group, choice-field, token-card, runtime-step, or local extension.`
+ data_spw_composition_flow = `layout flow: stack, grid, flex, inline, or the computed display fallback.`
+ data_spw_box_measure = `computed measure band: narrow, compact, comfortable, wide.`
+ data_spw_box_presence = `presence state: hidden, waiting, present, overfull.`
+ data_spw_box_overflow = `true when scroll size exceeds visible box size.`
+ data_spw_box_story = `short narrative-readable summary for console, screenshots, and model hydration.`
+}[reg=facet]
+
+runtime: .{
+ module = `public/js/runtime/composition-box-model.js`
+ portable_entrypoint = `public/js/compose.js`
+ console = `window.spwCompose.controls.composition.inspect(target)`
+ site_hook = `window.__SPW_SITE__.composition.inspect(target)`
+}[reg=facet]
+
+settings_surface_rule: #[
+ `Settings cards should distinguish choice fields, control cards, readout cards, folds, token atlases, query labs, and data-structure atlases.`,
+ `The box model helper may annotate inferred components, but authored markup should carry explicit roles when the role teaches how the interface should be read.`,
+ `CSS may reveal composition rails in module-visuals mode, but essential content and navigation must remain readable without visual debug.`
+][reg=set]
+
+storytelling_rule: `A component is not only a box. It is a small stage for attention: what enters, what changes, what can be tuned, and what can be carried forward.`
