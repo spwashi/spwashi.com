@@ -1,4 +1,7 @@
-import { SEMANTIC_CHROME_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import {
+  SEMANTIC_CHROME_SELECTOR,
+  writeRuntimeDatasetValues,
+} from '/public/js/kernel/dom-contracts.js';
 import { snapshotComponentSemantics } from '/public/js/semantic/component-semantics.js';
 import {
   humanizeToken,
@@ -433,6 +436,11 @@ function createSemanticPopover(token, host) {
   const tokenText = normalizeText(token.textContent || '').toLowerCase();
 
   popover.className = SEMANTIC_POPOVER_CLASS;
+  popover.dataset.spwFloatingChrome = 'true';
+  popover.dataset.spwLayoutOwner = 'floating-chrome';
+  popover.dataset.spwChromeRole = 'semantic-popover';
+  popover.dataset.spwRuntimeMutator = 'semantic-chrome';
+  popover.dataset.spwRuntimeMutationReason = 'semantic-inspection';
   popover.setAttribute('role', 'dialog');
   popover.setAttribute('aria-modal', 'false');
   popover.setAttribute('aria-label', `${tokenText || humanizeToken(snapshot.kind)} semantic note`);
@@ -487,14 +495,17 @@ function positionSemanticPopover(popover, token) {
 function setSemanticTokenState(token, { charge = '', gesture = '', holdState = '', expanded = false } = {}) {
   if (!(token instanceof HTMLElement)) return;
 
-  if (charge) token.dataset.spwCharge = charge;
-  else delete token.dataset.spwCharge;
-
-  if (gesture) token.dataset.spwGesture = gesture;
-  else delete token.dataset.spwGesture;
-
-  if (holdState) token.dataset.spwHoldState = holdState;
-  else delete token.dataset.spwHoldState;
+  writeRuntimeDatasetValues(token, {
+    spwCharge: charge || null,
+    spwGesture: gesture || null,
+    spwHoldState: holdState || null,
+    spwRuntimeMutator: charge || gesture || holdState ? 'semantic-chrome' : null,
+    spwRuntimeMutationReason: charge || gesture || holdState ? 'semantic-token-state' : null,
+    spwRuntimeStylingAxis: charge || gesture || holdState ? 'semantic-handle' : null,
+  }, {
+    source: 'semantic-chrome',
+    reason: 'semantic-token-state',
+  });
 
   token.setAttribute('aria-expanded', expanded ? 'true' : 'false');
 }

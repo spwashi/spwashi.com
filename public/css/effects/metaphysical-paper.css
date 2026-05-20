@@ -722,7 +722,7 @@
     bottom: 1rem;
     right: 1rem;
     width: max-content;
-    z-index: 1200;
+    z-index: calc(var(--z-floating, var(--layer-floating, 100)) + 8);
   }
 
   .spw-metaphysics-host[data-spw-brush-mode="true"] .spw-image-brush-controls {

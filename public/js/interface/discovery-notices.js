@@ -286,6 +286,11 @@ function ensureStackRoot() {
   stack = document.createElement('section');
   stack.className = 'spw-discovery-notice-stack';
   stack.setAttribute(STACK_ATTR, '');
+  stack.dataset.spwFloatingChrome = 'true';
+  stack.dataset.spwLayoutOwner = 'floating-chrome';
+  stack.dataset.spwChromeRole = 'discovery-toast-stack';
+  stack.dataset.spwRuntimeMutator = 'discovery-notices';
+  stack.dataset.spwRuntimeMutationReason = 'discoverability-toast';
   stack.setAttribute('aria-live', 'polite');
   stack.setAttribute('aria-label', 'Discoverability notices');
   stack.setAttribute(MODULE_ATTR, 'ready');
@@ -302,6 +307,11 @@ function ensureModalRoot() {
   root.setAttribute(MODAL_ATTR, '');
   root.setAttribute('aria-label', 'Promotional brief');
   root.setAttribute('data-spw-overlay', 'scrim-dark');
+  root.dataset.spwFloatingChrome = 'true';
+  root.dataset.spwLayoutOwner = 'floating-chrome';
+  root.dataset.spwChromeRole = 'discovery-modal';
+  root.dataset.spwRuntimeMutator = 'discovery-notices';
+  root.dataset.spwRuntimeMutationReason = 'discoverability-modal';
   root.setAttribute(MODULE_ATTR, 'ready');
   document.body.append(root);
   return root;

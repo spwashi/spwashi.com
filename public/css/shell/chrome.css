@@ -1111,7 +1111,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 }
 
 .spw-route-menu-panel {
-  z-index: calc(var(--layer-floating, 100) + 4);
+  z-index: calc(var(--z-floating, var(--layer-floating, 100)) + 4);
   display: grid;
   gap: 0.26rem;
   width: 100%;
@@ -1805,7 +1805,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   justify-items: center;
   gap: 0.8rem;
   padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
-  z-index: calc(var(--z-floating, 100) + 7);
+  z-index: calc(var(--z-priority, 2000) + 6);
   pointer-events: none;
 }
 
@@ -2499,7 +2499,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.34rem;
   }
 
@@ -2542,7 +2542,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.32rem;
   }
 
@@ -2682,7 +2682,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
 @media (max-width: 540px) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.28rem;
   }
 
@@ -2693,6 +2693,13 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
 
   .spw-section-handle-shell {
     max-width: calc(100vw - 0.5rem);
+  }
+}
+
+@media (max-width: 360px) {
+  :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
+  :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
+    grid-template-columns: 1fr;
   }
 }
 

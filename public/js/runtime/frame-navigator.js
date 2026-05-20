@@ -155,6 +155,11 @@ class SpwFrameNavigator {
     buildUI() {
         this.root = document.createElement('div');
         this.root.className = 'spw-nav';
+        this.root.dataset.spwFloatingChrome = 'true';
+        this.root.dataset.spwLayoutOwner = 'floating-chrome';
+        this.root.dataset.spwChromeRole = 'surface-map';
+        this.root.dataset.spwRuntimeMutator = 'frame-navigator';
+        this.root.dataset.spwRuntimeMutationReason = 'surface-map';
         this.root.setAttribute('aria-label', 'Surface map');
 
         // Strip + trigger
@@ -180,6 +185,9 @@ class SpwFrameNavigator {
         this.panel.setAttribute('role', 'dialog');
         this.panel.setAttribute('aria-modal', 'false');
         this.panel.setAttribute('aria-label', 'Surface map');
+        this.panel.dataset.spwFloatingChrome = 'true';
+        this.panel.dataset.spwLayoutOwner = 'floating-chrome';
+        this.panel.dataset.spwChromeRole = 'surface-map-panel';
         this.panel.hidden = true;
 
         // Header

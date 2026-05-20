@@ -105,6 +105,67 @@ export const SITE_TOPOGRAPHY = Object.freeze({
   slot: '[data-spw-slot]',
 });
 
+const RUNTIME_AUDIT_LIMIT = 240;
+const runtimeMutationLog = [];
+
+function getRuntimeElementLabel(el) {
+  if (!globalThis.Element || !(el instanceof globalThis.Element)) return '';
+  if (el.id) return `#${el.id}`;
+  const stableClass = Array.from(el.classList || []).find(Boolean);
+  if (stableClass) return `.${stableClass}`;
+  return el.localName || 'element';
+}
+
+function logRuntimeMutation(el, entries, options = {}) {
+  if (!globalThis.Element || !(el instanceof globalThis.Element) || !entries || typeof entries !== 'object') return;
+
+  const changed = Object.fromEntries(
+    Object.entries(entries).filter(([key, value]) => {
+      if (!key) return false;
+      const current = el.dataset?.[key];
+      if (value == null || value === '') return current != null;
+      const next = String(value);
+      return current !== next;
+    })
+  );
+
+  if (!Object.keys(changed).length) return;
+
+  runtimeMutationLog.push({
+    at: Date.now(),
+    source: options.source || 'runtime',
+    reason: options.reason || '',
+    target: getRuntimeElementLabel(el),
+    attributes: changed,
+  });
+
+  if (runtimeMutationLog.length > RUNTIME_AUDIT_LIMIT) runtimeMutationLog.shift();
+
+  if (globalThis.document?.documentElement?.dataset?.spwRuntimeAudit === 'verbose') {
+    console.debug('[spw runtime attributes]', runtimeMutationLog[runtimeMutationLog.length - 1]);
+  }
+}
+
+export function getRuntimeMutationLog() {
+  return runtimeMutationLog.slice();
+}
+
+export function writeRuntimeDatasetValues(el, entries = {}, options = {}) {
+  logRuntimeMutation(el, entries, options);
+  return writeDatasetValues(el, entries, options);
+}
+
+if (globalThis.window) {
+  globalThis.window.spwRuntimeAudit = Object.freeze({
+    mutations: getRuntimeMutationLog,
+    contract: Object.freeze({
+      verboseFlag: 'html[data-spw-runtime-audit="verbose"]',
+      recordShape: '{ at, source, reason, target, attributes }',
+      portableUse: 'Inspect which runtime modules added styling-relevant data attributes after load.',
+    }),
+  });
+}
+
 function hasClass(el, className) {
   return Boolean(el?.classList?.contains(className));
 }

@@ -27,10 +27,13 @@
    ========================================================================== */
 
 header,
-.header-op-indicator,
+.header-op-indicator {
+  z-index: var(--z-header, var(--layer-header, 1000));
+}
+
 .spw-navigator,
 .spw-console {
-  z-index: 2000;
+  z-index: var(--z-priority, var(--layer-priority, 2000));
 }
 
 /* Handles sit above content but below site-level overlays. */
@@ -2055,7 +2058,7 @@ html[data-spw-cognitive-handles="off"] :where(
 /* Pronunciation Hints */
 .spw-pronunciation-hint {
   position: absolute;
-  z-index: 3000;
+  z-index: calc(var(--z-priority, var(--layer-priority, 2000)) + 12);
   pointer-events: none;
   opacity: 0;
   transform: translateY(4px);

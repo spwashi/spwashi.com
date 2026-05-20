@@ -95,7 +95,7 @@ class ToastManager {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 0.9rem;
                 line-height: 1.5;
-                z-index: 9999;
+                z-index: calc(var(--z-priority, 2000) + 18);
                 animation: pwaToastSlideUp 220ms cubic-bezier(0.4, 0, 0.2, 1);
             }
 
@@ -145,6 +145,9 @@ class ToastManager {
 
         const toast = document.createElement('div');
         toast.setAttribute(TOAST_ATTR, kind);
+        toast.dataset.spwFloatingChrome = 'true';
+        toast.dataset.spwLayoutOwner = 'floating-chrome';
+        toast.dataset.spwChromeRole = 'pwa-status';
         toast.setAttribute('role', kind === 'update' ? 'alert' : 'status');
         toast.setAttribute('aria-live', 'polite');
         toast.style.cssText = ''; // styles are now in global <style>

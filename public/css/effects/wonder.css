@@ -98,7 +98,7 @@
 .spw-delight,
 [data-spw-delight="burst"],
 [data-spw-delight="settled"] {
-  z-index: 100 !important;
+  z-index: var(--z-floating, var(--layer-floating, 100));
   animation: spw-delight-burst 0.6s var(--spw-wonder-ease-settle) forwards;
 }
 
@@ -459,7 +459,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   bottom: calc(100% + 4px);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: calc(var(--z-priority, var(--layer-priority, 2000)) + 8);
   padding: 2px 6px;
   border: 1px solid var(--ink-soft, #333);
   border-radius: 2px;

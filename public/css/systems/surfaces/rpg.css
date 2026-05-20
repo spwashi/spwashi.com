@@ -199,7 +199,14 @@
   grid-template-columns: minmax(19rem, 0.92fr) minmax(0, 1.08fr);
 }
 
-:where([data-spw-features~="rpg-gameplay"] :is(.rpg-character-lab, .rpg-asset-atlas)__:is(composer, board-panel)) {
+:where(
+  [data-spw-features~="rpg-gameplay"] :is(
+    .rpg-character-lab__composer,
+    .rpg-character-lab__board-panel,
+    .rpg-asset-atlas__composer,
+    .rpg-asset-atlas__board-panel
+  )
+) {
   display: grid;
   gap: var(--space-sm, 0.7rem);
   min-width: 0;
@@ -212,7 +219,12 @@
   box-shadow: var(--shadow-sm);
 }
 
-:where([data-spw-features~="rpg-gameplay"] :is(.rpg-character-lab, .rpg-asset-atlas)__section-heading) {
+:where(
+  [data-spw-features~="rpg-gameplay"] :is(
+    .rpg-character-lab__section-heading,
+    .rpg-asset-atlas__section-heading
+  )
+) {
   display: flex;
   flex-wrap: wrap;
   align-items: start;

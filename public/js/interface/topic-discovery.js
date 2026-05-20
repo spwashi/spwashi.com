@@ -152,6 +152,11 @@ function showPopover(el) {
 
     popoverEl = document.createElement('div');
     popoverEl.className = POPOVER_CLASS;
+    popoverEl.dataset.spwFloatingChrome = 'true';
+    popoverEl.dataset.spwLayoutOwner = 'floating-chrome';
+    popoverEl.dataset.spwChromeRole = 'topic-popover';
+    popoverEl.dataset.spwRuntimeMutator = 'topic-discovery';
+    popoverEl.dataset.spwRuntimeMutationReason = 'topic-context';
     popoverEl.setAttribute('role', 'tooltip');
 
     const sections = occurrences

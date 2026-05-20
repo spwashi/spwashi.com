@@ -60,6 +60,16 @@
       "url": "/play/"
     },
     {
+      "name": "RPG Wednesday",
+      "short_name": "RPG Weds",
+      "url": "/play/rpg-wednesday/"
+    },
+    {
+      "name": "Visual Bench",
+      "short_name": "Visuals",
+      "url": "/tools/midjourney/"
+    },
+    {
       "name": "About",
       "short_name": "About",
       "url": "/about"

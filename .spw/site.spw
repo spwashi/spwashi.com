@@ -25,6 +25,7 @@
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @annotation_layer: ~"./conventions/annotation-layer.spw"
 @semantic_braces: ~"./conventions/semantic-braces.spw"
+@narrative_instrumentation: ~"./conventions/narrative-instrumentation.spw"
 @query_disposition: ~"./conventions/query-disposition.spw"
 @composition_box_model: ~"./conventions/composition-box-model.spw"
 @philosophy: ~"./philosophy/index.spw"
@@ -76,6 +77,7 @@ translations: .{
  reviews = #[@reviews, @site_semantics][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
  annotation_layer = #[@annotation_layer, @attention_field, @site_semantics][reg=set]
+ narrative_instrumentation = #[@narrative_instrumentation, @annotation_layer, @attention_field, @site_semantics][reg=set]
  query_disposition = #[@query_disposition, @style_development, @site_semantics][reg=set]
  composition_box_model = #[@composition_box_model, @query_disposition, @site_semantics][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
@@ -104,6 +106,7 @@ dispatch: .{
  wonder_vocabulary = @wonder_vocabulary
  annotation_layer = @annotation_layer
  semantic_braces = @semantic_braces
+ narrative_instrumentation = @narrative_instrumentation
  query_disposition = @query_disposition
  composition_box_model = @composition_box_model
  philosophy = @philosophy

@@ -1,0 +1,24 @@
+# Narrative Instrumentation
+
+#>narrative_instrumentation
+#:layer #!runtime
+#:status #!active
+
+purpose: `Turn selected prose into inspectable narrative handles while preserving static readability.`
+
+html_contract: .{
+  mode = `html[data-spw-narrative-mode="on"] enables runtime tokenization.`
+  copy_owner = `data-spw-narrative-copy names prose that can explain itself in the inspector.`
+  copy_metadata = `data-spw-copy-label, data-spw-copy-role, data-spw-copy-purpose, and data-spw-copy-depth describe why a phrase is interactive.`
+  implicit_characters = `data-spw-narrative-implicit="characters" opts a prose region into proper-name character recognition.`
+}[reg=facet]
+
+runtime_contract: .{
+  source_text = `The original HTML remains the source of truth and is restored when narrative mode turns off.`
+  token = `.grammar-token marks generated narrative handles.`
+  resonance = `html[data-spw-resonance-token] announces the active token identity for matching handles.`
+  drawer = `.spw-narrative-drawer provides sentence context, copy metadata, occurrences, and a copyable Spw seed.`
+  runtime_audit = `window.spwRuntimeAudit.mutations() lists styling-relevant runtime attribute changes when modules use the shared writer.`
+}[reg=facet]
+
+editor_rule: `Prefer authored metadata over runtime guessing. Use explicit @, #, $, !, and ? tokens when the text wants visible sigils; use data-spw-narrative-implicit only when ordinary prose should stay ordinary until narrative mode is enabled. Styling-relevant runtime attributes should name their mutator, reason, and styling axis so another author can inspect the component without reading every mounted script.`

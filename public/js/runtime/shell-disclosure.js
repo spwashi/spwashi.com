@@ -3,6 +3,7 @@ import {
   removeDatasetValues,
   writeDatasetValues,
   writeDatasetValue,
+  writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 
 const EVENT_NAMES = Object.freeze({
@@ -337,7 +338,7 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
 function writeMenuDatasets(el, snapshot, role) {
   if (!(el instanceof HTMLElement)) return;
 
-  writeDatasetValues(el, {
+  writeRuntimeDatasetValues(el, {
     spwMenuRole: role,
     spwMenuMode: snapshot.mode,
     spwMenuChanged: snapshot.changedAxes.join(' ') || 'none',
@@ -356,6 +357,12 @@ function writeMenuDatasets(el, snapshot, role) {
     spwMenuLocking: snapshot.locking,
     spwMenuReversible: snapshot.reversible ? 'true' : 'false',
     spwMenuReturnPaths: snapshot.returnPaths.join(' '),
+    spwRuntimeMutator: 'shell-disclosure',
+    spwRuntimeMutationReason: 'navigation-layout',
+    spwRuntimeStylingAxis: 'menu',
+  }, {
+    source: 'shell-disclosure',
+    reason: 'navigation-layout',
   });
 }
 
@@ -386,7 +393,15 @@ function syncHeaderPointerField(header, event) {
   const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
   header.style.setProperty('--spw-shell-pointer-x', `${x.toFixed(2)}%`);
   header.style.setProperty('--spw-shell-pointer-y', `${y.toFixed(2)}%`);
-  writeDatasetValue(header, 'spwShellPointer', 'tracking');
+  writeRuntimeDatasetValues(header, {
+    spwShellPointer: 'tracking',
+    spwRuntimeMutator: 'shell-disclosure',
+    spwRuntimeMutationReason: 'pointer-field',
+    spwRuntimeStylingAxis: 'header-pointer',
+  }, {
+    source: 'shell-disclosure',
+    reason: 'pointer-field',
+  });
   writeDatasetValue(header, 'spwShellMicrointeraction', 'pointer-field', { missingOnly: true });
 }
 
@@ -402,7 +417,15 @@ function syncShellLock(snapshot) {
 
   [document.documentElement, document.body].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
-    writeDatasetValue(node, 'spwShellMenuLock', shouldLock ? 'true' : null);
+    writeRuntimeDatasetValues(node, {
+      spwShellMenuLock: shouldLock ? 'true' : null,
+      spwRuntimeMutator: shouldLock ? 'shell-disclosure' : null,
+      spwRuntimeMutationReason: shouldLock ? 'menu-scroll-lock' : null,
+      spwRuntimeStylingAxis: shouldLock ? 'scroll-lock' : null,
+    }, {
+      source: 'shell-disclosure',
+      reason: 'menu-scroll-lock',
+    });
   });
 }
 

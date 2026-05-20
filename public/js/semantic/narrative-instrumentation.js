@@ -36,15 +36,22 @@ const NARRATIVE_SKIP_SELECTOR = [
   'button',
 ].join(',');
 
+const NARRATIVE_METADATA_SELECTOR = [
+  '[data-spw-copy-depth]',
+  '[data-spw-copy-label]',
+  '[data-spw-copy-unit]',
+  '[data-spw-copy-role]',
+  '[data-spw-copy-purpose]',
+  '[data-spw-semantic-expression]',
+  '[data-spw-semantic-cluster]',
+  '[data-spw-vocab]',
+  '[data-spw-narrative-copy]',
+  '[data-spw-narrative-implicit]',
+].join(', ');
+
 const NARRATIVE_IMPLICIT_CHARACTERS = new Set([
   'Spwashi',
-  'Alice',
-  'Bob',
-  'Charlie',
-  'Dave',
-  'Eve',
-  'Novelist',
-  'Screenwriter',
+  'Aetheris',
 ]);
 
 const NARRATIVE_TOKEN_REGEX = /(@[A-Za-z0-9_]+|#[A-Za-z0-9_]+|\$[A-Za-z0-9_]+|![A-Za-z0-9_]+|\?[A-Za-z0-9_]+|["“][^"”]+["”])/g;
@@ -55,17 +62,8 @@ const NARRATIVE_MAX_CONTEXTS = 5;
 export const SPW_NARRATIVE_INSTRUMENTATION_CONTRACT = Object.freeze({
   selector: NARRATIVE_PROSE_SELECTOR,
   skipSelector: NARRATIVE_SKIP_SELECTOR,
-  metadataSelector: Object.freeze([
-    '[data-spw-copy-depth]',
-    '[data-spw-copy-label]',
-    '[data-spw-copy-unit]',
-    '[data-spw-copy-role]',
-    '[data-spw-copy-purpose]',
-    '[data-spw-semantic-expression]',
-    '[data-spw-semantic-cluster]',
-    '[data-spw-vocab]',
-    '[data-spw-narrative-copy]',
-  ]),
+  metadataSelector: NARRATIVE_METADATA_SELECTOR,
+  implicitSelector: '[data-spw-narrative-implicit~="characters"]',
   tokenKinds: Object.freeze(['character', 'location', 'prop', 'action', 'theme', 'dialogue']),
   resonanceFields: Object.freeze(['spwResonanceToken', 'spwResonanceProbe']),
   drawerClass: NARRATIVE_DRAWER_CLASS,
@@ -162,7 +160,7 @@ function walkAndTokenize(parent) {
       const value = child.nodeValue || '';
       if (!value.trim()) continue;
 
-      const fragments = processText(value);
+      const fragments = processText(value, parent);
       if (!fragments.length) continue;
 
       const replacement = document.createDocumentFragment();
@@ -182,7 +180,7 @@ function shouldSkipNode(node) {
   return node.matches(NARRATIVE_SKIP_SELECTOR);
 }
 
-function processText(text) {
+function processText(text, owner) {
   const parts = [];
   let lastIndex = 0;
   const regex = new RegExp(NARRATIVE_TOKEN_REGEX);
@@ -191,7 +189,7 @@ function processText(text) {
   while ((match = regex.exec(text)) !== null) {
     const matchIndex = match.index;
     if (matchIndex > lastIndex) {
-      parts.push(...processImplicitTokens(text.slice(lastIndex, matchIndex)));
+      parts.push(...processImplicitTokens(text.slice(lastIndex, matchIndex), owner));
     }
 
     parts.push(createTokenSpan(match[0]));
@@ -199,13 +197,17 @@ function processText(text) {
   }
 
   if (lastIndex < text.length) {
-    parts.push(...processImplicitTokens(text.slice(lastIndex)));
+    parts.push(...processImplicitTokens(text.slice(lastIndex), owner));
   }
 
   return parts;
 }
 
-function processImplicitTokens(text) {
+function processImplicitTokens(text, owner) {
+  if (!allowsImplicitCharacters(owner)) {
+    return [document.createTextNode(text)];
+  }
+
   const words = text.split(/(\b[A-Z][A-Za-z0-9_]+\b)/);
   const parts = [];
 
@@ -224,6 +226,11 @@ function processImplicitTokens(text) {
   return parts;
 }
 
+function allowsImplicitCharacters(owner) {
+  if (!(owner instanceof Element)) return false;
+  return Boolean(owner.closest('[data-spw-narrative-implicit~="characters"]'));
+}
+
 function createTokenSpan(tokenText) {
   const span = document.createElement('span');
   span.className = 'grammar-token';
@@ -233,6 +240,7 @@ function createTokenSpan(tokenText) {
   if (token.kind === 'dialogue') {
     span.classList.add('token-dialogue');
     span.dataset.spwOperator = 'stream';
+    span.dataset.spwNarrativeToken = 'dialogue';
     span.dataset.kind = 'dialogue';
     span.dataset.id = NARRATIVE_DIALOGUE_ID;
     span.textContent = tokenText;
@@ -241,6 +249,7 @@ function createTokenSpan(tokenText) {
 
   span.classList.add(`token-${token.kind}`);
   span.dataset.spwOperator = token.operator;
+  span.dataset.spwNarrativeToken = token.kind;
   span.dataset.kind = token.kind;
   span.dataset.id = token.id;
   span.dataset.raw = token.value;
@@ -467,19 +476,7 @@ function showInspectorDrawer(token) {
 }
 
 function collectNarrativeMetadata(token) {
-  const owner = token.closest(
-    [
-      '[data-spw-copy-depth]',
-      '[data-spw-copy-label]',
-      '[data-spw-copy-unit]',
-      '[data-spw-copy-role]',
-      '[data-spw-copy-purpose]',
-      '[data-spw-semantic-expression]',
-      '[data-spw-semantic-cluster]',
-      '[data-spw-vocab]',
-      '[data-spw-narrative-copy]',
-    ].join(', ')
-  );
+  const owner = token.closest(NARRATIVE_METADATA_SELECTOR);
 
   if (!owner) {
     return {
