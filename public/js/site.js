@@ -36,6 +36,24 @@ import {
   snapshotCompositionBox,
   snapshotCompositionBoxes,
 } from './runtime/composition-box-model.js';
+import {
+  cancelIdle,
+  createRegistry,
+  inferRuntimePosture,
+  isFn,
+  normalizeRuntimeToken,
+  normalizeMountHandle,
+  onIdle,
+  once,
+  parseFeatureList,
+  readDelimitedSet,
+  readModuleTimingMap,
+  readRuntimePolicy,
+  safeQuery,
+  safeQueryAll,
+  whenDocumentReady,
+  whenWindowLoaded,
+} from './runtime/runtime-helpers.js';
 
 /**
  * site.js
@@ -118,8 +136,6 @@ const MOUNT_WHEN = {
   REGION: 'region',
 };
 
-const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
-
 const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
@@ -136,22 +152,6 @@ annotatePageHooks(document);
 function setRegionState(el, state) {
   if (!el || !(el instanceof HTMLElement)) return;
   writeDatasetValue(el, 'spwRegionState', state);
-}
-
-function safeQuery(selector, root = document) {
-  try {
-    return root.querySelector(selector);
-  } catch {
-    return null;
-  }
-}
-
-function safeQueryAll(selector, root = document) {
-  try {
-    return [...root.querySelectorAll(selector)];
-  } catch {
-    return [];
-  }
 }
 
 function matchesRoute(def) {
@@ -171,162 +171,12 @@ function getRoots(def) {
   return matches.length ? matches : [];
 }
 
-function isFn(value) {
-  return typeof value === 'function';
-}
-
-function once(fn) {
-  let called = false;
-  let value;
-  return (...args) => {
-    if (called) return value;
-    called = true;
-    value = fn(...args);
-    return value;
-  };
-}
-
-function onIdle(callback, timeout = 1200) {
-  if ('requestIdleCallback' in window) {
-    return window.requestIdleCallback(callback, { timeout });
-  }
-  return window.setTimeout(() => callback({ didTimeout: false, timeRemaining: () => 0 }), 180);
-}
-
-function cancelIdle(handle) {
-  if ('cancelIdleCallback' in window) {
-    window.cancelIdleCallback(handle);
-    return;
-  }
-  window.clearTimeout(handle);
-}
-
-function whenDocumentReady() {
-  if (document.readyState === 'loading') {
-    return new Promise((resolve) => {
-      document.addEventListener('DOMContentLoaded', resolve, { once: true });
-    });
-  }
-  return Promise.resolve();
-}
-
-function whenWindowLoaded() {
-  if (document.readyState === 'complete') return Promise.resolve();
-  return new Promise((resolve) => {
-    window.addEventListener('load', resolve, { once: true });
-  });
-}
-
-function parseFeatureList(value) {
-  if (!value || typeof value !== 'string') return new Set();
-  return new Set(
-    value
-      .split(/[\s,]+/)
-      .map((item) => item.trim())
-      .filter(Boolean)
-  );
-}
-
 function setDataIfMissing(el, key, value) {
   writeDatasetValueIfMissing(el, key, value);
 }
 
 function readSet(...values) {
   return new Set(values.filter(Boolean));
-}
-
-function normalizeRuntimeToken(value = '') {
-  return String(value || '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function readDelimitedSet(value = '') {
-  return new Set(
-    String(value || '')
-      .split(/[\s,]+/)
-      .map(normalizeRuntimeToken)
-      .filter(Boolean)
-  );
-}
-
-function readModuleTimingMap(value = '') {
-  const map = new Map();
-  String(value || '')
-    .split(/[\s,]+/)
-    .map((item) => item.trim())
-    .filter(Boolean)
-    .forEach((item) => {
-      const [rawId, rawWhen] = item.split(':');
-      const id = normalizeRuntimeToken(rawId);
-      const when = normalizeRuntimeToken(rawWhen);
-      if (id && Object.values(MOUNT_WHEN).includes(when)) {
-        map.set(id, when);
-      }
-    });
-  return map;
-}
-
-function readRuntimePolicy() {
-  const params = new URLSearchParams(window.location.search);
-  const rawTiming =
-    params.get('spw-runtime-timing')
-    || params.get('runtime-timing')
-    || HTML?.dataset.spwRuntimeTiming
-    || BODY?.dataset.spwRuntimeTiming
-    || 'normal';
-  const timing = RUNTIME_TIMING_POLICIES.has(normalizeRuntimeToken(rawTiming))
-    ? normalizeRuntimeToken(rawTiming)
-    : 'normal';
-  const delay = Number.parseInt(
-    params.get('spw-module-delay')
-    || params.get('module-delay')
-    || HTML?.dataset.spwModuleDelay
-    || BODY?.dataset.spwModuleDelay
-    || '0',
-    10
-  );
-  const auditValue =
-    params.get('spw-module-audit')
-    || params.get('module-audit')
-    || HTML?.dataset.spwModuleAudit
-    || BODY?.dataset.spwModuleAudit
-    || '';
-  const visualValue =
-    params.get('spw-module-visuals')
-    || params.get('module-visuals')
-    || HTML?.dataset.spwModuleVisuals
-    || BODY?.dataset.spwModuleVisuals
-    || '';
-
-  return {
-    timing,
-    audit: ['1', 'true', 'on', 'yes', '*'].includes(String(auditValue).toLowerCase()),
-    visuals: ['1', 'true', 'on', 'yes', '*'].includes(String(visualValue).toLowerCase()),
-    delay: Number.isFinite(delay) && delay > 0 ? Math.min(delay, 5000) : 0,
-    only: readDelimitedSet(params.get('spw-module-only') || params.get('module-only')),
-    skip: readDelimitedSet(params.get('spw-module-skip') || params.get('module-skip')),
-    timingByModule: readModuleTimingMap(params.get('spw-module-timing') || params.get('module-timing')),
-  };
-}
-
-function inferRuntimePosture(policy) {
-  if (!policy) return 'minimal';
-  if (policy.visuals && policy.timing === 'eager') return 'theatrical';
-  if (policy.visuals) return 'resonant';
-  if (
-    policy.audit
-    || policy.timing !== 'normal'
-    || policy.delay
-    || policy.only.size
-    || policy.skip.size
-    || policy.timingByModule.size
-  ) {
-    return 'precision';
-  }
-  return 'minimal';
 }
 
 /* ==========================================================================
@@ -374,78 +224,7 @@ function createBus() {
 }
 
 /* ==========================================================================
-   4. Runtime registry
-   ========================================================================== */
-
-function createRegistry() {
-  const records = new Map();
-
-  function set(id, record) {
-    records.set(id, record);
-    return record;
-  }
-
-  function get(id) {
-    return records.get(id) || null;
-  }
-
-  function has(id) {
-    return records.has(id);
-  }
-
-  function remove(id) {
-    records.delete(id);
-  }
-
-  function values() {
-    return [...records.values()];
-  }
-
-  function cleanupAll() {
-    for (const record of records.values()) {
-      try {
-        record.cleanup?.();
-      } catch (error) {
-        console.warn(`[site.js] cleanup failed for ${record.id}`, error);
-      }
-    }
-    records.clear();
-  }
-
-  return {
-    set,
-    get,
-    has,
-    remove,
-    values,
-    cleanupAll,
-  };
-}
-
-/* ==========================================================================
-   5. Cleanup / refresh normalization
-   ========================================================================== */
-
-function normalizeMountHandle(result) {
-  if (isFn(result)) {
-    return { cleanup: result, refresh: null };
-  }
-
-  if (result && typeof result === 'object') {
-    return {
-      cleanup:
-        (isFn(result.cleanup) && result.cleanup)
-        || (isFn(result.destroy) && result.destroy)
-        || null,
-      refresh: isFn(result.refresh) ? result.refresh : null,
-    };
-  }
-
-  return { cleanup: null, refresh: null };
-}
-
-/* ==========================================================================
-   6. Region profiling and harmony
+   4. Region profiling and harmony
    --------------------------------------------------------------------------
    This is the main new layer: a lightweight semantic read of regions that
    both CSS and JS can use without expensive choreography.

@@ -64,6 +64,25 @@ export {
 } from './kernel/dom-contracts.js';
 
 export {
+  cancelIdle,
+  createRegistry,
+  inferRuntimePosture,
+  isFn,
+  normalizeRuntimeToken,
+  normalizeMountHandle,
+  onIdle,
+  once,
+  parseFeatureList,
+  readDelimitedSet,
+  readModuleTimingMap,
+  readRuntimePolicy,
+  safeQuery,
+  safeQueryAll,
+  whenDocumentReady,
+  whenWindowLoaded,
+} from './runtime/runtime-helpers.js';
+
+export {
   INTERACTION_LOOP_CONTRACT,
   IMAGE_REFRESH_EVENT,
   IMAGE_REFRESH_REASONS,

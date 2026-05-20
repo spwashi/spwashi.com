@@ -4,8 +4,8 @@
 module tree, not a pile of ad hoc helpers.
 
 `compose.js` is the portable composition entrypoint. It exports reusable DOM
-contracts, palette utilities, attention contracts, and interaction loop records
-without mounting the full site runtime.
+contracts, runtime helpers, palette utilities, attention contracts, and
+interaction loop records without mounting the full site runtime.
 
 It also exports `SPW_COMPOSITION_CONTRACT`, a small documentation object for the
 browser-field / script-spell / stylesheet-disposition model.
@@ -45,6 +45,8 @@ If you are trying to learn the runtime, read in this order:
 These are the best candidates when you want to reuse a file on another site:
 
 - `compose.js` for a single import surface over the portable runtime helpers.
+- `runtime/runtime-helpers.js` for shared timing, parsing, mount, and registry
+  helpers that can be reused without booting `site.js`.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/interaction-loop.js` for small interaction-state records and refresh events.
 - `runtime/page-state.js` for page state, attention timing, and visibility hooks.
@@ -91,6 +93,9 @@ Console helpers should reveal the same model:
 - `window.spwCompose.controls.pageHooks` can expose page-unique landmarks and
   generalizable handles through `list()`, `resolve()`, `focus()`, and `pulse()`;
   this is a good discovery loop for incremental learning and page familiarity.
+- `window.spwCompose.controls.composition` can expose component box-model
+  inspection through `inspect()`, `snapshot()`, and `annotate()` so standalone
+  scripts can explain layout, presence, and story without the full site shell.
 - `applySpwQueryDisposition(root)` applies opt-in query parameters such as
   `spw-palette=craft`, `spw-color-active-op=%23008080`,
   `spw-var-shape-component=8px`, `spw-tune-density=compact`, and
