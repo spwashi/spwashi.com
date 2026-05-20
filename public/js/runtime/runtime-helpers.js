@@ -1,12 +1,26 @@
 /**
  * Runtime helper utilities shared by the site bootstrap and portable compose
  * entrypoints.
+ *
+ * This module keeps the page shell legible: query parsing, mount timing,
+ * registry handling, and guardrails for scripts that want to be portable.
  */
 
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
 const MOUNT_WHEN_VALUES = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
 const HTML = document.documentElement;
 const BODY = document.body;
+
+/**
+ * Small contract for code that wants to reuse the runtime's helper layer
+ * without booting the whole site shell.
+ */
+export const SPW_RUNTIME_HELPERS_CONTRACT = Object.freeze({
+  timingPolicies: Object.freeze([...RUNTIME_TIMING_POLICIES]),
+  mountWhenValues: Object.freeze([...MOUNT_WHEN_VALUES]),
+  portableUse:
+    'Use this module when a page shell needs to read runtime policy, normalize mount handles, or share registry helpers without importing the whole bootstrap.',
+});
 
 export function safeQuery(selector, root = document) {
   try {
@@ -172,6 +186,27 @@ export function inferRuntimePosture(policy) {
     return 'precision';
   }
   return 'minimal';
+}
+
+/**
+ * Describe the active runtime policy as a short sentence for logs, datasets,
+ * or screenshots.
+ */
+export function describeRuntimePolicy(policy) {
+  if (!policy) return 'runtime policy unavailable';
+
+  const parts = [
+    `timing:${policy.timing || 'normal'}`,
+    `audit:${policy.audit ? 'on' : 'off'}`,
+    `visuals:${policy.visuals ? 'on' : 'off'}`,
+  ];
+
+  if (policy.delay) parts.push(`delay:${policy.delay}ms`);
+  if (policy.only?.size) parts.push(`only:${[...policy.only].join(',')}`);
+  if (policy.skip?.size) parts.push(`skip:${[...policy.skip].join(',')}`);
+  if (policy.timingByModule?.size) parts.push(`per-module:${policy.timingByModule.size}`);
+
+  return parts.join(' · ');
 }
 
 export function createRegistry() {

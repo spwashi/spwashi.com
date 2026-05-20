@@ -21,16 +21,18 @@ import {
   PAGE_PRESENCE,
   PAGE_STATES,
   PAGE_TRANSITION_EVENT,
+  SPW_PAGE_STATE_CONTRACT,
   annotateFloatingChrome,
   clearPageState,
   clearPageAttentionSequence,
+  describePageStateSnapshot,
   initPageAttentionLifecycle,
   schedulePageArrival,
   setPageState,
   setPageAttentionState,
   snapshotPageState,
 } from './runtime/page-state.js';
-import { annotatePageHooks } from './runtime/page-hooks.js';
+import { annotatePageHooks, describePageHook } from './runtime/page-hooks.js';
 import {
   annotateCompositionBoxes,
   snapshotCompositionBox,
@@ -39,6 +41,7 @@ import {
 import {
   cancelIdle,
   createRegistry,
+  describeRuntimePolicy,
   inferRuntimePosture,
   isFn,
   normalizeRuntimeToken,
@@ -430,6 +433,7 @@ function createRuntimeContext() {
 
   writeDatasetValue(HTML, 'spwRuntimeTiming', ctx.runtimePolicy.timing);
   writeDatasetValue(HTML, 'spwRuntimePosture', inferRuntimePosture(ctx.runtimePolicy));
+  writeDatasetValue(HTML, 'spwRuntimePolicy', describeRuntimePolicy(ctx.runtimePolicy));
   writeDatasetValue(HTML, 'spwModuleAudit', ctx.runtimePolicy.audit ? 'on' : null);
   writeDatasetValue(HTML, 'spwModuleVisuals', ctx.runtimePolicy.visuals ? 'on' : null);
   if (ctx.runtimePolicy.delay) {
@@ -1037,6 +1041,19 @@ const FEATURE_DEFS = [
     load: () => import('./runtime/brace-pivots.js'),
     mount: (mod) => {
       const fn = mod?.initBracePivots;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'narrative-instrumentation',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-narrative-mode="on"]',
+    rootMode: 'single',
+    load: () => import('./semantic/narrative-instrumentation.js'),
+    mount: (mod) => {
+      const fn = mod?.initNarrativeInstrumentation;
       if (!isFn(fn)) return;
       return fn();
     },
@@ -2153,21 +2170,24 @@ async function bootSite() {
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
-    const [
-      { orchestrator: frameState, bindGlobalInteractions },
-      pageHooks,
-    ] = await Promise.all([
-      import('./runtime/state-orchestrator.js'),
-      import('./runtime/page-hooks.js'),
-    ]);
-    const composeApi = installSpwCompositionConsole(window, {
-      namespace: 'site-runtime',
-      role: 'runtime',
-      metaphor: 'composition-console',
-      owns: 'query disposition, runtime inspection, tuning hooks',
+  const [
+    { orchestrator: frameState, bindGlobalInteractions },
+    pageHooks,
+  ] = await Promise.all([
+    import('./runtime/state-orchestrator.js'),
+    import('./runtime/page-hooks.js'),
+  ]);
+
+  const composeApi = installSpwCompositionConsole(window, {
+    namespace: 'site-runtime',
+    role: 'runtime',
+    metaphor: 'composition-console',
+    owns: 'query disposition, runtime inspection, tuning hooks',
     controls: {
       pageState: {
         clearAttentionSequence: clearPageAttentionSequence,
+        describe: describePageStateSnapshot,
+        contract: SPW_PAGE_STATE_CONTRACT,
         states: PAGE_STATES,
         presence: PAGE_PRESENCE,
         arrival: PAGE_ARRIVAL,
@@ -2185,7 +2205,9 @@ async function bootSite() {
       },
       pageHooks: {
         annotate: pageHooks.annotatePageHooks,
+        describe: describePageHook,
         focus: pageHooks.focusPageHook,
+        contract: pageHooks.SPW_PAGE_HOOK_CONTRACT,
         list: pageHooks.listPageHooks,
         pulse: pageHooks.pulsePageHook,
         resolve: pageHooks.resolvePageHook,

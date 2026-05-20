@@ -429,6 +429,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   authorMode: 'draft',
   currentDevelopmentalClimate: 'orient',
   developmentalClimateAutoCycle: 'off',
+  narrativeMode: 'off', // Inline prose token lens for narrative surfaces.
 
   grainIntensity: 'subtle',
 
@@ -502,6 +503,7 @@ const SETTING_OPTIONS = Object.freeze({
   authorMode: new Set(AUTHOR_WORKFLOW_MODES),
   currentDevelopmentalClimate: new Set(Object.keys(DEVELOPMENTAL_CLIMATES)),
   developmentalClimateAutoCycle: new Set(['off', 'on']),
+  narrativeMode: new Set(['off', 'on']),
 
   grainIntensity: new Set(['none', 'subtle', 'moderate', 'rich']),
 
@@ -681,6 +683,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   layoutTuner: Object.freeze({reading: 'Reading', wide: 'Wide', atlas: 'Atlas'}),
   interactionTuner: Object.freeze({calm: 'Calm', responsive: 'Responsive', expressive: 'Expressive'}),
   componentLifecycle: Object.freeze({draft: 'Draft', stable: 'Stable', active: 'Active', archived: 'Archived'}),
+  narrativeMode: Object.freeze({off: 'Off', on: 'On'}),
   debugMode: Object.freeze({off: 'Off', on: 'On'}),
   showFrameMetadata: Object.freeze({off: 'Hidden', on: 'Shown'}),
   verboseLogging: Object.freeze({off: 'Off', on: 'On'}),
@@ -976,7 +979,9 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   spacing: 'spacingTuner',
   interaction: 'interactionTuner',
   flavor: 'pedagogicalFlavor',
-  lifecycle: 'componentLifecycle'
+  lifecycle: 'componentLifecycle',
+  narrative: 'narrativeMode',
+  'narrative-mode': 'narrativeMode'
 });
 
 const parseSettingsFromSearch = (search = window.location.search) => {
@@ -1402,6 +1407,7 @@ class SiteSettingsManager {
       spwOperatorHighlighting: normalized.operatorHighlighting,
       spwRelationalVisualization: normalized.relationalVisualization,
       spwWonderMemory: normalized.wonderMemory,
+      spwNarrativeMode: normalized.narrativeMode,
       spwDevelopmentalIndicators: normalized.developmentalIndicators,
       spwDepthIndicators: normalized.depthIndicators,
       spwDevelopmentalClimate: normalized.currentDevelopmentalClimate,

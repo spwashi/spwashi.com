@@ -3,6 +3,10 @@ import {
   writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
 
+/**
+ * Page hooks are named anchors in the page shell: places a reader, console,
+ * or runtime can jump to without needing bespoke route logic.
+ */
 export const PAGE_HOOK_STATES = Object.freeze({
   IDLE: 'idle',
   FOCUSED: 'focused',
@@ -16,6 +20,14 @@ export const PAGE_HOOK_SELECTOR = [
 ].join(', ');
 
 const PAGE_HOOK_OWNER = 'page-hooks';
+
+export const SPW_PAGE_HOOK_CONTRACT = Object.freeze({
+  selector: PAGE_HOOK_SELECTOR,
+  states: PAGE_HOOK_STATES,
+  owner: PAGE_HOOK_OWNER,
+  portableUse:
+    'Use this module when a page needs stable handles for reading, focus, pulse, or hook discovery.',
+});
 
 const normalizeHookName = (value = '') => String(value)
   .trim()
@@ -105,6 +117,18 @@ export function resolvePageHook(target, root = document) {
 
 export function snapshotPageHooks(root = document) {
   return listPageHooks(root).map(({ element, ...record }) => record);
+}
+
+/**
+ * Convert a hook record into a short sentence for debug output or narration.
+ */
+export function describePageHook(record) {
+  if (!record) return 'page hook unavailable';
+  return [
+    `name:${record.name}`,
+    `kind:${record.kind}`,
+    `state:${record.state}`,
+  ].join(' · ');
 }
 
 export function setPageHookState(target, state = PAGE_HOOK_STATES.IDLE, root = document) {

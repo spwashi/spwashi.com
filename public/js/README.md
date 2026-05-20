@@ -32,7 +32,7 @@ If you are trying to learn the runtime, read in this order:
 ## Folder Roles
 
 - `kernel/`: durable primitives, settings, shared contracts, and runtime bridges.
-- `semantic/`: operator grammar, projection machinery, semantic inference, and pretext helpers.
+- `semantic/`: operator grammar, projection machinery, semantic inference, narrative token lenses, and pretext helpers.
 - `runtime/`: active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
@@ -47,6 +47,8 @@ These are the best candidates when you want to reuse a file on another site:
 - `compose.js` for a single import surface over the portable runtime helpers.
 - `runtime/runtime-helpers.js` for shared timing, parsing, mount, and registry
   helpers that can be reused without booting `site.js`.
+- `SPW_RUNTIME_HELPERS_CONTRACT` for a compact summary of the helper layer's
+  timing and mount vocabulary.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/interaction-loop.js` for small interaction-state records and refresh events.
 - `runtime/page-state.js` for page state, attention timing, and visibility hooks.
@@ -93,9 +95,23 @@ Console helpers should reveal the same model:
 - `window.spwCompose.controls.pageHooks` can expose page-unique landmarks and
   generalizable handles through `list()`, `resolve()`, `focus()`, and `pulse()`;
   this is a good discovery loop for incremental learning and page familiarity.
+- `SPW_PAGE_STATE_CONTRACT` and `describePageStateSnapshot()` make page
+  lifecycle state readable as data or as a short sentence.
+- `SPW_PAGE_HOOK_CONTRACT` and `describePageHook()` do the same for named
+  handles and page-unique anchors.
+- `SPW_NARRATIVE_INSTRUMENTATION_CONTRACT` and
+  `initNarrativeInstrumentation()` expose the prose-token lens used by
+  narrative mode, so a page can reveal characters, locations, props, actions,
+  themes, and dialogue contexts without hiding the source text.
+  Copy can strengthen that lens by adding `data-spw-narrative-copy`,
+  `data-spw-copy-depth`, or `data-spw-copy-label` to the most rewarding prose
+  blocks.
 - `window.spwCompose.controls.composition` can expose component box-model
   inspection through `inspect()`, `snapshot()`, and `annotate()` so standalone
   scripts can explain layout, presence, and story without the full site shell.
+- Runtime policy is also readable as a sentence. `describeRuntimePolicy()`
+  returns the current timing/audit/visuals posture, and `html[data-spw-runtime-policy]`
+  can surface that summary for debugging, screenshots, or console narration.
 - `applySpwQueryDisposition(root)` applies opt-in query parameters such as
   `spw-palette=craft`, `spw-color-active-op=%23008080`,
   `spw-var-shape-component=8px`, `spw-tune-density=compact`, and

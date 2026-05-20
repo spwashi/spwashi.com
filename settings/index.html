@@ -92,12 +92,12 @@
                 data-spw-focus-lens="editorial"
                 data-spw-typeset-surface="editorial"
             >
-                <p class="settings-note">
+                <p class="settings-note" data-spw-narrative-copy="on" data-spw-copy-depth="normal" data-spw-copy-label="Settings overview">
                     <span class="drop-cap">P</span>references are saved in this browser. Use this page to choose a writing
                     workflow, set a developmental climate, improve reading comfort, reduce friction, and inspect what the
                     runtime is doing only when you need to.
                 </p>
-                <p class="spw-playable-hook">Settings are not decoration here. They are reading weather.</p>
+                <p class="spw-playable-hook" data-spw-narrative-copy="on" data-spw-copy-depth="genre" data-spw-copy-label="Settings hook">Settings are not decoration here. They are reading weather, and the weather should be readable at a glance.</p>
                 <ul class="spw-copy-motif-strip" aria-label="Settings copy motifs">
                     <li>preset</li>
                     <li>workflow</li>
@@ -105,7 +105,7 @@
                     <li>density</li>
                     <li>inspect</li>
                 </ul>
-                <p class="settings-start-note">
+                <p class="settings-start-note" data-spw-narrative-copy="on" data-spw-copy-depth="normal" data-spw-copy-label="Settings start note">
                     The simplest path is: choose a preset, choose an author workflow, adjust reading comfort, then refine
                     details only if something still feels off. Author workflow describes the writing task; developmental climate
                     describes the attention posture. The more technical maps and registries live lower on the page so everyday
@@ -339,7 +339,7 @@
             data-spw-form="brace"
             data-spw-form-options="brace,block"
             data-spw-inspect="runtime_preferences"
-            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,busDiagnostics"
+            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,busDiagnostics"
             data-spw-kind="frame"
             data-spw-liminality="entry"
             data-spw-locality="medium"
@@ -1525,6 +1525,18 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
+                            <legend>Narrative mode</legend>
+                            <label class="settings-option">
+                                <input checked name="narrativeMode" type="radio" value="off" />
+                            <span class="settings-option-copy"><strong>Off</strong><span>Read prose as standard text, with no token lens or drawer.</span></span>
+                        </label>
+                        <label class="settings-option">
+                            <input name="narrativeMode" type="radio" value="on" />
+                            <span class="settings-option-copy"><strong>On</strong><span>Highlight characters, locations, dialogue, actions, and themes as interactive tokens while leaving the prose intact and readable.</span></span>
+                        </label>
+                    </fieldset>
+
+                        <fieldset class="settings-fieldset">
                             <legend>Conceptual guides</legend>
                             <label class="settings-option">
                                 <input checked name="showSemanticMetadata" type="radio" value="off" />
@@ -1819,6 +1831,11 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                 <article class="settings-state-card">
                     <span class="settings-state-label">semantic density</span>
                     <strong data-settings-state="semanticDensity">minimal</strong>
+                </article>
+
+                <article class="settings-state-card">
+                    <span class="settings-state-label">narrative mode</span>
+                    <strong data-settings-state="narrativeMode">off</strong>
                 </article>
 
                 <article class="settings-state-card">

@@ -3,6 +3,10 @@ import {
   writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
 
+/**
+ * Page state models the visible lifecycle of a page shell: booting,
+ * interaction, arrival, and whether the browser is foregrounded or returned.
+ */
 export const PAGE_STATES = Object.freeze({
   BOOTING: 'booting',
   INTERACTIVE: 'interactive',
@@ -25,6 +29,22 @@ export const PAGE_ARRIVAL = Object.freeze({
 
 export const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 export const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
+
+/**
+ * Compact contract for page-state consumers and console readers.
+ */
+export const SPW_PAGE_STATE_CONTRACT = Object.freeze({
+  states: PAGE_STATES,
+  presence: PAGE_PRESENCE,
+  arrival: PAGE_ARRIVAL,
+  events: Object.freeze({
+    attention: PAGE_ATTENTION_EVENT,
+    transition: PAGE_TRANSITION_EVENT,
+  }),
+  portableUse:
+    'Use this module when page attention, arrival, visibility, or transition state needs to be tracked and narrated consistently.',
+});
+
 const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
   { step: '1', token: '--spw-page-arrival-step-1-delay', fallback: 0 },
   { step: '2', token: '--spw-page-arrival-step-2-delay', fallback: 96 },
@@ -251,6 +271,24 @@ export function snapshotPageState(root = document.documentElement, body = docume
     tempoField: htmlDataset.spwTempoField || '',
     bodyState: bodyDataset.spwPageState || '',
   };
+}
+
+/**
+ * Convert a page-state snapshot into a human-readable sentence.
+ */
+export function describePageStateSnapshot(snapshot) {
+  if (!snapshot) return 'page state unavailable';
+
+  const parts = [
+    `state:${snapshot.state}`,
+    `presence:${snapshot.presence}`,
+    `arrival:${snapshot.arrival}`,
+  ];
+
+  if (snapshot.transition) parts.push(`transition:${snapshot.transition}`);
+  if (snapshot.attentionContext) parts.push(`attention:${snapshot.attentionContext}`);
+
+  return parts.join(' · ');
 }
 
 export function clearPageState(root = document.documentElement, body = document.body) {

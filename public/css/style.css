@@ -91,6 +91,7 @@
 @import url('/public/css/effects/demos.css') layer(effects);
 @import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/effects/metaphysical-paper.css') layer(effects);
+@import url('/public/css/effects/narrative.css') layer(effects);
 @import url('/public/css/effects/debug.css') layer(effects);
 
 @import url('/public/css/ornament/whimsy.css') layer(ornament);

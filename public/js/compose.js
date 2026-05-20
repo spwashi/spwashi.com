@@ -66,6 +66,7 @@ export {
 export {
   cancelIdle,
   createRegistry,
+  describeRuntimePolicy,
   inferRuntimePosture,
   isFn,
   normalizeRuntimeToken,
@@ -80,7 +81,26 @@ export {
   safeQueryAll,
   whenDocumentReady,
   whenWindowLoaded,
+  SPW_RUNTIME_HELPERS_CONTRACT,
 } from './runtime/runtime-helpers.js';
+
+export {
+  PAGE_ARRIVAL,
+  PAGE_ATTENTION_EVENT,
+  PAGE_PRESENCE,
+  PAGE_STATES,
+  PAGE_TRANSITION_EVENT,
+  SPW_PAGE_STATE_CONTRACT,
+  annotateFloatingChrome,
+  clearPageAttentionSequence,
+  clearPageState,
+  describePageStateSnapshot,
+  initPageAttentionLifecycle,
+  schedulePageArrival,
+  setPageAttentionState,
+  setPageState,
+  snapshotPageState,
+} from './runtime/page-state.js';
 
 export {
   INTERACTION_LOOP_CONTRACT,
@@ -110,6 +130,25 @@ export {
   ATTENTION_ARCHITECTURE_CONTRACT,
   initSpwAttentionArchitecture,
 } from './runtime/attention-architecture.js';
+
+export {
+  PAGE_HOOK_SELECTOR,
+  PAGE_HOOK_STATES,
+  SPW_PAGE_HOOK_CONTRACT,
+  annotatePageHooks,
+  describePageHook,
+  focusPageHook,
+  listPageHooks,
+  pulsePageHook,
+  resolvePageHook,
+  setPageHookState,
+  snapshotPageHooks,
+} from './runtime/page-hooks.js';
+
+export {
+  SPW_NARRATIVE_INSTRUMENTATION_CONTRACT,
+  initNarrativeInstrumentation,
+} from './semantic/narrative-instrumentation.js';
 
 export {
   DEFAULT_PALETTE_RESONANCE,
