@@ -254,16 +254,71 @@ export function describeFloatingChromeElement(element) {
 export function describeFeatureClusterElement(element) {
   if (!globalThis.Element || !(element instanceof globalThis.Element)) return null;
 
+  const context = describeElementContext(element);
+
+  return {
+    ...context,
+    kind: element.dataset.spwComponentKind || context.kind,
+    feature: element.dataset.spwFeature || context.feature || '',
+  };
+}
+
+function collectElementAncestry(element, limit = 4) {
+  if (!globalThis.Element || !(element instanceof globalThis.Element)) return [];
+
+  const ancestry = [];
+  let current = element.parentElement;
+
+  while (current && ancestry.length < limit) {
+    const isInspectable = Boolean(
+      current.matches?.(COMPONENT_SELECTOR)
+      || current.matches?.(REGION_SELECTOR)
+      || current.matches?.('[data-spw-feature]')
+      || current.matches?.('[data-spw-surface]')
+    );
+
+    if (isInspectable) {
+      ancestry.push({
+        target: getRuntimeElementLabel(current),
+        kind: current.dataset.spwKind || inferTopographyKind(current, 'component'),
+        role: current.dataset.spwRole || '',
+        feature: current.dataset.spwFeature || '',
+        context: current.dataset.spwContext || '',
+        surface: current.closest?.('[data-spw-surface]')?.dataset?.spwSurface || '',
+        slot: current.dataset.spwSlot || '',
+      });
+    }
+
+    current = current.parentElement;
+  }
+
+  return ancestry;
+}
+
+export function describeElementContext(element) {
+  if (!globalThis.Element || !(element instanceof globalThis.Element)) return null;
+
+  const ancestry = collectElementAncestry(element);
+  const owner = ancestry[0] || null;
+
   return {
     target: getRuntimeElementLabel(element),
-    feature: element.dataset.spwFeature || '',
-    kind: element.dataset.spwComponentKind || element.dataset.spwKind || '',
+    label:
+      element.getAttribute?.('aria-label')
+      || element.querySelector?.('h1, h2, h3, strong')?.textContent?.trim()
+      || element.textContent?.replace(/\s+/g, ' ').trim().slice(0, 120)
+      || '',
+    kind: element.dataset.spwKind || inferTopographyKind(element, 'component'),
     role: element.dataset.spwRole || '',
+    feature: element.dataset.spwFeature || '',
     context: element.dataset.spwContext || '',
-    inspect: element.dataset.spwInspect || '',
     surface: element.closest?.('[data-spw-surface]')?.dataset?.spwSurface || '',
+    slot: element.dataset.spwSlot || '',
+    inspect: element.dataset.spwInspect || '',
     boxModel: element.dataset.spwBoxModel || '',
     compositionFlow: element.dataset.spwCompositionFlow || '',
+    owner,
+    ancestry,
   };
 }
 
@@ -276,6 +331,7 @@ if (globalThis.window) {
     featureClusters: () => Array.from(
       globalThis.document?.querySelectorAll?.(FEATURE_CLUSTER_CONTRACT.selector) || []
     ).map(describeFeatureClusterElement).filter(Boolean),
+    elementContext: (target) => describeElementContext(target),
     contract: Object.freeze({
       verboseFlag: 'html[data-spw-runtime-audit="verbose"]',
       recordShape: '{ at, source, reason, target, attributes }',

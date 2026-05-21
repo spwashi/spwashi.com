@@ -14,10 +14,13 @@
  */
 
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
+import { describeFeatureClusterElement } from '/public/js/kernel/dom-contracts.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
+const SAMPLE_HOLD_MS = 220;
+const SAMPLE_SWIPE_PX = 42;
 const BOOKMARKS_KEY = 'spw-pins';
 const MAX_BREADCRUMB_NEIGHBORS = 3;
 const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
@@ -90,6 +93,12 @@ const OPERATOR_INFO = Object.freeze({
 const runtime = {
   pathBar: null,
   headerMemo: null,
+  sampleDock: null,
+  samplePreview: null,
+  sampleItems: [],
+  sampleSelectedIndex: 0,
+  samplePinnedIndex: null,
+  sampleGesture: null,
   lastMemoTimeout: null,
   shellSnapshot: null,
   pathExpanded: null,
@@ -100,11 +109,13 @@ const runtime = {
 export function initSpwExperiential() {
   if (document.documentElement.dataset.spwExperientialInit === 'true') {
     renderBreadcrumbSpell();
+    renderSampleDock();
     syncExperientialSurface();
     return {
       cleanup() {},
       refresh() {
         renderBreadcrumbSpell();
+        renderSampleDock();
         syncExperientialSurface();
       },
     };
@@ -113,6 +124,7 @@ export function initSpwExperiential() {
   document.documentElement.dataset.spwExperientialInit = 'true';
   if (document.body?.dataset.spwFeatures?.split(/\s+/).includes('shell-trace')) {
     initSpellBreadcrumbs();
+    initSampleDock();
   }
   initContextualMemos();
   initOperatorLearning();
@@ -123,6 +135,7 @@ export function initSpwExperiential() {
     cleanup() {},
     refresh() {
       renderBreadcrumbSpell();
+      renderSampleDock();
       syncExperientialSurface();
     },
   };
@@ -165,6 +178,7 @@ function initSpellBreadcrumbs() {
 
   const update = () => {
     renderBreadcrumbSpell();
+    renderSampleDock();
     syncExperientialSurface();
   };
 
@@ -184,6 +198,36 @@ function initSpellBreadcrumbs() {
   renderBreadcrumbSpell();
 }
 
+function initSampleDock() {
+  const header = document.querySelector('header');
+  if (!header) return;
+  const traceHost = ensureHeaderTraceHost(header);
+
+  let dock = traceHost.querySelector('.spw-sample-dock');
+  if (!dock) {
+    dock = document.createElement('details');
+    dock.className = 'spw-spell-dock spw-sample-dock';
+    dock.open = true;
+    dock.setAttribute('aria-label', 'Sample explorer');
+    traceHost.appendChild(dock);
+  }
+
+  runtime.sampleDock = dock;
+
+  if (dock.dataset.spwSampleBound !== 'true') {
+    dock.addEventListener('pointerover', onSampleDockPointerOver);
+    dock.addEventListener('pointerout', onSampleDockPointerOut);
+    dock.addEventListener('focusin', onSampleDockFocusIn);
+    dock.addEventListener('focusout', onSampleDockFocusOut);
+    dock.addEventListener('pointerdown', onSampleDockPointerDown);
+    dock.addEventListener('click', onSampleDockClick);
+    dock.addEventListener('keydown', onSampleDockKeydown);
+    dock.dataset.spwSampleBound = 'true';
+  }
+
+  renderSampleDock();
+}
+
 function ensureHeaderTraceHost(header) {
   let host = header.querySelector('.spw-header-trace');
   if (host) return host;
@@ -199,6 +243,363 @@ function ensureHeaderTraceHost(header) {
   }
 
   return host;
+}
+
+function collectSampleItems(root = document) {
+  const page = describePageSample(root);
+  const features = Array.from(root.querySelectorAll('[data-spw-feature]'))
+    .map((element, index) => describeFeatureSample(element, index))
+    .filter(Boolean)
+    .slice(0, 4);
+  const routes = collectRelatedBreadcrumbRoutes(window.location.pathname)
+    .map((route, index) => describeRouteSample(route, index))
+    .filter(Boolean)
+    .slice(0, MAX_BREADCRUMB_NEIGHBORS);
+
+  return [page, ...features, ...routes];
+}
+
+function describePageSample(root = document) {
+  const body = root.body || document.body;
+  return {
+    kind: 'page',
+    label: body?.dataset.spwPageResponsibility
+      || body?.dataset.spwPageRole
+      || body?.dataset.spwSurface
+      || 'page',
+    note: body?.dataset.spwPagePrimaryAction || 'Current page context.',
+    route: window.location.pathname,
+    surface: body?.dataset.spwSurface || 'root',
+    family: body?.dataset.spwPageFamily || '',
+    routeFamily: body?.dataset.spwRouteFamily || '',
+    pageModes: body?.dataset.spwPageModes || '',
+    role: body?.dataset.spwPageRole || '',
+    responsibility: body?.dataset.spwPageResponsibility || '',
+    primaryAction: body?.dataset.spwPagePrimaryAction || '',
+    context: body?.dataset.spwContext || '',
+    wonder: body?.dataset.spwWonder || '',
+    relatedRoutes: collectRelatedBreadcrumbRoutes(window.location.pathname),
+  };
+}
+
+function describeFeatureSample(element, index = 0) {
+  const descriptor = describeFeatureClusterElement(element);
+  if (!descriptor) return null;
+
+  return {
+    kind: 'feature',
+    index,
+    label: descriptor.label || descriptor.target || descriptor.feature || `feature ${index + 1}`,
+    note: descriptor.inspect || descriptor.role || descriptor.context || 'Feature cluster from this page.',
+    target: descriptor.target,
+    feature: descriptor.feature,
+    role: descriptor.role,
+    context: descriptor.context,
+    surface: descriptor.surface,
+    inspect: descriptor.inspect,
+    boxModel: descriptor.boxModel,
+    compositionFlow: descriptor.compositionFlow,
+    ancestry: descriptor.ancestry || [],
+  };
+}
+
+function describeRouteSample(route, index = 0) {
+  if (!route) return null;
+  return {
+    kind: 'route',
+    index,
+    label: route.label || titleFromPath(route.href || ''),
+    note: route.note || 'Related route from this page.',
+    href: route.href || '/',
+  };
+}
+
+function renderSampleDock() {
+  const dock = runtime.sampleDock;
+  if (!dock) return;
+
+  const items = collectSampleItems();
+  runtime.sampleItems = items;
+
+  if (!items.length) {
+    dock.hidden = true;
+    return;
+  }
+
+  if (runtime.sampleSelectedIndex >= items.length || runtime.sampleSelectedIndex < 0) {
+    runtime.sampleSelectedIndex = 0;
+  }
+  if (runtime.samplePinnedIndex != null && runtime.samplePinnedIndex >= items.length) {
+    runtime.samplePinnedIndex = null;
+  }
+
+  const selectedIndex = runtime.samplePinnedIndex ?? runtime.sampleSelectedIndex;
+  const selected = items[selectedIndex] || items[0];
+  runtime.samplePreview = dock.querySelector('.spw-sample-preview');
+
+  dock.hidden = false;
+  dock.dataset.spwSampleState = runtime.samplePinnedIndex == null ? 'preview' : 'pinned';
+  dock.dataset.spwSampleCount = String(items.length);
+  dock.dataset.spwSampleKind = selected?.kind || 'page';
+  dock.dataset.spwSamplePinned = runtime.samplePinnedIndex == null ? 'false' : 'true';
+
+  dock.innerHTML = `
+    <summary class="spw-spell-dock-summary spw-sample-dock-summary">
+      <span class="spw-spell-dock-op">?</span>
+      <span class="spw-spell-dock-label">samples</span>
+      <span class="spw-spell-dock-count">${escapeHtml(String(items.length))}</span>
+    </summary>
+    <div class="spw-spell-dock-body spw-sample-dock-body">
+      <p class="spw-sample-dock__lead">Hover, focus, or press and hold to preview. Swipe left or right here to move between the page, features, and nearby routes.</p>
+      <section class="spw-sample-preview" aria-live="polite">
+        ${renderSamplePreview(selected)}
+      </section>
+      <div class="spw-sample-chip-rail" aria-label="Sample selectors">
+        ${items.map((item, index) => renderSampleChip(item, index, index === selectedIndex)).join('')}
+      </div>
+    </div>
+  `;
+
+  runtime.samplePreview = dock.querySelector('.spw-sample-preview');
+}
+
+function renderSamplePreview(item) {
+  if (!item) return '';
+
+  const fields = [];
+
+  if (item.kind === 'page') {
+    fields.push(['surface', item.surface]);
+    fields.push(['family', item.family]);
+    fields.push(['role', item.role]);
+    fields.push(['responsibility', item.responsibility]);
+    fields.push(['action', item.primaryAction]);
+    fields.push(['context', item.context]);
+    fields.push(['wonder', item.wonder]);
+  } else if (item.kind === 'feature') {
+    fields.push(['feature', item.feature]);
+    fields.push(['role', item.role]);
+    fields.push(['context', item.context]);
+    fields.push(['surface', item.surface]);
+    fields.push(['inspect', item.inspect]);
+    fields.push(['box model', item.boxModel]);
+    fields.push(['composition', item.compositionFlow]);
+  } else if (item.kind === 'route') {
+    fields.push(['route', item.href]);
+  }
+
+  const ancestry = item.ancestry?.length
+    ? `<div class="spw-sample-preview__ancestry"><span>ancestry</span><strong>${escapeHtml(item.ancestry.map((entry) => entry.target || entry.feature || entry.role || entry.kind || 'node').join(' → '))}</strong></div>`
+    : '';
+
+  return `
+    <div class="spw-sample-preview__header">
+      <span class="spw-sample-preview__kind">${escapeHtml(item.kind || 'sample')}</span>
+      <strong class="spw-sample-preview__label">${escapeHtml(item.label || item.target || 'sample')}</strong>
+    </div>
+    ${item.note ? `<p class="spw-sample-preview__note">${escapeHtml(item.note)}</p>` : ''}
+    <dl class="spw-sample-preview__fields">
+      ${fields.filter(([, value]) => value).map(([label, value]) => `
+        <div class="spw-sample-preview__field">
+          <dt>${escapeHtml(label)}</dt>
+          <dd>${escapeHtml(value)}</dd>
+        </div>
+      `).join('')}
+    </dl>
+    ${ancestry}
+  `;
+}
+
+function renderSampleChip(item, index, current = false) {
+  if (item.kind === 'route') {
+    return `
+      <button
+        class="spw-sample-chip"
+        type="button"
+        data-spw-sample-index="${index}"
+        data-spw-sample-kind="route"
+        data-spw-sample-href="${escapeAttribute(item.href)}"
+        aria-label="${escapeAttribute(`Open ${item.label}`)}"
+        ${current ? 'aria-pressed="true"' : ''}>
+        <span class="spw-sample-chip__token">→</span>
+        <span class="spw-sample-chip__label">${escapeHtml(item.label)}</span>
+      </button>
+    `;
+  }
+
+  return `
+    <button
+      class="spw-sample-chip"
+      type="button"
+      data-spw-sample-index="${index}"
+      data-spw-sample-kind="${escapeAttribute(item.kind)}"
+      aria-label="${escapeAttribute(`Preview ${item.label}`)}"
+      ${current ? 'aria-pressed="true"' : ''}>
+      <span class="spw-sample-chip__token">${escapeHtml(item.kind === 'page' ? 'page' : 'feature')}</span>
+      <span class="spw-sample-chip__label">${escapeHtml(item.label)}</span>
+    </button>
+  `;
+}
+
+function selectSampleIndex(index, options = {}) {
+  if (!runtime.sampleItems.length) return;
+  const next = Math.max(0, Math.min(index, runtime.sampleItems.length - 1));
+  const sameSelected = runtime.sampleSelectedIndex === next;
+  const samePinned = runtime.samplePinnedIndex === next;
+  if (!options.pin && !options.keepPin && runtime.samplePinnedIndex == null && sameSelected) return;
+  if (options.pin && samePinned) return;
+  if (options.keepPin && runtime.samplePinnedIndex == null && sameSelected) return;
+  runtime.sampleSelectedIndex = next;
+  if (options.pin) {
+    runtime.samplePinnedIndex = next;
+  } else if (!options.keepPin) {
+    runtime.samplePinnedIndex = null;
+  }
+  renderSampleDock();
+}
+
+function pinSampleIndex(index) {
+  selectSampleIndex(index, { pin: true });
+}
+
+function clearSamplePin() {
+  if (runtime.samplePinnedIndex == null) return;
+  runtime.samplePinnedIndex = null;
+  renderSampleDock();
+}
+
+function cycleSampleIndex(delta = 1) {
+  if (!runtime.sampleItems.length) return;
+  const next = (runtime.sampleSelectedIndex + delta + runtime.sampleItems.length) % runtime.sampleItems.length;
+  selectSampleIndex(next, { keepPin: false });
+}
+
+function getSampleIndexFromEvent(event) {
+  const item = event.target instanceof Element ? event.target.closest('[data-spw-sample-index]') : null;
+  if (!(item instanceof HTMLElement)) return null;
+  const index = Number(item.dataset.spwSampleIndex);
+  return Number.isFinite(index) ? { item, index } : null;
+}
+
+function onSampleDockPointerOver(event) {
+  const sample = getSampleIndexFromEvent(event);
+  if (!sample || runtime.samplePinnedIndex != null) return;
+  selectSampleIndex(sample.index, { keepPin: true });
+}
+
+function onSampleDockPointerOut(event) {
+  if (runtime.samplePinnedIndex != null) return;
+  const related = event.relatedTarget instanceof Element
+    ? event.relatedTarget.closest('[data-spw-sample-index]')
+    : null;
+  if (related) return;
+  runtime.sampleSelectedIndex = 0;
+  renderSampleDock();
+}
+
+function onSampleDockFocusIn(event) {
+  const sample = getSampleIndexFromEvent(event);
+  if (!sample) return;
+  if (runtime.samplePinnedIndex != null && runtime.samplePinnedIndex !== sample.index) return;
+  selectSampleIndex(sample.index, { keepPin: true });
+}
+
+function onSampleDockFocusOut(event) {
+  if (runtime.samplePinnedIndex != null) return;
+  const related = event.relatedTarget instanceof Element
+    ? event.relatedTarget.closest('[data-spw-sample-index]')
+    : null;
+  if (related) return;
+  runtime.sampleSelectedIndex = 0;
+  renderSampleDock();
+}
+
+function onSampleDockPointerDown(event) {
+  const sample = getSampleIndexFromEvent(event);
+  if (!sample) return;
+
+  clearTimeout(runtime.sampleGesture?.holdTimer);
+  runtime.sampleGesture = {
+    index: sample.index,
+    startX: event.clientX,
+    startY: event.clientY,
+    held: false,
+    consumedClick: false,
+    pointerId: event.pointerId,
+    target: sample.item,
+    holdTimer: window.setTimeout(() => {
+      runtime.sampleGesture.held = true;
+      runtime.sampleGesture.consumedClick = true;
+      pinSampleIndex(sample.index);
+    }, SAMPLE_HOLD_MS),
+  };
+
+  window.addEventListener('pointerup', finishSampleGesture, { once: true });
+  window.addEventListener('pointercancel', finishSampleGesture, { once: true });
+}
+
+function finishSampleGesture(event) {
+  const gesture = runtime.sampleGesture;
+  if (!gesture) return;
+  if (event.pointerId != null && gesture.pointerId != null && event.pointerId !== gesture.pointerId) return;
+  clearTimeout(gesture.holdTimer);
+  const dx = event.clientX - gesture.startX;
+  const dy = event.clientY - gesture.startY;
+  const isSwipe = Math.abs(dx) > SAMPLE_SWIPE_PX && Math.abs(dx) > Math.abs(dy);
+
+  if (isSwipe) {
+    gesture.consumedClick = true;
+    cycleSampleIndex(dx < 0 ? 1 : -1);
+  }
+
+  if (!gesture.held && !isSwipe && runtime.samplePinnedIndex != null) {
+    runtime.samplePinnedIndex = null;
+    renderSampleDock();
+  }
+
+  window.setTimeout(() => {
+    if (runtime.sampleGesture === gesture) {
+      runtime.sampleGesture = null;
+    }
+  }, 0);
+}
+
+function onSampleDockClick(event) {
+  const sample = getSampleIndexFromEvent(event);
+  if (!sample) return;
+
+  if (runtime.sampleGesture?.consumedClick) {
+    event.preventDefault();
+    event.stopPropagation();
+    runtime.sampleGesture.consumedClick = false;
+    return;
+  }
+
+  if (sample.item.dataset.spwSampleKind === 'route') {
+    const href = sample.item.dataset.spwSampleHref || '';
+    if (!href) return;
+    window.location.assign(href);
+    return;
+  }
+
+  if (runtime.samplePinnedIndex === sample.index) {
+    clearSamplePin();
+    return;
+  }
+
+  selectSampleIndex(sample.index, { pin: true });
+}
+
+function onSampleDockKeydown(event) {
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    cycleSampleIndex(-1);
+  } else if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    cycleSampleIndex(1);
+  } else if (event.key === 'Escape') {
+    clearSamplePin();
+  }
 }
 
 function renderBreadcrumbSpell() {

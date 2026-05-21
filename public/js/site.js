@@ -6,6 +6,7 @@ import {
   FRAME_SELECTOR,
   FEATURE_CLUSTER_CONTRACT,
   buildAxisGenome,
+  describeElementContext,
   describeFeatureClusterElement,
   inferTopographyKind,
   writeDatasetValue,
@@ -465,6 +466,18 @@ function collectRelatedRouteSamples(root = document) {
     .slice(0, 8);
 }
 
+function describePageElementalContext(root = document) {
+  const body = root?.body || BODY;
+  const header = root?.querySelector?.('header') || null;
+  const main = root?.querySelector?.('main') || ROOT_MAIN || null;
+
+  return {
+    header: header ? describeElementContext(header) : null,
+    main: main ? describeElementContext(main) : null,
+    featureClusters: snapshotFeatureClusters(root).slice(0, 6),
+  };
+}
+
 function describeCurrentPageSample(root = document) {
   const body = root?.body || BODY;
   const relatedRoutes = collectRelatedRouteSamples(root);
@@ -472,13 +485,18 @@ function describeCurrentPageSample(root = document) {
   return {
     route: window.location.pathname,
     surface: body?.dataset?.spwSurface || SITE_SURFACE,
+    routeFamily: body?.dataset?.spwRouteFamily || '',
     family: body?.dataset?.spwPageFamily || '',
     role: body?.dataset?.spwPageRole || '',
+    zone: body?.dataset?.spwPageZone || '',
+    status: body?.dataset?.spwPageStatus || '',
     responsibility: body?.dataset?.spwPageResponsibility || '',
     primaryAction: body?.dataset?.spwPagePrimaryAction || '',
+    pageModes: body?.dataset?.spwPageModes || '',
     context: body?.dataset?.spwContext || '',
     wonder: body?.dataset?.spwWonder || '',
     relatedRoutes,
+    elementalContext: describePageElementalContext(root),
   };
 }
 
@@ -486,23 +504,25 @@ function describeComponentSample(target) {
   if (!(target instanceof HTMLElement)) return null;
 
   const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-feature]');
+  const elementalContext = describeElementContext(target);
 
   return {
-    target: target.id ? `#${target.id}` : target.dataset.spwFeature || target.dataset.spwRole || target.localName || 'element',
-    label: target.getAttribute('aria-label')
-      || target.querySelector('h1, h2, h3, strong')?.textContent?.trim()
-      || target.textContent?.replace(/\s+/g, ' ').trim().slice(0, 120)
-      || '',
-    kind: target.dataset.spwKind || inferTopographyKind(target, 'component'),
-    role: target.dataset.spwRole || '',
-    feature: target.dataset.spwFeature || '',
-    context: target.dataset.spwContext || target.closest('[data-spw-context]')?.dataset?.spwContext || BODY?.dataset?.spwContext || '',
-    surface: target.closest('[data-spw-surface]')?.dataset?.spwSurface || BODY?.dataset?.spwSurface || SITE_SURFACE,
+    target: elementalContext?.target || '',
+    label: elementalContext?.label || '',
+    kind: elementalContext?.kind || inferTopographyKind(target, 'component'),
+    role: elementalContext?.role || '',
+    feature: elementalContext?.feature || '',
+    context: elementalContext?.context || target.closest('[data-spw-context]')?.dataset?.spwContext || BODY?.dataset?.spwContext || '',
+    surface: elementalContext?.surface || BODY?.dataset?.spwSurface || SITE_SURFACE,
+    slot: elementalContext?.slot || '',
+    inspect: elementalContext?.inspect || '',
+    boxModel: elementalContext?.boxModel || '',
+    compositionFlow: elementalContext?.compositionFlow || '',
+    owner: elementalContext?.owner || null,
+    ancestry: elementalContext?.ancestry || [],
     page: describeCurrentPageSample(document),
+    elementalContext,
     frame: frame?.id || frame?.dataset?.spwKind || '',
-    inspect: target.dataset.spwInspect || '',
-    boxModel: target.dataset.spwBoxModel || '',
-    compositionFlow: target.dataset.spwCompositionFlow || '',
   };
 }
 

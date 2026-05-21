@@ -419,6 +419,160 @@
   display: none;
 }
 
+.spw-sample-dock {
+  touch-action: pan-y;
+}
+
+.spw-sample-dock-body {
+  gap: 0.62rem;
+}
+
+.spw-sample-dock__lead {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
+.spw-sample-preview {
+  display: grid;
+  gap: 0.34rem;
+  padding: 0.56rem 0.62rem 0.66rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 84%, transparent);
+  border-radius: calc(var(--shell-panel-radius, 0.9rem) - 0.1rem);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18), transparent 68%),
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+.spw-sample-preview__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.spw-sample-preview__kind {
+  color: var(--teal, #008080);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-sample-preview__label {
+  min-width: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.spw-sample-preview__note {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.spw-sample-preview__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.34rem 0.5rem;
+  margin: 0;
+}
+
+.spw-sample-preview__field {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.spw-sample-preview__field dt {
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 84%, var(--spw-shell-chrome-accent-local) 16%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spw-sample-preview__field dd,
+.spw-sample-preview__ancestry strong {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: 0.71rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.spw-sample-preview__ancestry {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+}
+
+.spw-sample-preview__ancestry > span {
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 84%, var(--spw-shell-chrome-accent-local) 16%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spw-sample-chip-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+.spw-sample-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.95rem;
+  padding: 0.26rem 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 72%),
+    color-mix(in oklab, var(--surface, rgba(255,255,255,0.62)) 96%, var(--spw-shell-chrome-accent-local) 4%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 140ms var(--shell-ease),
+    background-color 140ms var(--shell-ease),
+    color 140ms var(--shell-ease),
+    transform 140ms var(--shell-ease),
+    box-shadow 140ms var(--shell-ease);
+}
+
+.spw-sample-chip:is(:hover, :focus-visible),
+.spw-sample-chip[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--spw-shell-chrome-accent-local) 28%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 66%),
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-shell-chrome-accent-local) 10%, transparent);
+}
+
+.spw-sample-chip__token {
+  color: var(--teal, #008080);
+  font-weight: 700;
+}
+
+.spw-sample-chip[data-spw-sample-kind="route"] {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--teal, #008080) 12%);
+}
+
 /* ==========================================================================
    2. Primary navigation
    ========================================================================== */
