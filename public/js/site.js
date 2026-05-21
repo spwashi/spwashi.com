@@ -409,6 +409,103 @@ function snapshotFeatureClusters(root = document) {
     .filter(Boolean);
 }
 
+function normalizeRoutePath(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '/';
+
+  try {
+    const url = new URL(raw, window.location.href);
+    if (url.origin !== window.location.origin) return '';
+    return `${url.pathname.replace(/\/+$/, '/') || '/'}${url.search}${url.hash}`;
+  } catch {
+    if (raw.startsWith('/')) return raw.replace(/\/+$/, '/') || '/';
+    return `/${raw.replace(/^\/+/, '').replace(/\/+$/, '/')}`;
+  }
+}
+
+function titleFromPath(pathname = '') {
+  return String(pathname || '/')
+    .split('/')
+    .filter(Boolean)
+    .at(-1)
+    ?.replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase()) || 'Home';
+}
+
+function parseRouteList(value = '') {
+  return Array.from(new Set(
+    String(value || '')
+      .split(/[|,]/)
+      .map((part) => normalizeRoutePath(part))
+      .filter(Boolean)
+  ));
+}
+
+function describeRouteSample(pathname = '') {
+  const href = normalizeRoutePath(pathname);
+  if (!href) return null;
+  return {
+    href,
+    label: titleFromPath(href),
+    note: href === '/' ? 'Start or re-enter the site.' : 'Related route from this page.',
+  };
+}
+
+function collectRelatedRouteSamples(root = document) {
+  const related = [
+    root?.body?.dataset?.spwRelatedRoutes,
+    root?.querySelector?.('header')?.dataset?.spwRelatedRoutes,
+  ]
+    .filter(Boolean)
+    .join('|');
+
+  return parseRouteList(related)
+    .map(describeRouteSample)
+    .filter(Boolean)
+    .slice(0, 8);
+}
+
+function describeCurrentPageSample(root = document) {
+  const body = root?.body || BODY;
+  const relatedRoutes = collectRelatedRouteSamples(root);
+
+  return {
+    route: window.location.pathname,
+    surface: body?.dataset?.spwSurface || SITE_SURFACE,
+    family: body?.dataset?.spwPageFamily || '',
+    role: body?.dataset?.spwPageRole || '',
+    responsibility: body?.dataset?.spwPageResponsibility || '',
+    primaryAction: body?.dataset?.spwPagePrimaryAction || '',
+    context: body?.dataset?.spwContext || '',
+    wonder: body?.dataset?.spwWonder || '',
+    relatedRoutes,
+  };
+}
+
+function describeComponentSample(target) {
+  if (!(target instanceof HTMLElement)) return null;
+
+  const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-feature]');
+
+  return {
+    target: target.id ? `#${target.id}` : target.dataset.spwFeature || target.dataset.spwRole || target.localName || 'element',
+    label: target.getAttribute('aria-label')
+      || target.querySelector('h1, h2, h3, strong')?.textContent?.trim()
+      || target.textContent?.replace(/\s+/g, ' ').trim().slice(0, 120)
+      || '',
+    kind: target.dataset.spwKind || inferTopographyKind(target, 'component'),
+    role: target.dataset.spwRole || '',
+    feature: target.dataset.spwFeature || '',
+    context: target.dataset.spwContext || target.closest('[data-spw-context]')?.dataset?.spwContext || BODY?.dataset?.spwContext || '',
+    surface: target.closest('[data-spw-surface]')?.dataset?.spwSurface || BODY?.dataset?.spwSurface || SITE_SURFACE,
+    page: describeCurrentPageSample(document),
+    frame: frame?.id || frame?.dataset?.spwKind || '',
+    inspect: target.dataset.spwInspect || '',
+    boxModel: target.dataset.spwBoxModel || '',
+    compositionFlow: target.dataset.spwCompositionFlow || '',
+  };
+}
+
 /* ==========================================================================
    7. Runtime context
    ========================================================================== */
@@ -2243,6 +2340,20 @@ async function bootSite() {
         list: (root = document) => snapshotFeatureClusters(root),
         contract: FEATURE_CLUSTER_CONTRACT,
       },
+      routes: {
+        current: () => describeCurrentPageSample(document),
+        list: (root = document) => collectRelatedRouteSamples(root),
+        open: (pathname = '') => {
+          const href = normalizeRoutePath(pathname);
+          if (!href) return '';
+          window.location.assign(href);
+          return href;
+        },
+      },
+      samples: {
+        page: (root = document) => describeCurrentPageSample(root),
+        component: (target) => describeComponentSample(target),
+      },
       effects: {
         expressions: snapshotSemanticExpressions,
         projections: snapshotProjectionEquations,
@@ -2317,6 +2428,20 @@ window.__SPW_SITE__ = {
     inspect: (target) => describeFeatureClusterElement(target),
     list: (root = document) => snapshotFeatureClusters(root),
     contract: FEATURE_CLUSTER_CONTRACT,
+  },
+  routes: {
+    current: () => describeCurrentPageSample(document),
+    list: (root = document) => collectRelatedRouteSamples(root),
+    open: (pathname = '') => {
+      const href = normalizeRoutePath(pathname);
+      if (!href) return '';
+      window.location.assign(href);
+      return href;
+    },
+  },
+  samples: {
+    page: (root = document) => describeCurrentPageSample(root),
+    component: (target) => describeComponentSample(target),
   },
   effects: snapshotEffectSummary,
   expressions: snapshotSemanticExpressions,

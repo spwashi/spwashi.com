@@ -7,6 +7,7 @@ function parseArgs(argv) {
   const options = {
     host: undefined,
     open: false,
+    path: '',
     port: undefined,
   };
 
@@ -15,6 +16,17 @@ function parseArgs(argv) {
 
     if (arg === '--open') {
       options.open = true;
+      continue;
+    }
+
+    if (arg === '--path' && argv[index + 1]) {
+      options.path = argv[index + 1];
+      index += 1;
+      continue;
+    }
+
+    if (arg.startsWith('--path=')) {
+      options.path = arg.slice('--path='.length);
       continue;
     }
 
@@ -44,6 +56,15 @@ function parseArgs(argv) {
 }
 
 const options = parseArgs(process.argv.slice(2));
+
+function normalizeOpenPath(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '/';
+  if (raw.startsWith('/')) return raw;
+  return `/${raw}`;
+}
+
+const openPath = normalizeOpenPath(options.path);
 
 function start(name, command, args) {
   const child = spawn(command, args, {
@@ -83,6 +104,6 @@ start('css-watch', 'node', ['scripts/css-build.mjs', '--watch']);
 const viteArgs = ['node_modules/vite/bin/vite.js'];
 if (options.host) viteArgs.push('--host', options.host);
 if (options.port) viteArgs.push('--port', options.port);
-if (options.open) viteArgs.push('--open');
+if (options.open || options.path) viteArgs.push('--open', openPath);
 
 start('vite', 'node', viteArgs);

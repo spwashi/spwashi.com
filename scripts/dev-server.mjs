@@ -104,6 +104,7 @@ function parseArgs(argv) {
   const options = {
     host: DEFAULT_HOST,
     open: false,
+    path: '',
     port: DEFAULT_PORT,
   };
 
@@ -117,6 +118,17 @@ function parseArgs(argv) {
 
     if (arg === '--open') {
       options.open = true;
+      continue;
+    }
+
+    if (arg === '--path' && argv[index + 1]) {
+      options.path = argv[index + 1];
+      index += 1;
+      continue;
+    }
+
+    if (arg.startsWith('--path=')) {
+      options.path = arg.slice('--path='.length);
       continue;
     }
 
@@ -146,7 +158,7 @@ function parseArgs(argv) {
 }
 
 function printUsage() {
-  console.log(`Usage: node scripts/dev-server.mjs [--host 127.0.0.1] [--port 4173] [--open]`);
+  console.log(`Usage: node scripts/dev-server.mjs [--host 127.0.0.1] [--port 4173] [--open] [--path /route/]`);
 }
 
 function toPosixPath(value) {
@@ -253,6 +265,13 @@ function openBrowser(url) {
   } catch (error) {
     console.warn(`[dev] Failed to open browser automatically: ${error.message}`);
   }
+}
+
+function normalizeOpenPath(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '/';
+  if (raw.startsWith('/')) return raw;
+  return `/${raw}`;
 }
 
 const clients = new Set();
@@ -439,6 +458,7 @@ async function handleRequest(request, response) {
 }
 
 const options = parseArgs(process.argv.slice(2));
+const openPath = normalizeOpenPath(options.path);
 
 if (options.help) {
   printUsage();
@@ -464,7 +484,7 @@ server.listen(options.port, options.host, () => {
   console.log('[dev] Editing HTML/CSS/JS triggers a browser refresh; CSS changes hot-swap stylesheets.');
 
   if (options.open) {
-    openBrowser(address);
+    openBrowser(`${address}${openPath === '/' ? '' : openPath}`);
   }
 });
 
