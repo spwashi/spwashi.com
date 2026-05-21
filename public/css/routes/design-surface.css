@@ -9,19 +9,21 @@
    ========================================================================== */
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) {
-  --design-surface-accent: color-mix(in srgb, var(--teal, #008080) 68%, var(--amber, #c58b2a) 32%);
+  --design-surface-accent: color-mix(in srgb, var(--teal, #008080) 62%, var(--amber, #c58b2a) 38%);
+  --design-surface-accent-strong: color-mix(in srgb, var(--design-surface-accent) 82%, #214e76 18%);
+  --design-surface-accent-warm: color-mix(in srgb, var(--design-surface-accent) 72%, #8e5e2c 28%);
   --design-surface-ink: rgba(14, 18, 20, 0.94);
   --design-surface-ink-soft: rgba(14, 18, 20, 0.74);
   --design-surface-ink-mid: rgba(14, 18, 20, 0.58);
-  --design-surface-line: color-mix(in srgb, var(--design-surface-accent) 24%, rgba(14, 18, 20, 0.12));
-  --design-surface-line-strong: color-mix(in srgb, var(--design-surface-accent) 42%, rgba(14, 18, 20, 0.16));
+  --design-surface-line: color-mix(in srgb, var(--design-surface-accent) 30%, rgba(14, 18, 20, 0.12));
+  --design-surface-line-strong: color-mix(in srgb, var(--design-surface-accent-strong) 48%, rgba(14, 18, 20, 0.16));
   --design-surface-base: rgba(255, 255, 255, 0.76);
   --design-surface-base-strong: rgba(255, 255, 255, 0.9);
   --design-surface-base-soft: rgba(255, 255, 255, 0.58);
   --design-surface-panel: rgba(255, 255, 255, 0.84);
   --design-surface-panel-strong: rgba(255, 255, 255, 0.92);
-  --design-surface-link: color-mix(in srgb, var(--design-surface-accent) 78%, var(--design-surface-ink) 22%);
-  --design-surface-shell-line: color-mix(in srgb, var(--design-surface-accent) 24%, rgba(14, 18, 20, 0.14));
+  --design-surface-link: color-mix(in srgb, var(--design-surface-accent-strong) 84%, var(--design-surface-ink) 16%);
+  --design-surface-shell-line: color-mix(in srgb, var(--design-surface-accent) 32%, rgba(14, 18, 20, 0.14));
   --design-surface-paper:
     linear-gradient(
       180deg,
@@ -99,6 +101,76 @@
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-frame h1) {
   max-inline-size: 18ch;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators) {
+  gap: 0.5rem 0.55rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .operator-chip) {
+  border-color: color-mix(in srgb, var(--design-surface-accent-strong) 52%, var(--design-surface-line) 48%);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--design-surface-base-strong) 84%, var(--design-surface-accent) 16%),
+      color-mix(in srgb, var(--design-surface-base) 86%, var(--design-surface-accent-warm) 14%));
+  color: var(--design-surface-ink);
+  box-shadow:
+    0 8px 20px rgba(8, 18, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators > .operator-chip:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--design-surface-base-strong) 72%, var(--design-surface-accent-strong) 28%),
+      color-mix(in srgb, var(--design-surface-base) 76%, var(--design-surface-accent-warm) 24%));
+  color: var(--design-surface-ink);
+  box-shadow:
+    0 12px 26px rgba(8, 18, 24, 0.1),
+    0 0 0 1px color-mix(in srgb, var(--design-surface-accent-strong) 26%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster) {
+  border: 1px solid color-mix(in srgb, var(--design-surface-line-strong) 72%, transparent);
+  border-radius: calc(var(--shape-surface, 10px) + 2px);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--design-surface-accent) 14%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--design-surface-panel-strong) 98%, transparent), color-mix(in srgb, var(--design-surface-panel) 94%, transparent));
+  box-shadow:
+    0 14px 30px rgba(8, 18, 24, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.44);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__header .eyebrow) {
+  color: color-mix(in srgb, var(--design-surface-accent-strong) 62%, var(--design-surface-ink-mid) 38%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__title) {
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__copy) {
+  color: var(--design-surface-ink-soft);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .operator-chip) {
+  border-color: color-mix(in srgb, var(--design-surface-accent) 42%, var(--design-surface-line) 58%);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--design-surface-base-strong) 84%, var(--design-surface-accent) 16%),
+      color-mix(in srgb, var(--design-surface-base) 88%, var(--design-surface-accent-warm) 12%));
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-settings-cluster__actions .operator-chip:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--design-surface-accent-strong) 60%, var(--design-surface-line) 40%);
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--design-surface-base-strong) 76%, var(--design-surface-accent-strong) 24%),
+      color-mix(in srgb, var(--design-surface-base) 78%, var(--design-surface-accent-warm) 22%));
+  color: var(--design-surface-ink);
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(article > .site-frame) {

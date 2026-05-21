@@ -135,13 +135,13 @@ export function mountLogo(selector, opts = {}) {
       <path
         id="mark-arc-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--arc"
-        d="M 8 20 Q 24 5 40 20"
+        d="M 9 18 C 14 6 28 4 37 10 C 44 14 44 23 38 28 C 32 32 23 32 18 26"
         stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"
       />
       <path
         id="mark-w-${Math.random().toString(36).slice(2,6)}"
         class="mark-layer mark-layer--w"
-        d="M 8 26 L 16 46 L 24 26 L 32 46 L 40 26"
+        d="M 8 26 L 16 45 L 24 27 L 32 45 L 40 26"
         stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"
       />
     </svg>

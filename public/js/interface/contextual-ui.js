@@ -477,7 +477,7 @@ function createRouteMenu(hostHeader, navList) {
   const summary = document.createElement('summary');
   summary.className = 'spw-route-menu-trigger';
   summary.id = 'spw-route-menu-trigger';
-  summary.setAttribute('aria-label', 'Show additional top-level routes');
+  summary.setAttribute('aria-label', 'Open nearby routes');
   summary.setAttribute('aria-expanded', 'false');
 
   const label = document.createElement('span');
@@ -595,7 +595,7 @@ function updateRouteMenu() {
     ? `${discoveryRoutes.length} nearby ${discoveryRoutes.length === 1 ? 'path' : 'paths'}`
     : `${discoveryRoutes.length} additional ${discoveryRoutes.length === 1 ? 'route' : 'routes'}`;
 
-  label.textContent = compact ? 'nearby' : '#>';
+  label.textContent = compact ? 'nearby routes' : 'routes';
   count.textContent = `+${discoveryRoutes.length}`;
   details.dataset.spwRouteMenuCount = String(discoveryRoutes.length);
   details.dataset.spwRouteMenuLabel = routeCountLabel;
