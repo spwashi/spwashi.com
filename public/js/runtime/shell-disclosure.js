@@ -101,6 +101,24 @@ const MENU_DATASET_KEYS = Object.freeze([
 
 const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
+const UTILITY_LABELS = Object.freeze({
+  compact: Object.freeze({
+    'color-light': 'Light',
+    'color-dark': 'Dark',
+    'font-down': 'Smaller',
+    'path-toggle': 'Path',
+    'font-up': 'Larger',
+    settings: 'Style',
+  }),
+  regular: Object.freeze({
+    'color-light': 'L',
+    'color-dark': 'D',
+    'font-down': 'A-',
+    'path-toggle': 'PATH',
+    'font-up': 'A+',
+    settings: 'Aa',
+  }),
+});
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -459,12 +477,12 @@ function ensureUtilityRow(header) {
   row.setAttribute('role', 'group');
   row.setAttribute('aria-label', 'Quick reading and display controls');
   row.innerHTML = `
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" aria-label="Use light mode" title="Light mode">L</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" aria-label="Use dark mode" title="Dark mode">D</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size">A-</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path">PATH</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size">A+</button>
-    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings">Aa</a>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" aria-label="Use light mode" title="Use light mode">L</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" aria-label="Use dark mode" title="Use dark mode">D</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size" title="Decrease font size">A-</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path" title="Toggle cognitive path">PATH</button>
+    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size" title="Increase font size">A+</button>
+    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings" title="Open appearance and typography settings">Aa</a>
   `;
 
   const trace = header.querySelector('.spw-header-trace');
@@ -480,34 +498,57 @@ function syncUtilityRow(row) {
   const min = FONT_SCALE_STEPS[0];
   const max = FONT_SCALE_STEPS[FONT_SCALE_STEPS.length - 1];
   const pathToggle = document.querySelector('.spw-spell-path-toggle');
+  const compact = document.documentElement.dataset.spwViewportTier === 'compact'
+    || document.documentElement.dataset.spwPointerMode === 'coarse';
+  const labels = compact ? UTILITY_LABELS.compact : UTILITY_LABELS.regular;
 
   row.dataset.spwFontScale = current;
   row.dataset.spwColorMode = currentColorMode;
   row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
+  row.dataset.spwUtilityMode = compact ? 'compact' : 'regular';
 
   row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
+    button.textContent = labels['color-light'];
     button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
-    button.title = currentColorMode === 'light' ? 'Light mode active' : 'Use light mode';
+    button.title = currentColorMode === 'light'
+      ? 'Light mode active'
+      : compact ? 'Use light mode' : 'Use light mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
+    button.textContent = labels['color-dark'];
     button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
-    button.title = currentColorMode === 'dark' ? 'Dark mode active' : 'Use dark mode';
+    button.title = currentColorMode === 'dark'
+      ? 'Dark mode active'
+      : compact ? 'Use dark mode' : 'Use dark mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
+    button.textContent = labels['font-down'];
     button.toggleAttribute('disabled', current === min);
     button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
+    button.title = current === min ? 'Already at the smallest readable size' : 'Decrease font size';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
+    button.textContent = labels['font-up'];
     button.toggleAttribute('disabled', current === max);
     button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
+    button.title = current === max ? 'Already at the largest readable size' : 'Increase font size';
   });
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
+    button.textContent = labels['path-toggle'];
     button.toggleAttribute('disabled', !pathToggle);
     button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
+    button.title = pathToggle ? 'Toggle the cognitive path' : 'No path toggle is available on this page';
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="settings"]').forEach((button) => {
+    button.textContent = labels.settings;
+    button.title = compact
+      ? 'Open appearance and typography settings'
+      : 'Open appearance and typography settings';
   });
 }
 
@@ -826,7 +867,26 @@ export function initSpwShellDisclosure(options = {}) {
   const handleNavClick = (event) => {
     const link = event.target.closest('a[href]');
     if (!link) return;
-    window.setTimeout(() => closeToggleMenu('route'), 0);
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    const href = link.getAttribute('href') || link.href || '';
+    if (!href) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
+      menu.open = false;
+      syncRouteMenuMode(menu);
+    });
+
+    closeToggleMenu('route');
+
+    window.requestAnimationFrame(() => {
+      window.location.assign(href);
+    });
   };
 
   const handleDocumentClick = (event) => {
