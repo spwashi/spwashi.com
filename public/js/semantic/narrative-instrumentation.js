@@ -368,119 +368,29 @@ function dismissInspectorDrawer() {
   activeDrawer = null;
 }
 
-function findOccurrences(id, name) {
-  const sentences = [];
-  const prose = document.querySelectorAll(NARRATIVE_PROSE_SELECTOR);
-  const namePattern = new RegExp(`\\b${escapeRegExp(name)}\\b`, 'i');
-
-  prose.forEach((paragraph) => {
-    const tokens = paragraph.querySelectorAll(`.grammar-token[data-id="${id}"]`);
-    if (!tokens.length) return;
-
-    const segments = String(paragraph.textContent || '').split(/(?<=[.?!])\s+/);
-    segments.forEach((segment) => {
-      if (!namePattern.test(segment) || segment.trim().length <= 4) return;
-      sentences.push({ text: segment.trim(), element: paragraph });
-    });
-  });
-
-  return sentences.filter((sentence, index, all) => (
-    all.findIndex((other) => other.text === sentence.text) === index
-  ));
+function describeNarrativeToken(token) {
+  return {
+    id: token.dataset.id || '',
+    name: token.dataset.raw || '',
+    kind: token.dataset.kind || 'dialogue',
+    operator: token.dataset.spwOperator || 'stream',
+    sigil: token.querySelector('.token-sigil')?.textContent || '',
+  };
 }
 
 function showInspectorDrawer(token) {
   dismissInspectorDrawer();
 
-  const id = token.dataset.id || '';
-  const name = token.dataset.raw || '';
-  const kind = token.dataset.kind || 'dialogue';
-  const op = token.dataset.spwOperator || 'stream';
-  const sigil = token.querySelector('.token-sigil')?.textContent || '';
+  const descriptor = describeNarrativeToken(token);
   const metadata = collectNarrativeMetadata(token);
-
-  const occurrences = findOccurrences(id, name);
-  const totalCount = document.querySelectorAll(`.grammar-token[data-id="${id}"]`).length;
-  const seed = generateSpwSeed(name, kind, totalCount);
-
-  const drawer = document.createElement('div');
-  drawer.className = NARRATIVE_DRAWER_CLASS;
-  annotateFloatingChromeElement(drawer, {
-    role: 'narrative-drawer',
-    tier: 'drawer',
-    mutator: 'narrative-instrumentation',
-    reason: 'narrative-inspector',
-    stylingAxis: 'narrative-drawer',
-  });
-  drawer.dataset.spwMetamaterial = 'glass';
-  drawer.dataset.spwDrawerState = 'open';
-  drawer.setAttribute('role', 'dialog');
-  drawer.setAttribute('aria-modal', 'false');
-  drawer.setAttribute('aria-label', `Narrative inspector for ${name}`);
-  drawer.innerHTML = `
-    <button class="drawer-close" aria-label="Close narrative inspector">×</button>
-    <div class="drawer-header">
-      <span class="operator-chip" data-spw-operator="${op}">${escapeHtml(`${sigil}${kind}`)}</span>
-      <h3>${escapeHtml(name)}</h3>
-    </div>
-    <div class="drawer-body">
-      ${buildNarrativeMetadataMarkup(metadata)}
-      <div class="drawer-stats">
-        <span>Occurrences on this page: <strong>${totalCount}</strong></span>
-      </div>
-      <div class="drawer-sentences">
-        <h4>Sentence Contexts</h4>
-        <ul>
-          ${buildSentenceListMarkup(occurrences)}
-        </ul>
-      </div>
-      <div class="drawer-spw-seed">
-        <h4>Spw Entity Seed</h4>
-        <pre><code class="language-spw">${escapeHtml(seed)}</code></pre>
-        <button class="copy-seed-btn operator-chip" data-spw-operator="action">Copy Seed</button>
-      </div>
-    </div>
-  `;
+  const occurrences = collectNarrativeOccurrences(descriptor.id, descriptor.name);
+  const totalCount = document.querySelectorAll(`.grammar-token[data-id="${descriptor.id}"]`).length;
+  const seed = generateSpwSeed(descriptor.name, descriptor.kind, totalCount);
+  const drawer = createInspectorDrawer(descriptor, metadata, occurrences, totalCount, seed);
 
   document.body.appendChild(drawer);
   activeDrawer = drawer;
-
-  drawer.querySelector('.drawer-close')?.addEventListener('click', dismissInspectorDrawer);
-  drawer.querySelectorAll('.context-jump-btn').forEach((button, index) => {
-    button.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const occurrence = occurrences[index];
-      if (!occurrence?.element) return;
-
-      occurrence.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      occurrence.element.classList.add('prose-pulse-highlight');
-      window.setTimeout(() => {
-        occurrence.element.classList.remove('prose-pulse-highlight');
-      }, 1200);
-    });
-  });
-
-  drawer.querySelector('.copy-seed-btn')?.addEventListener('click', (event) => {
-    event.stopPropagation();
-    navigator.clipboard.writeText(seed).then(() => {
-      const button = drawer.querySelector('.copy-seed-btn');
-      if (!button) return;
-      const original = button.textContent;
-      button.textContent = 'Copied!';
-      button.classList.add('copy-success');
-      window.setTimeout(() => {
-        button.textContent = original;
-        button.classList.remove('copy-success');
-      }, 1500);
-    }).catch(() => {
-      const button = drawer.querySelector('.copy-seed-btn');
-      if (!button) return;
-      button.textContent = 'Copy failed';
-      window.setTimeout(() => {
-        button.textContent = 'Copy Seed';
-      }, 1500);
-    });
-  });
+  wireInspectorDrawer(drawer, occurrences, seed);
 }
 
 function collectNarrativeMetadata(token) {
@@ -511,6 +421,136 @@ function collectNarrativeMetadata(token) {
     vocab: owner.dataset.spwVocab || '',
     narrativeCopy: owner.dataset.spwNarrativeCopy || '',
   };
+}
+
+function collectNarrativeOccurrences(id, name) {
+  const sentences = [];
+  const prose = document.querySelectorAll(NARRATIVE_PROSE_SELECTOR);
+  const namePattern = new RegExp(`\\b${escapeRegExp(name)}\\b`, 'i');
+
+  prose.forEach((paragraph) => {
+    if (!paragraph.querySelector(`.grammar-token[data-id="${id}"]`)) return;
+
+    const segments = String(paragraph.textContent || '').split(/(?<=[.?!])\s+/);
+    segments.forEach((segment) => {
+      const trimmed = segment.trim();
+      if (!namePattern.test(trimmed) || trimmed.length <= 4) return;
+      sentences.push({ text: trimmed, element: paragraph });
+    });
+  });
+
+  return dedupeNarrativeSentences(sentences);
+}
+
+function dedupeNarrativeSentences(sentences) {
+  return sentences.filter((sentence, index, all) => (
+    all.findIndex((other) => other.text === sentence.text) === index
+  ));
+}
+
+function createInspectorDrawer(descriptor, metadata, occurrences, totalCount, seed) {
+  const drawer = document.createElement('div');
+  drawer.className = NARRATIVE_DRAWER_CLASS;
+  annotateFloatingChromeElement(drawer, {
+    role: 'narrative-drawer',
+    tier: 'drawer',
+    mutator: 'narrative-instrumentation',
+    reason: 'narrative-inspector',
+    stylingAxis: 'narrative-drawer',
+  });
+  drawer.dataset.spwMetamaterial = 'glass';
+  drawer.dataset.spwDrawerState = 'open';
+  drawer.setAttribute('role', 'dialog');
+  drawer.setAttribute('aria-modal', 'false');
+  drawer.setAttribute('aria-label', `Narrative inspector for ${descriptor.name}`);
+  drawer.innerHTML = buildInspectorDrawerMarkup(descriptor, metadata, occurrences, totalCount, seed);
+  return drawer;
+}
+
+function buildInspectorDrawerMarkup(descriptor, metadata, occurrences, totalCount, seed) {
+  return `
+    <button class="drawer-close" aria-label="Close narrative inspector">×</button>
+    <div class="drawer-header">
+      <span class="operator-chip" data-spw-operator="${descriptor.operator}">${escapeHtml(`${descriptor.sigil}${descriptor.kind}`)}</span>
+      <h3>${escapeHtml(descriptor.name)}</h3>
+    </div>
+    <div class="drawer-body">
+      ${buildNarrativeMetadataMarkup(metadata)}
+      <div class="drawer-stats">
+        <span>Occurrences on this page: <strong>${totalCount}</strong></span>
+      </div>
+      <div class="drawer-sentences">
+        <h4>Sentence Contexts</h4>
+        <ul>
+          ${buildSentenceListMarkup(occurrences)}
+        </ul>
+      </div>
+      <div class="drawer-spw-seed">
+        <h4>Spw Entity Seed</h4>
+        <pre><code class="language-spw">${escapeHtml(seed)}</code></pre>
+        <button class="copy-seed-btn operator-chip" data-spw-operator="action">Copy Seed</button>
+      </div>
+    </div>
+  `;
+}
+
+function wireInspectorDrawer(drawer, occurrences, seed) {
+  drawer.querySelector('.drawer-close')?.addEventListener('click', dismissInspectorDrawer);
+  wireSentenceJumpButtons(drawer, occurrences);
+  wireCopySeedButton(drawer, seed);
+}
+
+function wireSentenceJumpButtons(drawer, occurrences) {
+  drawer.querySelectorAll('.context-jump-btn').forEach((button, index) => {
+    button.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const occurrence = occurrences[index];
+      if (!occurrence?.element) return;
+
+      scrollNarrativeOccurrenceIntoView(occurrence.element);
+    });
+  });
+}
+
+function scrollNarrativeOccurrenceIntoView(element) {
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  element.classList.add('prose-pulse-highlight');
+  window.setTimeout(() => {
+    element.classList.remove('prose-pulse-highlight');
+  }, 1200);
+}
+
+function wireCopySeedButton(drawer, seed) {
+  drawer.querySelector('.copy-seed-btn')?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    copyNarrativeSeed(drawer, seed);
+  });
+}
+
+function copyNarrativeSeed(drawer, seed) {
+  navigator.clipboard.writeText(seed).then(() => {
+    setCopySeedStatus(drawer, 'Copied!', 'copy-success');
+  }).catch(() => {
+    setCopySeedStatus(drawer, 'Copy failed', '');
+  });
+}
+
+function setCopySeedStatus(drawer, nextText, className) {
+  const button = drawer.querySelector('.copy-seed-btn');
+  if (!button) return;
+
+  const original = button.dataset.spwOriginalLabel || button.textContent || 'Copy Seed';
+  if (!button.dataset.spwOriginalLabel) {
+    button.dataset.spwOriginalLabel = original;
+  }
+
+  button.textContent = nextText;
+  button.classList.toggle('copy-success', className === 'copy-success');
+
+  window.setTimeout(() => {
+    button.textContent = button.dataset.spwOriginalLabel || 'Copy Seed';
+    button.classList.remove('copy-success');
+  }, nextText === 'Copied!' ? 1500 : 1200);
 }
 
 function buildNarrativeMetadataMarkup(metadata) {

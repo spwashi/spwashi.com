@@ -178,9 +178,7 @@ export function writeRuntimeDatasetValues(el, entries = {}, options = {}) {
   return writeDatasetValues(el, entries, options);
 }
 
-export function annotateFloatingChromeElement(el, options = {}) {
-  if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
-
+export function createFloatingChromeDescriptor(options = {}) {
   const {
     role = '',
     tier = '',
@@ -190,13 +188,6 @@ export function annotateFloatingChromeElement(el, options = {}) {
     overlay = '',
   } = options;
 
-  /*
-   * Stage mechanic:
-   * Floating chrome is any runtime-created handle that appears above normal
-   * prose flow. Give it a role and tier so authors can inspect the element,
-   * see which script projected it, and tune the visual stack from CSS without
-   * chasing scattered z-index rules.
-   */
   const entries = {
     spwFloatingChrome: 'true',
     spwLayoutOwner: 'floating-chrome',
@@ -209,10 +200,46 @@ export function annotateFloatingChromeElement(el, options = {}) {
 
   if (overlay) entries.spwOverlay = overlay;
 
-  return writeRuntimeDatasetValues(el, entries, {
-    source: mutator || 'floating-chrome',
-    reason: reason || 'floating-chrome',
+  return {
+    role,
+    tier,
+    mutator,
+    reason,
+    stylingAxis,
+    overlay,
+    entries,
+  };
+}
+
+export function annotateFloatingChromeElement(el, options = {}) {
+  if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
+
+  /*
+   * Stage mechanic:
+   * Floating chrome is any runtime-created handle that appears above normal
+   * prose flow. Give it a role and tier so authors can inspect the element,
+   * see which script projected it, and tune the visual stack from CSS without
+   * chasing scattered z-index rules.
+   */
+  const descriptor = createFloatingChromeDescriptor(options);
+
+  return writeRuntimeDatasetValues(el, descriptor.entries, {
+    source: descriptor.mutator || 'floating-chrome',
+    reason: descriptor.reason || 'floating-chrome',
   });
+}
+
+export function describeFloatingChromeElement(element) {
+  if (!globalThis.Element || !(element instanceof globalThis.Element)) return null;
+
+  return {
+    target: getRuntimeElementLabel(element),
+    role: element.dataset.spwChromeRole || '',
+    tier: element.dataset.spwChromeTier || '',
+    mutator: element.dataset.spwRuntimeMutator || '',
+    reason: element.dataset.spwRuntimeMutationReason || '',
+    stylingAxis: element.dataset.spwRuntimeStylingAxis || '',
+  };
 }
 
 if (globalThis.window) {
@@ -220,14 +247,7 @@ if (globalThis.window) {
     mutations: getRuntimeMutationLog,
     floatingChrome: () => Array.from(
       globalThis.document?.querySelectorAll?.(FLOATING_CHROME_CONTRACT.selector) || []
-    ).map((element) => ({
-      target: getRuntimeElementLabel(element),
-      role: element.dataset.spwChromeRole || '',
-      tier: element.dataset.spwChromeTier || '',
-      mutator: element.dataset.spwRuntimeMutator || '',
-      reason: element.dataset.spwRuntimeMutationReason || '',
-      stylingAxis: element.dataset.spwRuntimeStylingAxis || '',
-    })),
+    ).map(describeFloatingChromeElement).filter(Boolean),
     contract: Object.freeze({
       verboseFlag: 'html[data-spw-runtime-audit="verbose"]',
       recordShape: '{ at, source, reason, target, attributes }',

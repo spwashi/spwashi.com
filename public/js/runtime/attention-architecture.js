@@ -428,6 +428,410 @@ function createHandleShell(origin) {
   return shell;
 }
 
+function createSectionHandleState() {
+  return {
+    activeIndex: 0,
+    phase: 'settled',
+    raf: 0,
+    travelTimer: 0,
+    travelTargetId: '',
+    compact: window.matchMedia(HANDLE_COMPACT_QUERY).matches,
+    manualCompact: false,
+  };
+}
+
+function getSectionHandleRefs(handle, shell) {
+  return {
+    handle,
+    shell,
+    opNode: handle.querySelector('.spw-section-handle__op'),
+    labelNode: handle.querySelector('.spw-section-handle__label'),
+    currentLink: shell.querySelector('.spw-section-handle-current'),
+    currentToken: shell.querySelector('.spw-section-handle-current-token'),
+    currentLabel: shell.querySelector('.spw-section-handle-current-label'),
+    progressNode: shell.querySelector('.spw-section-handle-progress'),
+    toggleButton: shell.querySelector('[data-spw-handle-target="toggle"]'),
+    topButton: shell.querySelector('[data-spw-handle-target="top"]'),
+    prevButton: shell.querySelector('[data-spw-handle-target="prev"]'),
+    nextButton: shell.querySelector('[data-spw-handle-target="next"]'),
+    bottomButton: shell.querySelector('[data-spw-handle-target="bottom"]'),
+  };
+}
+
+function syncSectionHandleShellState(shell, toggleButton, compact) {
+  shell.setAttribute(HANDLE_SHELL_STATE_ATTR, compact ? 'collapsed' : 'expanded');
+  if (!(toggleButton instanceof HTMLButtonElement)) return;
+  toggleButton.setAttribute('aria-expanded', compact ? 'false' : 'true');
+  toggleButton.setAttribute(
+    'aria-label',
+    compact ? 'Expand page travel rail' : 'Collapse page travel rail'
+  );
+  toggleButton.title = compact ? 'Show more travel controls' : 'Show fewer travel controls';
+  toggleButton.textContent = compact ? 'more' : 'less';
+}
+
+function syncSectionHandlePhase(shell, handle, phase) {
+  setHandlePhase(shell, phase);
+  setHandlePhase(handle, phase);
+}
+
+function syncSectionHandleVisibility(handle, shell, visible) {
+  setHandleState(handle, visible ? 'visible' : 'hidden');
+  setHandleState(shell, visible ? 'visible' : 'hidden');
+}
+
+function syncSectionHandleAvailability(refs, activeIndex, sectionCount) {
+  const hasPrev = activeIndex > 0;
+  const hasNext = activeIndex < sectionCount - 1;
+  if (refs.topButton instanceof HTMLButtonElement) refs.topButton.disabled = !hasPrev;
+  if (refs.prevButton instanceof HTMLButtonElement) refs.prevButton.disabled = !hasPrev;
+  if (refs.nextButton instanceof HTMLButtonElement) refs.nextButton.disabled = !hasNext;
+  if (refs.bottomButton instanceof HTMLButtonElement) refs.bottomButton.disabled = !hasNext;
+}
+
+function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCount, snapshot, source) {
+  writeAttributes(handle, {
+    href: `#${info.id}`,
+    'aria-label': `Jump to ${info.label}`,
+    [HANDLE_OP_ATTR]: info.token || '',
+    [HANDLE_LABEL_ATTR]: info.label || '',
+  });
+
+  writeAttributes(shell, {
+    [HANDLE_LABEL_ATTR]: info.label || '',
+    [HANDLE_OP_ATTR]: info.token || '',
+    [HANDLE_AVAILABILITY_ATTR]: snapshot.availability.join(' '),
+  });
+
+  shell.dataset.spwHandleCurrent = info.id;
+  shell.dataset.spwHandleIndex = String(activeIndex + 1);
+  shell.dataset.spwHandleCount = String(sectionCount);
+  shell.dataset.spwHandleSource = source;
+}
+
+function syncSectionHandleSections(sections, activeIndex) {
+  sections.forEach((section, index) => {
+    writeAttributes(section, {
+      [SECTION_STATE_ATTR]: getSectionLifecycleState(index, activeIndex),
+    });
+  });
+}
+
+function updateSectionHandleState({
+  sections,
+  state,
+  handle,
+  shell,
+  refs,
+  generated,
+  source = 'sync',
+  updateActiveState,
+}) {
+  state.activeIndex = resolveActiveIndex(sections);
+  const activeSection = sections[state.activeIndex];
+  const info = describeSection(activeSection, state.activeIndex);
+  if (!info) return;
+
+  const snapshot = buildSectionSnapshot(
+    activeSection,
+    state.activeIndex,
+    state.activeIndex,
+    state.phase,
+    source,
+    generated ? 'generated' : 'markup',
+    sections.length
+  );
+  if (!snapshot) return;
+
+  syncHandleContent(
+    {
+      opNode: refs.opNode,
+      labelNode: refs.labelNode,
+      currentToken: refs.currentToken,
+      currentLabel: refs.currentLabel,
+      progressNode: refs.progressNode,
+      currentLink: refs.currentLink,
+    },
+    info,
+    state.activeIndex,
+    sections.length
+  );
+
+  syncSectionHandleAttributes(handle, shell, info, state.activeIndex, sections.length, snapshot, source);
+  syncSectionHandleSections(sections, state.activeIndex);
+  syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
+
+  const scrolledPast = window.scrollY > Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
+  const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
+  syncSectionHandleVisibility(handle, shell, visible);
+
+  writePageSectionDatasets(snapshot);
+
+  if (state.phase === 'traveling' && state.travelTargetId && info.id === state.travelTargetId) {
+    window.clearTimeout(state.travelTimer);
+    state.travelTimer = window.setTimeout(() => {
+      state.phase = 'settled';
+      syncSectionHandlePhase(shell, handle, 'settled');
+      updateActiveState('settled');
+    }, 120);
+  }
+}
+
+function travelSectionHandleToIndex({
+  sections,
+  state,
+  shell,
+  handle,
+  updateActiveState,
+  nextIndex,
+  source,
+}) {
+  const targetIndex = Math.max(0, Math.min(nextIndex, sections.length - 1));
+  const target = sections[targetIndex];
+  if (!target) return;
+
+  state.phase = 'traveling';
+  state.travelTargetId = ensureSectionId(target, targetIndex);
+  syncSectionHandlePhase(shell, handle, 'traveling');
+  window.clearTimeout(state.travelTimer);
+  state.travelTimer = window.setTimeout(() => {
+    state.phase = 'settled';
+    syncSectionHandlePhase(shell, handle, 'settled');
+    updateActiveState(`${source}-settled`);
+  }, HANDLE_TRAVEL_SETTLE_MS);
+  target.scrollIntoView({
+    behavior: getScrollBehavior(),
+    block: 'start',
+    inline: 'nearest',
+  });
+  updateActiveState(source);
+}
+
+function setSectionHandleCompactMode(state, shell, toggleButton) {
+  syncSectionHandleShellState(shell, toggleButton, state.compact);
+}
+
+function createSectionHandleController({
+  sections,
+  handle,
+  shell,
+  generated,
+}) {
+  const refs = getSectionHandleRefs(handle, shell);
+  const state = createSectionHandleState();
+
+  const updateActiveState = (source = 'sync') => {
+    updateSectionHandleState({
+      sections,
+      state,
+      handle,
+      shell,
+      refs,
+      generated,
+      source,
+      updateActiveState,
+    });
+  };
+
+  const runUpdate = (source = 'scroll') => {
+    if (state.raf) return;
+    state.raf = window.requestAnimationFrame(() => {
+      state.raf = 0;
+      updateActiveState(source);
+    });
+  };
+
+  const syncCompactPreference = () => {
+    if (!state.manualCompact) {
+      state.compact = window.matchMedia(HANDLE_COMPACT_QUERY).matches;
+    }
+    if (!window.matchMedia(HANDLE_COMPACT_QUERY).matches) {
+      state.compact = false;
+      state.manualCompact = false;
+    }
+    setSectionHandleCompactMode(state, shell, refs.toggleButton);
+  };
+
+  const handleButtonClick = (event) => {
+    const button = event.target.closest?.('[data-spw-handle-target]');
+    if (!(button instanceof HTMLButtonElement)) return;
+    const target = button.dataset.spwHandleTarget || '';
+    switch (target) {
+      case 'toggle':
+        state.compact = !state.compact;
+        state.manualCompact = true;
+        setSectionHandleCompactMode(state, shell, refs.toggleButton);
+        updateActiveState('toggle');
+        break;
+      case 'top':
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: 0,
+          source: 'top',
+        });
+        break;
+      case 'prev':
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: state.activeIndex - 1,
+          source: 'prev',
+        });
+        break;
+      case 'next':
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: state.activeIndex + 1,
+          source: 'next',
+        });
+        break;
+      case 'bottom':
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: sections.length - 1,
+          source: 'bottom',
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleCurrentClick = () => {
+    state.phase = 'traveling';
+    syncSectionHandlePhase(shell, handle, 'traveling');
+    window.clearTimeout(state.travelTimer);
+    state.travelTimer = window.setTimeout(() => {
+      state.phase = 'settled';
+      syncSectionHandlePhase(shell, handle, 'settled');
+      updateActiveState('current-settled');
+    }, HANDLE_TRAVEL_SETTLE_MS);
+  };
+
+  const handleShellKeydown = (event) => {
+    if (event.altKey || event.metaKey || event.ctrlKey) return;
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault();
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: state.activeIndex - 1,
+          source: 'arrow-prev',
+        });
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: state.activeIndex + 1,
+          source: 'arrow-next',
+        });
+        break;
+      case 'Home':
+        event.preventDefault();
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: 0,
+          source: 'home',
+        });
+        break;
+      case 'End':
+        event.preventDefault();
+        travelSectionHandleToIndex({
+          sections,
+          state,
+          shell,
+          handle,
+          updateActiveState,
+          nextIndex: sections.length - 1,
+          source: 'end',
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onScroll = () => {
+    runUpdate('scroll');
+  };
+
+  const onResize = () => {
+    syncCompactPreference();
+    runUpdate('resize');
+  };
+
+  shell.addEventListener('click', handleButtonClick);
+  shell.addEventListener('keydown', handleShellKeydown);
+  refs.currentLink?.addEventListener('click', handleCurrentClick);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('orientationchange', onResize);
+
+  syncSectionHandlePhase(shell, handle, 'settled');
+  syncCompactPreference();
+  updateActiveState('init');
+
+  return () => {
+    shell.removeEventListener('click', handleButtonClick);
+    shell.removeEventListener('keydown', handleShellKeydown);
+    refs.currentLink?.removeEventListener('click', handleCurrentClick);
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('orientationchange', onResize);
+    if (state.raf) {
+      window.cancelAnimationFrame(state.raf);
+      state.raf = 0;
+    }
+    window.clearTimeout(state.travelTimer);
+    shell.remove();
+    handle.hidden = false;
+    clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR]);
+    sections.forEach((section) => {
+      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR]);
+    });
+    [document.documentElement, document.body].forEach((node) => {
+      clearAttributes(node, [
+        PAGE_SECTION_CURRENT_ATTR,
+        PAGE_SECTION_INDEX_ATTR,
+        PAGE_SECTION_COUNT_ATTR,
+        PAGE_SECTION_PHASE_ATTR,
+        PAGE_SECTION_EDGE_ATTR,
+      ]);
+    });
+    if (generated) {
+      handle.remove();
+    }
+  };
+}
+
 function resolveActiveIndex(sections) {
   if (!sections.length) return -1;
 
@@ -496,280 +900,23 @@ function initSectionHandle(root) {
     return () => {};
   }
 
-  const opNode = handle.querySelector('.spw-section-handle__op');
-  const labelNode = handle.querySelector('.spw-section-handle__label');
   const shell = createHandleShell(generated ? 'generated' : 'markup');
-  const currentLink = shell.querySelector('.spw-section-handle-current');
-  const currentToken = shell.querySelector('.spw-section-handle-current-token');
-  const currentLabel = shell.querySelector('.spw-section-handle-current-label');
-  const progressNode = shell.querySelector('.spw-section-handle-progress');
-  const toggleButton = shell.querySelector('[data-spw-handle-target="toggle"]');
-  const topButton = shell.querySelector('[data-spw-handle-target="top"]');
-  const prevButton = shell.querySelector('[data-spw-handle-target="prev"]');
-  const nextButton = shell.querySelector('[data-spw-handle-target="next"]');
-  const bottomButton = shell.querySelector('[data-spw-handle-target="bottom"]');
 
   handle.after(shell);
   handle.hidden = true;
   handle.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
-
-  const state = {
-    activeIndex: 0,
-    phase: 'settled',
-    raf: 0,
-    travelTimer: 0,
-    travelTargetId: '',
-    compact: window.matchMedia(HANDLE_COMPACT_QUERY).matches,
-    manualCompact: false,
-  };
-
-  const syncShellState = () => {
-    shell.setAttribute(HANDLE_SHELL_STATE_ATTR, state.compact ? 'collapsed' : 'expanded');
-    if (!(toggleButton instanceof HTMLButtonElement)) return;
-    toggleButton.setAttribute('aria-expanded', state.compact ? 'false' : 'true');
-    toggleButton.setAttribute(
-      'aria-label',
-      state.compact ? 'Expand page travel rail' : 'Collapse page travel rail'
-    );
-    toggleButton.title = state.compact ? 'Show more travel controls' : 'Show fewer travel controls';
-    toggleButton.textContent = state.compact ? 'more' : 'less';
-  };
 
   sections.forEach((section, index) => {
     section.setAttribute(SECTION_INDEX_ATTR, String(index + 1));
     ensureSectionId(section, index);
   });
 
-  const updateActiveState = (source = 'sync') => {
-    state.activeIndex = resolveActiveIndex(sections);
-    const activeSection = sections[state.activeIndex];
-    const info = describeSection(activeSection, state.activeIndex);
-    if (!info) return;
-
-    const snapshot = buildSectionSnapshot(
-      activeSection,
-      state.activeIndex,
-      state.activeIndex,
-      state.phase,
-      source,
-      generated ? 'generated' : 'markup',
-      sections.length
-    );
-    if (!snapshot) return;
-
-    syncHandleContent(
-      { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink },
-      info,
-      state.activeIndex,
-      sections.length
-    );
-
-    writeAttributes(handle, {
-      href: `#${info.id}`,
-      'aria-label': `Jump to ${info.label}`,
-      [HANDLE_OP_ATTR]: info.token || '',
-      [HANDLE_LABEL_ATTR]: info.label || '',
-    });
-
-    sections.forEach((section, index) => {
-      writeAttributes(section, {
-        [SECTION_STATE_ATTR]: getSectionLifecycleState(index, state.activeIndex),
-      });
-    });
-
-    const hasPrev = state.activeIndex > 0;
-    const hasNext = state.activeIndex < sections.length - 1;
-    if (topButton instanceof HTMLButtonElement) topButton.disabled = !hasPrev;
-    if (prevButton instanceof HTMLButtonElement) prevButton.disabled = !hasPrev;
-    if (nextButton instanceof HTMLButtonElement) nextButton.disabled = !hasNext;
-    if (bottomButton instanceof HTMLButtonElement) bottomButton.disabled = !hasNext;
-
-    writeAttributes(shell, {
-      [HANDLE_LABEL_ATTR]: info.label || '',
-      [HANDLE_OP_ATTR]: info.token || '',
-      [HANDLE_AVAILABILITY_ATTR]: snapshot.availability.join(' '),
-    });
-    shell.dataset.spwHandleCurrent = info.id;
-    shell.dataset.spwHandleIndex = String(state.activeIndex + 1);
-    shell.dataset.spwHandleCount = String(sections.length);
-    shell.dataset.spwHandleSource = source;
-
-    const scrolledPast = window.scrollY > Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
-    const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
-    setHandleState(handle, visible ? 'visible' : 'hidden');
-    setHandleState(shell, visible ? 'visible' : 'hidden');
-
-    writePageSectionDatasets(snapshot);
-
-    if (state.phase === 'traveling' && state.travelTargetId && info.id === state.travelTargetId) {
-      window.clearTimeout(state.travelTimer);
-      state.travelTimer = window.setTimeout(() => {
-        state.phase = 'settled';
-        setHandlePhase(shell, 'settled');
-        setHandlePhase(handle, 'settled');
-        updateActiveState('settled');
-      }, 120);
-    }
-  };
-
-  const runUpdate = (source = 'scroll') => {
-    if (state.raf) return;
-    state.raf = window.requestAnimationFrame(() => {
-      state.raf = 0;
-      updateActiveState(source);
-    });
-  };
-
-  const travelToIndex = (nextIndex, source) => {
-    const targetIndex = Math.max(0, Math.min(nextIndex, sections.length - 1));
-    const target = sections[targetIndex];
-    if (!target) return;
-
-    state.phase = 'traveling';
-    state.travelTargetId = ensureSectionId(target, targetIndex);
-    setHandlePhase(shell, 'traveling');
-    setHandlePhase(handle, 'traveling');
-    window.clearTimeout(state.travelTimer);
-    state.travelTimer = window.setTimeout(() => {
-      state.phase = 'settled';
-      setHandlePhase(shell, 'settled');
-      setHandlePhase(handle, 'settled');
-      updateActiveState(`${source}-settled`);
-    }, HANDLE_TRAVEL_SETTLE_MS);
-    target.scrollIntoView({
-      behavior: getScrollBehavior(),
-      block: 'start',
-      inline: 'nearest',
-    });
-    updateActiveState(source);
-  };
-
-  const handleButtonClick = (event) => {
-    const button = event.target.closest?.('[data-spw-handle-target]');
-    if (!(button instanceof HTMLButtonElement)) return;
-    const target = button.dataset.spwHandleTarget || '';
-    switch (target) {
-      case 'toggle':
-        state.compact = !state.compact;
-        state.manualCompact = true;
-        syncShellState();
-        updateActiveState('toggle');
-        break;
-      case 'top':
-        travelToIndex(0, 'top');
-        break;
-      case 'prev':
-        travelToIndex(state.activeIndex - 1, 'prev');
-        break;
-      case 'next':
-        travelToIndex(state.activeIndex + 1, 'next');
-        break;
-      case 'bottom':
-        travelToIndex(sections.length - 1, 'bottom');
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleCurrentClick = () => {
-    const settle = () => {
-      state.phase = 'settled';
-      setHandlePhase(shell, 'settled');
-      setHandlePhase(handle, 'settled');
-      updateActiveState('current-settled');
-    };
-
-    state.phase = 'traveling';
-    setHandlePhase(shell, 'traveling');
-    setHandlePhase(handle, 'traveling');
-    window.clearTimeout(state.travelTimer);
-    state.travelTimer = window.setTimeout(settle, HANDLE_TRAVEL_SETTLE_MS);
-  };
-
-  const handleShellKeydown = (event) => {
-    if (event.altKey || event.metaKey || event.ctrlKey) return;
-    switch (event.key) {
-      case 'ArrowLeft':
-        event.preventDefault();
-        travelToIndex(state.activeIndex - 1, 'arrow-prev');
-        break;
-      case 'ArrowRight':
-        event.preventDefault();
-        travelToIndex(state.activeIndex + 1, 'arrow-next');
-        break;
-      case 'Home':
-        event.preventDefault();
-        travelToIndex(0, 'home');
-        break;
-      case 'End':
-        event.preventDefault();
-        travelToIndex(sections.length - 1, 'end');
-        break;
-      default:
-        break;
-    }
-  };
-
-  const onScroll = () => {
-    runUpdate('scroll');
-  };
-
-  const onResize = () => {
-    if (!state.manualCompact) {
-      state.compact = window.matchMedia(HANDLE_COMPACT_QUERY).matches;
-    }
-    if (!window.matchMedia(HANDLE_COMPACT_QUERY).matches) {
-      state.compact = false;
-      state.manualCompact = false;
-    }
-    syncShellState();
-    runUpdate('resize');
-  };
-
-  shell.addEventListener('click', handleButtonClick);
-  shell.addEventListener('keydown', handleShellKeydown);
-  currentLink?.addEventListener('click', handleCurrentClick);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('orientationchange', onResize);
-
-  setHandlePhase(shell, 'settled');
-  setHandlePhase(handle, 'settled');
-  syncShellState();
-  updateActiveState('init');
-
-  return () => {
-    shell.removeEventListener('click', handleButtonClick);
-    shell.removeEventListener('keydown', handleShellKeydown);
-    currentLink?.removeEventListener('click', handleCurrentClick);
-    window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onResize);
-    window.removeEventListener('orientationchange', onResize);
-    if (state.raf) {
-      window.cancelAnimationFrame(state.raf);
-      state.raf = 0;
-    }
-    window.clearTimeout(state.travelTimer);
-    shell.remove();
-    handle.hidden = false;
-    clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR]);
-    sections.forEach((section) => {
-      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR]);
-    });
-    [document.documentElement, document.body].forEach((node) => {
-      clearAttributes(node, [
-        PAGE_SECTION_CURRENT_ATTR,
-        PAGE_SECTION_INDEX_ATTR,
-        PAGE_SECTION_COUNT_ATTR,
-        PAGE_SECTION_PHASE_ATTR,
-        PAGE_SECTION_EDGE_ATTR,
-      ]);
-    });
-    if (generated) {
-      handle.remove();
-    }
-  };
+  return createSectionHandleController({
+    sections,
+    handle,
+    shell,
+    generated,
+  });
 }
 
 function initResonanceProbe(root) {
