@@ -20,6 +20,7 @@
  *
  * To add a new toast type: extend ToastManager.show() and add a new maybeShow* handler.
  */
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 
 const APP_THEME_COLOR = '#1a9999';
@@ -95,7 +96,6 @@ class ToastManager {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 0.9rem;
                 line-height: 1.5;
-                z-index: calc(var(--z-priority, 2000) + 18);
                 animation: pwaToastSlideUp 220ms cubic-bezier(0.4, 0, 0.2, 1);
             }
 
@@ -145,9 +145,13 @@ class ToastManager {
 
         const toast = document.createElement('div');
         toast.setAttribute(TOAST_ATTR, kind);
-        toast.dataset.spwFloatingChrome = 'true';
-        toast.dataset.spwLayoutOwner = 'floating-chrome';
-        toast.dataset.spwChromeRole = 'pwa-status';
+        annotateFloatingChromeElement(toast, {
+            role: 'pwa-status',
+            tier: 'toast',
+            mutator: 'pwa-update-handler',
+            reason: `${kind}-toast`,
+            stylingAxis: 'pwa-toast',
+        });
         toast.setAttribute('role', kind === 'update' ? 'alert' : 'status');
         toast.setAttribute('aria-live', 'polite');
         toast.style.cssText = ''; // styles are now in global <style>

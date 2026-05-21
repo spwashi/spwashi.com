@@ -8,6 +8,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { getOperatorDefinition, normalizeText } from '/public/js/kernel/shared.js';
 
 const HINT_CLASS = 'spw-pronunciation-hint';
@@ -41,6 +42,13 @@ function showHint(element, definition) {
 
   hintEl = document.createElement('div');
   hintEl.className = HINT_CLASS;
+  annotateFloatingChromeElement(hintEl, {
+    role: 'pronunciation-hint',
+    tier: 'popover',
+    mutator: 'pronunciation',
+    reason: 'operator-pronunciation',
+    stylingAxis: 'language-hint',
+  });
   hintEl.setAttribute('role', 'status');
 
   const content = `

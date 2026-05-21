@@ -27,6 +27,7 @@ import {
   SPW_LOG_RELATIONSHIPS,
   createSpwLogger,
 } from '/public/js/kernel/instrumentation.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const HANDLE_SELECTOR = '.spw-section-handle';
@@ -347,8 +348,13 @@ function collectSections() {
 function ensureHandle(root, sections) {
   const existing = root.querySelector(HANDLE_SELECTOR);
   if (existing instanceof HTMLElement) {
-    existing.dataset.spwFloatingChrome = 'true';
-    existing.dataset.spwLayoutOwner = 'floating-chrome';
+    annotateFloatingChromeElement(existing, {
+      role: 'section-handle',
+      tier: 'floating',
+      mutator: 'attention-architecture',
+      reason: 'existing-section-handle',
+      stylingAxis: 'page-locomotion',
+    });
     return { handle: existing, generated: false };
   }
 
@@ -360,8 +366,13 @@ function ensureHandle(root, sections) {
   handle.className = 'spw-section-handle spw-section-handle--generated';
   handle.href = '#main-content';
   handle.setAttribute('aria-label', 'Jump to current section');
-  handle.dataset.spwFloatingChrome = 'true';
-  handle.dataset.spwLayoutOwner = 'floating-chrome';
+  annotateFloatingChromeElement(handle, {
+    role: 'section-handle',
+    tier: 'floating',
+    mutator: 'attention-architecture',
+    reason: 'generated-section-handle',
+    stylingAxis: 'page-locomotion',
+  });
   handle.innerHTML = `
     <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
     <span class="spw-section-handle__label">section</span>
@@ -382,8 +393,13 @@ function createHandleShell(origin) {
   shell.className = HANDLE_SHELL_CLASS;
   shell.setAttribute('aria-label', 'Page locomotion');
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
-  shell.dataset.spwFloatingChrome = 'true';
-  shell.dataset.spwLayoutOwner = 'floating-chrome';
+  annotateFloatingChromeElement(shell, {
+    role: 'section-handle-shell',
+    tier: 'floating',
+    mutator: 'attention-architecture',
+    reason: 'section-handle-shell',
+    stylingAxis: 'page-locomotion',
+  });
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
     <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel rail">

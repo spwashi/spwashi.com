@@ -1,6 +1,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { initPersonaSelector } from '/public/js/interface/persona-selector.js';
 import { createSpwLogger } from '/public/js/kernel/instrumentation.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const PERSONAS = ['viewer', 'doodler', 'scribe'];
 const STORAGE_KEY = 'spw-active-persona';
@@ -59,6 +60,13 @@ function augmentScribe(el) {
     if (!scribeTooltip) {
         scribeTooltip = document.createElement('div');
         scribeTooltip.className = 'scribe-meta-tooltip';
+        annotateFloatingChromeElement(scribeTooltip, {
+            role: 'persona-tooltip',
+            tier: 'popover',
+            mutator: 'personas',
+            reason: 'scribe-meta-tooltip',
+            stylingAxis: 'persona-chrome',
+        });
         document.body.appendChild(scribeTooltip);
     }
     
@@ -80,6 +88,13 @@ function hideScribeTooltip() {
 function augmentDoodler(el) {
     const burst = document.createElement('div');
     burst.className = 'doodler-burst';
+    annotateFloatingChromeElement(burst, {
+        role: 'persona-burst',
+        tier: 'priority',
+        mutator: 'personas',
+        reason: 'doodler-burst',
+        stylingAxis: 'persona-chrome',
+    });
     burst.innerHTML = '✧ ✦ ✧'; 
     
     const rect = el.getBoundingClientRect();

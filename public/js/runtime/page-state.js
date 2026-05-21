@@ -1,6 +1,6 @@
 import {
+  annotateFloatingChromeElement,
   writeDatasetValue,
-  writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
 
 /**
@@ -74,8 +74,17 @@ const prefersReducedMotion = () => (
 export function annotateFloatingChrome(root = document) {
   if (!root?.querySelectorAll) return;
   root.querySelectorAll(FLOATING_CHROME_SELECTOR).forEach((element) => {
-    writeDatasetValueIfMissing(element, 'spwFloatingChrome', 'true');
-    writeDatasetValueIfMissing(element, 'spwLayoutOwner', 'floating-chrome');
+    annotateFloatingChromeElement(element, {
+      role: element.classList?.contains('skip-link')
+        ? 'skip-link'
+        : element.classList?.contains('spw-section-handle-shell')
+          ? 'section-handle-shell'
+          : 'section-handle',
+      tier: element.classList?.contains('skip-link') ? 'priority' : 'floating',
+      mutator: 'page-state',
+      reason: 'floating-chrome-annotation',
+      stylingAxis: 'page-chrome',
+    });
   });
 }
 

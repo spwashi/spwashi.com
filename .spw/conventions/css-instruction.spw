@@ -53,7 +53,7 @@
 
 ^"flow_ownership"{
   rule: "Broad child-lifting selectors may protect ordinary content from pseudo-element substrate layers, but they must not silently reclassify overlays, toasts, skip links, or dismissable shells as flow content."
-  floating_chrome_contract: "Use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for viewport-pinned or host-edge affordances that should stay outside normal component flow."
+  floating_chrome_contract: "Use annotateFloatingChromeElement(...) for runtime-created chrome, or data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored viewport-pinned affordances that should stay outside normal component flow."
   anatomy_rule: "Slot-bearing card anatomy owns readable content. Floating chrome and overlays are separate roles even when they borrow the same material tokens."
   failure_mode: "A generic > * selector assigns position or min-width to a fixed affordance, then debugging starts by guessing which broad rule stole layout ownership."
 }

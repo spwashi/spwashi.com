@@ -149,7 +149,6 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-  z-index: calc(var(--z-priority, 2000) + 20);
   isolation: isolate;
   overflow: hidden;
   animation: drawer-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);

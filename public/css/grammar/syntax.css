@@ -1612,7 +1612,6 @@
 
 :where(.spw-topic-popover, .spw-semantic-popover) {
   position: absolute;
-  z-index: calc(var(--z-priority, var(--layer-priority, 2000)) + 8);
   max-width: 28rem;
   padding: 0.65rem 0.85rem;
   pointer-events: auto;

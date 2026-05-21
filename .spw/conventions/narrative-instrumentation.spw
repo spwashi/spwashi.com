@@ -19,6 +19,7 @@ runtime_contract: .{
   resonance = `html[data-spw-resonance-token] announces the active token identity for matching handles.`
   drawer = `.spw-narrative-drawer provides sentence context, copy metadata, occurrences, and a copyable Spw seed.`
   runtime_audit = `window.spwRuntimeAudit.mutations() lists styling-relevant runtime attribute changes when modules use the shared writer.`
+  floating_chrome = `window.spwRuntimeAudit.floatingChrome() lists runtime-projected popovers, drawers, toasts, hints, and handles with role, tier, mutator, reason, and styling axis.`
 }[reg=facet]
 
-editor_rule: `Prefer authored metadata over runtime guessing. Use explicit @, #, $, !, and ? tokens when the text wants visible sigils; use data-spw-narrative-implicit only when ordinary prose should stay ordinary until narrative mode is enabled. Styling-relevant runtime attributes should name their mutator, reason, and styling axis so another author can inspect the component without reading every mounted script.`
+editor_rule: `Prefer authored metadata over runtime guessing. Use explicit @, #, $, !, and ? tokens when the text wants visible sigils; use data-spw-narrative-implicit only when ordinary prose should stay ordinary until narrative mode is enabled. Styling-relevant runtime attributes should name their mutator, reason, and styling axis so another author can inspect the component without reading every mounted script. Floating chrome should also name its role and tier so stage mechanics remain learnable.`

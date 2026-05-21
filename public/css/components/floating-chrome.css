@@ -1,0 +1,67 @@
+/* ==========================================================================
+   floating-chrome.css
+   --------------------------------------------------------------------------
+   Purpose
+   - Define shared layer and containment semantics for runtime-created chrome:
+     popovers, drawers, toasts, route menus, section handles, and status panels.
+   - Keep feature files responsible for visual personality, not z-index policy.
+   ========================================================================== */
+
+:where([data-spw-floating-chrome="true"]) {
+  --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
+  --spw-floating-safe-inset: max(1rem, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
+  --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="header"]) {
+  --spw-floating-tier-z: var(--z-header, var(--layer-header, 1000));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="priority"]) {
+  --spw-floating-tier-z: var(--z-priority, var(--layer-priority, 2000));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="modal"]) {
+  --spw-floating-tier-z: calc(var(--z-priority, var(--layer-priority, 2000)) + 6);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="popover"]) {
+  --spw-floating-tier-z: calc(var(--z-priority, var(--layer-priority, 2000)) + 8);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="toast"]) {
+  --spw-floating-tier-z: calc(var(--z-priority, var(--layer-priority, 2000)) + 18);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="drawer"]) {
+  --spw-floating-tier-z: calc(var(--z-priority, var(--layer-priority, 2000)) + 20);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]) {
+  z-index: var(--spw-floating-tier-z);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role$="popover"]) {
+  max-inline-size: min(28rem, calc(100vw - 1rem));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role$="drawer"]) {
+  max-inline-size: min(24rem, calc(100vw - 2rem));
+  max-block-size: min(34rem, calc(100vh - 2rem));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role$="toast-stack"]) {
+  inline-size: min(24rem, calc(100vw - 2rem));
+  max-inline-size: calc(100vw - 2rem);
+}
+
+@media (max-width: 720px) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role$="toast-stack"]) {
+    inline-size: auto;
+    max-inline-size: none;
+  }
+}

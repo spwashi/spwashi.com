@@ -77,7 +77,7 @@ composition_hierarchy: .{
    slot_bearing_content = `Normal card or frame anatomy. Participates in reading order and may be lifted above substrate layers by shared child-lifting selectors.`
    overlay = `Host-local plane. Uses data-spw-overlay or region-flow overlay when a child shares the host's semantic boundary but occupies a different layer.`
    popout = `Host-edge escape. Uses data-spw-region-flow='popout' when content remains semantically attached to the host but intentionally crosses its interior boundary.`
-   floating_chrome = `Viewport- or shell-edge affordance. Uses data-spw-floating-chrome='true' and data-spw-layout-owner='floating-chrome'. Examples: skip links, section handles, toast stacks, non-modal notices.`
+   floating_chrome = `Viewport- or shell-edge affordance. Runtime elements use annotateFloatingChromeElement(...); authored elements use data-spw-floating-chrome='true' and data-spw-layout-owner='floating-chrome'. Examples: skip links, section handles, toast stacks, non-modal notices.`
    modal = `Context-owning dialog. Temporarily becomes the dominant reading/focus surface rather than ambient chrome.`
   }[reg=facet]
   precedence = #[

@@ -31,6 +31,7 @@
 @import url('/public/css/components/content.css') layer(components);
 @import url('/public/css/components/controls.css') layer(components);
 @import url('/public/css/components/runtime-states.css') layer(components);
+@import url('/public/css/components/floating-chrome.css') layer(components);
 @import url('/public/css/components/promo-wonder-cycle.css') layer(components);
 
 @import url('/public/css/systems/substrate-ecology.css') layer(systems);

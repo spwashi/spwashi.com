@@ -46,7 +46,6 @@
     color: var(--op-object-color, #a67c00);
     font-size: var(--text-size-xl, 1.2rem);
     transform: translate(-50%, -50%);
-    z-index: var(--z-priority, var(--layer-priority, 2000));
     animation: doodler-scatter var(--duration-slow, 480ms) var(--ease-release, ease-out) forwards;
 }
 
@@ -87,7 +86,6 @@
     border: 1px solid var(--line-strong, rgba(0, 128, 128, 0.34));
     border-radius: var(--shape-element, 3px);
     white-space: nowrap;
-    z-index: calc(var(--z-priority, var(--layer-priority, 2000)) + 8);
     pointer-events: none;
     opacity: 0;
     box-shadow: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));

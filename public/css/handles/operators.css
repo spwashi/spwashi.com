@@ -2058,7 +2058,6 @@ html[data-spw-cognitive-handles="off"] :where(
 /* Pronunciation Hints */
 .spw-pronunciation-hint {
   position: absolute;
-  z-index: calc(var(--z-priority, var(--layer-priority, 2000)) + 12);
   pointer-events: none;
   opacity: 0;
   transform: translateY(4px);

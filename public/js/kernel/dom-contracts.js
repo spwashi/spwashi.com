@@ -105,6 +105,29 @@ export const SITE_TOPOGRAPHY = Object.freeze({
   slot: '[data-spw-slot]',
 });
 
+export const FLOATING_CHROME_CONTRACT = Object.freeze({
+  selector: '[data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]',
+  tiers: Object.freeze(['floating', 'header', 'priority', 'modal', 'popover', 'toast', 'drawer']),
+  roles: Object.freeze([
+    'skip-link',
+    'section-handle',
+    'section-handle-shell',
+    'topic-popover',
+    'semantic-popover',
+    'narrative-drawer',
+    'discovery-toast-stack',
+    'discovery-modal',
+    'surface-map',
+    'surface-map-panel',
+    'pwa-status',
+    'persona-tooltip',
+    'persona-burst',
+    'pronunciation-hint',
+  ]),
+  portableUse:
+    'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
+});
+
 const RUNTIME_AUDIT_LIMIT = 240;
 const runtimeMutationLog = [];
 
@@ -155,14 +178,62 @@ export function writeRuntimeDatasetValues(el, entries = {}, options = {}) {
   return writeDatasetValues(el, entries, options);
 }
 
+export function annotateFloatingChromeElement(el, options = {}) {
+  if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
+
+  const {
+    role = '',
+    tier = '',
+    mutator = '',
+    reason = '',
+    stylingAxis = 'floating-chrome',
+    overlay = '',
+  } = options;
+
+  /*
+   * Stage mechanic:
+   * Floating chrome is any runtime-created handle that appears above normal
+   * prose flow. Give it a role and tier so authors can inspect the element,
+   * see which script projected it, and tune the visual stack from CSS without
+   * chasing scattered z-index rules.
+   */
+  const entries = {
+    spwFloatingChrome: 'true',
+    spwLayoutOwner: 'floating-chrome',
+    spwChromeRole: role || null,
+    spwChromeTier: tier || null,
+    spwRuntimeMutator: mutator || null,
+    spwRuntimeMutationReason: reason || null,
+    spwRuntimeStylingAxis: stylingAxis || null,
+  };
+
+  if (overlay) entries.spwOverlay = overlay;
+
+  return writeRuntimeDatasetValues(el, entries, {
+    source: mutator || 'floating-chrome',
+    reason: reason || 'floating-chrome',
+  });
+}
+
 if (globalThis.window) {
   globalThis.window.spwRuntimeAudit = Object.freeze({
     mutations: getRuntimeMutationLog,
+    floatingChrome: () => Array.from(
+      globalThis.document?.querySelectorAll?.(FLOATING_CHROME_CONTRACT.selector) || []
+    ).map((element) => ({
+      target: getRuntimeElementLabel(element),
+      role: element.dataset.spwChromeRole || '',
+      tier: element.dataset.spwChromeTier || '',
+      mutator: element.dataset.spwRuntimeMutator || '',
+      reason: element.dataset.spwRuntimeMutationReason || '',
+      stylingAxis: element.dataset.spwRuntimeStylingAxis || '',
+    })),
     contract: Object.freeze({
       verboseFlag: 'html[data-spw-runtime-audit="verbose"]',
       recordShape: '{ at, source, reason, target, attributes }',
       portableUse: 'Inspect which runtime modules added styling-relevant data attributes after load.',
     }),
+    floatingChromeContract: FLOATING_CHROME_CONTRACT,
   });
 }
 

@@ -5,6 +5,7 @@ import {
   createJsonFeedLoader,
   getWeekIndex,
 } from '/public/js/typed/feed-utils.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -286,11 +287,13 @@ function ensureStackRoot() {
   stack = document.createElement('section');
   stack.className = 'spw-discovery-notice-stack';
   stack.setAttribute(STACK_ATTR, '');
-  stack.dataset.spwFloatingChrome = 'true';
-  stack.dataset.spwLayoutOwner = 'floating-chrome';
-  stack.dataset.spwChromeRole = 'discovery-toast-stack';
-  stack.dataset.spwRuntimeMutator = 'discovery-notices';
-  stack.dataset.spwRuntimeMutationReason = 'discoverability-toast';
+  annotateFloatingChromeElement(stack, {
+    role: 'discovery-toast-stack',
+    tier: 'floating',
+    mutator: 'discovery-notices',
+    reason: 'discoverability-toast',
+    stylingAxis: 'notice-chrome',
+  });
   stack.setAttribute('aria-live', 'polite');
   stack.setAttribute('aria-label', 'Discoverability notices');
   stack.setAttribute(MODULE_ATTR, 'ready');
@@ -306,12 +309,14 @@ function ensureModalRoot() {
   root.className = 'spw-discovery-notice-modal';
   root.setAttribute(MODAL_ATTR, '');
   root.setAttribute('aria-label', 'Promotional brief');
-  root.setAttribute('data-spw-overlay', 'scrim-dark');
-  root.dataset.spwFloatingChrome = 'true';
-  root.dataset.spwLayoutOwner = 'floating-chrome';
-  root.dataset.spwChromeRole = 'discovery-modal';
-  root.dataset.spwRuntimeMutator = 'discovery-notices';
-  root.dataset.spwRuntimeMutationReason = 'discoverability-modal';
+  annotateFloatingChromeElement(root, {
+    role: 'discovery-modal',
+    tier: 'modal',
+    mutator: 'discovery-notices',
+    reason: 'discoverability-modal',
+    stylingAxis: 'notice-chrome',
+    overlay: 'scrim-dark',
+  });
   root.setAttribute(MODULE_ATTR, 'ready');
   document.body.append(root);
   return root;

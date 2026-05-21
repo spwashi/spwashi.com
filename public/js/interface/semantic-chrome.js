@@ -1,4 +1,5 @@
 import {
+  annotateFloatingChromeElement,
   SEMANTIC_CHROME_SELECTOR,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
@@ -436,11 +437,13 @@ function createSemanticPopover(token, host) {
   const tokenText = normalizeText(token.textContent || '').toLowerCase();
 
   popover.className = SEMANTIC_POPOVER_CLASS;
-  popover.dataset.spwFloatingChrome = 'true';
-  popover.dataset.spwLayoutOwner = 'floating-chrome';
-  popover.dataset.spwChromeRole = 'semantic-popover';
-  popover.dataset.spwRuntimeMutator = 'semantic-chrome';
-  popover.dataset.spwRuntimeMutationReason = 'semantic-inspection';
+  annotateFloatingChromeElement(popover, {
+    role: 'semantic-popover',
+    tier: 'popover',
+    mutator: 'semantic-chrome',
+    reason: 'semantic-inspection',
+    stylingAxis: 'semantic-popover',
+  });
   popover.setAttribute('role', 'dialog');
   popover.setAttribute('aria-modal', 'false');
   popover.setAttribute('aria-label', `${tokenText || humanizeToken(snapshot.kind)} semantic note`);

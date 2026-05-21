@@ -1793,7 +1793,6 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   width: min(24rem, calc(100vw - 2rem));
   max-inline-size: calc(100vw - 2rem);
   box-sizing: border-box;
-  z-index: calc(var(--z-floating, 100) + 6);
   pointer-events: none;
 }
 
@@ -1805,7 +1804,6 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   justify-items: center;
   gap: 0.8rem;
   padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
-  z-index: calc(var(--z-priority, 2000) + 6);
   pointer-events: none;
 }
 

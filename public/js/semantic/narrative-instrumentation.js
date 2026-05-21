@@ -8,6 +8,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const NARRATIVE_PROSE_SELECTOR = [
   'main p',
@@ -404,6 +405,13 @@ function showInspectorDrawer(token) {
 
   const drawer = document.createElement('div');
   drawer.className = NARRATIVE_DRAWER_CLASS;
+  annotateFloatingChromeElement(drawer, {
+    role: 'narrative-drawer',
+    tier: 'drawer',
+    mutator: 'narrative-instrumentation',
+    reason: 'narrative-inspector',
+    stylingAxis: 'narrative-drawer',
+  });
   drawer.dataset.spwMetamaterial = 'glass';
   drawer.dataset.spwDrawerState = 'open';
   drawer.setAttribute('role', 'dialog');

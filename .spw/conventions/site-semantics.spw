@@ -119,7 +119,7 @@
 
 ^"floating_chrome_contract"{
   definition: "Floating chrome is a non-content affordance that pins to the viewport or shell edge and remains available across nearby regions without becoming part of a card's reading order."
-  html_contract: "Use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for skip links, section handles, toast stacks, non-modal notices, and similar dismissable shells."
+  html_contract: "Use annotateFloatingChromeElement(...) for runtime-created skip links, section handles, toast stacks, popovers, non-modal notices, and similar dismissable shells; use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored equivalents."
   anatomy_rule: "Floating chrome may borrow card material, slot labels, or action chips, but it is not itself card anatomy."
   modal_relation: "Modal dialogs temporarily own focus and reading order. Floating chrome stays ambient or dismissable without becoming the whole page context."
   toast_relation: "A toast is one presentation of floating chrome: brief, edge-pinned, and non-blocking. A persistent notice or locomotion handle can share the same ownership contract while differing in copy and lifecycle."

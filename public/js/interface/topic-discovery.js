@@ -23,6 +23,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
 const BADGE_SELECTOR = '.spec-pill, .operator-chip';
@@ -152,11 +153,13 @@ function showPopover(el) {
 
     popoverEl = document.createElement('div');
     popoverEl.className = POPOVER_CLASS;
-    popoverEl.dataset.spwFloatingChrome = 'true';
-    popoverEl.dataset.spwLayoutOwner = 'floating-chrome';
-    popoverEl.dataset.spwChromeRole = 'topic-popover';
-    popoverEl.dataset.spwRuntimeMutator = 'topic-discovery';
-    popoverEl.dataset.spwRuntimeMutationReason = 'topic-context';
+    annotateFloatingChromeElement(popoverEl, {
+        role: 'topic-popover',
+        tier: 'popover',
+        mutator: 'topic-discovery',
+        reason: 'topic-context',
+        stylingAxis: 'topic-popover',
+    });
     popoverEl.setAttribute('role', 'tooltip');
 
     const sections = occurrences
