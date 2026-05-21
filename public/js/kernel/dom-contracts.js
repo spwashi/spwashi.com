@@ -45,6 +45,7 @@ export const SEMANTIC_ATTRIBUTE_SELECTORS = Object.freeze([
   '[data-spw-component-kind]',
   '[data-spw-role]',
   '[data-spw-slot]',
+  '[data-spw-feature]',
   '[data-spw-features]',
   '[data-spw-meaning]',
   '[data-spw-inspect]',
@@ -85,6 +86,7 @@ export const SEMANTIC_CHROME_SELECTORS = Object.freeze([
   '[data-spw-kind]',
   '[data-spw-role]',
   '[data-spw-slot]',
+  '[data-spw-feature]',
 ]);
 
 export const COMPONENT_SELECTOR = COMPONENT_SELECTORS.join(', ');
@@ -103,6 +105,7 @@ export const SITE_TOPOGRAPHY = Object.freeze({
   component: COMPONENT_SELECTOR,
   module: MODULE_SELECTOR,
   slot: '[data-spw-slot]',
+  feature: '[data-spw-feature]',
 });
 
 export const FLOATING_CHROME_CONTRACT = Object.freeze({
@@ -126,6 +129,12 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
   ]),
   portableUse:
     'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
+});
+
+export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
+  selector: '[data-spw-feature]',
+  portableUse:
+    'Use [data-spw-feature] for the outermost named cluster that should stay visible to CSS, audit hooks, and region-menu inspection.',
 });
 
 const RUNTIME_AUDIT_LIMIT = 240;
@@ -242,18 +251,38 @@ export function describeFloatingChromeElement(element) {
   };
 }
 
+export function describeFeatureClusterElement(element) {
+  if (!globalThis.Element || !(element instanceof globalThis.Element)) return null;
+
+  return {
+    target: getRuntimeElementLabel(element),
+    feature: element.dataset.spwFeature || '',
+    kind: element.dataset.spwComponentKind || element.dataset.spwKind || '',
+    role: element.dataset.spwRole || '',
+    context: element.dataset.spwContext || '',
+    inspect: element.dataset.spwInspect || '',
+    surface: element.closest?.('[data-spw-surface]')?.dataset?.spwSurface || '',
+    boxModel: element.dataset.spwBoxModel || '',
+    compositionFlow: element.dataset.spwCompositionFlow || '',
+  };
+}
+
 if (globalThis.window) {
   globalThis.window.spwRuntimeAudit = Object.freeze({
     mutations: getRuntimeMutationLog,
     floatingChrome: () => Array.from(
       globalThis.document?.querySelectorAll?.(FLOATING_CHROME_CONTRACT.selector) || []
     ).map(describeFloatingChromeElement).filter(Boolean),
+    featureClusters: () => Array.from(
+      globalThis.document?.querySelectorAll?.(FEATURE_CLUSTER_CONTRACT.selector) || []
+    ).map(describeFeatureClusterElement).filter(Boolean),
     contract: Object.freeze({
       verboseFlag: 'html[data-spw-runtime-audit="verbose"]',
       recordShape: '{ at, source, reason, target, attributes }',
       portableUse: 'Inspect which runtime modules added styling-relevant data attributes after load.',
     }),
     floatingChromeContract: FLOATING_CHROME_CONTRACT,
+    featureClusterContract: FEATURE_CLUSTER_CONTRACT,
   });
 }
 

@@ -4,7 +4,9 @@ import {
 } from './kernel/page-metadata.js';
 import {
   FRAME_SELECTOR,
+  FEATURE_CLUSTER_CONTRACT,
   buildAxisGenome,
+  describeFeatureClusterElement,
   inferTopographyKind,
   writeDatasetValue,
   writeDatasetValueIfMissing,
@@ -399,6 +401,12 @@ function syncPageHarmony(ctx) {
   writeDatasetValue(HTML, 'spwTempoField', [...tempos].join(' '));
   writeDatasetValue(HTML, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(HTML, '--region-count', String(profiles.length));
+}
+
+function snapshotFeatureClusters(root = document) {
+  return Array.from(root?.querySelectorAll?.(FEATURE_CLUSTER_CONTRACT.selector) || [])
+    .map(describeFeatureClusterElement)
+    .filter(Boolean);
 }
 
 /* ==========================================================================
@@ -2230,6 +2238,11 @@ async function bootSite() {
         inspect: (target, options = {}) => snapshotCompositionBox(target, options),
         snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
       },
+      featureClusters: {
+        inspect: (target) => describeFeatureClusterElement(target),
+        list: (root = document) => snapshotFeatureClusters(root),
+        contract: FEATURE_CLUSTER_CONTRACT,
+      },
       effects: {
         expressions: snapshotSemanticExpressions,
         projections: snapshotProjectionEquations,
@@ -2299,6 +2312,11 @@ window.__SPW_SITE__ = {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
     inspect: (target, options = {}) => snapshotCompositionBox(target, options),
     snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+  },
+  featureClusters: {
+    inspect: (target) => describeFeatureClusterElement(target),
+    list: (root = document) => snapshotFeatureClusters(root),
+    contract: FEATURE_CLUSTER_CONTRACT,
   },
   effects: snapshotEffectSummary,
   expressions: snapshotSemanticExpressions,

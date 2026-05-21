@@ -379,6 +379,12 @@ frame #semantic-crossrefs
   concept semantic_resonance cross_reference spw_expression
   note "The semantic cross-reference runtime reads data-spw-semantic-cluster, data-spw-vocab, data-spw-semantic-expression, and topic markers. Hover or focus may mark nearby concepts as peers, but click behavior and normal navigation must remain untouched. This makes Spw annotation a lightweight way to serialize component meaning for humans, crawlers, screenshots, and future model expansion."
 
+frame #feature-clusters
+  role convention
+  surface copy/runtime
+  concept feature_clusters component_clusters inspectable_surface
+  note "Use data-spw-feature for the outermost named cluster that should stay legible across copy, composition, debug labels, console audit, and route inspection. Feature clusters should remain readable even when enhancement is off, but they may also become a first-class target for region-menu inspection and runtime summaries."
+
 frame #semantic-emphasis
   role convention
   surface markup/css/copy

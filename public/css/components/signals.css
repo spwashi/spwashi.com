@@ -36,6 +36,11 @@
   --component-route-accent: var(--op-ref-color, var(--component-accent));
 }
 
+:where([data-spw-feature]) {
+  --component-feature-accent: color-mix(in srgb, var(--component-accent) 82%, var(--op-frame-color, #008080) 18%);
+  --component-route-accent: var(--component-feature-accent, var(--component-accent));
+}
+
 :where([data-spw-component-kind]:not(body))[data-spw-route-state]:not([data-spw-route-state="none"]) {
   padding-block-start: calc(var(--component-pad) + 0.82rem);
 }

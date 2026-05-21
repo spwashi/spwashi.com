@@ -12,6 +12,7 @@ const TARGET_SELECTOR = [
   '.frame-sigil',
   '.frame-card-sigil',
   '.operator-chip',
+  '[data-spw-feature]',
   '[data-spw-semantic-expression]',
   '[data-spw-semantic-root]',
 ].join(', ');
@@ -328,6 +329,7 @@ function readableTarget(target) {
   return normalizeText(
     target?.dataset?.spwSemanticExpression
     || target?.dataset?.spwMeaning
+    || target?.dataset?.spwFeature
     || target?.dataset?.spwSigil
     || target?.textContent
     || 'region'
@@ -337,12 +339,14 @@ function readableTarget(target) {
 function buildSummary(semantic, target, frame) {
   const parts = [];
   const operator = target.dataset.spwOperator || 'region';
+  const feature = target.dataset.spwFeature || frame?.dataset?.spwFeature || '';
   const frameName =
     frame?.querySelector?.(':scope > header h1, :scope > header h2, :scope > .frame-heading h2, :scope > .frame-topline .frame-sigil')
       ?.textContent
     || frame?.id
     || 'current frame';
 
+  if (feature) parts.push(`feature ${feature}`);
   if (semantic.rootLabel) parts.push(`root ${semantic.rootLabel}`);
   if (semantic.variantLabel) parts.push(`variant ${semantic.variantLabel}`);
   if (semantic.behaviorLabel) parts.push(`behavior ${semantic.behaviorLabel}`);
@@ -355,6 +359,7 @@ function buildSummary(semantic, target, frame) {
 function buildContract(target, semantic, frame) {
   const source = target.closest('[data-spw-reading-cue], [data-spw-input], [data-spw-operation], [data-spw-return]');
   const fields = [
+    ['Feature', source?.dataset.spwFeature || target.dataset.spwFeature || frame?.dataset?.spwFeature],
     ['Cue', source?.dataset.spwReadingCue || target.dataset.spwReadingCue],
     ['Input', source?.dataset.spwInput || target.dataset.spwInput || semantic.rootLabel],
     ['Operation', source?.dataset.spwOperation || target.dataset.spwOperation || semantic.behaviorLabel],
@@ -440,7 +445,13 @@ async function copySeed(target, semantic, frame) {
 
 function buildSeed(target, semantic, frame) {
   const route = document.body?.dataset.spwSurface || normalizeToken(location.pathname || 'site');
-  const region = normalizeToken(frame?.id || frame?.dataset?.spwFeature || frame?.dataset?.spwRole || 'region');
+  const region = normalizeToken(
+    target.dataset.spwFeature
+    || frame?.dataset?.spwFeature
+    || frame?.id
+    || frame?.dataset?.spwRole
+    || 'region'
+  );
   const operator = target.dataset.spwOperator || 'frame';
   const expression = semantic.key || semantic.expression || readableTarget(target);
   return `${route}<${region}> ${operator}{${expression}}`;
