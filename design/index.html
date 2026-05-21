@@ -66,7 +66,9 @@
                     This is the route for turning a vibe into an accountable structure. Use it when the question is not
                     only “what should this look like?” but “what exactly is being discovered, what should be tested,
                     which layer owns it, and does the idea survive a cramped screen, a different theme, or a sharper
-                    reading density?”
+                    reading density?” The markup should stay legible enough that a person or a simple model can
+                    extend it by adding content to the nearest header, nav, section, article, aside, or figure
+                    instead of inventing a new shape every time.
                 </p>
 
                 <p>
@@ -93,7 +95,8 @@
                     Topic links should act like metacognitive handles here: <a href="/topics/software/algorithms/">algorithms</a>
                     for procedure, <a href="/topics/math/statistical-analysis/">statistical analysis</a> for evidence,
                     and <a href="/topics/math/scale-intuition/">scale intuition</a> for scope, so the hub makes the
-                    spokes easier to discover and compare.
+                    spokes easier to discover and compare. If the route needs expansion later, keep the same
+                    container logic and add the next idea as a new section, not a broken exception.
                 </p>
 
                 <p>
@@ -105,8 +108,22 @@
                 <p>
                     I want this route to feel like a worktable people actually come back to. A good design study should
                     leave behind a usable link, a kept image, a clearer test, a stronger component choice, and one
-                    clean sentence about what has to survive the next round.
+                    clean sentence about what has to survive the next round. That makes the page easier for future
+                    authors, and easier for a model to continue without flattening the semantics.
                 </p>
+
+                <aside class="spw-route-bridge" aria-labelledby="design-structure-links-title">
+                    <header>
+                        <h3 id="design-structure-links-title">Extend the same structure</h3>
+                        <p>These routes show where the design hub turns into a reusable page pattern, a teaching surface, or a browser-side test bench.</p>
+                    </header>
+                    <ul class="spw-route-bridge__links">
+                        <li><a href="/design/components/"><strong>Component glossary</strong><span>See how named slots, wrappers, and states keep the anatomy readable.</span></a></li>
+                        <li><a href="/topics/software/"><strong>Software</strong><span>Compare the same landmark pattern in a theory page that teaches HTML and runtime structure.</span></a></li>
+                        <li><a href="/about/website/"><strong>Website field guide</strong><span>Read the route that explains the broader site grammar and how pages stay connected.</span></a></li>
+                        <li><a href="/settings/#semantic-settings"><strong>Semantic settings</strong><span>Tune density, perspective, and runtime emphasis while keeping the page structure legible.</span></a></li>
+                    </ul>
+                </aside>
 
                 <figure class="image-study topic-photo-card" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#144a59, #cfa16d, #365b8c, #d4d1c3" data-spw-accent-anchor="design website pretext renderers mobile" data-spw-accent-operator="frame">
                     <img src="/public/images/routes/site-design-resonance-hero.webp" alt="A readable surface study blending threshold architecture, orbital traces, and structural design grammar." width="1600" height="960">

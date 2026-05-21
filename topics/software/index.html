@@ -165,16 +165,19 @@
                         <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="HTML scavenger hunt">
                             <header>
                                 <h3>HTML scavenger hunt</h3>
-                                <p>Use the page source to find the elements that carry the job. The game is to read the structure and name what each tag protects.</p>
+                                <p>Use the page source to find the elements that carry the job. The game is to read the structure, name what each tag protects, and extend the same pattern without inventing a new wrapper unless you need one.</p>
                             </header>
                             <ul class="spw-route-bridge__links">
                                 <li><strong>header</strong><span>Find the route stance and the title that frames the page.</span></li>
                                 <li><strong>nav</strong><span>Find the routes that help a reader travel or compare.</span></li>
                                 <li><strong>main</strong><span>Find the source idea the page is trying to teach.</span></li>
                                 <li><strong>article</strong><span>Find the self-contained body of the lesson.</span></li>
+                                <li><strong>section</strong><span>Find a named chunk that can grow or split without losing its purpose.</span></li>
                                 <li><strong>aside</strong><span>Find the related routes and side notes that widen the field.</span></li>
                                 <li><strong>figure</strong><span>Find the examples, screenshots, and evidence that make the idea concrete.</span></li>
+                                <li><strong>footer</strong><span>Find the afterword, the exits, and the durable links that remain once the reading is done.</span></li>
                             </ul>
+                            <p class="frame-note">If you want to extend the same structure on other pages, compare this route with <a href="/design/components/">component glossary</a>, <a href="/design/">design hub</a>, <a href="/about/website/">website field guide</a>, and <a href="/settings/#semantic-settings">semantic settings</a>. Those routes show how the same landmarks can carry different kinds of meaning without changing the HTML backbone.</p>
                         </aside>
                         <p>Software engineering theory enters here as discipline rather than decoration: invariants keep meaning stable, interfaces make promises explicit, parsers turn syntax into structure, schedulers decide when behavior arrives, and renderers project the same model into different surfaces. Spw is useful when those layers stay close enough that a reader can learn the theory by inspecting the page.</p>
                         <div class="spw-resonance-lab" aria-label="Software resonance dimensions" data-spw-role="probe">
@@ -200,7 +203,8 @@
                             The programming-theory neighbor is not only parsing. It is the discipline of separating
                             source language, intermediate representation, scheduler, renderer, and effect. Spw semantics
                             are useful when those layers remain named enough that a learner can inspect the transformation
-                            rather than merely trusting the result.
+                            rather than merely trusting the result. That same habit helps a model or collaborator extend
+                            the page: keep the landmark, keep the role, and add depth in the nearest semantic container.
                         </p>
                         <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Software theory route bridge">
                             <header>
