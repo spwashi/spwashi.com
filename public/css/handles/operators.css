@@ -1494,6 +1494,101 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   min-width: 0;
 }
 
+.spw-spell-path__guide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.16rem 0.34rem;
+  align-items: baseline;
+  margin: 0.06rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+
+.spw-spell-path__guide-lead,
+.spw-spell-path__guide-action {
+  min-width: 0;
+}
+
+.spw-spell-path__guide-action {
+  color: var(--ink);
+}
+
+.spw-spell-path__guide-details {
+  color: var(--ink-soft);
+  opacity: 0.88;
+}
+
+.spw-spell-neighborhood {
+  display: grid;
+  gap: 0.22rem;
+  margin: 0.06rem 0 0;
+}
+
+.spw-spell-neighborhood__label {
+  color: var(--ink-soft);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-spell-neighborhood__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem 0.34rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.spw-spell-neighborhood__item {
+  min-width: 0;
+}
+
+.spw-spell-neighborhood__link {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.18rem 0.28rem;
+  min-height: 1.84rem;
+  padding: 0.14rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  text-decoration: none;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.spw-spell-neighborhood__link:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--teal, #008080) 24%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--teal, #008080) 12%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-neighborhood__name {
+  color: var(--teal);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.spw-spell-neighborhood__note {
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  line-height: 1.25;
+}
+
 .spw-spell-crumb {
   display: inline-flex;
   align-items: center;
@@ -1672,6 +1767,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .spw-spell-path__guide,
+  .spw-spell-neighborhood {
+    display: none;
   }
 
   .spw-spell-path[data-spw-breadcrumb-state="closed"] {

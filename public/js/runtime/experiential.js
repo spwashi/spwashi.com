@@ -19,9 +19,23 @@ import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
 const BOOKMARKS_KEY = 'spw-pins';
+const MAX_BREADCRUMB_NEIGHBORS = 3;
 const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
 const SHELL_MENU_STATE_EVENT = 'spw:shell-menu-state';
 const HEADER_TRACE_CHANGE_EVENT = 'spw:header-trace-change';
+
+const BREADCRUMB_ROUTE_REGISTRY = Object.freeze({
+  '/': { label: 'Home', note: 'Start or re-enter the site.' },
+  '/about/': { label: 'About', note: 'Read the method and the kernel.' },
+  '/blog/': { label: 'Blog', note: 'Working threads and process notes.' },
+  '/contact/': { label: 'Contact', note: 'Send a structured inquiry.' },
+  '/play/': { label: 'Play', note: 'RPG Wednesday and experiments.' },
+  '/recipes/': { label: 'Recipes', note: 'Culinary practice and technique.' },
+  '/services/': { label: 'Services', note: 'Compare a collaboration path.' },
+  '/settings/': { label: 'Settings', note: 'Tune the surface and inspect runtime.' },
+  '/tools/': { label: 'Tools', note: 'Inspect reusable helpers.' },
+  '/topics/': { label: 'Topics', note: 'Browse the atlas.' },
+});
 
 const OPERATOR_INFO = Object.freeze({
   '#>': { type: 'frame', label: 'frame address', intent: 'name a resonance handle', wonder: 'resonance' },
@@ -198,6 +212,10 @@ function renderBreadcrumbSpell() {
   runtime.shellSnapshot = shellSnapshot;
   syncBreadcrumbViewportPreference();
 
+  const pageRole = document.body?.dataset.spwPageRole || '';
+  const pageResponsibility = document.body?.dataset.spwPageResponsibility || '';
+  const pagePrimaryAction = document.body?.dataset.spwPagePrimaryAction || '';
+  const relatedRoutes = collectRelatedBreadcrumbRoutes(url.pathname);
   const activeFrame =
     document.querySelector('.site-frame[data-state~="active"]')
     || (url.hash ? document.querySelector(url.hash) : null);
@@ -225,7 +243,7 @@ function renderBreadcrumbSpell() {
     kind: 'surface',
     href: url.pathname,
     token: '#:surface',
-    label: `!${surface}`,
+    label: humanizePathPart(surface),
     current: routeParts.length === 0 && !activeFrameSigil && !activeMode,
   }));
 
@@ -274,6 +292,9 @@ function renderBreadcrumbSpell() {
   });
   const meaning = describeBreadcrumbMeaning({
     surface,
+    pageRole,
+    pageResponsibility,
+    pagePrimaryAction,
     activeFrameSigil,
     activeMode,
     shellSnapshot,
@@ -283,11 +304,23 @@ function renderBreadcrumbSpell() {
   const compactSummary = describeBreadcrumbSummary({
     surface,
     routeParts,
+    pageResponsibility,
+    pagePrimaryAction,
     activeFrameSigil,
     activeMode,
   });
-  const pathState = runtime.pathExpanded ? 'open' : 'closed';
   const compact = runtime.pathCompact === true;
+  const guide = describeBreadcrumbGuide({
+    surface,
+    pageRole,
+    pageResponsibility,
+    pagePrimaryAction,
+    activeFrameSigil,
+    activeMode,
+    relatedRoutes,
+    compact,
+  });
+  const pathState = runtime.pathExpanded ? 'open' : 'closed';
 
   pathBar.dataset.spwBreadcrumbSurface = surface;
   pathBar.dataset.spwBreadcrumbDepth = String(items.length);
@@ -308,6 +341,9 @@ function renderBreadcrumbSpell() {
   pathBar.dataset.spwBreadcrumbMeaningMode = narrationMode;
   pathBar.dataset.spwBreadcrumbState = pathState;
   pathBar.dataset.spwBreadcrumbViewport = compact ? 'compact' : 'roomy';
+  pathBar.dataset.spwBreadcrumbRelatedCount = String(relatedRoutes.length);
+  pathBar.dataset.spwBreadcrumbPageRole = pageRole || 'none';
+  pathBar.dataset.spwBreadcrumbPageResponsibility = pageResponsibility || 'none';
 
   pathBar.innerHTML = `
     <div class="spw-spell-path__header">
@@ -322,9 +358,11 @@ function renderBreadcrumbSpell() {
       </button>
       ${compact ? '' : renderShellControl(shellSnapshot)}
     </div>
+    ${guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
     <ol class="spw-spell-trail" aria-label="Current cognitive breadcrumb">
       ${items.join('')}
     </ol>
+    ${compact || !relatedRoutes.length ? '' : renderBreadcrumbNearbyRoutes(relatedRoutes)}
     <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
   `;
 
@@ -394,6 +432,71 @@ function renderShellControl(shellSnapshot) {
   `;
 }
 
+function renderBreadcrumbNearbyRoutes(routes) {
+  if (!routes.length) return '';
+
+  return `
+    <div class="spw-spell-neighborhood" aria-label="Nearby routes">
+      <span class="spw-spell-neighborhood__label">nearby</span>
+      <ul class="spw-spell-neighborhood__list">
+        ${routes.slice(0, MAX_BREADCRUMB_NEIGHBORS).map((route) => `
+          <li class="spw-spell-neighborhood__item">
+            <a class="spw-spell-neighborhood__link" href="${escapeAttribute(route.href)}" title="${escapeAttribute(route.note)}">
+              <span class="spw-spell-neighborhood__name">${escapeHtml(route.label)}</span>
+              <span class="spw-spell-neighborhood__note">${escapeHtml(route.note)}</span>
+            </a>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function collectRelatedBreadcrumbRoutes(currentPath = '') {
+  const normalizedCurrentPath = normalizeRouteHref(currentPath);
+  const related = [
+    document.body?.dataset.spwRelatedRoutes,
+    document.querySelector('header')?.dataset.spwRelatedRoutes,
+  ]
+    .filter(Boolean)
+    .join('|');
+
+  return parseRelatedRouteList(related)
+    .filter((pathname) => pathname && pathname !== normalizedCurrentPath)
+    .map((pathname) => describeBreadcrumbRoute(pathname))
+    .filter(Boolean)
+    .slice(0, MAX_BREADCRUMB_NEIGHBORS);
+}
+
+function parseRelatedRouteList(value = '') {
+  return Array.from(new Set(
+    String(value)
+      .split(/[|,]/)
+      .map((part) => normalizeRouteHref(part))
+      .filter(Boolean)
+  ));
+}
+
+function describeBreadcrumbRoute(pathname = '') {
+  const normalized = normalizeRouteHref(pathname);
+  if (!normalized) return null;
+  const known = BREADCRUMB_ROUTE_REGISTRY[normalized];
+
+  if (known) {
+    return {
+      href: normalized,
+      label: known.label,
+      note: known.note,
+    };
+  }
+
+  return {
+    href: normalized,
+    label: titleFromPath(normalized),
+    note: 'Related route from this page.',
+  };
+}
+
 function syncBreadcrumbViewportPreference() {
   const compact = window.matchMedia('(max-width: 720px)').matches;
 
@@ -406,20 +509,59 @@ function syncBreadcrumbViewportPreference() {
   runtime.pathCompact = compact;
 }
 
-function describeBreadcrumbSummary({ surface, routeParts, activeFrameSigil, activeMode }) {
+function describeBreadcrumbSummary({ surface, routeParts, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode }) {
   const routeLabel = humanizePathPart(routeParts.at(-1) || surface || 'home');
+  const responsibilityLabel = humanizePathPart(pageResponsibility || '');
+  const actionLabel = humanizePathPart(pagePrimaryAction || '');
+
   if (activeFrameSigil) {
-    return `${routeLabel} · ${stripWhitespace(activeFrameSigil)}`;
+    return [routeLabel, responsibilityLabel || actionLabel, stripWhitespace(activeFrameSigil)]
+      .filter(Boolean)
+      .join(' · ');
   }
   if (activeMode) {
-    return `${routeLabel} · ${humanizePathPart(activeMode)}`;
+    return [routeLabel, responsibilityLabel || actionLabel, humanizePathPart(activeMode)]
+      .filter(Boolean)
+      .join(' · ');
   }
-  return routeLabel;
+  return [routeLabel, responsibilityLabel || actionLabel].filter(Boolean).join(' · ') || routeLabel;
 }
 
-function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode }) {
+function describeBreadcrumbGuide({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, relatedRoutes, compact }) {
+  const lead = pageResponsibility
+    ? `This page is a ${humanizePathPart(pageResponsibility)}.`
+    : `This page is part of ${humanizePathPart(surface)}.`;
+  const action = pagePrimaryAction
+    ? `Use it to ${humanizePathPart(pagePrimaryAction)}.`
+    : `Use it to read, inspect, or move deeper.`;
+  const details = [];
+
+  if (pageRole) {
+    details.push(`role ${humanizePathPart(pageRole)}`);
+  }
+  if (activeFrameSigil) {
+    details.push(`frame ${stripWhitespace(activeFrameSigil)}`);
+  }
+  if (activeMode) {
+    details.push(`mode ${humanizePathPart(activeMode)}`);
+  }
+  if (!compact && relatedRoutes.length) {
+    details.push(`nearby ${relatedRoutes.length}`);
+  }
+
+  return [
+    `<span class="spw-spell-path__guide-lead">${escapeHtml(lead)}</span>`,
+    `<span class="spw-spell-path__guide-action">${escapeHtml(action)}</span>`,
+    details.length ? `<span class="spw-spell-path__guide-details">${escapeHtml(details.join(' · '))}</span>` : '',
+  ].filter(Boolean).join(' ');
+}
+
+function describeBreadcrumbMeaning({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode }) {
   const parts = [
     `surface ${surface}`,
+    pageResponsibility ? `responsibility ${pageResponsibility}` : '',
+    pagePrimaryAction ? `action ${pagePrimaryAction}` : '',
+    pageRole ? `role ${pageRole}` : '',
     activeFrameSigil ? `frame ${stripWhitespace(activeFrameSigil)}` : 'frame route-level',
     activeMode ? `mode ${humanizePathPart(activeMode)}` : 'mode ambient',
     `menu ${humanizePathPart(shellSnapshot.topology)} ${shellSnapshot.state}`,
@@ -435,7 +577,7 @@ function describeBreadcrumbMeaning({ surface, activeFrameSigil, activeMode, shel
     parts.push(`meaning ${narrationMode}`);
   }
 
-  return parts.join(' · ');
+  return parts.filter(Boolean).join(' · ');
 }
 
 function readShellSnapshot() {
@@ -538,6 +680,14 @@ function humanizePathPart(value = '') {
     .replace(/^!/, '')
     .replace(/[_-]+/g, ' ')
     .trim();
+}
+
+function titleFromPath(pathname = '') {
+  return humanizePathPart(pathname)
+    .split('/')
+    .filter(Boolean)
+    .at(-1)
+    ?.replace(/\b\w/g, (letter) => letter.toUpperCase()) || 'Home';
 }
 
 function stripWhitespace(value = '') {
