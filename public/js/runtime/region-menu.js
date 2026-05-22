@@ -23,12 +23,15 @@ const PREVIEW_DELAY_MS = Object.freeze({
   responsive: 520,
   expressive: 360,
 });
+const HOLD_OPEN_MS = 460;
+const MOVE_CANCEL_PX = 10;
 
 let activeTarget = null;
 let activeMatches = [];
 let activeIndex = 0;
 let previewTimer = null;
 let previewTarget = null;
+let holdState = null;
 
 export function initSpwRegionMenu(root = document) {
   const doc = root?.nodeType === Node.DOCUMENT_NODE ? root : document;
@@ -40,18 +43,18 @@ export function initSpwRegionMenu(root = document) {
   body.addEventListener('contextmenu', onContextMenu, true);
   body.addEventListener('pointerenter', onPointerEnter, true);
   body.addEventListener('pointerleave', onPointerLeave, true);
+  body.addEventListener('pointerdown', onPointerDown, true);
+  body.addEventListener('pointermove', onPointerMove, true);
+  body.addEventListener('pointerup', onPointerUp, true);
+  body.addEventListener('pointercancel', onPointerCancel, true);
   body.addEventListener('keydown', onKeyDown, true);
+  window.addEventListener('scroll', onViewportChange, { passive: true });
+  window.addEventListener('resize', onViewportChange);
 }
 
 function onClick(event) {
   const target = resolveTarget(event.target);
   if (!target) return;
-
-  if (target.classList.contains('spw-delimiter')) {
-    event.preventDefault();
-    openMenu(target);
-    return;
-  }
 
   if (event.altKey || event.metaKey || target.dataset.spwRegionPreview === 'true') {
     if (isNavigable(target) && !event.altKey && !event.metaKey) return;
@@ -69,6 +72,7 @@ function onContextMenu(event) {
 }
 
 function onPointerEnter(event) {
+  if (isCoarsePointer(event)) return;
   const target = resolveTarget(event.target);
   if (!target) return;
 
@@ -81,6 +85,7 @@ function onPointerEnter(event) {
 }
 
 function onPointerLeave(event) {
+  if (isCoarsePointer(event)) return;
   const target = resolveTarget(event.target);
   if (!target) return;
 
@@ -90,6 +95,54 @@ function onPointerLeave(event) {
     writeDatasetValue(document.documentElement, 'spwRegionPreviewing', null);
     previewTarget = null;
   }
+}
+
+function onPointerDown(event) {
+  if (!event.isPrimary || event.button !== 0) return;
+  const target = resolveTarget(event.target);
+  if (!target || !shouldArmHoldOpen(target, event)) return;
+
+  clearHoldState();
+  holdState = {
+    target,
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    moved: false,
+    opened: false,
+    timer: window.setTimeout(() => {
+      if (!holdState || holdState.target !== target || holdState.moved) return;
+      holdState.opened = true;
+      previewTarget = target;
+      writeDatasetValue(target, 'spwRegionPreview', 'true');
+      writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
+      openMenu(target);
+    }, HOLD_OPEN_MS),
+  };
+}
+
+function onPointerMove(event) {
+  const state = holdState;
+  if (!state) return;
+  if (event.pointerId != null && state.pointerId != null && event.pointerId !== state.pointerId) return;
+
+  const dx = event.clientX - state.startX;
+  const dy = event.clientY - state.startY;
+  if (Math.abs(dx) > MOVE_CANCEL_PX || Math.abs(dy) > MOVE_CANCEL_PX) {
+    state.moved = true;
+    clearHoldState({ preservePreview: state.opened });
+  }
+}
+
+function onPointerUp(event) {
+  const state = holdState;
+  if (!state) return;
+  if (event.pointerId != null && state.pointerId != null && event.pointerId !== state.pointerId) return;
+  clearHoldState({ preservePreview: state.opened });
+}
+
+function onPointerCancel() {
+  clearHoldState();
 }
 
 function onKeyDown(event) {
@@ -117,6 +170,13 @@ function onKeyDown(event) {
   }
 }
 
+function onViewportChange() {
+  clearHoldState();
+  if (document.documentElement.dataset.spwRegionMenu === 'open') {
+    closeMenu({ restoreFocus: false });
+  }
+}
+
 function resolveTarget(node) {
   return node?.closest?.(TARGET_SELECTOR) || null;
 }
@@ -127,6 +187,9 @@ function isNavigable(target) {
 
 function openMenu(target) {
   activeTarget = target;
+  previewTarget = target;
+  writeDatasetValue(target, 'spwRegionPreview', 'true');
+  writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
 
   const semantic = resolveSemantic(target);
   const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-role]') || document.body;
@@ -372,11 +435,17 @@ function buildContract(target, semantic, frame) {
 
 function positionMenu(menu, target) {
   const rect = target.getBoundingClientRect();
-  const rootStyle = document.documentElement.style;
-  rootStyle.setProperty('--spw-region-menu-x', `${Math.max(12, rect.left)}px`);
-  rootStyle.setProperty('--spw-region-menu-y', `${Math.max(12, rect.bottom + 8)}px`);
-  menu.style.left = 'var(--spw-region-menu-x)';
-  menu.style.top = 'var(--spw-region-menu-y)';
+  const maxWidth = Math.min(304, window.innerWidth - 24);
+  const estimatedHeight = Math.min(416, window.innerHeight - 24);
+  const left = clamp(rect.left, 12, Math.max(12, window.innerWidth - maxWidth - 12));
+  const preferredTop = rect.bottom + 8;
+  const fallbackTop = rect.top - estimatedHeight - 8;
+  const top = preferredTop + estimatedHeight <= window.innerHeight - 12
+    ? preferredTop
+    : Math.max(12, fallbackTop);
+
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
 }
 
 function focusMatches(target, semantic) {
@@ -491,13 +560,24 @@ function collectRegionMatches(root, family) {
   return matches;
 }
 
-function closeMenu() {
+function closeMenu(options = {}) {
+  const { restoreFocus = true } = options;
   const menu = document.getElementById(MENU_ID);
   if (menu) {
     writeDatasetValue(menu, 'spwState', 'closed');
   }
+  if (activeTarget) {
+    writeDatasetValue(activeTarget, 'spwRegionMenuTarget', null);
+  }
+  if (previewTarget) {
+    writeDatasetValue(previewTarget, 'spwRegionPreview', null);
+    previewTarget = null;
+  }
+  writeDatasetValue(document.documentElement, 'spwRegionPreviewing', null);
   document.documentElement.removeAttribute('data-spw-region-menu');
-  activeTarget?.focus?.({ preventScroll: true });
+  if (restoreFocus) {
+    activeTarget?.focus?.({ preventScroll: true });
+  }
   activeTarget = null;
 }
 
@@ -519,6 +599,33 @@ function clearPreviewTimer() {
 function getPreviewDelay() {
   const tuner = document.documentElement.dataset.spwInteractionTuner || 'calm';
   return PREVIEW_DELAY_MS[tuner] || PREVIEW_DELAY_MS.calm;
+}
+
+function clearHoldState(options = {}) {
+  const { preservePreview = false } = options;
+  if (!holdState) return;
+  window.clearTimeout(holdState.timer);
+  if (!preservePreview && previewTarget === holdState.target) {
+    writeDatasetValue(holdState.target, 'spwRegionPreview', null);
+    writeDatasetValue(document.documentElement, 'spwRegionPreviewing', null);
+    previewTarget = null;
+  }
+  holdState = null;
+}
+
+function shouldArmHoldOpen(target, event) {
+  if (!isCoarsePointer(event)) return false;
+  if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) return false;
+  if (isNavigable(target)) return false;
+  return target.matches('.spw-delimiter, .frame-sigil, .frame-card-sigil, [data-spw-feature], [data-spw-semantic-expression]');
+}
+
+function isCoarsePointer(event) {
+  return event?.pointerType === 'touch';
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 function shouldShowTuningHandles() {

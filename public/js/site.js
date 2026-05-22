@@ -526,6 +526,137 @@ function describeComponentSample(target) {
   };
 }
 
+const GESTURE_TARGET_SELECTOR = [
+  '.spw-delimiter',
+  '.frame-sigil',
+  '.frame-card-sigil',
+  '.frame-panel-sigil',
+  '.operator-chip',
+  '[data-spw-feature]',
+  '[data-spw-semantic-expression]',
+].join(', ');
+
+const GESTURE_VOCABULARY = Object.freeze({
+  ground: Object.freeze({
+    label: 'Ground',
+    summary: 'Commit to the current target.',
+    inputs: 'tap, click, Enter',
+  }),
+  charge: Object.freeze({
+    label: 'Charge',
+    summary: 'Preview a semantic handle before committing.',
+    inputs: 'focus, hover, deliberate hold',
+  }),
+  flow: Object.freeze({
+    label: 'Flow',
+    summary: 'Move through a nearby sequence or rail.',
+    inputs: 'arrow keys, prev/next controls, contextual swipe rails',
+  }),
+  rotate: Object.freeze({
+    label: 'Rotate',
+    summary: 'Change the active lens or reading posture.',
+    inputs: 'mode chips, lens controls, scoped left/right lens changes',
+  }),
+  project: Object.freeze({
+    label: 'Project',
+    summary: 'Open a secondary tray, menu, or inspect surface.',
+    inputs: 'question mark, Alt+Enter, context click, deliberate long press',
+  }),
+  settle: Object.freeze({
+    label: 'Settle',
+    summary: 'Close a preview or projected layer and return.',
+    inputs: 'Escape, dismiss button, close-on-return controls',
+  }),
+});
+
+const GESTURE_SPELL_SEEDS = Object.freeze([
+  Object.freeze({
+    id: 'charge-preview',
+    label: 'Charge preview',
+    note: 'Preview a sigil, brace, or semantic handle without changing the route.',
+    seed: '?gesture_charge { input: "hover | focus | hold" return: "semantic preview" }',
+  }),
+  Object.freeze({
+    id: 'project-region-menu',
+    label: 'Project region menu',
+    note: 'Open the brace / region menu on purpose, then return without losing your place.',
+    seed: '#>gesture_project { cue: "? | Alt+Enter | long hold" return: "region menu" }',
+  }),
+  Object.freeze({
+    id: 'settle-return',
+    label: 'Settle return',
+    note: 'Dismiss chrome and recover the reading surface after inspection.',
+    seed: '@gesture_settle { cue: "Escape" return: "focused prose" }',
+  }),
+]);
+
+function inferGestureIntents(element) {
+  if (!(element instanceof HTMLElement)) return [];
+
+  const gestures = new Set();
+  if (element.matches('.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression]')) {
+    gestures.add('charge');
+    gestures.add('project');
+    gestures.add('settle');
+  }
+  if (element.matches('.operator-chip, a[href], button, [data-set-mode], [data-site-setting-set]')) {
+    gestures.add('ground');
+  }
+  if (element.matches('[data-mode-group], [data-set-mode], .mode-switch button')) {
+    gestures.add('rotate');
+  }
+  if (element.matches('.spw-section-handle, [data-spw-section-handle], [data-spw-feature="settings-section-index"] *')) {
+    gestures.add('flow');
+  }
+  return [...gestures];
+}
+
+function resolveGestureTarget(target) {
+  if (target instanceof HTMLElement) return target;
+  if (typeof target === 'string') {
+    return document.querySelector(target);
+  }
+  return null;
+}
+
+function describeGestureTarget(target) {
+  const element = resolveGestureTarget(target);
+  if (!(element instanceof HTMLElement)) return null;
+  const context = describeElementContext(element);
+  return {
+    target: context?.target || '',
+    label: context?.label || '',
+    kind: context?.kind || '',
+    role: context?.role || '',
+    feature: context?.feature || '',
+    inspect: context?.inspect || '',
+    gestures: inferGestureIntents(element),
+    semanticExpression: element.dataset.spwSemanticExpression || '',
+    semanticKey: element.dataset.spwSemanticKey || '',
+    operator: element.dataset.spwOperator || '',
+  };
+}
+
+function snapshotGestureTargets(root = document) {
+  return safeQueryAll(GESTURE_TARGET_SELECTOR, root)
+    .slice(0, 24)
+    .map((element) => describeGestureTarget(element))
+    .filter(Boolean);
+}
+
+function describeGestureContract() {
+  return {
+    vocabulary: GESTURE_VOCABULARY,
+    seeds: GESTURE_SPELL_SEEDS,
+    notes: [
+      'Ground commits to the current target.',
+      'Charge previews without navigation.',
+      'Project opens a tray or semantic menu on purpose.',
+      'Settle closes the nearest charged or projected layer.',
+    ],
+  };
+}
+
 /* ==========================================================================
    7. Runtime context
    ========================================================================== */
@@ -2360,6 +2491,12 @@ async function bootSite() {
         list: (root = document) => snapshotFeatureClusters(root),
         contract: FEATURE_CLUSTER_CONTRACT,
       },
+      gestures: {
+        contract: describeGestureContract,
+        inspect: (target) => describeGestureTarget(target),
+        list: (root = document) => snapshotGestureTargets(root),
+        seeds: () => GESTURE_SPELL_SEEDS.slice(),
+      },
       routes: {
         current: () => describeCurrentPageSample(document),
         list: (root = document) => collectRelatedRouteSamples(root),
@@ -2449,6 +2586,12 @@ window.__SPW_SITE__ = {
     list: (root = document) => snapshotFeatureClusters(root),
     contract: FEATURE_CLUSTER_CONTRACT,
   },
+  gestures: {
+    contract: describeGestureContract,
+    inspect: (target) => describeGestureTarget(target),
+    list: (root = document) => snapshotGestureTargets(root),
+    seeds: () => GESTURE_SPELL_SEEDS.slice(),
+  },
   routes: {
     current: () => describeCurrentPageSample(document),
     list: (root = document) => collectRelatedRouteSamples(root),
@@ -2469,6 +2612,14 @@ window.__SPW_SITE__ = {
   refreshRuntime: () => runtimeCtx && refreshRuntime(runtimeCtx),
   getContext: () => runtimeCtx,
 };
+
+if (window.spwRuntimeAudit) {
+  window.spwRuntimeAudit = Object.freeze({
+    ...window.spwRuntimeAudit,
+    gestures: (root = document) => snapshotGestureTargets(root),
+    gestureContract: describeGestureContract,
+  });
+}
 
 /* ==========================================================================
    15. Start

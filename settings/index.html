@@ -1700,7 +1700,10 @@
                         <code>window.spwCompose.controls.pageState</code>,
                         <code>window.spwCompose.controls.frameState</code>, and
                         <code>window.spwCompose.controls.pageHooks</code>. Component composition is available through
-                        <code>window.spwCompose.controls.composition</code>, plus query values such as
+                        <code>window.spwCompose.controls.composition</code>. Gesture discovery now lives at
+                        <code>window.__SPW_SITE__.gestures</code> and <code>window.spwRuntimeAudit.gestures()</code>,
+                        while route and component context still live under <code>window.__SPW_SITE__.routes</code> and
+                        <code>window.__SPW_SITE__.samples</code>. This all pairs with query values such as
                         <code>diagnostics=basic</code>, <code>log=layout-shift</code>, or
                         <code>spw-data-page-state=interactive</code> for repeatable QA, extension workflows, and page play.
                     </p>
@@ -1773,7 +1776,11 @@
                             Used this way, the console becomes a discovery loop: list hooks, inspect state, focus a
                             section, and build familiarity with the page in small, repeatable steps.
                         </p>
-                        <pre><code>spwCompose.controls.pageState.snapshot()
+                        <pre><code>window.__SPW_SITE__.gestures.contract()
+window.__SPW_SITE__.gestures.list()
+window.__SPW_SITE__.gestures.inspect('.frame-sigil')
+window.spwRuntimeAudit.gestures()
+spwCompose.controls.pageState.snapshot()
 spwCompose.controls.pageState.scheduleArrival(spwCompose.controls.pageState.arrival.RETURNING)
 spwCompose.controls.pageHooks.list()
 spwCompose.controls.pageHooks.focus('runtime-diagnostics')
@@ -2305,10 +2312,13 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                 <div class="spw-settings-cluster__note" data-spw-semantic-expression="settings[region-menu]{prepare.reading}">
                     <strong>Region menu behavior.</strong>
                     <p>
-                        Pause on a sigil or expression to preview that it can be inspected. Use <kbd>?</kbd>,
-                        <kbd>Alt</kbd>+<kbd>Enter</kbd>, or a context click to open the menu without changing where a
-                        link goes. Calm interaction waits longer before preview; expressive interaction makes the handle
-                        show up sooner and exposes tuning sliders when semantic metadata is enabled.
+                        Treat sigils and brace expressions as small handles, not mandatory detours. Hover, focus, or a
+                        deliberate hold will <strong>preview</strong> a handle. Use <kbd>?</kbd>,
+                        <kbd>Alt</kbd>+<kbd>Enter</kbd>, a context click, or a longer touch hold to
+                        <strong>open</strong> the menu on purpose without changing where an ordinary route goes.
+                        <kbd>Escape</kbd> should always <strong>settle</strong> the layer and return you to the page.
+                        Calm interaction waits longer before preview; expressive interaction makes the handle show up
+                        sooner and exposes tuning sliders when semantic metadata is enabled.
                     </p>
                 </div>
             </aside>
@@ -2418,6 +2428,26 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
             </header>
 
             <p class="inline-note">Gathered curriculum ingredients appear here as a technical spell.</p>
+            <div class="spw-reason-strip" aria-label="Spell gesture seeds">
+                <div>
+                    <strong>Charge preview</strong>
+                    <p><code>?gesture_charge { input: "hover | focus | hold" return: "semantic preview" }</code></p>
+                </div>
+                <div>
+                    <strong>Project region menu</strong>
+                    <p><code>#&gt;gesture_project { cue: "? | Alt+Enter | long hold" return: "region menu" }</code></p>
+                </div>
+                <div>
+                    <strong>Settle the layer</strong>
+                    <p><code>@gesture_settle { cue: "Escape" return: "focused prose" }</code></p>
+                </div>
+            </div>
+            <p class="frame-note">
+                If you are imagining RPG Wednesday enchantments, think of these as three small spell families:
+                <strong>charge</strong> to inspect a sigil without commitment, <strong>project</strong> to open the
+                brace or region menu on purpose, and <strong>settle</strong> to close the layer cleanly and keep the
+                story moving.
+            </p>
             <div class="spell-board-content">
                 <!-- Populated by spells.js -->
             </div>

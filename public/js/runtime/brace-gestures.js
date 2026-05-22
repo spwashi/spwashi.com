@@ -52,6 +52,7 @@ import {
 
 const HOLD_THRESHOLD_MS = 420;
 const DRAG_THRESHOLD_PX = 8;
+const COARSE_POINTER_TYPES = new Set(['touch']);
 
 const CHARGE_BY_GESTURE = Object.freeze({
   charging: 0.25,
@@ -657,6 +658,7 @@ function emitBraceEvents(names, detail, el) {
    ========================================================================== */
 
 function onPointerEnter(event) {
+  if (isCoarsePointerEvent(event)) return;
   const target = braceTarget(event.target);
   if (!target) return;
   if (event.relatedTarget instanceof Node && target.contains(event.relatedTarget)) return;
@@ -693,6 +695,7 @@ function onPointerLeave(event) {
 }
 
 function onPointerDown(event) {
+  if (!event.isPrimary || event.button !== 0) return;
   const target = braceTarget(event.target);
   if (!target) return;
 
@@ -732,7 +735,7 @@ function onPointerDown(event) {
     meta,
   });
 
-  if (target.setPointerCapture) {
+  if (!isCoarsePointerEvent(event) && target.setPointerCapture) {
     try {
       target.setPointerCapture(event.pointerId);
     } catch {
@@ -779,6 +782,7 @@ function onPointerMove(event) {
 }
 
 function onPointerUp(event) {
+  if (!event.isPrimary) return;
   const target = braceTarget(event.target);
   if (!target) return;
 
@@ -799,7 +803,7 @@ function onPointerUp(event) {
     }
   }
 
-  if (meta.semantic?.family && !state?.dragging && !state?.armed) {
+  if (shouldToggleSemanticExpansionOnRelease(target, meta, state, event)) {
     applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
   }
 
@@ -838,6 +842,7 @@ function onPointerUp(event) {
 }
 
 function onPointerCancel(event) {
+  if (!event.isPrimary) return;
   const target = braceTarget(event.target);
   if (!target) return;
 
@@ -893,6 +898,23 @@ function clearHoldTimer(el) {
   if (!state) return;
 
   clearTimeout(state.timer);
+}
+
+function isCoarsePointerEvent(event) {
+  return COARSE_POINTER_TYPES.has(event?.pointerType || '');
+}
+
+function shouldToggleSemanticExpansionOnRelease(target, meta, state, event) {
+  if (!meta?.semantic?.family) return false;
+  if (state?.dragging || state?.armed) return false;
+  if (isCoarsePointerEvent(event)) return false;
+  return isSemanticTapTarget(target);
+}
+
+function isSemanticTapTarget(target) {
+  return Boolean(
+    target?.matches?.('.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression]')
+  );
 }
 
 /* ==========================================================================
