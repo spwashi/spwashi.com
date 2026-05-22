@@ -46,6 +46,12 @@ import {
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
 import {
+  buildPinRecord,
+  pinRecordKey,
+  readPins,
+  writePins,
+} from '/public/js/runtime/pin-registry.js';
+import {
   collectSemanticBraceMatches,
   deriveSemanticBraceExpression,
 } from '/public/js/semantic/semantic-braces.js';
@@ -568,24 +574,16 @@ function togglePin(el, meta) {
   const id = meta.id;
   if (id) {
     const page = window.location.pathname;
-    const pins = JSON.parse(localStorage.getItem('spw-pins') || '{}');
-    const key = `${page}#${id}`;
+    const pins = readPins();
+    const key = pinRecordKey(page, id);
 
     if (nextPinned) {
-      pins[key] = {
-        page,
-        id,
-        timestamp: Date.now(),
-        title: document.title,
-        wonder: meta.wonder,
-        operator: meta.operator,
-        context: meta.context,
-      };
+      pins[key] = buildPinRecord(meta, page);
     } else {
       delete pins[key];
     }
 
-    localStorage.setItem('spw-pins', JSON.stringify(pins));
+    writePins(pins);
   }
 
   emitBraceEvents(
@@ -602,7 +600,7 @@ function togglePin(el, meta) {
 }
 
 function restorePins() {
-  const pins = JSON.parse(localStorage.getItem('spw-pins') || '{}');
+  const pins = readPins();
 
   Object.keys(pins).forEach((key) => {
     const [page, id] = key.split('#');

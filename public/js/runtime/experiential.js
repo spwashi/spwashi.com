@@ -15,13 +15,17 @@
 
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { describeFeatureClusterElement } from '/public/js/kernel/dom-contracts.js';
+import {
+  clearPins,
+  getPinStorageKey,
+  readPins,
+} from '/public/js/runtime/pin-registry.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
 const SAMPLE_HOLD_MS = 220;
 const SAMPLE_SWIPE_PX = 42;
-const BOOKMARKS_KEY = 'spw-pins';
 const MAX_BREADCRUMB_NEIGHBORS = 3;
 const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
 const SHELL_MENU_STATE_EVENT = 'spw:shell-menu-state';
@@ -1303,9 +1307,10 @@ function learningMemo(meta) {
 function initBookmarkRegistry() {
   const root = document.querySelector('[data-spw-bookmarks-root]');
   if (!root) return;
+  const storageKey = getPinStorageKey();
 
   const render = () => {
-    const pins = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '{}');
+    const pins = readPins();
     const values = Object.values(pins);
 
     if (!values.length) {
@@ -1340,7 +1345,7 @@ function initBookmarkRegistry() {
     clearBtn.style.marginTop = '1rem';
     clearBtn.innerHTML = '<span class="spell-op">!</span> reset_pins';
     clearBtn.addEventListener('click', () => {
-      localStorage.removeItem(BOOKMARKS_KEY);
+      clearPins();
       document.querySelectorAll('[data-spw-pinned]').forEach((el) => {
         delete el.dataset.spwPinned;
         delete el.dataset.spwLatched;
@@ -1354,7 +1359,7 @@ function initBookmarkRegistry() {
   render();
 
   window.addEventListener('storage', (e) => {
-    if (e.key === BOOKMARKS_KEY) render();
+    if (e.key === storageKey) render();
   });
 
   document.addEventListener('brace:pinned', render);
@@ -1436,9 +1441,9 @@ function applyFieldAttrs(meta) {
 
   if (!(root instanceof HTMLElement)) return;
 
-  root.dataset.spwFieldWonder = meta.wonder;
-  root.dataset.spwFieldOperator = meta.operator || '';
-  root.dataset.spwFieldContext = meta.context || '';
+  root.dataset.spwInspectFieldWonder = meta.wonder;
+  root.dataset.spwInspectFieldOperator = meta.operator || '';
+  root.dataset.spwInspectFieldContext = meta.context || '';
 }
 
 /* ==========================================================================
