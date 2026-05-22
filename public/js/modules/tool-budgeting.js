@@ -1,23 +1,29 @@
 const STORAGE_KEY = 'spw-budget-state:v1';
-const MAX_TIER_COST = 15000;
+const MAX_TIER_COST = 18000;
 const TIERS = [
     {
+        id: 'scope',
+        cost: 250,
+        color: 'var(--op-object-color, #c48a28)',
+        message: 'A scope card is now within reach.',
+    },
+    {
         id: 'creator',
-        cost: 400,
+        cost: 600,
         color: 'var(--op-topic-color, #2f8f6b)',
-        message: 'Creator packages are now within reach.',
+        message: 'Creator work is now within reach.',
     },
     {
-        id: 'business',
-        cost: 3500,
+        id: 'systems',
+        cost: 5000,
         color: 'var(--op-frame-color, #1a9999)',
-        message: 'Business Web is now within reach.',
+        message: 'A systems sprint is now within reach.',
     },
     {
-        id: 'premium',
-        cost: 15000,
+        id: 'advisory',
+        cost: 18000,
         color: 'var(--op-probe-color, #6b4bb6)',
-        message: 'Staff-level consulting is now within reach.',
+        message: 'Architecture and advisory are now within reach.',
     },
 ];
 
@@ -182,11 +188,16 @@ document.addEventListener('DOMContentLoaded', () => {
             setTierMessage(`You are ${formatCurrency(Math.abs(netValue))} below zero. Restore baseline first, then map the next threshold.`, 'negative');
         } else if (!nextTier) {
             setTierMessage('Staff-level consulting is within reach. You can plan around architecture or diligence instead of only the minimum viable scope.', 'complete');
-        } else if (nextTier.id === 'creator') {
-            setTierMessage(`Need ${formatCurrency(nextTier.cost - netValue)} more to reach creator packages.`, 'neutral');
+        } else if (nextTier.id === 'scope') {
+            setTierMessage(`Need ${formatCurrency(nextTier.cost - netValue)} more to reach a scope card.`, 'neutral');
         } else {
             const unlockedTier = TIERS[TIERS.findIndex((tier) => tier.id === nextTier.id) - 1];
-            setTierMessage(`${unlockedTier.message} ${formatCurrency(nextTier.cost - netValue)} more reaches ${nextTier.id === 'business' ? 'Business Web' : 'staff-level consulting'}.`, unlockedTier.id === 'creator' ? 'growth' : 'complete');
+            const nextLabel = nextTier.id === 'creator'
+                ? 'creator work'
+                : nextTier.id === 'systems'
+                    ? 'a systems sprint'
+                    : 'architecture and advisory';
+            setTierMessage(`${unlockedTier.message} ${formatCurrency(nextTier.cost - netValue)} more reaches ${nextLabel}.`, unlockedTier.id === 'scope' ? 'growth' : 'complete');
         }
 
         tierCards.forEach((card) => {

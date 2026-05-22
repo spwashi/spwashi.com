@@ -150,12 +150,20 @@
                         </ul>
                         <p>Spw is the throughline: a readable <span class="spw-delimiter spw-delimiter--square" data-spw-operator="concept">[</span>plain-text format<span class="spw-delimiter spw-delimiter--square" data-spw-operator="concept">]</span> that tools can address, query, and project. This page introduces the syntax, the <span class="spw-delimiter spw-delimiter--circle" data-spw-operator="concept">(</span>operator grammar<span class="spw-delimiter spw-delimiter--circle" data-spw-operator="concept">)</span>, and the <span class="spw-delimiter spw-delimiter--angle" data-spw-operator="concept">&lt;</span>small demos<span class="spw-delimiter spw-delimiter--angle" data-spw-operator="concept">&gt;</span> that make the idea concrete.</p>
                         <p>The language design philosophy is simple to state and hard to honor: authored text should remain human-readable, structure should stay stable enough for tools to navigate, and every richer surface should be a deterministic projection rather than a second, drifting source of truth. That is the technical reason the site can also behave like documentation, lore, and a seedbed for future sites.</p>
+                        <p>The larger public goal is simpler than the implementation: help people who do not code yet feel that software can describe actual phenomena. A program can model pressure, sequence, timing, budgets, queues, memory limits, branching states, and consequences. Once that becomes visible, a business plan, classroom routine, worldbuilding system, or production workflow stops feeling mystical and starts feeling discussable.</p>
                         <p data-spw-semantic-expression="cookbook[theory]{adult.study.practice}">
                             Read this surface like an academic cookbook for theory. A parser is a recipe for turning
                             syntax into structure. A type is a pantry label that prevents the wrong ingredient from
                             entering a dish. An interface is a service contract. A scheduler is kitchen timing. A
                             renderer is plating. These analogies are not replacements for formal study; they are ramps
                             that help a returning learner keep the formal terms warm.
+                        </p>
+                        <p data-spw-semantic-expression="software[model]{constraint.resource.projection}">
+                            CSS is useful here because it already teaches constraint thinking: width, overflow,
+                            alignment, inheritance, fallback, and responsive tradeoffs. Lower-level programming
+                            languages add a more direct vocabulary for memory, allocation, latency, and failure. Add
+                            combinatorics and dimensional expansion, and a small set of rules can generate a surprisingly
+                            large world of possible outcomes.
                         </p>
                         <p data-spw-semantic-expression="runtime[handle]{field-guide}">
                             The software route should explain its machinery without making every reader feel trapped in
@@ -209,12 +217,13 @@
                         <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Software theory route bridge">
                             <header>
                                 <h3>Move through the software theory field</h3>
-                                <p>Use these routes when a page needs more precision than the overview can carry.</p>
+                                <p>Use these routes when a page needs more precision than the overview can carry: memory, queues, render passes, and the time budgets that make a system feel computationally sound.</p>
                             </header>
                             <ul class="spw-route-bridge__links">
                                 <li><a href="/topics/software/parsers/" data-spw-operator="route"><strong>Parsers</strong><span>How readable syntax becomes a navigable structure.</span></a></li>
-                                <li><a href="/topics/software/renderers/" data-spw-operator="route"><strong>Renderers</strong><span>How one model becomes several visual and textual surfaces.</span></a></li>
-                                <li><a href="/topics/software/schedulers/" data-spw-operator="route"><strong>Schedulers</strong><span>How timing, delay, and runtime arrival become design decisions.</span></a></li>
+                                <li><a href="/topics/software/renderers/" data-spw-operator="route"><strong>Renderers</strong><span>How one model becomes several visual and textual surfaces, including video-processing and frame-budget intuition.</span></a></li>
+                                <li><a href="/topics/software/schedulers/" data-spw-operator="route"><strong>Schedulers</strong><span>How timing, delay, queues, and runtime arrival become design decisions.</span></a></li>
+                                <li><a href="/topics/knowledge-bases/" data-spw-operator="route"><strong>Knowledge bases</strong><span>Memory management for notes, checkpoints, references, and long-lived working context.</span></a></li>
                             </ul>
                         </aside>
                         <div class="spw-reason-strip" aria-label="Software reasons" data-spw-role="schema">
@@ -224,14 +233,14 @@
                             </div>
                             <div>
                                 <strong>Best readers</strong>
-                                <p>developers, systems designers, toolmakers, returning students, and worldbuilders who need readable structure.</p>
+                                <p>developers, systems designers, toolmakers, returning students, parents, and worldbuilders who need readable structure.</p>
                             </div>
                             <div>
                                 <strong>Leave with</strong>
-                                <p>recipe prompts, route scaffolds, operator pages, and durable documentation for later work.</p>
+                                <p>route scaffolds, operator pages, memory-management handles, render-thinking ramps, and durable documentation for later work.</p>
                             </div>
                         </div>
-                        <p class="frame-note" data-spw-copy-depth="normal">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the text-editing application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map" data-spw-operator="potential">parser field guide</a>, <a href="/topics/software/algorithms/" data-spw-operator="stream">algorithm visualization</a>, <a href="/topics/software/differential-lambda-calculus/" data-spw-operator="stream">differential lambda calculus</a>, <a href="/topics/math/complexity/#parser-budgets" data-spw-operator="stream">complexity</a>, <a href="/topics/math/scale-intuition/" data-spw-operator="stream">scale intuition</a>, <a href="/topics/math/statistical-analysis/" data-spw-operator="stream">statistical analysis</a>, <a href="/topics/math/category-theory/#category-insight" data-spw-operator="stream">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock" data-spw-operator="stream">number theory</a>.</p>
+                        <p class="frame-note" data-spw-copy-depth="normal">Read the sections in order if you want the gradual path: first the source idea, then the grammar, then interactive codeblocks, components, external probes, and the text-editing application context. If you want the theory neighbors behind parser design, jump from here into the <a href="/topics/software/parsers/#parser-map" data-spw-operator="potential">parser field guide</a>, <a href="/topics/software/renderers/" data-spw-operator="surface">renderers</a>, <a href="/topics/software/schedulers/" data-spw-operator="integrate">schedulers</a>, <a href="/topics/knowledge-bases/" data-spw-operator="address">knowledge bases</a>, <a href="/topics/software/algorithms/" data-spw-operator="stream">algorithm visualization</a>, <a href="/topics/software/differential-lambda-calculus/" data-spw-operator="stream">differential lambda calculus</a>, <a href="/topics/math/complexity/#parser-budgets" data-spw-operator="stream">complexity</a>, <a href="/topics/math/scale-intuition/" data-spw-operator="stream">scale intuition</a>, <a href="/topics/math/statistical-analysis/" data-spw-operator="stream">statistical analysis</a>, <a href="/topics/math/category-theory/#category-insight" data-spw-operator="stream">category theory</a>, and <a href="/topics/math/number-theory/#modular-clock" data-spw-operator="stream">number theory</a>.</p>
                         <div class="vibe-widget-grid vibe-widget-grid--compact" data-site-settings-panel data-spw-feature="software-quick-tune">
                             <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
                                 <div class="vibe-widget-header">
@@ -323,6 +332,7 @@
 
                 <div class="frame-body" data-spw-slot="body">
                     <p class="inline-note" data-spw-copy-depth="normal">The language is not trying to win by density alone. It is trying to keep source legible while giving tools clearer contracts about structure, timing, and projection.</p>
+                    <p class="frame-note">Another way to say it is: programming languages help model ideas, CSS helps model constraints, and lower-level systems work helps model scarce resources. Put those together and you get a way to project how a project might develop before the social and financial costs become harder to change.</p>
                     <div class="intent-lattice" aria-label="Language philosophy intent groups" data-spw-feature="software-intent-lattice" data-spw-role="schema">
                         <section class="intent-cluster" data-spw-intent="orient">
                             <p class="intent-cluster-kicker">Orient</p>
@@ -558,6 +568,10 @@
                                     <a href="/services/systems/#quote" data-spw-operator="situate"><span>Scope around leverage</span><span class="intent-token">quote</span></a>
                                     <span class="intent-link-note">Small typed seams can be worth more than broad rewrites when they clarify core risk.</span>
                                 </li>
+                                <li>
+                                    <a href="/services/#render-queue" data-spw-operator="situate"><span>Fund the next render pass</span><span class="intent-token">queue</span></a>
+                                    <span class="intent-link-note">Queues, checkpoints, and named passes make memory and timing easier to budget before scale turns confusion into cost.</span>
+                                </li>
                             </ul>
                         </section>
                         <section class="intent-cluster" data-spw-intent="project">
@@ -581,6 +595,10 @@
                             <h3>Events become a vocabulary</h3>
                             <p>Frontend events should read like a small language: stable names, predictable payloads, clear timing, and a known place where cross-feature signals pass through.</p>
                         </div>
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-seed="page_topics_topics_software__curricular_contract_1b" data-spw-semantic-expression="codebase[memory]{queues.buffers}">
+                            <h3>Memory blocks stay visible</h3>
+                            <p>Buffers, queues, checkpoints, and caches should be named plainly enough that a teammate, investor, or future maintainer can tell what the system remembers, when it releases pressure, and what happens when it fills up.</p>
+                        </div>
                         <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-seed="page_topics_topics_software__curricular_contract_2" data-spw-semantic-expression="codebase[pages]{data}">
                             <h3>Pages carry explainable data</h3>
                             <p>Route metadata, related routes, feature gates, and semantic attributes should help the page explain what it is for before a reader digs through implementation details.</p>
@@ -593,7 +611,16 @@
                             <h3>Types mark the load-bearing seams</h3>
                             <p>The budget-conscious move is to type the contracts that organize behavior, then let ordinary HTML and CSS keep carrying the readable public surface.</p>
                         </div>
+                        <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-seed="page_topics_topics_software__curricular_contract_5" data-spw-semantic-expression="codebase[video]{frames.budgets}">
+                            <h3>Render budgets stay teachable</h3>
+                            <p>Video processing is a good grounding metaphor here: frame budgets, staging buffers, and decode / encode passes make time and memory visible enough to reason about before performance turns into mystery.</p>
+                        </div>
                     </div>
+                    <nav class="frame-operators" aria-label="Curricular codebase actions">
+                        <a class="operator-chip" href="/services/systems/#curricularize" data-spw-operator="situate">scope a codebase memo</a>
+                        <a class="operator-chip" href="/services/#render-queue" data-spw-operator="situate">open a render queue</a>
+                        <a class="operator-chip" href="/services/systems/#quote" data-spw-operator="situate">ask for a systems quote</a>
+                    </nav>
                 </div>
 
                 <footer class="frame-actions" data-spw-slot="actions">

@@ -2,11 +2,11 @@
  * Services Configurator (Enhanced)
  *
  * Weighted-field service tier resolver — four dimensions resolve to the
- * creator / business / staff-level service registers.
+ * scope / creator / systems / advisory service registers.
  * Now dramatically more impressive while remaining dead-simple for first-time users.
  *
  * Core philosophy (exactly as requested):
- * • Easiest path = most reasonable defaults (loads resolved to Business Web — the
+ * • Easiest path = most reasonable defaults (loads resolved to Systems Sprint — the
  *   sweet spot for most visitors)
  * • Deeper exploration = optional power-user interactions (drag nodes, keyboard,
  *   shareable links, fine-tune sliders, export as Spw seed)
@@ -17,7 +17,7 @@
  * All original math, tiers, dimensions, and DOM classes are unchanged.
  *
  * New premium features:
- * • Default state resolves cleanly to Business Web on load
+ * • Default state resolves cleanly to Systems Sprint on load
  * • Drag nodes for continuous 0–1 values (premium mode)
  * • Keyboard: ←→ to select dimension, ↑↓ or Space to step, R to randomize
  * • “Inspire me” button with 6 curated configurations
@@ -86,34 +86,45 @@ const DIMS = [
 
 // ── Tier definitions ─────────────────────────────────────────────
 const TIERS = {
+    scope: {
+        label: 'Scope Card',
+        price: '$250–$750',
+        note: 'Ask. Scope. Memo.',
+        accent: 'hsl(36 72% 42%)',
+        paymentNote: 'A smaller front door for projects that are real but still forming.',
+        primaryHref: '/services/#pricing',
+        primaryLabel: 'review scope card',
+        secondaryHref: '/services/#render-queue',
+        secondaryLabel: 'open render queue',
+    },
     fast: {
-        label: 'Creator Packages',
-        price: '$400–$1,500',
-        note: 'Covers. Formatting. Focus.',
+        label: 'Creator Work',
+        price: '$600–$2,500+',
+        note: 'Covers. Formatting. Launch.',
         accent: 'hsl(188 72% 34%)',
-        paymentNote: 'Priced competitively for authors and independent creatives.',
+        paymentNote: 'Authored deliverables for authors, illustrators, and independent makers.',
         primaryHref: '/services/creator/',
         primaryLabel: 'open creator work',
         secondaryHref: '/services/#pricing',
         secondaryLabel: 'review pricing',
     },
     standard: {
-        label: 'Business Web',
-        price: '$3,500–$8,000',
-        note: 'Web systems. Applications.',
-        accent: 'hsl(36 72% 42%)',
-        paymentNote: 'Engineered web services built for longevity.',
+        label: 'Systems Sprint',
+        price: '$5,000–$12,000+',
+        note: 'Routes. Apps. QA.',
+        accent: 'hsl(188 72% 34%)',
+        paymentNote: 'Durable sites, internal tools, QA passes, and architecture-aware implementation.',
         primaryHref: '/services/systems/',
         primaryLabel: 'open systems work',
         secondaryHref: '/services/#custom-quote',
         secondaryLabel: 'request hybrid quote',
     },
     premium: {
-        label: 'Staff-Level Consulting',
-        price: '$15k or $150/hr',
-        note: 'Full scope. Architecture.',
+        label: 'Architecture & Advisory',
+        price: '$18k+ or $225/hr',
+        note: 'Diligence. Architecture. Retainers.',
         accent: 'hsl(268 58% 42%)',
-        paymentNote: 'Senior engineering rigor for complex problems.',
+        paymentNote: 'Senior judgement for teams that need decision support without a full-time hire.',
         primaryHref: '/services/systems/#staff',
         primaryLabel: 'open staff advisory',
         secondaryHref: '/services/#custom-quote',
@@ -124,10 +135,11 @@ const TIERS = {
 // ── Resolution math (unchanged, just clearer names) ───────────────────────────
 function resolveTiers(vals) {
     const { time = 0, scope = 0, depth = 0, tenure = 0 } = vals;
+    const scopeCard = (time * 1.4 + (1 - scope) * 1.2 + (1 - depth) * 0.8 + (1 - tenure) * 0.9) / 4.3;
     const fast = (time * 1.6 + (1 - scope) * 0.6 + (1 - depth) * 0.4 + (1 - tenure) * 0.6) / 3.2;
     const standard = (tenure * 1.6 + scope * 0.6 + (1 - time) * 0.4 + (1 - depth) * 0.4) / 3.0;
-    const premium = (depth * 1.6 + scope * 0.8 + (1 - time) * 0.6 + tenure * 0.2) / 3.2;
-    return { fast, standard, premium };
+    const premium = (depth * 1.6 + scope * 0.8 + (1 - time) * 0.6 + tenure * 0.45) / 3.45;
+    return { scope: scopeCard, fast, standard, premium };
 }
 
 function topTier(scores) {
@@ -164,7 +176,7 @@ class ServicesConfigurator {
         this.topTierFn = topTier;
         this.maxSteps = 10;
 
-        // Reasonable defaults — loads resolved to Business Web (most common sweet spot)
+        // Reasonable defaults — loads resolved to Systems Sprint (most common sweet spot)
         this.vals = {
             time: 0.33,   // months
             scope: 0.5,   // growing
@@ -399,7 +411,7 @@ class ServicesConfigurator {
 
         el.className = 'svc-nudge';
         el.hidden = true;
-        el.append('You can always return to the standard baseline. ');
+        el.append('You can always return to the systems baseline. ');
 
         button.type = 'button';
         button.className = 'svc-nudge__btn';
@@ -638,8 +650,8 @@ class ServicesConfigurator {
 
     inspireMe() {
         const suggestions = [
-            { name: 'Urgent MVP', vals: { time: 1, scope: 0, depth: 0.5, tenure: 0 } },
-            { name: 'Growing SaaS', vals: { time: 0.33, scope: 0.5, depth: 0.5, tenure: 1 } },
+            { name: 'Urgent diagnostic', vals: { time: 1, scope: 0, depth: 0, tenure: 0 } },
+            { name: 'Growing product', vals: { time: 0.33, scope: 0.5, depth: 0.5, tenure: 1 } },
             { name: 'Enterprise platform', vals: { time: 0, scope: 1, depth: 1, tenure: 0.5 } },
             // ... more curated presets
         ];
@@ -659,7 +671,7 @@ class ServicesConfigurator {
         const tier = this.tiers[tierId];
         const state = clear ? 'resolved' : this.tapCount > 0 ? 'weighted' : 'probing';
         const priceShift = clear
-            ? (tierId === 'premium' ? 'rising' : tierId === 'fast' ? 'falling' : 'stable')
+            ? (tierId === 'premium' ? 'rising' : tierId === 'scope' || tierId === 'fast' ? 'falling' : 'stable')
             : 'floating';
 
         this.wrapper.dataset.svcState = state;

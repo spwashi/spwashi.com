@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi · Savings Regimen</title>
-    <meta name="description" content="A local-only budgeting tool that tracks saved capacity against creator packages, business web work, and staff-level consulting."/>
+    <meta name="description" content="A local-only budgeting tool that tracks saved capacity against scope cards, creator work, systems sprints, and architecture advisory."/>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
     <script type="module" src="/public/js/site.js"></script>
@@ -17,7 +17,7 @@
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
     <meta property="og:title" content="Spwashi · Savings Regimen"/>
-    <meta property="og:description" content="A local-only budgeting tool that tracks saved capacity against creator packages, business web work, and staff-level consulting."/>
+    <meta property="og:description" content="A local-only budgeting tool that tracks saved capacity against scope cards, creator work, systems sprints, and architecture advisory."/>
     <meta property="og:url" content="https://spwashi.com/tools/budgeting/"/>
     <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
     <meta property="og:image:alt" content="Savings regimen route card on Spwashi."/>
@@ -25,16 +25,16 @@
     <meta property="og:image:height" content="630"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="Spwashi · Savings Regimen"/>
-    <meta name="twitter:description" content="A local-only budgeting tool that tracks saved capacity against creator packages, business web work, and staff-level consulting."/>
+    <meta name="twitter:description" content="A local-only budgeting tool that tracks saved capacity against scope cards, creator work, systems sprints, and architecture advisory."/>
     <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
     <meta name="twitter:image:alt" content="Savings regimen route card on Spwashi."/>
-    <meta name="keywords" content="budgeting, savings, local-only, service budgeting, creator packages, business web, consulting">
+    <meta name="keywords" content="budgeting, savings, local-only, service budgeting, scope card, creator work, systems sprint, advisory">
     <script type="application/ld+json" data-spw-generated="page">
         {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
                 "name": "Spwashi · Savings Regimen",
-                "description": "A local-only budgeting tool that tracks saved capacity against creator packages, business web work, and staff-level consulting.",
+                "description": "A local-only budgeting tool that tracks saved capacity against scope cards, creator work, systems sprints, and architecture advisory.",
                 "url": "https://spwashi.com/tools/budgeting/",
                 "isPartOf": {
                         "@type": "WebSite",
@@ -96,10 +96,11 @@
                 </div>
                 <h1 id="budgeting-title">Savings Regimen</h1>
                 <p class="site-lede">Track saved capacity against real service thresholds instead of keeping the number abstract.</p>
-                <p>Add money you have preserved, add expenses that reduce it, and watch the current balance map onto creator packages, business web work, and staff-level consulting. Nothing leaves this browser.</p>
+                <p>Add money you have preserved, add expenses that reduce it, and watch the current balance map onto scope cards, creator work, systems sprints, and architecture advisory. Nothing leaves this browser.</p>
                 <nav class="frame-operators" aria-label="Budgeting sections">
                     <a class="operator-chip" href="#ledger">^ ledger</a>
                     <a class="operator-chip" href="#capacity">~ capacity</a>
+                    <a class="operator-chip" href="/services/#render-queue">* render queue</a>
                     <a class="operator-chip" href="/services/creator/">^ creator work</a>
                     <a class="operator-chip" href="/services/systems/">^ systems work</a>
                     <a class="operator-chip" href="/services/#custom-quote">@ custom quote</a>
@@ -154,23 +155,28 @@
                             </div>
 
                             <div class="budget-milestones" aria-hidden="true">
-                                <span>Creator from $400</span>
-                                <span>Business from $3,500</span>
-                                <span>Staff from $15,000</span>
+                                <span>Scope from $250</span>
+                                <span>Creator from $600</span>
+                                <span>Systems from $5,000</span>
+                                <span>Advisory from $18,000</span>
                             </div>
 
                             <div class="budget-tier-list" id="tier-cards-container">
-                                <a class="budget-tier-card" data-tier="creator" data-cost="400" href="/services/creator/">
-                                    <strong>Creator Packages</strong>
-                                    <p class="frame-note">From $400. Formatting, illustrated covers, interactive cover pages, and other entry-sized creator work.</p>
+                                <a class="budget-tier-card" data-tier="scope" data-cost="250" href="/services/#pricing">
+                                    <strong>Scope Card</strong>
+                                    <p class="frame-note">From $250. Proof cards, scope notes, and a diagnostic memo when the work is real but still forming.</p>
                                 </a>
-                                <a class="budget-tier-card" data-tier="business" data-cost="3500" href="/services/systems/">
-                                    <strong>Business Web</strong>
-                                    <p class="frame-note">From $3,500. Durable sites, web systems, applications, and scoped production work.</p>
+                                <a class="budget-tier-card" data-tier="creator" data-cost="600" href="/services/creator/">
+                                    <strong>Creator Work</strong>
+                                    <p class="frame-note">From $600. Formatting, illustrated covers, interactive cover pages, and author sites.</p>
                                 </a>
-                                <a class="budget-tier-card" data-tier="premium" data-cost="15000" href="/services/systems/#staff">
-                                    <strong>Staff-Level Consulting</strong>
-                                    <p class="frame-note">From $15,000 or $150/hr. Architecture, diligence, and staff-level advisory.</p>
+                                <a class="budget-tier-card" data-tier="systems" data-cost="5000" href="/services/systems/">
+                                    <strong>Systems Sprint</strong>
+                                    <p class="frame-note">From $5,000. Durable sites, web systems, UX-flow testing, and scoped production work.</p>
+                                </a>
+                                <a class="budget-tier-card" data-tier="advisory" data-cost="18000" href="/services/systems/#staff">
+                                    <strong>Architecture &amp; Advisory</strong>
+                                    <p class="frame-note">From $18,000 or $225/hr. Architecture, diligence, and staff-level advisory.</p>
                                 </a>
                             </div>
 
