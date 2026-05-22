@@ -44,11 +44,26 @@
 
         <p class="page-kicker">Privacy / Local State / Browser Trust</p>
         <h1 id="privacy-title">The privacy model should be easy to inspect.</h1>
-        <p>
-            Spwashi is mostly a static site with progressive browser features. Some features remember preferences,
-            visits, notes, checkpoints, or drafts in this browser so the surface can feel continuous across visits.
-            Those records are local unless a specific feature says otherwise.
+        <p class="page-lede">
+            This page is a plain-language register for privacy, local state, and browser trust. It helps you inspect what stays in the browser, what can be reset, and what a return visit will remember.
         </p>
+        <p>
+            Spwashi is mostly a static site with progressive browser features. Some features remember preferences, visits, notes, checkpoints, or drafts in this browser so the surface can feel continuous across visits. Those records are local unless a specific feature says otherwise.
+        </p>
+        <div class="spw-reason-strip" aria-label="Privacy reasons">
+            <div>
+                <strong>This page exists because</strong>
+                <p>browser trust should be readable instead of hidden in implementation.</p>
+            </div>
+            <div>
+                <strong>Use this when</strong>
+                <p>you want to inspect local state, analytics posture, or reset paths before returning.</p>
+            </div>
+            <div>
+                <strong>What it can produce</strong>
+                <p>a clearer privacy model, cleaner resets, and more confident repeat visits.</p>
+            </div>
+        </div>
         <nav class="frame-operators" aria-label="Privacy shortcuts">
             <a class="operator-chip" href="#analytics-posture">? analytics</a>
             <a class="operator-chip" href="#local-state">^ local state</a>
@@ -64,9 +79,7 @@
             <h2>Analytics posture</h2>
         </header>
         <p>
-            Plausible is no longer emitted by the shared template and legacy Plausible tags have been removed from
-            source pages. The head template now requires analytics to be declared explicitly with an engine and script
-            source. If no engine is configured, no analytics script is rendered.
+            Analytics must now be declared explicitly. If no engine is configured, no analytics script is rendered.
         </p>
         <pre><code>&lt;spw-page
   analytics_engine="custom"
@@ -115,8 +128,7 @@
             <li>Use browser storage tools when you want to clear every local trace for this origin.</li>
         </ul>
         <p class="frame-note">
-            Sensitive working surfaces should say when data stays local. If a future feature sends data off-device,
-            that should be visible in the route copy, not hidden in implementation.
+            Sensitive working surfaces should say when data stays local. If a future feature sends data off-device, that should be visible in route copy, not hidden in implementation.
         </p>
     </section>
 </main>
