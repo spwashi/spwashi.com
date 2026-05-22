@@ -36,6 +36,14 @@
     transform var(--component-transition-fast);
 }
 
+:where(.frame-card) {
+  --card-rhythm: clamp(0.62rem, 1.3vw, 0.92rem);
+}
+
+:where(.frame-card > a:first-child) {
+  gap: var(--card-rhythm);
+}
+
 :where(.frame-card, .frame-card > a:first-child) > :where(
   .spw-semantic-seam,
   p,
@@ -63,6 +71,7 @@
   span:not(.frame-card-sigil):not(.spw-component-tag):not(.spw-guide-chip)
 ) {
   max-inline-size: 42ch;
+  line-height: 1.54;
   text-wrap: pretty;
 }
 
@@ -89,6 +98,37 @@
 
 :where(.frame-card:is(:hover, :focus-within) .frame-card-sigil, .operator-symbol:is(:hover, :focus-visible)) {
   color: var(--active-op-color, var(--component-accent));
+}
+
+:where(.frame-card[data-spw-role="routing"], .frame-card[data-spw-role="routing"] > a:first-child) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-route-accent) 11%, transparent) 0%,
+      transparent 24%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 93%, var(--component-route-accent) 7%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--component-route-accent) 18%, transparent),
+    var(--component-shadow);
+}
+
+:where(.frame-card[data-spw-role="reference"], .frame-card[data-spw-role="reference"] > a:first-child) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 4%, transparent) 0%,
+      transparent 18%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 97%, var(--component-accent) 3%);
+}
+
+:where(.frame-card.frame-card--illustrated > a:first-child) {
+  gap: clamp(0.72rem, 1.45vw, 1rem);
+}
+
+:where(.frame-card.frame-card--illustrated .frame-card-media) {
+  margin-block-end: 0.18rem;
 }
 
 :where(.card-sub-links, .ref-links, .plan-links) {
@@ -156,8 +196,8 @@
   padding: 0.18rem 0.62rem;
   border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 86%, transparent);
   border-radius: var(--component-radius-pill, 999px);
-  background: color-mix(in srgb, var(--component-surface-soft) 84%, var(--active-op-color, var(--component-accent)) 6%);
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 76%, var(--active-op-color, var(--component-accent)) 24%);
+  background: color-mix(in srgb, var(--component-surface-soft) 80%, var(--active-op-color, var(--component-accent)) 10%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 70%, var(--active-op-color, var(--component-accent)) 30%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76rem;
   font-weight: 700;
@@ -178,7 +218,9 @@
       transparent 46%
     ),
     color-mix(in srgb, var(--component-surface-strong) 94%, var(--active-op-color, var(--component-accent)) 4%);
-  box-shadow: var(--component-shadow-quiet);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 6%, transparent),
+    var(--component-shadow-quiet);
 }
 
 :where(.spw-reason-strip strong, .spw-role-hooks strong, .spw-card-meta strong) {
@@ -190,6 +232,11 @@
   letter-spacing: 0.055em;
   line-height: 1.2;
   text-transform: uppercase;
+}
+
+:where(.spw-reason-strip > * > strong, .spw-role-hooks > * > strong) {
+  padding-block-end: 0.24rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, transparent);
 }
 
 :where(.spw-reason-strip p, .spw-role-hooks p, .spw-card-meta p) {

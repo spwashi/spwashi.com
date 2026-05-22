@@ -9,8 +9,8 @@
    ========================================================================== */
 
 :where(.site-frame) {
-  --surface-gap: var(--spw-surface-gap, var(--component-gap));
-  --surface-padding: var(--spw-surface-padding, clamp(1rem, 2.25vw, 1.55rem));
+  --surface-gap: var(--spw-surface-gap, clamp(0.88rem, 1.8vw, 1.28rem));
+  --surface-padding: var(--spw-surface-padding, clamp(0.95rem, 2vw, 1.4rem));
   --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
 
   display: flex;
@@ -137,6 +137,10 @@
   transition: transform var(--component-transition-base), opacity var(--component-transition-base);
 }
 
+:where(.site-frame > :is(h1, h2, h3, .site-lede, .page-lede) + p) {
+  margin-block-start: -0.15rem;
+}
+
 :where(.frame-actions:has(> .spw-delimiter:only-child)) {
   gap: 0;
   margin-top: 0;
@@ -223,7 +227,13 @@
   border-left-width: 2px;
   border-left-color: var(--op-ref-border, color-mix(in srgb, var(--component-accent) 22%, transparent));
   --component-measure: 74ch;
-  --surface-gap: 1.3rem;
+  --surface-gap: 1.15rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-surface-strong) 95%, var(--component-accent) 5%),
+      color-mix(in srgb, var(--component-surface) 98%, transparent)
+    );
 }
 
 :where(.site-frame[data-spw-role="reference"] p) {
@@ -240,8 +250,21 @@
 }
 
 :where(.site-frame[data-spw-role="routing"]) {
-  border-style: dashed;
+  border-style: solid;
   border-color: color-mix(in srgb, var(--component-accent) 24%, var(--line, transparent));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent) 8%, transparent) 0%,
+      transparent 18%
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--component-accent) 12%, transparent) 0 18%,
+      transparent 18% 100%
+    ),
+    var(--component-surface);
+  --surface-gap: clamp(0.95rem, 1.9vw, 1.32rem);
 }
 
 :where(.site-frame[data-spw-role="schema"]) {
@@ -251,6 +274,7 @@
       transparent 32%
   ),
   var(--component-surface);
+  --surface-gap: clamp(0.82rem, 1.6vw, 1.08rem);
 }
 
 :where(.site-frame[data-spw-role="gallery"]) {
