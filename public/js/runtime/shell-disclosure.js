@@ -539,9 +539,11 @@ function syncUtilityRow(row) {
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
     button.textContent = labels['path-toggle'];
-    button.toggleAttribute('disabled', !pathToggle);
-    button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
-    button.title = pathToggle ? 'Toggle the cognitive path' : 'No path toggle is available on this page';
+    button.toggleAttribute('disabled', false);
+    button.setAttribute('aria-disabled', 'false');
+    button.title = pathToggle
+      ? 'Toggle the cognitive path'
+      : 'Open the cognitive path when the header trace finishes mounting';
   });
 
   row.querySelectorAll('[data-spw-shell-action="settings"]').forEach((button) => {

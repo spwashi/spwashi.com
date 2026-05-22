@@ -122,8 +122,8 @@ export function initSpwExperiential() {
   }
 
   document.documentElement.dataset.spwExperientialInit = 'true';
+  initSpellBreadcrumbs();
   if (document.body?.dataset.spwFeatures?.split(/\s+/).includes('shell-trace')) {
-    initSpellBreadcrumbs();
     initSampleDock();
   }
   initContextualMemos();

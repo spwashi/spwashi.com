@@ -25,6 +25,7 @@ const PREVIEW_DELAY_MS = Object.freeze({
 });
 const HOLD_OPEN_MS = 460;
 const MOVE_CANCEL_PX = 10;
+const DOUBLE_TAP_OPEN_MS = 340;
 
 let activeTarget = null;
 let activeMatches = [];
@@ -32,6 +33,7 @@ let activeIndex = 0;
 let previewTimer = null;
 let previewTarget = null;
 let holdState = null;
+let coarseTapState = null;
 
 export function initSpwRegionMenu(root = document) {
   const doc = root?.nodeType === Node.DOCUMENT_NODE ? root : document;
@@ -55,6 +57,12 @@ export function initSpwRegionMenu(root = document) {
 function onClick(event) {
   const target = resolveTarget(event.target);
   if (!target) return;
+
+  if (shouldHandleCoarseDoubleTap(target, event)) {
+    if (consumeCoarseDoubleTap(target, event)) {
+      return;
+    }
+  }
 
   if (event.altKey || event.metaKey || target.dataset.spwRegionPreview === 'true') {
     if (isNavigable(target) && !event.altKey && !event.metaKey) return;
@@ -172,6 +180,7 @@ function onKeyDown(event) {
 
 function onViewportChange() {
   clearHoldState();
+  clearCoarseTapState();
   if (document.documentElement.dataset.spwRegionMenu === 'open') {
     closeMenu({ restoreFocus: false });
   }
@@ -183,6 +192,63 @@ function resolveTarget(node) {
 
 function isNavigable(target) {
   return target instanceof HTMLAnchorElement && target.hasAttribute('href');
+}
+
+function isLocalHashTarget(target) {
+  if (!(target instanceof HTMLAnchorElement)) return false;
+  const href = target.getAttribute('href') || '';
+  return href.startsWith('#');
+}
+
+function shouldHandleCoarseDoubleTap(target, event) {
+  if (!isCoarsePointer(event)) return false;
+  if (!(target instanceof HTMLElement)) return false;
+  return target.matches('.frame-sigil, .spw-delimiter, .frame-card-sigil, .frame-panel-sigil');
+}
+
+function consumeCoarseDoubleTap(target, event) {
+  const now = Date.now();
+  const sameTarget = coarseTapState?.target === target;
+  const withinWindow = sameTarget && now - coarseTapState.timestamp <= DOUBLE_TAP_OPEN_MS;
+
+  if (withinWindow) {
+    clearCoarseTapState();
+    event.preventDefault();
+    openMenu(target);
+    return true;
+  }
+
+  clearCoarseTapState();
+  coarseTapState = {
+    target,
+    timestamp: now,
+    timer: window.setTimeout(() => {
+      if (previewTarget === target) {
+        writeDatasetValue(target, 'spwRegionPreview', null);
+        writeDatasetValue(document.documentElement, 'spwRegionPreviewing', null);
+        previewTarget = null;
+      }
+      clearCoarseTapState();
+    }, DOUBLE_TAP_OPEN_MS),
+  };
+
+  previewTarget = target;
+  writeDatasetValue(target, 'spwRegionPreview', 'true');
+  writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
+
+  if (isLocalHashTarget(target) || target.matches('.spw-delimiter')) {
+    event.preventDefault();
+  }
+
+  return false;
+}
+
+function clearCoarseTapState() {
+  if (!coarseTapState) return;
+  if (coarseTapState.timer) {
+    window.clearTimeout(coarseTapState.timer);
+  }
+  coarseTapState = null;
 }
 
 function openMenu(target) {
