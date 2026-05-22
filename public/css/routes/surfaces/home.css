@@ -58,7 +58,7 @@
 
   --home-hero-padding: clamp(0.85rem, 2vw, 1.3rem);
   --home-frame-padding: clamp(0.95rem, 2vw, 1.35rem);
-  --home-section-max: 84rem;
+  --home-section-max: 76rem;
   --spw-main-display: grid;
   --spw-main-padding-block-start: clamp(0.8rem, 1.8vw, 1.4rem);
   --spw-main-gap: var(--home-gap-xl);
@@ -102,6 +102,10 @@
       var(--home-surface-bg);
   box-shadow: var(--home-shadow);
   overflow: clip;
+}
+
+:where(#home-frame.site-hero) {
+  max-inline-size: min(100%, 76rem);
 }
 
 :where(#home-frame.site-hero)::before {
@@ -171,7 +175,7 @@
 
 :where(#home-frame .home-hero-grid) {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 22rem);
+  grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 19rem);
   align-items: start;
   gap: clamp(1rem, 2.3vw, 2rem);
   min-width: 0;
@@ -182,6 +186,7 @@
   align-content: start;
   gap: var(--home-gap-lg);
   min-width: 0;
+  max-inline-size: 54rem;
 }
 
 :where(#home-frame .home-brand-plate) {

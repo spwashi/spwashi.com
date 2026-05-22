@@ -1043,6 +1043,44 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     padding: 0.22rem 0.52rem;
   }
 
+  :where(.site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"],
+         .site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"],
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"],
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"]) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "sigil toggle"
+      "nav nav"
+      "trace trace";
+    align-items: start;
+  }
+
+  :where(.site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] nav,
+         .site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] nav,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] nav,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] nav) {
+    justify-self: stretch;
+    width: 100%;
+    max-inline-size: none;
+  }
+
+  :where(.site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] ul,
+         .site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] ul,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] ul,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] ul) {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.2rem 0.28rem;
+  }
+
+  :where(.site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] .spw-nav-toggle-meta,
+         .site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] .spw-nav-toggle-meta,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"] .spw-nav-toggle-meta,
+         body > header[data-spw-menu-mode="inline"][data-spw-menu-pressure="crowded"] .spw-nav-toggle-meta) {
+    display: none;
+  }
+
   .header-sigil {
     font-size: var(--text-size-2xs, 0.72rem);
   }
