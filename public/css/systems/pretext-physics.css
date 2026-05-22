@@ -496,19 +496,19 @@
 :where(html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold),
 :where(html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]) [data-spw-flow="pretext"] .pretext-flow-line),
 :where(html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]) [data-spw-flow="pretext"] .pretext-flow-scaffold) {
-  transition-timing-function: steps(3, end);
+  transition-timing-function: var(--ease-settle, ease);
 }
 
 :where(html[data-spw-page-arrival-step="1"] [data-spw-flow="pretext"]) {
-  --pretext-arrival-shift: 2px;
-  --pretext-arrival-opacity: 0.92;
-  --pretext-arrival-scale: 0.996;
+  --pretext-arrival-shift: 1px;
+  --pretext-arrival-opacity: 0.96;
+  --pretext-arrival-scale: 0.998;
 }
 
 :where(html[data-spw-page-arrival-step="2"] [data-spw-flow="pretext"]) {
-  --pretext-arrival-shift: 1px;
-  --pretext-arrival-opacity: 0.97;
-  --pretext-arrival-scale: 0.998;
+  --pretext-arrival-shift: 0.5px;
+  --pretext-arrival-opacity: 0.985;
+  --pretext-arrival-scale: 0.999;
 }
 
 :where(

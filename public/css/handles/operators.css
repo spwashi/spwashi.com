@@ -794,7 +794,7 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   .spw-component-tag,
   .spw-guide-chip
 ) {
-  transition-timing-function: steps(3, end);
+  transition-timing-function: var(--ease-settle, ease);
 }
 
 :where(html[data-spw-page-arrival-step="1"]) :where(
@@ -808,8 +808,8 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   .spw-component-tag,
   .spw-guide-chip
 ):not(:hover):not(:focus-visible) {
-  --handle-arrival-lift: 2px;
-  --handle-arrival-opacity: 0.92;
+  --handle-arrival-lift: 1px;
+  --handle-arrival-opacity: 0.96;
 }
 
 :where(html[data-spw-page-arrival-step="2"]) :where(
@@ -823,8 +823,8 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   .spw-component-tag,
   .spw-guide-chip
 ):not(:hover):not(:focus-visible) {
-  --handle-arrival-lift: 1px;
-  --handle-arrival-opacity: 0.97;
+  --handle-arrival-lift: 0.5px;
+  --handle-arrival-opacity: 0.985;
 }
 
 :where(

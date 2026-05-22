@@ -116,7 +116,7 @@
   .compare-card,
   .spec-column
 ) {
-  --component-transition-arrival: var(--spw-component-arrival-transition, 180ms steps(3, end));
+  --component-transition-arrival: var(--spw-component-arrival-transition, 140ms var(--ease-settle));
 }
 
 :where(html[data-spw-page-arrival-step="1"]) :where(
@@ -131,8 +131,8 @@
   .compare-card,
   .spec-column
 ):not(:hover):not(:focus-within) {
-  --component-arrival-offset: 3px;
-  --component-arrival-opacity: 0.93;
+  --component-arrival-offset: 2px;
+  --component-arrival-opacity: 0.96;
 }
 
 :where(html[data-spw-page-arrival-step="2"]) :where(
@@ -148,7 +148,7 @@
   .spec-column
 ):not(:hover):not(:focus-within) {
   --component-arrival-offset: 1px;
-  --component-arrival-opacity: 0.97;
+  --component-arrival-opacity: 0.985;
 }
 
 :where(

@@ -542,12 +542,12 @@
 
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;
-  --spw-page-arrival-step-2-delay: 96ms;
-  --spw-page-arrival-step-3-delay: 212ms;
-  --spw-page-arrival-duration: 420ms;
-  --spw-page-return-duration: 280ms;
+  --spw-page-arrival-step-2-delay: 64ms;
+  --spw-page-arrival-step-3-delay: 148ms;
+  --spw-page-arrival-duration: 280ms;
+  --spw-page-return-duration: 180ms;
   --spw-region-profile-refresh-duration: 220ms;
-  --spw-component-arrival-transition: 180ms steps(3, end);
+  --spw-component-arrival-transition: 140ms var(--ease-settle);
   --spw-component-settle-transition: 220ms var(--ease-settle);
 
   --utility-shift-duration: var(--duration-deliberate);

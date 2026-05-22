@@ -175,7 +175,7 @@
 
 :where(#home-frame .home-hero-grid) {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 19rem);
+  grid-template-columns: minmax(0, 1.7fr) minmax(14rem, 18rem);
   align-items: start;
   gap: clamp(1rem, 2.3vw, 2rem);
   min-width: 0;
@@ -186,7 +186,7 @@
   align-content: start;
   gap: var(--home-gap-lg);
   min-width: 0;
-  max-inline-size: 54rem;
+  max-inline-size: none;
 }
 
 :where(#home-frame .home-brand-plate) {
@@ -231,6 +231,12 @@
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+@container (min-width: 70rem) {
+  :where(#home-frame.site-hero--split-figure) > [data-spw-slot="body"] {
+    grid-column: 1 / -1;
+  }
 }
 
 /* ==========================================================================
