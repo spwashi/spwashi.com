@@ -12,6 +12,32 @@
   align-content: start;
 }
 
+:where(body[data-spw-surface="settings"] .settings-section-lead) {
+  margin-top: 0.85rem;
+  max-inline-size: 68ch;
+}
+
+:where(body[data-spw-surface="settings"] .settings-panel-kicker) {
+  margin: 0;
+  color: var(--settings-accent);
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-surface="settings"] .settings-hero-actions) {
+  row-gap: 0.6rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-hero-actions .operator-chip) {
+  min-height: 2.35rem;
+}
+
+:where(body[data-spw-surface="settings"] .spw-reason-strip p) {
+  max-inline-size: 28ch;
+}
+
 :where(body[data-spw-surface="settings"] .settings-note-form) {
   display: grid;
   gap: var(--space-sm, 0.75rem);
@@ -169,6 +195,12 @@
   gap: var(--space-xs, 0.5rem);
 }
 
+:where(body[data-spw-surface="settings"] .settings-reset-panel) {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+
 /* ==========================================================================
    7. PWA Status Grid
    ========================================================================== */
@@ -204,6 +236,44 @@
    8. Persistence Register
    ========================================================================== */
 
+:where(body[data-spw-surface="settings"] .settings-storage-guide) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-md, 1rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-storage-guide__card) {
+  display: grid;
+  gap: 0.7rem;
+  padding: var(--inset-component, 1rem);
+  border: 1px solid var(--settings-control-line-soft);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 62%),
+    var(--settings-control-bg);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+}
+
+:where(body[data-spw-surface="settings"] .settings-storage-guide__card > h3) {
+  margin: 0;
+  color: var(--settings-ink-strong);
+  font-size: var(--text-size-sm, 0.98rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-storage-guide__card > p) {
+  margin: 0;
+  color: var(--settings-ink-soft);
+  line-height: 1.52;
+  max-inline-size: 32ch;
+}
+
+:where(body[data-spw-surface="settings"] .settings-storage-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
 :where(body[data-spw-surface="settings"] .settings-persistence-panel) {
   display: grid;
   gap: var(--space-md, 1rem);
@@ -218,6 +288,7 @@
   margin: 0;
   color: var(--settings-ink-soft);
   line-height: 1.55;
+  max-inline-size: 48ch;
 }
 
 :where(body[data-spw-surface="settings"] .settings-persistence-list) {
@@ -240,8 +311,23 @@
   padding: var(--inset-component, 1rem);
   border: 1px solid var(--settings-control-line-soft);
   border-radius: var(--shape-component, 6px);
-  background: var(--settings-control-bg);
-  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 62%),
+    var(--settings-control-bg);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    var(--shadow-sm, 0 4px 12px rgba(0,0,0,0.04));
+  position: relative;
+}
+
+:where(body[data-spw-surface="settings"] .settings-persistence-item::before) {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: color-mix(in srgb, var(--settings-accent) 72%, transparent);
+  border-radius: inherit 0 0 inherit;
+  opacity: 0.88;
 }
 
 :where(body[data-spw-surface="settings"] .settings-persistence-head) {

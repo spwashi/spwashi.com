@@ -93,11 +93,10 @@
                 data-spw-typeset-surface="editorial"
             >
                 <p class="settings-note" data-spw-narrative-copy="on" data-spw-copy-depth="normal" data-spw-copy-label="Settings overview">
-                    <span class="drop-cap">P</span>references are saved in this browser. Use this page to choose a writing
-                    workflow, set a developmental climate, improve reading comfort, reduce friction, and inspect what the
-                    runtime is doing only when you need to.
+                    <span class="drop-cap">P</span>references are saved in this browser. Start with a preset, adjust workflow
+                    or comfort, then inspect the runtime only when you need to.
                 </p>
-                <p class="spw-playable-hook" data-spw-narrative-copy="on" data-spw-copy-depth="genre" data-spw-copy-label="Settings hook">Settings are not decoration here. They are reading weather, and the weather should be readable at a glance.</p>
+                <p class="spw-playable-hook" data-spw-narrative-copy="on" data-spw-copy-depth="genre" data-spw-copy-label="Settings hook">Treat settings like reading weather: quick to scan, easy to change.</p>
                 <ul class="spw-copy-motif-strip" aria-label="Settings copy motifs">
                     <li>preset</li>
                     <li>workflow</li>
@@ -106,19 +105,15 @@
                     <li>inspect</li>
                 </ul>
                 <p class="settings-start-note" data-spw-narrative-copy="on" data-spw-copy-depth="normal" data-spw-copy-label="Settings start note">
-                    The simplest path is: choose a preset, choose an author workflow, adjust reading comfort, then refine
-                    details only if something still feels off. Author workflow describes the writing task; developmental climate
-                    describes the attention posture. The more technical maps and registries live lower on the page so everyday
-                    tuning and deeper inspection do not compete.
+                    Fast path: preset, workflow, comfort, then deeper tuning only if something still feels off. Workflow
+                    describes the writing task; climate describes the attention posture.
                 </p>
                 <p
                     class="settings-start-note settings-cognitive-note"
                     data-spw-page-hook="settings-cognitive-note"
                     data-spw-page-hook-label="Settings cognitive note"
                 >
-                    The page begins in a readable posture. As you ground more signals, the same surface can explain when it
-                    feels <strong>fresh</strong>, when it becomes <strong>familiar</strong>, and when it is ready for
-                    <strong>inspectable</strong> detail.
+                    The page starts readable, then reveals more structure as the surface becomes familiar.
                 </p>
             </div>
 
@@ -127,28 +122,29 @@
                 class="settings-hero-actions"
                 data-spw-feature="settings-section-index"
             >
-                <a class="operator-chip" href="#presets">quick start</a>
-                <a class="operator-chip" href="#reader-builder-modes">reader + builder modes</a>
-                <a class="operator-chip" href="#author-workflow-settings">author workflow</a>
-                <a class="operator-chip" href="#climate-settings">developmental climate</a>
-                <a class="operator-chip" href="#runtime-preferences">tune the site</a>
-                <a class="operator-chip" href="#applied-state">current runtime state</a>
-                <a class="operator-chip" href="#settings-notes">notes + reset paths</a>
+                <a class="operator-chip" href="#presets">presets</a>
+                <a class="operator-chip" href="#reader-builder-modes">viewing modes</a>
+                <a class="operator-chip" href="#author-workflow-settings">workflow</a>
+                <a class="operator-chip" href="#climate-settings">climate</a>
+                <a class="operator-chip" href="#runtime-preferences">preferences</a>
+                <a class="operator-chip" href="#applied-state">runtime state</a>
+                <a class="operator-chip" href="#settings-notes">notes + resets</a>
+                <a class="operator-chip" href="#stored-data">saved data</a>
                 <a class="operator-chip" href="/privacy/">privacy + local state</a>
-                <a class="operator-chip" href="#runtime-map">inspect the system</a>
+                <a class="operator-chip" href="#runtime-map">runtime map</a>
             </nav>
             <div class="spw-reason-strip" aria-label="Settings reasons">
                 <div>
-                    <strong>Why tune this page</strong>
-                    <p>the same site should be able to feel softer, denser, calmer, louder, or more inspectable without changing its public shape.</p>
+                    <strong>Use this page</strong>
+                    <p>to shift comfort, workflow, and semantic visibility without changing the public shape of the site.</p>
                 </div>
                 <div>
                     <strong>Best for</strong>
-                    <p>you want to bias reading comfort, developmental climate, or the amount of semantic detail the page should expose.</p>
+                    <p>quick tuning first, deeper inspection later.</p>
                 </div>
                 <div>
-                    <strong>You can leave with</strong>
-                    <p>reader presets, builder presets, inspectable runtime state, and a clearer relationship between Spw charge and boonhonk disposition.</p>
+                    <strong>Leave with</strong>
+                    <p>a calmer or richer surface, readable local state, and clearer reset paths.</p>
                 </div>
             </div>
         </section>
@@ -216,9 +212,8 @@
                         <h3 class="vibe-widget-title">Choose a reader, builder, or inspector posture</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        Reader mode keeps the surface calmer. Builder mode exposes CSS and layout ownership. Inspector mode
-                        adds the full debug layer, and lab mode pushes further into motion and palette bias. These are the
-                        controls that let the same page behave like documentation or like an instrument.
+                        Reader stays calm. Builder exposes structure. Inspector adds the debug layer. Lab pushes further into
+                        motion and palette bias.
                     </p>
                     <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
@@ -1954,6 +1949,11 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                 <h2>Local Notes + Reset Paths</h2>
             </header>
 
+            <p class="frame-note settings-section-lead">
+                This section is the practical cleanup shelf: save local notes, understand what kind of reset you need, and
+                decide whether to clear one setting, one register, or the whole browser-local surface.
+            </p>
+
             <div class="frame-grid" data-spw-feature="settings-notes-grid">
                 <div
                     class="frame-panel settings-note-register"
@@ -2007,11 +2007,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                 </div>
 
                 <div
-                    class="frame-panel"
+                    class="frame-panel settings-reset-panel"
                     data-spw-category-family="specimen"
                     data-spw-kind="panel"
                     data-spw-role="reference"
                 >
+                    <p class="settings-panel-kicker">Reset guide</p>
                     <h3>Reset model</h3>
                     <p>
                         Use the deviation register for one-setting resets. Use the form reset button for authored defaults. Use
@@ -2049,8 +2050,30 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
             </header>
 
             <p class="frame-note">
-                These readouts describe what this browser is doing locally. They do not require an account.
+                These readouts describe what this browser is doing locally.
             </p>
+
+            <div class="settings-storage-guide" data-spw-feature="storage-guide">
+                <article class="settings-storage-guide__card">
+                    <p class="settings-panel-kicker">Read this section</p>
+                    <h3>Start with app status, then inspect persistence</h3>
+                    <p>Check install, service worker, cache, and connection first. Then inspect what will remain after a refresh or return visit.</p>
+                </article>
+                <article class="settings-storage-guide__card">
+                    <p class="settings-panel-kicker">Clear safely</p>
+                    <h3>Use the smallest honest reset</h3>
+                    <p>Clear one setting first, then one register. Use browser-wide clearing only when you want every local trace gone.</p>
+                </article>
+                <article class="settings-storage-guide__card">
+                    <p class="settings-panel-kicker">Inspect next</p>
+                    <h3>Follow the local-state trail</h3>
+                    <div class="settings-storage-actions">
+                        <a class="operator-chip" href="#settings-notes">notes + reset paths</a>
+                        <a class="operator-chip" href="/privacy/">privacy surface</a>
+                        <a class="operator-chip" href="#runtime-map">runtime map</a>
+                    </div>
+                </article>
+            </div>
 
             <div class="settings-state-grid" data-spw-feature="pwa-status">
                 <article class="settings-state-card">
@@ -2075,10 +2098,10 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
             </div>
 
             <article class="frame-panel settings-persistence-panel" data-spw-feature="persistence-register">
+                <p class="settings-panel-kicker">Browser-local registers</p>
                 <h3>Persistence register</h3>
                 <p>
-                    These registries persist beyond the current page. Each one names its browser key, what wrote it, what it
-                    is storing, and how to clear it without guessing in DevTools.
+                    These registries persist beyond the current page. Each one shows its key, writer, scope, and clear path.
                 </p>
 
                 <div class="settings-note-form__meta settings-persistence-summary">
