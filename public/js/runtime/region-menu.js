@@ -527,16 +527,16 @@ function setRegionFocus(target, semantic, expanded = true) {
   activeIndex = Math.max(0, activeMatches.indexOf(target));
 
   activeMatches.forEach((node, index) => {
-    writeDatasetValue(node, 'spwSemanticExpanded', expanded ? 'true' : null);
+    writeDatasetValue(node, 'spwInspectSemanticExpanded', expanded ? 'true' : null);
     writeDatasetValue(node, 'spwSemanticFamily', semantic.family);
     writeDatasetValue(node, 'spwSemanticRoot', semantic.root || semantic.family);
-    writeDatasetValue(node, 'spwSemanticMatch', expanded && node !== target ? 'true' : null);
-    writeDatasetValue(node, 'spwSemanticFocused', expanded && node === target ? 'true' : null);
+    writeDatasetValue(node, 'spwInspectSemanticMatch', expanded && node !== target ? 'true' : null);
+    writeDatasetValue(node, 'spwInspectSemanticFocused', expanded && node === target ? 'true' : null);
     writeDatasetValue(node, 'spwSemanticOrdinal', String(index + 1));
   });
 
-  document.documentElement.dataset.spwSemanticFocusRoot = semantic.family;
-  document.documentElement.dataset.spwSemanticFocusCount = String(activeMatches.length);
+  document.documentElement.dataset.spwInspectSemanticFocusRoot = semantic.family;
+  document.documentElement.dataset.spwInspectSemanticFocusCount = String(activeMatches.length);
 }
 
 function moveMatch(direction) {
@@ -547,8 +547,8 @@ function moveMatch(direction) {
   if (!(next instanceof HTMLElement)) return;
 
   activeMatches.forEach((node) => {
-    writeDatasetValue(node, 'spwSemanticFocused', node === next ? 'true' : null);
-    writeDatasetValue(node, 'spwSemanticMatch', node === next ? null : 'true');
+    writeDatasetValue(node, 'spwInspectSemanticFocused', node === next ? 'true' : null);
+    writeDatasetValue(node, 'spwInspectSemanticMatch', node === next ? null : 'true');
   });
 
   next.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
@@ -594,16 +594,16 @@ function buildSeed(target, semantic, frame) {
 
 function clearRegionFocus(close = true) {
   document
-    .querySelectorAll('[data-spw-semantic-focused], [data-spw-semantic-match], [data-spw-semantic-expanded], [data-spw-region-menu-target]')
+    .querySelectorAll('[data-spw-inspect-semantic-focused], [data-spw-inspect-semantic-match], [data-spw-inspect-semantic-expanded], [data-spw-region-menu-target]')
     .forEach((node) => {
-      writeDatasetValue(node, 'spwSemanticFocused', null);
-      writeDatasetValue(node, 'spwSemanticMatch', null);
-      writeDatasetValue(node, 'spwSemanticExpanded', null);
+      writeDatasetValue(node, 'spwInspectSemanticFocused', null);
+      writeDatasetValue(node, 'spwInspectSemanticMatch', null);
+      writeDatasetValue(node, 'spwInspectSemanticExpanded', null);
       writeDatasetValue(node, 'spwRegionMenuTarget', null);
     });
 
-  document.documentElement.removeAttribute('data-spw-semantic-focus-root');
-  document.documentElement.removeAttribute('data-spw-semantic-focus-count');
+  document.documentElement.removeAttribute('data-spw-inspect-semantic-focus-root');
+  document.documentElement.removeAttribute('data-spw-inspect-semantic-focus-count');
 
   if (close) closeMenu();
 }

@@ -35,9 +35,9 @@
     "data-spw-semantic-lens"
   ]
   runtime_state: [
-    "data-spw-semantic-expanded",
-    "data-spw-semantic-focused",
-    "data-spw-semantic-match"
+    "data-spw-inspect-semantic-expanded",
+    "data-spw-inspect-semantic-focused",
+    "data-spw-inspect-semantic-match"
   ]
   interaction_rule: "When a semantic family is expanded, matching instances may become visible together, but authored text remains the source of truth."
   scale_rule: "Use only high-signal concepts. Semantic braces should make navigation easier, not turn every repeated noun into a target."
@@ -56,4 +56,3 @@
 
 @site_semantics: ~"./site-semantics.spw"
 @operator_semantics: ~"./operator-semantics.spw"
-

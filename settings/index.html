@@ -2073,6 +2073,22 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                     <strong data-pwa-connection-status>Checking…</strong>
                 </article>
             </div>
+
+            <article class="frame-panel settings-persistence-panel" data-spw-feature="persistence-register">
+                <h3>Persistence register</h3>
+                <p>
+                    These registries persist beyond the current page. Each one names its browser key, what wrote it, what it
+                    is storing, and how to clear it without guessing in DevTools.
+                </p>
+
+                <div class="settings-note-form__meta settings-persistence-summary">
+                    <p><strong data-site-persistence-active-count>0</strong> active registries in this browser.</p>
+                    <p>Total stored items: <strong data-site-persistence-item-count>0</strong></p>
+                    <p>Last persistence change: <span data-site-persistence-latest>not recorded</span></p>
+                </div>
+
+                <div class="settings-persistence-list" data-site-persistence-list="resettable"></div>
+            </article>
         </section>
 
         <section

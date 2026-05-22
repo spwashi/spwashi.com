@@ -441,9 +441,9 @@ function syncDiscoveredMarkup(el, meta, extra = {}) {
 function clearSemanticExpansion(root = document) {
   const scope = root instanceof Element ? root : document;
   const selector = [
-    '[data-spw-semantic-focused="true"]',
-    '[data-spw-semantic-match="true"]',
-    '[data-spw-semantic-expanded="true"]',
+    '[data-spw-inspect-semantic-focused="true"]',
+    '[data-spw-inspect-semantic-match="true"]',
+    '[data-spw-inspect-semantic-expanded="true"]',
   ].join(', ');
   const nodes = [];
   if (scope instanceof Element && scope.matches?.(selector)) {
@@ -453,15 +453,15 @@ function clearSemanticExpansion(root = document) {
     nodes.push(node);
   });
   nodes.forEach((node) => {
-    writeDatasetValue(node, 'spwSemanticFocused', null);
-    writeDatasetValue(node, 'spwSemanticMatch', null);
-    writeDatasetValue(node, 'spwSemanticExpanded', null);
+    writeDatasetValue(node, 'spwInspectSemanticFocused', null);
+    writeDatasetValue(node, 'spwInspectSemanticMatch', null);
+    writeDatasetValue(node, 'spwInspectSemanticExpanded', null);
   });
 
   const host = scope instanceof HTMLElement ? scope : document.documentElement;
   if (host) {
-    writeDatasetValue(host, 'spwSemanticFocusRoot', null);
-    writeDatasetValue(host, 'spwSemanticFocusKey', null);
+    writeDatasetValue(host, 'spwInspectSemanticFocusRoot', null);
+    writeDatasetValue(host, 'spwInspectSemanticFocusKey', null);
   }
 }
 
@@ -479,7 +479,7 @@ function applySemanticExpansion(target, meta, nextExpanded) {
   const activeMatch = target instanceof Element && matches.includes(target) ? target : matches[0];
 
   matches.forEach((node) => {
-    writeDatasetValue(node, 'spwSemanticExpanded', nextExpanded ? 'true' : null);
+    writeDatasetValue(node, 'spwInspectSemanticExpanded', nextExpanded ? 'true' : null);
     writeDatasetValue(node, 'spwSemanticFamily', family);
     writeDatasetValue(node, 'spwSemanticRoot', semantic.root || family);
     if (semantic.rootLabel) writeDatasetValue(node, 'spwSemanticRootLabel', semantic.rootLabel);
@@ -493,13 +493,13 @@ function applySemanticExpansion(target, meta, nextExpanded) {
 
   if (nextExpanded) {
     matches.forEach((node) => {
-      writeDatasetValue(node, 'spwSemanticMatch', node === activeMatch ? null : 'true');
-      writeDatasetValue(node, 'spwSemanticFocused', node === activeMatch ? 'true' : null);
+      writeDatasetValue(node, 'spwInspectSemanticMatch', node === activeMatch ? null : 'true');
+      writeDatasetValue(node, 'spwInspectSemanticFocused', node === activeMatch ? 'true' : null);
     });
 
     const host = scope instanceof HTMLElement ? scope : document.documentElement;
-    writeDatasetValue(host, 'spwSemanticFocusRoot', family);
-    writeDatasetValue(host, 'spwSemanticFocusKey', semantic.key || family);
+    writeDatasetValue(host, 'spwInspectSemanticFocusRoot', family);
+    writeDatasetValue(host, 'spwInspectSemanticFocusKey', semantic.key || family);
   }
 
   emitBraceEvents(
@@ -802,7 +802,7 @@ function onPointerUp(event) {
   }
 
   if (shouldToggleSemanticExpansionOnRelease(target, meta, state, event)) {
-    applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+    applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
   }
 
   gestureState.delete(target);
@@ -863,7 +863,7 @@ function commitArmedInteraction(target, state) {
   let action = null;
 
   if (meta.semantic?.family) {
-    committed = applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+    committed = applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
     action = committed ? 'semantic-expand' : null;
   } else if (meta.affordances.includes('swap')) {
     committed = handleOperatorSwap(target, meta);
@@ -980,6 +980,6 @@ function onKeyUp(event) {
   );
 
   if (meta.semantic?.family && !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey) {
-    applySemanticExpansion(target, meta, target.dataset.spwSemanticExpanded !== 'true');
+    applySemanticExpansion(target, meta, target.dataset.spwInspectSemanticExpanded !== 'true');
   }
 }

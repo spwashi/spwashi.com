@@ -26,8 +26,16 @@ import {
   getPaletteResonanceSwatches
 } from '/public/js/interface/palette-resonance.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
+import {
+  clearPins,
+  getPinStorageKey,
+  readPins,
+} from '/public/js/runtime/pin-registry.js';
 
 const SITE_SETTINGS_KEY = 'spw-site-settings';
+const CAULDRON_STORAGE_KEY = 'spw-cauldron';
+const DISCOVERY_DISMISSALS_STORAGE_KEY = 'spw-discovery-notice-dismissals';
+const VISITED_IMAGE_STORAGE_KEY = 'spw-visited-image-surfaces';
 
 const THEME_PACK_OPTIONS = Object.freeze([
   'neutral-paper',
@@ -1124,6 +1132,169 @@ const humanizeSettingName = (name = '') => String(name)
   .toLowerCase();
 
 const describeSettingValue = (name, value) => SETTING_VALUE_LABELS[name]?.[value] || String(value ?? '—');
+const safeParseStorageJson = (key, fallback) => {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const formatStorageTimestamp = (value) => {
+  if (!value) return 'not recorded';
+  try {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'not recorded';
+    return date.toLocaleString();
+  } catch {
+    return 'not recorded';
+  }
+};
+
+const getLatestTimestamp = (values = [], pick) => {
+  const latest = values.reduce((max, value) => {
+    const next = pick(value);
+    if (!next) return max;
+    if (!max) return next;
+    return new Date(next).getTime() > new Date(max).getTime() ? next : max;
+  }, '');
+  return latest || '';
+};
+
+const clearVisitedImageState = () => {
+  document.querySelectorAll('[data-spw-image-managed="true"], [data-spw-image-surface]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    delete node.dataset.spwVisited;
+    delete node.dataset.spwVisitBurst;
+    node.dataset.spwImageMemoryState = 'fresh';
+  });
+};
+
+const clearCurrentPinState = () => {
+  document.querySelectorAll('[data-spw-pinned], [data-spw-latched]').forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    delete node.dataset.spwPinned;
+    delete node.dataset.spwLatched;
+  });
+};
+
+const buildPersistenceRegistries = () => ([
+  {
+    id: 'site-settings',
+    label: 'Runtime preferences',
+    description: 'Saved site settings that override authored defaults in this browser.',
+    scope: 'sitewide preferences',
+    source: 'site-settings manager',
+    storageKey: SITE_SETTINGS_KEY,
+    read() {
+      const persisted = storage.get();
+      const entries = Object.entries(persisted).filter(([name]) => isKnownSetting(name));
+      return {
+        count: entries.length,
+        latest: '',
+        summary: entries.length
+          ? `${entries.length} explicit preference override${entries.length === 1 ? '' : 's'}`
+          : 'Authored defaults only',
+      };
+    },
+    clear() {
+      resetSiteSettings();
+    },
+  },
+  {
+    id: 'pins',
+    label: 'Pinned frames',
+    description: 'Frames and sigils remembered through brace pinning and bookmark surfaces.',
+    scope: 'route-aware memory register',
+    source: 'brace gestures and bookmark register',
+    storageKey: getPinStorageKey(),
+    read() {
+      const pins = Object.values(readPins());
+      return {
+        count: pins.length,
+        latest: getLatestTimestamp(pins, (pin) => pin.timestamp),
+        summary: pins.length
+          ? `${pins.length} pinned frame${pins.length === 1 ? '' : 's'}`
+          : 'No pinned frames',
+      };
+    },
+    clear() {
+      clearPins();
+      clearCurrentPinState();
+    },
+  },
+  {
+    id: 'cauldron',
+    label: 'Cauldron ingredients',
+    description: 'Captured expressions waiting to be mixed into a prompt or seed.',
+    scope: 'composition scratch register',
+    source: 'composition spell',
+    storageKey: CAULDRON_STORAGE_KEY,
+    read() {
+      const items = safeParseStorageJson(CAULDRON_STORAGE_KEY, []);
+      return {
+        count: items.length,
+        latest: getLatestTimestamp(items, (item) => item.capturedAt),
+        summary: items.length
+          ? `${items.length} ingredient${items.length === 1 ? '' : 's'} captured`
+          : 'No saved ingredients',
+      };
+    },
+    clear() {
+      localStorage.removeItem(CAULDRON_STORAGE_KEY);
+      document.documentElement.dataset.spwCauldronCount = '0';
+      bus.emit?.('cauldron:cleared', {});
+    },
+  },
+  {
+    id: 'discovery-dismissals',
+    label: 'Discovery dismissals',
+    description: 'Dismissed promo notices that stay hidden until a later cycle becomes eligible.',
+    scope: 'promo cadence register',
+    source: 'discovery notices',
+    storageKey: DISCOVERY_DISMISSALS_STORAGE_KEY,
+    read() {
+      const dismissals = safeParseStorageJson(DISCOVERY_DISMISSALS_STORAGE_KEY, {});
+      const entries = Object.entries(dismissals);
+      return {
+        count: entries.length,
+        latest: '',
+        summary: entries.length
+          ? `${entries.length} dismissed notice${entries.length === 1 ? '' : 's'}`
+          : 'No dismissed notices',
+      };
+    },
+    clear() {
+      localStorage.removeItem(DISCOVERY_DISMISSALS_STORAGE_KEY);
+      document.dispatchEvent(new CustomEvent('spw:discovery-dismissals-changed', {
+        detail: { storageKey: DISCOVERY_DISMISSALS_STORAGE_KEY, cleared: true },
+      }));
+    },
+  },
+  {
+    id: 'visited-images',
+    label: 'Visited image surfaces',
+    description: 'Image metaphysics memory marking which surfaces were held long enough to become visited.',
+    scope: 'image memory register',
+    source: 'image metaphysics',
+    storageKey: VISITED_IMAGE_STORAGE_KEY,
+    read() {
+      const visited = Object.values(safeParseStorageJson(VISITED_IMAGE_STORAGE_KEY, {}));
+      return {
+        count: visited.length,
+        latest: getLatestTimestamp(visited, (entry) => entry.visitedAt),
+        summary: visited.length
+          ? `${visited.length} visited image surface${visited.length === 1 ? '' : 's'}`
+          : 'No visited image surfaces',
+      };
+    },
+    clear() {
+      localStorage.removeItem(VISITED_IMAGE_STORAGE_KEY);
+      clearVisitedImageState();
+    },
+  },
+]);
 
 const describeSettingsPatch = (partial = {}) => Object.entries(partial)
   .filter(([name]) => isKnownSetting(name))
@@ -2214,6 +2385,86 @@ const syncDeviationReadouts = (root = document, settings = getSiteSettings()) =>
   });
 };
 
+const syncPersistenceReadouts = (root = document) => {
+  const registries = buildPersistenceRegistries().map((registry) => ({
+    ...registry,
+    snapshot: registry.read(),
+  }));
+  const active = registries.filter((registry) => registry.snapshot.count > 0);
+  const totalItems = registries.reduce((sum, registry) => sum + registry.snapshot.count, 0);
+  const latest = formatStorageTimestamp(getLatestTimestamp(registries, (registry) => registry.snapshot.latest));
+
+  root.querySelectorAll?.('[data-site-persistence-active-count]').forEach((node) => {
+    node.textContent = String(active.length);
+  });
+  root.querySelectorAll?.('[data-site-persistence-item-count]').forEach((node) => {
+    node.textContent = String(totalItems);
+  });
+  root.querySelectorAll?.('[data-site-persistence-latest]').forEach((node) => {
+    node.textContent = latest;
+  });
+
+  root.querySelectorAll?.('[data-site-persistence-list]').forEach((host) => {
+    host.innerHTML = '';
+
+    if (!registries.length) {
+      const empty = document.createElement('p');
+      empty.className = 'settings-persistence-empty';
+      empty.textContent = 'No browser-local registries are available here.';
+      host.appendChild(empty);
+      return;
+    }
+
+    registries.forEach((registry) => {
+      const item = document.createElement('article');
+      item.className = 'settings-persistence-item';
+      item.dataset.sitePersistence = registry.id;
+
+      const head = document.createElement('div');
+      head.className = 'settings-persistence-head';
+
+      const title = document.createElement('strong');
+      title.className = 'settings-persistence-title';
+      title.textContent = registry.label;
+
+      const badge = document.createElement('span');
+      badge.className = 'settings-persistence-badge';
+      badge.textContent = registry.snapshot.count > 0
+        ? `${registry.snapshot.count} stored`
+        : 'empty';
+
+      head.append(title, badge);
+
+      const copy = document.createElement('p');
+      copy.className = 'settings-persistence-copy';
+      copy.textContent = registry.description;
+
+      const meta = document.createElement('div');
+      meta.className = 'settings-persistence-meta';
+      meta.innerHTML = [
+        `<p><strong>Scope</strong><br>${registry.scope}</p>`,
+        `<p><strong>Writer</strong><br>${registry.source}</p>`,
+        `<p><strong>Storage key</strong><br><code>${registry.storageKey}</code></p>`,
+        `<p><strong>Summary</strong><br>${registry.snapshot.summary}</p>`,
+        `<p><strong>Latest change</strong><br>${formatStorageTimestamp(registry.snapshot.latest)}</p>`,
+      ].join('');
+
+      const actions = document.createElement('div');
+      actions.className = 'settings-persistence-actions';
+
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.className = 'operator-chip';
+      reset.textContent = `! clear ${registry.id}`;
+      reset.setAttribute('data-site-persistence-reset', registry.id);
+      actions.appendChild(reset);
+
+      item.append(head, copy, meta, actions);
+      host.appendChild(item);
+    });
+  });
+};
+
 const bindDeviationControls = (root = document) => {
   if (!(root instanceof HTMLElement) && root !== document) return {
     cleanup() {
@@ -2240,6 +2491,62 @@ const bindDeviationControls = (root = document) => {
     refresh() {
       syncDeviationReadouts(root);
     }
+  };
+};
+
+const bindPersistenceControls = (root = document) => {
+  if (!(root instanceof HTMLElement) && root !== document) return {
+    cleanup() {},
+    refresh() {},
+  };
+
+  const registryMap = new Map(buildPersistenceRegistries().map((registry) => [registry.id, registry]));
+  const sync = () => syncPersistenceReadouts(root);
+
+  const handleClick = (event) => {
+    const target = event.target instanceof Element ? event.target.closest('[data-site-persistence-reset]') : null;
+    if (!(target instanceof HTMLElement)) return;
+    const id = target.getAttribute('data-site-persistence-reset');
+    const registry = id ? registryMap.get(id) : null;
+    if (!registry) return;
+    registry.clear();
+    sync();
+  };
+
+  const handleStorage = (event) => {
+    if (!event.key) return;
+    if ([SITE_SETTINGS_KEY, getPinStorageKey(), CAULDRON_STORAGE_KEY, DISCOVERY_DISMISSALS_STORAGE_KEY, VISITED_IMAGE_STORAGE_KEY].includes(event.key)) {
+      sync();
+    }
+  };
+
+  root.addEventListener('click', handleClick);
+  window.addEventListener('storage', handleStorage);
+  sync();
+
+  const offSettings = bus.on?.('settings:changed', sync);
+  const offCauldronUpdated = bus.on?.('cauldron:updated', sync);
+  const offCauldronCleared = bus.on?.('cauldron:cleared', sync);
+  const offImageVisited = bus.on?.('image:visited', sync);
+  const handlePin = () => sync();
+  const handleDiscoveryDismissals = () => sync();
+  document.addEventListener('brace:pinned', handlePin);
+  document.addEventListener('spw:discovery-dismissals-changed', handleDiscoveryDismissals);
+
+  return {
+    cleanup() {
+      root.removeEventListener('click', handleClick);
+      window.removeEventListener('storage', handleStorage);
+      document.removeEventListener('brace:pinned', handlePin);
+      document.removeEventListener('spw:discovery-dismissals-changed', handleDiscoveryDismissals);
+      offSettings?.();
+      offCauldronUpdated?.();
+      offCauldronCleared?.();
+      offImageVisited?.();
+    },
+    refresh() {
+      sync();
+    },
   };
 };
 
@@ -2323,7 +2630,7 @@ const initSiteSettingsBindings = () => {
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
   const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set], [data-site-settings-recipe]')]
     .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
-  const hasReadouts = Boolean(document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list]'));
+  const hasReadouts = Boolean(document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list], [data-site-persistence-list]'));
 
   if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || manager._initialized) return null;
 
@@ -2344,6 +2651,7 @@ const initSiteSettingsBindings = () => {
   const triggers = bindStandaloneSettingTriggers(document);
   const readouts = bindSettingsReadouts(document);
   const deviationControls = bindDeviationControls(document);
+  const persistenceControls = bindPersistenceControls(document);
 
   initPwaStatusDisplay();
 
@@ -2353,6 +2661,7 @@ const initSiteSettingsBindings = () => {
       triggers.cleanup();
       readouts.cleanup();
       deviationControls.cleanup();
+      persistenceControls.cleanup();
       manager._initialized = false;
     },
     refresh() {
@@ -2360,6 +2669,7 @@ const initSiteSettingsBindings = () => {
       triggers.refresh();
       readouts.refresh();
       deviationControls.refresh();
+      persistenceControls.refresh();
       initPwaStatusDisplay();
     }
   };

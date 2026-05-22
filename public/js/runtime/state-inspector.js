@@ -201,6 +201,32 @@ function readFormFields(target) {
         .filter(Boolean);
 }
 
+function readDatasetStateField(target, name, options = {}) {
+    const value = target.dataset?.[name];
+    if (value == null || value === '') return null;
+
+    return createStateField(options.label || toSnake(name), value, {
+        source: options.source || 'inspect'
+    });
+}
+
+function readDatasetFields(target) {
+    const explicitNames = (target.dataset.spwInspectDatasets || '')
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+    const defaultNames = [
+        'spwInspectFieldWonder',
+        'spwInspectFieldOperator',
+        'spwInspectFieldContext',
+    ];
+    const names = [...new Set([...defaultNames, ...explicitNames])];
+
+    return names
+        .map((name) => readDatasetStateField(target, name))
+        .filter(Boolean);
+}
+
 function readImageFields(target) {
     if (target.dataset.spwImageManaged !== 'true') return [];
 
@@ -415,6 +441,7 @@ function collectFields(target) {
     if (modeField) fields.push(modeField);
     if (phaseField) fields.push(phaseField);
     fields.push(...readFormFields(target));
+    fields.push(...readDatasetFields(target));
     fields.push(...readImageFields(target));
     fields.push(...readInstrumentationFields(target));
 
@@ -842,6 +869,18 @@ export function initSpwStateInspector() {
 
     bus.on('image:visited', refreshAll);
     bus.on('settings:changed', refreshAll);
+    [
+        'brace:charge-start',
+        'brace:activate',
+        'brace:armed',
+        'brace:committed',
+        'brace:swapped',
+        'brace:pinned',
+        'brace:expanded',
+        'brace:collapsed',
+    ].forEach((eventName) => {
+        document.addEventListener(eventName, refreshAll);
+    });
     document.addEventListener(IMAGE_REFRESH_EVENT, (event) => {
         const target = event.target instanceof Element
             ? event.target.closest('[data-spw-image-managed="true"]')

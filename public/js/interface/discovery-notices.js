@@ -14,6 +14,7 @@ const MODAL_ATTR = 'data-spw-discovery-notice-modal';
 const NOTICE_ATTR = 'data-spw-discovery-notice';
 const MODULE_ATTR = 'data-spw-discovery-notice-module';
 const NOTICE_HIDE_DELAY_MS = 180;
+const DISMISSALS_CHANGED_EVENT = 'spw:discovery-dismissals-changed';
 
 const loadFeed = createJsonFeedLoader(FEED_URL, null);
 let removeEscapeListener = () => {};
@@ -331,6 +332,13 @@ function clearRemoveEscapeListenerIfIdle() {
 function dismissNotice(notice, root, dismissals) {
   dismissals[notice.dismissKey] = notice.scheduleKey;
   writeDismissals(dismissals);
+  document.dispatchEvent(new CustomEvent(DISMISSALS_CHANGED_EVENT, {
+    detail: {
+      storageKey: STORAGE_KEY,
+      dismissKey: notice.dismissKey,
+      scheduleKey: notice.scheduleKey,
+    },
+  }));
 
   notice.article.classList.add('is-dismissing');
   window.setTimeout(() => {
