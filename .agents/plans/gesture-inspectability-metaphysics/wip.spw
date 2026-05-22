@@ -1,0 +1,40 @@
+# wip — gesture-inspectability-metaphysics
+
+#>gesture_inspectability_metaphysics
+#:plan #!runtime
+#:layer #!pragmatics
+
+@plan: ~".agents/plans/gesture-inspectability-metaphysics/PLAN.md"
+@site_semantics: ~".spw/conventions/site-semantics.spw"
+@attention_field: ~".spw/conventions/attention-field.spw"
+@ornament_contract: ~".spw/conventions/ornament-contract.spw"
+@cognitive_surface: ~".spw/philosophy/cognitive-surface.spw"
+
+~#goal: "Unify gesture grammar, inspectability, and metaphysics into one browser-tested runtime ecology."
+~#taste: "inspectable wonder with operational discipline"
+
+develops: [#brace_gestures, #attention_locomotion, #spell_replayability, #image_metaphysics, #inspectability, #browser_audit]
+primary: [#state_ownership, #gesture_vocab, #specimen_routes, #metaphysics_alignment, #validation_loop]
+
+^"route_specimens"{
+ home: "/"
+ settings: "/settings/"
+ design_components: "/design/components/"
+ spw_atlas: "/topics/software/spw/"
+ rpg_library: "/play/rpg-wednesday/library/"
+ profile_tool: "/tools/profile/"
+}
+
+^"working_hypotheses"{
+ canonical_vs_transient: "The site currently mixes stable semantic truth and temporary gesture traces too freely."
+ browser_gap: "A lot of interaction design has matured faster than route-by-route browser verification."
+ inspect_surface_gap: "The runtime knows more than the public inspect surfaces currently reveal."
+ metaphysics_gap: "Some metaphysical terms are implemented, some are partial, and some still behave like aspirations."
+}
+
+^"falsifiers"{
+ `If the same gesture means different things on brace, card, and image surfaces without an inspectable reason, the grammar is incoherent.`
+ `If a state survives refresh or route return without a clear owner, the persistence model is incoherent.`
+ `If a term in .spw cannot be tied to a visible runtime consequence, the metaphysics is ahead of the implementation.`
+ `If a canonical route specimen cannot be audited quickly in-browser, the validation loop is too weak.`
+}
