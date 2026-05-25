@@ -28,6 +28,18 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - No first-class entry in the `.spw` ontology for the planning ecology, skills layer, or "agent contracts" as a reusable semantic family (despite heavy use and public exposure).
 - `archive/README.md` is stale (references only 3 of the 4 canonical tracks).
 - The public `/about/plans/` page is a significant hand-maintenance tax; plan cards and status are not derived from the filesystem or a machine-readable index.
+
+**Recent addition (experiential + spell/cauldron discoverability):**
+- Deeper updates to `public/js/runtime/experiential.js` generalized tap/hold/swipe (pointer + device detection), added reusable GESTURE_SVGS + render helpers as visual topical anchors, device-aware educational lead text, and learning-science notes for students vs. uncurious visitors.
+- Added inline SVGs and data-spw-interaction / semantic-expression attributes in design/palettes (spell-cauldron), settings (presets/modes/notes), and blog (gardening/design threads) as visual + semantic anchors.
+- Improves "reasons to engage" on elements (spell, cauldron, modes, notes) so visitors of any curiosity level have immediate value, while preserving progressive enhancement and Spw brace/semantic patterns.
+- Recorded here as it directly improves the editor/learner operating environment (discoverability of interaction semantics and learning progressions). See related broad UX plan notes and the culinary-expertise plan for overlapping social-kitchen grammar work.
+
+**Wonder hub evolution on /design/ (gesture + component anatomy learnability):**
+- Transformed the design hub into a gentler "local wonder hub" for passive curiosity: added explicit low-friction entry language ("wander in, tap to test, hold to inspect anatomy/state, easy path back via spell path/sample dock").
+- Enhanced component anatomy / culinary instruction sections with gesture learnability hints, data-spw- attributes for anatomy/interaction, and visual SVG anchors tying tap/hold/swipe directly to readable component slots and Spw semantics.
+- Strengthened runtime state evaluation affordances (links to settings with "test instantly / hold to inspect live state").
+- Aligns with (and consumes) the recent experiential gesture helpers. Makes the hub a primary on-ramp for learning gestures, component anatomy, and Spw without requiring prior commitment. Passive visitors now have clear "why engage here" reasons on more elements.
 - `spw-plan-maintenance` now has initial references from skills, `.spw`, `AGENTS.md`, and the public plans register, but routine usage cadence still needs proof through future sweeps.
 - Skills have only a minimal collective README; no generated index, no `.spw` model, and inconsistent cross-linking.
 - ~50+ active backlog plans create signal-to-noise risk; no lightweight status markers (canonical/active/dormant) usable by tools or the public page.

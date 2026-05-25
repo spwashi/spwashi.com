@@ -102,9 +102,17 @@ import {
  * - selector?: CSS selector
  * - route?: string | string[]
  * - reason?: human-readable load reason for audit surfaces
+ * - describes?: Spw-style semantic expression describing what the module does or the structures it affects (strongly preferred for clarity)
+ * - updates?: string[] — data-spw-* attributes, selectors, or Spw expressions describing the specific elements/structures updated by this module (for meaningful descriptions, attentional models, serialization)
  * - rootMode?: "single" | "each"
+ * - evaluates?: explicit dimensions (inferred if absent)
  * - load(): Promise<module>
  * - mount(mod, ctx, root?): cleanup fn | { cleanup?, refresh? } | void
+ *
+ * The intent is a semantically meaningful lifecycle where module timing, load behavior, and effects are:
+ * - Clearly described in terms of the Spw structures they touch.
+ * - Observable and serializable as "runtime spells" for prompts, notes, recordings, screenshots, and cross-page replay.
+ * - Integrated with attentional models, transitions, behavior profiles, and the broader spell/force system.
  *
  * Notes
  * - This file intentionally avoids importing heavier modules at top-level.
@@ -749,6 +757,13 @@ function createRuntimeContext() {
     ctx.regions = [];
   };
 
+  // Event-driven runtime token behavior (high-value for CSS reactivity + attentional models)
+  ctx.bus.on('spw:module-mounted', () => updateRuntimeStateTokens(ctx));
+  ctx.bus.on('spw:module-failed', () => updateRuntimeStateTokens(ctx));
+
+  // Seed initial token state
+  updateRuntimeStateTokens(ctx);
+
   return ctx;
 }
 
@@ -1088,6 +1103,8 @@ const CORE_DEFS = [
     id: 'site-settings',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'root[data-spw-color-mode][data-spw-palette-resonance][data-spw-wonder-memory] settings surface',
+    updates: ['data-spw-color-mode', 'data-spw-palette-resonance', 'data-spw-wonder-memory', 'data-spw-semantic-density', 'data-spw-operator-saturation'],
     load: () => import('./kernel/site-settings.js'),
     mount: (mod) => {
       const fn = mod?.applySiteSettings;
@@ -1356,13 +1373,16 @@ const FEATURE_DEFS = [
     },
   },
   {
-    id: 'composition-spell',
+    id: 'cauldron',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    evaluates: 'semantics composition learning',
+    describes: 'cauldron[gather|mix] force[operator] emergence[composition]',
+    updates: ['data-spw-cauldron', 'data-spw-cauldron-ingredient', 'data-spw-semantic-expression'],
+    evaluates: 'semantics composition learning attention-field emergence',
     load: () => import('./interface/composition.js'),
     mount: (mod) => {
-      const fn = mod?.initCompositionSpell;
+      // Prefer the clearer cauldron name; fall back to legacy alias
+      const fn = mod?.initCauldron || mod?.initCompositionSpell;
       if (!isFn(fn)) return;
       return fn();
     },
@@ -1519,6 +1539,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-box-model], [data-spw-composition-flow], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
     rootMode: 'single',
+    describes: 'box-model[presence|measure|story] composition[flow]',
+    updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow'],
     evaluates: 'layout semantics spacing-semantics state storytelling',
     load: () => import('./runtime/composition-box-model.js'),
     mount: (mod, ctx) => {
@@ -1533,6 +1555,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-semantic-cluster], [data-spw-vocab], [data-spw-semantic-expression], [data-spw-topic], .spw-topic',
     rootMode: 'single',
+    describes: 'crossref[semantics] resonance[peer|source]',
+    updates: ['data-spw-crossref', 'data-spw-crossref-source', 'data-spw-semantic-cluster', 'data-spw-vocab'],
     evaluates: 'semantics navigation interaction resonance',
     load: () => import('./semantic/semantic-crossrefs.js'),
     mount: (mod, ctx) => {
@@ -1560,6 +1584,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.operator-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
     rootMode: 'single',
+    describes: 'guide[badge|collect] operator[resonance]',
+    updates: ['data-spw-guide-badge', 'data-spw-collected'],
     load: () => import('./interface/guide-badge.js'),
     mount: (mod) => {
       const fn = mod?.initGuideBadges;
@@ -1636,6 +1662,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'main, .spw-section-handle, [data-spw-operator]',
     rootMode: 'single',
+    describes: 'attention[resonance|field-intensity|section-handle] operators',
+    updates: ['data-spw-resonance-probe', 'data-spw-section-handle', 'data-spw-grounded', 'data-spw-attention'],
     load: () => import('./runtime/attention-architecture.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAttentionArchitecture;
@@ -1662,6 +1690,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'header nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
     rootMode: 'single',
+    describes: 'navigation[spell|grounding] route[replay]',
+    updates: ['data-spw-spell-path', 'data-spw-grounded-in'],
     load: () => import('./runtime/navigation-spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwNavigationSpells;
@@ -1688,6 +1718,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-groundable=\"true\"], .operator-chip, .syntax-token, .frame-sigil',
     rootMode: 'single',
+    describes: 'grounding[collection|resonance] spell[grounded|checkpoint]',
+    updates: ['data-spw-grounded', 'data-spw-collected', 'data-spw-collection-strength', 'data-spw-grounded-wonder'],
     load: () => import('./interface/haptics.js'),
     mount: (mod) => {
       const fn = mod?.initSpwHaptics;
@@ -1727,6 +1759,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'header, main',
     rootMode: 'single',
+    describes: 'gesture[tap|hold|swipe] spell[cauldron] learning[intuition]',
+    updates: ['data-spw-interaction-hint', 'data-spw-learning-note', 'data-spw-visual-anchor', 'data-spw-sample-kind'],
     load: () => import('./runtime/experiential.js'),
     mount: (mod) => {
       const fn = mod?.initSpwExperiential;
@@ -1740,6 +1774,8 @@ const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '.spell-board-content, header',
     rootMode: 'single',
+    describes: 'spell[checkpoint|replay] grounding[serialization]',
+    updates: ['data-spw-spell', 'data-spw-grounded', 'data-spw-checkpoint'],
     load: () => import('./runtime/spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpells;
@@ -1817,6 +1853,8 @@ function snapshotRuntimeModules(ctx = runtimeCtx) {
     effectiveWhen: record.effectiveWhen,
     status: record.status,
     reason: record.reason,
+    describes: record.describes || null,
+    updates: record.updates || null,
     mountedAt: record.mountedAt,
     loadMs: record.loadMs,
     mountMs: record.mountMs,
@@ -1826,6 +1864,55 @@ function snapshotRuntimeModules(ctx = runtimeCtx) {
       : 'document',
     error: record.error?.message || null,
   }));
+}
+
+/**
+ * Turns a module record into a portable "runtime spell" expression.
+ * This gives modules cross-page, serializable, prompt-friendly value
+ * consistent with the existing spell / grounded interaction model.
+ */
+function moduleRecordToSpellExpression(record) {
+  if (!record) return null;
+  const base = record.describes || record.reason || record.baseId || record.id;
+  const updatesPart = record.updates && record.updates.length
+    ? `{updates:${record.updates.join('+')}}`
+    : '';
+  const timingPart = record.durationMs
+    ? `[${Math.round(record.durationMs)}ms]`
+    : '';
+  const statusPart = record.status ? `:${record.status}` : '';
+
+  // Produce something like: #>module:cauldron{updates:data-spw-cauldron}[120ms]:mounted
+  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${timingPart}${statusPart} ${base}`.trim();
+}
+
+/**
+ * Lightweight snapshot of the current runtime as a "module spellbook".
+ * Useful for serialization into notes, prompts, recordings, or cross-page restoration.
+ */
+function snapshotRuntimeAsSpellbook(ctx = runtimeCtx) {
+  if (!ctx) return { modules: [], activeLayers: '', generatedAt: Date.now() };
+
+  const modules = snapshotRuntimeModules(ctx).map((rec) => ({
+    ...rec,
+    spell: moduleRecordToSpellExpression(rec),
+  }));
+
+  // Capture live token state for rich serialization (prompts, recordings, notes)
+  const tokenSnapshot = {
+    enhancementIntensity: parseFloat(HTML?.style.getPropertyValue('--spw-runtime-enhancement-intensity') || '0'),
+    featureIntensity: parseFloat(HTML?.style.getPropertyValue('--spw-runtime-feature-intensity') || '0'),
+    layerCount: parseInt(HTML?.style.getPropertyValue('--spw-runtime-layer-count') || '0', 10),
+    avgModuleMs: parseInt(HTML?.style.getPropertyValue('--spw-runtime-avg-module-ms') || '0', 10),
+  };
+
+  return {
+    modules,
+    activeLayers: HTML?.dataset?.spwActiveLayers || '',
+    tokens: tokenSnapshot,
+    generatedAt: Date.now(),
+    route: ctx.route,
+  };
 }
 
 async function mountModuleById(id, ctx = runtimeCtx, options = {}) {
@@ -1877,6 +1964,15 @@ function getEffectiveMountWhen(def, ctx) {
 }
 
 function describeMountReason(def, ctx, root = null, effectiveWhen = getEffectiveMountWhen(def, ctx)) {
+  // Prefer explicit, semantically meaningful description when provided by the module author.
+  if (def.describes) {
+    const base = def.reason || `${effectiveWhen} ${def.layer}`;
+    const updates = Array.isArray(def.updates) && def.updates.length
+      ? ` updates:[${def.updates.join('|')}]`
+      : '';
+    return `${base} ${def.describes}${updates}`;
+  }
+
   const routeReason = def.route
     ? `route:${Array.isArray(def.route) ? def.route.join('|') : def.route}`
     : 'route:any';
@@ -1956,10 +2052,73 @@ function annotateModuleTarget(target, record) {
   writeDatasetValue(target, 'spwModuleStatus', record.status);
   writeDatasetValue(target, 'spwModuleReason', record.reason);
   writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
+
+  // New semantically meaningful fields for clarity, inspectability, and serialization as "module spells"
+  if (record.describes) {
+    writeDatasetValue(target, 'spwModuleDescribes', record.describes);
+  }
+  if (record.updates && Array.isArray(record.updates) && record.updates.length) {
+    writeDatasetValue(target, 'spwModuleUpdates', record.updates.join(' '));
+  }
+
   writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
   if (Number.isFinite(record.durationMs)) {
     writeDatasetValue(target, 'spwModuleDurationMs', String(Math.round(record.durationMs)));
   }
+}
+
+/**
+ * Single source of truth for computing and applying runtime-driven CSS tokens.
+ * This makes token updates event-driven and centralized instead of scattered.
+ */
+function updateRuntimeStateTokens(ctx) {
+  if (!ctx || !HTML) return;
+
+  const records = Array.from(ctx.registry.values());
+  const activeLayers = new Set();
+  let hasEnhancement = false;
+  let hasFeature = false;
+  let totalDuration = 0;
+  let count = 0;
+
+  for (const r of records) {
+    if (r.status === 'mounted' || r.status === 'loading') {
+      activeLayers.add(r.layer);
+      if (r.layer === MODULE_LAYERS.ENHANCEMENT) hasEnhancement = true;
+      if (r.layer === MODULE_LAYERS.FEATURE) hasFeature = true;
+    }
+    if (Number.isFinite(r.durationMs)) {
+      totalDuration += r.durationMs;
+      count++;
+    }
+  }
+
+  const layersValue = [...activeLayers].sort().join(' ') || 'core';
+  writeDatasetValue(HTML, 'spwActiveLayers', layersValue);
+
+  const enhancementIntensity = hasEnhancement ? 0.92 : 0.32;
+  const featureIntensity = hasFeature ? 0.78 : 0.22;
+  const layerCount = activeLayers.size || 1;
+  const avgModuleTime = count > 0 ? Math.round(totalDuration / count) : 0;
+
+  HTML.style.setProperty('--spw-runtime-enhancement-intensity', enhancementIntensity.toFixed(2));
+  HTML.style.setProperty('--spw-runtime-feature-intensity', featureIntensity.toFixed(2));
+  HTML.style.setProperty('--spw-runtime-layer-count', String(layerCount));
+  if (avgModuleTime > 0) {
+    HTML.style.setProperty('--spw-runtime-avg-module-ms', String(avgModuleTime));
+  }
+
+  ctx.bus.emit('spw:runtime-tokens-updated', {
+    activeLayers: layersValue,
+    enhancementIntensity,
+    featureIntensity,
+    layerCount,
+    avgModuleTime,
+  });
+}
+
+function syncActiveModuleLayers(ctx) {
+  updateRuntimeStateTokens(ctx);
 }
 
 function syncRuntimeModuleSummary(ctx, record) {
@@ -1972,9 +2131,35 @@ function syncRuntimeModuleSummary(ctx, record) {
   writeDatasetValue(HTML, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleReason', record.reason);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleEvaluates', record.evaluates);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleDescribes', record.describes || null);
   writeDatasetValue(HTML, 'spwRuntimeMountedModules', [...new Set(mounted)].join(' '));
   writeDatasetValue(HTML, 'spwRuntimeFailedModules', [...new Set(failed)].join(' ') || null);
   writeDatasetValue(HTML, 'spwRuntimeModuleCount', String(mounted.length));
+
+  // Expose active layers for CSS timing, transitions, and attentional models
+  const activeLayers = new Set();
+  let hasEnhancement = false;
+  let hasFeature = false;
+
+  for (const r of records) {
+    if (r.status === 'mounted' || r.status === 'loading') {
+      activeLayers.add(r.layer);
+      if (r.layer === MODULE_LAYERS.ENHANCEMENT) hasEnhancement = true;
+      if (r.layer === MODULE_LAYERS.FEATURE) hasFeature = true;
+    }
+  }
+
+  const layersValue = [...activeLayers].sort().join(' ') || 'core';
+  writeDatasetValue(HTML, 'spwActiveLayers', layersValue);
+
+  // Dynamically drive the runtime influence tokens for CSS consumers
+  const enhancementIntensity = hasEnhancement ? 0.92 : 0.35;
+  const featureIntensity = hasFeature ? 0.78 : 0.25;
+  const layerCount = activeLayers.size || 1;
+
+  HTML.style.setProperty('--spw-runtime-enhancement-intensity', enhancementIntensity.toFixed(2));
+  HTML.style.setProperty('--spw-runtime-feature-intensity', featureIntensity.toFixed(2));
+  HTML.style.setProperty('--spw-runtime-layer-count', String(layerCount));
   if (BODY) {
     writeDatasetValue(BODY, 'spwRuntimeLastModule', record.baseId || record.id);
     writeDatasetValue(BODY, 'spwRuntimeLastModuleStatus', record.status);
@@ -2067,6 +2252,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
     effectiveWhen,
     reason,
+    describes: def.describes || null,
+    updates: Array.isArray(def.updates) ? def.updates : null,
     status: 'idle',
     cleanup: null,
     refresh: null,
@@ -2118,6 +2305,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
       effectiveWhen,
       reason,
+      describes: def.describes || null,
+      updates: Array.isArray(def.updates) ? def.updates : null,
       status: 'mounted',
       cleanup: handle.cleanup,
       refresh: handle.refresh,
@@ -2132,6 +2321,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     ctx.registry.set(recordId, record);
     annotateModuleTarget(root, record);
     syncRuntimeModuleSummary(ctx, record);
+    syncActiveModuleLayers(ctx); // for CSS transitions and attentional timing keyed off active runtime layers
     recordModuleAudit(ctx, {
       id: recordId,
       baseId: def.id,
@@ -2141,6 +2331,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       effectiveWhen,
       status: 'mounted',
       reason,
+      describes: record.describes,
+      updates: record.updates,
       loadMs: Math.round(record.loadMs),
       mountMs: Math.round(record.mountMs),
       durationMs: Math.round(record.durationMs),
@@ -2162,6 +2354,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
       effectiveWhen,
       reason,
+      describes: record.describes,
+      updates: record.updates,
       route: ctx.route,
       root,
       loadMs: record.loadMs,
@@ -2181,6 +2375,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
       effectiveWhen,
       reason,
+      describes: def.describes || null,
+      updates: Array.isArray(def.updates) ? def.updates : null,
       status: 'failed',
       cleanup: null,
       refresh: null,
@@ -2204,6 +2400,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       effectiveWhen,
       status: 'failed',
       reason,
+      describes: record.describes,
+      updates: record.updates,
       error: error?.message || String(error),
     });
 
@@ -2611,6 +2809,17 @@ window.__SPW_SITE__ = {
   projections: snapshotProjectionEquations,
   refreshRuntime: () => runtimeCtx && refreshRuntime(runtimeCtx),
   getContext: () => runtimeCtx,
+  // Runtime state + token utilities (high-value for external tools, serialization, and CSS consumers)
+  runtimeTokens: {
+    update: () => runtimeCtx && updateRuntimeStateTokens(runtimeCtx),
+    snapshot: () => runtimeCtx && snapshotRuntimeAsSpellbook(runtimeCtx),
+    getCurrent: () => ({
+      activeLayers: HTML?.dataset?.spwActiveLayers || '',
+      enhancementIntensity: parseFloat(HTML?.style.getPropertyValue('--spw-runtime-enhancement-intensity') || '0'),
+      featureIntensity: parseFloat(HTML?.style.getPropertyValue('--spw-runtime-feature-intensity') || '0'),
+      layerCount: parseInt(HTML?.style.getPropertyValue('--spw-runtime-layer-count') || '0', 10),
+    }),
+  },
 };
 
 if (window.spwRuntimeAudit) {

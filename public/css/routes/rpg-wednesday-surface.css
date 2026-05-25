@@ -8,7 +8,7 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="rpg-wednesday"]) {
-  --rpg-accent: #5d9367;
+  --rpg-accent: var(--semantic-accent, #5d9367);
   --rpg-accent-soft: color-mix(in srgb, var(--rpg-accent) 12%, transparent);
   --rpg-wonder: #b06a5b;
   --spw-main-width: 1280px;

@@ -42,7 +42,7 @@
   --blog-line: rgba(18, 52, 50, 0.14);
   --blog-line-strong: rgba(24, 123, 135, 0.34);
 
-  --blog-accent: hsl(188 64% 32%);
+  --blog-accent: var(--semantic-accent, hsl(188 64% 32%));
   --blog-wonder: hsl(342 58% 38%);
   --blog-spw: hsl(188 64% 32%);
   --blog-draft: hsl(150 54% 30%);
@@ -115,7 +115,7 @@
     --blog-line: rgba(255, 255, 255, 0.14);
     --blog-line-strong: rgba(103, 212, 222, 0.38);
 
-    --blog-accent: hsl(188 68% 62%);
+    --blog-accent: var(--semantic-accent, hsl(188 68% 62%));
     --blog-wonder: hsl(342 66% 66%);
     --blog-spw: hsl(188 68% 62%);
     --blog-draft: hsl(150 58% 58%);

@@ -392,14 +392,15 @@
 .spw-spell-dock-summary:is(:hover, :focus-visible),
 .spw-spell-dock[open] > .spw-spell-dock-summary {
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 5%, transparent);
+  background: color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal))) 8%, transparent);
   outline: none;
 }
 
 .spw-spell-dock-op,
 .spw-spell-dock-count {
-  color: var(--teal, #008080);
+  color: var(--semantic-accent, var(--active-op-color, var(--teal)));
   font-weight: 700;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
 }
 
 .spw-spell-dock-label {
@@ -444,7 +445,7 @@
   border-radius: calc(var(--shell-panel-radius, 0.9rem) - 0.1rem);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.18), transparent 68%),
-    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--semantic-accent, var(--spw-shell-chrome-accent-local)) 6%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
 }
 
@@ -456,7 +457,7 @@
 }
 
 .spw-sample-preview__kind {
-  color: var(--teal, #008080);
+  color: var(--semantic-accent, var(--active-op-color, var(--teal)));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.64rem;
   letter-spacing: 0.08em;
@@ -476,6 +477,19 @@
   color: var(--ink-soft, rgba(14, 18, 20, 0.72));
   font-size: 0.72rem;
   line-height: 1.35;
+}
+
+.spw-sample-preview__confidence {
+  margin: 0;
+  padding: 0.46rem 0.52rem;
+  border: 1px solid color-mix(in srgb, var(--semantic-accent-subtle, var(--line)) 82%, transparent);
+  border-radius: calc(var(--shell-panel-radius, 0.9rem) - 0.22rem);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--semantic-accent, var(--spw-shell-chrome-accent-local)) 7%, transparent), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 92%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.7rem;
+  line-height: 1.36;
 }
 
 .spw-sample-preview__fields {
@@ -508,6 +522,13 @@
   word-break: break-word;
 }
 
+.spw-sample-preview__field--confidence dd,
+.spw-sample-preview__field--inventory dd,
+.spw-sample-preview__field--recover dd {
+  color: color-mix(in srgb, var(--semantic-accent-emphasis, var(--spw-shell-chrome-accent-local)) 68%, var(--ink, #111) 32%);
+  font-weight: 650;
+}
+
 .spw-sample-preview__ancestry {
   display: grid;
   gap: 0.1rem;
@@ -529,48 +550,50 @@
 }
 
 .spw-sample-chip {
+  /* Align with operator-chip + semantic accent system for consistency across chrome */
+  --sample-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--semantic-accent, var(--active-op-color, var(--teal))) 6%);
+  --sample-chip-border: color-mix(in oklab, var(--semantic-accent, var(--active-op-color, var(--teal))) 16%, var(--line, rgba(14,18,20,0.14)) 84%);
+  --sample-chip-ink: var(--ink, rgba(14, 18, 20, 0.92));
+
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  min-height: 1.95rem;
-  padding: 0.26rem 0.62rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 82%, transparent);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 72%),
-    color-mix(in oklab, var(--surface, rgba(255,255,255,0.62)) 96%, var(--spw-shell-chrome-accent-local) 4%);
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  gap: var(--spw-control-gap, 0.28rem);
+  min-height: var(--spw-control-min-height, 2.15rem);
+  padding: var(--spw-control-padding-block, 0.26rem) var(--spw-control-padding-inline, 0.72rem);
+  border: 1px solid var(--sample-chip-border);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
+  background: var(--sample-chip-bg);
+  color: var(--sample-chip-ink);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.68rem;
+  font-size: var(--text-size-chip, 0.82rem);
   letter-spacing: 0.02em;
   white-space: nowrap;
   cursor: pointer;
   transition:
-    border-color 140ms var(--shell-ease),
-    background-color 140ms var(--shell-ease),
-    color 140ms var(--shell-ease),
-    transform 140ms var(--shell-ease),
-    box-shadow 140ms var(--shell-ease);
+    background-color var(--spw-control-transition-fast),
+    border-color var(--spw-control-transition-fast),
+    color var(--spw-control-transition-fast),
+    transform var(--spw-control-transition-fast),
+    box-shadow var(--spw-control-transition-base);
 }
 
 .spw-sample-chip:is(:hover, :focus-visible),
 .spw-sample-chip[aria-pressed="true"] {
-  border-color: color-mix(in srgb, var(--spw-shell-chrome-accent-local) 28%, transparent);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.22), transparent 66%),
-    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  --sample-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--semantic-accent, var(--active-op-color, var(--teal))) 10%);
+  --sample-chip-border: color-mix(in oklab, var(--semantic-accent, var(--active-op-color, var(--teal))) 28%, transparent);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   transform: translateY(-1px);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-shell-chrome-accent-local) 10%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal))) 18%, transparent);
 }
 
 .spw-sample-chip__token {
-  color: var(--teal, #008080);
+  color: var(--semantic-accent, var(--active-op-color, var(--teal)));
   font-weight: 700;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
 }
 
 .spw-sample-chip[data-spw-sample-kind="route"] {
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--teal, #008080) 12%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--semantic-accent, var(--active-op-color, var(--teal))) 12%);
 }
 
 /* ==========================================================================
@@ -2230,13 +2253,14 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
       "sigil toggle"
       "nav nav";
     align-content: start;
-    gap: var(--spw-shell-row-gap, 0.25rem);
-    padding-block: var(--spw-shell-surface-padding-block, 0.35rem);
+    row-gap: 0.32rem;
+    column-gap: 0.5rem;
+    padding-block: var(--spw-shell-surface-padding-block, 0.38rem);
   }
 
   .header-sigil,
   .spw-nav-toggle {
-    padding-inline: 1rem;
+    padding-inline: max(0.85rem, env(safe-area-inset-left));
   }
 
   .spw-nav-toggle {
@@ -2318,15 +2342,220 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
   .site-footer__inner {
     grid-template-columns: 1fr;
+    gap: 0.55rem 0;
+  }
+
+  .site-footer__identity {
+    /* Dense children (cauldron + settings form + architecture) need tighter, consistent rhythm on stack */
+    gap: 0.32rem;
   }
 
   .site-footer__settings {
-    margin-top: 0.65rem;
+    margin-top: 0.45rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 65%, transparent);
   }
 
   .site-footer__nav {
     justify-content: flex-start;
+    padding-top: 0.2rem;
   }
+
+  .site-footer__cauldron-ingredients {
+    flex-wrap: wrap;
+  }
+}
+
+/* Richer cauldron ingredient list — supports the force-gathering / emergence model */
+.site-footer__cauldron-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22rem 0.3rem;
+  margin: 0.3rem 0 0.15rem;
+  font-size: 0.71rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+/* Cauldron ingredients — styled as inspectable semantic chips using shared tokens */
+.cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--component-accent, var(--active-op-color, var(--teal))) 6%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 16%, var(--line, rgba(14,18,20,0.14)) 84%);
+  --cauldron-chip-ink: var(--ink-soft, rgba(14, 18, 20, 0.72));
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spw-control-gap, 0.28rem);
+  min-height: var(--spw-control-min-height, 2.15rem);
+  padding: var(--spw-control-padding-block, 0.26rem) calc(var(--spw-control-padding-inline, 0.68rem) * 0.7);
+  border: 1px solid var(--cauldron-chip-border);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
+  background: var(--cauldron-chip-bg);
+  color: var(--cauldron-chip-ink);
+  font-size: var(--text-size-chip, 0.82rem);
+  line-height: var(--spw-control-line-height, 1.08);
+  white-space: nowrap;
+  transition:
+    background-color var(--spw-control-transition-fast),
+    border-color var(--spw-control-transition-fast),
+    color var(--spw-control-transition-fast),
+    box-shadow var(--spw-control-transition-base),
+    transform var(--spw-control-transition-fast);
+  cursor: default;
+  touch-action: manipulation;
+}
+
+/* Device optimization for cauldron ingredients (larger comfortable tap targets on narrow viewports) */
+@media (max-width: 720px) {
+  .cauldron-ingredient {
+    min-height: 2.4rem;
+    padding: 0.32rem 0.55rem;
+    font-size: 0.78rem;
+  }
+  .cauldron-ingredient-remove {
+    min-width: 1.6rem;
+    min-height: 1.6rem;
+  }
+}
+
+.cauldron-ingredient:hover,
+.cauldron-ingredient:focus-visible {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--component-accent, var(--active-op-color, var(--teal))) 10%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 28%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+.cauldron-ingredient:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, transparent);
+  outline-offset: 1px;
+}
+
+.cauldron-ingredient-op {
+  font-weight: 700;
+  color: var(--active-op-color, var(--component-accent, var(--teal)));
+  opacity: 0.9;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+.cauldron-ingredient-expr {
+  max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+.cauldron-ingredient-meta-group {
+  display: inline-flex;
+  gap: 0.2rem;
+  opacity: 0.7;
+  font-size: 0.72em;
+}
+
+.cauldron-ingredient-meta,
+.cauldron-origin {
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 12%, transparent);
+  font-size: 0.68em;
+  letter-spacing: 0.02em;
+}
+
+.cauldron-origin {
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.cauldron-ingredient-remove {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  opacity: 0.5;
+  font-size: 1.05em;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.15rem;
+  border-radius: 999px;
+  transition: opacity var(--spw-control-transition-fast), color var(--spw-control-transition-fast);
+}
+
+.cauldron-ingredient-remove:hover,
+.cauldron-ingredient-remove:focus-visible {
+  opacity: 1;
+  color: var(--danger, #9d2f2f);
+  background: color-mix(in srgb, var(--danger, #9d2f2f) 12%, transparent);
+}
+
+/* Consistent disabled state for cauldron controls (mix/clear use .operator-chip) */
+.site-footer__cauldron button[disabled],
+.site-footer__cauldron [data-spw-cauldron-action][disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+  filter: saturate(0.6);
+}
+
+/* Header/nav transitional behavior tied to active runtime layers */
+:root[data-spw-active-layers="core"] :where(.site-header, body > header) {
+  --spw-header-opacity-local: 0.7;
+  transition-duration: 80ms;
+}
+
+:root[data-spw-active-layers~="enhancement"] :where(.site-header, body > header) {
+  --spw-header-opacity-local: 0.98;
+}
+
+/* Structures that help the learner stay with the actual combination
+   rather than over-valuing any single mnemonic */
+.cauldron-combination-record {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--spw-shell-chrome-line-local) 65%, transparent);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--surface, rgba(255,255,255,0.65)) 96%, transparent);
+}
+
+.cauldron-section-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 0.35rem;
+}
+
+.cauldron-crystallization {
+  padding-top: 0.5rem;
+  border-top: 1px dashed color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 70%, transparent);
+}
+
+/* Subtle visual reflection of the suggested cast liminality (deeper projection of semantics into the UI) */
+.cauldron-crystallization[data-spw-liminality="deep"] {
+  border-left: 3px solid color-mix(in srgb, var(--semantic-accent, var(--component-accent)) 35%, transparent);
+}
+.cauldron-crystallization[data-spw-liminality="nested"] {
+  border-left: 2px solid color-mix(in srgb, var(--semantic-accent, var(--component-accent)) 25%, transparent);
+}
+
+.cauldron-mnemonic-note,
+.cauldron-test-prompt {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  margin: 0.35rem 0;
+}
+
+.cauldron-mnemonic {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  padding: 0.4rem 0.55rem;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
+
+.cauldron-plus {
+  opacity: 0.5;
+  margin: 0 0.2rem;
 }
 
 @media (max-width: 600px) {
@@ -2526,7 +2755,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 .spw-section-handle,
 .spw-section-handle-shell {
-  --active-op-color: var(--spw-shell-chrome-accent, var(--teal, #008080));
+  --active-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
   position: fixed;
   left: 50%;
   bottom: calc(var(--attention-handle-offset, 1rem) + env(safe-area-inset-bottom));
@@ -2541,7 +2770,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   padding: 0.36rem 0.8rem;
 
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 28%, transparent);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 62%),
     color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, transparent);
@@ -2549,7 +2778,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   -webkit-backdrop-filter: blur(10px) saturate(1.08);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.38) inset,
-    0 6px 18px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, rgba(0, 0, 0, 0.08));
+    0 6px 18px color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 10%, rgba(0, 0, 0, 0.08));
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);

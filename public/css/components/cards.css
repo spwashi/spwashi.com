@@ -12,6 +12,8 @@
   /* Debug / inspection */
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
+
+  /* Component accent now inherits semantic accent family via foundation bridge for consistent theming */
 }
 
 :where(a.frame-card, .frame-card > a:first-child) {
@@ -151,7 +153,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 0.4rem 0.5rem;
+  gap: var(--component-gap-tight, 0.4rem) var(--component-gap-tight, 0.5rem);
   min-width: 0;
   margin-top: auto;
 }
@@ -198,7 +200,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.38rem;
+  gap: var(--spw-list-charge-gap, 0.38rem);
   min-width: 0;
   margin: var(--component-gap-tight) 0 0;
   padding: 0;
@@ -381,15 +383,16 @@
 }
 
 :where([data-spw-emphasis="primary"]) {
-  --component-route-accent: var(--op-action-color, var(--component-accent));
+  /* Primary emphasis leans action-oriented but routes through semantic accent first (see operator-semantics.spw#spell_evolution_note for the shift away from treating raw operator colors as universal surface defaults). */
+  --component-route-accent: var(--semantic-accent, var(--op-action-color, var(--component-accent)));
 }
 
 :where([data-spw-emphasis="secondary"]) {
-  --component-route-accent: var(--op-frame-color, var(--component-accent));
+  --component-route-accent: var(--semantic-accent, var(--op-frame-color, var(--component-accent)));
 }
 
 :where([data-spw-emphasis="tertiary"]) {
-  --component-route-accent: var(--op-ref-color, var(--component-accent));
+  --component-route-accent: var(--semantic-accent, var(--op-ref-color, var(--component-accent)));
 }
 
 :where(.spw-emphasis-tier strong) {
@@ -685,6 +688,18 @@
 :where([data-spw-component-lifecycle="archived"], html[data-spw-component-lifecycle="archived"] [data-spw-component-variant]) {
   filter: saturate(0.78);
   opacity: 0.9;
+}
+
+/* Low-noise treatment for empty or default states — specific wisdom/card extensions only.
+   The base --spw-variant-accent contract + broad opacity lives in foundation.css (components layer).
+   This keeps the repeated rule in one shared location per containment audit guidance. */
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"]) :where(.spw-wisdom-card, .card-sub-links) {
+  opacity: 0.6;
+}
+
+:where([data-spw-empty="true"] .spw-wisdom-card, [data-spw-component-state="empty"] .spw-wisdom-card) {
+  box-shadow: var(--component-shadow-quiet);
+  border-color: color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 70%, transparent);
 }
 
 :where(html[data-spw-module-visuals="on"], html[data-spw-semantic-density="rich"])

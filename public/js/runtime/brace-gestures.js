@@ -312,14 +312,18 @@ function resolveStableId(el) {
    Gesture state + semantic field output
    ========================================================================== */
 
-function setGesture(el, meta, gesture) {
+function setGesture(el, meta, gesture, options = {}) {
   if (!el) return;
+
+  const { source, button } = options;
 
   if (!gesture || gesture === 'neutral') {
     writeDatasetValue(el, 'spwGesture', null);
     writeDatasetValue(el, 'spwCharge', null);
     writeDatasetValue(el, 'spwArmed', null);
     writeDatasetValue(el, 'spwLastGesture', null);
+    writeDatasetValue(el, 'spwGestureSource', null);
+    writeDatasetValue(el, 'spwGestureButton', null);
     writeStyleValue(el, '--charge', null);
     writeStyleValue(el, '--drag-dx', null);
     writeStyleValue(el, '--drag-dy', null);
@@ -332,6 +336,9 @@ function setGesture(el, meta, gesture) {
   writeDatasetValue(el, 'spwGesture', gesture);
   writeDatasetValue(el, 'spwCharge', GESTURE_TO_CHARGE_BUCKET[gesture] || 'active');
   writeStyleValue(el, '--charge', `${CHARGE_BY_GESTURE[gesture] ?? 0}`);
+
+  if (source) writeDatasetValue(el, 'spwGestureSource', source);
+  if (button != null) writeDatasetValue(el, 'spwGestureButton', String(button));
 
   if (gesture === 'armed') {
     writeDatasetValue(el, 'spwArmed', 'true');
@@ -698,7 +705,7 @@ function onPointerDown(event) {
   if (!target) return;
 
   const meta = classifyTarget(target);
-  setGesture(target, meta, 'active');
+  setGesture(target, meta, 'active', { source: 'pointer', button: 0 });
 
   emitBraceEvents(
     ['brace:activated', 'brace:activate'],
@@ -971,7 +978,7 @@ function onKeyUp(event) {
   if (!target) return;
 
   const meta = classifyTarget(target);
-  setGesture(target, meta, 'charging');
+  setGesture(target, meta, 'charging', { source: 'keyboard' });
 
   emitBraceEvents(
     ['brace:discharged', 'brace:discharge'],

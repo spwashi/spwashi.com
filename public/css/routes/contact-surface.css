@@ -31,7 +31,7 @@
   --contact-line: rgba(56, 43, 35, 0.14);
   --contact-line-strong: rgba(116, 82, 63, 0.26);
 
-  --contact-accent: hsl(186 34% 34%);
+  --contact-accent: var(--semantic-accent, hsl(186 34% 34%));
   --contact-accent-2: hsl(330 28% 40%);
   --contact-accent-3: hsl(40 56% 48%);
 
@@ -90,7 +90,7 @@ html[data-spw-color-mode="dark"] [data-spw-surface="contact"] {
   --contact-line: rgba(255, 240, 225, 0.12);
   --contact-line-strong: rgba(209, 164, 134, 0.24);
 
-  --contact-accent: hsl(184 34% 66%);
+  --contact-accent: var(--semantic-accent, hsl(184 34% 66%));
   --contact-accent-2: hsl(334 40% 70%);
   --contact-accent-3: hsl(42 60% 66%);
 
@@ -125,7 +125,7 @@ html[data-spw-color-mode="dark"] [data-spw-surface="contact"] {
     --contact-line: rgba(255, 240, 225, 0.12);
     --contact-line-strong: rgba(209, 164, 134, 0.24);
 
-    --contact-accent: hsl(184 34% 66%);
+    --contact-accent: var(--semantic-accent, hsl(184 34% 66%));
     --contact-accent-2: hsl(334 40% 70%);
     --contact-accent-3: hsl(42 60% 66%);
   }

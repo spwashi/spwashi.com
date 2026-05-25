@@ -10,7 +10,7 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="website"]) {
-  --website-accent: color-mix(in srgb, var(--teal, #008080) 76%, var(--amber, #c58b2a) 24%);
+  --website-accent: var(--semantic-accent, color-mix(in srgb, var(--teal, #008080) 76%, var(--amber, #c58b2a) 24%));
   --website-accent-soft: color-mix(in srgb, var(--website-accent) 14%, transparent);
   --website-accent-quiet: color-mix(in srgb, var(--website-accent) 8%, transparent);
 
@@ -130,7 +130,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
 
 @media (prefers-color-scheme: dark) {
   html[data-spw-color-mode="auto"] :where(body[data-spw-surface="website"]) {
-    --website-accent: hsl(182 38% 66%);
+    --website-accent: var(--semantic-accent, hsl(182 38% 66%));
     --website-accent-soft: color-mix(in srgb, var(--website-accent) 16%, transparent);
     --website-accent-quiet: color-mix(in srgb, var(--website-accent) 10%, transparent);
     --website-ink: rgba(235, 241, 240, 0.94);

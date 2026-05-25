@@ -63,13 +63,20 @@
   --ornament-ease: var(--ease-mechanical, ease);
   --ornament-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
 
-  --ornament-accent: var(--active-op-color, var(--teal));
+  --ornament-accent: var(--semantic-accent, var(--active-op-color, var(--teal)));
+  /* These aliases prefer the new semantic accent tokens from core, falling back
+     to the previous ornament logic. This improves the reference chain while
+     maintaining backward compatibility for any existing local overrides. */
+  --ornament-accent-secondary: var(--semantic-accent-secondary, var(--ornament-accent));
+  --ornament-accent-subtle: var(--semantic-accent-subtle, color-mix(in srgb, var(--ornament-accent) 18%, var(--line, transparent)));
+  --ornament-accent-emphasis: var(--semantic-accent-emphasis, var(--ornament-accent));
+
   --ornament-accent-soft:
     color-mix(in srgb, var(--ornament-accent) 18%, transparent);
   --ornament-line:
     color-mix(in srgb, var(--ornament-accent) 24%, var(--line, transparent));
   --ornament-line-quiet:
-    color-mix(in srgb, var(--ornament-accent) 12%, transparent);
+    color-mix(in srgb, var(--ornament-accent-subtle) 65%, transparent);
   --ornament-surface:
     color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.82)) 90%, transparent);
   --ornament-glow:
@@ -127,15 +134,11 @@
   --ornament-wonder-trail: var(--ornament-wonder-trail, 0);
   --ornament-resonance: var(--ornament-resonance, var(--spw-resonance, 0));
 
-  /* Balance semantics — prefer these for harmonious ornament expression */
+  /* Balance semantics (field equilibrium) — prefer when expressing calm vs charged ornament */
   --ornament-field-balance: var(--field-balance, 0.5);
-  --ornament-semantic-balance: var(--semantic-balance, 0.6);
 
   /* Box */
   min-width: 0;
-
-  /* Example consumption of balance tokens for calmer default ornament */
-  opacity: calc(var(--ornament-opacity-rest) * (0.8 + var(--ornament-semantic-balance) * 0.4));
 
   /* Interaction */
   transition:
@@ -377,6 +380,16 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: var(--ornament-opacity-rest);
+}
+
+/* Example of using the new semantic accent aliases for different visual weights */
+.spw-ornament-kicker[data-accent="secondary"] {
+  color: color-mix(in srgb, var(--ornament-accent-secondary) 70%, var(--ink-soft));
+}
+
+.spw-ornament-kicker[data-accent="subtle"] {
+  color: color-mix(in srgb, var(--ornament-accent-subtle) 80%, var(--ink-soft));
+  opacity: 0.7;
 }
 
 .spw-ornament-kicker::before {
@@ -997,4 +1010,34 @@
     animation: none;
     opacity: 0;
   }
+}
+
+/* ==========================================================================
+   Runtime layer influence on ornament (architectural + computational)
+   ========================================================================== */
+
+/* Enhancement presence makes ornament more responsive and "field-aware" */
+:root[data-spw-active-layers~="enhancement"] :where(
+  .spw-ornament-host,
+  [data-spw-ornament]
+) {
+  --ornament-field-intensity: var(--spw-runtime-enhancement-intensity, 0.85);
+  --ornament-resonance: calc(var(--spw-runtime-enhancement-intensity, 0.85) * 0.65);
+}
+
+/* Feature activity increases wonder-trail and potential */
+:root[data-spw-active-layers~="feature"] :where(
+  .spw-ornament-host,
+  [data-spw-ornament]
+) {
+  --ornament-wonder-trail: calc(var(--spw-runtime-feature-intensity, 0.7) * 0.85);
+}
+
+/* Early/core-only phase: keep ornament restrained and fast */
+:root[data-spw-active-layers="core"] :where(
+  .spw-ornament-host,
+  [data-spw-ornament]
+) {
+  --ornament-field-intensity: 0.22;
+  transition-duration: 60ms;
 }

@@ -435,11 +435,16 @@
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#spell-cauldron-hooks">^"spell_cauldron_hooks"</a>
                     <h2 id="spell-cauldron-hooks-title">Spell And Cauldron Hooks</h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="vertical-align: -4px; margin-left: 0.5em; opacity: 0.7;">
+                        <path d="M3 6h18M5 6v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
                 </header>
-                <p class="frame-note">
-                    Use these as prompt handles, not production promises. A spell names a replayable move. A cauldron
-                    names the gathered ingredients before the move is ready. Each hook should still point to a route,
-                    component, state, or HTML owner.
+                <p class="frame-note" data-spw-interaction="tap-hold" data-spw-learnability="high">
+                    Use these as prompt handles for students of Spw semantics. A <strong data-spw-semantic-expression="spell[behavior]{repeat.move}">spell</strong> names a replayable, inspectable move (tap to cast on desktop, long-press to inspect on mobile). A <strong data-spw-semantic-expression="cauldron[mix]{gather.ingredients}">cauldron</strong> is the holding space for ingredients before the move solidifies.
+                    These hooks make abstract operators concrete and discoverable: curious visitors get immediate reasons to engage; active learners see the progression from gathering (cauldron) to casting (spell).
+                    Each hook should still point to a route, component, state, or HTML owner so the learning transfers back into the surface.
                 </p>
 
                 <div class="panel-grid">

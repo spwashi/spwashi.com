@@ -9,7 +9,7 @@
 
 @layer surface {
   :where(body[data-spw-surface="services"]) {
-    --services-accent: #986134;
+    --services-accent: var(--semantic-accent, #986134);
     --services-accent-cool: #455342;
     --services-glow: #8d945e;
     --spw-main-width: 1160px;

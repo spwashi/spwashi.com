@@ -12,6 +12,17 @@
   align-content: start;
 }
 
+/* Enhanced discoverability for learners and wanderers: clearer grouping and reasons */
+:where(body[data-spw-surface="settings"] .settings-notes-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+}
+
+:where(body[data-spw-surface="settings"] .settings-notes-grid .frame-panel) {
+  border-left: 3px solid var(--line-strong);
+  padding-left: 0.75rem;
+}
+
 :where(body[data-spw-surface="settings"] .settings-section-lead) {
   margin-top: 0.85rem;
   max-inline-size: 68ch;

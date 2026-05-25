@@ -48,6 +48,13 @@
   physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."
 }
 
+^"spell_evolution_note"{
+  ~#context: "When the runtime 'spell' concept was introduced (grounded interaction serialization, checkpoints, replayable navigation units), some surface-level modeling treated operators primarily as hue sources rather than as positional sigils and force markers in a metacognitive physics of composition and liminality. This created a mild semantic drift between the technical 'spell' (site-owned serialization) and the deeper Spw intention of spells as practitioner-owned learned reflexes."
+  correction_direction: "Operators (sigils) are best understood as markers of position, argument structure, and phase (liminality). Composition via braces and sequences is the primary site of meaning. Surface color should route through semantic accent families except where the operator itself is the semantic payload (e.g., explicit per-operator rails or emphasis tiers)."
+  implication_for_learning_science: "This separation supports clearer mental models: learners can distinguish 'the force I am working with' (operator + brace + liminality) from 'the current tonal temperature of this surface' (semantic accent). It reduces inappropriate generalization from one mnemonic or prompt to an entire domain."
+  related: ["site-semantics.spw#composition-spellcasting", "cognitive-surface.spw#practitioner_artist_model", "attention-field.spw"]
+}
+
 ^"operator_physics"{
   ~#thesis: "Operators are not arbitrary symbols. They encode spatial and attentional relationships that can be felt, observed, and built upon. The physics of operators emerges through priming, symmetry, and relational patterning."
 

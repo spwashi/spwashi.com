@@ -37,7 +37,7 @@
   --line-strong: color-mix(in srgb, var(--active-op-border, #1a9999) 34%, var(--line));
 
   /* Local Palette Overrides */
-  --play-accent: var(--active-op-color, #1a9999);
+  --play-accent: var(--semantic-accent, var(--active-op-color, #1a9999));
   --play-accent-soft: color-mix(in srgb, var(--play-accent) 8%, transparent);
   --play-wonder: color-mix(in srgb, #a02a4d 88%, #5c2437);
   --play-wonder-soft: color-mix(in srgb, var(--play-wonder) 12%, transparent);

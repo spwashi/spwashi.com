@@ -1614,9 +1614,9 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   display: inline-flex;
   align-items: center;
   gap: 0.18rem;
-  min-height: 1.9rem;
+  min-height: max(2.05rem, var(--spw-control-min-height, 2.15rem));
   min-width: 0;
-  padding: 0.16rem 0.44rem;
+  padding: calc(var(--spw-control-padding-block, 0.22rem) + 0.02rem) calc(var(--spw-control-padding-inline, 0.48rem) - 0.04rem);
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -1625,6 +1625,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   text-decoration: none;
   contain: paint style;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     border-color 140ms ease,
     background-color 140ms ease,
@@ -1634,8 +1635,8 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .spw-spell-link:is(:hover, :focus-visible),
 .spw-spell-button:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--teal, #008080) 18%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--teal, #008080) 6%);
+  border-color: color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 6%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   outline: none;
   transform: translateY(-1px);
@@ -1643,12 +1644,12 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 .spw-spell-crumb[data-spw-current="true"] .spw-spell-link,
 .spw-spell-crumb[data-spw-current="true"] .spw-spell-button {
-  border-color: color-mix(in srgb, var(--pink, hsl(342 58% 42%)) 18%, transparent);
-  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--pink, hsl(342 58% 42%)) 6%);
+  border-color: color-mix(in srgb, var(--semantic-accent-emphasis, var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))) 22%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--semantic-accent-emphasis, var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))) 8%);
 }
 
 .spw-spell-token {
-  color: var(--teal);
+  color: var(--semantic-accent, var(--active-op-color, var(--teal, #008080)));
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.68rem;
   font-weight: 700;

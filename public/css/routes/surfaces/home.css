@@ -95,7 +95,7 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="home"]) {
-  --component-accent: var(--home-accent-primary);
+  --component-accent: var(--semantic-accent, var(--home-accent-primary));
   --component-surface: var(--home-surface-bg);
   --component-surface-strong: var(--home-surface-bg-strong);
   --component-surface-soft: color-mix(in oklab, var(--home-surface-bg) 76%, transparent);

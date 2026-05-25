@@ -40,21 +40,24 @@
   --card-padding: 1.25rem 1.35rem;
   --card-max-width: 22rem;
 
+  /* Accent bridge for theme + semantic coherence (gentle teal bias preserved for calm support tone) */
+  --payment-accent: var(--semantic-accent, var(--component-accent, var(--teal, #1a9999)));
+
   /* Surface */
   --card-bg:
-    color-mix(in oklab, var(--page-bg, #f8f7f5) 92%, var(--teal, #1a9999) 8%);
+    color-mix(in oklab, var(--page-bg, #f8f7f5) 92%, var(--payment-accent) 8%);
   --card-bg-soft:
     color-mix(in oklab, var(--page-bg, #f8f7f5) 96%, transparent);
   --card-border-color:
-    color-mix(in oklab, var(--teal, #1a9999) 22%, transparent);
+    color-mix(in oklab, var(--payment-accent) 22%, transparent);
   --card-border-strong:
-    color-mix(in oklab, var(--teal, #1a9999) 36%, transparent);
+    color-mix(in oklab, var(--payment-accent) 36%, transparent);
   --card-shadow:
     0 1px 3px rgba(0, 0, 0, 0.07),
     0 4px 16px rgba(0, 0, 0, 0.07),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
   --card-shadow-active:
-    0 0 0 1px color-mix(in oklab, var(--teal, #1a9999) 18%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--payment-accent) 18%, transparent),
     0 10px 28px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
@@ -66,15 +69,15 @@
 
   /* Link items */
   --link-bg:
-    color-mix(in oklab, var(--teal, #1a9999) 7%, transparent);
+    color-mix(in oklab, var(--payment-accent) 7%, transparent);
   --link-bg-hover:
-    color-mix(in oklab, var(--teal, #1a9999) 13%, transparent);
+    color-mix(in oklab, var(--payment-accent) 13%, transparent);
   --link-bg-selected:
-    color-mix(in oklab, var(--teal, #1a9999) 16%, transparent);
+    color-mix(in oklab, var(--payment-accent) 16%, transparent);
   --link-border:
-    color-mix(in oklab, var(--teal, #1a9999) 18%, transparent);
+    color-mix(in oklab, var(--payment-accent) 18%, transparent);
   --link-border-strong:
-    color-mix(in oklab, var(--teal, #1a9999) 35%, transparent);
+    color-mix(in oklab, var(--payment-accent) 35%, transparent);
   --link-radius: 0.6rem;
   --link-padding: 0.6rem 0.85rem;
   --link-min-height: max(2.9rem, var(--touch-target-min, 2.75rem));
@@ -87,9 +90,9 @@
 
   /* Hints + notes */
   --hint-bg:
-    color-mix(in oklab, var(--page-bg, #f8f7f5) 96%, var(--teal, #1a9999) 4%);
+    color-mix(in oklab, var(--page-bg, #f8f7f5) 96%, var(--payment-accent) 4%);
   --note-line:
-    color-mix(in oklab, var(--teal, #1a9999) 14%, transparent);
+    color-mix(in oklab, var(--payment-accent) 14%, transparent);
 
   /* Motion */
   --payment-duration-fast: var(--duration-fast, 120ms);
@@ -152,7 +155,7 @@
   background:
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--teal, #1a9999) 4%, transparent) 0%,
+      color-mix(in oklab, var(--payment-accent) 4%, transparent) 0%,
       transparent 38%
     );
 }
@@ -167,24 +170,24 @@
    ========================================================================== */
 
 .payment-card[data-payment-state="editing"] {
-  --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 28%, transparent);
+  --card-border-color: color-mix(in oklab, var(--payment-accent) 28%, transparent);
 }
 
 .payment-card[data-payment-state="choosing"] {
-  --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 32%, transparent);
+  --card-border-color: color-mix(in oklab, var(--payment-accent) 32%, transparent);
   --payment-calm-blur: 3px;
 }
 
 .payment-card[data-payment-state="ready"] {
-  --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 36%, transparent);
+  --card-border-color: color-mix(in oklab, var(--payment-accent) 36%, transparent);
   --card-shadow:
-    0 0 0 1px color-mix(in oklab, var(--teal, #1a9999) 12%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--payment-accent) 12%, transparent),
     0 6px 24px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .payment-card[data-payment-state="complete"] {
-  --card-border-color: color-mix(in oklab, var(--teal, #1a9999) 42%, transparent);
+  --card-border-color: color-mix(in oklab, var(--payment-accent) 42%, transparent);
 }
 
 .payment-card[data-payment-density="calm"] {

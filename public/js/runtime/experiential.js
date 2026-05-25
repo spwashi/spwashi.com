@@ -31,6 +31,36 @@ const SHELL_MENU_INTENT_EVENT = 'spw:shell-menu-intent';
 const SHELL_MENU_STATE_EVENT = 'spw:shell-menu-state';
 const HEADER_TRACE_CHANGE_EVENT = 'spw:header-trace-change';
 
+/**
+ * Device-aware interaction helpers for learning science and discoverability.
+ * These provide consistent reasons + semantics so uncurious visitors get immediate
+ * value while active learners see clear progression (tap → hold → swipe).
+ */
+function getInteractionHint() {
+  const isCoarse = window.matchMedia?.('(pointer: coarse)').matches;
+  if (isCoarse) {
+    return 'tap to ground, long-press to inspect, swipe to cycle';
+  }
+  return 'click to ground, hold to inspect, swipe or arrow keys to cycle';
+}
+
+function isTouchPrimary() {
+  return window.matchMedia?.('(pointer: coarse)').matches || 'ontouchstart' in window;
+}
+
+const GESTURE_SVGS = Object.freeze({
+  tap: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>',
+  hold: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 6v6l3 3"/></svg>',
+  swipe: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
+  cauldron: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18M5 6v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><circle cx="12" cy="13" r="2.5"/></svg>',
+  spell: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-7z"/></svg>',
+});
+
+function renderGestureAnchor(type, title = '') {
+  const svg = GESTURE_SVGS[type] || GESTURE_SVGS.tap;
+  return `<span class="spw-gesture-anchor" title="${escapeHtml(title || type)}" data-spw-visual-anchor="gesture-${type}">${svg}</span>`;
+}
+
 const BREADCRUMB_ROUTE_REGISTRY = Object.freeze({
   '/': { label: 'Home', note: 'Start or re-enter the site.' },
   '/about/': { label: 'About', note: 'Read the method and the kernel.' },
@@ -339,6 +369,8 @@ function renderSampleDock() {
 
   const selectedIndex = runtime.samplePinnedIndex ?? runtime.sampleSelectedIndex;
   const selected = items[selectedIndex] || items[0];
+  const selectedConfidence = describeLearnerConfidence(selected);
+  const sampleInventory = summarizeSampleInventory(items);
   runtime.samplePreview = dock.querySelector('.spw-sample-preview');
 
   dock.hidden = false;
@@ -346,6 +378,10 @@ function renderSampleDock() {
   dock.dataset.spwSampleCount = String(items.length);
   dock.dataset.spwSampleKind = selected?.kind || 'page';
   dock.dataset.spwSamplePinned = runtime.samplePinnedIndex == null ? 'false' : 'true';
+  dock.dataset.spwLearnerConfidence = selectedConfidence.level;
+  dock.dataset.spwLearnerScope = selectedConfidence.scopeKey;
+  dock.dataset.spwLearnerRecovery = selectedConfidence.recoveryKey;
+  dock.dataset.spwCognitiveInventory = sampleInventory.key;
 
   dock.innerHTML = `
     <summary class="spw-spell-dock-summary spw-sample-dock-summary">
@@ -354,9 +390,18 @@ function renderSampleDock() {
       <span class="spw-spell-dock-count">${escapeHtml(String(items.length))}</span>
     </summary>
     <div class="spw-spell-dock-body spw-sample-dock-body">
-      <p class="spw-sample-dock__lead">Hover, focus, or press and hold to preview. Swipe left or right here to move between the page, features, and nearby routes.</p>
+      <p class="spw-sample-dock__lead" data-spw-interaction-hint="${getInteractionHint()}" data-spw-learning-note="The cauldron shows the specific forces and expressions gathered. Any mix result is one limited crystallization — test it specifically rather than forming broad conclusions about its value.">
+        ${isTouchPrimary()
+          ? 'Tap to ground, long-press to inspect, swipe to cycle between page, features, and nearby routes.'
+          : 'Hover, focus, or hold to preview. Swipe (or use arrows) to move between the page, features, and nearby routes. ' + getInteractionHint()}
+      </p>
+      <div class="spw-gesture-anchors" aria-hidden="true" data-spw-visual-anchor="interaction-semantics">
+        ${renderGestureAnchor('tap', 'tap / click to ground or add a specific expression to the cauldron')}
+        ${renderGestureAnchor('hold', 'hold to inspect the current ingredients or resulting combination')}
+        ${renderGestureAnchor('swipe', 'swipe to cycle topical anchors')}
+      </div>
       <section class="spw-sample-preview" aria-live="polite">
-        ${renderSamplePreview(selected)}
+        ${renderSamplePreview(selected, sampleInventory)}
       </section>
       <div class="spw-sample-chip-rail" aria-label="Sample selectors">
         ${items.map((item, index) => renderSampleChip(item, index, index === selectedIndex)).join('')}
@@ -367,10 +412,11 @@ function renderSampleDock() {
   runtime.samplePreview = dock.querySelector('.spw-sample-preview');
 }
 
-function renderSamplePreview(item) {
+function renderSamplePreview(item, inventory = null) {
   if (!item) return '';
 
   const fields = [];
+  const confidence = describeLearnerConfidence(item);
 
   if (item.kind === 'page') {
     fields.push(['surface', item.surface]);
@@ -392,6 +438,14 @@ function renderSamplePreview(item) {
     fields.push(['route', item.href]);
   }
 
+  fields.push(['confidence', confidence.level]);
+  fields.push(['scope', confidence.scope]);
+  if (inventory?.label) {
+    fields.push(['inventory', inventory.label]);
+  }
+  fields.push(['recover', confidence.recovery]);
+  fields.push(['apply', confidence.application]);
+
   const ancestry = item.ancestry?.length
     ? `<div class="spw-sample-preview__ancestry"><span>ancestry</span><strong>${escapeHtml(item.ancestry.map((entry) => entry.target || entry.feature || entry.role || entry.kind || 'node').join(' → '))}</strong></div>`
     : '';
@@ -402,9 +456,12 @@ function renderSamplePreview(item) {
       <strong class="spw-sample-preview__label">${escapeHtml(item.label || item.target || 'sample')}</strong>
     </div>
     ${item.note ? `<p class="spw-sample-preview__note">${escapeHtml(item.note)}</p>` : ''}
+    <p class="spw-sample-preview__confidence" data-spw-confidence="${escapeAttribute(confidence.level)}">
+      ${escapeHtml(confidence.note)}
+    </p>
     <dl class="spw-sample-preview__fields">
       ${fields.filter(([, value]) => value).map(([label, value]) => `
-        <div class="spw-sample-preview__field">
+        <div class="spw-sample-preview__field spw-sample-preview__field--${escapeAttribute(slugify(label))}">
           <dt>${escapeHtml(label)}</dt>
           <dd>${escapeHtml(value)}</dd>
         </div>
@@ -414,18 +471,74 @@ function renderSamplePreview(item) {
   `;
 }
 
+function summarizeSampleInventory(items = []) {
+  const kinds = [...new Set(items.map((item) => item?.kind).filter(Boolean))];
+  return {
+    key: kinds.length ? kinds.join('-') : 'empty',
+    label: kinds.length ? `${items.length} ${items.length === 1 ? 'sample' : 'samples'}: ${kinds.join(' / ')}` : 'no samples',
+  };
+}
+
+function describeLearnerConfidence(item) {
+  if (item.kind === 'route') {
+    return {
+      level: 'low-risk',
+      note: 'Opening a nearby route only changes where you are reading. The current route stays one browser Back action away.',
+      scope: 'navigation',
+      scopeKey: 'route',
+      recovery: 'Back button or spell path',
+      recoveryKey: 'browser-back',
+      application: 'compare one neighboring idea',
+    };
+  }
+
+  if (item.kind === 'feature') {
+    return {
+      level: 'inspectable',
+      note: 'Previewing a feature is reversible. Hold or focus to inspect its owner before changing how you read it.',
+      scope: item.feature || item.role || 'one feature',
+      scopeKey: 'feature',
+      recovery: 'unpin sample or choose another chip',
+      recoveryKey: 'unpin',
+      application: 'try one component behavior',
+    };
+  }
+
+  return {
+    level: 'recoverable',
+    note: 'This surface is safe to explore: grounding, previewing, and cycling samples do not erase work or commit global changes.',
+    scope: item.surface || 'current page',
+    scopeKey: 'page',
+    recovery: 'reset paths live in Settings',
+    recoveryKey: 'settings-reset',
+    application: 'notice, compare, then return',
+  };
+}
+
 function renderSampleChip(item, index, current = false) {
+  const surface = item.surface || item.family || '';
+  const wonder = item.wonder || '';
+  const context = item.context || item.role || '';
+
+  const commonAttrs = `
+    data-spw-sample-index="${index}"
+    data-spw-sample-kind="${escapeAttribute(item.kind)}"
+    ${surface ? `data-spw-sample-surface="${escapeAttribute(surface)}"` : ''}
+    ${wonder ? `data-spw-sample-wonder="${escapeAttribute(wonder)}"` : ''}
+    ${context ? `data-spw-sample-context="${escapeAttribute(context)}"` : ''}
+    data-spw-interaction="tap-hold"
+  `.trim();
+
   if (item.kind === 'route') {
     return `
       <button
         class="spw-sample-chip"
         type="button"
-        data-spw-sample-index="${index}"
-        data-spw-sample-kind="route"
+        ${commonAttrs}
         data-spw-sample-href="${escapeAttribute(item.href)}"
         aria-label="${escapeAttribute(`Open ${item.label}`)}"
         ${current ? 'aria-pressed="true"' : ''}>
-        <span class="spw-sample-chip__token">→</span>
+        <span class="spw-sample-chip__token" data-spw-operator="frame">→</span>
         <span class="spw-sample-chip__label">${escapeHtml(item.label)}</span>
       </button>
     `;
@@ -435,8 +548,7 @@ function renderSampleChip(item, index, current = false) {
     <button
       class="spw-sample-chip"
       type="button"
-      data-spw-sample-index="${index}"
-      data-spw-sample-kind="${escapeAttribute(item.kind)}"
+      ${commonAttrs}
       aria-label="${escapeAttribute(`Preview ${item.label}`)}"
       ${current ? 'aria-pressed="true"' : ''}>
       <span class="spw-sample-chip__token">${escapeHtml(item.kind === 'page' ? 'page' : 'feature')}</span>

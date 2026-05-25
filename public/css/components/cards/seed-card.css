@@ -26,7 +26,7 @@
   --seed-surface-opacity: calc(0.92 + (var(--card-charge) * 0.04));
   --seed-border-alpha: calc(0.10 + var(--card-charge) * 0.18);
 
-  --seed-accent: var(--op-frame-color, var(--teal, #008080));
+  --seed-accent: var(--semantic-accent, var(--op-frame-color, var(--component-accent, var(--teal, #008080))));
   --seed-accent-soft:
     color-mix(in srgb, var(--seed-accent) 18%, transparent);
   --seed-accent-quiet:

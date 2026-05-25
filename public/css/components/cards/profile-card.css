@@ -34,7 +34,7 @@
 
 .profile-card {
   --card-charge: 0;
-  --profile-accent: var(--active-op-color, var(--teal));
+  --profile-accent: var(--semantic-accent, var(--active-op-color, var(--component-accent, var(--teal))));
   --profile-accent-soft:
     color-mix(in srgb, var(--profile-accent) 12%, transparent);
   --profile-accent-line:
@@ -535,7 +535,7 @@
 .profile-wizard {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--surface-gap, 1rem);
+  gap: var(--spw-surface-gap, var(--component-gap, 1rem));
   align-items: start;
 }
 

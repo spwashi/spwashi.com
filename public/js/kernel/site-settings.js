@@ -1229,7 +1229,7 @@ const buildPersistenceRegistries = () => ([
     label: 'Cauldron ingredients',
     description: 'Captured expressions waiting to be mixed into a prompt or seed.',
     scope: 'composition scratch register',
-    source: 'composition spell',
+    source: 'cauldron',
     storageKey: CAULDRON_STORAGE_KEY,
     read() {
       const items = safeParseStorageJson(CAULDRON_STORAGE_KEY, []);

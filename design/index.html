@@ -61,6 +61,9 @@
 
                 <p class="spec-kicker">Design / Coordination / Rendering Context</p>
                 <h1 id="design-hub-title">Design should read like a playable instrument panel for discoverability, testing, and tuning.</h1>
+                <p class="frame-note" data-spw-wonder-entry="passive-curiosity" data-spw-interaction="tap-hold-swipe">
+                    For someone with passive curiosity: wander in, tap a card or spoke to test a feature in context, hold to inspect the underlying component anatomy and Spw attributes, swipe or use the sample dock to evaluate runtime state across nearby surfaces. No commitment — every element gives a clear reason to engage and an easy path back to the hub.
+                </p>
 
                 <p id="design-hub-description">
                     This is the route for turning a vibe into an accountable structure. Use it when the question is not
@@ -128,7 +131,7 @@
                         <li><a href="/design/palettes/"><strong>Palette seeds</strong><span>Browse color, material, spell, cauldron, and lighting hooks before promoting tokens.</span></a></li>
                         <li><a href="/topics/software/"><strong>Software</strong><span>Compare the same landmark pattern in a theory page that teaches HTML and runtime structure.</span></a></li>
                         <li><a href="/about/website/"><strong>Website field guide</strong><span>Read the route that explains the broader site grammar and how pages stay connected.</span></a></li>
-                        <li><a href="/settings/#semantic-settings"><strong>Semantic settings</strong><span>Tune density, perspective, and runtime emphasis while keeping the page structure legible.</span></a></li>
+                        <li><a href="/settings/#semantic-settings" data-spw-interaction="tap-hold" data-spw-component-anatomy="runtime-state"><strong>Semantic settings</strong><span>Tap to tune density/perspective/runtime emphasis (test a feature instantly). Hold to inspect the live Spw state of the current surface. Perfect low-friction entry for evaluating runtime behavior from the hub.</span></a></li>
                     </ul>
                 </aside>
 
@@ -200,11 +203,13 @@
                     <a class="operator-chip" href="/topics/math/statistical-analysis/">~ statistics</a>
                     <a class="operator-chip" href="/topics/math/scale-intuition/">^ scale</a>
                 </nav>
-                <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-feature="design-tuning-links" data-spw-semantic-cluster="design settings qa component-lifecycle">
+                <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-feature="design-tuning-links" data-spw-semantic-cluster="design settings qa component-lifecycle" data-spw-wonder-hub="passive-curiosity">
                     <header class="spw-settings-cluster__header">
                         <p class="eyebrow">Design tuning</p>
                         <h3 class="spw-settings-cluster__title">Use these spokes to inspect component motifs under different region frames.</h3>
-                        <p class="spw-settings-cluster__copy">These links are configuration recipes for visual QA. They change lighting, spacing, layout, and lifecycle names through query parameters, so the hub stays readable while each spoke proves a different condition.</p>
+                        <p class="spw-settings-cluster__copy">Tap a tuning link to instantly test a feature or evaluate runtime state in context. Hold to inspect the underlying Spw anatomy. These are low-friction wonder entries — no commitment, easy path back via the experiential spell path or sample dock.
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align:-2px;opacity:0.6;margin-left:0.3em;" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>
+                        </p>
                     </header>
                     <div class="spw-settings-cluster__actions">
                         <a class="operator-chip" data-spw-link-intent="query" href="?layout=reading&amp;lighting=balanced&amp;lifecycle=stable">stable reading</a>
@@ -228,6 +233,7 @@
                     styling. Bloom asks which small detail needs heat before it becomes visible. Deglaze asks what
                     residue should be recovered instead of discarded. Fold asks how to integrate without flattening.
                     Each answer can become a shopping list, a mnemonic character, or a scene prompt for RPG Wednesday.
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-2px;opacity:0.55;margin-left:0.4em;" aria-hidden="true" title="Tap to explore anatomy, hold to inspect Spw attributes"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
                 </p>
                 <p class="frame-note" data-spw-semantic-expression="interface[field-guide]{handle.not.widget}">
                     The design surface should not read like a generic UI inventory. A control can be a handle, a route
@@ -830,13 +836,13 @@ spwCompose.inspect('#lab-behavior');</code></pre>
                     <a class="frame-sigil" href="#component-anatomy">^"component_options"</a>
                     <h2>Component Option Register</h2>
                 </header>
-                <p class="frame-note">A utility to break down how surface options relate to underlying structures. Instead of asking "what should it look like", a design team can ask "what materials and states map to its purpose?"</p>
+                <p class="frame-note" data-spw-component-anatomy="learnability" data-spw-interaction="tap-hold">A utility to break down how surface options relate to underlying structures. Tap any link or card to test the anatomy in context; hold (or long-press on mobile) to inspect the Spw attributes and runtime state. This turns passive curiosity into low-friction learning: wander the hub, probe a component, evaluate how it behaves, then navigate back via the spell path or sample dock.</p>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-component-anatomy="slots" data-spw-interaction="tap-hold">
                         <p class="frame-note">structural constraints</p>
                         <h3><a href="/design/slots/">The Universal Slots</a></h3>
-                        <p>Components expect a standard slot sequence. Reusing semantic slots keeps the DOM inspectable.</p>
+                        <p>Components expect a standard slot sequence. Reusing semantic slots keeps the DOM inspectable. Tap the link to see the anatomy live; hold to reveal the data attributes that make each slot queryable and learnable.</p>
                         <ul>
                             <li><strong>header</strong>: Sigil, title, context pills</li>
                             <li><strong>meta</strong>: Timestamps, provenance, hints</li>
@@ -871,9 +877,10 @@ spwCompose.inspect('#lab-behavior');</code></pre>
                         </ul>
                     </article>
                     
-                    <article class="frame-panel">
+                    <article class="frame-panel" data-spw-gesture-learnability="tap-hold-swipe" data-spw-component-anatomy="state">
                         <p class="frame-note">interaction language</p>
                         <h3><a href="/design/affordance/">State & Affordance</a></h3>
+                        <p class="frame-note" style="font-size:0.85em;opacity:0.8;">Tap to trigger, hold to reveal the data-spw anatomy and current runtime values, swipe to compare states. Designed for passive entry and quick evaluation.</p>
                         <p>How a block communicates what you can do to it before you interact.</p>
                         <ul>
                             <li><strong>read</strong>: Stable layout with no hover lifts</li>

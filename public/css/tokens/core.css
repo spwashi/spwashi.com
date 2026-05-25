@@ -20,11 +20,39 @@
    8. Developmental climate interface
    9. Boonhonk / taste combinatorics
    10. Runtime density, dark mode, contrast, and reduced motion
+
+   Token System Balance Principles
+   - Primitive scales remain as few and stable as possible.
+   - Semantic aliases are introduced only when they provide clear expressive or cognitive value.
+   - Runtime state properties (@property) are preferred for dynamic, inspectable concerns over static magic numbers.
+   - "Balance" in the token system is maintained through clear categorization, consistent naming, and separation of visual, semantic, and behavioral concerns rather than through generic numeric dials.
+   - Surfaces should prefer composing from central semantic tokens (operator colors, --active-op-color, field tokens) over proliferating local *-accent tokens. Local accents are acceptable for strong route identity but should still reference central tokens as fallbacks where possible.
+   - Ornament and effects layers should consume the ornament field visualization tokens and field-balance rather than re-inventing parallel state.
    ========================================================================== */
 
 
 /* ==========================================================================
    1. Registered Runtime State Properties
+   --------------------------------------------------------------------------
+   These @property declarations define the core runtime state that drives
+   much of the site's adaptive behavior (wonder, attention, collection,
+   resonance, etc.).
+
+   Cascading & Reference Logic Notes:
+   - Most field-related properties use `inherits: true` so they naturally
+     cascade from ancestors. This supports the diffusive attention-field
+     model (see attention-field.spw).
+   - A few early properties (`--charge`, `--spw-valence`, `--spw-resonance`)
+     use `inherits: false` because they are frequently written directly
+     onto specific elements by JS for performance or to create isolated
+     interaction contexts. Consumers should treat them as local-first.
+   - Token references throughout the CSS use layered fallbacks:
+       var(--semantic-accent, var(--active-op-color, var(--teal)))
+     This pattern provides robustness while allowing progressive override
+     from data attributes, surface-specific CSS, or JS.
+   - When adding new runtime state, prefer `inherits: true` unless there
+     is a clear reason (performance, isolation, or explicit per-element
+     control) to use `inherits: false`.
    ========================================================================== */
 
 @property --active-op-color {
@@ -174,21 +202,36 @@
 }
 
 /* Field balance: equilibrium between resonance (outward pull) and collection/ground (inward stability).
-   Useful for ornament and effects to express "calm vs charged" without hard-coding numbers. */
+   Useful for ornament and effects to express "calm vs charged" without hard-coding numbers.
+
+   This token is designed to be set by JS (wonder-memory, attention-architecture, etc.)
+   and read by CSS. Because it inherits, a value set on a parent can naturally
+   influence descendant ornament without per-element JS writes. */
 @property --field-balance {
   syntax: "<number>";
   inherits: true;
   initial-value: 0.5;
 }
 
-/* Semantic balance: recommended equilibrium between semantic density and visual breathing room.
-   0 = maximal semantic compression, 1 = maximal visual lightness. */
-@property --semantic-balance {
+/* Runtime module layer influence tokens — driven by data-spw-active-layers on root.
+   These allow CSS to react to which parts of the JS runtime are currently live,
+   supporting smoother transitions, attentional modulation, and "computational"
+   awareness of module cost / presence without per-module selectors everywhere. */
+@property --spw-runtime-enhancement-intensity {
   syntax: "<number>";
   inherits: true;
   initial-value: 0.6;
 }
-
+@property --spw-runtime-feature-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.4;
+}
+@property --spw-runtime-layer-count {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 2;
+}
 
 /* ==========================================================================
    2. Primitive Scales
@@ -220,9 +263,6 @@
   --spw-component-gap-tight: 0.48rem;
   --spw-component-gap-loose: 1.08rem;
   --spw-component-gap-roomy: 1.42rem;
-
-  /* Recommended balanced default for most components (respects semantic-balance) */
-  --spw-component-gap-balanced: var(--spw-component-gap);
 
   --spw-component-pad: 0.84rem;
   --spw-component-pad-tight: 0.65rem;
@@ -715,6 +755,31 @@
   --op-meta-color: hsl(220 34% 36%);
   --op-meta-border: hsla(220, 34%, 36%, 0.2);
   --op-meta-bg-soft: rgba(236, 241, 255, 0.68);
+
+  /* Recommended semantic accent for surfaces that want a primary accent
+     without creating yet another local token. Falls back to the active
+     operator color but can be tuned per surface via data attributes or
+     the ornament field model.
+
+     Reference logic: semantic → active operator → hard teal fallback.
+     This three-layer fallback is intentional for maximum resilience. */
+  --semantic-accent: var(--active-op-color, var(--teal));
+
+  /* Secondary semantic accent — provides a clear second level of visual
+     weight within the same semantic system. Useful for contrast within
+     cards, sections, or when a surface needs two related but distinct
+     accent voices. */
+  --semantic-accent-secondary: var(--op-topic-color, color-mix(in srgb, var(--semantic-accent) 75%, var(--ink-soft)));
+
+  /* Subtle semantic accent — low-salience version for borders, faint
+     highlights, or background accents. Helps maintain visual hierarchy
+     without competing with the primary semantic accent. */
+  --semantic-accent-subtle: color-mix(in srgb, var(--semantic-accent) 18%, var(--line, transparent));
+
+  /* Emphasis semantic accent — higher salience version for drawing
+     attention within a semantic context (e.g., active states, key
+     calls to action, or highlighted content). */
+  --semantic-accent-emphasis: var(--op-action-color, color-mix(in srgb, var(--semantic-accent) 85%, var(--ink-strong)));
 
   --op-normalize-color: hsl(95 28% 34%);
   --op-normalize-border: hsla(95, 28%, 34%, 0.2);

@@ -262,6 +262,14 @@
     "spw:shell-menu-state emits the current shell snapshot",
     "spw:shell-menu-intent requests toggle | open | close | settle | focus without requiring direct module coupling"
   ]
+
+  ^"refinement_2026_shell_attentional_tokens"{
+    ~#note: "Harmonized shell chrome, menu topologies, spell breadcrumbs, and section locomotion handle with semantic accent family and control tokens."
+    change: "Replaced raw teal/pink literals in .spw-spell-crumb / .spw-spell-link and section-handle accents with var(--semantic-accent, var(--active-op-color, ...)) chains + --semantic-accent-emphasis for current/settled states. Mobile header stacking (sigil+toggle / full-width nav grid) and crumb min-height/padding now route through --spw-control-* and safe-area tokens for device spacing and touch utility."
+    meaning: "The header nav, toggle disclosure field (drawer-field/screen-field topologies), cognitive spell-path breadcrumbs, and mobile region locomotion handle now project the same attentional/liminal semantics as cauldron chips, spell dock, and brace gestures. Navigation surfaces feel like sigil fields rather than administrative chrome."
+    consequence: "Improved layout breathing between header regions on narrow viewports; breadcrumbs and handles carry higher inspectable utility and visible consequence on interaction without new contracts."
+    aligns_with: "operator-as-sigil model, Token System Balance Principles, component empty/default variants, data-spw-gesture consequence, liminality axes"
+  }
 }
 
 ^"page_locomotion_handle"{

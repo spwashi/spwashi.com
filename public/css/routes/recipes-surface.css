@@ -9,7 +9,7 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="recipes"]) {
-  --recipes-accent: #2d7a72;
+  --recipes-accent: var(--semantic-accent, #2d7a72);
   --recipes-ember: #a86132;
   --recipes-gold: #c59752;
   --spw-main-width: 1160px;
@@ -70,7 +70,7 @@
 }
 
 html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
-  --recipes-accent: #8dc4ba;
+  --recipes-accent: var(--semantic-accent, #8dc4ba);
   --recipes-ember: #d39a6b;
   --recipes-gold: #d2b06d;
   --recipes-ink: rgba(240, 235, 227, 0.94);

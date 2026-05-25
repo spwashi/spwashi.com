@@ -47,11 +47,17 @@
   --component-frame-shadow: var(--spw-depth-frame-shadow, var(--component-shadow));
   --component-frame-shadow-active: var(--spw-depth-frame-shadow-active, var(--component-shadow-active));
 
-  /* Accent */
-  --component-accent: var(--active-op-color, var(--teal, #008080));
+  /* Accent — prefer semantic accent family for theme coherence across routes and ornament projection.
+     Falls back through active-op-color (runtime) then teal primitive. */
+  --component-accent: var(--semantic-accent, var(--active-op-color, var(--teal, #008080)));
   --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
   --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
   --component-accent-wash: color-mix(in srgb, var(--component-accent) 8%, transparent);
+
+  /* Semantic accent aliases for component contexts (secondary weight, subtle wash, emphasis) */
+  --component-accent-secondary: var(--semantic-accent-secondary, color-mix(in srgb, var(--component-accent) 72%, var(--ink-soft, var(--component-accent)) 28%));
+  --component-accent-subtle: var(--semantic-accent-subtle, color-mix(in srgb, var(--component-accent) 18%, transparent));
+  --component-accent-emphasis: var(--semantic-accent-emphasis, var(--component-accent));
 
   /* Route accent */
   --component-route-accent: var(--component-accent);
@@ -98,6 +104,16 @@
   --component-layer-raised: 1;
   --component-layer-overlay: 2;
 }
+
+/* Component spacing/layout review notes (2026-04 context):
+   - Tokens map from core primitives + semantic aliases; prefer these over magic numbers in cards.
+   - Container-type: inline-size applied broadly for @container queries (see frames.css, content.css examples).
+   - Fluid rhythm via clamp + auto-fit minmax + --grid-min-* thresholds handles most device sizes.
+   - Specialty vessels (seed/profile/payment) retain characterful local pads/gaps but now bridge accent family.
+   - Field-balance and ornament tokens inherit naturally; card [data-*charge] states can consume for projection if extended.
+   - Repeated gap/pad clusters normalized to --component-gap-* / --spw-list-* where low risk.
+   - No new generic numeric dials introduced; specific grounded tokens preferred per core balance principles.
+*/
 
 
 /* ==========================================================================
@@ -374,6 +390,19 @@ header.frame-heading > :is(h1, h2, h3) {
   justify-content: flex-start;
 }
 
+/* Low-visual-weight contract for empty/default component states.
+   Reduces noise for placeholder or initial UI without hiding structure.
+   Families (cards, frames, controls, handles) extend or opt-in via selectors.
+   Routes through --spw-variant-accent (see cards.css for example usage). */
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"]) {
+  --spw-variant-accent: color-mix(in srgb, var(--spw-variant-accent, var(--component-accent, var(--semantic-accent, var(--active-op-color, var(--teal))))) 32%, var(--line, rgba(14,18,20,0.14)) 68%);
+}
+
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"])
+  :where(.frame-sigil, .spw-component-tag, .spw-guide-chip, .operator-chip[data-spw-nav-tokenized]) {
+  opacity: 0.58;
+}
+
 
 /* ==========================================================================
    4. Module semantics
@@ -461,6 +490,19 @@ header.frame-heading > :is(h1, h2, h3) {
 
 :where([data-spw-module-evaluates~="spacing-semantics"]) {
   --spw-perspective-weight: 0.62;
+}
+
+/* Map active runtime layers into computational/attentional tokens for CSS consumers */
+:root[data-spw-active-layers] {
+  --spw-runtime-layer-count: 2;
+}
+:root[data-spw-active-layers~="enhancement"] {
+  --spw-runtime-enhancement-intensity: 0.85;
+  --spw-runtime-layer-count: 3;
+}
+:root[data-spw-active-layers~="feature"] {
+  --spw-runtime-feature-intensity: 0.7;
+  --spw-runtime-layer-count: calc(var(--spw-runtime-layer-count, 2) + 1);
 }
 
 :where(html[data-spw-space-motion="fold"]) :where([data-spw-module-evaluates~="spacing-semantics"]) {

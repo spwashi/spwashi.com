@@ -9,7 +9,7 @@
    ========================================================================== */
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) {
-  --design-surface-accent: color-mix(in srgb, var(--teal, #008080) 62%, var(--amber, #c58b2a) 38%);
+  --design-surface-accent: var(--semantic-accent, color-mix(in srgb, var(--teal, #008080) 62%, var(--amber, #c58b2a) 38%));
   --design-surface-accent-strong: color-mix(in srgb, var(--design-surface-accent) 82%, #214e76 18%);
   --design-surface-accent-warm: color-mix(in srgb, var(--design-surface-accent) 72%, #8e5e2c 28%);
   --design-surface-ink: rgba(14, 18, 20, 0.94);

@@ -30,7 +30,7 @@
   --line-strong: rgba(124, 77, 55, 0.28);
   --line-accent: rgba(116, 67, 95, 0.26);
 
-  --craft-accent: hsl(334 34% 38%);
+  --craft-accent: var(--semantic-accent, hsl(334 34% 38%));
   --craft-accent-soft: hsla(334, 34%, 38%, 0.10);
   --craft-rose-ink: hsl(344 30% 42%);
   --craft-teal: hsl(186 38% 30%);

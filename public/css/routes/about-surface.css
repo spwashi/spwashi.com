@@ -36,7 +36,7 @@
   --about-line-strong: rgba(98, 76, 64, 0.24);
   --about-line-accent: rgba(24, 123, 135, 0.20);
 
-  --about-accent: hsl(186 34% 34%);
+  --about-accent: var(--semantic-accent, hsl(186 34% 34%));
   --about-accent-2: hsl(28 46% 40%);
   --about-accent-3: hsl(334 22% 40%);
   --about-accent-soft: hsla(186, 34%, 34%, 0.08);
@@ -98,7 +98,7 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] {
   --about-line-strong: rgba(209, 164, 134, 0.22);
   --about-line-accent: rgba(132, 204, 212, 0.18);
 
-  --about-accent: hsl(184 34% 66%);
+  --about-accent: var(--semantic-accent, hsl(184 34% 66%));
   --about-accent-2: hsl(32 54% 68%);
   --about-accent-3: hsl(336 28% 68%);
 
@@ -135,7 +135,7 @@ html[data-spw-color-mode="dark"] [data-spw-surface="about"] {
     --about-line-strong: rgba(209, 164, 134, 0.22);
     --about-line-accent: rgba(132, 204, 212, 0.18);
 
-    --about-accent: hsl(184 34% 66%);
+    --about-accent: var(--semantic-accent, hsl(184 34% 66%));
     --about-accent-2: hsl(32 54% 68%);
     --about-accent-3: hsl(336 28% 68%);
   }

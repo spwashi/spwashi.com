@@ -54,5 +54,13 @@
   counterexample: "A surface invents a new brace pattern for every page, so no one learns the grammar and nothing resonates."
 }
 
+^"gesture_charge_and_interaction_reflection"{
+  ~#note: "Braces function as a novel, inspectable UI primitive: gestures accumulate charge and write rich state for reflection, learning, and replay."
+  thesis: "Pointer (tap/hold/drag with primary/secondary button) and keyboard (tab/enter) gestures on brace targets produce differentiated charge and source data, enabling objective/subjective flow awareness, L/R distinction, and state reflection without external tooling."
+  current: "brace-gestures.js tracks charging/active/armed/projecting/committed with CHARGE_BY_GESTURE values; writes data-spw-gesture, data-spw-charge, data-spw-gesture-source (pointer|keyboard), data-spw-gesture-button (centralized via setGesture with proper neutral-path cleanup for transient interaction metadata); projects to field --spw-field-* hormones and --charge. Resolved semantic attrs + liminality already flow from form/brace metadata."
+  extension_direction: "Charge buckets or intensities can vary by gesture source/button and by data-spw-brace (objective vs subjective) for distinct 'return values' or copy affordances. Braces thus serve as live mirrors of attentional physics and metacognitive position."
+  aligns_with: "liminality axes, operator-as-sigil, cognitive-navigation dimensions, attention-field projection, privacy-centric local state (no server roundtrips)"
+}
+
 @site_semantics: ~"./site-semantics.spw"
 @operator_semantics: ~"./operator-semantics.spw"

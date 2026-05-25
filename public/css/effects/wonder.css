@@ -789,7 +789,49 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 }
 
 /* ==========================================================================
-   15. Reduced motion
+   15. Runtime layer attentional polish (data-spw-active-layers driven)
+   ========================================================================== */
+
+/* When enhancement layer is active, boost resonance and collection cues for better attention on dynamic content */
+html[data-spw-active-layers~="enhancement"] :where(
+  [data-spw-wonder-state],
+  .spw-wonder-accent,
+  .intent-cluster,
+  .frame-card[data-spw-feature]
+) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * (1 + var(--spw-runtime-enhancement-intensity, 0.6) * 0.4));
+  transition-duration: calc(280ms + (var(--spw-runtime-enhancement-intensity, 0.6) * 120ms));
+}
+
+/* During heavy feature loading, soften aggressive transitions for calmer attentional experience */
+html[data-spw-active-layers~="feature"]:not([data-spw-active-layers~="enhancement"]) :where(
+  .spw-delight,
+  [data-spw-delight],
+  .wonder-action
+) {
+  transition-duration: 180ms;
+  animation-duration: 1.2s;
+}
+
+/* Core-only early load: reduce visual noise until more layers are ready */
+html[data-spw-active-layers="core"] :where(
+  .spw-wonder-accent,
+  [data-spw-wonder-state="resonant"]
+) {
+  opacity: 0.6;
+  transition: none;
+}
+
+/* Computational modulation: higher layer count = slightly more expressive wonder (architectural hook) */
+:root {
+  --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.08);
+}
+[data-spw-wonder-state] {
+  animation-duration: calc(1.8s / var(--spw-wonder-layer-mod, 1));
+}
+
+/* ==========================================================================
+   16. Reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

@@ -8,7 +8,7 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="topics"]) {
-  --topics-accent: #2a504b;
+  --topics-accent: var(--semantic-accent, #2a504b);
   --topics-warm: #9e592b;
   --spw-main-width: 1180px;
   --topics-ink: rgba(24, 30, 29, 0.94);
