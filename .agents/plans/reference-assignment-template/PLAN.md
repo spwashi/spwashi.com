@@ -101,6 +101,35 @@ Runtime projection:
 - The same attributes can be focused as nearby variants, captured as cauldron ingredients, and grounded as collected vocabulary.
 - Keep values short and searchable because they become traversal keys, spell expressions, and collection labels.
 
+## Learnable Transformation Attributes
+
+Use these when a term should become a practice object instead of only a label:
+
+- `data-spw-recognition`: what the learner should notice first.
+- `data-spw-operation`: what the concept does.
+- `data-spw-failure-mode`: how the concept breaks or misleads.
+- `data-spw-adjacent`: nearby ideas worth moseying toward.
+- `data-spw-contrast`: what the concept is not.
+- `data-spw-practice`: routes or anchors where the learner can try it.
+- `data-spw-proficiency`: `novice`, `intermediate`, `advanced`, or `expert`.
+
+Good shape:
+
+```html
+<article
+  data-spw-concept="emulsion"
+  data-spw-domain="materials"
+  data-spw-grounding="vinaigrette-component"
+  data-spw-behavior="bind"
+  data-spw-recognition="distinct-but-bound"
+  data-spw-operation="bind-unlike"
+  data-spw-failure-mode="split-emulsion"
+  data-spw-contrast="homogenization"
+  data-spw-proficiency="intermediate">
+```
+
+The plain rule: a useful term should become a playable relation. A learner should be able to notice it, ground it, compare it, try it, explain it, and return to it with more context.
+
 ## Good Assignment Examples
 
 - `operator-chip-invite`: compare operator chips across three routes and tune one hover/focus behavior.

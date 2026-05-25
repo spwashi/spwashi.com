@@ -662,6 +662,34 @@ function buildSemanticDetail(el, overrides = {}) {
       overrides.realization
       ?? el.dataset.spwRealization
       ?? null,
+    recognition:
+      overrides.recognition
+      ?? el.dataset.spwRecognition
+      ?? null,
+    operation:
+      overrides.operation
+      ?? el.dataset.spwOperation
+      ?? null,
+    failureMode:
+      overrides.failureMode
+      ?? el.dataset.spwFailureMode
+      ?? null,
+    adjacent:
+      overrides.adjacent
+      ?? el.dataset.spwAdjacent
+      ?? null,
+    contrast:
+      overrides.contrast
+      ?? el.dataset.spwContrast
+      ?? null,
+    practice:
+      overrides.practice
+      ?? el.dataset.spwPractice
+      ?? null,
+    proficiency:
+      overrides.proficiency
+      ?? el.dataset.spwProficiency
+      ?? null,
     group:
       overrides.group
       ?? el.dataset.spwGroundGroup
