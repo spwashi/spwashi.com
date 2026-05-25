@@ -32,3 +32,17 @@ SPW_TOOL_ROOT_OVERRIDE="$PWD/.spw/_workbench"
 
 The existing local workflow note at `.agents/workflows/commit-review.md`
 remains the site-specific commit-gate adapter.
+
+## Active Plan Tracks
+
+The current stable planning set lives under `.agents/plans/`:
+
+- `css-architecture-readability/PLAN.md`
+- `color-motion/PLAN.md`
+- `midjourney-design-concepts/PLAN.md`
+
+For the directory index and handoff notes, see `.agents/plans/README.md`.
+Historical notes that have been superseded live under `.agents/plans/archive/`.
+
+Use these as the canonical starting points for CSS architecture, color and motion tuning, and Midjourney-inspired design studies.
+The plan index also separates the broader active backlog from archived notes so legacy workstreams stay visible without competing with the canonical tracks.
