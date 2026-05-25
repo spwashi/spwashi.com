@@ -7,79 +7,349 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Numerical Methods: Approximation, Stepping, Iteration</title>
-    <meta name="description" content="A continuation stub for numerical methods: Euler stepping, Newton iteration, discretization, and approximation literacy when exact formulas are not enough.">
+    <title>Spwashi • Numerical Methods: Approximation, Stability, and Stepping</title>
+    <meta name="description" content="Intuition-first field notes on numerical approximation, Euler stepping, Newton-Raphson iteration, and stability thresholds, with a portable interactive logistic growth visualizer.">
     <link rel="stylesheet" href="/public/css/style.css">
     <script type="module" src="/public/js/site.js"></script>
+    <script type="module" src="/public/js/modules/math-diagrams.js?v=0.0.1"></script>
     <link rel="canonical" href="https://spwashi.com/topics/math/numerical-methods/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Spwashi • Numerical Methods: Approximation, Stepping, Iteration"/>
-    <meta property="og:description" content="A continuation stub for numerical methods: Euler stepping, Newton iteration, discretization, and approximation literacy when exact formulas are not enough."/>
+    <meta property="og:title" content="Spwashi • Numerical Methods: Approximation, Stability, and Stepping"/>
+    <meta property="og:description" content="Intuition-first field notes on numerical approximation, Euler stepping, Newton-Raphson iteration, and stability thresholds, with a portable interactive logistic growth visualizer."/>
     <meta property="og:url" content="https://spwashi.com/topics/math/numerical-methods/"/>
     <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
     <meta property="og:image:alt" content="A mathematical signal field suggesting iteration, approximation, and stepwise refinement."/>
     <meta property="og:image:width" content="1200"/>
     <meta property="og:image:height" content="630"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Spwashi • Numerical Methods: Approximation, Stepping, Iteration"/>
-    <meta name="twitter:description" content="A continuation stub for numerical methods: Euler stepping, Newton iteration, discretization, and approximation literacy when exact formulas are not enough."/>
+    <meta name="twitter:title" content="Spwashi • Numerical Methods: Approximation, Stability, and Stepping"/>
+    <meta name="twitter:description" content="Intuition-first field notes on numerical approximation, Euler stepping, Newton-Raphson iteration, and stability thresholds, with a portable interactive logistic growth visualizer."/>
     <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
     <meta name="twitter:image:alt" content="A mathematical signal field suggesting iteration, approximation, and stepwise refinement."/>
+    <meta name="keywords" content="numerical methods, euler method, approximation, stability, step size, logistic growth, yeast fermentation, game loop tick, math intuition">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Numerical Methods: Approximation, Stability, and Stepping",
+                "description": "Intuition-first field notes on numerical approximation, Euler stepping, Newton-Raphson iteration, and stability thresholds, with a portable interactive logistic growth visualizer.",
+                "url": "https://spwashi.com/topics/math/numerical-methods/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "numerical methods",
+                        "euler method",
+                        "approximation",
+                        "stability",
+                        "step size"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "numerical-methods-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "approximation iteration consequence"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Numerical Methods",
+                                "item": "https://spwashi.com/topics/math/numerical-methods/"
+                        }
+                ]
+        }
+    </script>
 </head>
-<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_numerical_methods" data-spw-page-role="numerical-methods-register" data-spw-related-routes="/topics/math/calculus/|/topics/math/differential-equations/|/topics/software/algorithms/|/topics/math/statistical-analysis/">
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_numerical_methods" data-spw-page-role="numerical-methods-register" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/software/algorithms/|/topics/math/statistical-analysis/|/play/rpg-wednesday/world/">
 <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
     <spw-site-header
         current="Numerical Methods"
         current_href="/topics/math/numerical-methods/"
         indicator="approx"
-        nav_items="Home:/|Topics:/topics/|Math:/topics/math/|Numerical Methods:/topics/math/numerical-methods/"
+        seed="page_topics_topics_math_numerical_methods__site_header"
+        related_routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/software/algorithms/|/topics/math/statistical-analysis/"
+        context_relevance="numerical methods euler stepping newton iteration approximation accuracy stability"
+        nav_items="Home:/|About:/about|Topics:/topics/|Math:/topics/math/|Numerical Methods:/topics/math/numerical-methods/|Software:/topics/software/|Play:/play/"
     ></spw-site-header>
-    <main id="main-content" tabindex="-1">
+
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_numerical_methods__main_surface" data-spw-wonder="approximation iteration consequence" id="main-content" tabindex="-1" aria-labelledby="numerical-methods-title">
         <article>
-            <section class="site-frame site-hero" id="numerical-methods-hero">
-                <div class="frame-topline">
+            <section class="site-frame site-hero site-hero--split-figure" id="numerical-methods-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_numerical_methods__hero" data-spw-context-relevance="numerical methods approximation stability euler iteration" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/software/algorithms/|/topics/math/statistical-analysis/">
+                <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#numerical-methods-hero">#&gt;approximation_literacy</a>
                     <div class="spec-strip">
-                        <span class="spec-pill">Euler</span>
-                        <span class="spec-pill">Newton</span>
-                        <span class="spec-pill">discretization</span>
+                        <span class="spec-pill">Euler stepping</span>
+                        <span class="spec-pill">Newton iteration</span>
+                        <span class="spec-pill">stability limit</span>
                     </div>
                 </div>
-                <div class="topic-hero-copy">
-                    <p class="spec-kicker">Math / Continuation Stub</p>
-                    <h1>Numerical methods keep the conversation moving when exact form breaks down.</h1>
-                    <p>This is a deliberate stub. Many important systems do not yield to one clean symbolic answer, but they still invite disciplined approximation. Numerical methods give names to that discipline: step size, convergence, stability, truncation error, and iteration count. This route exists so the handoff from <a href="/topics/math/differential-equations/#slope-field-lab">slope fields</a> and <a href="/topics/math/calculus/#integration-techniques">integration techniques</a> stays visible.</p>
-                    <nav class="frame-operators" aria-label="Numerical methods neighbors">
-                        <a class="operator-chip" href="/topics/math/differential-equations/#slope-field-lab">Euler stepping</a>
-                        <a class="operator-chip" href="/topics/math/calculus/#calculus-lab">calculus</a>
-                        <a class="operator-chip" href="/topics/software/algorithms/#important_families">algorithms</a>
-                        <a class="operator-chip" href="/topics/math/statistical-analysis/#analysis-language">analysis language</a>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Pure Structure</p>
+                    <h1 id="numerical-methods-title">Numerical methods turn equations into step-by-step algorithms.</h1>
+                    <p>Many systems do not yield to clean algebraic formulas. When exact solutions are out of reach, numerical methods provide disciplined approximation techniques: Euler stepping, Newton-Raphson iteration, and discretization. Rather than solving in a single leap, these tools walk toward the answer using successive local corrections. This page connects numerical stepping to baking heat penetration and RPG game loop physics before illustrating the math. If you want the underlying derivative rates first, go to <a href="/topics/math/calculus/#calculus-lab">calculus</a>. If you want to see how these approximations trace paths across continuous fields, go back to <a href="/topics/math/vector-calculus/#vector-field-lab">vector calculus</a>.</p>
+                    <nav class="frame-operators" aria-label="Numerical methods routes">
+                        <a class="operator-chip" href="#numerical-methods-metaphors">stepping metaphors</a>
+                        <a class="operator-chip" href="#numerical-stepping-lab">numerical stepping lab</a>
+                        <a class="operator-chip" href="#numerical-operators">operators</a>
+                        <a class="operator-chip" href="#reasons-to-practice">reasons to practice</a>
+                        <a class="operator-chip" href="/topics/math/vector-calculus/#vector-field-lab">vector calculus</a>
                     </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#2a8c76, #d58c40, #6a3fb8, #1d57a3" data-spw-accent-anchor="numerical methods approximation stability stepping error iteration" data-spw-accent-operator="object" data-spw-accent-strength="0.94" data-spw-realization="hybrid" data-spw-substrate="frame">
+                    <img src="/public/images/renders/papergami/papergami-kinetic.webp" alt="Kinetic paper structures folded in progressive steps, suggesting iteration.">
+                    <figcaption>
+                        <strong>Step-wise refinement</strong>
+                        <span>Approximation proceeds in discrete stages, where each step size determines whether the calculation stays stable or diverges.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Numerical methods sections">
+                <ul>
+                    <li><a href="#numerical-methods-hero">Overview</a></li>
+                    <li><a href="#numerical-methods-metaphors">Expert Metaphors</a></li>
+                    <li><a href="#numerical-stepping-lab">Interactive Stepping Lab</a></li>
+                    <li><a href="#numerical-operators">Operations and Formulas</a></li>
+                    <li><a href="#reasons-to-practice">Why We Practice</a></li>
+                    <li><a href="#numerical-methods-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="numerical-methods-metaphors" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-wonder="approximation iteration consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_numerical_methods__metaphors" data-spw-context-relevance="metaphors euler stepping stability error culinary worldbuilding">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#numerical-methods-metaphors">.stepping_metaphors</a>
+                    <h2>Cross-Disciplinary Metaphors</h2>
+                </header>
+                <p class="frame-note">Numerical stepping maps directly onto real-world processes that occur in increments. Compare how step parameters shape results in yeast fermentation and game state updates.</p>
+                <div class="topic-reference-grid" aria-label="Numerical methods metaphors">
+                    <article class="topic-reference-card" id="metaphor-stepping">
+                        <h3>Euler Stepping (time ticks)</h3>
+                        <p><strong>In the Kitchen:</strong> Checking the rise of bread dough. You inspect the volume at discrete intervals (e.g. every 20 minutes) rather than watching it continuously, updating your temperature plan at each check.</p>
+                        <p><strong>In RPG World Building:</strong> Turn-based rounds. Each round is a discrete step where characters move and actions resolve, approximating continuous battle over time.</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-error">
+                        <h3>Truncation Error (drift)</h3>
+                        <p><strong>In the Kitchen:</strong> The difference between estimating bake time by checking once an hour (coarse, high error) vs measuring the internal temperature constantly.</p>
+                        <p><strong>In RPG World Building:</strong> Tracking resources over a long journey. Estimating supplies by multiplying average consumption per day leaves behind a drift from actual usage.</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-stability">
+                        <h3>Stability Limit (blowup)</h3>
+                        <p><strong>In the Kitchen:</strong> Adjusting the flame on a stove. If you wait too long between adjustments (coarse step size) and turn the knob too aggressively, you oscillate between boiling over and cold stock.</p>
+                        <p><strong>In RPG World Building:</strong> Balancing level scaling. If character attributes step up too steeply relative to monster difficulty increments, the combat difficulty explodes or breaks down.</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-iteration">
+                        <h3>Newton Iteration (homing in)</h3>
+                        <p><strong>In the Kitchen:</strong> Seasoning a sauce. Taste, add a pinch of salt, taste again. Each step uses the current gap (error) to guide the size of the next pinch, homing in on balance.</p>
+                        <p><strong>In RPG World Building:</strong> Tuning game mechanics. Playtesters report the feel, you tweak the numbers, playtest again, iteratively converging on balanced gameplay rules.</p>
+                    </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="numerical-methods-register">
+            <section class="site-frame" id="numerical-stepping-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_numerical_methods__lab" data-spw-context-relevance="numerical stepping euler integration error stability logistic growth" data-spw-related-routes="/topics/math/calculus/#calculus-lab|/topics/math/vector-calculus/#vector-field-lab|/recipes/fermentation/">
                 <header class="frame-heading">
-                    <a class="frame-sigil" href="#numerical-methods-register">~"stub_register"</a>
-                    <h2>Useful First Questions</h2>
+                    <a class="frame-sigil" href="#numerical-stepping-lab">^"numerical_stepping_lab"{</a>
+                    <h2>Interactive Stepping Lab: Logistic Population Growth</h2>
                 </header>
+                <p class="frame-note">We model yeast growth during fermentation or game XP leveling using the logistic equation <code>dy/dt = y(1 - y/4)</code>. Adjust the step size <code>h</code> and initial value. Watch what happens: small steps track the exact green curve closely. Large steps (<code>h > 1.0</code>) cause oscillations, and coarse steps (<code>h > 2.0</code>) cause Euler stepping to diverge and explode. This demonstrates why numerical stability is a core constraint. The living-culture model lives in the <a href="/recipes/fermentation/" data-spw-operator="stream">*fermentation</a> principle register.</p>
+                <div class="math-interactive-lab" data-math-visual="numerical-stepping-lab">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>Euler Step Size h: <output data-output="step-size">0.5</output></span>
+                            <input data-control="step-size" type="range" min="0.1" max="2.4" step="0.1" value="0.5">
+                        </label>
+                        <label class="math-control">
+                            <span>Initial value y(0): <output data-output="initial-y">0.5</output></span>
+                            <input data-control="initial-y" type="range" min="0.1" max="4.8" step="0.1" value="0.5">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 380" role="img" aria-labelledby="stepping-lab-title stepping-lab-desc">
+                            <title id="stepping-lab-title">Interactive numerical stepping visualizer</title>
+                            <desc id="stepping-lab-desc">A graph comparing exact logistic growth with Euler's approximation, showing step points and convergence or divergence behavior.</desc>
+                        </svg>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default state with h = 0.5. The dashed yellow path steps alongside the solid green curve, converging smoothly on the carrying capacity K = 4.0.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Change the step size to test stability limits.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>Changing the step size recalculates the Euler path. Coarse steps make the approximation jump too far and drift.</p>
+                            <a href="#numerical-stepping-lab">anchor: interactive lab</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The carrying capacity (limit K = 4.0) and the growth rate remain constant. Both methods try to model the same stable physics.</p>
+                            <a href="#numerical-operators">anchor: mathematical equations</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What collapses</h3>
+                            <p>When the step size exceeds 2.0 near the limit, the error amplifies. The math collapses into divergence, showing stability limits in action.</p>
+                            <a href="#metaphor-stability">anchor: stability details</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Euler integration acts along direction lines. Follow this back to see how vector directions are calculated across space.</p>
+                            <a href="/topics/math/vector-calculus/#vector-field-lab">back: vector fields</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="numerical-operators" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_numerical_methods__operators" data-spw-context-relevance="numerical methods euler newton formulas equations math">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#numerical-operators">~"numerical_operators"</a>
+                    <h2>Operations and Formulas</h2>
+                </header>
+                <p class="frame-note">These formulas define the stepping operations. Subvocalize them by connecting the steps to the grid coordinates in the visualizer above.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">Euler</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">tangent step</span>
+                            <span class="spec-pill">linear step</span>
+                        </div>
+                        <h3>Euler's Method</h3>
+                        <p><code>y_{k+1} = y_k + h · f(t_k, y_k)</code>. Steps forward along the local slope <code>f(t, y)</code>. Simple to compute but accumulates error proportional to step size <code>h</code>.</p>
+                        <a href="#numerical-stepping-lab">see: euler steps</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">Newton</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">root finding</span>
+                            <span class="spec-pill">quadratic</span>
+                        </div>
+                        <h3>Newton-Raphson Iteration</h3>
+                        <p><code>x_{k+1} = x_k - f(x_k)/f'(x_k)</code>. Finds where a function equals zero by sliding down the tangent line. Doubles correct digits each iteration when close.</p>
+                        <a href="#metaphor-iteration">see: seasoning metaphor</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">Stability</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">bounded error</span>
+                            <span class="spec-pill">stability limit</span>
+                        </div>
+                        <h3>Stability Threshold</h3>
+                        <p>For <code>dy/dt = -λy</code>, Euler stepping is stable only if <code>|1 - hλ| < 1</code>, meaning <code>h < 2/λ</code>. Exceeding this boundary causes exponential growth.</p>
+                        <a href="#numerical-stepping-lab">see: divergence blowups</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">RK4</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">higher order</span>
+                            <span class="spec-pill">four slopes</span>
+                        </div>
+                        <h3>Runge-Kutta 4th Order</h3>
+                        <p>Evaluates the slope at four points (start, two midpoints, end) to average out error. Far more stable and accurate than simple Euler stepping.</p>
+                        <a href="/topics/software/algorithms/">see: physics solvers</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="reasons-to-practice" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-wonder="approximation iteration consequence" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_numerical_methods__practice" data-spw-context-relevance="practice benefits application reasons engineering loops game physics">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#reasons-to-practice">$"why_practice"</a>
+                    <h2>Why We Practice This Exercise</h2>
+                </header>
+                <p class="frame-note">We don't practice numerical stepping to satisfy academic requirements. We practice it because it provides the algorithms that run dynamic software systems:</p>
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel">
+                        <h3>Physics Engines</h3>
+                        <p>Video games must compute positions of objects, gravity, collisions, and spring joints in real-time. This requires integrating differential equations (usually via Verlet or Euler stepping) at 60 frames per second.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Game Loop Frame-Rate Ticks</h3>
+                        <p>A game loop must update its game state based on elapsed time <code>dt</code>. Using numerical methods to handle variable <code>dt</code> ensures that characters move at the same speed regardless of hardware frame-rate spikes.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Inverse Kinematics</h3>
+                        <p>How does a character's hand reach naturally for a doorknob? By iteratively solving kinematic constraint equations (often using Newton-like solvers) to calculate joint angles.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Solving Non-linear Equations</h3>
+                        <p>Many real-world engineering problems (such as orbital mechanics or structural stress loads) cannot be resolved analytically. Numerical iteration is the only way to find solutions.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="numerical-methods-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="approximation iteration consequence" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_numerical_methods__neighbors" data-spw-context-relevance="calculus vector calculus differential equations algorithms statistics" data-spw-related-routes="/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/vector-calculus/|/topics/software/algorithms/|/topics/math/statistical-analysis/">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#numerical-methods-neighbors">&amp;["stepping_neighbors"]</a>
+                    <h2>Neighbor Routes</h2>
+                </header>
+                <p class="frame-note">Numerical methods translate mathematical change laws into concrete software loops. Follow these links to see where the algorithms run next:</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
-                        <h3>Step size</h3>
-                        <p>How much local error does one step introduce, and what happens when the step is too coarse for the shape of the problem?</p>
+                        <h3>Calculus</h3>
+                        <p>The rate foundation. Derivatives define the local slope that Euler stepping relies on to project future state.</p>
+                        <a href="/topics/math/calculus/#calculus-lab">route: rate and area</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Convergence</h3>
-                        <p>Does the repeated procedure home in on a stable answer, oscillate, or wander away?</p>
+                        <h3>Vector calculus</h3>
+                        <p>Multidimensional flow. Euler stepping is used to trace trajectories of particles floating through vector fields.</p>
+                        <a href="/topics/math/vector-calculus/#vector-field-lab">route: vector fields</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Stability</h3>
-                        <p>Does a small perturbation stay bounded, or does the numerical procedure amplify it until the answer stops meaning anything?</p>
+                        <h3>Differential equations</h3>
+                        <p>The laws of change. Slope fields define the direction field, and Euler stepping trace one solution curve.</p>
+                        <a href="/topics/math/differential-equations/#slope-field-lab">route: slope fields</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Why this matters</h3>
-                        <p>Approximation methods are where calculus, differential equations, and algorithm literacy stop being separate subjects and start becoming engineering practice.</p>
+                        <h3>Algorithms</h3>
+                        <p>Software implementation. Learn about computational complexity, loops, and sorting algorithms.</p>
+                        <a href="/topics/software/algorithms/#important_families">route: algorithms</a>
                     </article>
                 </div>
             </section>

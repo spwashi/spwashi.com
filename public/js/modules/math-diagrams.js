@@ -1102,6 +1102,475 @@ function initDiffEqSlopeField(root) {
   render();
 }
 
+function initVectorFieldLab(root) {
+  const fieldTypeSelect = safeQuery('[data-control="field-type"]', root);
+  const pxInput = safeQuery('[data-control="probe-x"]', root);
+  const pyInput = safeQuery('[data-control="probe-y"]', root);
+  const hInput = safeQuery('[data-control="step-size"]', root);
+  const stepsInput = safeQuery('[data-control="euler-steps"]', root);
+
+  const pxOutput = safeQuery('[data-output="probe-x"]', root);
+  const pyOutput = safeQuery('[data-output="probe-y"]', root);
+  const hOutput = safeQuery('[data-output="step-size"]', root);
+  const stepsOutput = safeQuery('[data-output="euler-steps"]', root);
+  const divOutput = safeQuery('[data-output="divergence"]', root);
+  const curlOutput = safeQuery('[data-output="curl"]', root);
+
+  const svg = safeQuery('svg', root);
+  const status = safeQuery('[data-role="status"]', root);
+  if (!svg || !status) return;
+
+  const width = 720;
+  const height = 400;
+  const plot = { left: 60, right: 420, top: 50, bottom: 350 };
+  const domain = { xMin: -3, xMax: 3, yMin: -2.5, yMax: 2.5 };
+
+  const toSvgX = (x) => plot.left + (((x - domain.xMin) / (domain.xMax - domain.xMin)) * (plot.right - plot.left));
+  const toSvgY = (y) => plot.bottom - (((y - domain.yMin) / (domain.yMax - domain.yMin)) * (plot.bottom - plot.top));
+
+  function getField(type, x, y) {
+    if (type === 'vortex') {
+      return { dx: -y, dy: x, div: 0, curl: 2 };
+    } else if (type === 'source') {
+      return { dx: x, dy: y, div: 2, curl: 0 };
+    } else if (type === 'sink') {
+      return { dx: -x, dy: -y, div: -2, curl: 0 };
+    } else { // saddle
+      return { dx: x, dy: -y, div: 0, curl: 0 };
+    }
+  }
+
+  function render() {
+    const type = fieldTypeSelect ? fieldTypeSelect.value : 'vortex';
+    const px = pxInput ? Number.parseFloat(pxInput.value) : 1.0;
+    const py = pyInput ? Number.parseFloat(pyInput.value) : 1.0;
+    const h = hInput ? Number.parseFloat(hInput.value) : 0.05;
+    const steps = stepsInput ? Number.parseInt(stepsInput.value, 10) : 40;
+
+    if (pxOutput) pxOutput.textContent = formatNumber(px, 2);
+    if (pyOutput) pyOutput.textContent = formatNumber(py, 2);
+    if (hOutput) hOutput.textContent = formatNumber(h, 3);
+    if (stepsOutput) stepsOutput.textContent = String(steps);
+
+    const probeField = getField(type, px, py);
+    if (divOutput) divOutput.textContent = formatNumber(probeField.div, 1);
+    if (curlOutput) curlOutput.textContent = formatNumber(probeField.curl, 1);
+
+    svg.innerHTML = '';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    // Definitions
+    const defs = createSvgNode('defs');
+    const marker = createSvgNode('marker', {
+      id: 'arrow-vector',
+      viewBox: '0 0 10 10',
+      refX: 7,
+      refY: 5,
+      markerWidth: 5,
+      markerHeight: 5,
+      orient: 'auto-start-reverse'
+    });
+    marker.append(createSvgNode('path', { d: 'M 0 1.5 L 8 5 L 0 8.5 z', fill: 'rgba(29,87,163,0.45)' }));
+    defs.append(marker);
+
+    const markerEuler = createSvgNode('marker', {
+      id: 'arrow-euler',
+      viewBox: '0 0 10 10',
+      refX: 6,
+      refY: 5,
+      markerWidth: 5,
+      markerHeight: 5,
+      orient: 'auto-start-reverse'
+    });
+    markerEuler.append(createSvgNode('path', { d: 'M 0 1.5 L 8 5 L 0 8.5 z', fill: 'var(--op-object-color, #c68a22)' }));
+    defs.append(markerEuler);
+    svg.append(defs);
+
+    // Background
+    svg.append(createSvgNode('rect', {
+      x: 14,
+      y: 14,
+      width: width - 28,
+      height: height - 28,
+      rx: 24,
+      fill: 'rgba(255,255,255,0.88)',
+      stroke: 'rgba(0,128,128,0.16)',
+    }));
+
+    // Axes
+    svg.append(createSvgNode('line', {
+      x1: plot.left, y1: toSvgY(0), x2: plot.right, y2: toSvgY(0),
+      stroke: 'rgba(0,128,128,0.14)', 'stroke-width': 1.8
+    }));
+    svg.append(createSvgNode('line', {
+      x1: toSvgX(0), y1: plot.bottom, x2: toSvgX(0), y2: plot.top,
+      stroke: 'rgba(0,128,128,0.14)', 'stroke-width': 1.8
+    }));
+
+    // Vector field grid arrows
+    const fieldGroup = createSvgNode('g');
+    for (let gx = -2.5; gx <= 2.5001; gx += 0.5) {
+      for (let gy = -2.0; gy <= 2.0001; gy += 0.5) {
+        // Skip origin to avoid 0 length vector overlap
+        if (Math.abs(gx) < 0.01 && Math.abs(gy) < 0.01) continue;
+        const f = getField(type, gx, gy);
+        const len = Math.sqrt(f.dx * f.dx + f.dy * f.dy) || 1;
+        // Normalize and scale arrow to fixed visual length
+        const arrowLen = 0.16;
+        const dx = (f.dx / len) * arrowLen;
+        const dy = (f.dy / len) * arrowLen;
+        fieldGroup.append(createSvgNode('line', {
+          x1: toSvgX(gx - dx),
+          y1: toSvgY(gy - dy),
+          x2: toSvgX(gx + dx),
+          y2: toSvgY(gy + dy),
+          stroke: 'rgba(29,87,163,0.22)',
+          'stroke-width': 1.5,
+          'marker-end': 'url(#arrow-vector)'
+        }));
+      }
+    }
+    svg.append(fieldGroup);
+
+    // Euler Trajectory
+    const trajPoints = [[px, py]];
+    let cxVal = px;
+    let cyVal = py;
+    for (let i = 0; i < steps; i += 1) {
+      const f = getField(type, cxVal, cyVal);
+      cxVal += h * f.dx;
+      cyVal += h * f.dy;
+      // Guard boundaries to prevent SVG overflow
+      if (cxVal < domain.xMin - 1 || cxVal > domain.xMax + 1 || cyVal < domain.yMin - 1 || cyVal > domain.yMax + 1) break;
+      trajPoints.push([cxVal, cyVal]);
+    }
+
+    if (trajPoints.length > 1) {
+      const eulerPath = createSvgNode('polyline', {
+        points: trajPoints.map(([tx, ty]) => `${formatNumber(toSvgX(tx), 2)},${formatNumber(toSvgY(ty), 2)}`).join(' '),
+        fill: 'none',
+        stroke: 'var(--op-object-color, #c68a22)',
+        'stroke-width': 3.0,
+        'stroke-dasharray': '5 4',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      });
+      svg.append(eulerPath);
+
+      // Trajectory end arrowhead
+      const lastPoint = trajPoints[trajPoints.length - 1];
+      const prevPoint = trajPoints[trajPoints.length - 2];
+      svg.append(createSvgNode('line', {
+        x1: toSvgX(prevPoint[0]),
+        y1: toSvgY(prevPoint[1]),
+        x2: toSvgX(lastPoint[0]),
+        y2: toSvgY(lastPoint[1]),
+        stroke: 'var(--op-object-color, #c68a22)',
+        'stroke-width': 3.0,
+        'marker-end': 'url(#arrow-euler)'
+      }));
+    }
+
+    // Active Probe dot
+    svg.append(createSvgNode('circle', {
+      cx: toSvgX(px),
+      cy: toSvgY(py),
+      r: 6.5,
+      fill: 'var(--op-topic-color, #2a8c76)',
+      stroke: 'rgba(255,255,255,0.96)',
+      'stroke-width': 2
+    }));
+
+    // Panel
+    const panel = createSvgNode('g');
+    panel.append(createSvgNode('rect', {
+      x: 458,
+      y: 50,
+      width: 232,
+      height: 300,
+      rx: 20,
+      fill: 'rgba(255,255,255,0.92)',
+      stroke: 'rgba(0,128,128,0.14)'
+    }));
+
+    const panelText = createSvgNode('g', {
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 14,
+      fill: 'var(--ink)'
+    });
+
+    const addPanelLine = (text, idx, color = 'var(--ink)') => {
+      const node = createSvgNode('text', { x: 478, y: 84 + (idx * 20), fill: color });
+      node.textContent = text;
+      panelText.append(node);
+    };
+
+    const typeLabels = { vortex: 'Vortex (Stir)', source: 'Source (Spring)', sink: 'Sink (Drain)', saddle: 'Saddle (Pass)' };
+    addPanelLine(typeLabels[type] || type, 0, 'var(--op-frame-color, #178282)');
+    addPanelLine(`pos: (${formatNumber(px, 2)}, ${formatNumber(py, 2)})`, 2);
+    addPanelLine(`val: (${formatNumber(probeField.dx, 2)}, ${formatNumber(probeField.dy, 2)})`, 3);
+    addPanelLine(`div: ${formatNumber(probeField.div, 1)}`, 5, probeField.div > 0 ? 'var(--op-object-color, #c68a22)' : (probeField.div < 0 ? 'var(--op-ref-color, #1d57a3)' : 'var(--ink)'));
+    addPanelLine(`curl: ${formatNumber(probeField.curl, 1)}`, 6, probeField.curl !== 0 ? 'var(--op-probe-color, #6a3fb8)' : 'var(--ink)');
+    addPanelLine('Euler stepping:', 8, 'var(--ink-soft)');
+    addPanelLine(`h = ${formatNumber(h, 3)}`, 9);
+    addPanelLine(`steps = ${steps}`, 10);
+    addPanelLine('trace: ' + (trajPoints.length - 1) + ' steps', 11, 'var(--op-object-color, #c68a22)');
+
+    panel.append(panelText);
+    svg.append(panel);
+
+    // Labels
+    const labels = createSvgNode('g', {
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 12,
+      fill: 'var(--ink-soft, rgba(0,0,0,0.68))'
+    });
+    const xText = createSvgNode('text', { x: plot.right + 10, y: toSvgY(0) + 4, 'dominant-baseline': 'middle' });
+    xText.textContent = 'x';
+    labels.append(xText);
+    const yText = createSvgNode('text', { x: toSvgX(0), y: plot.top - 12, 'text-anchor': 'middle' });
+    yText.textContent = 'y';
+    labels.append(yText);
+    svg.append(labels);
+
+    // Update status text
+    const descMetaphors = {
+      vortex: `Pure rotational flow (curl = 2.0, divergence = 0). Like stirring soup, a dust devil in RPG world building, or angular momentum in game physics.`,
+      source: `Pure outward flow (divergence = 2.0, curl = 0). Like a spring bubbling water, a magical mana portal spawning monsters, or heat radiating from a burner.`,
+      sink: `Pure inward flow (divergence = -2.0, curl = 0). Like a sink drain, a gravity well, or a localized threat/danger gradient pulling characters in.`,
+      saddle: `Saddle flow (divergence = 0, curl = 0). Air passing over a mountain ridge, showing hyperbolic trade paths and unstable routing seams.`
+    };
+    status.textContent = `Field type is ${typeLabels[type]}. At (${formatNumber(px, 2)}, ${formatNumber(py, 2)}), the flow vector is (${formatNumber(probeField.dx, 2)}, ${formatNumber(probeField.dy, 2)}). ${descMetaphors[type]} Euler stepping uses local flow vectors to trace a path step-by-step.`;
+  }
+
+  if (fieldTypeSelect) fieldTypeSelect.addEventListener('change', render);
+  if (pxInput) pxInput.addEventListener('input', render);
+  if (pyInput) pyInput.addEventListener('input', render);
+  if (hInput) hInput.addEventListener('input', render);
+  if (stepsInput) stepsInput.addEventListener('input', render);
+
+  render();
+}
+
+function initNumericalSteppingLab(root) {
+  const hInput = safeQuery('[data-control="step-size"]', root);
+  const y0Input = safeQuery('[data-control="initial-y"]', root);
+
+  const hOutput = safeQuery('[data-output="step-size"]', root);
+  const y0Output = safeQuery('[data-output="initial-y"]', root);
+  const errorOutput = safeQuery('[data-output="final-error"]', root);
+
+  const svg = safeQuery('svg', root);
+  const status = safeQuery('[data-role="status"]', root);
+  if (!svg || !status) return;
+
+  const width = 720;
+  const height = 380;
+  const plot = { left: 60, right: 450, top: 50, bottom: 330 };
+  const domain = { tMin: 0, tMax: 6, yMin: 0, yMax: 5 };
+
+  const toSvgX = (t) => plot.left + (((t - domain.tMin) / (domain.tMax - domain.tMin)) * (plot.right - plot.left));
+  const toSvgY = (y) => plot.bottom - (((y - domain.yMin) / (domain.yMax - domain.yMin)) * (plot.bottom - plot.top));
+
+  const rate = 1.0;
+  const K = 4.0;
+  const f = (t, y) => rate * y * (1.0 - y / K);
+
+  function exactSolution(t, y0) {
+    const ert = Math.exp(rate * t);
+    return (K * y0 * ert) / (K + y0 * (ert - 1));
+  }
+
+  function render() {
+    const h = hInput ? Number.parseFloat(hInput.value) : 0.5;
+    const y0 = y0Input ? Number.parseFloat(y0Input.value) : 0.5;
+
+    if (hOutput) hOutput.textContent = formatNumber(h, 2);
+    if (y0Output) y0Output.textContent = formatNumber(y0, 2);
+
+    svg.innerHTML = '';
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    // Background
+    svg.append(createSvgNode('rect', {
+      x: 14,
+      y: 14,
+      width: width - 28,
+      height: height - 28,
+      rx: 24,
+      fill: 'rgba(255,255,255,0.88)',
+      stroke: 'rgba(0,128,128,0.16)',
+    }));
+
+    // Axes
+    svg.append(createSvgNode('line', {
+      x1: plot.left, y1: plot.bottom, x2: plot.right, y2: plot.bottom,
+      stroke: 'rgba(0,128,128,0.18)', 'stroke-width': 2
+    }));
+    svg.append(createSvgNode('line', {
+      x1: plot.left, y1: plot.bottom, x2: plot.left, y2: plot.top,
+      stroke: 'rgba(0,128,128,0.18)', 'stroke-width': 2
+    }));
+
+    // Carrying Capacity line
+    svg.append(createSvgNode('line', {
+      x1: plot.left, y1: toSvgY(K), x2: plot.right, y2: toSvgY(K),
+      stroke: 'rgba(23,130,130,0.15)', 'stroke-width': 1.5, 'stroke-dasharray': '4 4'
+    }));
+
+    // Exact solution polyline
+    const exactPoints = [];
+    for (let t = domain.tMin; t <= domain.tMax + 0.001; t += 0.05) {
+      const yVal = exactSolution(t, y0);
+      exactPoints.push(`${toSvgX(t)},${toSvgY(yVal)}`);
+    }
+    svg.append(createSvgNode('polyline', {
+      points: exactPoints.join(' '),
+      fill: 'none',
+      stroke: 'var(--op-frame-color, #178282)',
+      'stroke-width': 3.5,
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }));
+
+    // Euler Steps
+    const eulerPoints = [[0, y0]];
+    let currentT = 0;
+    let currentY = y0;
+    while (currentT < domain.tMax) {
+      const stepVal = Math.min(h, domain.tMax - currentT);
+      const dy = f(currentT, currentY);
+      currentY += stepVal * dy;
+      currentT += stepVal;
+      if (isNaN(currentY) || !isFinite(currentY) || currentY > 20 || currentY < -10) {
+        currentY = NaN;
+        break;
+      }
+      eulerPoints.push([currentT, currentY]);
+    }
+
+    const eulerColor = isNaN(currentY) ? 'var(--op-action-color, #a83232)' : 'var(--op-object-color, #c68a22)';
+
+    if (eulerPoints.length > 0) {
+      const eulerPointsFiltered = eulerPoints.filter(([tVal, yVal]) => !isNaN(yVal));
+      svg.append(createSvgNode('polyline', {
+        points: eulerPointsFiltered.map(([tVal, yVal]) => `${formatNumber(toSvgX(tVal), 2)},${formatNumber(toSvgY(yVal), 2)}`).join(' '),
+        fill: 'none',
+        stroke: eulerColor,
+        'stroke-width': 2.5,
+        'stroke-dasharray': '6 5',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }));
+
+      // Draw Euler step circles
+      eulerPointsFiltered.forEach(([tVal, yVal]) => {
+        svg.append(createSvgNode('circle', {
+          cx: toSvgX(tVal),
+          cy: toSvgY(yVal),
+          r: 4.5,
+          fill: eulerColor,
+          stroke: 'rgba(255,255,255,0.95)',
+          'stroke-width': 1.5
+        }));
+      });
+    }
+
+    // Initial node
+    svg.append(createSvgNode('circle', {
+      cx: toSvgX(0),
+      cy: toSvgY(y0),
+      r: 6,
+      fill: 'var(--op-topic-color, #2a8c76)',
+      stroke: 'rgba(255,255,255,0.95)',
+      'stroke-width': 2
+    }));
+
+    // Panel
+    const panel = createSvgNode('g');
+    panel.append(createSvgNode('rect', {
+      x: 486,
+      y: 50,
+      width: 204,
+      height: 280,
+      rx: 18,
+      fill: 'rgba(255,255,255,0.92)',
+      stroke: 'rgba(0,128,128,0.14)'
+    }));
+
+    const panelText = createSvgNode('g', {
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 13,
+      fill: 'var(--ink)'
+    });
+
+    const addPanelLine = (text, idx, color = 'var(--ink)') => {
+      const node = createSvgNode('text', { x: 504, y: 84 + (idx * 20), fill: color });
+      node.textContent = text;
+      panelText.append(node);
+    };
+
+    addPanelLine('Numerical Stepping', 0, 'var(--op-frame-color, #178282)');
+    addPanelLine(`dy/dt = y(1 - y/4)`, 1, 'var(--ink-soft)');
+    addPanelLine(`y(0) = ${formatNumber(y0, 2)}`, 3);
+    addPanelLine(`step size h = ${formatNumber(h, 2)}`, 4);
+
+    const finalExact = exactSolution(domain.tMax, y0);
+    const lastEulerPoint = eulerPoints[eulerPoints.length - 1];
+    const finalEuler = lastEulerPoint ? lastEulerPoint[1] : NaN;
+    const finalError = isNaN(finalEuler) ? Infinity : Math.abs(finalEuler - finalExact);
+
+    if (errorOutput) {
+      errorOutput.textContent = isNaN(finalEuler) ? 'diverged' : formatNumber(finalError, 4);
+    }
+
+    if (isNaN(finalEuler)) {
+      addPanelLine('y(6) = diverged', 6, 'var(--op-action-color, #a83232)');
+      addPanelLine('Unstable Step!', 7, 'var(--op-action-color, #a83232)');
+      addPanelLine('h > 2.0 causes growth', 8, 'var(--op-action-color, #a83232)');
+    } else {
+      addPanelLine(`Exact: y(6) = ${formatNumber(finalExact, 3)}`, 6, 'var(--op-frame-color, #178282)');
+      addPanelLine(`Euler: y(6) = ${formatNumber(finalEuler, 3)}`, 7, 'var(--op-object-color, #c68a22)');
+      addPanelLine(`Error: ${formatNumber(finalError, 4)}`, 9, finalError > 0.5 ? 'var(--op-object-color, #c68a22)' : 'var(--ink)');
+    }
+
+    panel.append(panelText);
+    svg.append(panel);
+
+    // Labels
+    const labels = createSvgNode('g', {
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 12,
+      fill: 'var(--ink-soft, rgba(0,0,0,0.68))'
+    });
+    const tText = createSvgNode('text', { x: plot.right + 10, y: plot.bottom + 4, 'dominant-baseline': 'middle' });
+    tText.textContent = 't';
+    labels.append(tText);
+    const yText = createSvgNode('text', { x: plot.left, y: plot.top - 12, 'text-anchor': 'middle' });
+    yText.textContent = 'y';
+    labels.append(yText);
+    const capText = createSvgNode('text', { x: plot.right - 10, y: toSvgY(K) - 6, 'text-anchor': 'end' });
+    capText.textContent = 'capacity K = 4.0';
+    labels.append(capText);
+    svg.append(labels);
+
+    let statusMsg = '';
+    if (isNaN(finalEuler)) {
+      statusMsg = `DIVERGENCE! Step size h = ${formatNumber(h, 2)} is too coarse (h > 2.0 near carrying capacity), causing the Euler approximation to overshoot stable limits and explode. This is why numerical stability analysis is practiced.`;
+    } else if (h > 1.0) {
+      statusMsg = `Step size h = ${formatNumber(h, 2)} is stable but causes oscillations: the Euler path overshoots the carrying capacity K = 4 before converging. This mimics game loop jitter or temperature overshoot in a stove burner.`;
+    } else {
+      statusMsg = `Step size h = ${formatNumber(h, 2)} is small, producing a smooth monotonic approximation that tracks the exact logistic S-curve closely. Truncation error at t=6 is ${formatNumber(finalError, 4)}.`;
+    }
+    status.textContent = statusMsg;
+  }
+
+  if (hInput) hInput.addEventListener('input', render);
+  if (y0Input) y0Input.addEventListener('input', render);
+
+  render();
+}
+
 function init() {
   safeQueryAll('[data-math-visual="mod-clock"]').forEach(initModClock);
   safeQueryAll('[data-math-visual="commuting-square"]').forEach(initCategorySquare);
@@ -1110,6 +1579,8 @@ function init() {
   safeQueryAll('[data-math-visual="integration-by-parts"]').forEach(initIntegrationByParts);
   safeQueryAll('[data-math-visual="partial-derivatives"]').forEach(initPartialDerivatives);
   safeQueryAll('[data-math-visual="diff-eq-slope-field"]').forEach(initDiffEqSlopeField);
+  safeQueryAll('[data-math-visual="vector-field-lab"]').forEach(initVectorFieldLab);
+  safeQueryAll('[data-math-visual="numerical-stepping-lab"]').forEach(initNumericalSteppingLab);
 }
 
 if (document.readyState === 'loading') {

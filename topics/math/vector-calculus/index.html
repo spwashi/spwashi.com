@@ -7,79 +7,367 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Vector Calculus: Gradient, Divergence, Curl</title>
-    <meta name="description" content="A continuation stub for vector calculus: gradient, divergence, curl, and flow literacy after multivariable calculus.">
+    <title>Spwashi • Vector Calculus: Gradient, Divergence, and Flow Fields</title>
+    <meta name="description" content="Intuition-first field notes on gradients, divergence, curl, and vector fields, with a portable interactive vector field simulation.">
     <link rel="stylesheet" href="/public/css/style.css">
     <script type="module" src="/public/js/site.js"></script>
+    <script type="module" src="/public/js/modules/math-diagrams.js?v=0.0.1"></script>
     <link rel="canonical" href="https://spwashi.com/topics/math/vector-calculus/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Spwashi • Vector Calculus: Gradient, Divergence, Curl"/>
-    <meta property="og:description" content="A continuation stub for vector calculus: gradient, divergence, curl, and flow literacy after multivariable calculus."/>
+    <meta property="og:title" content="Spwashi • Vector Calculus: Gradient, Divergence, and Flow Fields"/>
+    <meta property="og:description" content="Intuition-first field notes on gradients, divergence, curl, and vector fields, with a portable interactive vector field simulation."/>
     <meta property="og:url" content="https://spwashi.com/topics/math/vector-calculus/"/>
     <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
-    <meta property="og:image:alt" content="A field of directional mathematical marks suggesting flow and circulation."/>
+    <meta property="og:image:alt" content="A mathematical signal field suggesting flow, direction, and divergence."/>
     <meta property="og:image:width" content="1200"/>
     <meta property="og:image:height" content="630"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Spwashi • Vector Calculus: Gradient, Divergence, Curl"/>
-    <meta name="twitter:description" content="A continuation stub for vector calculus: gradient, divergence, curl, and flow literacy after multivariable calculus."/>
+    <meta name="twitter:title" content="Spwashi • Vector Calculus: Gradient, Divergence, and Flow Fields"/>
+    <meta name="twitter:description" content="Intuition-first field notes on gradients, divergence, curl, and vector fields, with a portable interactive vector field simulation."/>
     <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
-    <meta name="twitter:image:alt" content="A field of directional mathematical marks suggesting flow and circulation."/>
+    <meta name="twitter:image:alt" content="A mathematical signal field suggesting flow, direction, and divergence."/>
+    <meta name="keywords" content="vector calculus, gradient, divergence, curl, vector field, euler method, convection, wind mapping, ley lines, math intuition">
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": "Spwashi • Vector Calculus: Gradient, Divergence, and Flow Fields",
+                "description": "Intuition-first field notes on gradients, divergence, curl, and vector fields, with a portable interactive vector field simulation.",
+                "url": "https://spwashi.com/topics/math/vector-calculus/",
+                "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "Spwashi",
+                        "url": "https://spwashi.com/"
+                },
+                "about": [
+                        "vector calculus",
+                        "gradient",
+                        "divergence",
+                        "curl",
+                        "vector field",
+                        "euler method"
+                ],
+                "additionalProperty": [
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwSurface",
+                                "value": "topics"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageFamily",
+                                "value": "field-guide"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwPageRole",
+                                "value": "vector-calculus-register"
+                        },
+                        {
+                                "@type": "PropertyValue",
+                                "name": "spwWonder",
+                                "value": "flow direction circulation"
+                        }
+                ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                        {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://spwashi.com/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Topics",
+                                "item": "https://spwashi.com/topics/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": "Math",
+                                "item": "https://spwashi.com/topics/math/"
+                        },
+                        {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "name": "Vector Calculus",
+                                "item": "https://spwashi.com/topics/math/vector-calculus/"
+                        }
+                ]
+        }
+    </script>
 </head>
-<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_vector_calculus" data-spw-page-role="vector-calculus-register" data-spw-related-routes="/topics/math/calculus/|/topics/math/differential-equations/|/topics/software/renderers/|/topics/software/geometry/">
+<body data-spw-surface="topics" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_vector_calculus" data-spw-page-role="vector-calculus-register" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/numerical-methods/|/topics/software/renderers/|/topics/software/geometry/|/play/rpg-wednesday/world/">
 <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
     <spw-site-header
         current="Vector Calculus"
         current_href="/topics/math/vector-calculus/"
         indicator="flow"
-        nav_items="Home:/|Topics:/topics/|Math:/topics/math/|Vector Calculus:/topics/math/vector-calculus/"
+        seed="page_topics_topics_math_vector_calculus__site_header"
+        related_routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/numerical-methods/|/topics/software/renderers/|/topics/software/geometry/"
+        context_relevance="vector calculus gradient divergence curl flow direction circulation vector field"
+        nav_items="Home:/|About:/about|Topics:/topics/|Math:/topics/math/|Vector Calculus:/topics/math/vector-calculus/|Software:/topics/software/|Play:/play/"
     ></spw-site-header>
-    <main id="main-content" tabindex="-1">
+
+    <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_math_vector_calculus__main_surface" data-spw-wonder="flow direction circulation" id="main-content" tabindex="-1" aria-labelledby="vector-calculus-title">
         <article>
-            <section class="site-frame site-hero" id="vector-calculus-hero">
-                <div class="frame-topline">
-                    <a class="frame-sigil" href="#vector-calculus-hero">#&gt;flow_literacy</a>
+            <section class="site-frame site-hero site-hero--split-figure" id="vector-calculus-hero" data-spw-image-hero="true" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_math_vector_calculus__hero" data-spw-context-relevance="vector calculus gradient divergence curl flow field" data-spw-related-routes="/topics/math/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/numerical-methods/|/topics/software/renderers/|/topics/software/geometry/">
+                <div class="frame-topline" data-spw-slot="header">
+                    <a class="frame-sigil" href="#vector-calculus-hero">#&gt;flow_field_literacy</a>
                     <div class="spec-strip">
                         <span class="spec-pill">gradient</span>
                         <span class="spec-pill">divergence</span>
                         <span class="spec-pill">curl</span>
                     </div>
                 </div>
-                <div class="topic-hero-copy">
-                    <p class="spec-kicker">Math / Continuation Stub</p>
-                    <h1>Vector calculus extends local shape into flow and field language.</h1>
-                    <p>This is a deliberate stub. After partial derivatives start making sense, the next useful questions are about fields instead of only scalar surfaces. Gradient tells you local uphill direction. Divergence asks whether flow is sourcing or draining. Curl asks whether local rotation is present. This route exists so the handoff from <a href="/topics/math/calculus/#multivariable-shape">Calc III</a> stays visible.</p>
-                    <nav class="frame-operators" aria-label="Vector calculus neighbors">
-                        <a class="operator-chip" href="/topics/math/calculus/#multivariable-shape">partial derivatives</a>
-                        <a class="operator-chip" href="/topics/math/differential-equations/#equation-family">differential equations</a>
-                        <a class="operator-chip" href="/topics/software/renderers/">renderers</a>
-                        <a class="operator-chip" href="/topics/software/geometry/#poincare-model">geometry</a>
+                <div class="topic-hero-copy" data-spw-slot="body">
+                    <p class="spec-kicker">Math / Pure Structure</p>
+                    <h1 id="vector-calculus-title">Vector calculus maps local change onto flow and fields.</h1>
+                    <p>When a space has a direction and magnitude at every point, it is described by a vector field. Vector calculus extends single-variable rates into directional operations. The gradient points most uphill on a hill. Divergence measures whether flow is generating or draining. Curl measures local rotation and spin. This page is built to provide concrete intuition first, linking these operations to wind systems in RPG world building and liquid patterns in <a href="/recipes/" data-spw-operator="frame">culinary recipes</a> (the <a href="/recipes/reduction/">reduction</a> and <a href="/recipes/mise-en-place/">mise en place</a> registers are especially close) before diving into the formulas. If you want the rate foundation first, go to <a href="/topics/math/calculus/#calculus-lab">calculus</a>. If you want the step-wise approximations that trace vectors over time, go next to <a href="/topics/math/numerical-methods/#numerical-stepping-lab">numerical methods</a>.</p>
+                    <nav class="frame-operators" aria-label="Vector calculus routes">
+                        <a class="operator-chip" href="#vector-calculus-metaphors">cross-disciplinary metaphors</a>
+                        <a class="operator-chip" href="#vector-field-lab">vector field lab</a>
+                        <a class="operator-chip" href="#vector-operators">operators</a>
+                        <a class="operator-chip" href="#reasons-to-practice">reasons to practice</a>
+                        <a class="operator-chip" href="/topics/math/numerical-methods/#numerical-stepping-lab">numerical methods</a>
                     </nav>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#2a8c76, #d58c40, #6a3fb8, #1d57a3" data-spw-accent-anchor="vector calculus flow field direction curl divergence" data-spw-accent-operator="topic" data-spw-accent-strength="0.95" data-spw-realization="hybrid" data-spw-substrate="frame">
+                    <img src="/public/images/routes/math-signal-field-square.webp" alt="A mathematical signal field suggesting vector flow and circulation.">
+                    <figcaption>
+                        <strong>Directional fields</strong>
+                        <span>Vector lines trace local orientation, allowing operations like divergence and curl to define flow behaviors across a continuous plane.</span>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <nav class="page-index" aria-label="Vector calculus sections">
+                <ul>
+                    <li><a href="#vector-calculus-hero">Overview</a></li>
+                    <li><a href="#vector-calculus-metaphors">Expert Metaphors</a></li>
+                    <li><a href="#vector-field-lab">Interactive Vector Field Lab</a></li>
+                    <li><a href="#vector-operators">Operators and Formulas</a></li>
+                    <li><a href="#reasons-to-practice">Why We Practice</a></li>
+                    <li><a href="#vector-calculus-neighbors">Neighbor Routes</a></li>
+                </ul>
+            </nav>
+
+            <section class="site-frame" id="vector-calculus-metaphors" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-wonder="flow direction circulation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_vector_calculus__metaphors" data-spw-context-relevance="metaphors divergence curl gradient culinary worldbuilding">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#vector-calculus-metaphors">.expert_metaphors</a>
+                    <h2>Cross-Disciplinary Metaphors</h2>
+                </header>
+                <p class="frame-note">We understand mathematical abstractions when they land in processes we can taste or play with. Use these frames to translate vector properties between physical cooking steps and game world structures.</p>
+                <div class="topic-reference-grid" aria-label="Vector calculus metaphors">
+                    <article class="topic-reference-card" id="metaphor-gradient">
+                        <h3>Gradient (uphill push)</h3>
+                        <p><strong>In the Kitchen:</strong> The heat profile in a cast-iron pan. The gradient points directly toward the hottest spot on the burner, guiding how you move ingredients (e.g. searing vs resting).</p>
+                        <p><strong>In RPG World Building:</strong> The map of danger or magical wealth. High gradient means threat levels spike rapidly over a short distance, cued by changing atmosphere or terrain.</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-divergence">
+                        <h3>Divergence (flux/sources)</h3>
+                        <p><strong>In the Kitchen:</strong> Heat rising from a hot burner (positive divergence/source) vs cold ingredients absorbing heat (negative divergence/sink) in a simmering soup.</p>
+                        <p><strong>In RPG World Building:</strong> A monster spawner or magical portal acts as a source (positive divergence). A whirlpool or dungeon drain acts as a sink (negative divergence).</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-curl">
+                        <h3>Curl (spin/circulation)</h3>
+                        <p><strong>In the Kitchen:</strong> Stirring a gravy to prevent lumps. A circular motion creates curl, folding ingredients together without sending them flying off the edges.</p>
+                        <p><strong>In RPG World Building:</strong> A persistent wind cyclone, dust devil, or magical vortex. Characters caught in the field are pulled into circular orbits around the eye.</p>
+                    </article>
+                    <article class="topic-reference-card" id="metaphor-euler">
+                        <h3>Trajectory (Euler stepping)</h3>
+                        <p><strong>In the Kitchen:</strong> The path of a herb leaf floating in stirred stock. Step-by-step, the liquid's current decides where the leaf travels.</p>
+                        <p><strong>In RPG World Building:</strong> Pathing wind trade routes. A ship follows local wind vectors turn-by-turn to trace its voyage across the map.</p>
+                    </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="vector-calculus-register">
+            <section class="site-frame" id="vector-field-lab" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_vector_calculus__lab" data-spw-context-relevance="vector field divergence curl gradient euler stepping simulation" data-spw-related-routes="/topics/math/calculus/#calculus-lab|/topics/math/numerical-methods/#numerical-stepping-lab|/play/rpg-wednesday/world/">
                 <header class="frame-heading">
-                    <a class="frame-sigil" href="#vector-calculus-register">~"stub_register"</a>
-                    <h2>Useful First Questions</h2>
+                    <a class="frame-sigil" href="#vector-field-lab">^"vector_field_lab"{</a>
+                    <h2>Interactive Vector Field Lab</h2>
                 </header>
+                <p class="frame-note">Select a vector field type and move the inputs. The vector grid shows flow direction. The probe outputs calculated values for divergence and curl at the coordinate. The dashed Euler path traces the trajectory step-by-step from the probe position, showing how local vectors dictate motion.</p>
+                <div class="math-interactive-lab" data-math-visual="vector-field-lab">
+                    <div class="math-diagram-controls">
+                        <label class="math-control">
+                            <span>Field Type</span>
+                            <select data-control="field-type">
+                                <option value="vortex" selected>Vortex (Stirring / Cyclone)</option>
+                                <option value="source">Source (Hot Burner / Spawn Portal)</option>
+                                <option value="sink">Sink (Drain / Whirlpool)</option>
+                                <option value="saddle">Saddle (Wind Over Mountain Pass)</option>
+                            </select>
+                        </label>
+                        <label class="math-control">
+                            <span>Probe X: <output data-output="probe-x">1.0</output></span>
+                            <input data-control="probe-x" type="range" min="-2.8" max="2.8" step="0.1" value="1.0">
+                        </label>
+                        <label class="math-control">
+                            <span>Probe Y: <output data-output="probe-y">1.0</output></span>
+                            <input data-control="probe-y" type="range" min="-2.3" max="2.3" step="0.1" value="1.0">
+                        </label>
+                        <label class="math-control">
+                            <span>Euler Step Size h: <output data-output="step-size">0.05</output></span>
+                            <input data-control="step-size" type="range" min="0.01" max="0.15" step="0.01" value="0.05">
+                        </label>
+                        <label class="math-control">
+                            <span>Step Count: <output data-output="euler-steps">40</output></span>
+                            <input data-control="euler-steps" type="range" min="10" max="80" step="5" value="40">
+                        </label>
+                    </div>
+                    <figure class="spw-svg-figure">
+                        <svg viewBox="0 0 720 400" role="img" aria-labelledby="vector-lab-title vector-lab-desc">
+                            <title id="vector-lab-title">Interactive vector field visualizer</title>
+                            <desc id="vector-lab-desc">An interactive vector field showing field arrows, a draggable probe, divergence and curl values, and a path traced via Euler integration.</desc>
+                        </svg>
+                        <figcaption class="frame-note">If the controls are unavailable, read the default state as a vortex field with a probe at (1.0, 1.0). The vortex shows high curl and zero divergence, representing a pure circular flow.</figcaption>
+                    </figure>
+                    <p class="math-diagram-status" data-role="status">Change coordinates or flow type to observe divergence and curl properties.</p>
+                    <div class="topic-reference-grid">
+                        <article class="topic-reference-card">
+                            <h3>What changes</h3>
+                            <p>Moving the probe recalculates coordinate metrics and redraws the Euler integration trajectory.</p>
+                            <a href="#vector-field-lab">anchor: interactive lab</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What stays invariant</h3>
+                            <p>The vector field equations remain fixed for a given selection, defining uniform rules for divergence and curl across all coordinates.</p>
+                            <a href="#vector-operators">anchor: operator math</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>What collapses</h3>
+                            <p>In rotational flows (vortex), divergence collapses to zero, showing that matter is not created or destroyed, only redirected.</p>
+                            <a href="#metaphor-divergence">anchor: divergence details</a>
+                        </article>
+                        <article class="topic-reference-card">
+                            <h3>Where it leads</h3>
+                            <p>Euler integration shown here connects directly to numerical approximation. View how steps accumulate error next.</p>
+                            <a href="/topics/math/numerical-methods/#numerical-stepping-lab">next: numerical methods lab</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="vector-operators" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_vector_calculus__operators" data-spw-context-relevance="vector calculus gradient divergence curl formulas math equations">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#vector-operators">~"vector_operators"</a>
+                    <h2>Operators and Equations</h2>
+                </header>
+                <p class="frame-note">These equations define the vector calculus toolkit. Subvocalize them by connecting the symbols to the flow patterns in the visualizer above.</p>
+                <div class="math-lens-grid">
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∇f</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">scalar to vector</span>
+                            <span class="spec-pill">slope direction</span>
+                        </div>
+                        <h3>Gradient</h3>
+                        <p><code>∇f = (∂f/∂x, ∂f/∂y)</code>. Takes a height field (scalar) and produces a direction field (vector) pointing toward fastest local increase.</p>
+                        <a href="/topics/math/calculus/#multivariable-shape">see: partial derivatives</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∇·F</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">vector to scalar</span>
+                            <span class="spec-pill">expansion rate</span>
+                        </div>
+                        <h3>Divergence</h3>
+                        <p><code>div F = ∇·F = ∂Fx/∂x + ∂Fy/∂y</code>. Measures localized flux. Positive values indicate a source (pushing out); negative values indicate a sink (drawing in).</p>
+                        <a href="#vector-field-lab">see: source/sink settings</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">∇×F</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">vector to vector</span>
+                            <span class="spec-pill">angular spin</span>
+                        </div>
+                        <h3>Curl</h3>
+                        <p><code>curl F = ∇×F = ∂Fy/∂x - ∂Fx/∂y</code>. Measures localized spin or vortex behavior around an axis. Zero curl indicates irrotational flow.</p>
+                        <a href="#vector-field-lab">see: vortex setting</a>
+                    </article>
+                    <article class="math-lens-card">
+                        <span class="frame-card-sigil">Euler</span>
+                        <div class="spec-strip">
+                            <span class="spec-pill">integration</span>
+                            <span class="spec-pill">approximation</span>
+                        </div>
+                        <h3>Euler Stepping</h3>
+                        <p><code>x_{k+1} = x_k + h · F_x(x_k, y_k)</code>. Appends small linear increments along the vector field to approximate continuous trajectories.</p>
+                        <a href="/topics/math/numerical-methods/#numerical-stepping-lab">next: numerical methods</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="reasons-to-practice" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-wonder="flow direction circulation" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_topics_topics_math_vector_calculus__practice" data-spw-context-relevance="practice benefits application reasons engineering game physics">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#reasons-to-practice">$"why_practice"</a>
+                    <h2>Why We Practice This Exercise</h2>
+                </header>
+                <p class="frame-note">We don't compute vector derivatives only to pass academic exams. We practice vector field mathematics because it provides structural mechanisms for solving design, software, and simulation challenges:</p>
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel">
+                        <h3>Fluid and Wind Simulation</h3>
+                        <p>Whether simulating wind blowing across an RPG town or steam escaping from a boiled stock pot, we use Navier-Stokes solvers which resolve divergence and curl to enforce physical realism.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Game Physics and Particles</h3>
+                        <p>Particle systems (sparks, smoke, magic spells) follow velocity fields. Calculating particle positions turn-by-turn uses Euler stepping over vector fields to create natural flow patterns.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Gradient descent pathfinding</h3>
+                        <p>How does a character navigate toward safety or a target? By following the negative gradient of a distance field, avoiding obstacles by flowing downhill around them.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Procedural terrain generation</h3>
+                        <p>Perlin or Simplex noise uses gradients to generate natural-looking mountains and valleys, defining slope normals for light rendering.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="vector-calculus-neighbors" data-spw-role="directory" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="flow direction circulation" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics_math_vector_calculus__neighbors" data-spw-context-relevance="calculus numerical methods differential equations renderers geometry" data-spw-related-routes="/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/numerical-methods/|/topics/software/renderers/|/topics/software/geometry/">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#vector-calculus-neighbors">&amp;["flow_neighbors"]</a>
+                    <h2>Neighbor Routes</h2>
+                </header>
+                <p class="frame-note">Vector fields connect local rate observations to physical trajectories and rendering maps. Follow these links to see where the abstractions land next:</p>
                 <div class="topic-reference-grid">
                     <article class="topic-reference-card">
-                        <h3>Gradient</h3>
-                        <p>If the field comes from a scalar potential, what direction points most uphill and how large is that push locally?</p>
+                        <h3>Calculus</h3>
+                        <p>The rate foundation. Slicing surfaces to find partial derivatives prepares the field for gradient and divergence language.</p>
+                        <a href="/topics/math/calculus/#multivariable-shape">route: multivariable shape</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Divergence</h3>
-                        <p>Is material or influence locally accumulating, dispersing, or balancing at this point in the field?</p>
+                        <h3>Numerical methods</h3>
+                        <p>Euler stepping in action. Explore how step size determines whether approximations stay stable or oscillate into divergence.</p>
+                        <a href="/topics/math/numerical-methods/#numerical-stepping-lab">route: numerical methods</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Curl</h3>
-                        <p>Is there a local tendency to circulate rather than simply flow outward or inward?</p>
+                        <h3>Differential equations</h3>
+                        <p>Slope fields are single-variable vector fields. Trace solution curves through slope directions.</p>
+                        <a href="/topics/math/differential-equations/#slope-field-lab">route: slope fields</a>
                     </article>
                     <article class="topic-reference-card">
-                        <h3>Why this matters</h3>
-                        <p>These questions keep appearing in fluid metaphors, electromagnetism, renderer design, and any system where a field is a better picture than a list.</p>
+                        <h3>Software geometry</h3>
+                        <p>Laying out structures on curved surfaces. Poincare projection and hyper-dimensional meshes reuse vector principles.</p>
+                        <a href="/topics/software/geometry/#poincare-model">route: geometry</a>
                     </article>
                 </div>
             </section>
