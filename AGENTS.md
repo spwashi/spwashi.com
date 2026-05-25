@@ -21,6 +21,7 @@
 - Preserve existing copy, links, analytics snippets, and metadata unless the task requires changing them.
 - If work spans multiple routes or shared layers, add or update a plan under `.agents/plans/<slug>/`.
 - If a new reusable semantic family, runtime state, or sitewide contract is introduced, update the relevant `.spw` surface and wire it into `.spw/site.spw` when needed.
+- If the work improves the agent/editor operating environment itself, use `.agents/plans/agent-optimization/PLAN.md` as the tracking document and invoke `spw-plan-maintenance` for plan, skill, `.spw`, and public editor-surface wiring.
 
 ## Creator Identity
 

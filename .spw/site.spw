@@ -32,6 +32,12 @@
 @timing_data_localization: ~"./philosophy/timing-data-localization.spw"
 @graph: ~"./graph.spw"
 @surfaces: ~"./surfaces.spw"
+@agents: ~"../.agents/README.md"
+@plans: ~"../.agents/plans/README.md"
+@agent_optimization: ~"../.agents/plans/agent-optimization/PLAN.md"
+@agentic_contracts: ~"../.agents/plans/agentic-dev-contracts/PLAN.md"
+@plan_maintenance: ~"../.agents/skills/spw-plan-maintenance/SKILL.md"
+@planning_ecology: ~"./conventions/planning-ecology.spw"
 @canon: ~"./_workbench/.spw/index.spw"
 @mount: ~"./_workbench/.spw/mount.spw"
 @workspace: ~"./_workbench/.spw/workspace.spw"
@@ -114,6 +120,12 @@ dispatch: .{
  graph = @graph
  public_surfaces = @surfaces
  workbench = @canon
+ agents = @agents
+ plans = @plans
+ agent_contracts = @agentic_contracts
+ agent_optimization = @agent_optimization
+ plan_maintenance = @plan_maintenance
+ planning_ecology = @planning_ecology
  selection = @selection
  naming = @naming
  submodule = @submodule

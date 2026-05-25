@@ -23,6 +23,8 @@ Read first:
 4. Prefer one canonical name per concept unless the distinction is real and teachable.
 5. When the model matters beyond one patch, write it down in `.spw`.
 
+The agent/ planning / editor-inspectability layer (new concepts such as "agent contracts", "planning surfaces", "skill affordances") is currently an active area for rigorous modeling — see `agent-optimization/PLAN.md` and the `@agents` block in `site.spw`.
+
 ## Good Outputs
 
 - invariants

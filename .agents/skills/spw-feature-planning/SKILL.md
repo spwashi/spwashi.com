@@ -35,3 +35,5 @@ Read first:
 - semantic or runtime seams
 - validation loop
 - what stays out of scope
+
+When the feature is an improvement *to the agent operating environment itself* (planning ecology, skills, `.spw` dispatch for editors, public plans surface, validation contracts), create or extend the plan under `.agents/plans/agent-optimization/`. Cite this skill and `spw-plan-maintenance`.

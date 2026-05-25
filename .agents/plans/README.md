@@ -29,6 +29,9 @@ High-signal active examples:
 - `mobile-image-effects/FIX.md`
 - `runtime-route-css-regressions/FIX.md`
 
+Meta / ecology work:
+- `agent-optimization/PLAN.md` — maturing the `.agents/`, skills, `.spw` bridges, and public editor surfaces for lower friction agent and editor operation (follows from the prior active plans review).
+
 ## Archived Notes
 
 Archived historical notes live in `archive/`. Use them as reference only:

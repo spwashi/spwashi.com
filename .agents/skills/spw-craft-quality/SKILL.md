@@ -19,7 +19,7 @@ Read first:
    - surfaces before route-specific CSS
    - semantic HTML before JS
 4. Keep hand-authored copy and structure legible; remove incidental complexity instead of layering new workaround code.
-5. Update `.spw` inspection surfaces when the change introduces a new concept, lifecycle, or ontology seam.
+5. Update `.spw` inspection surfaces when the change introduces a new concept, lifecycle, or ontology seam — especially when the change touches the planning ecology, skills, or agent contracts (see `agent-optimization/PLAN.md`).
 
 ## Quality Heuristics
 

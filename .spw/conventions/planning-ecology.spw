@@ -1,0 +1,37 @@
+# Planning Ecology Convention
+#
+# Thin bridge for the site-local agent/editor operating layer.
+
+#>planning_ecology
+#:convention #!agents
+#:layer #!editor_inspectability
+
+@agents: ~"../../.agents/README.md"
+@plans: ~"../../.agents/plans/README.md"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@agentic_contracts: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@plan_maintenance: ~"../../.agents/skills/spw-plan-maintenance/SKILL.md"
+@public_plans: ~"../../about/plans/index.html"
+
+dispatch: .{
+ agents = @agents
+ plans = @plans
+ agent_optimization = @agent_optimization
+ agent_contracts = @agentic_contracts
+ plan_maintenance = @plan_maintenance
+ public_plans = @public_plans
+}[reg=facet]
+
+roles: #[
+ `planning ecology`: canonical tracks, active backlog, archive, and public editor projections.
+ `agent contracts`: executable validation and manifest contracts that answer whether a change broke the site.
+ `skill affordances`: local SKILL.md wrappers that route agents toward site-specific workflows.
+ `editor seam`: a route, plan, .spw note, or README that helps a human or agent decide what to do next.
+][reg=set]
+
+invariants: #[
+ `Site-local plans and skills stay the source of truth for this repository's agent operating layer.`,
+ `Public editor pages project the plan ecology; they do not replace the .agents source files.`,
+ `New durable planning concepts should be wired through site.spw, this convention, and the relevant README or public page.`,
+ `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`
+][reg=set]

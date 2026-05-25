@@ -22,6 +22,7 @@
 @operator_semantics: ~"./operator-semantics.spw"
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
+@planning_ecology: ~"./planning-ecology.spw"
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
@@ -36,6 +37,7 @@ dispatch: .{
  operators = @operator_semantics
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition
+ planning_ecology = @planning_ecology
  cognition = @cognitive_navigation
  containers = @electromagnetic_containers
  versioning = @precipitates_projections

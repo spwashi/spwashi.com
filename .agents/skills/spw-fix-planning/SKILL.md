@@ -33,3 +33,5 @@ Read first:
 - syntax checks for touched JS
 - asset/anchor checks for touched routes
 - `git diff --check`
+
+When the regression or lifecycle issue lives in the agent/planning layer (stale indexes, missing `.spw` dispatch, broken skill references, maintenance drift), record it under `.agents/plans/agent-optimization/` (or a focused sub-plan) and invoke `spw-plan-maintenance` as part of the fix.

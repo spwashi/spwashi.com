@@ -6,6 +6,7 @@ This repository is a hand-authored static site with four main edit surfaces:
 - shared CSS under `public/css/`
 - shared JavaScript modules under `public/js/`
 - editor-facing `.spw` bridges under `.spw/` and `.agents/plans/`
+- agent operating surfaces (skills, planning ecology, validation contracts, public editor pages such as `/about/plans/`) — maintained via `spw-plan-maintenance` and tracked in `agent-optimization/PLAN.md`
 
 Default edit order:
 
