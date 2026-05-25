@@ -3,13 +3,16 @@
    --------------------------------------------------------------------------
    Purpose
    - Debug-only overlays for page surface -> feature/module -> slots.
+   - Optional layer-owner labels for cascade-resolved diagnostic markers.
 
    Activation
    - html[data-spw-debug-mode="on"] or [data-spw-debug~="css"] or
      [data-spw-debug~="layout"].
+   - html[data-spw-debug-layers="on"] or [data-spw-debug~="layers"].
 
    Ownership
    - Expose structure only; move required UI rules to the semantic owner.
+   - Layer labels show diagnostic owner markers, not full CSS provenance.
    ========================================================================== */
 
 :where(
@@ -274,8 +277,135 @@
   --spw-css-debug-color: color-mix(in srgb, var(--op-action-color, #005959) 70%, var(--teal, #008080));
 }
 
+/* Layer labels show cascade-resolved diagnostic markers, not full CSS provenance. */
+:where(
+  html[data-spw-debug-layers="on"],
+  html[data-spw-debug~="layers"],
+  [data-spw-debug~="layers"]
+) :where(
+  header,
+  main,
+  footer,
+  section,
+  article,
+  nav,
+  aside,
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .media-card,
+  .operator-card,
+  .mode-panel,
+  .operator-chip,
+  .frame-sigil,
+  [data-cognitive-handle],
+  [data-spw-feature],
+  [data-spw-box-model],
+  [data-spw-box-story],
+  [data-spw-composition-flow],
+  [data-spw-component-kind],
+  [data-spw-kind],
+  [data-spw-metamaterial],
+  [data-spw-wonder-state],
+  [data-spw-charge],
+  [data-spw-accent],
+  [data-spw-ornament-state]
+) {
+  /* Local tokens */
+  --spw-layer-debug-color: var(--spw-debug-layer-color, #888888);
+
+  /* Visual */
+  outline: 2px solid color-mix(in srgb, var(--spw-layer-debug-color) 72%, transparent);
+  outline-offset: 3px;
+
+  /* Layering / containment */
+  position: relative;
+}
+
+:where(
+  html[data-spw-debug-layers="on"],
+  html[data-spw-debug~="layers"],
+  [data-spw-debug~="layers"]
+) :where(
+  header,
+  main,
+  footer,
+  section,
+  article,
+  nav,
+  aside,
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .media-card,
+  .operator-card,
+  .mode-panel,
+  .operator-chip,
+  .frame-sigil,
+  [data-cognitive-handle],
+  [data-spw-feature],
+  [data-spw-box-model],
+  [data-spw-box-story],
+  [data-spw-composition-flow],
+  [data-spw-component-kind],
+  [data-spw-kind],
+  [data-spw-metamaterial],
+  [data-spw-wonder-state],
+  [data-spw-charge],
+  [data-spw-accent],
+  [data-spw-ornament-state]
+)::after {
+  /* Layout */
+  display: inline-block;
+  max-inline-size: min(42ch, calc(100vw - 2rem));
+  overflow: hidden;
+  padding: 0.18rem 0.42rem;
+  margin-block-start: 0.24rem;
+
+  /* Box */
+  border: 1px solid color-mix(in srgb, var(--spw-layer-debug-color) 50%, transparent);
+  border-radius: var(--shape-micro, 4px);
+
+  /* Typography */
+  color: color-mix(in srgb, var(--ink, #111) 86%, var(--spw-layer-debug-color) 14%);
+  content:
+    "layer: " var(--spw-debug-layer-owner, "none")
+    " | box: " attr(data-spw-box-model)
+    " | flow: " attr(data-spw-composition-flow)
+    " | story: " attr(data-spw-box-story);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 650;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* Visual */
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--spw-layer-debug-color) 16%, var(--surface-strong, #fff)),
+      color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent)
+    );
+  box-shadow: 0 0.24rem 0.85rem color-mix(in srgb, var(--shadow-color, #111) 14%, transparent);
+
+  /* Interaction */
+  pointer-events: none;
+
+  /* Layering / containment */
+  position: absolute;
+  z-index: 180;
+  inset: calc(100% + 0.22rem) auto auto 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  :where(html[data-spw-debug-mode="on"], [data-spw-debug~="css"], [data-spw-debug~="layout"]) * {
+  :where(
+    html[data-spw-debug-mode="on"],
+    html[data-spw-debug-layers="on"],
+    [data-spw-debug~="css"],
+    [data-spw-debug~="layout"],
+    [data-spw-debug~="layers"]
+  ) * {
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;
     animation-iteration-count: 1;

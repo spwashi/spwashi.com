@@ -183,6 +183,12 @@ body > :where(header, main, footer) {
   position: relative;
 }
 
+:where(header, main, footer, [data-spw-layout]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "shell";
+  --spw-debug-layer-color: #22aa66;
+}
+
 /* ==========================================================================
    3. Generic page defaults
    --------------------------------------------------------------------------
@@ -192,6 +198,12 @@ body > :where(header, main, footer) {
 
 /* main owns the page gutter; nested sections should not add a second page edge. */
 main {
+  /* Layout */
+  display: var(--spw-main-display);
+  flex-direction: var(--spw-main-direction);
+  gap: var(--spw-main-gap);
+
+  /* Box */
   width: 100%;
   max-width: var(--spw-main-width);
   padding-inline: var(--spw-main-padding-inline);
@@ -199,10 +211,11 @@ main {
     var(--spw-main-padding-block-start)
     auto
     var(--spw-main-padding-block-end);
-  display: var(--spw-main-display);
-  flex-direction: var(--spw-main-direction);
-  gap: var(--spw-main-gap);
+
+  /* Interaction */
   touch-action: pan-y;
+
+  /* Layering / containment */
   container-type: inline-size;
 }
 

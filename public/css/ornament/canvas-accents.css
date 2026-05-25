@@ -9,13 +9,26 @@
 /* ─── Base Host & Canvas Configuration ──────────────────────────────────── */
 
 :where(.spw-accent-host) {
-    position: relative;
-    overflow: hidden !important;
-    z-index: 1; /* Establishes local stacking context */
-    
-    /* Default canvas behavior tokens */
+    /* Debug / inspection */
+    --spw-debug-layer-owner: "ornament";
+    --spw-debug-layer-color: #b58900;
+
+    /* Local tokens */
     --canvas-opacity: 0.6;
     --canvas-blend: multiply;
+
+    /* Box */
+    overflow: hidden !important;
+
+    /* Layering / containment */
+    position: relative;
+    z-index: 1; /* Establishes local stacking context */
+}
+
+:where([data-spw-accent]) {
+    /* Debug / inspection */
+    --spw-debug-layer-owner: "ornament";
+    --spw-debug-layer-color: #b58900;
 }
 
 :where(.spw-accent-host[data-spw-image-prominence="hero"]) {

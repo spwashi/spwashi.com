@@ -65,6 +65,11 @@
   .mode-panel,
   [data-spw-component-kind]
 ) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "effects";
+  --spw-debug-layer-color: #d23669;
+
+  /* Local tokens */
   --material-depth-opacity: var(--material-depth-opacity-2);
   --material-local-surface:
     color-mix(
@@ -76,7 +81,10 @@
   --material-local-border-color: var(--material-line);
   --material-local-shadow: var(--material-shadow-rest);
 
+  /* Typography */
   color: var(--material-ink);
+
+  /* Visual */
   background: var(--material-local-background);
   border: 1px solid var(--material-local-border-color);
   outline: 1px solid transparent;
@@ -84,6 +92,8 @@
   box-shadow:
     var(--material-local-shadow),
     var(--interaction-glow);
+
+  /* Interaction */
   transition:
     transform    var(--material-duration-fast) var(--material-lift-ease),
     box-shadow   var(--material-duration-base) var(--material-settle-ease),

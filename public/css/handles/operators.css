@@ -114,6 +114,12 @@ header,
   min-width: 0;
 }
 
+:where([data-spw-operator], .operator-chip, .frame-sigil, .frame-card-sigil) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "handles";
+  --spw-debug-layer-color: #1d57a3;
+}
+
 /* ==========================================================================
    2. Shared handle primitive
    --------------------------------------------------------------------------

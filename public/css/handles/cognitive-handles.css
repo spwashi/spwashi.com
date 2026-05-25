@@ -60,6 +60,10 @@
     [data-dimensional-link],
     [data-foldable]
 ) {
+    /* Debug / inspection */
+    --spw-debug-layer-owner: "handles";
+    --spw-debug-layer-color: #1d57a3;
+
     position: relative;
 }
 

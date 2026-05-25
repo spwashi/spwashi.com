@@ -16,6 +16,28 @@
   --flow-space: var(--spw-flow-space, var(--space-md, 1rem));
 }
 
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  figcaption,
+  li,
+  pre,
+  code,
+  mark,
+  [data-reading-region],
+  [data-spw-readable]
+) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "typography";
+  --spw-debug-layer-color: #ddaa33;
+}
+
 :where(.prose > * + *, article > * + *, .frame-copy > * + *) {
   margin-block-start: var(--flow-space);
 }

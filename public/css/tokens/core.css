@@ -123,12 +123,22 @@
   initial-value: 0;
 }
 
+@property --spw-debug-layer-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #888888;
+}
+
 
 /* ==========================================================================
    2. Primitive Scales
    ========================================================================== */
 
 :root {
+  /* -- Debug / Inspection -- */
+  --spw-debug-layer-owner: "tokens";
+  --spw-debug-layer-color: #888888;
+
   /* -- Spacing Primitives -- */
   --space-4xs: 0.0625rem;
   --space-3xs: 0.125rem;

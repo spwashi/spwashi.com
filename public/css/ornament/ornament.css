@@ -97,6 +97,9 @@
    ========================================================================== */
 
 :where(
+  [data-spw-ornament-state],
+  [data-spw-ornament-density],
+  [data-spw-ornament-axis],
   .spw-ornament-host,
   .spw-spirit-sequence,
   .spw-ornament-rail,
@@ -108,12 +111,19 @@
   .spw-ornament-braid,
   .spw-ornament-ladder
 ) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "ornament";
+  --spw-debug-layer-color: #b58900;
+
+  /* Local tokens */
   --ornament-local-accent: var(--ornament-accent);
   --ornament-local-line: var(--ornament-line);
   --ornament-local-surface: var(--ornament-surface);
 
-  position: relative;
+  /* Box */
   min-width: 0;
+
+  /* Interaction */
   transition:
     opacity var(--ornament-duration-base) var(--ornament-ease),
     color var(--ornament-duration-fast) var(--ornament-ease),
@@ -121,6 +131,9 @@
     box-shadow var(--ornament-duration-base) var(--ornament-settle-ease),
     transform var(--ornament-duration-fast) var(--ornament-settle-ease),
     background-color var(--ornament-duration-fast) var(--ornament-ease);
+
+  /* Layering / containment */
+  position: relative;
 }
 
 /* Stage-aware ornament opacity can be inherited from container contexts. */

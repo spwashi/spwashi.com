@@ -170,18 +170,19 @@ export async function buildCssSources(options = { check: false, watch: false }) 
         const output = processed?.css || source;
         const map = processed?.map?.toString() || null;
         const normalizedOutput = output.endsWith('\n') ? output : `${output}\n`;
+        const normalizedMap = map ? (map.endsWith('\n') ? map : `${map}\n`) : null;
         const currentOutput = await readIfExists(entry.outputPath);
         const currentMap = entry.mapOutputPath ? await readIfExists(entry.mapOutputPath) : null;
         const isFresh = currentOutput === normalizedOutput;
-        const isMapFresh = !entry.mapOutputPath || currentMap === map;
+        const isMapFresh = !entry.mapOutputPath || currentMap === normalizedMap;
         if (options.check && (!isFresh || !isMapFresh)) {
             throw new Error(`[css-build] stale output: ${entry.output}`);
         }
         if (!options.check && (!isFresh || !isMapFresh)) {
             await fs.mkdir(path.dirname(entry.outputPath), { recursive: true });
             await fs.writeFile(entry.outputPath, normalizedOutput, 'utf8');
-            if (entry.mapOutputPath && map) {
-                await fs.writeFile(entry.mapOutputPath, `${map}\n`, 'utf8');
+            if (entry.mapOutputPath && normalizedMap) {
+                await fs.writeFile(entry.mapOutputPath, normalizedMap, 'utf8');
             }
         }
         results.push({

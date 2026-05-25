@@ -61,6 +61,11 @@
   .spw-console,
   .spw-nav-panel
 ) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "systems";
+  --spw-debug-layer-color: #008080;
+
+  /* Local tokens */
   --spw-surface-local-clarity: var(--spw-surface-clarity, 0.62);
   --spw-surface-local-pressure: var(--spw-surface-pressure, 0.34);
   --spw-surface-local-atmosphere: var(--spw-surface-atmosphere, 0.18);
@@ -68,8 +73,11 @@
   --spw-surface-local-memory: var(--spw-surface-memory, 0.16);
   --spw-surface-local-resonance: var(--spw-surface-resonance, 0.18);
 
-  position: relative;
+  /* Box */
   min-width: 0;
+
+  /* Layering / containment */
+  position: relative;
 }
 
 /* ==========================================================================

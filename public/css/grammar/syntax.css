@@ -262,26 +262,27 @@
    6. Frame primitives
    ========================================================================== */
 
+:where(.site-frame, [data-spw-form], [data-spw-brace], .spw-topic, [data-spw-topic]) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "grammar";
+  --spw-debug-layer-color: #ee6622;
+}
+
 :where(.site-frame) {
-  position: relative;
+  /* Layout */
   display: flex;
   flex-direction: column;
   gap: var(--grammar-surface-gap);
+
+  /* Box */
   min-width: 0;
-  overflow: clip;
   padding: var(--grammar-surface-padding);
   border: 1px solid var(--grammar-line);
   border-radius: var(--grammar-radius);
-  background: var(--grammar-surface);
-  box-shadow: var(--grammar-shadow);
-  container-type: inline-size;
-  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
-  touch-action: pan-y;
-  transition:
-    background var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
-    border-color var(--grammar-duration-base) var(--grammar-ease-mechanical),
-    box-shadow var(--grammar-duration-deliberate) var(--grammar-ease-mechanical);
+  overflow: clip;
 
+  /* Visual */
+  background: var(--grammar-surface);
   background-image:
     linear-gradient(
       90deg,
@@ -291,6 +292,19 @@
   background-repeat: no-repeat;
   background-size: calc(100% - (var(--grammar-surface-padding) * 2)) 1px;
   background-position: var(--grammar-surface-padding) 1rem;
+  box-shadow: var(--grammar-shadow);
+
+  /* Interaction */
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+  touch-action: pan-y;
+  transition:
+    background var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
+    border-color var(--grammar-duration-base) var(--grammar-ease-mechanical),
+    box-shadow var(--grammar-duration-deliberate) var(--grammar-ease-mechanical);
+
+  /* Layering / containment */
+  position: relative;
+  container-type: inline-size;
 }
 
 :where(.site-frame[data-state~="active"]) {

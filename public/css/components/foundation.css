@@ -129,11 +129,18 @@
   .pwa-status-card,
   .payment-card
 ) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "components";
+  --spw-debug-layer-color: #9933cc;
+
+  /* Box */
+  min-width: 0;
+  box-sizing: border-box;
+
+  /* Layering / containment */
   position: relative;
   z-index: var(--component-layer-base);
-  min-width: 0;
   isolation: isolate;
-  box-sizing: border-box;
 }
 
 :where(
@@ -217,26 +224,35 @@
 }
 
 :where([data-spw-region-flow="stack"], .spw-region-stack) {
+  /* Layout */
   display: flex;
   flex-direction: column;
   gap: var(--surface-gap, 1rem);
+
+  /* Box */
   min-width: 0;
 }
 
 :where([data-spw-region-flow="cluster"], .spw-region-cluster) {
+  /* Layout */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
   gap: var(--component-gap-tight, 0.55rem);
+
+  /* Box */
   min-width: 0;
 }
 
 :where([data-spw-region-flow="overlay"], .spw-region-overlay) {
+  /* Layout */
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   justify-items: stretch;
+
+  /* Box */
   min-width: 0;
 }
 

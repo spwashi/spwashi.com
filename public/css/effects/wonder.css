@@ -70,6 +70,11 @@
   [data-spw-delight],
   [data-spw-visited]
 ) {
+  /* Debug / inspection */
+  --spw-debug-layer-owner: "effects";
+  --spw-debug-layer-color: #d23669;
+
+  /* Layering / containment */
   position: relative;
 }
 
