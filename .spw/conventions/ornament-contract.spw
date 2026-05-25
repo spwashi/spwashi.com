@@ -20,9 +20,9 @@
 @runtime_audit_settings: ~"../reviews/runtime-audit/settings-state.spw"
 
 thesis: .{
- claim = `An ornament is a visual expression of semantic or field state, not a decoration.`
+ claim = `An ornament is the visual projection layer of the attentional field. It renders semantic state + field state (resonance, collection, deviation, wonder trail) into inspectable, tunable visuals.`
  naive_shape = `The current guide badge reads: I am an operator — here is my name. It does not show whether that operator is warm in the current field, explicitly collected, or deviating from default state.`
- updated_shape = `A badge should read: I am an operator. My current field state is warm, resonant, collected, or default. My contribution to the attentional field is this token set.`
+ updated_shape = `A badge (or any ornament) should read: I am an operator. My current field state is warm, resonant, collected, or default. My contribution to the attentional field is this token set. Ornament is the canonical visualization layer, not decoration.`
 }[reg=facet]
 
 ornament_classes: .{

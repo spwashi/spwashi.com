@@ -115,13 +115,27 @@
   --spw-debug-layer-owner: "ornament";
   --spw-debug-layer-color: #b58900;
 
-  /* Local tokens */
+  /* Local tokens — prefer the new field-visualization bridge when available */
   --ornament-local-accent: var(--ornament-accent);
   --ornament-local-line: var(--ornament-line);
   --ornament-local-surface: var(--ornament-surface);
 
+  /* Field-driven ornament intensity (new canonical tokens) */
+  --ornament-field-intensity: var(--ornament-field-intensity, var(--spw-field-intensity, 0));
+  --ornament-collection-mark: var(--ornament-collection-mark, 0);
+  --ornament-deviation-visibility: var(--ornament-deviation-visibility, 0);
+  --ornament-wonder-trail: var(--ornament-wonder-trail, 0);
+  --ornament-resonance: var(--ornament-resonance, var(--spw-resonance, 0));
+
+  /* Balance semantics — prefer these for harmonious ornament expression */
+  --ornament-field-balance: var(--field-balance, 0.5);
+  --ornament-semantic-balance: var(--semantic-balance, 0.6);
+
   /* Box */
   min-width: 0;
+
+  /* Example consumption of balance tokens for calmer default ornament */
+  opacity: calc(var(--ornament-opacity-rest) * (0.8 + var(--ornament-semantic-balance) * 0.4));
 
   /* Interaction */
   transition:
@@ -131,6 +145,11 @@
     box-shadow var(--ornament-duration-base) var(--ornament-settle-ease),
     transform var(--ornament-duration-fast) var(--ornament-settle-ease),
     background-color var(--ornament-duration-fast) var(--ornament-ease);
+
+  /* Field-driven ornament (new tokens in action) */
+  opacity: calc(var(--ornament-opacity-rest) + (var(--ornament-field-intensity) * 0.3));
+  box-shadow: var(--ornament-glow),
+    0 0 0 calc(1px * var(--ornament-resonance)) color-mix(in srgb, var(--ornament-accent) 22%, transparent);
 
   /* Layering / containment */
   position: relative;

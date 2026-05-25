@@ -131,6 +131,66 @@
 
 
 /* ==========================================================================
+   Ornament Field Visualization Tokens (canonical bridge)
+   --------------------------------------------------------------------------
+   These are the preferred tokens for the ornament layer to consume when
+   expressing the attentional field (resonance, collection, deviation, wonder
+   trail, etc.). They act as a thin, stable projection of the runtime state
+   properties above so ornament.css and effects can remain decoupled from
+   the full field model implementation.
+
+   Ornament should prefer these over inventing parallel --ornament-* state
+   variables where possible.
+   ========================================================================== */
+
+@property --ornament-field-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ornament-collection-mark {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ornament-deviation-visibility {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ornament-wonder-trail {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ornament-resonance {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Field balance: equilibrium between resonance (outward pull) and collection/ground (inward stability).
+   Useful for ornament and effects to express "calm vs charged" without hard-coding numbers. */
+@property --field-balance {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Semantic balance: recommended equilibrium between semantic density and visual breathing room.
+   0 = maximal semantic compression, 1 = maximal visual lightness. */
+@property --semantic-balance {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.6;
+}
+
+
+/* ==========================================================================
    2. Primitive Scales
    ========================================================================== */
 
@@ -160,6 +220,9 @@
   --spw-component-gap-tight: 0.48rem;
   --spw-component-gap-loose: 1.08rem;
   --spw-component-gap-roomy: 1.42rem;
+
+  /* Recommended balanced default for most components (respects semantic-balance) */
+  --spw-component-gap-balanced: var(--spw-component-gap);
 
   --spw-component-pad: 0.84rem;
   --spw-component-pad-tight: 0.65rem;
