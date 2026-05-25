@@ -38,6 +38,8 @@
 ## Validation
 - Run `git diff --check` after edits.
 - Run `node --check <file>` for edited JS modules.
+- Run `npm run audit` (or `npm run check`, which now includes it) before landing changes that touch `package.json`, `package-lock.json`, or any dependency surface.
+- Agents must not introduce new npm packages (via `npm install`, `npx`, etc.) without an accompanying plan note under `.agents/plans/` (or `agent-optimization/`) and human review. Prefer `npm ci --ignore-scripts` for any temporary installs.
 - Use targeted `rg` checks for anchors, asset paths, and semantic data attributes.
 - For content edits, sanity-check surrounding markup for balanced tags and broken relative/root-relative links.
 - If a local preview step is needed, use a simple static server; otherwise avoid adding tooling just for validation.
@@ -62,7 +64,7 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
-| `npm run check` | Validates the site (pre-existing). |
+| `npm run check` | Validates the site (includes `npm run audit --audit-level=moderate`, typechecking, CSS contracts, generated manifest checks, and route runtime validation). |
 
 **Deploy:** `.github/workflows/deploy.yml` runs `npm run build` and publishes `dist/` to GitHub Pages on push to `main`. Binary deploy artifacts in `dist/` stay ignored; plaintext outputs can be tracked when useful for review.
 
