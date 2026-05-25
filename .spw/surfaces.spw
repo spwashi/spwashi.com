@@ -28,6 +28,7 @@ public_routes: .{
  pretext = .{ path = ~"../topics/software/pretext/index.html", role = `probe surface`, bridge = `live lab that projects grammar into a concrete device-oriented interface` }[reg=facet]
  play = .{ path = ~"../play/index.html", role = `world surface`, bridge = `creative and game-facing routes shaped by the same operator logic` }[reg=facet]
  rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `local gameplay surface`, bridge = `table-facing RPG route with private localStorage registers for scene, initiative, clocks, notes, and session seeds` }[reg=facet]
+ recipes = .{ path = ~"../recipes/index.html", role = `craft domain`, bridge = `social kitchen and hosting grammar as a developable expertise domain — skills, progression, practice, and projection into ritual/annual planning` }[reg=facet]
 }[reg=facet]
 
 canon_alignment: .{

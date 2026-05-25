@@ -403,6 +403,12 @@ frame #culinary-component-physics
   concept cuisine programming component_genomics
   note "Culinary physics can describe component lifecycle without hiding implementation: mise declares slots, reduction compresses signal, emulsion binds unlike materials, fermentation matures a reusable pattern under conditions, and service tests whether the component works in company."
 
+frame #social-kitchen-grammar
+  role metaphor
+  surface recipes newyear play/rpg-wednesday
+  concept culinary hosting holiday planning projection budgeting expertise
+  note "The six social kitchen skills (mise for presence, batch bases & provisions, service as reading/repair, recovery & byproduct alchemy, flexible technique verbs, rhythm & layered attention) form a coherent grammar for cooking for friends and family. They also project cleanly as a budgeting and concept development lens for holidays and annual rituals. Cooking is treated as a primary developable expertise domain with its own progression, not only a metaphor source for other surfaces."
+
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime

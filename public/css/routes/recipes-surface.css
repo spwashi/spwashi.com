@@ -351,3 +351,20 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
        body[data-spw-surface="recipes"] h3) {
   color: color-mix(in srgb, var(--recipes-ink) 88%, var(--recipes-accent));
 }
+
+/* Structural support for cooking as developable expertise domain */
+:where(body[data-spw-surface="recipes"] .spw-wisdom-deck) {
+  /* Stronger practice-module rhythm, echoing modular lab/card patterns elsewhere */
+  gap: clamp(0.7rem, 1.4vw, 1rem);
+}
+
+:where(body[data-spw-surface="recipes"] .spw-wisdom-deck .spw-wisdom-card) {
+  background: var(--recipes-panel);
+  border-color: color-mix(in srgb, var(--recipes-line-strong) 24%, var(--recipes-line));
+}
+
+:where(body[data-spw-surface="recipes"] #material-grammar-cards) {
+  /* Material grammar cards receive lab-like emphasis as core transferable expertise handles */
+  background: var(--recipes-panel-warm);
+  border-color: color-mix(in srgb, var(--recipes-ember) 22%, var(--recipes-line));
+}

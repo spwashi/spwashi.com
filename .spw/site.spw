@@ -59,6 +59,7 @@ surfaces: .{
  spw = .{ path = ~"../topics/software/spw/index.html", role = `operator atlas, alchemistry, interaction semantics` }[reg=facet]
  play = .{ path = ~"../play/index.html", role = `games, sessions, creative work` }[reg=facet]
  rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `gameplay surface, local table state, session registers` }[reg=facet]
+ recipes = .{ path = ~"../recipes/index.html", role = `craft domain, social kitchen, hosting grammar, expertise development` }[reg=facet]
 }[reg=facet]
 
 frame_patterns: #[

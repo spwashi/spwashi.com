@@ -24,12 +24,12 @@ thesis: .{
 product_lines: .{
  note = `Named lines in their current state. Each can be stubbed before it is filled.`
  recipes = .{
-  pitch = `Culinary forms through a learning-science lens. Each recipe is a lesson in cognition — how flavor builds structure, how substitution teaches variables, how timing teaches causality.`
-  feature_shape = `Per-recipe card: ingredients as a set, steps as a stream, context as a facet, pedagogical note as a liminal layer.`
-  collectible_unit = `The recipe itself, its substitution matrix, its pedagogical note, its seasonal variant.`
+  pitch = `Cooking as a developable expertise domain, with strong projection into learning, play, ritual, and annual planning. Social kitchen skills (hosting grammar, batch provision, service as repair, recovery, rhythm) form a primary practice surface rather than only a metaphor source.`
+  feature_shape = `Per-recipe card: ingredients as a set, steps as a stream, context as a facet, pedagogical note as a liminal layer. Principle registers and social grammar as developmental arcs.`
+  collectible_unit = `The recipe itself, its substitution matrix, its pedagogical note, its seasonal variant, and its use as expertise practice or holiday projection.`
   audience_primary = illustrator
-  audience_bridge = `engineers read it as a DSL; librarians read it as a catalog entry`
-  current_state = `Route exists at /recipes; markup is naive; needs hero, substrate, and first three cards.`
+  audience_bridge = `engineers read it as a DSL; librarians read it as a catalog entry; practitioners develop real hosting and craft expertise`
+  current_state = `Route exists at /recipes; now registered as primary craft domain in site.spw and surfaces.spw. Principle registers + #social-kitchen-grammar frame model expertise development. Cross-topic links and social projection lens active.`
  }[reg=facet]
  seed_cards = .{
   pitch = `Configurable, screenshottable cards for rates, asks, and offerings. The same card shape serves 'my hourly rate is X' and 'I need groceries this week'.`
