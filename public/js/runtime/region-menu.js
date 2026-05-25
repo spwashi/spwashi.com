@@ -15,6 +15,12 @@ const TARGET_SELECTOR = [
   '[data-spw-feature]',
   '[data-spw-semantic-expression]',
   '[data-spw-semantic-root]',
+  '[data-spw-concept]',
+  '[data-spw-grounding]',
+  '[data-spw-assignment]',
+  '[data-spw-reference-seed]',
+  '[data-spw-vocab]',
+  '[data-spw-topic]',
 ].join(', ');
 
 const MENU_ID = 'spw-region-menu';
@@ -457,6 +463,11 @@ function inferExpressionFromText(text) {
 function readableTarget(target) {
   return normalizeText(
     target?.dataset?.spwSemanticExpression
+    || target?.dataset?.spwConcept
+    || target?.dataset?.spwAssignment
+    || target?.dataset?.spwReferenceSeed
+    || target?.dataset?.spwGrounding
+    || target?.dataset?.spwTopic
     || target?.dataset?.spwMeaning
     || target?.dataset?.spwFeature
     || target?.dataset?.spwSigil
@@ -489,6 +500,15 @@ function buildContract(target, semantic, frame) {
   const source = target.closest('[data-spw-reading-cue], [data-spw-input], [data-spw-operation], [data-spw-return]');
   const fields = [
     ['Feature', source?.dataset.spwFeature || target.dataset.spwFeature || frame?.dataset?.spwFeature],
+    ['Concept', target.dataset.spwConcept],
+    ['Domain', target.dataset.spwDomain],
+    ['Grounding', target.dataset.spwGrounding],
+    ['Assignment', target.dataset.spwAssignment],
+    ['Reference seed', target.dataset.spwReferenceSeed],
+    ['Vocabulary', target.dataset.spwVocab],
+    ['Topic', target.dataset.spwTopic],
+    ['Attention', target.dataset.spwAttention],
+    ['Behavior', target.dataset.spwBehavior || semantic.behaviorLabel],
     ['Cue', source?.dataset.spwReadingCue || target.dataset.spwReadingCue],
     ['Input', source?.dataset.spwInput || target.dataset.spwInput || semantic.rootLabel],
     ['Operation', source?.dataset.spwOperation || target.dataset.spwOperation || semantic.behaviorLabel],
@@ -552,6 +572,9 @@ function moveMatch(direction) {
   });
 
   next.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
+  if (!next.hasAttribute('tabindex')) {
+    next.setAttribute('tabindex', '-1');
+  }
   next.focus?.({ preventScroll: true });
 }
 
@@ -582,6 +605,9 @@ function buildSeed(target, semantic, frame) {
   const route = document.body?.dataset.spwSurface || normalizeToken(location.pathname || 'site');
   const region = normalizeToken(
     target.dataset.spwFeature
+    || target.dataset.spwConcept
+    || target.dataset.spwAssignment
+    || target.dataset.spwReferenceSeed
     || frame?.dataset?.spwFeature
     || frame?.id
     || frame?.dataset?.spwRole
@@ -683,7 +709,9 @@ function shouldArmHoldOpen(target, event) {
   if (!isCoarsePointer(event)) return false;
   if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) return false;
   if (isNavigable(target)) return false;
-  return target.matches('.spw-delimiter, .frame-sigil, .frame-card-sigil, [data-spw-feature], [data-spw-semantic-expression]');
+  return target.matches(
+    '.spw-delimiter, .frame-sigil, .frame-card-sigil, [data-spw-feature], [data-spw-semantic-expression], [data-spw-concept], [data-spw-grounding], [data-spw-assignment], [data-spw-reference-seed], [data-spw-vocab], [data-spw-topic]'
+  );
 }
 
 function isCoarsePointer(event) {

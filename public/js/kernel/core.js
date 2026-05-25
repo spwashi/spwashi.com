@@ -17,7 +17,20 @@ import { bus } from '/public/js/kernel/bus.js';
 import { groundElement } from '/public/js/interface/haptics.js';
 import { createSpwLogger, markInstrumented } from '/public/js/kernel/instrumentation.js';
 
-const KNOWLEDGE_TARGET_SELECTOR = '.operator-chip, .syntax-token, .frame-sigil, .spec-pill, .spw-delimiter, [data-spw-groundable="true"]';
+const KNOWLEDGE_TARGET_SELECTOR = [
+    '.operator-chip',
+    '.syntax-token',
+    '.frame-sigil',
+    '.spec-pill',
+    '.spw-delimiter',
+    '[data-spw-concept]',
+    '[data-spw-grounding]',
+    '[data-spw-assignment]',
+    '[data-spw-reference-seed]',
+    '[data-spw-vocab]',
+    '[data-spw-topic]',
+    '[data-spw-groundable="true"]',
+].join(', ');
 const logger = createSpwLogger('spw-core');
 
 export function initSpwCore() {

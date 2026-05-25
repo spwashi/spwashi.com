@@ -41,6 +41,12 @@ const GROUND_SELECTORS = [
   '.badge',
   '.tag',
   '.pill',
+  '[data-spw-concept]',
+  '[data-spw-grounding]',
+  '[data-spw-assignment]',
+  '[data-spw-reference-seed]',
+  '[data-spw-vocab]',
+  '[data-spw-topic]',
   '[data-spw-groundable="true"]'
 ].join(', ');
 
@@ -609,6 +615,7 @@ function buildSemanticDetail(el, overrides = {}) {
       overrides.expression
       ?? el.dataset.spwGroundExpression
       ?? el.dataset.spwNavExpression
+      ?? buildConceptExpression(el)
       ?? label,
     prefix:
       overrides.prefix
@@ -658,6 +665,8 @@ function buildSemanticDetail(el, overrides = {}) {
     group:
       overrides.group
       ?? el.dataset.spwGroundGroup
+      ?? el.dataset.spwDomain
+      ?? el.dataset.spwVocab
       ?? null,
     destination:
       overrides.destination
@@ -711,6 +720,11 @@ function getElementKey(el) {
   const explicit =
     el.dataset.spwGroundKey
     || el.dataset.spwSemanticKey
+    || el.dataset.spwConcept
+    || el.dataset.spwAssignment
+    || el.dataset.spwReferenceSeed
+    || el.dataset.spwGrounding
+    || el.dataset.spwTopic
     || el.dataset.spwImageKey
     || el.id;
 
@@ -730,12 +744,42 @@ function getElementKey(el) {
 function getElementText(el) {
   return (
     el.dataset.spwGroundLabel
+    || el.dataset.spwConcept
+    || el.dataset.spwAssignment
+    || el.dataset.spwReferenceSeed
+    || el.dataset.spwGrounding
+    || el.dataset.spwTopic
     || el.dataset.spwMeaning
     || el.getAttribute('aria-label')
     || el.querySelector?.('h1, h2, h3, h4, strong, figcaption, .frame-sigil, .frame-card-sigil')?.textContent
     || el.textContent
     || ''
   );
+}
+
+function buildConceptExpression(el) {
+  const root = normalizeText(
+    el.dataset.spwConcept
+    || el.dataset.spwAssignment
+    || el.dataset.spwReferenceSeed
+    || el.dataset.spwGrounding
+    || el.dataset.spwTopic
+    || (el.hasAttribute('data-spw-vocab') ? el.textContent : '')
+    || ''
+  );
+
+  if (!root) return '';
+
+  const variant = normalizeText(el.dataset.spwDomain || el.dataset.spwReferenceSeed || el.dataset.spwVocab || '');
+  const behavior = normalizeText(el.dataset.spwBehavior || el.dataset.spwAttention || '');
+  const lens = normalizeText(el.dataset.spwGrounding || el.dataset.spwAssignment || '');
+
+  return [
+    root,
+    variant ? `[${variant}]` : '',
+    behavior ? `{${behavior}}` : '',
+    lens ? `<${lens}>` : '',
+  ].join('');
 }
 
 function normalizeText(value = '') {

@@ -95,6 +95,12 @@ HTML projection:
 
 Use metaphor as lighting, not structure. The structure should still name the role, behavior, owner, and result note.
 
+Runtime projection:
+
+- `data-spw-concept`, `data-spw-grounding`, `data-spw-assignment`, `data-spw-reference-seed`, `data-spw-vocab`, and `data-spw-topic` participate in the region menu.
+- The same attributes can be focused as nearby variants, captured as cauldron ingredients, and grounded as collected vocabulary.
+- Keep values short and searchable because they become traversal keys, spell expressions, and collection labels.
+
 ## Good Assignment Examples
 
 - `operator-chip-invite`: compare operator chips across three routes and tune one hover/focus behavior.

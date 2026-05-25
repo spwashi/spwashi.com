@@ -133,6 +133,28 @@ export function deriveSemanticBraceExpression(el) {
     return parseSemanticBraceExpression(meaning);
   }
 
+  const conceptRoot = normalizeText(
+    el.dataset.spwConcept
+    || el.dataset.spwAssignment
+    || el.dataset.spwReferenceSeed
+    || el.dataset.spwGrounding
+    || el.dataset.spwTopic
+    || (el.hasAttribute('data-spw-vocab') ? el.textContent : '')
+    || (el.hasAttribute('data-spw-topic') ? el.textContent : '')
+    || ''
+  );
+
+  if (conceptRoot) {
+    return parseSemanticBraceExpression(
+      composeSemanticBraceExpression({
+        root: conceptRoot,
+        variant: el.dataset.spwDomain || el.dataset.spwReferenceSeed || el.dataset.spwVocab || '',
+        behavior: el.dataset.spwBehavior || el.dataset.spwAttention || '',
+        lens: el.dataset.spwGrounding || el.dataset.spwAssignment || '',
+      })
+    );
+  }
+
   return null;
 }
 
@@ -146,14 +168,32 @@ export function collectSemanticBraceMatches(root, family) {
   const selector = [
     `[data-spw-semantic-root="${escaped}"]`,
     `[data-spw-semantic-family="${escaped}"]`,
+    '[data-spw-concept]',
+    '[data-spw-assignment]',
+    '[data-spw-reference-seed]',
+    '[data-spw-grounding]',
+    '[data-spw-vocab]',
+    '[data-spw-topic]',
   ].join(', ');
 
   const matches = [];
-  if (scope instanceof Element && scope.matches?.(selector)) {
+  if (scope instanceof Element && isSemanticFamilyMatch(scope, family, selector)) {
     matches.push(scope);
   }
 
   const descendants = scope.querySelectorAll?.(selector) || [];
-  descendants.forEach((node) => matches.push(node));
+  descendants.forEach((node) => {
+    if (isSemanticFamilyMatch(node, family, selector)) {
+      matches.push(node);
+    }
+  });
   return matches;
+}
+
+function isSemanticFamilyMatch(node, family, selector) {
+  if (!(node instanceof Element)) return false;
+  if (!node.matches?.(selector)) return false;
+  if (node.dataset.spwSemanticFamily === family) return true;
+  const semantic = deriveSemanticBraceExpression(node);
+  return semantic?.family === family;
 }
