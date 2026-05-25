@@ -46,11 +46,54 @@ Use this shape for small component, route, palette, or behavior assignments:
 Use these as reusable axes for compact assignments:
 
 - Material: paper, vellum, glass, copper, broth, fiber, enamel, graphite, ash, ink.
+- Material property: viscosity, porosity, emulsion, crystallization, plasticity, brittleness, translucency, patina, thermal mass.
 - Motion: fold, bloom, settle, reveal, warn, simmer, pulse, collect, ground, return.
 - Light: side light, table light, footlight, backlight, blackout, ember, diagnostic glow.
+- Math handle: graph, gradient, invariant, ratio, constraint, state machine, feedback loop, basis, lattice.
 - Spell: a small replayable behavior a visitor can repeat or restore.
 - Cauldron: a gathered set of ingredients before they become a prompt, card, token, or route note.
 - Grounding point: the route, component, state, or HTML owner where the wonder becomes usable.
+
+## Math And Materials Grounding
+
+Use this ladder when an abstract idea needs immediate sensory value:
+
+```text
+math abstraction -> material property -> recipe/process example -> site behavior -> owner
+```
+
+Examples:
+
+- `graph -> substitution network -> black garlic bean stew -> compare -> /topics/math/`
+- `gradient -> flavor tuning -> miso-maple carrots -> reveal -> /recipes/`
+- `porosity -> breathable structure -> rice paper or bread crumb -> reveal -> /design/palettes/`
+- `crystallization -> fragile order -> chocolate tempering -> warn -> /recipes/`
+
+The public card should give a learner something to wonder about and something to try next.
+
+## Attention Vocabulary
+
+Use these values when a reference card or component session needs an inspectable reader intention:
+
+- `scan`: quick overview.
+- `read`: sustained comprehension.
+- `compare`: look across nearby choices.
+- `try`: experiment on one component or route.
+- `promote`: turn a local success into a shared token, component rule, asset, or documented convention.
+- `return`: leave a residue for later work.
+
+HTML projection:
+
+```html
+<article
+  class="frame-panel"
+  data-spw-attention="try"
+  data-spw-behavior="reveal"
+  data-spw-reference-seed="rice-paper-vellum-fold"
+  data-spw-assignment="component-vellum-fold-surface">
+```
+
+Use metaphor as lighting, not structure. The structure should still name the role, behavior, owner, and result note.
 
 ## Good Assignment Examples
 

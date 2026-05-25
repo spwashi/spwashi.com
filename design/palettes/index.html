@@ -30,7 +30,7 @@
     </script>
 <script type="module" src="/public/js/site.js"></script>
 
-    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
@@ -112,9 +112,8 @@
                     promoting shared tokens.
                 </p>
                 <p class="frame-note">
-                    This route should reward skimming. Read it like a prompt cabinet: color roles, material moves,
-                    lighting cues, spell concepts, cauldron ingredients, and small behavior names that can become
-                    useful tomorrow.
+                    This route should reward skimming. Read it like a prompt cabinet: each card names a role, a
+                    material move, a behavior, and a place to test it before anything becomes a shared token.
                 </p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -207,119 +206,193 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="theme-pack-role-map" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+            <section class="site-frame" id="theme-pack-role-map" aria-labelledby="theme-pack-role-map-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-attention="compare">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#theme-pack-role-map">^"theme_pack_role_map"</a>
-                    <h2>Theme Pack Role Map</h2>
+                    <h2 id="theme-pack-role-map-title">Theme Pack Role Map</h2>
                 </header>
                 <p class="frame-note">
                     Theme packs already carry field, surface, signal, marker, and depth. Read them like modes: each
                     pack changes how a component invites, settles, reveals, warns, or resonates while the HTML keeps
-                    the tune.
+                    the structure stable.
                 </p>
 
                 <div class="panel-grid">
-                    <article class="frame-panel" data-spw-context="reading">
-                        <h3>Neutral Paper</h3>
+                    <article class="frame-panel" id="neutral-paper-role-map" data-spw-context="reading" data-spw-attention="read" data-spw-behavior="settle" data-spw-reference-seed="neutral-paper" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#neutral-paper-role-map">Neutral Paper</a></h3>
                         <p>
                             The reading standard. Quiet field, paper surface, teal structure, amber lift. Depth stays
                             low so the words can carry the lead.
                         </p>
-                        <p class="frame-note"><code>neutral-paper</code> · reading baseline · settle</p>
+                        <dl class="context-readout" aria-label="Neutral Paper role map">
+                            <div><dt>pack</dt><dd><code>neutral-paper</code></dd></div>
+                            <div><dt>role</dt><dd>reading baseline</dd></div>
+                            <div><dt>behavior</dt><dd>settle</dd></div>
+                            <div><dt>attention</dt><dd>read</dd></div>
+                        </dl>
                     </article>
-                    <article class="frame-panel" data-spw-context="archive">
-                        <h3>Oxide Ledger</h3>
+                    <article class="frame-panel" id="oxide-ledger-role-map" data-spw-context="archive" data-spw-attention="compare" data-spw-behavior="reveal" data-spw-reference-seed="oxide-ledger" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#oxide-ledger-role-map">Oxide Ledger</a></h3>
                         <p>
                             A cool ledger with warm oxide in the margins. Use it for records, traces, and weathered
                             surfaces that need memory without alarm.
                         </p>
-                        <p class="frame-note"><code>oxide-ledger</code> · archive depth · reveal</p>
+                        <dl class="context-readout" aria-label="Oxide Ledger role map">
+                            <div><dt>pack</dt><dd><code>oxide-ledger</code></dd></div>
+                            <div><dt>role</dt><dd>archive depth</dd></div>
+                            <div><dt>behavior</dt><dd>reveal</dd></div>
+                            <div><dt>attention</dt><dd>compare</dd></div>
+                        </dl>
                     </article>
-                    <article class="frame-panel" data-spw-context="signal">
-                        <h3>Electric Studio</h3>
+                    <article class="frame-panel" id="electric-studio-role-map" data-spw-context="signal" data-spw-attention="compare" data-spw-behavior="resonate" data-spw-reference-seed="electric-studio" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#electric-studio-role-map">Electric Studio</a></h3>
                         <p>
                             Blue signal, clean edge, bright diagnostic pressure. Focus and resonance come forward
                             without drowning the operator colors.
                         </p>
-                        <p class="frame-note"><code>electric-studio</code> · signal clarity · resonate</p>
+                        <dl class="context-readout" aria-label="Electric Studio role map">
+                            <div><dt>pack</dt><dd><code>electric-studio</code></dd></div>
+                            <div><dt>role</dt><dd>signal clarity</dd></div>
+                            <div><dt>behavior</dt><dd>resonate</dd></div>
+                            <div><dt>attention</dt><dd>compare</dd></div>
+                        </dl>
                     </article>
-                    <article class="frame-panel" data-spw-context="ritual">
-                        <h3>Ritual Vellum</h3>
+                    <article class="frame-panel" id="ritual-vellum-role-map" data-spw-context="ritual" data-spw-attention="try" data-spw-behavior="reveal" data-spw-reference-seed="ritual-vellum" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#ritual-vellum-role-map">Ritual Vellum</a></h3>
                         <p>
                             Warm vellum, amber line, soft violet undertone. Use it when reveal should feel patient,
                             authored, and a little ceremonial.
                         </p>
-                        <p class="frame-note"><code>ritual-vellum</code> · ceremonial surface · reveal</p>
+                        <dl class="context-readout" aria-label="Ritual Vellum role map">
+                            <div><dt>pack</dt><dd><code>ritual-vellum</code></dd></div>
+                            <div><dt>role</dt><dd>ceremonial surface</dd></div>
+                            <div><dt>behavior</dt><dd>reveal</dd></div>
+                            <div><dt>attention</dt><dd>try</dd></div>
+                        </dl>
                     </article>
-                    <article class="frame-panel" data-spw-context="craft">
-                        <h3>Copper Brace</h3>
+                    <article class="frame-panel" id="copper-brace-role-map" data-spw-context="craft" data-spw-attention="try" data-spw-behavior="warn" data-spw-reference-seed="copper-brace" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#copper-brace-role-map">Copper Brace</a></h3>
                         <p>
                             Forged warmth with a cool teal brace. Copper marks binding and emphasis; paper keeps the
                             hand on the control.
                         </p>
-                        <p class="frame-note"><code>copper-brace</code> · crafted constraint · warn</p>
+                        <dl class="context-readout" aria-label="Copper Brace role map">
+                            <div><dt>pack</dt><dd><code>copper-brace</code></dd></div>
+                            <div><dt>role</dt><dd>crafted constraint</dd></div>
+                            <div><dt>behavior</dt><dd>warn</dd></div>
+                            <div><dt>attention</dt><dd>try</dd></div>
+                        </dl>
                     </article>
-                    <article class="frame-panel" data-spw-context="console">
-                        <h3>Glass Console</h3>
+                    <article class="frame-panel" id="glass-console-role-map" data-spw-context="console" data-spw-attention="try" data-spw-behavior="invite" data-spw-reference-seed="glass-console" data-spw-assignment="theme-pack-depth-map">
+                        <h3><a href="#glass-console-role-map">Glass Console</a></h3>
                         <p>
                             Cool glass for inspectable layers. Let the system show through, but keep the text sharp
                             enough to solo.
                         </p>
-                        <p class="frame-note"><code>glass-console</code> · inspectable layer · invite</p>
+                        <dl class="context-readout" aria-label="Glass Console role map">
+                            <div><dt>pack</dt><dd><code>glass-console</code></dd></div>
+                            <div><dt>role</dt><dd>inspectable layer</dd></div>
+                            <div><dt>behavior</dt><dd>invite</dd></div>
+                            <div><dt>attention</dt><dd>try</dd></div>
+                        </dl>
                     </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="reference-color-seeds" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+            <section class="site-frame" id="reference-color-seeds" aria-labelledby="reference-color-seeds-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis" data-spw-attention="compare">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#reference-color-seeds">^"reference_color_seeds"</a>
-                    <h2>Reference Color Seeds</h2>
+                    <h2 id="reference-color-seeds-title">Reference Color Seeds</h2>
                 </header>
                 <p class="frame-note">
-                    These studies are not promoted assets. They are charts for small, reversible takes: one route, one
-                    component family, one behavior, one result note.
+                    These studies are not promoted assets. Each seed should name a role, test one behavior, choose one
+                    owner, and leave one result note.
                 </p>
 
                 <div class="panel-grid">
-                    <article class="frame-panel" data-spw-context="analysis">
-                        <h3>Woven Signal Stack</h3>
+                    <article class="frame-panel" id="woven-signal-stack" data-spw-context="analysis" data-spw-attention="try" data-spw-behavior="resonate" data-spw-reference-seed="woven-signal-stack" data-spw-assignment="design-palette-woven-signal">
+                        <h3><a href="#woven-signal-stack">Woven Signal Stack</a></h3>
                         <p>
                             Deep teal, cream paper, rusted copper, amber signal, ochre fiber. Use it to test field,
-                            paper, signal, oxide, and fiber roles before any shared palette alias gets a chorus.
+                            paper, signal, oxide, and fiber roles on one route before promoting shared palette aliases.
                         </p>
-                        <p class="frame-note"><code>design-palette-woven-signal</code> · route-local experiment</p>
+                        <dl class="context-readout" aria-label="Woven Signal Stack reference roles">
+                            <div><dt>assignment</dt><dd><code data-spw-assignment="design-palette-woven-signal">design-palette-woven-signal</code></dd></div>
+                            <div><dt>role</dt><dd>route-local palette</dd></div>
+                            <div><dt>behavior</dt><dd>resonate</dd></div>
+                            <div><dt>owner</dt><dd><a href="/design/">design route</a></dd></div>
+                            <div><dt>result</dt><dd>untried</dd></div>
+                        </dl>
+                        <nav class="frame-note" aria-label="Woven Signal Stack next steps">
+                            <a href="/design/">Try on the design route</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="#folded-amber-register">Compare with Folded Amber Register</a>
+                        </nav>
                     </article>
-                    <article class="frame-panel" data-spw-context="analysis">
-                        <h3>Folded Amber Register</h3>
+                    <article class="frame-panel" id="folded-amber-register" data-spw-context="analysis" data-spw-attention="try" data-spw-behavior="reveal" data-spw-reference-seed="folded-amber-register" data-spw-assignment="component-register-folded-amber">
+                        <h3><a href="#folded-amber-register">Folded Amber Register</a></h3>
                         <p>
                             Soft paper register, teal mass, amber pane, oxide depth, copper pin. Use it for selected,
                             pinned, or collected states where the marker stays small, legible, and local.
                         </p>
-                        <p class="frame-note"><code>component-register-folded-amber</code> · component-state experiment</p>
+                        <dl class="context-readout" aria-label="Folded Amber Register reference roles">
+                            <div><dt>assignment</dt><dd><code data-spw-assignment="component-register-folded-amber">component-register-folded-amber</code></dd></div>
+                            <div><dt>role</dt><dd>component state marker</dd></div>
+                            <div><dt>behavior</dt><dd>reveal</dd></div>
+                            <div><dt>owner</dt><dd><a href="/design/components/">component specimens</a></dd></div>
+                            <div><dt>result</dt><dd>untried</dd></div>
+                        </dl>
+                        <nav class="frame-note" aria-label="Folded Amber Register next steps">
+                            <a href="/design/components/">Try on components</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="#rice-paper-vellum-fold">Compare with Rice Paper Vellum Fold</a>
+                        </nav>
                     </article>
-                    <article class="frame-panel" data-spw-context="story">
-                        <h3>RPG Wednesday Veil Table</h3>
+                    <article class="frame-panel" id="rpg-wednesday-veil-table" data-spw-context="story" data-spw-attention="try" data-spw-behavior="resonate" data-spw-reference-seed="rpg-wednesday-veil-table" data-spw-assignment="rpg-veil-table-resonance">
+                        <h3><a href="#rpg-wednesday-veil-table">RPG Wednesday Veil Table</a></h3>
                         <p>
                             Teal story field, map paper, gold writing, floating globes, warm table cube. Use it for
                             RPG Wednesday when the page needs shared focus without making every panel a hero image.
                         </p>
-                        <p class="frame-note"><code>rpg-veil-table-resonance</code> · route-personality experiment</p>
+                        <dl class="context-readout" aria-label="RPG Wednesday Veil Table reference roles">
+                            <div><dt>assignment</dt><dd><code data-spw-assignment="rpg-veil-table-resonance">rpg-veil-table-resonance</code></dd></div>
+                            <div><dt>role</dt><dd>route atmosphere</dd></div>
+                            <div><dt>behavior</dt><dd>resonate</dd></div>
+                            <div><dt>owner</dt><dd><a href="/play/rpg-wednesday/">RPG Wednesday</a></dd></div>
+                            <div><dt>result</dt><dd>untried</dd></div>
+                        </dl>
+                        <nav class="frame-note" aria-label="RPG Wednesday Veil Table next steps">
+                            <a href="/play/rpg-wednesday/">Try on RPG Wednesday</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="#woven-signal-stack">Compare with Woven Signal Stack</a>
+                        </nav>
                     </article>
-                    <article class="frame-panel" data-spw-context="material">
-                        <h3>Rice Paper Vellum Fold</h3>
+                    <article class="frame-panel" id="rice-paper-vellum-fold" data-spw-context="material" data-spw-attention="try" data-spw-behavior="reveal" data-spw-reference-seed="rice-paper-vellum-fold" data-spw-assignment="component-vellum-fold-surface">
+                        <h3><a href="#rice-paper-vellum-fold">Rice Paper Vellum Fold</a></h3>
                         <p>
                             Thick translucent paper, fibrous cream light, curled edge, folded body. Use it for a
-                            foreground card that reveals softly and keeps its tactile edge.
+                            foreground card that reveals depth softly while keeping text and slots readable.
                         </p>
-                        <p class="frame-note"><code>component-vellum-fold-surface</code> · material-surface experiment</p>
+                        <dl class="context-readout" aria-label="Rice Paper Vellum Fold reference roles">
+                            <div><dt>assignment</dt><dd><code data-spw-assignment="component-vellum-fold-surface">component-vellum-fold-surface</code></dd></div>
+                            <div><dt>role</dt><dd>foreground surface</dd></div>
+                            <div><dt>behavior</dt><dd>reveal</dd></div>
+                            <div><dt>owner</dt><dd><a href="/design/components/">component specimens</a></dd></div>
+                            <div><dt>result</dt><dd>untried</dd></div>
+                        </dl>
+                        <nav class="frame-note" aria-label="Rice Paper Vellum Fold next steps">
+                            <a href="/design/components/">Try on components</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="#folded-amber-register">Compare with Folded Amber Register</a>
+                        </nav>
                     </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="material-theatre-directions" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning">
+            <section class="site-frame" id="material-theatre-directions" aria-labelledby="material-theatre-directions-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning" data-spw-attention="scan">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#material-theatre-directions">^"material_theatre_directions"</a>
-                    <h2>Material Theatre Directions</h2>
+                    <h2 id="material-theatre-directions-title">Material Theatre Directions</h2>
                 </header>
                 <p class="frame-note">
                     Some references are useful because they suggest what could be made. Use these directions when a
@@ -331,76 +404,76 @@
                 </p>
 
                 <div class="panel-grid">
-                    <article class="frame-panel" data-spw-context="material">
-                        <h3>Fiber And Paper Art</h3>
+                    <article class="frame-panel" id="fiber-paper-art" data-spw-context="material" data-spw-attention="try" data-spw-behavior="reveal" data-spw-assignment="fiber-paper-surface-study">
+                        <h3><a href="#fiber-paper-art">Fiber And Paper Art</a></h3>
                         <p>
                             Treat cards, panels, and captions like folded material: pulp, vellum, thread, deckled edge,
                             hinge, seam, pin, shadow. Keep the take only if the HTML slots read clearer.
                         </p>
-                        <p class="frame-note"><code>fiber-paper-surface-study</code> · material clarity · reveal</p>
+                        <p class="frame-note"><code data-spw-assignment="fiber-paper-surface-study">fiber-paper-surface-study</code> · material clarity · reveal</p>
                     </article>
-                    <article class="frame-panel" data-spw-context="craft">
-                        <h3>Culinary Engineering</h3>
+                    <article class="frame-panel" id="culinary-engineering" data-spw-context="craft" data-spw-attention="try" data-spw-behavior="settle" data-spw-assignment="culinary-component-engineering">
+                        <h3><a href="#culinary-engineering">Culinary Engineering</a></h3>
                         <p>
                             Use cooking as component logic: mise en place for slots, reduction for copy, emulsion for
                             unlike media, proofing for patient state, service for the room.
                         </p>
-                        <p class="frame-note"><code>culinary-component-engineering</code> · component method · settle</p>
+                        <p class="frame-note"><code data-spw-assignment="culinary-component-engineering">culinary-component-engineering</code> · component method · settle</p>
                     </article>
-                    <article class="frame-panel" data-spw-context="theatre">
-                        <h3>Theatre Lighting</h3>
+                    <article class="frame-panel" id="theatre-lighting" data-spw-context="theatre" data-spw-attention="try" data-spw-behavior="invite" data-spw-assignment="theatre-lighting-behavior">
+                        <h3><a href="#theatre-lighting">Theatre Lighting</a></h3>
                         <p>
                             Use light as behavior: side light for texture, footlight for active state, backlight for
                             depth, blackout for rest, warm focus for the object that matters now.
                         </p>
-                        <p class="frame-note"><code>theatre-lighting-behavior</code> · staged interaction · invite</p>
+                        <p class="frame-note"><code data-spw-assignment="theatre-lighting-behavior">theatre-lighting-behavior</code> · staged interaction · invite</p>
                     </article>
                 </div>
             </section>
 
-            <section class="site-frame" id="spell-cauldron-hooks" data-spw-role="reference" data-spw-kind="frame" data-spw-context="ritual">
+            <section class="site-frame" id="spell-cauldron-hooks" aria-labelledby="spell-cauldron-hooks-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="ritual" data-spw-attention="scan">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#spell-cauldron-hooks">^"spell_cauldron_hooks"</a>
-                    <h2>Spell And Cauldron Hooks</h2>
+                    <h2 id="spell-cauldron-hooks-title">Spell And Cauldron Hooks</h2>
                 </header>
                 <p class="frame-note">
                     Use these as prompt handles, not production promises. A spell names a replayable move. A cauldron
-                    names the gathered ingredients before the move is ready. The page should keep both readable enough
-                    for a learner to skim, collect, and try.
+                    names the gathered ingredients before the move is ready. Each hook should still point to a route,
+                    component, state, or HTML owner.
                 </p>
 
                 <div class="panel-grid">
-                    <article class="frame-panel" data-spw-context="ritual">
-                        <h3>Replayable Spell</h3>
+                    <article class="frame-panel" id="replayable-spell" data-spw-context="ritual" data-spw-attention="return" data-spw-behavior="return" data-spw-assignment="spell-chip-learnability">
+                        <h3><a href="#replayable-spell">Replayable Spell</a></h3>
                         <p>
                             A small action with memory: ground a route, restore a working set, reveal a card, compare
                             two surfaces, or cast a saved prompt back into the page.
                         </p>
-                        <p class="frame-note"><code>spell[behavior]{repeat.move}</code> · learnability · return</p>
+                        <p class="frame-note"><code data-spw-assignment="spell-chip-learnability">spell[behavior]{repeat.move}</code> · learnability · return</p>
                     </article>
-                    <article class="frame-panel" data-spw-context="craft">
-                        <h3>Prompt Cauldron</h3>
+                    <article class="frame-panel" id="prompt-cauldron" data-spw-context="craft" data-spw-attention="try" data-spw-behavior="collect" data-spw-assignment="prompt-cauldron-ingredients">
+                        <h3><a href="#prompt-cauldron">Prompt Cauldron</a></h3>
                         <p>
                             A holding bowl for ingredients: route, object, material, light, state, constraint, and
                             result note. Useful when wonder needs a place to gather before it becomes instruction.
                         </p>
-                        <p class="frame-note"><code>cauldron[prompt]{mix.ingredients}</code> · promptability · collect</p>
+                        <p class="frame-note"><code data-spw-assignment="prompt-cauldron-ingredients">cauldron[prompt]{mix.ingredients}</code> · promptability · collect</p>
                     </article>
-                    <article class="frame-panel" data-spw-context="learning">
-                        <h3>Sigil With Plain Text</h3>
+                    <article class="frame-panel" id="sigil-with-plain-text" data-spw-context="learning" data-spw-attention="read" data-spw-behavior="inspect" data-spw-assignment="spell-chip-learnability">
+                        <h3><a href="#sigil-with-plain-text">Sigil With Plain Text</a></h3>
                         <p>
                             Keep the mark and the label together. The sigil gives rhythm; the text gives auditability.
                             If a learner cannot say what the chip does, the spell has become ornament too soon.
                         </p>
-                        <p class="frame-note"><code>operator[label]{teach.sigil}</code> · HTML clarity · inspect</p>
+                        <p class="frame-note"><code data-spw-assignment="spell-chip-learnability">operator[label]{teach.sigil}</code> · HTML clarity · inspect</p>
                     </article>
-                    <article class="frame-panel" data-spw-context="story">
-                        <h3>Daily Practice Ground</h3>
+                    <article class="frame-panel" id="daily-practice-ground" data-spw-context="story" data-spw-attention="try" data-spw-behavior="settle" data-spw-assignment="prompt-cauldron-ingredients">
+                        <h3><a href="#daily-practice-ground">Daily Practice Ground</a></h3>
                         <p>
                             Give generativity a landing point: one route, one component, one ingredient, one question,
                             one take. The wonder can be wide if the next move is small.
                         </p>
-                        <p class="frame-note"><code>practice[seed]{wonder.ground}</code> · daily use · settle</p>
+                        <p class="frame-note"><code data-spw-assignment="prompt-cauldron-ingredients">practice[seed]{wonder.ground}</code> · daily use · settle</p>
                     </article>
                 </div>
             </section>

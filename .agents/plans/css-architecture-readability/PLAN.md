@@ -33,6 +33,7 @@ Known constraints:
 - Use file splits to improve reading order, not just file size.
 - Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling.
 - Treat Spw sigils in HTML as learnability surfaces, not just decoration. When a chip or handle combines a sigil with plain text, the CSS and markup should keep the action auditable by label, operator, destination, and state.
+- Use reference-card attributes when a design surface needs later auditability: `data-spw-attention`, `data-spw-behavior`, `data-spw-reference-seed`, and `data-spw-assignment`.
 
 ## Component Development Sessions
 
@@ -51,6 +52,7 @@ Intern-sized examples:
 
 - Compare operator chips across three routes and make the shared focus behavior easier to trace.
 - Audit one sigil-plus-label operator pattern and confirm the Spw mark, plain-language text, `data-spw-operator`, and link destination teach the same action.
+- Compare one reference-card cluster and confirm its heading anchor, attention value, behavior value, assignment code, and next-step link all describe the same small task.
 - Use `/design/components/` to tune one card anatomy rule and document the slot contract in CSS selectors.
 - Inspect settings controls and name one repeated state as a shared behavior token.
 - Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.

@@ -248,7 +248,7 @@ const ensurePwaHeadLinks = () => {
 
     try {
         ensure('apple-touch-icon', '/public/images/apple-touch-icon.png');
-        ensure('icon', '/favicon.ico', { sizes: '32x32' });
+        ensure('icon', '/favicon.ico', { type: 'image/x-icon', sizes: 'any' });
         ensure('icon', '/public/images/icon-192.png', { sizes: '192x192', type: 'image/png' });
 
         // Mobile web app capable

@@ -463,7 +463,7 @@ function renderSiteHead(vars) {
     preconnectLinks,
     modulePreloadLinks,
     '',
-    '    <link href="/favicon.ico" rel="icon" sizes="32x32" />',
+    '    <link href="/favicon.ico" rel="icon" type="image/x-icon" sizes="any" />',
     '    <link href="/public/images/apple-touch-icon.png" rel="apple-touch-icon" />',
     '    <link href="/manifest.webmanifest" rel="manifest" />',
     includePrepaint ? renderSettingsPreflightScript() : '',
