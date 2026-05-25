@@ -20,7 +20,7 @@ Generated imagery should be translated into CSS, tokens, layout, or ornament bef
 
 ## UX Development Rule
 
-Every concept study should answer at least one UX question before it proposes an asset.
+A concept study should answer a UX question before it asks to become an asset.
 
 Useful UX questions:
 
@@ -117,12 +117,37 @@ Promotion decision:
 - Prefer route-local CSS and component experiments before image promotion.
 - Reject direct background use if it weakens map, note, or action readability.
 
+### Rice Paper Vellum Fold
+
+Reference type: material and foreground-surface seed.
+
+Visual principles:
+
+- translucent cream paper as a foreground card material
+- fibrous edges as tactile boundaries
+- warm fold lines as state and depth cues
+- cool ground plane as contrast restraint
+- curled edge as reveal without large motion
+
+UX translation candidates:
+
+- `/design/components/` card material specimen
+- `.frame-card` reveal or focus surface experiment
+- reduced-motion-safe depth cue using border, shadow, and internal glow
+- material token study for `vellum-surface`, `fiber-edge`, and `fold-shadow`
+
+Promotion decision:
+
+- Keep as reference for now.
+- Translate into CSS material behavior before considering image use.
+- Reject broad texture overlays if they make text or slot anatomy harder to read.
+
 ## Literate Output Rule
 
 - A promoted concept needs a named principle, not just a prompt.
-- The principle should be searchable across the prompt bank, CSS token, route note, and `.spw` sidecar.
+- Use the same name in the prompt bank, CSS token, route note, and `.spw` sidecar when the concept becomes durable.
 - If a concept affects behavior, document the behavior word beside the visual principle.
-- Keep rejection notes specific enough that future agents do not repeat discarded directions.
+- Keep rejection notes specific enough that a later pass does not repeat discarded directions.
 
 ## Token Efficiency
 
@@ -177,7 +202,7 @@ Relevant skills:
 - No route becomes visually dependent on a raw generated image.
 - Concepts map back to existing Spw semantics: operator, brace, frame, substrate, ornament, attention field, or route family.
 - The design catalog can explain why each promoted visual exists.
-- Concept notes are literate enough that a future agent can implement the CSS/HTML behavior without reopening the image reference.
+- Concept notes are literate enough that the next component session can implement the CSS/HTML behavior without reopening the image reference.
 
 ## Out Of Scope
 
@@ -231,12 +256,30 @@ Design questions:
 - What is the difference between glass, matte, paper, bioplastic, field, and signal?
 - How should cards lift without looking generic?
 - What should a "semantic surface" look like when active, resonant, or settled?
+- What can fiber, handmade paper, folded vellum, thread, seams, and pins teach a component about readable depth?
 
 Possible outputs:
 
 - Material token tuning in `public/css/effects/material.css`.
 - Card surface refinements in `public/css/components/cards.css`.
 - Better local tokens for shadow, edge, grain, and backdrop.
+- Component-session notes for `fiber-paper-surface-study`.
+
+### Lane 2.5 - Culinary Engineering And Theatre Light
+
+Design questions:
+
+- Which cooking methods can become component methods: mise en place, reduction, emulsion, proofing, service, or leftovers?
+- How can lighting make behavior readable: invite, reveal, settle, warn, or resonate?
+- What should a component look like when it is staged, not decorated?
+- How much shadow can a route hold before the HTML structure becomes harder to read?
+
+Possible outputs:
+
+- Reference assignments for `culinary-component-engineering`.
+- Lighting behavior notes for `theatre-lighting-behavior`.
+- Route-local experiments on `/design/`, `/design/components/`, `/design/palettes/`, or `/play/rpg-wednesday/`.
+- CSS translation candidates for active edge, side light, focus object, and reduced-motion blackout.
 
 ### Lane 3 - Operator And Grammar Visuals
 
@@ -295,6 +338,20 @@ Every Midjourney prompt should specify:
 - What to avoid.
 - Whether text/logos/UI screenshots are excluded.
 
+## Sensory-Literate Prompt Axes
+
+Use these axes when a reference should be dense enough for learners to skim, wonder, and reuse:
+
+- `subject`: the object or surface under study, such as card, chip, route, table, rail, figure, or prompt tray.
+- `material behavior`: what the surface does, such as fold, bloom, simmer, reveal, settle, warn, collect, or ground.
+- `light cue`: side light, table light, footlight, backlight, blackout, ember, or diagnostic glow.
+- `spell`: the small replayable move a user could repeat, restore, cast, or compare.
+- `cauldron`: the ingredient set before it becomes a prompt, asset, token, or component rule.
+- `grounding point`: the route, component, state, or HTML owner where the metaphor becomes usable.
+- `guardrail`: the thing the reference must not break, such as readability, operator distinction, reduced motion, or semantic HTML.
+
+Metaphor may be lyrical, but it should still land somewhere inspectable. If a prompt cannot name its owner, it remains inspiration rather than a production direction.
+
 Template:
 
 ```text
@@ -304,8 +361,11 @@ Visual lane: [palette/material/operator/ornament/route].
 Mood: [3-5 adjectives].
 Palette: [existing token colors or restrained direction].
 Material: [paper/glass/matte/bioplastic/field/signal].
+Light cue: [side light/table light/footlight/backlight/blackout/ember/diagnostic glow].
 Composition: [layout metaphor, density, scale].
 Motifs: [brace, frame, operator chip, rail, seam, atlas, fold].
+Spell or cauldron: [replayable move or ingredient set].
+Grounding point: [route/component/state/HTML owner].
 Avoid: generic SaaS UI, legible text, logos, fake screenshots, purple-white default gradients, photoreal people.
 Output goal: inspiration reference for CSS/design tokens, not final UI.
 ```

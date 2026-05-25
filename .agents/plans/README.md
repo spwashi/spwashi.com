@@ -11,7 +11,7 @@ This directory holds the stable, reviewable plan tracks for the site.
 
 Use these plans as the canonical starting point instead of the `tmp-plan*.md` scratch files at the repo root.
 
-Current planning emphasis: build the site's UX through inspectable behavior, recognizable personality, component development sessions, and a literate codebase that future agents can navigate by concept name.
+Current emphasis: make behavior inspectable, keep the site's voice recognizable, and keep the codebase navigable by concept name.
 
 Reference assignments should give an intern a small set of site references, one UX question, one component behavior, and a validation path.
 

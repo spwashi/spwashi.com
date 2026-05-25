@@ -118,7 +118,6 @@ const CORE_ASSETS = [
   '/public/images/icon-192.png',
   '/public/images/icon-512.png',
   '/public/images/icon-maskable-512.png',
-  '/public/images/favicon.svg',
   '/public/images/routes/about-attention-register-hero.webp',
   '/public/images/routes/blog-thread-laboratory-hero.webp',
   '/public/images/routes/blog-thread-laboratory-square.webp',

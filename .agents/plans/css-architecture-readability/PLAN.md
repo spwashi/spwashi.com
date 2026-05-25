@@ -25,13 +25,14 @@ Known constraints:
 
 ## UX And Literate Code Direction
 
-- Treat CSS readability as part of UX development: a future agent should be able to connect a visible behavior to the selectors, tokens, and route semantics that produce it.
+- Treat CSS readability as part of UX development: the next editor should be able to connect a visible behavior to the selectors, tokens, and route semantics that produce it.
 - Name CSS properties, local tokens, and `data-spw-*` hooks around user-facing behavior where possible: reveal, focus, collect, inspect, compare, settle, charge, and navigate.
 - Keep debug overlays useful as developer UX, with labels that explain ownership and behavior without becoming the product experience.
 - When a selector changes interaction behavior, record the behavior contract near the selector or in the relevant `.spw` surface.
 - Prefer literate clusters over clever compression: nearby code should explain what can be changed safely and what is a shared contract.
 - Use file splits to improve reading order, not just file size.
 - Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling.
+- Treat Spw sigils in HTML as learnability surfaces, not just decoration. When a chip or handle combines a sigil with plain text, the CSS and markup should keep the action auditable by label, operator, destination, and state.
 
 ## Component Development Sessions
 
@@ -49,6 +50,7 @@ Session shape:
 Intern-sized examples:
 
 - Compare operator chips across three routes and make the shared focus behavior easier to trace.
+- Audit one sigil-plus-label operator pattern and confirm the Spw mark, plain-language text, `data-spw-operator`, and link destination teach the same action.
 - Use `/design/components/` to tune one card anatomy rule and document the slot contract in CSS selectors.
 - Inspect settings controls and name one repeated state as a shared behavior token.
 - Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.

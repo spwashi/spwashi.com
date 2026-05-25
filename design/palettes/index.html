@@ -31,7 +31,6 @@
 <script type="module" src="/public/js/site.js"></script>
 
     <link rel="icon" href="/favicon.ico" sizes="32x32">
-    <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
@@ -108,9 +107,14 @@
                     Colors in the Spwashi architecture are not hard-coded hexadecimal strings. They are projected through semantic handles, environmental resonance, and underlying theme contexts.
                 </p>
                 <p class="frame-note">
-                    New palette work starts as a reference assignment, not a global recolor. A seed image should name
-                    roles like field, paper, signal, oxide, or pin, then test those roles on one route or component
-                    before they become shared tokens.
+                    New palette work starts as a reference assignment, not a global recolor. A seed should name roles
+                    such as field, paper, signal, oxide, or pin, then test them on one route or component before
+                    promoting shared tokens.
+                </p>
+                <p class="frame-note">
+                    This route should reward skimming. Read it like a prompt cabinet: color roles, material moves,
+                    lighting cues, spell concepts, cauldron ingredients, and small behavior names that can become
+                    useful tomorrow.
                 </p>
 
                 <div class="frame-grid frame-grid--2up">
@@ -203,43 +207,200 @@
                 </div>
             </section>
 
+            <section class="site-frame" id="theme-pack-role-map" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#theme-pack-role-map">^"theme_pack_role_map"</a>
+                    <h2>Theme Pack Role Map</h2>
+                </header>
+                <p class="frame-note">
+                    Theme packs already carry field, surface, signal, marker, and depth. Read them like modes: each
+                    pack changes how a component invites, settles, reveals, warns, or resonates while the HTML keeps
+                    the tune.
+                </p>
+
+                <div class="panel-grid">
+                    <article class="frame-panel" data-spw-context="reading">
+                        <h3>Neutral Paper</h3>
+                        <p>
+                            The reading standard. Quiet field, paper surface, teal structure, amber lift. Depth stays
+                            low so the words can carry the lead.
+                        </p>
+                        <p class="frame-note"><code>neutral-paper</code> · reading baseline · settle</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="archive">
+                        <h3>Oxide Ledger</h3>
+                        <p>
+                            A cool ledger with warm oxide in the margins. Use it for records, traces, and weathered
+                            surfaces that need memory without alarm.
+                        </p>
+                        <p class="frame-note"><code>oxide-ledger</code> · archive depth · reveal</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="signal">
+                        <h3>Electric Studio</h3>
+                        <p>
+                            Blue signal, clean edge, bright diagnostic pressure. Focus and resonance come forward
+                            without drowning the operator colors.
+                        </p>
+                        <p class="frame-note"><code>electric-studio</code> · signal clarity · resonate</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="ritual">
+                        <h3>Ritual Vellum</h3>
+                        <p>
+                            Warm vellum, amber line, soft violet undertone. Use it when reveal should feel patient,
+                            authored, and a little ceremonial.
+                        </p>
+                        <p class="frame-note"><code>ritual-vellum</code> · ceremonial surface · reveal</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="craft">
+                        <h3>Copper Brace</h3>
+                        <p>
+                            Forged warmth with a cool teal brace. Copper marks binding and emphasis; paper keeps the
+                            hand on the control.
+                        </p>
+                        <p class="frame-note"><code>copper-brace</code> · crafted constraint · warn</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="console">
+                        <h3>Glass Console</h3>
+                        <p>
+                            Cool glass for inspectable layers. Let the system show through, but keep the text sharp
+                            enough to solo.
+                        </p>
+                        <p class="frame-note"><code>glass-console</code> · inspectable layer · invite</p>
+                    </article>
+                </div>
+            </section>
+
             <section class="site-frame" id="reference-color-seeds" data-spw-role="reference" data-spw-kind="frame" data-spw-context="analysis">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#reference-color-seeds">^"reference_color_seeds"</a>
                     <h2>Reference Color Seeds</h2>
                 </header>
                 <p class="frame-note">
-                    These studies are not promoted assets. They are planning references for small palette and component
-                    experiments, where CSS should document the HTML state being tuned.
+                    These studies are not promoted assets. They are charts for small, reversible takes: one route, one
+                    component family, one behavior, one result note.
                 </p>
 
                 <div class="panel-grid">
                     <article class="frame-panel" data-spw-context="analysis">
                         <h3>Woven Signal Stack</h3>
                         <p>
-                            A deep teal and cream material stack with rusted copper accents, amber signal lines, and a
-                            flowing ochre fiber. Use it to test field, paper, signal, oxide, and fiber roles on the
-                            design route before promoting any shared palette alias.
+                            Deep teal, cream paper, rusted copper, amber signal, ochre fiber. Use it to test field,
+                            paper, signal, oxide, and fiber roles before any shared palette alias gets a chorus.
                         </p>
                         <p class="frame-note"><code>design-palette-woven-signal</code> · route-local experiment</p>
                     </article>
                     <article class="frame-panel" data-spw-context="analysis">
                         <h3>Folded Amber Register</h3>
                         <p>
-                            A softer paper register with teal mass, translucent amber panes, oxide-red depth, and small
-                            copper pins. Use it for selected, pinned, or collected component states where the marker
-                            should stay small and legible.
+                            Soft paper register, teal mass, amber pane, oxide depth, copper pin. Use it for selected,
+                            pinned, or collected states where the marker stays small, legible, and local.
                         </p>
                         <p class="frame-note"><code>component-register-folded-amber</code> · component-state experiment</p>
                     </article>
                     <article class="frame-panel" data-spw-context="story">
                         <h3>RPG Wednesday Veil Table</h3>
                         <p>
-                            A teal story field with map paper, gold writing, floating globes, and a warm table cube.
-                            Use it as a route personality reference for RPG Wednesday surfaces: atmospheric, readable,
-                            collaborative, and charged at the center without turning every panel into a hero image.
+                            Teal story field, map paper, gold writing, floating globes, warm table cube. Use it for
+                            RPG Wednesday when the page needs shared focus without making every panel a hero image.
                         </p>
                         <p class="frame-note"><code>rpg-veil-table-resonance</code> · route-personality experiment</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="material">
+                        <h3>Rice Paper Vellum Fold</h3>
+                        <p>
+                            Thick translucent paper, fibrous cream light, curled edge, folded body. Use it for a
+                            foreground card that reveals softly and keeps its tactile edge.
+                        </p>
+                        <p class="frame-note"><code>component-vellum-fold-surface</code> · material-surface experiment</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="material-theatre-directions" data-spw-role="reference" data-spw-kind="frame" data-spw-context="learning">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#material-theatre-directions">^"material_theatre_directions"</a>
+                    <h2>Material Theatre Directions</h2>
+                </header>
+                <p class="frame-note">
+                    Some references are useful because they suggest what could be made. Use these directions when a
+                    component session needs breadth, wonder, and a lighting cue.
+                </p>
+                <p class="frame-note">
+                    Think in changes of state. Fiber softens the attack. Paper folds the phrase. Broth carries the
+                    theme. Copper warms the hit. Glass opens the voicing. Theatre light tells the room when to listen.
+                </p>
+
+                <div class="panel-grid">
+                    <article class="frame-panel" data-spw-context="material">
+                        <h3>Fiber And Paper Art</h3>
+                        <p>
+                            Treat cards, panels, and captions like folded material: pulp, vellum, thread, deckled edge,
+                            hinge, seam, pin, shadow. Keep the take only if the HTML slots read clearer.
+                        </p>
+                        <p class="frame-note"><code>fiber-paper-surface-study</code> · material clarity · reveal</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="craft">
+                        <h3>Culinary Engineering</h3>
+                        <p>
+                            Use cooking as component logic: mise en place for slots, reduction for copy, emulsion for
+                            unlike media, proofing for patient state, service for the room.
+                        </p>
+                        <p class="frame-note"><code>culinary-component-engineering</code> · component method · settle</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="theatre">
+                        <h3>Theatre Lighting</h3>
+                        <p>
+                            Use light as behavior: side light for texture, footlight for active state, backlight for
+                            depth, blackout for rest, warm focus for the object that matters now.
+                        </p>
+                        <p class="frame-note"><code>theatre-lighting-behavior</code> · staged interaction · invite</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="spell-cauldron-hooks" data-spw-role="reference" data-spw-kind="frame" data-spw-context="ritual">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#spell-cauldron-hooks">^"spell_cauldron_hooks"</a>
+                    <h2>Spell And Cauldron Hooks</h2>
+                </header>
+                <p class="frame-note">
+                    Use these as prompt handles, not production promises. A spell names a replayable move. A cauldron
+                    names the gathered ingredients before the move is ready. The page should keep both readable enough
+                    for a learner to skim, collect, and try.
+                </p>
+
+                <div class="panel-grid">
+                    <article class="frame-panel" data-spw-context="ritual">
+                        <h3>Replayable Spell</h3>
+                        <p>
+                            A small action with memory: ground a route, restore a working set, reveal a card, compare
+                            two surfaces, or cast a saved prompt back into the page.
+                        </p>
+                        <p class="frame-note"><code>spell[behavior]{repeat.move}</code> · learnability · return</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="craft">
+                        <h3>Prompt Cauldron</h3>
+                        <p>
+                            A holding bowl for ingredients: route, object, material, light, state, constraint, and
+                            result note. Useful when wonder needs a place to gather before it becomes instruction.
+                        </p>
+                        <p class="frame-note"><code>cauldron[prompt]{mix.ingredients}</code> · promptability · collect</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="learning">
+                        <h3>Sigil With Plain Text</h3>
+                        <p>
+                            Keep the mark and the label together. The sigil gives rhythm; the text gives auditability.
+                            If a learner cannot say what the chip does, the spell has become ornament too soon.
+                        </p>
+                        <p class="frame-note"><code>operator[label]{teach.sigil}</code> · HTML clarity · inspect</p>
+                    </article>
+                    <article class="frame-panel" data-spw-context="story">
+                        <h3>Daily Practice Ground</h3>
+                        <p>
+                            Give generativity a landing point: one route, one component, one ingredient, one question,
+                            one take. The wonder can be wide if the next move is small.
+                        </p>
+                        <p class="frame-note"><code>practice[seed]{wonder.ground}</code> · daily use · settle</p>
                     </article>
                 </div>
             </section>

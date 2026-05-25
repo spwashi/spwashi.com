@@ -45,5 +45,5 @@ The current stable planning set lives under `.agents/plans/`:
 For the directory index and handoff notes, see `.agents/plans/README.md`.
 Historical notes that have been superseded live under `.agents/plans/archive/`.
 
-Use these as the canonical starting points for UX development through literate CSS, behavior and personality audit, color and motion tuning, Midjourney-inspired concept studies, and intern-sized reference assignments.
+Use these as the starting points for UX development through literate CSS, repeated site behaviors, color and motion tuning, Midjourney-inspired concept studies, and intern-sized reference assignments.
 The plan index also separates the broader active backlog from archived notes so legacy workstreams stay visible without competing with the canonical tracks.

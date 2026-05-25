@@ -2,7 +2,7 @@
 
 ## Public Goal
 
-Improve the site's color coherence, interaction feel, and recognizable personality without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing communicate behavior clearly instead of feeling randomly animated.
+Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing communicate behavior clearly instead of feeling randomly animated.
 
 This is not a redesign. The goal is to tune the existing Spw visual language through tokens, semantic aliases, targeted interaction contracts, and a personality audit of the site's most repeated behaviors.
 
@@ -110,7 +110,7 @@ Keep semantic aliases layered on top of primitives rather than replacing the pri
 
 ## Behavior And Personality Audit
 
-Audit interactions as personality-bearing behaviors, not isolated effects.
+Audit interactions as repeated site behaviors, not isolated effects.
 
 Behavior vocabulary:
 
@@ -132,13 +132,60 @@ Audit questions:
 - Does the same behavior use the same timing band across chips, cards, controls, and mode switches?
 - Does the color state communicate meaning before animation is noticed?
 - Does reduced motion preserve the same personality through color, border, shadow, and opacity?
-- Does the behavior feel authored by Spwashi rather than generic UI chrome?
-- Can a future agent find the token or selector by searching the behavior word?
+- Does the behavior feel authored here, or does it feel like generic UI chrome?
+- Can the next editor find the token or selector by searching the behavior word?
 - Does the component's CSS document the HTML state that produces the visible behavior?
 
 ## Color Seed References
 
 Use color seeds as reference material for palette roles, not as direct token replacements.
+
+## Theme Pack Depth Axes
+
+Evaluate existing theme packs with the same axes used for new color seeds.
+
+Axis vocabulary:
+
+- `field`: page atmosphere and route background.
+- `surface`: readable card, panel, and specimen material.
+- `signal`: focus, active line, route glint, or resonance cue.
+- `marker`: small selected, pinned, collected, or warning state.
+- `depth`: shadow, lower register, history, or inspectable layering.
+- `behavior`: the usual state the pack should clarify first.
+- `light`: the staging logic that makes behavior legible.
+- `spell`: the replayable move the color or timing should make easier to repeat.
+- `cauldron`: the gathered ingredients a learner can collect before forming a prompt or component change.
+
+Current pack readings:
+
+- `neutral-paper`: quiet field, readable surface, teal structure, amber light marker, shallow depth, `settle` behavior.
+- `oxide-ledger`: cool ledger field, pale surface, oxide emphasis, teal line, record-like depth, `reveal` behavior.
+- `electric-studio`: blue-white field, crisp surface, cyan signal, violet/blue marker, diagnostic depth, `resonate` behavior.
+- `ritual-vellum`: warm vellum field, cream surface, amber signal, violet marker, ceremonial depth, `reveal` behavior.
+- `copper-brace`: forged warm field, tactile paper surface, copper marker, teal structure, constrained depth, `warn` behavior.
+- `glass-console`: cool field, transparent surface, teal/blue signal, glass layer marker, inspectable depth, `invite` behavior.
+
+Lighting readings:
+
+- `side light`: reveal texture, fiber, seam, and edge without changing layout.
+- `footlight`: mark the active or current object with a low warm signal.
+- `backlight`: separate stacked surfaces without increasing border noise.
+- `blackout`: remove nonessential motion and glow in reduced-motion or dense contexts.
+- `table light`: focus a route on one shared object while preserving surrounding notes and links.
+
+Spell and cauldron readings:
+
+- `spell`: use color and timing to make a repeated action recognizable on return.
+- `cauldron`: use small markers, collected states, and material roles to show ingredients gathering without implying completion.
+- `ground`: give any generative metaphor one route, component, or HTML owner where the next move becomes concrete.
+
+Use constraints:
+
+- Keep theme packs as global family choices; use color seeds for smaller route or component experiments.
+- Do not let a pack erase operator color distinction.
+- Check every pack in light, dark, and auto mode before promoting new shared aliases.
+- Let a component session prove the behavior before changing pack-wide token values.
+- Treat lighting as contrast and state first; avoid adding atmosphere that weakens reading.
 
 ### Seed - Woven Signal Stack
 
@@ -189,7 +236,7 @@ Use constraints:
 - Use `pin-copper` for tiny state markers, not whole-button backgrounds.
 - Let `register-teal` carry structure while `paper-lit` carries reading comfort.
 - Treat `oxide-depth` as depth and memory, not generic warning.
-- Compare with Woven Signal Stack before promoting any shared palette alias.
+- Compare with Woven Signal Stack before promoting shared palette aliases.
 
 Intern assignment candidate:
 
@@ -228,6 +275,34 @@ Intern assignment candidate:
 - UX question: can an RPG route feel more collaborative and charged while keeping maps, notes, and actions readable?
 - Expected change: route-local palette or ornament test first; no global RPG palette until the behavior works on a real route.
 - Validation: mobile readability, link focus, map/note contrast, and no loss of static HTML comprehension.
+
+### Seed - Rice Paper Vellum Fold
+
+Reference: thick translucent cream paper, fibrous edge texture, warm brown fold lines, soft blue-gray background, and a curled card-like foreground surface.
+
+Extracted roles:
+
+- `vellum-surface`: cream-white translucent foreground for cards, panels, and specimen sheets.
+- `fiber-edge`: warm brown edge tone for fold lines, active seams, and tactile boundaries.
+- `paper-glow`: soft internal light for reveal and focus states.
+- `cool-ground`: blue-gray background restraint that keeps warm paper readable.
+- `fold-shadow`: low, warm shadow for depth without glassiness.
+
+Use constraints:
+
+- Treat translucency as a foreground material, not a full-page wash.
+- Keep fibers and edge marks subtle enough that text stays primary.
+- Use folds to explain card state or surface depth, not as decorative texture everywhere.
+- Test on a single component family before adding shared material tokens.
+
+Intern assignment candidate:
+
+- Title: `component-vellum-fold-surface`
+- Work type: `experiment`
+- Reference set: this material seed, `/design/components/`, `/design/palettes/`, `public/css/effects/material.css`, and one `.frame-card` specimen.
+- UX question: can a foreground card reveal depth and tactility while CSS still documents the HTML slots and states?
+- Expected change: component-local material test on one card family, with selectors grouped by default, focus, reveal, and reduced motion.
+- Validation: text contrast, focus outline, reduced-motion behavior, compact viewport, and no layout shift.
 
 ## Patch 1 - Color And Motion Audit
 
