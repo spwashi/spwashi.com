@@ -2,9 +2,9 @@
 
 ## Public Goal
 
-Make the site's CSS easier to read, inspect, and refactor without changing the visual language or cascade layer order. The next series should turn the first debug-label pass into a broader maintainability program: clearer ownership boundaries, smaller files, stronger local tokens, less selector guesswork, and repeatable validation.
+Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass into a literate maintainability program: clearer ownership boundaries, behavior-facing names, smaller files, stronger local tokens, less selector guesswork, and repeatable validation.
 
-This is a CSS architecture plan, not a redesign. The site should look materially the same unless a local cleanup reveals a small behavior bug.
+This is a CSS architecture plan, not a redesign. The site should look materially the same unless a local cleanup reveals a small behavior bug or a confusing affordance that should be corrected in place.
 
 ## Current Baseline
 
@@ -23,6 +23,36 @@ Known constraints:
 - `check-generated` treats unstaged generated outputs as stale, so generated CSS and compiled tool output must be staged with their sources before final checks.
 - The debug layer labels are diagnostic nearest-visible ownership markers, not true CSS provenance.
 
+## UX And Literate Code Direction
+
+- Treat CSS readability as part of UX development: a future agent should be able to connect a visible behavior to the selectors, tokens, and route semantics that produce it.
+- Name CSS properties, local tokens, and `data-spw-*` hooks around user-facing behavior where possible: reveal, focus, collect, inspect, compare, settle, charge, and navigate.
+- Keep debug overlays useful as developer UX, with labels that explain ownership and behavior without becoming the product experience.
+- When a selector changes interaction behavior, record the behavior contract near the selector or in the relevant `.spw` surface.
+- Prefer literate clusters over clever compression: nearby code should explain what can be changed safely and what is a shared contract.
+- Use file splits to improve reading order, not just file size.
+- Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling.
+
+## Component Development Sessions
+
+CSS readability should often improve while developing or tuning a real component, not only through abstract cleanup.
+
+Session shape:
+
+1. Choose one component or route cluster, such as `.operator-chip`, `.frame-card`, `.mode-switch`, settings controls, or `/design/` specimen cards.
+2. Read the HTML first and name the structural roles already present.
+3. Identify the component's usual behavior: default, hover, focus, active, selected, disabled, reduced motion, and compact viewport.
+4. Update CSS so those states are grouped, named, and traceable from the HTML attributes or classes.
+5. Add a token or selector name only when it helps another agent find the behavior later.
+6. Leave a short note in the plan or nearby `.spw` surface explaining whether the session produced an improvement, an experiment, or a rejected direction.
+
+Intern-sized examples:
+
+- Compare operator chips across three routes and make the shared focus behavior easier to trace.
+- Use `/design/components/` to tune one card anatomy rule and document the slot contract in CSS selectors.
+- Inspect settings controls and name one repeated state as a shared behavior token.
+- Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.
+
 ## Success Criteria
 
 - Large CSS files have clearer local ownership and navigable sections.
@@ -30,6 +60,9 @@ Known constraints:
 - Shared component styles use local tokens instead of repeated raw `color-mix(...)`, gradient, and shadow expressions.
 - Debug labels are useful on real routes without blocking controls or burying content.
 - Route and component ownership boundaries are inspectable through existing semantic hooks, not guessed selectors.
+- A visible UX behavior can be traced from route HTML to CSS token to runtime state without guessing.
+- Component sessions produce small readability improvements while preserving the authored HTML as the source of meaning.
+- CSS comments and `.spw` notes explain non-obvious behavior contracts, not routine declarations.
 - Dark and auto color-mode overrides become token-only wherever possible.
 - Validation is deterministic through `npm run check:css`, `npm run check`, and `git diff --check`.
 
@@ -67,6 +100,7 @@ Known constraints:
 - Keep `data-spw-*` names aligned with the concept they expose, not the file that happened to introduce them.
 - When a JS or TypeScript helper is added, name it after the semantic action it performs so it can be traced back from the CSS token or data attribute.
 - If a concept needs a sidecar, use the same stem across image, `.spw`, and route references.
+- Prefer names that describe the behavior a visitor experiences over names that only describe implementation technique.
 
 ## Property Clustering Contract
 
@@ -652,13 +686,14 @@ Validation:
 
 1. `Harden CSS layer debug overlay`
 2. `Add route CSS owner markers`
-3. `Extract reusable component surface tokens`
-4. `Split shell chrome CSS responsibilities`
-5. `Split operator handle CSS responsibilities`
-6. `Normalize dark mode token overrides`
-7. `Replace fragile route structural selectors`
-8. `Document CSS architecture conventions in Spw`
-9. `Evaluate composition layout contract`
+3. `Map UX behavior contracts in CSS`
+4. `Extract reusable component surface tokens`
+5. `Split shell chrome CSS responsibilities`
+6. `Split operator handle CSS responsibilities`
+7. `Normalize dark mode token overrides`
+8. `Replace fragile route structural selectors`
+9. `Document CSS architecture conventions in Spw`
+10. `Evaluate composition layout contract`
 
 Each commit should be independently reviewable and should avoid mixing file splits with behavior changes.
 
@@ -667,7 +702,7 @@ Preferred first implementation sequence:
 ```text
 Harden CSS layer debug overlay
 Add route CSS owner markers
-Extract reusable component surface tokens
+Map UX behavior contracts in CSS
 ```
 
 ## Combined Roadmap
@@ -676,20 +711,21 @@ This plan is part of the broader design-system track:
 
 1. Harden CSS layer debug overlay.
 2. Add route CSS owner markers.
-3. Audit color and motion token usage.
-4. Add interaction timing bands.
-5. Normalize operator chip microinteractions.
-6. Document Midjourney inspiration workflow.
-7. Add focused design prompt bank.
-8. Run SuperGrok animation study sprint.
-9. Prototype `/design/` grammar atlas concept.
-10. Extract reusable component surface tokens.
-11. Begin large CSS file responsibility split.
+3. Map visible UX behaviors to named CSS and runtime contracts.
+4. Audit color, motion, and site personality signals.
+5. Add interaction timing bands.
+6. Normalize operator chip microinteractions.
+7. Document concept-inspiration workflow for UX prototypes.
+8. Add focused design prompt bank.
+9. Run SuperGrok animation study sprint.
+10. Prototype `/design/` grammar atlas concept.
+11. Extract reusable component surface tokens.
+12. Begin large CSS file responsibility split.
 
 Strategic rule:
 
 ```text
-Use external inspiration and visual tuning to strengthen the repo-native system: tokens, semantics, CSS contracts, .spw conventions, and inspectable route/component boundaries.
+Use external inspiration and visual tuning to strengthen the repo-native system: UX behavior, site personality, tokens, semantics, CSS contracts, .spw conventions, and inspectable route/component boundaries.
 ```
 
 ## Validation Loop For Each Patch

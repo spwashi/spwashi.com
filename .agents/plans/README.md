@@ -4,11 +4,16 @@ This directory holds the stable, reviewable plan tracks for the site.
 
 ## Canonical Tracks
 
-- `css-architecture-readability/PLAN.md` - CSS ownership boundaries, debug labels, and property clustering.
-- `color-motion/PLAN.md` - palette tuning, operator distinction, and microinteraction timing.
-- `midjourney-design-concepts/PLAN.md` - inspiration workflow, animation studies, and asset promotion rules.
+- `css-architecture-readability/PLAN.md` - literate CSS ownership, debug labels, and UX behavior traceability.
+- `color-motion/PLAN.md` - behavior/personality audit, palette tuning, operator distinction, and microinteraction timing.
+- `midjourney-design-concepts/PLAN.md` - UX concept studies, animation references, inspiration workflow, and asset promotion rules.
+- `reference-assignment-template/PLAN.md` - intern-sized reference briefs for component improvements and experiments.
 
 Use these plans as the canonical starting point instead of the `tmp-plan*.md` scratch files at the repo root.
+
+Current planning emphasis: build the site's UX through inspectable behavior, recognizable personality, component development sessions, and a literate codebase that future agents can navigate by concept name.
+
+Reference assignments should give an intern a small set of site references, one UX question, one component behavior, and a validation path.
 
 ## Active Backlog
 

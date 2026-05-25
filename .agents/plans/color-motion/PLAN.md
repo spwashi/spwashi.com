@@ -2,9 +2,9 @@
 
 ## Public Goal
 
-Improve the site's color coherence and interaction feel without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing feel precise instead of randomly animated.
+Improve the site's color coherence, interaction feel, and recognizable personality without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing communicate behavior clearly instead of feeling randomly animated.
 
-This is not a redesign. The goal is to tune the existing Spw visual language through tokens, semantic aliases, and targeted interaction contracts.
+This is not a redesign. The goal is to tune the existing Spw visual language through tokens, semantic aliases, targeted interaction contracts, and a personality audit of the site's most repeated behaviors.
 
 ## Current Baseline
 
@@ -53,6 +53,8 @@ Known issue pattern:
 - Delight and resonance effects feel intentional, not noisy.
 - Colors used in components are mostly named local tokens, not repeated raw color math.
 - Reduced-motion mode keeps state legible while removing nonessential movement.
+- Repeated behaviors communicate a stable personality: tactile, inspectable, precise, and authored.
+- Interaction states can be described in plain language before implementation: acknowledge, settle, reveal, invite, warn, or resonate.
 - `npm run check:css`, `npm run check`, and `git diff --check` pass after each patch.
 
 ## Out Of Scope
@@ -105,6 +107,127 @@ Keep semantic aliases layered on top of primitives rather than replacing the pri
 - Use the same semantic noun across token, data attribute, and runtime helper names when the concept is shared.
 - Keep role aliases searchable enough that a model can trace a value from `core.css` to its consumers without guessing.
 - Avoid parallel synonyms for the same concept unless the codebase already distinguishes them for a reason.
+
+## Behavior And Personality Audit
+
+Audit interactions as personality-bearing behaviors, not isolated effects.
+
+Behavior vocabulary:
+
+- `acknowledge`: a fast response that confirms input.
+- `settle`: a short return to rest after movement or state change.
+- `reveal`: a deliberate appearance of hidden structure.
+- `invite`: a hover or focus state that suggests the next action.
+- `warn`: a contrast or timing change that protects the user from accidental action.
+- `resonate`: a semantic echo between related operators or concepts.
+
+Usual behavior contract:
+
+- Each repeated component should have a named default behavior and a small set of named state changes.
+- A call or handoff can refer to a behavior by name, such as `operator-chip invite` or `frame-card settle`, and the relevant CSS should be findable by that name or nearby selector.
+- Component development sessions should tune behavior where it is visible first, then decide whether the pattern deserves a shared token.
+
+Audit questions:
+
+- Does the same behavior use the same timing band across chips, cards, controls, and mode switches?
+- Does the color state communicate meaning before animation is noticed?
+- Does reduced motion preserve the same personality through color, border, shadow, and opacity?
+- Does the behavior feel authored by Spwashi rather than generic UI chrome?
+- Can a future agent find the token or selector by searching the behavior word?
+- Does the component's CSS document the HTML state that produces the visible behavior?
+
+## Color Seed References
+
+Use color seeds as reference material for palette roles, not as direct token replacements.
+
+### Seed - Woven Signal Stack
+
+Reference: layered teal paper blocks, cream fiber slab, rusted copper squares, amber signal line, and a flowing ochre/russet fiber stream.
+
+Extracted roles:
+
+- `field`: muted green-gray background for calm route atmosphere.
+- `deep-surface`: blue-black teal for stacked panels, code surfaces, and inspectable depth.
+- `paper-surface`: warm cream for readable foreground cards and editorial surfaces.
+- `signal`: amber-gold for thin lines, focus traces, and active route glints.
+- `oxide`: rust/copper for warning, artifact, or grounded material accents.
+- `fiber`: ochre/russet gradient for motion, resonance, or carried attention.
+
+Use constraints:
+
+- Use the seed to test contrast and relationship, not to recolor the entire site.
+- Prioritize operator distinction before adopting the atmospheric field colors.
+- Treat `signal` as a line/accent role; avoid turning it into a broad background.
+- Treat `oxide` as a grounded accent; avoid using it for generic destructive/error states unless the semantic fit is clear.
+- Keep paper and deep-surface roles paired so the palette does not collapse into a one-note dark theme.
+
+Intern assignment candidate:
+
+- Title: `design-palette-woven-signal`
+- Work type: `experiment`
+- Reference set: this seed image, `/design/`, `/design/palettes/`, `public/css/tokens/core.css`, and one card-heavy route.
+- UX question: can the design route gain a clearer inspectable material hierarchy using field, paper, deep-surface, signal, and oxide roles?
+- Expected change: route-local CSS or component-local tokens first; promote to shared role tokens only after comparison.
+- Validation: light/dark contrast, keyboard focus visibility, narrow viewport, and no operator color collisions.
+
+### Seed - Folded Amber Register
+
+Reference: layered handmade paper rectangles, teal structural mass, translucent amber panes, oxide-red depth, small copper pins, and a soft gray-green wall.
+
+Extracted roles:
+
+- `ambient-wall`: pale green-gray for calm page fields and low-contrast route backdrops.
+- `register-teal`: deep muted teal for primary structural cards, catalog panels, and inspectable component blocks.
+- `paper-lit`: warm cream for foreground reading slabs and specimen surfaces.
+- `amber-pane`: translucent amber for overlays, glows, active panes, and warm affordance hints.
+- `oxide-depth`: red-brown/rust for lower-layer depth, historical artifacts, and grounded emphasis.
+- `pin-copper`: small copper accent for selected, pinned, or collected states.
+
+Use constraints:
+
+- Keep `amber-pane` translucent or line-like; avoid flooding controls with orange.
+- Use `pin-copper` for tiny state markers, not whole-button backgrounds.
+- Let `register-teal` carry structure while `paper-lit` carries reading comfort.
+- Treat `oxide-depth` as depth and memory, not generic warning.
+- Compare with Woven Signal Stack before promoting any shared palette alias.
+
+Intern assignment candidate:
+
+- Title: `component-register-folded-amber`
+- Work type: `experiment`
+- Reference set: this seed image, `/design/components/`, `public/css/components/cards.css`, `public/css/effects/material.css`, and one settings/control component.
+- UX question: can a component communicate selected or pinned state with small copper/amber markers while keeping the reading surface calm?
+- Expected change: one component-local experiment on card or control state, documented by selector names that match the HTML state.
+- Validation: keyboard focus, selected/pressed distinction, reduced-motion state, and narrow card layout.
+
+### Seed - RPG Wednesday Veil Table
+
+Reference: teal story field, map paper, gold writing, floating globes, warm table cube, and dim collaborative figures around a tabletop scene.
+
+Extracted roles:
+
+- `story-field`: deep teal-green atmosphere for RPG and campaign surfaces.
+- `map-paper`: worn cream for readable maps, notes, and session artifacts.
+- `lantern-core`: warm amber for the central active object or current turn focus.
+- `scribe-gold`: thin gold for annotations, route traces, and quiet metadata.
+- `veil-globe`: soft cyan for floating hints, memory bubbles, and optional guide marks.
+- `table-shadow`: dark green-brown for grounding dense play surfaces.
+
+Use constraints:
+
+- Keep the glow centered on the active object or chosen state.
+- Use gold as trace writing or fine lines, not broad text color.
+- Preserve readable map-paper surfaces; do not let atmosphere overpower copy.
+- Treat globes as optional hints or memory markers, not required navigation.
+
+Intern assignment candidate:
+
+- Title: `rpg-veil-table-resonance`
+- Work type: `experiment`
+- Reference set: this seed image, `/play/rpg-wednesday/`, `/design/palettes/`, and one card or capture-frame component.
+- UX question: can an RPG route feel more collaborative and charged while keeping maps, notes, and actions readable?
+- Expected change: route-local palette or ornament test first; no global RPG palette until the behavior works on a real route.
+- Validation: mobile readability, link focus, map/note contrast, and no loss of static HTML comprehension.
 
 ## Patch 1 - Color And Motion Audit
 

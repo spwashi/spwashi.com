@@ -2,9 +2,9 @@
 
 ## Public Goal
 
-Use Midjourney as an inspiration and concept-sketching tool for focused design directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments, and `.spw` inspection notes. The output should be design direction, not unfiltered generated-image decoration.
+Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments, behavior notes, and `.spw` inspection notes. The output should be design direction and interaction personality, not unfiltered generated-image decoration.
 
-The site should keep feeling authored by Spwashi. Midjourney can help discover palettes, materials, spatial metaphors, and visual motifs, but implementation should remain deliberate, accessible, and maintainable.
+The site should keep feeling authored by Spwashi. Midjourney can help discover palettes, materials, spatial metaphors, behavior metaphors, and visual motifs, but implementation should remain deliberate, accessible, and maintainable.
 
 ## Core Principle
 
@@ -17,6 +17,112 @@ render inspiration -> extract design principle -> prototype in CSS/HTML -> valid
 Do not paste generated imagery into routes just because it looks good. Every promoted asset needs a role, alt text, sidecar metadata, optimization, and route fit.
 
 Generated imagery should be translated into CSS, tokens, layout, or ornament before asset promotion is considered.
+
+## UX Development Rule
+
+Every concept study should answer at least one UX question before it proposes an asset.
+
+Useful UX questions:
+
+- What should the visitor feel is possible here?
+- Which action should feel tactile, quiet, charged, inspectable, or ceremonial?
+- Which route or component personality is being clarified?
+- What behavior would this concept change: hover, focus, reveal, collect, compare, navigate, or settle?
+- What can be expressed in CSS, HTML structure, or copy before considering an image?
+
+## Reference Assignment Rule
+
+Reference assignments should be useful for an intern or junior collaborator.
+
+- Start with a small reference set: 2-5 routes, components, screenshots, prompt studies, image references, or animation clips.
+- Assign one improvement or experiment, not a whole visual direction.
+- Tie the assignment to a visible component behavior and the HTML structure that owns it.
+- Prefer `/design/` and shared components as experiment surfaces before changing flagship routes.
+- Record the result as keep, revise, discard, or promote.
+
+## Current Reference Seeds
+
+### Woven Signal Stack
+
+Reference type: color and material seed.
+
+Visual principles:
+
+- stacked paper and mineral panels
+- warm cream foreground against deep teal structure
+- rusted copper accents as grounded artifacts
+- thin amber signal line across dense material
+- flowing ochre/russet fiber as directional attention
+
+UX translation candidates:
+
+- `/design/` palette study for inspectable material hierarchy
+- card surface experiment using paper, deep-surface, and signal roles
+- operator-chip or mode-switch focus treatment using the amber line as a restraint
+- ornament experiment where fiber motion becomes a subtle resonance trail instead of a large animation
+
+Promotion decision:
+
+- Keep as reference for now.
+- Translate into CSS roles and component experiments before considering any image asset.
+- Reject direct hero usage unless a route later needs this exact material stack as content, not atmosphere.
+
+### Folded Amber Register
+
+Reference type: color, material, and state-marker seed.
+
+Visual principles:
+
+- overlapping handmade paper as inspectable layers
+- teal mass as structure rather than decoration
+- amber transparency as an active pane or warm affordance
+- copper pins and small squares as selected, pinned, or collected state markers
+- oxide-red depth as history, memory, or lower-register emphasis
+
+UX translation candidates:
+
+- `/design/components/` card specimen for selected/pinned state
+- settings control experiment for active panes and calm reading surfaces
+- component token study for `paper-lit`, `register-teal`, `amber-pane`, and `pin-copper`
+- ornament restraint study where the warm glow is localized to state markers
+
+Promotion decision:
+
+- Keep as reference for now.
+- Prefer component-local CSS experiments before shared palette aliases.
+- Reject broad orange or rust backgrounds; the reference works because warmth appears in small markers and translucent planes.
+
+### RPG Wednesday Veil Table
+
+Reference type: route personality, color, and tabletop focus seed.
+
+Visual principles:
+
+- teal-green atmosphere as a story field
+- map paper and handwritten traces as readable artifacts
+- warm cube or lantern core as the active shared focus
+- floating cyan globes as optional hints, memories, or guide marks
+- dim collaborative figures as presence without portrait dependence
+
+UX translation candidates:
+
+- `/play/rpg-wednesday/` route-personality experiment
+- capture-frame or session-card palette test
+- central focus treatment for current turn, current map, or current prompt
+- fine-line annotation style for route traces and session metadata
+
+Promotion decision:
+
+- Keep as reference for now.
+- Prefer route-local CSS and component experiments before image promotion.
+- Reject direct background use if it weakens map, note, or action readability.
+
+## Literate Output Rule
+
+- A promoted concept needs a named principle, not just a prompt.
+- The principle should be searchable across the prompt bank, CSS token, route note, and `.spw` sidecar.
+- If a concept affects behavior, document the behavior word beside the visual principle.
+- Keep rejection notes specific enough that future agents do not repeat discarded directions.
 
 ## Token Efficiency
 
@@ -65,11 +171,13 @@ Relevant skills:
 ## Success Criteria
 
 - Each Midjourney study answers one design question.
+- Each promoted study answers a UX or behavior question before an asset question.
 - Extracted ideas become CSS tokens, layout motifs, route art direction, or sidecar metadata before becoming assets.
 - Promoted images have optimized derivatives, descriptive alt text, and `.spw` sidecars.
 - No route becomes visually dependent on a raw generated image.
 - Concepts map back to existing Spw semantics: operator, brace, frame, substrate, ornament, attention field, or route family.
 - The design catalog can explain why each promoted visual exists.
+- Concept notes are literate enough that a future agent can implement the CSS/HTML behavior without reopening the image reference.
 
 ## Out Of Scope
 
@@ -84,6 +192,22 @@ Relevant skills:
 ## Concept Lanes
 
 Use focused lanes so prompts produce useful comparative references.
+
+### Lane 0 - Behavior And Personality
+
+Design questions:
+
+- What should Spwashi interactions feel like before any image appears?
+- Which behaviors should be crisp, quiet, tactile, charged, inspectable, or ceremonial?
+- How should route identity appear through repeated interaction rather than static art direction?
+- What motion reference helps explain an operator chip, mode switch, reveal, or ornament response?
+
+Possible outputs:
+
+- Behavior notes for `color-motion/PLAN.md`.
+- Timing and reduced-motion notes for operator chips and controls.
+- Route personality notes for `/design/`, `/settings/`, and homepage surfaces.
+- CSS translation candidates before asset promotion.
 
 ### Lane 1 - Palette And Atmosphere
 
