@@ -27,6 +27,13 @@ const DEFAULT_HISTORY_LIMIT = 100;
 const MIN_HISTORY_LIMIT = 10;
 const MAX_HISTORY_LIMIT = 1000;
 
+type SpwEventDetail = Record<string, unknown>;
+type SpwEventName = string;
+type Unsubscribe = () => void;
+type SpwDomTarget = EventTarget;
+type ChargeElement = HTMLElement | SVGElement;
+type ChargeState = Exclude<DOMStringMap['spwCharge'], undefined>;
+
 const CHARGE_BY_EVENT = Object.freeze({
     'brace:charged': 0.25,
     'brace:activated': 0.65,
@@ -89,13 +96,7 @@ const CHARGE_STATE = Object.freeze([
     { max: 0.70, label: 'active' },
     { max: 0.94, label: 'sustained' },
     { max: Infinity, label: 'manifest' },
-]);
-
-type SpwEventDetail = Record<string, unknown>;
-type SpwEventName = string;
-type Unsubscribe = () => void;
-type SpwDomTarget = EventTarget;
-type ChargeElement = HTMLElement | SVGElement;
+] satisfies readonly { max: number; label: ChargeState | null }[]);
 
 type SpwEmitOptions = {
     target?: SpwDomTarget;
@@ -189,7 +190,7 @@ const resolveSource = (name: SpwEventName): string => {
     return normalized.includes(':') ? normalized.split(':')[0] : 'spw';
 };
 
-const getChargeState = (level: unknown): string | null => {
+const getChargeState = (level: unknown): ChargeState | null => {
     const numeric = Number(level) || 0;
     return CHARGE_STATE.find((entry) => numeric <= entry.max)?.label ?? null;
 };

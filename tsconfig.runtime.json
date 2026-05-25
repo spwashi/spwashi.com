@@ -8,6 +8,6 @@
     "sourceMap": false,
     "types": []
   },
-  "include": ["public/ts/**/*.ts"],
+  "include": ["public/ts/**/*.ts", "types/**/*.d.ts"],
   "exclude": []
 }
