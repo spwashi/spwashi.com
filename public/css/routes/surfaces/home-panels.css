@@ -389,6 +389,24 @@
     align-items: flex-start;
   }
 
+  :where(#home-frame .frame-topline) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+        "brace identity"
+        "meta meta"
+        "modes modes";
+  }
+
+  :where(#home-frame .frame-topline > .mode-switch),
+  :where(#home-frame .frame-topline > .spw-component-meta) {
+    justify-self: stretch;
+    justify-content: flex-start;
+  }
+
+  :where(#home-frame .spw-component-meta) {
+    min-width: 0;
+  }
+
   :where(body[data-spw-surface="home"] .mode-switch) {
     width: 100%;
   }
@@ -420,28 +438,32 @@
    ========================================================================== */
 
 html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
-  --home-accent-ink: color-mix(in srgb, white 88%, var(--home-accent-primary) 12%);
-  --home-surface-bg: rgba(19, 23, 26, 0.9);
-  --home-surface-bg-strong: rgba(22, 27, 30, 0.96);
-  --home-surface-bg-muted: rgba(26, 31, 35, 0.96);
-  --home-surface-border: 1px solid color-mix(in srgb, var(--home-accent-primary) 20%, rgba(255, 255, 255, 0.08));
-  --home-surface-border-strong: 1px solid color-mix(in srgb, var(--home-accent-primary) 34%, rgba(255, 255, 255, 0.12));
-  --home-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-  --home-shadow-active: 0 18px 42px rgba(0, 0, 0, 0.34);
-  --home-shadow-quiet: 0 6px 18px rgba(0, 0, 0, 0.18);
+  --home-accent-ink: color-mix(in oklab, white 84%, var(--home-accent-primary) 16%);
+  --home-surface-bg: color-mix(in oklab, rgba(31, 25, 20, 0.92) 86%, var(--home-accent-primary) 4%);
+  --home-surface-bg-strong: color-mix(in oklab, rgba(48, 39, 31, 0.97) 88%, var(--home-accent-primary) 5%);
+  --home-surface-bg-muted: color-mix(in oklab, rgba(42, 34, 28, 0.97) 88%, var(--home-accent-ember) 5%);
+  --home-surface-border: 1px solid color-mix(in oklab, var(--home-accent-primary) 26%, rgba(255, 236, 210, 0.11));
+  --home-surface-border-strong: 1px solid color-mix(in oklab, var(--home-accent-primary) 46%, rgba(255, 236, 210, 0.16));
+  --home-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+  --home-shadow-active:
+      0 22px 58px color-mix(in oklab, var(--home-accent-primary) 12%, transparent),
+      0 18px 44px rgba(0, 0, 0, 0.38);
+  --home-shadow-quiet: 0 9px 24px rgba(0, 0, 0, 0.24);
 }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-spw-color-mode="light"]) body[data-spw-surface="home"] {
-    --home-accent-ink: color-mix(in srgb, white 88%, var(--home-accent-primary) 12%);
-    --home-surface-bg: rgba(19, 23, 26, 0.9);
-    --home-surface-bg-strong: rgba(22, 27, 30, 0.96);
-    --home-surface-bg-muted: rgba(26, 31, 35, 0.96);
-    --home-surface-border: 1px solid color-mix(in srgb, var(--home-accent-primary) 20%, rgba(255, 255, 255, 0.08));
-    --home-surface-border-strong: 1px solid color-mix(in srgb, var(--home-accent-primary) 34%, rgba(255, 255, 255, 0.12));
-    --home-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-    --home-shadow-active: 0 18px 42px rgba(0, 0, 0, 0.34);
-    --home-shadow-quiet: 0 6px 18px rgba(0, 0, 0, 0.18);
+    --home-accent-ink: color-mix(in oklab, white 84%, var(--home-accent-primary) 16%);
+    --home-surface-bg: color-mix(in oklab, rgba(31, 25, 20, 0.92) 86%, var(--home-accent-primary) 4%);
+    --home-surface-bg-strong: color-mix(in oklab, rgba(48, 39, 31, 0.97) 88%, var(--home-accent-primary) 5%);
+    --home-surface-bg-muted: color-mix(in oklab, rgba(42, 34, 28, 0.97) 88%, var(--home-accent-ember) 5%);
+    --home-surface-border: 1px solid color-mix(in oklab, var(--home-accent-primary) 26%, rgba(255, 236, 210, 0.11));
+    --home-surface-border-strong: 1px solid color-mix(in oklab, var(--home-accent-primary) 46%, rgba(255, 236, 210, 0.16));
+    --home-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+    --home-shadow-active:
+        0 22px 58px color-mix(in oklab, var(--home-accent-primary) 12%, transparent),
+        0 18px 44px rgba(0, 0, 0, 0.38);
+    --home-shadow-quiet: 0 9px 24px rgba(0, 0, 0, 0.24);
   }
 }
 

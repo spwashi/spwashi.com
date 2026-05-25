@@ -15,26 +15,30 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="home"]) {
-  --home-accent-primary: var(--teal, #0f7f7d);
-  --home-accent-secondary: color-mix(in srgb, var(--home-accent-primary) 26%, var(--gold, #c79a3b));
-  --home-accent-tertiary: color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
+  --home-accent-primary: color-mix(in oklab, var(--teal, #0f7f7d) 86%, #f2c46d 14%);
+  --home-accent-secondary: color-mix(in oklab, var(--home-accent-primary) 42%, var(--amber, #c79a3b));
+  --home-accent-tertiary: color-mix(in oklab, var(--home-accent-primary) 24%, transparent);
+  --home-accent-ember: color-mix(in oklab, var(--amber, #c79a3b) 72%, #ff6f4f 28%);
+  --home-accent-blue: color-mix(in oklab, var(--home-accent-primary) 54%, #6aa3ff 46%);
 
-  --home-accent-ink: color-mix(in srgb, var(--ink, #1b1f23) 86%, var(--home-accent-primary) 14%);
-  --home-accent-line: color-mix(in srgb, var(--home-accent-primary) 20%, var(--line, rgba(15, 127, 125, 0.14)));
-  --home-accent-line-strong: color-mix(in srgb, var(--home-accent-primary) 34%, var(--line, rgba(15, 127, 125, 0.14)));
-  --home-accent-wash-soft: color-mix(in srgb, var(--home-accent-primary) 5%, transparent);
-  --home-accent-wash: color-mix(in srgb, var(--home-accent-primary) 8%, transparent);
-  --home-accent-wash-strong: color-mix(in srgb, var(--home-accent-primary) 12%, transparent);
+  --home-accent-ink: color-mix(in oklab, var(--ink, #1b1f23) 82%, var(--home-accent-primary) 18%);
+  --home-accent-line: color-mix(in oklab, var(--home-accent-primary) 24%, var(--line, rgba(15, 127, 125, 0.14)));
+  --home-accent-line-strong: color-mix(in oklab, var(--home-accent-primary) 42%, var(--line, rgba(15, 127, 125, 0.14)));
+  --home-accent-wash-soft: color-mix(in oklab, var(--home-accent-primary) 7%, transparent);
+  --home-accent-wash: color-mix(in oklab, var(--home-accent-primary) 12%, transparent);
+  --home-accent-wash-strong: color-mix(in oklab, var(--home-accent-primary) 18%, transparent);
 
-  --home-surface-bg: var(--surface, rgba(255, 255, 255, 0.92));
-  --home-surface-bg-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
-  --home-surface-bg-muted: color-mix(in srgb, var(--home-surface-bg-strong) 90%, var(--bg, #f7f4ee));
+  --home-surface-bg: color-mix(in oklab, var(--surface, rgba(255, 255, 255, 0.92)) 82%, var(--home-accent-primary) 4%);
+  --home-surface-bg-strong: color-mix(in oklab, var(--surface-strong, rgba(255, 255, 255, 0.98)) 88%, var(--home-accent-primary) 5%);
+  --home-surface-bg-muted: color-mix(in oklab, var(--home-surface-bg-strong) 84%, var(--bg, #f7f4ee));
   --home-surface-border: 1px solid var(--home-accent-line);
   --home-surface-border-strong: 1px solid var(--home-accent-line-strong);
 
-  --home-shadow: var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06));
-  --home-shadow-active: var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10));
-  --home-shadow-quiet: 0 4px 14px rgba(0, 0, 0, 0.04);
+  --home-shadow: 0 18px 48px color-mix(in oklab, var(--bg, #111) 72%, transparent);
+  --home-shadow-active:
+      0 22px 58px color-mix(in oklab, var(--home-accent-primary) 12%, transparent),
+      0 16px 38px color-mix(in oklab, var(--bg, #111) 70%, transparent);
+  --home-shadow-quiet: 0 8px 22px color-mix(in oklab, var(--bg, #111) 46%, transparent);
 
   --home-gap-xs: 0.38rem;
   --home-gap-sm: 0.62rem;
@@ -64,6 +68,27 @@
   --spw-main-gap: var(--home-gap-xl);
 }
 
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="home"]) {
+    --bg: hsl(28 18% 8%);
+    --bg-field: hsl(30 16% 11%);
+    --paper: hsl(30 15% 12%);
+    --surface: rgba(31, 25, 20, 0.82);
+    --surface-strong: rgba(44, 35, 28, 0.95);
+    --surface-panel: rgba(39, 31, 25, 0.92);
+    --surface-panel-strong: rgba(52, 41, 32, 0.96);
+    --teal: hsl(180 64% 61%);
+    --amber: hsl(38 82% 64%);
+    --violet: hsl(270 54% 72%);
+    --ink-strong: rgba(255, 247, 235, 0.98);
+    --ink: rgba(246, 238, 226, 0.94);
+    --ink-soft: rgba(220, 204, 185, 0.84);
+    --ink-mid: rgba(220, 204, 185, 0.68);
+    --line: rgba(247, 226, 198, 0.15);
+    --line-strong: rgba(121, 220, 214, 0.36);
+  }
+}
+
 
 /* ==========================================================================
    2. Home page scoping
@@ -71,8 +96,15 @@
 
 :where(body[data-spw-surface="home"]) {
   --component-accent: var(--home-accent-primary);
+  --component-surface: var(--home-surface-bg);
+  --component-surface-strong: var(--home-surface-bg-strong);
+  --component-surface-soft: color-mix(in oklab, var(--home-surface-bg) 76%, transparent);
   --card-border-emphasis: var(--home-accent-line);
   --focus-ring: 0 0 0 3px color-mix(in srgb, var(--home-accent-primary) 18%, transparent);
+  background:
+      radial-gradient(circle at 18% 4%, color-mix(in oklab, var(--home-accent-primary) 16%, transparent), transparent 28rem),
+      radial-gradient(circle at 88% 18%, color-mix(in oklab, var(--home-accent-ember) 12%, transparent), transparent 30rem),
+      linear-gradient(135deg, color-mix(in oklab, var(--bg-field, #111) 78%, var(--home-accent-blue) 7%), var(--bg, #111));
 }
 
 :where(body[data-spw-surface="home"] main > .site-frame) {
@@ -89,11 +121,21 @@
 :where(#home-frame.site-hero) {
   position: relative;
   display: grid;
-  gap: var(--home-gap-xl);
+  gap: clamp(0.9rem, 1.8vw, 1.35rem);
   padding: var(--home-hero-padding);
   border: var(--home-surface-border);
   border-radius: var(--home-radius-lg);
   background:
+      radial-gradient(
+          circle at 87% 17%,
+          color-mix(in oklab, var(--home-accent-primary) 18%, transparent),
+          transparent 24rem
+      ),
+      radial-gradient(
+          circle at 18% 74%,
+          color-mix(in oklab, var(--home-accent-ember) 11%, transparent),
+          transparent 28rem
+      ),
       linear-gradient(
           180deg,
           var(--home-accent-wash-soft),
@@ -116,21 +158,51 @@
   background:
       radial-gradient(
           circle at 86% 16%,
-          color-mix(in srgb, var(--home-accent-primary) 5%, transparent),
+          color-mix(in oklab, var(--home-accent-primary) 12%, transparent),
           transparent 26%
+      ),
+      linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--home-accent-primary) 7%, transparent),
+          transparent 38%,
+          color-mix(in oklab, var(--home-accent-ember) 7%, transparent)
       );
-  opacity: 0.9;
+  opacity: 0.78;
 }
 
 :where(#home-frame .frame-topline) {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+      "brace identity meta"
+      "modes modes modes";
   align-items: center;
-  justify-content: space-between;
-  gap: var(--home-gap-sm);
+  gap: 0.46rem 0.5rem;
   min-width: 0;
-  padding-bottom: var(--home-gap-sm);
+  padding: 0.42rem 0 0.62rem;
   border-bottom: 1px solid var(--home-accent-line);
+}
+
+:where(#home-frame .frame-topline > .spw-delimiter) {
+  grid-area: brace;
+  justify-self: start;
+}
+
+:where(#home-frame .frame-topline > .frame-sigil) {
+  grid-area: identity;
+  justify-self: start;
+}
+
+:where(#home-frame .frame-topline > .mode-switch) {
+  grid-area: modes;
+  justify-self: stretch;
+  justify-content: flex-end;
+}
+
+:where(#home-frame .frame-topline > .spw-component-meta) {
+  grid-area: meta;
+  justify-self: end;
+  margin-left: 0;
 }
 
 :where(#home-frame .page-kicker) {
@@ -175,7 +247,7 @@
 
 :where(#home-frame .home-hero-grid) {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(14rem, 18rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(19rem, 0.74fr);
   align-items: start;
   gap: clamp(1rem, 2.3vw, 2rem);
   min-width: 0;
@@ -194,12 +266,17 @@
   align-self: start;
   display: grid;
   place-items: center;
-  inline-size: min(100%, 17rem);
+  inline-size: min(100%, 18.5rem);
   margin: 0;
-  padding: 0.75rem;
+  padding: 0.82rem;
   border: var(--home-surface-border);
   border-radius: var(--home-radius-md);
   background:
+      radial-gradient(
+          circle at 80% 12%,
+          color-mix(in oklab, var(--home-accent-ember) 16%, transparent),
+          transparent 48%
+      ),
       linear-gradient(
           180deg,
           color-mix(in srgb, #fff 20%, transparent),
@@ -231,6 +308,76 @@
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+@media (min-width: 62rem) {
+  :where(#home-frame .home-hero-grid) {
+    grid-template-columns: minmax(0, 1.02fr) minmax(18rem, 0.82fr);
+  }
+
+  :where(#home-frame .home-hero-copy) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1.02fr) minmax(18rem, 0.82fr);
+    column-gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  :where(
+    #home-frame .page-kicker,
+    #home-frame h1,
+    #home-frame .home-hero-copy > h2,
+    #home-frame #home-frame-note,
+    #home-frame .home-hero-copy > .frame-note:nth-of-type(2),
+    #home-frame .spw-playable-hook,
+    #home-frame .home-hero-copy > .frame-note:nth-of-type(3),
+    #home-frame .spw-copy-motif-strip
+  ) {
+    grid-column: 1;
+  }
+
+  :where(#home-frame .home-brand-plate) {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: calc(var(--header-height, 4rem) + 1rem);
+  }
+
+  :where(#home-frame .spw-reason-strip) {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(#home-frame .spw-narration) {
+    grid-column: 1;
+    align-self: stretch;
+  }
+
+  :where(#home-frame .spw-role-hooks) {
+    grid-column: 2;
+    grid-row: 10;
+    margin-block-start: 0;
+  }
+
+  :where(#home-frame .spw-resonance-lab) {
+    grid-column: 2;
+    grid-row: 11;
+    margin-block-start: 0;
+  }
+
+  :where(#home-frame .home-hero-copy > p[data-spw-copy-depth]) {
+    grid-column: 2;
+    grid-row: 12;
+    align-self: start;
+    margin: 0;
+  }
+
+  :where(#home-frame .spw-route-bridge) {
+    grid-column: 1 / -1;
+  }
+
+  :where(#home-frame .frame-grid--dense) {
+    grid-column: 1 / -1;
+  }
 }
 
 @container (min-width: 70rem) {
@@ -304,6 +451,41 @@
   min-width: 0;
 }
 
+:where(#home-frame .mode-switch) {
+  width: 100%;
+  max-inline-size: none;
+  padding: 0.34rem;
+  border: 1px solid color-mix(in oklab, var(--home-accent-primary) 18%, transparent);
+  border-radius: calc(var(--home-radius-pill) / 2);
+  background:
+      linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--home-accent-primary) 10%, transparent),
+          color-mix(in oklab, var(--home-surface-bg-strong) 72%, transparent)
+  );
+  box-shadow: inset 0 1px 0 color-mix(in oklab, white 10%, transparent);
+}
+
+:where(#home-frame .mode-switch)::before {
+  content: "lens";
+  margin-inline-end: auto;
+  padding-inline: 0.18rem 0.5rem;
+  color: color-mix(in oklab, var(--ink-soft, currentColor) 78%, var(--home-accent-primary) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:where(#home-frame .spw-component-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.32rem;
+  min-width: max-content;
+}
+
 :where(body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"]) {
   border-color: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
   background: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));
@@ -322,4 +504,50 @@
   color: var(--ink-soft, rgba(27, 31, 35, 0.68));
   line-height: 1.58;
   text-wrap: pretty;
+}
+
+:where(body[data-spw-surface="home"] .frame-panel),
+:where(body[data-spw-surface="home"] .frame-card) {
+  --component-shadow: var(--home-shadow-quiet);
+  --component-shadow-active: var(--home-shadow-active);
+  border-color: color-mix(in oklab, var(--home-accent-primary) 18%, var(--line, transparent));
+  background:
+      radial-gradient(
+          circle at 12% 0%,
+          color-mix(in oklab, var(--home-accent-primary) 10%, transparent),
+          transparent 42%
+      ),
+      linear-gradient(
+          155deg,
+          color-mix(in oklab, var(--home-surface-bg-strong) 92%, var(--home-accent-primary) 4%),
+          color-mix(in oklab, var(--home-surface-bg) 94%, var(--home-accent-ember) 3%)
+      );
+}
+
+:where(body[data-spw-surface="home"] .frame-panel h3),
+:where(body[data-spw-surface="home"] .frame-card h3),
+:where(body[data-spw-surface="home"] .frame-card strong) {
+  letter-spacing: -0.015em;
+}
+
+:where(body[data-spw-surface="home"] .frame-panel p) {
+  max-inline-size: 54ch;
+}
+
+:where(body[data-spw-surface="home"] .frame-grid--dense) {
+  --spw-grid-min-base: 18rem;
+  gap: clamp(0.65rem, 1.15vw, 0.9rem);
+}
+
+:where(#choose-your-entrance .frame-grid--dense) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+:where(#choose-your-entrance .frame-panel) {
+  min-height: auto;
+  align-content: start;
+}
+
+:where(#choose-your-entrance .spw-card-reason) {
+  margin-top: 0.15rem;
 }

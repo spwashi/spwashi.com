@@ -57,6 +57,7 @@ const PAGE_SECTION_INDEX_ATTR = 'data-spw-page-section-index';
 const PAGE_SECTION_COUNT_ATTR = 'data-spw-page-section-count';
 const PAGE_SECTION_PHASE_ATTR = 'data-spw-page-section-phase';
 const PAGE_SECTION_EDGE_ATTR = 'data-spw-page-section-edge';
+const PAGE_SECTION_DIRECTION_ATTR = 'data-spw-page-section-direction';
 const READING_GROOVE_ATTR = 'data-spw-reading-groove';
 const READING_GROOVE_COUNT_ATTR = 'data-spw-reading-groove-count';
 const READING_GROOVE_MODE_ATTR = 'data-spw-reading-groove-mode';
@@ -94,6 +95,7 @@ const READING_GROOVE_SELECTOR = [
 ].join(', ');
 let lastSectionLogKey = '';
 let lastProbeLogKey = '';
+let lastSectionIndex = 0;
 const logger = createSpwLogger('attention-architecture', {
   role: 'runtime',
   metaphor: 'attention-field',
@@ -122,6 +124,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     pageSectionCount: PAGE_SECTION_COUNT_ATTR,
     pageSectionPhase: PAGE_SECTION_PHASE_ATTR,
     pageSectionEdge: PAGE_SECTION_EDGE_ATTR,
+    pageSectionDirection: PAGE_SECTION_DIRECTION_ATTR,
     readingGroove: READING_GROOVE_ATTR,
     readingGrooveCount: READING_GROOVE_COUNT_ATTR,
     readingGrooveMode: READING_GROOVE_MODE_ATTR,
@@ -237,6 +240,23 @@ function buildSectionSnapshot(section, index, activeIndex, phase, source, origin
     source,
     origin,
   };
+}
+
+function getSectionProgress(currentIndex, sectionCount) {
+  if (sectionCount <= 1) return 1;
+  return currentIndex / (sectionCount - 1);
+}
+
+function getSectionDirection(currentIndex) {
+  if (currentIndex > lastSectionIndex) return 'forward';
+  if (currentIndex < lastSectionIndex) return 'back';
+  return 'steady';
+}
+
+function writeSectionProgressStyle(node, progress, step) {
+  if (!(node instanceof HTMLElement)) return;
+  node.style.setProperty('--spw-section-progress', progress.toFixed(4));
+  node.style.setProperty('--spw-section-step', step.toFixed(4));
 }
 
 function syncHandleContent(parts, info, activeIndex, sectionCount) {
@@ -483,13 +503,22 @@ function syncSectionHandleVisibility(handle, shell, visible) {
 function syncSectionHandleAvailability(refs, activeIndex, sectionCount) {
   const hasPrev = activeIndex > 0;
   const hasNext = activeIndex < sectionCount - 1;
-  if (refs.topButton instanceof HTMLButtonElement) refs.topButton.disabled = !hasPrev;
-  if (refs.prevButton instanceof HTMLButtonElement) refs.prevButton.disabled = !hasPrev;
-  if (refs.nextButton instanceof HTMLButtonElement) refs.nextButton.disabled = !hasNext;
-  if (refs.bottomButton instanceof HTMLButtonElement) refs.bottomButton.disabled = !hasNext;
+  [
+    [refs.topButton, hasPrev],
+    [refs.prevButton, hasPrev],
+    [refs.nextButton, hasNext],
+    [refs.bottomButton, hasNext],
+  ].forEach(([button, enabled]) => {
+    if (!(button instanceof HTMLButtonElement)) return;
+    button.disabled = !enabled;
+    button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+  });
 }
 
 function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCount, snapshot, source) {
+  const progress = getSectionProgress(activeIndex, sectionCount);
+  const step = sectionCount > 0 ? (activeIndex + 1) / sectionCount : 1;
+
   writeAttributes(handle, {
     href: `#${info.id}`,
     'aria-label': `Jump to ${info.label}`,
@@ -507,6 +536,7 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
   shell.dataset.spwHandleIndex = String(activeIndex + 1);
   shell.dataset.spwHandleCount = String(sectionCount);
   shell.dataset.spwHandleSource = source;
+  writeSectionProgressStyle(shell, progress, step);
 }
 
 function syncSectionHandleSections(sections, activeIndex) {
@@ -824,7 +854,10 @@ function createSectionHandleController({
         PAGE_SECTION_COUNT_ATTR,
         PAGE_SECTION_PHASE_ATTR,
         PAGE_SECTION_EDGE_ATTR,
+        PAGE_SECTION_DIRECTION_ATTR,
       ]);
+      node.style.removeProperty('--spw-section-progress');
+      node.style.removeProperty('--spw-section-step');
     });
     if (generated) {
       handle.remove();
@@ -861,6 +894,11 @@ function describeAvailability(activeIndex, count) {
 
 function writePageSectionDatasets(snapshot) {
   const edge = getPageSectionEdge(snapshot.currentIndex, snapshot.sectionCount);
+  const direction = getSectionDirection(snapshot.currentIndex);
+  const progress = getSectionProgress(snapshot.currentIndex, snapshot.sectionCount);
+  const step = snapshot.sectionCount > 0
+    ? (snapshot.currentIndex + 1) / snapshot.sectionCount
+    : 1;
 
   [document.documentElement, document.body].forEach((node) => {
     writeAttributes(node, {
@@ -869,13 +907,18 @@ function writePageSectionDatasets(snapshot) {
       [PAGE_SECTION_COUNT_ATTR]: snapshot.sectionCount,
       [PAGE_SECTION_PHASE_ATTR]: snapshot.phase,
       [PAGE_SECTION_EDGE_ATTR]: edge,
+      [PAGE_SECTION_DIRECTION_ATTR]: direction,
     });
+    writeSectionProgressStyle(node, progress, step);
   });
+  lastSectionIndex = snapshot.currentIndex;
 
   document.dispatchEvent(new CustomEvent(PAGE_SECTION_EVENT, {
     detail: {
       ...snapshot,
       edge,
+      direction,
+      progress,
     },
   }));
 
@@ -958,6 +1001,7 @@ function initResonanceProbe(root) {
   function onMouseEnter(event) {
     const target = event.target.closest?.('[data-spw-operator]');
     if (!target) return;
+    if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);
     hoverTimer = window.setTimeout(() => {
       probeHover = target.getAttribute('data-spw-operator');
@@ -968,6 +1012,7 @@ function initResonanceProbe(root) {
   function onMouseLeave(event) {
     const target = event.target.closest?.('[data-spw-operator]');
     if (!target) return;
+    if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);
     probeHover = null;
     apply();
@@ -985,6 +1030,29 @@ function initResonanceProbe(root) {
     root.removeEventListener('mouseover', onMouseEnter);
     root.removeEventListener('mouseout', onMouseLeave);
     html.removeAttribute(PROBE_ATTR);
+  };
+}
+
+function initScrollCadenceState() {
+  const nodes = [document.documentElement, document.body].filter((node) => node instanceof HTMLElement);
+  const previous = nodes.map((node) => [node, node.getAttribute(SCROLL_CADENCE_ATTR)]);
+  const enabled = getRootPreference('spwScrollCadence', 'on') !== 'off';
+
+  nodes.forEach((node) => {
+    writeAttributes(node, {
+      [SCROLL_CADENCE_ATTR]: enabled ? 'on' : 'off',
+    });
+  });
+
+  return () => {
+    previous.forEach(([node, value]) => {
+      if (!(node instanceof HTMLElement)) return;
+      if (value == null) {
+        node.removeAttribute(SCROLL_CADENCE_ATTR);
+      } else {
+        node.setAttribute(SCROLL_CADENCE_ATTR, value);
+      }
+    });
   };
 }
 
@@ -1234,6 +1302,7 @@ export function initSpwAttentionArchitecture(ctx) {
   const root = (ctx && ctx.root) || document;
   const cleanups = [];
 
+  try { cleanups.push(initScrollCadenceState()); } catch (_) {}
   try { cleanups.push(initSectionHandle(root)); } catch (_) {}
   try { cleanups.push(initResonanceProbe(root)); } catch (_) {}
   try { cleanups.push(initReadingGroove(root)); } catch (_) {}

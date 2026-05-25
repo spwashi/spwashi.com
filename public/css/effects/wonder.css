@@ -866,7 +866,8 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   :where([data-spw-operator]) {
     transition:
       box-shadow var(--attention-echo-duration, 480ms) var(--ease-settle, ease),
-      border-color var(--attention-echo-duration, 480ms) var(--ease-settle, ease);
+      border-color var(--attention-echo-duration, 480ms) var(--ease-settle, ease),
+      background-color var(--attention-echo-duration, 480ms) var(--ease-settle, ease);
   }
 
   :where([data-spw-operator]:not(:hover):not(:focus-visible))[style*="--spw-resonance"],
@@ -889,6 +890,26 @@ html[data-spw-resonance-probe="action"] :where([data-spw-operator="action"]:not(
 html[data-spw-resonance-probe="stream"] :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
 html[data-spw-resonance-probe="surface"] :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
   --spw-resonance: calc(var(--attention-field-radius, 0.4) * var(--attention-field-decay, 0.65) + 0.25);
+}
+
+html[data-spw-resonance-probe="frame"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="frame"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="object"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="object"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="probe"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="probe"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="ref"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="ref"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="action"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="action"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="stream"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="stream"]:not(:hover):not(:focus-visible),
+html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .frame-sigil, .spec-pill)[data-spw-operator="surface"]:not(:hover):not(:focus-visible) {
+  border-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, var(--teal))) 28%,
+    var(--line, rgba(14, 18, 20, 0.14))
+  );
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent),
+      color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent)
+    );
 }
 
 @media (prefers-reduced-motion: reduce) {

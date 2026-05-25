@@ -358,7 +358,8 @@
     { name: "data-spw-page-section-index='n'", meaning: "1-based current section index on html/body" },
     { name: "data-spw-page-section-count='n'", meaning: "number of locomotion sections on the page" },
     { name: "data-spw-page-section-phase='settled|traveling'", meaning: "page-level locomotion phase published beyond the control itself" },
-    { name: "data-spw-page-section-edge='top|middle|bottom'", meaning: "whether the active section is at the start, middle, or end of the sequence" }
+    { name: "data-spw-page-section-edge='top|middle|bottom'", meaning: "whether the active section is at the start, middle, or end of the sequence" },
+    { name: "data-spw-page-section-direction='forward|back|steady'", meaning: "whether the active section index advanced, retreated, or held steady during the latest locomotion update" }
   ]
 }
 
