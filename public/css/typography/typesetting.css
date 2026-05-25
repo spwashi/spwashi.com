@@ -148,24 +148,24 @@
    ========================================================================== */
 
 :where(html[data-spw-reading-groove="on"], body[data-spw-reading-groove="on"]) {
-  --spw-reading-rest-opacity: 0.74;
-  --spw-reading-near-opacity: 0.92;
+  --spw-reading-rest-opacity: 0.86;
+  --spw-reading-near-opacity: 0.96;
   --spw-reading-lead-opacity: 1;
   --spw-reading-rest-shift: 0rem;
-  --spw-reading-near-shift: 0.06rem;
-  --spw-reading-lead-shift: 0.1rem;
+  --spw-reading-near-shift: 0.035rem;
+  --spw-reading-lead-shift: 0.06rem;
   --spw-reading-rest-color:
-    color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 92%, transparent);
+    color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.74)) 96%, var(--ink, rgba(14, 18, 20, 0.92)) 4%);
   --spw-reading-near-color:
-    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 96%, var(--active-op-color, #008080) 4%);
+    color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 98%, var(--active-op-color, #008080) 2%);
   --spw-reading-lead-color:
-    color-mix(in oklab, var(--ink-strong, #090b0c) 94%, var(--active-op-color, #008080) 6%);
+    color-mix(in oklab, var(--ink-strong, #090b0c) 97%, var(--active-op-color, #008080) 3%);
   --spw-reading-lead-accent:
-    color-mix(in oklab, var(--active-op-color, #008080) 18%, transparent);
+    color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
   --spw-reading-near-accent:
-    color-mix(in oklab, var(--active-op-color, #008080) 7%, transparent);
+    color-mix(in oklab, var(--active-op-color, #008080) 4%, transparent);
   --spw-reading-lead-glow:
-    inset 0.12rem 0 0 var(--spw-reading-lead-accent, transparent);
+    inset 0.08rem 0 0 var(--spw-reading-lead-accent, transparent);
 }
 
 :where(html[data-spw-reading-groove="off"], body[data-spw-reading-groove="off"]) {
@@ -189,22 +189,22 @@
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="rest"]) {
-  opacity: var(--spw-reading-rest-opacity, 0.74);
+  opacity: var(--spw-reading-rest-opacity, 0.86);
   color: var(--spw-reading-rest-color, inherit);
-  filter: saturate(0.92);
+  filter: saturate(0.98);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="near"]) {
   opacity: var(--spw-reading-near-opacity, 0.92);
   color: var(--spw-reading-near-color, inherit);
-  transform: translateX(var(--spw-reading-near-shift, 0.14rem));
+  transform: translateX(var(--spw-reading-near-shift, 0.035rem));
   text-shadow: 0 0 0.45rem var(--spw-reading-near-accent, transparent);
 }
 
 :where(html[data-spw-reading-groove="on"] [data-spw-reading-beat="lead"]) {
   opacity: var(--spw-reading-lead-opacity, 1);
   color: var(--spw-reading-lead-color, var(--ink-strong, #090b0c));
-  transform: translateX(var(--spw-reading-lead-shift, 0.24rem));
+  transform: translateX(var(--spw-reading-lead-shift, 0.06rem));
   text-shadow: 0 0 0.02em color-mix(in oklab, var(--ink-strong, #090b0c) 12%, transparent);
   box-shadow: var(--spw-reading-lead-glow);
 }

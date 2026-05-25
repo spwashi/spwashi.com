@@ -23,6 +23,10 @@
     data-spw-layout="reading"
     data-spw-related-routes="/settings/|/design/runtime/|/tools/|/care/|/services/care/">
 <a class="skip-link" href="#main-content">Skip to content</a>
+<a class="spw-section-handle" href="#main-content" data-spw-handle-state="hidden" aria-label="Jump to current privacy section">
+    <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+    <span class="spw-section-handle__label">Privacy</span>
+</a>
 
 <spw-site-header
     current="Privacy"
@@ -32,7 +36,7 @@
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="privacy-title">
-    <article class="site-frame site-hero" id="privacy-overview" data-spw-kind="frame" data-spw-role="privacy-register" data-spw-context="reference" data-spw-wonder="locality consent inspectability">
+    <article class="site-frame site-hero" id="privacy-overview" aria-labelledby="privacy-title" aria-describedby="privacy-lede" data-spw-kind="frame" data-spw-role="privacy-register" data-spw-context="reference" data-spw-wonder="locality consent inspectability">
         <div class="frame-topline">
             <a class="frame-sigil" href="#privacy-overview">#&gt;privacy</a>
             <div class="spec-strip">
@@ -44,13 +48,13 @@
 
         <p class="page-kicker">Privacy / Local State / Browser Trust</p>
         <h1 id="privacy-title">The privacy model should be easy to inspect.</h1>
-        <p class="page-lede">
+        <p id="privacy-lede" class="page-lede">
             This page is a plain-language register for privacy, local state, and browser trust. It helps you inspect what stays in the browser, what can be reset, and what a return visit will remember.
         </p>
         <p>
             Spwashi is mostly a static site with progressive browser features. Some features remember preferences, visits, notes, checkpoints, or drafts in this browser so the surface can feel continuous across visits. Those records are local unless a specific feature says otherwise.
         </p>
-        <div class="spw-reason-strip" aria-label="Privacy reasons">
+        <div class="spw-reason-strip" aria-label="Privacy reasons" data-spw-feature="privacy-reason-strip">
             <div>
                 <strong>This page exists because</strong>
                 <p>browser trust should be readable instead of hidden in implementation.</p>
@@ -73,10 +77,10 @@
         </nav>
     </article>
 
-    <section class="site-frame" id="analytics-posture" data-spw-kind="frame" data-spw-role="analytics-policy">
+    <section class="site-frame" id="analytics-posture" aria-labelledby="analytics-posture-title" data-spw-kind="frame" data-spw-role="analytics-policy" data-spw-feature="privacy-analytics-posture">
         <header class="frame-heading">
             <a class="frame-sigil" href="#analytics-posture">?"analytics_posture"</a>
-            <h2>Analytics posture</h2>
+            <h2 id="analytics-posture-title">Analytics posture</h2>
         </header>
         <p>
             Analytics must now be declared explicitly. If no engine is configured, no analytics script is rendered.
@@ -87,10 +91,10 @@
 &lt;/spw-page&gt;</code></pre>
     </section>
 
-    <section class="site-frame" id="local-state" data-spw-kind="frame" data-spw-role="local-state-inventory">
+    <section class="site-frame" id="local-state" aria-labelledby="local-state-title" data-spw-kind="frame" data-spw-role="local-state-inventory" data-spw-feature="privacy-local-state-inventory">
         <header class="frame-heading">
             <a class="frame-sigil" href="#local-state">^"local_state"</a>
-            <h2>Local state inventory</h2>
+            <h2 id="local-state-title">Local state inventory</h2>
         </header>
         <div class="frame-grid">
             <article class="frame-panel">
@@ -116,10 +120,10 @@
         </div>
     </section>
 
-    <section class="site-frame" id="reset-paths" data-spw-kind="frame" data-spw-role="reset-guide">
+    <section class="site-frame" id="reset-paths" aria-labelledby="reset-paths-title" data-spw-kind="frame" data-spw-role="reset-guide" data-spw-feature="privacy-reset-paths">
         <header class="frame-heading">
             <a class="frame-sigil" href="#reset-paths">!"reset_paths"</a>
-            <h2>Reset paths</h2>
+            <h2 id="reset-paths-title">Reset paths</h2>
         </header>
         <ul class="frame-list">
             <li>Use <a href="/settings/#presets">settings presets</a> or the deviation register to reset appearance and runtime preferences.</li>

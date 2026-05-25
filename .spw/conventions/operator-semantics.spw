@@ -198,6 +198,55 @@
   anti_priming: "When operators appear in unexpected sequences, they create cognitive dissonance. This can be used intentionally to force re-evaluation, but it should not happen accidentally. The user should either see why the unusual sequence makes sense or have a way to resolve the dissonance."
 }
 
+^"voice_marker_combinatorics"{
+  ~#thesis: "Visual markers are invitations into reader stance, not decoration for its own sake. A marker should tell the reader how to hold the sentence: as room, question, echo, object, action, variant, or behavior."
+
+  public_surface: ~"/topics/software/spw/#voice-marker-palette"
+
+  marker_roles: {
+    "#": "frame voice — names the room, threshold, register, or route"
+    "?": "probe voice — opens uncertainty and permits curiosity"
+    "~": "reference voice — keeps memory, source, or motif nearby"
+    "^": "object voice — makes a phrase holdable as card, specimen, talisman, or tool"
+    "@": "action voice — turns language toward ritual, instruction, edit, or invitation"
+    "[]": "variant voice — lets a phrase try a costume without losing its root"
+    "{}": "behavior voice — names what the phrase does in this encounter"
+    ">": "surface voice — projects the same root into another readable form"
+  }
+
+  combinatoric_rule: "One marker changes the invitation. Two markers can create a voice. Too many markers can turn the doorway back into a wall."
+
+  decorated_language_examples: [
+    "#guide ?notice — field-guide voice; name the habitat, then invite one observation",
+    "@cast ^token — spellbook voice; turn a sentence into a small replayable outcome",
+    "~source {revise} — workshop voice; keep provenance visible while changing the material",
+    "scene[comic]{soften} — variant plus behavior; the scene keeps its root while changing tone and action"
+  ]
+
+  taste_rule: "Compress the sentence, not the ontology; decorate the invitation, not every surface of the prose."
+}
+
+^"sentence_rhythm_sampler"{
+  ~#thesis: "Run-on sentences often show excess pressure rather than lack of thought. Sentence variety gives that pressure containers: landing beats, bridges, delays, lists, fragments, braids, and controlled long forms."
+
+  public_surface: ~"/topics/software/spw/#sentence-rhythm-sampler"
+
+  revision_rule: "Mark the job of each sentence before rewriting it: #land, ?open, ~return, @move, .pause. Then vary structure until the paragraph has a pulse."
+
+  sentence_shapes: {
+    simple: "one clear beat or landing place"
+    compound: "two equal forces held side by side"
+    complex: "context, cause, or condition attached to an action"
+    periodic: "delayed release; suspense gathers before the main clause"
+    list: "abundance with order"
+    fragment: "purposeful pause, shock, emphasis, or afterimage"
+    braided: "multiple motives kept visible without collapsing"
+    controlled_long: "a long sentence where each clause has a job and the ending lands"
+  }
+
+  nourishment_rule: "Variety is not ornament alone. It is reader care: breath, emphasis, return, acceleration, and rest."
+}
+
 ^"operator_symmetry"{
   ~#thesis: "Operators have symmetry partners. These pairs create dynamics that generate meaning through relationship rather than isolation."
 
