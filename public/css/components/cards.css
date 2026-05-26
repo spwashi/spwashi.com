@@ -58,6 +58,21 @@
   --card-rhythm: clamp(0.62rem, 1.3vw, 0.92rem);
 }
 
+/* Brace placement + box model consistency for card anatomy.
+   When a frame-card itself carries the brace form (common for semantic grouping),
+   the corner visuals (from grammar) "bite" into the corners. Compensate the
+   internal vertical rhythm slightly using central tokens so content doesn't
+   feel cramped at top/bottom compared to non-braced cards. This improves
+   consistency of the slot-like anatomy (even without explicit data-spw-slot
+   on every card child) and works with gesture states (charging etc. on braces).
+   Gesture affordances (haptics, pivots) that change density will still compose
+   cleanly because we use the component rhythm tokens. */
+:where(.frame-card[data-spw-form="brace"]) {
+  --card-rhythm: calc(var(--card-rhythm, 0.92rem) * 1.08);
+  padding-top: calc(var(--spw-component-pad-tight, 0.65rem) + 0.1rem);
+  padding-bottom: calc(var(--spw-component-pad-tight, 0.65rem) + 0.1rem);
+}
+
 :where(.frame-card > a:first-child) {
   gap: var(--card-rhythm);
 }
@@ -142,11 +157,11 @@
 }
 
 :where(.frame-card.frame-card--illustrated > a:first-child) {
-  gap: clamp(0.72rem, 1.45vw, 1rem);
+  gap: var(--spw-component-gap, var(--space-md, 1rem));
 }
 
 :where(.frame-card.frame-card--illustrated .frame-card-media) {
-  margin-block-end: 0.18rem;
+  margin-block-end: var(--space-3xs, 0.125rem);
 }
 
 :where(.card-sub-links, .ref-links, .plan-links) {
@@ -163,7 +178,7 @@
   grid-auto-flow: column;
   grid-auto-columns: max-content;
   align-items: center;
-  gap: 0.22rem;
+  gap: var(--space-3xs, 0.125rem);
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   text-decoration: none;
   font-size: 0.84rem;
@@ -178,7 +193,7 @@
 .spw-playable-hook {
   max-inline-size: 64ch;
   margin-block: var(--component-gap) var(--component-gap-loose);
-  padding: 0.85rem 1rem;
+  padding: var(--spw-component-pad-tight, 0.65rem) var(--spw-component-pad, 0.84rem);
   border-inline-start: 0.25rem solid var(--active-op-color, var(--component-accent));
   border-radius: var(--component-radius-loose);
   background: color-mix(in srgb, var(--component-surface-strong) 88%, var(--active-op-color, var(--component-accent)) 8%);
@@ -243,7 +258,7 @@
 
 :where(.spw-reason-strip strong, .spw-role-hooks strong, .spw-card-meta strong) {
   display: block;
-  margin-block-end: 0.25rem;
+  margin-block-end: var(--space-2xs, 0.25rem);
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--component-accent)) 18%);
   font-size: 0.84rem;
   font-weight: 800;
@@ -253,7 +268,7 @@
 }
 
 :where(.spw-reason-strip > * > strong, .spw-role-hooks > * > strong) {
-  padding-block-end: 0.24rem;
+  padding-block-end: var(--space-3xs, 0.125rem);
   border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, transparent);
 }
 
@@ -269,7 +284,7 @@
   display: grid;
   gap: var(--component-gap-tight);
   margin-block: var(--component-gap) var(--component-gap-loose);
-  padding: clamp(0.85rem, 2vw, 1.05rem);
+  padding: var(--spw-component-pad-tight, 0.65rem);
   border: 1px solid color-mix(in srgb, var(--spw-learning-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--component-radius-loose);
   background:
@@ -304,7 +319,7 @@
 :where(.spw-learning-game ol) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
-  gap: 0.55rem;
+  gap: var(--space-xs, 0.5rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -629,7 +644,7 @@
 
 :where(.spw-settings-cluster__note) {
   display: grid;
-  gap: 0.22rem;
+  gap: var(--space-3xs, 0.125rem);
   max-inline-size: 74ch;
   padding: 0.68rem 0.78rem;
   border: 1px dashed color-mix(in srgb, var(--active-op-color) 22%, var(--line));
@@ -715,7 +730,7 @@
   display: inline-flex;
   justify-self: start;
   max-inline-size: 100%;
-  margin-block-end: 0.25rem;
+  margin-block-end: var(--space-2xs, 0.25rem);
   padding: 0.16rem 0.48rem;
   border: 1px solid color-mix(in srgb, var(--spw-variant-accent) 18%, transparent);
   border-radius: var(--component-radius-pill, 999px);
@@ -829,7 +844,7 @@
 
 :where(.spw-route-bridge header) {
   display: grid;
-  gap: 0.22rem;
+  gap: var(--space-3xs, 0.125rem);
   min-width: 0;
 }
 
@@ -1049,7 +1064,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   display: grid;
   gap: 0.8rem;
   margin-block: var(--component-gap) var(--component-gap-loose);
-  padding: clamp(0.85rem, 2vw, 1.05rem);
+  padding: var(--spw-component-pad-tight, 0.65rem);
   border: 1px solid color-mix(in srgb, var(--spw-cuisine-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
   border-radius: var(--component-radius-loose);
   background:
@@ -1081,7 +1096,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 :where(.spw-cuisine-taxonomy dl) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-  gap: 0.55rem;
+  gap: var(--space-xs, 0.5rem);
   margin: 0;
 }
 

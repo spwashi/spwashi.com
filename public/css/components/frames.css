@@ -138,13 +138,13 @@
 }
 
 :where(.site-frame > :is(h1, h2, h3, .site-lede, .page-lede) + p) {
-  margin-block-start: -0.15rem;
+  margin-block-start: calc(-1 * var(--space-3xs, 0.125rem));
 }
 
 :where(.frame-actions:has(> .spw-delimiter:only-child)) {
   gap: 0;
   margin-top: 0;
-  padding-top: 0.35rem;
+  padding-top: var(--space-xs, 0.5rem);
   border-top: 0;
   min-block-size: 0;
 }
@@ -317,7 +317,7 @@
 
 :where(.site-hero--split-figure) > [data-spw-slot="body"] {
   display: grid;
-  gap: clamp(0.85rem, 1.8vw, 1.15rem);
+  gap: var(--spw-surface-gap, var(--space-md, 1rem));
   align-content: start;
 }
 
@@ -328,7 +328,7 @@
 @container (min-width: 70rem) {
   :where(.site-hero--split-figure) {
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(0.85rem, 1.8vw, 1.2rem) clamp(0.95rem, 2vw, 1.35rem);
+    gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));
   }
 
   :where(.site-hero--split-figure) > canvas {

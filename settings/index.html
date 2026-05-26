@@ -262,6 +262,111 @@
                     </div>
                 </article>
 
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card" id="runtime-load-timing">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Runtime load</p>
+                        <h3 class="vibe-widget-title">Control when and how modules discover and activate</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        The runtime already exposes rich timing policy (normal / eager / defer / quiet / manual) plus per-module overrides.
+                        Use these to change targeting and discovery feel. The new <code>discoverRuntimeLoad()</code> surface makes the current decision inspectable.
+                    </p>
+                    <div aria-label="Load timing postures" class="vibe-widget-actions" role="group">
+                        <a class="operator-chip" href="?runtime-timing=normal">Normal load</a>
+                        <a class="operator-chip" href="?runtime-timing=eager&amp;module-visuals=on">Eager + visuals</a>
+                        <a class="operator-chip" href="?runtime-timing=quiet">Quiet / calm load</a>
+                        <a class="operator-chip" href="?runtime-timing=defer">Defer non-critical</a>
+                        <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on" data-site-settings-query-mode="inspect">Inspect current load</a>
+                    </div>
+                    <div class="vibe-widget-meta">
+                        <span class="spec-pill">Try <code>window.__SPW_SITE__.discoverRuntimeLoad()</code> in console</span>
+                    </div>
+                </article>
+
+                <!-- Live Tuning Playground: makes settings useful for interaction tuning + comparing variants + "digging for extras" while in context -->
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card" id="live-interaction-playground">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Live tuning</p>
+                        <h3 class="vibe-widget-title">Play with variants, currents, and nearby companions</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        Pinch over the examples below (or use the scale controls) to change type size. Tap the cards to cycle component variants. The "current" cluster (density + posture + wonder + load) can surface extra narrative handles — a small taste of runtime modification as storytelling.
+                    </p>
+
+                    <!-- Mini playground using real component patterns -->
+                    <div class="vibe-widget-actions" style="display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));" data-spw-feature="tuning-playground">
+                        <div class="frame-card" data-spw-component-variant="primary" data-spw-semantic-expression="tuning:primary" style="padding: 0.6rem;">
+                            <strong>Primary variant</strong>
+                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">Tap me to cycle variants. Long copy here demonstrates nearby play — swipe or tap edges for companion actions.</p>
+                            <div class="card-sub-links" style="margin-top: 0.4rem;">
+                                <a href="#" data-companion-action="cycle-variant">Cycle variant</a>
+                                <a href="#" data-companion-action="surface-current">Surface current</a>
+                            </div>
+                        </div>
+
+                        <div class="frame-card" data-spw-component-variant="reference" data-spw-semantic-expression="tuning:reference" style="padding: 0.6rem;">
+                            <strong>Reference variant</strong>
+                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">These companions are "fries at the bottom" — low-friction extras that appear or react based on your current semantic cluster.</p>
+                            <div class="card-sub-links" style="margin-top: 0.4rem;">
+                                <a href="#" data-companion-action="cycle-variant">Cycle variant</a>
+                                <a href="#" data-companion-action="surface-current">Surface current</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vibe-widget-meta">
+                        <span class="spec-pill">Current cluster responds to your tuners + gestures (pinch, tap, density, load posture)</span>
+                    </div>
+                </article>
+
+                <script type="module">
+                // Tiny progressive playground for the live tuning section.
+                // Demonstrates variant cycling, nearby companion actions, and a taste of "currents" as storytelling.
+                // Real implementation would live in a shared tuning or experiential module.
+                (function initTuningPlayground() {
+                    const playground = document.getElementById('live-interaction-playground');
+                    if (!playground) return;
+
+                    playground.addEventListener('click', (e) => {
+                        const card = e.target.closest('.frame-card');
+                        const action = e.target.closest('[data-companion-action]')?.dataset.companionAction;
+
+                        if (!card) return;
+
+                        if (action === 'cycle-variant') {
+                            const variants = ['primary', 'reference', 'prompt', 'ambient'];
+                            const current = card.dataset.spwComponentVariant || 'primary';
+                            const next = variants[(variants.indexOf(current) + 1) % variants.length];
+                            card.dataset.spwComponentVariant = next;
+                            card.dataset.spwSemanticExpression = `tuning:${next}`;
+                        }
+
+                        if (action === 'surface-current') {
+                            // Simulate runtime "current" response as lightweight storytelling mechanic.
+                            // In a fuller system this would come from a currents composer reacting to clusters.
+                            const currentNote = document.createElement('div');
+                            currentNote.className = 'spw-narrative-drawer';
+                            currentNote.style.cssText = 'margin-top:0.4rem; font-size:0.8em; opacity:0.85;';
+                            currentNote.textContent = `Current cluster: ${document.documentElement.dataset.spwSemanticDensity || 'balanced'} + ${document.documentElement.dataset.spwLoadPosture || 'normal'} + gesture`;
+                            card.appendChild(currentNote);
+                            setTimeout(() => currentNote.remove(), 2400);
+                        }
+                    });
+
+                    // Bonus: make the playground itself respond to global tuners (pinch, density, load posture)
+                    // by lightly modulating its own "presence" — a micro storytelling response.
+                    const observer = new MutationObserver(() => {
+                        const posture = document.documentElement.dataset.spwLoadPosture;
+                        if (posture === 'quiet') {
+                            playground.style.opacity = '0.85';
+                        } else {
+                            playground.style.opacity = '';
+                        }
+                    });
+                    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-spw-load-posture', 'data-spw-semantic-density'] });
+                })();
+                </script>
+
                 <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
                     <div class="vibe-widget-header">
                         <p class="vibe-widget-kicker">Common fixes</p>

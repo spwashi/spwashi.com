@@ -435,6 +435,20 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   outline: none;
 }
 
+/* Microinteraction refinement tied to runtime load posture/timing.
+   When the page was loaded in a "quiet" or "defer" posture (user or editor choice),
+   tone down the physical feedback (lift, shadow) for calmer feel.
+   This is rule refinement using the explicit load attrs we added for discovery/customization. */
+html[data-spw-load-posture="quiet"] .operator-chip:hover,
+html[data-spw-load-posture="quiet"] .operator-chip:focus-visible,
+html[data-spw-load-timing="quiet"] .operator-chip:hover,
+html[data-spw-load-timing="quiet"] .operator-chip:focus-visible,
+html[data-spw-load-timing="defer"] .operator-chip:hover,
+html[data-spw-load-timing="defer"] .operator-chip:focus-visible {
+  transform: none;
+  box-shadow: var(--operator-chip-hover-shadow, 0 1px 3px rgba(0,0,0,0.06));
+}
+
 /* Probe and pragma chips should not feel interchangeable.
    Probe stays open/reversible; pragma reads as a stronger local constraint. */
 .operator-chip[data-spw-operator="probe"],

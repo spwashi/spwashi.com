@@ -15,7 +15,9 @@ import {
 } from './kernel/dom-contracts.js';
 import {
   applySpwQueryDisposition,
+  createSpwLogger,
   installSpwCompositionConsole,
+  SPW_LOG_RELATIONSHIPS,
 } from './kernel/instrumentation.js';
 import { bus as sharedBus } from './kernel/bus.js';
 import {
@@ -114,6 +116,15 @@ import {
  * - Observable and serializable as "runtime spells" for prompts, notes, recordings, screenshots, and cross-page replay.
  * - Integrated with attentional models, transitions, behavior profiles, and the broader spell/force system.
  *
+ * Load instrumentation contract
+ * - Phases and per-module costs are recorded with performance.mark/measure using the 'spw:' prefix
+ *   (visible in DevTools Performance panel, getEntriesByType, and the timings() surfaces).
+ * - Key transitions and module events are also emitted via the 'spw-runtime' logger (LIFECYCLE relation)
+ *   so they respect ?log=spw-runtime&log-level=debug and the shared instrumentation controls.
+ * - Existing internal timings (loadMs, durationMs, registry records, moduleAudit, data-spw-runtime-* attrs)
+ *   and bus events remain the primary machine-readable model; the Performance + logger surfaces
+ *   are the external observability layer.
+ *
  * Notes
  * - This file intentionally avoids importing heavier modules at top-level.
  * - Region enhancement is lightweight by default and mostly writes state.
@@ -154,6 +165,31 @@ const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
 let SITE_SURFACE = BODY?.dataset?.spwSurface || 'default';
+
+// Runtime load instrumentation (Performance API + structured lifecycle logging)
+// These are additive and zero-cost for normal visitors; they power DevTools timelines,
+// ?log=spw-runtime diagnostics, and the exposed timings() surfaces.
+performance.mark('spw:runtime-eval-start');
+const runtimeLogger = createSpwLogger('spw-runtime', {
+  role: 'lifecycle',
+  metaphor: 'boot-sequence',
+});
+
+function getSpwPerformanceTimings() {
+  const filter = (entry) => entry && typeof entry.name === 'string' && entry.name.startsWith('spw:');
+  try {
+    return {
+      marks: performance.getEntriesByType('mark')
+        .filter(filter)
+        .map((m) => ({ name: m.name, startTime: Math.round(m.startTime) })),
+      measures: performance.getEntriesByType('measure')
+        .filter(filter)
+        .map((m) => ({ name: m.name, duration: Math.round(m.duration), startTime: Math.round(m.startTime) })),
+    };
+  } catch {
+    return { marks: [], measures: [] };
+  }
+}
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
 annotateFloatingChrome(document);
@@ -703,6 +739,13 @@ function createRuntimeContext() {
   if (ctx.runtimePolicy.delay) {
     writeDatasetValue(HTML, 'spwModuleDelay', String(ctx.runtimePolicy.delay));
   }
+
+  // Explicit load posture for CSS targeting and editor discovery (helps avoid
+  // over-broad :where() selectors on many component types by giving a single
+  // hook for "how the runtime decided to load this page").
+  const loadPosture = inferRuntimePosture(ctx.runtimePolicy);
+  writeDatasetValue(HTML, 'spwLoadPosture', loadPosture);
+  writeDatasetValue(HTML, 'spwLoadTiming', ctx.runtimePolicy.timing);
 
   ctx.addCleanup = (fn) => {
     if (!isFn(fn)) return () => {};
@@ -2108,6 +2151,15 @@ function updateRuntimeStateTokens(ctx) {
     HTML.style.setProperty('--spw-runtime-avg-module-ms', String(avgModuleTime));
   }
 
+  // Site rhythm tokens for the visual ornament (derived from the same load + layer data).
+  // Tempo is livelier when recent module work is fast / frequent; density tracks active surface complexity.
+  const rhythmBase = avgModuleTime > 0 ? avgModuleTime : 180;
+  const rhythmTempo = Math.max(0.35, Math.min(3.2, 1400 / rhythmBase));
+  const rhythmDensity = Math.max(0.25, Math.min(1.6, 0.28 + layerCount * 0.19));
+  HTML.style.setProperty('--spw-site-rhythm-tempo', rhythmTempo.toFixed(2));
+  HTML.style.setProperty('--spw-site-rhythm-density', rhythmDensity.toFixed(2));
+  writeDatasetValue(HTML, 'spwSiteRhythm', activeLayers.size > 0 ? 'active' : 'quiet');
+
   ctx.bus.emit('spw:runtime-tokens-updated', {
     activeLayers: layersValue,
     enhancementIntensity,
@@ -2236,6 +2288,22 @@ function normalizeWhitespace(value = '') {
   return String(value).replace(/\s+/g, ' ').trim();
 }
 
+/**
+ * Shared snapshot builder for load discovery (used by both the compose API
+ * and the global __SPW_SITE__ surface). Keeps the "what is the runtime doing
+ * right now and how can I change its timing/targeting" story in one place.
+ */
+function buildLoadDiscoverySnapshot(ctx) {
+  if (!ctx) return null;
+  return {
+    policies: [...RUNTIME_TIMING_POLICIES],
+    current: ctx.runtimePolicy,
+    considered: listModuleDefinitions(ctx),
+    mounted: snapshotRuntimeModules(ctx),
+    skipped: [...(ctx.moduleSkipAuditKeys || [])],
+  };
+}
+
 async function mountDefinition(def, ctx, root = null, index = 0) {
   const recordId = makeRecordId(def, root, index);
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
@@ -2269,6 +2337,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     if (root instanceof HTMLElement) setRegionState(root, REGION_STATES.HYDRATING);
 
     const startedAt = performance.now();
+    performance.mark(`spw:module:${def.id}:start`);
     annotateModuleTarget(root, {
       id: recordId,
       baseId: def.id,
@@ -2290,11 +2359,30 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     });
 
     const loadStartedAt = performance.now();
+    performance.mark(`spw:module:${def.id}:load-start`);
     const mod = await def.load();
     const loadEndedAt = performance.now();
+    performance.mark(`spw:module:${def.id}:load-end`);
+    performance.measure(
+      `spw:module:${def.id}:load`,
+      `spw:module:${def.id}:load-start`,
+      `spw:module:${def.id}:load-end`,
+    );
+    runtimeLogger.debug(
+      `module load complete: ${def.id}`,
+      { ms: Math.round(loadEndedAt - loadStartedAt) },
+      SPW_LOG_RELATIONSHIPS.LIFECYCLE,
+    );
+
     const mountStartedAt = performance.now();
     const result = await def.mount(mod, ctx, root);
     const mountEndedAt = performance.now();
+    performance.mark(`spw:module:${def.id}:mount-end`);
+    performance.measure(
+      `spw:module:${def.id}:mount`,
+      `spw:module:${def.id}:load-end`,
+      `spw:module:${def.id}:mount-end`,
+    );
     const handle = normalizeMountHandle(result);
 
     const record = {
@@ -2322,6 +2410,23 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     annotateModuleTarget(root, record);
     syncRuntimeModuleSummary(ctx, record);
     syncActiveModuleLayers(ctx); // for CSS transitions and attentional timing keyed off active runtime layers
+
+    performance.mark(`spw:module:${def.id}:end`);
+    performance.measure(
+      `spw:module:${def.id}`,
+      `spw:module:${def.id}:start`,
+      `spw:module:${def.id}:end`,
+    );
+    runtimeLogger.info(
+      `module mounted: ${def.id}`,
+      {
+        loadMs: Math.round(record.loadMs),
+        mountMs: Math.round(record.mountMs),
+        durationMs: Math.round(record.durationMs),
+      },
+      SPW_LOG_RELATIONSHIPS.LIFECYCLE,
+    );
+
     recordModuleAudit(ctx, {
       id: recordId,
       baseId: def.id,
@@ -2365,6 +2470,11 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
 
     return record;
   } catch (error) {
+    runtimeLogger.error(
+      `module mount failed: ${def.id}`,
+      { message: error?.message || String(error) },
+      SPW_LOG_RELATIONSHIPS.LIFECYCLE,
+    );
     console.warn(`[site.js] module mount failed: ${def.id}`, error);
 
     const record = {
@@ -2620,10 +2730,13 @@ function destroyRuntime() {
 
 async function bootSite() {
   await whenDocumentReady();
+  performance.mark('spw:document-ready');
   const normalized = normalizeDocumentMetadata();
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
+  performance.mark('spw:boot-start');
+  runtimeLogger.info('runtime boot started', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
   const [
     { orchestrator: frameState, bindGlobalInteractions },
     pageHooks,
@@ -2678,6 +2791,12 @@ async function bootSite() {
         mount: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
+        timings: () => runtimeCtx ? { ...getSpwPerformanceTimings(), modules: snapshotRuntimeModules(runtimeCtx) } : null,
+        // Discovery + timing customization surface (makes "knowing about runtime load"
+        // and adjusting targeting feel first-class for editors and power users).
+        // Returns the canonical timing policies, current posture, and a lightweight
+        // view of what was considered vs actually mounted (aids targeting/debug).
+        discovery: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
       },
       composition: {
         annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
@@ -2735,6 +2854,9 @@ async function bootSite() {
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
   await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
+  performance.mark('spw:immediate-layer-complete');
+  performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
+  runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
   refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
 
   schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');
@@ -2746,19 +2868,29 @@ async function bootSite() {
   await mountInteractionFeatures(FEATURE_DEFS, runtimeCtx);
 
   setPageState(PAGE_STATES.HYDRATED);
+  performance.mark('spw:page-hydrated');
   runtimeCtx.bus.emit('spw:page-hydrated', { route: runtimeCtx.route });
 
   await mountRegionLayer(REGION_DEFS, runtimeCtx);
 
   setPageState(PAGE_STATES.REGION_ENHANCED);
+  performance.mark('spw:region-enhanced');
   runtimeCtx.bus.emit('spw:page-region-enhanced', { route: runtimeCtx.route });
 
   queueIdleEnhancements(ENHANCEMENT_DEFS, runtimeCtx);
 
   whenWindowLoaded().then(() => {
     if (!runtimeCtx) return;
+    performance.mark('spw:window-loaded');
+    performance.measure('spw:full-boot', 'spw:boot-start', 'spw:window-loaded');
+    runtimeLogger.info('site ready (window load)', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
     refreshRuntime(runtimeCtx);
   });
+
+  // Final site-ready mark for traces that end before full window load
+  performance.mark('spw:site-ready');
+  performance.measure('spw:boot-to-ready', 'spw:boot-start', 'spw:site-ready');
+  runtimeLogger.info('site ready (post region)', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
 
   return runtimeCtx;
 }
@@ -2774,6 +2906,9 @@ window.__SPW_SITE__ = {
   listModules: () => listModuleDefinitions(runtimeCtx),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
+  getLoadTimings: () => getSpwPerformanceTimings(),
+  // Same discovery surface as the compose API for direct console/global access.
+  discoverRuntimeLoad: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
   composition: {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
     inspect: (target, options = {}) => snapshotCompositionBox(target, options),

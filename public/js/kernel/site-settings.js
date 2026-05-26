@@ -1596,6 +1596,18 @@ class SiteSettingsManager {
       spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
     };
 
+    // Semantic currents (emergent clusters across Spw semantics + data attrs).
+    // This is the seed for runtime modification as a responsive storytelling mechanic.
+    // Pages (especially settings + design) can react to the current "signature"
+    // (density + wonder + posture + load + gesture + variant clusters) with
+    // narrative or extra affordance responses — the "currents" the surface feels.
+    const currentSignature = [
+      normalized.semanticDensity,
+      normalized.interactionTuner || 'balanced',
+      document.documentElement?.dataset?.spwLoadPosture || 'normal'
+    ].filter(Boolean).join('+');
+    datasetEntries.spwSemanticCurrent = currentSignature || null;
+
     setDatasetEntries(this.root, datasetEntries);
     if (this.body) setDatasetEntries(this.body, datasetEntries);
 

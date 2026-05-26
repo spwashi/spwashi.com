@@ -1041,3 +1041,100 @@
   --ornament-field-intensity: 0.22;
   transition-duration: 60ms;
 }
+
+/* ==========================================================================
+   Site rhythm ornament
+   --------------------------------------------------------------------------
+   Visual projection of runtime load + activity cadence.
+   Uses the existing rail / meter / node / sequence primitives so the
+   visual language stays consistent with the rest of the ornament system.
+
+   Driven by:
+   - --spw-site-rhythm-tempo (higher = livelier / faster pulse)
+   - --spw-site-rhythm-density (more nodes / stronger presence)
+   - data-spw-site-rhythm + the pre-existing runtime layer tokens
+
+   Placement: author-controlled. Can be a small persistent chrome element,
+   a floating minimal handle (mobile-friendly, following spw-section-handle
+   patterns), or inside any [data-spw-feature] region. Works on desktop
+   and narrow screens by default (small footprint, inherits shell tokens).
+
+   No new JS module required — the tokens are written by the central
+   runtime state sync that already powers the other visual intensities.
+   ========================================================================== */
+
+.spw-site-rhythm,
+[data-spw-ornament="site-rhythm"] {
+  --rhythm-tempo: var(--spw-site-rhythm-tempo, 1);
+  --rhythm-density: var(--spw-site-rhythm-density, 0.8);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ornament-gap-1);
+  padding: var(--ornament-pad-1) var(--ornament-pad-2);
+  font-family: var(--ornament-font);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--ornament-local-accent, var(--ornament-accent));
+  opacity: calc(0.35 + (var(--rhythm-density) * 0.35));
+  transition: opacity var(--ornament-duration-base) var(--ornament-ease);
+}
+
+/* The rhythm rail itself — a living meter whose "playhead" speed and
+   node activation reflect current site activity / recent load rhythm. */
+.spw-site-rhythm__rail {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 0.32rem;
+  min-width: 3.8rem;
+  padding-inline: 0.18rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 9%, transparent);
+  overflow: hidden;
+}
+
+/* Animated nodes inside the rail. Number and speed driven by the runtime tokens. */
+.spw-site-rhythm__node {
+  width: 0.18rem;
+  height: 0.18rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+  margin-inline: 0.08rem;
+  animation: spw-site-rhythm-pulse calc(820ms / var(--rhythm-tempo)) var(--ornament-settle-ease) infinite alternate;
+  animation-play-state: var(--spw-site-rhythm, running);
+}
+
+.spw-site-rhythm[data-spw-site-rhythm="quiet"] .spw-site-rhythm__node,
+[data-spw-ornament="site-rhythm"][data-spw-site-rhythm="quiet"] .spw-site-rhythm__node {
+  animation-duration: calc(1450ms / var(--rhythm-tempo));
+  opacity: 0.38;
+}
+
+.spw-site-rhythm__node:nth-child(2) { animation-delay: calc(-120ms / var(--rhythm-tempo)); }
+.spw-site-rhythm__node:nth-child(3) { animation-delay: calc(-260ms / var(--rhythm-tempo)); }
+
+@keyframes spw-site-rhythm-pulse {
+  from { opacity: 0.32; transform: scale(0.82); }
+  to   { opacity: 0.92; transform: scale(1.05); }
+}
+
+/* When the runtime reports high layer activity or recent enhancement work,
+   the whole rhythm ornament becomes more present (still subtle). */
+:root[data-spw-active-layers~="enhancement"] .spw-site-rhythm,
+[data-spw-ornament="site-rhythm"][data-spw-active-layers~="enhancement"] {
+  opacity: calc(0.48 + (var(--rhythm-density) * 0.38));
+}
+
+/* Compact form for tight chrome or mobile handles */
+.spw-site-rhythm[data-compact],
+[data-spw-ornament="site-rhythm"][data-compact] {
+  font-size: 0.5rem;
+  min-width: 2.6rem;
+}
+
+.spw-site-rhythm[data-compact] .spw-site-rhythm__rail {
+  min-width: 2.4rem;
+  height: 0.26rem;
+}

@@ -89,7 +89,9 @@ runtime_exposure_contract: .{
    `--delight-color`,
    `--spw-wonder-memory-color`,
    `--spw-wonder-memory-alt-color`,
-   `--spw-field-entropy`
+   `--spw-field-entropy`,
+   `--spw-site-rhythm-tempo`,
+   `--spw-site-rhythm-density`
   ][reg=set]
   data_attrs = #[
    `html[data-spw-wonder-memory-state='active|inactive']`,
@@ -175,6 +177,18 @@ ornament_vocabulary: .{
  stable_accent = `Persistent color change reserved for collected state.`
  fade_trail = `Gradually fading color reserved for wonder trail.`
  note = `An ornament that uses a visual form outside its reserved meaning creates visual noise.`
+}[reg=facet]
+
+site_rhythm_ornament: .{
+ definition = `A compact, living visual (rail, meter, or sequenced nodes) that projects the temporal cadence of the runtime: module load rhythm, active layer intensity, region tempo field, and overall site "pulse".`
+ state_source = .{
+  runtime = #[`--spw-runtime-layer-count`, `--spw-runtime-*-intensity`, `--spw-runtime-avg-module-ms`, `data-spw-active-layers`, `data-spw-page-state`][reg=set]
+  derived = #[`--spw-site-rhythm-tempo`, `--spw-site-rhythm-density`, `data-spw-site-rhythm`][reg=set]
+ }[reg=facet]
+ visual_range = `Subtle animated nodes or fill whose speed and density reflect current activity. Faster / denser when the runtime is "busy" (recent module mounts, high layer count). Calmer in quiet or core-only states. Re-uses the existing rail / meter / node / spirit-sequence primitives.`
+ placement = `Author-controlled small element. Can live in shell chrome, as a minimal floating handle (mobile-friendly via the same patterns as .spw-section-handle), or inside any inspect/debug region. Always respects reduced motion and shell spacing tokens.`
+ purpose = `Makes the load instrumentation and runtime activity state visually present and cross-device inspectable without requiring DevTools or console.`
+ css_contract = `Driven entirely by the two new rhythm custom properties + pre-existing runtime tokens. No new heavy JS.`
 }[reg=facet]
 
 open_questions: #[

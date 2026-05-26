@@ -618,6 +618,7 @@
   scrollbar-width: none;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
   border: 1.5px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
   border-radius: var(--shell-panel-radius-loose);
   background:
@@ -626,6 +627,50 @@
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
     var(--spw-depth-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+}
+
+/* Mobile responsiveness + ornament distribution for nav:
+   - Better horizontal rhythm on small screens via snap + slightly larger
+     comfortable targets.
+   - Nav surface can host .spw-site-rhythm for living momentum without
+     competing with link text. */
+@media (max-width: 720px) {
+  :where(.site-header nav, body > header nav) {
+    padding-inline: 0.35rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :where(.site-header nav a, body > header nav a) {
+    scroll-snap-align: center;
+    padding-inline: 0.35rem; /* slightly more comfortable touch targets */
+  }
+}
+
+/* Linking surface + ornament + momentum distribution on primary nav.
+   Nav links (the main linking surface in chrome) participate in site rhythm
+   and spell-grounded states for stronger visual momentum. Uses existing
+   operator and rhythm primitives so distribution feels native. */
+:where(.site-header nav a, body > header nav a) {
+  transition:
+    color var(--ornament-duration-fast) var(--ornament-ease),
+    opacity var(--ornament-duration-base) var(--ornament-ease),
+    transform var(--ornament-duration-fast) var(--ornament-settle-ease);
+}
+
+/* When a nav link is the current route or carries spell momentum (grounded),
+   it picks up a bit more of the living rhythm without overpowering text. */
+:where(.site-header nav a[data-spw-grounded="true"],
+       body > header nav a[data-spw-grounded="true"],
+       .site-header nav a[aria-current="page"],
+       body > header nav a[aria-current="page"]) {
+  opacity: 0.98;
+}
+
+:where(.site-header nav .spw-site-rhythm,
+       body > header nav .spw-site-rhythm) {
+  opacity: 0.5;
+  margin-inline-start: 0.2rem;
 }
 
 :where(.site-header[data-spw-menu-mode="inline"] nav, body > header[data-spw-menu-mode="inline"] nav) {
@@ -1728,6 +1773,22 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   align-items: start;
 }
 
+/* Mobile responsiveness: stack identity and architecture on narrow viewports
+   while preserving semantic structure and safe-area padding already present
+   on the parent .site-footer. Keeps touch targets comfortable and rhythm
+   intact. */
+@media (max-width: 520px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .site-footer__page-architecture {
+    margin-top: 0.35rem;
+    padding-top: 0.45rem;
+  }
+}
+
 .site-footer__identity {
   display: grid;
   gap: 0.22rem;
@@ -1745,6 +1806,20 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   letter-spacing: 0.06em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+/* Ornament distribution: the footer brand participates in site rhythm.
+   Uses the existing .spw-site-rhythm vocabulary (or data attr) so the
+   chrome footer feels connected to the runtime pulse without adding
+   new visual weight. Works on desktop and mobile. */
+.site-footer__brand .spw-site-rhythm,
+.site-footer__brand [data-spw-ornament="site-rhythm"] {
+  margin-left: 0.35rem;
+  opacity: 0.65;
+}
+
+.site-footer__brand .spw-site-rhythm__rail {
+  min-width: 2.1rem;
 }
 
 .site-footer__brand:is(:hover, :focus-visible) {
