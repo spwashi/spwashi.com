@@ -1,0 +1,49 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "knife-lattice"
+  description: "A wooden cutting board holding a precise geometric lattice of diced root vegetables, with a resting chef's knife. The arrangement suggests hidden order and rhythmic craft."
+  visual_qualities: "precise, repetitive, geometric, grounded, musical"
+}
+
+^"thematic_mapping"{
+  valence: "bone"
+  role: "repetition-as-grammar"
+  context: "mise-en-place as living geometry"
+  operator_leanings: ["ground", "integration", "commitment"]
+  phase: "initiation-through-resistance"
+  liminality: "settled"
+}
+
+^"usage"{
+  surface: "recipes"
+  sub_surface: "mise-en-place craft"
+  role: "figure"
+  primary_file: "knife-rhythm-lattice-no-hands.jpg"
+  dimensions: { width: 1408, height: 768 }
+  formats_available: ["png", "webp", "avif"]
+  optimization: {
+    date: "2026-05-25"
+    model: "xAI Imagine"
+    tiers: ["thumb", "display", "hero"]
+    qualities: { thumb: 40, display: 60, hero: 75 }
+    variants_generated: 9
+  }
+  alt_text: "Wooden cutting board with precisely diced vegetables arranged in a geometric lattice, a chef's knife resting beside the work. The pattern evokes rhythm and hidden structure."
+}
+
+^"caption"{
+  text: "The knife does not rush. It returns to the same motion until the vegetable yields its hidden order. What looks like tedious repetition is actually the body learning a ratio that the tongue will later recognize as right."
+}
+
+^"prompt_seed"{
+  base: "Wooden cutting board holding a perfect geometric lattice of precisely diced root vegetables, chef's knife resting at the edge, small herb sprigs with spiral growth, warm amber light, the cuts suggesting hidden order and rhythmic practice"
+}
+
+^"discovery"{
+  tags: ["knife", "mise-en-place", "repetition", "ratios", "craft", "geometry", "rpg-worldbuilding", "prompt-seed"]
+  part_of: "culinary-gardening-rhythms-2026-05-B"
+  related_assets: ["dough-tide-fold", "fermentation-bubble-choir"]
+  audiences: ["chefs", "parents", "rpg-players"]
+}

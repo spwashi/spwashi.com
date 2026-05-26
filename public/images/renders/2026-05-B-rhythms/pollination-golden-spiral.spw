@@ -1,0 +1,48 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "golden-flight"
+  description: "Sunflower at golden hour with pollinator paths visibly tracing Fibonacci spirals and the golden angle in glowing lines"
+  visual_qualities: "spiral, radiant, mathematical, botanical, wonder"
+}
+
+^"thematic_mapping"{
+  valence: "boon"
+  role: "visible-order"
+  context: "pollination as living mathematics"
+  operator_leanings: ["integration", "threading", "wonder"]
+  phase: "expression"
+  liminality: "projected"
+}
+
+^"usage"{
+  surface: "topics"
+  sub_surface: "math garden cross-link"
+  role: "hero or large figure"
+  dimensions: { width: 1296, height: 864 }
+  formats_available: ["png", "webp", "avif"]
+  optimization: {
+    date: "2026-05-25"
+    model: "xAI Imagine"
+    tiers: ["thumb", "display", "hero"]
+    qualities: { thumb: 40, display: 60, hero: 75 }
+    variants_generated: 9
+  }
+  alt_text: "Large sunflower head at sunset with bees and butterflies tracing glowing golden spirals that follow the real Fibonacci pattern of the flower."
+}
+
+^"caption"{
+  text: "The bees do not measure. They simply follow the oldest invitation in the garden: the same 137.5° turn that packs the sunflower’s seeds also guides their flight."
+}
+
+^"prompt_seed"{
+  base: "Large open sunflower at golden hour, pollinator flight paths traced as glowing golden spirals and Fibonacci curves in the air, floret packing visible, soft layered light, botanical precision with quiet enchantment"
+}
+
+^"discovery"{
+  tags: ["pollination", "fibonacci", "golden-angle", "garden", "mathematics", "visible-order", "rpg-worldbuilding", "prompt-seed"]
+  part_of: "culinary-gardening-rhythms-2026-05-B"
+  related_assets: ["brassica-twilight-transformation"]
+  audiences: ["gardeners", "parents", "rpg-players"]
+}

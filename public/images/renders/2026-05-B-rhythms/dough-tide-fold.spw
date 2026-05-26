@@ -1,0 +1,49 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "dough-tide"
+  description: "Folded dough on a wooden surface, its layers forming soft repeating wave patterns that suggest tidal movement and accumulated memory."
+  visual_qualities: "soft, layered, domestic, tidal, memory"
+}
+
+^"thematic_mapping"{
+  valence: "boon"
+  role: "lunar-memory"
+  context: "simple domestic craft carrying deep cycles"
+  operator_leanings: ["ground", "integration", "threading"]
+  phase: "return"
+  liminality: "nested"
+}
+
+^"usage"{
+  surface: "recipes"
+  sub_surface: "bread fermentation-adjacent"
+  role: "figure or hero"
+  primary_file: "dough-tide-fold-no-hands.jpg"
+  dimensions: { width: 1280, height: 896 }
+  formats_available: ["png", "webp", "avif"]
+  optimization: {
+    date: "2026-05-25"
+    model: "xAI Imagine"
+    tiers: ["thumb", "display", "hero"]
+    qualities: { thumb: 40, display: 60, hero: 75 }
+    variants_generated: 9
+  }
+  alt_text: "Folded dough on a floured wooden surface. The layers form soft, repeating wave patterns reminiscent of tides and accumulated rhythm."
+}
+
+^"caption"{
+  text: "The hands move the same way, over and over, and the dough begins to answer. Not with words, but with tension and give. Somewhere in the layers is the memory of every tide that ever pulled on every grain that ever grew."
+}
+
+^"prompt_seed"{
+  base: "Folded simple dough on floured wood, layers forming soft repeating wave patterns like slow tides, salt crystals catching light, domestic and ancient feeling, warm amber tones, the dough holding memory of cycles"
+}
+
+^"discovery"{
+  tags: ["bread", "dough", "cycles", "tides", "repetition", "parenting", "imagination", "rpg-worldbuilding", "prompt-seed"]
+  part_of: "culinary-gardening-rhythms-2026-05-B"
+  related_assets: ["fermentation-bubble-choir", "knife-rhythm-lattice"]
+  audiences: ["parents", "chefs", "rpg-players"]
+}

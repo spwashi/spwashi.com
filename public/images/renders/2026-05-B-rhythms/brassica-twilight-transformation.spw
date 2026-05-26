@@ -1,0 +1,48 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "brassica-veil"
+  description: "Brassica plant at twilight showing intricate veining that forms mathematical resistance patterns slowly turning into abundance"
+  visual_qualities: "veined, resistant, twilight, patient, depth"
+}
+
+^"thematic_mapping"{
+  valence: "bane-to-boon"
+  role: "hidden-work"
+  context: "difficult crops teaching long rhythms"
+  operator_leanings: ["ground", "wonder", "integration"]
+  phase: "resistance-to-transformation"
+  liminality: "deep"
+}
+
+^"usage"{
+  surface: "care"
+  sub_surface: "nutrition garden"
+  role: "figure"
+  dimensions: { width: 1280, height: 853 }
+  formats_available: ["png", "webp", "avif"]
+  optimization: {
+    date: "2026-05-25"
+    model: "xAI Imagine"
+    tiers: ["thumb", "display", "hero"]
+    qualities: { thumb: 40, display: 60, hero: 75 }
+    variants_generated: 9
+  }
+  alt_text: "Close view of a brassica plant at twilight, its leaves holding subtle mathematical veining and the quiet promise of transformation through time and care."
+}
+
+^"caption"{
+  text: "Some plants do not want to be easy. They make you earn the sweetness. The veins hold the memory of every cool night and every long day. If you stay with them long enough, the bitterness turns into something the tongue recognizes as depth."
+}
+
+^"prompt_seed"{
+  base: "Brassica plant at twilight, leaves showing intricate veining that forms subtle resistance patterns and slow spirals, dew catching light like small lenses, patient depth and quiet transformation in the garden"
+}
+
+^"discovery"{
+  tags: ["brassica", "resistance", "patience", "garden", "transformation", "difficult-crops", "rpg-worldbuilding", "prompt-seed"]
+  part_of: "culinary-gardening-rhythms-2026-05-B"
+  related_assets: ["pollination-golden-spiral", "fermentation-bubble-choir"]
+  audiences: ["gardeners", "chefs", "rpg-players"]
+}
