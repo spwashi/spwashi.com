@@ -284,6 +284,7 @@
   charge_sources: ["focus dwell", "held inspection", "explicit binding", "operator sequence", "recent projection"]
   projection_bias: "Charge may prefer a lens, surface, or pivot when the user asks for depth, but it must not hide other available interactions."
   decay_rule: "Charge should either decay, transfer through registers, or be discharged by an explicit action; it should not become permanent hidden state."
+  collection_bridge: "A charged/committed brace with a semantic expression now surfaces its local value as a primed cauldron ingredient (via spell:capture with primedBy). This turns transient containment priming into stable, gardenable collection without mutating the charge model."
   counterexample: "A frame remembers a hidden mode forever after a hover and later sends the user into a surprising projection with no inspectable cause."
 }
 
@@ -405,6 +406,12 @@ frame #feature-clusters
   surface copy/runtime
   concept feature_clusters component_clusters inspectable_surface
   note "Use data-spw-feature for the outermost named cluster that should stay legible across copy, composition, debug labels, console audit, and route inspection. Feature clusters should remain readable even when enhancement is off, but they may also become a first-class target for region-menu inspection and runtime summaries."
+
+frame #mode-spell-projections
+  role convention
+  surface copy/runtime/interaction
+  concept mode_switches spells inspection copy_projection
+  note "A mode switch should visibly change something in the same viewport when possible. Spw syntax on the control is fine when the consequence is locally apparent. If the full panel lives elsewhere, pair the control with a local preview or inspection summary. Authored controls may expose data-spw-spell and data-spw-semantic-expression so a mode change reads as a small reversible spell rather than a decorative tab."
 
 frame #semantic-emphasis
   role convention

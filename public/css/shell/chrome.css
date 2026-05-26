@@ -2493,6 +2493,15 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
 }
 
+.site-footer__cauldron-status {
+  margin: 0.18rem 0 0;
+  max-inline-size: 58ch;
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 86%, var(--component-accent, var(--active-op-color, var(--teal))) 14%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.35;
+}
+
 /* Cauldron ingredients — styled as inspectable semantic chips using shared tokens */
 .cauldron-ingredient {
   --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--component-accent, var(--active-op-color, var(--teal))) 6%);
@@ -2569,6 +2578,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 
 .cauldron-ingredient-meta-group {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.2rem;
   opacity: 0.7;
   font-size: 0.72em;
@@ -2586,6 +2596,13 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 .cauldron-origin {
   font-style: italic;
   opacity: 0.65;
+}
+
+.cauldron-primed {
+  border: 1px dashed color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 32%, transparent);
+  background: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 10%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--component-accent, var(--active-op-color, var(--teal))) 22%);
+  font-weight: 700;
 }
 
 .cauldron-ingredient-remove {

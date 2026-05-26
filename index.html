@@ -149,20 +149,50 @@
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="address">#&gt;home_frame</a>
-            <div class="mode-switch" role="group" aria-label="Home lens">
+            <div class="mode-switch" role="group" aria-label="Choose what the homepage foregrounds">
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="surface"
-                        aria-pressed="true" data-spw-operator="select" data-spw-operator-reversibility="reversible">.surface
+                        aria-pressed="true" data-spw-operator="select" data-spw-operator-reversibility="reversible"
+                        data-spw-spell="home.prose" data-spw-semantic-expression="home[prose]{read.first}">.surface
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="syntax"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">^syntax
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
+                        data-spw-spell="home.grammar" data-spw-semantic-expression="home[grammar]{inspect.structure}">^syntax
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="artifacts"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">*artifacts
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
+                        data-spw-spell="home.outputs" data-spw-semantic-expression="home[outputs]{show.work}">*artifacts
                 </button>
                 <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="website"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible">@website
+                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
+                        data-spw-spell="home.system" data-spw-semantic-expression="home[system]{explain.runtime}">@website
                 </button>
             </div>
+            <div class="home-lens-preview" aria-live="polite" data-spw-feature="home-mode-preview">
+                <p data-mode-group="home-lens" data-mode-panel="surface" data-spw-semantic-expression="home[prose]{read.first}">
+                    Prose keeps the first screen oriented around identity, useful routes, and plain-language reasons to keep reading.
+                </p>
+                <p data-mode-group="home-lens" data-mode-panel="syntax" data-spw-semantic-expression="home[grammar]{inspect.structure}" hidden>
+                    Grammar exposes the same homepage as operators, braces, and structure so the page can be inspected instead of only read.
+                </p>
+                <p data-mode-group="home-lens" data-mode-panel="artifacts" data-spw-semantic-expression="home[outputs]{show.work}" hidden>
+                    Outputs foregrounds public work and reusable artifacts, turning the page from introduction into proof surface.
+                </p>
+                <p data-mode-group="home-lens" data-mode-panel="website" data-spw-semantic-expression="home[system]{explain.runtime}" hidden>
+                    System explains the site itself: settings, runtime, routes, and semantic handles as part of the authored medium.
+                </p>
+            </div>
+            <details class="home-copy-inspector" data-spw-form="brace" data-spw-feature="home-copy-inspector"
+                     data-spw-semantic-expression="home[copy.inspection]{why.reader.takeaway}">
+                <summary>
+                    <span class="home-copy-inspector__sigil" aria-hidden="true">{}</span>
+                    <span>inspect the copy promise</span>
+                </summary>
+                <div class="home-copy-inspector__body">
+                    <a href="#home-reason-why" data-spw-operator="probe">why this page exists</a>
+                    <a href="#home-reason-readers" data-spw-operator="probe">who it is for</a>
+                    <a href="#home-reason-takeaway" data-spw-operator="probe">what you can leave with</a>
+                </div>
+            </details>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="kernel" data-spw-stance="entry">kernel_entry</span>
             </div>
@@ -209,15 +239,15 @@
                 </ul>
 
                 <div class="spw-reason-strip" aria-label="Home surface reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
-                    <div>
+                    <div id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{centralize.practice}">
                         <strong>Why home exists</strong>
                         <p>To keep engineering, art direction, and story seeds in one durable frame instead of scattering them across drafts and apps.</p>
                     </div>
-                    <div>
+                    <div id="home-reason-readers" data-spw-form="brace" data-spw-semantic-expression="home[reader]{orient.first.route}">
                         <strong>Primary readers</strong>
                         <p>Developers, artists, returning students, and working adults who need one practical route into a larger field.</p>
                     </div>
-                    <div>
+                    <div id="home-reason-takeaway" data-spw-form="brace" data-spw-semantic-expression="home[takeaway]{carry.reuse}">
                         <strong>Concrete things you can leave with</strong>
                         <p>Route maps, proof cards, session seeds, screenshot-ready references, and reusable components that can travel into another project.</p>
                     </div>
@@ -1367,7 +1397,7 @@
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#reading-layers" data-spw-operator="integrate">^"reading_layers"{</a>
-            <h2 id="reading-layers-title">Read the site through multiple lenses</h2>
+            <h2 id="reading-layers-title">Read the site as prose, grammar, outputs, or system</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="reference" data-spw-stance="entry">layers</span>
             </div>
@@ -1377,8 +1407,9 @@
             <div class="mode-panels" data-spw-feature="home-lens-panels">
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block"
                          data-spw-liminality="projected" aria-labelledby="home-surface-title" data-spw-kind="lens">
-                    <h3 id="home-surface-title" class="sr-only">Surface view</h3>
+                    <h3 id="home-surface-title" class="sr-only">Prose mode</h3>
                     <p>
+                        Prose mode keeps the surface anchored in readable public language before asking you to inspect the machinery.
                         Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle"
                                               data-spw-form="angle" data-spw-operator="concept">&lt;</a><a href="/topics/software/spw/" data-spw-operator="concept">Spw</a><span
                         class="spw-delimiter spw-delimiter--angle" data-spw-form="angle" data-spw-operator="concept">&gt;</span>
@@ -1404,10 +1435,11 @@
 
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden
                          aria-labelledby="home-syntax-title" data-spw-kind="lens">
-                    <h3 id="home-syntax-title" class="sr-only">Syntax view</h3>
+                    <h3 id="home-syntax-title" class="sr-only">Grammar mode</h3>
                     <p class="frame-note" data-spw-copy-depth="normal">
-                        Each line is a gesture in a grammar that stays readable as plain text. Operators are vocabulary.
-                        Braces are containment.
+                        Grammar mode turns the same homepage into an inspectable structure. Operators are vocabulary,
+                        braces mark containment by attaching local value and behavioral intent to a stable root,
+                        and the lines below show how the copy can become a reusable spell.
                     </p>
                     <pre><code>#>home_frame &lt; orients this unit of meaning
 #:layer pragmatics &lt; qualifies interpretive layer
@@ -1427,7 +1459,7 @@
 
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden
                          data-spw-form="square" data-spw-liminality="deep" aria-labelledby="home-artifacts-title" data-spw-kind="lens">
-                    <h3 id="home-artifacts-title" class="sr-only">Artifact view</h3>
+                    <h3 id="home-artifacts-title" class="sr-only">Outputs mode</h3>
                     <div class="frame-grid" role="list">
                         <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-workbench"
                                  data-spw-category-family="workshop" data-spw-kind="card" data-spw-role="reference">
@@ -1458,12 +1490,11 @@
 
                 <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="website" hidden
                          aria-labelledby="home-website-title" data-spw-kind="lens">
-                    <h3 id="home-website-title" class="sr-only">Website view</h3>
+                    <h3 id="home-website-title" class="sr-only">System mode</h3>
                     <p>
-                        The website itself is part of the practice. It is a field guide, a publishing surface, an
-                        observatory for settings and states,
-                        and a test for whether a site can stay readable while becoming more semantic, promptable, and
-                        cross-referenceable.
+                        System mode explains the website itself as part of the practice: a field guide, a publishing surface,
+                        an observatory for settings and states, and a test for whether a site can stay readable while becoming
+                        more semantic, promptable, and cross-referenceable.
                     </p>
                     <p class="frame-note" data-spw-copy-depth="normal" data-spw-semantic-expression="website[practice]{semantic}">
                         The practical thesis: readable syntax can give people and tools the same map. A typographic layer

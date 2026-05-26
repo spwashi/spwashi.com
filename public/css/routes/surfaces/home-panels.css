@@ -247,6 +247,47 @@
   box-shadow: var(--home-shadow);
 }
 
+:where(body[data-spw-surface="home"] .site-frame > .frame-actions:has(> .spw-delimiter:only-child)) {
+  align-self: end;
+  inline-size: auto;
+  margin-block-start: calc(-1 * var(--home-gap-xs));
+  padding-block-start: 0;
+}
+
+:where(body[data-spw-surface="home"] .site-frame > .frame-actions:has(> .spw-delimiter:only-child) > .spw-delimiter) {
+  min-inline-size: 1.05rem;
+  min-block-size: 1.25rem;
+  border-color: color-mix(in srgb, var(--home-accent-primary) 20%, transparent);
+  background: transparent;
+  opacity: 0.64;
+}
+
+:where(body[data-spw-surface="home"] #returner-drift .returner-grid) {
+  gap: clamp(0.78rem, 1.4vw, 1rem);
+}
+
+:where(body[data-spw-surface="home"] #returner-drift .returner-card, body[data-spw-surface="home"] #returner-drift .returner-ledger) {
+  border-radius: var(--home-radius-sm);
+}
+
+:where(body[data-spw-surface="home"] #returner-drift .returner-card--warm) {
+  border-inline-start: 0.22rem solid color-mix(in srgb, var(--home-accent-ember) 46%, transparent);
+}
+
+:where(body[data-spw-surface="home"] #town-library-gateway) {
+  --brace-corner-offset: 0.42rem;
+  --brace-corner-width: 1.65rem;
+  --brace-corner-height: 1.15rem;
+}
+
+:where(body[data-spw-surface="home"] #town-library-gateway .frame-body) {
+  gap: var(--home-gap-md);
+}
+
+:where(body[data-spw-surface="home"] #town-library-gateway .frame-grid--dense) {
+  margin-block-start: 0.15rem;
+}
+
 /* ==========================================================================
   10. Reading layers / mode panels
   ========================================================================== */
@@ -374,6 +415,8 @@
   :where(#operator-field),
   :where(#climate-tuning),
   :where(#entry-loops),
+  :where(#returner-drift),
+  :where(#town-library-gateway),
   :where(#reading-layers) {
     padding: 0.9rem;
     border-radius: var(--home-radius-sm);
@@ -409,6 +452,14 @@
 
   :where(body[data-spw-surface="home"] .mode-switch) {
     width: 100%;
+  }
+
+  :where(body[data-spw-surface="home"] #returner-drift .returner-card, body[data-spw-surface="home"] #returner-drift .returner-ledger) {
+    padding: 0.86rem;
+  }
+
+  :where(body[data-spw-surface="home"] #town-library-gateway .frame-heading) {
+    gap: 0.55rem;
   }
 }
 

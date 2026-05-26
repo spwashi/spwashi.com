@@ -1497,6 +1497,13 @@
   border-radius: 999px;
 }
 
+:where(.frame-topline > .spw-component-meta > .spw-component-tag,
+       .frame-heading > .spw-component-meta > .spw-component-tag) {
+  min-inline-size: 10.5ch;
+  max-inline-size: min(100%, 34ch);
+  padding-inline: 0.7rem;
+}
+
 :where([data-spw-form="brace"] > .spw-component-tag::before) {
   content: "{";
   margin-right: 0.25em;

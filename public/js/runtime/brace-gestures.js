@@ -658,6 +658,25 @@ function emitBraceEvents(names, detail, el) {
   });
 }
 
+function capturePrimedContainment(meta, chargeContext = 'committed') {
+  if (!meta?.semantic?.expression) return false;
+
+  bus.emit('spell:capture', {
+    expression: meta.semantic.expression,
+    label: meta.semantic.rootLabel || meta.semantic.expression,
+    origin: 'brace-primed-containment',
+    originLabel: 'charged brace',
+    wonder: meta.wonder || 'containment',
+    operator: meta.operator,
+    context: meta.context,
+    primedBy: 'brace-containment-charge',
+    chargeContext,
+    semantic: meta.semantic,
+  });
+
+  return true;
+}
+
 /* ==========================================================================
    Pointer lifecycle
    ========================================================================== */
@@ -895,6 +914,9 @@ function commitArmedInteraction(target, state) {
       }),
       target
     );
+
+    // Emission is additive; cauldron owns dedupe, refresh, and display policy.
+    capturePrimedContainment(meta, 'committed');
   }
 }
 
@@ -928,6 +950,7 @@ function isSemanticTapTarget(target) {
 
 function onKeyDown(event) {
   if (event.key !== 'Enter' && event.key !== ' ') return;
+  if (event.repeat) return;
 
   const target = braceTarget(event.target);
   if (!target) return;
@@ -968,6 +991,10 @@ function onKeyDown(event) {
       }),
       target
     );
+  }
+
+  if (meta.semantic?.family && !event.shiftKey && !event.altKey && !event.metaKey && !event.ctrlKey) {
+    capturePrimedContainment(meta, 'keyboard-commit');
   }
 }
 

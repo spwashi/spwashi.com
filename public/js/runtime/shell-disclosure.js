@@ -111,12 +111,12 @@ const UTILITY_LABELS = Object.freeze({
     settings: 'Style',
   }),
   regular: Object.freeze({
-    'color-light': 'L',
-    'color-dark': 'D',
-    'font-down': 'A-',
-    'path-toggle': 'PATH',
-    'font-up': 'A+',
-    settings: 'Aa',
+    'color-light': 'Light mode',
+    'color-dark': 'Dark mode',
+    'font-down': 'Smaller text',
+    'path-toggle': 'Reading path',
+    'font-up': 'Larger text',
+    settings: 'Appearance',
   }),
 });
 const FOCUSABLE_SELECTOR = [
@@ -512,7 +512,7 @@ function syncUtilityRow(row) {
     button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
     button.title = currentColorMode === 'light'
       ? 'Light mode active'
-      : compact ? 'Use light mode' : 'Use light mode';
+      : compact ? 'Switch to light mode' : 'Switch to light mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
@@ -520,21 +520,21 @@ function syncUtilityRow(row) {
     button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
     button.title = currentColorMode === 'dark'
       ? 'Dark mode active'
-      : compact ? 'Use dark mode' : 'Use dark mode';
+      : compact ? 'Switch to dark mode' : 'Switch to dark mode';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
     button.textContent = labels['font-down'];
     button.toggleAttribute('disabled', current === min);
     button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
-    button.title = current === min ? 'Already at the smallest readable size' : 'Decrease font size';
+    button.title = current === min ? 'Already at the smallest readable size' : 'Make text smaller';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
     button.textContent = labels['font-up'];
     button.toggleAttribute('disabled', current === max);
     button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
-    button.title = current === max ? 'Already at the largest readable size' : 'Increase font size';
+    button.title = current === max ? 'Already at the largest readable size' : 'Make text larger';
   });
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
@@ -542,14 +542,14 @@ function syncUtilityRow(row) {
     button.toggleAttribute('disabled', false);
     button.setAttribute('aria-disabled', 'false');
     button.title = pathToggle
-      ? 'Toggle the cognitive path'
-      : 'Open the cognitive path when the header trace finishes mounting';
+      ? 'Toggle the reading path'
+      : 'Open the reading path when the header trace finishes mounting';
   });
 
   row.querySelectorAll('[data-spw-shell-action="settings"]').forEach((button) => {
     button.textContent = labels.settings;
     button.title = compact
-      ? 'Open appearance and typography settings'
+      ? 'Open appearance settings'
       : 'Open appearance and typography settings';
   });
 }

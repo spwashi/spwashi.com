@@ -323,6 +323,16 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   opacity: 0.92;
 }
 
+/* Rich route choices carry operator metadata, but their contents are card
+   anatomy rather than inline handles. Preserve the component grid contract. */
+:where(.spw-route-bridge__links a[data-spw-operator]) {
+  display: grid;
+  align-items: start;
+  justify-content: stretch;
+  text-align: start;
+  white-space: normal;
+}
+
 /* ==========================================================================
    4. Frame sigils
    --------------------------------------------------------------------------
@@ -538,7 +548,6 @@ html[data-spw-color-mode="dark"] .operator-chip {
 }
 
 :where(
-  a.operator-chip,
   a.spec-pill,
   a.badge,
   a.tag,
@@ -551,6 +560,12 @@ html[data-spw-color-mode="dark"] .operator-chip {
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
   background: var(--handle-bg);
   border-color: var(--handle-line-soft);
+}
+
+a.operator-chip:visited {
+  color: var(--operator-chip-ink);
+  background: var(--operator-chip-bg);
+  border-color: var(--operator-chip-border);
 }
 
 :where(
@@ -573,6 +588,52 @@ html[data-spw-color-mode="dark"] .operator-chip {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.24),
     0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+)[data-spw-grounded="true"]:not([aria-current="page"]) {
+  color: var(--operator-chip-ink, color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 68%),
+    var(--operator-chip-bg, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 86%, var(--active-op-color, var(--teal, #008080)) 14%));
+  border-color: var(--operator-chip-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 0 0 1px rgba(0,0,0,0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(
+    .operator-chip,
+    .spec-pill,
+    .badge,
+    .tag,
+    .pill,
+    .frame-sigil,
+    .frame-card-sigil,
+    .spw-component-tag,
+    .spw-guide-chip,
+    .header-annotation
+  )[data-spw-grounded="true"]:not([aria-current="page"]) {
+    color: var(--operator-chip-ink, color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%));
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), transparent 68%),
+      var(--operator-chip-bg, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 86%, var(--active-op-color, var(--teal, #008080)) 14%));
+    border-color: var(--operator-chip-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 1px rgba(0,0,0,0.12);
+  }
 }
 
 :where(
@@ -1145,6 +1206,10 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   transform: translateY(var(--mode-switch-active-lift));
 }
 
+body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
+  animation: none;
+}
+
 .mode-switch .frame-sigil[aria-pressed="true"]::after {
   opacity: 0.72;
   transform: scale(1);
@@ -1230,6 +1295,24 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 :where([data-spw-gesture="projecting"][data-spw-form="block"]) {
   transform: translate(calc(var(--drag-dx, 0px) * 0.02), calc(var(--drag-dy, 0px) * 0.02));
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* Primed containment → cauldron tether (additive, inside gesture block).
+   A charged/armed brace signals local value ready for gathering; the cauldron
+   host and any primed ingredients receive a soft visual echo without new tokens. */
+body:has([data-spw-gesture="armed"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="charging"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="armed"][data-spw-form="brace"]) [data-spw-cauldron-mirror],
+body:has([data-spw-gesture="charging"][data-spw-form="brace"]) [data-spw-cauldron-mirror],
+body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldron-mirror] {
+  --cauldron-tether: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  box-shadow: 0 0 0 1px var(--cauldron-tether);
+}
+
+.cauldron-ingredient[data-spw-ingredient-primed] {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--cauldron-chip-border));
 }
 
 /* ==========================================================================
@@ -2174,8 +2257,8 @@ html[data-spw-cognitive-handles="off"] :where(
   .spw-component-tag,
   .spw-guide-chip {
     max-inline-size: 100%;
-    padding: 0.14rem 0.34rem;
-    font-size: calc(var(--semantic-metadata-font-size, 0.58rem) - 0.02rem);
+    padding: 0.17rem 0.42rem;
+    font-size: calc(var(--semantic-metadata-font-size, 0.58rem) + 0.01rem);
     letter-spacing: calc(var(--semantic-metadata-tracking, 0.04em) * 0.88);
   }
 }

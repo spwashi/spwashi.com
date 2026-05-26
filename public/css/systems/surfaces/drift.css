@@ -9,12 +9,11 @@
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) minmax(0, 1fr);
   gap: var(--spw-shell-panel-gap);
-  align-items: stretch;
+  align-items: start;
 }
 
 :where(.returner-card, .returner-ledger) {
   min-width: 0;
-  min-height: 100%;
   padding: var(--spw-shell-panel-pad);
   border: 1px solid color-mix(in srgb, var(--spw-shell-line-strong) 42%, var(--spw-shell-line));
   border-radius: var(--shape-floating, 14px);
@@ -28,6 +27,10 @@
   display: grid;
   gap: 0.72rem;
   align-content: start;
+}
+
+:where(.returner-card > :last-child, .returner-ledger > :last-child) {
+  margin-block-end: 0;
 }
 
 :where(.returner-card--warm) {

@@ -898,6 +898,8 @@
 
 :where(.spw-route-bridge__links a) {
   display: grid;
+  grid-template-columns: minmax(7.5rem, max-content) minmax(0, 1fr);
+  align-items: start;
   gap: 0.2rem;
   box-sizing: border-box;
   min-width: 0;
@@ -943,6 +945,30 @@
   line-height: 1.35;
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  :where(.spw-route-bridge) {
+    gap: 0.68rem;
+    margin-block: var(--component-gap-tight, 0.5rem) var(--component-gap, 0.75rem);
+    padding: 0.78rem;
+  }
+
+  :where(.spw-route-bridge__links) {
+    gap: 0.48rem;
+  }
+
+  :where(.spw-route-bridge__links a) {
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+    padding: 0.68rem;
+  }
+
+  :where(.spw-route-bridge__links strong) {
+    max-inline-size: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
 }
 
 :where(.spw-wisdom-deck) {

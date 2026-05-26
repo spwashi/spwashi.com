@@ -64,7 +64,7 @@ surfaces: .{
 
 frame_patterns: #[
  `Every section is a .site-frame with a sigil (#>name) and metadata.`,
- `Mode switching via data-mode-group — .source / ^syntax / >surface / @obsidian.`,
+ `Mode switching via data-mode-group — Spw-flavored control labels are acceptable when the same viewport shows the consequence of the mode change; controls may carry data-spw-spell / data-spw-semantic-expression for inspectable mode changes.`,
  `Operator color tokens (--op-*-color) drive semantic visual hierarchy.`,
  `Operator pages expose interaction, metaphysics, brace physics, and prefix/postfix symmetry before runtime behavior.`,
  `The g key toggles the surface map; [ ] traverses frames.`,

@@ -175,7 +175,9 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas:
       "brace identity meta"
-      "modes modes modes";
+      "modes modes modes"
+      "preview preview preview"
+      "inspect inspect inspect";
   align-items: center;
   gap: 0.46rem 0.5rem;
   min-width: 0;
@@ -196,7 +198,14 @@
 :where(#home-frame .frame-topline > .mode-switch) {
   grid-area: modes;
   justify-self: stretch;
-  justify-content: flex-end;
+}
+
+:where(#home-frame .frame-topline > .home-lens-preview) {
+  grid-area: preview;
+}
+
+:where(#home-frame .frame-topline > .home-copy-inspector) {
+  grid-area: inspect;
 }
 
 :where(#home-frame .frame-topline > .spw-component-meta) {
@@ -454,20 +463,20 @@
 :where(#home-frame .mode-switch) {
   width: 100%;
   max-inline-size: none;
-  padding: 0.34rem;
+  padding: 0.26rem;
   border: 1px solid color-mix(in oklab, var(--home-accent-primary) 18%, transparent);
-  border-radius: calc(var(--home-radius-pill) / 2);
+  border-radius: var(--home-radius-sm);
   background:
       linear-gradient(
           90deg,
-          color-mix(in oklab, var(--home-accent-primary) 10%, transparent),
-          color-mix(in oklab, var(--home-surface-bg-strong) 72%, transparent)
+          color-mix(in oklab, var(--home-accent-primary) 7%, transparent),
+          color-mix(in oklab, var(--home-surface-bg-strong) 84%, transparent)
   );
   box-shadow: inset 0 1px 0 color-mix(in oklab, white 10%, transparent);
 }
 
 :where(#home-frame .mode-switch)::before {
-  content: "lens";
+  content: "view";
   margin-inline-end: auto;
   padding-inline: 0.18rem 0.5rem;
   color: color-mix(in oklab, var(--ink-soft, currentColor) 78%, var(--home-accent-primary) 22%);
@@ -476,6 +485,77 @@
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+:where(#home-frame .home-lens-preview) {
+  min-width: 0;
+  padding: 0.44rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
+  border-radius: var(--home-radius-sm);
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 84%, transparent);
+}
+
+:where(#home-frame .home-lens-preview p) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 88%, var(--home-accent-primary) 12%);
+  font-size: 0.82rem;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+
+:where(#home-frame .home-copy-inspector) {
+  --brace-corner-offset: 0.3rem;
+  --brace-corner-width: 1.1rem;
+  --brace-corner-height: 0.82rem;
+  position: relative;
+  min-width: 0;
+  padding: 0.34rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
+  border-radius: var(--home-radius-sm);
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 78%, transparent);
+}
+
+:where(#home-frame .home-copy-inspector > summary) {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: color-mix(in srgb, var(--ink, #1b1f23) 82%, var(--home-accent-primary) 18%);
+  cursor: pointer;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+  list-style: none;
+}
+
+#home-frame .home-copy-inspector > summary::-webkit-details-marker {
+  display: none;
+}
+
+:where(#home-frame .home-copy-inspector__sigil) {
+  color: var(--home-accent-primary);
+}
+
+:where(#home-frame .home-copy-inspector__body) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  padding-block-start: 0.5rem;
+}
+
+:where(#home-frame .home-copy-inspector__body a) {
+  display: inline-flex;
+  min-height: 1.8rem;
+  align-items: center;
+  padding: 0.14rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 18%, transparent);
+  border-radius: var(--home-radius-sm);
+  background: color-mix(in srgb, var(--home-accent-primary) 5%, var(--home-surface-bg-strong));
+  color: color-mix(in srgb, var(--home-accent-primary) 72%, var(--ink, #1b1f23) 28%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 720;
+  text-decoration: none;
 }
 
 :where(#home-frame .spw-component-meta) {
@@ -491,6 +571,19 @@
   background: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));
   color: var(--home-accent-primary);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 12%, transparent);
+}
+
+:where(#home-frame .spw-reason-strip > [data-spw-form="brace"]) {
+  --brace-corner-offset: 0.26rem;
+  --brace-corner-width: 1.05rem;
+  --brace-corner-height: 0.78rem;
+  position: relative;
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+}
+
+:where(#home-frame .spw-reason-strip > [data-spw-form="brace"]:is(:target, :focus-within, :hover)) {
+  outline: 1px solid color-mix(in srgb, var(--home-accent-primary) 28%, transparent);
+  outline-offset: 3px;
 }
 
 

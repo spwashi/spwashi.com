@@ -1,0 +1,38 @@
+# brace-cauldron-primed-collection alignment note
+#
+# Captures the semantic bridge introduced in this patch so the concept
+# remains legible to future agents/editors beyond the implementation surface.
+
+#>primed_containment_collection
+#:semantics #!runtime #!interaction
+#:layer #!pragmatics
+
+^"thesis"{
+  "A charged brace (containment form carrying semantic expression) is now a live priming vessel. Its gesture lifecycle (charging → armed → committed) surfaces the local value it holds as a gatherable cauldron ingredient, carrying primedBy + origin context."
+  "This makes the cauldron's collection semantics discoverable through the same containment interactions used for inspection, pinning, and semantic expansion."
+  "Copy updated to name the root/local-value relationship rather than restating the form attribute."
+}
+
+^"runtime_contract"{
+  emission: "brace-gestures emits spell:capture { primedBy: 'brace-containment-charge', chargeContext, semantic.expression, origin } on committed pointer and keyboard gestures"
+  ingestion: "composition onCapture normalizes into ingredient { origin, data-spw-ingredient-primed='brace', ingredientPhase contribution }; duplicate expressions refresh metadata and capturedAt instead of disappearing silently"
+  state: "additive only — existing cauldron phases, gardening, dedupe, and bus events unchanged"
+  inspect: "primed ingredients visible in cauldron chips, footer status, mirrors, console, and design catalog via existing semantic-expression + origin paths"
+}
+
+^"metaphysics_alignment"{
+  ~#from: ["semantic-braces.spw gesture_charge_and_interaction_reflection", "site-semantics.spw brace_charge_and_bias + component-lifecycle-tropes"]
+  charge: "transient stored tendency / priming bias in the brace container (already written as data-spw-charge + --charge + field hormones)"
+  collection: "stable, gardenable capture of the local value (cauldron ingredient with origin + primed metadata)"
+  relationship: "primed containment → gathering is the explicit behavioral link; both remain reversible and inspectable"
+  falsify: "If removing the primedBy emission and metadata leaves the rest of brace gestures + cauldron gathering behavior identical, the alignment is decorative and should be removed."
+}
+
+^"learnability"{
+  for_readers: "Hold or commit on a brace frame; notice the cauldron count or mirror update and the ingredient carrying the exact expression + 'primed from charged containment' context. This is the same rhythm as other semantic captures, just surfaced from the containment boundary itself."
+  for_editors: "The bridge is additive and documented here + in the two convention .spw files. No new top-level data attr families were minted in this patch."
+}
+
+@semantic_braces: ~"../../conventions/semantic-braces.spw"
+@site_semantics: ~"../../conventions/site-semantics.spw"
+@spell_cauldron_lifecycle: ~"../spell-cauldron-lifecycle-memory-gardening/PLAN.md"

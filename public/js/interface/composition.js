@@ -152,6 +152,13 @@ function handleIngredientInspect(e) {
   }
 }
 
+function announceCauldronStatus(message) {
+  if (!message) return;
+  document.querySelectorAll('[data-cauldron-status]').forEach((node) => {
+    node.textContent = message;
+  });
+}
+
 /* ==========================================================================
    Output Display
    ========================================================================== */
@@ -291,6 +298,13 @@ function syncCauldronState() {
   const clearBtn = document.querySelector('[data-spw-cauldron-action="clear"]');
   if (mixBtn) mixBtn.disabled = count < 2;
   if (clearBtn) clearBtn.disabled = count === 0;
+  document.querySelectorAll('[data-cauldron-count]').forEach((node) => {
+    node.textContent = String(count);
+  });
+  document.querySelectorAll('[data-spw-cauldron-operators]').forEach((node) => {
+    const operators = root.dataset.spwCauldronOperators;
+    node.textContent = operators ? `· forces: ${operators}` : '';
+  });
   document.querySelectorAll('[data-spw-cauldron-action="prune"], [data-spw-cauldron-action="nourish"], [data-spw-cauldron-action="plant"]')
     .forEach((button) => { button.disabled = count === 0; });
 
@@ -355,6 +369,13 @@ function renderIngredientsList(ingredients) {
       const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
       meta += `<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`;
     }
+    // Primed containment bridge (additive, inspectable): surfaced only when the
+    // ingredient arrived via charged brace gesture. Gives immediate learning signal
+    // that the cauldron gathered local value from a primed containment form.
+    if (ing.primedBy) {
+      const primedLabel = ing.primedBy === 'brace-containment-charge' ? 'primed' : escapeHtml(ing.primedBy);
+      meta += `<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`;
+    }
 
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
 
@@ -364,6 +385,7 @@ function renderIngredientsList(ingredients) {
             data-spw-semantic-expression="${escapeHtml(ing.expression)}"
             data-spw-ingredient-phase="${phase}"
             ${ing.origin ? `data-spw-origin="${escapeHtml(ing.origin)}"` : ''}
+            ${ing.primedBy ? `data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}"` : ''}
             tabindex="0"
             role="group"
             aria-label="Ingredient: ${escapeHtml(ing.expression)}"
@@ -393,9 +415,6 @@ function onCapture(event) {
 
   const ingredients = getCauldron();
 
-  // Dedupe by expression
-  if (ingredients.some(item => item.expression === expression)) return;
-
   // Improve origin context for learning value (where this semantic came from)
   const origin = detail.origin
     || detail.context
@@ -411,10 +430,40 @@ function onCapture(event) {
     origin: origin,                    // explicit origin for inspectability
     originLabel: detail.originLabel || detail.contextLabel || origin,
     capturedAt: Date.now(),
+    // Primed containment alignment (additive): carries the brace charge context
+    // so the cauldron can surface "local value gathered from a charged containment".
+    primedBy: detail.primedBy || null,
+    chargeContext: detail.chargeContext || null,
   };
+
+  const existingIndex = ingredients.findIndex(item => item.expression === expression);
+  if (existingIndex >= 0) {
+    ingredients[existingIndex] = {
+      ...ingredients[existingIndex],
+      ...Object.fromEntries(
+        Object.entries(ingredient).filter(([, value]) => value !== '' && value != null)
+      ),
+      capturedAt: Date.now(),
+    };
+    saveCauldron(ingredients);
+    const message = ingredient.primedBy
+      ? `Refreshed primed ingredient from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
+      : `Refreshed ingredient: ${ingredient.label}.`;
+    announceCauldronStatus(message);
+    bus.emit('cauldron:ingredient-refreshed', {
+      expression,
+      item: ingredients[existingIndex],
+      index: existingIndex,
+    });
+    return;
+  }
 
   ingredients.push(ingredient);
   saveCauldron(ingredients);
+  const message = ingredient.primedBy
+    ? `Primed ingredient gathered from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
+    : `Ingredient gathered: ${ingredient.label}.`;
+  announceCauldronStatus(message);
 }
 
 export function addIngredient(ingredient) {
