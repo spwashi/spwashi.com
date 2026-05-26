@@ -578,6 +578,25 @@
   --layer-docked: 900;
   --layer-header: 1000;
   --layer-priority: 2000;
+  --layer-popover: calc(var(--layer-priority) + 8);
+  --layer-toast: calc(var(--layer-priority) + 18);
+  --layer-drawer: calc(var(--layer-priority) + 20);
+  --layer-modal: calc(var(--layer-priority) + 30);
+
+  /* Canonical z-index aliases for runtime-created chrome. */
+  --z-ground: var(--layer-ground);
+  --z-substrate: var(--layer-substrate);
+  --z-content: var(--layer-content);
+  --z-overlay: var(--layer-overlay);
+  --z-surface: var(--layer-surface);
+  --z-floating: var(--layer-floating);
+  --z-docked: var(--layer-docked);
+  --z-header: var(--layer-header);
+  --z-priority: var(--layer-priority);
+  --z-popover: var(--layer-popover);
+  --z-toast: var(--layer-toast);
+  --z-drawer: var(--layer-drawer);
+  --z-modal: var(--layer-modal);
 
   /* Local surface stack aliases */
   --spw-local-layer-substrate: var(--layer-substrate);

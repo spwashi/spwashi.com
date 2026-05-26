@@ -1883,13 +1883,16 @@
 window.__SPW_SITE__.gestures.list()
 window.__SPW_SITE__.gestures.inspect('.frame-sigil')
 window.spwRuntimeAudit.gestures()
+window.__SPW_SITE__.discoverDeepLinks()
+window.__SPW_SITE__.snapshotModules()
 spwCompose.controls.pageState.snapshot()
 spwCompose.controls.pageState.scheduleArrival(spwCompose.controls.pageState.arrival.RETURNING)
 spwCompose.controls.pageHooks.list()
 spwCompose.controls.pageHooks.focus('runtime-diagnostics')
 spwCompose.controls.pageHooks.pulse('query-recipes')
 spwCompose.controls.composition.inspect('#runtime-map')
-spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
+spwCompose.controls.composition.snapshot().map(box => box.story)
+// Use the state satchel in the lower corner for temporary debug, mount, tag, and learning-toast state.</code></pre>
                     </article>
                 </details>
 

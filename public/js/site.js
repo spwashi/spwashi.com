@@ -1747,6 +1747,21 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'state-inspector',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    rootMode: 'single',
+    describes: 'state[satchel]{inspect.modify.serialize.feedback}',
+    updates: ['data-spw-state-inspector', 'data-spw-state-serialization-dimensions', 'data-spw-debug-mode', 'data-spw-module-visuals', 'data-spw-show-semantic-metadata', 'data-spw-feature-learning'],
+    evaluates: 'state accessibility layering interaction learnability',
+    load: () => import('./interface/state-inspector.js'),
+    mount: (mod) => {
+      const fn = mod?.initStateInspector;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'image-discovery-rewards',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -2209,6 +2224,7 @@ function annotateModuleTarget(target, record) {
   writeDatasetValue(target, 'spwModuleStatus', record.status);
   writeDatasetValue(target, 'spwModuleReason', record.reason);
   writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
+  writeDatasetValue(target, 'spwModuleTriggerStatus', record.status);
 
   // New semantically meaningful fields for clarity, inspectability, and serialization as "module spells"
   if (record.describes) {
@@ -2222,6 +2238,53 @@ function annotateModuleTarget(target, record) {
   if (Number.isFinite(record.durationMs)) {
     writeDatasetValue(target, 'spwModuleDurationMs', String(Math.round(record.durationMs)));
   }
+}
+
+function annotateModuleTrigger(target, def, ctx, effectiveWhen, status = 'queued') {
+  if (!(target instanceof HTMLElement)) return;
+  const reason = describeMountReason(def, ctx, target, effectiveWhen);
+  writeDatasetValue(target, 'spwModuleTrigger', def.id);
+  writeDatasetValue(target, 'spwModuleTriggerLayer', def.layer);
+  writeDatasetValue(target, 'spwModuleTriggerWhen', effectiveWhen);
+  writeDatasetValue(target, 'spwModuleTriggerStatus', status);
+  writeDatasetValue(target, 'spwModuleTriggerReason', reason);
+  writeDatasetValue(target, 'spwFeatureMountTrigger', `${def.id}:${effectiveWhen}`);
+  if (def.selector) writeDatasetValue(target, 'spwModuleTriggerSelector', def.selector);
+}
+
+function annotateDeepLinkTargets(root = document) {
+  const targets = safeQueryAll('main :is(section, article, aside, div)[id], main :is(h1, h2, h3, h4)[id], [data-spw-feature][id]', root)
+    .filter((el) => el instanceof HTMLElement && el.id && !el.closest('[hidden], template'));
+
+  targets.forEach((el) => {
+    const label = normalizeWhitespace(
+      el.getAttribute('aria-label')
+      || el.querySelector?.('h1, h2, h3, h4, .frame-sigil, .page-kicker')?.textContent
+      || el.textContent
+      || el.id
+    ).slice(0, 80);
+    writeDatasetValue(el, 'spwDeepLink', `#${el.id}`);
+    writeDatasetValue(el, 'spwDeepLinkLabel', label || el.id);
+
+    const sigil = el.querySelector?.(':scope > .frame-topline .frame-sigil[href^="#"], :scope > .frame-heading .frame-sigil[href^="#"]');
+    if (sigil instanceof HTMLAnchorElement && !sigil.title) {
+      sigil.title = `Deep link: #${el.id}`;
+    }
+  });
+
+  writeDatasetValue(HTML, 'spwDeepLinkCount', String(targets.length));
+  return targets;
+}
+
+function snapshotDeepLinks(root = document) {
+  return annotateDeepLinkTargets(root).map((el) => ({
+    id: el.id,
+    href: `#${el.id}`,
+    label: el.dataset.spwDeepLinkLabel || el.id,
+    feature: el.dataset.spwFeature || null,
+    kind: el.dataset.spwKind || null,
+    role: el.dataset.spwRole || null,
+  }));
 }
 
 /**
@@ -2798,6 +2861,7 @@ async function mountVisibleFeatures(defs, ctx) {
 
         for (const def of visibleDefs) {
           if (!el.matches(def.selector)) continue;
+          annotateModuleTrigger(el, def, ctx, MOUNT_WHEN.VISIBLE, 'triggered');
 
           if (def.rootMode === 'single') {
             void mountDefinition(def, ctx, null, 0);
@@ -2823,6 +2887,7 @@ async function mountVisibleFeatures(defs, ctx) {
     roots.forEach((el) => {
       if (el instanceof HTMLElement) {
         setRegionState(el, REGION_STATES.QUEUED);
+        annotateModuleTrigger(el, def, ctx, MOUNT_WHEN.VISIBLE, 'queued');
       }
       observer.observe(el);
     });
@@ -2841,6 +2906,7 @@ async function mountInteractionFeatures(defs, ctx) {
         continue;
       }
       for (const [index, root] of roots.entries()) {
+        annotateModuleTrigger(root, def, ctx, MOUNT_WHEN.INTERACTION, 'triggered');
         await mountDefinition(def, ctx, root, index);
       }
     }
@@ -2858,6 +2924,9 @@ async function mountInteractionFeatures(defs, ctx) {
   };
 
   const options = { once: true, passive: true };
+  for (const def of interactionDefs) {
+    getRoots(def).forEach((root) => annotateModuleTrigger(root, def, ctx, MOUNT_WHEN.INTERACTION, 'waiting'));
+  }
   window.addEventListener('pointerdown', handler, options);
   window.addEventListener('keydown', handler, options);
   window.addEventListener('touchstart', handler, options);
@@ -2919,6 +2988,7 @@ function queueIdleEnhancements(defs, ctx) {
       }
 
       for (const [index, root] of roots.entries()) {
+        annotateModuleTrigger(root, def, ctx, MOUNT_WHEN.IDLE, 'triggered');
         await mountDefinition(def, ctx, root, index);
       }
     }
@@ -2926,6 +2996,10 @@ function queueIdleEnhancements(defs, ctx) {
     setPageState(PAGE_STATES.ENHANCED);
     ctx.bus.emit('spw:page-enhanced', { route: ctx.route });
   });
+
+  for (const def of idleDefs) {
+    getRoots(def).forEach((root) => annotateModuleTrigger(root, def, ctx, MOUNT_WHEN.IDLE, 'queued'));
+  }
 
   ctx.addTimer(handle);
 }
@@ -3044,6 +3118,10 @@ async function bootSite() {
         // view of what was considered vs actually mounted (aids targeting/debug).
         discovery: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
       },
+      deepLinks: {
+        annotate: (root = document) => annotateDeepLinkTargets(root),
+        list: (root = document) => snapshotDeepLinks(root),
+      },
       composition: {
         annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
         inspect: (target, options = {}) => snapshotCompositionBox(target, options),
@@ -3095,6 +3173,7 @@ async function bootSite() {
 
   // Initialize relational state and global interactions
   bindGlobalInteractions();
+  annotateDeepLinkTargets(document);
 
   primeRegions(runtimeCtx);
 
@@ -3159,6 +3238,7 @@ window.__SPW_SITE__ = {
   // Same discovery surface as the compose API for direct console/global access.
   discoverRuntimeLoad: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
   discoverRuntimeResources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
+  discoverDeepLinks: (root = document) => snapshotDeepLinks(root),
   composition: {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
     inspect: (target, options = {}) => snapshotCompositionBox(target, options),

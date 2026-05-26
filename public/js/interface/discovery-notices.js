@@ -17,6 +17,8 @@ const NOTICE_HIDE_DELAY_MS = 180;
 const DISMISSALS_CHANGED_EVENT = 'spw:discovery-dismissals-changed';
 const DISCOVERY_REWARD_EVENT = 'spw:discovery-reward';
 const PRESENTATIONS = new Set(['toast', 'popup', 'modal']);
+const FEATURE_LEARNING_STORAGE_KEY = 'spw-feature-learning-toasts';
+const FEATURE_LEARNING_LIMIT = 3;
 
 const loadFeed = createJsonFeedLoader(FEED_URL, null);
 let removeEscapeListener = () => {};
@@ -526,15 +528,88 @@ function handleDiscoveryReward(event) {
   });
 }
 
+function readFeatureLearningState() {
+  try {
+    return safeParse(sessionStorage.getItem(FEATURE_LEARNING_STORAGE_KEY), { shown: [], count: 0 });
+  } catch {
+    return { shown: [], count: 0 };
+  }
+}
+
+function writeFeatureLearningState(next) {
+  try {
+    sessionStorage.setItem(FEATURE_LEARNING_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    // Learning toasts are optional.
+  }
+}
+
+function buildFeatureLearningHref(detail = {}) {
+  const root = detail.root instanceof HTMLElement ? detail.root : null;
+  if (root?.id) return `#${root.id}`;
+  const target = root?.closest?.('[id]') || document.querySelector('main [id]');
+  return target?.id ? `#${target.id}` : window.location.pathname || '/';
+}
+
+function handleFeatureLearningToast(event) {
+  const detail = event.detail || {};
+  const id = cleanText(detail.baseId || detail.id || '');
+  if (!id || id === 'discovery-notices') return;
+  if (document.documentElement.dataset.spwFeatureLearning === 'off') return;
+  if (document.body?.dataset?.spwDiscoveryNotices === 'off') return;
+
+  const state = readFeatureLearningState();
+  const shown = Array.isArray(state.shown) ? state.shown : [];
+  if (shown.includes(id) || Number(state.count || 0) >= FEATURE_LEARNING_LIMIT) return;
+
+  const layer = cleanText(detail.layer || 'feature');
+  const when = cleanText(detail.effectiveWhen || detail.requestedWhen || 'runtime');
+  const evaluates = cleanText(detail.evaluates || 'semantics');
+  const root = detail.root instanceof HTMLElement ? detail.root : null;
+  const title = `${id.replace(/-/g, ' ')} mounted`;
+  const summary = `This ${layer} feature mounted because the page matched its ${when} trigger. It evaluates ${evaluates}.`;
+
+  showSpwDiscoveryNotice({
+    label: 'Feature learned',
+    title,
+    summary,
+    href: buildFeatureLearningHref(detail),
+    cta: root?.id ? 'Jump to feature' : 'Inspect route',
+    why: cleanText(detail.reason || 'Feature triggers are now visible in markup and console discovery.'),
+    presentation: 'toast',
+    source: 'feature-learning',
+    promotion: {
+      kind: 'learning',
+      theme: 'signal',
+      handles: [layer, when, 'mount-trigger'].filter(Boolean),
+      rewardKind: 'runtime-literacy',
+      productionSeed: id,
+    },
+  }, {
+    cadence: 'learning',
+    scheduleKey: `feature-${id}`,
+  });
+
+  writeFeatureLearningState({
+    shown: [...shown, id].slice(-12),
+    count: Number(state.count || 0) + 1,
+  });
+}
+
 export async function initSpwDiscoveryNotices(ctx = {}) {
   if (document.body?.dataset?.spwDiscoveryNotices === 'off') return () => {};
   document.addEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
+  document.addEventListener('spw:module-mounted', handleFeatureLearningToast);
 
   const cleanupEventApi = () => {
     document.removeEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
+    document.removeEventListener('spw:module-mounted', handleFeatureLearningToast);
   };
 
-  if (document.querySelector('[data-promo-wonder-cycle]')) return () => {};
+  if (document.querySelector('[data-promo-wonder-cycle]')) {
+    ctx.addCleanup?.(cleanupEventApi);
+    return cleanupEventApi;
+  }
 
   const feed = await loadFeed();
   const { dismissals, visible } = buildVisibleNotices(feed);

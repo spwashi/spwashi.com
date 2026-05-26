@@ -120,6 +120,7 @@
 ^"floating_chrome_contract"{
   definition: "Floating chrome is a non-content affordance that pins to the viewport or shell edge and remains available across nearby regions without becoming part of a card's reading order."
   html_contract: "Use annotateFloatingChromeElement(...) for runtime-created skip links, section handles, toast stacks, popovers, non-modal notices, and similar dismissable shells; use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored equivalents."
+  z_index_contract: "Use --z-* aliases and data-spw-chrome-tier instead of local hard-coded z-index values for runtime-created chrome."
   anatomy_rule: "Floating chrome may borrow card material, slot labels, or action chips, but it is not itself card anatomy."
   modal_relation: "Modal dialogs temporarily own focus and reading order. Floating chrome stays ambient or dismissable without becoming the whole page context."
   toast_relation: "A toast is one presentation of floating chrome: brief, edge-pinned, and non-blocking. A persistent notice or locomotion handle can share the same ownership contract while differing in copy and lifecycle."
@@ -186,6 +187,17 @@
   offline_rule: "Offline and constrained connections should calm rendering through document-level tokens instead of pretending the same theme intensity fits every context."
   html_tokens: #[`data-spw-connection-posture`, `data-spw-prefetch-mode`, `data-spw-prefetch-count`, `data-spw-cached-module-count`, `data-spw-service-worker-prefetch`, `data-spw-service-worker-cache-state`, `data-spw-service-worker-cache-entries`][reg=set]
   inspection_rule: "Expose resource readiness beside module definitions so editors can see considered modules, mounted modules, cached modules, and skipped prefetch work in one place."
+}
+
+^"deep_link_feature_discovery_contract"{
+  definition: "Deep links, feature mount triggers, and learning notices are one discoverability system: a visitor should know where they are, what mounted, and how to return."
+  deep_link_rule: "Elements with stable ids in main content should expose `data-spw-deep-link` and readable labels so routes are addressable beyond the visible frame sigil."
+  trigger_rule: "Selector-gated modules should stamp pending or triggered roots before mount, then mounted modules should preserve the reason, timing, layer, and evaluated dimensions."
+  learning_toast_rule: "Learning toasts are bounded explanations of newly discovered runtime features; they reuse the discovery notice API and should not create a parallel toast/modal system."
+  state_inspector_rule: "Temporary state modification belongs in an accessible floating inspector that announces feedback, serializes dimensions, and avoids persistent settings writes unless explicitly routed through site-settings."
+  serialization_dimensions: #[`route`, `hash`, `accessibility`, `layering`, `runtime`, `dataset-state`][reg=set]
+  html_tokens: #[`data-spw-deep-link`, `data-spw-deep-link-label`, `data-spw-module-trigger`, `data-spw-module-trigger-status`, `data-spw-feature-mount-trigger`, `data-spw-feature-learning`, `data-spw-state-inspector`, `data-spw-state-serialization-dimensions`][reg=set]
+  design_rule: "Component tags and mode switches should remain readable metadata controls under narrow/debug layouts; if a control cannot explain consequence, replace it with a stronger sitewide affordance."
 }
 
 ^"promo_presentation_contract"{

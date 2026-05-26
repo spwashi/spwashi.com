@@ -122,6 +122,7 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
     'discovery-modal',
     'surface-map',
     'surface-map-panel',
+    'state-inspector',
     'pwa-status',
     'persona-tooltip',
     'persona-burst',
