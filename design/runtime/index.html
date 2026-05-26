@@ -137,6 +137,61 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             <p><a class="operator-chip" href="/design/composition/">see composition + cauldron docs</a></p>
         </section>
 
+        <section
+            class="frame-panel spw-interaction-contract"
+            id="brace-interaction-contract"
+            aria-labelledby="brace-interaction-contract-title"
+            data-spw-kind="panel"
+            data-spw-role="interaction-contract"
+            data-spw-feature="brace-interaction-contract"
+            data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit"
+            data-spw-interaction-tap="inspect semantic family and matching local instances"
+            data-spw-interaction-hold="arm the brace and prime its local value into the cauldron on release"
+            data-spw-interaction-drag="project charge for spatial feedback without capture"
+            data-spw-interaction-double-click="inspect and prime immediately"
+            data-spw-interaction-keyboard="Enter or Space mirrors the committed brace path">
+            <h2 id="brace-interaction-contract-title">Brace interaction contract</h2>
+            <p>Brace targets need visible consequences in the viewport. The contract is simple: tap inspects, hold primes, drag projects, double-click inspects and primes, and keyboard commit follows the same collection path.</p>
+
+            <div class="spw-interaction-contract__grid" aria-label="Brace gesture outcomes">
+                <article class="spw-interaction-contract__step">
+                    <strong>Tap</strong>
+                    <span>Inspect matching semantic family. No ingredient is stored.</span>
+                </article>
+                <article class="spw-interaction-contract__step">
+                    <strong>Hold</strong>
+                    <span>Arm the brace, then release to prime local value into the cauldron.</span>
+                </article>
+                <article class="spw-interaction-contract__step">
+                    <strong>Drag / swipe</strong>
+                    <span>Project charge and motion. Treat it as preview, not collection.</span>
+                </article>
+                <article class="spw-interaction-contract__step">
+                    <strong>Double-click</strong>
+                    <span>Inspect and prime immediately for deliberate desktop use.</span>
+                </article>
+                <article class="spw-interaction-contract__step">
+                    <strong>Enter / Space</strong>
+                    <span>Keyboard parity for committed brace priming.</span>
+                </article>
+            </div>
+
+            <div
+                class="spw-interaction-demo"
+                role="button"
+                tabindex="0"
+                aria-label="Brace interaction demo: tap to inspect, hold or double-click to prime cauldron"
+                data-spw-form="brace"
+                data-spw-brace="objective"
+                data-spw-semantic-expression="interaction[brace]{prime.local_value}"
+                data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
+                <span class="spw-delimiter" aria-hidden="true">{</span>
+                <span class="spw-interaction-demo__copy">interaction[brace]{prime.local_value}</span>
+                <span class="spw-interaction-demo__hint">tap inspect · hold prime · drag project · double-click fast prime</span>
+                <span class="spw-delimiter" aria-hidden="true">}</span>
+            </div>
+        </section>
+
         <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
             <h2 id="console-contract-title">Console contract</h2>
             <p>The portable bundle exposes a deliberate console API. Install it when a lab page needs inspection without mounting the whole site runtime.</p>

@@ -288,6 +288,27 @@
   counterexample: "A frame remembers a hidden mode forever after a hover and later sends the user into a surprising projection with no inspectable cause."
 }
 
+^"interaction_contract_attributes"{
+  rule: "When a surface depends on gesture meaning, the HTML should document the consequence through data-spw-interaction-contract plus specific gesture notes before JavaScript adds live state."
+  attributes: [
+    "data-spw-interaction-contract",
+    "data-spw-interaction-tap",
+    "data-spw-interaction-hold",
+    "data-spw-interaction-drag",
+    "data-spw-interaction-double-click",
+    "data-spw-interaction-keyboard"
+  ]
+  gesture_contract: {
+    tap: "inspect local semantic relation without storing it"
+    hold: "arm the brace and prime local value into the cauldron on release"
+    drag: "project charge or spatial preview without capture"
+    double_click: "inspect and prime immediately for deliberate desktop use"
+    keyboard: "Enter or Space follows the committed brace path"
+  }
+  boundary: "These attributes are authoring/documentation contracts, not storage. Runtime state still belongs to data-spw-gesture, data-spw-charge, cauldron phase/count attrs, and bus events."
+  counterexample: "A component requires long-press or double-click but only reveals that behavior after the user accidentally discovers it."
+}
+
 ^"brace_charge_interaction_semantics"{
   rule: "Passive reading may become light interaction when a word, phrase, badge, or sigil carries an explicit charge key."
   html_contract: "Use data-spw-charge-key for semantically similar phrases that should resonate together."

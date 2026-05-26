@@ -54,5 +54,6 @@ Implementation in progress.
 - Done: cauldron ingests and renders `primedBy` metadata on ingredients.
 - Done: cauldron footer visually tethers to charged braces and highlights primed ingredients.
 - Enhanced: keyboard commits now also prime the cauldron, duplicate captures refresh existing ingredients instead of silently doing nothing, and the footer now exposes a live status/gloss for priming behavior.
+- Enhanced: gesture consequences are now documented in HTML through data-spw-interaction-* attributes, design runtime/palette pages include a style specimen, and semantic brace double-click provides a deliberate inspect+prime shortcut.
 
 See the full session plan artifact for deeper rationale and exact success criteria. This surface is the stable tracking point in the repo.

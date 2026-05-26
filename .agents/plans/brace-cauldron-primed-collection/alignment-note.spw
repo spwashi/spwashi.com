@@ -15,9 +15,23 @@
 
 ^"runtime_contract"{
   emission: "brace-gestures emits spell:capture { primedBy: 'brace-containment-charge', chargeContext, semantic.expression, origin } on committed pointer and keyboard gestures"
+  double_click: "semantic brace double-click emits brace:double-clicked + brace:inspected, expands matching semantic family, and captures with chargeContext: 'double-click-inspect'"
   ingestion: "composition onCapture normalizes into ingredient { origin, data-spw-ingredient-primed='brace', ingredientPhase contribution }; duplicate expressions refresh metadata and capturedAt instead of disappearing silently"
   state: "additive only — existing cauldron phases, gardening, dedupe, and bus events unchanged"
   inspect: "primed ingredients visible in cauldron chips, footer status, mirrors, console, and design catalog via existing semantic-expression + origin paths"
+}
+
+^"interaction_contract_markup"{
+  attributes: [
+    "data-spw-interaction-contract",
+    "data-spw-interaction-tap",
+    "data-spw-interaction-hold",
+    "data-spw-interaction-drag",
+    "data-spw-interaction-double-click",
+    "data-spw-interaction-keyboard"
+  ]
+  role: "Author-owned HTML documentation for what each gesture means. This is discoverability copy and inspection metadata, not runtime storage."
+  mapping: "tap=inspect, hold=prime, drag/swipe=project preview, double-click=inspect+prime, Enter/Space=commit"
 }
 
 ^"metaphysics_alignment"{

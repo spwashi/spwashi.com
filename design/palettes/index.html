@@ -431,7 +431,15 @@
                 </div>
             </section>
 
-            <section class="site-frame" id="spell-cauldron-hooks" aria-labelledby="spell-cauldron-hooks-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="ritual" data-spw-attention="scan">
+            <section
+                class="site-frame"
+                id="spell-cauldron-hooks"
+                aria-labelledby="spell-cauldron-hooks-title"
+                data-spw-role="reference"
+                data-spw-kind="frame"
+                data-spw-context="ritual"
+                data-spw-attention="scan"
+                data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#spell-cauldron-hooks">^"spell_cauldron_hooks"</a>
                     <h2 id="spell-cauldron-hooks-title">Spell And Cauldron Hooks</h2>
@@ -441,8 +449,15 @@
                         <circle cx="12" cy="12" r="3"/>
                     </svg>
                 </header>
-                <p class="frame-note" data-spw-interaction="tap-hold" data-spw-learnability="high">
-                    Use these as prompt handles for students of Spw semantics. A <strong data-spw-semantic-expression="spell[behavior]{repeat.move}">spell</strong> names a replayable, inspectable move (tap to cast on desktop, long-press to inspect on mobile). A <strong data-spw-semantic-expression="cauldron[mix]{gather.ingredients}">cauldron</strong> is the holding space for ingredients before the move solidifies.
+                <p
+                    class="frame-note"
+                    data-spw-interaction="tap-hold-drag-double-click"
+                    data-spw-learnability="high"
+                    data-spw-interaction-tap="inspect without capture"
+                    data-spw-interaction-hold="prime local value"
+                    data-spw-interaction-drag="project charge"
+                    data-spw-interaction-double-click="inspect and prime">
+                    Use these as prompt handles for students of Spw semantics. A <strong data-spw-semantic-expression="spell[behavior]{repeat.move}">spell</strong> names a replayable, inspectable move. A <strong data-spw-semantic-expression="cauldron[mix]{gather.ingredients}">cauldron</strong> is the holding space for ingredients before the move solidifies. The gesture copy should be plain: tap inspects, hold primes, drag projects, double-click inspects and primes, and keyboard commit follows the same primed path.
                     These hooks make abstract operators concrete and discoverable: curious visitors get immediate reasons to engage; active learners see the progression from gathering (cauldron) to casting (spell).
                     Each hook should still point to a route, component, state, or HTML owner so the learning transfers back into the surface.
                 </p>
@@ -481,6 +496,34 @@
                         <p class="frame-note"><code data-spw-assignment="prompt-cauldron-ingredients">practice[seed]{wonder.ground}</code> · daily use · settle</p>
                     </article>
                 </div>
+
+                <article
+                    class="frame-panel spw-interaction-contract"
+                    id="primed-brace-cauldron-demo"
+                    data-spw-context="ritual"
+                    data-spw-attention="try"
+                    data-spw-behavior="collect"
+                    data-spw-assignment="primed-brace-cauldron-demo"
+                    data-spw-concept="brace-cauldron"
+                    data-spw-grounding="discoverable-interaction"
+                    data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
+                    <h3><a href="#primed-brace-cauldron-demo">Primed Brace Cauldron Demo</a></h3>
+                    <p>Use this specimen when styling interaction hints. The HTML names the consequence first, then lets the brace runtime write live charge state during tap, hold, drag, double-click, and keyboard use.</p>
+                    <div
+                        class="spw-interaction-demo spw-interaction-demo--cauldron"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Primed brace cauldron demo: tap to inspect, hold or double-click to prime"
+                        data-spw-form="brace"
+                        data-spw-brace="subjective"
+                        data-spw-semantic-expression="cauldron[primed]{gather.local_value}"
+                        data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit">
+                        <span class="spw-delimiter" aria-hidden="true">{</span>
+                        <span class="spw-interaction-demo__copy">cauldron[primed]{gather.local_value}</span>
+                        <span class="spw-interaction-demo__hint">tap inspect · hold prime · drag preview · double-click prime now</span>
+                        <span class="spw-delimiter" aria-hidden="true">}</span>
+                    </div>
+                </article>
             </section>
 
             <section class="site-frame" id="environment-synchronization" data-spw-role="sync" data-spw-kind="frame" data-spw-context="analysis">

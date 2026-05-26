@@ -301,3 +301,116 @@
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-qa-card .palette-probe-actions) {
   margin-top: 0.2rem;
 }
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract) {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  border-color: color-mix(in srgb, var(--op-action-color, #008080) 34%, var(--line, rgba(255, 255, 255, 0.18)) 66%);
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--op-action-color, #008080) 14%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-panel, rgba(255, 255, 255, 0.08)) 94%, transparent), color-mix(in srgb, var(--surface, rgba(255, 255, 255, 0.06)) 90%, transparent));
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract__grid) {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract__step) {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 0;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--op-frame-color, #008080) 30%, var(--line, rgba(255, 255, 255, 0.2)));
+  border-radius: var(--shape-component, 0.6rem);
+  background: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.12)) 86%, transparent);
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract__step strong) {
+  color: var(--ink, currentColor);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract__step span) {
+  color: var(--ink-soft, currentColor);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo) {
+  --spw-interaction-demo-line: color-mix(in srgb, var(--op-action-color, #008080) 46%, var(--line, rgba(255, 255, 255, 0.22)));
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: clamp(0.82rem, 1.6vw, 1.1rem);
+  border: 1px solid var(--spw-interaction-demo-line);
+  border-radius: calc(var(--shape-surface, 0.8rem) + 0.2rem);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--op-frame-color, #008080) 10%, transparent), transparent 34%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.12)) 86%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-interaction-demo-line) 18%, transparent),
+    0 12px 28px color-mix(in srgb, var(--op-action-color, #008080) 10%, transparent);
+  color: var(--ink, currentColor);
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo:is(:hover, :focus-visible)) {
+  outline: none;
+  border-color: color-mix(in srgb, var(--op-action-color, #008080) 66%, var(--line, rgba(255, 255, 255, 0.22)));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--op-action-color, #008080) 28%, transparent),
+    0 16px 34px color-mix(in srgb, var(--op-action-color, #008080) 16%, transparent);
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo[data-spw-gesture="active"], .spw-interaction-demo[data-spw-gesture="armed"]) {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--op-action-color, #008080) 24%, transparent), transparent 72%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.12)) 88%, transparent);
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo[data-spw-gesture="projecting"]) {
+  transform: translate(
+    clamp(-0.35rem, calc(var(--drag-dx, 0px) * 0.08), 0.35rem),
+    clamp(-0.2rem, calc(var(--drag-dy, 0px) * 0.05), 0.2rem)
+  );
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo[data-spw-gesture="committed"]) {
+  border-color: color-mix(in srgb, var(--op-object-color, #c58b2a) 58%, var(--spw-interaction-demo-line) 42%);
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo__copy) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(0.95rem, 0.88rem + 0.4vw, 1.18rem);
+  font-weight: 700;
+}
+
+:where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo__hint) {
+  grid-column: 2;
+  color: var(--ink-soft, currentColor);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 42rem) {
+  :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo > .spw-delimiter:last-child) {
+    grid-column: 1;
+  }
+
+  :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo__hint) {
+    grid-column: 1 / -1;
+  }
+}

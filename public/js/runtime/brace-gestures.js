@@ -12,6 +12,7 @@
  * - hold no longer pins immediately
  * - hold first enters an "armed" phase
  * - release commits the relevant affordance only when appropriate
+ * - double-click on semantic brace targets inspects and primes without waiting
  *
  * Optional implementation mutation
  * - Enabled by:
@@ -146,6 +147,7 @@ export function initBraceGestures() {
   body.addEventListener('pointermove', onPointerMove, true);
   body.addEventListener('pointerup', onPointerUp, true);
   body.addEventListener('pointercancel', onPointerCancel, true);
+  body.addEventListener('dblclick', onDoubleClick, true);
 
   body.addEventListener('keydown', onKeyDown, true);
   body.addEventListener('keyup', onKeyUp, true);
@@ -881,6 +883,40 @@ function onPointerCancel(event) {
     buildDetail(meta, { canceled: true }),
     target
   );
+}
+
+function onDoubleClick(event) {
+  const target = braceTarget(event.target);
+  if (!target || !isSemanticTapTarget(target)) return;
+
+  const meta = classifyTarget(target);
+  if (!meta.semantic?.family && !meta.semantic?.expression) return;
+
+  event.preventDefault();
+  clearHoldTimer(target);
+
+  const expanded = meta.semantic?.family
+    ? applySemanticExpansion(target, meta, true)
+    : false;
+
+  setGesture(target, meta, 'committed', { source: 'pointer', button: event.button ?? 0 });
+  capturePrimedContainment(meta, 'double-click-inspect');
+
+  emitBraceEvents(
+    ['brace:double-clicked', 'brace:inspected'],
+    buildDetail(meta, {
+      committed: true,
+      affordance: 'inspect-prime',
+      expanded,
+    }),
+    target
+  );
+
+  window.setTimeout(() => {
+    if (target.dataset.spwGesture === 'committed') {
+      setGesture(target, meta, 'charging');
+    }
+  }, 260);
 }
 
 function commitArmedInteraction(target, state) {
