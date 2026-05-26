@@ -188,6 +188,22 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('message', (event) => {
   if (event.data?.type === 'SKIP_WAITING') {
     self.skipWaiting();
+    return;
+  }
+
+  if (event.data?.type === 'SPW_CACHE_SUMMARY') {
+    event.waitUntil(replyWithCacheSummary(event));
+    return;
+  }
+
+  if (event.data?.type === 'SPW_PREFETCH_URLS') {
+    const urls = Array.isArray(event.data.urls) ? event.data.urls : [];
+    event.waitUntil(prefetchUrls(urls).then((summary) => {
+      event.source?.postMessage?.({
+        type: 'SPW_PREFETCH_URLS_RESULT',
+        summary,
+      });
+    }));
   }
 });
 
@@ -442,6 +458,61 @@ async function pruneCacheEntries(cacheName, allowlistUrls) {
   } catch (error) {
     console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Cache prune failed`, error);
   }
+}
+
+async function replyWithCacheSummary(event) {
+  try {
+    const names = await caches.keys();
+    const managed = names.filter(isManagedCacheName);
+    const entries = [];
+
+    for (const name of managed) {
+      const cache = await caches.open(name);
+      const requests = await cache.keys();
+      entries.push({
+        name,
+        count: requests.length,
+      });
+    }
+
+    event.source?.postMessage?.({
+      type: 'SPW_CACHE_SUMMARY_RESULT',
+      version: CACHE_SCHEMA_VERSION,
+      caches: entries,
+    });
+  } catch (error) {
+    event.source?.postMessage?.({
+      type: 'SPW_CACHE_SUMMARY_RESULT',
+      version: CACHE_SCHEMA_VERSION,
+      error: error?.message || String(error),
+      caches: [],
+    });
+  }
+}
+
+async function prefetchUrls(urls) {
+  const normalized = urls
+    .map((url) => {
+      try {
+        const parsed = new URL(url, self.location.origin);
+        return parsed.origin === self.location.origin ? parsed.pathname + parsed.search : '';
+      } catch {
+        return '';
+      }
+    })
+    .filter(Boolean)
+    .slice(0, 12);
+
+  if (!normalized.length) {
+    return { requested: 0, cached: 0 };
+  }
+
+  const cache = await caches.open(CACHE.assets);
+  const results = await Promise.allSettled(normalized.map((url) => precacheUrl(cache, url)));
+  return {
+    requested: normalized.length,
+    cached: results.filter((result) => result.status === 'fulfilled').length,
+  };
 }
 
 function isManagedCacheName(name) {

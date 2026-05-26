@@ -169,6 +169,34 @@ test('discovery notices suppress duplicate visible routes', () => {
   assert.equal(sameRoute.visible.length, 0);
 });
 
+test('discovery notices accept image reward popup presentation', () => {
+  const normalized = normalizeNotice(
+    {
+      title: 'Golden spiral discovered',
+      summary: 'A visual invariant can become a prompt seed.',
+      href: '/public/images/renders/2026-05-B-rhythms/rhythms-prompt-pack.md',
+      presentation: 'popup',
+      cadenceMotion: 'compare.orbit',
+      rewardKind: 'math-prompt',
+      productionSeed: 'symmetry-motion-card',
+      promotion: {
+        handles: ['image', 'spiral', 'reward'],
+      },
+    },
+    'reward',
+    'runtime-test',
+    0,
+    'en',
+  );
+
+  assert.ok(normalized);
+  assert.equal(normalized.presentation, 'popup');
+  assert.deepEqual(normalized.handles, ['image', 'spiral', 'reward']);
+  assert.equal(normalized.cadenceMotion, 'compare.orbit');
+  assert.equal(normalized.rewardKind, 'math-prompt');
+  assert.equal(normalized.productionSeed, 'symmetry-motion-card');
+});
+
 test('promo wonder selection remains data driven', () => {
   const daily = pickDaily(promoFeed, date);
   const weekly = pickWeekly(promoFeed, date);

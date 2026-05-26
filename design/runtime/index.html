@@ -117,6 +117,26 @@ console.table(SPW_SVG_PALETTES);</code></pre>
             </div>
         </section>
 
+        <section class="frame-panel" id="memory-garden-mirror" aria-labelledby="memory-garden-mirror-title" data-spw-kind="panel" data-spw-role="runtime-mirror" data-spw-feature="cauldron-garden">
+            <h2 id="memory-garden-mirror-title">Memory garden mirror</h2>
+            <p>The cauldron and spell systems expose live lifecycle phases and gardening affordances. Root data attributes (<code>data-spw-cauldron-phase</code>, <code>data-spw-cauldron-count</code>, per-ingredient <code>data-spw-ingredient-phase</code>) plus bus events make the current "garden" of semantic memory observable and lightly tunable in any surface that loads the composition runtime.</p>
+
+            <div class="frame-note" data-spw-cauldron-mirror>
+                <strong>Live state (when active):</strong>
+                <span data-spw-mirror-label="phase">phase</span>
+                <span data-spw-mirror-label="count">count</span>
+                <span data-spw-mirror-label="operators">operators</span>
+            </div>
+            <div class="frame-operators" aria-label="Memory garden actions">
+                <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-groundable="false">~ nourish latest</button>
+                <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-groundable="false">^ plant mix</button>
+                <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-groundable="false">! prune stale</button>
+            </div>
+
+            <p class="inline-note">Inline tuning: the same <code>[data-spw-cauldron-action="prune|nourish|plant|mix|clear"]</code> buttons that appear in the footer work anywhere. They respect the current garden phase and keep capturedAt / origin context for reflective learning.</p>
+            <p><a class="operator-chip" href="/design/composition/">see composition + cauldron docs</a></p>
+        </section>
+
         <section class="frame-panel" id="console-contract" aria-labelledby="console-contract-title" data-spw-kind="panel" data-spw-role="console-contract">
             <h2 id="console-contract-title">Console contract</h2>
             <p>The portable bundle exposes a deliberate console API. Install it when a lab page needs inspection without mounting the whole site runtime.</p>
@@ -148,6 +168,14 @@ logger.trace('after query disposition', '#runtime-lab');</code></pre>
   scope: 'document',
   tuning: { density: 'compact' }
 });</code></pre>
+        </section>
+
+        <section class="frame-panel" id="resource-readiness" aria-labelledby="resource-readiness-title" data-spw-kind="panel" data-spw-role="resource-contract" data-spw-wonder="prefetch cache offline responsiveness">
+            <h2 id="resource-readiness-title">Resource readiness</h2>
+            <p>The module loader now exposes what it can know before a module mounts: route and selector eligibility, effective timing, inferred module URLs, cache presence, connection posture, and whether a conservative prefetch hint was issued.</p>
+            <pre><code>spwCompose.controls.modules.discovery()
+window.__SPW_SITE__.discoverRuntimeResources()</code></pre>
+            <p class="frame-note">Prefetch is intentionally selective. It is skipped for offline, data-saver, quiet, and manual postures. Cached/offline state appears as document-level tokens so CSS can calm rendering rather than pretending every context has the same bandwidth.</p>
         </section>
     </article>
 </main>

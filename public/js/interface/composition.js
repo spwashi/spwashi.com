@@ -17,7 +17,14 @@
  * - Haptics grounding (the act of settling attention on something).
  * - Spells/checkpoints (the serialized, replayable results of a cast).
  *
- * Public API kept as stable as possible for existing callers.
+ * Lifecycle + memory gardening (added in this enhancement):
+ * - Ingredients and the vessel itself carry phase data attrs (gathering | resonant | mature | decayed | empty)
+ *   derived from recency (capturedAt) and context (wonder/operator presence). CSS, runtime mirrors,
+ *   and inspectors can react without timers.
+ * - Gardening actions (prune stale, nourish/tend, plant as durable spell) turn passive collection
+ *   into reflective tending — the "garden" metaphor for long-term semantic memory.
+ *
+ * Public API kept as stable as possible for existing callers. New actions and phase attrs are additive.
  */
 
 import { bus } from '/public/js/kernel/bus.js';
@@ -54,8 +61,12 @@ export function initCauldron() {
    ========================================================================== */
 
 function handleCauldronUIActions(e) {
+  if (!(e.target instanceof Element)) return;
   const mixBtn = e.target.closest('[data-spw-cauldron-action="mix"]');
   const clearBtn = e.target.closest('[data-spw-cauldron-action="clear"]');
+  const pruneBtn = e.target.closest('[data-spw-cauldron-action="prune"]');
+  const nourishBtn = e.target.closest('[data-spw-cauldron-action="nourish"]');
+  const plantBtn = e.target.closest('[data-spw-cauldron-action="plant"]');
 
   if (mixBtn) {
     const result = mixIngredients();
@@ -68,9 +79,41 @@ function handleCauldronUIActions(e) {
     hideOutput();
     e.preventDefault();
   }
+
+  if (pruneBtn) {
+    pruneStale();
+    hideOutput();
+    e.preventDefault();
+  }
+
+  if (nourishBtn) {
+    // Nourish the most recent ingredient as a simple "tend" gesture
+    const ingredients = getCauldron();
+    if (ingredients.length) nourishIngredient(ingredients.length - 1);
+    e.preventDefault();
+  }
+
+  if (plantBtn) {
+    // Memory gardening: "plant" the current gathering as a durable spell/checkpoint
+    const ingredients = getCauldron();
+    if (ingredients.length >= 1) {
+      const expr = ingredients.map(i => i.expression).join(' + ');
+      bus.emit('spell:capture', {
+        expression: `cast[garden]{${expr}}`,
+        label: 'Planted garden mix',
+        origin: 'cauldron',
+        originLabel: 'memory garden',
+        wonder: 'cultivation',
+      });
+      // Optionally clear after planting to keep the garden cycle clean
+      // clearCauldron();
+    }
+    e.preventDefault();
+  }
 }
 
 function handleIngredientRemoval(e) {
+  if (!(e.target instanceof Element)) return;
   const removeBtn = e.target.closest('[data-spw-cauldron-remove]');
   if (!removeBtn) return;
 
@@ -82,6 +125,7 @@ function handleIngredientRemoval(e) {
 }
 
 function handleIngredientInspect(e) {
+  if (!(e.target instanceof Element)) return;
   const ingEl = e.target.closest('.cauldron-ingredient');
   if (!ingEl || e.target.closest('.cauldron-ingredient-remove')) return;
 
@@ -95,11 +139,10 @@ function handleIngredientInspect(e) {
     bus.emit?.('cauldron:ingredient-inspected', { expression: expr, origin, element: ingEl });
 
     // Gentle visual feedback + console for immediate learning value
-    ingEl.style.transition = 'box-shadow 120ms ease';
-    ingEl.style.boxShadow = `0 0 0 2px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 35%, transparent)`;
+    ingEl.dataset.spwIngredientInspect = 'active';
 
     setTimeout(() => {
-      if (ingEl) ingEl.style.boxShadow = '';
+      if (ingEl) delete ingEl.dataset.spwIngredientInspect;
     }, 1400);
 
     // Helpful for learning without being noisy
@@ -164,6 +207,54 @@ function inferOperator(expression = '') {
   return match ? match[1] : '';
 }
 
+/* ==========================================================================
+   Lifecycle + Memory Gardening Primitives
+   (smallest additive layer for phase awareness and tending)
+   ========================================================================== */
+
+const GARDEN_PRUNE_DAYS = 30; // default threshold for "stale" in the memory garden
+
+function computeIngredientPhase(ing) {
+  if (!ing || !ing.capturedAt) return 'gathering';
+  const ageMs = Date.now() - Number(ing.capturedAt);
+  const days = ageMs / (1000 * 60 * 60 * 24);
+  if (days > GARDEN_PRUNE_DAYS * 1.5) return 'decayed';
+  if (days > GARDEN_PRUNE_DAYS) return 'mature';
+  if (ing.wonder || ing.operator) return 'resonant';
+  return 'gathering';
+}
+
+function computeCauldronPhase(ingredients = []) {
+  if (!ingredients.length) return 'empty';
+  const hasRecent = ingredients.some(i => {
+    const days = (Date.now() - Number(i.capturedAt || 0)) / (1000 * 60 * 60 * 24);
+    return days < 3;
+  });
+  const count = ingredients.length;
+  if (hasRecent && count >= 2) return 'resonant';
+  if (count >= 4) return 'mature';
+  return 'gathering';
+}
+
+function pruneStale(days = GARDEN_PRUNE_DAYS) {
+  const ingredients = getCauldron();
+  const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
+  const next = ingredients.filter(i => Number(i.capturedAt || 0) >= cutoff);
+  if (next.length === ingredients.length) return ingredients; // nothing pruned
+  saveCauldron(next);
+  bus.emit('cauldron:gardened', { action: 'prune', pruned: ingredients.length - next.length, remaining: next.length });
+  return next;
+}
+
+/** Simple "nourish" — touch the capturedAt of an ingredient to keep it alive in the garden */
+function nourishIngredient(index) {
+  const ingredients = getCauldron();
+  if (index < 0 || index >= ingredients.length) return;
+  ingredients[index] = { ...ingredients[index], capturedAt: Date.now() };
+  saveCauldron(ingredients);
+  bus.emit('cauldron:gardened', { action: 'nourish', index });
+}
+
 function saveCauldron(cauldron) {
   const trimmed = cauldron.slice(-MAX_INGREDIENTS);
   localStorage.setItem(CAULDRON_KEY, JSON.stringify(trimmed));
@@ -181,6 +272,11 @@ function syncCauldronState() {
   const root = document.documentElement;
   root.dataset.spwCauldronCount = String(count);
 
+  // Lifecycle phase for CSS, mirrors, and runtime awareness (the core of the enhancement)
+  const phase = computeCauldronPhase(ingredients);
+  root.dataset.spwCauldronPhase = phase;
+  syncCauldronHosts(ingredients, phase);
+
   // Richer inspectability for the taxonomy / attention model
   root.dataset.spwCauldronForceCount = String(count);
   if (count > 0) {
@@ -190,13 +286,45 @@ function syncCauldronState() {
     delete root.dataset.spwCauldronOperators;
   }
 
-  // Interaction semantics for buttons
+  // Interaction semantics for buttons (existing + new gardening actions)
   const mixBtn = document.querySelector('[data-spw-cauldron-action="mix"]');
   const clearBtn = document.querySelector('[data-spw-cauldron-action="clear"]');
   if (mixBtn) mixBtn.disabled = count < 2;
   if (clearBtn) clearBtn.disabled = count === 0;
+  document.querySelectorAll('[data-spw-cauldron-action="prune"], [data-spw-cauldron-action="nourish"], [data-spw-cauldron-action="plant"]')
+    .forEach((button) => { button.disabled = count === 0; });
 
   renderIngredientsList(ingredients);
+  renderCauldronMirrors(ingredients, phase);
+}
+
+function syncCauldronHosts(ingredients, phase) {
+  const count = ingredients.length;
+  const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))].join(' ');
+  document.querySelectorAll('[data-spw-cauldron]').forEach((host) => {
+    host.dataset.spwCauldronPhase = phase;
+    host.dataset.spwCauldronCount = String(count);
+    if (operators) {
+      host.dataset.spwCauldronOperators = operators;
+    } else {
+      delete host.dataset.spwCauldronOperators;
+    }
+  });
+}
+
+function renderCauldronMirrors(ingredients, phase) {
+  const count = ingredients.length;
+  const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))].join(' ') || 'none';
+  document.querySelectorAll('[data-spw-cauldron-mirror]').forEach((mirror) => {
+    mirror.dataset.spwCauldronPhase = phase;
+    mirror.dataset.spwCauldronCount = String(count);
+    const phaseEl = mirror.querySelector('[data-spw-mirror-label="phase"]');
+    const countEl = mirror.querySelector('[data-spw-mirror-label="count"]');
+    const operatorsEl = mirror.querySelector('[data-spw-mirror-label="operators"]');
+    if (phaseEl) phaseEl.textContent = `phase: ${phase}`;
+    if (countEl) countEl.textContent = `count: ${count}`;
+    if (operatorsEl) operatorsEl.textContent = `operators: ${operators}`;
+  });
 }
 
 function renderIngredientsList(ingredients) {
@@ -212,6 +340,7 @@ function renderIngredientsList(ingredients) {
     const op = ing.operator ? `<span class="cauldron-ingredient-op" data-spw-operator="${ing.operator}">${ing.operator}</span>` : '';
     const expr = `<span class="cauldron-ingredient-expr" data-spw-expression>${escapeHtml(ing.expression)}</span>`;
 
+    const phase = computeIngredientPhase(ing);
     let meta = '';
     if (ing.wonder) {
       meta += `<span class="cauldron-ingredient-meta" data-spw-wonder="${ing.wonder}">${ing.wonder}</span>`;
@@ -221,6 +350,11 @@ function renderIngredientsList(ingredients) {
     if (originText) {
       meta += `<span class="cauldron-ingredient-meta cauldron-origin" data-spw-origin="${escapeHtml(originText)}">${escapeHtml(originText)}</span>`;
     }
+    // Lightweight age for memory gardening visibility (CSS can style .decayed etc.)
+    if (ing.capturedAt) {
+      const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
+      meta += `<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`;
+    }
 
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
 
@@ -228,6 +362,7 @@ function renderIngredientsList(ingredients) {
       <span class="cauldron-ingredient"
             data-spw-cauldron-ingredient
             data-spw-semantic-expression="${escapeHtml(ing.expression)}"
+            data-spw-ingredient-phase="${phase}"
             ${ing.origin ? `data-spw-origin="${escapeHtml(ing.origin)}"` : ''}
             tabindex="0"
             role="group"
@@ -374,3 +509,6 @@ export function clearCauldron() {
 
 /* Backwards-compatible alias for the mounting code in site.js */
 export const initCompositionSpell = initCauldron;
+
+/* Public helpers for runtime mirrors, design labs, and inline instrumentation */
+export { computeCauldronPhase, computeIngredientPhase, pruneStale, nourishIngredient, getCauldron as getCauldronIngredients };

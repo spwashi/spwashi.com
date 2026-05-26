@@ -229,6 +229,101 @@ function readSet(...values) {
   return new Set(values.filter(Boolean));
 }
 
+function readConnectionPosture() {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+  const effectiveType = String(connection?.effectiveType || '').toLowerCase();
+  const saveData = Boolean(connection?.saveData);
+  const online = navigator.onLine !== false;
+
+  if (!online) return 'offline';
+  if (saveData) return 'save-data';
+  if (effectiveType === 'slow-2g' || effectiveType === '2g') return 'constrained';
+  if (effectiveType === '3g') return 'measured';
+  return 'open';
+}
+
+function shouldPrefetchRuntimeResources(ctx) {
+  if (!ctx || !navigator.onLine) return false;
+  if (ctx.runtimePolicy.timing === 'manual' || ctx.runtimePolicy.timing === 'quiet') return false;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+  if (connection?.saveData) return false;
+  const effectiveType = String(connection?.effectiveType || '').toLowerCase();
+  return effectiveType !== 'slow-2g' && effectiveType !== '2g';
+}
+
+function extractDynamicImportSpecifier(def) {
+  const source = String(def?.load || '');
+  const match = source.match(/import\(\s*['"]([^'"]+)['"]\s*\)/);
+  return match?.[1] || '';
+}
+
+function moduleSpecifierToUrl(specifier = '') {
+  if (!specifier || !specifier.startsWith('./')) return '';
+  try {
+    return new URL(specifier, new URL('/public/js/site.js', window.location.origin)).href;
+  } catch {
+    return '';
+  }
+}
+
+function ensureResourceHint(href, rel = 'modulepreload') {
+  if (!href) {
+    return false;
+  }
+
+  const existingHint = Array.from(document.head.querySelectorAll(`link[rel="${rel}"]`)).some(
+    (link) => link instanceof HTMLLinkElement && link.href === href,
+  );
+  if (existingHint) {
+    return false;
+  }
+
+  const link = document.createElement('link');
+  link.rel = rel;
+  link.href = href;
+  if (rel === 'prefetch') {
+    link.as = 'script';
+  }
+  link.setAttribute('data-spw-runtime-prefetch', rel);
+  document.head.append(link);
+  return true;
+}
+
+async function isRuntimeResourceCached(href) {
+  if (!href || !('caches' in window)) return false;
+  try {
+    return Boolean(await caches.match(href));
+  } catch {
+    return false;
+  }
+}
+
+function requestServiceWorkerPrefetch(urls = []) {
+  const controller = navigator.serviceWorker?.controller;
+  if (!controller || !urls.length) return false;
+  try {
+    controller.postMessage({
+      type: 'SPW_PREFETCH_URLS',
+      urls: urls.slice(0, 12),
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function requestServiceWorkerCacheSummary() {
+  const controller = navigator.serviceWorker?.controller;
+  if (!controller) return false;
+  try {
+    controller.postMessage({ type: 'SPW_CACHE_SUMMARY' });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /* ==========================================================================
    3. Bus facade
    ========================================================================== */
@@ -724,6 +819,8 @@ function createRuntimeContext() {
     runtimePolicy: readRuntimePolicy(),
     moduleAudit: [],
     moduleSkipAuditKeys: new Set(),
+    resourceHints: [],
+    resourceReadiness: new Map(),
     observers: new Set(),
     timers: new Set(),
     pageAttentionTimers: new Set(),
@@ -746,6 +843,8 @@ function createRuntimeContext() {
   const loadPosture = inferRuntimePosture(ctx.runtimePolicy);
   writeDatasetValue(HTML, 'spwLoadPosture', loadPosture);
   writeDatasetValue(HTML, 'spwLoadTiming', ctx.runtimePolicy.timing);
+  writeDatasetValue(HTML, 'spwConnectionPosture', readConnectionPosture());
+  writeDatasetValue(HTML, 'spwPrefetchMode', shouldPrefetchRuntimeResources(ctx) ? 'eligible' : 'conservative');
 
   ctx.addCleanup = (fn) => {
     if (!isFn(fn)) return () => {};
@@ -1419,8 +1518,8 @@ const FEATURE_DEFS = [
     id: 'cauldron',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    describes: 'cauldron[gather|mix] force[operator] emergence[composition]',
-    updates: ['data-spw-cauldron', 'data-spw-cauldron-ingredient', 'data-spw-semantic-expression'],
+    describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
+    updates: ['data-spw-cauldron', 'data-spw-cauldron-phase', 'data-spw-cauldron-count', 'data-spw-cauldron-ingredient', 'data-spw-ingredient-phase', 'data-spw-semantic-expression'],
     evaluates: 'semantics composition learning attention-field emergence',
     load: () => import('./interface/composition.js'),
     mount: (mod) => {
@@ -1645,6 +1744,21 @@ const ENHANCEMENT_DEFS = [
       const fn = mod?.initSpwDiscoveryNotices;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'image-discovery-rewards',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-image-reward], [data-spw-image-discovery]',
+    rootMode: 'single',
+    describes: 'image[discovery]{reward.notice.cadence.production}',
+    updates: ['data-spw-image-discovery-state', 'data-spw-image-discovered', 'data-spw-discovery-cadence', 'data-spw-discovery-motion', 'data-spw-discovery-production'],
+    load: () => import('./interface/image-discovery-rewards.js'),
+    mount: (mod) => {
+      const fn = mod?.initImageDiscoveryRewards;
+      if (!isFn(fn)) return;
+      return fn(document);
     },
   },
   {
@@ -2298,9 +2412,140 @@ function buildLoadDiscoverySnapshot(ctx) {
   return {
     policies: [...RUNTIME_TIMING_POLICIES],
     current: ctx.runtimePolicy,
+    connectionPosture: HTML?.dataset?.spwConnectionPosture || readConnectionPosture(),
+    prefetchMode: HTML?.dataset?.spwPrefetchMode || 'unknown',
+    resources: snapshotRuntimeResourceReadiness(ctx),
     considered: listModuleDefinitions(ctx),
     mounted: snapshotRuntimeModules(ctx),
     skipped: [...(ctx.moduleSkipAuditKeys || [])],
+  };
+}
+
+function snapshotRuntimeResourceReadiness(ctx = runtimeCtx) {
+  if (!ctx) return [];
+  return [...ctx.resourceReadiness.values()].map((entry) => ({ ...entry }));
+}
+
+function buildRuntimeResourceEntry(def, effectiveWhen, rel) {
+  const specifier = extractDynamicImportSpecifier(def);
+  const href = moduleSpecifierToUrl(specifier);
+  if (!href) return null;
+  return {
+    id: def.id,
+    layer: def.layer,
+    effectiveWhen,
+    rel,
+    href,
+    status: 'discovered',
+    cached: false,
+  };
+}
+
+async function syncRuntimeResourceEntry(ctx, entry) {
+  if (!ctx || !entry?.href) return null;
+  const cached = await isRuntimeResourceCached(entry.href);
+  const next = {
+    ...entry,
+    cached,
+    status: cached ? 'cached' : entry.status,
+  };
+  ctx.resourceReadiness.set(entry.id, next);
+  return next;
+}
+
+async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
+  if (!ctx) return [];
+  const candidates = defs
+    .filter((def) => shouldScheduleDefinition(def, ctx, expectedWhen))
+    .map((def) => buildRuntimeResourceEntry(def, expectedWhen, rel))
+    .filter(Boolean);
+
+  if (!candidates.length) return [];
+
+  const canPrefetch = shouldPrefetchRuntimeResources(ctx);
+  const warmed = [];
+
+  for (const entry of candidates) {
+    const current = await syncRuntimeResourceEntry(ctx, entry);
+    if (!current) continue;
+    if (canPrefetch && !current.cached) {
+      const hinted = ensureResourceHint(current.href, rel);
+      current.status = hinted ? 'prefetched' : 'hint-present';
+    } else if (!canPrefetch) {
+      current.status = 'deferred';
+    }
+    ctx.resourceReadiness.set(current.id, current);
+    warmed.push(current);
+  }
+
+  writeDatasetValue(HTML, 'spwConnectionPosture', readConnectionPosture());
+  writeDatasetValue(HTML, 'spwPrefetchMode', canPrefetch ? 'selective' : 'deferred');
+  writeDatasetValue(HTML, 'spwPrefetchCount', String(warmed.filter((entry) => entry.status === 'prefetched').length));
+  writeDatasetValue(HTML, 'spwCachedModuleCount', String(warmed.filter((entry) => entry.cached).length));
+  if (canPrefetch) {
+    const sentToServiceWorker = requestServiceWorkerPrefetch(
+      warmed
+        .filter((entry) => !entry.cached)
+        .map((entry) => entry.href)
+    );
+    writeDatasetValue(HTML, 'spwServiceWorkerPrefetch', sentToServiceWorker ? 'requested' : 'unavailable');
+  }
+
+  ctx.bus.emit('spw:runtime-resources-profiled', {
+    route: ctx.route,
+    expectedWhen,
+    rel,
+    connectionPosture: readConnectionPosture(),
+    prefetchMode: HTML?.dataset?.spwPrefetchMode || 'unknown',
+    resources: warmed,
+  });
+
+  return warmed;
+}
+
+function initRuntimeResourceAwareness(ctx) {
+  if (!ctx) return () => {};
+
+  const handleServiceWorkerMessage = (event) => {
+    if (event.data?.type === 'SPW_CACHE_SUMMARY_RESULT') {
+      const caches = Array.isArray(event.data.caches) ? event.data.caches : [];
+      const entryCount = caches.reduce((sum, entry) => sum + (Number.parseInt(entry.count, 10) || 0), 0);
+      writeDatasetValue(HTML, 'spwServiceWorkerCacheCount', String(caches.length));
+      writeDatasetValue(HTML, 'spwServiceWorkerCacheEntries', String(entryCount));
+      writeDatasetValue(HTML, 'spwServiceWorkerCacheVersion', event.data.version || null);
+      writeDatasetValue(HTML, 'spwServiceWorkerCacheState', event.data.error ? 'error' : 'reported');
+    }
+
+    if (event.data?.type === 'SPW_PREFETCH_URLS_RESULT') {
+      const summary = event.data.summary || {};
+      writeDatasetValue(HTML, 'spwServiceWorkerPrefetchState', 'reported');
+      writeDatasetValue(HTML, 'spwServiceWorkerPrefetchRequested', String(summary.requested || 0));
+      writeDatasetValue(HTML, 'spwServiceWorkerPrefetchCached', String(summary.cached || 0));
+    }
+  };
+
+  const syncConnection = () => {
+    writeDatasetValue(HTML, 'spwConnectionPosture', readConnectionPosture());
+    writeDatasetValue(HTML, 'spwPrefetchMode', shouldPrefetchRuntimeResources(ctx) ? 'eligible' : 'conservative');
+    ctx.bus.emit('spw:runtime-connection', {
+      route: ctx.route,
+      connectionPosture: HTML?.dataset?.spwConnectionPosture || 'unknown',
+      prefetchMode: HTML?.dataset?.spwPrefetchMode || 'unknown',
+    });
+  };
+
+  syncConnection();
+  requestServiceWorkerCacheSummary();
+  navigator.serviceWorker?.addEventListener?.('message', handleServiceWorkerMessage);
+  window.addEventListener('online', syncConnection);
+  window.addEventListener('offline', syncConnection);
+  navigator.connection?.addEventListener?.('change', syncConnection);
+
+  return () => {
+    navigator.serviceWorker?.removeEventListener?.('message', handleServiceWorkerMessage);
+    window.removeEventListener('online', syncConnection);
+    window.removeEventListener('offline', syncConnection);
+    navigator.connection?.removeEventListener?.('change', syncConnection);
   };
 }
 
@@ -2791,6 +3036,7 @@ async function bootSite() {
         mount: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
+        resources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
         timings: () => runtimeCtx ? { ...getSpwPerformanceTimings(), modules: snapshotRuntimeModules(runtimeCtx) } : null,
         // Discovery + timing customization surface (makes "knowing about runtime load"
         // and adjusting targeting feel first-class for editors and power users).
@@ -2843,6 +3089,7 @@ async function bootSite() {
   runtimeCtx.compose = composeApi;
   setPageState(PAGE_STATES.BOOTING);
   runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
+  runtimeCtx.addCleanup(initRuntimeResourceAwareness(runtimeCtx));
 
   runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
 
@@ -2854,6 +3101,8 @@ async function bootSite() {
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
   await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
+  await prefetchRuntimeResources(runtimeCtx, FEATURE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload');
+  await prefetchRuntimeResources(runtimeCtx, ENHANCEMENT_DEFS, MOUNT_WHEN.IDLE, 'prefetch');
   performance.mark('spw:immediate-layer-complete');
   performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
   runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
@@ -2909,6 +3158,7 @@ window.__SPW_SITE__ = {
   getLoadTimings: () => getSpwPerformanceTimings(),
   // Same discovery surface as the compose API for direct console/global access.
   discoverRuntimeLoad: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
+  discoverRuntimeResources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
   composition: {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
     inspect: (target, options = {}) => snapshotCompositionBox(target, options),

@@ -156,6 +156,8 @@ const RUNTIME = {
   resizeObserver: null,
   intersectionObserver: null,
   pointerRaf: 0,
+  typographyRaf: 0,
+  typographySettingsUnsub: null,
 
   pointer: {
     active: false,
@@ -371,6 +373,8 @@ function ensureRuntimeListeners(config) {
     attachRhythmListeners();
   }
 
+  attachTypographySettingsListener();
+
   RUNTIME.listenersAttached = true;
 }
 
@@ -394,6 +398,7 @@ function teardownRuntimeIfIdle() {
   RUNTIME.intersectionObserver = null;
 
   detachRhythmListeners();
+  detachTypographySettingsListener();
 
   RUNTIME.listenersAttached = false;
 }
@@ -423,6 +428,56 @@ function detachRhythmListeners() {
     }
   });
   RUNTIME.unsubs = [];
+}
+
+const TYPOGRAPHY_SETTING_KEYS = ['fontSize', 'fontSizeScale', 'lineSpacing', 'pinchTextScale'];
+
+function attachTypographySettingsListener() {
+  if (RUNTIME.typographySettingsUnsub) return;
+
+  const handler = (event) => {
+    const settings = event?.detail || {};
+    const changed = TYPOGRAPHY_SETTING_KEYS.some((key) => Object.prototype.hasOwnProperty.call(settings, key));
+    if (!changed) return;
+
+    // Debounce rapid setting updates (e.g. slider drag) to avoid thrashing measurements.
+    if (RUNTIME.typographyRaf) cancelAnimationFrame(RUNTIME.typographyRaf);
+    RUNTIME.typographyRaf = requestAnimationFrame(() => {
+      RUNTIME.typographyRaf = 0;
+      RUNTIME.controllers.forEach((controller) => {
+        try {
+          controller.refresh?.({});
+        } catch (error) {
+          console.warn('[Pretext] Typography refresh failed for controller.', error);
+        }
+      });
+    });
+  };
+
+  const busUnsub = bus.on?.('settings:changed', handler);
+  const domUnsub = () => {
+    document.removeEventListener('spw:settings-change', handler);
+  };
+  document.addEventListener('spw:settings-change', handler, { passive: true });
+
+  RUNTIME.typographySettingsUnsub = () => {
+    try { busUnsub?.(); } catch {}
+    domUnsub();
+  };
+}
+
+function detachTypographySettingsListener() {
+  if (!RUNTIME.typographySettingsUnsub) return;
+  try {
+    RUNTIME.typographySettingsUnsub();
+  } catch (error) {
+    console.warn('[Pretext] Failed to detach typography settings listener.', error);
+  }
+  RUNTIME.typographySettingsUnsub = null;
+  if (RUNTIME.typographyRaf) {
+    cancelAnimationFrame(RUNTIME.typographyRaf);
+    RUNTIME.typographyRaf = 0;
+  }
 }
 
 /* ==========================================================================

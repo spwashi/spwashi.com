@@ -1,0 +1,10 @@
+# Cadence + Text Interpretation Bridge Note
+
+^"runtime_expectation"{
+  text_sizing: "Components that measure or project text (pretext physics, frame metrics, future copy interpreters) must subscribe to typography settings changes and re-interpret on fontSizeScale, lineSpacing, pinchTextScale."
+  cadence_resonance: "Any surface carrying data-spw-cadence should be eligible for CSS rhythm differentiation (daily = immediate return, cycle/streak = heavier editorial close)."
+  copy_variants: "Authored HTML carries the current-axiom default (time-forward for crawlers). data-spw-copy-alt-json or sibling <template data-spw-copy-variant> nodes (or equivalent in JSON feeds) declare the replacement when costs, dates, or testing change the underlying truth. The default text is never hidden from static readers."
+}
+
+@see: ~"../../../.spw/philosophy/timing-data-localization.spw"
+@see: ~"../../../.spw/conventions/copy-localization.spw"

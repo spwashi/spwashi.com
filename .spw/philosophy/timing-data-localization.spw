@@ -25,6 +25,8 @@
 ^"timing_contract"{
  daily: "Use for return signals, prompts, and lightweight promotional invitations."
  weekly: "Use for broader themes, strategic offers, and larger interpretive frames."
+ cycle: "Use for 13th/26th release closes, especially where A closes on the 13th and B closes on the 26th."
+ streak: "Use for sustained social return, where repeated contact becomes evidence for a small production spark."
  invariant: "Timing changes should be predictable enough to be accessible and cacheable, but expressive enough to make the surface feel maintained."
  anti_pattern: "Changing important calls to action randomly on every render."
 }
@@ -33,13 +35,24 @@
  rule: "Dismissible discovery notices should key dismissal to the active cadence so a daily promo can return tomorrow and a weekly promo can return next week."
  shape: "Notice cards are still copy units: label, title, summary, href, and cta stay complete enough to render without fragmenting the editorial thought."
  scope: "The popup is a shell-layer affordance, not a modal interruption."
+ reward_rule: "Discovery rewards may carry cadenceDay, cadenceMotion, rewardKind, and productionSeed when a found image or route affordance should become gameplay or production material."
+}
+
+^"day_motion_map"{
+ monday = "probe.prepare — collect one question, crop, image, unresolved cast pressure, or route seam."
+ wednesday = "frame.play — test the prepared material at the table and let actual play decide what deserves memory."
+ thirteenth = "close.bind_A — bind the A cycle into an artifact, support ask, route note, or release checkpoint."
+ twenty_sixth = "close.bind_B — bind the B cycle into an artifact, support ask, route note, or release checkpoint."
+ release_after = "reflect.produce — use the day after a close to ask what survived and what should become playable."
+ streak_milestone = "celebrate.transform — turn sustained return into one kind, visible, repeatable production spark."
 }
 
 ^"data_contract"{
  format: "JSON feeds carry sourceLocale, localization metadata, and typed card fields."
  required_card_fields: #[`title`, `summary`, `href`, `cta`][reg=set]
- optional_card_fields: #[`label`, `operator`, `why`, `tag`, `copyUnit`, `locale`, `cadence`][reg=set]
+ optional_card_fields: #[`label`, `operator`, `why`, `tag`, `copyUnit`, `locale`, `cadence`, `cadenceDay`, `cadenceMotion`, `rewardKind`, `productionSeed`][reg=set]
  rendering_rule: "TypeScript normalizes text and sets data-spw-copy-unit, data-spw-locale, and data-spw-cadence where a generated card appears."
+ variant_text: "Static HTML may carry the present-day default (crawler-visible, time-forward). data-spw-copy-alt-json or sibling templates on the same node indicate future/alternative wording when support costs, dates, or axioms shift under testing or time."
 }
 
 ^"localization_contract"{
@@ -61,7 +74,10 @@
 invariants: #[
  `Timed data is editorial rhythm, not opaque personalization.`,
  `Generated cards should expose cadence, locale, and copy-unit identity in HTML.`,
+ `Discovery rewards may expose cadence motion and production seeds when they are meant to feed gameplay or artifact production.`,
  `Feeds should remain static and cacheable so the public site stays simple.`,
  `Localization prepares complete thoughts and CTAs, not isolated string crumbs.`,
- `Templates own page-level locale metadata; runtime modules own generated-card locale metadata.`
+ `Templates own page-level locale metadata; runtime modules own generated-card locale metadata.`,
+ `Text measurement surfaces (pretext physics, frame metrics) must re-interpret on typography settings changes so projected widths and line counts stay accurate when --site-root-font-size or data-spw-font-size-scale shift.`,
+ `Variant text lives in markup (data-* or templates) or JSON sidecars; the authored HTML default is always the crawler-present truth.`
 ][reg=set]

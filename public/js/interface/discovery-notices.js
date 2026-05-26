@@ -4,8 +4,8 @@ import {
   cleanText,
   createJsonFeedLoader,
   getWeekIndex,
-} from '/public/js/typed/feed-utils.js';
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+} from '../typed/feed-utils.js';
+import { annotateFloatingChromeElement } from '../kernel/dom-contracts.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -15,6 +15,8 @@ const NOTICE_ATTR = 'data-spw-discovery-notice';
 const MODULE_ATTR = 'data-spw-discovery-notice-module';
 const NOTICE_HIDE_DELAY_MS = 180;
 const DISMISSALS_CHANGED_EVENT = 'spw:discovery-dismissals-changed';
+const DISCOVERY_REWARD_EVENT = 'spw:discovery-reward';
+const PRESENTATIONS = new Set(['toast', 'popup', 'modal']);
 
 const loadFeed = createJsonFeedLoader(FEED_URL, null);
 let removeEscapeListener = () => {};
@@ -85,7 +87,7 @@ function getPromotionDetails(source = {}) {
     : [];
 
   return {
-    presentation: cleanText(source.presentation || promotion.presentation || 'toast') || 'toast',
+    presentation: normalizePresentation(source.presentation || promotion.presentation || 'toast'),
     kind: cleanText(promotion.kind || ''),
     audience: cleanText(promotion.audience || ''),
     offer: cleanText(promotion.offer || ''),
@@ -96,7 +98,16 @@ function getPromotionDetails(source = {}) {
     theme: cleanText(promotion.theme || ''),
     handles,
     ctaStyle: cleanText(promotion.ctaStyle || ''),
+    cadenceDay: cleanText(promotion.cadenceDay || source.cadenceDay || ''),
+    cadenceMotion: cleanText(promotion.cadenceMotion || source.cadenceMotion || ''),
+    rewardKind: cleanText(promotion.rewardKind || source.rewardKind || ''),
+    productionSeed: cleanText(promotion.productionSeed || source.productionSeed || ''),
   };
+}
+
+function normalizePresentation(value = 'toast') {
+  const presentation = cleanText(value || 'toast').toLowerCase();
+  return PRESENTATIONS.has(presentation) ? presentation : 'toast';
 }
 
 export function selectScheduleItems(feed, date = new Date()) {
@@ -178,6 +189,10 @@ function createMetaList(notice) {
     ['Proof', notice.proof],
     ['Objection', notice.objection],
     ['Urgency', notice.urgency],
+    ['Day', notice.cadenceDay],
+    ['Motion', notice.cadenceMotion],
+    ['Reward', notice.rewardKind],
+    ['Production', notice.productionSeed],
   ].filter(([, value]) => Boolean(value));
 
   entries.forEach(([labelText, value]) => {
@@ -209,6 +224,10 @@ function createNoticeElement(notice) {
   if (notice.kind) article.setAttribute('data-spw-promo-kind', notice.kind);
   if (notice.ctaStyle) article.setAttribute('data-spw-promo-cta-style', notice.ctaStyle);
   if (notice.handles.length) article.setAttribute('data-spw-promo-handles', notice.handles.join(' '));
+  if (notice.cadenceDay) article.setAttribute('data-spw-cadence-day', notice.cadenceDay);
+  if (notice.cadenceMotion) article.setAttribute('data-spw-cadence-motion', notice.cadenceMotion);
+  if (notice.rewardKind) article.setAttribute('data-spw-reward-kind', notice.rewardKind);
+  if (notice.productionSeed) article.setAttribute('data-spw-production-seed', notice.productionSeed);
 
   const label = document.createElement('p');
   label.className = 'spw-discovery-notice__label';
@@ -378,6 +397,10 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
     theme: promotion.theme,
     handles: promotion.handles,
     ctaStyle: promotion.ctaStyle,
+    cadenceDay: promotion.cadenceDay,
+    cadenceMotion: promotion.cadenceMotion,
+    rewardKind: promotion.rewardKind,
+    productionSeed: promotion.productionSeed,
     copyUnit: cleanText(source.copyUnit || `home.discoveryNotice.${cadence}`),
     dismissKey: buildDismissKey(cadence, { ...source, href, title, summary }, scheduleKey, index),
   };
@@ -436,13 +459,89 @@ function mountNotices(visible, stack, dismissals) {
   return cleanup;
 }
 
+function removeNotice(article, root) {
+  article.classList.add('is-dismissing');
+  window.setTimeout(() => {
+    article.remove();
+    if (!root.childElementCount) root.remove();
+    clearRemoveEscapeListenerIfIdle();
+  }, NOTICE_HIDE_DELAY_MS);
+}
+
+export function showSpwDiscoveryNotice(raw = {}, options = {}) {
+  if (!document.body || document.body.dataset.spwDiscoveryNotices === 'off') return null;
+
+  const source = raw?.detail || raw || {};
+  const now = Date.now();
+  const notice = normalizeNotice(
+    {
+      ...source,
+      presentation: normalizePresentation(source.presentation || options.presentation || 'toast'),
+    },
+    cleanText(options.cadence || source.cadence || 'reward') || 'reward',
+    cleanText(options.scheduleKey || source.scheduleKey || `runtime-${now}`) || `runtime-${now}`,
+    Number.isFinite(options.index) ? options.index : 0,
+    cleanText(options.locale || source.locale || document.documentElement.lang || 'en') || 'en',
+  );
+
+  if (!notice) return null;
+
+  const stack = notice.presentation === 'modal' ? null : ensureStackRoot();
+  const modalRoot = notice.presentation === 'modal' ? ensureModalRoot() : null;
+  const root = modalRoot || stack;
+  const { article, dismiss } = createNoticeElement(notice);
+
+  root.append(article);
+
+  const cleanup = () => removeNotice(article, root);
+  dismiss.addEventListener('click', cleanup, { once: true });
+  article.querySelector('.spw-discovery-notice__cta')?.addEventListener('click', cleanup, { once: true });
+
+  if (notice.presentation === 'modal') {
+    article.focus({ preventScroll: true });
+  }
+
+  document.dispatchEvent(new CustomEvent('spw:discovery-notice-shown', {
+    detail: {
+      dismissKey: notice.dismissKey,
+      presentation: notice.presentation,
+      title: notice.title,
+      href: notice.href,
+      source: source.source || 'runtime',
+      cadence: notice.cadence,
+      cadenceDay: notice.cadenceDay,
+      cadenceMotion: notice.cadenceMotion,
+      rewardKind: notice.rewardKind,
+      productionSeed: notice.productionSeed,
+    },
+  }));
+
+  return { article, dismiss, notice, cleanup };
+}
+
+function handleDiscoveryReward(event) {
+  showSpwDiscoveryNotice(event.detail || {}, {
+    cadence: event.detail?.cadence || 'reward',
+    presentation: event.detail?.presentation || 'toast',
+  });
+}
+
 export async function initSpwDiscoveryNotices(ctx = {}) {
   if (document.body?.dataset?.spwDiscoveryNotices === 'off') return () => {};
+  document.addEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
+
+  const cleanupEventApi = () => {
+    document.removeEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
+  };
+
   if (document.querySelector('[data-promo-wonder-cycle]')) return () => {};
 
   const feed = await loadFeed();
   const { dismissals, visible } = buildVisibleNotices(feed);
-  if (!visible.length) return () => {};
+  if (!visible.length) {
+    ctx.addCleanup?.(cleanupEventApi);
+    return cleanupEventApi;
+  }
 
   const stack = ensureStackRoot();
   const cleanupItems = mountNotices(visible, stack, dismissals);
@@ -462,6 +561,7 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
     }
     removeEscapeListener();
     removeEscapeListener = () => {};
+    cleanupEventApi();
     stack.remove();
     document.querySelector(`[${MODAL_ATTR}]`)?.remove();
   };

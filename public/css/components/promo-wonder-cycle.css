@@ -89,6 +89,27 @@
     color-mix(in srgb, var(--home-surface-bg-muted) 94%, var(--home-surface-bg-strong) 6%);
 }
 
+/* Daily cards feel snappier and more immediate (return tomorrow signal). */
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="daily"] {
+  transition-duration: 160ms, 160ms, 120ms;
+  border-color: color-mix(in srgb, var(--home-accent-primary) 22%, var(--home-surface-border-color, transparent) 78%);
+}
+
+/* Cycle (13/26 release close) and streak carry heavier editorial weight. */
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="cycle"] {
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  border-color: color-mix(in srgb, var(--op-frame-color, var(--teal, #008080)) 18%, var(--home-surface-border-color, transparent) 82%);
+}
+
+:where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card[data-spw-cadence="streak"] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 7%, transparent), transparent 55%),
+    color-mix(in srgb, var(--home-surface-bg-muted) 90%, var(--home-surface-bg-strong) 10%);
+  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 24%, var(--home-surface-border-color, transparent) 76%);
+}
+
 :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card--wonder {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--home-accent-secondary) 9%, transparent), transparent 52%),

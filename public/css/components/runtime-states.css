@@ -128,6 +128,22 @@
   0 0 0 4px color-mix(in srgb, var(--component-accent) 7%, transparent);
 }
 
+:where(html[data-spw-connection-posture="offline"], html[data-spw-prefetch-mode="deferred"]) {
+  --spw-runtime-enhancement-intensity: min(var(--spw-runtime-enhancement-intensity, 0.5), 0.48);
+  --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.82);
+}
+
+:where(html[data-spw-connection-posture="offline"]) :where(.site-frame, .frame-panel, .frame-card) {
+  --component-accent:
+    color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
+}
+
+:where(html[data-spw-prefetch-mode="selective"]) :where([data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]) {
+  --spw-runtime-readiness-ring:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+  box-shadow: var(--spw-runtime-readiness-ring), var(--spw-local-shadow, var(--component-shadow, none));
+}
+
 
 /* ==========================================================================
    26. Accessibility and visibility

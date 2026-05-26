@@ -226,7 +226,7 @@
                 <div class="spw-narration" data-spw-textual-role="narration" data-spw-form="brace" data-spw-box-model="narration-card" data-spw-composition-flow="stack">
                     <p class="spw-narration__cue" data-spw-textual-role="cue">Current direction</p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text">
-                        A simple way to say it is: this site helps me practice through recipes, components, spells, study plans, and session notes, then share the ones worth reusing. The current metaphor is a cookbook with engineering notes in the margins. The test is whether a pattern can be read, reused, revised, and served to someone else without losing its source.
+                        A simple way to say it is: this site helps me practice through recipes, components, spells, study plans, and session notes, then share the ones worth reusing. The current metaphor is a cookbook with engineering notes in the margins, but I keep wondering how vegetables take shape as dimensions: length, volume, density, color, cut surface, and the relationships that change when they sit beside each other. The test is whether a pattern can be read, reused, revised, and served to someone else without losing its source.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
                        data-spw-semantic-expression="adult[study]{stay.sharp.return}">
@@ -267,8 +267,10 @@
                        data-spw-semantic-expression="technique[list]{shop.remember.scene}">
                         Culinary techniques are useful because they ask for inventory. If a page says bloom, temper,
                         deglaze, ferment, fold, or reduce, it can also suggest a shopping list, a memory character, and
-                        a scene. A cook learns what to buy; a software engineer learns what operation is happening; an
-                        RPG table gets a mnemonic creature or ritual that makes the concept easier to recall.
+                        a scene. Vegetables do that too: root depth, leaf spread, heft, tenderness, and neighborly
+                        pressure all change what a dish can become. A cook learns what to buy; a software engineer
+                        learns what operation is happening; an RPG table gets a mnemonic creature or ritual that makes
+                        the concept easier to recall.
                     </p>
                     <p class="spw-narration__text" data-spw-textual-role="narration-text"
                        data-spw-semantic-expression="handle[field-guide]{clear.without.widget}">
@@ -431,7 +433,7 @@
                 <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid">
                     <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
                     <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
-                    <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, timing, texture, and shared company.</span></a></li>
+                    <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, vegetable relationships, timing, texture, and shared company.</span></a></li>
                     <li><a href="/play/rpg-wednesday/" data-spw-operator="route"><strong>RPG Wednesday</strong><span>Promptable lore, session memory, trade ingredients, character pressure, and table-tested mechanics.</span></a></li>
                 </ul>
             </aside>
@@ -1309,6 +1311,31 @@
                     JavaScript is off, so this section will stay on its embedded fallback copy. The page still points to
                     a clear next step and a weekly question.
                 </p>
+                <!-- Time-forward defaults for crawlers / no-JS: the current daily cadence copy (kept in sync with
+                     promo-wonder-cycle.js DEFAULT_FEED on edits). Data attrs match the JS-rendered contract so
+                     narrative + catalog surfaces see the same copy units. Alternative text for future axiom changes
+                     can live in data-spw-copy-alt-json or sibling templates on these nodes. -->
+                <div class="promo-wonder-cycle__static-fallback" data-spw-copy-source="static-default" data-spw-static-for="promo-wonder-cycle">
+                    <article class="promo-wonder-cycle__card" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
+                        <p class="spec-kicker promo-wonder-cycle__label">Daily promo</p>
+                        <div class="promo-wonder-cycle__title-row">
+                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">@</span>
+                            <h3>Help the next release land</h3>
+                        </div>
+                        <p class="promo-wonder-cycle__summary">Releases are scheduled for the 13th and 26th of each month. The A cycle closes on the 13th, and the B cycle closes on the 26th. Small support keeps the work moving and makes the next page easier to ship.</p>
+                        <p class="promo-wonder-cycle__why">A direct contribution keeps the monthly cadence steady.</p>
+                        <a class="operator-chip promo-wonder-cycle__cta" href="/services/#support">Open support</a>
+                    </article>
+                    <article class="promo-wonder-cycle__card promo-wonder-cycle__card--wonder" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.wonder" data-spw-locale="en">
+                        <p class="spec-kicker promo-wonder-cycle__label">Daily wonder</p>
+                        <div class="promo-wonder-cycle__title-row">
+                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">?</span>
+                            <h3>What changes if the page has a reason to return tomorrow?</h3>
+                        </div>
+                        <p class="promo-wonder-cycle__summary">A site can feel alive when one small surface changes on a schedule. This slot is here to make that return legible.</p>
+                        <a class="operator-chip promo-wonder-cycle__cta" href="/about/website/">See the system</a>
+                    </article>
+                </div>
             </noscript>
         </div>
 

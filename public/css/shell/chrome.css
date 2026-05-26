@@ -2138,8 +2138,50 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   box-shadow: 0 24px 54px rgba(0, 0, 0, 0.14);
 }
 
+.spw-discovery-notice--popup {
+  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--op-object-color, #a67c00) 10%, transparent), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 97%, transparent);
+}
+
+.spw-discovery-notice[data-spw-cadence="daily"] {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal, #008080)) 16%, var(--line, rgba(14, 18, 20, 0.14)) 84%);
+}
+
 .spw-discovery-notice[data-spw-cadence="weekly"] {
   border-color: color-mix(in srgb, var(--op-probe-color, #4a2180) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
+}
+
+.spw-discovery-notice[data-spw-cadence="cycle"] {
+  border-color: color-mix(in srgb, var(--op-frame-color, var(--teal, #008080)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+}
+
+.spw-discovery-notice[data-spw-cadence="streak"] {
+  border-color: color-mix(in srgb, var(--op-object-color, #a67c00) 28%, var(--line, rgba(14, 18, 20, 0.14)) 72%);
+}
+
+.spw-discovery-notice[data-spw-cadence-motion]::before {
+  content: attr(data-spw-cadence-motion);
+  justify-self: start;
+  margin-bottom: -0.3rem;
+  padding: 0.18rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 64%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 36%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.04em;
+}
+
+/* Cadence-driven micro-variation on the motion label for rhythm feel (no new JS). */
+.spw-discovery-notice[data-spw-cadence="daily"][data-spw-cadence-motion]::before {
+  filter: saturate(0.92);
+}
+.spw-discovery-notice[data-spw-cadence="cycle"][data-spw-cadence-motion]::before,
+.spw-discovery-notice[data-spw-cadence="streak"][data-spw-cadence-motion]::before {
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
 
 .spw-discovery-notice[data-spw-promo-theme="glass"] {
@@ -2506,6 +2548,10 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   outline-offset: 1px;
 }
 
+.cauldron-ingredient[data-spw-ingredient-inspect="active"] {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 35%, transparent);
+}
+
 .cauldron-ingredient-op {
   font-weight: 700;
   color: var(--active-op-color, var(--component-accent, var(--teal)));
@@ -2569,6 +2615,52 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   opacity: 0.45;
   pointer-events: none;
   filter: saturate(0.6);
+}
+
+/* Lifecycle phases for memory gardening (additive, respects existing layers) */
+.cauldron-ingredient[data-spw-ingredient-phase="mature"] {
+  opacity: 0.78;
+  filter: saturate(0.75);
+}
+.cauldron-ingredient[data-spw-ingredient-phase="decayed"] {
+  opacity: 0.55;
+  text-decoration: line-through;
+  filter: grayscale(0.6) saturate(0.4);
+}
+
+.site-footer__cauldron[data-spw-cauldron-phase="mature"],
+.site-footer__cauldron[data-spw-cauldron-phase="resonant"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
+}
+
+/* Subtle gardening affordance on prune/plant/nourish when the garden has material */
+.site-footer__cauldron [data-spw-cauldron-action="prune"],
+.site-footer__cauldron [data-spw-cauldron-action="nourish"],
+.site-footer__cauldron [data-spw-cauldron-action="plant"] {
+  transition: opacity 120ms ease, filter 120ms ease;
+}
+.site-footer__cauldron[data-spw-cauldron-phase="gathering"] [data-spw-cauldron-action="prune"],
+.site-footer__cauldron[data-spw-cauldron-phase="resonant"] [data-spw-cauldron-action="prune"] {
+  opacity: 0.9;
+}
+
+[data-spw-cauldron-mirror] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+}
+
+[data-spw-cauldron-mirror] [data-spw-mirror-label] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
 }
 
 /* Header/nav transitional behavior tied to active runtime layers */

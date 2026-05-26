@@ -268,8 +268,9 @@
                         <h3 class="vibe-widget-title">Control when and how modules discover and activate</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        The runtime already exposes rich timing policy (normal / eager / defer / quiet / manual) plus per-module overrides.
-                        Use these to change targeting and discovery feel. The new <code>discoverRuntimeLoad()</code> surface makes the current decision inspectable.
+                        The runtime exposes timing policy (normal / eager / defer / quiet / manual), per-module overrides,
+                        and resource readiness. Use these to change targeting, discovery feel, and whether route modules should
+                        be prefetched, cached, or deferred for the current connection and offline posture.
                     </p>
                     <div aria-label="Load timing postures" class="vibe-widget-actions" role="group">
                         <a class="operator-chip" href="?runtime-timing=normal">Normal load</a>
@@ -280,6 +281,7 @@
                     </div>
                     <div class="vibe-widget-meta">
                         <span class="spec-pill">Try <code>window.__SPW_SITE__.discoverRuntimeLoad()</code> in console</span>
+                        <span class="spec-pill">Try <code>window.__SPW_SITE__.discoverRuntimeResources()</code> in console</span>
                     </div>
                 </article>
 
@@ -2153,14 +2155,15 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
             </header>
 
             <p class="frame-note">
-                These readouts describe what this browser is doing locally.
+                These readouts describe what this browser is doing locally. Cache, connection, and service worker state also
+                influence how aggressively the runtime prefetches modules or calms enhancement when a visit is offline or constrained.
             </p>
 
             <div class="settings-storage-guide" data-spw-feature="storage-guide">
                 <article class="settings-storage-guide__card">
                     <p class="settings-panel-kicker">Read this section</p>
                     <h3>Start with app status, then inspect persistence</h3>
-                    <p>Check install, service worker, cache, and connection first. Then inspect what will remain after a refresh or return visit.</p>
+                    <p>Check install, service worker, cache, and connection first. Then inspect what will remain after a refresh or return visit, and which module hints are already warm.</p>
                 </article>
                 <article class="settings-storage-guide__card">
                     <p class="settings-panel-kicker">Clear safely</p>
@@ -2241,7 +2244,8 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
 
             <p class="frame-note">
                 Settings are not isolated form fields. They flow into datasets, CSS variables, event bus diagnostics, and
-                progressively enhanced modules.
+                progressively enhanced modules. Module readiness, cauldron phases, and cadence discovery follow the same
+                rule: explicit state first, visual response second.
             </p>
 
             <aside class="frame-panel" data-spw-box-model="composition-note" data-spw-semantic-cluster="javascript layout storytelling settings">
@@ -2281,6 +2285,12 @@ spwCompose.controls.composition.snapshot().map(box => box.story)</code></pre>
                     <h3>4. Emit</h3>
                     <p>Canonical bus events announce settings, author mode, development shifts, and deviations.</p>
                     <code>bus.emit("settings:changed", settings)</code>
+                </article>
+
+                <article class="frame-panel" data-spw-box-model="runtime-step">
+                    <h3>5. Warm</h3>
+                    <p>Eligible modules declare whether they were considered, prefetched, cached, or deferred by connection posture.</p>
+                    <code>window.__SPW_SITE__.discoverRuntimeResources()</code>
                 </article>
 
                 <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-box-model="query-recipe-lab" data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">

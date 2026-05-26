@@ -101,6 +101,21 @@
   }
 }
 
+^rhythms_2026_05_B{
+  path: ~"../public/images/renders/2026-05-B-rhythms/"
+  purpose: `Culinary abstractions and fantastical gardening rhythms — plausible mathematical patterns (waves, spirals, repetition, cycles) rendered as quiet magic for gardeners, chefs, and parents.`
+  images: [
+    { name: "fermentation-bubble-choir.jpg", spirit: "bubble-choir", valence: "honk", role: "slow-signal" },
+    { name: "dough-tide-fold.jpg", spirit: "dough-tide", valence: "boon", role: "lunar-memory" },
+    { name: "pollination-golden-spiral.jpg", spirit: "golden-flight", valence: "boon", role: "visible-order" },
+    { name: "brassica-twilight-transformation.jpg", spirit: "brassica-veil", valence: "bane-to-boon", role: "hidden-work" },
+    { name: "knife-rhythm-lattice.jpg", spirit: "knife-lattice", valence: "bone", role: "repetition-as-grammar" }
+  ]
+  animation: { name: "fermentation-bubble-rhythm.mp4", spirit: "bubble-choir", role: "living-rhythm" }
+  optimization_complete: true
+  sidecars_present: true
+}
+
 ^"open_questions"{
   ?["Which images from the Midjourney render study are candidates for extraction to asset/illustrations?"]{ #:open }
   ?["What thematic motifs should be generated or commissioned for the motifs/ directory?"]{ #:open }

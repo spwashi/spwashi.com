@@ -679,3 +679,37 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.45;
   text-wrap: pretty;
 }
+
+:where([data-spw-image-reward], [data-spw-image-discovery]) {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--surface-strong, #fff) 72%, transparent),
+    0 0.6rem 1.6rem color-mix(in srgb, var(--shadow-color, #111) 8%, transparent);
+}
+
+:where([data-spw-image-reward], [data-spw-image-discovery])::after {
+  content: "? image seed";
+  position: absolute;
+  z-index: 2;
+  inset: 0.55rem 0.55rem auto auto;
+  max-inline-size: calc(100% - 1.1rem);
+  padding: 0.22rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  border-radius: var(--shape-micro, 4px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  color: var(--ink, currentColor);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  font-weight: 700;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+:where([data-spw-image-reward][data-spw-discovery-motion], [data-spw-image-discovery][data-spw-discovery-motion])::after {
+  content: "? " attr(data-spw-discovery-motion);
+}
+
+:where([data-spw-image-reward][data-spw-image-discovered="true"], [data-spw-image-discovery][data-spw-image-discovered="true"])::after {
+  content: "* discovered";
+}

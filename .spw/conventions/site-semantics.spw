@@ -179,6 +179,15 @@
   debug_rule: "The header, nav, and toggle carry the same snapshot vocabulary: mode, state, phase, pressure, topology, intent, clarity, and changed axes."
 }
 
+^"runtime_resource_contract"{
+  definition: "Runtime resources are progressive modules and supporting assets whose readiness can be known before the behavior is mounted."
+  privacy_rule: "Resource readiness may inspect same-origin Cache API and service-worker state, but it must not persist new visitor profiles or prefetch third-party resources."
+  prefetch_rule: "Prefetch only route- and selector-eligible modules, and skip it for offline, data-saver, quiet, or manual runtime postures."
+  offline_rule: "Offline and constrained connections should calm rendering through document-level tokens instead of pretending the same theme intensity fits every context."
+  html_tokens: #[`data-spw-connection-posture`, `data-spw-prefetch-mode`, `data-spw-prefetch-count`, `data-spw-cached-module-count`, `data-spw-service-worker-prefetch`, `data-spw-service-worker-cache-state`, `data-spw-service-worker-cache-entries`][reg=set]
+  inspection_rule: "Expose resource readiness beside module definitions so editors can see considered modules, mounted modules, cached modules, and skipped prefetch work in one place."
+}
+
 ^"promo_presentation_contract"{
   definition: "Promo feed entries carry a brief, a route, and optional persuasion notes so teammates can copy, paste, and restate the promotion without knowing the original context."
   feed_contract: "Use promotionPlaybook for the general kind-level brief, and promotion for per-item audience, offer, proof, objection, urgency, tone, theme, handles, ctaStyle, and presentation."
@@ -412,8 +421,8 @@ frame #social-kitchen-grammar
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime
-  concept lifecycle component_genomics page_state
-  note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention."
+  concept lifecycle component_genomics page_state cauldron spell memory_gardening
+  note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention. Cauldron and spell surfaces extend the model with explicit phases (gathering | resonant | mature | decayed) and gardening actions so semantic memory itself becomes a tended, inspectable rhythm rather than an opaque list."
 
 frame #svg-art-runtime
   role concept
