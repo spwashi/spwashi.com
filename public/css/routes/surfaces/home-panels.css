@@ -437,11 +437,15 @@
     grid-template-areas:
         "brace identity"
         "meta meta"
-        "modes modes";
+        "modes modes"
+        "preview preview"
+        "inspect inspect";
   }
 
   :where(#home-frame .frame-topline > .mode-switch),
-  :where(#home-frame .frame-topline > .spw-component-meta) {
+  :where(#home-frame .frame-topline > .spw-component-meta),
+  :where(#home-frame .frame-topline > .home-lens-preview),
+  :where(#home-frame .frame-topline > .home-copy-inspector) {
     justify-self: stretch;
     justify-content: flex-start;
   }

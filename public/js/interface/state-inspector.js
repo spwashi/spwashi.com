@@ -93,6 +93,9 @@ function snapshotStateDimensions() {
       modules: window.__SPW_SITE__?.snapshotModules?.() || [],
       resources: window.__SPW_SITE__?.discoverRuntimeResources?.() || [],
       deepLinks: window.__SPW_SITE__?.discoverDeepLinks?.() || [],
+      beats: window.__SPW_SITE__?.beats?.listActive?.() || (window.__SPW_SITE__?.beats?.snapshot?.() || null),
+      // Rich positional/time context from latest beat artifacts (when available)
+      positionContext: (window.__SPW_SITE__?.beats?.snapshot?.()?.lastContext || null),
     },
     state: {
       html: pickDataset(root.dataset),
@@ -241,7 +244,7 @@ async function copySnapshot(root) {
   try {
     await navigator.clipboard?.writeText(serialized);
     updateStatus(root, 'Copied state snapshot.');
-    emitFeedback('Copied a state snapshot with route, accessibility, layering, runtime, and dataset dimensions.', 'copy');
+    emitFeedback('Copied a state snapshot with route, accessibility, layering, runtime (incl. beats), and dataset dimensions.', 'copy');
   } catch {
     updateStatus(root, 'Snapshot ready in console.');
     console.info('[state inspector snapshot]', snapshot);

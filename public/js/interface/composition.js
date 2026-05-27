@@ -70,7 +70,9 @@ function handleCauldronUIActions(e) {
 
   if (mixBtn) {
     const result = mixIngredients();
-    showOutput(result);
+    const html = typeof result === 'string' ? result : result.html || result;
+    showOutput(html);
+    // Functional result available for agents/spells: result.functional
     e.preventDefault();
   }
 
@@ -517,6 +519,19 @@ export function mixIngredients() {
   const expressions = ingredients.map(i => i.expression);
   const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))];
 
+  // Functional application support: return structured data for programmatic use (spells, agents, beats)
+  const functionalMix = {
+    ingredients: ingredients.map(i => ({ ...i })),
+    operators,
+    expressions,
+    // Brace/physics context for enhanced emergence (reads current site state for "physics" of the cast)
+    braceContext: document.documentElement?.dataset?.spwActiveBraceForm || 'brace',
+    physicsContext: {
+      rhythmTempo: getComputedStyle(document.documentElement).getPropertyValue('--spw-site-rhythm-tempo').trim() || '1',
+      climate: document.documentElement?.dataset?.spwDevelopmentalClimate || 'neutral',
+    },
+  };
+
   // Build a readable "Combination Record" using Spw-style markup
   let combinationHtml = `
     <div class="cauldron-combination-record">
@@ -527,28 +542,34 @@ export function mixIngredients() {
       <div class="cauldron-expressions">
         ${expressions.map(expr => `<code data-spw-semantic-expression="${escapeHtml(expr)}">${escapeHtml(expr)}</code>`).join(' <span class="cauldron-plus">+</span> ')}
       </div>
+      <details class="cauldron-functional" data-spw-functional-application>
+        <summary>Functional mix (for agents/spells)</summary>
+        <pre data-spw-semantic-expression="mix[functional]{${operators.join('+')}}"><code>${escapeHtml(JSON.stringify(functionalMix, null, 2))}</code></pre>
+      </details>
     </div>
   `;
 
-  // One deliberately non-authoritative crystallization
+  // One deliberately non-authoritative crystallization, now enhanced with brace/physics awareness
   const labels = ingredients.map(i => i.label);
-  const prompt = `One scene in which ${labels.join(' and ')} interact, organized by the expressions above.`;
+  const physicsNote = ` (rhythm ${functionalMix.physicsContext.rhythmTempo}, ${functionalMix.physicsContext.climate} climate, ${functionalMix.braceContext} form)`;
+  const prompt = `One scene in which ${labels.join(' and ')} interact, organized by the expressions above${physicsNote}.`;
 
-  // Deeper semantic projection: suggest a "cast form" that names the emergent liminality
+  // Deeper semantic projection: suggest a "cast form" that names the emergent liminality + physics
   const forceCount = operators.length;
   const suggestedLiminality = forceCount >= 4 ? 'deep' : forceCount >= 3 ? 'nested' : forceCount >= 2 ? 'settled' : 'threshold';
-  const castForm = `cast[${suggestedLiminality}]{${operators.join('+')}}`;
+  const castForm = `cast[${suggestedLiminality}:${functionalMix.braceContext}]{${operators.join('+')}} ${functionalMix.physicsContext.climate}`;
 
   let crystallizationHtml = `
-    <div class="cauldron-crystallization" data-spw-cast-form="${escapeHtml(castForm)}" data-spw-liminality="${suggestedLiminality}">
-      <p class="cauldron-section-label">One possible crystallization (mnemonic / prompt)</p>
-      <p class="cauldron-mnemonic-note">This is one contingent phrasing someone derived from the combination above. Its value is not general — test it specifically against your own material and observe what actually transfers.</p>
+    <div class="cauldron-crystallization" data-spw-cast-form="${escapeHtml(castForm)}" data-spw-liminality="${suggestedLiminality}" data-spw-brace-physics="${functionalMix.braceContext}">
+      <p class="cauldron-section-label">One possible crystallization (mnemonic / prompt) — brace/physics aware</p>
+      <p class="cauldron-mnemonic-note">This is one contingent phrasing someone derived from the combination above. Its value is not general — test it specifically against your own material and observe what actually transfers. Includes current brace form and site physics for richer emergence.</p>
       <div class="cauldron-mnemonic">${escapeHtml(prompt)}</div>
       <p class="cauldron-test-prompt">Try using the exact expressions from the Combination Record on a real page or frame. Notice what the operators actually do in situ. Suggested cast form: <code data-spw-semantic-expression="${escapeHtml(castForm)}">${escapeHtml(castForm)}</code></p>
     </div>
   `;
 
-  return combinationHtml + crystallizationHtml;
+  // Return both human HTML and functional data for spells/agents/beats
+  return { html: combinationHtml + crystallizationHtml, functional: functionalMix };
 }
 
 export function clearCauldron() {
@@ -561,3 +582,34 @@ export const initCompositionSpell = initCauldron;
 
 /* Public helpers for runtime mirrors, design labs, and inline instrumentation */
 export { computeCauldronPhase, computeIngredientPhase, pruneStale, nourishIngredient, getCauldron as getCauldronIngredients };
+
+/**
+ * Capture current observation beat/artifact as a cauldron ingredient (Phase 3 QA integration).
+ * Wires beats directly into spell/cauldron architecture.
+ */
+export async function captureBeatAsIngredient() {
+  try {
+    const mod = await import('/public/js/runtime/observation-beats.js');
+    const artifact = mod.captureCurrentBeatArtifact({ source: 'cauldron-capture' });
+    if (artifact) {
+      const ingredients = getCauldron();
+      ingredients.push({
+        expression: `beat[qa]{${artifact.id || 'current'}}`,
+        label: `Observation beat ${artifact.id?.slice(-6) || ''}`,
+        operator: '#>',
+        wonder: 'trace',
+        capturedAt: Date.now(),
+        origin: 'qa-beat',
+        context: artifact.mode,
+        beatArtifact: artifact,  // full functional payload
+      });
+      const trimmed = ingredients.slice(-6);
+      saveCauldron(trimmed);
+      bus.emit('cauldron:updated', { count: trimmed.length, source: 'beat-capture' });
+      return artifact;
+    }
+  } catch (e) {
+    console.warn('[cauldron] beat capture failed', e);
+  }
+  return null;
+}

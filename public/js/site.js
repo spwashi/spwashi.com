@@ -324,6 +324,42 @@ function requestServiceWorkerCacheSummary() {
   }
 }
 
+/* Temporary debug-only guard for layout shift instrumentation.
+   The layout-shift-audit module (and its 5s mutation + mount timing collectors)
+   only loads when ?debug=layout or ?log=layout-shift (or spw- aliases).
+   This keeps production free of the observer and extra diagnostics. */
+function shouldActivateLayoutDebugInstrumentation() {
+  try {
+    const search = (typeof window !== 'undefined' && window.location) ? window.location.search : '';
+    const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+    const debugRaw = String(params.get('debug') || params.get('spw-debug') || '').toLowerCase();
+    const logRaw = String(params.get('log') || params.get('spw-log') || '').toLowerCase();
+    const debugTokens = debugRaw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
+    const logTokens = logRaw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
+    const wantsLayout = debugTokens.some((t) => t === 'layout' || t === 'layout-shift' || t.includes('layout'));
+    const wantsLogLayout = logTokens.some((t) => t.includes('layout'));
+    return wantsLayout || wantsLogLayout;
+  } catch {
+    return false;
+  }
+}
+
+function hasDebugOrQAMode(ctx) {
+  if (ctx?.debug?.size && [...ctx.debug].some((token) => ['qa', 'agent', 'beat', 'layout', 'debug'].includes(token))) {
+    return true;
+  }
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const qa = String(params.get('qa') || params.get('spw-qa') || '').toLowerCase();
+    const mode = String(params.get('mode') || params.get('spw-mode') || '').toLowerCase();
+    return qa.includes('qa') || qa.includes('beat') || qa.includes('screenshot') || mode.includes('qa');
+  } catch {
+    return false;
+  }
+}
+
+
 /* ==========================================================================
    3. Bus facade
    ========================================================================== */
@@ -1585,6 +1621,20 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'observation-beats',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    debugOnly: true,  // Enhanced gating via shouldScheduleDefinition + ctx.debug
+    describes: 'beat[window] qa[observation] lifecycle[page+region+component+cauldron] consequence[traceable]',
+    updates: ['data-spw-active-beat', 'data-spw-active-beat-state', 'data-spw-last-beat-id', 'data-spw-module-consequence'],
+    load: () => import('./runtime/observation-beats.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initObservationBeats;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'svg-filters',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -1970,6 +2020,13 @@ const ENHANCEMENT_DEFS = [
   },
 ];
 
+if (!shouldActivateLayoutDebugInstrumentation()) {
+  // Remove layout-shift-audit from enhancement list unless explicitly requested via
+  // ?debug=layout or ?log=layout-shift. This makes the (expanded) audit debug-only.
+  const layoutIdx = ENHANCEMENT_DEFS.findIndex((d) => d && d.id === 'layout-shift-audit');
+  if (layoutIdx >= 0) ENHANCEMENT_DEFS.splice(layoutIdx, 1);
+}
+
 const MODULE_DEFS = [
   ...CORE_DEFS,
   ...FEATURE_DEFS,
@@ -2169,6 +2226,8 @@ function inferModuleDimensions(def) {
   if (/settings|tune|local|memory|storage|pwa/.test(text)) dimensions.add('state');
   if (/spell|haptic|gesture|experiential|interaction|pointer|mode/.test(text)) dimensions.add('interaction');
   if (/payment|service|rpg|blog|media|design/.test(text)) dimensions.add('surface');
+  if (/lifecycle|phase|state|beat|observation|cauldron|region|page-state/.test(text)) dimensions.add('lifecycle');
+  if (/qa|agent|debug|inspect|beat|observation/.test(text)) dimensions.add('qa-observation');
 
   if (def.evaluates) {
     String(def.evaluates)
@@ -2189,7 +2248,13 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const onlyMatch = !ctx.runtimePolicy.only.size || ctx.runtimePolicy.only.has(id);
   const skipMatch = ctx.runtimePolicy.skip.has(id);
   const whenMatch = expectedWhen ? effectiveWhen === expectedWhen : effectiveWhen !== 'manual';
-  const allowed = routeMatch && selectorMatch && onlyMatch && !skipMatch && whenMatch;
+
+  // Enhanced debug/QA module gating (supports observation-beats, layout-shift-audit, future agent surfaces)
+  const debugOnly = !!def.debugOnly;
+  const debugActive = hasDebugOrQAMode(ctx);
+  const debugMatch = !debugOnly || debugActive;
+
+  const allowed = routeMatch && selectorMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
 
   if (!allowed && ctx.runtimePolicy.audit) {
     const reason = [
@@ -2198,6 +2263,7 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
       onlyMatch ? '' : 'outside-module-only',
       skipMatch ? 'module-skip' : '',
       whenMatch ? '' : `waiting-for-${effectiveWhen}`,
+      debugOnly && !debugActive ? 'debug-only-gated' : '',
     ].filter(Boolean).join(' ') || 'not-scheduled';
     const auditKey = `${id}:${expectedWhen || 'any'}:${reason}`;
     if (ctx.moduleSkipAuditKeys.has(auditKey)) return allowed;
@@ -3254,6 +3320,25 @@ window.__SPW_SITE__ = {
     inspect: (target) => describeGestureTarget(target),
     list: (root = document) => snapshotGestureTargets(root),
     seeds: () => GESTURE_SPELL_SEEDS.slice(),
+  },
+  beats: {
+    snapshot: () => {
+      try {
+        // Lazy to keep surface small when not debug-gated
+        return import('./runtime/observation-beats.js').then(m => m.snapshotObservationBeats?.() || { active: [], contract: null });
+      } catch {
+        return { active: [], contract: null };
+      }
+    },
+    listActive: () => {
+      // Fallback sync view via DOM when module not fully loaded
+      const root = document.documentElement;
+      return root.dataset.spwActiveBeat ? [{
+        id: root.dataset.spwActiveBeat,
+        state: root.dataset.spwActiveBeatState || 'gathering',
+        reason: root.dataset.spwActiveBeatReason || 'qa',
+      }] : [];
+    },
   },
   routes: {
     current: () => describeCurrentPageSample(document),

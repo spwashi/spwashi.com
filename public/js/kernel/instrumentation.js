@@ -609,11 +609,12 @@ export function applySpwQueryDisposition(target = globalThis.document?.documentE
 export function snapshotInstrumentationTarget(target, options = {}) {
   const element = resolveTarget(target, options.root);
   if (!element) return null;
+  const dataset = element.dataset || {};
 
   const selector = element.id
     ? `#${element.id}`
-    : element.dataset.spwInspect
-      ? `[data-spw-inspect="${element.dataset.spwInspect}"]`
+    : dataset.spwInspect
+      ? `[data-spw-inspect="${dataset.spwInspect}"]`
       : element.matches?.(DEFAULT_TARGET_SELECTOR)
         ? DEFAULT_TARGET_SELECTOR
         : element.tagName.toLowerCase();
@@ -632,7 +633,7 @@ export function snapshotInstrumentationTarget(target, options = {}) {
     dataset: readSpwDataset(element),
     cssTokens,
     tuning: Object.fromEntries(
-      Object.entries(element.dataset)
+      Object.entries(dataset)
         .filter(([key]) => key.startsWith(TUNING_PREFIX))
         .sort(([left], [right]) => left.localeCompare(right))
     ),
@@ -708,6 +709,8 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     css: queryPresets.css.href,
     inspect: queryPresets.inspect.href,
     screenshot: queryPresets.screenshot.href,
+    // New Screenshot QA Mode — rich semantic visibility + beat-based observation + easy artifact export
+    'screenshot-qa': '?qa=screenshot-qa&debug=qa,layout,agent&log=layout-shift,observation-beats,cauldron&log-level=debug&meaning=inspect&physics=screenshot',
     readable: queryPresets.readable.href,
     calm: queryPresets.calm.href,
     puppet: queryPresets.puppet.href,
@@ -726,6 +729,21 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     query: (target = globalObject.document?.documentElement, queryOptions = {}) => applySpwQueryDisposition(target, { ...queryOptions, source: options.namespace || 'spw-compose' }),
     reflow: (target, reason, details = {}) => markReflowReason(target, reason, { ...details, source: options.namespace || 'spw-compose' }),
     tune: (target, entries = {}) => writeTuningAttributes(target, entries, { source: options.namespace || 'spw-compose' }),
+
+    // Phase 3 agent/QA surface (gated behind ?debug=qa|agent or ?qa=screenshot-qa)
+    beats: {
+      create: (duration, opts) => {
+        // Lazy import to keep surface small when not in QA mode
+        return import('/public/js/runtime/observation-beats.js').then(m => m.createBeatWindow(duration, opts));
+      },
+      startQA: (opts) => import('/public/js/runtime/observation-beats.js').then(m => m.startQABeat(opts)),
+      captureArtifact: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
+      getActive: () => import('/public/js/runtime/observation-beats.js').then(m => m.getActiveBeats()),
+    },
+    qa: {
+      enterScreenshotMode: () => applySpwQueryDisposition(document.documentElement, { search: '?qa=screenshot-qa' }),
+      capture: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
+    },
   });
 
   globalObject[apiName] = api;

@@ -293,6 +293,192 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
 
   ctx.layoutShiftAudit = auditApi;
 
+  /* ----------------------------------------------------------------------
+     Debug-only post-load instrumentation (activated only when the module
+     itself was mounted via ?debug=layout or ?log=layout-shift guard in site.js).
+     Records:
+       - module mount timings (initial snapshot + live for first 5s)
+       - first-5s DOM mutations on html/body/header/#home-frame/floating-chrome
+     All behind the mount gate; zero production impact when flag absent.
+     Existing CLS source/rect recording (snapshotSource + normalizeEntry) is kept.
+  ---------------------------------------------------------------------- */
+  const DEBUG_WINDOW_MS = 5000;
+  const auditStart = performance.now();
+  const debugMutations = [];
+  const debugModuleMounts = [];
+  let mutationObserver = null;
+  let mountCleanup = null;
+  let debugStopTimer = null;
+
+  const roundValueLocal = (v) => roundValue(v); // reuse existing
+  const formatRectLocal = (r) => formatRect(r);
+
+  function describeDebugTarget(node) {
+    if (!node) return { tag: 'unknown' };
+    if (node.nodeType === 3) return { text: String(node.textContent || '').slice(0, 80) };
+    if (node.nodeType !== 1) return { nodeType: node.nodeType };
+    const el = node;
+    return {
+      tag: (el.tagName || '').toLowerCase(),
+      id: el.id || '',
+      classes: el.classList ? [...el.classList].slice(0, 5) : [],
+      spw: Object.keys(el.dataset || {}).filter((k) => k.startsWith('spw')).slice(0, 6),
+    };
+  }
+
+  function getDebugRect(el) {
+    if (!el || typeof el.getBoundingClientRect !== 'function') return null;
+    try {
+      const r = el.getBoundingClientRect();
+      return formatRectLocal({ x: r.x, y: r.y, width: r.width, height: r.height });
+    } catch { return null; }
+  }
+
+  function isKeyLayoutSurface(el) {
+    if (!el || !el.tagName) return false;
+    const tag = el.tagName.toUpperCase();
+    if (tag === 'HTML' || tag === 'BODY' || tag === 'HEADER') return true;
+    if (el.id === 'home-frame') return true;
+    if (el.hasAttribute && el.hasAttribute('data-spw-floating-chrome')) return true;
+    if (tag === 'SPW-SITE-HEADER') return true;
+    return false;
+  }
+
+  function recordModuleMountTiming(detail = {}) {
+    const t = performance.now();
+    if (t - auditStart > DEBUG_WINDOW_MS) return;
+    debugModuleMounts.push({
+      id: detail.baseId || detail.id || 'unknown',
+      layer: detail.layer || '',
+      mountedAt: roundValueLocal(t),
+      relativeMs: roundValueLocal(t - auditStart),
+      durationMs: detail.durationMs != null ? roundValueLocal(detail.durationMs) : null,
+      loadMs: detail.loadMs != null ? roundValueLocal(detail.loadMs) : null,
+    });
+  }
+
+  // Snapshot already-mounted modules at audit init time (many immediate layers precede this enhancement)
+  if (ctx?.registry && typeof ctx.registry.values === 'function') {
+    for (const rec of ctx.registry.values()) {
+      if (rec && rec.mountedAt != null) {
+        debugModuleMounts.push({
+          id: rec.baseId || rec.id || 'unknown',
+          layer: rec.layer || '',
+          mountedAt: roundValueLocal(rec.mountedAt),
+          relativeMs: roundValueLocal(rec.mountedAt - auditStart),
+          durationMs: rec.durationMs != null ? roundValueLocal(rec.durationMs) : null,
+          loadMs: rec.loadMs != null ? roundValueLocal(rec.loadMs) : null,
+          initial: true,
+        });
+      }
+    }
+  }
+
+  // Live subscription for modules that mount during the 5s window
+  if (ctx?.bus && typeof ctx.bus.on === 'function') {
+    const unsub = ctx.bus.on('spw:module-mounted', recordModuleMountTiming);
+    mountCleanup = () => { try { unsub && unsub(); } catch {} };
+  } else {
+    const handler = (ev) => recordModuleMountTiming(ev && ev.detail ? ev.detail : {});
+    document.addEventListener('spw:module-mounted', handler, false);
+    mountCleanup = () => { try { document.removeEventListener('spw:module-mounted', handler, false); } catch {} };
+  }
+
+  // 5s DOM mutation observer focused on surfaces that commonly host post-load shifts
+  if (typeof MutationObserver === 'function') {
+    mutationObserver = new MutationObserver((mutationList) => {
+      const now = performance.now();
+      if (now - auditStart > DEBUG_WINDOW_MS) {
+        if (mutationObserver) { try { mutationObserver.disconnect(); } catch {} }
+        return;
+      }
+      for (const mut of mutationList) {
+        if (debugMutations.length >= 64) break;
+        const tEl = (mut.target && mut.target.nodeType === 1) ? mut.target : (mut.target ? mut.target.parentElement : null);
+        const rec = {
+          t: roundValueLocal(now - auditStart),
+          type: mut.type,
+          target: describeDebugTarget(mut.target),
+          added: mut.addedNodes ? mut.addedNodes.length : 0,
+          removed: mut.removedNodes ? mut.removedNodes.length : 0,
+          attr: mut.attributeName || null,
+          old: mut.oldValue != null ? String(mut.oldValue).slice(0, 60) : null,
+        };
+        if (tEl && isKeyLayoutSurface(tEl)) {
+          rec.keySurface = true;
+          rec.rect = getDebugRect(tEl);
+        }
+        debugMutations.push(rec);
+      }
+    });
+
+    const observeTargets = [
+      document.documentElement,
+      document.body,
+      document.getElementById('home-frame'),
+      document.querySelector('spw-site-header'),
+      document.querySelector('header'),
+      ...Array.from(document.querySelectorAll('[data-spw-floating-chrome]')),
+    ].filter((el, idx, arr) => el && arr.indexOf(el) === idx);
+
+    for (const t of observeTargets) {
+      try {
+        mutationObserver.observe(t, {
+          childList: true,
+          attributes: true,
+          characterData: true,
+          subtree: true,
+          attributeOldValue: true,
+          characterDataOldValue: true,
+        });
+        ctx?.addObserver?.(mutationObserver);
+      } catch {}
+    }
+
+    debugStopTimer = setTimeout(() => {
+      flushAndStopDebugCollectors();
+    }, DEBUG_WINDOW_MS + 80);
+    if (ctx?.addTimer) ctx.addTimer(debugStopTimer);
+  }
+
+  function flushAndStopDebugCollectors() {
+    if (debugStopTimer) { try { clearTimeout(debugStopTimer); } catch {} debugStopTimer = null; }
+    if (mutationObserver) {
+      try { mutationObserver.disconnect(); } catch {}
+      ctx?.observers?.delete?.(mutationObserver);
+      mutationObserver = null;
+    }
+    if (typeof mountCleanup === 'function') {
+      try { mountCleanup(); } catch {}
+      mountCleanup = null;
+    }
+    if (debugMutations.length || debugModuleMounts.length) {
+      const payload = {
+        windowMs: DEBUG_WINDOW_MS,
+        startedAt: roundValueLocal(auditStart),
+        mutationCount: debugMutations.length,
+        moduleMountCount: debugModuleMounts.length,
+        mutations: debugMutations.slice(0, 40),
+        moduleMounts: debugModuleMounts.slice(0, 40),
+        capturedAt: roundValueLocal(performance.now()),
+      };
+      logger.debug('layout debug: 5s post-mount DOM + module timing', payload, SPW_LOG_RELATIONSHIPS.MEASURE);
+      try {
+        if (ctx?.bus?.emit) ctx.bus.emit('spw:layout-shift-debug', payload);
+        window.__spwLayoutDebug = { ...(window.__spwLayoutDebug || {}), last: payload };
+      } catch {}
+    }
+  }
+
+  // expose for console / state inspector during debug sessions
+  try {
+    auditApi.debug = {
+      get mutations() { return [...debugMutations]; },
+      get moduleMounts() { return [...debugModuleMounts]; },
+      flush: flushAndStopDebugCollectors,
+    };
+  } catch {}
+
   const emit = (detail, level = 'warn') => {
     const payload = {
       ...detail,
@@ -351,6 +537,11 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     clearAuditDataset(ctx);
     if (ctx.layoutShiftAudit === auditApi) {
       ctx.layoutShiftAudit = null;
+    }
+
+    // Stop any active 5s debug collectors (mutation + mount listeners)
+    if (typeof flushAndStopDebugCollectors === 'function') {
+      try { flushAndStopDebugCollectors(); } catch {}
     }
   };
 

@@ -361,6 +361,28 @@
   }
 }
 
+/* ==========================================================================
+   Context feedback (size + content tone) — Phase 1 of context-sensitive variants
+   These attrs are written at runtime by the composition box model resolver.
+   They let frames/cards feel their actual container situation and content pressure.
+   Explicit author values win; the rules below are additive and safe.
+   ========================================================================== */
+
+:where(.site-frame[data-spw-size-context="narrow-hero"],
+       .site-frame[data-spw-size-context="narrow-panel"]) {
+  --surface-padding: clamp(0.7rem, 2.2vw, 1.05rem);
+  --surface-gap: clamp(0.7rem, 1.6vw, 0.95rem);
+}
+
+:where(.site-frame[data-spw-content-tone="dense"],
+       .site-frame[data-spw-content-tone="operator-heavy"]) {
+  --surface-gap: calc(var(--surface-gap, 1rem) * 0.82);
+}
+
+:where(.site-frame[data-spw-content-tone="light"]) {
+  --surface-gap: calc(var(--surface-gap, 1rem) * 1.15);
+}
+
 
 /* ==========================================================================
    15. Metamaterial selectors

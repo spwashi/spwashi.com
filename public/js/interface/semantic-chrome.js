@@ -43,7 +43,8 @@ const GENERIC_CONTEXT_TEXTS = new Set(['analysis', 'reading', 'routing', 'settin
 const GENERIC_ROLE_TEXTS = new Set(['reference', 'orientation', 'routing', 'context', 'vessel']);
 
 function shouldExposeSemanticSeam() {
-  return HTML.dataset.spwShowSemanticMetadata === 'on' || HTML.dataset.spwDebugMode === 'on';
+  const root = document.documentElement;
+  return root.dataset.spwShowSemanticMetadata === 'on' || root.dataset.spwDebugMode === 'on';
 }
 
 function uniqueByText(items = []) {

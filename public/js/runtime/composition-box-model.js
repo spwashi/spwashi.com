@@ -46,6 +46,28 @@ const PRESENCE_STATES = Object.freeze({
   OVERFULL: 'overfull',
 });
 
+/* New context feedback (Phase 1 of context-sensitive variants work).
+   These close the loop: components now report their *effective* size role
+   and rough content pressure back into stable data-spw-* attrs that CSS
+   and agents can read. Explicit author values always win. */
+const SIZE_CONTEXTS = Object.freeze({
+  NARROW_HERO: 'narrow-hero',
+  NARROW_PANEL: 'narrow-panel',
+  COMFORTABLE: 'comfortable',
+  WIDE_HERO: 'wide-hero',
+  WIDE_PANEL: 'wide-panel',
+  DENSE_GRID: 'dense-grid',
+});
+
+const CONTENT_TONES = Object.freeze({
+  LIGHT: 'light',
+  BALANCED: 'balanced',
+  DENSE: 'dense',
+  OPERATOR_HEAVY: 'operator-heavy',
+  MEDIA_DOMINANT: 'media-dominant',
+  TEXT_LONG: 'text-long',
+});
+
 const normalizeToken = (value = '') => String(value)
   .trim()
   .toLowerCase()
@@ -127,6 +149,47 @@ function resolveCompositionRole(el, box) {
   return 'component';
 }
 
+/* Context feedback resolvers (new for context-sensitive variants).
+   These are deliberately lightweight and conservative: explicit author data-*
+   attributes win; otherwise we derive stable, useful signals from the box
+   we already compute + role + light structural heuristics. */
+function resolveSizeContext(el, box, role) {
+  const explicit = el.dataset.spwSizeContext || el.dataset.spwSize || '';
+  if (explicit) return normalizeToken(explicit);
+
+  const measure = resolveMeasure(box);
+  const isHeroish = role === 'stage' || el.matches('.site-hero, [data-spw-liminality="entry"]');
+  const isGridish = el.matches('.frame-grid, [data-spw-composition-flow="grid"]') || box.childCount >= 3;
+
+  if (measure === 'narrow') {
+    return isHeroish ? SIZE_CONTEXTS.NARROW_HERO : SIZE_CONTEXTS.NARROW_PANEL;
+  }
+  if (measure === 'compact' || measure === 'comfortable') {
+    return isGridish ? SIZE_CONTEXTS.DENSE_GRID : 'comfortable';
+  }
+  // wide+
+  if (isHeroish) return SIZE_CONTEXTS.WIDE_HERO;
+  if (isGridish) return SIZE_CONTEXTS.DENSE_GRID;
+  return SIZE_CONTEXTS.WIDE_PANEL;
+}
+
+function resolveContentTone(el, box) {
+  const explicit = el.dataset.spwContentTone || el.dataset.spwContentDensity || '';
+  if (explicit) return normalizeToken(explicit);
+
+  const textLen = (el.textContent || '').trim().length;
+  const opCount = el.querySelectorAll?.('[data-spw-operator], .operator-chip, .frame-sigil').length || 0;
+  const mediaCount = el.querySelectorAll?.('img, picture, video, svg, canvas').length || 0;
+  const childDensity = box.childCount / Math.max(1, (box.inlineSize || 300) / 100);
+
+  if (mediaCount >= 2 && opCount <= 1) return CONTENT_TONES.MEDIA_DOMINANT;
+  if (opCount >= 3 && textLen < 600) return CONTENT_TONES.OPERATOR_HEAVY;
+  if (textLen > 1200 && opCount <= 2 && mediaCount <= 1) return CONTENT_TONES.TEXT_LONG;
+  if (childDensity > 1.8 || box.childCount >= 6) return CONTENT_TONES.DENSE;
+  if (textLen < 280 && opCount <= 1 && mediaCount <= 1) return CONTENT_TONES.LIGHT;
+  return CONTENT_TONES.BALANCED;
+}
+
 function describeBox(el, box, role, presence) {
   const label = el.id || el.dataset.spwFeature || el.dataset.spwInspect || role;
   const action = presence === PRESENCE_STATES.OVERFULL
@@ -135,7 +198,12 @@ function describeBox(el, box, role, presence) {
       ? 'is waiting for copy, controls, or a visible outcome'
       : 'is ready to support reading, tuning, or navigation';
 
-  return `${label}: ${role} uses ${box.flow} flow at ${resolveMeasure(box)} measure and ${action}.`;
+  // Include new size/content context in the narrative when available (Phase 1)
+  const size = el.dataset.spwSizeContext || resolveSizeContext(el, box, role);
+  const tone = el.dataset.spwContentTone || resolveContentTone(el, box);
+  const contextNote = size || tone ? ` (${size || ''}${size && tone ? ' · ' : ''}${tone || ''})` : '';
+
+  return `${label}: ${role} uses ${box.flow} flow at ${resolveMeasure(box)} measure${contextNote} and ${action}.`;
 }
 
 export function snapshotCompositionBox(target, options = {}) {
@@ -148,12 +216,16 @@ export function snapshotCompositionBox(target, options = {}) {
   const role = resolveCompositionRole(el, box);
   const presence = resolvePresence(box);
   const measure = resolveMeasure(box);
+  const sizeContext = resolveSizeContext(el, box, role);
+  const contentTone = resolveContentTone(el, box);
 
   return {
     selector: el.id ? `#${el.id}` : el.dataset.spwFeature ? `[data-spw-feature="${el.dataset.spwFeature}"]` : el.tagName.toLowerCase(),
     role,
     presence,
     measure,
+    sizeContext,
+    contentTone,
     flow: box.flow,
     box,
     story: describeBox(el, box, role, presence),
@@ -180,6 +252,8 @@ export function annotateCompositionBox(target, options = {}) {
     spwBoxMeasure: snapshot.measure,
     spwBoxPresence: snapshot.presence,
     spwBoxOverflow: snapshot.box.overflowX || snapshot.box.overflowY ? 'true' : 'false',
+    spwSizeContext: snapshot.sizeContext,
+    spwContentTone: snapshot.contentTone,
   }, { missingOnly: options.missingOnly === true });
 
   if (options.story !== false) {
@@ -229,9 +303,14 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
     'data-spw-box-presence',
     'data-spw-box-overflow',
     'data-spw-box-story',
+    // Phase 1 context feedback (size + content tone for more context-sensitive variants)
+    'data-spw-size-context',
+    'data-spw-content-tone',
   ]),
   roles: Object.freeze(['stage', 'fold', 'control-group', 'control-card', 'feature', 'choice-field', 'component']),
   presence: PRESENCE_STATES,
+  sizeContexts: SIZE_CONTEXTS,
+  contentTones: CONTENT_TONES,
   portableUse:
-    'Import snapshotCompositionBox() or annotateCompositionBoxes() to make a static component explain its layout, presence, and next repair clue.',
+    'Import snapshotCompositionBox() or annotateCompositionBoxes() to make a static component explain its layout, presence, size context, content tone, and next repair clue.',
 });

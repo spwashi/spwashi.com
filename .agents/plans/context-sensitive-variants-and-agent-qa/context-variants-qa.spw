@@ -1,0 +1,80 @@
+# Context-Sensitive Variants + Agent Browser QA (Initial Contract Note)
+
+#>context_variants_agent_qa
+#:layer #!pragmatics #!runtime
+#:status #!planning
+
+@parent: ~"../PLAN.md"
+@related: ~"../../../.spw/conventions/composition-box-model.spw"
+@related: ~"../../../.spw/conventions/site-semantics.spw"
+@related: ~"../../../.spw/conventions/ornament-contract.spw"
+@related: ~"../../../.spw/conventions/attention-field.spw"
+@related: ~"screenshot-semantics/PLAN.md"
+@related: ~"content-responsive-layout/PLAN.md"
+@related: ~"instrumentation-legibility/PLAN.md"
+
+thesis: .{
+  claim = `Component variants should feel like they know where they are (size band, container role, local thematic climate, content pressure) and agents should be able to see the rendered result + read the semantic model in one move.`
+  current_strength = `The attribute model (data-spw-form, context, surface, layout, materiality, accent-*, density, role/kind/slot) + composition box model + catalog already give us an unusually rich substrate.`
+  gap = `Feedback from actual rendered size/content is weak/one-way; local theming is mostly global cascade; there is no first-class "agent eyes" surface that pairs vision (rects + crops) with the semantic graph + bus state + philosophy links.`
+}[reg=facet]
+
+new_semantic_families: .{
+  data_spw_size_context = .{
+    values = #[narrow, comfortable, wide, hero, panel, dense-grid]
+    source = `runtime resolver (extension of composition-box-model) + explicit author hints`
+    consumers = `CSS in frames/cards/systems (in addition to existing @container rules); state inspector; agent capture`
+    rationale = `Closes the loop so a frame can style itself differently when it is actually narrow in its container vs. when it is the hero on a wide atlas layout.`
+  }[reg=facet]
+
+  data_spw_content_tone = .{
+    values = #[light, balanced, dense, operator-heavy, media-dominant, text-long]
+    source = `light runtime inference + explicit data-spw-content-tone or data-spw-form-options density`
+    consumers = `CSS density + measure rules; agent snapshots for "this region is currently text-heavy"`
+  }[reg=facet]
+
+  data_spw_local_materiality = .{
+    values = #[paper, ledger, signal, ritual, console, ...]
+    purpose = `Per-component or per-region override of the global theme pack / climate without polluting siblings.`
+  }[reg=facet]
+
+  agent_observation_surface = .{
+    entrypoints = #[spwCompose.captureLabeledRegion, spwCompose.snapshotLiveCatalog, window.__spwAgentDebug]
+    gated_by = `?debug=qa|agent|vision (same pattern as layout-shift debug)`
+    output_shape = `{ semantic: full ancestry + box model + state + tokens, rects, busRecent?, imageDataUrl?, philosophyLinks? }`
+    rationale = `Gives coding agents (and humans debugging) both "eyes" (visual + geometry) and "understanding" (the data-spw-* graph + contracts we already maintain) in one artifact.`
+  }[reg=facet]
+
+  positional_time_context = .{
+    shape = `{ route, hash, timestamp, timezone, scroll, viewport, activeFrame.semantic, activeFrame.box }`
+    purpose = `Let a component be interpreted in relation to where the reader is, when the observation happened, and which local frame is active.`
+    metaphysical_use = `Supports low-fantasy/animistic interface design: a card can feel like a local spirit whose behavior depends on position, season, attention, and accumulated return.`
+  }[reg=facet]
+}[reg=facet]
+
+contracts_to_extend: .{
+  composition_box_model = `Add size-context + content-tone inference + writers. Keep the existing measure/presence/overflow contract.`
+  site_semantics = `Document the feedback attrs as first-class context axes (alongside context/surface/layout).`
+  ornament_contract = `Ornaments (guide badges, sigils, etc.) may read local size/content context for subtle intensity or presence adjustments (screenshot-safe).`
+}[reg=facet]
+
+agent_hygiene: .{
+  debug_only = `All vision + heavy observation is behind the debug query flag. Production pages remain unchanged.`
+  zero_new_deps = `Client-side capture starts with existing canvas/DOM primitives + the snapshot helpers we already have. External Playwright/CDP is a future optional note only.`
+  catalog_first = `New attrs and surfaces must appear in the design catalog (static + live slice) so they are discoverable by editors and agents.`
+  screenshot_compatible = `Anything written for agent capture must also improve the human screenshot legibility goal of the sibling screenshot-semantics plan.`
+}[reg=facet]
+
+initial_markers: .{
+  phase_1 = `Resolver writes data-spw-size-context + data-spw-content-tone on .site-frame / .frame-card families.`
+  phase_3 = `Observation Beats primitive (generalized 5s window + cauldron-aligned lifecycle). Screenshot QA Mode (?qa=screenshot-qa). Artifact export shape integrated with cauldron "mix/plant". Discoverability via spwCompose + data attrs. Gesture/keyboard entry points for beats and captures.`
+}[reg=facet]
+
+beat_concept: .{
+  definition = `A short, intentional observation window that produces coherent semantic + visual + context batches. Replaces raw observer firehose with rhythmic, flushable artifacts.`
+  states = #[gathering, resonant, mature, flushed]  # deliberately mirrors cauldron phases
+  triggers = #[manual, qa-mode, interaction-loop, cauldron-phase, frame-change, timeout]
+  integration = `Beats can be captured as cauldron ingredients. "Mix" on a beat ingredient can crystallize a full QA artifact spell.`
+}[reg=facet]
+
+# This note will grow into a proper .spw contract once the families stabilize in real markup and CSS.
