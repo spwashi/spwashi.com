@@ -66,6 +66,11 @@
                             <p class="spw-narration__cue" data-spw-textual-role="cue">Field detail</p>
                             <p class="spw-narration__text" data-spw-textual-role="narration-text">Visit the actual library, too. Maps, cookbooks, seed catalogs, and field guides can give a scene or character the material detail the internet will not know to supply.</p>
                         </div>
+                        <div class="spw-narration" data-spw-textual-role="narration" data-spw-feature="daily-weekly-rhythm">
+                            <p class="spw-narration__cue" data-spw-textual-role="cue">Daily school, weekly adventure</p>
+                            <p class="spw-narration__text" data-spw-textual-role="narration-text">The Town Library has stood longer than any of us have been tending it. Its stones are half-swallowed by deliberate growth — protected by the patience that lets real learning take root. Conflict is set down at the door; the old coffer receives wands and sharp intentions before anyone passes into the stacks. At the center, the scrying bowl waits with still water so patterns across many weeks can rise.</p>
+                            <p class="spw-narration__text" data-spw-textual-role="narration-text">This is daily school and weekly adventure in one place. Tend a garden prompt or one-line boonhonk reflection in the quiet days. Bring what you have grown into the Wednesday session, where the pressure of other minds turns cultivation into story, canon, and shared memory. After two hundred days, the library no longer needs to explain itself. It only needs to be used with the care it has already taught us.</p>
+                        </div>
                         <nav class="frame-operators" aria-label="Town library quick starts" data-spw-feature="library-quick-starts">
                             <a class="operator-chip" href="#starter-quests" data-spw-operator="action" data-spw-sigil="@starter_quests">@ start a first quest</a>
                             <a class="operator-chip" href="#guide-cards" data-spw-operator="ref" data-spw-sigil="~guide_cards">~ meet the guides</a>
@@ -112,7 +117,17 @@
             <header class="frame-heading"><a class="frame-sigil" href="#guide-cards" data-spw-operator="ref" data-spw-sigil="~guide_cards">~guide_cards</a><h2>Characters become learning interfaces.</h2></header>
             <p class="inline-note">A guide card is useful when it turns personality into a repeatable studio move: mechanic, quest, college skill, and portfolio output.</p>
             <div class="frame-grid">
-                <article class="frame-card" data-spw-kind="card" data-spw-role="guide" data-spw-operator="object" data-spw-context="education" data-spw-category-family="encounter"><span class="frame-card-sigil" data-spw-operator="object" data-spw-sigil="^grounding_rod">^grounding_rod</span><strong>Grounding Rod</strong><span><b>Core mechanic:</b> draw the strike. Convert chaos into safe passage.</span><span><b>Quest:</b> map a stressful system, then mark where energy builds, discharges, and can safely ground.</span><span><b>College skill:</b> systems thinking, risk management, electrical metaphor, self-regulation.</span><span><b>Portfolio output:</b> one-page system diagram.</span></article>
+                <article class="frame-card" data-spw-kind="card" data-spw-role="guide" data-spw-operator="object" data-spw-context="education" data-spw-category-family="encounter" data-spw-frame="grounding-rod-guide" data-spw-intent="orient-guide">
+                    <span class="frame-card-sigil" data-spw-operator="object" data-spw-sigil="^grounding_rod">^grounding_rod</span>
+                    <strong>Grounding Rod</strong>
+                    <span><b>Core mechanic:</b> draw the strike. Convert chaos into safe passage.</span>
+                    <span><b>Quest:</b> map a stressful system, then mark where energy builds, discharges, and can safely ground.</span>
+                    <span><b>College skill:</b> systems thinking, risk management, electrical metaphor, self-regulation.</span>
+                    <span><b>Portfolio output:</b> one-page system diagram.</span>
+                    <div class="frame-card-actions" data-spw-slot="actions">
+                        <a class="operator-chip" href="#garden" data-spw-operator="object" data-spw-intent="tend-daily" data-spw-target="^grounding_rod">^ tend this guide</a>
+                    </div>
+                </article>
                 <details class="spw-card-reason">
                     <summary>Why this guide exists</summary>
                     <p>This guide helps a learner map force, risk, and safe passage in a system they can actually touch.</p>
@@ -186,6 +201,8 @@
         <section class="site-frame" id="garden" data-spw-feature="library-garden-seeds" data-spw-kind="frame" data-spw-role="community" data-spw-operator="object" data-spw-context="education" data-spw-wonder="belonging ecology memory" data-spw-affordance="reflect" data-spw-liminality="rest" data-spw-category-family="garden" data-spw-locality="medium" data-spw-consequence="care" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_play_rpg_wednesday_library__garden">
             <header class="frame-heading"><a class="frame-sigil" href="#garden" data-spw-operator="object" data-spw-sigil="^garden">^garden</a><h2>The garden gives the library softness.</h2></header>
             <p class="inline-note">A garden prompt can stay lightweight: no social network, no heavy account system, just seed types that help someone notice what they want to grow.</p>
+            <p class="frame-note">These are the kinds of questions a careful person returns to across decades. A Character Seed is not a full backstory. It is the first small claim that a life might be worth keeping company with for a long time.</p>
+
             <div class="frame-grid frame-grid--dense">
                 <article class="frame-panel"><h3>Question Seed</h3><p>What are you wondering about?</p></article>
                 <article class="frame-panel"><h3>Skill Seed</h3><p>What do you want to learn to do?</p></article>
@@ -193,6 +210,33 @@
                 <article class="frame-panel"><h3>System Seed</h3><p>What pattern have you noticed?</p></article>
                 <article class="frame-panel"><h3>Character Seed</h3><p>What kind of helper would this world need?</p></article>
             </div>
+
+            <details class="spw-inline-disclosure" data-spw-intent="onboard-character-work">
+                <summary>If you are new to this kind of tending, or if generating a character still feels unclear</summary>
+                <div class="spw-inline-disclosure__body">
+                    <p>Start here in the garden. A Character Seed is the smallest honest beginning. Later, when you are ready, the <a href="/play/rpg-wednesday/character/">character development page</a> gives the private workshop for name, portrait, pressure, and the five boonhonk questions. The <a href="/tools/character-sheet/">character sheet builder</a> is the press that lets one grammar (the life you imagined) become legible in another (the profile a mentor or collaborator can actually use), without forcing the two to collapse.</p>
+                    <p>You do not need to understand every construct at once. The kernel you can carry from the portal, the operators as gestures the character learns to make, the tags as sigils you inscribe — these become useful the more you live with one person. The table and the Library will teach the rest over time.</p>
+                </div>
+            </details>
+
+            <details class="spw-inline-disclosure spw-garden-tended"
+                     data-spw-concept="living-tools"
+                     data-spw-intent="onboard-constructs"
+                     data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron double-click:expand-trail swipe:cycle-nearby"
+                     aria-describedby="living-tools-desc">
+                <summary id="living-tools-summary">The living tools of the garden: semantic labels, attentive braces, the memory cauldron, and spell trails</summary>
+                <div class="spw-inline-disclosure__body" id="living-tools-desc">
+                    <p>These four practices are how the Library stays alive and how meaning moves between the real surfaces and the world you are building here.</p>
+                    <ul>
+                        <li><strong data-spw-living-term data-spw-concept="semantic-enhancement" data-spw-semantic-expression="label[world]{remember.become}" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Semantic enhancements</strong> — the living inscriptions and handles the site keeps for itself and for you. Every frame, card, and gesture can carry clear labels (data attributes, operator sigils, component tags) so the world remembers what it is and what it can become.</li>
+                        <li><strong data-spw-living-term data-spw-concept="brace-physics" data-spw-semantic-expression="containment[attention]{prime.gather}" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Brace physics</strong> — attentive containment and priming. When you hold a semantic brace (tap to notice, hold to gather its local value, double-click or release to prime it), you are performing a small act of care that makes that meaning available to the rest of the garden.</li>
+                        <li><strong data-spw-living-term data-spw-concept="cauldron-collection" data-spw-semantic-expression="garden[memory]{mix.tend.plant}" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Cauldron collection</strong> — the memory garden at the bottom of every page. Daily observations, journal lines, and primed semantic forces rest here. You mix them, tend them (nourish, prune), and plant what deserves to become a durable vision or character artifact.</li>
+                        <li><strong data-spw-living-term data-spw-concept="spell-navigation" data-spw-semantic-expression="trail[attention]{follow.replay.share}" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Spell navigation</strong> — the trails and paths your attention leaves. The spell path (the breadcrumb that travels with you) and the spells you cast from the cauldron are replayable, shareable memory. Follow them forward into new work or backward to remember how you arrived.</li>
+                    </ul>
+                    <p>These are not separate features. They are the same patient attention, practiced at different scales. Hold a living term to prime its value; the cauldron remembers the gesture that gathered it. When you plant a mix, the resulting spell trail carries the chain of attentions that created it — you can follow the trail forward or re-gather it later. Every trail is an invitation: the garden remembers what you noticed, and the spell that grew from it is waiting for you to wonder what it becomes next. The portal home makes the full grammar visible; the Library is where you learn to use it by tending one small thing at a time. The Midjourney bench and character tools are simply places where the gathered forces (with their gesture memory) take visible or usable form.</p>
+                    <p>Everything here is inspectable. Open “read / inspect” mode or look at the data attributes on any element. The constructs are meant to be played with.</p>
+                </div>
+            </details>
         </section>
 
         <section class="site-frame" id="isee-map" data-spw-feature="isee-world-map" data-spw-kind="frame" data-spw-role="translation" data-spw-operator="ref" data-spw-context="education" data-spw-wonder="systems curriculum worldbuilding" data-spw-affordance="connect" data-spw-liminality="settled" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="translation" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_play_rpg_wednesday_library__isee_map">

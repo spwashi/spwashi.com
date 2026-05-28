@@ -100,15 +100,51 @@ function handleCauldronUIActions(e) {
     const ingredients = getCauldron();
     if (ingredients.length >= 1) {
       const expr = ingredients.map(i => i.expression).join(' + ');
+      const gestureSummary = ingredients
+        .map(i => i.primedBy || i.chargeContext)
+        .filter(Boolean)
+        .join('·');
       bus.emit('spell:capture', {
         expression: `cast[garden]{${expr}}`,
         label: 'Planted garden mix',
         origin: 'cauldron',
         originLabel: 'memory garden',
         wonder: 'cultivation',
+        // Deeper composition bridge: carry gesture history from the ingredients
+        // so the resulting spell/trail can remember how the forces were gathered.
+        gestureHistory: gestureSummary || null,
+        ingredientGestures: ingredients.map(i => ({
+          expression: i.expression,
+          primedBy: i.primedBy,
+          chargeContext: i.chargeContext,
+        })),
       });
       // Optionally clear after planting to keep the garden cycle clean
       // clearCauldron();
+    }
+    e.preventDefault();
+  }
+
+  if (e.target.closest('[data-spw-cauldron-action="vision"]')) {
+    // Prompting UX bridge: turn current cauldron into a Daily Vision Seed packet
+    // and navigate toward the Midjourney bench (or open with prefilled context).
+    const ingredients = getCauldron();
+    if (ingredients.length) {
+      const expr = ingredients.map(i => i.expression).join(' + ');
+      const gestureHistory = ingredients.map(i => i.primedBy || i.chargeContext).filter(Boolean).join('·');
+      const promptSeed = `Daily observation as vision: ${expr}. Render with quiet domestic light, garden texture, subtle resonance. Use as Library ward or character private vision. Gesture history: ${gestureHistory || 'direct'}.`;
+      // Store a lightweight vision seed for the bench to pick up
+      try {
+        sessionStorage.setItem('spw-pending-vision-seed', JSON.stringify({
+          expression: expr,
+          prompt: promptSeed,
+          origin: 'cauldron',
+          capturedAt: Date.now(),
+          gestureHistory,
+        }));
+      } catch (_) {}
+      // Navigate to Midjourney bench (it will check for the pending seed on load)
+      window.location.href = '/tools/midjourney/#reference-packets';
     }
     e.preventDefault();
   }
@@ -352,6 +388,11 @@ function renderIngredientsList(ingredients) {
     return;
   }
 
+  // Small tightening: only re-render when the signature changes (avoids unnecessary DOM churn on frequent syncs)
+  const signature = ingredients.map(i => `${i.expression}|${i.capturedAt || 0}`).join('~');
+  if (container.dataset.lastSignature === signature) return;
+  container.dataset.lastSignature = signature;
+
   const html = ingredients.map((ing, idx) => {
     const op = ing.operator ? `<span class="cauldron-ingredient-op" data-spw-operator="${ing.operator}">${ing.operator}</span>` : '';
     const expr = `<span class="cauldron-ingredient-expr" data-spw-expression>${escapeHtml(ing.expression)}</span>`;
@@ -377,6 +418,10 @@ function renderIngredientsList(ingredients) {
     if (ing.primedBy) {
       const primedLabel = ing.primedBy === 'brace-containment-charge' ? 'primed' : escapeHtml(ing.primedBy);
       meta += `<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`;
+    }
+    // Traceability for effects (Patch 010): if this ingredient carries gesture history from a living-term or brace, surface a short trace so the user can see exactly which attention created it.
+    if (ing.gestureHistory) {
+      meta += `<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`;
     }
 
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
@@ -436,6 +481,9 @@ function onCapture(event) {
     // so the cauldron can surface "local value gathered from a charged containment".
     primedBy: detail.primedBy || null,
     chargeContext: detail.chargeContext || null,
+    // Deeper composition: preserve gesture history when a spell/capture feeds the cauldron
+    // (supports re-hydration and prompt enrichment).
+    gestureHistory: detail.gestureHistory || detail.gestureChain || null,
   };
 
   const existingIndex = ingredients.findIndex(item => item.expression === expression);

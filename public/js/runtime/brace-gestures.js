@@ -975,8 +975,14 @@ function shouldToggleSemanticExpansionOnRelease(target, meta, state, event) {
 }
 
 function isSemanticTapTarget(target) {
+  // Generalizability note (Patch 008 audit): This selector is the primary extension point.
+  // Any element matching here participates in the full gesture state machine (armed/charging/
+  // sustained/committed/projected) and primed-containment emission to cauldron.
+  // Authors can make new content gesture-aware by adding data-spw-living-term,
+  // data-spw-concept, data-spw-semantic-expression, or matching one of the spw-* sigil classes.
+  // See also data-spw-gesture-contract on disclosures for declarative affordance hints.
   return Boolean(
-    target?.matches?.('.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression]')
+    target?.matches?.('.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-living-term, [data-spw-living-term]')
   );
 }
 

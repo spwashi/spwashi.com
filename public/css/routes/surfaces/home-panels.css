@@ -454,6 +454,22 @@
     min-width: 0;
   }
 
+  /* Visual refinement for the kernel/component tags in the exact context
+     of the reference screenshot (read/inspect mode on the semantic-portal home).
+     Makes the tags feel like elegant slips even when the surrounding meta
+     carries the dense data-spw-* attributes shown in DevTools. */
+  :where(body[data-spw-surface="home"] .spw-component-tag) {
+    letter-spacing: 0.05em;
+    border-color: color-mix(in srgb, var(--home-accent-primary, var(--teal)) 22%, var(--handle-line-soft, rgba(0,0,0,0.12)) 78%);
+  }
+
+  :where(body[data-spw-surface="home"] #town-library-gateway .spw-component-tag) {
+    background: color-mix(in srgb, var(--home-surface-bg-strong, #fff) 88%, var(--home-accent-primary, var(--teal)) 12%);
+    box-shadow:
+      var(--projection-lift-xs, 1px) var(--projection-lift-xs, 1px) 0 color-mix(in srgb, var(--home-accent-primary, var(--teal)) 14%, transparent),
+      inset 0 0.5px 0 rgba(255, 255, 255, 0.5);
+  }
+
   :where(body[data-spw-surface="home"] .mode-switch) {
     width: 100%;
   }

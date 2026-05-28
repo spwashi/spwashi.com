@@ -110,6 +110,15 @@
                 <h1 id="midjourney-title">Midjourney Bench</h1>
                 <p class="site-lede" data-spw-narrative-copy="bench-hook" data-spw-copy-label="Bench hook">This is the Midjourney route: a bench for refs, packets, and the images worth keeping around after the first burst of novelty wears off.</p>
                 <p data-spw-narrative-copy="reference-pool" data-spw-copy-label="Reference pool" data-spw-copy-purpose="asset-discipline">Use the kept images in <code>/public/images/</code> as the reference pool. Ignore everything that has not earned a stable home yet. Style refs should tell you about material and atmosphere. Identity refs should stabilize a character or recurring figure. Omni refs should help multiple scenes share one canon without making every prompt start from zero.</p>
+
+                <p class="frame-note" data-spw-intent="daily-to-vision">Ordinary days and journal entries are the richest soil. A single observation — the way light hit the steam on a window at 7:14 a.m., the exact quality of tiredness after a long conversation, the small ritual that made a Tuesday feel like itself — can become the seed for a prompt packet. That packet grows into an image that can live in the Library as a new ward, a character’s private vision, a motif for the town, or a scene the table can step into. The Midjourney bench is the place those daily fragments are tended into visual canon.</p>
+
+                <div id="pending-vision-seed" class="frame-note" hidden data-spw-feature="pending-vision-from-cauldron">
+                    <strong>Pending Daily Vision Seed from the cauldron</strong>
+                    <p data-pending-vision-expr></p>
+                    <button type="button" class="operator-chip" id="use-pending-vision">Use as prompt packet</button>
+                    <button type="button" class="operator-chip" id="dismiss-pending-vision">Dismiss</button>
+                </div>
                 <p class="frame-note" data-spw-attention="try" data-spw-behavior="ground" data-spw-concept="sensory-prompt-axis" data-spw-domain="prompting" data-spw-grounding="material-light-owner" data-spw-recognition="prompt-has-a-test-surface" data-spw-operation="ground-image-idea" data-spw-failure-mode="mood-without-owner" data-spw-adjacent="style-reference shotboard palette-seed" data-spw-contrast="generic-aesthetic-prompt" data-spw-practice="/design/palettes/ /design/components/" data-spw-proficiency="intermediate">
                     A useful prompt packet names the subject, material behavior, light cue, grounding point, and
                     guardrail. “Translucent rice paper” is not just mood if the card also says where text must remain
@@ -172,6 +181,31 @@
                         <strong>Nearby shelf</strong>
                         <span>As of April 22, 2026: Midjourney, ChatGPT Images, Gemini, Adobe Firefly, and Ideogram. Keep the packet clear enough to travel, then season it for the generator that gets the next pour.</span>
                     </article>
+
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="visible" data-spw-collectability="high" data-spw-locality="high" data-spw-consequence="memory" data-spw-semantic-expression="daily-vision-seed[journal]{real.life → kernel.tag → prompt.packet → in-world.artifact}" data-spw-seed="page_tools_tools_midjourney__card_daily_vision" data-spw-attention="try" data-spw-behavior="compost" data-spw-concept="daily-vision-ecology" data-spw-grounding="journal-to-image-to-library">
+                        <span class="frame-card-sigil">^daily_vision_seed</span>
+                        <strong>Daily Vision Seeds</strong>
+                        <span>A real observation or journal line becomes the soil. Map it through a garden seed or operator, write the prompt packet, grow the image, then plant the result in the Library as a usable artifact (a new ward for Grounding Rod, a private vision for a character, a motif the table can discover later).</span>
+                        <span class="frame-note">Example: Tuesday steam on the window at 7:14 a.m. → ^memory seed + ~resonance operator → prompt packet with rice-paper light and quiet domestic scale → generated image becomes “the Quiet Window” card that appears in the scrying bowl during a session.</span>
+                    </article>
+
+                    <details class="spw-inline-disclosure spw-garden-tended"
+                             data-spw-concept="living-tools"
+                             data-spw-intent="onboard-constructs"
+                             data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron"
+                             aria-describedby="vision-living-tools-desc">
+                        <summary id="vision-living-tools-summary">How the garden’s living tools feed vision work</summary>
+                        <div class="spw-inline-disclosure__body" id="vision-living-tools-desc">
+                            <p>The four practices that keep the Library coherent are the same ones that make rich, specific prompts possible:</p>
+                            <ul>
+                                <li><strong data-spw-living-term data-spw-concept="semantic-enhancement" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Semantic enhancements</strong> give you precise, inspectable language for material, light, gesture, and consequence instead of vague mood words.</li>
+                                <li><strong data-spw-living-term data-spw-concept="brace-physics" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Brace physics</strong> (the attentive hold, prime, and release) let you gather the exact local value of a moment before it dissolves.</li>
+                                <li><strong data-spw-living-term data-spw-concept="cauldron-collection" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Cauldron collection</strong> (the memory garden at the bottom of pages) is where daily observations and primed semantic forces rest until they are ready to become a vision seed.</li>
+                                <li><strong data-spw-living-term data-spw-concept="spell-navigation" tabindex="0" title="tap: inspect • hold: prime into cauldron • double-click: follow related trail">Spell navigation</strong> turns the trails of your attention into replayable, shareable memory that can travel with a character or a world across many images and many years.</li>
+                            </ul>
+                            <p>When you use the cauldron’s “vision seed” action (or hold a living term anywhere on the site), the gesture history travels with the seed. The resulting prompt packet and image carry the chain of attentions — a true blended artifact that can be planted back into the Library or a character as a vision with memory.</p>
+                        </div>
+                    </details>
                 </div>
             </section>
 
@@ -232,5 +266,49 @@
         </article>
     </main>
 <spw-site-footer></spw-site-footer>
+
+<script type="module">
+  // Small progressive enhancement: consume pending vision seed from cauldron
+  // (set by the "vision seed" action in the footer cauldron). Improves prompting UX
+  // by making daily/cauldron → Midjourney one fluid gesture.
+  (function () {
+    const pending = sessionStorage.getItem('spw-pending-vision-seed');
+    if (!pending) return;
+
+    try {
+      const seed = JSON.parse(pending);
+      const host = document.getElementById('pending-vision-seed');
+      if (!host) return;
+
+      const exprEl = host.querySelector('[data-pending-vision-expr]');
+      if (exprEl) exprEl.textContent = seed.expression || seed.prompt || '';
+
+      host.hidden = false;
+
+      const useBtn = document.getElementById('use-pending-vision');
+      if (useBtn) {
+        useBtn.addEventListener('click', () => {
+          // In a fuller system this would prefill a packet editor.
+          // For now, surface the prompt in console + highlight the packets section.
+          console.info('[vision seed] ready for packet:', seed);
+          const packets = document.getElementById('reference-packets');
+          if (packets) packets.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          host.hidden = true;
+          sessionStorage.removeItem('spw-pending-vision-seed');
+        }, { once: true });
+      }
+
+      const dismissBtn = document.getElementById('dismiss-pending-vision');
+      if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+          host.hidden = true;
+          sessionStorage.removeItem('spw-pending-vision-seed');
+        }, { once: true });
+      }
+    } catch (e) {
+      sessionStorage.removeItem('spw-pending-vision-seed');
+    }
+  })();
+</script>
 </body>
 </html>
