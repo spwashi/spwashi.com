@@ -371,6 +371,16 @@ These keep the system feeling like one garden of attention rather than separate 
 
 (Implementation of highest-value minimal fixes follows in this session if gaps warrant immediate surgical work; otherwise documented for future slices.)
 
+**Additional refinement (user feedback on screenshot)**: Component tag and dense control packing/clipping/wrapping issues in the custom left "read/inspect" sidebar (CHOOSE WHAT pills, mode buttons, kernel_entry tag, etc.).
+
+**Smallest honest fixes applied**:
+- Increased gap in metadata-on `.spw-component-meta` to use the `--handle-gap-tight` token.
+- Added dedicated rules giving `.spw-component-tag` better `min-inline-size` and padding inside inspector/state-inspector/read-mode panels.
+- Strengthened `.spw-component-meta` and dense handle groups (`.frame-operators`, `.spec-strip`) inside custom inspector containers to use proper `flex-wrap` + full `--handle-gap` and prevent edge clipping.
+- Home-specific overrides for the inspector context on the semantic-portal home were also tightened for the exact scenario shown in the screenshot.
+
+These changes directly reduce over-packing and clipping while keeping the elegant, compact "rune slip" personality of component tags. No behavior or layer changes.
+
 ---
 
 ### Patch 011 — CSS Refactor Assessment (Gesture / Living-Tools / Garden Patterns)

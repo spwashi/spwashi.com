@@ -326,9 +326,32 @@ header,
   max-inline-size: 100%;
 }
 
+/* Dense control rows inside custom inspector panels (e.g. the header bar with
+   Light/Dark, text size, and CHOOSE WHAT pills in the read/inspect sidebar).
+   Prevents over-packing, clipping at panel edges, and awkward wrapping. */
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .spw-component-meta,
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .frame-operators,
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .spec-strip {
+  flex-wrap: wrap;
+  gap: var(--handle-gap, 0.38rem);
+  align-items: center;
+}
+
 html[data-spw-show-semantic-metadata="on"] :where(.spw-component-meta) {
   flex-wrap: wrap;
-  gap: 0.18rem;
+  gap: var(--handle-gap-tight, 0.22rem);
+}
+
+/* Extra breathing room for component tags and dense control groups when inside
+   inspector / read-mode panels (addresses clipping and over-packing visible in
+   the custom left sidebar in the reference screenshot). */
+:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) :where(.spw-component-meta, .spw-component-tag, .spec-pill, .operator-chip) {
+  gap: var(--handle-gap, 0.38rem);
+}
+
+:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) .spw-component-tag {
+  min-inline-size: 2.8rem; /* prevent aggressive shrinking that causes clipping */
+  padding-inline: 0.5rem;
 }
 
 /* ==========================================================================

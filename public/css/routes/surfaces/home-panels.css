@@ -452,6 +452,7 @@
 
   :where(#home-frame .spw-component-meta) {
     min-width: 0;
+    gap: var(--handle-gap, 0.38rem); /* more generous than the tight metadata-on default for inspector views */
   }
 
   /* Visual refinement for the kernel/component tags in the exact context
@@ -461,6 +462,8 @@
   :where(body[data-spw-surface="home"] .spw-component-tag) {
     letter-spacing: 0.05em;
     border-color: color-mix(in srgb, var(--home-accent-primary, var(--teal)) 22%, var(--handle-line-soft, rgba(0,0,0,0.12)) 78%);
+    min-inline-size: 3.2rem; /* better resistance to clipping in dense inspector headers */
+    padding-inline: 0.52rem;
   }
 
   :where(body[data-spw-surface="home"] #town-library-gateway .spw-component-tag) {
