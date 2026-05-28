@@ -601,11 +601,19 @@ function formatSpellBundleMeta(bundle) {
 }
 
 function renderSpellAtom(entry) {
+  const hasProvenance = !!(entry.gestureHistory || entry.provenance || entry.spellTrail);
+  const provenance = entry.gestureHistory || entry.provenance || entry.spellTrail || '';
+  const provenanceAttr = hasProvenance ? ` data-spw-garden-provenance data-spw-spell-trail="${escapeHtml(provenance)}" title="Gesture chain that grew this spell: ${escapeHtml(provenance)}"` : '';
+  const provenanceChip = hasProvenance
+    ? `<span class="spell-provenance__chip" aria-hidden="true">✧</span>`
+    : '';
+
   return `
-    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}">
+    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}"${provenanceAttr}>
       <span class="spell-ingredient-prefix">${escapeHtml(entry.prefix || '')}</span>
       <span class="spell-ingredient-nucleus">${escapeHtml(entry.nucleus || entry.expression)}</span>
       <span class="spell-ingredient-postfix">${escapeHtml(entry.postfix || '')}</span>
+      ${provenanceChip}
     </span>
   `;
 }

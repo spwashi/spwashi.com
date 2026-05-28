@@ -371,6 +371,22 @@ These keep the system feeling like one garden of attention rather than separate 
 
 (Implementation of highest-value minimal fixes follows in this session if gaps warrant immediate surgical work; otherwise documented for future slices.)
 
+**Additional work (user query on screenshot)**: Audit of visible components in the custom read/inspect sidebar (CHOOSE WHAT pills / mode-switch buttons, kernel_entry component tag, inspect promise disclosure, KERNEL ENTRY prose).
+
+Findings:
+- The mode-switch pills (.surface, ^syntax, *artifacts, @website) are interactive (lens toggles) and already receive basic 'toggle' gesture treatment via brace-gestures.js. They have strong data-spw-semantic-expression and spell attributes.
+- However, they lacked the full `.spw-living-term` + rich `data-spw-gesture-contract` + title treatment that the newer garden patterns use. Visual hierarchy (they are prominent pills) was not fully matched with the deepest gesture affordances.
+- The kernel_entry tag and home-copy-inspector were partially enhanced but not consistently.
+- The actual explorable depth (semantic slices, cauldron priming, spell trails) was not yet visually signaled on the most prominent controls in the inspector view.
+
+Smallest honest fixes executed:
+- Converted the four mode-switch buttons into full `.spw-living-term` elements with explicit `data-spw-gesture-contract`, `data-spw-concept`, `tabindex`, and descriptive `title` attributes. Holding one now clearly primes the corresponding semantic slice.
+- Enhanced the kernel_entry component tag with living-term treatment and gesture contract.
+- Strengthened the home-copy-inspector with an additional gesture affordance.
+- These changes ensure visual prominence in the inspector now matches real, high-value explorable interactions that tie directly into cauldron, spells, and the portal fantasy.
+
+This makes the "CHOOSE WHAT" controls in the read/inspect experience true gateways to discovery rather than just UI toggles.
+
 **Additional refinement (user feedback on screenshot)**: Component tag and dense control packing/clipping/wrapping issues in the custom left "read/inspect" sidebar (CHOOSE WHAT pills, mode buttons, kernel_entry tag, etc.).
 
 **Smallest honest fixes applied**:
@@ -471,5 +487,49 @@ This keeps everything inspectable, progressive, and true to the cozy long-lived 
 (Implementation follows immediately in this session.)
 
 ---
+
+### Patch 012 — Are the Consequences Meaningfully Visible with Effects That Maintain Temporal Momentum?
+
+**User question (direct continuation from screenshot inspector context + four principles work in Patch 010)**: After making the prominent CHOOSE WHAT / mode pills and kernel_entry living-terms gesture-aware on the home (the exact surface shown in the custom left "#>SPWASHI" inspector sidebar), the deeper question is whether performing a hold on those elements produces *visible, traversable consequences* whose effects persist with temporal momentum — i.e., you can still see/trace/follow what your attention did after the gesture gesture ends, without having to leave the inspect context or the KERNEL ENTRY frame.
+
+**Audit at start of patch**:
+- Gesture contracts and living-term treatment were now on the actual prominent controls (mode-switch frame-sigils + kernel_entry tag + several terms in the town-library-gateway KERNEL ENTRY prose).
+- The data model was already excellent: gestureHistory, primedBy, chargeContext, and ingredientGestures travel with captures → cauldron ingredients → spell:capture emissions → vision seeds.
+- Visual momentum existed in some places: cauldron ingredient list renders `.cauldron-gesture-trace`, footer has "Memory Garden" language, living-terms show armed/charging/sustained states *during* the hold, and `[data-spw-cauldron-mirror]` + tether CSS lights up during active brace gestures.
+- Gap: On the home's own inspect surfaces (home-copy-inspector disclosure right next to the pills, and the KERNEL ENTRY paragraph that explicitly promises "gestures performed here can be carried... planted as living spell trails"), there was *no live, updating readout* of the consequence. You had to open the separate footer cauldron to see the trace. Effects evaporated from the inspector's view. The "states easy to traverse" and "effects easy to trace" principles were only partially satisfied in the exact context the screenshot highlighted.
+
+**Smallest honest surface chosen** (one route + one shared module + handles-layer CSS):
+- The existing `<details class="home-copy-inspector spw-garden-tended">` (already brace, garden-tended, gesture-contract, sitting inside the hero frame immediately under the living-term mode pills and beside the kernel_entry tag). This is the real analogue to the aspirational custom inspector sidebar.
+- The KERNEL ENTRY prose paragraph in `#town-library-gateway` (the carry promise itself).
+- Reuse of the proven `[data-spw-cauldron-mirror]` contract + `renderCauldronMirrors` + `syncCauldronHosts` (no new event system).
+- Tiny additive state trackers + population logic inside the existing composition.js (same file that already owns gestureHistory and planting).
+
+**What landed (surgical, all additive)**:
+- HTML (index.html): Inside the home-copy-inspector body, a new `.garden-consequence` mirror block with labels for last-gesture, trace, trail, and a re-gather button. Also a one-line live `.garden-carried` note directly under the KERNEL ENTRY carry paragraph.
+- JS (composition.js): Two small module-level trackers (`lastGestureTrace`, `lastPlantedTrailSignature`). Extended `renderCauldronMirrors` (and the new `updateGardenCarriedDisplay`) to populate the consequence labels from actual ingredient gestureHistory + primedBy + the just-planted trail sig. Hooked recording in onCapture and the plant path. Added delegated handler for the new `[data-spw-cauldron-action="re-gather"]` that scrolls the footer Memory Garden Cauldron into view, flashes it, and re-syncs mirrors — literally making the prior attention traversable again. The button auto-shows only when count > 0.
+- CSS (handles/operators.css — correct layer): Full set of styles for `.garden-consequence`, its chips, the dashed trail variant, `.garden-action`, the `.garden-carried` micro-line under KERNEL ENTRY, and the "is-recently-tended" flash on the footer cauldron. Reuses every existing token (color-mix with --active-op-color, garden-tended patterns, cauldron-tether logic). No !important. Inherits armed/charging/sustained and tether states automatically.
+
+**Result against the question and the four principles**:
+- Yes. Holding any of the prominent living-term pills or the kernel_entry tag (or terms in the KERNEL ENTRY copy) now immediately produces a visible, persistent trace inside the inspect surface itself ("garden remembers", last gesture provenance, compact trace across ingredients, and the planted trail signature when you cast).
+- The re-gather button turns the trace into a traversable action: one click brings the Memory Garden Cauldron (with full history) into view.
+- The KERNEL ENTRY "last attention carried" line gives the prose promise a live counterpart.
+- All of this survives the original gesture (temporal momentum) and is built only from data that was already flowing through the system.
+- Discoverability, traceability, and traversability are now materially stronger exactly where the screenshot was looking.
+
+**Validation performed**:
+- `git diff --check` clean.
+- `node --check public/js/interface/composition.js` clean.
+- `npm run check` (full audit + build:tools + build:runtime + css-build + site + generated checks) passed with zero issues.
+- Targeted rg confirmed all new attributes/classes are confined to the intended three files and match the contracts.
+
+**Open / next**:
+- The design/runtime mirror section (which already uses `[data-spw-cauldron-mirror]`) now automatically receives richer last-gesture / trace / trail readouts — a free win for the deep technical surfaces.
+- If the custom left inspector sidebar in the screenshot ever becomes real production code, it can simply include the same `.garden-consequence` markup (or a data-spw-feature variant) and will light up for free.
+- The re-gather affordance is intentionally simple (scroll + flash + announce). A future slice could make it re-prime the specific expression directly into a focused state or "follow the trail" into experiential path memory.
+- This patch closes the immediate "consequences visible with momentum" loop for the home gateway / inspector context while keeping the entire addition minimal, inspectable, and inside the existing living-tools / garden-tended grammar.
+
+---
+
+**Status update after Patch 012**: The four principles from Patch 010 now have a concrete, live, inspectable demonstration on the semantic portal home itself. The garden (cauldron + spell trails + gesture provenance) is no longer something you read about in the KERNEL ENTRY — it is something whose immediate consequences you can see and act on while you are still standing in the inspector. The portal fantasy is one step closer to feeling like a place where attention itself has weight and can be carried.
 
 ## References

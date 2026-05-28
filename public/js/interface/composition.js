@@ -34,6 +34,12 @@ const MAX_INGREDIENTS = 6;
 
 let initialized = false;
 
+/* Temporal consequence trackers for live garden state mirrors (home inspector + design surfaces).
+   These let the consequence of a hold on a living-term or mode pill remain visible after the gesture ends,
+   directly supporting "effects easy to trace" and "states easy to traverse". */
+let lastGestureTrace = '';
+let lastPlantedTrailSignature = '';
+
 /**
  * Initialize the cauldron system.
  * Listens for captures (from region menus, gestures, etc.) and wires footer UI.
@@ -104,6 +110,9 @@ function handleCauldronUIActions(e) {
         .map(i => i.primedBy || i.chargeContext)
         .filter(Boolean)
         .join('·');
+      const trailSig = gestureSummary ? `garden{${expr}}·${gestureSummary}` : `garden{${expr}}`;
+      lastPlantedTrailSignature = trailSig.length > 52 ? trailSig.slice(0, 49) + '…' : trailSig;
+
       bus.emit('spell:capture', {
         expression: `cast[garden]{${expr}}`,
         label: 'Planted garden mix',
@@ -144,6 +153,81 @@ function handleCauldronUIActions(e) {
         }));
       } catch (_) {}
       // Navigate to Midjourney bench (it will check for the pending seed on load)
+      window.location.href = '/tools/midjourney/#reference-packets';
+    }
+    e.preventDefault();
+  }
+
+  // Re-gather: makes the consequence of a prior hold traversable again — brings the most recent
+  // tended material back into immediate view (scrolls to Memory Garden Cauldron + re-syncs mirrors).
+  const reGatherBtn = e.target.closest('[data-spw-cauldron-action="re-gather"]');
+  if (reGatherBtn) {
+    const ingredients = getCauldron();
+    if (ingredients.length) {
+      const last = ingredients[ingredients.length - 1];
+      // Re-render mirrors and list immediately (the data already exists; this gives the "temporal momentum" click)
+      renderIngredientsList(ingredients);
+      const phase = computeCauldronPhase(ingredients);
+      renderCauldronMirrors(ingredients, phase);
+      syncCauldronHosts(ingredients, phase);
+
+      // Surface the cauldron in the footer so the full history + re-gather affordances are reachable
+      const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
+      if (footerCauldron) {
+        footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        footerCauldron.classList.add('is-recently-tended');
+        setTimeout(() => footerCauldron.classList.remove('is-recently-tended'), 1400);
+      }
+      announceCauldronStatus(`Re-gathered: ${last.label || last.expression}. The garden still holds the attention that created it.`);
+    } else {
+      // If nothing in cauldron yet but we have a trace, at least surface the footer as the place consequences live
+      const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
+      if (footerCauldron) footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    e.preventDefault();
+  }
+
+  // Spell-side re-gather / vision actions (from the enhanced crystallization output in cauldron-text after plant/mix).
+  // Mirrors the Garden State re-gather exactly so the spell (the planted result) has the same traversable momentum.
+  const spellReGather = e.target.closest('[data-spw-spell-action="re-gather"]');
+  if (spellReGather) {
+    const trail = spellReGather.dataset.spwSpellTrail || '';
+    const ingredients = getCauldron();
+    if (ingredients.length) {
+      renderIngredientsList(ingredients);
+      const phase = computeCauldronPhase(ingredients);
+      renderCauldronMirrors(ingredients, phase);
+      syncCauldronHosts(ingredients, phase);
+
+      const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
+      if (footerCauldron) {
+        footerCauldron.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        footerCauldron.classList.add('is-recently-tended');
+        setTimeout(() => footerCauldron.classList.remove('is-recently-tended'), 1400);
+      }
+      announceCauldronStatus(`Re-gathered from spell trail${trail ? `: ${trail}` : ''}. The attention that grew this spell is still held in the garden.`);
+    }
+    e.preventDefault();
+  }
+
+  const spellVision = e.target.closest('[data-spw-spell-action="vision-from-spell"]');
+  if (spellVision) {
+    const ingredients = getCauldron();
+    if (ingredients.length) {
+      const expr = ingredients.map(i => i.expression).join(' + ');
+      const gestureHistory = ingredients.map(i => i.primedBy || i.chargeContext).filter(Boolean).join('·');
+      const trail = spellVision.dataset.spwSpellTrail || '';
+      const promptSeed = `Spell trail as vision: ${expr}. From garden trace: ${gestureHistory || trail || 'direct'}. Render with quiet domestic light, garden texture, subtle resonance. Use as Library ward or character private vision.`;
+      try {
+        sessionStorage.setItem('spw-pending-vision-seed', JSON.stringify({
+          expression: expr,
+          prompt: promptSeed,
+          origin: 'spell-trail',
+          capturedAt: Date.now(),
+          gestureHistory: gestureHistory || trail,
+          spellTrail: trail,
+        }));
+      } catch (_) {}
       window.location.href = '/tools/midjourney/#reference-packets';
     }
     e.preventDefault();
@@ -367,6 +451,21 @@ function syncCauldronHosts(ingredients, phase) {
 function renderCauldronMirrors(ingredients, phase) {
   const count = ingredients.length;
   const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))].join(' ') || 'none';
+
+  // Build compact temporal trace from ingredients that carry gesture history (the momentum we want visible)
+  const traceParts = [];
+  ingredients.forEach((ing) => {
+    if (ing.gestureHistory) traceParts.push(ing.gestureHistory);
+    else if (ing.primedBy) traceParts.push(ing.primedBy);
+  });
+  const compactTrace = traceParts.length ? traceParts.join(' · ') : (lastGestureTrace || '');
+
+  // Last gesture for the "what just happened" immediate signal
+  const lastIng = ingredients[ingredients.length - 1];
+  const lastGesture = lastIng
+    ? (lastIng.gestureHistory || lastIng.primedBy || lastIng.chargeContext || lastGestureTrace || 'direct attention')
+    : (lastGestureTrace || '—');
+
   document.querySelectorAll('[data-spw-cauldron-mirror]').forEach((mirror) => {
     mirror.dataset.spwCauldronPhase = phase;
     mirror.dataset.spwCauldronCount = String(count);
@@ -376,7 +475,42 @@ function renderCauldronMirrors(ingredients, phase) {
     if (phaseEl) phaseEl.textContent = `phase: ${phase}`;
     if (countEl) countEl.textContent = `count: ${count}`;
     if (operatorsEl) operatorsEl.textContent = `operators: ${operators}`;
+
+    // New consequence labels for temporal momentum (home garden inspector + any other mirror)
+    const lastGestureEl = mirror.querySelector('[data-spw-mirror-label="last-gesture"]');
+    const traceEl = mirror.querySelector('[data-spw-mirror-label="trace"]');
+    const trailEl = mirror.querySelector('[data-spw-mirror-label="trail"]');
+    if (lastGestureEl) {
+      lastGestureEl.textContent = lastGesture.length > 42 ? lastGesture.slice(0, 39) + '…' : lastGesture;
+      lastGestureEl.dataset.spwGestureProvenance = lastGesture;
+    }
+    if (traceEl) {
+      traceEl.textContent = compactTrace ? `trace: ${compactTrace.length > 48 ? compactTrace.slice(0, 45) + '…' : compactTrace}` : '';
+      if (compactTrace) traceEl.dataset.spwGestureTrace = compactTrace;
+    }
+    if (trailEl) {
+      trailEl.textContent = lastPlantedTrailSignature ? `trail: ${lastPlantedTrailSignature}` : '';
+      if (lastPlantedTrailSignature) trailEl.dataset.spwSpellTrail = lastPlantedTrailSignature;
+    }
+
+    // Show re-gather affordance only when there is actually something whose consequence can be traversed
+    const reGather = mirror.querySelector('[data-spw-cauldron-action="re-gather"]');
+    if (reGather) reGather.hidden = count === 0;
   });
+
+  // Also update the dedicated home KERNEL ENTRY carried value (direct answer to "consequences visible with momentum")
+  updateGardenCarriedDisplay(lastGesture, compactTrace);
+}
+
+function updateGardenCarriedDisplay(lastGesture, trace) {
+  const carriedValue = document.querySelector('[data-spw-garden-carried-value]');
+  if (!carriedValue) return;
+  const surface = document.body?.dataset?.spwSurface;
+  if (surface !== 'home') return;
+
+  const display = lastGesture && lastGesture !== '—' ? lastGesture : (trace || '—');
+  carriedValue.textContent = display.length > 36 ? display.slice(0, 33) + '…' : display;
+  carriedValue.dataset.spwLastCarried = display;
 }
 
 function renderIngredientsList(ingredients) {
@@ -485,6 +619,11 @@ function onCapture(event) {
     // (supports re-hydration and prompt enrichment).
     gestureHistory: detail.gestureHistory || detail.gestureChain || null,
   };
+
+  // Record for live temporal consequence mirrors (the hold on a living-term now has visible afterlife)
+  if (ingredient.gestureHistory || ingredient.primedBy) {
+    lastGestureTrace = ingredient.gestureHistory || ingredient.primedBy || ingredient.chargeContext || '';
+  }
 
   const existingIndex = ingredients.findIndex(item => item.expression === expression);
   if (existingIndex >= 0) {
@@ -615,6 +754,28 @@ export function mixIngredients() {
       <p class="cauldron-test-prompt">Try using the exact expressions from the Combination Record on a real page or frame. Notice what the operators actually do in situ. Suggested cast form: <code data-spw-semantic-expression="${escapeHtml(castForm)}">${escapeHtml(castForm)}</code></p>
     </div>
   `;
+
+  // Spell enhancement (Patch 012 continuation): when the mix came from garden gestures (living-terms, holds, primed slices),
+  // surface the full temporal provenance directly in the crystallization output. This is the "spell" the user sees
+  // after ^ plant or @ mix. It now carries the same visible consequence + re-gather affordances as the Garden State mirror.
+  const gardenProvenance = ingredients
+    .map(i => i.gestureHistory || i.primedBy || i.chargeContext)
+    .filter(Boolean)
+    .join(' · ');
+  if (gardenProvenance) {
+    const trailSig = lastPlantedTrailSignature || `garden-mix{${expressions.join(' + ')}}`;
+    crystallizationHtml += `
+      <div class="cauldron-garden-provenance spell-provenance" data-spw-garden-provenance data-spw-spell-trail="${escapeHtml(trailSig)}">
+        <span class="spell-provenance__label">garden trace</span>
+        <span class="spell-provenance__trace" title="Full gesture chain that created this spell">${escapeHtml(gardenProvenance)}</span>
+        <button type="button" class="garden-action spell-action" data-spw-spell-action="re-gather" data-spw-spell-trail="${escapeHtml(trailSig)}">re-gather</button>
+        <button type="button" class="garden-action spell-action" data-spw-spell-action="vision-from-spell" data-spw-spell-trail="${escapeHtml(trailSig)}">vision seed</button>
+      </div>
+    `;
+    // Attach to functional data so spell boards / atoms downstream can consume it
+    functionalMix.gestureHistory = gardenProvenance;
+    functionalMix.spellTrail = trailSig;
+  }
 
   // Return both human HTML and functional data for spells/agents/beats
   return { html: combinationHtml + crystallizationHtml, functional: functionalMix };

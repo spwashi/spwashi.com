@@ -61,6 +61,34 @@ function renderGestureAnchor(type, title = '') {
   return `<span class="spw-gesture-anchor" title="${escapeHtml(title || type)}" data-spw-visual-anchor="gesture-${type}">${svg}</span>`;
 }
 
+/* Garden trace on the live spell path (one-pass ambitious enhancement).
+   When the cauldron currently holds gesture provenance from living terms / holds, the spell path
+   (the visible breadcrumb trail) now carries a compact "garden memory" marker + re-gather action.
+   This makes the live navigation state and the planted spell memory feel like the same continuous attention. */
+function renderGardenTraceOnSpellPath() {
+  // Read from any existing cauldron mirror (populated by composition.js) — no new imports needed.
+  const mirror = document.querySelector('[data-spw-cauldron-mirror]');
+  if (!mirror) return '';
+
+  const lastGesture = mirror.querySelector('[data-spw-mirror-label="last-gesture"]')?.textContent?.trim();
+  const trace = mirror.querySelector('[data-spw-mirror-label="trace"]')?.textContent?.trim();
+  const trail = mirror.querySelector('[data-spw-mirror-label="trail"]')?.textContent?.trim();
+
+  const hasGarden = !!(lastGesture || trace || trail);
+  if (!hasGarden) return '';
+
+  const display = (lastGesture || trace || trail || '').replace(/^trace:\s*/i, '').slice(0, 48);
+  const trailSig = trail ? trail.replace(/^trail:\s*/i, '') : display;
+
+  return `
+    <div class="spw-spell-path__garden-trace spell-provenance" data-spw-garden-on-path aria-live="polite">
+      <span class="spell-provenance__label">garden in path</span>
+      <span class="spell-provenance__trace">${escapeHtml(display)}</span>
+      <button type="button" class="garden-action spell-action" data-spw-spell-action="re-gather" data-spw-spell-trail="${escapeHtml(trailSig)}">re-gather</button>
+    </div>
+  `;
+}
+
 const BREADCRUMB_ROUTE_REGISTRY = Object.freeze({
   '/': { label: 'Home', note: 'Start or re-enter the site.' },
   '/about/': { label: 'About', note: 'Read the method and the kernel.' },
@@ -897,6 +925,11 @@ function renderBreadcrumbSpell() {
     </ol>
     ${compact || !relatedRoutes.length ? '' : renderBreadcrumbNearbyRoutes(relatedRoutes)}
     <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
+    <!-- Live garden trace on the spell path itself (ambitious one-pass enhancement).
+         When the cauldron holds recent gesture provenance (from living-term holds etc.), the spell path
+         now surfaces it directly so the breadcrumb trail and the garden memory are visibly linked.
+         Re-gather button makes the originating attention traversable from the path. -->
+    ${renderGardenTraceOnSpellPath()}
   `;
 
   const traceSignature = [

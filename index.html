@@ -150,21 +150,29 @@
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="address">#&gt;home_frame</a>
             <div class="mode-switch" role="group" aria-label="Choose what the homepage foregrounds">
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="surface"
+                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-surface" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
+                        data-mode-group="home-lens" data-set-mode="surface"
                         aria-pressed="true" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.prose" data-spw-semantic-expression="home[prose]{read.first}">.surface
+                        data-spw-spell="home.prose" data-spw-semantic-expression="home[prose]{read.first}"
+                        title="tap: switch to prose lens • hold: prime this semantic slice to cauldron">.surface
                 </button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="syntax"
+                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-syntax" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
+                        data-mode-group="home-lens" data-set-mode="syntax"
                         aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.grammar" data-spw-semantic-expression="home[grammar]{inspect.structure}">^syntax
+                        data-spw-spell="home.grammar" data-spw-semantic-expression="home[grammar]{inspect.structure}"
+                        title="tap: switch to syntax lens • hold: prime this semantic slice to cauldron">^syntax
                 </button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="artifacts"
+                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-artifacts" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
+                        data-mode-group="home-lens" data-set-mode="artifacts"
                         aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.outputs" data-spw-semantic-expression="home[outputs]{show.work}">*artifacts
+                        data-spw-spell="home.outputs" data-spw-semantic-expression="home[outputs]{show.work}"
+                        title="tap: switch to artifacts lens • hold: prime this semantic slice to cauldron">*artifacts
                 </button>
-                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="website"
+                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-website" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
+                        data-mode-group="home-lens" data-set-mode="website"
                         aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.system" data-spw-semantic-expression="home[system]{explain.runtime}">@website
+                        data-spw-spell="home.system" data-spw-semantic-expression="home[system]{explain.runtime}"
+                        title="tap: switch to full system lens • hold: prime this semantic slice to cauldron">@website
                 </button>
             </div>
             <div class="home-lens-preview" aria-live="polite" data-spw-feature="home-mode-preview">
@@ -183,7 +191,7 @@
             </div>
             <details class="home-copy-inspector spw-garden-tended" data-spw-form="brace" data-spw-feature="home-copy-inspector"
                      data-spw-semantic-expression="home[copy.inspection]{why.reader.takeaway}"
-                     data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron">
+                     data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron double-click:expand-full-wonder">
                 <summary>
                     <span class="home-copy-inspector__sigil" aria-hidden="true">{}</span>
                     <span>inspect the copy promise</span>
@@ -192,10 +200,22 @@
                     <a href="#home-reason-why" data-spw-operator="probe">why this page exists</a>
                     <a href="#home-reason-readers" data-spw-operator="probe">who it is for</a>
                     <a href="#home-reason-takeaway" data-spw-operator="probe">what you can leave with</a>
+                    <!-- Live garden consequence surface (temporal momentum for the four living tools).
+                         Reuses the established cauldron-mirror contract + gestureHistory already carried
+                         by composition. Holding any living-term or mode pill on this page now produces
+                         an immediately visible trace here that survives the gesture and can be traversed. -->
+                    <div class="garden-consequence" data-spw-cauldron-mirror data-spw-feature="garden-consequence" aria-live="polite">
+                        <span class="garden-consequence__label">garden remembers</span>
+                        <span data-spw-mirror-label="last-gesture" title="Most recent attention that fed the garden"></span>
+                        <span data-spw-mirror-label="trace" title="Gesture chain across current ingredients"></span>
+                        <span data-spw-mirror-label="trail" class="garden-trail" title="Most recent planted spell trail from this surface"></span>
+                        <button type="button" data-spw-cauldron-action="re-gather" hidden class="garden-action" title="Bring the last tended material back into active attention">re-gather</button>
+                    </div>
                 </div>
             </details>
             <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="kernel" data-spw-stance="entry">kernel_entry</span>
+                <span class="spw-component-tag spw-living-term" data-spw-living-term data-spw-concept="kernel-entry" data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron" tabindex="0"
+                      title="tap: inspect kernel • hold: prime this entry point to cauldron">kernel_entry</span>
             </div>
         </header>
 
@@ -835,6 +855,11 @@
 
             <p class="frame-note" data-spw-projection="kernel" data-spw-intent="carry-wonder">
                 The <span class="spw-living-term" data-spw-living-term data-spw-concept="kernel" tabindex="0">kernel</span> and live inspector you can open on this page — the <span class="spw-living-term" data-spw-living-term data-spw-concept="component-tag" tabindex="0">component tags</span>, attention fields, resonance grammar, and naming sigils — do not have to stay behind when you cross. In the Library they become part of the long work: a naming engine you can feed with <span class="spw-living-term" data-spw-living-term data-spw-concept="garden-prompt" tabindex="0">garden prompts</span>, a lens for the scrying bowl, a codex a careful person might still be annotating three generations from now. Gestures performed here can be carried through and composed in the cauldron or planted as living spell trails.
+            </p>
+            <!-- Live temporal consequence for the carry claim: shows the most recent attention that left this page and entered the garden. Maintains momentum between the prose promise and the actual runtime state. -->
+            <p class="frame-note garden-carried" data-spw-garden-carried aria-live="polite">
+                <span class="garden-carried__label">last attention carried:</span>
+                <span class="garden-carried__value" data-spw-garden-carried-value>—</span>
             </p>
             <nav class="frame-operators" aria-label="Carry the kernel" data-spw-feature="kernel-projection">
                 <a class="operator-chip" href="/play/rpg-wednesday/library/#daily-weekly-rhythm" data-spw-operator="frame" data-spw-intent="project-kernel" data-spw-target="town_library">^ carry the kernel through</a>

@@ -2498,3 +2498,149 @@ html[data-spw-cognitive-handles="off"] :where(
   outline: 1px solid var(--active-op-color, var(--teal));
   outline-offset: 2px;
 }
+
+/* Garden consequence live strip (home inspector + KERNEL ENTRY carry surface)
+   — the direct answer to "are the consequences meaningfully visible with effects that maintain temporal momentum?"
+   Reuses cauldron-tether, garden-tended, and gesture state inheritance. Lives in handles layer. */
+.garden-consequence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  margin-block-start: 0.35rem;
+  padding-block-start: 0.35rem;
+  border-top: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 70%, var(--active-op-color, var(--teal)) 30%);
+}
+
+.garden-consequence__label {
+  font-weight: 720;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+}
+
+.garden-consequence [data-spw-mirror-label] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  padding: 0.08rem 0.38rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
+  font-size: 0.65rem;
+  white-space: nowrap;
+  max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.garden-consequence .garden-trail[data-spw-mirror-label="trail"] {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent);
+}
+
+.garden-action {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  background: transparent;
+  color: var(--active-op-color, var(--teal));
+  font-family: inherit;
+  font-size: 0.64rem;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.garden-action:hover,
+.garden-action:focus-visible {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  border-color: var(--active-op-color, var(--teal));
+}
+
+/* The KERNEL ENTRY carry surface — makes the prose promise of "gestures can be carried" have a live, traversable consequence */
+.garden-carried {
+  margin-block-start: 0.25rem;
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 78%, var(--active-op-color, var(--teal)) 22%);
+}
+.garden-carried__label {
+  opacity: 0.75;
+  margin-inline-end: 0.35em;
+}
+.garden-carried__value {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  padding: 0.1rem 0.35rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+}
+
+/* When a re-gather happens, the footer cauldron receives a short "still warm" flash via the JS class */
+.site-footer__cauldron.is-recently-tended,
+[data-spw-cauldron].is-recently-tended {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent),
+              0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  transition: box-shadow 200ms ease;
+}
+
+/* Spell provenance + garden trace on spell paths and atoms (direct "enhance spells similarly" continuation).
+   Cohesive with the Garden State mirror and garden-consequence styles. Lives in handles layer. */
+.spell-provenance,
+.cauldron-garden-provenance,
+.spw-spell-path__garden-trace {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.4rem;
+  margin-block-start: 0.3rem;
+  padding-block-start: 0.3rem;
+  border-top: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 72%, var(--active-op-color, var(--teal)) 28%);
+}
+
+.spell-provenance__label,
+.cauldron-garden-provenance .spell-provenance__label {
+  font-weight: 720;
+  letter-spacing: 0.02em;
+  opacity: 0.82;
+}
+
+.spell-provenance__trace,
+.spell-provenance__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.06rem 0.32rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 95%, transparent);
+  font-size: 0.63rem;
+  white-space: nowrap;
+}
+
+.spell-provenance__chip {
+  padding: 0 0.18rem;
+  font-size: 0.58rem;
+  opacity: 0.7;
+}
+
+.spell-provenance .garden-action,
+.spell-provenance .spell-action {
+  font-size: 0.62rem;
+  padding: 0.08rem 0.36rem;
+}
+
+/* When a spell atom itself carries provenance (from garden mix or planted trail) */
+.spell-ingredient[data-spw-garden-provenance] {
+  border-bottom-style: dashed;
+  border-bottom-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+  position: relative;
+}
+
+.spw-spell-path__garden-trace {
+  margin-block-start: 0.2rem;
+  font-size: 0.64rem;
+}
