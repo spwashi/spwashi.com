@@ -203,10 +203,15 @@ class SpwFrameNavigator {
 
         const title = document.createElement('span');
         title.className = 'spw-nav-title';
+        title.id = 'spw-nav-panel-title';
         title.innerHTML = '<span data-spw-operator="frame">#&gt;</span>&thinsp;surface map';
+
+        // Wire aria-labelledby now that title id exists
+        this.panel.setAttribute('aria-labelledby', 'spw-nav-panel-title');
 
         this.counter = document.createElement('span');
         this.counter.className = 'spw-nav-counter';
+        this.counter.id = 'spw-nav-counter';
         this.counter.setAttribute('aria-live', 'polite');
         this.counter.setAttribute('aria-label', 'Surface map counts');
 
@@ -232,6 +237,7 @@ class SpwFrameNavigator {
         this.searchInput.type = 'search';
         this.searchInput.placeholder = 'filter frames + routes';
         this.searchInput.setAttribute('aria-label', 'Filter frames and routes');
+        this.searchInput.setAttribute('aria-describedby', 'spw-nav-counter');
         this.searchInput.autocomplete = 'off';
 
         searchWrap.append(searchLabel, this.searchInput);
@@ -445,6 +451,7 @@ class SpwFrameNavigator {
     appendSectionLabel(list, label, count) {
         const section = document.createElement('li');
         section.className = 'spw-nav-section-label';
+        section.setAttribute('role', 'separator');
         section.textContent = `${label} (${count})`;
         list.appendChild(section);
     }
@@ -505,13 +512,17 @@ class SpwFrameNavigator {
         list.querySelectorAll('.spw-nav-item-btn').forEach(btn => {
             if (btn.dataset.navKind !== 'frame') {
                 btn.classList.remove('is-active');
-                btn.setAttribute('aria-current', 'false');
+                btn.removeAttribute('aria-current');
                 return;
             }
             const idx = Number(btn.dataset.navIndex);
             const isActive = frames[idx]?.frame === active;
             btn.classList.toggle('is-active', isActive);
-            btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+            if (isActive) {
+                btn.setAttribute('aria-current', 'true');
+            } else {
+                btn.removeAttribute('aria-current');
+            }
 
             if (isActive) {
                 activeVisibleIndex = visibleFrameIndex;

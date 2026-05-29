@@ -321,7 +321,7 @@ function normalizeIngredient(item) {
   if (typeof item === 'string') {
     return { expression: item, label: item, capturedAt: Date.now() };
   }
-  return {
+  const normalized = {
     expression: item.expression || item.label || '',
     label: item.label || item.expression || '',
     operator: item.operator || inferOperator(item.expression),
@@ -329,6 +329,55 @@ function normalizeIngredient(item) {
     capturedAt: item.capturedAt || Date.now(),
     ...item, // preserve any extra rich data
   };
+
+  // Numericity integration (proper architecture extension, not ad-hoc surface):
+  // Numbers/rhythmic allocations. The baker's dozen (13-modulo) specifics are an easter egg layer — functional in quantifier derivation but not announced in primary surfaces.
+  // become typed ingredients with derived quantifiers for selection/discovery paths.
+  // This makes categories of numbers first-class for cauldron → spell → navigation flows
+  // and keeps them "in mind" via existing mirrors (ideal for video narration/editing).
+  if (isNumericalConcept(normalized.expression)) {
+    normalized.type = 'numerical';
+    const parsed = parseNumericalValue(normalized.expression);
+    if (parsed) {
+      normalized.value = parsed.value;
+      normalized.unit = parsed.unit;
+      normalized.quantifiers = deriveNumericityQuantifiers([normalized]);
+    }
+  }
+
+  return normalized;
+}
+
+function isNumericalConcept(expr = '') {
+  const s = String(expr).toLowerCase();
+  return /\b(13|200|10k|10000|day|step|video|trace|mod|per|across|dimensional|epoch|chunk)\b/.test(s);
+}
+
+function parseNumericalValue(expr = '') {
+  const match = String(expr).match(/(\d+)(k?)\s*[- ]?(day|step|video|trace|chunk|epoch)?/i);
+  if (!match) return null;
+  let val = parseInt(match[1], 10);
+  if (match[2] === 'k') val *= 1000;
+  return { value: val, unit: match[3] || 'count' };
+}
+
+function deriveNumericityQuantifiers(ingredients = []) {
+  const nums = ingredients.filter(i => i.type === 'numerical' && typeof i.value === 'number');
+  if (!nums.length) return [];
+
+  const suggestions = new Set();
+  nums.forEach(n => {
+    const v = n.value;
+    const u = n.unit || 'unit';
+    suggestions.add(`mod-${v}`);
+    suggestions.add(`per-${v}-${u}`);
+    suggestions.add(`across-${v}-trace`);
+    // The 13-modulo "baker's dozen" derivation is the easter-egg heart of the numericity system.
+    // It powers real quantifiers for users who engage, but is not surfaced in main prose or default UI.
+    if (v % 13 === 0 || v === 13) suggestions.add('mod-13-allocation');
+    suggestions.add(`dimensional-${Math.min(3, Math.floor(v / 50) || 1)}`);
+  });
+  return Array.from(suggestions);
 }
 
 function inferOperator(expression = '') {
@@ -476,6 +525,15 @@ function renderCauldronMirrors(ingredients, phase) {
     if (countEl) countEl.textContent = `count: ${count}`;
     if (operatorsEl) operatorsEl.textContent = `operators: ${operators}`;
 
+    // Numericity visibility in mirrors (keeps numbers + their quantifiers "in mind" for narration/video)
+    const numerics = ingredients.filter(i => i.type === 'numerical' && i.quantifiers);
+    if (numerics.length) {
+      const numMeta = numerics.map(n => `${n.value}${n.unit ? '-' + n.unit : ''} → ${ (n.quantifiers || []).slice(0,2).join('/') }`).join(' · ');
+      // Append to an existing or new mirror label if present; otherwise it stays in console/inspector
+      const numEl = mirror.querySelector('[data-spw-mirror-label="numericity"]');
+      if (numEl) numEl.textContent = `numericity: ${numMeta}`;
+    }
+
     // New consequence labels for temporal momentum (home garden inspector + any other mirror)
     const lastGestureEl = mirror.querySelector('[data-spw-mirror-label="last-gesture"]');
     const traceEl = mirror.querySelector('[data-spw-mirror-label="trace"]');
@@ -558,6 +616,13 @@ function renderIngredientsList(ingredients) {
       meta += `<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`;
     }
 
+    // Numericity quantifier surfacing (integrated, not brittle): when a numerical ingredient is present,
+    // show its derived quantifiers as first-class options for selection/discovery in spells/navigation.
+    if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
+      const qList = ing.quantifiers.slice(0, 4).map(q => `<span class="cauldron-numericity-quantifier" data-spw-quantifier="${escapeHtml(q)}">${escapeHtml(q)}</span>`).join(' ');
+      meta += `<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`;
+    }
+
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
 
     return `
@@ -619,6 +684,18 @@ function onCapture(event) {
     // (supports re-hydration and prompt enrichment).
     gestureHistory: detail.gestureHistory || detail.gestureChain || null,
   };
+
+  // Numericity: if this capture is a number concept (from living-term on rhythm text etc.),
+  // enrich it so the cauldron can derive responsive quantifiers automatically.
+  if (isNumericalConcept(expression)) {
+    const parsed = parseNumericalValue(expression);
+    if (parsed) {
+      ingredient.type = 'numerical';
+      ingredient.value = parsed.value;
+      ingredient.unit = parsed.unit;
+      ingredient.quantifiers = deriveNumericityQuantifiers([ingredient]);
+    }
+  }
 
   // Record for live temporal consequence mirrors (the hold on a living-term now has visible afterlife)
   if (ingredient.gestureHistory || ingredient.primedBy) {

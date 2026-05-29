@@ -390,6 +390,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   baseAffordance: 'read',
   componentDensity: 'soft',
   operatorSaturation: 'normal',
+  numericityEmphasis: 'subtle',
   animationIntensity: 'normal',
   contourProfile: 'balanced',
   strokeProfile: 'structural',
@@ -464,6 +465,7 @@ const SETTING_OPTIONS = Object.freeze({
   baseAffordance: new Set(['read', 'tune', 'inspect', 'orient']),
   componentDensity: new Set(['dense', 'soft', 'roomy']),
   operatorSaturation: new Set(['muted', 'normal', 'vibrant']),
+  numericityEmphasis: new Set(['subtle', 'prominent', 'cauldron-first']),
   animationIntensity: new Set(['reduced', 'normal', 'enhanced']),
   contourProfile: new Set(['tight', 'balanced', 'soft']),
   strokeProfile: new Set(['hairline', 'structural', 'bold']),
@@ -1380,6 +1382,7 @@ const deriveArchitecturalModifiers = (settings) => {
   const infospaceFactor = INFOSPACE_FACTOR[settings.infospaceComplexity] || 1;
   const operatorPresentationFactor = OPERATOR_PRESENTATION_FACTOR[settings.operatorPresentation] || 1;
   const operatorSaturationFactor = OPERATOR_SATURATION_FACTOR[settings.operatorSaturation] || 1;
+  const numericityEmphasisFactor = settings.numericityEmphasis === 'prominent' ? 1.35 : settings.numericityEmphasis === 'cauldron-first' ? 1.6 : 1;
   const cognitiveFactor = settings.cognitiveHandles === 'on' ? 1 : 0;
   const relationalFactor = settings.relationalVisualization === 'on' ? 1 : 0;
   const metadataFactor = settings.showSemanticMetadata === 'on' ? 1 : 0;
@@ -1461,6 +1464,7 @@ const deriveArchitecturalModifiers = (settings) => {
       infospaceFactor,
       operatorPresentationFactor,
       operatorSaturationFactor,
+      numericityEmphasisFactor,
       cognitiveFactor,
       relationalFactor,
       metadataFactor
@@ -1543,6 +1547,7 @@ class SiteSettingsManager {
       spwBaseAffordance: normalized.baseAffordance,
       spwComponentDensity: normalized.componentDensity,
       spwOperatorSaturation: normalized.operatorSaturation,
+      spwNumericityEmphasis: normalized.numericityEmphasis,
       spwAnimationIntensity: normalized.animationIntensity,
       spwContourProfile: normalized.contourProfile,
       spwStrokeProfile: normalized.strokeProfile,
@@ -1633,6 +1638,7 @@ class SiteSettingsManager {
       '--spw-infospace-factor': modifiers.semantic.infospaceFactor,
       '--spw-operator-presentation-factor': modifiers.semantic.operatorPresentationFactor,
       '--spw-operator-saturation-factor': modifiers.semantic.operatorSaturationFactor,
+      '--spw-numericity-emphasis-factor': modifiers.semantic.numericityEmphasisFactor,
       '--spw-cognitive-handle-factor': modifiers.semantic.cognitiveFactor,
       '--spw-relational-factor': modifiers.semantic.relationalFactor,
       '--spw-semantic-metadata-factor': modifiers.semantic.metadataFactor,

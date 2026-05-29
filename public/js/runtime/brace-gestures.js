@@ -78,6 +78,16 @@ const GESTURE_TO_CHARGE_BUCKET = Object.freeze({
   committed: 'active',
 });
 
+/* ARIA hygiene for transient gesture states (see gesture-aria-hygiene/FIX.md).
+   Only applied to non-link/non-button interactive elements so we do not
+   interfere with native semantics. Cleared on neutral/discharge. */
+const GESTURE_ARIA_DESCRIPTIONS = Object.freeze({
+  charging: 'hover active',
+  active: 'pressing',
+  armed: 'hold ready',
+  committed: 'activated',
+});
+
 const FIELD_WONDERS = Object.freeze([
   'orientation',
   'inquiry',
@@ -332,6 +342,10 @@ function setGesture(el, meta, gesture, options = {}) {
     writeStyleValue(el, '--drag-distance', null);
     updateFieldHormones(meta, 'neutral');
     syncDiscoveredMarkup(el, meta, { spwLastGesture: null, spwArmed: null });
+    // ARIA hygiene: clear transient gesture description on neutral
+    if (el.hasAttribute && el.hasAttribute('aria-description')) {
+      el.removeAttribute('aria-description');
+    }
     return;
   }
 
@@ -352,6 +366,26 @@ function setGesture(el, meta, gesture, options = {}) {
     spwLastGesture: gesture,
     spwArmed: gesture === 'armed' ? 'true' : null,
   });
+
+  /* ARIA hygiene pass (gesture-aria-hygiene/FIX.md).
+     Only on non-native interactive elements. Lower noise than aria-live for transient phases. */
+  const isNativeControl = el.matches?.('a[href], button, input, select, textarea, [role="button"], [role="link"]');
+  if (!isNativeControl) {
+    let desc = GESTURE_ARIA_DESCRIPTIONS[gesture] || '';
+    if (gesture === 'armed') {
+      const aff = (meta && meta.affordances) || [];
+      if (aff.includes('swap') || el.hasAttribute('data-spw-swappable')) {
+        desc = 'Hold: will swap operator. Release now to confirm.';
+      } else if (aff.includes('pin') || meta?.pinnable) {
+        desc = 'Hold: will pin this frame.';
+      }
+    }
+    if (desc) {
+      el.setAttribute('aria-description', desc);
+    } else {
+      el.removeAttribute('aria-description');
+    }
+  }
 
   updateFieldHormones(meta, gesture);
 }

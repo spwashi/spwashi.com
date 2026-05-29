@@ -1,0 +1,51 @@
+# Hook Region (wip)
+#
+# Staged ontology note for the proposed hook region anatomy feature.
+# This lives in the plan until the contracts stabilize in the public .spw surfaces.
+#
+# See: PLAN.md, .spw/surfaces/page-model.spw (target), .spw/conventions/site-semantics.spw (target)
+
+#>hook_region
+#:region #!peak
+#:layer #!pragmatics
+
+@page_model: ~"../../.spw/surfaces/page-model.spw"
+@site_semantics: ~"../../.spw/conventions/site-semantics.spw"
+@attention_field: ~"../../.spw/conventions/attention-field.spw"
+
+thesis: .{
+  claim = `A hook is a volatile, high-charge entry peak region at the top of landing pages. It is the first interactive "call to wonder or action" that orients a visitor, emits strong initial tokens into the attentional field, and hands off to the stable hero narrative and deeper attractors.`
+  distinction = `Distinct from: site-hero frame (stable container), page-hook landmarks (jump targets), playable-hook (memorable prose line), generic section.`
+  vertical = `The hook participates in vertical progression: it is the entry threshold whose gestures and operators prime the charge gradient for the scroll journey that follows.`
+  motion = `Hooks encourage motion to other pages by surfacing representative Spw operators and semantically tagged concepts that resonate with (and link to) related routes.`
+}[reg=facet]
+
+contract: .{
+  kind = "hook"
+  roles = #["call", "invocation", "gate", "prime", "progression", "wonder-call", "action-call"][reg=set]
+  variants = #["wonder", "action", "operator", "progression", "resonance"][reg=set]
+  defaults = .{
+    liminality = "entry"
+    selection = "high on landing"
+    charge = "peak (initial field bias)"
+    form = "brace | block (volatile affordance)"
+  }
+  html = `section[data-spw-kind="hook"][data-spw-role="call|..."] + data-spw-hook-variant + data-spw-operator + data-spw-gesture-contract + inner living terms / semantic expressions`
+  field_role = "Strong initial emitter of its operator + wonder tokens + tagged concepts. Bias source for intra-page and cross-route resonance."
+  gesture = "Reuses existing gesture-contract vocabulary (tap, hold, prime, resonate). Can advance progression or suggest next-page motion."
+  volatility = "Editor can swap variant, foreground operator, call copy, or gesture set per page without touching the rest of the hero or body."
+  inspection = "Automatically becomes a region (after dom-contracts update). Appears in registry, catalog, console describe, region menus."
+}[reg=facet]
+
+example: .{
+  home = `#>home_entry_hook { wonder: orientation locality; operator: frame; variant: progression }`
+  topics = `#>topic_atlas_hook { wonder: comparison projection; operator: route; variant: operator }`
+  about = `#>creator_kernel_hook { wonder: consequence resonance; operator: probe; variant: wonder }`
+}[reg=set]
+
+open_questions: #[
+  "Should hooks declare an explicit data-spw-hook-seed for more advanced volatility later?",
+  "Does the hook need its own slot inside site-hero, or is it always a peer section at main > hook + hero?",
+  "How strongly should the initial field emission on load be (vs. requiring first interaction)?",
+  "Vertical progression cues: reuse consequence/liminality or introduce a light dedicated attr?"
+][reg=set]

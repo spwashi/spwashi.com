@@ -57,6 +57,7 @@ export const REGION_SELECTORS = Object.freeze([
   '[data-spw-kind="panel"]',
   '[data-spw-kind="card"]',
   '[data-spw-kind="surface"]',
+  '[data-spw-kind="hook"]',
   '[data-spw-role]',
   '[data-spw-slot]',
 ]);

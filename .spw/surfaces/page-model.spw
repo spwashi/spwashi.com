@@ -37,6 +37,16 @@ composition_hierarchy: .{
   html_contract = `Sections or divs selected by PAGE_METADATA_REGION_SELECTOR. Assigned by site.js primeRegions().`
   note = `Regions are the granularity at which attentional topography is most actionable — their harmony value is already a design-facing signal.`
  }[reg=facet]
+
+ hook = .{
+  definition = `A volatile, high-value entry peak region placed at the top of landing pages. Serves as a configurable call to wonder or action that represents the page's core Spw operations and primes the vertical progression a scrolling visitor will experience.`
+  is_a = "specialized region (peak attractor)"
+  semantic_identity = #[`hook-variant` (wonder|action|operator|progression|resonance), `primary-operator`, `gesture-contract`, liminality="entry"][reg=set]
+  field_role = `Strong initial emitter of operator + wonder tokens into the attentional field on entry or first interaction. Biases resonance on matching concepts across the page and related routes.`
+  html_contract = `section[data-spw-kind="hook"][data-spw-role="call|invocation|gate"] (recognized automatically via REGION_SELECTORS after dom-contracts update). Often carries data-spw-operator, data-spw-hook-variant, data-spw-gesture-contract, and inner living-terms / semantic-expressions.`
+  authoring_contract = `Editor places it as the first interactive voice inside or immediately before the primary site-hero on landing routes. Content should be relatively easy to swap (volatile) without disturbing deeper narrative.`
+  note = `The hook is deliberately more charged and gesture-forward than a standard frame. It is the place a visitor first *does something* (relate, prime, move) rather than only read past. Pairs with concept tagging updates for semantic resonance navigation.`
+ }[reg=facet]
  feature = .{
  definition = `A named functional unit within a region — a coherent cluster of components that together serve one interaction purpose and should remain identifiable across CSS, JS, QA links, and editor inspection.`
   semantic_identity = #[feature_name, `feature-role`, `feature-kind`, `purpose description`][reg=set]
@@ -157,7 +167,8 @@ attentional_topography: .{
   sources = #[
    `operator atlas entries (high conceptual density)`,
    `interactive widgets (action affordance)`,
-   `hero frames (entry orientation)`
+   `hero frames (entry orientation)`,
+   `hook regions (volatile top-of-landing call to wonder or action — the first charged stand in vertical progression)`
   ][reg=set]
   design_consequence = `Peaks should earn their prominence through semantic density, not visual noise. A peak that attracts attention but does not reward it creates cognitive debt.`
  }[reg=facet]

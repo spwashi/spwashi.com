@@ -95,8 +95,8 @@
                     </div>
                 </div>
                 <h1 id="budgeting-title">Savings Regimen</h1>
-                <p class="site-lede">Track saved capacity against real service thresholds instead of keeping the number abstract.</p>
-                <p>Add money you have preserved, add expenses that reduce it, and watch the current balance map onto scope cards, creator work, systems sprints, and architecture advisory. Nothing leaves this browser.</p>
+                <p class="site-lede">Track saved capacity — money and time — against real service thresholds instead of keeping the numbers abstract.</p>
+                <p>Add money or protected focus time (hours, days, or 13-cycles aligned to your release rhythm). Watch capacity map onto scope cards, creator work, systems sprints, and advisory. Time entries become numericity-native cauldron ingredients with quantifiers for allocation and discovery. Nothing leaves this browser.</p>
                 <nav class="frame-operators" aria-label="Budgeting sections">
                     <a class="operator-chip" href="#ledger">^ ledger</a>
                     <a class="operator-chip" href="#capacity">~ capacity</a>
@@ -184,6 +184,39 @@
                                 <a class="operator-chip" href="/services/">~ services overview</a>
                                 <a class="operator-chip" href="/services/#custom-quote">@ custom quote</a>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- Time Budgeting: first-class support for budgeting time alongside money, aligned to rhythmic release cycles and numericity.
+                         Time capacity can be tracked in rhythm-aware units and primed to the cauldron as numerical ingredients. Quantifiers (including baker's dozen derivations) appear through interaction and the numericity emphasis mode. This keeps the deep 13-modulo logic as a delightful discovery layer rather than primary prose. -->
+                    <section class="budget-panel" id="time-capacity" aria-labelledby="time-capacity-title">
+                        <header class="frame-heading">
+                            <h3 id="time-capacity-title">Time Capacity</h3>
+                        </header>
+                        <p class="frame-note">Budget time the same way you budget money. Track saved focus time and allocate it across rhythmic cycles. In the right mode, these become cauldron ingredients that surface playful quantifiers (including baker's dozen derivations) for deeper discovery.</p>
+
+                        <div class="budget-form" role="group" aria-labelledby="time-capacity-title">
+                            <div class="budget-input-row">
+                                <input type="text" id="time-desc" class="budget-input" placeholder="Deep work block saved, sprint buffer, research day" aria-label="Time entry description">
+                                <input type="number" id="time-amount" class="budget-input" placeholder="Hours or days" inputmode="decimal" min="0.5" step="0.5" aria-label="Time amount">
+                                <select id="time-unit" class="budget-input" aria-label="Time unit">
+                                    <option value="hours">hours</option>
+                                    <option value="days">days</option>
+                                    <option value="cycles">rhythm cycles</option>
+                                </select>
+                            </div>
+                            <div class="budget-action-row">
+                                <button type="button" id="btn-add-time-saved" class="budget-button" data-time-add="saved">+ saved time</button>
+                                <button type="button" id="btn-add-time-used" class="budget-button" data-time-add="used">- time allocated</button>
+                            </div>
+                        </div>
+
+                        <ul class="budget-list" id="time-entries" aria-live="polite"></ul>
+
+                        <div class="budget-time-summary">
+                            <div class="budget-total-label">Net time capacity</div>
+                            <output class="budget-total" id="time-total-display" aria-live="polite">0 hours</output>
+                            <p class="budget-message" id="time-tier-message" aria-live="polite">Track saved time to map capacity onto rhythm-aligned service work.</p>
                         </div>
                     </section>
                 </div>

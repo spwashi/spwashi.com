@@ -1033,6 +1033,36 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
+/* ARIA + navigation-spells hygiene: directional affordance for destination semantics on key link families.
+   projection (cross-route) gets a distinct forward-leaning treatment; scope/settle stay more contained. */
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a
+)[data-spw-nav-destination="projection"] {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
+  text-decoration-thickness: calc(var(--handle-underline-thickness, 1.5px) * 1.1);
+}
+
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a
+)[data-spw-nav-destination="scope"] {
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a
+)[data-spw-nav-destination="settle"] {
+  text-decoration-style: dashed;
+  text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
+}
+
 :where(em .syntax-token, em .spw-delimiter, em :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])),
 :where(i .syntax-token, i .spw-delimiter, i :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])) {
   text-decoration-thickness: 1px;
@@ -1358,6 +1388,13 @@ body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
 .spw-garden-tended [data-spw-living-term][data-spw-gesture="armed"] {
   border-bottom-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 55%, transparent);
   background: color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+/* ARIA hygiene: armed state on any focusable gesture target shows distinct "hold to commit" affordance.
+   This bridges the data-spw-gesture state written by brace-gestures.js to visual + AT users. */
+:where([data-spw-gesture="armed"]):focus-visible {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 65%, transparent);
+  outline-offset: 2px;
 }
 
 .spw-living-term[data-spw-gesture="charging"],
@@ -2473,9 +2510,9 @@ html[data-spw-cognitive-handles="off"] :where(
 .spw-living-term::after {
   content: "✧";
   position: absolute;
-  right: -0.6em;
-  top: -0.1em;
-  font-size: 0.55em;
+  right: -0.45em; /* tighter to reduce line-box pressure and wrapping artifacts at end of balanced text */
+  top: -0.08em;
+  font-size: 0.52em;
   color: color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
   opacity: 0.4;
   pointer-events: none;
@@ -2497,6 +2534,25 @@ html[data-spw-cognitive-handles="off"] :where(
 .spw-living-term[tabindex="0"]:focus-visible {
   outline: 1px solid var(--active-op-color, var(--teal));
   outline-offset: 2px;
+}
+
+/* Numericity emphasis mode — makes rhythm numbers easy to discover and interact with.
+   The baker's dozen (13-modulo) specifics are an easter egg: they surface in quantifiers, tooltips, and cauldron outputs when the mode is prominent or cauldron-first, or when you hold living-terms. Keeps the motif delightful for those who engage the system rather than announced in prose. */
+html[data-spw-numericity-emphasis="prominent"] .spw-living-term[data-spw-concept*="day"],
+html[data-spw-numericity-emphasis="prominent"] .spw-living-term[data-spw-concept*="step"],
+html[data-spw-numericity-emphasis="prominent"] .spw-living-term[data-spw-concept*="trace"],
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="day"],
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="step"],
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="trace"] {
+  font-weight: 600;
+  border-bottom-width: 2px;
+  --spw-numericity-lift: var(--spw-numericity-emphasis-factor, 1.35);
+}
+
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="day"],
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="step"],
+html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-concept*="trace"] {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
 }
 
 /* Garden consequence live strip (home inspector + KERNEL ENTRY carry surface)

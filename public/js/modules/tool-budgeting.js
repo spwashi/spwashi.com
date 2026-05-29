@@ -222,5 +222,199 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Time budgeting support: first-class time capacity alongside money.
+    // Aligns with site rhythmic cycles and numericity mode.
+    // Time entries are captured as numerical cauldron ingredients with quantifiers.
+    // The baker's dozen (13-modulo) specifics are an easter egg — revealed through cauldron priming and the numericity emphasis mode rather than primary UI text.
+    const timeDescInput = document.getElementById('time-desc');
+    const timeAmountInput = document.getElementById('time-amount');
+    const timeUnitSelect = document.getElementById('time-unit');
+    const btnTimeSaved = document.getElementById('btn-add-time-saved');
+    const btnTimeUsed = document.getElementById('btn-add-time-used');
+    const timeEntriesList = document.getElementById('time-entries');
+    const timeTotalDisplay = document.getElementById('time-total-display');
+    const timeMessageEl = document.getElementById('time-tier-message');
+
+    let timeEntries = [];
+
+    function loadTimeState() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY + ':time');
+            timeEntries = raw ? JSON.parse(raw) : [];
+        } catch { timeEntries = []; }
+        renderTime();
+    }
+
+    function saveTimeState() {
+        try {
+            localStorage.setItem(STORAGE_KEY + ':time', JSON.stringify(timeEntries));
+        } catch {}
+        renderTime();
+    }
+
+    function addTimeEntry(type) {
+        const desc = timeDescInput.value.trim() || 'Time entry';
+        const amount = Number.parseFloat(timeAmountInput.value);
+        const unit = timeUnitSelect.value;
+        if (!Number.isFinite(amount) || amount <= 0) {
+            timeAmountInput.focus();
+            return;
+        }
+
+        timeEntries.push({
+            id: makeId(),
+            type, // 'saved' or 'used'
+            desc,
+            amount,
+            unit,
+        });
+
+        timeDescInput.value = '';
+        timeAmountInput.value = '';
+        timeDescInput.focus();
+        saveTimeState();
+
+        // Prime to cauldron as numerical ingredient (reuses existing architecture + numericity derivation)
+        try {
+            const bus = window.__SPW_SITE__?.bus || (window.bus);
+            if (bus && typeof bus.emit === 'function') {
+                const expr = `${amount}-${unit}-time-${type}`;
+                bus.emit('spell:capture', {
+                    expression: expr,
+                    label: `${desc} (${amount} ${unit} ${type})`,
+                    type: 'numerical',
+                    value: amount,
+                    unit: `${unit}-${type}`,
+                    origin: 'budgeting-tool-time',
+                    wonder: 'capacity',
+                    primedBy: 'time-ledger',
+                });
+            }
+        } catch (_) {}
+    }
+
+    function removeTimeEntry(id) {
+        timeEntries = timeEntries.filter(e => e.id !== id);
+        saveTimeState();
+    }
+
+    function normalizeToHours(entry) {
+        const { amount, unit } = entry;
+        if (unit === 'hours') return amount;
+        if (unit === 'days') return amount * 8; // assume 8h day for capacity mapping
+        if (unit === 'cycles') return amount * 40; // rough 13-cycle ~ 5 days * 8h
+        return amount;
+    }
+
+    function buildTimeEntryNode(entry) {
+        const item = document.createElement('li');
+        item.className = 'budget-item time-item';
+        item.dataset.type = entry.type;
+        item.dataset.unit = entry.unit;
+
+        const content = document.createElement('div');
+        content.className = 'budget-item__content';
+
+        const title = document.createElement('strong');
+        title.textContent = entry.desc;
+
+        const amt = document.createElement('span');
+        amt.className = 'budget-item__amount time-amount';
+        const sign = entry.type === 'saved' ? '+' : '-';
+        amt.textContent = `${sign}${entry.amount} ${entry.unit}`;
+
+        // Make time amounts living/numericity-aware for the mode + cauldron
+        if (document.documentElement.dataset.spwNumericityEmphasis && document.documentElement.dataset.spwNumericityEmphasis !== 'subtle') {
+            amt.classList.add('spw-living-term');
+            amt.setAttribute('data-spw-living-term', '');
+            amt.setAttribute('data-spw-concept', `time-${entry.unit}`);
+            amt.setAttribute('data-spw-numericity', 'rhythm');
+            amt.setAttribute('tabindex', '0');
+            amt.setAttribute('data-spw-gesture-contract', 'tap:prime hold:cauldron-capture');
+        }
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'budget-item__remove';
+        removeBtn.type = 'button';
+        removeBtn.textContent = '×';
+        removeBtn.setAttribute('aria-label', `Remove ${entry.desc}`);
+        removeBtn.addEventListener('click', () => removeTimeEntry(entry.id));
+
+        // Prime button for direct cauldron capture with quantifiers
+        const primeBtn = document.createElement('button');
+        primeBtn.className = 'budget-item__prime operator-chip';
+        primeBtn.type = 'button';
+        primeBtn.textContent = 'prime to cauldron';
+        primeBtn.addEventListener('click', () => {
+            try {
+                const bus = window.__SPW_SITE__?.bus;
+                if (bus) {
+                    const expr = `${entry.amount}-${entry.unit}-time-${entry.type}`;
+                    bus.emit('spell:capture', {
+                        expression: expr,
+                        label: `${entry.desc} (${entry.amount} ${entry.unit} ${entry.type})`,
+                        type: 'numerical',
+                        value: entry.amount,
+                        unit: `${entry.unit}-${entry.type}`,
+                        origin: 'budgeting-tool-time',
+                        wonder: 'rhythm-capacity',
+                        primedBy: 'time-prime',
+                    });
+                }
+            } catch (_) {}
+        });
+
+        content.append(title, amt, primeBtn);
+        item.append(content, removeBtn);
+        return item;
+    }
+
+    function renderTime() {
+        const items = timeEntries.map(buildTimeEntryNode);
+        const totalHours = timeEntries.reduce((sum, e) => {
+            return sum + (e.type === 'saved' ? normalizeToHours(e) : -normalizeToHours(e));
+        }, 0);
+
+        timeEntriesList.replaceChildren(...(items.length ? items : [buildEmptyNodeForTime()]));
+
+        timeTotalDisplay.textContent = `${totalHours.toFixed(1)} hours equiv.`;
+
+        // Simple time affordance message (extendable to rhythm-mapped tiers)
+        if (totalHours > 120) {
+            timeMessageEl.textContent = 'Significant time capacity. Multiple rhythmic cycles of deep work are banked.';
+        } else if (totalHours > 40) {
+            timeMessageEl.textContent = 'A full 13-cycle block of focused capacity is available.';
+        } else if (totalHours > 0) {
+            timeMessageEl.textContent = `${totalHours.toFixed(0)} hours of protected time saved. Allocate deliberately across your release rhythm.`;
+        } else {
+            timeMessageEl.textContent = 'Track saved focus time to see what rhythm-aligned work becomes possible.';
+        }
+
+        // Expose to numericity mode / cauldron mirrors if active
+        try {
+            document.documentElement.dataset.spwTimeCapacityHours = totalHours.toFixed(1);
+        } catch (_) {}
+    }
+
+    function buildEmptyNodeForTime() {
+        const empty = document.createElement('li');
+        empty.className = 'budget-empty';
+        empty.textContent = 'No time entries yet. Log saved focus blocks or allocated time.';
+        return empty;
+    }
+
+    btnTimeSaved.addEventListener('click', () => addTimeEntry('saved'));
+    btnTimeUsed.addEventListener('click', () => addTimeEntry('used'));
+
+    [timeDescInput, timeAmountInput].forEach((input) => {
+        input.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            addTimeEntry('saved');
+        });
+    });
+
+    loadTimeState();
+
     loadState();
 });

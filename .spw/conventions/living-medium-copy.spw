@@ -21,6 +21,7 @@
     `Return here after...`
   ][reg=set]
   playable_hook: "Each major surface should include at least one line that can survive being read aloud as a scene prompt, field note, or next action."
+  hook_region_note: "The hook region (data-spw-kind=hook) at the top of landing pages is a preferred structural home for the playable hook line when the line should carry gesture affordance, operator invocation, or a call to wonder/action that primes vertical progression and semantic resonance navigation."
   reason_copy: "Cards and banners should explain their own presence before they ask the reader to navigate elsewhere."
   disclosure_rule: "Expandable details are allowed only when the same essential information remains visible in the HTML by default."
   role_rule: "Whenever it fits, address developers, illustrators, painters, performers, RPG players, and worldbuilders as active participants rather than passive visitors."

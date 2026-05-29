@@ -454,3 +454,77 @@
   var(--component-surface);
   --component-material-border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
 }
+
+/* ==========================================================================
+   Hook region anatomy (volatile high-value entry peak)
+   --------------------------------------------------------------------------
+   A top-of-landing "call to wonder or action" — more charged and configurable
+   than a standard frame. Lives at the head of vertical progression on routes
+   like home, topics, about, services. Reuses existing tokens; feels like an
+   amplified, operator-forward playable-hook with gesture affordance.
+   See: .agents/plans/hook-region-anatomy/PLAN.md + page-model.spw
+   ========================================================================== */
+
+:where([data-spw-kind="hook"]) {
+  /* Slightly more charged than default frame for "volatile" entry presence */
+  border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 38%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--component-surface) 93%,
+    var(--active-op-color, var(--component-accent)) 7%
+  );
+  --surface-gap: 0.7rem;
+  --surface-padding: clamp(0.85rem, 1.6vw, 1.2rem);
+  box-shadow: var(--component-frame-shadow);
+
+  /* Layout hygiene: proper containment when used as grid/flex child inside hero bodies or split layouts */
+  min-width: 0;
+  width: 100%;
+}
+
+/* Text fit inside hooks: ensure body paragraphs and direct content wrap well in narrow viewports or grid columns */
+:where([data-spw-kind="hook"]) > p,
+:where([data-spw-kind="hook"]) .frame-note,
+:where([data-spw-kind="hook"]) .page-lede {
+  text-wrap: pretty;
+  max-inline-size: 62ch;
+}
+
+/* When the hook carries a primary operator, surface it more strongly */
+:where([data-spw-kind="hook"][data-spw-operator]) {
+  border-left-width: 3px;
+  border-left-color: var(--active-op-color, var(--component-accent));
+}
+
+/* Variant flavors for different calls (wonder vs action vs operator-forward) */
+:where([data-spw-kind="hook"][data-spw-hook-variant="wonder"]) {
+  background: color-mix(
+    in srgb,
+    var(--component-surface) 91%,
+    var(--op-probe-color, var(--violet, #7c3aed)) 9%
+  );
+}
+
+:where([data-spw-kind="hook"][data-spw-hook-variant="action"]) {
+  background: color-mix(
+    in srgb,
+    var(--component-surface) 92%,
+    var(--op-action-color, var(--teal-dark)) 8%
+  );
+}
+
+/* Gesture-ready state (pairs with brace-gestures armed/charging) */
+:where([data-spw-kind="hook"][data-spw-gesture="armed"]) {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 55%, transparent);
+}
+
+:where([data-spw-kind="hook"]) :where(.spw-playable-hook, [data-spw-semantic-expression]) {
+  /* Hooks often contain or are the memorable playable line.
+     Slightly tighter than base playable-hook for call-to-action density, but respects parent grid constraints. */
+  font-weight: 600;
+  max-inline-size: min(58ch, 100%);
+  text-wrap: balance;
+}
+
+/* (numericity now lives inside the real cauldron as typed ingredients with derived quantifiers — see composition.js) */

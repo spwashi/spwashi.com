@@ -260,17 +260,40 @@ function writeSectionProgressStyle(node, progress, step) {
 }
 
 function syncHandleContent(parts, info, activeIndex, sectionCount) {
-  const { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink } = parts;
+  const { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink, prevButton, nextButton } = parts;
 
   if (opNode) opNode.textContent = info.token || '#>';
   if (labelNode) labelNode.textContent = info.label || 'section';
   if (currentToken) currentToken.textContent = info.token || '#>';
   if (currentLabel) currentLabel.textContent = info.label || 'section';
-  if (progressNode) progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
+  if (progressNode) {
+    progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
+    progressNode.setAttribute('aria-label', `Section ${activeIndex + 1} of ${sectionCount}`);
+  }
   if (currentLink instanceof HTMLAnchorElement) {
     currentLink.href = `#${info.id}`;
     currentLink.setAttribute('aria-label', `Jump to ${info.label}`);
   }
+
+  // ARIA hygiene: dynamic prev/next labels using the section that will be targeted
+  if (prevButton instanceof HTMLButtonElement) {
+    const prevLabel = info.prevLabel || 'previous section';
+    prevButton.setAttribute('aria-label', `Jump to previous: ${prevLabel}`);
+  }
+  if (nextButton instanceof HTMLButtonElement) {
+    const nextLabel = info.nextLabel || 'next section';
+    nextButton.setAttribute('aria-label', `Jump to next: ${nextLabel}`);
+  }
+}
+
+/** Announce only for explicit button-driven travel (not passive scroll). */
+function announceSectionTravel(liveRegion, label) {
+  if (!liveRegion || !label) return;
+  liveRegion.textContent = `Now at ${label}`;
+  // Clear after a short window so future announcements can fire
+  window.setTimeout(() => {
+    if (liveRegion.textContent.includes(label)) liveRegion.textContent = '';
+  }, 1200);
 }
 
 function getSectionHeading(section) {
@@ -444,6 +467,8 @@ function createHandleShell(origin) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">
       <span aria-hidden="true">↓</span>
     </button>
+    <!-- Polite live region for button-driven section travel only (gesture-aria-hygiene/FIX.md) -->
+    <span class="spw-section-handle-live" aria-live="polite" aria-atomic="true" hidden></span>
   `;
   return shell;
 }
@@ -475,6 +500,7 @@ function getSectionHandleRefs(handle, shell) {
     prevButton: shell.querySelector('[data-spw-handle-target="prev"]'),
     nextButton: shell.querySelector('[data-spw-handle-target="next"]'),
     bottomButton: shell.querySelector('[data-spw-handle-target="bottom"]'),
+    liveRegion: shell.querySelector('.spw-section-handle-live'),
   };
 }
 
@@ -634,6 +660,14 @@ function travelSectionHandleToIndex({
     block: 'start',
     inline: 'nearest',
   });
+
+  // ARIA hygiene: only announce for explicit button-driven travel (not passive scroll)
+  if (['prev', 'next', 'top', 'bottom'].includes(source)) {
+    const live = shell.querySelector('.spw-section-handle-live');
+    const heading = target.querySelector('h1, h2, h3, .frame-sigil')?.textContent?.trim() || 'section';
+    announceSectionTravel(live, heading);
+  }
+
   updateActiveState(source);
 }
 

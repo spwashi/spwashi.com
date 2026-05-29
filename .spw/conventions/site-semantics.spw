@@ -84,6 +84,12 @@
     default_liminality: "deep"
     selection_base: "ambient"
   }
+  hook: {
+    default_form: "brace"
+    default_liminality: "entry"
+    selection_base: "high (peak on landing)"
+    note: "Volatile high-value call to wonder/action at top of landing pages. More charged and gesture-forward than a standard frame. Primary emitter of the page's core operator + wonder tokens."
+  }
 }
 
 ^"public_starter_topography"{
@@ -463,6 +469,12 @@ frame #component-lifecycle-tropes
   surface components/runtime
   concept lifecycle component_genomics page_state cauldron spell memory_gardening
   note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention. Cauldron and spell surfaces extend the model with explicit phases (gathering | resonant | mature | decayed) and gardening actions so semantic memory itself becomes a tended, inspectable rhythm rather than an opaque list."
+
+frame #numericity-as-cauldron-ingredient
+  role extension
+  surface about + software + cauldron + spells
+  concept numericity rhythmic-allocation quantifier dimensional baker's-dozen-easter-egg
+  note "Rhythmic numbers and allocations are recognized as typed 'numerical' ingredients. The specific baker's dozen (13-modulo) derivations and '13-step' language are treated as an easter egg layer: functional in the quantifier derivation and data-spw-numericity system, but de-emphasized in main prose. They surface delightfully in cauldron outputs, tooltips on living-terms (when numericity mode is active), and inspection. This keeps the motif powerful for engaged users and video creators without overwhelming new visitors. The 13-day personal cycles remain available for tips/bundles as a separate, lighter pattern."
 
 frame #svg-art-runtime
   role concept
