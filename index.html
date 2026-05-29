@@ -749,12 +749,12 @@
             </p>
 
             <div class="returner-grid">
-                <article class="returner-card" data-spw-kind="card" data-spw-role="reference">
-                    <p class="returner-card-kicker">Changed center</p>
-                    <h3>Follow whatever has pressure now.</h3>
-                    <p>Some visits are about support, some about proof, some about learning, and some about finding a route
+                <article class="returner-card" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="returner-card-kicker" data-spw-slot="meta">Changed center</p>
+                    <h3 data-spw-slot="header">Follow whatever has pressure now.</h3>
+                    <p data-spw-slot="body">Some visits are about support, some about proof, some about learning, and some about finding a route
                         you ignored the first time because it was not ripe yet.</p>
-                    <nav class="returner-chip-row" aria-label="Changed center routes">
+                    <nav class="returner-chip-row" aria-label="Changed center routes" data-spw-slot="actions">
                         <a class="operator-chip" href="/now/" data-spw-operator="value">$ current sprint</a>
                         <a class="operator-chip" href="/services/" data-spw-operator="situate">@ services</a>
                         <a class="operator-chip" href="/research/" data-spw-operator="wonder">? research</a>
@@ -778,10 +778,10 @@
                     </div>
                 </div>
 
-                <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference">
-                    <p class="returner-card-kicker">Fresh entry</p>
-                    <h3>Pick the route that makes your next question stranger and smaller.</h3>
-                    <p>That might be <a href="/topics/" data-spw-operator="stream">topics</a> if you need a map, <a href="/cards/" data-spw-operator="integrate">cards</a> if you
+                <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="returner-card-kicker" data-spw-slot="meta">Fresh entry</p>
+                    <h3 data-spw-slot="header">Pick the route that makes your next question stranger and smaller.</h3>
+                    <p data-spw-slot="body">That might be <a href="/topics/" data-spw-operator="stream">topics</a> if you need a map, <a href="/cards/" data-spw-operator="integrate">cards</a> if you
                         need a proof surface, or <a href="/blog/" data-spw-operator="stream">the blog</a> if you need to watch fragments turn into
                         public form.</p>
                 </article>
@@ -1038,15 +1038,15 @@
             </div>
 
             <div class="gratitude-grid">
-                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference">
-                    <p class="gratitude-kicker">Gratitude</p>
-                    <h3>Thanks for staying with the strange routes long enough to find a handle.</h3>
-                    <p>Wonder is useful here because it keeps software, art, care, and play from sealing themselves off too early.</p>
+                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="gratitude-kicker" data-spw-slot="meta">Gratitude</p>
+                    <h3 data-spw-slot="header">Thanks for staying with the strange routes long enough to find a handle.</h3>
+                    <p data-spw-slot="body">Wonder is useful here because it keeps software, art, care, and play from sealing themselves off too early.</p>
                 </article>
 
-                <article class="gratitude-card gratitude-card--reward" data-spw-kind="card" data-spw-role="reference">
-                    <p class="gratitude-kicker">Rewards</p>
-                    <div class="gratitude-list" aria-label="Wonder rewards">
+                <article class="gratitude-card gratitude-card--reward" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="gratitude-kicker" data-spw-slot="meta">Rewards</p>
+                    <div class="gratitude-list" aria-label="Wonder rewards" data-spw-slot="body">
                         <div class="gratitude-item" data-spw-semantic-expression="reward[next.step]{action}">
                             <strong>A smaller next step</strong>
                             <p>A route, card, or tool that makes the work feel startable.</p>
@@ -1066,10 +1066,10 @@
                     </div>
                 </article>
 
-                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference">
-                    <p class="gratitude-kicker">Take it sideways</p>
-                    <h3>Turn the wondering into movement.</h3>
-                    <nav class="returner-chip-row" aria-label="Wonder reward routes">
+                <article class="gratitude-card" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="gratitude-kicker" data-spw-slot="meta">Take it sideways</p>
+                    <h3 data-spw-slot="header">Turn the wondering into movement.</h3>
+                    <nav class="returner-chip-row" aria-label="Wonder reward routes" data-spw-slot="body">
                         <a class="operator-chip" href="/topics/software/" data-spw-operator="route">software</a>
                         <a class="operator-chip" href="/topics/craft/" data-spw-operator="route">craft</a>
                         <a class="operator-chip" href="/topics/math/" data-spw-operator="route">math</a>
@@ -1286,9 +1286,9 @@
                                 height="1024"
                             />
                         </figure>
-                        <span class="frame-card-sigil">#&gt;component_glossary</span>
-                        <strong>Design components</strong>
-                        <span>A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
+                        <span class="frame-card-sigil" data-spw-slot="meta">#&gt;component_glossary</span>
+                        <strong data-spw-slot="header">Design components</strong>
+                        <span data-spw-slot="body">A practical entry for collaborators who need the card, chip, slot, and runtime-state vocabulary before patching.</span>
                     </a>
                 </article>
 
@@ -1305,9 +1305,9 @@
                                 height="1024"
                             />
                         </figure>
-                        <span class="frame-card-sigil">*rpg_wednesday</span>
-                        <strong>RPG Wednesday</strong>
-                        <span>A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
+                        <span class="frame-card-sigil" data-spw-slot="meta">*rpg_wednesday</span>
+                        <strong data-spw-slot="header">RPG Wednesday</strong>
+                        <span data-spw-slot="body">A live play route where interface, prompts, memory, screenshots, and lore are tested under social pressure.</span>
                     </a>
                 </article>
 
@@ -1325,9 +1325,9 @@
                                 height="1024"
                             />
                         </figure>
-                        <span class="frame-card-sigil">&gt;texture_surface</span>
-                        <strong>Texture surface</strong>
-                        <span>A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
+                        <span class="frame-card-sigil" data-spw-slot="meta">&gt;texture_surface</span>
+                        <strong data-spw-slot="header">Texture surface</strong>
+                        <span data-spw-slot="body">A style-contagion route for materials, patterns, promptable specimens, and reusable page feelings that can later travel as portable seeds.</span>
                     </a>
                 </article>
             </div>

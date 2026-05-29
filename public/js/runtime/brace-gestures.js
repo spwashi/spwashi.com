@@ -168,7 +168,7 @@ export function initBraceGestures() {
    ========================================================================== */
 
 function braceTarget(node) {
-  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression]') || null;
+  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card') || null;
 }
 
 function classifyTarget(el) {
@@ -207,7 +207,7 @@ function resolveTargetKind(el) {
   if (el.matches('.spec-pill, .badge, .tag, .pill')) return 'inline-pill';
   if (el.matches('.spw-delimiter')) return 'delimiter';
   if (el.matches('.site-frame')) return 'frame';
-  if (el.matches('.frame-card, .frame-panel, .mode-panel, .software-card')) return 'card';
+  if (el.matches('.frame-card, .frame-panel, .mode-panel, .software-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card')) return 'card';
   return 'form';
 }
 

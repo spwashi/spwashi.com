@@ -97,6 +97,61 @@
   text-wrap: balance;
 }
 
+/* Light upgrade for .frame-panel used in card-like roles on landing pages.
+   Gives them better wrapping, rhythm, and hover behavior without requiring a full class change.
+   This is especially useful on design, blog, about, math, and play hubs. */
+:where(.frame-panel[data-spw-kind="card"], .frame-panel[data-spw-role="reference"][data-spw-category-family]) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-route-accent, var(--active-op-color, #008080)) 4%, transparent) 0%,
+      transparent 20%
+    ),
+    color-mix(in srgb, var(--component-surface-strong, #fff) 96%, var(--component-route-accent, var(--active-op-color, #008080)) 4%);
+  border: 1px solid color-mix(in srgb, var(--component-line, var(--line, rgba(14, 18, 20, 0.14))) 70%, transparent);
+  border-radius: var(--component-radius, 10px);
+  padding: var(--component-pad, 0.85rem);
+  transition: box-shadow var(--component-transition-base), border-color var(--component-transition-fast);
+}
+
+:where(.frame-panel[data-spw-kind="card"], .frame-panel[data-spw-role="reference"][data-spw-category-family]):is(:hover, :focus-within) {
+  box-shadow: var(--component-shadow-active);
+  border-color: color-mix(in srgb, var(--component-route-accent, var(--active-op-color, #008080)) 35%, transparent);
+}
+
+:where(.frame-panel[data-spw-kind="card"] p,
+       .frame-panel[data-spw-role="reference"][data-spw-category-family] p) {
+  max-inline-size: 42ch;
+  text-wrap: pretty;
+}
+
+/* Gesture state enhancements for cards, panels, and variants.
+   Provides visual feedback during tap/hold/drag on recognizable card surfaces
+   (math-lens-card, topic-reference-card, principle cards, gratitude/returner variants, etc.).
+   Works alongside brace-gestures.js armed/charging states. */
+:where(
+  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .spw-principle-card, .gratitude-card, .returner-card
+)[data-spw-gesture="armed"] {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 35%, transparent);
+  transition: box-shadow var(--component-transition-fast);
+}
+
+:where(
+  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .spw-principle-card, .gratitude-card, .returner-card
+)[data-spw-gesture="charging"] {
+  transform: translateY(-1px);
+  box-shadow: var(--component-shadow-active);
+}
+
+:where(
+  .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
+  .spw-principle-card, .gratitude-card, .returner-card
+)[data-spw-gesture="sustained"] {
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
+}
+
 :where(.frame-card, .frame-card > a:first-child) > :is(
   p,
   .frame-note,
