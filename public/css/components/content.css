@@ -120,10 +120,10 @@
   --spw-grid-min-mid: 13.2rem;
   --spw-grid-min-narrow: 12.4rem;
   --spw-grid-min-compact: 11.5rem;
-  --spw-grid-gap-base: 0.78rem;
-  --spw-grid-gap-mid: 0.74rem;
-  --spw-grid-gap-narrow: 0.68rem;
-  --spw-grid-gap-compact: 0.62rem;
+  --spw-grid-gap-base: 0.72rem;
+  --spw-grid-gap-mid: 0.68rem;
+  --spw-grid-gap-narrow: 0.62rem;
+  --spw-grid-gap-compact: 0.56rem;
 }
 
 :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="soft"] {

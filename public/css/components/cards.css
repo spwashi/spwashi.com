@@ -67,6 +67,38 @@
   text-align: start;
 }
 
+/* Screenshot-utility defaults for reference-style token/spec cards across the site.
+   Makes sections like Environment Synchronization, sync specimens, and similar
+   denser, higher-contrast, and more legible when captured. */
+:where(.frame-panel.sync-specimen, .sync-specimen) {
+  padding: 0.6rem 0.75rem;
+  gap: 0.32rem;
+}
+
+:where(.frame-panel.sync-specimen h4, .sync-specimen h4) {
+  font-size: 0.8rem;
+  margin: 0;
+  letter-spacing: 0.015em;
+}
+
+:where(.frame-panel.sync-specimen code, .sync-specimen code) {
+  font-size: 0.76rem;
+  padding: 0.1rem 0.38rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink) 13%, var(--surface-strong, #fff));
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+}
+
+:where(.frame-panel.sync-specimen .frame-note, .sync-specimen .frame-note) {
+  font-size: 0.7rem;
+  line-height: 1.32;
+  color: var(--ink-mid, color-mix(in srgb, var(--ink) 58%, transparent));
+  margin: 0;
+}
+
 /* Brace placement + box model consistency for card anatomy.
    When a frame-card itself carries the brace form (common for semantic grouping),
    the corner visuals (from grammar) "bite" into the corners. Compensate the

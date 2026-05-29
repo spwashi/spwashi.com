@@ -80,6 +80,49 @@
   color: var(--design-surface-ink);
 }
 
+/* Reference / screenshot-friendly tightening for sync-specimen cards on palettes and similar surfaces.
+   Makes token reference sections denser and more legible when screenshotted for docs, Notion, or shared notes. */
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen {
+  --sync-pad: 0.65rem 0.8rem;
+  padding: var(--sync-pad);
+  gap: 0.35rem;
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen h4 {
+  font-size: 0.82rem;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen code {
+  display: inline-block;
+  font-size: 0.78rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--design-surface-ink) 14%, var(--design-surface-base-strong));
+  color: var(--design-surface-ink);
+  border: 1px solid color-mix(in srgb, var(--design-surface-line) 65%, transparent);
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen .frame-note {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--design-surface-ink-mid);
+  margin: 0;
+}
+
+/* Make reference token cards even tighter and more screenshot-native */
+:where(body[data-spw-page-seed^="page_design_"]) .frame-grid--dense {
+  gap: 0.55rem;
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) .sync-specimen {
+  border-radius: calc(var(--shape-surface, 10px) - 2px);
+}
+
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-frame) {
   position: relative;
   overflow: clip;
@@ -97,6 +140,15 @@
   background:
     radial-gradient(circle at 14% 0%, color-mix(in srgb, var(--design-surface-accent) 14%, transparent), transparent 36%),
     linear-gradient(180deg, color-mix(in srgb, var(--design-surface-base-strong) 98%, transparent), color-mix(in srgb, var(--design-surface-panel-strong) 96%, transparent));
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .frame-grid--dense,
+:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .panel-grid {
+  gap: 0.6rem;
+}
+
+:where(body[data-spw-page-seed^="page_design_"]) :where(.site-frame) .frame-panel {
+  padding: 0.65rem 0.8rem;
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.site-frame h1) {
@@ -412,5 +464,48 @@
 
   :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo__hint) {
     grid-column: 1 / -1;
+  }
+}
+
+/* Screenshot + narrow-view density for the Spectral Workshop values section
+   (probe swatches, resonance mode chips, granular pigment swatches).
+   Increases information density and label legibility when the "values" cluster
+   (violet-ink / teal-mineral / brass-warm etc. + low-friction resonance toggles)
+   is captured in mobile/portrait crops or shared screenshots. Uses the existing
+   semantic pigment token names as the primary readable labels. */
+@media (max-width: 560px) {
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.spectral-grid) {
+    grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));
+    gap: 0.36rem;
+  }
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.spectral-swatch) {
+    padding: 0.38rem 0.18rem;
+    font-size: 0.61rem;
+    aspect-ratio: 1.08;
+  }
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.spectral-swatch figcaption) {
+    font-size: 0.60rem;
+    line-height: 1.08;
+    opacity: 0.94;
+    font-weight: 500;
+  }
+
+  /* Tighten the live 4-voice probe readout row inside the workshop for the same captures */
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.palette-probe-swatches) {
+    gap: 0.28rem;
+  }
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.palette-probe-chip) {
+    inline-size: 1.02rem;
+    block-size: 1.02rem;
+    border-radius: 0.30rem;
+  }
+
+  /* Slightly denser packing for the resonance chip row + surrounding workshop widgets */
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.vibe-widget-grid--compact) {
+    gap: 0.62rem;
+  }
+  :where(body[data-spw-page-seed="page_design_palettes"]) :where(.vibe-widget, .palette-probe) {
+    padding: 0.72rem 0.78rem 0.82rem;
+    gap: 0.58rem;
   }
 }
