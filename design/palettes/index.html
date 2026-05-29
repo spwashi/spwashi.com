@@ -584,29 +584,126 @@
                 </div>
             </section>
 
+            <section class="site-frame" id="spectral-workshop" aria-labelledby="spectral-workshop-title" data-spw-role="workshop" data-spw-kind="frame" data-spw-context="play" data-spw-feature="spectral-workshop" data-spw-concept="palette-play resonance-probe seed-composition" data-spw-interaction-contract="tap toggle hold prime" data-spw-semantic-expression="workshop[palette]{resonance.play}">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#spectral-workshop">^"spectral_workshop"</a>
+                    <h2 id="spectral-workshop-title">Spectral Workshop</h2>
+                </header>
 
-            
+                <p class="frame-note">
+                    This is the live instrument. The four resonance modes are not abstract labels — they are distinct visual personalities that re-color operators, probe bars, accent fields, and canvas tints across the entire surface. Click any button below (or in the hero above). The whole page, including the chips and swatches inside this workshop, will shift.
+                </p>
+
+                <div class="vibe-widget-grid vibe-widget-grid--compact" style="margin-top: var(--space-md);">
+                    <!-- Live resonance controls (reuse global runtime) -->
+                    <article class="vibe-widget" data-spw-kind="card" data-spw-role="control" data-spw-feature="resonance-tuner">
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Personality</p>
+                            <h3 class="vibe-widget-title">Choose a resonance bias</h3>
+                        </div>
+                        <div class="vibe-widget-actions" role="group" aria-label="Spectral Workshop resonance mode toggles" data-spw-slot="actions">
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="select">Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led</button>
+                        </div>
+                        <p class="vibe-widget-status" data-status="info">Current: <strong data-settings-state="paletteResonance">route</strong>. This also updates the four probe swatches below.</p>
+                    </article>
+
+                    <!-- Visible probe swatches (driven by the runtime setting --spw-palette-probe-N) -->
+                    <article class="palette-probe" data-spw-kind="card" data-spw-role="readout" data-spw-feature="probe-readout">
+                        <div class="palette-probe-header">
+                            <header>
+                                <p class="palette-probe-kicker">Active probe set</p>
+                                <h3 class="palette-probe-title">The four resonance voices</h3>
+                            </header>
+                        </div>
+                        <div class="palette-probe-swatches" aria-label="Current resonance swatches (updated live by paletteResonance)">
+                            <span class="palette-probe-chip" title="Probe 1 — primary accent"></span>
+                            <span class="palette-probe-chip" title="Probe 2 — secondary / object"></span>
+                            <span class="palette-probe-chip" title="Probe 3 — reference / projection"></span>
+                            <span class="palette-probe-chip" title="Probe 4 — inquiry / probe"></span>
+                        </div>
+                        <div class="palette-probe-paths">
+                            <span class="spec-pill">Driven by <code>--spw-palette-probe-*</code></span>
+                            <a class="operator-chip" href="/settings/#dimensional-resonance" data-spw-operator="frame">full dials in settings</a>
+                        </div>
+                    </article>
+
+                    <!-- Operator cluster that demonstrates the bias -->
+                    <article class="frame-panel" data-spw-kind="card" data-spw-role="demonstration" data-spw-context="analysis" data-spw-attention="try">
+                        <h3 style="margin-top:0;">Operator cluster (live)</h3>
+                        <p class="frame-note">These chips inherit the current resonance personality. Their borders, text, and focus rings shift with the mode.</p>
+                        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem;">
+                            <a class="operator-chip" href="#" data-spw-operator="frame" aria-label="Example frame operator under current palette resonance">#&gt;frame</a>
+                            <a class="operator-chip" href="#" data-spw-operator="object" aria-label="Example object operator under current palette resonance">^object</a>
+                            <a class="operator-chip" href="#" data-spw-operator="probe" aria-label="Example probe operator under current palette resonance">?probe</a>
+                            <a class="operator-chip" href="#" data-spw-operator="ref" aria-label="Example ref operator under current palette resonance">~ref</a>
+                            <a class="operator-chip" href="#" data-spw-operator="action" aria-label="Example action operator under current palette resonance">@action</a>
+                            <a class="operator-chip" href="#" data-spw-operator="topic" aria-label="Example topic operator under current palette resonance">&lt;topic</a>
+                        </div>
+                        <nav class="frame-note" style="margin-top:0.6rem;">
+                            <a href="/design/palettes/#spectral-resonance-mapping">See the four mode descriptions</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="/topics/software/">See real operators on the software surface</a>
+                        </nav>
+                    </article>
+                </div>
+
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="composer" data-spw-feature="seed-composer" style="margin-top: var(--space-md);">
+                    <h3>Compose a palette seed</h3>
+                    <p class="frame-note">This is the approved pattern for introducing new palette thinking. Name a role, pick a behavior, declare an owner, then test on one surface before promoting tokens.</p>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.6rem; margin: 0.8rem 0;">
+                        <label style="display:block; font-size:0.8rem; color:var(--ink-soft);">Role / assignment
+                            <input type="text" value="woven-signal-stack" style="width:100%; margin-top:0.2rem; font-family:var(--font-family-mono); font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-role">
+                        </label>
+                        <label style="display:block; font-size:0.8rem; color:var(--ink-soft);">Primary behavior
+                            <select style="width:100%; margin-top:0.2rem; font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-behavior">
+                                <option value="resonate">resonate</option>
+                                <option value="reveal">reveal</option>
+                                <option value="settle">settle</option>
+                                <option value="invite">invite</option>
+                                <option value="warn">warn</option>
+                            </select>
+                        </label>
+                        <label style="display:block; font-size:0.8rem; color:var(--ink-soft);">Owner route
+                            <input type="text" value="/design/" style="width:100%; margin-top:0.2rem; font-family:var(--font-family-mono); font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-owner">
+                        </label>
+                    </div>
+                    <button type="button" class="operator-chip" onclick="const r=document.getElementById('seed-role').value||'new-seed';const b=document.getElementById('seed-behavior').value;const o=document.getElementById('seed-owner').value||'/design/';const out=document.getElementById('seed-output'); out.textContent=`data-spw-assignment=\"${r}\" data-spw-behavior=\"${b}\" data-spw-reference-seed=\"${r}\" data-spw-owner=\"${o}\"`; out.style.display='block';" data-spw-operator="action">Generate seed markup</button>
+                    <pre id="seed-output" style="display:none; margin-top:0.6rem; padding:0.6rem; background:var(--surface-code, #0f1418); color:#c9d1d9; font-size:0.78rem; border-radius:6px; white-space:pre-wrap; overflow:auto;" aria-live="polite"></pre>
+                    <p class="frame-note" style="margin-top:0.4rem;">Copy the attributes onto a frame-panel or image-study. Then test the result on the owner route before proposing a shared token.</p>
+                </article>
+
+                <p class="frame-note" style="margin-top: var(--space-sm);">
+                    <a class="operator-chip" href="/design/catalog/" data-spw-operator="frame">Open the full design catalog</a>
+                    <span aria-hidden="true"> · </span>
+                    <a class="operator-chip" href="/settings/" data-spw-operator="frame">Open settings (all dials + lab views)</a>
+                </p>
+            </section>
+
             <section class="site-frame">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#spectral-families">^"spectral_families"</a>
                     <h2>Granular Spectral Families</h2>
                 </header>
-                <p class="frame-note">These are pure pigment tokens from <code>tokens/core.css</code>. They provide stability for textural backgrounds, SVG charts, and specific art direction where theme-agnostic identity is required.</p>
+                <p class="frame-note">These are pure pigment tokens from <code>tokens/core.css</code>. They provide stability for textural backgrounds, SVG charts, and specific art direction where theme-agnostic identity is required. (The workshop above demonstrates how resonance modes re-interpret the same underlying hues.)</p>
                 
                 <div class="spectral-grid">
-                    <div class="spectral-swatch" style="background: hsl(182 58% 30%);">--pigment-teal-mineral</div>
-                    <div class="spectral-swatch" style="background: hsl(186 88% 38%);">--pigment-teal-electric</div>
-                    <div class="spectral-swatch" style="background: hsl(38 82% 50%);">--pigment-amber-resin</div>
-                    <div class="spectral-swatch" style="background: hsl(22 58% 40%);">--pigment-copper-oxide</div>
-                    <div class="spectral-swatch" style="background: hsl(268 42% 38%);">--pigment-violet-ink</div>
-                    <div class="spectral-swatch" style="background: hsl(342 44% 46%);">--pigment-rose-dust</div>
-                    <div class="spectral-swatch" style="background: hsl(10 52% 42%);">--pigment-clay-red</div>
-                    <div class="spectral-swatch" style="background: hsl(42 54% 46%);">--pigment-brass-warm</div>
-                    <div class="spectral-swatch" style="background: hsl(42 44% 94%); color: #333; text-shadow: none;">--pigment-paper-cream</div>
-                    <div class="spectral-swatch" style="background: hsl(205 16% 12%);">--pigment-charcoal-fiber</div>
-                    <div class="spectral-swatch" style="background: hsl(102 26% 34%);">--pigment-moss-soft</div>
-                    <div class="spectral-swatch" style="background: hsl(214 58% 42%);">--pigment-lapis-soft</div>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-mineral" style="background: var(--pigment-teal-mineral); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">teal-mineral</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-electric" style="background: var(--pigment-teal-electric); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">teal-electric</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-amber-resin" style="background: var(--pigment-amber-resin); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">amber-resin</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-copper-oxide" style="background: var(--pigment-copper-oxide); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">copper-oxide</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-violet-ink" style="background: var(--pigment-violet-ink); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">violet-ink</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-rose-dust" style="background: var(--pigment-rose-dust); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">rose-dust</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-clay-red" style="background: var(--pigment-clay-red); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">clay-red</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-brass-warm" style="background: var(--pigment-brass-warm); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">brass-warm</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-paper-cream" style="background: var(--pigment-paper-cream); color: #333; text-shadow: none; margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85; color:#333;">paper-cream</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-charcoal-fiber" style="background: var(--pigment-charcoal-fiber); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">charcoal-fiber</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-moss-soft" style="background: var(--pigment-moss-soft); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">moss-soft</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-lapis-soft" style="background: var(--pigment-lapis-soft); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">lapis-soft</figcaption></figure>
                 </div>
+                <p class="frame-note" style="margin-top:0.4rem;"><a href="/design/catalog/#tokens">See all tokens in the design catalog</a> (regenerate after any token promotion).</p>
             </section>
 
             <section class="site-frame" id="palette-projection" data-spw-role="projection" data-spw-kind="frame" data-spw-context="ritual">

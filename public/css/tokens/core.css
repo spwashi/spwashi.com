@@ -712,6 +712,24 @@
   --valence-pos: hsl(160 45% 34%);
   --valence-neg: hsl(8 54% 42%);
 
+  /* Granular Spectral / Pigment Families
+     Stable, theme-agnostic reference colors for art direction, SVG,
+     textural backgrounds, and the Spectral Workshop on /design/palettes/.
+     These are the single source of truth; the palettes page and catalog
+     now reference them instead of magic strings. */
+  --pigment-teal-mineral: hsl(182 58% 30%);
+  --pigment-teal-electric: hsl(186 88% 38%);
+  --pigment-amber-resin: hsl(38 82% 50%);
+  --pigment-copper-oxide: hsl(22 58% 40%);
+  --pigment-violet-ink: hsl(268 48% 36%); /* tiny sat+depth bump for better math resonance distinction and swatch pop (low-attachment original) */
+  --pigment-rose-dust: hsl(342 44% 46%);
+  --pigment-clay-red: hsl(10 52% 42%);
+  --pigment-brass-warm: hsl(40 58% 45%); /* slight warm/craft lean for better distinction in craft-led mode (low-attachment original) */
+  --pigment-paper-cream: hsl(42 44% 94%);
+  --pigment-charcoal-fiber: hsl(205 16% 12%);
+  --pigment-moss-soft: hsl(102 26% 34%);
+  --pigment-lapis-soft: hsl(214 58% 42%);
+
   --active-op-color: var(--teal);
   --active-op-border: color-mix(in srgb, var(--active-op-color) 34%, transparent);
   --active-op-bg-soft: color-mix(in srgb, var(--active-op-color) 7%, transparent);

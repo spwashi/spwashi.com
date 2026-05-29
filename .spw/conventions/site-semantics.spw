@@ -493,3 +493,35 @@ frame #quick-demo-rail
   surface design services about/website
   concept discoverability internal_marketing qa_demo route_handoff
   note "Quick demo rails expose small route-local proofs: why the surface matters, which live link demonstrates it, and what next step becomes available without turning the page into a campaign banner."
+
+frame #palette-resonance-contract
+  role convention
+  surface design/palettes settings runtime
+  concept palette resonance theme-pack spectral bias
+  data-spw-palette-resonance = "route (default, path-adjacent context) | craft (material, editorial, svg, services) | software (parsers, operators, tools, renderers) | math (relations, proofs, category, complexity)"
+  data-spw-accent-palette = "cool | warm (local tint hint consumed by canvas accents and resonance ornaments)"
+  note "paletteResonance is a runtime bias on active accent tokens and probe swatches (see palette-resonance.js + applyPaletteResonanceSwatches). It is distinct from themePack (material surface family: neutral-paper, electric-studio, etc.). The four modes shift the four --spw-palette-probe-N variables and therefore the visual 'personality' of operators, resonance fields, and accent canvases without changing the underlying HTML structure. Spectral families (pigment tokens) provide stable, theme-agnostic reference colors for art direction and SVG. Reference seeds on /design/palettes/ are the approved way to test a new palette role before promoting tokens."
+
+frame #accent-projection-family
+  role convention
+  surface design ornament canvas runtime
+  concept accent resonance projection image-sampling
+  data-spw-accent = "wave | vortex | crystal | lattice | flow | resonance"
+  data-spw-accent-palette = "cool | warm"
+  data-spw-accent-resonance = "image anchor recent manual | ..."
+  data-spw-accent-colors = "#hex, #hex, ..."
+  data-spw-accent-anchor = "token list for inference"
+  data-spw-accent-operator = "frame | probe | ..."
+  data-spw-accent-strength = "0.0-1.0"
+  note "The accent-* cluster is the primary markup contract for image-promoted and runtime-generated color fields. JS (accent-palette.js, canvas-accents.js, image-metaphysics.js) samples, infers from recent path / href / text, and projects onto [data-spw-accent] hosts. Cool/warm tints are applied as hue-rotate filters in ornament/canvas-accents.css. These attributes are the reason many figures on the site carry rich spectral signatures that survive screenshots and model ingestion."
+
+frame #compact-tuning-widget
+  role convention
+  surface design settings runtime topics pedagogy
+  concept settings-widget low-friction active-state vocabulary
+  placement = "immediately before or inside the content whose reaction demonstrates the setting (text block for semanticDensity, operator list for operatorSaturation, figure/accent area for paletteResonance or wonderMemory)"
+  markup = "small .tuning-strip or .vibe-widget--compact containing .operator-chip[data-site-setting-set=\"name:value\"] + optional [data-settings-state] readouts. Uses existing binding + aria-pressed."
+  active-state = "data-site-setting-active=\"true\" + aria-pressed (strong resonance-colored treatment via tuning.css compact rules)"
+  vocabulary = "chip labels are the canonical short names (Context-led, Rich, Focused, Vibrant, etc.). Immediate visual effect on adjacent content teaches the meaning faster than prose."
+  cross-link = "tiny 'related tuning' or 'full settings' chip at end of cluster, pointing to /settings/ anchor or /design/palettes/#spectral-workshop when palette-related"
+  note "Compact contextual tuning widgets turn passive settings into an active, learnable vocabulary layer. They are always secondary in visual hierarchy (kicker + one short sentence max + chips). The global effect on the page is intentional — the whole site is the teaching instrument. Documented here so the design catalog and future editors can discover the exact reusable pattern for adding one near any high-impact component. Also supports wrapping/packing and light surrounding copy passes for component diversity and region value when the widget is introduced."
