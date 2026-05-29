@@ -92,9 +92,20 @@
 }
 
 .spw-state-inspector__launch:active,
-.spw-state-inspector__launch[data-spw-dragging="true"] {
+.spw-state-inspector__launch[data-spw-dragging="true"],
+.spw-state-inspector__launch[data-spw-drag-state="dragging"] {
   cursor: grabbing;
+  transition: none !important;
   box-shadow: var(--floating-shadow, 0 8px 32px rgba(0, 0, 0, 0.12)), 0 0 0 1px color-mix(in srgb, var(--state-inspector-accent) 35%, transparent);
+  will-change: left, top;
+}
+
+.spw-state-inspector__launch[data-spw-drag-state="dragging"] {
+  opacity: 0.95;
+}
+
+.spw-state-inspector[data-spw-drag-state="dragging"] {
+  --state-inspector-accent: color-mix(in srgb, var(--op-probe-color, #4a2180) 70%, var(--active-op-color, #008080));
 }
 
 .spw-state-inspector__panel {

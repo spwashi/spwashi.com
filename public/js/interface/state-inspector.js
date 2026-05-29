@@ -250,6 +250,7 @@ function createInspector() {
   launch.setAttribute('aria-expanded', 'false');
   launch.setAttribute('aria-controls', PANEL_ID);
   launch.textContent = 'state satchel';
+  launch.dataset.spwDragState = 'idle'; // explicit initial state
 
   panel.id = PANEL_ID;
   panel.className = 'spw-state-inspector__panel';
@@ -394,14 +395,20 @@ function bindSatchelDrag(root) {
   let dragging = false;
   let startX = 0, startY = 0;
   let startLeft = 0, startTop = 0;
+  let rafId = null;
+
+  const updateDragPosition = (newLeft, newTop) => {
+    applyPositionToLaunch(launch, newLeft, newTop, true);
+  };
 
   const onPointerDown = (e) => {
     if (!e.isPrimary || e.button !== 0) return;
-    // Only start drag on the launch button itself (not when clicking inside the open panel)
     if (root.dataset.spwStateInspector === 'open') return;
 
     dragging = true;
-    launch.dataset.spwDragging = 'true';
+    launch.dataset.spwDragState = 'dragging';
+    launch.dataset.spwDragging = 'true'; // keep legacy for now
+    root.dataset.spwDragState = 'dragging'; // explicit state on container for broader styling
     startX = e.clientX;
     startY = e.clientY;
 
@@ -422,13 +429,25 @@ function bindSatchelDrag(root) {
     const newLeft = startLeft + dx;
     const newTop = startTop + dy;
 
-    applyPositionToLaunch(launch, newLeft, newTop, true);
+    // Smooth updates via rAF
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      updateDragPosition(newLeft, newTop);
+    });
   };
 
   const onPointerUp = (e) => {
     if (!dragging) return;
+
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
     dragging = false;
     delete launch.dataset.spwDragging;
+    launch.dataset.spwDragState = 'idle';
+    delete root.dataset.spwDragState;
 
     // Save final position
     const rect = launch.getBoundingClientRect();
@@ -440,8 +459,10 @@ function bindSatchelDrag(root) {
 
     // Small delay so the click handler can see the flag
     setTimeout(() => {
-      delete launch.dataset.spwDragging;
-    }, 60);
+      if (launch.dataset.spwDragState === 'idle') {
+        delete launch.dataset.spwDragState;
+      }
+    }, 80);
   };
 
   launch.addEventListener('pointerdown', onPointerDown, { passive: false });
@@ -454,6 +475,7 @@ function bindSatchelDrag(root) {
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', onPointerUp);
     window.removeEventListener('pointercancel', onPointerUp);
+    if (rafId) cancelAnimationFrame(rafId);
   };
 }
 

@@ -175,6 +175,19 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   --spw-grid-gap-active: var(--spw-grid-gap-compact);
 }
 
+/* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
+@media (max-width: 640px) {
+  :where(.frame-grid--dense) {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  :where(.frame-card--illustrated .frame-card-media) {
+    margin: calc(var(--component-pad) * -0.75);
+    margin-bottom: 0.35rem;
+  }
+}
+
 :where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) {
   display: grid;
   min-width: 0;
@@ -678,6 +691,17 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   font-size: var(--text-size-sm, 0.88rem);
   line-height: 1.45;
   text-wrap: pretty;
+}
+
+/* Tighter, more balanced spacing for long narration / "Current Direction" style blocks on desktop */
+:where(.spw-narration, [data-spw-box-model="narration-card"]) {
+  max-inline-size: 72ch;
+}
+
+@media (min-width: 900px) {
+  :where(.spw-narration, [data-spw-box-model="narration-card"]) {
+    max-inline-size: 68ch;
+  }
 }
 
 :where([data-spw-image-reward], [data-spw-image-discovery]) {

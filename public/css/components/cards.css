@@ -55,7 +55,16 @@
 }
 
 :where(.frame-card) {
-  --card-rhythm: clamp(0.62rem, 1.3vw, 0.92rem);
+  --card-rhythm: clamp(0.58rem, 1.15vw, 0.85rem);
+}
+
+/* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
+:where(.frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
+  --card-internal-gap: 0.45rem;
+  display: grid;
+  gap: var(--card-internal-gap);
+  align-content: start;
+  text-align: start;
 }
 
 /* Brace placement + box model consistency for card anatomy.
@@ -161,6 +170,17 @@
   max-inline-size: 42ch;
   line-height: 1.54;
   text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+/* Stronger defaults for layout, wrapping, and alignment in cards/panels */
+:where(.frame-card, .frame-panel, .math-lens-card, .topic-reference-card) {
+  text-align: start;
+  align-items: start;
+}
+
+:where(.frame-card, .frame-panel) > * {
+  min-width: 0;
 }
 
 :where(a.frame-card, .frame-card > a:first-child):is(:hover, :focus-visible) {
