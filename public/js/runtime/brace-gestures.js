@@ -745,6 +745,14 @@ function onPointerLeave(event) {
   clearHoldTimer(target);
   const meta = state?.meta || classifyTarget(target);
 
+  // Restore normal text selection after gesture ends
+  if (target instanceof HTMLElement) {
+    delete target.dataset.spwGestureArmed;
+    if (target.style.userSelect === 'none' && !target.hasAttribute('data-spw-keep-user-select-none')) {
+      target.style.userSelect = '';
+    }
+  }
+
   setGesture(target, meta, 'neutral');
 
   emitBraceEvents(
@@ -774,6 +782,17 @@ function onPointerDown(event) {
 
     current.armed = true;
     setGesture(target, current.meta, 'armed');
+
+    // Suppress native text selection on recognizable gesture targets during hold.
+    // This prioritizes coincidental discovery (tap/hold/drag on cards, living terms, operators, seams, etc.)
+    // while still allowing text selection on plain prose outside gesture contexts.
+    if (target instanceof HTMLElement) {
+      target.dataset.spwGestureArmed = 'true';
+      // Only force none if it wasn't explicitly text-friendly
+      if (!target.closest('[data-spw-text-friendly="true"], [data-spw-gesture-priority="text"]')) {
+        target.style.userSelect = 'none';
+      }
+    }
 
     emitBraceEvents(
       ['brace:armed', 'brace:sustained'],

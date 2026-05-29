@@ -6,6 +6,7 @@ import { bus } from '/public/js/kernel/bus.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
+const POSITION_STORAGE_KEY = 'spw-state-satchel-position';
 const TOGGLES = [
   {
     key: 'debug',
@@ -49,6 +50,70 @@ function normalizeText(value = '') {
 function getToggleState(config) {
   const value = document.documentElement.dataset[config.datasetKey];
   return config.inverted ? value !== config.off : value === config.on;
+}
+
+// --- Lightweight satchel position persistence + drag support ---
+
+function loadSavedPosition() {
+  try {
+    const raw = localStorage.getItem(POSITION_STORAGE_KEY);
+    if (!raw) return null;
+    const pos = JSON.parse(raw);
+    if (typeof pos?.left === 'number' && typeof pos?.top === 'number') {
+      return { left: pos.left, top: pos.top };
+    }
+  } catch {}
+  return null;
+}
+
+function savePosition(left, top) {
+  try {
+    localStorage.setItem(POSITION_STORAGE_KEY, JSON.stringify({ left, top }));
+  } catch {}
+}
+
+function clearSavedPosition() {
+  try {
+    localStorage.removeItem(POSITION_STORAGE_KEY);
+  } catch {}
+}
+
+function applyPositionToLaunch(launch, left, top, fallback = false) {
+  if (!launch) return;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const rect = launch.getBoundingClientRect();
+  const w = rect.width || 120;
+  const h = rect.height || 36;
+
+  // Clamp to viewport with small margin
+  const margin = 8;
+  const clampedLeft = Math.max(margin, Math.min(left, vw - w - margin));
+  const clampedTop = Math.max(margin, Math.min(top, vh - h - margin));
+
+  launch.style.position = 'fixed';
+  launch.style.left = `${clampedLeft}px`;
+  launch.style.top = `${clampedTop}px`;
+  launch.style.right = 'auto';
+  launch.style.bottom = 'auto';
+  launch.style.transform = 'none';
+
+  if (fallback) {
+    // Mark that we're using a user-dragged or restored position
+    launch.dataset.spwSatchelPositioned = 'user';
+  }
+}
+
+function resetLaunchToDefault(launch) {
+  if (!launch) return;
+  launch.style.position = '';
+  launch.style.left = '';
+  launch.style.top = '';
+  launch.style.right = '';
+  launch.style.bottom = '';
+  launch.style.transform = '';
+  delete launch.dataset.spwSatchelPositioned;
+  clearSavedPosition();
 }
 
 function setToggleState(config, enabled) {
@@ -213,13 +278,22 @@ function createInspector() {
   close.dataset.spwStateInspectorClose = 'true';
   close.textContent = 'close';
 
+  // Lightweight reset for user-dragged satchel position
+  const resetPos = document.createElement('button');
+  resetPos.type = 'button';
+  resetPos.className = 'operator-chip spw-state-inspector__reset-pos';
+  resetPos.dataset.spwStateInspectorResetPosition = 'true';
+  resetPos.textContent = 'Reset position';
+  resetPos.style.fontSize = '0.7rem';
+  resetPos.style.opacity = '0.75';
+
   status.className = 'spw-state-inspector__status';
   status.dataset.spwStateInspectorStatus = '';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.textContent = 'Closed.';
 
-  panel.append(title, summary, actions, copy, close, status);
+  panel.append(title, summary, actions, copy, close, resetPos, status);
   root.append(launch, panel);
   return root;
 }
@@ -255,14 +329,20 @@ async function copySnapshot(root) {
 function bindInspector(root) {
   const handleClick = (event) => {
     if (!(event.target instanceof Element)) return;
+
+    // Satchel launch button click (only toggles panel if not currently dragging)
     if (event.target.closest('.spw-state-inspector__launch')) {
+      const launch = event.target.closest('.spw-state-inspector__launch');
+      if (launch && launch.dataset.spwDragging === 'true') return; // ignore click at end of drag
       setOpen(root, root.dataset.spwStateInspector !== 'open');
       return;
     }
+
     if (event.target.closest('[data-spw-state-inspector-close]')) {
       setOpen(root, false);
       return;
     }
+
     const toggle = event.target.closest('[data-spw-state-toggle]');
     if (toggle instanceof HTMLButtonElement) {
       const config = TOGGLES.find((entry) => entry.key === toggle.dataset.spwStateToggle);
@@ -275,8 +355,18 @@ function bindInspector(root) {
       emitFeedback(message, config.key);
       return;
     }
+
     if (event.target.closest('[data-spw-state-inspector-copy]')) {
       void copySnapshot(root);
+      return;
+    }
+
+    // Lightweight "Reset satchel position" action inside the panel
+    if (event.target.closest('[data-spw-state-inspector-reset-position]')) {
+      const launchBtn = root.querySelector('.spw-state-inspector__launch');
+      resetLaunchToDefault(launchBtn);
+      updateStatus(root, 'Satchel position reset.');
+      return;
     }
   };
 
@@ -295,13 +385,103 @@ function bindInspector(root) {
   };
 }
 
+// --- Lightweight drag support for the satchel launch button ---
+
+function bindSatchelDrag(root) {
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  if (!launch) return () => {};
+
+  let dragging = false;
+  let startX = 0, startY = 0;
+  let startLeft = 0, startTop = 0;
+
+  const onPointerDown = (e) => {
+    if (!e.isPrimary || e.button !== 0) return;
+    // Only start drag on the launch button itself (not when clicking inside the open panel)
+    if (root.dataset.spwStateInspector === 'open') return;
+
+    dragging = true;
+    launch.dataset.spwDragging = 'true';
+    startX = e.clientX;
+    startY = e.clientY;
+
+    const rect = launch.getBoundingClientRect();
+    startLeft = rect.left;
+    startTop = rect.top;
+
+    launch.setPointerCapture?.(e.pointerId);
+    e.preventDefault();
+  };
+
+  const onPointerMove = (e) => {
+    if (!dragging) return;
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    const newLeft = startLeft + dx;
+    const newTop = startTop + dy;
+
+    applyPositionToLaunch(launch, newLeft, newTop, true);
+  };
+
+  const onPointerUp = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    delete launch.dataset.spwDragging;
+
+    // Save final position
+    const rect = launch.getBoundingClientRect();
+    savePosition(rect.left, rect.top);
+
+    try {
+      launch.releasePointerCapture?.(e.pointerId);
+    } catch {}
+
+    // Small delay so the click handler can see the flag
+    setTimeout(() => {
+      delete launch.dataset.spwDragging;
+    }, 60);
+  };
+
+  launch.addEventListener('pointerdown', onPointerDown, { passive: false });
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('pointerup', onPointerUp, { passive: true });
+  window.addEventListener('pointercancel', onPointerUp, { passive: true });
+
+  return () => {
+    launch.removeEventListener('pointerdown', onPointerDown);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerUp);
+  };
+}
+
 export function initStateInspector() {
   if (document.body?.dataset?.spwStateInspector === 'off') return () => {};
   if (document.querySelector(`[${ROOT_ATTR}]`)) return () => {};
 
   const root = createInspector();
   document.body.append(root);
+
+  // Restore any previously dragged position for the satchel launch button
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  const saved = loadSavedPosition();
+  if (saved && launch) {
+    requestAnimationFrame(() => {
+      applyPositionToLaunch(launch, saved.left, saved.top, true);
+    });
+  } else if (launch) {
+    // Bake an explicit initial position so that enabling debug/seams (which mutates DOM)
+    // does not cause the fixed element to jump due to inset recalculation.
+    requestAnimationFrame(() => {
+      const r = launch.getBoundingClientRect();
+      applyPositionToLaunch(launch, r.left, r.top, false);
+    });
+  }
+
   const cleanupBindings = bindInspector(root);
+  const cleanupDrag = bindSatchelDrag(root);
   syncControls(root);
   writeRuntimeDatasetValues(document.documentElement, {
     spwStateInspector: 'available',
@@ -313,6 +493,7 @@ export function initStateInspector() {
 
   return () => {
     cleanupBindings();
+    cleanupDrag?.();
     root.remove();
     writeRuntimeDatasetValues(document.documentElement, {
       spwStateInspector: null,

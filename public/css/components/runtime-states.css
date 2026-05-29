@@ -87,6 +87,14 @@
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.03em;
+  touch-action: none; /* helps with drag vs scroll */
+  user-select: none;
+}
+
+.spw-state-inspector__launch:active,
+.spw-state-inspector__launch[data-spw-dragging="true"] {
+  cursor: grabbing;
+  box-shadow: var(--floating-shadow, 0 8px 32px rgba(0, 0, 0, 0.12)), 0 0 0 1px color-mix(in srgb, var(--state-inspector-accent) 35%, transparent);
 }
 
 .spw-state-inspector__panel {
@@ -422,4 +430,29 @@
   :where(.settings-state-grid, .settings-navigator-grid, .settings-structures-grid, .settings-quickstart-grid) {
     grid-template-columns: 1fr;
   }
+}
+
+/* Defensive layout hardening for frame-card / brace surfaces when debug or state inspection is active.
+   Prevents bad wrapping and "missing element" visual breakage under seams, metadata, or dense inspect content.
+   Also protects padding/chrome areas as potential gesture surfaces. */
+:where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
+  .frame-card, .site-frame, .frame-panel, .brace-surface, [data-spw-brace]
+) {
+  /* Stronger wrapping defense */
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-wrap: wrap;
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
+  .frame-card, .site-frame, .frame-panel, .brace-surface, [data-spw-brace]
+) :where(.frame-topline, .frame-heading, .card-body, [data-spw-slot]) {
+  min-height: 0; /* prevent flex/grid collapse */
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-state-inspector="open"]) :where(
+  .frame-card, .site-frame
+) :where(p, li, .prose, [data-spw-content]) {
+  /* Give prose areas inside cards breathing room even when seams/overlays are present */
+  max-width: 100%;
 }
