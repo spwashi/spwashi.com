@@ -319,7 +319,8 @@ function ensureStackRoot() {
   stack.setAttribute('aria-live', 'polite');
   stack.setAttribute('aria-label', 'Discoverability notices');
   stack.setAttribute(MODULE_ATTR, 'ready');
-  document.body.append(stack);
+  const host = document.body || document.documentElement;
+  host.append(stack);
   return stack;
 }
 
@@ -340,7 +341,8 @@ function ensureModalRoot() {
     overlay: 'scrim-dark',
   });
   root.setAttribute(MODULE_ATTR, 'ready');
-  document.body.append(root);
+  const host = document.body || document.documentElement;
+  host.append(root);
   return root;
 }
 

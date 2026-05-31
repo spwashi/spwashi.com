@@ -484,7 +484,8 @@ export function initStateInspector() {
   if (document.querySelector(`[${ROOT_ATTR}]`)) return () => {};
 
   const root = createInspector();
-  document.body.append(root);
+  const host = document.body || document.documentElement;
+  host.append(root);
 
   // Restore any previously dragged position for the satchel launch button
   const launch = root.querySelector('.spw-state-inspector__launch');
