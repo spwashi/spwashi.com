@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Curriculum — Teaching Technical Fundamentals Through Economic Theory</title>
+    <meta name="description" content="A living learning surface for CS fundamentals via bounded economic analogies. Six modules with simulations, mandatory boundary tests, proof-card artifacts, and local-first progress. Start with Memory &amp; Economic Buffers guided by Cask."/>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+<script type="module" src="/public/js/site.js"></script>
+    <link rel="canonical" href="https://spwashi.com/curriculum/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Spwashi"/>
+    <meta property="og:title" content="Spwashi • Curriculum — Living Learning Surface"/>
+    <meta property="og:description" content="Interactive curriculum: CS fundamentals through economic theory. Quests, simulations, boundary tests, and exportable proof artifacts. Local-first, equity-first, no login required."/>
+    <meta property="og:url" content="https://spwashi.com/curriculum/"/>
+    <meta property="og:image" content="https://spwashi.com/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"/>
+    <meta property="og:image:alt" content="A luminous curriculum signal field with teal, amber, and violet economic traces flowing through technical structures."/>
+    <meta property="og:image:width" content="1400"/>
+    <meta property="og:image:height" content="1400"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Spwashi • Curriculum — Living Learning Surface"/>
+    <meta name="twitter:description" content="Interactive curriculum: CS fundamentals through economic theory. Quests, simulations, boundary tests, and exportable proof artifacts. Local-first, equity-first, no login required."/>
+    <meta name="twitter:image" content="https://spwashi.com/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"/>
+    <meta name="twitter:image:alt" content="A luminous curriculum signal field with teal, amber, and violet economic traces flowing through technical structures."/>
+    <meta name="keywords" content="curriculum, CS fundamentals, economic analogies, memory management, operating systems, networking, algorithms, data structures, security, boundary tests, proof cards, local-first learning, Spwashi, Town Library, RPG Wednesday, Cask"/>
+    <script type="application/ld+json" data-spw-generated="page">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Spwashi • Curriculum — Living Learning Surface",
+            "description": "A living learning surface for CS fundamentals via bounded economic analogies. Six modules with simulations, mandatory boundary tests, proof-card artifacts, and local-first progress.",
+            "url": "https://spwashi.com/curriculum/",
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Spwashi",
+                "url": "https://spwashi.com/"
+            },
+            "about": [
+                "curriculum",
+                "CS fundamentals",
+                "economic analogies",
+                "memory management",
+                "operating systems",
+                "networking markets",
+                "algorithms incentives",
+                "data structures credentials",
+                "security externalities",
+                "boundary tests",
+                "proof cards",
+                "local-first learning"
+            ],
+            "additionalProperty": [
+                { "@type": "PropertyValue", "name": "spwSurface", "value": "curriculum" },
+                { "@type": "PropertyValue", "name": "spwPageFamily", "value": "curriculum" },
+                { "@type": "PropertyValue", "name": "spwPageRole", "value": "learning-surface" },
+                { "@type": "PropertyValue", "name": "spwPageModes", "value": "quest simulate reflect synthesize" },
+                { "@type": "PropertyValue", "name": "spwWonder", "value": "analogy boundary equity institution disruption" },
+                { "@type": "PropertyValue", "name": "spwContext", "value": "learning" }
+            ]
+        }
+    </script>
+    <script type="application/ld+json" data-spw-generated="breadcrumbs">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spwashi.com/" },
+                { "@type": "ListItem", "position": 2, "name": "Town Library", "item": "https://spwashi.com/play/rpg-wednesday/library/" },
+                { "@type": "ListItem", "position": 3, "name": "Curriculum — Living Learning Surface", "item": "https://spwashi.com/curriculum/" }
+            ]
+        }
+    </script>
+</head>
+<body
+    data-spw-surface="curriculum"
+    data-spw-features="operators navigator console boundary-tests proof-artifacts curriculum-simulations"
+    data-spw-route-family="editorial systems curriculum learning"
+    data-spw-context="learning"
+    data-spw-wonder="analogy boundary equity institution disruption"
+    data-spw-page-family="curriculum"
+    data-spw-page-modes="quest simulate reflect synthesize"
+    data-spw-page-role="learning-surface"
+    data-spw-page-seed="page_curriculum_living_learning_surface"
+    data-spw-related-routes="/play/rpg-wednesday/library/|/play/rpg-wednesday/|/town/|/topics/software/|/topics/pedagogy/|/settings/|/cards/">
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<spw-site-header
+    nav_items="Home:/|Town Library:/play/rpg-wednesday/library/|Curriculum:/curriculum/|RPG Wednesday:/play/rpg-wednesday/|Software:/topics/software/|Settings:/settings/|Cards:/cards/"
+    related_routes="/|/play/rpg-wednesday/library/|/town/|/topics/software/|/topics/pedagogy/|/settings/|/cards/"></spw-site-header>
+
+<a class="spw-section-handle"
+   href="#main-content"
+   data-spw-handle-state="hidden"
+   aria-label="Jump to top of current section">
+    <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+    <span class="spw-section-handle__label">section</span>
+</a>
+
+<main data-spw-kind="surface" data-spw-role="curriculum" data-spw-context="learning" data-spw-seed="page_curriculum_living_learning_surface__main" id="main-content" tabindex="-1" aria-labelledby="curriculum-title">
+
+    <section class="site-frame" id="curriculum-hero" data-spw-kind="hero" data-spw-role="entry" data-spw-context="learning" data-spw-wonder="orientation analogy" data-spw-affordance="choose" data-spw-liminality="threshold" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="low" data-spw-seed="page_curriculum_living_learning_surface__hero">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#curriculum-hero" data-spw-operator="frame" data-spw-sigil="#>curriculum_frame">#&gt;curriculum_frame</a>
+            <h1 id="curriculum-title">A living learning surface for technical fundamentals.</h1>
+        </header>
+        <div class="topic-hero-copy" data-spw-slot="body">
+            <p class="spec-kicker">Curriculum • 8–12 weeks • Local-first • No login</p>
+            <p>CS fundamentals made legible through bounded economic analogies. Each module pairs a technical mechanism with a stabilizing institution vs. novel disruption thread, active simulations or quests, <strong>mandatory boundary tests</strong> on the analogy, socio-technical reflection, and a reusable proof-card artifact.</p>
+            <p>Progress lives in your browser. Export artifacts as JSON, Markdown, Spw fragments, or Obsidian-friendly folders. Developmental climate settings (vocabulary, grain, lighting, spacing) act as equity buffers by design.</p>
+            <nav class="frame-operators" aria-label="Curriculum entry points">
+                <a class="operator-chip" href="#memory-buffers" data-spw-operator="frame">#&gt; memory &amp; buffers</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="ref">~ Cask (Liquidity Keeper)</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="object">^ Town Library quests</a>
+                <a class="operator-chip" href="/settings/#climate-settings" data-spw-operator="perspective">@ Learning Mode</a>
+            </nav>
+        </div>
+        <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="square" data-spw-accent="flow" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor curriculum economic trace" data-spw-accent-colors="#1a9999, #c68a22, #6a3fb8" data-spw-accent-anchor="memory buffers liquidity debt swap household volatility" data-spw-accent-operator="frame" data-spw-accent-strength="0.92" data-spw-realization="hybrid" data-spw-substrate="curriculum">
+            <img src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp" alt="Luminous economic traces flowing through technical memory structures — teal liquidity, amber buffers, violet boundary stress." loading="lazy">
+            <figcaption>
+                <strong>Economic traces through technical systems</strong>
+                <span>Household liquidity ↔ RAM/cache/swap. Gig-income volatility ↔ allocation pressure. Subscription drains ↔ memory leaks. Savings buffers ↔ cache tiers.</span>
+            </figcaption>
+        </figure>
+    </section>
+
+    <nav class="page-index" aria-label="Curriculum modules">
+        <ul>
+            <li><a href="#memory-buffers">1. Memory Management &amp; Economic Buffers (Cask)</a></li>
+            <li class="page-index-muted"><a href="#modules-stub">2–6. Systems, Networking, Algorithms, Data Structures, Security (stubs)</a></li>
+            <li><a href="#cross-cutting">Cross-cutting thread: Stabilizing institutions vs. novel disruptions</a></li>
+            <li><a href="#progress-stub">Local progress &amp; artifacts (stub)</a></li>
+        </ul>
+    </nav>
+
+    <!-- MODULE 1: MEMORY & ECONOMIC BUFFERS -->
+    <section class="site-frame" id="memory-buffers" data-spw-kind="module" data-spw-role="curriculum" data-spw-context="learning" data-spw-wonder="analogy boundary equity" data-spw-affordance="simulate reflect" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="artifact" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_curriculum_living_learning_surface__memory_buffers" data-spw-curriculum-module="memory-buffers" data-spw-related-routes="/play/rpg-wednesday/library/#guide-cards|/play/rpg-wednesday/library/#starter-quests|/topics/software/memory/|/topics/software/parsers/">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#memory-buffers" data-spw-operator="frame" data-spw-sigil="#>memory_buffers">#&gt;memory_buffers</a>
+            <h2>1. Memory Management &amp; Economic Buffers <span class="spec-pill">1 week • Cask / Liquidity Keeper</span></h2>
+        </header>
+
+        <div data-spw-slot="body">
+            <p><strong>Economic parallel</strong>: A household or gig worker managing volatile income against fixed expenses. Savings buffers, credit (debt/swap), subscription drains (leaks), and the cost of reclamation (eviction, garbage collection). Volatility scenarios: one steady job vs. multiple unpredictable gigs.</p>
+            <p><strong>Technical mechanism</strong>: RAM as fast expensive cache, disk swap as slower larger buffer, allocation/reclamation policies, fragmentation, leaks as un-reclaimed subscriptions. Trace a process address space or a browser tab under memory pressure.</p>
+        </div>
+
+        <div class="frame-grid" data-spw-slot="meta">
+            <article class="frame-card" data-spw-kind="card" data-spw-role="guide" data-spw-operator="object" data-spw-context="education" data-spw-category-family="encounter">
+                <span class="frame-card-sigil" data-spw-operator="object" data-spw-sigil="^cask">^cask</span>
+                <strong>Cask — Liquidity Keeper</strong>
+                <span><b>Core mechanic:</b> protect the sanctity of the sealed interior (bounded buffers).</span>
+                <span><b>Quest:</b> design a memory budget artifact that refuses to disclose what it cannot safely hold.</span>
+                <span><b>College skill:</b> boundary-setting, resource accounting, ethics of retention, leak detection as archival restraint.</span>
+                <div class="frame-card-actions" data-spw-slot="actions">
+                    <a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="ref">~ visit Cask in the Library</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- BOUNDED ANALOGY + BOUNDARY TEST (FIRST-CLASS) -->
+        <article class="site-frame" data-spw-kind="boundary-test" data-spw-role="reflection" data-spw-context="learning" data-spw-wonder="constraint boundary" data-spw-affordance="test" data-spw-liminality="threshold" data-spw-category-family="probe" data-spw-seed="page_curriculum_living_learning_surface__memory_boundary" data-spw-curriculum-module="memory-buffers">
+            <header class="frame-heading">
+                <a class="frame-sigil" href="#memory-boundary" data-spw-operator="probe" data-spw-sigil="?boundary_test">? where does the analogy break?</a>
+                <h3>Boundary Test — Memory as Household Liquidity</h3>
+            </header>
+            <p class="frame-note"><strong>Mandatory before proceeding.</strong> Mark every place the mapping fails or misleads. This prevents misconception fossilization and returns you to the native technical model.</p>
+
+            <form class="boundary-test-form" data-boundary-test="memory-buffers" aria-label="Memory liquidity boundary test checklist">
+                <fieldset>
+                    <legend>Where does “household liquidity ↔ memory hierarchy” distort or hide the truth?</legend>
+                    <label class="boundary-check"><input type="checkbox" name="break" value="volatility-speed"> Gig income volatility maps cleanly to allocation pressure, but real processes have hard real-time deadlines that no household budget experiences.</label>
+                    <label class="boundary-check"><input type="checkbox" name="break" value="reclamation-cost"> Eviction (swap out) feels like moving to cheaper storage, but the performance cliff and thrashing cost are not symmetric with moving apartments.</label>
+                    <label class="boundary-check"><input type="checkbox" name="break" value="ownership"> A household “owns” its savings; a process does not own RAM in the same way—another process or the kernel can take it.</label>
+                    <label class="boundary-check"><input type="checkbox" name="break" value="subscription-drain"> Subscription drains (leaks) are often invisible to the “household” (the program) until the system is already in distress.</label>
+                    <label class="boundary-check"><input type="checkbox" name="break" value="scale"> A single household can declare bankruptcy; a single process leak rarely brings down the whole machine—until it does at fleet scale.</label>
+                </fieldset>
+
+                <label class="boundary-reflection">
+                    <span>Your reflection on the breakdown (what the analogy hides, what it usefully reveals):</span>
+                    <textarea name="reflection" rows="4" placeholder="The mapping breaks most clearly when... It still helps me see..."></textarea>
+                </label>
+
+                <div class="boundary-actions">
+                    <button type="button" class="operator-chip" data-action="log-boundary">Log to local proof card</button>
+                    <button type="button" class="operator-chip" data-action="clear-boundary">Clear</button>
+                    <span class="boundary-status" aria-live="polite"></span>
+                </div>
+            </form>
+
+            <details class="spw-card-reason">
+                <summary>Why boundary tests are non-negotiable here</summary>
+                <p>Analogies are powerful compression. Without explicit stress-testing they fossilize into misconceptions. Every module ends with this surface so you return to the technical trace stronger, not confused.</p>
+            </details>
+        </article>
+
+        <!-- ARTIFACT GENERATOR STUB -->
+        <article class="site-frame" id="memory-artifact" data-spw-kind="proof-artifact" data-spw-role="action" data-spw-context="learning" data-spw-wonder="projection consequence" data-spw-affordance="produce" data-spw-liminality="exit" data-spw-category-family="register" data-spw-seed="page_curriculum_living_learning_surface__memory_artifact" data-spw-curriculum-module="memory-buffers">
+            <header class="frame-heading">
+                <a class="frame-sigil" href="#memory-artifact" data-spw-operator="action" data-spw-sigil="!memory_audit">! produce memory-leak audit proof</a>
+                <h3>Artifact: Memory Leak Audit Memo (or short proof card)</h3>
+            </header>
+            <p class="frame-note">Capture one real or hypothetical system. Name the buffers, the volatility sources, the reclamation policy, and at least two places the household analogy would have misled you without the boundary test.</p>
+
+            <div class="proof-capture" data-spw-feature="artifact-generator">
+                <textarea class="proof-textarea" data-proof-field="memory-audit" rows="6" placeholder="System: ...
+Economic mapping used: ...
+Where the analogy held: ...
+Where it broke (from boundary test): ...
+Technical recommendation: ...
+Reflection (equity / access / who bears the cost of leaks): ..."></textarea>
+
+                <div class="proof-actions">
+                    <button type="button" class="operator-chip" data-action="export-proof" data-proof-type="memory-audit">Export JSON</button>
+                    <button type="button" class="operator-chip" data-action="export-proof" data-proof-type="memory-audit" data-format="markdown">Export Markdown</button>
+                    <button type="button" class="operator-chip" data-action="export-proof" data-proof-type="memory-audit" data-format="spw">Export Spw fragment</button>
+                    <span class="proof-status" aria-live="polite"></span>
+                </div>
+                <p class="frame-note proof-note">All artifacts stay in your browser until you export. No account, no server.</p>
+            </div>
+        </article>
+
+        <div data-spw-slot="footer">
+            <p><strong>Socio-technical reflection prompt</strong>: Who bears the cost when buffers are under-provisioned or leaks go undetected? In gig-platform work? In public-school device fleets? In creator-platform memory budgets for live video?</p>
+            <nav class="frame-operators">
+                <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="object">^ return to Cask &amp; the Library</a>
+                <a class="operator-chip" href="#progress-stub" data-spw-operator="action">! mark module complete (stub)</a>
+            </nav>
+        </div>
+    </section>
+
+    <!-- MODULE STUBS -->
+    <section class="site-frame" id="modules-stub" data-spw-kind="directory" data-spw-role="reference" data-spw-context="learning" data-spw-wonder="comparison constraint" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-seed="page_curriculum_living_learning_surface__modules_stub">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#modules-stub" data-spw-operator="frame">#&gt; remaining modules</a>
+            <h2>Modules 2–6 (stubs — full surfaces in later phases)</h2>
+        </header>
+        <div class="frame-grid">
+            <article class="frame-card"><span class="frame-card-sigil" data-spw-operator="frame">#&gt;</span><strong>Systems &amp; Operating Systems</strong><span>RPG Wednesday scheduler governance scenario (unions/tenure vs algorithmic management). “Operating system of a school” system map artifact.</span></article>
+            <article class="frame-card"><span class="frame-card-sigil" data-spw-operator="frame">#&gt;</span><strong>Networking &amp; Markets</strong><span>Packet-routing game as supply chain with transaction costs and intermediaries. “Throttle the market” experiment. Fair protocol design artifact.</span></article>
+            <article class="frame-card"><span class="frame-card-sigil" data-spw-operator="frame">#&gt;</span><strong>Algorithms &amp; Incentives</strong><span>Parsons sequencing + Spw workbench for matching. Fastest vs fairest critique. Recommender bias reflection.</span></article>
+            <article class="frame-card"><span class="frame-card-sigil" data-spw-operator="frame">#&gt;</span><strong>Data Structures &amp; Credential Records</strong><span>Interactive ledger/registry prototype. Microcredential fragmentation vs degree signaling. Search cost analysis.</span></article>
+            <article class="frame-card"><span class="frame-card-sigil" data-spw-operator="frame">#&gt;</span><strong>Security &amp; Externalities</strong><span>Threat-model worksheet (NIST-style) on school portal / gig app / creator account. First-/third-party harms + insurance/reg reflection. Capstone comparative brief.</span></article>
+        </div>
+    </section>
+
+    <!-- CROSS-CUTTING + PROGRESS STUB -->
+    <section class="site-frame" id="cross-cutting" data-spw-kind="frame" data-spw-role="synthesis" data-spw-context="learning" data-spw-wonder="comparison consequence" data-spw-affordance="reflect" data-spw-liminality="threshold" data-spw-category-family="register" data-spw-seed="page_curriculum_living_learning_surface__cross_cutting">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#cross-cutting" data-spw-operator="frame">#&gt; stabilizing_vs_novel</a>
+            <h2>Cross-cutting thread (Week 7 synthesis)</h2>
+        </header>
+        <p>Stabilizing institutions (unions, tenure, public funding, degrees, licenses) vs. novel disruptions (gig platforms, AI management, microcredentials, creator economies). Use the U.S. indicators from the source report as data points inside your own comparative case brief.</p>
+        <p class="frame-note">This thread runs through every module and becomes the capstone portfolio spine.</p>
+    </section>
+
+    <section class="site-frame" id="progress-stub" data-spw-kind="progress" data-spw-role="dashboard" data-spw-context="learning" data-spw-wonder="memory locality" data-spw-affordance="track" data-spw-liminality="entry" data-spw-category-family="system" data-spw-seed="page_curriculum_living_learning_surface__progress_stub" data-spw-feature="curriculum-progress">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#progress-stub" data-spw-operator="frame">#&gt; local_progress</a>
+            <h2>Your local route map (stub — expands in Phase 2)</h2>
+        </header>
+        <p class="frame-note">8–12 week view. Checkmarks and artifact counts persist in this browser only. Export the whole map + artifacts as a single bundle.</p>
+        <div class="progress-map" aria-label="Curriculum progress stub">
+            <div class="progress-item" data-module="memory-buffers"><span class="progress-check" aria-hidden="true">☐</span> Memory &amp; Economic Buffers <span class="progress-meta">boundary test + 1 artifact</span></div>
+            <div class="progress-item progress-muted">Systems &amp; OS <span class="progress-meta">(stub)</span></div>
+            <div class="progress-item progress-muted">Networking &amp; Markets <span class="progress-meta">(stub)</span></div>
+            <div class="progress-item progress-muted">Algorithms &amp; Incentives <span class="progress-meta">(stub)</span></div>
+            <div class="progress-item progress-muted">Data Structures &amp; Credentials <span class="progress-meta">(stub)</span></div>
+            <div class="progress-item progress-muted">Security &amp; Externalities <span class="progress-meta">(stub)</span></div>
+            <div class="progress-item progress-muted">Capstone synthesis <span class="progress-meta">(stub)</span></div>
+        </div>
+        <div class="progress-actions">
+            <button type="button" class="operator-chip" data-action="export-all">Export full route map + artifacts (JSON)</button>
+            <button type="button" class="operator-chip" data-action="export-all" data-format="markdown">Export as Markdown bundle</button>
+        </div>
+        <p class="frame-note">This surface will grow into the full LMS dashboard with dependency hints and rubric scoring.</p>
+    </section>
+
+</main>
+
+<spw-site-footer></spw-site-footer>
+
+<script type="module">
+/* Progressive boundary test + artifact capture for Memory module (Phase 1 stub).
+   No new dependencies. Degrades gracefully if JS unavailable. */
+(function () {
+  const form = document.querySelector('[data-boundary-test="memory-buffers"]');
+  if (!form) return;
+
+  const status = form.querySelector('.boundary-status');
+  const logBtn = form.querySelector('[data-action="log-boundary"]');
+  const clearBtn = form.querySelector('[data-action="clear-boundary"]');
+
+  function saveBoundary() {
+    const data = {
+      module: 'memory-buffers',
+      timestamp: new Date().toISOString(),
+      breaks: Array.from(form.querySelectorAll('input[name="break"]:checked')).map(i => i.value),
+      reflection: form.querySelector('textarea[name="reflection"]').value.trim()
+    };
+    try {
+      const key = 'spwashi:curriculum:memory-buffers:boundary';
+      localStorage.setItem(key, JSON.stringify(data));
+      if (status) status.textContent = 'Logged locally. Add to your proof card below.';
+    } catch (e) {
+      if (status) status.textContent = 'Could not save (storage blocked).';
+    }
+  }
+
+  function clearBoundary() {
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    const ta = form.querySelector('textarea[name="reflection"]');
+    if (ta) ta.value = '';
+    if (status) status.textContent = 'Cleared.';
+  }
+
+  if (logBtn) logBtn.addEventListener('click', saveBoundary);
+  if (clearBtn) clearBtn.addEventListener('click', clearBoundary);
+
+  // Simple artifact export stubs (Phase 1 — real module will centralize)
+  document.querySelectorAll('[data-action="export-proof"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.proofType || 'memory-audit';
+      const format = btn.dataset.format || 'json';
+      const ta = document.querySelector(`[data-proof-field="${type}"]`);
+      const content = ta ? ta.value.trim() : 'No content captured.';
+      const payload = {
+        type,
+        format,
+        module: 'memory-buffers',
+        content,
+        boundary: (() => { try { return JSON.parse(localStorage.getItem('spwashi:curriculum:memory-buffers:boundary') || 'null'); } catch { return null; } })(),
+        exportedAt: new Date().toISOString()
+      };
+
+      if (format === 'json') {
+        download(`${type}.json`, JSON.stringify(payload, null, 2), 'application/json');
+      } else if (format === 'markdown') {
+        const md = `# ${type} — Memory & Economic Buffers\n\n${content}\n\n## Boundary Test\n${JSON.stringify(payload.boundary, null, 2)}\n`;
+        download(`${type}.md`, md, 'text/markdown');
+      } else if (format === 'spw') {
+        const spw = `#>memory_audit[${type}] { boundary: ${JSON.stringify(payload.boundary?.breaks || [])} reflection: "${(payload.boundary?.reflection || '').replace(/"/g,'\\"')}" }`;
+        download(`${type}.spw`, spw, 'text/plain');
+      }
+      const s = btn.parentElement.querySelector('.proof-status');
+      if (s) s.textContent = 'Exported.';
+    });
+  });
+
+  function download(filename, text, mime) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: mime }));
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // Progress stub buttons (Phase 1)
+  document.querySelectorAll('[data-action="export-all"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const all = {
+        curriculum: 'living-learning-surface',
+        exportedAt: new Date().toISOString(),
+        modules: {
+          'memory-buffers': {
+            complete: true,
+            boundary: (() => { try { return JSON.parse(localStorage.getItem('spwashi:curriculum:memory-buffers:boundary') || 'null'); } catch { return null; } })(),
+            artifacts: [ /* collected in real version */ ]
+          }
+        }
+      };
+      const fmt = btn.dataset.format || 'json';
+      if (fmt === 'json') {
+        download('spwashi-curriculum-route-map.json', JSON.stringify(all, null, 2), 'application/json');
+      } else {
+        download('spwashi-curriculum-route-map.md', `# Spwashi Curriculum Route Map\n\nExported ${all.exportedAt}\n\n## Memory & Buffers\n\n(See individual artifacts)\n`, 'text/markdown');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
