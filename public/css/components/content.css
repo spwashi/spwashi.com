@@ -160,6 +160,12 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+@media (max-width: 64rem) {
+  :where(.frame-grid--2up, .frame-grid--3up) {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active)), 1fr));
+  }
+}
+
 html[data-spw-viewport-tier="mid"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
   --spw-grid-min-active: var(--spw-grid-min-mid);
   --spw-grid-gap-active: var(--spw-grid-gap-mid);

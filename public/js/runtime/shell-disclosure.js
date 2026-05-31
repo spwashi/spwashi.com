@@ -71,7 +71,7 @@ const SCROLL_DIRECTIONS = Object.freeze({
 const DEFAULTS = Object.freeze({
   narrowBreakpointPx: 720,
   midBreakpointPx: 980,
-  compressedRatio: 1.08,
+  compressedRatio: 1.55,
   scrollLiftPx: 18,
   scrollDeepPx: 132,
   scrollDirectionDeadzonePx: 4,
@@ -142,6 +142,24 @@ function getPointerMode() {
   return 'fine';
 }
 
+function getHoverMode() {
+  if (window.matchMedia('(hover: hover)').matches) return 'hover';
+  return 'touch';
+}
+
+function syncDeviceContext(state) {
+  const tier = getViewportTier(window.innerWidth, state?.config || DEFAULTS);
+  const pointer = getPointerMode();
+  const hover = getHoverMode();
+
+  writeDatasetValues(document.documentElement, {
+    spwViewportTier: tier,
+    spwPointerMode: pointer,
+    spwHoverMode: hover,
+    spwDeviceContext: `${tier}-${pointer}`,
+  });
+}
+
 function getScrollY() {
   return Math.max(window.scrollY || window.pageYOffset || 0, 0);
 }
@@ -180,7 +198,15 @@ function createState(config) {
 function computeNavRatio(header, nav, navList) {
   const navWidth = nav.clientWidth || Math.max(header.clientWidth * 0.58, 1);
   if (!navWidth) return 1;
-  return navList.scrollWidth / navWidth;
+  const listItems = Array.from(navList.querySelectorAll(':scope > li'));
+  const listStyle = window.getComputedStyle(navList);
+  const columnGap = Number.parseFloat(listStyle.columnGap || listStyle.gap || '0') || 0;
+  const measuredItemsWidth = listItems.reduce((total, item) => {
+    if (!(item instanceof HTMLElement)) return total;
+    return total + item.getBoundingClientRect().width;
+  }, 0) + Math.max(0, listItems.length - 1) * columnGap;
+  const contentWidth = Math.max(nav.scrollWidth, navList.scrollWidth, measuredItemsWidth);
+  return contentWidth / navWidth;
 }
 
 function countPrimaryRoutes(navList) {
@@ -396,7 +422,9 @@ function writeScrollDatasets(header, state) {
 
 function syncShellOffset(header) {
   if (!(header instanceof HTMLElement)) return;
-  document.documentElement.style.removeProperty('--spw-shell-menu-offset');
+  const rect = header.getBoundingClientRect();
+  const offset = Math.max(0, rect.bottom || 0);
+  document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset.toFixed(1)}px`);
 }
 
 function syncHeaderPointerField(header, event) {
@@ -699,6 +727,7 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
 }
 
 function syncDisclosure(header, nav, navList, toggle, state, source = 'sync') {
+  syncDeviceContext(state);
   state.pointerMode = getPointerMode();
   const previousMode = state.mode;
   state.mode = resolveMenuMode(header, nav, navList, state);
@@ -772,6 +801,7 @@ export function initSpwShellDisclosure(options = {}) {
   const utilityRow = ensureUtilityRow(header);
 
   const state = createState(config);
+  syncDeviceContext(state);
   writeDatasetValues(header, {
     spwMenu: 'closed',
     spwMenuMode: MODES.INLINE,
@@ -797,9 +827,20 @@ export function initSpwShellDisclosure(options = {}) {
     dispatchActionForSnapshot(snapshot);
   };
 
+  let lastToggleActivation = 0;
   const handleToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
+
+    const now = performance.now();
+    if (now - lastToggleActivation < 90) return;
+    lastToggleActivation = now;
+
+    const activeToggle = event.target?.closest?.('.spw-nav-toggle');
+    if (activeToggle instanceof HTMLButtonElement && activeToggle !== toggle) {
+      toggle = activeToggle;
+      toggle.setAttribute('aria-controls', nav.id);
+    }
 
     if (state.mode !== MODES.TOGGLE) {
       nav.querySelector('a[href]')?.focus();
@@ -835,6 +876,17 @@ export function initSpwShellDisclosure(options = {}) {
 
   const handleTogglePointerDown = (event) => {
     event.stopPropagation();
+  };
+
+  const handleTogglePointerUp = (event) => {
+    if (event.button && event.button !== 0) return;
+    handleToggle(event);
+  };
+
+  const handleDelegatedToggleClick = (event) => {
+    const activeToggle = event.target?.closest?.('.spw-nav-toggle');
+    if (!(activeToggle instanceof HTMLButtonElement)) return;
+    handleToggle(event);
   };
 
   const handlePointerEnter = (event) => {
@@ -925,9 +977,26 @@ export function initSpwShellDisclosure(options = {}) {
     toggle.focus();
   };
 
+  let measureRaf = 0;
+  let measureRafSettled = 0;
+  const scheduleMeasuredSync = (source = 'layout') => {
+    if (measureRaf || measureRafSettled) return;
+    measureRaf = window.requestAnimationFrame(() => {
+      measureRaf = 0;
+      measureRafSettled = window.requestAnimationFrame(() => {
+        measureRafSettled = 0;
+        syncScrollState(header, state);
+        syncDisclosure(header, nav, navList, toggle, state, source);
+        syncUtilityRow(utilityRow);
+      });
+    });
+  };
+
   const handleResize = () => {
+    syncDeviceContext(state);
     syncScrollState(header, state);
     syncDisclosure(header, nav, navList, toggle, state, 'resize');
+    scheduleMeasuredSync('resize-layout');
   };
 
   const handleScroll = () => {
@@ -952,6 +1021,10 @@ export function initSpwShellDisclosure(options = {}) {
     syncScrollState(header, state);
     syncShellOffset(header);
     syncUtilityRow(utilityRow);
+  };
+
+  const handleLoad = () => {
+    scheduleMeasuredSync('load-layout');
   };
 
   const handleUtilityClick = (event) => {
@@ -1033,14 +1106,17 @@ export function initSpwShellDisclosure(options = {}) {
 
   const navObserver = new MutationObserver(() => {
     syncDisclosure(header, nav, navList, toggle, state, 'structure');
+    scheduleMeasuredSync('structure-layout');
   });
 
   toggle.addEventListener('click', handleToggle);
   toggle.addEventListener('pointerdown', handleTogglePointerDown);
+  toggle.addEventListener('pointerup', handleTogglePointerUp);
   toggle.addEventListener('keydown', handleToggleKeydown);
   header.addEventListener('pointerenter', handlePointerEnter);
   header.addEventListener('pointermove', handlePointerMove);
   header.addEventListener('pointerleave', handlePointerLeave);
+  header.addEventListener('click', handleDelegatedToggleClick);
   header.addEventListener('focusin', handleFocusIn);
   header.addEventListener('focusout', handleFocusOut);
   nav.addEventListener('click', handleNavClick);
@@ -1052,6 +1128,7 @@ export function initSpwShellDisclosure(options = {}) {
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
   window.addEventListener('orientationchange', handleResize);
+  window.addEventListener('load', handleLoad, { once: true });
   window.addEventListener('hashchange', handleHashChange);
   document.addEventListener('spw:settings-changed', handleSettingsChanged);
   document.addEventListener('spw:frame-change', handleSettingsChanged);
@@ -1063,15 +1140,18 @@ export function initSpwShellDisclosure(options = {}) {
 
   syncDisclosure(header, nav, navList, toggle, state, 'init');
   syncUtilityRow(utilityRow);
+  scheduleMeasuredSync(document.readyState === 'complete' ? 'complete-layout' : 'init-layout');
 
   return {
     cleanup() {
       toggle.removeEventListener('click', handleToggle);
       toggle.removeEventListener('pointerdown', handleTogglePointerDown);
+      toggle.removeEventListener('pointerup', handleTogglePointerUp);
       toggle.removeEventListener('keydown', handleToggleKeydown);
       header.removeEventListener('pointerenter', handlePointerEnter);
       header.removeEventListener('pointermove', handlePointerMove);
       header.removeEventListener('pointerleave', handlePointerLeave);
+      header.removeEventListener('click', handleDelegatedToggleClick);
       header.removeEventListener('focusin', handleFocusIn);
       header.removeEventListener('focusout', handleFocusOut);
       nav.removeEventListener('click', handleNavClick);
@@ -1083,6 +1163,7 @@ export function initSpwShellDisclosure(options = {}) {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
+      window.removeEventListener('load', handleLoad);
       window.removeEventListener('hashchange', handleHashChange);
       document.removeEventListener('spw:settings-changed', handleSettingsChanged);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
@@ -1091,6 +1172,14 @@ export function initSpwShellDisclosure(options = {}) {
       if (state.scrollRaf) {
         window.cancelAnimationFrame(state.scrollRaf);
         state.scrollRaf = 0;
+      }
+      if (measureRaf) {
+        window.cancelAnimationFrame(measureRaf);
+        measureRaf = 0;
+      }
+      if (measureRafSettled) {
+        window.cancelAnimationFrame(measureRafSettled);
+        measureRafSettled = 0;
       }
       removeDatasetValues(header, [
         'spwShellDisclosureInit',
@@ -1110,6 +1199,7 @@ export function initSpwShellDisclosure(options = {}) {
       state.config = { ...state.config, ...nextOptions };
       syncScrollState(header, state);
       syncDisclosure(header, nav, navList, toggle, state, 'refresh');
+      scheduleMeasuredSync('refresh-layout');
     },
   };
 }

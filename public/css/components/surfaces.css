@@ -144,10 +144,69 @@
   .vibe-widget,
   .pwa-status-card
 ):is(:hover, :focus-within) {
+  --spw-depth: 0.24;
+  --spw-utility: 0.32;
   border-color: color-mix(in srgb, var(--component-accent) 28%, var(--line, transparent));
   box-shadow: var(--component-shadow-active);
   transform: translateY(calc(var(--projection-lift-xs, 1px) * -1));
   z-index: var(--component-layer-raised, 1);
+}
+
+:where(
+  a.frame-card,
+  .frame-card > a:first-child,
+  button.settings-preset-btn,
+  .media-card[href],
+  .software-card[href],
+  .operator-card[href],
+  .plan-card[href],
+  .ref-card[href]
+):active {
+  --spw-depth: 0.12;
+  --spw-utility: 0.42;
+  transform: translateY(0);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 0 0 1px color-mix(in srgb, var(--component-accent) 18%, transparent),
+    var(--component-shadow-quiet);
+}
+
+@media (hover: none) {
+  :where(
+    .frame-card,
+    .media-card,
+    .media-focus-card,
+    .software-card,
+    .operator-card,
+    .frame-panel,
+    .mode-panel,
+    .plan-card,
+    .compare-card,
+    .spec-column,
+    .ref-card,
+    .settings-state-card,
+    .settings-nav-card,
+    .settings-structure-card,
+    .settings-map-card,
+    .settings-preset-btn,
+    .vibe-widget,
+    .pwa-status-card
+  ):is(:hover, :focus-within) {
+    transform: none;
+  }
+
+  :where(
+    a.frame-card,
+    .frame-card > a:first-child,
+    button.settings-preset-btn,
+    .media-card[href],
+    .software-card[href],
+    .operator-card[href],
+    .plan-card[href],
+    .ref-card[href]
+  ):active {
+    transform: translateY(-1px) scale(0.998);
+  }
 }
 
 :where(.media-focus-card) {

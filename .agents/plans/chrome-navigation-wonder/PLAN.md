@@ -63,6 +63,12 @@ This is not a new feature request — it is naming and deepening the existing co
 
 ## Recommended Next Actions (prioritized)
 
+### 2026-05-31 shared polish patch
+- Preserve route label integrity in the primary header by preventing inline nav links from shrinking into each other; let the shell disclosure state choose inline vs toggle based on real overflow.
+- Make viewport tier, pointer mode, hover mode, and device context reliable from the always-mounted shell disclosure layer so intermediate breakpoint CSS can participate on every route.
+- Use shared content-grid fallbacks for `frame-grid--2up` / `frame-grid--3up` below desktop widths so tablet routes get honest columns instead of squeezed fixed tracks.
+- Add subtle touch/active feedback to shared card-like surfaces and richer section-handle direction glow without adding new route markup.
+
 0. **Confidence as a dimension of existing radar**:
    - Do not add a standalone "learner confidence" widget unless a route needs it locally.
    - Project confidence through the existing sample dock, section handle, settings reset paths, and semantic inventory.

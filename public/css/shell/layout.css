@@ -238,6 +238,20 @@ main[data-spw-layout="atlas"] {
   --spw-main-width: var(--page-width-atlas);
 }
 
+@media (min-width: 92rem) {
+  :where(body[data-spw-layout="wide"]) main,
+  main[data-spw-layout="wide"] {
+    --spw-main-width: min(92rem, calc(100vw - (var(--page-gutter-inline) * 2)));
+  }
+
+  :where(body[data-spw-layout="split"]) main,
+  main[data-spw-layout="split"],
+  :where(body[data-spw-layout="atlas"]) main,
+  main[data-spw-layout="atlas"] {
+    --spw-main-width: min(var(--page-width-atlas), calc(100vw - (var(--page-gutter-inline) * 2)));
+  }
+}
+
 /* Split layouts place a narrower reading column next to a rail for
    related-routes, quick-jumps, or locally-collected items. */
 @media (min-width: 72rem) {
@@ -266,6 +280,14 @@ main[data-spw-layout="atlas"] {
     align-self: start;
     max-height: calc(100dvh - var(--header-height) - 2rem);
     overflow-y: auto;
+  }
+}
+
+@media (min-width: 72rem) and (max-width: 82rem) {
+  :where(body[data-spw-layout="split"]) main,
+  main[data-spw-layout="split"] {
+    grid-template-columns: minmax(0, 1fr) minmax(12.5rem, 0.28fr);
+    column-gap: clamp(0.75rem, 1.4vw, 1rem);
   }
 }
 

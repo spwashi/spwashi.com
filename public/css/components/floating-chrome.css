@@ -74,6 +74,11 @@
 }
 
 @media (max-width: 720px) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) {
+    /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */
+    inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--touch-target-compact, 2.15rem) + 1rem);
+  }
+
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role$="toast-stack"]) {
     inline-size: auto;
     max-inline-size: none;
