@@ -7,6 +7,13 @@ This directly extends the existing Town Library / RPG Wednesday learning library
 ## Scope & Phasing
 **Phase 1 (Quick wins, surgical)**: Dedicated `/curriculum/` stub route + Memory module (1 of 6) as semantic frames. Reusable boundary-test checklist UI (first-class after analogies). Cask/Liquidity Keeper link from library. Settings "Learning Mode" preset stubs + local progress dashboard stub. Home + library discovery cards. This plan + minimal .spw bridge.
 
+**Navigation & LLM depth additions (executed)**:
+- Added `/curriculum/` and reinforced Town Library to `TOP_ROUTE_REGISTRY` in `public/js/interface/contextual-ui.js` (global menu + crawler visibility).
+- Updated `nav_items` strings and `data-spw-related-routes` across home, play/* routes, library, settings, pedagogy, and about.
+- Home: added a fourth panel in the Town Library gateway ("Study technical fundamentals") + strengthened the gateway lede to reference active curriculum surfaces.
+- About: updated header nav and related-routes (including boonhonk frame); inserted a direct forward reference in the college/adult learning lab / Student Body for Meaningful Education history section, positioning the curriculum (economic analogies + boundary tests + developmental climate as equity) as the public, active continuation of the site's founding through-line around attention compounding and environments for difficult work.
+- Added large "For Agents & Extenders" frame on curriculum page containing full 6-module ontology (with economic parallels, boundary contracts, artifact types, guide/RPG hooks, data-spw attributes, and Spw examples), reusable contracts, 4 extension recipes, and explicit machine-readable guidance linking the PLAN.md, .spw surfaces, shared.js, site-settings.js, and math lab patterns. This makes the curriculum highly legible and safely extensible by other language models.
+
 **Phase 2**: 1-2 prototype simulations (memory budget allocation; packet/market routing) following math-interactive-lab + SVG/canvas patterns. Proof-card generators for 2-3 modules. Real curriculum-state.js with JSON/MD/Spw/Obsidian exports. Spw projection examples.
 
 **Phase 3+**: Remaining modules + cross-cutting stabilizing-vs-novel thread. Reusable 4-criterion rubric scorer. Capstone portfolio synthesis view. PWA/offline curriculum manifest. RPG scenarios in play/rpg-wednesday/. Curriculum Spw dialect (liquidity, boundary, externality registers) + workbench mode.

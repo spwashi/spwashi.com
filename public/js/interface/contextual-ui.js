@@ -46,6 +46,8 @@ const TOP_ROUTE_REGISTRY = Object.freeze([
   { href: '/tools/', label: 'Tools', token: '^tools', note: 'Utilities, profiles, and reusable helpers.' },
   { href: '/services/', label: 'Services', token: '@services', note: 'Ways to collaborate on readable systems and publishing surfaces.' },
   { href: '/settings/', label: 'Settings', token: '=settings', note: 'Tune browser-local reading modes and inspector presets.' },
+  { href: '/curriculum/', label: 'Curriculum', token: '#>curriculum', note: 'Living learning surface: CS fundamentals via bounded economic analogies, mandatory boundary tests, local proof artifacts, and developmental climate as equity buffers. Start with Memory & Cask.' },
+  { href: '/play/rpg-wednesday/library/', label: 'Town Library', token: '^town_library', note: 'Quests, guide characters (Cask, Grounding Rod...), boonhonk reflection, college bridge, and curriculum study routes.' },
 ]);
 
 const PERSPECTIVE_WEIGHTS = Object.freeze({
