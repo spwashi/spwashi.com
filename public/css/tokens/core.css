@@ -518,6 +518,11 @@
   --spw-svg-flow-gap: 9;
   --spw-svg-label-spacing: 0.04em;
 
+  /* Enhanced theme depth for project development + regional screenshots.
+     Project motifs can tune these for local personality while staying within the site's artistic composability.
+     Use with data-spw-svg-semantic="project-motif" and responsive="project" for unique capture value. */
+  --spw-svg-project-regional-accent: color-mix(in oklab, var(--active-op-color) 70%, var(--op-topic-color) 30%);
+
   /* Shell chrome */
   --spw-shell-chrome-accent: color-mix(in oklab, var(--teal, #008080) 68%, var(--ink-strong) 32%);
   --spw-shell-chrome-line: color-mix(in oklab, var(--spw-shell-chrome-accent) 18%, var(--line) 82%);

@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-title" content="Spwashi"/>
     <title>Spwashi • SVG Experiments</title>
-    <meta name="description" content="A live SVG learning lab for path weight, label spacing, pointer fields, palette reasons, screenshot-ready diagrams, and model handoff on Spwashi.">
+    <meta name="description" content="A live SVG learning lab for path weight, label spacing, pointer fields, palette reasons, screenshot-ready diagrams, model handoff, project development notes, semantic/responsive/interactive tuning, and unique local/regional capture value on Spwashi.">
     <link rel="canonical" href="https://spwashi.com/design/experiments/svg/">
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Spwashi"/>
@@ -93,7 +93,7 @@
                 <p class="frame-note">
                     For search engines and language models: this page is a practical SVG tutorial surface for learning
                     declarative SVG theming, custom properties, palette handles, pointer interactions, and screenshot-ready
-                    diagram semantics without adding a framework.
+                    diagram semantics without adding a framework. Use it to develop your own projects: experiment with semantic="project-motif", responsive="project", interactive="note", capture unique local/regional screenshots, and keep project notes below each specimen.
                 </p>
 
                 <nav class="design-experiment-actions" aria-label="Experiment routes">
@@ -348,7 +348,7 @@ applySvgQueryTunability(document);</code></pre>
                     This specimen is intentionally legible to a human reviewer and to an image model: labeled regions, explicit color roles, and a short semantic description in the host attributes.
                 </p>
 
-                <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="brand-screenshot-card" data-spw-svg-kind="branded-screenshot-card" data-spw-svg-scale="wide" data-spw-svg-pointer="tilt" data-spw-svg-companion="rail" data-spw-image-model="screenshot-ready SVG card with brand accent, offer/action region, trust notes, and interpretation labels" aria-labelledby="brand-screenshot-title">
+                <figure class="spw-svg-figure design-svg-stage" data-spw-svg-host="brand-screenshot-card" data-spw-svg-kind="branded-screenshot-card" data-spw-svg-scale="wide" data-spw-svg-pointer="tilt" data-spw-svg-companion="rail" data-spw-svg-semantic="project-motif" data-spw-svg-responsive="project" data-spw-svg-interactive="note" data-spw-image-model="screenshot-ready SVG card with brand accent, offer/action region, trust notes, and interpretation labels. Unique local/regional value for project documentation and regional motif capture." aria-labelledby="brand-screenshot-title">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 920 420" role="img" aria-labelledby="brand-screenshot-title brand-screenshot-desc">
                         <title id="brand-screenshot-title">Brand screenshot interpretation specimen</title>
                         <desc id="brand-screenshot-desc">A reusable SVG card with brand accent rail, offer block, trust notes, action target, and semantic labels for image interpretation.</desc>
@@ -385,6 +385,18 @@ applySvgQueryTunability(document);</code></pre>
                         <p>Use this as a QA fixture: change query values, capture the same anchored SVG, and compare whether the brand and interpretation labels survive the visual treatment.</p>
                     </figcaption>
                 </figure>
+
+                <div class="frame-note project-notes" data-spw-local-note-origin="svg-experiments" data-spw-local-note-entry data-spw-slot="notes" aria-label="Project development notes for this SVG lab">
+                    <label for="svg-project-notes-input" class="spec-kicker">Project notes</label>
+                    <form class="svg-project-note-form" data-spw-local-note-entry>
+                        <div class="note-row">
+                            <input id="svg-project-notes-input" type="text" data-local-note-input class="project-note-input" placeholder="Jot adaptations for your project (regional motif, palette, interactivity notes). Local only.">
+                            <button type="submit" class="operator-chip" data-spw-operator="action">save</button>
+                        </div>
+                        <p class="inline-note" data-local-note-preview></p>
+                    </form>
+                    <p class="inline-note">These notes stay in your browser (spwashi:local-notes). Use to develop projects; new semantic/responsive/interactive attrs on the SVG above enable unique local/regional screenshots and better handoff. Prime compelling notes via cauldron.</p>
+                </div>
             </section>
 
             <section class="site-frame design-experiment-frame" id="svg-handoff-register" data-spw-kind="frame" data-spw-role="handoff" data-spw-context="analysis">

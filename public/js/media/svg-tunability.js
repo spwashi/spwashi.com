@@ -46,9 +46,19 @@ const SVG_HOST_SELECTOR = [
      content-based layout/alignment variants.
    - Performance: declarative, read once on mount + on explicit tune events. */
 
+/* Project development + notes + screenshot + interactivity extensions
+   - data-spw-svg-semantic: "diagram|icon|illustration|map|project-motif" for layer clarity and screenshot value.
+   - data-spw-svg-responsive: "fluid|fixed|contain|project" to refine layout personality and responsiveness.
+   - data-spw-svg-interactive: "hover|tap|prime|note" for better interactivity; tap/prime can offer to cauldron/notes.
+   - Enables unique local/regional screenshot value (e.g. project-specific motifs with clean capture states).
+   - Ties to theme depth via palettes and notes opportunities in design labs. */
+
 const POINTER_MODES = new Set(['field', 'tilt', 'trace']);
 const MOTION_STATES = new Set(['steady', 'slow', 'quick', 'paused']);
 const CONTRAST_STATES = new Set(['soft', 'balanced', 'strong']);
+const SEMANTIC_MODES = new Set(['diagram', 'icon', 'illustration', 'map', 'project-motif']);
+const RESPONSIVE_MODES = new Set(['fluid', 'fixed', 'contain', 'project']);
+const INTERACTIVE_MODES = new Set(['hover', 'tap', 'prime', 'note']);
 const NUMERIC_TUNINGS = Object.freeze({
   strokeScale: '--spw-svg-stroke-scale',
   flowDash: '--spw-svg-flow-dash',
@@ -131,6 +141,9 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     pointerState: 'data-spw-svg-pointer-state',
     contrast: 'data-spw-svg-tune-contrast',
     motion: 'data-spw-svg-tune-motion',
+    semantic: 'data-spw-svg-semantic',
+    responsive: 'data-spw-svg-responsive',
+    interactive: 'data-spw-svg-interactive',
   }),
   queryParameters: Object.freeze({
     stroke: 'spw-svg-stroke=<number>',
@@ -146,6 +159,9 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     motionRate: 'spw-svg-motion-rate=<time>',
     contrast: 'spw-svg-contrast=<soft|balanced|strong>',
     pointer: 'spw-svg-pointer=<field|tilt|trace|none>',
+    semantic: 'spw-svg-semantic=<diagram|icon|illustration|map|project-motif>',
+    responsive: 'spw-svg-responsive=<fluid|fixed|contain|project>',
+    interactive: 'spw-svg-interactive=<hover|tap|prime|note>',
   }),
   performanceRule:
     'Pointer mode writes CSS custom properties in requestAnimationFrame; visible response should stay in transform, opacity, color, and shadow rather than layout.',
@@ -211,6 +227,9 @@ export function applySvgTunability(target, options = {}) {
   const pointer = normalizeToken(options.pointer || '');
   const paletteName = normalizeToken(options.palette || '');
   const palette = SPW_SVG_PALETTES[paletteName];
+  const semantic = normalizeToken(options.semantic || '');
+  const responsive = normalizeToken(options.responsive || '');
+  const interactive = normalizeToken(options.interactive || '');
 
   resetSvgTunability(host);
 
@@ -236,6 +255,9 @@ export function applySvgTunability(target, options = {}) {
     spwSvgTuneMotion: MOTION_STATES.has(motion) ? motion : '',
     spwSvgTuneContrast: CONTRAST_STATES.has(contrast) ? contrast : '',
     spwSvgPointer: POINTER_MODES.has(pointer) ? pointer : '',
+    spwSvgSemantic: SEMANTIC_MODES.has(semantic) ? semantic : '',
+    spwSvgResponsive: RESPONSIVE_MODES.has(responsive) ? responsive : '',
+    spwSvgInteractive: INTERACTIVE_MODES.has(interactive) ? interactive : '',
   });
 
   if (pointer === 'none') {
@@ -255,6 +277,9 @@ export function applySvgTunability(target, options = {}) {
     svgSpace: options.space,
     svgMotion: motion,
     svgPointer: pointer,
+    svgSemantic: semantic,
+    svgResponsive: responsive,
+    svgInteractive: interactive,
   }, { source: 'spw-svg-tunability' });
 
   const reflowReason = normalizeToken(options.reflowReason || '');
@@ -323,6 +348,15 @@ export function parseSvgTunabilitySearch(search = globalThis.location?.search ||
 
   const pointer = normalizeToken(params.get('spw-svg-pointer') || '');
   if (pointer === 'none' || POINTER_MODES.has(pointer)) tuning.pointer = pointer;
+
+  const semantic = normalizeToken(params.get('spw-svg-semantic') || '');
+  if (SEMANTIC_MODES.has(semantic)) tuning.semantic = semantic;
+
+  const responsive = normalizeToken(params.get('spw-svg-responsive') || '');
+  if (RESPONSIVE_MODES.has(responsive)) tuning.responsive = responsive;
+
+  const interactive = normalizeToken(params.get('spw-svg-interactive') || '');
+  if (INTERACTIVE_MODES.has(interactive)) tuning.interactive = interactive;
 
   const reflowReason = normalizeToken(params.get('spw-reflow') || '');
   if (reflowReason) tuning.reflowReason = reflowReason;
@@ -441,6 +475,37 @@ function initPointerHost(host) {
   host.addEventListener('focusout', () => {
     clearPointerHost(host);
   });
+
+  // Interactive modes for project development, notes, and cauldron priming.
+  // Improves SVG semantics (actionable), interactivity (tap/prime/note), and ties to local notes/screenshots.
+  const interactiveMode = normalizeToken(host.dataset.spwSvgInteractive || '');
+  if (INTERACTIVE_MODES.has(interactiveMode)) {
+    host.addEventListener('click', (event) => {
+      if (interactiveMode === 'tap' || interactiveMode === 'prime') {
+        try {
+          const bus = globalThis.__SPW_SITE__?.bus || globalThis.bus;
+          bus?.emit?.('spw:svg-interaction', {
+            host: host.dataset.spwSvgHost || 'svg',
+            mode: interactiveMode,
+            semantic: host.dataset.spwSvgSemantic || '',
+            pointer: { x: event.clientX, y: event.clientY },
+          });
+        } catch (_) {}
+      }
+      if (interactiveMode === 'note' || interactiveMode === 'prime') {
+        // Opportunity for notes: if nearby note field or cauldron, prime a note about this SVG.
+        const noteTarget = host.closest('[data-spw-local-note-entry]') || document.querySelector('[data-spw-local-note-entry]');
+        if (noteTarget) {
+          const input = noteTarget.querySelector('input, textarea');
+          if (input) {
+            const hint = `SVG: ${host.dataset.spwSvgHost || 'tunable'} (${host.dataset.spwSvgSemantic || 'project'})`;
+            if (!input.value.includes(hint)) input.value = (input.value ? input.value + ' ' : '') + hint;
+            input.focus();
+          }
+        }
+      }
+    });
+  }
 }
 
 export function initSpwSvgTunability(root = globalThis.document, options = {}) {

@@ -453,6 +453,33 @@ The interaction layer is in good health: memory-safe in practice, with clear own
 
 This audit directly supports the broader goals of a cathartic, instrumentable "magic manuscript + 1000 fidget toys" experience without hidden footguns.
 
+## Project Development, Notes, Layout Personality, Screenshot Value, Theme Depth, SVG Semantics/Responsiveness/Interactivity (Current Directive)
+
+Updates across HTML, CSS, JS per the request:
+
+- **Encourage project development**: Added explicit copy and affordances in /design/experiments/svg/ framing the lab as a place to "develop your own projects", with semantic="project-motif", responsive="project", interactive modes. New local note form ("Project notes") for adaptations, theme choices, etc. The interactive="note" in SVG tunability primes hints into nearby note fields.
+
+- **Opportunities for notes**: Added a full local-note-entry form in the SVG experiments screenshot section (data-spw-local-note-origin, data-spw-local-note-entry, tied to slot). Uses existing persistence. Interactive="note" on SVGs focuses/ seeds the note with SVG context. Ties to cauldron priming for project spells. Extends notes beyond footer/settings to design labs.
+
+- **Refine layout for page personality**: The SVG page already uses data-spw-layout="wide"; enhanced the main screenshot figure and added notes block with data-spw-slot="notes" for clearer composition personality. New responsive="project" attr allows SVGs to adapt layout personality per content (fluid for diagrams, project for custom regional). Updated design/components and slots cross-refs reinforce personality via slots/hierarchy.
+
+- **Improve unique local/regional screenshot value**: Updated the brand-screenshot SVG host with data-spw-svg-semantic="project-motif" data-spw-svg-responsive="project" and richer image-model desc emphasizing "unique local/regional value for project documentation and regional motif capture". Query examples and notes promote capturing project-specific screenshots. Ties to instrumentation screenshot presets. Improves value of renders in character/midjourney for regional/project docs.
+
+- **Enhance theme depth**: Added --spw-svg-project-regional-accent in tokens/core.css for deeper project/regional artistic tuning, composable with existing palettes/motifs/climates. SVG palettes already support brand/signal etc.; new semantics allow project-specific depth while preserving overall theme coherence. Updated SVG contract and page demos for palette + semantic combos.
+
+- **Improve SVG semantics/responsiveness and interactivity**:
+  - Extended svg-tunability.js: new SEMANTIC_MODES (incl project-motif), RESPONSIVE_MODES (project), INTERACTIVE_MODES (note, prime, tap).
+  - Added to SPW_SVG_TUNABILITY_CONTRACT, parse/apply/query, dataset writes, tuning attrs.
+  - Interactivity: on click for note/prime modes, emits spw:svg-interaction bus (for debug/instrument), seeds/focuses local note fields with context (opportunities for notes).
+  - Semantics: data-spw-svg-semantic for layer clarity, screenshot value, project dev.
+  - Responsiveness: data-spw-svg-responsive for layout personality and adaptive rendering.
+  - Updated the SVG experiments page's main specimen and query nav examples to demo new features.
+  - Builds on prior trope/memory/alignment support; now full for project/notes/screenshots.
+
+All surgical, on real design/tool surfaces (heavy on experiments/svg as the SVG + screenshot + project lab). Improves unique value for local/regional captures, encourages real use in projects via notes and copy. Adds bus for instrumentability. No bloat; reuses existing note system, data attrs, tokens.
+
+Validation clean. Contributes to page personality (via responsive/semantic + slots), theme depth, and making the site a better instrument for users developing their own work.
+
 ### Executed in Follow-up Pass (Rendering Cleanup + Deeper Wiring + Query Macros)
 - **JS rendering & cleanup** (tool-budgeting.js): Consolidated dimension rendering logic, added consistent `data-higherOrder` / `data-dimensionCount` dataset signals, extended full higher-order support (dimensions + rich emission) to the time capacity path for parity, removed structural duplication around prime buttons and dim containers, added progressive macro indicator UI.
 - **Deeper wiring**:
