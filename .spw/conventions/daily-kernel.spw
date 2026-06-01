@@ -1,0 +1,125 @@
+# Daily Kernel
+#
+# A repeatable development exercise for growing semantic capacity, brand
+# physics, regional sensory design, and cross-discipline ergonomics.
+
+#>daily_kernel
+#:conventions #!practice #!brand-physics #!regions #!collaboration
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/daily-kernel-development/PLAN.md"
+@template: ~"../../.agents/plans/daily-kernel-development/templates/daily-kernel-note.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@site_semantics: ~"./site-semantics.spw"
+@attention_field: ~"./attention-field.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+
+^"thesis"{
+  claim: "A daily kernel is a small, tunable exercise that lets professional engineers and creative practitioners improve one dimension of the site without being overwhelmed by the whole lattice."
+  value = "It turns semantic abundance into practice: one focus, one audience pair, one region/component, one brand-physics variable, one validation path."
+  rule = "A daily kernel should be useful even if it produces only a note, audit, or cached insight. Implementation is optional."
+}
+
+^"kernel_shape"{
+  focus = "operator | component | route-region | CSS cluster | audience register | product-line dimension"
+  disciplines = "one primary discipline + one bridge discipline"
+  region = "commons | studio | lab | library | theater | workshop | garden"
+  brand_physics = "gravity | resonance | cadence | grain | charge | threshold | edition | repair"
+  intensity = "quiet | studio | performance | festival"
+  semantic_operation = "cache | audit | align | prime | contract | archive"
+  output = "note | CSS trace | HTML pattern audit | data feed improvement | route-local sketch | claim"
+  validation = "command, rg trace, browser smoke, design catalog check, or manual inspection"
+  do_not_touch = "files, concepts, or layers outside the kernel"
+}
+
+^"discipline_ergonomics"{
+  engineer: .{
+    needs = #[`ownership`, `validation`, `small implementation surface`, `traceable contracts`][reg=set]
+    best_entry = #[`site-semantics`, `operator-site-projection`, `dom-contracts`, `runtime module definitions`][reg=set]
+    risk = "optimizing code before understanding sensory or audience value"
+  }[reg=facet]
+  animator: .{
+    needs = #[`timing`, `easing`, `motion purpose`, `reduced-motion boundaries`, `gesture consequence`][reg=set]
+    best_entry = #[`attention-field`, `motion tokens`, `operator resonance`, `promo/wonder cadence`, `cauldron/spell gestures`][reg=set]
+    risk = "adding motion where the page needs calm or accessibility"
+  }[reg=facet]
+  illustrator: .{
+    needs = #[`substrate`, `composition`, `figure-ground`, `palette`, `edition logic`, `screenshot-ready surfaces`][reg=set]
+    best_entry = #[`design palettes`, `image sidecars`, `grain texture`, `frame cards`, `seed/reference cards`][reg=set]
+    risk = "local visual flourish that does not map to route meaning or product-line proof"
+  }[reg=facet]
+  designer: .{
+    needs = #[`component anatomy`, `interaction consequence`, `accessibility`, `route flow`, `visual hierarchy`][reg=set]
+    best_entry = #[`/design/`, `/design/components/`, `site-semantics`, `queryable component contracts`][reg=set]
+    risk = "renaming or wrapping components without preserving inspectability"
+  }[reg=facet]
+  musician: .{
+    needs = #[`cadence`, `motif`, `loop`, `score`, `timbre`, `performance`, `session`][reg=set]
+    best_entry = #[`promo/wonder cycle`, `attention rhythm`, `play sessions`, `cauldron mixing`, `operator voices`][reg=set]
+    risk = "metaphor that does not produce a timing, interaction, or return contract"
+  }[reg=facet]
+}
+
+^"university_regions"{
+  definition = "The site can be read as a small university/studio campus. The metaphor is valid only when it improves regional semantics and sensory development."
+  commons = "homepage, about, contact, now, promo/wonder; low-friction orientation and return"
+  studios = "design, palettes, components, image surfaces; sensory development and material exploration"
+  labs = "math practice, runtime behavior, settings, tools; instrumented experimentation"
+  library = "operator atlas, plans, reviews, .spw, design catalog; search, provenance, recall"
+  theater = "play, RPG Wednesday, promo/wonder, live demos; performance and public narrative"
+  workshop = "software, Spw, CSS architecture, runtime contracts; making, repair, tooling"
+  garden = "practice beds, cauldrons, sedimentation notes, product lines; growth, return, seasonal tending"
+  design_rule = "Studios, labs, library, theater, and garden deserve especially careful regional semantics because they train senses: visual attention, rhythm, trust, comparison, memory, and creative appetite."
+}
+
+^"brand_physics"{
+  definition = "Brand physics are learnable behaviors designed by Spwashi and tested by Spwashi plus collaborators."
+  gravity = "what feels stable, grounded, and worth returning to"
+  resonance = "what echoes when addressed"
+  cadence = "how daily, weekly, monthly, or session rhythm is expressed"
+  grain = "how material texture signals care without noise"
+  charge = "how attention accumulates and discharges"
+  threshold = "how a visitor knows they are entering a new region"
+  edition = "how an instance becomes collectible or worth sharing"
+  repair = "how the system explains unavailable, quiet, or failed interactions"
+  rule = "Tune one brand-physics variable per daily kernel unless the exercise is explicitly an audit."
+}
+
+^"intensity_scale"{
+  quiet = "clarify semantics without increasing visual loudness"
+  studio = "make a pattern more inspectable for creative work"
+  performance = "make a resonant cluster appreciable in motion, cadence, or copy"
+  festival = "high-energy route-local experiment; scoped, reversible, and not promoted by default"
+  default = "quiet | studio"
+  rule = "Use performance only when the feature teaches a relation or supports public demonstration. Use festival only for experiments."
+}
+
+^"community_metaphors"{
+  css_clusters = "Treat CSS clusters as studio drawers, instrument racks, gardens beds, or lab benches only when the metaphor helps someone find what to change."
+  html_patterns = "Treat HTML components as rooms, scores, specimens, stages, or tools only when the component's role, slot anatomy, and interaction consequence stay inspectable."
+  reward_familiarity = "Developed familiarity should unlock richer theming and faster navigation, not hidden requirements. A novice should still see the room; an expert can hear the motif."
+  future_theming = "Creative theming should tune brand physics and region roles before inventing new visual systems."
+}
+
+^"active_claims"{
+  claim #daily-kernel-001 {
+    layer = "pragmatic"
+    hypothesis = "Daily kernel exercises will improve semantic capacity without overwhelming the codebase if each exercise declares focus, disciplines, region, brand physics, intensity, semantic operation, output, validation, and do-not-touch."
+    spec_ref = ".spw/conventions/daily-kernel.spw#kernel_shape"
+    impl_ref = ".agents/plans/daily-kernel-development/PLAN.md + daily-kernel-note template + future insight caches"
+    probe_ref = "Review a daily kernel note; confirm it can be completed or audited in one session without broad CSS/JS exploration."
+    falsification = "A daily kernel turns into broad redesign, broad runtime cleanup, or unbounded metaphor with no validation path."
+    status = "active"
+  }
+}
+
+^"dispatch"{
+  @plan: @plan
+  @template: @template
+  @model_guided_refinement: @model_guided_refinement
+  @semantic_capacity: @semantic_capacity
+  @site_semantics: @site_semantics
+  @attention_field: @attention_field
+  @product_lines: @product_lines
+}

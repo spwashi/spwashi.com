@@ -1,0 +1,134 @@
+# Composable Art System for Storytelling
+#
+# Rules for mapping the CSS architectural strata onto a composable narrative stage.
+
+#>composable_art_system
+#:conventions #!style #!narrative #!art #!storytelling
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "The site's visual presentation is a composable narrative stage where CSS layers function as atmospheric strata that pace, contextualize, and project the story of Spwashi's software and art."
+  grounding: "Instead of arbitrary decoration, visual elements (accents, animations, color temperature, and grain) map directly onto semantic states: operator resonance, brace charging, spirit cycle phases, and curiosity levels."
+  vision: "A story is told through the progressive enhancement of structure. As a reader navigates, the visual environment shifts dynamically to reflect the cognitive and emotional resonance of the material."
+}
+
+^"architectural_strata"{
+  ~#note: "Mapping the CSS layer hierarchy to storytelling roles."
+
+  substrate: {
+    css_layers: ["reset", "tokens", "shell"]
+    narrative_role: "The physical constants and Stage Geometry of the storytelling environment."
+    elements: ["layouts (split, reading, wide, atlas)", "aspect ratios", "spacing constants"]
+  }
+
+  voice_and_rhythm: {
+    css_layers: ["typography"]
+    narrative_role: "The Narrative Voice and Textual Pace."
+    elements: ["JetBrains Mono (logical narration, precision)", "Newsreader (editorial narration, multivariable shape, wonder modes)"]
+  }
+
+  structural_grammar: {
+    css_layers: ["grammar"]
+    narrative_role: "The Punctuation and Boundary Charges."
+    elements: ["brace containers (objective/subjective charges)", "operator tokens as visual anchors"]
+  }
+
+  scenery_and_props: {
+    css_layers: ["components", "systems", "routes"]
+    narrative_role: "The painted scenery, character actors (cards/panels), and route-specific settings."
+    elements: ["lens switches", "matte surfaces vs. glass surfaces", "route-specific page surfaces"]
+  }
+
+  agency_and_handles: {
+    css_layers: ["handles"]
+    narrative_role: "The Reader's Handles of interaction and exploration."
+    elements: ["cognitive handles", "sticky section handles", "interactive triggers"]
+  }
+
+  affect_and_climate: {
+    css_layers: ["effects", "ornament"]
+    narrative_role: "Atmospheric Projection: lighting, grain, weather, and sensory feedback."
+    elements: ["wonder echos", "canvas accent backgrounds (wave, vortex, flow)", "grain intensity", "palette resonance"]
+  }
+}
+
+^"storytelling_primitives"{
+  ~#note: "Reusable semantic markup attributes that compose visual art dynamically."
+
+  climate_controls: {
+    attribute: "data-spw-color-mode"
+    values: ["light", "dark"]
+    narrative_effect: "Global contrast shift representing the daylight cycle of the text."
+  }
+
+  resonance_fields: {
+    attribute: "data-spw-palette-resonance"
+    values: ["cool", "warm", "balanced"]
+    narrative_effect: "Shifts semantic accent palettes to change the emotional warmth of the frame."
+  }
+
+  grain_strata: {
+    attribute: "data-spw-grain-intensity"
+    values: ["none", "subtle", "medium", "heavy"]
+    narrative_effect: "Injects analog friction, texture, and historical weight to the surface background."
+  }
+
+  canvas_accents: {
+    attribute: "data-spw-accent"
+    values: ["wave", "vortex", "crystal", "lattice", "flow"]
+    narrative_effect: "Renders dynamic background energy fields aligned with specific topics."
+  }
+
+  spirit_phases: {
+    attribute: "data-spw-context"
+    values: ["initiation", "resistance", "transformation", "expression", "return"]
+    narrative_effect: "Alters top-border accent hues and hover transitions based on current journey phase."
+  }
+}
+
+^"streaming_and_screenshots"{
+  ~#note: "Design guidelines for presenting the site on stream and capturing clear, high-contrast, imaginative screenshot artifacts."
+
+  presentation_modes: {
+    resonance_probe: "Hovering over operators echoes soft glows across the page, serving as a live visual indicator for stream viewers following the cursor."
+    keyboard_navigation: "Use [ and ] keys to focus and isolate frames sequentially, framing content blocks for easy reading."
+    density_tuning: "Toggling 'Rich' vocabulary discovery or enabling debug/module overlays transforms the screen into an inspectable hacker-like console, giving chat visual mechanics to decode and imagine with."
+  }
+
+  screenshot_geometry: {
+    box_stability: "Ensure card containers and text columns maintain stable geometry (e.g. reserving space for toggles) so screen boundaries do not jitter during captures."
+    aspect_framing: "Use layout constraints (split, wide, atlas) to align content cleanly to standard 16:9 stream viewports or modular card crops."
+    high_contrast: "Accents, borders, and text selection highlights must scale cleanly in compressed video feeds so text remains readable in chat screenshots."
+  }
+}
+
+^"slots_for_wonder_and_art"{
+  ~#note: "An invitation for UI designers to extend the CSS layout. By targeting stable HTML slots, designers can project atmospheric overlays, whimsical alignments, and curiosity-driven imagery without rewriting layout cores."
+
+  note_slots: {
+    selectors: ["data-spw-slot=\"meta\"", ".frame-note", ".pantry-note", "data-spw-form=\"brace\""]
+    design_direction: "Treat notes as tactile marginalia. Designers are encouraged to apply warm backgrounds, slight rotations/offsets, and callout brackets that make prose feel hand-penciled and observation-rich."
+  }
+
+  image_slots: {
+    selectors: ["data-spw-slot=\"figure\"", "figure.frame-figure", "img[data-spw-accent]"]
+    design_direction: "Images are active windows of wonder. Instead of static blocks, extend them using CSS filters, scroll-parallax, clip-paths, and interactive layers that respond to pointer position or ambient resonance."
+  }
+
+  encouraging_wonder: {
+    rule: "Designers should extend the CSS via routes/ or effects/ layers. Use container queries and state variables (e.g. --spw-resonance) to trigger visual echos only when a reader pauses to inspect a slot."
+  }
+}
+
+^"invariants"{
+  "Storytelling is progressive: the text remains the core anchor, and visual projection must never obscure readability."
+  "No flashing: all transitions must remain calm and safe (respecting preferences-reduced-motion)."
+  "Accessible default: the composition must make sense as semantic HTML even if stylesheets fail to load."
+}
+
+^"dispatch"{
+  @style_manifest: ~"../../../public/css/style.css"
+  @design_whimsy: ~"./design-whimsy.spw"
+  @wonder_vocabulary: ~"./wonder-vocabulary.spw"
+  @site_semantics: ~"./site-semantics.spw"
+}

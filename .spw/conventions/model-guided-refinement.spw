@@ -1,0 +1,177 @@
+# Model-Guided Refinement
+#
+# Rails for less creative models that can read .spw and follow explicit
+# connections, but should not improvise across the full CSS/JS architecture.
+
+#>model_guided_refinement
+#:conventions #!agents #!semantics #!css #!marketing
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/model-guided-refinement/PLAN.md"
+@site_semantics: ~"./site-semantics.spw"
+@operator_site_projection: ~"./operator-site-projection.spw"
+@attention_field: ~"./attention-field.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
+@promo_runtime: ~"../../public/ts/promo-wonder-cycle.ts"
+@daily_kernel: ~"./daily-kernel.spw"
+
+^"thesis"{
+  claim: "A less creative model can make wise changes when the site exposes focus dimension, semantic fixity, elemental effect, ownership layer, and validation path before implementation."
+  risk: "Without these rails, the model will over-read existing JavaScript and CSS, chase incidental complexity, and miss the specific dimension the plan needs elaborated."
+  rule: "Every model-guided patch should name one focus dimension, one fixity tier, one primary element, one owner surface, and one validation path."
+}
+
+^"focus_dimensions"{
+  audience = "animator | illustrator | designer | musician | visual-artist | writer-worldbuilder | engineer-toolmaker | patron-collaborator"
+  operator = "one canonical operator or operator family from operator-site-projection.spw"
+  component = "operator-chip | frame-card | promo-wonder-cycle | tuning-strip | math-practice-lab | site-header"
+  slice = "attention-resonance-field | creative-marketing-engine | daily-kernel | math-practice-labs | operator-grammar | cauldron-composition"
+  region = "commons | studio | lab | library | theater | workshop | garden"
+  css_behavior = "focus | resonance | material | rhythm | spacing | reduced-motion | debug"
+  marketing_dimension = "audience | offer | proof | resonance | extension | next-action"
+  rule: "Pick one primary dimension. A second dimension may bridge the work, but it must not become a second task."
+}
+
+^"semantic_fixity"{
+  fixed: .{
+    meaning = "Do not change without explicit plan and human review."
+    examples = #[`creator identity`, `accessibility basics`, `canonical route paths`, `CSS layer order`, `operator canonical types`, `site-settings storage ownership`][reg=set]
+    allowed_action = "cite, validate, or add an adjacent note"
+  }[reg=facet]
+  stable: .{
+    meaning = "Reusable site contracts that may be extended carefully."
+    examples = #[`body data-spw metadata`, `component slot anatomy`, `operator color families`, `product-line names`, `queryable component dimensions`][reg=set]
+    allowed_action = "extend with .spw contract, targeted route/CSS update, and validation"
+  }[reg=facet]
+  tending: .{
+    meaning = "Living material that can improve through small careful edits."
+    examples = #[`copy phrasing`, `local component clarity`, `practice-bed notes`, `route-local visual emphasis`, `promo card wording`][reg=set]
+    allowed_action = "edit locally, preserve links/metadata, leave note if meaning changes"
+  }[reg=facet]
+  experimental: .{
+    meaning = "Trial material that should stay scoped."
+    examples = #[`visual seeds`, `reference assignments`, `one-route data-spw sketches`, `candidate marketing handles`][reg=set]
+    allowed_action = "keep route-local or plan-local; do not promote to shared CSS/JS yet"
+  }[reg=facet]
+  volatile: .{
+    meaning = "Generated or runtime state that should not become authored doctrine."
+    examples = #[`debug output`, `timing measurements`, `console diagnostics`, `temporary data-spw-module-* traces`][reg=set]
+    allowed_action = "observe and validate; do not hand-author as stable content"
+  }[reg=facet]
+}
+
+^"elemental_effects"{
+  rule: "Elemental language is implementation shorthand, not a substitute for selectors, tokens, or copy."
+  earth: .{
+    implementation = "material depth, substrate, stable layout, card ground, matte/glass distinction"
+    css_home = "tokens, effects/material.css, grain-texture.css, components/cards"
+    html_markers = #[`data-spw-kind`, `data-spw-role`, `data-spw-form`, `data-spw-grounded`][reg=set]
+  }[reg=facet]
+  water: .{
+    implementation = "flow, cadence, sequence, feed cycling, cauldron mixing, scroll progression"
+    css_home = "shell/layout.css, route flow files, effects/wonder.css"
+    html_markers = #[`data-spw-cadence`, `data-spw-timing-model`, `data-spw-region-flow`][reg=set]
+  }[reg=facet]
+  air: .{
+    implementation = "breath, spacing, disclosure, readability, low-density entry"
+    css_home = "shell, typography, route spacing, reduced-density variants"
+    html_markers = #[`data-spw-layout`, `data-spw-semantic-density`, `data-spw-page-modes`][reg=set]
+  }[reg=facet]
+  fire: .{
+    implementation = "action, CTA, urgency, gesture result, accent flare, selected state"
+    css_home = "handles/operators.css, effects/wonder.css, ornament, controls"
+    html_markers = #[`data-spw-operator`, `data-spw-presentation`, `data-spw-promotion-cta-style`, `aria-pressed`][reg=set]
+  }[reg=facet]
+  metal: .{
+    implementation = "schema, validation, boundaries, indexes, route contracts, debug labels"
+    css_home = "debug.css, handles, components/controls.css"
+    html_markers = #[`data-spw-feature`, `data-spw-module-trigger`, `data-spw-state-serialization-dimensions`][reg=set]
+  }[reg=facet]
+  wood: .{
+    implementation = "growth, practice, seasonal tending, product-line maturation, artist extension"
+    css_home = "routes/design, routes/play, promo-wonder-cycle, practice surfaces"
+    html_markers = #[`data-spw-feature`, `data-spw-assignment`, `data-spw-reference-seed`, `data-spw-collectability`][reg=set]
+  }[reg=facet]
+  patch_rule: "Use one primary element and one optional secondary element per patch. If three or more elements feel necessary, split the work."
+}
+
+^"cross_language_css_logic"{
+  definition: "CSS is logical when the same concept can be traced across authored HTML, CSS selectors/tokens, JS state/events, and .spw claims without translating into a different vocabulary at each layer."
+  naming_stem_rule = "Use the same stem where possible: feature name, CSS local token, JS event payload key, and .spw claim should share recognizable words."
+  path = #[
+    `route HTML names the concept through data-spw-* or stable class`,
+    `CSS projects the named state through layer-appropriate selectors and local tokens`,
+    `JS writes only the runtime state it owns and emits named events when consequence matters`,
+    `.spw records the durable claim, fixity tier, and validation`
+  ][reg=set]
+  good_example = "promo-wonder-cycle: data-spw-feature + data-spw-cadence + promo-wonder-cycle CSS + promo-wonder-cycle feed/runtime + product-lines/promo contract."
+  bad_example = "A component called campaign-card in CSS, opportunityFeed in JS, artist-door in copy, and marketing_spell in .spw with no declared equivalence."
+  validation = "A future model should be able to rg the stem and find the HTML, CSS, JS, and .spw owner surfaces quickly."
+}
+
+^"creative_marketing_engine"{
+  definition: "A coherent marketing engine for this site is an invitation system: it gives musicians, artists, writers, engineers, and patrons a reason to enter, return, remix, commission, or support the work."
+  current_roots = #[@product_lines, @promo_feed, @promo_runtime][reg=set]
+  card_contract = .{
+    audience = "primary audience for this card or route-local offer"
+    offer = "what the visitor can do or understand now"
+    proof = "existing route, artifact, screenshotable component, or public surface"
+    resonance = "why this matters aesthetically, rhythmically, socially, or technically"
+    extension = "how the visitor could remix, commission, collect, cite, perform, or build on it"
+    next_action = "one concrete link, contact path, support action, or route continuation"
+  }[reg=facet]
+  musician_register = .{
+    values = #[`rhythm`, `motif`, `loop`, `score`, `timbre`, `session`, `performance`, `cadence`][reg=set]
+    good_routes = #[`/design/`, `/play/`, `/play/rpg-wednesday/`, `/topics/software/spw/`, `/recipes/`][reg=set]
+    reason_to_extend = "The site can act like a score for interaction: operators as voices, routes as movements, promo/wonder as cadence, cauldron as mix surface."
+  }[reg=facet]
+  visual_artist_register = .{
+    values = #[`substrate`, `palette`, `composition`, `texture`, `figure-ground`, `edition`, `studio`, `surface`][reg=set]
+    good_routes = #[`/design/`, `/design/palettes/`, `/about/website/`, `/topics/craft/`, `/contact/`][reg=set]
+    reason_to_extend = "The site exposes material systems and named visual contracts that can become commissions, editions, references, or shared studio language."
+  }[reg=facet]
+  implementation_rule = "Before editing promo copy or visual marketing surfaces, name audience, offer, proof, resonance, extension, and next_action. If one is missing, fill the contract before polishing words."
+  anti_pattern = "Generic creative marketing that says artists are welcome but gives them no motif, surface, proof, or way to extend the work."
+}
+
+^"model_handoff_checklist"{
+  focus_dimension = "name exactly one"
+  fixity_tier = "fixed | stable | tending | experimental | volatile"
+  primary_element = "earth | water | air | fire | metal | wood"
+  secondary_element = "optional, at most one"
+  owner_surface = "route | CSS file | JS module | .spw convention | plan"
+  validation = "command or manual inspection path"
+  do_not_touch = "explicit files, layers, routes, or concepts outside scope"
+}
+
+^"active_claims"{
+  claim #model-guided-focus-001 {
+    layer = "pragmatic"
+    hypothesis = "Future model-guided refinement patches will be safer and more useful when they declare focus dimension, fixity tier, elemental effect, owner surface, and validation before touching HTML/CSS/JS."
+    spec_ref = ".spw/conventions/model-guided-refinement.spw#model_handoff_checklist"
+    impl_ref = ".agents/plans/model-guided-refinement/PLAN.md + any future slice or plan-local handoff note"
+    probe_ref = "Read a proposed patch or plan note; confirm it names the checklist fields and does not edit outside its declared tier."
+    falsification = "A patch makes broad CSS or JS changes while describing only a general vibe, with no focus dimension, fixity tier, or validation path."
+    status = "active"
+  }
+  claim #creative-marketing-contract-001 {
+    layer = "semantic"
+    hypothesis = "Marketing surfaces become more coherent for musicians and artists when every promo/wonder or product-line extension names audience, offer, proof, resonance, extension, and next action."
+    spec_ref = ".spw/conventions/model-guided-refinement.spw#creative_marketing_engine"
+    impl_ref = ".spw/surfaces/product-lines.spw + public/data/promo-wonder-cycle.json + route-local promo components"
+    probe_ref = "Choose one promo card; verify the six card_contract fields can be answered from the feed or adjacent .spw."
+    falsification = "A card invites creative people generally but offers no route proof, no extension path, and no clear next action."
+    status = "active"
+  }
+}
+
+^"dispatch"{
+  @plan: @plan
+  @site_semantics: @site_semantics
+  @operator_site_projection: @operator_site_projection
+  @attention_field: @attention_field
+  @product_lines: @product_lines
+  @promo_feed: @promo_feed
+  @daily_kernel: @daily_kernel
+}

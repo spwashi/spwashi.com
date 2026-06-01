@@ -1,0 +1,155 @@
+# Semantic Capacity
+#
+# Local rules for growing many more meanings, relationships, and creative
+# expansion paths without turning .spw into unreviewable prose.
+
+#>semantic_capacity
+#:conventions #!semantics #!memory #!audit #!expansion
+#:layer #!pragmatics
+
+@surface_normalization_plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@surface_normalization_review: ~"../reviews/spw-surface-normalization.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@planning_ecology: ~"./planning-ecology.spw"
+@site_semantics: ~"./site-semantics.spw"
+@attention_field: ~"./attention-field.spw"
+@daily_kernel: ~"./daily-kernel.spw"
+
+^"thesis"{
+  claim: "The site is entering a semantic-capacity phase: many more operators, audience registers, practice beds, elemental effects, product lines, and slice contracts can exist if each new meaning is cached, audited, and made operational at the right fixity."
+  risk: "If every insight becomes a full plan, the worktree becomes noisy. If insights stay only in chat or prose, future agents cannot reuse them."
+  rule: "A .spw update should declare its operation: cache, audit, align, prime, contract, or archive."
+}
+
+^"operations"{
+  cache: .{
+    purpose = "Hold a useful insight before it is ready to become a stable convention."
+    fixity = "tending | experimental"
+    good_diff = "adds one named insight, its source, affected surfaces, and the next question"
+    bad_diff = "adds a broad essay with no owner, validation, or next action"
+  }[reg=facet]
+  audit: .{
+    purpose = "Test whether current understanding matches the codebase, routes, and runtime."
+    fixity = "stable | tending"
+    good_diff = "names expected pattern, evidence found, gap, and falsification path"
+    bad_diff = "asserts alignment without checking selectors, routes, events, or plan refs"
+  }[reg=facet]
+  align: .{
+    purpose = "Make two or more surfaces use the same concept name, route, selector, or claim."
+    fixity = "stable"
+    good_diff = "updates dispatch, references, and one shared vocabulary stem"
+    bad_diff = "renames a concept in one file while leaving parallel names elsewhere"
+  }[reg=facet]
+  prime: .{
+    purpose = "Prepare a creative expansion path without implementing it yet."
+    fixity = "experimental | tending"
+    good_diff = "names audience, element, resonance, extension path, and safe first patch"
+    bad_diff = "describes possibility but gives no route or component where it can start"
+  }[reg=facet]
+  contract: .{
+    purpose = "Promote a repeated pattern into durable operating guidance."
+    fixity = "stable | fixed"
+    good_diff = "adds invariant, validation, owner surface, and affected file families"
+    bad_diff = "turns taste into a rule with no falsification path"
+  }[reg=facet]
+  archive: .{
+    purpose = "Reduce active semantic load by marking an idea superseded, stale, or historical."
+    fixity = "cold"
+    good_diff = "names replacement surface and preserves why the old path mattered"
+    bad_diff = "deletes memory that still explains current structure"
+  }[reg=facet]
+}
+
+^"insight_cache_shape"{
+  definition: "The smallest useful unit for caching an insight in .spw."
+  fields = #[
+    `id`: "short stable anchor"
+    `operation`: "cache | audit | align | prime | contract | archive"
+    `fixity`: "fixed | stable | tending | experimental | volatile"
+    `source`: "chat, review, route, runtime, browser smoke, plan, or workbench reference"
+    `claim`: "one sentence of meaning"
+    `evidence`: "specific files, selectors, route fragments, or runtime events"
+    `pattern_consideration`: "what similar patterns this should be compared against"
+    `expansion_prime`: "the safest next creative or implementation direction"
+    `validation`: "rg, command, browser check, catalog check, or manual read"
+  ][reg=set]
+  rule = "If an insight cannot fill source, evidence, and validation, keep it in a plan note until it can."
+}
+
+^"pattern_consideration_audit"{
+  definition: "A pattern consideration audit keeps models from overfitting one attractive example."
+  compare_axes = #[
+    `same operator different route`
+    `same component different audience`
+    `same CSS behavior different layer`
+    `same JS event different owner layer`
+    `same metaphor different fixity`
+    `same marketing promise different proof surface`
+  ][reg=set]
+  minimum = "Compare at least two sibling patterns before promoting a new convention."
+  example = "Before promoting a musician-facing promo card contract, compare promo-wonder-cycle, product-lines, play/rpg-wednesday, and the musical runtime audit."
+}
+
+^"diff_value_rules"{
+  definition: "A .spw diff is valuable when it changes how future work can be selected, validated, or extended."
+  high_value = #[
+    `adds a missing dispatch reference`
+    `turns a vague idea into a falsifiable claim`
+    `names a fixity tier for a confusing concept`
+    `creates a small reusable template`
+    `links a plan to its route/CSS/JS/.spw owner surfaces`
+    `records why a pattern should not be promoted yet`
+  ][reg=set]
+  low_value = #[
+    `adds metaphor without implementation mapping`
+    `duplicates a plan paragraph in a convention`
+    `adds broad future possibilities without a safe first patch`
+    `renames a concept without updating dispatch or siblings`
+    `adds a new semantic family with no rg-friendly stem`
+  ][reg=set]
+  review_rule = "Prefer .spw diffs that make the next patch smaller, safer, or more legible."
+}
+
+^"operational_diversity"{
+  definition: "Different .spw files should do different jobs. Operational diversity prevents every surface from becoming a plan."
+  convention = "Defines durable rules, invariants, contracts, and vocabulary stems."
+  review = "Records evidence, tradeoffs, audits, and synthesis from a bounded investigation."
+  surface = "Describes a public route, product line, image family, or component ecology."
+  slice = "Owns cross-layer implementation context for a durable experience slice."
+  plan = "Sequences work, validation, scope, and patch order."
+  template = "Makes repeatable work easy for less creative models or returning humans."
+  index = "Routes attention to current owner surfaces; it should stay small and navigable."
+  rule = "Before creating or expanding a .spw file, choose the operation and the file type. If both are unclear, update an existing plan instead."
+}
+
+^"creative_expansion_prime"{
+  definition: "Semantic capacity should make creative expansion easier, not just document current architecture."
+  good_prime = "names a creative audience, the route where they enter, the pattern they can recognize, the component they can extend, and the validation that keeps it grounded."
+  musician_prime = "Compare rhythm/cadence/motif language across promo-wonder-cycle, attention-field, runtime timing, and play surfaces before changing copy or CSS."
+  artist_prime = "Compare substrate/palette/edition language across design palettes, grain texture, product lines, and image sidecars before promoting a visual contract."
+  animator_prime = "Compare motion intent, reduced-motion constraints, attention resonance, and gesture consequence before adding or tuning animation."
+  engineer_artist_prime = "Use daily-kernel.spw when a professional engineering concern intersects with creative surface development; it forces one region, one brand-physics variable, and one validation path."
+  model_rule = "A future model may elaborate a creative prime only after it identifies the audience, route, component, element, and fixity tier."
+}
+
+^"active_claims"{
+  claim #semantic-capacity-001 {
+    layer = "semantic"
+    hypothesis = "The .spw layer can absorb a rapid increase in meaning if new entries declare operation, fixity, evidence, pattern consideration, expansion prime, and validation."
+    spec_ref = ".spw/conventions/semantic-capacity.spw#insight_cache_shape"
+    impl_ref = ".spw conventions, reviews, slices, surfaces, and plan-local templates"
+    probe_ref = "Review a new .spw diff and confirm it changes selection, validation, or extension behavior rather than only adding prose."
+    falsification = "Several new .spw files add evocative language but future agents still cannot tell what to edit, validate, compare, or avoid."
+    status = "active"
+  }
+}
+
+^"dispatch"{
+  @surface_normalization_plan: @surface_normalization_plan
+  @surface_normalization_review: @surface_normalization_review
+  @model_guided_refinement: @model_guided_refinement
+  @planning_ecology: @planning_ecology
+  @site_semantics: @site_semantics
+  @attention_field: @attention_field
+  @daily_kernel: @daily_kernel
+}
