@@ -35,12 +35,12 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - Each carries: site_role, stable HTML selectors, runtime event mappings (SpwBus), ownership in the script_structure layers, falsifiable claims (using claim_chain), phase behavior, affordance validation, and concrete examples inside slices (especially math-practice-labs).
 - This directly supports selection, ownership, validation, and UI state work for agents and editors. Wired into site.spw and conventions/index.spw. See also the active claims and contracts added in site-semantics.spw.
 - **CSS/HTML architecture implications**: Strengthens the requirement that operator-driven styling (operators.css, wonder.css resonance, etc.) remain centralized and traceable from data-spw-operator attributes. New operators add concrete styling and selector contracts that future CSS refactors must respect (see updated css-architecture-readability/PLAN.md and the css-layer-order-001 claim). Encourages consistent `data-spw-operator` usage in HTML as a primary query surface.
-- **Emergent cognitive+computational communication alignment pass (continued)**:
-  - Deepened the `%` (measure) operator projection in operator-site-projection.spw to explicitly distinguish and integrate subjective measures (felt resonance, wonder intensity, deviation salience — captured via workbench annotations, cauldron, claim protocols) and objective measures (performance, layout, audit counters — captured via plugins/LSP). Added dedicated claims, data-spw-measure-kind support, workbench capabilities mapping, and examples.
-  - Added operational_semantics sections (with the same distribution: cognitive/computational use, selectors, events, ownership, claims, validation) to ornament-contract.spw and query-disposition.spw.
-  - Updated math-practice-labs slice with concrete subjective + objective % examples.
-  - JS/CSS alignment: Added setMeasuredValue helper in public/js/modules/math-diagrams.js and [data-spw-measure-kind] rules in public/css/handles/operators.css. These changes were made to align the working tree with the operator and resonance contracts.
-  - This continues making the entire .spw surface a coherent medium where cognitive practitioner judgment and computational instrumentation can communicate and compose. Architecture (script_structure, ui_resonance, operator projections) now has tighter cohesion with actual runtime and styling implementations.
+- **Structural improvements to .spw architecture (2026-06)**:
+  - Formalized `operational_semantics_template` in `planning-ecology.spw` as the reusable pattern for turning concepts into dual cognitive/computational contracts.
+  - Created `.spw/conventions/operational-semantics.spw` — a central registry/index of all active operational contracts (operators, attention, wonder vocabulary, semantic braces, ornament, query disposition, measurement).
+  - Created `.spw/conventions/measurement-contract.spw` — first-class elevation of the subjective vs. objective measurement pattern (directly supporting the expanded `%` operator work).
+  - Wired both new conventions into `site.spw` and `conventions/index.spw`.
+  - These changes give agents and editors a single, discoverable place to understand the current set of enforceable operational contracts on the site. (Items 1, 2, and 5 from the June 2026 architecture review completed.)
 
 **Recent addition (experiential + spell/cauldron discoverability):**
 - Deeper updates to `public/js/runtime/experiential.js` generalized tap/hold/swipe (pointer + device detection), added reusable GESTURE_SVGS + render helpers as visual topical anchors, device-aware educational lead text, and learning-science notes for students vs. uncurious visitors.

@@ -111,8 +111,8 @@
         </header>
         <div class="topic-hero-copy" data-spw-slot="body">
             <p class="spec-kicker">Curriculum • 8–12 weeks • Local-first • No login</p>
-            <p>CS fundamentals made legible through bounded economic analogies. Each module pairs a technical mechanism with a stabilizing institution vs. novel disruption thread, active simulations or quests, <strong>mandatory boundary tests</strong> on the analogy, socio-technical reflection, and a reusable proof-card artifact.</p>
-            <p>Progress lives in your browser. Export artifacts as JSON, Markdown, Spw fragments, or Obsidian-friendly folders. Developmental climate settings (vocabulary, grain, lighting, spacing) act as equity buffers by design.</p>
+            <p>CS fundamentals made legible through bounded economic analogies. Prime operators and measures (objective or felt) straight into your attention system. Each module carries stabilizing vs. novel threads, boundary tests you can actually use, and exportable artifacts.</p>
+            <p>Everything stays browser-local. Prime what matters, export when ready (JSON, Markdown, Spw, Obsidian). Developmental climate settings keep the surface tuned to how you learn best this month.</p>
             <nav class="frame-operators" aria-label="Curriculum entry points">
                 <a class="operator-chip" href="#memory-buffers" data-spw-operator="frame">#&gt; memory &amp; buffers</a>
                 <a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="ref">~ Cask (Liquidity Keeper)</a>
@@ -183,7 +183,7 @@
 
                 <label class="boundary-reflection">
                     <span>Your reflection on the breakdown (what the analogy hides, what it usefully reveals):</span>
-                    <textarea name="reflection" rows="4" placeholder="The mapping breaks most clearly when... It still helps me see..."></textarea>
+                    <textarea name="reflection" rows="4" placeholder="The mapping breaks most clearly when... It still helps me see..." data-spw-measure-kind="subjective" data-spw-measure-source="boundary-test" data-spw-measure-scale="practitioner-judgment"></textarea>
                 </label>
 
                 <div class="boundary-actions">
@@ -213,7 +213,7 @@ Economic mapping used: ...
 Where the analogy held: ...
 Where it broke (from boundary test): ...
 Technical recommendation: ...
-Reflection (equity / access / who bears the cost of leaks): ..."></textarea>
+Reflection (equity / access / who bears the cost of leaks): ..." data-spw-measure-kind="subjective" data-spw-measure-source="memory-audit-artifact" data-spw-measure-scale="practitioner-judgment"></textarea>
 
                 <div class="proof-actions">
                     <button type="button" class="operator-chip" data-action="export-proof" data-proof-type="memory-audit">Export JSON</button>
@@ -307,7 +307,7 @@ Reflection (equity / access / who bears the cost of leaks): ..."></textarea>
                     <strong>Boundary test contract:</strong> Checklist of where the household mapping distorts (real-time deadlines, ownership, fleet-scale effects, invisible drains).
                     <strong>Artifact:</strong> Memory-leak audit memo / proof card (with boundary reflection).
                     <strong>Suggested guide / RPG:</strong> Cask (Liquidity Keeper) — already wired in Town Library. RPG: "Operating System of a Household under Volatility".
-                    <strong>Key data attrs:</strong> <code>data-spw-curriculum-module="memory-buffers"</code>, <code>data-spw-kind="boundary-test"</code>, <code>data-spw-kind="proof-artifact"</code>.
+                    <strong>Key data attrs:</strong> <code>data-spw-curriculum-module="memory-buffers"</code>, <code>data-spw-kind="boundary-test"</code>, <code>data-spw-kind="proof-artifact"</code>, <code>data-spw-measure-kind="subjective|objective"</code>.
                     <strong>Spw projection example:</strong> <code>#&gt;memory_audit[leak] { buffers: [ram, cache, swap], volatility: "gig", boundary_breaks: ["real-time", "ownership"] }</code>
                 </dd>
 
@@ -447,6 +447,11 @@ Reflection (equity / access / who bears the cost of leaks): ..."></textarea>
         format,
         module: 'memory-buffers',
         content,
+        measure: {
+          kind: ta?.getAttribute('data-spw-measure-kind') || 'subjective',
+          source: ta?.getAttribute('data-spw-measure-source') || 'curriculum-artifact',
+          scale: ta?.getAttribute('data-spw-measure-scale') || 'practitioner-judgment'
+        },
         boundary: (() => { try { return JSON.parse(localStorage.getItem('spwashi:curriculum:memory-buffers:boundary') || 'null'); } catch { return null; } })(),
         exportedAt: new Date().toISOString()
       };

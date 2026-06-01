@@ -24,6 +24,8 @@
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
 @operator_site_projection: ~"./operator-site-projection.spw"
+@operational_semantics: ~"./operational-semantics.spw"
+@measurement_contract: ~"./measurement-contract.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @daily_kernel: ~"./daily-kernel.spw"
@@ -46,6 +48,8 @@ dispatch: .{
  living_medium_copy = @living_medium_copy
  operators = @operator_semantics
  operator_site_projection = @operator_site_projection
+ operational_semantics = @operational_semantics
+ measurement = @measurement_contract
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology

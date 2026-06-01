@@ -350,6 +350,11 @@ const OPERATOR_FAMILIES = Object.freeze(
 
 const OPERATOR_PREFIX_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 
+/* Note (2026-06 alignment with operator-site-projection + measurement-contract):
+   % measures now commonly carry data-spw-measure-kind ("subjective" | "objective")
+   along with source/scale. Components using setMeasuredValue or equivalent
+   should set data-spw-measure="true" for catalog/query discoverability. */
+
 /* ==========================================================================
    3. Shared taxonomies
    ========================================================================== */

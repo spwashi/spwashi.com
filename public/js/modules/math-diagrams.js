@@ -45,7 +45,8 @@ function setMeasuredValue(el, valueText, opts = {}) {
   if (source) el.setAttribute('data-spw-measure-source', source);
   if (scale) el.setAttribute('data-spw-measure-scale', scale);
   if (unit) el.setAttribute('data-spw-measure-unit', unit);
-  // Future: could emit via bus for spw:value-updated when bus is in scope
+  el.setAttribute('data-spw-measure', 'true'); // for general queryability per measurement-contract
+  // Future: emit via bus when in scope, e.g. bus.emit('spw:value-updated', { kind, source, value: valueText })
 }
 
 function gcd(a, b) {
@@ -623,7 +624,12 @@ function initCalculusRelationships(root) {
 
     svg.append(background, xAxis, yAxis, areaShape, curve, tangent, guide, point, labels, panel);
 
-    status.textContent = `At x = ${formatNumber(x, 2)}, the derivative is the local slope ${formatNumber(slope, 2)} while the integral tracks accumulated area ${formatNumber(area, 2)} from the left boundary. Calculus becomes readable when rate and accumulation stay on the same picture.`;
+    setMeasuredValue(status, `At x = ${formatNumber(x, 2)}, the derivative is the local slope ${formatNumber(slope, 2)} while the integral tracks accumulated area ${formatNumber(area, 2)} from the left boundary. Calculus becomes readable when rate and accumulation stay on the same picture.`, {
+      kind: 'objective',
+      source: 'calculus-rate-area',
+      scale: 'local',
+      unit: 'rate / area'
+    });
   }
 
   xInput.addEventListener('input', render);

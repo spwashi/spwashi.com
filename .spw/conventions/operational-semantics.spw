@@ -1,0 +1,74 @@
+# Operational Semantics Registry
+#
+# Central index of all site-facing operational contracts.
+# These are the contracts that have been elevated to support both
+# human cognitive work and machine computational tooling.
+
+#>operational_semantics_registry
+#:registry #!operational #!contracts
+#:layer #!pragmatics
+
+@planning_ecology: ~"./planning-ecology.spw#operational_semantics_template"
+@site_semantics: ~"./site-semantics.spw"
+@operator_site_projection: ~"./operator-site-projection.spw"
+@attention_field: ~"./attention-field.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@semantic_braces: ~"./semantic-braces.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@query_disposition: ~"./query-disposition.spw"
+@measurement_contract: ~"./measurement-contract.spw"
+
+^"active_contracts"{
+  note: "All files/sections that currently carry formalized operational_semantics."
+
+  operators: .{
+    file: ~"./operator-site-projection.spw"
+    focus: "Site roles, selectors, events, ownership, claims, and validation for every major Spw operator used on the published site."
+    key_claims: #[`operator-probe-001`, `operator-action-001`, `operator-measure-001`, `operator-measure-subjective-001`][reg=set]
+  }[reg=facet]
+
+  attention_field: .{
+    file: ~"./attention-field.spw#operational_semantics"
+    focus: "Observability of the attention field through data attributes and resonance effects."
+    key_claims: #[`attention-field-observable-001`, `attention-field-decay-001`][reg=set]
+  }[reg=facet]
+
+  wonder_vocabulary: .{
+    file: ~"./wonder-vocabulary.spw#operational_semantics"
+    focus: "Words as tokens that bias the attention field; both cognitive toolkit and computational surface."
+    key_claims: #[`wonder-vocabulary-field-001`][reg=set]
+  }[reg=facet]
+
+  semantic_braces: .{
+    file: ~"./semantic-braces.spw#operational_semantics"
+    focus: "Brace expressions as queryable semantic structure."
+    key_claims: #[`semantic-braces-queryable-001`][reg=set]
+  }[reg=facet]
+
+  ornament: .{
+    file: ~"./ornament-contract.spw#operational_semantics"
+    focus: "Visual projection of field state, including both objective and subjective measures."
+    key_claims: #[`ornament-measures-001`][reg=set]
+  }[reg=facet]
+
+  query_disposition: .{
+    file: ~"./query-disposition.spw#operational_semantics"
+    focus: "Query parameters as reproducible setup for measurement contexts (objective and subjective)."
+    key_claims: #[`query-disposition-measures-001`][reg=set]
+  }[reg=facet]
+
+  measurement: .{
+    file: ~"./measurement-contract.spw"
+    focus: "First-class pattern for subjective vs. objective measures, with clear capture paths and integration into the attention field."
+  }[reg=facet]
+}
+
+^"registry_rules"{
+  addition: "When a new area receives a full operational_semantics treatment, add an entry here with file reference and key claims."
+  maintenance: "This registry should be the first place an agent or editor looks when asking 'what are the current enforceable operational contracts on this site?'"
+}
+
+dispatch: .{
+  template = @planning_ecology#operational_semantics_template
+  contracts = @active_contracts
+}[reg=facet]

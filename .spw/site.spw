@@ -40,6 +40,8 @@
 @plan_maintenance: ~"../.agents/skills/spw-plan-maintenance/SKILL.md"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
 @operator_site_projection: ~"./conventions/operator-site-projection.spw"
+@operational_semantics: ~"./conventions/operational-semantics.spw"
+@measurement_contract: ~"./conventions/measurement-contract.spw"
 @model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
 @semantic_capacity: ~"./conventions/semantic-capacity.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
@@ -56,6 +58,15 @@
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
 @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
+
+@operational_semantics: ~"./conventions/operational-semantics.spw"
+@measurement_contract: ~"./conventions/measurement-contract.spw"
+
+operational_layer: .{
+  registry = @operational_semantics
+  measurement = @measurement_contract
+  note = "Central surfaces for the site's operational contracts — the primary place agents and editors should look when asking how concepts are made queryable, claim-bearing, and safely extensible."
+}[reg=facet]
 
 surfaces: .{
  note = `Main surfaces and nested reference surfaces. Each follows the same frame architecture.`

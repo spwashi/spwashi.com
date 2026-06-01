@@ -293,6 +293,16 @@ header,
   border-color: var(--measure-tint, currentColor);
 }
 
+/* Extend to general status and artifact elements for curriculum / labs coherence */
+.status[data-spw-measure-kind],
+[data-spw-artifact] [data-spw-measure-kind],
+.proof-textarea[data-spw-measure-kind],
+.math-diagram-status[data-spw-measure-kind],
+[data-spw-proof] [data-spw-measure] {
+  font-family: var(--font-mono, monospace);
+  border: 1px dashed var(--measure-tint, currentColor);
+}
+
 /* ==========================================================================
    2. Shared handle primitive
    --------------------------------------------------------------------------

@@ -60,10 +60,33 @@ memory_rule: .{
   insight_cache = `Use semantic-capacity.spw for insights that are valuable but not ready for implementation: cache them with operation, fixity, evidence, pattern consideration, expansion prime, and validation.`
 }[reg=facet]
 
+^"operational_semantics_template"{
+  definition: "A reusable structure for turning conceptual models into operational contracts that support both human cognition and machine reasoning/extension."
+
+  required_sections: .{
+    cognitive_use = "How practitioners, learners, and editors use this concept for thinking, design, and extension."
+    computational_use = "Selectors, events, data attributes, ownership, and query surfaces that allow agents and tools to discover, validate, and act on the concept."
+    claims = "One or more falsifiable claims using the claim_chain shape. These are the enforceable expectations."
+    validation = "Concrete ways (manual or automated) to verify that implementations satisfy the claims."
+  }[reg=facet]
+
+  recommended_sections: .{
+    selectors = "Stable CSS / data attribute selectors for finding instances."
+    runtime_events = "SpwBus or DOM events emitted or consumed."
+    ownership = "Mapping to script_structure_contract layers (kernel, runtime, interface, semantic, modules, typed)."
+    phase_behavior = "How this participates in broader site rhythms or operator phases."
+    failure_modes = "What it looks like when the contract is violated."
+    examples = "Concrete worked examples, especially in slices or major routes."
+  }[reg=facet]
+
+  rule: "When a conceptual area (operators, attention, ornament, measurement, etc.) becomes important for both human practice and agent tooling, it should receive an operational_semantics section following this template."
+}
+
 invariants: #[
  `Site-local plans and skills stay the source of truth for this repository's agent operating layer.`,
  `Public editor pages project the plan ecology; they do not replace the .agents source files.`,
  `New durable planning concepts should be wired through site.spw, this convention, and the relevant README or public page.`,
  `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`,
- `Architectural claims that drive refactors should name a falsification path before they become durable convention.`
+ `Architectural claims that drive refactors should name a falsification path before they become durable convention.`,
+ `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`
 ][reg=set]
