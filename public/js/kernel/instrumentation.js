@@ -245,6 +245,49 @@ const shouldLogByDefault = (namespace = DEFAULT_NAMESPACE, level = SPW_LOG_LEVEL
   return tokens.includes('on') || tokens.includes('*') || tokens.includes(normalizedNamespace);
 };
 
+const formatNumber = (value) => {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return '';
+  const digits = Math.abs(numeric) < 0.01 ? 4 : 3;
+  return numeric.toFixed(digits).replace(/\.?0+$/, '');
+};
+
+const describeLogDetail = (detail = {}) => {
+  if (!detail || typeof detail !== 'object') return '';
+
+  const bits = [];
+  if (detail.route) bits.push(`route=${detail.route}`);
+  if (detail.state) bits.push(`state=${detail.state}`);
+  if (detail.outcome) bits.push(`outcome=${detail.outcome}`);
+  if (detail.metric) {
+    const total = formatNumber(detail.totalValue ?? detail.total);
+    const batch = formatNumber(detail.batchValue ?? detail.value);
+    bits.push(`${detail.metric}${total ? ` total=${total}` : ''}${batch ? ` batch=${batch}` : ''}`);
+  }
+  if (detail.count != null) bits.push(`count=${detail.count}`);
+  if (detail.recentInputCount) bits.push(`recent-input=${detail.recentInputCount}`);
+  if (detail.sourceCount) bits.push(`sources=${detail.sourceCount}`);
+  if (detail.primarySource?.selector) bits.push(`primary=${detail.primarySource.selector}`);
+  if (detail.id || detail.baseId) bits.push(`module=${detail.baseId || detail.id}`);
+  if (detail.layer) bits.push(`layer=${detail.layer}`);
+  if (detail.status) bits.push(`status=${detail.status}`);
+  if (detail.effectiveWhen) bits.push(`when=${detail.effectiveWhen}`);
+  if (detail.durationMs != null) bits.push(`duration=${formatNumber(detail.durationMs)}ms`);
+
+  return bits.join(' ');
+};
+
+const rememberBrowserConsoleRecord = (record) => {
+  try {
+    const buffer = globalThis.__spwLogs ||= [];
+    buffer.push(record);
+    if (buffer.length > 80) buffer.splice(0, buffer.length - 80);
+    globalThis.__spwLastLog = record;
+  } catch {
+    // Console logging should never affect runtime behavior.
+  }
+};
+
 const resolveTarget = (target, root = globalThis.document) => {
   if (isElement(target)) return target;
   if (typeof target === 'string') return root?.querySelector?.(target) || null;
@@ -645,7 +688,7 @@ export function createSpwLogger(namespace = DEFAULT_NAMESPACE, options = {}) {
   const normalizedNamespace = normalizeToken(namespace) || DEFAULT_NAMESPACE;
   const label = `[${normalizedNamespace}]`;
   const enabled = (level) => options.enabled ?? shouldLogByDefault(normalizedNamespace, level);
-  const writer = options.console || globalThis.console;
+  const writer = options.console || globalThis.window?.console || globalThis.console;
   const profile = Object.freeze({
     namespace: normalizedNamespace,
     role: normalizeToken(options.role || 'script'),
@@ -658,15 +701,19 @@ export function createSpwLogger(namespace = DEFAULT_NAMESPACE, options = {}) {
   const write = (level, message, detail, relation = SPW_LOG_RELATIONSHIPS.GESTURE) => {
     if (!enabled(level)) return null;
     const method = typeof writer?.[level] === 'function' ? level : 'log';
+    const summary = describeLogDetail(detail);
     const record = {
+      at: Math.round(globalThis.performance?.now?.() || Date.now()),
       namespace: normalizedNamespace,
       relation: normalizeToken(relation),
       role: profile.role,
       metaphor: profile.metaphor,
       message,
+      summary,
       detail,
     };
-    writer?.[method]?.(label, message, record);
+    rememberBrowserConsoleRecord({ level, ...record });
+    writer?.[method]?.(summary ? `${label} ${message} | ${summary}` : `${label} ${message}`, record);
     return { level, ...record };
   };
 

@@ -57,7 +57,11 @@ export function onIdle(callback, timeout = 1200) {
   if ('requestIdleCallback' in window) {
     return window.requestIdleCallback(callback, { timeout });
   }
-  return window.setTimeout(() => callback({ didTimeout: false, timeRemaining: () => 0 }), 180);
+  const fallbackDelay = Number.isFinite(timeout) && timeout > 0 ? timeout : 180;
+  return window.setTimeout(
+    () => callback({ didTimeout: true, timeRemaining: () => 0 }),
+    fallbackDelay
+  );
 }
 
 export function cancelIdle(handle) {

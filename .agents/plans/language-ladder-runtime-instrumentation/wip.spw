@@ -1,0 +1,16 @@
+# wip - language-ladder-runtime-instrumentation
+# Branch: feature/language-ladder-runtime-instrumentation
+
+@plan: ~".agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
+@related: ~"../runtime-module-fluency/PLAN.md"
+@related: ~"../runtime-load-instrumentation/PLAN.md"
+@related: ~"../typescript-integration/PLAN.md"
+
+#>language_ladder_runtime_instrumentation
+
+~#goal: "Make the development experience progressively teachable: static HTML first, JavaScript as a readable runtime ladder, TypeScript as contract sharpening, and module integration timing as an inspectable sequence."
+
+@tags: [#progressive_enhancement, #module_timing, #instrumentation, #javascript, #typescript, #programming_paradigms]
+
+>>[2026-05-31] note - This track is about making the site itself a clearer learning surface for developers: what a module is, when it runs, how to observe it, and when stronger typing should replace incidental runtime assumptions.
+

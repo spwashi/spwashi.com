@@ -161,6 +161,15 @@ const MOUNT_WHEN = {
   REGION: 'region',
 };
 
+const MODULE_TIMING_STAGES = Object.freeze([
+  'scheduled',
+  'loading',
+  'mounted',
+  'observed',
+  'settled',
+  'failed',
+]);
+
 const HTML = document.documentElement;
 const BODY = document.body;
 const ROOT_MAIN = document.querySelector('main');
@@ -189,6 +198,94 @@ function getSpwPerformanceTimings() {
   } catch {
     return { marks: [], measures: [] };
   }
+}
+
+function normalizeModuleTimingStage(stage = 'scheduled') {
+  return MODULE_TIMING_STAGES.includes(stage) ? stage : 'scheduled';
+}
+
+function pushModuleLifecycleStage(record, stage, detail = {}) {
+  if (!record) return record;
+  const normalizedStage = normalizeModuleTimingStage(stage);
+  const at = Math.round(detail.at ?? performance.now());
+  if (!Array.isArray(record.lifecycle)) record.lifecycle = [];
+  const last = record.lifecycle[record.lifecycle.length - 1];
+  if (last?.stage !== normalizedStage || last?.at !== at) {
+    record.lifecycle.push({
+      stage: normalizedStage,
+      at,
+      note: detail.note || '',
+    });
+  }
+  record.stage = normalizedStage;
+  record.stageAt = at;
+  if (normalizedStage === 'observed') record.observedAt = at;
+  if (normalizedStage === 'settled') record.settledAt = at;
+  return record;
+}
+
+function summarizeModuleLifecycle(record) {
+  const lifecycle = Array.isArray(record?.lifecycle) ? record.lifecycle : [];
+  return lifecycle.map((entry) => entry.stage).join(' > ');
+}
+
+function snapshotModuleTimingStages(ctx = runtimeCtx) {
+  if (!ctx) {
+    return {
+      stages: [],
+      counts: {},
+      latest: null,
+      records: [],
+      generatedAt: Date.now(),
+    };
+  }
+
+  const records = snapshotRuntimeModules(ctx).map((record) => ({
+    ...record,
+    lifecycle: Array.isArray(ctx.registry.get(record.id)?.lifecycle)
+      ? ctx.registry.get(record.id).lifecycle.map((entry) => ({ ...entry }))
+      : [],
+    stage: ctx.registry.get(record.id)?.stage || (record.status === 'mounted'
+      ? 'observed'
+      : record.status === 'failed'
+        ? 'failed'
+        : record.status === 'loading'
+          ? 'loading'
+          : 'scheduled'),
+  }));
+
+  const counts = MODULE_TIMING_STAGES.reduce((acc, stage) => {
+    acc[stage] = 0;
+    return acc;
+  }, {});
+
+  for (const record of records) {
+    const stage = normalizeModuleTimingStage(record.stage);
+    counts[stage] = (counts[stage] || 0) + 1;
+  }
+
+  const latest = records.at(-1) || null;
+
+  return {
+    stages: MODULE_TIMING_STAGES.map((stage) => ({
+      stage,
+      count: counts[stage] || 0,
+    })),
+    counts,
+    latest: latest ? {
+      id: latest.id,
+      baseId: latest.baseId,
+      status: latest.status,
+      stage: latest.stage,
+      lifecycle: latest.lifecycle,
+      loadMs: latest.loadMs,
+      mountMs: latest.mountMs,
+      durationMs: latest.durationMs,
+      reason: latest.reason,
+    } : null,
+    records,
+    generatedAt: Date.now(),
+  };
 }
 
 const REGION_SELECTOR = PAGE_METADATA_REGION_SELECTOR;
@@ -1853,6 +1950,22 @@ const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'console',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'body[data-spw-features~="console"]',
+    rootMode: 'single',
+    describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
+    updates: ['data-spw-console-state'],
+    evaluates: 'debuggability layout-shift interaction frame-state',
+    load: () => import('./interface/console.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwConsole;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'design-experiments',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -2084,6 +2197,11 @@ function snapshotRuntimeModules(ctx = runtimeCtx) {
     reason: record.reason,
     describes: record.describes || null,
     updates: record.updates || null,
+    stage: record.stage || record.status || 'scheduled',
+    stageAt: record.stageAt || null,
+    lifecycle: Array.isArray(record.lifecycle)
+      ? record.lifecycle.map((entry) => ({ ...entry }))
+      : [],
     mountedAt: record.mountedAt,
     loadMs: record.loadMs,
     mountMs: record.mountMs,
@@ -2106,13 +2224,14 @@ function moduleRecordToSpellExpression(record) {
   const updatesPart = record.updates && record.updates.length
     ? `{updates:${record.updates.join('+')}}`
     : '';
+  const lifecyclePart = record.stage ? `{stage:${record.stage}}` : '';
   const timingPart = record.durationMs
     ? `[${Math.round(record.durationMs)}ms]`
     : '';
   const statusPart = record.status ? `:${record.status}` : '';
 
   // Produce something like: #>module:cauldron{updates:data-spw-cauldron}[120ms]:mounted
-  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${timingPart}${statusPart} ${base}`.trim();
+  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${lifecyclePart}${timingPart}${statusPart} ${base}`.trim();
 }
 
 /**
@@ -2288,9 +2407,11 @@ function annotateModuleTarget(target, record) {
   writeDatasetValue(target, 'spwModuleLayer', record.layer);
   writeDatasetValue(target, 'spwModuleWhen', record.effectiveWhen);
   writeDatasetValue(target, 'spwModuleStatus', record.status);
+  writeDatasetValue(target, 'spwModuleLifecycleStage', record.stage || record.status);
   writeDatasetValue(target, 'spwModuleReason', record.reason);
   writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
   writeDatasetValue(target, 'spwModuleTriggerStatus', record.status);
+  writeDatasetValue(target, 'spwModuleLifecycle', summarizeModuleLifecycle(record));
 
   // New semantically meaningful fields for clarity, inspectability, and serialization as "module spells"
   if (record.describes) {
@@ -2420,9 +2541,14 @@ function syncRuntimeModuleSummary(ctx, record) {
   const records = ctx.registry.values();
   const mounted = records.filter((entry) => entry.status === 'mounted').map((entry) => entry.baseId || entry.id);
   const failed = records.filter((entry) => entry.status === 'failed').map((entry) => entry.baseId || entry.id);
+  const timingSnapshot = snapshotModuleTimingStages(ctx);
+  const stageSummary = timingSnapshot.stages
+    .map(({ stage, count }) => `${stage}:${count}`)
+    .join(' ');
 
   writeDatasetValue(HTML, 'spwRuntimeLastModule', record.baseId || record.id);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleStatus', record.status);
+  writeDatasetValue(HTML, 'spwRuntimeLastModuleStage', record.stage || record.status);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleReason', record.reason);
   writeDatasetValue(HTML, 'spwRuntimeLastModuleEvaluates', record.evaluates);
@@ -2430,6 +2556,13 @@ function syncRuntimeModuleSummary(ctx, record) {
   writeDatasetValue(HTML, 'spwRuntimeMountedModules', [...new Set(mounted)].join(' '));
   writeDatasetValue(HTML, 'spwRuntimeFailedModules', [...new Set(failed)].join(' ') || null);
   writeDatasetValue(HTML, 'spwRuntimeModuleCount', String(mounted.length));
+  writeDatasetValue(HTML, 'spwRuntimeModuleLifecycleStages', stageSummary);
+  writeDatasetValue(HTML, 'spwRuntimeModuleLifecycleSummary', timingSnapshot.latest
+    ? `${timingSnapshot.latest.baseId || timingSnapshot.latest.id}:${timingSnapshot.latest.stage}`
+    : null);
+  writeDatasetValue(HTML, 'spwRuntimeModuleLifecycleLatest', timingSnapshot.latest?.lifecycle
+    ? timingSnapshot.latest.lifecycle.map((entry) => entry.stage).join(' > ')
+    : null);
 
   // Expose active layers for CSS timing, transitions, and attentional models
   const activeLayers = new Set();
@@ -2458,10 +2591,18 @@ function syncRuntimeModuleSummary(ctx, record) {
   if (BODY) {
     writeDatasetValue(BODY, 'spwRuntimeLastModule', record.baseId || record.id);
     writeDatasetValue(BODY, 'spwRuntimeLastModuleStatus', record.status);
+    writeDatasetValue(BODY, 'spwRuntimeLastModuleStage', record.stage || record.status);
     writeDatasetValue(BODY, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
     writeDatasetValue(BODY, 'spwRuntimeLastModuleReason', record.reason);
     writeDatasetValue(BODY, 'spwRuntimeLastModuleEvaluates', record.evaluates);
     writeDatasetValue(BODY, 'spwRuntimeModuleCount', String(mounted.length));
+    writeDatasetValue(BODY, 'spwRuntimeModuleLifecycleStages', stageSummary);
+    writeDatasetValue(BODY, 'spwRuntimeModuleLifecycleSummary', timingSnapshot.latest
+      ? `${timingSnapshot.latest.baseId || timingSnapshot.latest.id}:${timingSnapshot.latest.stage}`
+      : null);
+    writeDatasetValue(BODY, 'spwRuntimeModuleLifecycleLatest', timingSnapshot.latest?.lifecycle
+      ? timingSnapshot.latest.lifecycle.map((entry) => entry.stage).join(' > ')
+      : null);
   }
 }
 
@@ -2474,7 +2615,16 @@ function recordModuleAudit(ctx, entry) {
   ctx.moduleAudit.push(record);
   if (ctx.moduleAudit.length > 160) ctx.moduleAudit.shift();
   if (ctx.runtimePolicy.audit) {
-    console.info('[site.js] module audit', record);
+  const summary = [
+    record.status || 'audit',
+    record.stage ? `stage=${record.stage}` : '',
+    record.baseId || record.id,
+    record.layer ? `layer=${record.layer}` : '',
+    record.effectiveWhen ? `when=${record.effectiveWhen}` : '',
+      record.durationMs != null ? `duration=${record.durationMs}ms` : '',
+      record.reason ? `reason=${record.reason}` : '',
+    ].filter(Boolean).join(' | ');
+    console.info(`[site.js] module audit | ${summary}`, record);
   }
   return record;
 }
@@ -2538,6 +2688,7 @@ function normalizeWhitespace(value = '') {
  */
 function buildLoadDiscoverySnapshot(ctx) {
   if (!ctx) return null;
+  const timingStages = snapshotModuleTimingStages(ctx);
   return {
     policies: [...RUNTIME_TIMING_POLICIES],
     current: ctx.runtimePolicy,
@@ -2546,6 +2697,7 @@ function buildLoadDiscoverySnapshot(ctx) {
     resources: snapshotRuntimeResourceReadiness(ctx),
     considered: listModuleDefinitions(ctx),
     mounted: snapshotRuntimeModules(ctx),
+    lifecycle: timingStages,
     skipped: [...(ctx.moduleSkipAuditKeys || [])],
   };
 }
@@ -2683,10 +2835,11 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
   const reason = describeMountReason(def, ctx, root, effectiveWhen);
   const evaluates = inferModuleDimensions(def);
+  const scheduledAt = Math.round(performance.now());
 
   if (ctx.registry.has(recordId)) return ctx.registry.get(recordId);
 
-  ctx.registry.set(recordId, {
+  const record = ctx.registry.set(recordId, {
     id: recordId,
     baseId: def.id,
     layer: def.layer,
@@ -2697,21 +2850,32 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     describes: def.describes || null,
     updates: Array.isArray(def.updates) ? def.updates : null,
     status: 'idle',
+    stage: 'scheduled',
+    stageAt: scheduledAt,
+    lifecycle: [{
+      stage: 'scheduled',
+      at: scheduledAt,
+      note: effectiveWhen,
+    }],
     cleanup: null,
     refresh: null,
     root,
     mountedAt: null,
+    observedAt: null,
+    settledAt: null,
     loadMs: null,
     mountMs: null,
     durationMs: null,
     error: null,
   });
+  performance.mark(`spw:module:${def.id}:scheduled`);
 
   try {
     if (root instanceof HTMLElement) setRegionState(root, REGION_STATES.HYDRATING);
 
     const startedAt = performance.now();
     performance.mark(`spw:module:${def.id}:start`);
+    const loadStartedAt = performance.now();
     annotateModuleTarget(root, {
       id: recordId,
       baseId: def.id,
@@ -2721,6 +2885,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       reason,
       status: 'loading',
     });
+    pushModuleLifecycleStage(record, 'loading', { at: loadStartedAt, note: reason });
     recordModuleAudit(ctx, {
       id: recordId,
       baseId: def.id,
@@ -2731,8 +2896,6 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       status: 'loading',
       reason,
     });
-
-    const loadStartedAt = performance.now();
     performance.mark(`spw:module:${def.id}:load-start`);
     const mod = await def.load();
     const loadEndedAt = performance.now();
@@ -2759,28 +2922,28 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     );
     const handle = normalizeMountHandle(result);
 
-    const record = {
-      id: recordId,
-      baseId: def.id,
-      layer: def.layer,
-      evaluates,
-      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
-      effectiveWhen,
-      reason,
-      describes: def.describes || null,
-      updates: Array.isArray(def.updates) ? def.updates : null,
+    Object.assign(record, {
       status: 'mounted',
       cleanup: handle.cleanup,
       refresh: handle.refresh,
       root,
       mountedAt: mountEndedAt,
+      observedAt: null,
+      settledAt: null,
       loadMs: loadEndedAt - loadStartedAt,
       mountMs: mountEndedAt - mountStartedAt,
       durationMs: mountEndedAt - startedAt,
       error: null,
-    };
-
-    ctx.registry.set(recordId, record);
+    });
+    pushModuleLifecycleStage(record, 'mounted', {
+      at: mountEndedAt,
+      note: `${Math.round(record.loadMs)}ms load / ${Math.round(record.mountMs)}ms mount`,
+    });
+    pushModuleLifecycleStage(record, 'observed', {
+      at: Math.round(performance.now()),
+      note: 'runtime summary written',
+    });
+    performance.mark(`spw:module:${def.id}:observed`);
     annotateModuleTarget(root, record);
     syncRuntimeModuleSummary(ctx, record);
     syncActiveModuleLayers(ctx); // for CSS transitions and attentional timing keyed off active runtime layers
@@ -2851,16 +3014,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     );
     console.warn(`[site.js] module mount failed: ${def.id}`, error);
 
-    const record = {
-      id: recordId,
-      baseId: def.id,
-      layer: def.layer,
-      evaluates,
-      requestedWhen: def.when || MOUNT_WHEN.IMMEDIATE,
-      effectiveWhen,
-      reason,
-      describes: def.describes || null,
-      updates: Array.isArray(def.updates) ? def.updates : null,
+    const failedAt = Math.round(performance.now());
+    Object.assign(record, {
       status: 'failed',
       cleanup: null,
       refresh: null,
@@ -2870,9 +3025,12 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       mountMs: null,
       durationMs: null,
       error,
-    };
-
-    ctx.registry.set(recordId, record);
+    });
+    pushModuleLifecycleStage(record, 'failed', {
+      at: failedAt,
+      note: error?.message || String(error),
+    });
+    performance.mark(`spw:module:${record.id}:failed`);
     annotateModuleTarget(root, record);
     syncRuntimeModuleSummary(ctx, record);
     recordModuleAudit(ctx, {
@@ -3076,9 +3234,18 @@ function queueIdleEnhancements(defs, ctx) {
 
 function refreshRuntime(ctx) {
   refreshRegionProfiles(ctx, 'runtime-refresh');
+  const settledAt = Math.round(performance.now());
 
   for (const record of ctx.registry.values()) {
     try {
+      if (record.status === 'mounted' && record.stage !== 'settled') {
+        pushModuleLifecycleStage(record, 'settled', {
+          at: settledAt,
+          note: 'runtime refresh completed',
+        });
+        performance.mark(`spw:module:${record.id}:settled`);
+        syncRuntimeModuleSummary(ctx, record);
+      }
       record.refresh?.(ctx);
     } catch (error) {
       console.warn(`[site.js] refresh failed for ${record.id}`, error);
@@ -3177,7 +3344,13 @@ async function bootSite() {
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
         resources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
-        timings: () => runtimeCtx ? { ...getSpwPerformanceTimings(), modules: snapshotRuntimeModules(runtimeCtx) } : null,
+        timings: () => runtimeCtx
+          ? {
+              ...getSpwPerformanceTimings(),
+              lifecycle: snapshotModuleTimingStages(runtimeCtx),
+              modules: snapshotRuntimeModules(runtimeCtx),
+            }
+          : null,
         // Discovery + timing customization surface (makes "knowing about runtime load"
         // and adjusting targeting feel first-class for editors and power users).
         // Returns the canonical timing policies, current posture, and a lightweight
@@ -3300,7 +3473,20 @@ window.__SPW_SITE__ = {
   listModules: () => listModuleDefinitions(runtimeCtx),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
-  getLoadTimings: () => getSpwPerformanceTimings(),
+  timings: () => runtimeCtx
+    ? {
+        ...getSpwPerformanceTimings(),
+        lifecycle: snapshotModuleTimingStages(runtimeCtx),
+        modules: snapshotRuntimeModules(runtimeCtx),
+      }
+    : getSpwPerformanceTimings(),
+  getLoadTimings: () => runtimeCtx
+    ? {
+        ...getSpwPerformanceTimings(),
+        lifecycle: snapshotModuleTimingStages(runtimeCtx),
+        modules: snapshotRuntimeModules(runtimeCtx),
+      }
+    : getSpwPerformanceTimings(),
   // Same discovery surface as the compose API for direct console/global access.
   discoverRuntimeLoad: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
   discoverRuntimeResources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
