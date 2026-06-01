@@ -214,6 +214,10 @@ body::after {
   isolation: isolate;
 }
 
+.spw-console {
+  position: fixed;
+}
+
 :where(.operator-chip, .spec-pill, .badge, .tag, .pill) {
   position: relative;
   isolation: isolate;

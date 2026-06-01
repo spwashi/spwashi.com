@@ -1,7 +1,9 @@
 import {
+    getFrameMeta,
     getPageSurface,
     matchesMaxWidth
 } from '/public/js/kernel/shared.js';
+import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 let initialized = false;
@@ -18,6 +20,123 @@ const makeRingBuffer = (size) => {
             if (buf.length > size) buf.pop();
         },
         all() { return [...buf]; }
+    };
+};
+
+const normalizeText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
+
+const formatHistoryMeta = (meta = {}) => {
+    const bits = [
+        meta.source,
+        meta.frame,
+        meta.surface,
+        meta.scope,
+    ].map(normalizeText).filter(Boolean);
+
+    return bits.length ? bits.join(' · ') : '';
+};
+
+const getBusDiagnostics = () => {
+    try {
+        return bus.getDiagnostics?.() || null;
+    } catch {
+        return null;
+    }
+};
+
+const getActiveFrame = () =>
+    document.querySelector('.site-frame[data-state~="active"], .site-frame[data-spw-active="true"]')
+    || document.querySelector('.site-frame');
+
+const createConsoleInterface = () => ({
+    getActiveFrame,
+    getFrameMeta,
+    activateFrame(frame, options = {}) {
+        if (!(frame instanceof HTMLElement)) return;
+        document.querySelectorAll('.site-frame').forEach((candidate) => {
+            const active = candidate === frame;
+            candidate.dataset.spwActive = active ? 'true' : 'false';
+            if (active) candidate.dataset.state = 'active';
+            else delete candidate.dataset.state;
+        });
+
+        document.dispatchEvent(new CustomEvent('spw:frame-change', {
+            detail: {
+                ...getFrameMeta(frame),
+                frame,
+                source: options.source || 'console',
+            },
+        }));
+    },
+    setGroupMode(group, mode, options = {}) {
+        if (!group || !mode) return;
+        document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-set-mode]`).forEach((button) => {
+            button.setAttribute('aria-pressed', String(button.dataset.setMode === mode));
+        });
+        document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`).forEach((panel) => {
+            panel.hidden = panel.dataset.modePanel !== mode;
+        });
+
+        document.dispatchEvent(new CustomEvent('spw:mode-change', {
+            detail: {
+                group,
+                groupName: group,
+                mode,
+                label: mode,
+                source: options.source || 'console',
+                frameMeta: getFrameMeta(getActiveFrame()),
+            },
+        }));
+    },
+});
+
+const describeConsoleDiagnostics = (frame, detail = {}) => {
+    const frameMeta = detail?.frameMeta || (frame ? detail : null) || null;
+    const surface = getPageSurface() || 'surface';
+    const frameLabel = normalizeText(frameMeta?.headingText || frameMeta?.sigilText || frameMeta?.id || 'no active frame');
+    const modeLabel = normalizeText(
+        frameMeta?.modeLabel
+        || frameMeta?.mode
+        || frame?.dataset?.state
+        || 'no inline mode'
+    );
+    const busDiagnostics = getBusDiagnostics();
+    const latest = busDiagnostics?.latest;
+    const latestLabel = latest?.eventName
+        ? `${latest.eventName}${latest.source ? ` (${latest.source})` : ''}`
+        : 'no recent bus event';
+    const historyLabel = busDiagnostics
+        ? `${busDiagnostics.historySize}/${busDiagnostics.historyLimit}`
+        : 'unavailable';
+    const layoutShiftState = document.documentElement.dataset.spwLayoutShiftState || '';
+    const layoutShiftCount = document.documentElement.dataset.spwLayoutShiftCount || '';
+    const layoutShiftTotal = document.documentElement.dataset.spwLayoutShiftTotal || '';
+    const layoutShiftLabel = layoutShiftState
+        ? `${layoutShiftState}${layoutShiftCount ? ` · ${layoutShiftCount}` : ''}${layoutShiftTotal ? ` · ${layoutShiftTotal}` : ''}`
+        : '';
+
+    return [
+        `surface ${surface}`,
+        `frame ${frameLabel}`,
+        `mode ${modeLabel}`,
+        `bus ${historyLabel}`,
+        `latest ${latestLabel}`,
+        layoutShiftLabel ? `layout ${layoutShiftLabel}` : '',
+    ].filter(Boolean).join(' · ');
+};
+
+const describeFrameSelection = (detail = {}, frame = null) => {
+    const frameMeta = detail?.frameMeta || detail || {};
+    const heading = normalizeText(frameMeta.headingText || frameMeta.sigilText || frameMeta.id || 'unknown frame');
+    const source = normalizeText(detail.source || 'frame');
+    const surface = normalizeText(getPageSurface() || 'surface');
+    const mode = normalizeText(frame?.dataset?.state || frameMeta.mode || 'idle');
+
+    return {
+        source,
+        frame: heading,
+        surface,
+        scope: mode,
     };
 };
 
@@ -79,6 +198,13 @@ const createConsole = () => {
     actionCopy.textContent = 'waiting for active frame';
     actionLine.append(actionToken, actionCopy);
 
+    const diagnosticsLine = el('div', 'spw-console-line spw-console-diagnostics-line');
+    const diagnosticsToken = el('span', 'frame-sigil spw-console-diagnostics-token');
+    diagnosticsToken.textContent = '?debug';
+    const diagnosticsCopy = el('span', 'spw-console-copy spw-console-diagnostics-copy');
+    diagnosticsCopy.textContent = 'bus unavailable';
+    diagnosticsLine.append(diagnosticsToken, diagnosticsCopy);
+
     // History rows
     const historyList = el('ol', 'spw-console-history', { 'aria-label': 'Recent actions' });
 
@@ -90,22 +216,24 @@ const createConsole = () => {
         '<span class="spw-spell">[ ]</span> traverse' +
         '<a class="spw-runtime-settings-link" href="/settings/">settings</a>';
 
-    body.append(headerLine, frameLine, modeLine, actionLine, historyList, spellsLine);
+    body.append(headerLine, frameLine, modeLine, diagnosticsLine, actionLine, historyList, spellsLine);
     root.append(collapsedBar, body);
 
     return {
-        actionCopy,
-        actionToken,
-        body,
-        collapseBtn,
-        collapsedBar,
-        collapsedToken,
-        expandBtn,
-        frameLabel,
-        frameLink,
-        historyList,
-        modeButtons,
-        root
+      actionCopy,
+      actionToken,
+      body,
+      collapseBtn,
+      collapsedBar,
+      collapsedToken,
+      expandBtn,
+      diagnosticsCopy,
+      diagnosticsToken,
+      frameLabel,
+      frameLink,
+      historyList,
+      modeButtons,
+      root
     };
 };
 
@@ -116,25 +244,46 @@ const renderHistory = (nodes, history) => {
     const entries = history.all();
     if (!entries.length) return;
 
-    entries.forEach(([token, copy], i) => {
+    entries.forEach((entry, i) => {
         const item = el('li', 'spw-console-history-item');
         item.style.setProperty('--history-age', String(i));
+        item.dataset.spwConsoleToken = entry.token;
+        if (entry.meta?.source) item.dataset.spwConsoleSource = entry.meta.source;
+        if (entry.meta?.eventName) item.dataset.spwConsoleEvent = entry.meta.eventName;
+        if (entry.meta?.surface) item.dataset.spwConsoleSurface = entry.meta.surface;
+        item.title = formatHistoryMeta(entry.meta) || entry.copy;
 
         const tok = el('span', 'spw-console-history-token');
-        tok.textContent = token;
+        tok.textContent = entry.token;
 
         const desc = el('span', 'spw-console-history-copy');
-        desc.textContent = copy;
+        desc.textContent = entry.copy;
 
-        item.append(tok, desc);
+        const meta = formatHistoryMeta(entry.meta);
+        if (meta) {
+            const info = el('span', 'spw-console-history-meta');
+            info.textContent = meta;
+            item.append(tok, desc, info);
+        } else {
+            item.append(tok, desc);
+        }
+
         nodes.historyList.appendChild(item);
     });
 };
 
 // ─── State setters ────────────────────────────────────────────────────────────
 
-const setAction = (nodes, history, token, copy) => {
-    history.push([token, copy]);
+const setAction = (nodes, history, token, copy, meta = {}) => {
+    history.push({
+        token,
+        copy,
+        meta: {
+            ...meta,
+            surface: meta.surface || getPageSurface() || 'surface',
+        },
+        ts: Date.now(),
+    });
     nodes.actionToken.textContent = token;
     nodes.actionCopy.textContent = copy;
     nodes.collapsedToken.textContent = token;
@@ -145,6 +294,15 @@ const updateFrame = (nodes, detail) => {
     nodes.frameLink.textContent = detail.sigilText;
     nodes.frameLink.href = detail.id ? `#${detail.id}` : '#';
     nodes.frameLabel.textContent = detail.headingText;
+    nodes.frameLink.title = detail.headingText || detail.id || 'active frame';
+    nodes.frameLabel.title = detail.description || detail.context || detail.headingText || 'active frame';
+};
+
+const updateDiagnostics = (nodes, frame, detail = {}) => {
+    const summary = describeConsoleDiagnostics(frame, detail);
+    nodes.diagnosticsToken.textContent = '?debug';
+    nodes.diagnosticsCopy.textContent = summary;
+    nodes.diagnosticsCopy.title = summary;
 };
 
 const renderModes = (nodes, frame, api) => {
@@ -204,11 +362,13 @@ const describeFrameAction = (detail) => {
 };
 
 const describeModeAction = (detail) => {
-    const suffix = detail.label ? `${detail.groupName} -> ${detail.label}` : detail.groupName;
+    const groupName = detail.groupName || detail.group || 'mode';
+    const label = detail.label || detail.mode || detail.setMode || '';
+    const suffix = label ? `${groupName} -> ${label}` : groupName;
     switch (detail.source) {
     case 'console':       return ['@console.project',  suffix];
     case 'keyboard-mode': return ['@keyboard.cycle',   suffix];
-    case 'init':          return ['>surface.ready',    detail.frameMeta.headingText];
+    case 'init':          return ['>surface.ready',    detail.frameMeta?.headingText || suffix];
     default:              return ['@mode.project',     suffix];
     }
 };
@@ -342,6 +502,17 @@ const shouldNarrateDiagnostics = (level = 'basic') => {
 };
 
 const getDefaultCollapsedState = (storageKey, settings = getSiteSettings()) => {
+    const params = new URLSearchParams(window.location.search);
+    const diagnosticIntent = [
+        params.get('diagnostics'),
+        params.get('spw-diagnostics'),
+        params.get('debug'),
+        params.get('spw-debug'),
+        params.get('log'),
+        params.get('spw-log'),
+    ].some((value = '') => /layout|diagnostic|debug|shift/i.test(String(value)));
+
+    if (diagnosticIntent) return false;
     if (settings.consoleDisplay === 'expanded') return false;
     if (settings.consoleDisplay === 'collapsed' || settings.consoleDisplay === 'hidden') return true;
 
@@ -363,10 +534,11 @@ const getDefaultCollapsedState = (storageKey, settings = getSiteSettings()) => {
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 
 const initSpwConsole = () => {
-    if (initialized) return;
+    if (initialized && document.querySelector('.spw-console')) return;
+    if (initialized) initialized = false;
 
-    const api = window.spwInterface;
-    if (!api) return;
+    const api = window.spwInterface || createConsoleInterface();
+    if (!window.spwInterface) window.spwInterface = api;
     initialized = true;
 
     const history = makeRingBuffer(HISTORY_SIZE);
@@ -400,6 +572,7 @@ const initSpwConsole = () => {
             // The console can still respond for the current page.
         }
         nodes.root.classList.toggle('is-collapsed', value);
+        nodes.root.dataset.spwConsoleState = value ? 'collapsed' : 'expanded';
         if (animate) nodes.root.classList.add('is-animating');
         renderCollapseControls(nodes, value);
         wake();
@@ -427,6 +600,12 @@ const initSpwConsole = () => {
         const meta = detail || (frame ? api.getFrameMeta(frame) : null);
         if (meta) updateFrame(nodes, meta);
         renderModes(nodes, frame, api);
+        updateDiagnostics(nodes, frame, meta || {});
+    };
+
+    const refresh = () => {
+        const frame = api.getActiveFrame();
+        sync(frame ? api.getFrameMeta(frame) : null);
     };
 
     const initial = api.getActiveFrame();
@@ -434,15 +613,34 @@ const initSpwConsole = () => {
     if (shouldNarrateDiagnostics('basic')) {
         const layoutShiftAudit = readLayoutShiftAudit();
         if (layoutShiftAudit) {
-            setAction(nodes, history, ...describeLayoutShiftAction(layoutShiftAudit));
+            setAction(nodes, history, ...describeLayoutShiftAction(layoutShiftAudit), {
+                source: 'layout-shift-audit',
+                eventName: 'spw:layout-shift',
+                frame: 'layout stability',
+                scope: layoutShiftAudit.state,
+            });
         }
     }
     wake();
 
+    window.spwConsole = {
+        collapse: () => applyCollapsed(true, true),
+        expand: () => applyCollapsed(false, true),
+        getDiagnostics: () => ({
+            collapsed,
+            surface: getPageSurface() || 'surface',
+            frame: api.getFrameMeta(api.getActiveFrame?.() || initial || null),
+            bus: getBusDiagnostics(),
+            layoutShift: readLayoutShiftAudit(),
+        }),
+        getHistory: () => history.all().map((entry) => ({ ...entry })),
+        refresh,
+    };
+
     // ── Event subscriptions ──
     document.addEventListener('spw:frame-change', (event) => {
         sync(event.detail);
-        setAction(nodes, history, ...describeFrameAction(event.detail));
+        setAction(nodes, history, ...describeFrameAction(event.detail), describeFrameSelection(event.detail, api.getActiveFrame()));
         wake();
     });
 
@@ -451,14 +649,23 @@ const initSpwConsole = () => {
             ? { ...event.detail.frameMeta, frame: event.detail.frame }
             : null;
         sync(frameMeta);
-        setAction(nodes, history, ...describeModeAction(event.detail));
+        setAction(nodes, history, ...describeModeAction(event.detail), {
+            source: event.detail?.source || 'mode-change',
+            frame: normalizeText(event.detail?.frameMeta?.headingText || event.detail?.frameMeta?.sigilText || 'mode'),
+            scope: event.detail?.groupName || 'mode',
+        });
         wake();
     });
 
     document.addEventListener('spw:action', (event) => {
         const detail = event.detail || {};
         if (!detail.token || !detail.description) return;
-        setAction(nodes, history, detail.token, detail.description);
+        setAction(nodes, history, detail.token, detail.description, {
+            source: detail.source || 'action',
+            frame: detail.frame || detail.label || 'action',
+            scope: detail.kind || detail.relation || 'gesture',
+            eventName: detail.eventName || detail.name || 'spw:action',
+        });
         wake();
     });
 
@@ -470,25 +677,45 @@ const initSpwConsole = () => {
 
     document.addEventListener('spw:development-shifted', (event) => {
         if (!shouldNarrateDiagnostics('basic')) return;
-        setAction(nodes, history, ...describeDevelopmentAction(event.detail));
+        setAction(nodes, history, ...describeDevelopmentAction(event.detail), {
+            source: 'development-shift',
+            frame: event.detail?.authorLabel || event.detail?.label || 'development',
+            scope: event.detail?.phase || event.detail?.climate || 'climate',
+            eventName: 'spw:development-shifted',
+        });
         wake();
     });
 
     document.addEventListener('spw:semantic-snapshot', (event) => {
         if (!shouldNarrateDiagnostics('verbose')) return;
-        setAction(nodes, history, ...describeSemanticSnapshot(event.detail));
+        setAction(nodes, history, ...describeSemanticSnapshot(event.detail), {
+            source: 'semantic-snapshot',
+            frame: event.detail?.field?.roles?.[0] || 'semantic field',
+            scope: event.detail?.field?.instrumentation?.[0] || 'semantic',
+            eventName: 'spw:semantic-snapshot',
+        });
         wake();
     });
 
     document.addEventListener('spw:runtime-refresh', (event) => {
         if (!shouldNarrateDiagnostics('verbose')) return;
-        setAction(nodes, history, ...describeRuntimeRefresh(event.detail));
+        setAction(nodes, history, ...describeRuntimeRefresh(event.detail), {
+            source: 'runtime-refresh',
+            frame: event.detail?.route || getPageSurface() || 'surface',
+            scope: 'runtime',
+            eventName: 'spw:runtime-refresh',
+        });
         wake();
     });
 
     document.addEventListener('spw:layout-shift', (event) => {
         if (!shouldNarrateDiagnostics('basic')) return;
-        setAction(nodes, history, ...describeLayoutShiftAction(event.detail));
+        setAction(nodes, history, ...describeLayoutShiftAction(event.detail), {
+            source: 'layout-shift',
+            frame: event.detail?.outcome || 'layout',
+            scope: event.detail?.state || 'layout',
+            eventName: 'spw:layout-shift',
+        });
         wake();
     });
 };

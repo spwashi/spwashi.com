@@ -1033,12 +1033,17 @@
 :where(.site-header nav a, body > header nav a):is(:hover, :focus-visible) {
   --spw-shell-link-trace-scale: 1;
   --spw-shell-link-trace-opacity: 0.9;
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 91%, var(--spw-shell-chrome-accent-local) 9%);
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 68%, transparent) 0 0.2rem, transparent 0.22rem),
+    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
+  background-position: 0.82rem 50%, 0 0;
+  background-size: 0.42rem 0.42rem, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 91%, var(--spw-shell-chrome-accent-local) 9%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, transparent);
   outline: none;
-  transform: translateY(-1px);
 }
 
 :where(.site-header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible),
@@ -1051,10 +1056,15 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 :where(.site-header nav a[aria-current="page"], body > header nav a[aria-current="page"]) {
   --spw-shell-link-trace-scale: 1;
   --spw-shell-link-trace-opacity: 1;
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 86%, var(--spw-shell-chrome-accent-local) 14%);
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 78%, transparent) 0 0.2rem, transparent 0.22rem),
+    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
+  background-position: 0.82rem 50%, 0 0;
+  background-size: 0.42rem 0.42rem, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 86%, var(--spw-shell-chrome-accent-local) 14%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 26%, transparent);
-  font-weight: 600;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.32),
     inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
@@ -1063,28 +1073,19 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 :where(.site-header nav a[data-spw-grounded="true"], body > header nav a[data-spw-grounded="true"]) {
   --spw-shell-link-trace-scale: 0.82;
   --spw-shell-link-trace-opacity: 0.76;
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 72%, transparent) 0 0.2rem, transparent 0.22rem),
+    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
+  background-position: 0.82rem 50%, 0 0;
+  background-size: 0.42rem 0.42rem, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
   color: var(--spw-shell-guided-accent);
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.28),
     inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent);
   text-decoration: none;
-}
-
-:where(.site-header nav a[data-spw-grounded="true"], body > header nav a[data-spw-grounded="true"])::before {
-  content: "";
-  inline-size: 0.42rem;
-  block-size: 0.42rem;
-  border-radius: 999px;
-  flex: 0 0 auto;
-  background:
-    radial-gradient(circle at 35% 35%, rgba(255,255,255,0.82), transparent 38%),
-    color-mix(in oklab, var(--spw-shell-chrome-accent-local) 74%, transparent);
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, transparent),
-    0 0 0.6rem color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
-  opacity: 0.9;
 }
 
 @media (min-width: 981px) {
@@ -1112,6 +1113,10 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   :where(.site-header nav a, body > header nav a) {
     min-height: 2.05rem;
     padding: 0.22rem 0.52rem;
+  }
+
+  .spw-nav-toggle {
+    min-inline-size: clamp(8.75rem, 10vw, 10.75rem);
   }
 
   :where(.site-header[data-spw-menu-mode="inline"][data-spw-menu-pressure="compressed"],

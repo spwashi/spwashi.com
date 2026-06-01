@@ -23,6 +23,23 @@
 - If a new reusable semantic family, runtime state, or sitewide contract is introduced, update the relevant `.spw` surface and wire it into `.spw/site.spw` when needed.
 - If the work improves the agent/editor operating environment itself, use `.agents/plans/agent-optimization/PLAN.md` as the tracking document and invoke `spw-plan-maintenance` for plan, skill, `.spw`, and public editor-surface wiring.
 
+## Current Semantic Rails
+
+Use these rails before broad creative, semantic, CSS, JS, or marketing work:
+
+- **Model-guided refinement:** Use `.spw/conventions/model-guided-refinement.spw` and `.agents/plans/model-guided-refinement/PLAN.md` when a task needs explicit focus dimensions, semantic fixity tiers, elemental effects, cross-language CSS/HTML/JS/.spw tracing, or a creative marketing contract.
+- **Semantic capacity:** Use `.spw/conventions/semantic-capacity.spw` when adding `.spw` meaning. Name the operation first: `cache`, `audit`, `align`, `prime`, `contract`, or `archive`. For small valuable insights that are not ready for implementation, use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw`.
+- **Daily kernel:** Use `.spw/conventions/daily-kernel.spw` and `.agents/plans/daily-kernel-development/PLAN.md` when engineering work intersects animators, illustrators, designers, musicians, artists, or other collaborators. A daily kernel must name one focus, one discipline pair, one region, one brand-physics variable, one intensity, one semantic operation, one output, one validation path, and what not to touch.
+- **Creative marketing engine:** Use `.spw/surfaces/product-lines.spw` plus `.spw/conventions/model-guided-refinement.spw#creative_marketing_engine` before changing promo/wonder, artist, musician, commission, or collaborator-facing offers. Each offer should name audience, offer, proof, resonance, extension, and next action.
+- **Experience slices:** Use `.agents/plans/modular-experience-slices/PLAN.md` and `.spw/slices/` contracts when work needs durable ownership across route HTML, CSS, JS, `.spw`, validation, and practice beds.
+
+Default decision rule:
+
+1. If the task is a broad idea, create or update a `.spw` cache/audit/prime before touching HTML/CSS/JS.
+2. If the task is cross-discipline but small, create a daily-kernel note or follow the daily-kernel fields.
+3. If the task is an implementation, declare the semantic fixity tier and edit the smallest honest surface.
+4. If the task introduces a reusable contract, wire it through `.spw/site.spw`, `.spw/conventions/index.spw`, and the relevant plan/index.
+
 ## Creator Identity
 
 **Spwashi is a creator identity first, not just a place.** The canonical self-description is: _"I'm Spwashi. I build software and make art."_ Copy should lead with the person. The site can describe itself as a surface or space for the work, but Spwashi = the creator first.
@@ -253,12 +270,14 @@ Update `.spw` surfaces when:
 - a new reusable semantic family or attribute contract is introduced
 - a runtime state becomes part of the site's inspectable model
 - a concept should remain legible to agents/editors beyond one implementation patch
+- an insight should be cached, audited, aligned, primed, contracted, or archived for future semantic capacity
 
 Add or update a plan under `.agents/plans/<slug>/` when:
 
 - the work spans multiple routes
 - the work touches both shared CSS/JS and route HTML
 - the work changes how a concept should be understood, not just how it looks
+- the work creates a durable daily-kernel, model-guided refinement, creative marketing, or experience-slice direction
 
 ### Do not
 - Modify `style.css` layer declaration order.

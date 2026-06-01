@@ -15,6 +15,9 @@
 @wonder_vocabulary: ~"../conventions/wonder-vocabulary.spw"
 @ornament_contract: ~"../conventions/ornament-contract.spw"
 @site_semantics: ~"../conventions/site-semantics.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@promo_feed: ~"../../public/data/promo-wonder-cycle.json"
 
 thesis: .{
  claim = `A product line is a feature that has been named long enough and narrated clearly enough that its instances become collectible. Without narrative, a feature is a fixture; with narrative, a feature is an edition.`
@@ -124,6 +127,32 @@ narrativization: .{
   `copy naturally refers to the feature by name`,
   `the feature earns a route of its own rather than living inside a parent route`
  ][reg=set]
+}[reg=facet]
+
+creative_marketing_engine: .{
+ note = `The product-line layer is the narrative source for a coherent creative marketing engine. It should make musicians, visual artists, writers, engineers, and patrons feel that the site is not only promoting work, but offering a system they can explore, remix, commission, cite, or extend.`
+ contract = @model_guided_refinement
+ feed = @promo_feed
+ card_shape = .{
+  audience = `Who is this for right now?`
+  offer = `What can they do or understand now?`
+  proof = `Which route, artifact, or screenshotable surface demonstrates it?`
+  resonance = `Why does the offer matter aesthetically, rhythmically, socially, or technically?`
+  extension = `How could the visitor remix, commission, collect, cite, perform, or build on it?`
+  next_action = `One link, contact path, support action, or route continuation.`
+ }[reg=facet]
+ musician_path = .{
+  doorways = #[operator_atlas, play_sessions, recipes][reg=set]
+  language = #[`rhythm`, `motif`, `loop`, `score`, `timbre`, `session`, `cadence`][reg=set]
+  expansion_prime = `Treat promo/wonder cadence, operator voices, runtime timing, and cauldron mixing as a score that a musician can read, perform, or remix.`
+ }[reg=facet]
+ visual_artist_path = .{
+  doorways = #[seed_cards, domain_cards, operator_atlas][reg=set]
+  language = #[`substrate`, `palette`, `composition`, `texture`, `figure-ground`, `edition`, `studio`][reg=set]
+  expansion_prime = `Treat design palettes, grain, cards, image sidecars, and product-line editions as a studio system that can support commissions and collectible variants.`
+ }[reg=facet]
+ audit_rule = `Before adding or rewriting a promo/wonder card, answer the six card_shape fields and compare at least one musician path and one visual artist path when the card claims to serve creative practitioners.`
+ semantic_capacity_rule = `If a marketing idea is promising but not ready for copy or runtime, cache it using semantic-capacity.spw instead of expanding the feed immediately.`
 }[reg=facet]
 
 open_questions: #[

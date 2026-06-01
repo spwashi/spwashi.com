@@ -328,7 +328,12 @@ const OPERATOR_TYPE_ALIASES = Object.freeze({
   merge: 'subject',
   pragma: 'action',
   topic: 'concept',
-  surface: 'concept-edge'
+  surface: 'concept-edge',
+  address: 'frame',
+  select: 'mode',
+  integrate: 'integration',
+  situate: 'perspective',
+  act: 'action'
 });
 
 const OPERATOR_PREFIXES = Object.freeze(

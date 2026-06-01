@@ -16,6 +16,8 @@
 @workbench_index: ~"./_workbench/.spw/index.spw"
 @workbench_mount: ~"./_workbench/.spw/mount.spw"
 @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_metaphysics_application: ~"./reviews/workbench-metaphysics-application.spw"
+@planning_ecology: ~"./conventions/planning-ecology.spw"
 @spw: ~"."
 
 settings: .{
@@ -42,8 +44,43 @@ lsp: .{
  ][reg=set]
 }[reg=facet]
 
+kernel: .{
+ authored = .{
+  owns = `route HTML, body metadata, headings, frame sigils, static links, accessible names`
+  sources = #[~"../index.html", ~"../topics", ~"../design", ~"../play", ~"../recipes"][reg=set]
+  invariant = `Public meaning remains readable without JavaScript.`
+ }[reg=facet]
+
+ semantic = .{
+  owns = `data-spw-* families, .spw conventions, route/component contracts, slice/practice notes`
+  sources = #[~"./conventions", ~"./surfaces", ~"./reviews", ~"./site.spw"][reg=set]
+  invariant = `Semantic claims cite authored or runtime evidence.`
+ }[reg=facet]
+
+ pragmatic = .{
+  owns = `CSS projection, JS runtime modules, feature gates, settings state, diagnostics`
+  sources = #[~"../public/css", ~"../public/js", ~"../settings/index.html", ~"../design/runtime/index.html"][reg=set]
+  invariant = `Runtime behavior progressively enhances authored structure and exposes inspection state.`
+ }[reg=facet]
+
+ generated = .{
+  owns = `design catalog, route manifest, sitemap, dist output, generated audits`
+  sources = #[~"../scripts", ~"../design/catalog", ~"../dist"][reg=set]
+  invariant = `Generated surfaces are rebuildable or explicitly marked as review artifacts.`
+ }[reg=facet]
+}[reg=facet]
+
+memory_locations: .{
+ hot = `.agents/plans/* and active review/tending notes for current work`
+ warm = `.spw/reviews/* and .spw/slices/* for curated observations and handoffs`
+ cold = `.spw/conventions/*, .spw/site.spw, .spw/workspace.spw for durable contracts`
+ generated = `design/catalog/, route manifests, dist outputs, and other rebuildable projections`
+ invariant = `Working memory should move from hot to warm to cold only when the claim has evidence and an owner surface.`
+}[reg=facet]
+
 invariants: #[
  `Workspace discovery should expose both local bridge surfaces and imported canon surfaces.`,
  `Local conventions and surface registries should resolve without needing path folklore.`,
- `Site-local planning remains narrow even when the imported workbench is broad.`
+ `Site-local planning remains narrow even when the imported workbench is broad.`,
+ `Local .spw files should mark whether a claim is authored, semantic, pragmatic, generated, imported canon, or exploratory metaphor.`
 ][reg=set]
