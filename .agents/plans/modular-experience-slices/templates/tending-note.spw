@@ -1,0 +1,52 @@
+# Tending Note Template
+
+#>spw_slice_tending_note_template
+#:template #!planning #!practice #!handoff
+#:layer #!pragmatics
+
+note: .{
+  slice = `replace with slice name, e.g. math-practice-labs`
+  bed = `reading | observation | gesture | tending | sedimentation | succession`
+  date = `YYYY-MM-DD`
+  author = `name or handle`
+  status = `draft | reviewed | sedimented | superseded`
+}[reg=facet]
+
+observation: .{
+  summary = `What became clearer during this session?`
+  entry_point = `Which route, file, runtime surface, or .spw note did you enter through?`
+  affected_files = #[
+    `path/to/file`
+  ][reg=set]
+}[reg=facet]
+
+contract: .{
+  semantic_family = `data-spw-* family, CSS layer, runtime event, route flow, or .spw concept touched`
+  changed = `yes | no`
+  note = `If a contract changed, summarize the new expectation and where it is documented.`
+}[reg=facet]
+
+claim_chain: .{
+  claim_id = `optional stable id if this note asserts an architecture claim`
+  hypothesis = `What should be true after this tending?`
+  spec_ref = `Plan, convention, route, or .spw surface declaring the expectation.`
+  impl_ref = `HTML/CSS/JS/file path where the claim is realized.`
+  probe_ref = `Command, browser smoke, catalog page, or review note that can falsify it.`
+  falsification = `Concrete condition that would disprove or weaken the claim.`
+  status = `untested | active | confirmed | refuted | superseded | not_applicable`
+}[reg=facet]
+
+gesture: .{
+  reversible_experiment = `Small experiment attempted, if any.`
+  outcome = `kept | reverted | split | deferred | not_applicable`
+}[reg=facet]
+
+sedimentation: .{
+  decision = `What should remain true for the next contributor?`
+  evidence = `Validation, browser observation, diff review, or source reference.`
+  next_handoff = `One concrete next action or question.`
+}[reg=facet]
+
+validation: #[
+  `git diff --check`
+][reg=set]

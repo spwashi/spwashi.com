@@ -1,0 +1,25 @@
+# Semantic Insight Cache Template
+#
+# Copy this shape when a model or human needs to cache an insight without
+# prematurely turning it into a convention or implementation patch.
+
+#>semantic_insight_cache_template
+#:template #!semantics #!handoff
+#:layer #!pragmatics
+
+^"insight"{
+  id = "short-stable-id"
+  operation = "cache | audit | align | prime | contract | archive"
+  fixity = "fixed | stable | tending | experimental | volatile"
+  source = "chat | review | route | runtime | plan | browser smoke | workbench reference"
+  claim = "One sentence describing the insight."
+  evidence = #[
+    `path/or/selector/or/event`
+  ][reg=set]
+  pattern_consideration = #[
+    `sibling pattern to compare before promotion`
+  ][reg=set]
+  expansion_prime = "Smallest safe future direction if this insight proves useful."
+  validation = "rg, command, browser check, design catalog check, or manual read."
+  do_not_promote_until = "What evidence or repeated use would make this stable?"
+}

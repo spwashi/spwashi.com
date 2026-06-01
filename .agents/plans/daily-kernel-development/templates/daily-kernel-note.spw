@@ -1,0 +1,33 @@
+# Daily Kernel Note Template
+#
+# Use this for one-session semantic, design, CSS, HTML, runtime, or product
+# exploration. Implementation is optional; clarity is required.
+
+#>daily_kernel_note_template
+#:template #!practice #!handoff
+#:layer #!pragmatics
+
+^"daily_kernel"{
+  id = "daily-kernel-short-stem"
+  date = "YYYY-MM-DD"
+  focus = "operator | component | route-region | CSS cluster | audience register | product-line dimension"
+  disciplines = .{
+    primary = "engineer | animator | illustrator | designer | musician | writer | patron"
+    bridge = "engineer | animator | illustrator | designer | musician | writer | patron"
+  }[reg=facet]
+  region = "commons | studio | lab | library | theater | workshop | garden"
+  brand_physics = "gravity | resonance | cadence | grain | charge | threshold | edition | repair"
+  intensity = "quiet | studio | performance | festival"
+  semantic_operation = "cache | audit | align | prime | contract | archive"
+  target = "route, component, CSS file, JS module, .spw file, or product-line surface"
+  claim = "One sentence describing what this kernel explores or improves."
+  evidence = #[
+    `path/or/selector/or/route/or/event`
+  ][reg=set]
+  output = "note | CSS trace | HTML pattern audit | data feed improvement | route-local sketch | claim"
+  validation = "git diff --check plus one targeted command or manual inspection."
+  do_not_touch = #[
+    `files, routes, layers, or concepts outside scope`
+  ][reg=set]
+  next_kernel = "Smallest useful follow-up if this kernel proves valuable."
+}
