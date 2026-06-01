@@ -79,6 +79,45 @@ The concept gap is not renderer capability. The gap is doctrine: what kind of th
    - `translation lens` for moving between imaginative and professional language
    - `cast lens` for recurring campaign references
 
+## 2026 Self-Imagination + Funding/Services Tranche (Cross-Ref)
+This tranche (detailed in expressive-layout-tropes-fidget-manuscript/PLAN.md "Funding, Services..." section and funding-proof-cards/PLAN.md) makes the character/profile card system an explicit instrument for **self-imagination as funding and capacity development**:
+
+- Character Sheet Builder is reframed (in copy + optional flows) as the place where a creator practices the personality, theme, and developmental posture of the self/work that will later commission or be commissioned.
+- Optional process flows (playful random seeds, wonder-primed generation, lens cycling, priming pressures to cauldron) reduce friction while inviting depth. The card becomes a living record of "who I am becoming in order to do the next work."
+- Microinteractions + grounding (trope marks on preset/random/field changes, vocabulary resonance, richer cauldron ingredients with character-origin) create the literacy and trace channels powerusers expect.
+- Direct tie to budgeting tool and services register: "Map the character arc → fund the capacity → commission the work that fits the person you practiced becoming."
+- Metacognitive profiles (from prior tranche) can gently surface inside the builder as developmental climate suggestions (never required).
+- Strengthens the "lenses not collapse" doctrine: the translation map and multi-lens presets already embody this; the tranche makes the *why* (self-imagination for clearer, more personal asks) even more legible.
+
+No change to the shared renderer or core data model unless a future patch requires it. This work keeps the card substrate honest as a portable, multi-lens identity instrument while giving it a clear role in the funding/self-prep ecology.
+
+See also:
+- expressive-layout-tropes-fidget-manuscript/PLAN.md (primary coordination + execution log)
+- funding-proof-cards/PLAN.md (funding surface evolution)
+
+### Clarity of Semantic Layers, Option/Subitem Flow/Wrapping/Hierarchy, Component Composition (Current Pass)
+This pass directly addressed "clarity of semantic layers, option or subitem flow/wrapping/hierarchy; component composition":
+
+- **Rendered cards now emit the canonical slot contract**: Updated `profile-builder.js` renderProfileCard to add `data-spw-slot="header"`, `data-spw-slot="meta"`, `data-spw-slot="body"`, `data-spw-slot="footer"` on the major regions of the live `.profile-card`. This makes every published character/profile card a first-class, inspectable specimen of the universal slots anatomy documented in `/design/slots/`.
+- **Improved clarity in live builders**: Added explicit guidance in the character-sheet builder navigation area explaining that the panels are compositional slots with clear hierarchy (primary/secondary/tertiary from the taxonomy). On narrow screens they stack cleanly; the preview is the composed result.
+- **Hierarchy + wrapping enhancements**: Strengthened visual distinction for badge clusters (primary/approach/role vs. secondary/context/domain) in `profile-card.css` with better opacity/weight and explicit flex-wrap behavior that holds up on mobile without breaking composition.
+- **Design surface wiring**: Added a direct call-out in `/design/components/` linking the live rendered cards (now with proper slots) back to the glossary and `/design/slots/`. This closes the "edit → render → inspect composition" loop for producers, designers, and powerusers.
+- **Semantic layer consistency**: The change reinforces that the same slot grammar (header → meta → body → figure → actions → footer) applies across frames, cards, and the visual canon tools (Midjourney packets, etc.).
+
+These are minimal, high-leverage patches that make the semantic model more legible without altering visual design or adding bloat. The rendered card is now both a practical output *and* a teaching specimen for component composition.
+
+All changes pass git diff --check + node --check. Plans and live surfaces are now better aligned on slots, hierarchy, and composition.
+This tranche directly improved the *value and discoverability of the rendered .profile-card / character cards* as first-class inputs to visual style work:
+- One-click "develop style in Midjourney" action from the live rendered preview that constructs a portable style/identity packet, copies it, and navigates with `?style-packet=...` query combinatorics.
+- Producer/director copy added in Midjourney bench and design/slots explicitly explaining how to use rendered cards + slots + palettes + Midjourney packets to develop and maintain a coherent visual style across a project.
+- Local image mounting/pasting UX enhanced with an explicit drop/paste zone on the Midjourney bench that participates in image-metaphysics + prompt memory (associates studies with packets for recall).
+- Slots (design/slots + builder panels) wired as the ergonomic tuning grammar between card rendering and image canon.
+- Edit/read/preview modes in the builder benefit from the stronger "rendered output as contract" emphasis and the preview panel now surfaces the style handoff affordance.
+- Runtime instrumentability: bus events (`rendered-card-to-style-packet`, `style-packet-from-card`), query param consumption, and data attrs for the flows.
+- Consolidation: packet concept (vision seed, style packet, character tropes) now flows more cleanly between cauldron → character builder → Midjourney.
+
+All changes surgical, build on existing Spw semantics (data-spw-slot, operators on cards, promptability), respect AGENTS.md, and make the "rendered card" a high-value, discoverable artifact for both personal imagination development and professional visual production.
+
 3. **Family over template clones**
    These are not separate widgets. They are one family of cards with shared anatomy and different projection rules.
 

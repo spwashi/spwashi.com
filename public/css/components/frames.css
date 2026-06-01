@@ -38,8 +38,8 @@
   height: 1px;
   background: linear-gradient(
       90deg,
-      var(--site-frame-seam-color) 0 4.5rem,
-      transparent 4.5rem
+      var(--site-frame-seam-color) 0 clamp(3.5rem, 12vw, 4.5rem),
+      transparent clamp(3.5rem, 12vw, 4.5rem)
   );
   pointer-events: none;
   opacity: 0.92;
@@ -51,6 +51,87 @@
   background: var(--component-surface-strong);
   box-shadow: var(--component-frame-shadow-active);
   transform: translateY(calc(var(--interaction-excitement, 0) * -1px));
+}
+
+/* Cognitive container enhancements (observational resonance, meaning depth, inline memory/annotation)
+   - Frames as rich semantic vessels that support inline memory/annotation affordances
+     and carry interpretable meaning attributes for screenshots, catalog, and active wonder.
+   - Reduces dead space by making the seam/header area carry light inline controls when
+     memory or annotation state is present.
+   - Supports cathartic, resonant experience: containers that "remember" and "invite annotation"
+     rather than remaining passive.
+   - Performance-minded: uses existing data attrs and :has() where already supported; no new
+     heavy selectors or forced reflows. */
+:where(.site-frame[data-spw-memory-managed="true"],
+       .site-frame[data-spw-annotation-scope]) {
+  --cognitive-container-tint: color-mix(in srgb, var(--component-accent) 8%, transparent);
+}
+
+:where(.site-frame[data-spw-memory-managed="true"])::before {
+  background: linear-gradient(
+    90deg,
+    var(--cognitive-container-tint) 0 clamp(3.5rem, 12vw, 4.5rem),
+    transparent clamp(3.5rem, 12vw, 4.5rem)
+  );
+}
+
+/* Meaning and design depth attributes — portable signals for screenshots,
+   AI interpretation, catalog, and authorial intent layering.
+   These turn a static frame into a medium with observable depth. */
+:where(.site-frame[data-spw-meaning-depth="light"]) {
+  --meaning-contrast: 0.6;
+  --meaning-density: 0.4;
+}
+
+:where(.site-frame[data-spw-meaning-depth="rich"]) {
+  --meaning-contrast: 1.15;
+  --meaning-density: 0.85;
+}
+
+:where(.site-frame[data-spw-design-interpretation]) {
+  /* Subtle visual cue that this container carries explicit design/semantic intent */
+  box-shadow: var(--component-frame-shadow),
+    0 0 0 1px color-mix(in srgb, var(--component-accent) 12%, transparent);
+}
+
+/* Inline interaction affordance in header/seam area when memory or annotation is active
+   (encourages engagement without dedicated panels — reduces dead space). */
+:where(.site-frame[data-spw-memory-managed="true"] .frame-heading,
+       .site-frame[data-spw-annotation-scope] .frame-heading) {
+  position: relative;
+}
+
+:where(.site-frame[data-spw-memory-managed="true"] .frame-heading)::after,
+:where(.site-frame[data-spw-annotation-scope] .frame-heading)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--component-accent) 55%, transparent);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Context-aware typography, alignment, and overflow hygiene inside resonant containers.
+   When a frame carries memory/annotation state (active wonder), tighten rhythm
+   slightly to reduce dead space while preserving readability. Prevents overflow
+   bugs in dense inline + annotated content. Performance-friendly (no layout thrash). */
+:where(.site-frame[data-spw-memory-managed="true"],
+       .site-frame[data-spw-annotation-scope]) {
+  --surface-gap: calc(var(--spw-surface-gap, 1rem) * 0.92);
+  --surface-padding: calc(var(--spw-surface-padding, 1.2rem) * 0.95);
+}
+
+:where(.site-frame[data-spw-memory-managed="true"] p,
+       .site-frame[data-spw-annotation-scope] p,
+       .site-frame[data-spw-memory-managed="true"] li,
+       .site-frame[data-spw-annotation-scope] li) {
+  max-inline-size: 68ch; /* slightly tighter for resonant reading */
+  overflow-wrap: break-word;
 }
 
 .site-frame h1 {

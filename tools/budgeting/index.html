@@ -95,8 +95,8 @@
                     </div>
                 </div>
                 <h1 id="budgeting-title">Savings Regimen</h1>
-                <p class="site-lede">Track saved capacity — money and time — against real service thresholds instead of keeping the numbers abstract.</p>
-                <p>Add money or protected focus time (hours, days, or 13-cycles aligned to your release rhythm). Watch capacity map onto scope cards, creator work, systems sprints, and advisory. Time entries become numericity-native cauldron ingredients with quantifiers for allocation and discovery. Nothing leaves this browser.</p>
+                <p class="site-lede">Track saved capacity — money and time — against real service thresholds. This is a private instrument for rehearsing the version of yourself that can afford the next work: the character, the thematic posture, the developmental rhythm.</p>
+                <p>Add money or protected focus time (hours, days, or 13-cycles aligned to your own release rhythm). Watch capacity map onto scope cards, creator work, systems sprints, and advisory. Optional context fields let you note the personality or theme this saving serves; those notes travel with the entry. Time entries become numericity-native cauldron ingredients with quantifiers for allocation and discovery. Prime a milestone or a "why" into the cauldron as an optional next gesture — the garden remembers the shape of your becoming. Nothing leaves this browser.</p>
                 <nav class="frame-operators" aria-label="Budgeting sections">
                     <a class="operator-chip" href="#ledger">^ ledger</a>
                     <a class="operator-chip" href="#capacity">~ capacity</a>
@@ -123,12 +123,20 @@
                         <header class="frame-heading">
                             <h3 id="ledger-title">Ledger</h3>
                         </header>
-                        <p class="frame-note">Add saved money, expected income, or expenses. Use it as a planning scratchpad, not a moral scorecard.</p>
+                        <p class="frame-note">Add saved money, expected income, or expenses. Use it as a planning scratchpad for the self you are funding — not a moral scorecard. An optional "motive" note on each entry captures the personality, theme, or character arc this capacity serves; the note moves with the value into the cauldron when you choose to prime it.</p>
 
                         <div class="budget-form" role="group" aria-labelledby="ledger-title">
                             <div class="budget-input-row">
                                 <input type="text" id="budget-desc" class="budget-input" placeholder="Freelance invoice, saved month, software cost" aria-label="Entry description">
                                 <input type="number" id="budget-amount" class="budget-input" placeholder="Amount in dollars" inputmode="decimal" min="0.01" step="0.01" aria-label="Entry amount in dollars">
+                            </div>
+                            <!-- Optional higher-order resource dimensions (builds directly on the self-imagination motive field).
+                                 Supports simple multi-dimension syntax for scalability: "illustrator-weird + attention-13cycle + prompt-tokens-800".
+                                 Each dimension becomes a first-class, vocabulary-tagged, primable resource in the entry and cauldron payload.
+                                 Fully optional, tool-local, no rules — powerusers type structured expressions; the system scales without new UI.
+                                 Also supports query-string macros, e.g. ?dimensions=attention+weird-illustrator&amount=1200 (shareable higher-order models). -->
+                            <div class="budget-input-row budget-context-row">
+                                <input type="text" id="budget-motive" class="budget-input" placeholder="Optional higher-order dimensions: e.g. illustrator-weird + attention-13cycle + prompt-800 (or single character arc)" aria-label="Optional higher-order resource dimensions or motive for this entry (supports + separated names for scalability)" data-spw-optional-context="motive" data-spw-higher-order-dimensions="supported">
                             </div>
                             <div class="budget-action-row">
                                 <button type="button" id="btn-add-income" class="budget-button" data-budget-add="income">+ income or savings</button>
@@ -168,7 +176,7 @@
                                 </a>
                                 <a class="budget-tier-card" data-tier="creator" data-cost="600" href="/services/creator/">
                                     <strong>Creator Work</strong>
-                                    <p class="frame-note">From $600. Formatting, illustrated covers, interactive cover pages, and author sites.</p>
+                                    <p class="frame-note">From $600. Formatting, illustrated covers, interactive surfaces, and author sites — the kind of work that carries the personality and thematic depth you practiced while saving for it.</p>
                                 </a>
                                 <a class="budget-tier-card" data-tier="systems" data-cost="5000" href="/services/systems/">
                                     <strong>Systems Sprint</strong>
@@ -193,7 +201,7 @@
                         <header class="frame-heading">
                             <h3 id="time-capacity-title">Time Capacity</h3>
                         </header>
-                        <p class="frame-note">Budget time the same way you budget money. Track saved focus time and allocate it across rhythmic cycles. In the right mode, these become cauldron ingredients that surface playful quantifiers (including baker's dozen derivations) for deeper discovery.</p>
+                        <p class="frame-note">Budget time the same way you budget money. Track saved focus time and allocate it across your own rhythmic cycles. Optional context lets you name the character or thematic pressure this protected attention serves. In the right mode (or when primed), these become cauldron ingredients that surface playful quantifiers for deeper discovery — a living trace of how you chose to spend your becoming.</p>
 
                         <div class="budget-form" role="group" aria-labelledby="time-capacity-title">
                             <div class="budget-input-row">

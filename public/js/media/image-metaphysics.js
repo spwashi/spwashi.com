@@ -18,6 +18,7 @@ import {
 import { getCanvasAccentInstance } from '/public/js/interface/canvas-accents.js';
 
 const VISITED_KEY = 'spw-visited-image-surfaces';
+const PROMPT_MEMORY_KEY = 'spw-image-prompt-memory';  // local association of images ↔ prompts for creative resonance
 const HOLD_DURATION_MS = 480;
 const DRAG_CANCEL_DISTANCE_PX = 12;
 const PRIMED_DELAY_MS = 120;
@@ -950,4 +951,36 @@ export function initSpwImageMetaphysics() {
     bus.on('settings:changed', () => {
         document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncHost(host));
     });
+}
+
+/* Local image memory for prompts (enhancement for creative resonance + annotation)
+   - Associates an image/SVG surface with a prompt string locally (dataset + localStorage).
+   - Enables "prompt memory" that can surface in wonder-memory, cauldron, or annotation layers.
+   - Ties into observational resonance: holding or priming an image can "remember" the generative intent.
+   - Performance: simple key-value, lazy load, no heavy serialization. */
+export function rememberImagePrompt(surfaceEl, promptText) {
+  if (!surfaceEl || !promptText) return;
+  const id = surfaceEl.dataset.spwImageSurface || surfaceEl.id || surfaceEl.getAttribute('data-spw-inspect');
+  if (!id) return;
+
+  surfaceEl.dataset.spwImagePrompt = promptText.slice(0, 280);
+
+  try {
+    const mem = JSON.parse(localStorage.getItem('spw-image-prompt-memory') || '{}');
+    mem[id] = { prompt: promptText.slice(0, 280), ts: Date.now() };
+    localStorage.setItem('spw-image-prompt-memory', JSON.stringify(mem));
+  } catch {}
+}
+
+export function recallImagePrompt(surfaceEl) {
+  if (!surfaceEl) return null;
+  const id = surfaceEl.dataset.spwImageSurface || surfaceEl.id || surfaceEl.getAttribute('data-spw-inspect');
+  if (!id) return null;
+
+  if (surfaceEl.dataset.spwImagePrompt) return surfaceEl.dataset.spwImagePrompt;
+
+  try {
+    const mem = JSON.parse(localStorage.getItem('spw-image-prompt-memory') || '{}');
+    return mem[id]?.prompt || null;
+  } catch { return null; }
 }

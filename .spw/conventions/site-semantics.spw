@@ -613,6 +613,20 @@ frame #compact-tuning-widget
 
 ^"script_structure_contract"{
   definition: "The site's JavaScript is organized into stable architectural layers so that refactors, audits, and new features have predictable homes and ownership rules. Actual implementation files (e.g. public/js/modules/math-diagrams.js for labs, public/js/kernel/shared.js for operators) should carry comments referencing this contract and the operator-site-projection where relevant."
+
+^"palette_theme_composability_contract"{
+  definition: "Artistically selected palettes, theme packs, lighting (color-mode), developmental climate ('mind context'), and component motifs (curriculum for care/memory/boundary, lab for technical depth, artifact for reflection) compose via data-spw-* attributes + central PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF map (in shared.js) into readable, balanced, tunable visual+felt species. Tokens use --pigment-context-boost, motif-specific active-op overrides (with explicit dark+auto variants for lighting balance), and climate accents. JS writes attrs early + emits 'spw:palette-state' + settings:changed for full instrumentability."
+  html_contract: "Combine data-spw-color-mode + data-spw-theme-pack + data-spw-palette-resonance + data-spw-component-motif (or pedagogicalFlavor) + data-spw-developmental-climate on html/body or container. Tuning widgets and recipes make full artistic selection one gesture. data-spw-active-motif snapshot aids inspection."
+  css_tokens: "core.css: pigment-* modulation + motif rules (light + dark variants after theme packs) + operator colors that automatically inherit boosted active-op. See also --mind-context alignment via climate + motif."
+  js_timing: "Central map in shared.js (normalizeComponentMotif) for learnable single source. In site-settings applySiteSettings: synchronous write before/early paint from localStorage, dataset.spwActiveMotif + componentMotif, bus.emit('spw:palette-state', {flavor, motif, themePack, colorMode}) for reactive ornament/measure/attention without full cycle. Future: spw:value-updated from setMeasuredValue for % measures in context."
+  combinatoric_enhancement: "Attribute combinations form evolutionary semantic trees/species for enhancement without new code per pack. Examples below + in component-box-model and operational-semantics. New theme pack or motif automatically participates in all existing operator + measure-kind + frame + accent trees."
+  examples: [
+    "curriculum-motif + subjective-measure + probe-op + weave-climate + ritual-vellum + dark: boosted violet probe (via context + dark lift), dashed subjective border (operators.css), climate wash on status, higher resonance via boost-tuned field. 'Mind' (boundary reflection) feels heavier, more care-weighted.",
+    "lab-motif + objective-measure + frame-op + electric-studio + light: lapis active emphasis on diagrams, crisp objective status, high technical clarity.",
+    "artifact-motif + subjective + brass + copper-brace dark: reflective warm weight, lower boost keeps ornament intimate for proof/notation work.",
+    "Any motif × resonance choice × climate now yields distinct 'species' visible in design catalog and queryable via [data-spw-component-motif][data-spw-measure-kind][data-spw-developmental-climate]."
+  ]
+}
   layers: #[
     kernel: "shared pure helpers, canonical state machines, bus, and contracts that have no DOM or route coupling (site-settings, shared operator defs, dom-contracts, bus)."
     runtime: "progressive page and route behaviors that mount on specific pages or shells (shell disclosure, attention architecture, experiential gestures, section handles)."

@@ -77,10 +77,10 @@
             <div class="frame-topline">
                 <a class="frame-sigil" href="#settings-surface">#&gt;settings_surface</a>
                 <div class="spec-strip">
-                    <span class="spec-pill">browser-local state</span>
-                    <span class="spec-pill">author workflow</span>
-                    <span class="spec-pill">developmental climate</span>
-                    <span class="spec-pill">runtime observatory</span>
+                    <span class="spec-pill" data-spw-badge-type="state">browser-local state</span>
+                    <span class="spec-pill" data-spw-badge-type="workflow">author workflow</span>
+                    <span class="spec-pill" data-spw-badge-type="climate">developmental climate</span>
+                    <span class="spec-pill" data-spw-badge-type="observatory">runtime observatory</span>
                 </div>
             </div>
 
@@ -95,8 +95,11 @@
                 <p class="settings-note" data-spw-narrative-copy="on" data-spw-copy-depth="normal" data-spw-copy-label="Settings overview">
                     <span class="drop-cap">P</span>references are saved in this browser. Start with a preset, adjust workflow
                     or comfort, then inspect the runtime only when you need to.
+                    <span data-spw-vocabulary-term data-spw-operator="meta">This surface is a cognitive workbench:</span> every cluster you tune changes how the site itself thinks, remembers, and invites wonder.
                 </p>
-                <p class="spw-playable-hook" data-spw-narrative-copy="on" data-spw-copy-depth="genre" data-spw-copy-label="Settings hook">Treat settings like reading weather: quick to scan, easy to change.</p>
+                <p class="spw-playable-hook" data-spw-narrative-copy="on" data-spw-copy-depth="genre" data-spw-copy-label="Settings hook">
+                    Treat settings like reading weather — or like casting a spell over your own attention. Change the climate, and the entire imaginative field shifts.
+                </p>
                 <ul class="spw-copy-motif-strip" aria-label="Settings copy motifs">
                     <li>preset</li>
                     <li>workflow</li>
@@ -186,20 +189,20 @@
                         Presets apply coherent baselines so uncurious visitors get an immediate, useful surface while active learners and playful wanderers have clear starting points to explore or tune. You can still refine every setting afterward. Tap or click a preset to feel the difference instantly across desktop, tablet, or phone.
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="vertical-align:-2px;opacity:.6;margin-left:.3em;" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
                     </p>
-                    <div class="settings-presets" data-settings-presets>
-                        <button class="settings-preset-btn" data-preset="hearth" type="button">
+                    <div class="settings-presets" data-settings-presets data-spw-feature="presets-as-ingredients">
+                        <button class="settings-preset-btn" data-preset="hearth" type="button" data-spw-ingredient-type="climate-base">
                             <strong>Hearth</strong>
                             <span>Quiet defaults. Draft-friendly, minimal enhancement, low grain, and stable orientation.</span>
                         </button>
-                        <button class="settings-preset-btn" data-preset="loom" type="button">
+                        <button class="settings-preset-btn" data-preset="loom" type="button" data-spw-ingredient-type="semantic-weave">
                             <strong>Loom</strong>
                             <span>Richer semantic weave. Revision-friendly, active handles, richer density, and adaptive infospace.</span>
                         </button>
-                        <button class="settings-preset-btn" data-preset="workshop" type="button">
+                        <button class="settings-preset-btn" data-preset="workshop" type="button" data-spw-ingredient-type="inspection-layer">
                             <strong>Workshop</strong>
                             <span>Developer-facing inspection. Expanded console, metadata visibility, and implementation focus.</span>
                         </button>
-                        <button class="settings-preset-btn" data-preset="access" type="button">
+                        <button class="settings-preset-btn" data-preset="access" type="button" data-spw-ingredient-type="accessibility-base">
                             <strong>Access</strong>
                             <span>High contrast, reduced motion, larger type, looser spacing, and stronger guidance cues.</span>
                         </button>
@@ -244,6 +247,7 @@
               <span class="spec-pill">author mode:
                 <span class="vibe-widget-state" data-settings-state="authorMode">draft</span>
               </span>
+                        <span class="spec-pill" data-spw-vocabulary-term data-spw-operator="stream" title="This combination can be primed into cauldron or saved as a personal spell">primable as spell</span>
                     </div>
                 </article>
 
@@ -254,11 +258,35 @@
                     </div>
                     <p class="vibe-widget-copy">
                         These recipes combine author workflow, climate, reading mode, and semantic visibility into common writing states.
+                        Each is a ready-to-cast bundle — tap one and it can be primed directly into your cauldron or saved as a personal spell for later resonance.
                     </p>
                     <div aria-label="Author writing recipes" class="vibe-widget-actions" role="group">
                         <button class="operator-chip" data-site-settings-recipe="draft" type="button">Draft comfortably</button>
                         <button class="operator-chip" data-site-settings-recipe="revise" type="button">Revise with annotations</button>
                         <button class="operator-chip" data-site-settings-recipe="publish" type="button">Prepare for readers</button>
+                    </div>
+                </article>
+
+                <!-- New Spw metacognitive profiles — encourage noticing your own stance while reading/wondering -->
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Metacognition</p>
+                        <h3 class="vibe-widget-title">Notice your current stance</h3>
+                    </div>
+                    <p class="vibe-widget-copy">
+                        These profiles help you observe how you are approaching the material right now — witness, composer, explorer, integrator, or generous overflow. They are instruments for developing metacognitive skill.
+                    </p>
+                    <div aria-label="Metacognitive stances" class="vibe-widget-actions" role="group">
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:witness" type="button">Witness</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:composer" type="button">Composer</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:explorer" type="button">Explorer</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:integrator" type="button">Integrator</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:overflow" type="button">Overflow</button>
+                    </div>
+                    <div class="vibe-widget-meta">
+                        <span class="spec-pill" data-spw-vocabulary-term data-spw-operator="meta">Current stance:
+                            <span class="vibe-widget-state" data-settings-state="metacognitiveStance">witness</span>
+                        </span>
                     </div>
                 </article>
 
@@ -318,6 +346,8 @@
 
                     <div class="vibe-widget-meta">
                         <span class="spec-pill">Current cluster responds to your tuners + gestures (pinch, tap, density, load posture)</span>
+                        <span class="spec-pill" data-spw-vocabulary-term data-spw-operator="meta">This cluster is a live cognitive instrument — changes here ripple as tropes and can be chained into spells.</span>
+                        <a class="spec-pill" href="/design/" data-spw-operator="ref" data-spw-ingredient-type="design-hub">Explore design hubs →</a>
                     </div>
                 </article>
 

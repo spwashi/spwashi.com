@@ -39,6 +39,13 @@ const SVG_HOST_SELECTOR = [
   '.spw-svg-surface[data-spw-svg-host]',
 ].join(', ');
 
+/* SVG attribute development + trope integration (enhancement)
+   - New supported attrs for richer system participation:
+     data-spw-trope, data-spw-memory, data-spw-alignment-hint, data-spw-content-density
+   - These allow SVGs to participate in trope wiring, image/prompt memory, and
+     content-based layout/alignment variants.
+   - Performance: declarative, read once on mount + on explicit tune events. */
+
 const POINTER_MODES = new Set(['field', 'tilt', 'trace']);
 const MOTION_STATES = new Set(['steady', 'slow', 'quick', 'paused']);
 const CONTRAST_STATES = new Set(['soft', 'balanced', 'strong']);

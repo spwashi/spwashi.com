@@ -573,6 +573,30 @@ function syncSectionHandleSections(sections, activeIndex) {
   });
 }
 
+/* UX enhancement for floating chrome (section handle): context-sensitive vocabulary resonance.
+   When the active section contains primable vocabulary terms, the handle gets a hint
+   so it can visually "invite" wonder priming and feel more alive with the page content.
+   This ties the floating chrome directly to interactive vocabulary development and
+   page-specific attentional rhythm without new heavy logic. */
+function syncSectionVocabularyHint(sections, activeIndex, handle, shell) {
+  if (!handle || !shell) return;
+  const active = sections[activeIndex];
+  if (!active) {
+    handle.removeAttribute('data-spw-section-has-vocabulary');
+    shell.removeAttribute('data-spw-section-has-vocabulary');
+    return;
+  }
+  const hasVocab = !!active.querySelector('[data-spw-vocabulary-term]');
+  const attr = 'data-spw-section-has-vocabulary';
+  if (hasVocab) {
+    handle.setAttribute(attr, 'true');
+    shell.setAttribute(attr, 'true');
+  } else {
+    handle.removeAttribute(attr);
+    shell.removeAttribute(attr);
+  }
+}
+
 function updateSectionHandleState({
   sections,
   state,
@@ -622,6 +646,9 @@ function updateSectionHandleState({
   syncSectionHandleVisibility(handle, shell, visible);
 
   writePageSectionDatasets(snapshot);
+
+  // Enhance floating chrome UX with vocabulary context (for resonance + priming)
+  syncSectionVocabularyHint(sections, state.activeIndex, handle, shell);
 
   if (state.phase === 'traveling' && state.travelTargetId && info.id === state.travelTargetId) {
     window.clearTimeout(state.travelTimer);
@@ -726,6 +753,16 @@ function createSectionHandleController({
         state.manualCompact = true;
         setSectionHandleCompactMode(state, shell, refs.toggleButton);
         updateActiveState('toggle');
+
+        // Instrumentation for debuggability of floating chrome interactions
+        try {
+          const bus = window.__SPW_SITE__?.bus || window.bus;
+          bus?.emit?.('spw:chrome-interaction', {
+            type: 'section-handle-compact-toggle',
+            compact: state.compact,
+            source: 'user',
+          });
+        } catch (_) {}
         break;
       case 'top':
         travelSectionHandleToIndex({

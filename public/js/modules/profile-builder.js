@@ -95,7 +95,7 @@ export function renderProfileCard(profile, container) {
 
   container.innerHTML = `
     <div class="profile-card" data-spw-kind="island" data-spw-role="vessel" data-spw-form="brace">
-      <header class="profile-card-header">
+      <header class="profile-card-header" data-spw-slot="header">
         <div class="profile-identity">
           <span class="profile-sigil" aria-hidden="true">${escHtml(header.sigil || '^')}"${escHtml(header.name || '...')}"</span>
           <div class="profile-name-role">
@@ -106,14 +106,14 @@ export function renderProfileCard(profile, container) {
         <span class="profile-status spec-pill" data-cluster="status" data-status="${escHtml(statusObj.value)}">${escHtml(statusObj.label)}</span>
       </header>
 
-      ${header.tagline ? `<p class="profile-tagline">${escHtml(header.tagline)}</p>` : ''}
+      ${header.tagline ? `<p class="profile-tagline" data-spw-slot="meta">${escHtml(header.tagline)}</p>` : ''}
 
-      ${badgeHTML}
+      ${badgeHTML ? `<div data-spw-slot="meta">${badgeHTML}</div>` : ''}
 
-      ${sectionHTML ? `<div class="profile-sections">${sectionHTML}</div>` : ''}
+      ${sectionHTML ? `<div class="profile-sections" data-spw-slot="body">${sectionHTML}</div>` : ''}
 
       ${footer.contact || linksHTML ? `
-        <footer class="profile-card-footer">
+        <footer class="profile-card-footer" data-spw-slot="footer">
           ${footer.contact ? `<span class="profile-contact">${escHtml(footer.contact)}</span>` : ''}
           ${linksHTML ? `<nav class="profile-links" aria-label="profile links">${linksHTML}</nav>` : ''}
         </footer>

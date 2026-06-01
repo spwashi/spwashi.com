@@ -2591,8 +2591,23 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     color var(--spw-control-transition-fast),
     box-shadow var(--spw-control-transition-base),
     transform var(--spw-control-transition-fast);
-  cursor: default;
+  cursor: grab;
   touch-action: manipulation;
+  position: relative;
+}
+
+/* Make cauldron ingredients feel like true "ingredients" — clear prime/gather affordance */
+.cauldron-ingredient::before {
+  content: "⟐";
+  font-size: 0.7em;
+  opacity: 0.5;
+  margin-right: -0.1em;
+}
+
+.cauldron-ingredient[data-spw-ingredient-primed="true"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 38%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, transparent);
+  transform: translateY(-0.5px);
 }
 
 /* Device optimization for cauldron ingredients (larger comfortable tap targets on narrow viewports) */
@@ -2615,6 +2630,16 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   color: var(--ink, rgba(14, 18, 20, 0.92));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, transparent);
   transform: translateY(-1px);
+}
+
+/* Cauldron locality: ingredients can be scoped to a cognitive container for more natural, local gathering/reset cycles */
+[data-spw-cognitive-container] .cauldron-ingredient {
+  font-size: 0.68rem;
+  min-height: 1.9rem;
+}
+
+[data-spw-cognitive-container] .site-footer__cauldron-ingredients {
+  gap: 0.18rem 0.24rem;
 }
 
 .cauldron-ingredient:focus-visible {
@@ -2661,6 +2686,39 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 .cauldron-origin {
   font-style: italic;
   opacity: 0.65;
+}
+
+/* Further cauldron UX polish for funding/self-imagination tranche:
+   Ingredients carrying character-capacity or budgeting origin get a subtle, inspectable accent.
+   This makes the "trace changes and wonder about variants" path from budgeting/character tools
+   immediately visible in the memory garden without adding rules, chrome, or cognitive load.
+   Powerusers can query [data-spw-origin*="budgeting"] or [data-spw-wonder="character-capacity"].
+   Scoped, additive, respects existing meta styles and locality. */
+.cauldron-ingredient[data-spw-origin*="budgeting"],
+.cauldron-ingredient[data-spw-wonder="character-capacity"],
+.cauldron-ingredient[data-spw-origin*="character"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--op-object-color, #c48a28) 28%, var(--cauldron-chip-border, currentColor) 72%);
+}
+.cauldron-ingredient[data-spw-wonder="character-capacity"] .cauldron-origin,
+.cauldron-ingredient[data-spw-origin*="character"] .cauldron-origin {
+  font-weight: 600;
+  opacity: 0.82;
+}
+
+/* Deeper higher-order dimension rendering in cauldron (from budgeting macros + resource modeling).
+   Keeps the memory garden as a first-class viewer for complex, shareable, higher-order models.
+   Small, scoped, additive — reuses existing meta chip aesthetics. */
+.cauldron-dimension-chip {
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--op-object-color, #c48a28) 12%, transparent);
+  font-size: 0.65em;
+  margin-right: 0.15rem;
+}
+.cauldron-ingredient-meta.cauldron-dimensions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
 }
 
 .cauldron-primed {
@@ -3136,11 +3194,65 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   z-index: 1;
 }
 
+/* Improved touch/keyboard UX for floating chrome (section handle shell).
+   Larger comfortable hit areas on narrow viewports, stronger focus-visible for keyboard users,
+   subtle active feedback without layout shift. Ties into existing touch-target tokens. */
+.spw-section-handle-shell button,
+.spw-section-handle-shell .spw-section-handle-current {
+  min-height: var(--touch-target-compact, 2.25rem);
+  min-width: var(--touch-target-compact, 2.25rem);
+  padding: 0.25rem 0.45rem;
+  border-radius: calc(var(--shape-control, 0.78rem) + 0.1rem);
+  transition: transform 80ms var(--ease-settle, ease), box-shadow 120ms ease;
+}
+
+.spw-section-handle-shell button:is(:hover, :focus-visible),
+.spw-section-handle-shell .spw-section-handle-current:is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+}
+
+.spw-section-handle-shell button:active {
+  transform: scale(0.98);
+}
+
+.spw-section-handle-shell button:focus-visible,
+.spw-section-handle-shell .spw-section-handle-current:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 65%, transparent);
+  outline-offset: 2px;
+}
+
 .spw-section-handle-shell[data-spw-handle-phase="traveling"] {
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, transparent);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.42) inset,
     0 10px 26px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, rgba(0, 0, 0, 0.12));
+}
+
+/* Enhanced UX for floating chrome (section handle) with vocabulary resonance + wonder priming
+   - The handle becomes more "alive" and context-sensitive when near primable vocabulary terms
+     or active wonder/resonance states (ties directly to recent interactive vocabulary work).
+   - Supports page-specific attentional rhythm and cathartic, playful discovery.
+   - Modern, performant: attribute-driven, no new observers. */
+body:has([data-spw-vocabulary-term]:hover, [data-spw-vocabulary-term]:focus-visible) .spw-section-handle,
+body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-handle {
+  --active-op-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 15%, var(--op-probe-color, #6a3fb8));
+}
+
+body:has([data-spw-vocabulary-term]:hover, [data-spw-vocabulary-term]:focus-visible) .spw-section-handle-shell::after,
+body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-handle-shell::after {
+  opacity: 1;
+  box-shadow:
+    0 0 0.55rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 35%, transparent),
+    0 0 1.4rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
+}
+
+/* When the current section has strong vocabulary or wonder content, the handle invites priming
+   (subtle persistent cue without clutter — supports wonder priming mechanics and game-like discoverability). */
+.spw-section-handle[data-spw-section-has-vocabulary="true"],
+.spw-section-handle-shell[data-spw-section-has-vocabulary="true"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent),
+    var(--handle-shadow-rest, 0 1px 3px rgba(0,0,0,0.06));
 }
 
 .spw-section-handle-shell[data-spw-handle-phase="traveling"]::after {

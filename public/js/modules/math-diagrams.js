@@ -46,6 +46,11 @@ function setMeasuredValue(el, valueText, opts = {}) {
   if (scale) el.setAttribute('data-spw-measure-scale', scale);
   if (unit) el.setAttribute('data-spw-measure-unit', unit);
   el.setAttribute('data-spw-measure', 'true'); // for general queryability per measurement-contract
+  // Future / phase integration: when a measurement update should be treated as a deliberate
+  // expressive "phase" or layout trope (e.g. inside an active frame during climate/author change),
+  // callers or a wrapper can call markLayoutTrope(el, 'phase-transition' or 'fidget-parameter')
+  // from instrumentation.js. This makes dynamic % measures first-class participants in the
+  // layout + interactivity audit and the "fidget toys for game devs / magic manuscript" vision.
   // Future: emit via bus when in scope, e.g. bus.emit('spw:value-updated', { kind, source, value: valueText })
 }
 

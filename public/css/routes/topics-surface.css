@@ -458,6 +458,8 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   background: var(--topics-status-bg);
   border-radius: var(--shape-surface, 10px);
   color: var(--ink-soft, rgba(0,0,0,0.72));
+  /* Base transparent border reserves space so [data-spw-measure-kind] attribute application (via JS) doesn't cause reflow or box model shift on narrow/tall or wide viewports. */
+  border: 1px solid transparent;
 }
 
 :where(body[data-spw-surface="topics"] .math-toggle-row) {

@@ -18,8 +18,11 @@ import {
   AUTHOR_WORKFLOW_DEFINITIONS,
   AUTHOR_WORKFLOW_MODES,
   normalizeAuthorMode,
-  normalizeDevelopmentalClimate
+  normalizeDevelopmentalClimate,
+  normalizeComponentMotif,
+  PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF
 } from '/public/js/kernel/shared.js';
+import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
@@ -435,10 +438,20 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   developmentalIndicators: 'off',
   depthIndicators: 'off',
 
+  /* New Spw semantics for metacognition and mindful overflow (2026+ direction) */
+  metacognitiveStance: 'witness',
+  processAttention: 'breath',
+  overflowMode: 'contained',
+
   authorMode: 'draft',
   currentDevelopmentalClimate: 'orient',
   developmentalClimateAutoCycle: 'off',
   narrativeMode: 'off', // Inline prose token lens for narrative surfaces.
+
+  /* Metacognitive and mindful profiles — encourage readers to notice their own stance */
+  metacognitiveStance: 'witness',
+  processAttention: 'breath',
+  overflowMode: 'contained',
 
   grainIntensity: 'subtle',
 
@@ -1578,6 +1591,11 @@ class SiteSettingsManager {
       spwCognitiveHandles: normalized.cognitiveHandles,
       spwDimensionalBreadcrumbs: normalized.dimensionalBreadcrumbs,
       spwFractalNesting: normalized.fractalNesting,
+
+      /* Metacognitive and mindful profile state — first-class Spw semantics for noticing one's own stance */
+      spwMetacognitiveStance: normalized.metacognitiveStance,
+      spwProcessAttention: normalized.processAttention,
+      spwOverflowMode: normalized.overflowMode,
       spwImplementationMutations: normalized.implementationMutations,
       spwShowSemanticMetadata: normalized.showSemanticMetadata,
       spwOperatorHighlighting: normalized.operatorHighlighting,
@@ -1760,6 +1778,104 @@ const getSiteSettingModifiers = (settings) => manager.getModifiers(settings);
 const applySiteSettings = (settings) => {
   const applied = manager.apply(settings);
   initSiteSettingsBindings();
+
+  // Instrumentability + composability timing improvement:
+  // Consolidated data attrs (component-motif, etc.) are set synchronously during apply,
+  // which for initial load occurs from localStorage before full first paint in the
+  // common bootstrap path. This eliminates FOUC for motif-driven tokens (see core.css
+  // pigment-context-boost + motif rules) and makes the full artistic selection
+  // (flavor + motif + theme + color-mode + resonance + climate) queryable in devtools,
+  // state-inspector, and design catalog immediately.
+  const flavor = applied?.pedagogicalFlavor || getSiteSettings().pedagogicalFlavor || 'runtime';
+  const motif = normalizeComponentMotif(flavor);
+  if (document?.documentElement) {
+    document.documentElement.dataset.spwComponentMotif = motif;
+    // Snapshot the active combo for easy inspection / combinatoric debugging.
+    // Enables queries like [data-spw-component-motif="curriculum"][data-spw-color-mode="dark"]
+    // in catalog and .spw operational contracts.
+    document.documentElement.dataset.spwActiveMotif = motif;
+  }
+
+  // Emit so reactive surfaces (tuning widgets, ornament/wonder, measure displays)
+  // can re-compose ornament or accent without a full settings re-apply cycle.
+  // This is part of making the palette/theme/motif/lighting/mind-context system
+  // first-class and event-instrumented for evolutionary semantic enhancement.
+  try {
+    emitSettingsChange({ ...applied, componentMotif: motif, flavor });
+    // Also a dedicated semantic event for operators/measures/attention that care
+    // about the combined artistic + developmental context.
+    if (typeof bus !== 'undefined' && bus?.emit) {
+      bus.emit('spw:palette-state', { flavor, motif, themePack: applied?.themePack, colorMode: applied?.colorMode });
+    }
+
+    // Spell/cauldron chainability: surface setting changes as primable, chainable expressions.
+    // This turns the settings workbench into a source of spells — a cluster or recipe can be
+    // directly primed into cauldron or composed into a personal replayable spell.
+    if (typeof bus !== 'undefined' && bus?.emit) {
+      const spellPayload = {
+        source: 'settings',
+        type: 'settings-bundle',
+        expression: `settings[${flavor || 'balanced'}]{${applied?.authorMode || 'draft'}+${applied?.currentDevelopmentalClimate || 'orient'}}`,
+        label: 'Current settings climate',
+        destination: 'cauldron',
+        canChain: true,
+        tuning: { ...applied, motif, flavor }
+      };
+      bus.emit('spell:primed', spellPayload);
+      bus.emit('cauldron:offer', { type: 'settings-state', payload: spellPayload });
+    }
+  } catch (_) { /* progressive; bus may not be wired in all early paths */ }
+
+  // Expressive layout trope instrumentation (vision: deliberate shifts as design language).
+  // When author workflow or developmental climate (core "magic manuscript" layers) change,
+  // we mark a named "phase-transition" trope. This produces rich dataset + logger + bus
+  // artifacts so senior SEs can inspect the mechanics and game devs can imagine extracting
+  // the model into fidget toys or future office surfaces. The shift itself may be subtle
+  // (orchestrated by CSS tokens for the mode/climate) or zero-layout (pure color/ornament);
+  // either way it is now a first-class, describable, tunable effect.
+  try {
+    const root = document?.documentElement;
+    if (root && applied) {
+      if (applied.authorMode || applied.currentDevelopmentalClimate) {
+        markLayoutTrope(root, 'phase-transition', {
+          reason: 'LAYOUT',
+          scope: 'author-manuscript',
+          source: 'site-settings',
+          tuning: {
+            authorMode: applied.authorMode,
+            developmentalClimate: applied.currentDevelopmentalClimate,
+          },
+        });
+      }
+
+      // Richer trope wiring for theme tuning, palette refinement, spacing tunability
+      if (applied.themePack || applied.paletteResonance || applied.colorMode) {
+        markLayoutTrope(root, 'theme-shift', {
+          reason: 'THEME',
+          scope: 'palette-refinement',
+          source: 'site-settings',
+          tuning: {
+            themePack: applied.themePack,
+            paletteResonance: applied.paletteResonance,
+            colorMode: applied.colorMode,
+          },
+        });
+      }
+
+      if (applied.componentDensity || applied.spacingTuner) {
+        markLayoutTrope(root, 'spacing-tune', {
+          reason: 'LAYOUT',
+          scope: 'content-based-spacing',
+          source: 'site-settings',
+          tuning: {
+            density: applied.componentDensity,
+            spacing: applied.spacingTuner,
+          },
+        });
+      }
+    }
+  } catch (_) { /* never break settings application */ }
+
   return applied;
 };
 const saveSiteSettings = (nextSettings) => manager.save(nextSettings);

@@ -375,6 +375,19 @@
   gap: 0.3rem;
 }
 
+/* Improved hierarchy + subitem flow for badges (options/sub-clusters).
+   Primary clusters get stronger visual weight; secondary are calmer.
+   Wrapping is explicit and respects narrow viewports without breaking composition. */
+.profile-badge-group[data-cluster="role"],
+.profile-badge-group[data-cluster="approach"] {
+  font-weight: 600;
+}
+
+.profile-badge-group[data-cluster="context"],
+.profile-badge-group[data-cluster="domain"] {
+  opacity: 0.92;
+}
+
 .profile-badge-group[data-badge-variant="primary"] .profile-tag {
   border-color: color-mix(in srgb, var(--profile-accent) 24%, transparent);
   color: color-mix(in srgb, var(--profile-accent) 84%, var(--profile-ink));

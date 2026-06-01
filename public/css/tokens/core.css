@@ -435,6 +435,23 @@
   --subjective-brace-width: 28px;
   --brace-strip-width: var(--objective-brace-width);
   --right-strip-width: var(--subjective-brace-width);
+
+  /* Typographical Aerodynamics Study (variable flow + encouraged pausing)
+     - "Aerodynamics" here means the felt resistance, lift, and breath of reading
+       as content, climate, density, motif, and trope state change.
+     - Goal: variable flow that feels alive and cathartic, with deliberate "pauses"
+       (micro-breaths, emphasis shifts, rhythm changes) to support active wonder,
+       taste development, and genre resonance rather than relentless forward motion.
+     - Content-based: denser measures/SVGs/operators increase "drag" (tighter tracking,
+       more breath space); lighter prose increases lift (looser, faster flow).
+     - Climate/mode sensitive: weave/rehearse climates favor more pausing breath;
+       draft vs publish author modes shift overall aerodynamic character.
+     - Performance: all via tokens + data attrs; no JS-driven per-element reflow.
+     - Future: expose via query (?typography-flow=variable) and trope 'typography-flow'. */
+  --text-aerodynamic-base: 1;          /* 0.7 compressed → 1.3 lifted */
+  --text-pause-breath: 0.25rem;        /* micro space that encourages micro-pauses */
+  --text-flow-variable: 1;             /* multiplier driven by content density + climate */
+  --text-rhythm-drag: 0;               /* positive when content is dense (measures, code, SVGs) */
 }
 
 
@@ -722,6 +739,7 @@
   --pigment-amber-resin: hsl(38 82% 50%);
   --pigment-copper-oxide: hsl(22 58% 40%);
   --pigment-violet-ink: hsl(268 48% 36%); /* tiny sat+depth bump for better math resonance distinction and swatch pop (low-attachment original) */
+  /* Balanced for motif/lighting composability: probe color in curriculum or lab motifs under different theme packs. */
   --pigment-rose-dust: hsl(342 44% 46%);
   --pigment-clay-red: hsl(10 52% 42%);
   --pigment-brass-warm: hsl(40 58% 45%); /* slight warm/craft lean for better distinction in craft-led mode (low-attachment original) */
@@ -730,7 +748,32 @@
   --pigment-moss-soft: hsl(102 26% 34%);
   --pigment-lapis-soft: hsl(214 58% 42%);
 
+  /* Context-aware pigment modulation tokens.
+     These allow artistically selected palettes/theme packs to compose with
+     lighting conditions and component motifs (curriculum, lab, artifact, etc.)
+     without per-motif token explosion. Used by ornament, tuning, and operator
+     surfaces for readable, balanced color across contexts. */
+  --pigment-context-boost: 1;        /* 0.8 subdued motif → 1.2 emphatic motif */
+  --pigment-lighting-guard: var(--spw-lighting-guard, 0.34);
+  --pigment-motif-bias: 0;           /* set via data-spw-component-motif for evolutionary semantic tuning */
+
   --active-op-color: var(--teal);
+
+  /* Easy artistic tuning via single data attr on body or container.
+     Combines with data-spw-color-mode + data-spw-theme-pack + data-spw-palette-resonance
+     for logical, learnable composability. Falls back gracefully. */
+  html[data-spw-component-motif="curriculum"] {
+    --pigment-context-boost: 1.15;
+    --active-op-color: var(--pigment-teal-electric);
+  }
+  html[data-spw-component-motif="lab"] {
+    --pigment-context-boost: 1.08;
+    --active-op-color: var(--pigment-lapis-soft);
+  }
+  html[data-spw-component-motif="artifact"] {
+    --pigment-context-boost: 0.95;
+    --active-op-color: var(--pigment-brass-warm);
+  }
   --active-op-border: color-mix(in srgb, var(--active-op-color) 34%, transparent);
   --active-op-bg-soft: color-mix(in srgb, var(--active-op-color) 7%, transparent);
 
@@ -760,6 +803,9 @@
   --op-probe-color: hsl(268 36% 42%);
   --op-probe-border: hsla(268, 36%, 42%, 0.2);
   --op-probe-bg-soft: rgba(245, 238, 255, 0.72);
+  /* Balanced for lighting + motif composability (e.g., curriculum or lab motifs under ritual-vellum or electric-studio).
+     Uses pigment context for evolutionary semantic readability across conditions. */
+  --op-probe-color-balanced: color-mix(in srgb, var(--pigment-violet-ink) calc(100% * var(--pigment-context-boost, 1)), var(--op-probe-color));
 
   --op-action-color: hsl(180 64% 25%);
   --op-action-border: hsla(180, 64%, 25%, 0.35);
@@ -1636,6 +1682,42 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
     --op-binding-color: hsl(20 62% 66%);
     --line-strong: rgba(214, 141, 77, 0.32);
   }
+}
+
+/* ==========================================================================
+   Motif + Lighting Balance (color + mind context composability)
+   --------------------------------------------------------------------------
+   Extends the pigment-context-boost + motif active-op overrides (defined earlier)
+   with explicit dark + auto-dark variants. This guarantees that artistically
+   chosen theme packs + lighting conditions + component motifs (curriculum for
+   mind/care, lab for technical depth, artifact for reflection) remain balanced,
+   readable, and distinct without per-page overrides.
+
+   "Mind context" here refers to developmental climate + pedagogical flavor
+   influencing the felt weight of operators/measures/ornament; the boost and
+   lifted dark colors keep visual weight aligned with cognitive stance across
+   the full combinatoric tree (motif × theme × color-mode × climate × measure-kind).
+
+   These rules are the minimal necessary to make tuning to theme packs logical
+   and learnable: change one data attr (or flavor preset) and the entire
+   operator/measure/accent system rebalances gracefully.
+   ========================================================================== */
+html[data-spw-color-mode="dark"][data-spw-component-motif="curriculum"],
+html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="curriculum"] {
+  --pigment-context-boost: 1.12;
+  /* Lifted electric teal keeps curriculum "mind" (care, memory, boundary) emphasis
+     distinct and vibrant on dark ritual/electric/copper packs. */
+  --active-op-color: hsl(186 68% 58%);
+}
+html[data-spw-color-mode="dark"][data-spw-component-motif="lab"],
+html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="lab"] {
+  --pigment-context-boost: 1.06;
+  --active-op-color: hsl(214 62% 62%); /* lifted lapis for technical clarity in dark */
+}
+html[data-spw-color-mode="dark"][data-spw-component-motif="artifact"],
+html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="artifact"] {
+  --pigment-context-boost: 0.98;
+  --active-op-color: hsl(40 52% 58%); /* lifted brass for reflective artifact weight */
 }
 
 /* Semantic density */

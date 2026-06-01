@@ -355,6 +355,24 @@ const OPERATOR_PREFIX_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
    along with source/scale. Components using setMeasuredValue or equivalent
    should set data-spw-measure="true" for catalog/query discoverability. */
 
+/* Canonical mapping from pedagogicalFlavor (user-facing artistic posture) to
+   component-motif (structural visual/ornament context). This is the single
+   source of truth for the logical, learnable composable relationship between
+   theme packs, lighting (color-mode), palette resonance, developmental climate
+   ("mind context"), and motif. Centralizing here makes tuning to artistically
+   selected packs predictable and inspectable across conditions and component
+   trees (see palette_theme_composability_contract in .spw). */
+const PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF = Object.freeze({
+  culinary: 'curriculum',
+  garden: 'curriculum',
+  studio: 'artifact',
+  runtime: 'lab'
+});
+
+const normalizeComponentMotif = (flavor = 'runtime') => (
+  PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF[String(flavor).toLowerCase()] || 'lab'
+);
+
 /* ==========================================================================
    3. Shared taxonomies
    ========================================================================== */
@@ -1527,6 +1545,7 @@ export {
   matchesMaxWidth,
   normalizeAuthorMode,
   normalizeDevelopmentalClimate,
+  normalizeComponentMotif,
   normalizeText,
   normalizeToken,
   onDomReady,
@@ -1544,5 +1563,6 @@ export {
   snapshotSpwTokenField,
   toNumber,
   writeAuthorWorkflow,
-  writeHormoneState
+  writeHormoneState,
+  PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF
 };

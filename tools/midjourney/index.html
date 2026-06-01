@@ -125,8 +125,16 @@
                     readable and which component or scene should test the surface.
                 </p>
                 <p>I want this page to feel like a back counter with pinned studies, damp notes, and a few good bottles still on hand: enough order to keep the night moving, enough residue to remember what was worth another round.</p>
+
+                <div class="image-study spw-image-surface" data-spw-image-surface data-spw-image-input="prompt-packet" data-spw-slot="visual-study" style="margin:1rem 0; padding:0.75rem; border:1px dashed var(--line); border-radius:0.5rem;">
+                    <p style="margin:0; font-size:0.9em;"><strong>Local image mount / paste zone</strong> — drop or paste images here to associate them with prompt packets (uses site image metaphysics + prompt memory for recall across sessions). Producers: this is how you build a personal visual canon without losing the files.</p>
+                </div>
                 <p>As of April 22, 2026, the nearby generator shelf includes Midjourney, ChatGPT Images, Gemini, Adobe Firefly, and Ideogram. The packet should still read cleanly before it gets tuned to any one of them.</p>
                 <p data-spw-narrative-copy="storyboard-collaboration" data-spw-copy-label="Storyboard collaboration" data-spw-copy-purpose="artist-handoff">This route is also where storyboarding and collaboration can stay legible. Treat copy as a panel sketch before it becomes an image: subject, camera distance, lighting, caption job, change budget, and what the scene must still mean after an artist improves it. When Raven of the Broken Biscuits starts drawing for the animated series work, that art should live in clearly credited collaborator buckets and route surfaces instead of blending into your own studies.</p>
+
+                <p class="frame-note" data-spw-intent="producer-director-guidance">
+                    <strong>For producers and directors developing a visual style:</strong> Start with rendered cards from the <a href="/tools/character-sheet/">character sheet builder</a> or <a href="/tools/profile/">profile tool</a>. Their tropes, badges, and sections become stable identity packets. Combine them with style refs (material + light + palette) and omni refs (world rules) here. Use the design palettes and slots pages to tune the underlying component language so the same atmosphere holds across stills, motion tests, and UI. Query parameters on this bench and the character tools let you share exact higher-order style combinations (card state + palette + image memory) with your art team.
+                </p>
                 <figure class="image-study topic-photo-card" data-spw-image-prominence="feature" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#154a52, #b7834f, #d8d3c8, #406173" data-spw-accent-anchor="midjourney bench shelf counter culture" data-spw-accent-operator="ref">
                     <img src="/public/images/renders/unsorted-curation/orbital-thread-field.webp" alt="A dim teal-and-amber field of suspended lines and glowing nodes, reading like a reef of references hovering above a night counter." loading="lazy" decoding="async" width="768" height="768">
                     <figcaption>
@@ -308,6 +316,48 @@
     } catch (e) {
       sessionStorage.removeItem('spw-pending-vision-seed');
     }
+  })();
+
+  // Consume style-packet from rendered cards (character/profile builders).
+  // Improves query parameter combinatorics and discoverability of card → style development flow.
+  // Surfaces the packet in the reference area for immediate use by producers/directors.
+  (function () {
+    const params = new URLSearchParams(window.location.search.replace(/^\?/, ''));
+    const packet = params.get('style-packet');
+    if (!packet) return;
+
+    const packetsSection = document.getElementById('reference-packets');
+    if (!packetsSection) return;
+
+    const note = document.createElement('div');
+    note.className = 'frame-note';
+    note.setAttribute('data-spw-feature', 'style-packet-from-card');
+    note.innerHTML = `
+      <strong>Style packet from rendered card</strong>
+      <p style="font-family:monospace; font-size:0.85em; white-space:pre-wrap;">${decodeURIComponent(packet)}</p>
+      <button type="button" class="operator-chip" data-action="copy-packet">copy full packet</button>
+    `;
+    packetsSection.insertBefore(note, packetsSection.firstElementChild?.nextSibling || null);
+
+    const copyBtn = note.querySelector('[data-action="copy-packet"]');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard?.writeText(decodeURIComponent(packet)).catch(() => {});
+        copyBtn.textContent = 'copied';
+        setTimeout(() => { copyBtn.textContent = 'copy full packet'; }, 1200);
+      }, { once: false });
+    }
+
+    // Instrument the arrival for debuggability
+    try {
+      const bus = window.__SPW_SITE__?.bus || window.bus;
+      bus?.emit?.('spw:value-updated', {
+        surface: 'tools-midjourney',
+        kind: 'style-packet-from-card',
+        packet: packet.slice(0, 200),
+        timestamp: Date.now(),
+      });
+    } catch (_) {}
   })();
 </script>
 </body>

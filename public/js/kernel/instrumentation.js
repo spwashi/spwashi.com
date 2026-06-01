@@ -202,6 +202,43 @@ export const SPW_REFLOW_REASONS = Object.freeze({
   VIEWPORT: 'viewport',
 });
 
+/* Deliberate, expressive layout shifts treated as first-class design "tropes".
+   These are not failures of stability but intentional phase transitions or
+   gestalt rebalancings that communicate state, ruleset application, or
+   manuscript response. They are instrumented so game developers can study
+   the mechanics as fodder for 1000 future fidget/office toys, and authors
+   can treat them as legible layers of semantic intent in a magic manuscript.
+
+   Use via markLayoutTrope (or markReflowReason with LAYOUT + trope details).
+   The layout-shift-audit already has an "intentional" path; these feed it richly. */
+export const SPW_LAYOUT_TROPES = Object.freeze({
+  'phase-transition': 'A ruleset or stance change causes a described spatial or emphasis rebalancing (e.g. authorMode + climate application).',
+  'ruleset-settle': 'Applying density, motif, physics, or meaning preset produces a pleasing, observable settling animation or gap/measure shift.',
+  'gestalt-rebalance': 'Operator/measure clusters or frame contents regroup for stronger proximity/similarity/common-fate after a semantic change.',
+  'manuscript-reveal': 'A layer of intent (audience, developmental climate, brace form, subjective/objective measure) becomes visually or spatially more prominent.',
+  'fidget-parameter': 'A tuning widget or lab control adjusts a physical-seeming parameter whose effect includes a small, reversible, instrumented layout or ornament response.',
+  /* New richer tropes for current enhancements */
+  'theme-shift': 'Theme pack, palette resonance, or color mode change produces a deliberate, describable visual and spatial re-composition (palette refinement + tuning).',
+  'spacing-tune': 'Density, gap, or content-based spacing adjustment (responsive to images, measures, SVG density) creates tunable alignment and flow.',
+  'typography-flow': 'Content-aware or climate-driven typographical aerodynamics change (variable rhythm, breath, pausing encouragement) for cathartic reading and active wonder.',
+  'image-memory': 'Local association of image surfaces with prompts or resonance states, creating persistent, queryable creative memory for prompts and engagement.',
+  'svg-integration': 'SVG host attribute or interaction change (tunability, tropes, memory, alignment) participates in the broader expressive system.',
+  /* Page-specific / content-led tropes for vocabulary resonance + attentional rhythm */
+  'fermentation-rhythm': 'Content about living processes (time, substrate, inoculation) triggers slow, patient typographic and spatial rhythm that rewards attention and develops long-horizon taste.',
+  'math-visual-aerodynamics': 'Pure structure visualization content drives variable flow, emphasis shifts, and pausing that make mathematical imagination feel like collaborative art or science.',
+  'recipe-composition-flow': 'Recipe or culinary grammar content creates compositional breathing room and operator-driven resonance that models taste development through play.',
+  'vocabulary-resonance': 'Spw/operator/brace/measure terms become live, primable, wonder-charged vocabulary objects that develop imaginative language skill and poetic/game-like discoverability.',
+  /* Higher-order dimension & resource modeling scalability (budgeting macros, character resources, configurator combinatorics) */
+  'higher-order-dimension': 'A surface introduces or activates multiple named, composable resource dimensions (personality, attention, creative capital, prompt budgets, etc.) as a single coherent, higher-order model.',
+  'resource-composition': 'Multiple resource dimensions or capacity statements are combined (via cauldron priming, macro, or explicit expression) into a traceable, primable, higher-order artifact.',
+  'budgeting-macro': 'A query-string or named macro seeds a complex, higher-order set of resource dimensions into a working surface (shareable, reproducible modeling state).',
+});
+
+export const normalizeLayoutTrope = (trope = '') => {
+  const normalized = normalizeToken(trope);
+  return Object.prototype.hasOwnProperty.call(SPW_LAYOUT_TROPES, normalized) ? normalized : '';
+};
+
 const normalizeToken = (value = '') => String(value)
   .trim()
   .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
@@ -324,6 +361,13 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     reflowScope: 'data-spw-reflow-scope',
     reflowCost: 'data-spw-reflow-cost',
     tuningPrefix: 'data-spw-tune-*',
+    /* New cognitive/meaning attributes for containers — enable interpretable
+       design depth and meaning for screenshots, catalog, AI agents, and
+       active wonder participants. */
+    meaningDepth: 'data-spw-meaning-depth',
+    designInterpretation: 'data-spw-design-interpretation',
+    memoryManaged: 'data-spw-memory-managed',
+    annotationScope: 'data-spw-annotation-scope',
   }),
   queryParameters: Object.freeze({
     cssVariable: 'spw-var-<token>=<value>',
@@ -340,6 +384,8 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     viewingPreset: 'spw-view|view=<quiet|readable|inspect|screenshot>',
     tuningAttribute: 'spw-tune-<name>=<value>',
     reflowReason: 'spw-reflow|reflow=<reason>',
+    meaningDepth: 'spw-meaning-depth|meaning-depth=<light|rich>',
+    designInterpretation: 'spw-design-interpretation|design-interpretation=<value>',
   }),
   queryPresets: Object.freeze({
     quiet: SPW_QUERY_PRESETS.quiet.href,
@@ -365,6 +411,7 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     meaning: SPW_MEANING_PRESETS,
   }),
   reflowReasons: SPW_REFLOW_REASONS,
+  layoutTropes: SPW_LAYOUT_TROPES,
   relationships: SPW_LOG_RELATIONSHIPS,
   consoleApi: 'window.spwCompose',
 });
@@ -492,6 +539,40 @@ export function markReflowReason(target, reason = SPW_REFLOW_REASONS.INTERACTION
   return element;
 }
 
+/* Mark a deliberate, expressive layout shift or re-gestalting as a named "trope".
+   This is the key primitive for treating certain layout changes as design language
+   rather than instability — directly supporting the "fidget toys for game devs"
+   and "magic manuscript layering for authors" vision. The resulting data attrs
+   + logger + bus events make the effect fully inspectable and tunable. */
+export function markLayoutTrope(target, trope, details = {}) {
+  const element = resolveTarget(target, details.root);
+  if (!element) return null;
+
+  const normalizedTrope = normalizeLayoutTrope(trope);
+  if (normalizedTrope) {
+    element.dataset.spwLayoutTrope = normalizedTrope;
+  }
+
+  // Also surface through the existing reflow system for unified observation
+  const reason = details.reason || SPW_REFLOW_REASONS.LAYOUT;
+  markReflowReason(element, reason, {
+    ...details,
+    scope: details.scope || 'trope',
+    tuning: {
+      ...(details.tuning || {}),
+      layoutTrope: normalizedTrope || trope,
+    },
+  });
+
+  // Rich instrumentation tag
+  markInstrumented(element, details.source || 'layout-trope', {
+    tags: ['layout-trope', normalizedTrope || trope],
+    state: normalizedTrope || trope,
+  });
+
+  return element;
+}
+
 export function parseSpwQueryDisposition(search = globalThis.location?.search || '', options = {}) {
   const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
   const queryContract = options.queryContract || createSpwQueryContract(options);
@@ -544,6 +625,19 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
 
     if (queryContract.aliases.reflow?.has(key)) {
       disposition.reflowReason = normalizeReflowReason(value);
+      continue;
+    }
+
+    if (key === 'meaning-depth' || key === 'spw-meaning-depth') {
+      const depth = normalizeToken(value);
+      if (['light', 'rich'].includes(depth)) {
+        disposition.data.spwMeaningDepth = depth;
+      }
+      continue;
+    }
+
+    if (key === 'design-interpretation' || key === 'spw-design-interpretation') {
+      disposition.data.spwDesignInterpretation = normalizeToken(value) || value;
       continue;
     }
 
@@ -775,6 +869,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     mark: (target, details = {}) => markInstrumented(target, options.namespace || 'spw-compose', details),
     query: (target = globalObject.document?.documentElement, queryOptions = {}) => applySpwQueryDisposition(target, { ...queryOptions, source: options.namespace || 'spw-compose' }),
     reflow: (target, reason, details = {}) => markReflowReason(target, reason, { ...details, source: options.namespace || 'spw-compose' }),
+    layoutTrope: (target, trope, details = {}) => markLayoutTrope(target, trope, { ...details, source: options.namespace || 'spw-compose' }),
     tune: (target, entries = {}) => writeTuningAttributes(target, entries, { source: options.namespace || 'spw-compose' }),
 
     // Phase 3 agent/QA surface (gated behind ?debug=qa|agent or ?qa=screenshot-qa)

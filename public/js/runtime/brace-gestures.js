@@ -177,6 +177,23 @@ function classifyTarget(el) {
   const affordances = resolveAffordances(el, targetKind);
   const wonder = resolveWonder(el, operator, targetKind, affordances);
   const context = resolveContext(el);
+
+  // Topology enhancement: surface explicit brace nesting / containment for
+  // better CSS gestalts, queryability, and phase coordination with operators
+  // and measurements. This makes brace/operator topology first-class data.
+  if (el && el.matches && el.matches('[data-spw-form]')) {
+    const parentBrace = el.closest('[data-spw-form="brace"]');
+    if (parentBrace && parentBrace !== el) {
+      el.dataset.spwBraceNesting = 'nested';
+      el.dataset.spwBraceParentForm = parentBrace.dataset.spwForm || 'brace';
+    } else {
+      el.dataset.spwBraceNesting = 'root';
+    }
+    // Simple topology signal for operators inside this brace
+    if (operator) {
+      el.dataset.spwBraceContainsOperator = operator;
+    }
+  }
   const semantic = deriveSemanticBraceExpression(el);
   const fieldRoot =
     el.closest?.('[data-spw-field-root], .site-frame, main, body') || document.body;

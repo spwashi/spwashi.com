@@ -293,6 +293,22 @@ header,
   border-color: var(--measure-tint, currentColor);
 }
 
+/* Responsive tightening for narrow viewports and tall aspect ratios (mobile portrait, etc.)
+   Prevents measure elements from causing wrapping or overflow inside frames/labs while preserving the subjective/objective distinction. */
+@media (max-width: 40rem) {
+  [data-spw-measure-kind],
+  .status[data-spw-measure-kind],
+  .math-diagram-status[data-spw-measure-kind] {
+    font-size: 0.9em;
+    padding-inline: calc(var(--handle-pad-x) * 0.6);
+    line-height: 1.35;
+  }
+
+  .math-interactive-lab [data-spw-measure-kind] {
+    max-inline-size: 100%;
+  }
+}
+
 /* Extend to general status and artifact elements for curriculum / labs coherence */
 .status[data-spw-measure-kind],
 [data-spw-artifact] [data-spw-measure-kind],
@@ -301,6 +317,48 @@ header,
 [data-spw-proof] [data-spw-measure] {
   font-family: var(--font-mono, monospace);
   border: 1px dashed var(--measure-tint, currentColor);
+}
+
+/* Measurement phases + interactivity + wrapping (component layout + interactivity audit)
+   - Stronger focus-visible and active coordination when measures live inside frames
+     that are active, attention-focused, or under developmental/author phases.
+   - Preserves subjective (dashed/italic) vs objective distinction while giving
+     tactile "graspable" feedback — supports both manuscript layering and
+     fidget-toy style tuning of measurement surfaces.
+   - Scoped wrapping safeguard for long subjective reflections or objective
+     status text inside frames to reduce awkward breaks during phase transitions
+     (authorMode/climate changes, frame activation, motif application).
+   - Ties into expressive layout tropes: these states are now more observable
+     and less likely to produce surprising layout shifts. */
+:where(.site-frame, [data-spw-feature*="measure"], .math-interactive-lab)
+  [data-spw-measure-kind]:is(:focus-visible, :focus-within) {
+  outline: 2px solid color-mix(in srgb, var(--measure-tint, var(--op-probe-color)) 45%, transparent);
+  outline-offset: 2px;
+  border-color: var(--measure-tint, currentColor);
+}
+
+:where(.site-frame[data-spw-active="true"], .site-frame[data-spw-attention="focused"])
+  [data-spw-measure-kind] {
+  /* Gentle common-fate lift during frame phases without causing extra wrap */
+  transform: translateY(-0.5px);
+  transition: transform var(--duration-fast, 140ms) var(--ease-settle, ease);
+}
+
+:where(.site-frame, .proof-capture, .boundary-test-form)
+  [data-spw-measure-kind="subjective"] {
+  /* Extra wrapping protection for long practitioner reflections in manuscript contexts */
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
+}
+
+@media (max-width: 48rem) {
+  :where(.site-frame, .math-interactive-lab)
+    [data-spw-measure-kind] {
+    /* Tighter intermediate-width wrapping guard for measurement phases */
+    max-inline-size: calc(100% - 0.5rem);
+    line-height: 1.38;
+  }
 }
 
 /* ==========================================================================
@@ -1611,6 +1669,56 @@ body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
 
 :where([data-spw-gesture="projecting"][data-spw-form="brace"]) {
   transform: translate(calc(var(--drag-dx, 0px) * 0.03), calc(var(--drag-dy, 0px) * 0.03));
+}
+
+/* Interactive vocabulary development + resonance (vocabulary-resonance trope)
+   - Terms carrying Spw/operator/brace/measure language become primable, wonder-charged objects.
+   - Hover/prime/focus creates resonance (echo via wonder-memory, charge, annotation invitation).
+   - Supports page-specific attentional rhythm and game/poetry-style discoverability.
+   - Ties directly to 'vocabulary-resonance' trope and imagination-development north star.
+   - Modern CSS: uses :has() + :focus-visible for clean, context-sensitive behavior. */
+[data-spw-vocabulary-term],
+[data-spw-semantic-expression],
+.inline-note code,
+.frame-note code {
+  transition: color var(--duration-fast), background var(--duration-fast), box-shadow var(--duration-fast);
+  cursor: help;
+}
+
+[data-spw-vocabulary-term]:is(:hover, :focus-visible),
+[data-spw-semantic-expression]:is(:hover, :focus-visible),
+.inline-note code:is(:hover, :focus-visible),
+.frame-note code:is(:hover, :focus-visible) {
+  color: var(--active-op-color);
+  background: color-mix(in srgb, var(--active-op-color) 8%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color) 25%, transparent);
+}
+
+/* When a vocabulary term is primed (via wonder-memory, annotation, or explicit data attr)
+   it participates in the larger resonance field — supports priming wonder mechanics
+   and easter-egg-like moments of recognition. */
+body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) [data-spw-vocabulary-term],
+body:has([data-spw-annotation-match]) [data-spw-vocabulary-term] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* Brace + operator + measurement topology enhancement (gestalt + phase coordination)
+   When a brace is in a strong gesture/phase state and contains or is near
+   measurement elements, strengthen proximity and common fate without causing
+   wrapping surprises. Supports the "brace as manuscript layer container" and
+   "fidget-tunable brace physics" directions. */
+:where([data-spw-form="brace"][data-spw-gesture]:has([data-spw-measure-kind]),
+       [data-spw-form="brace"][data-spw-gesture] [data-spw-measure-kind]) {
+  --brace-measure-tint: color-mix(in srgb, var(--measure-tint, var(--spw-operator-color)) 22%, transparent);
+  border-color: var(--brace-measure-tint);
+  transition: border-color var(--duration-fast) var(--ease-settle);
+}
+
+:where([data-spw-form="brace"][data-spw-gesture="sustained"] [data-spw-measure-kind]) {
+  /* Sustained brace gesture makes contained measures participate in the breath */
+  animation: spw-handle-sustain-breath 1.6s ease-in-out infinite;
 }
 
 :where([data-spw-gesture="projecting"][data-spw-form="block"]) {

@@ -623,6 +623,15 @@ function renderIngredientsList(ingredients) {
       meta += `<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`;
     }
 
+    // Deeper higher-order dimension / resource modeling wiring (from budgeting macros and similar tools).
+    // When an ingredient carries a dimensions array (higher-order resource model), surface it cleanly
+    // as inspectable meta chips. This makes complex, shareable, query-string-loaded models visible
+    // and traceable inside the cauldron without extra UI.
+    if (Array.isArray(ing.dimensions) && ing.dimensions.length) {
+      const dimList = ing.dimensions.slice(0, 5).map(d => `<span class="cauldron-dimension-chip" data-spw-dimension="${escapeHtml(d)}">${escapeHtml(d)}</span>`).join(' ');
+      meta += `<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`;
+    }
+
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
 
     return `

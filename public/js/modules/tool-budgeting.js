@@ -50,6 +50,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let entries = [];
 
+    // Budgeting macros via query string — higher-order dimension & resource modeling support.
+    // Examples:
+    //   ?macro=weird-illustrator
+    //   ?dimensions=attention+creative-capital+illustrator-weird&seedAmount=850
+    //   ?dims=attention, prompt-tokens-1200
+    // Parsed once on load. If no local ledger state, seeds a starter entry or prefills inputs.
+    // Fully optional, progressive, shareable (powerusers construct complex models in URLs).
+    // Follows site conventions (URLSearchParams + replace(/^\?/, '')).
+    function applyBudgetingMacros() {
+        try {
+            const params = new URLSearchParams(String(window.location.search || '').replace(/^\?/, ''));
+            const rawMacro = params.get('macro') || params.get('m') || '';
+            const rawDims = params.get('dimensions') || params.get('dims') || params.get('d') || '';
+            const seedAmount = parseFloat(params.get('amount') || params.get('seedAmount') || params.get('a') || '');
+
+            let dimensions = [];
+            if (rawMacro) {
+                // Named macro → treat the macro name as a primary dimension (can be extended later with a registry)
+                dimensions.push(rawMacro);
+            }
+            if (rawDims) {
+                const extra = rawDims.split(/\s*[+,]\s*/).map(d => d.trim()).filter(Boolean);
+                dimensions = [...dimensions, ...extra];
+            }
+            dimensions = [...new Set(dimensions)]; // dedupe
+
+            if (dimensions.length === 0) return null;
+
+            // If we have a seed amount and the form inputs exist, prefill for easy "apply macro" flow
+            if (Number.isFinite(seedAmount) && seedAmount > 0 && amountInput) {
+                amountInput.value = seedAmount;
+            }
+            if (dimensions.length && document.getElementById('budget-motive')) {
+                // Prefill the higher-order dimension field so the visitor sees the model immediately
+                document.getElementById('budget-motive').value = dimensions.join(' + ');
+            }
+
+            // Emit for deeper wiring / instrumentation (higher-order macro loaded as a distinct phase)
+            const bus = window.__SPW_SITE__?.bus || window.bus;
+            if (bus && typeof bus.emit === 'function') {
+                bus.emit('spw:value-updated', {
+                    surface: 'tools-budgeting',
+                    kind: 'higher-order-macro',
+                    macro: rawMacro || null,
+                    dimensions,
+                    seedAmount: Number.isFinite(seedAmount) ? seedAmount : null,
+                    timestamp: Date.now(),
+                });
+            }
+
+            return { dimensions, seedAmount: Number.isFinite(seedAmount) ? seedAmount : null, rawMacro };
+        } catch (_) {
+            return null;
+        }
+    }
+
+    // Run macros early (before loadState) so query can seed the UI / starter state
+    const appliedMacro = applyBudgetingMacros();
+
     function makeId() {
         if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
         return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -90,6 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function addEntry(type) {
         const desc = descInput.value.trim() || 'Ledger entry';
         const amount = Number.parseFloat(amountInput.value);
+        const rawMotive = (document.getElementById('budget-motive')?.value || '').trim();
+
+        // Higher-order dimension scalability: parse simple "dim1 + dim2 + dim3" or comma syntax into array.
+        // This turns the single optional field into a lightweight, extensible resource-dimension model.
+        // Powerusers can express arbitrarily many named dimensions; the system treats them as first-class primable resources.
+        // No new UI, no schema, no rules — pure optional textual composition that becomes structured data + Spw expressions.
+        const dimensions = rawMotive
+            ? rawMotive.split(/\s*[+,]\s*/).map(d => d.trim()).filter(Boolean)
+            : [];
+
         if (!Number.isFinite(amount) || amount <= 0) {
             amountInput.focus();
             return;
@@ -100,10 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
             type,
             desc,
             amount,
+            motive: rawMotive || undefined,
+            dimensions: dimensions.length ? dimensions : undefined, // higher-order named resource dimensions (scalable, composable)
         });
 
         descInput.value = '';
         amountInput.value = '';
+        // Do not clear the dimension field — supports iterative higher-order modeling (add one dimension, save, add another).
         descInput.focus();
         saveState();
     }
@@ -138,9 +210,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.className = 'budget-item';
         item.dataset.type = entry.type;
+        if (entry.dimensions && entry.dimensions.length > 1) {
+            item.dataset.higherOrder = 'true';
+            item.dataset.dimensionCount = String(entry.dimensions.length);
+        } else if (entry.motive) {
+            item.dataset.hasMotive = 'true';
+        }
 
         content.className = 'budget-item__content';
         title.textContent = entry.desc;
+
+        // Higher-order dimensions (or fallback single motive) as clean, inspectable micro-labels.
+        // Cleanup: single container, explicit dataset for CSS/JS targeting, consistent with vocabulary + operator grammar.
+        const dimsToShow = (entry.dimensions && entry.dimensions.length) ? entry.dimensions
+            : (entry.motive ? [entry.motive] : []);
+
+        if (dimsToShow.length) {
+            const dimContainer = document.createElement('span');
+            dimContainer.className = 'budget-item__dimensions';
+            dimsToShow.forEach((dim, idx) => {
+                const dimEl = document.createElement('span');
+                dimEl.className = 'budget-item__motive budget-item__dimension';
+                dimEl.setAttribute('data-spw-vocabulary-term', '');
+                dimEl.setAttribute('data-spw-operator', idx === 0 ? 'object' : 'topic');
+                dimEl.textContent = dim;
+                dimEl.title = 'Higher-order resource dimension — primes as part of the composed model';
+                dimContainer.append(dimEl);
+            });
+            content.append(title, amount, dimContainer);
+        } else {
+            content.append(title, amount);
+        }
 
         removeButton.className = 'budget-item__remove';
         removeButton.type = 'button';
@@ -148,8 +248,40 @@ document.addEventListener('DOMContentLoaded', () => {
         removeButton.setAttribute('aria-label', `Remove ${entry.desc}`);
         removeButton.addEventListener('click', () => removeEntry(entry.id));
 
-        content.append(title, amount);
-        item.append(content, removeButton);
+        // Prime affordance for money entries — now emits higher-order dimension structure.
+        // When multiple dimensions are present, the payload carries a dimensions array + a composed Spw-style expression.
+        // This is the concrete scalability improvement: the same optional field now models (and primes) higher-order,
+        // multi-dimensional resources without any new chrome or rules. Cauldron receives first-class compositional material.
+        const primeBtn = document.createElement('button');
+        primeBtn.className = 'budget-item__prime operator-chip';
+        primeBtn.type = 'button';
+        primeBtn.textContent = 'prime to cauldron';
+        primeBtn.addEventListener('click', () => {
+            try {
+                const bus = window.__SPW_SITE__?.bus || window.bus;
+                if (bus && typeof bus.emit === 'function') {
+                    const dims = entry.dimensions || (entry.motive ? [entry.motive] : []);
+                    const dimSlug = dims.length ? '-dims-' + dims.map(d => d.slice(0, 16).replace(/\s+/g, '-')).join('+') : '';
+                    const expr = `${entry.amount}-${entry.type}${dimSlug}`;
+                    bus.emit('spell:capture', {
+                        expression: expr,
+                        label: `${entry.desc} (${entry.type} ${entry.amount}${dims.length ? ' — ' + dims.join(' + ') : ''})`,
+                        type: 'numerical',
+                        value: entry.amount,
+                        unit: entry.type,
+                        origin: 'budgeting-tool-money',
+                        wonder: dims.length ? 'higher-order-capacity' : (entry.motive ? 'character-capacity' : 'capacity'),
+                        primedBy: 'money-prime',
+                        motive: entry.motive || undefined,
+                        dimensions: dims.length ? dims : undefined, // explicit higher-order dimension array for scalable modeling
+                        context: 'funding-self-imagination',
+                        higherOrder: dims.length > 1,
+                    });
+                }
+            } catch (_) {}
+        });
+
+        item.append(content, removeButton, primeBtn);
 
         return item;
     }
@@ -208,6 +340,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 delete card.dataset.state;
             }
         });
+
+        // Grounding / trace channel for powerusers and future instrumentation:
+        // Emit on dashboard updates so console, layout-shift-audit, spwCompose, and cauldron-adjacent listeners
+        // can observe "funding narrative" phase changes (tier crossings, capacity shifts).
+        // This is the inspectable "atmosphere to trace changes and wonder about variants" without new UI chrome.
+        // When instrumentation registers 'funding-narrative' as a trope (or reuses value-updated), this payload
+        // becomes a first-class expressive phase that can be marked, snapshot, and tuned.
+        try {
+            const bus = window.__SPW_SITE__?.bus || window.bus;
+            if (bus && typeof bus.emit === 'function') {
+                bus.emit('spw:value-updated', {
+                    surface: 'tools-budgeting',
+                    kind: 'funding-narrative',
+                    netValue,
+                    nextTier: nextTier ? nextTier.id : 'complete',
+                    timestamp: Date.now(),
+                });
+            }
+
+            // Deeper higher-order wiring: if any current entries have multiple dimensions, surface a distinct
+            // 'higher-order-dimension' phase so markLayoutTrope / layout-shift-audit / spwCompose can observe it.
+            const hasHigherOrder = entries.some(e => e.dimensions && e.dimensions.length > 1);
+            if (hasHigherOrder && window.markLayoutTrope) {
+                const dash = document.getElementById('budget-dashboard');
+                if (dash) {
+                    window.markLayoutTrope(dash, 'higher-order-dimension', {
+                        scope: 'budgeting-resource-model',
+                        tuning: { activeHigherOrderEntries: entries.filter(e => e.dimensions?.length > 1).length },
+                    });
+                }
+            }
+        } catch (_) {}
     }
 
     btnIncome.addEventListener('click', () => addEntry('income'));
@@ -256,6 +420,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const desc = timeDescInput.value.trim() || 'Time entry';
         const amount = Number.parseFloat(timeAmountInput.value);
         const unit = timeUnitSelect.value;
+        const rawMotive = (document.getElementById('budget-motive')?.value || '').trim();
+
+        // Higher-order dimension support for time entries (parity with money path for scalable resource modeling)
+        const dimensions = rawMotive
+            ? rawMotive.split(/\s*[+,]\s*/).map(d => d.trim()).filter(Boolean)
+            : [];
+
         if (!Number.isFinite(amount) || amount <= 0) {
             timeAmountInput.focus();
             return;
@@ -267,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
             desc,
             amount,
             unit,
+            dimensions: dimensions.length ? dimensions : undefined,
         });
 
         timeDescInput.value = '';
@@ -274,20 +446,23 @@ document.addEventListener('DOMContentLoaded', () => {
         timeDescInput.focus();
         saveTimeState();
 
-        // Prime to cauldron as numerical ingredient (reuses existing architecture + numericity derivation)
+        // Prime to cauldron — now carries higher-order dimensions when present
         try {
             const bus = window.__SPW_SITE__?.bus || (window.bus);
             if (bus && typeof bus.emit === 'function') {
-                const expr = `${amount}-${unit}-time-${type}`;
+                const dimPart = dimensions.length ? '-dims-' + dimensions.map(d => d.slice(0, 12).replace(/\s+/g, '-')).join('+') : '';
+                const expr = `${amount}-${unit}-time-${type}${dimPart}`;
                 bus.emit('spell:capture', {
                     expression: expr,
-                    label: `${desc} (${amount} ${unit} ${type})`,
+                    label: `${desc} (${amount} ${unit} ${type}${dimensions.length ? ' — ' + dimensions.join(' + ') : ''})`,
                     type: 'numerical',
                     value: amount,
                     unit: `${unit}-${type}`,
                     origin: 'budgeting-tool-time',
-                    wonder: 'capacity',
-                    primedBy: 'time-ledger',
+                    wonder: dimensions.length ? 'higher-order-capacity' : 'rhythm-capacity',
+                    primedBy: 'time-prime',
+                    dimensions: dimensions.length ? dimensions : undefined,
+                    higherOrder: dimensions.length > 1,
                 });
             }
         } catch (_) {}
@@ -340,7 +515,26 @@ document.addEventListener('DOMContentLoaded', () => {
         removeBtn.setAttribute('aria-label', `Remove ${entry.desc}`);
         removeBtn.addEventListener('click', () => removeTimeEntry(entry.id));
 
-        // Prime button for direct cauldron capture with quantifiers
+        // Higher-order dimensions on time entries (rendered consistently with money path)
+        const timeDims = entry.dimensions && entry.dimensions.length ? entry.dimensions : [];
+        if (timeDims.length) {
+            const dimContainer = document.createElement('span');
+            dimContainer.className = 'budget-item__dimensions';
+            timeDims.forEach((dim, idx) => {
+                const dimEl = document.createElement('span');
+                dimEl.className = 'budget-item__motive budget-item__dimension';
+                dimEl.setAttribute('data-spw-vocabulary-term', '');
+                dimEl.setAttribute('data-spw-operator', idx === 0 ? 'object' : 'topic');
+                dimEl.textContent = dim;
+                dimEl.title = 'Higher-order time resource dimension';
+                dimContainer.append(dimEl);
+            });
+            content.append(title, amt, dimContainer);
+        } else {
+            content.append(title, amt);
+        }
+
+        // Prime button for direct cauldron capture — carries higher-order when present
         const primeBtn = document.createElement('button');
         primeBtn.className = 'budget-item__prime operator-chip';
         primeBtn.type = 'button';
@@ -349,23 +543,25 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const bus = window.__SPW_SITE__?.bus;
                 if (bus) {
-                    const expr = `${entry.amount}-${entry.unit}-time-${entry.type}`;
+                    const dimPart = timeDims.length ? '-dims-' + timeDims.map(d => d.slice(0, 12).replace(/\s+/g, '-')).join('+') : '';
+                    const expr = `${entry.amount}-${entry.unit}-time-${entry.type}${dimPart}`;
                     bus.emit('spell:capture', {
                         expression: expr,
-                        label: `${entry.desc} (${entry.amount} ${entry.unit} ${entry.type})`,
+                        label: `${entry.desc} (${entry.amount} ${entry.unit} ${entry.type}${timeDims.length ? ' — ' + timeDims.join(' + ') : ''})`,
                         type: 'numerical',
                         value: entry.amount,
                         unit: `${entry.unit}-${entry.type}`,
                         origin: 'budgeting-tool-time',
-                        wonder: 'rhythm-capacity',
+                        wonder: timeDims.length ? 'higher-order-capacity' : 'rhythm-capacity',
                         primedBy: 'time-prime',
+                        dimensions: timeDims.length ? timeDims : undefined,
+                        higherOrder: timeDims.length > 1,
                     });
                 }
             } catch (_) {}
         });
 
-        content.append(title, amt, primeBtn);
-        item.append(content, removeBtn);
+        item.append(content, removeBtn, primeBtn);
         return item;
     }
 
@@ -417,4 +613,20 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTimeState();
 
     loadState();
+
+    // Progressive macro indicator (improves discoverability of the higher-order query string capability)
+    if (appliedMacro && appliedMacro.dimensions && appliedMacro.dimensions.length) {
+        const capacityPanel = document.getElementById('capacity');
+        if (capacityPanel) {
+            const indicator = document.createElement('div');
+            indicator.className = 'budget-macro-indicator spec-pill';
+            indicator.setAttribute('data-spw-vocabulary-term', '');
+            indicator.textContent = `macro: ${appliedMacro.dimensions.join(' + ')}`;
+            indicator.title = 'Loaded from query string — higher-order resource model (shareable)';
+            // Place it near the top of the capacity panel for visibility without clutter
+            const header = capacityPanel.querySelector('.frame-heading');
+            if (header) header.after(indicator);
+            else capacityPanel.prepend(indicator);
+        }
+    }
 });

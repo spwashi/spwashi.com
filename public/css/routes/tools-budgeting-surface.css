@@ -281,4 +281,49 @@
   }
 }
 
+/* Optional context + motive micro-labels for self-imagination flow (budgeting tranche).
+   Context-sensitive to this tool only. Vocabulary resonance + operator coloring via existing shared rules.
+   Keeps the surface as a learnable, poweruser-forward instrument without patronizing redundancy. */
+:where(body[data-spw-surface="tools-budgeting"]) {
+  & .budget-context-row {
+    margin-top: 0.35rem;
+  }
+
+  & .budget-item__motive {
+    display: block;
+    font-size: 0.82em;
+    opacity: 0.85;
+    margin-top: 0.2rem;
+    padding-left: 0.1em;
+    border-left: 2px solid color-mix(in srgb, var(--op-object-color, #c48a28) 35%, transparent);
+  }
+
+  & .budget-item__prime {
+    margin-left: auto;
+    font-size: 0.75em;
+    padding: 0.15em 0.5em;
+    align-self: center;
+  }
+
+  & .budget-item {
+    flex-wrap: wrap; /* graceful for prime button + long motive on narrow */
+  }
+
+  /* Higher-order dimension scalability (multiple named resource dimensions from the optional field).
+     Keeps the surface as a compact, poweruser-extendable modeling instrument. */
+  & .budget-item__dimensions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    margin-top: 0.15rem;
+    width: 100%;
+  }
+
+  & .budget-item__dimension {
+    font-size: 0.78em;
+    padding: 0.05em 0.4em;
+    border-radius: 0.3rem;
+  }
+}
+
 /*# sourceMappingURL=tools-budgeting-surface.css.map */

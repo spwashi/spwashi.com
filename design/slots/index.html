@@ -75,6 +75,10 @@
                     Most pieces of UI in Spwashi are a variation of the <code>.frame-card</code> or <code>.frame-panel</code> structure. Instead of authoring arbitrary wrappers, we use a predictable slot anatomy.
                 </p>
 
+                <p class="frame-note">
+                    <strong>For producers and directors tuning visual style:</strong> The same slot contract used in rendered character/profile cards (header → meta → body → figure → actions → footer) is the grammar you tune in <a href="/design/palettes/">palettes</a>, <a href="/design/components/">components</a>, and <a href="/design/materials/">materials</a>. When a card from the character builder is used as a style packet in the Midjourney bench, its rendered slots become the testable surface for material, light, and rhythm decisions. This is the ergonomic loop: edit card → see rendered output → tune slots/palettes → send packet → iterate images with coherence.
+                </p>
+
                 <div class="frame-grid frame-grid--dense">
                     <article class="frame-panel">
                         <h3>[data-spw-slot="header"]</h3>

@@ -17,6 +17,47 @@
             storageKey: 'spw-character-sheet-builder',
             defaultProfileScriptId: 'character-sheet-default',
         });
+
+        // Improve value & discoverability of rendered cards for style development.
+        // The button wires the live .profile-card (rendered output) into the Midjourney bench
+        // as a portable style/identity packet. This is the ergonomic bridge for producers/directors.
+        // Also emits for runtime instrumentability (bus + potential trope).
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-card-action="style-to-midjourney"]');
+            if (!btn) return;
+            const preview = document.getElementById('profile-preview');
+            const card = preview?.querySelector('.profile-card');
+            if (!card) return;
+
+            const cardText = card.innerText.trim().replace(/\s+/g, ' ').slice(0, 280);
+            const packet = `card-style-packet: ${cardText} | use with palettes + slots for coherent visual canon`;
+
+            // Copy for immediate use in Midjourney prompts or notes
+            navigator.clipboard?.writeText(packet).catch(() => {});
+
+            // Navigate with query combinatorics (style packet as higher-order param)
+            const url = new URL('/tools/midjourney/', window.location.origin);
+            url.searchParams.set('style-packet', encodeURIComponent(packet.slice(0, 180)));
+            url.hash = '#reference-packets';
+
+            // Instrumentability: emit so bus/tropes/console can observe card → style handoff
+            try {
+                const bus = window.__SPW_SITE__?.bus || window.bus;
+                bus?.emit?.('spw:value-updated', {
+                    surface: 'tools-character-sheet',
+                    kind: 'rendered-card-to-style-packet',
+                    packetPreview: packet.slice(0, 120),
+                    timestamp: Date.now(),
+                });
+            } catch (_) {}
+
+            // Small UX: flash the preview as "exported to style work"
+            card.style.transition = 'box-shadow 180ms';
+            card.style.boxShadow = '0 0 0 3px var(--op-topic-color, #2f8f6b)';
+            setTimeout(() => { card.style.boxShadow = ''; }, 650);
+
+            window.location.href = url.toString();
+        }, { capture: true });
     </script>
     <link rel="canonical" href="https://spwashi.com/tools/character-sheet/">
     <meta property="og:type" content="website"/>
@@ -118,10 +159,10 @@
                     </div>
                 </div>
                 <h1 id="character-sheet-title">Character Sheet Builder</h1>
-                <p class="site-lede">A living record of a person who may still be becoming themselves long after the first session.</p>
-                <p>Begin with the life: tradition, role, tools, hungers, and the situations where this person does their clearest work. The builder helps you carry that shape into language a mentor, collaborator, or later reader can actually use — without requiring the two worlds to flatten into one.</p>
-                <p>This is the kind of profile a careful family might still be annotating in the margins generations from now. The character gives the depth. The translation gives it reach.</p>
-                <p class="frame-note">The strongest version is a living site: character notes, worldbuilding, engineering experiments, and recurring updates that show rhythm over time instead of a single frozen application artifact.</p>
+                <p class="site-lede">A living record of a person who may still be becoming themselves long after the first session. Use it to practice the self you are funding and developing — the personality, the thematic posture, the developmental climate that will make the next work possible.</p>
+                <p>Begin with the life: tradition, role, tools, hungers, and the situations where this person does their clearest work. The builder helps you carry that shape into language a mentor, collaborator, or later reader can actually use — without requiring the two worlds to flatten into one. Optional flows (random seeds, wonder-primed generation, lens cycling) invite playful depth; nothing is required.</p>
+                <p>This is the kind of profile a careful family might still be annotating in the margins generations from now. The character gives the depth. The translation gives it reach. Prime a pressure or a bond into the cauldron and it becomes a traceable ingredient in your own imaginative memory garden.</p>
+                <p class="frame-note">The strongest version is a living site: character notes, worldbuilding, engineering experiments, and recurring updates that show rhythm over time instead of a single frozen application artifact. Pair this with the <a href="/tools/budgeting/">Savings Regimen</a> when you want to fund the arcs you discover here.</p>
                 <nav class="frame-operators" aria-label="Character sheet routes">
                     <a class="operator-chip" href="/play/rpg-wednesday/character/">character development</a>
                     <a class="operator-chip" href="#translation-map">~ translation map</a>
@@ -184,7 +225,7 @@
                     <h2>Notebook Loop</h2>
                 </header>
                 <div class="profile-tool-guide">
-                    <p class="inline-note">A strong character card usually comes from private notes first. Keep the scratch layer messy, then promote only the details that stay true on the next pass.</p>
+                    <p class="inline-note">A strong character card usually comes from private notes first. Keep the scratch layer messy, then promote only the details that stay true on the next pass. The notebook loop itself is an optional process: residue → pressure → proof. Prime any stable pressure to the cauldron for later resonance; the trace stays inspectable.</p>
                     <div class="profile-tool-guide-grid">
                         <article>
                             <strong>Private residue</strong>
@@ -192,11 +233,11 @@
                         </article>
                         <article>
                             <strong>Character pressure</strong>
-                            <p>Name the contradiction clearly enough that another person could write or roleplay against it: desire versus duty, mask versus tell, hunger versus code.</p>
+                            <p>Name the contradiction clearly enough that another person could write or roleplay against it: desire versus duty, mask versus tell, hunger versus code. This pressure is the first-class imaginative material — it can be primed, mixed, planted as spell, or carried into budgeting as the "why" behind a savings goal.</p>
                         </article>
                         <article>
                             <strong>Public proof</strong>
-                            <p>Move stable material into this card, a session recap, a cast page, a craft fragment, or a blog note only after it earns memory.</p>
+                            <p>Move stable material into this card, a session recap, a cast page, a craft fragment, or a blog note only after it earns memory. The card becomes a portable, multi-lens instrument for self-imagination that funds clearer commissioning.</p>
                         </article>
                     </div>
                 </div>
@@ -221,6 +262,9 @@
                     <a class="operator-chip" href="#builder-panel-sections">beats</a>
                     <a class="operator-chip" href="#builder-panel-contact">links</a>
                 </nav>
+                <p class="inline-note" style="font-size:0.8em; margin-top:0.25rem;">
+                    The panels below are compositional slots. Each can be opened/closed independently. On narrow screens they stack cleanly; the preview is the composed result. Hierarchy is signaled by the taxonomy (primary pressure, secondary collaborator handle, tertiary share intent).
+                </p>
                 <div class="profile-preset-bar" role="group" aria-label="Character sheet presets">
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-default" aria-pressed="false">@ character lens</button>
                     <button class="profile-export-btn" type="button" data-profile-preset-script="character-sheet-translation" aria-pressed="false">~ translation lens</button>
@@ -475,6 +519,12 @@
                             </summary>
                             <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_preview">
                                 <div id="profile-preview"></div>
+                                <div class="profile-preview-actions" style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                                    <button type="button" class="operator-chip" data-card-action="style-to-midjourney" title="Send this card's tropes + current visual identity as a style/identity packet to the Midjourney bench (improves discoverability of rendered cards for style development)">
+                                        ~ develop style in Midjourney
+                                    </button>
+                                    <span class="frame-note" style="font-size:0.8em; opacity:0.7;">The rendered card is the stable visual contract. Use it with palettes and slots to keep a director/producer's style coherent across images and UI.</span>
+                                </div>
                             </div>
                         </details>
                     </div>

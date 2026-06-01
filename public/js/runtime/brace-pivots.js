@@ -24,6 +24,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { getSettingValue, saveSiteSettings } from '/public/js/kernel/site-settings.js';
+import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
 
 const PIVOT_SEQUENCES = {
     semanticDensity:    ['minimal', 'normal', 'rich'],
@@ -55,6 +56,28 @@ function getCurrentSetting(key) {
 function setSetting(key, value) {
     const saved = saveSiteSettings({ [key]: value });
     bus.emit('brace:pivoted', { key, value, settings: saved });
+
+    // Enhance brace behavior as expressive topology/phase change.
+    // Pivoting a brace wall (objective/subjective axis) is now a first-class
+    // "brace-pivot" layout trope. This makes the structural gesture (shared vs
+    // situated meaning) observable, instrumentable, and tunable — directly
+    // supporting enhanced brace/operator topology for game-dev fidget imagination
+    // and author manuscript layering (different audiences experience different
+    // density/saturation "faces" of the same content).
+    try {
+        const wall = key === 'semanticDensity'
+            ? document.querySelector('.spw-objective-wall, .spw-boon-wall')
+            : document.querySelector('.spw-subjective-wall, .spw-bane-wall');
+        if (wall) {
+            markLayoutTrope(wall, 'brace-pivot', {
+                reason: 'LAYOUT',
+                scope: 'brace-topology',
+                source: 'brace-pivots',
+                tuning: { pivotKey: key, pivotValue: value },
+            });
+        }
+    } catch (_) { /* instrumentation must never break pivots */ }
+
     return saved;
 }
 

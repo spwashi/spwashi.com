@@ -14,6 +14,12 @@ const REGION_SELECTOR = [
   'main section[id]',
   'main article[id]',
 ].join(', ');
+
+/* Cognitive container awareness: when annotating, also mark the nearest rich
+   container (.site-frame, .frame-card, etc.) so memory + annotation create
+   observable resonance across the container topology. This turns passive
+   reading surfaces into active wonder participants. */
+const COGNITIVE_CONTAINER_SELECTOR = '.site-frame, .frame-card, .mode-panel, [data-spw-form="brace"]';
 const ACTIVE_SECTION_EVENT = 'spw:section-locomotion-state';
 const ANNOTATION_EVENT = 'spw:annotation-layer-state';
 const HOLD_MS = 420;
@@ -173,11 +179,28 @@ function writeRegionState(regions, matches, snapshot) {
       region.dataset.spwAnnotation = snapshot.annotation;
       region.dataset.spwAnnotationState = snapshot.state;
       markInstrumented(region, 'annotation-layer', { tags: ['annotation', 'region'] });
+
+      /* Propagate to nearest cognitive container for observational resonance.
+         This makes containers (frames, cards, braces) active participants in
+         memory + annotation, encouraging engagement and creating visible
+         "resonance fields" for visitors. Cathartic and non-mundane. */
+      const container = region.closest(COGNITIVE_CONTAINER_SELECTOR);
+      if (container) {
+        container.dataset.spwAnnotationScope = snapshot.scope || 'local';
+        container.dataset.spwAnnotationState = snapshot.state;
+        markInstrumented(container, 'annotation-layer', { tags: ['annotation', 'cognitive-container'] });
+      }
       return;
     }
     delete region.dataset.spwAnnotationMatch;
     delete region.dataset.spwAnnotation;
     delete region.dataset.spwAnnotationState;
+
+    const container = region.closest(COGNITIVE_CONTAINER_SELECTOR);
+    if (container) {
+      delete container.dataset.spwAnnotationScope;
+      delete container.dataset.spwAnnotationState;
+    }
   });
 }
 
