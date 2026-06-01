@@ -22,11 +22,12 @@
 @seams: ~"./seams.spw"
 @lifecycles: ~"./lifecycles.spw"
 @settings_state: ~"./settings-state.spw"
+@selector_timing_chunking_musical: ~"./selector-timing-chunking-musical-ontology.spw"
 
 intent: .{
  goal = `Translate the runtime review into inspectable .spw surfaces so ontology drift and lifecycle seams can be studied in an editor.`
  scope = `Focus on the current spwashi.com runtime: semantic metadata, region profiling, enhancement ordering, settings/state flow, and reinitialization behavior.`
- entry = `Start here, then open ontology.spw, seams.spw, lifecycles.spw, and settings-state.spw as needed.`
+ entry = `Start here, then open ontology.spw, seams.spw, lifecycles.spw, settings-state.spw, and selector-timing-chunking-musical-ontology.spw (for staged selector timing, musical projection of data structures, and Spw workbench metaphysics).`
 }[reg=facet]
 
 dispatch: .{

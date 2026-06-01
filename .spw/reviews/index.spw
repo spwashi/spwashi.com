@@ -7,15 +7,30 @@
 
 @runtime_audit: ~"./runtime-audit/index.spw"
 @composition_ownership: ~"./runtime-audit/composition-ownership.spw"
+@css_architecture_alignment: ~"./css-architecture-alignment.spw"
+@modular_slices_volleyball: ~"./modular-experience-slices-volleyball.spw"
+@workbench_alignment_audit: ~"./workbench-alignment-audit.spw"
+@html_css_structure_audit: ~"./html-css-structure-audit.spw"
+@classname_attribute_grammar_recognizability: ~"./classname-patterns-attribute-grammar-recognizability.spw"
+@fundamentals_practice_rhythms: ~"./fundamentals-practice-rhythms.spw"
+@workbench_metaphysics_application: ~"./workbench-metaphysics-application.spw"
+@spw_surface_normalization: ~"./spw-surface-normalization.spw"
 
 intent: .{
  goal = `Keep review surfaces grouped and easy to traverse in an editor.`
- scope = `Runtime, ontology, seams, lifecycle, and state-flow audits that belong to the public site rather than the mounted workbench.`
+ scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, fundamentals practice rhythms, and .spw surface normalization/navigability audits that belong to the public site rather than the mounted workbench.`
 }[reg=facet]
 
 dispatch: .{
  runtime_audit = @runtime_audit
  composition_ownership = @composition_ownership
+ css_architecture_alignment = @css_architecture_alignment
+ modular_slices_volleyball = @modular_slices_volleyball
+ workbench_alignment_audit = @workbench_alignment_audit
+ html_css_structure_audit = @html_css_structure_audit
+ classname_attribute_grammar_recognizability = @classname_attribute_grammar_recognizability
+ fundamentals_practice_rhythms = @fundamentals_practice_rhythms
+ workbench_metaphysics_application = @workbench_metaphysics_application
 }[reg=facet]
 
 invariants: #[

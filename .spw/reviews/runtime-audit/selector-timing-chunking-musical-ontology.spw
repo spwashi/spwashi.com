@@ -1,0 +1,111 @@
+# Selector Timing, Chunking Ontology, Musical Whitelabel Structures, and Spw Metaphysics
+
+#>runtime_audit_selector_timing_chunking_musical_ontology
+#:review #!semantics #!philosophy #!projection
+#:layer #!pragmatics
+
+@runtime: ~"../../../public/js/site.js"
+@shared_kernel: ~"../../../public/js/kernel/shared.js"
+@boonhonk: ~"../../../public/js/modules/boonhonk-mixer.js"
+@composition: ~"../../../public/js/interface/composition.js"
+@attention_field: ~"../../conventions/attention-field.spw"
+@ornament: ~"../../conventions/ornament-contract.spw"
+@semantic_braces: ~"../../conventions/semantic-braces.spw"
+@precipitates: ~"../../conventions/precipitates-and-projections.spw"
+@wonder_doctrine: ~"../../philosophy/wonder-doctrine.spw"
+@site: ~"../../site.spw"
+@workbench_runtime_foundation: ~"../../_workbench/docs/runtime/spw/runtime-foundation.spw"
+@workbench_theory: ~"../../_workbench/docs/theory/index.spw"
+@runtime_bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+
+thesis: .{
+  claim = `The site's runtime already contains a sophisticated, multi-layered ontology of selector timing and semantic chunking that is directly mappable to musical structures, and the Spw language (as developed in the workbench) provides the metaphysics that makes this projection discoverable and extensible to future technologies.`
+  implication_for_performance = `Performance work on selectors and modules must respect the existing staged timing ontology rather than flattening it.`
+  implication_for_whitelabel = `The data structures are already abstract enough to support whitelabel "musical website runtimes" with different timbres, ensembles, and performance practices.`
+  implication_for_language = `Spw is not merely a notation for this site; the workbench models it as a language whose core (operators as forces, resonance, precipitates, projections, registers) can describe any emergent metaphysics, including new web/audio/spatial/AI primitives.`
+}[reg=facet]
+
+# 1. Timing of Selector Impact — Staged Ontology
+
+selector_timing_ontology: .{
+  layers = #[
+    immediate_js = `safeQueryAll + hasSelector checks during mountImmediateLayer and core boot. High impact on first paint path.`
+    observer_driven = `IntersectionObserver (visible features, region layer, attention sections) with 160-240px margins. Deferred, viewport-relative.`
+    interaction_triggered = `pointerdown/keydown once() gates for INTERACTION when.`
+    idle_rIC = `onIdle + optional explicit delay for ENHANCEMENT/IDLE modules. Lowest priority.`
+    css_live_field = `:has() + attribute selectors on data-spw-* (wonder-state, gesture, cauldron-phase, field-wonder, resonance-probe). Runs at style recalc / paint time, independent of JS module timing. This is the "acoustic" layer.`
+  ][reg=set]
+
+  impact_character = `JS selectors have discrete, auditable cost at known lifecycle moments (instrumented via spw:module:* marks). CSS selectors have continuous, diffuse cost that participates in the attentional field itself (see attention-field.spw).`
+  current_practice = `The runtime already "chunks" selector evaluation by MOUNT_WHEN and layer, which is itself a performance ontology.`
+  risk = `Over-broad immediate selectors or unbatched :has() chains on long pages can create hidden main-thread or style cost that the current module timing surfaces do not fully surface.`
+  opportunity = `The existing performance marks + registry already give us the hooks to measure and budget "selector impact per chunk" if we add a lightweight cost dimension to MODULE_DEFS.`
+}
+
+# 2. Chunking Ontology — How the System Already Thinks in Semantic Units
+
+chunking_ontology: .{
+  primary_chunks = `MODULE_DEFS in site.js — each is an explicit Spw-like entity with id, layer, when, selector, rootMode, describes, updates, evaluates, load, mount.`
+  secondary_chunks = `Region profiles (kind/role/context/surface/harmony/tempo/density/genome), feature clusters, gesture targets, semantic expressions.`
+  language_level_chunks = `Operators (from shared.js OPERATOR_DEFINITIONS), semantic braces (root[variant]{behavior}<lens>), precipitates (coherent semantic patches), projections (mappings across layers).`
+  workbench_level_chunks = `The Spw language itself (lex/parse/semantic/optimize/pragmatic phases, resonance registers, brace registers, phasors, valence).`
+
+  musical_mapping = `Each chunk type has a natural musical analogue: modules as score sections or movements, operators as voices/instruments with families and intents, regions as ensemble arrangement (harmony/tempo/density), cauldrons as mixing consoles, spells as motifs/phrases, the attentional field as resonant hall acoustics.`
+
+  current_strength = `The ontology is already "chunked" in a way that is inspectable both in JS (registry, snapshots, module spells) and in .spw (conventions + philosophy). This is rare and valuable.`
+}
+
+# 3. Data Structures for Eventual Whitelabeling as a Musical Website Runtime
+
+musical_runtime_data_structures: .{
+  core_portable = #[
+    OPERATOR_DEFINITIONS (shared.js) — a "scale" or "instrument bank". Each has type, prefix, family, intent, interaction, speech, reversibility, mnemonic. Already abstract and metaphorical (vibration, wonder, synthesis, grounding, thread, perspective, flow...).
+    MODULE_DEFS shape — "score form" or "performance script". The layer/when/selector/describes/updates/evaluates contract is a reusable grammar for any domain's runtime chunks.
+    RUNTIME_POLICY (timing, delay, only/skip, timingByModule) — "performance practice" or "interpretation instructions".
+    GESTURE_VOCABULARY + GESTURE_SPELL_SEEDS — "playing techniques" and "standard phrases".
+    region profile (harmony, tempo, density, genome) + site rhythm tokens — "arrangement", "orchestration", "groove".
+    attention-field model (signal emission, temporal_decay, spatial_influence, receptor affinity) — "acoustic space", "resonant chamber", "hall response".
+    cauldron/composition + boonhonk-mixer — "mixing console" + "color/timbre instrument". Boonhonk already uses 5 weighted "operators" (boon/bane/bone/bonk/honk) to produce accent color — a literal 5-voice mixer.
+    SpwBus + event enrichment + charge model — "MIDI clock / transport / modulation bus".
+    spell expressions + moduleRecordToSpellExpression — "serializable motifs" or "presets" that can be replayed across whitelabeled instances.
+  ][reg=set]
+
+  whitelabel_implications = `A different "musical website" could redefine the operator bank (new prefixes, new families for audio-rate concepts), swap the visual projection layer (different ornament grammar for waveform or spectrogram surfaces), keep the same chunking and field model, and inherit the entire staged loading, policy, and inspectability machinery for free. The metaphysics (wonder as structural revelation, resonance as diffusive field, precipitates as meaning crystallization) travels with the language.`
+
+  existing_musical_footholds = `boonhonk-mixer, composition cauldron (explicitly "gather|mix|garden" "emergence[composition]"), rpg-wednesday (session registers, asset atlas as "orchestral parts"), math diagrams (signal/field visualizations), experiential gestures (tap/hold/swipe as articulations), site-rhythm tokens derived from module timing.`
+}
+
+# 4. Spw as Language via the Workbench — A Discoverable, Extensible Metaphysics
+
+spw_language_metaphysics: .{
+  workbench_role = `The spw-workbench is the meta-environment where Spw is developed as a language, not just used as notation for one site. It contains the parser, runtime phases, theory (algebra of lenses/operators/probes, operational physics, probe calculus), register banks, resonance model, and its own .spw modeling of itself.`
+
+  core_metaphysical_primitives = #[
+    operators as elemental forces (vibration, wonder/inquiry, synthesis/integration, grounding, potential/thread, perspective/situation, value/flow, action).
+    resonance as first-class (aggregation, intersection, lens-indexed caching, diffusive field behavior).
+    precipitates — changes crystallize into stable, meaningful semantic units (directly relevant to patch-consolidator and runtime-bootstrap-performance work).
+    projections — any idea or change can be mapped across dimensions (abstraction, layer, relation, time, technology).
+    registers + brace registers + phasors — state machines and rotational models for layered, cyclic, or modal behavior.
+    pragmatic layer — the evaluation into runtime values, traces, and observable effects (exactly what the site's module mount + bus + ornament system does).
+  ][reg=set]
+
+  discoverability_contract = `Because the language models its own metaphysics explicitly (in workbench .spw + theory docs + runtime foundation), new technologies do not arrive as black boxes. A new WebGPU surface, spatial audio API, agentic co-composer loop, or biometric sensor can be described by: adding operators or families, defining new pragmatic evaluation rules, extending the resonance/attention-field model, or treating the new capability as a new "instrument" in the existing mixing/cauldron grammar. The site runtime (and any whitelabel) can then incorporate it without losing inspectability or the wonder doctrine (structural revelation over spectacle).`
+
+  relation_to_site = `The published spwashi.com runtime is one concrete performance / projection of this language metaphysics into a living, hand-authored website instrument. The runtime-bootstrap-performance work (parallel loading, chunk cost awareness, observer federation) is itself a precipitate that can be described in Spw terms and projected forward.`
+}
+
+# Synthesis & Recommended Next Surfaces
+
+recommendations: .{
+  for_runtime_performance = `When implementing Phase 1–3 of runtime-bootstrap-performance/PLAN.md, model selector cost and module chunk cost as first-class dimensions in the existing evaluates / updates vocabulary. This keeps the performance work inside the same ontology rather than bolting on a separate metrics system.`
+  for_whitelabel = `Extract or document the portable contracts (operator bank, module def shape, gesture vocab, field model, cauldron lifecycle) into a thin "runtime core" note that future musical or creative whitelabels can depend on. The current site can remain one rich instance.`
+  for_spw_language = `Continue treating the workbench as the authoritative metaphysics surface. When new tech emerges (or when we want to model audio-rate, agentic, or spatial primitives), add them first as workbench theory / runtime Spw, then project the useful parts into the site's runtime and .spw conventions. This preserves discoverability across decades.`
+  new_spw_surface = `This file itself (or a refined descendant) can become the canonical bridge between the runtime performance track, the musical/creative affordances already latent in the system (boonhonk, cauldron, rpg registers, rhythm tokens), and the deeper Spw language metaphysics.`
+}
+
+status: .{
+  created_during = `Consideration of "timing of selector impact and chunking ontology... whitelabeling as a musical website runtime... Spw as a language via the spw-workbench modeling a metaphysics discoverable and describable as new technologies emerge"`
+  date = `2026-04`
+  relation_to_existing = `Extends runtime-audit/ontology.spw, lifecycles.spw, precipitates-and-projections.spw, attention-field.spw, and the runtime-bootstrap-performance plan. Wired into runtime-audit/index.spw.`
+  validation = `Spw syntax follows existing review bundle conventions (thesis, entity maps, @references, ^"sections", . {facets}). Can be validated via workbench tools.`
+}

@@ -1,0 +1,110 @@
+# HTML Structure, CSS Semantics, Layouts, Cascades & Attribute Timing Audit
+
+#>spw_html_css_structure_audit
+#:review #!html #!css #!performance #!semantics
+#:layer #!pragmatics
+
+@css_instruction: ~"../conventions/css-instruction.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@css_alignment: ~"./css-architecture-alignment.spw"
+@selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
+@classname_grammar_recognizability: ~"./classname-patterns-attribute-grammar-recognizability.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@site: ~"../site.spw"
+@runtime_bootstrap_plan: ~"../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+
+thesis: .{
+  claim = `The site's HTML is consistently hand-authored with rich data-spw-* semantic markup (surface, features, kind, role, slot, form, layout, harmony, etc.) that maps well to the documented CSS layer contract and runtime ontology. However, the timing of when many of these attributes are written by JS (immediate vs observer-driven vs idle) creates measurable gaps between authored HTML state and final rendered state, with consequences for cascade, layout, paint, and CLS.`
+  scope = `~130 source .html files. Representative deep dives: root index (wide kernel atlas), settings (heavy dynamic), spw operator atlas (grammar-heavy), rpg-wednesday surfaces (creative), long topic pages.`
+}
+
+# HTML Structure Inventory & Patterns
+
+html_inventory: .{
+  total_source_files = `~130 (excluding builds and workbench)`
+  common_body_contract = `Almost all pages start with a rich <body data-spw-surface="..." data-spw-features="..." data-spw-context="..." data-spw-wonder="..." data-spw-page-family="..." data-spw-layout="..." ...> block. This is the primary semantic truth per AGENTS.md.`
+  frame_anatomy = `Widespread use of .site-frame > .frame-topline/.frame-heading (header + meta + operators) + .frame-body (with data-spw-slot="header|meta|body|figure|actions|footer") + optional panels/sections. Consistent with site-semantics.spw "slot" contract.`
+  brace_usage = `Heavy, correct use of data-spw-form="brace" (often with data-spw-form-options). Braces are the dominant structural grammar.`
+  operator_usage = `data-spw-operator on sigils, chips, and tokens is pervasive and correctly drives both JS behavior and CSS (handles/operators.css).`
+  layout_variants = `data-spw-layout="wide|reading|atlas|split" appears on key pages (home uses wide). This correctly gates shell/layout.css behavior.`
+  custom_elements = `Some pages use <spw-page>, <spw-site-header>, <spw-site-head> (likely defined or enhanced by JS or build step).`
+  partials = `_partials/site-footer.html and social-meta.html exist and are presumably included.`
+}
+
+# Comparison to CSS Semantics
+
+css_semantics_alignment: .{
+  strengths = `[
+    "data-spw-* attributes are the dominant selector strategy in higher layers (handles, effects, ornament) — this matches css-instruction.spw guidance.",
+    "CSS uses :where() extensively for low-specificity attachment to semantic nouns (.site-frame, .frame-*, [data-spw-operator], etc.).",
+    "Operator colors, brace physics, region harmony/tempo/density, and field states (wonder, charge, resonance) are all expressed via data attributes.",
+    "Shell/layout.css provides trustworthy generic scaffolding before route-specific CSS."
+  ]`
+
+  gaps = `[
+    "Some structural rules for .site-frame, .frame-topline, .frame-actions still live in components/ and routes/ rather than being fully owned in grammar/. This echoes the earlier CSS architecture alignment findings.",
+    "Complex :has() chains for gesture/brace/cauldron state (mostly in handles/operators.css) are semantically powerful but live high in the cascade.",
+    "Route files (especially blog, rpg-wednesday, settings, design experiments) still contain non-trivial amounts of frame/brace/operator logic that could be generalized."
+  ]`
+}
+
+# Page Layouts & Cascades
+
+layouts_and_cascades: .{
+  data_spw_layout = `Correctly implemented in shell/layout.css (--page-width-reading/wide/atlas). "split" variant with gutter rail is documented but lightly used.`
+  cascade_health = `Layer order is strictly respected. Most semantic styling correctly targets data attributes rather than fragile class combinations. Low-specificity :where() usage is a strength.`
+  risks = `[
+    "Route-specific overrides in high layers can still fight component/systems rules if not careful.",
+    "Some !important usage in grammar/syntax.css and handles/ (mostly defensive for inspect states) indicates places where the semantic contract could be stronger via explicit data attributes."
+  ]`
+}
+
+# Timing of Applied Attributes & Consequences
+
+attribute_timing_analysis: .{
+  authored_state = `Initial HTML delivers a rich but incomplete set of data-spw-* attributes on <body> and major containers (surface, features, layout, context, wonder, page-*, kernel, lattice, etc.). Many frame/section details are present.`
+  immediate_layer = `site-settings, shell-disclosure, core-minimal, and many ENHANCEMENT modules (component-semantics, operators, haptics, experiential, spells, attention-architecture, etc.) run immediately and write additional attributes (spwHarmony, spwTempo, spwDensity, spwRegion*, runtime policy tokens, module annotations, etc.). This happens before first paint in many cases.`
+  visible/region = `IntersectionObserver-driven (160-240px margins) for region enhancement, visible features, and some attention behaviors. These attributes arrive after initial layout/paint.`
+  idle = `onIdle (rIC) for pronunciation, logo, topic-discovery, guide, etc. Lowest timing priority.`
+  consequences = `[
+    "Positioning & Layout: Attributes that affect size, visibility, or flex/grid behavior (data-spw-density, data-spw-harmony, data-spw-form, data-spw-slot visibility, region state) written after first layout can cause reflows or CLS if not guarded by CSS defaults or skeleton states.",
+    "Cascade & Specificity: Early JS writes can 'win' over later route CSS if specificity is close, because JS writes happen in the DOM before route CSS fully cascades in some load scenarios.",
+    "Performance: Serial await in mountImmediateLayer (documented risk in runtime-bootstrap plan) means attribute writes are not fully parallelized. Multiple small writes to <html> and many frames can trigger style recalcs.",
+    "CLS Risk: layout-shift-audit exists (debug-gated) precisely because of this dynamic attribute surface. Pages with many frames/sections that receive harmony/tempo/density or state-accent attributes post-mount are vulnerable.",
+    "Initial HTML vs Final State Mismatch: Readers using reader-mode, print, or very slow JS may see a semantically poorer version of the page. This is acceptable per progressive enhancement stance but worth auditing per route."
+  ]`
+}
+
+# Specific Risks & Opportunities
+
+risks: .{
+  high = `Pages with many .site-frame elements that rely on post-mount region profiling (harmony/tempo/density writes) + CSS that keys off those attributes for layout or heavy visual treatment.`,
+  medium = `Complex :has() chains in handles/operators.css depending on gesture/brace state that may only be fully present after immediate layer.`,
+  low_but_noted = `Custom elements (<spw-page> etc.) on settings and some design pages introduce an additional layer of timing (their own upgrade timing + JS enhancement).`
+}
+
+opportunities: .{
+  html_first = `Strengthen initial HTML with more complete default region/profile hints or stable data attributes so the authored markup is closer to the final semantic state.`,
+  css_guards = `Ensure critical layout-affecting attributes have strong CSS defaults or [data-spw-xxx]:not([data-spw-xxx=""]) guards so late writes don't cause visible jumps.`,
+  timing_observability = `Leverage existing spw:module timing marks + new lightweight attribute-write timing to surface when semantic state stabilizes per page.`,
+  slice_ownership = `The modular experience slices work (operator-grammar, attention-field, musical-projection, etc.) maps cleanly onto HTML sections. Future bolder file tree work could align HTML partials or include patterns with slice ownership.`
+}
+
+# Comparison to Contracts
+
+contract_alignment: .{
+  agends_md = `Mostly compliant: semantic elements present, data attributes rich, accessibility basics (skip link, aria-labels on handles). Some pages use custom elements that may need extra scrutiny.`
+  css_instruction = `Strong adherence to data-spw-* as truth and low-specificity attachment. Some route files still need slimming per earlier recommendations.`
+  site_semantics = `Excellent mapping to kind/role/slot/form/liminality/selection axes in most pages.`
+  previous_audits = `This audit extends the CSS architecture alignment and selector timing work. The timing dimension (JS attribute application vs CSS cascade) is the newest and highest-leverage area for performance + semantic fidelity.`
+}
+
+# Status & Recommended Path
+
+status: .{
+  created = `2026-04 during comprehensive HTML + CSS + timing audit.`
+  wired = `Referenced from reviews/index.spw and relevant plans (runtime-bootstrap, css-architecture).`
+  next = `Use as input for any HTML structure passes, CSS redistribution, or performance work on attribute timing. Prioritize pages with high frame count + heavy post-mount attribute writes.`
+}
+
+This audit confirms that the hand-authored HTML + data-spw-* semantic model is one of the site's greatest strengths, but the dynamic application timing in the runtime creates the primary remaining friction between authored intent and final rendered semantics — with direct consequences for layout stability and perceived performance.

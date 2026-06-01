@@ -1,0 +1,121 @@
+# Fundamentals Practice Rhythms — A Structure for Wide-Ranging Developers
+
+#>spw_fundamentals_practice_rhythms
+#:review #!learning #!collaboration #!architecture
+#:layer #!pragmatics
+
+@modular_slices: ~"./modular-experience-slices-volleyball.spw"
+@language_ladder: ~"../../.agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
+@reference_assignment: ~"../../.agents/plans/reference-assignment-template/PLAN.md"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@design_wonder_hub: ~"../../design/index.html"
+@cauldron: ~"../conventions/ (multiple cauldron/garden references)"
+@spirit_cycle: ~"../conventions/ (spirit cycle phases)"
+@slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@tending_note_template: ~"../../.agents/plans/modular-experience-slices/templates/tending-note.spw"
+
+^"thesis"{
+  claim: "Developers arrive with widely varying skills, familiarity, and relationships to the core materials (Spw operators and brace grammar, data-spw-* attribute families, CSS layer strata, runtime module contract, precipitates/projections, attention-field, cauldron, spirit cycle). A living structure of 'practice beds' within experience slices, tended through earthy rhythms of participation, can make it easier for anyone to build an embodied, long-term relationship with the fundamentals without requiring uniform expertise or gamified progression."
+  grounding: "The site already contains strong seeds: the language-ladder plan (staged practice), reference-assignment template (small reversible experiments), /design/ as a low-friction wonder hub with explicit 'practice' frames and culinary instruction, cauldron/spell surfaces as gathering and mixing spaces, and the spirit cycle as a recurring organic rhythm."
+  earthy_rhythms_integration: "Practice is not a separate onboarding track. It is one of the natural cycles of tending a slice: reading the authored structure (static HTML), observing emergence (runtime state), making small gestures (edits, notes), letting contributions sediment, and returning in another season with deeper familiarity."
+}
+
+^"fundamentals"{
+  spw_operators_and_grammar: "The living primitives (#>, ?, ^, ~, @, etc.) and brace syntax (root[variant]{behavior}<lens>). Relationship means being able to read, speak, and extend them fluently across HTML, CSS, JS, and .spw."
+  data_spw_attribute_families: "The coherent namespaces (surface/features, kind/role/slot/form, operator, state/field, semantic-expression) that make the site inspectable and queryable. Practice is learning to reach for the right family and extend it when needed."
+  css_as_literary_geology: "The 11-layer cascade as readable strata. Relationship means feeling where a rule belongs, why it sediments upward, and how to read the history in the files."
+  runtime_module_contract: "The staged lifecycle (authored → scheduled → loading → mounted → observed → settled) and the MODULE_DEFS shape (layer, when, evaluates, describes, updates). Practice is tracing a real module through the contract."
+  precipitates_projections_and_spirit_cycle: "How change crystallizes and how ideas recur through phases. These are the organic models for participation itself."
+  attention_field_and_cauldron: "Diffusive field behavior and gathering/mixing/gardening as lived metaphors for how attention and ideas move on the site."
+}
+
+# Proposed Structure: Practice Beds Within Experience Slices
+
+^"practice_structure"{
+  practice_beds: "Within each experience slice (e.g., operator-grammar, attention-field, cauldron-emergence, musical-projection), designate small, visible 'practice beds' — focused areas or review bundles where developers at any level can do low-stakes, high-insight work. These are not tutorials; they are tended plots in the garden of the slice."
+
+  progressive_entry_points: {
+    reading: "static HTML + .spw contract + design/ explanation (no JS required)."
+    observation: "runtime state, timing marks, console helpers, data attributes in the browser (the language-ladder 'observe' stage)."
+    gesture: "small, reversible edits or .spw notes (reference-assignment style experiments)."
+    tending: "longer-term sedimentation — writing a small review, adding a sedimentation note, extending an attribute family, or documenting a projection."
+    succession: "helping the slice weather a transition or welcoming a new contributor's layer."
+  }
+
+  earthy_rhythm_integration: "Practice follows natural cycles rather than linear curricula: Planting/Initiation (first reading or small observation), Tending/Transformation (repeated gestures, note-taking, small experiments), Sedimentation/Expression (contributions that become part of the slice's stable ground), Weathering/Return (letting understanding rest, then returning with new eyes or helping someone else enter it). These cycles can be personal, per-slice, or cross-slice. No one is 'behind.'"
+
+  recognizability_and_cognitive_ease: "Every practice bed should make the fundamentals more recognizable over time: Consistent naming and attribute grammar families. Visible traces of previous tendings (sedimentation notes, small author marks in reviews). Low-friction re-entry points (the design/ wonder hub style: tap to try, hold to inspect anatomy)."
+}
+
+# First Pilot: Math Practice Labs
+
+pilot_math_practice_labs: .{
+  reason = `The strongest current candidate is the math-practice-labs pilot visible in the sibling Gemini worktree. It adds interactive vector-field and numerical-stepping labs to vector calculus and numerical methods. This is a better first pilot than an abstract slice because it forces the practice-bed model to answer concrete questions: how does a page teach a field, where does the runtime live, how does an SVG lab stay inspectable, and what does a returning developer need to know before changing it?`
+  candidate_files = #[
+    `public/js/modules/math-diagrams.js`
+    `topics/math/vector-calculus/index.html`
+    `topics/math/numerical-methods/index.html`
+  ][reg=set]
+  beds = .{
+    reading = `Route copy, section order, formulas, cross-disciplinary metaphors, and operator-chip paths should let a reader understand the concept without running the interaction.`
+    observation = `The browser should expose meaningful data-math-visual roots, data-control inputs, data-output fields, SVG state, and status text that can be inspected without reading the entire module.`
+    gesture = `Changing field type, probe coordinates, step size, and initial values should behave as reversible experiments. Controls should map cleanly to visible outputs.`
+    tending = `A contributor can improve one lab's explanation, labels, or bounds without rewriting every math diagram.`
+    sedimentation = `After the pilot lands or is split, a tending note should record what the math labs taught about route-local practice surfaces and shared math module growth.`
+  }[reg=facet]
+  known_review_checks = #[
+    `Ensure generated SVG marker IDs are unique per lab instance before landing if multiple labs can appear on one page.`
+    `Keep the first landing focused; do not pull unrelated educational metadata or broad route redesign into the same patch.`
+    `Run node --check public/js/modules/math-diagrams.js and git diff --check; then smoke vector-calculus and numerical-methods routes.`
+  ][reg=set]
+}
+
+# Refactor Latitude
+
+refactor_latitude: .{
+  route_visual_redesign = `Allowed when it clarifies semantic flow, improves reading/observation/gesture entry points, or makes the practice bed more accessible. The redesign should state the semantic role of the route before changing visuals.`
+  css_layer_order = `Open for reconsideration, but only after a specific blockage is named. The first response should usually be redistribution, clearer file ownership, or a manifest. If layer order changes, update AGENTS.md, css-instruction.spw, style.css imports, and validation notes together.`
+  data_spw_contracts = `New data-spw-* names are acceptable when they represent a real inspectable concept and are wired into the relevant .spw convention or slice contract. Prefer extending existing families when the meaning is already covered.`
+  spw_output = `.spw is the preferred durable output for slice contracts, tending notes, and review records because it keeps the practice structure inspectable in the same medium as the rest of the site ecology.`
+}
+
+# How This Supports Wide-Ranging Developers
+
+wide_range_support: .{
+  beginners_or_new_to_spw = `Can start in reading or observation beds inside any slice. The static HTML + .spw contracts + design explanations provide orientation without requiring them to understand the full runtime or CSS geology immediately. The earthy rhythm gives permission to tend slowly.`
+  intermediate_developers = `Can move fluidly between observation, gesture, and tending beds. Reference assignments and small experiments become natural ways to build relationship. They can contribute sedimentation notes that help others.`
+  experienced_or_long_term_contributors = `Can work in tending and succession beds: extending grammar families, refining layer boundaries, writing practice-oriented .spw notes, or helping the slice weather change. Their accumulated familiarity becomes part of the garden's fertility for others.`
+  non_linear_and_seasonal = `People can enter at any bed, leave for a season, and return to the same or a different bed with new eyes. The structure supports multiple relationships to the same fundamentals over time.`
+}
+
+# Connection to Existing Work
+
+connections: .{
+  language_ladder = `Directly extends the staged practice model (read structure → observe runtime → tune → compare → stronger contracts) into the slice-based, rhythmic collaboration model.`
+  reference_assignment_template = `Becomes one of the primary tools inside gesture and tending beds.`
+  design_routes = `The /design/ area (especially runtime, slots, composition, components, and the culinary instruction frame) is already functioning as a distributed wonder hub and practice surface. This proposal makes that role more explicit and integrates it with the slice structure.`
+  cauldron_and_spirit_cycle = `Cauldron surfaces (gathering, resonant, mature, decayed phases) and the spirit cycle become natural metaphors and actual containers for practice rhythms inside slices.`
+  previous_considerations = `Builds on attribute grammar families (making them practiceable), CSS as literary geology (tending the strata), and recognizability as cognitive ease (the goal of every practice bed).`
+}
+
+# Local Recommendations (Repo-Internal)
+
+recommendations: .{
+  short_term = `[
+    "Use math-practice-labs as the first concrete pilot, because it already exercises reading, observation, gesture, and tending beds through vector-field and numerical-stepping work.",
+    "Keep the initial math pilot as a focused patch: math-diagrams.js plus the two math routes, followed by a tending note.",
+    "Create slice contracts only after the pilot exposes the useful shape; avoid designing a full .spw/slices taxonomy before one real pilot has weathered review.",
+    "Surface existing low-friction practice surfaces more clearly in the design hub and in slice .spw contracts (e.g., 'this slice has active observation beds in /design/runtime/ and gesture beds via reference assignments')."
+  ]`
+  medium_term = `[
+    "When doing file tree or review bundle work for slices, include dedicated space for practice materials that respects the CSS layer contract and data-spw-* primacy.",
+    "Encourage sedimentation notes in both code changes and .spw reviews when a contribution clarifies a fundamental for future readers.",
+    "Evaluate CSS layer-order changes only after slice pilots show repeated friction that cannot be solved by file movement or clearer import manifests.",
+    "Use the earthy rhythms language in handoff expectations so that 'I tended this practice bed this season and here is what sedimented' becomes a normal, low-pressure contribution."
+  ]`
+  invariants = `Everything must remain hand-authored, progressively enhanced, inspectable, and free of new client-side frameworks or heavy dependencies. Practice is tending the existing garden, not building a separate school. Visual redesign, CSS redistribution, and new .spw contracts are allowed when they make semantic flow clearer and leave a reviewable migration path.`
+}
+
+This review proposes that the same earthy, rhythmic, slice-based collaboration model already being developed for long-term ownership can also serve as the primary structure for developers of any background to practice and gradually develop a living relationship with the fundamentals — without requiring everyone to arrive with the same skills or to follow a single linear path. The site already has many of the necessary seeds; the work is mostly making the practice beds visible, rhythmic, and integrated with the slices themselves.

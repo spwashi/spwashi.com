@@ -1,0 +1,98 @@
+# Workbench Alignment Audit
+
+#>spw_workbench_alignment_audit
+#:review #!architecture #!ontology #!agent_ecology
+#:layer #!pragmatics
+
+@site: ~"../site.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@css_alignment: ~"./css-architecture-alignment.spw"
+@modular_slices_volleyball: ~"./modular-experience-slices-volleyball.spw"
+@selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
+@agent_optimization: ~"../.agents/plans/agent-optimization/PLAN.md"
+@spw_css_architecture: ~"../.agents/plans/spw-css-architecture/PLAN.md"
+@runtime_bootstrap: ~"../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@workbench_index: ~"../_workbench/.spw/index.spw"
+@workbench_mount: ~"../_workbench/.spw/mount.spw"
+@workbench_workspace: ~"../_workbench/.spw/workspace.spw"
+@workbench_precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
+@workbench_theory: ~"../_workbench/docs/theory/index.spw"
+@workbench_runtime_foundation: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
+@workbench_registries: ~"../_workbench/.spw/registries"
+@workbench_conventions: ~"../_workbench/.spw/conventions/index.spw"
+
+thesis: .{
+  claim = `The site's .spw architecture maintains good one-way bridges to the spw-workbench canon for core language primitives (operators, braces, selection, naming, precipitates). Application-level collaboration patterns generated here (modular experience slices, team volleyball handoff protocols, long-term "painting over years" model for updating slices of the experience) are intentionally kept downstream and local to this repository for now. They are tools for conversation and coordination amongst human developers working on this codebase, not proposals for the workbench language canon.`
+  scoping_note = `Per current direction: the volleyball / experience-slices model is meant to live downstream of this repo for developer collaboration. It is not being upstreamed to the spw-workbench at this time. The audit should therefore treat the current separation as intentional rather than a gap to close.`
+  focus = `Strengthen the local (repo-internal) .spw + .agents/plans system so human teams can effectively volley work on distinct slices of the site experience over long periods, using reviews, plans, and runtime contracts as handoff surfaces.`
+}
+
+# Current Bridge Health
+
+bridges: .{
+  strong = #[
+    site.spw explicitly declares @canon, @mount, @workspace, and multiple workbench conventions/patterns/surfaces/registries.
+    site-semantics.spw pulls in workbench selection, naming, brace_physics registry, literate_ui, symmetry_ui.
+    Core concepts like precipitates have parallel but compatible modeling (workbench: runtime pipeline stages; site: patch crystallization and semantic versioning).
+    Recent site reviews (css-alignment, modular-slices-volleyball, selector-timing) do cite workbench theory and runtime-foundation.
+  ][reg=set]
+
+  weak_or_one_way = #[
+    Application innovations (experience slices as team-owned painting layers, volleyball handoff protocol, modular file-tree evolution for long-term collaboration) are almost entirely contained in site reviews and the new modular-experience-slices plan. They have no presence in workbench registries, surfaces, or theory.
+    "Slice" terminology diverges: workbench uses it for mount slices and pipeline stages; site uses it for human-team experience ownership units.
+    Bidirectional citation is thin: workbench canon does not reference site application patterns, while site increasingly depends on workbench for primitives.
+    Planning ecology, agent-optimization, and volleyball rituals live primarily on the site side; workbench has its own agents.spw and harness but no symmetric modeling of "human team long-term co-evolution" patterns.
+  ][reg=set]
+}
+
+# Key Alignment Observations
+
+observations: .{
+  language_vs_application = `The workbench excels at modeling the Spw language itself (grammar layers, semantics planes, pragmatics, register banks, brace physics, precipitates in the runtime pipeline, canon mount, workspace manifests). The site is successfully using these to build rich application semantics (attention field as diffusive resonance, musical/rhythmic projection, cauldron emergence, operator voices as timbre, CSS as projection surface). However, the site's higher-order collaboration models (slices as stable ownership units that teams can paint over years, volleyball as deliberate human+agent handoff rhythm) are not being lifted back into the workbench as reusable patterns.`
+
+  precipitates_alignment = `Good conceptual resonance. Workbench models precipitates as what falls out of each runtime pipeline stage (desugar, parse, normalize, interpret). Site extends the metaphor to patch semantics and conscious consolidation of changes. This is healthy evolution, but the site version could be registered as an "application precipitate" pattern in workbench surfaces.`
+
+  slice_terminology = `Mild but growing ambiguity. Workbench "mount_slice" and "projection" concepts are technical. Site "experience slice" + "volleyball" is a socio-technical ownership and evolution model. Without explicit mapping or distinct naming in the canon, future users of Spw may confuse or reinvent the ideas.`
+
+  recent_innovation_isolation = `The modular-experience-slices-volleyball.spw and related reviews represent some of the most sophisticated thinking on long-term human+agent co-creation in the entire repo. They are currently review artifacts rather than canon surfaces. This is the largest single alignment gap.`
+
+  css_and_runtime_projection = `The CSS architecture alignment work and runtime selector timing/chunking reviews are excellent examples of using Spw semantics to audit and redesign projection layers (CSS as visual grammar, staged loading as performance ontology). These are valuable case studies that the workbench's theory surfaces could reference or generalize.`
+}
+
+# Recommendations (Scoped to Local Repo Use)
+
+recommendations: .{
+  short_term = `Focus on making the local (this-repo) collaboration system excellent for human developers:
+    - Treat the experience-slices + volleyball model as a repo-internal pattern for coordinating work on distinct parts of the site (CSS layers, runtime modules, ontology surfaces, etc.).
+    - Improve handoff quality between developer sessions using existing mechanisms (.spw reviews per slice, plan notes, runtime spell/checkpoint artifacts).
+    - Keep any "promotion" language out of the artifacts for now, per the clarified scope.`
+
+  medium_term = `Strengthen repo-internal tooling without assuming upstream changes:
+    - Evolve the modular-experience-slices plan and related reviews into practical guides and templates that developers can use directly for volleying work.
+    - Make slice boundaries and ownership more visible in the file tree and in review bundles (while respecting the existing CSS layer contract and .spw conventions).
+    - Integrate volleyball handoffs more smoothly with spw-plan-maintenance and the existing planning ecology.`
+
+  governance = `Use agent-optimization/PLAN.md and the local planning ecology to track this as a developer-collaboration improvement track. The workbench alignment audit can note the current intentional separation and focus on local hygiene rather than cross-project promotion.`
+
+  file_tree_note = `Bolder file tree proposals (slices/ structures) remain useful locally for giving developers clearer ownership of experience slices. They should be evaluated purely on how well they support human team work on this codebase.`
+}
+
+# Status & Next Actions
+
+status: .{
+  audit_date = `2026-04 (following CSS architecture review, runtime performance work, and modular slices/volleyball exploration)`
+  scoping_update = `Updated per clarification: the volleyball / experience-slices model is intentionally downstream of this repository for human developer conversation and collaboration. It is not being positioned for workbench updates at this time. The audit now treats the separation as by design.`
+  primary_artifact = `This review (reframed for local scope), plus the modular-experience-slices-volleyball.spw.`
+  recommended_actions = `[
+    "Focus local improvements on making slice ownership and session handoffs clearer and more practical for developers working in this repo.",
+    "Run spw-plan-maintenance as needed for internal .spw hygiene (no cross-project promotion expected).",
+    "Update agent-optimization/PLAN.md and the modular-experience-slices plan to reflect the local, downstream nature of the volleyball pattern.",
+    "Develop lightweight templates or conventions inside this repo for 'slice review' handoffs between developer sessions."
+  ]`
+}
+
+This audit now scopes the relationship between the site's .spw surfaces and the spw-workbench as intentionally one-directional for the time being. The volleyball and experience-slices work is treated as repo-internal tooling to help human developers coordinate long-term, slice-based contributions to this codebase.

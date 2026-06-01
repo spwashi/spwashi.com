@@ -1,0 +1,134 @@
+# Workbench Metaphysics Application
+
+#>spw_workbench_metaphysics_application
+#:review #!ontology #!architecture #!metaphysics
+#:layer #!pragmatics
+
+@workbench_index: ~"../_workbench/.spw/index.spw"
+@workbench_workspace: ~"../_workbench/.spw/workspace.spw"
+@workbench_mount: ~"../_workbench/.spw/mount.spw"
+@runtime_foundation: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
+@theory_index: ~"../_workbench/docs/theory/index.spw"
+@operators: ~"../_workbench/docs/theory/spw/operators.spw"
+@semantics_physics: ~"../_workbench/docs/theory/spw/semantics-physics.spw"
+@precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
+@register_bank: ~"../_workbench/.spw/registries/register-bank.spw"
+@loop_observation: ~"../_workbench/.spw/process/loop-observation.spw"
+@scoped_evolution: ~"../_workbench/.spw/process/scoped-evolution.spw"
+@literate_architecture: ~"../_workbench/.spw/patterns/literate-architecture.spw"
+@literate_ui: ~"../_workbench/.spw/patterns/literate-ui.spw"
+@claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
+@site: ~"../site.spw"
+@site_workspace: ~"../workspace.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@fundamentals_practice: ~"./fundamentals-practice-rhythms.spw"
+
+thesis: .{
+  claim = `The workbench .spw corpus is strongest where it treats philosophy, metaphysics, and script architecture as operational contracts: every major concept names its layer, source files, phase flow, source-of-truth status, falsification rule, memory placement, and query surface. The site .spw corpus already has rich descriptions of routes, CSS, runtime state, and practice rhythms, but it should apply more of that contract structure so its claims become easier to verify, refactor, and hand off.`
+  scope = `This review applies workbench patterns to the site-facing .spw files only. It does not propose upstreaming site collaboration models to the workbench.`
+  method = `Sampled the 227 .spw files under .spw/_workbench by entrypoint, workspace/mount, theory/runtime, registries, process, patterns, harness, examples, and audits; compared those patterns against site.spw, workspace.spw, conventions, reviews, and recent practice-bed plans.`
+}[reg=facet]
+
+# Workbench Patterns Worth Importing
+
+patterns_to_import: .{
+  source_of_truth_split = `Workbench files frequently distinguish canonical, exploratory, generated, and runtime-falsifiable claims. Site .spw should do the same. Example: route semantics may be canonical when backed by body metadata and dom-contracts, exploratory when a metaphor is only prose, and falsifiable when CSS/JS writes measurable data attributes.`
+  layer_time_model = `The workbench separates grammar / semantics / pragmatics and lex / parse / semantic / optimize / pragmatic phases. Site .spw can translate this to authored HTML / CSS projection / runtime mount / observation / public consequence instead of flattening every statement into prose.`
+  claim_chain = `The workbench claim protocol links claim -> spec_ref -> impl_ref -> probe_ref -> status. Site reviews should use this for CSS architecture, runtime audit, attention field, shell disclosure, and practice-bed claims.`
+  memory_placement = `Workbench memory is explicit: hot, warm, cold, generated. Site planning can use the same idea: active work in plans, durable ontology in .spw/conventions or .spw/slices, generated/catalog artifacts in design/catalog, and one-off observations in review or tending notes.`
+  process_loop = `Loop observation gives a compact review cadence: focus, phase, operator, container, projection, evidence_refs, next_action. This fits site tending notes better than long narrative summaries.`
+  scoped_evolution = `Experimental syntax and structural changes should be path-scoped, probe-backed, and reversible. Apply this directly to CSS layer-order changes, new data-spw-* families, and .spw/slices experiments.`
+  literate_ui_traceability = `Literate UI requires every component to answer what it is by operator, container, phase, and register state. Site .spw can adapt this as route/component queryability: kind, role, slot, feature, runtime module, data-spw state, and visible consequence.`
+}[reg=facet]
+
+# Current Site Gaps
+
+site_gaps: .{
+  descriptive_without_falsification = `Many site reviews state architectural preferences but do not include a falsification condition, implementation reference, or probe. This makes later agents rely on tone rather than evidence.`
+  weak_binding_status = `Site .spw often cites workbench concepts without marking whether a statement is canonical for the public site, imported canon, local convention, exploratory metaphor, or implementation-backed contract.`
+  route_to_runtime_flow_under_modeled = `site-semantics.spw has strong contracts, but it does not yet express a full phase flow from authored body metadata -> route sections -> CSS selectors -> runtime modules -> public/editor consequence.`
+  memory_locations_blurry = `Plans, reviews, conventions, generated catalog output, and pending worktree observations sometimes carry similar information. The workbench hot/warm/cold/generated memory model would reduce duplication and stale notes.`
+  practice_beds_need_contract_shape = `fundamentals-practice-rhythms and modular-experience-slices now define practice beds, but the first slice contracts should inherit workbench-style fields: source refs, phase, evidence, status, rollback, and open probes.`
+}[reg=facet]
+
+# Recommended Applications
+
+recommendations: .{
+  add_claim_protocol_site_variant = `Create or add a site-local claim template under .spw/conventions/planning-ecology.spw or a new .spw/conventions/claim-protocol.spw. Keep it simpler than the workbench version: claim_id, layer, hypothesis, spec_ref, impl_ref, probe_ref, falsification, status.`
+  strengthen_site_workspace = `Extend .spw/workspace.spw with a kernel frame modeled after the workbench: authored, semantic, pragmatic, generated. This would make source-of-truth boundaries visible without importing the entire workbench harness.`
+  make_slice_contracts_phase_aware = `When .spw/slices/<slice>/index.spw appears, give each slice a phase map: authored surface, CSS projection, runtime writer/reader, editor inspection, consequence, validation.`
+  use_scoped_evolution_for_big_refactors = `CSS layer-order changes, route visual redesigns, and new data-spw-* families should carry stable/experimental channel, impacted paths, probes, and rollback. This fits the current openness to deeper refactors while keeping them reviewable.`
+  convert_reviews_gradually = `Do not rewrite every review. Start with the active surfaces: fundamentals-practice-rhythms, css-architecture-alignment, runtime-audit, and the future math-practice-labs tending note. Add claim chains only where a claim will guide implementation.`
+  add_queryability_to_site_semantics = `Add a small queryable-component frame to site-semantics.spw that says each significant surface should expose kind, role, slot, feature, module, state, and consequence. This is the site translation of literate-ui queryability.`
+}[reg=facet]
+
+# Candidate Site Kernel
+
+site_kernel_candidate: .{
+  authored = .{
+    owns = `route HTML, body metadata, headings, frame sigils, static links, accessible names`
+    source = `route index.html files`
+    invariant = `Public meaning remains readable without JavaScript.`
+  }[reg=facet]
+  semantic = .{
+    owns = `data-spw-* families, .spw conventions, operator/brace/page models, slice contracts`
+    source = `.spw/conventions/*.spw, .spw/surfaces/*.spw, .spw/reviews/*.spw`
+    invariant = `Semantic claims cite authored or runtime evidence.`
+  }[reg=facet]
+  pragmatic = .{
+    owns = `CSS projection, JS runtime modules, feature gates, settings state, observation/diagnostic surfaces`
+    source = `public/css/**, public/js/**, settings route, design/runtime surfaces`
+    invariant = `Runtime behavior progressively enhances authored structure and exposes inspection state.`
+  }[reg=facet]
+  generated = .{
+    owns = `design catalog, route manifest, sitemap, dist output, generated audits`
+    source = `scripts/**, design/catalog/, dist/ when produced`
+    invariant = `Generated surfaces are rebuildable or explicitly marked as review artifacts.`
+  }[reg=facet]
+}[reg=facet]
+
+# First Refactor Targets
+
+first_refactor_targets: #[
+  .{
+    target = `.spw/workspace.spw`
+    change = `Add kernel, memory_locations, and claim_protocol references.`
+    payoff = `Editors can tell what kind of truth each .spw file carries.`
+    risk = `Low if additive.`
+  }
+  .{
+    target = `.spw/conventions/site-semantics.spw`
+    change = `Add queryable_component_contract and route_to_runtime_phase_flow frames.`
+    payoff = `Literate UI metaphysics becomes a practical selector/data-attribute contract.`
+    risk = `Medium because it may influence future markup/data-spw naming.`
+    status = `applied in the current working tree as additive frames.`
+  }
+  .{
+    target = `.spw/conventions/planning-ecology.spw`
+    change = `Add a site-local claim chain and memory placement rule for plans/reviews/tending notes.`
+    payoff = `Practice-bed and refactor claims become testable instead of only persuasive.`
+    risk = `Low.`
+  }
+  .{
+    target = `.spw/slices/math-practice-labs/index.spw`
+    change = `When created, model the pilot with authored/semantic/pragmatic/generated phases and one claim chain about playable vocabulary.`
+    payoff = `The first slice starts with workbench-grade structure without waiting for a full taxonomy.`
+    risk = `Low if created after the math-lab patch is reviewed.`
+  }
+][reg=set]
+
+guardrails: #[
+  `Do not copy workbench metaphors wholesale into site files when the public site has a simpler HTML/CSS/JS fact.`
+  `Separate imported canon, local convention, exploratory metaphor, and implementation-backed contract in any new .spw note.`
+  `Prefer additive frames over large rewrites of existing review prose.`
+  `Use claim chains only for claims that will guide implementation, validation, or refactoring.`
+  `Keep site .spw plain-text readable in one sitting; depth should improve navigability, not inflate the corpus.`
+][reg=set]
+
+status: .{
+  created = `2026-06-01 after a structured read-through of .spw/_workbench/**/*.spw entrypoints, theory/runtime, registries, process, patterns, harness, examples, and audits.`
+  applied = `Initial workspace kernel, planning claim-chain, and site-semantics queryability/phase-flow frames have been added in the current working tree.`
+  next = `Use these frames to shape the first .spw/slices contract, likely math-practice-labs after its code patch is reviewed.`
+}[reg=facet]

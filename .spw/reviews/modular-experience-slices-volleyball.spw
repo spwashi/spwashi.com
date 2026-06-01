@@ -1,0 +1,209 @@
+# Modular Experience Slices & Earthy Rhythms of Participation and Exchange
+
+#>spw_modular_experience_slices_volleyball
+#:review #!architecture #!collaboration #!ontology
+#:layer #!pragmatics
+
+@css_alignment: ~"./css-architecture-alignment.spw"
+@spw_css_architecture_plan: ~"../.agents/plans/spw-css-architecture/PLAN.md"
+@runtime_bootstrap_plan: ~"../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@site: ~"../site.spw"
+@workbench_theory: ~"../_workbench/docs/theory/index.spw"
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@agent_optimization: ~"../.agents/plans/agent-optimization/PLAN.md"
+@workbench_alignment: ~"./workbench-alignment-audit.spw"
+@classname_grammar_recognizability: ~"./classname-patterns-attribute-grammar-recognizability.spw"
+
+thesis: .{
+  claim = `The Spw system already contains powerful natural modularity (MODULE_DEFS as experience chunks, data-spw-* as semantic routing, operator families, region profiles, attention-field as diffusive model). We can evolve the local file tree and collaboration surfaces of *this repository* into explicit "experience slices" that human developer teams can tend and exchange over years — like layers of an abstract painting or beds in a long-lived garden — using earthy, cyclical rhythms of participation and exchange built on .agents/plans/, .spw reviews, and runtime contracts.`
+  scoping = `This model is intentionally downstream of this repository. It is a tool for conversation and coordination amongst developers working on spwashi.com. It is not being proposed for the spw-workbench canon or generalized as language-level primitives at this time.`
+  painting_garden_metaphor = `Like an abstract painting built in layers over decades or a garden tended across seasons by different hands, contributors add to slices without erasing prior work. The architecture provides stable ground (layers, contracts, precipitates as sedimentation) while slices receive ongoing attention, weathering, growth, and exchange.`
+  earthy_rhythms = `Participation follows organic cycles rather than scheduled turns: periods of focused tending on a slice, followed by natural sedimentation of contributions, periods of rest or weathering, and generous handoff surfaces so others can enter the work in a later season. The goal is sustainable, low-friction, long-term collaboration that feels alive rather than gamified.`
+}
+
+# Candidate Experience Slices (Derived from Runtime + Ontology)
+
+slices: .{
+  operator_grammar_voices = .{
+    description = `The core linguistic and force primitives: operators (#>, ?, ^, ~, @, etc.), their families, intents, physics, and visual/sonic projection. Includes brace syntax and structural grammar.`
+    current_locations = `public/js/kernel/shared.js (OPERATOR_DEFINITIONS), public/js/semantic/operators.js, public/css/grammar/syntax.css, public/css/handles/operators.css, .spw/conventions/operator-semantics.spw`
+    natural_team = `Linguists, typographers, interaction designers, workbench language team`
+    painting_style = `Slow, precise layering of new operator families or resonance behaviors over years`
+  }
+
+  attention_resonance_field = .{
+    description = `The diffusive attention model, wonder states, charge, collection, resonance probes, section handles, and field influence. The "hormonal" or acoustic space of the site.`
+    current_locations = `public/js/runtime/attention-architecture.js, public/js/wonder-memory.js, public/css/effects/wonder.css, public/css/handles/operators.css (much of the :has() field logic), .spw/conventions/attention-field.spw`
+    natural_team = `Attention/perception researchers, field modelers, accessibility + wonder specialists`
+  }
+
+  cauldron_composition_emergence = .{
+    description = `Gathering, mixing, gardening of semantic ingredients into new forms. Cauldron phases, composition, boonhonk as color mixer, prompt/casting surfaces. The "kitchen" and "studio" emergence layer.`
+    current_locations = `public/js/interface/composition.js, public/js/modules/boonhonk-mixer.js, public/js/modules/rpg-wednesday-*.js (creative tools), .spw/conventions/ (related), routes/boonhonk-mixer.css`
+    natural_team = `Composers, prompt engineers, RPG/creative tool builders, culinary metaphor lovers`
+  }
+
+  musical_rhythmic_projection = .{
+    description = `The explicit musical metaphors made visual and interactive: rhythm tokens, harmony/tempo/density from regions, site rhythm derived from module timing, operator voices as timbre, arrangement as region profiles.`
+    current_locations = `public/js/site.js (rhythm calculation in updateRuntimeStateTokens), public/css/ornament/ornament.css + runtime-states.css (light consumption), tokens/core.css`
+    natural_team = `Musicians, sound designers, systems thinkers who want the runtime to "sing"`
+  }
+
+  wonder_ornament_celebration = .{
+    description = `The highest expressive layer: whimsy, relational state, delight, structural revelation made visible, canvas accents, metaphysical paper, narrative ornament. Where the painting gets its final light and texture.`
+    current_locations = `public/css/ornament/*, public/css/effects/wonder.css + metaphysical-paper.css + narrative.css, public/js/interface/canvas-accents.js etc.`
+    natural_team = `Visual artists, ornament specialists, delight engineers`
+  }
+
+  brace_physics_gestures = .{
+    description = `The embodied, physical interaction with structure: brace gestures, pivots, actions, experiential tap/hold/swipe, spells as replayable motifs.`
+    current_locations = `public/js/runtime/brace-*.js, public/js/runtime/experiential.js, public/js/runtime/spells.js, public/js/interface/haptics.js`
+    natural_team = `Gesture researchers, haptics people, performance artists`
+  }
+
+  region_harmony_arrangement = .{
+    description = `The meso-scale organization: region profiling (kind/role/harmony/tempo/density), page harmony field, layout variants, surface ecology.`
+    current_locations = `public/js/site.js (buildRegionProfile etc.), public/css/systems/surfaces/*, layout.css`
+    natural_team = `Systems designers, information architects, composers of large forms`
+  }
+
+  rpg_play_creative_surfaces = .{
+    description = `The dedicated creative play spaces (rpg-wednesday as exemplar): asset atlases, character labs, session registers, game-specific grammar. A living laboratory slice.`
+    current_locations = `public/js/modules/rpg-wednesday-*.js, public/css/routes/rpg-wednesday-surface.css and play-surface.css`
+    natural_team = `Game designers, world-builders, live session facilitators`
+  }
+}
+
+# Bolder File Tree Proposals (Supporting Slice Ownership)
+
+bolder_trees: .{
+  proposal_1_slices_parallel_to_layers = `public/css/slices/
+    operator-grammar/
+      grammar.css          # imported in grammar layer section
+      components.css
+      systems.css
+      handles.css
+      effects.css
+      ornament.css
+    attention-resonance-field/
+      ... (same pattern)
+    musical-rhythmic-projection/
+    cauldron-composition/
+    wonder-ornament-celebration/
+    brace-physics-gestures/
+    region-harmony-arrangement/
+    rpg-play-creative/
+
+  Then in style.css, under each @layer section, have documented blocks:
+  /* === SLICE: operator-grammar (grammar layer contribution) === */
+  @import url('/public/css/slices/operator-grammar/grammar.css') layer(grammar);
+  /* === SLICE: attention-resonance-field (grammar layer contribution) === */
+  ...
+
+  Benefit: A team can live almost entirely inside one slices/<their-slice>/ directory for years, touching every layer of the painting without touching other teams' work. The main style.css becomes a thin manifest of slice contributions per layer.`
+
+  proposal_2_slices_with_layer_substructure = `public/css/
+    grammar/
+      slices/
+        operator-grammar.css
+        brace-physics.css
+    systems/
+      slices/
+        attention-field.css
+        musical-projection.css
+        region-harmony.css
+    effects/
+      slices/
+        wonder-field.css
+    handles/
+      slices/
+        ...
+    ornament/
+      slices/
+        ...
+
+  This keeps the physical layer directories but makes slice ownership visible inside them. Slightly less "pure slice ownership" than proposal 1 but easier migration.`
+
+  proposal_3_full_experience_slices_with_contracts = `Add parallel structure in JS and .spw for symmetry:
+
+  public/js/slices/
+    operator-grammar/
+      index.js (re-exports or contracts)
+      ...
+  public/js/slices/<slice>/contracts.spw  (or pointer to .spw)
+
+  .spw/slices/
+    operator-grammar.spw
+    attention-resonance-field.spw
+    ...
+
+  Each slice.spw contains:
+    - runtime contract (which MODULE_DEFS, which data-spw-* it owns)
+    - css contract (which files it contributes to which layers)
+    - current painting state / open seams
+    - team ownership notes
+
+  This makes the entire system (HTML data attrs + JS modules + CSS contributions + .spw ontology) slice-aligned. The "painting" becomes explicitly multi-author over time.`
+
+  invariants_for_all = `Must preserve:
+    - Exact 11-layer cascade order in style.css (no new layers ever)
+    - css-instruction.spw as the law for file comments and ownership
+    - All existing data-spw-* contracts and runtime module loading
+    - Ability for static analysis / design catalog to still work
+    - Reduced-motion and performance characteristics`
+}
+
+# Human Team Volleyball Protocol (Painting Over Years)
+
+volleyball_protocol: .{
+  core_idea = `A "volley" is a bounded human coding session or series focused on one or more slices. Between volleys, the system provides stable ground and clear handoff surfaces so the next humans (or same humans months later) can pick up the brush without destroying prior layers.`
+
+  during_a_volley = `[
+    "Claim the slice(s) in a plan under .agents/plans/slices/<slice-name>/ or in the slice's own .spw",
+    "Work inside the slice-owned directories/files as much as possible",
+    "Update the slice's canonical .spw contract + current state",
+    "Leave a 'session review' .spw (lightweight, like the runtime-audit reviews)",
+    "Optionally emit a runtime spell or checkpoint of the slice state for experiential continuity",
+    "Update the cross-slice plan or the main runtime-bootstrap / css-architecture plans if architecture seams were touched"
+  ]`
+
+  handoff_between_volleys = `[
+    "The slice's .spw becomes the primary handoff document (what was painted, what seams remain, what the next painter should know)",
+    "A short plan note records the 'volley' (who, when, intent, open questions)",
+    "spw-plan-maintenance (or equivalent human + agent sweep) can be run to refresh indexes and surface drift",
+    "Runtime state (via existing spells/checkpoints or new slice-specific ones) can be used to 're-enter' the experiential state of the painting"
+  ]`
+
+  between_human_sessions = `Agents and maintenance tools (spw-plan-maintenance, ontology-workbench, craft-quality, etc.) act as the 'studio assistants' who keep the painting clean, document new layers, and prepare the surface for the next human volley.`
+
+  long_term_painting_qualities = `[
+    "Each slice can evolve at its own pace (some slices may be 'finished' for years while others keep getting new glazes)",
+    "Prior layers remain visible and respected (the architecture invariants + data attributes + .spw contracts protect the ground)",
+    "New teams can enter via the slice .spw + plan without needing to understand the entire site at once",
+    "The workbench can be used to model new slice concepts as the language itself evolves"
+  ]`
+}
+
+# Recommended Next Artifacts & Actions (Local to This Repo)
+
+next_steps: .{
+  immediate = `This review is now explicitly scoped as a local collaboration tool for developers working on this repository. No upstreaming to the spw-workbench is planned at this time.`
+  phase_a = `Create lightweight, practical handoff templates inside this repo (e.g. a standard "slice review" header in .spw/reviews/ or a convention for per-slice session notes) so human teams can easily document what was worked on during a volley.`
+  phase_b = `Prototype clearer slice boundaries in the file tree (starting conservatively with documentation and review bundles rather than large moves) so developers can quickly see "this area belongs to the X slice."`
+  phase_c = `Add a short "Developer Volleyball" section to planning-ecology.spw and/or css-instruction.spw describing the expected rhythm: claim slice(s) → work → leave updated .spw review + plan note → next person picks it up.`
+  phase_d = `Use the modular-experience-slices plan as the living coordination point for anyone experimenting with slice-based work on this codebase.`
+  measurement = `The success metric is simple: developers (especially those returning after a gap) can more easily understand what changed in a particular slice and what the current state/intent is, without having to reconstruct the full history of the painting.`
+}
+
+# Status
+
+status: .{
+  created_during = `Exploration of bolder file tree evolution + modular team volleyball for long-term iterative "painting" of experience slices (2026-04, building directly on css-architecture-alignment.spw)`
+  scoping = `Per clarification: this is a repo-internal collaboration pattern for human developers working on this codebase. It is deliberately kept downstream and is not intended for upstreaming to the spw-workbench at this time.`
+  intent = `Provide practical, inspectable surfaces and protocols so developers can effectively volley work on distinct slices of the spwashi.com experience over long periods.`
+}

@@ -1,0 +1,46 @@
+# Spw Surface Normalization
+
+#>spw_surface_normalization
+#:review #!architecture #!collaboration
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@fundamentals_practice: ~"./fundamentals-practice-rhythms.spw"
+@modular_slices: ~"./modular-experience-slices-volleyball.spw"
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@model_guided_refinement: ~"../conventions/model-guided-refinement.spw"
+
+^"purpose"{
+  note = "This .spw is the living companion and dispatch surface for the normalization plan."
+  claim = "Establish lightweight, workbench-aligned conventions for the site's .spw surfaces (headers, ^\"section\" scaffolding, @references, ~# micro-metadata, sedimentation notes) so they become naturally navigable and dimensional while preserving the local earthy, rhythmic, literary voice."
+  scope = "All work is scoped strictly local to this repository for human developer collaboration. No upstream changes to the spw-workbench are proposed or required."
+}
+
+^"dimensions"{
+  practice_depth = "reading | observation | gesture | tending | succession"
+  temporal_rhythm = "sedimentation | seasonal | return"
+  semantic_layer = "grammar | semantics | pragmatics | application"
+  collaboration_phase = "initiation | exchange | weathering | return"
+  semantic_capacity = "cache | audit | align | prime | contract | archive"
+}
+
+^"primary_deliverables"{
+  deliverables = #[
+    `Concrete before/after normalization examples`
+    `Priority targets for first surgical pass (planning-ecology, css-instruction, fundamentals, slices review, precipitates, dispatch indexes)`
+    `Sedimentation note convention for handoff traces`
+    `Lightweight dimensional declaration pattern + future index shape`
+    `Semantic-capacity operations for cache/audit/align/prime/contract/archive`
+    `Integration with experience slices + fundamentals practice beds model`
+    `Validation criteria focused on returning-developer friction reduction`
+  ][reg=set]
+}
+
+^"operational_diversity_note"{
+  insight = "As semantic capacity expands, .spw surfaces should not all become mini-plans. Reviews should audit and synthesize; conventions should fix vocabulary and invariants; slices should own cross-layer context; templates should make repeated agent work safer."
+  evidence = #[@semantic_capacity, @model_guided_refinement, @plan][reg=set]
+  next = "Use semantic-capacity.spw#insight_cache_shape when a new idea is valuable but not ready for route, CSS, JS, or convention work."
+}

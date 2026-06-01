@@ -1,0 +1,102 @@
+# Classname Patterns, CSS as Literary Geology, Attribute Grammar Families, and Recognizability
+
+#>spw_classname_attribute_grammar_recognizability
+#:review #!css #!semantics #!cognition #!collaboration
+#:layer #!pragmatics
+
+@css_instruction: ~"../conventions/css-instruction.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@html_css_structure_audit: ~"./html-css-structure-audit.spw"
+@css_architecture_alignment: ~"./css-architecture-alignment.spw"
+@modular_slices_volleyball: ~"./modular-experience-slices-volleyball.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+
+thesis: .{
+  claim = `The site's current patterns (heavy data-spw-* as primary semantic grammar + a disciplined set of structural classes like .site-frame, .frame-*, .spw-*) already support high recognizability and cognitive ease. Treating CSS layers as geological strata (sedimentation of decisions over time) and consciously evolving "attribute grammar families" strengthens the "painting over years" model for human developer volleyball on experience slices.`
+  local_scope = `All considerations here are scoped to this repository for developer collaboration (volleyball within this codebase). No upstreaming to the spw-workbench is implied.`
+}
+
+# 1. Classname Patterns — Current State and Observations
+
+classname_patterns: .{
+  dominant_style = `Hybrid but principled:
+    - Structural/layout primitives use clear, low-specificity class families: .site-frame, .frame-topline, .frame-heading, .frame-body, .frame-actions, .frame-panel, etc.
+    - Spw-specific affordances use the spw- prefix: .spw-section-handle, .spw-delimiter (with --brace/--angle/--circle modifiers), .spw-component-meta, .spw-component-tag, .spw-guide-chip, .spw-living-term.
+    - Modifiers follow a BEM-ish -- convention (site-hero--split-figure, spw-delimiter--brace).
+    - Many components combine a base class with data-spw-* for state (e.g., .operator-chip[data-spw-operator="probe"]).`
+  strengths = `[
+    "The spw- prefix makes Spw-native things instantly recognizable in both markup and CSS.",
+    "frame- family creates a coherent visual grammar for the core container metaphor.",
+    "Avoidance of deep descendant selectors in favor of data attributes + :where() keeps classes relatively flat and readable."
+  ]`
+  tensions = `[
+    "Some classes still feel presentational or historical (e.g., certain home-*, garden-*, or route-specific names) alongside the more systematic semantic ones.",
+    "The split between 'structural class' and 'semantic data attribute' is powerful but not always obvious to a returning developer — the boundary could be more explicitly documented per the css-instruction.spw 'semantic scope -> component noun' rule."
+  ]`
+}
+
+# 2. CSS as a Literary Geology
+
+css_geology: .{
+  metaphor = `Each layer in the cascade (reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament) is a geological stratum. Over time, decisions, experiments, and refinements 'sediment' into higher layers. Lower layers are the stable bedrock; higher layers are more recent, more specific deposits.`
+  precipitates_connection = `The precipitates-and-projections model maps beautifully here: a change starts as scattered intent, clusters around a semantic family (operator, brace, field state), and eventually crystallizes as a coherent addition to a particular stratum (or as a conscious override that respects the layer order).`
+  literary_quality = `Good files already read like field notes:
+    - Clear purpose statements at the top.
+    - Ownership boundaries.
+    - Comments that explain *why* something lives in this layer.
+    - The layer order itself is a readable history of design priorities (structure first, then semantics, then route personality, then delight).`
+  opportunity_for_familiarity = `Make the strata more legible over time:
+    - Consistent header format across layer files (purpose, responsibilities, what must not live here).
+    - Explicit "sedimentation notes" or migration hints when something moves between layers (e.g., "this rule precipitated from components/ into grammar/ in 2026 because...").
+    - Use the existing precipitates language in comments when consolidating.`
+}
+
+# 3. Attribute Grammar Families
+
+attribute_grammar_families: .{
+  current_families = `The data-spw-* namespace already forms several coherent families:
+    - Identity & Context: data-spw-surface, data-spw-features, data-spw-context, data-spw-wonder, data-spw-page-family/modes/role/seed.
+    - Structural Anatomy: data-spw-kind, data-spw-role, data-spw-slot, data-spw-form (with --options variants), data-spw-perspective.
+    - Operator & Force: data-spw-operator (the core linguistic primitives).
+    - State & Field: data-spw-wonder-state, data-spw-charge, data-spw-resonance, data-spw-collected, data-spw-harmony/tempo/density, data-spw-cauldron-phase, data-spw-gesture-*.
+    - Runtime & Projection: data-spw-module-*, data-spw-runtime-*, data-spw-load-*, data-spw-semantic-* (expression, root, variant, behavior, lens).`
+  brace_mirroring = `The semantic_brace_annotation in site-semantics.spw (root[variant]{behavior}<lens>) is already an explicit attribute grammar family that mirrors Spw syntax. This is one of the strongest existing examples of recognizability — the same mental model applies in markup, CSS selectors, JS, and .spw.`
+  opportunities = `[
+    "Make the families more explicit and documented (a small table or section in css-instruction.spw or a new lightweight convention).",
+    "Encourage consistent use of data-spw-semantic-* for the brace-annotated form when a component needs rich discoverability.",
+    "Consider a small 'grammar family' prefix convention for new attributes (e.g., data-spw-state-*, data-spw-semantic-*) to keep the namespace scannable.",
+    "Preserve the primacy of data attributes over classes for state and semantics (per css-instruction and site-semantics)."
+  ]`
+}
+
+# 4. Recognizability as a Dimension of Familiarity / Cognitive Ease
+
+recognizability: .{
+  wonder_connection = `Per wonder-doctrine.spw: wonder is structural revelation that rewards continued engagement. Recognizable patterns are the precondition for that revelation — if the grammar is consistent, a developer (or reader) can quickly orient and then notice the deeper structure.`
+  cognitive_ease = `For returning developers (the core of the volleyball model):
+    - Consistent spw- and frame- prefixes + data-spw-* families reduce the "where am I and what does this mean?" tax.
+    - The same root concepts (operator, brace, field state, region harmony) appear across HTML, CSS, JS, and .spw with the same mental model.
+    - This directly supports the "painting over years" goal: each new layer added by a different developer or session builds on familiar strata rather than requiring re-learning.`
+  current_health = `Already quite good because of the data-attribute discipline and the spw- prefix. The main risks are:
+    - Proliferation of ad-hoc class names in route or experiment files.
+    - Attribute writes that happen late (timing audit) can make the "final" recognizable state different from the initial authored one.`
+  recommendations_for_volleyball = `[
+    "When a team works on a slice, they should audit and (where helpful) regularize classname and attribute usage within that slice's owned files for recognizability.",
+    "Handoff reviews (per the modular-slices-volleyball protocol) should explicitly note any new patterns introduced and whether they extend an existing family or create a new one.",
+    "Treat 'does this increase or decrease recognizability for the next developer?' as a first-class review criterion alongside performance and semantics."
+  ]`
+}
+
+# Synthesis & Local Recommendations
+
+local_recommendations: .{
+  for_developer_volleyball = `Make these four lenses part of the practical handoff ritual when working on a slice:
+    1. Audit the slice's classname patterns for consistency with the broader families.
+    2. Add a short "geological note" (in the slice's .spw or in a CSS file comment) when a change sediments into a new layer or refines an existing stratum.
+    3. Prefer extending existing attribute grammar families over minting new top-level data-spw- names.
+    4. Explicitly consider recognizability/cognitive ease in the slice handoff review.`
+  for_architecture = `These considerations reinforce the direction in the html-css-structure-audit and css-architecture-alignment reviews: strengthen the data-attribute grammar as the primary readable, inspectable layer, keep classes as lightweight structural scaffolding, and make the layered CSS more deliberately literary (readable history) so that long-term painting remains cognitively sustainable.`
+}
+
+This consideration treats classname patterns, geological legibility of CSS, coherent attribute grammars, and recognizability not as separate polish items but as core enablers of the local human collaboration model (volleyball on experience slices) that this repository is deliberately cultivating.
