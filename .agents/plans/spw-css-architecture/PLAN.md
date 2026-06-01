@@ -71,4 +71,9 @@ none
 
 ## Spw Artifact
 
-None beyond `wip.spw`; the branch memory is the retained operational surface until the architecture settles enough to deserve a distilled protocol artifact.
+- `wip.spw` (historical working notes)
+- `.spw/reviews/css-architecture-alignment.spw` (2026-04 review that builds on this plan with fresh runtime selector timing, chunking ontology, and musical projection context; includes concrete redistribution and file-tree proposals while respecting the layer contract and css-instruction.spw)
+- `.spw/reviews/modular-experience-slices-volleyball.spw` (title still carries legacy name; takes the bolder file tree ideas into explicit "experience slices" that human teams can tend long-term through earthy rhythms of participation and exchange, using the painting/garden metaphor)
+- `.spw/reviews/fundamentals-practice-rhythms.spw` and `.agents/plans/modular-experience-slices/PLAN.md` now make route visual redesign and CSS layer-order review allowable when they clarify semantic flow. The CSS architecture stance is: try redistribution, slice manifests, and ownership documentation first; if layer order itself blocks repeated practice-bed work, propose that as a standalone migration with `style.css`, `AGENTS.md`, `css-instruction.spw`, and validation updated together.
+
+The 2026 reviews (alignment + slices/volleyball + html-css-structure-audit) are the current canonical references for redistribution and team collaboration models. The new html-css-structure-audit.spw specifically calls out the timing of JS-applied data-spw-* attributes as a major remaining source of layout/cascade friction that affects how CSS semantics are realized.

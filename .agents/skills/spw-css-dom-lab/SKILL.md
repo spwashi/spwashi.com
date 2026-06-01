@@ -12,14 +12,15 @@ Read first:
 
 ## Default Workflow
 
-1. Name the hypothesis in plain language: what should feel more learnable, vivid, or inspectable?
-2. Start with HTML/CSS; add JS only if the experiment needs state, timing, sampling, or pointer logic.
-3. Keep the experiment reversible:
+1. Name the hypothesis in plain language: what should feel more learnable, vivid, ergonomic, or inspectable?
+2. If the experiment involves animators, illustrators, designers, musicians, artists, or engineer/artist collaboration, fill the daily-kernel fields first: focus, discipline pair, region, brand physics, intensity, semantic operation, output, validation, and do-not-touch.
+3. Start with HTML/CSS; add JS only if the experiment needs state, timing, sampling, or pointer logic.
+4. Keep the experiment reversible:
    - isolate it to one selector family or data attribute
    - avoid one-off inline styles
    - prefer progressive enhancement over mandatory runtime behavior
-4. Test the experiment against both desktop reading and touch interaction assumptions.
-5. If the pattern survives, fold it back into shared tokens, surfaces, or runtime utilities instead of leaving it as a page trick.
+5. Test the experiment against desktop reading, touch interaction, reduced motion, and the declared daily-kernel intensity.
+6. If the pattern survives, fold it back into shared tokens, surfaces, runtime utilities, a `.spw` contract, or a semantic insight cache instead of leaving it as a page trick.
 
 ## Good Targets
 
@@ -28,6 +29,8 @@ Read first:
 - page-index discoverability
 - palette, wonder-memory, and resonance controls
 - structural ornaments that teach state
+- daily-kernel studio/lab/theater experiments
+- brand-physics variables such as resonance, cadence, grain, threshold, edition, and repair
 
 ## Validation
 

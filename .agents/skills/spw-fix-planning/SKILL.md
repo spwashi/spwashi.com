@@ -15,6 +15,7 @@ Read first:
 - the bug spans multiple layers
 - the failure mode is unclear
 - you need a durable fix note before implementation
+- the failure is stale semantic dispatch, missing plan/skill wiring, or a broken model-guided/daily-kernel/semantic-capacity reference
 
 ## Default Workflow
 
@@ -26,7 +27,7 @@ Read first:
    - diagnosis
    - planned fix
    - deferred follow-ups
-5. Add `.spw` review notes when the bug is really an ontology, settings, or lifecycle seam.
+5. Add `.spw` review notes when the bug is really an ontology, settings, lifecycle, semantic-capacity, model-guided, or daily-kernel seam.
 
 ## Validation
 
@@ -35,3 +36,5 @@ Read first:
 - `git diff --check`
 
 When the regression or lifecycle issue lives in the agent/planning layer (stale indexes, missing `.spw` dispatch, broken skill references, maintenance drift), record it under `.agents/plans/agent-optimization/` (or a focused sub-plan) and invoke `spw-plan-maintenance` as part of the fix.
+
+When the regression lives in the new semantic rails, check `.spw/site.spw`, `.spw/conventions/index.spw`, `.agents/plans/README.md`, and the relevant skill wrapper before editing runtime code.

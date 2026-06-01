@@ -21,6 +21,14 @@ For maintaining the planning ecology, semantics, and agent contracts on spwashi.
 - `spw-semantics-rigor` + `spw-craft-quality` — Ontology cleanup, structural polish, and inspectability passes.
 - `spw-feature-planning` / `spw-fix-planning` — Create focused plans before cross-layer work.
 - `spw-research-rigor` — Turn questions into reproducible notes.
+- `spw-css-dom-lab` — Run small reversible daily-kernel-style experiments across HTML, CSS, and DOM behavior.
+
+Current semantic rails:
+
+- `model-guided-refinement/PLAN.md` + `.spw/conventions/model-guided-refinement.spw` for focus dimensions, fixity tiers, elemental effects, cross-language tracing, and creative marketing contracts.
+- `daily-kernel-development/PLAN.md` + `.spw/conventions/daily-kernel.spw` for one-session cross-discipline kernels involving engineers, animators, illustrators, designers, musicians, artists, and collaborators.
+- `.spw/conventions/semantic-capacity.spw` for `.spw` operations: cache, audit, align, prime, contract, archive.
+- `spw-surface-normalization/PLAN.md` for navigable, dimensional `.spw` surfaces with higher diff value.
 
 See `.agents/plans/agent-optimization/PLAN.md` for the current track improving these surfaces themselves (the primary home for ongoing skill, planning, and `.spw` dispatch improvements).
 See `.agents/plans/agentic-dev-contracts/PLAN.md` for the executable validation contracts (manifest + `npm run check`).
