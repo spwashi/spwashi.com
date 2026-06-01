@@ -69,6 +69,88 @@ local_hormonal_model: .{
  }[reg=facet]
 }[reg=facet]
 
+^"operational_semantics"{
+  definition: "The attention field is not only a mathematical model. It is an operational contract that must be queryable, claim-bearing, and useful for both human cognitive work and machine computational work — emergent cognitive+computational communication in action."
+
+  cognitive_use: .{
+    for_designers = "When choosing copy tokens or interaction weight (reading vs. collecting), the field model tells you the expected signal strength and decay. This supports intentional design of wonder and attention rather than hoping the UI 'feels right'."
+    for_practitioners = "The distinction between local-hormonal ideal and register-diffusion implementation helps editors decide when a heavy resonance effect is worth the cost and when a lighter register approach suffices."
+  }[reg=facet]
+
+  computational_use: .{
+    selectors = #[
+      `[data-spw-attention]`
+      `[data-spw-wonder-state]`
+      `[data-spw-collected]`
+      `[data-spw-resonance-probe]`
+      `.operator-chip[data-spw-operator]:hover`
+    ][reg=set]
+    events = #[
+      `spw:attention-emitted`
+      `spw:wonder-state-changed`
+      `spw:field-bias-updated`
+    ][reg=set]
+    ownership = "runtime (wonder-memory.js, attention-architecture.js) + semantic (data-spw-* attributes) + effects (wonder.css, ornament.css)"
+  }[reg=facet]
+
+  claims: .{
+    field_is_observable: {
+      claim_id = "attention-field-observable-001"
+      layer = "pragmatic"
+      hypothesis = "The attention field must be observable through stable data-spw-* attributes and resonance effects so that both humans and agents can inspect current bias without reverse-engineering CSS."
+      spec_ref = ".spw/conventions/attention-field.spw#operational_semantics + site-semantics.spw#ui_resonance_contract"
+      impl_ref = "wonder-memory.js + data-spw-wonder-state / data-spw-attention on frames and operator chips"
+      probe_ref = "Hover or focus an operator; data-spw-resonance-probe and visual glow must appear; state inspector must reflect the field bias."
+      falsification = "A strong resonance or attention effect exists whose current state cannot be read from the DOM or design catalog."
+      status = "active"
+    }
+    decay_matches_model: {
+      claim_id = "attention-field-decay-001"
+      layer = "semantic"
+      hypothesis = "Signal decay must be consistent with the documented temporal model (τ ≈ 40s) so that wonder memory behaves predictably across sessions."
+      spec_ref = ".spw/conventions/attention-field.spw#local_hormonal_model"
+      impl_ref = "wonder-memory.js TTL and decay logic"
+      probe_ref = "Perform an action, wait measured time, observe attention/resonance state decay in inspector and visuals."
+      falsification = "Attention effects persist far longer or decay far faster than the model without an explicit exception in the projection."
+      status = "active"
+    }
+  }[reg=facet]
+
+  validation: "Any new resonance, collection, or attention-bearing surface must declare the data attributes it writes and the events it emits, then survive the two claims above."
+}
+
+^"practice_and_resonance_rhythms"{
+  definition: "Attention-bearing features should support a cycle of noticing, adjustment, resonance, and sedimentation without making every interaction loud."
+  notice: .{
+    role = "A reader detects an available handle, operator, surface, or cluster."
+    html = "stable heading, id, operator chip, data-spw-feature, or data-spw-charge-key"
+    css = "quiet affordance, focus-visible state, readable sigil + label, reduced-motion safe hint"
+    js = "optional observation only; no hidden commitment"
+  }[reg=facet]
+  adjust: .{
+    role = "The system or reader makes a small reversible change that improves fit."
+    html = "authored controls with local consequence labels"
+    css = "state projection through tokens and data-spw-* selectors"
+    js = "site-settings or route module writes inspectable state and bus events"
+    rule = "Adjustment should be seamless when it serves reading comfort, accessibility, or layout stability."
+  }[reg=facet]
+  resonate: .{
+    role = "A cluster briefly becomes more articulate because multiple signals align."
+    html = "cluster has a name: data-spw-feature, frame id, semantic expression, or slice reference"
+    css = "resonance is local, time-bounded, and tied to declared state carriers"
+    js = "event payload names the cause and affected cluster"
+    rule = "Resonance should be appreciable when it teaches a relation, completes a gesture, or reveals a practice-bed insight."
+  }[reg=facet]
+  sediment: .{
+    role = "A repeated useful adjustment becomes a durable claim, note, or component convention."
+    html = "markup contract becomes more explicit only when the concept boundary is honest"
+    css = "shared token or component rule replaces repeated route-local expression"
+    js = "utility moves toward kernel/runtime/interface/modules according to ownership"
+    spw = "claim chain, slice note, or convention records why the pattern now belongs"
+  }[reg=facet]
+  balance_rule = "Use seamless adjustment for care work; use resonant pause for learning work; use sedimentation for architecture work."
+}
+
 register_diffusion_model: .{
  note = `The scalable approximation. Preserves neighborhood structure via shared register membership.`
  motivation = `Computing d(a,b) for all pairs of components is O(n²). Register diffusion replaces continuous distance with discrete membership in named token registers.`

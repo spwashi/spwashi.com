@@ -1,0 +1,206 @@
+# Operator Site Projection
+#
+# Rules for mapping abstract Spw operators to concrete site-local implementations,
+# events, selectors, validation rules, and storytelling slice contracts.
+
+#>operator_site_projection
+#:conventions #!operators #!runtime #!validation
+#:layer #!pragmatics
+
+^"thesis"{
+  claim: "Operators are not merely symbolic typography or palette sources; they are executable handles for codebase work, coordinating HTML markup, CSS layout styles, JS events, and validation contracts."
+  grounding: "Every operator used on this site must map to a site-local implementation, carry falsifiable claims, respond to a specific phase of the site rhythm, and be verifiable through automated or manual affordance tests."
+  compatibility: "The workbench names the deeper metaphysical role; public/js/kernel/shared.js names the canonical runtime type; older route HTML sometimes uses site-local aliases. This file is the bridge, not a competing vocabulary."
+}
+
+^"projections"{
+  wonder_probe: .{
+    sigil: `?`
+    canonical_type: `wonder`
+    site_aliases: #[`wonder`, `probe`][reg=set]
+    family: `inquiry`
+    site_role: `probe / inspect / ask`
+    html_selector: `[data-spw-operator="wonder"], [data-spw-operator="probe"]`
+    css_projection: `probe color (violet) + dashed chip border + resonance echos`
+    runtime_events: #[`spw:semantic-snapshot`, `spw:action`][reg=set]
+    validation: `probe is keyboard-focusable, has accessible label, and opens an inspectable output without changing state`
+    failure_mode: `decorative question mark that does not reveal anything or changes state unexpectedly`
+  }[reg=facet]
+
+  potential: .{
+    sigil: `~`
+    canonical_type: `potential`
+    site_aliases: #[`potential`, `ref`][reg=set]
+    family: `possibility`
+    site_role: `reference / route path / bookmark`
+    html_selector: `[data-spw-operator="potential"], [data-spw-operator="ref"]`
+    css_projection: `potential color (blue) + link state markers`
+    runtime_events: #[`spw:checkpoint-restored`, `spw:bookmark-saved`][reg=set]
+    validation: `target address is valid, accessible, and can be followed or resumed`
+    failure_mode: `dead href anchor or broken relative pointer`
+  }[reg=facet]
+
+  frame: .{
+    sigil: `#>`
+    canonical_type: `frame`
+    site_aliases: #[`frame`, `vibration`][reg=set]
+    family: `resonance`
+    site_role: `address / anchor / viewport stage`
+    html_selector: `[data-spw-operator="frame"], [data-spw-operator="vibration"]`
+    css_projection: `frame color (teal) + sigil button + border accent bar`
+    runtime_events: #[`spw:frame-change`, `spw:attention-shifted`][reg=set]
+    validation: `updates URL hash, focuses correctly, and updates active/attention history in Spw console`
+    failure_mode: `frame container with missing or duplicate ID, or missing frame sigil`
+  }[reg=facet]
+
+  perspective: .{
+    sigil: `@`
+    canonical_type: `perspective`
+    site_aliases: #[`perspective`, `action`][reg=set]
+    family: `perspective`
+    site_role: `control / setting switch / mode projection`
+    html_selector: `[data-spw-operator="perspective"], [data-spw-operator="action"]`
+    css_projection: `active op color + matte panel transitions`
+    runtime_events: #[`spw:settings-change`, `spw:mode-change`][reg=set]
+    validation: `switches active lens, updates ARIA states (pressed/expanded), and modifies dataset flags`
+    failure_mode: `setting toggle that changes URL without updating visible DOM states`
+  }[reg=facet]
+
+  integration: .{
+    sigil: `^`
+    canonical_type: `integration`
+    site_aliases: #[`integration`, `object`][reg=set]
+    family: `relational`
+    site_role: `artifact / card / specimen / tended concept`
+    html_selector: `[data-spw-operator="integration"], [data-spw-operator="object"]`
+    css_projection: `object color (amber) + textured codex slip + card glass shadows`
+    runtime_events: #[`spw:action`, `spw:tending-note-added`][reg=set]
+    validation: `contains structured slots (header->body->footer) and carries a stable seed ID`
+    failure_mode: `empty wrapper containing un-slotted unstructured content`
+  }[reg=facet]
+
+  measure: .{
+    sigil: `%`
+    canonical_type: `normalize`
+    site_aliases: #[`normalize`, `measure`][reg=set]
+    family: `reflective`
+    site_role: `diagnostics / performance timing / counter / felt-scale annotation`
+    html_selector: `[data-spw-action-kind="measure"], [data-spw-measure-kind], [data-spw-operator="normalize"], [data-spw-operator="measure"]`
+    css_projection: `spec pills + console log line highlights`
+    runtime_events: #[`spw:layout-shift`, `spw:runtime-refresh`][reg=set]
+    validation: `measurement exposes kind, source, unit or scale, timestamp when instrumented, and the element or claim being measured`
+    failure_mode: `un-labeled metric or mood annotation that cannot say whether it is objective, subjective, or hybrid`
+  }[reg=facet]
+}
+
+^"measure_kind_contract"{
+  definition: "The % operator is useful only when its epistemic status is inspectable. Objective measurements come from instruments; subjective measurements come from situated judgment; hybrid measurements combine both and must name the join."
+  data_spw_measure_kind = "objective | subjective | hybrid"
+  data_spw_measure_source = "script module, browser observer, user annotation, mentor note, claim id, or route-local control"
+  data_spw_measure_unit = "ms | px | count | scalar | ratio | low-medium-high | 0-1 | prose"
+  objective_rule: "Use objective when the value can be recomputed from code, browser APIs, static analysis, or deterministic math."
+  subjective_rule: "Use subjective when the value records felt resonance, confidence, stability, difficulty, or interpretive judgment."
+  hybrid_rule: "Use hybrid when an instrumented value is interpreted through a learning or design claim."
+  validation: "A reader inspecting the element or adjacent .spw claim can determine who or what measured it, what scale it used, and what would falsify the reading."
+}
+
+^"script_event_mapping"{
+  definition: "Operators become more useful when route scripts emit or consume named events that match their semantic role."
+  frame: .{
+    event_family: #[`spw:frame-change`, `spw:attention-shifted`][reg=set]
+    script_layer: `runtime`
+    expected_carrier: `target id, previous frame, next frame, route`
+  }[reg=facet]
+  perspective: .{
+    event_family: #[`spw:settings-change`, `spw:mode-change`][reg=set]
+    script_layer: `interface`
+    expected_carrier: `control name, old value, new value, visible consequence`
+  }[reg=facet]
+  measure: .{
+    event_family: #[`spw:layout-shift`, `spw:runtime-refresh`, `spw:semantic-snapshot`][reg=set]
+    script_layer: `interface | modules`
+    expected_carrier: `measure kind, source, unit, value, observed element or claim`
+  }[reg=facet]
+  wonder_probe: .{
+    event_family: #[`spw:semantic-snapshot`, `spw:action`][reg=set]
+    script_layer: `semantic | interface`
+    expected_carrier: `selector, revealed relation, state before/after if any`
+  }[reg=facet]
+  note: "This mapping does not require every route to emit every event. It gives refactors a concrete test: when a script claims an operator role, its event payload should make that role inspectable."
+}
+
+^"falsifiable_claims"{
+  probe_claim: "A probe (? or diagnostics) is useful only if it reveals a hidden structural relation, metadata snapshot, or console output."
+  action_claim: "An action/perspective switch (@ or !) is useful only if it changes the visible layout state, ARIA indicators, or setting variables."
+  potential_claim: "A potential reference (~) is useful only if its link can be resolved to a valid route, pinned working set, or restored session."
+  measure_claim: "A measurement (%) is useful only if it specifies measure kind (objective, subjective, or hybrid), source element or claim, metric count/value, and unit or scale."
+}
+
+^"phase_behavior_mapping"{
+  ~#note: "Mapping the site's structural components to the Spw spirit cycle."
+
+  orient: .{
+    operators: #[`?`, `#>`][reg=set]
+    components: ["about registers", "menu disclosure toggle", "site orientation header"]
+    act: "discovery and inspect"
+  }[reg=facet]
+
+  anchor: .{
+    operators: #[`~`, `.`][reg=set]
+    components: ["stable gutter rail", "section return anchors", "bookmarks / satchel"]
+    act: "hold and relate"
+  }[reg=facet]
+
+  weave: .{
+    operators: #[`@`, `&`][reg=set]
+    components: ["settings controls", "mode switcher lens", "cauldron mix canvas"]
+    act: "change perspective or merge"
+  }[reg=facet]
+
+  rehearse: .{
+    operators: #[`*`, `!`][reg=set]
+    components: ["interactive codeblocks", "playable labs", "gesture inputs"]
+    act: "practice and trigger"
+  }[reg=facet]
+
+  offer: .{
+    operators: #[`^`][reg=set]
+    components: ["proof cards", "tending notes", "reusable zine slips"]
+    act: "promote and sediment"
+  }[reg=facet]
+}
+
+^"slice_participation_rules"{
+  ~#note: "How operators translate into concrete instructions for math-practice-labs."
+
+  math_practice_labs: {
+    probe: "probe a coordinate point in the vector field to inspect local coordinates (?)"
+    measure: "measure local divergence, curl, or step approximation error (%)"
+    perspective: "switch field type (source, sink, vortex) or change stepping size (@)"
+    value: "resolve the approximation flow lines dynamically (*)"
+    integration: "sediment the learned observation into a localized tending note (^)"
+  }
+}
+
+^"math_practice_labs_operator_usage"{
+  slice_ref: ~"../slices/math-practice-labs/index.spw"
+  purpose: "Pilot concrete operator projection on an interactive teaching surface where authored fallback, gesture, measurement, runtime state, and tending notes all coexist."
+  probe: "Use ? / wonder to inspect a coordinate point, parameter, or diagram state without committing a change."
+  measure: "Use % / normalize to expose objective values (divergence, curl, approximation error, repaint cost) and subjective values (felt stability, confidence, resonance) with data-spw-measure-kind."
+  perspective: "Use @ / perspective to switch vector-field family, stepping method, display lens, or explanatory mode while preserving visible ARIA state."
+  value: "Use * / value for replayable diagram outcomes such as traced flow lines, solved steps, or highlighted trajectories."
+  integration: "Use ^ / integration to sediment a useful observation into a tending note, proof artifact, or stable slice claim."
+  queryable_dimensions: "Each lab should answer route/kind/role/feature/module/state/consequence from markup or adjacent .spw, matching site-semantics.spw#queryable_component_contract."
+  validation: #[
+    `JS disabled: authored fallback still teaches the concept`
+    `JS enabled: controls change diagram, status text, and any declared event payload`
+    `data-spw-measure-kind distinguishes objective, subjective, and hybrid % readings`
+    `design catalog can discover the lab as a queryable component`
+  ][reg=set]
+}
+
+^"dispatch"{
+  @operator_semantics: ~"./operator-semantics.spw"
+  @site_semantics: ~"./site-semantics.spw"
+  @composable_art: ~"./composable-art-system.spw"
+}

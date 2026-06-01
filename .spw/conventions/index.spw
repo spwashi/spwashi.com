@@ -23,6 +23,15 @@
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
+@operator_site_projection: ~"./operator-site-projection.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@daily_kernel: ~"./daily-kernel.spw"
+@attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@semantic_braces: ~"./semantic-braces.spw"
+@slices: ~"../slices/index.spw"  # when a slices index is created; for now individual slices are pulled via site.spw
+@composable_art: ~"./composable-art-system.spw"
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
@@ -31,14 +40,19 @@ dispatch: .{
  semantics = @site_semantics
  css = @css_instruction
  style = @style_development
+ composable_art = @composable_art
  assets = @asset_management
  localization = @copy_localization
  living_medium_copy = @living_medium_copy
  operators = @operator_semantics
+ operator_site_projection = @operator_site_projection
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology
  cognition = @cognitive_navigation
+ model_guided_refinement = @model_guided_refinement
+ semantic_capacity = @semantic_capacity
+ daily_kernel = @daily_kernel
  containers = @electromagnetic_containers
  versioning = @precipitates_projections
  semantic_braces = @semantic_braces

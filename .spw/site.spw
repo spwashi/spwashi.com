@@ -16,6 +16,7 @@
 @copy_localization: ~"./conventions/copy-localization.spw"
 @living_medium_copy: ~"./conventions/living-medium-copy.spw"
 @assets: ~"./assets.spw"
+@composable_art: ~"./conventions/composable-art-system.spw"
 @reviews: ~"./reviews/index.spw"
 @page_model: ~"./surfaces/page-model.spw"
 @approach_topography: ~"./surfaces/approach-topography.spw"
@@ -38,6 +39,13 @@
 @agentic_contracts: ~"../.agents/plans/agentic-dev-contracts/PLAN.md"
 @plan_maintenance: ~"../.agents/skills/spw-plan-maintenance/SKILL.md"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
+@operator_site_projection: ~"./conventions/operator-site-projection.spw"
+@model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
+@daily_kernel: ~"./conventions/daily-kernel.spw"
+@slices: .{
+  math_practice_labs: ~"./slices/math-practice-labs/index.spw"
+}[reg=facet]
 @canon: ~"./_workbench/.spw/index.spw"
 @mount: ~"./_workbench/.spw/mount.spw"
 @workspace: ~"./_workbench/.spw/workspace.spw"
@@ -79,7 +87,7 @@ translations: .{
  site_semantics = #[@conventions, @site_semantics][reg=set]
  localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
  timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
- style_development = #[@css_instruction, @style_development, @site_semantics][reg=set]
+ style_development = #[@css_instruction, @style_development, @composable_art, @site_semantics][reg=set]
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
@@ -87,6 +95,9 @@ translations: .{
  narrative_instrumentation = #[@narrative_instrumentation, @annotation_layer, @attention_field, @site_semantics][reg=set]
  query_disposition = #[@query_disposition, @style_development, @site_semantics][reg=set]
  composition_box_model = #[@composition_box_model, @query_disposition, @site_semantics][reg=set]
+ model_guided_refinement = #[@model_guided_refinement, @site_semantics, @product_lines][reg=set]
+ semantic_capacity = #[@semantic_capacity, @model_guided_refinement, @planning_ecology][reg=set]
+ daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
@@ -104,6 +115,7 @@ dispatch: .{
  localization = @copy_localization
  living_medium_copy = @living_medium_copy
  style_development = @style_development
+ composable_art = @composable_art
  reviews = @reviews
  page_model = @page_model
  approach_topography = @approach_topography
@@ -127,6 +139,10 @@ dispatch: .{
  agent_optimization = @agent_optimization
  plan_maintenance = @plan_maintenance
  planning_ecology = @planning_ecology
+ operator_site_projection = @operator_site_projection
+ model_guided_refinement = @model_guided_refinement
+ semantic_capacity = @semantic_capacity
+ daily_kernel = @daily_kernel
  selection = @selection
  naming = @naming
  submodule = @submodule

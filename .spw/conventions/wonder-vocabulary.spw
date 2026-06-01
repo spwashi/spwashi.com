@@ -35,6 +35,44 @@ current_wonder_types: .{
 
 expanded_vocabulary: .{
  note = `A larger vocabulary that extends the seven. Each word is a candidate token with a specific intent, interaction feel, and CSS-potential expression.`
+
+^"operational_semantics"{
+  definition: "Wonder vocabulary participates in emergent cognitive+computational communication. Words are both cognitive affordances (they shape what a human can notice and wonder) and computational tokens (they participate in the attention field, can be selected, and carry claims about their effect)."
+
+  cognitive_use: .{
+    for_authors = "Choosing 'approach' vs 'arrival' is a design decision with measurable attentional consequences. The vocabulary gives authors a shared language for those consequences."
+    for_learners = "Students can treat the vocabulary as a cognitive toolkit: each term names a distinct attentional move they can practice."
+  }[reg=facet]
+
+  computational_use: .{
+    selectors = #[
+      `[data-spw-wonder-type]`
+      `.spw-living-term[data-spw-concept]`
+      `text nodes containing wonder tokens (for field analysis)`
+    ][reg=set]
+    events = #[
+      `spw:wonder-token-emitted`
+      `spw:vocabulary-bias-updated`
+    ][reg=set]
+    ownership = "semantic (copy as tokens) + runtime (attention-field + wonder-memory) + effects (ornament)"
+  }[reg=facet]
+
+  claims: .{
+    vocabulary_affects_field: {
+      claim_id = "wonder-vocabulary-field-001"
+      layer = "semantic"
+      hypothesis = "Words chosen in visible copy measurably bias the attention field (stronger signals for high-specificity wonder terms)."
+      spec_ref = ".spw/conventions/wonder-vocabulary.spw#operational_semantics + attention-field.spw"
+      impl_ref = "copy in frames, labs, and guides that use the defined wonder types"
+      probe_ref = "A/B or catalog inspection shows different field bias / resonance strength for pages using high- vs low-specificity vocabulary."
+      falsification = "Copy changes have no detectable effect on attention, wonder-state, or resonance behavior."
+      status = "active"
+    }
+  }[reg=facet]
+
+  validation: "New wonder-bearing copy or living terms must declare their wonder type and survive the field-bias claim."
+}
+
  arrival = .{
   intent = `The moment the visitor reaches a place that rewards the motion of getting there.`
   interaction = `A felt event, not a click. Arrival is recognized after it happens.`

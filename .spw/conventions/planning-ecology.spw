@@ -12,6 +12,10 @@
 @agentic_contracts: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
 @plan_maintenance: ~"../../.agents/skills/spw-plan-maintenance/SKILL.md"
 @public_plans: ~"../../about/plans/index.html"
+@workbench_claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@workbench_memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
+@workbench_process_loop: ~"../_workbench/.spw/process/loop-observation.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
 
 dispatch: .{
  agents = @agents
@@ -20,6 +24,10 @@ dispatch: .{
  agent_contracts = @agentic_contracts
  plan_maintenance = @plan_maintenance
  public_plans = @public_plans
+ claim_protocol = @workbench_claim_protocol
+ memory_surface = @workbench_memory_surface
+ process_loop = @workbench_process_loop
+ semantic_capacity = @semantic_capacity
 }[reg=facet]
 
 roles: #[
@@ -29,9 +37,33 @@ roles: #[
  `editor seam`: a route, plan, .spw note, or README that helps a human or agent decide what to do next.
 ][reg=set]
 
+claim_chain: .{
+ template = .{
+  claim_id = `short stable id, e.g. css-layer-order-001`
+  layer = `authored | semantic | pragmatic | generated`
+  hypothesis = `What we believe is true.`
+  spec_ref = `Plan, convention, route, or .spw surface declaring the expectation.`
+  impl_ref = `HTML/CSS/JS/file path where the claim is realized.`
+  probe_ref = `Command, browser smoke, design catalog, route, or review note that can falsify it.`
+  falsification = `Concrete condition that would disprove or weaken the claim.`
+  status = `untested | active | confirmed | refuted | superseded`
+ }[reg=facet]
+ rule = `Use claim chains for durable architecture claims that will guide implementation or validation. Do not require them for ordinary copy edits.`
+}[reg=facet]
+
+memory_rule: .{
+  hot = `Active plan notes, worktree observations, and draft tending notes.`
+  warm = `Review artifacts and slice notes that summarize evidence and next handoff.`
+  cold = `Conventions, site/workspace manifests, and AGENTS.md when a rule becomes durable.`
+  generated = `Catalogs, manifests, dist artifacts, and any rebuildable projection.`
+  transition = `Move a claim from hot to warm or cold only after it has evidence_refs, affected files, validation, and an owner surface.`
+  insight_cache = `Use semantic-capacity.spw for insights that are valuable but not ready for implementation: cache them with operation, fixity, evidence, pattern consideration, expansion prime, and validation.`
+}[reg=facet]
+
 invariants: #[
  `Site-local plans and skills stay the source of truth for this repository's agent operating layer.`,
  `Public editor pages project the plan ecology; they do not replace the .agents source files.`,
  `New durable planning concepts should be wired through site.spw, this convention, and the relevant README or public page.`,
- `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`
+ `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`,
+ `Architectural claims that drive refactors should name a falsification path before they become durable convention.`
 ][reg=set]

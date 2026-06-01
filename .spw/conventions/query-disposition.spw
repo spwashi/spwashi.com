@@ -16,6 +16,44 @@ metaphors: .{
  plugin = `Forks should be able to rename vocabulary or add instruments without editing parser internals.`
 }[reg=facet]
 
+^"operational_semantics"{
+  definition: "Query disposition participates in emergent cognitive+computational communication by turning measurement and configuration into shareable, inspectable tokens. Query parameters become a surface for both objective % measures (timings, audit counters) and subjective % measures (felt density, resonance preference) when captured via workbench plugins."
+
+  cognitive_use: .{
+    for_practitioners = "A query string can encode a 'studio setup' (palette + meaning density + wonder bias) that a human can return to or share as a felt configuration."
+    for_learners = "Students can treat query params as calibrated conditions for a learning experiment (e.g. high vs low runtime-timing visibility) and capture subjective response as a % measure."
+  }[reg=facet]
+
+  computational_use: .{
+    selectors = #[
+      `[data-spw-query-param]`
+      `?spw-runtime-timing`
+      `?spw-module-audit`
+      `[data-spw-measure-kind]` (when query sets up a measurement context)
+    ][reg=set]
+    events = #[
+      `spw:query-disposition-applied`
+      `spw:measure-context-established`
+    ][reg=set]
+    ownership = "runtime (query parsing and disposition application) + typed (workbench plugins that read/write query-based measures)"
+  }[reg=facet]
+
+  claims: .{
+    queries_expose_measures: {
+      claim_id = "query-disposition-measures-001"
+      layer = "pragmatic"
+      hypothesis = "Query parameters used for measurement (especially % measures) must declare their kind and be traceable so that both objective instrumentation and subjective practitioner judgment can be set up reproducibly and audited."
+      spec_ref = ".spw/conventions/query-disposition.spw#operational_semantics + operator-site-projection.spw#measure_operator"
+      impl_ref = "query params like spw-runtime-timing, spw-module-audit, and any that configure subjective capture contexts"
+      probe_ref = "A query string sets up a measurement context; both the objective values and any captured subjective % judgments are visible and comparable in the resulting surface state."
+      falsification = "A query-driven measurement surface exists whose % values (objective or subjective) have no declared source or kind and cannot be reproduced from the query alone."
+      status = "active"
+    }
+  }[reg=facet]
+
+  validation: "New query vocabulary for measurement or configuration must expose the measures it affects (with kind) and satisfy the traceability claim."
+}
+
 default_vocabulary: #[
  `spw-physics|physics`,
  `spw-meaning|meaning`,

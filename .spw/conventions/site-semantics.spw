@@ -114,6 +114,91 @@
   counterexample: "A new business starter route copies three long card selector lists into CSS, semantic JS, and contextual JS, then each list drifts independently."
 }
 
+^"route_to_runtime_phase_flow"{
+  definition: "Site semantics should describe how authored public structure becomes CSS projection, runtime behavior, editor inspection, and visible consequence."
+  authored = .{
+    owner = "route index.html files"
+    examples = #[`body[data-spw-*]`, `.site-frame`, `.frame-sigil`, `h1-h3`, `a[href]`, `[data-spw-feature]`][reg=set]
+    invariant = "Meaning remains readable and navigable before JavaScript mounts."
+  }[reg=facet]
+  semantic = .{
+    owner = ".spw conventions, surface maps, route metadata, and data-spw-* contracts"
+    examples = #[`data-spw-surface`, `data-spw-kind`, `data-spw-role`, `data-spw-slot`, `data-spw-feature`, `data-spw-semantic-expression`][reg=set]
+    invariant = "A semantic attribute family should be documented before it becomes a repeated implementation detail."
+  }[reg=facet]
+  projection = .{
+    owner = "public/css layer files"
+    examples = #[`tokens`, `grammar`, `components`, `systems`, `routes`, `handles`, `effects`, `ornament`][reg=set]
+    invariant = "CSS projects semantic state; it should not invent a parallel identity model when HTML or .spw already names one."
+  }[reg=facet]
+  runtime = .{
+    owner = "public/js modules and site.js MODULE_DEFS"
+    examples = #[`selector gates`, `data-spw-module-*`, `spw:* events`, `settings state`, `console diagnostics`][reg=set]
+    invariant = "Runtime writes should preserve the authored contract and expose what changed."
+  }[reg=facet]
+  consequence = .{
+    owner = "public page behavior, design catalog, runtime diagnostics, reviews, and tending notes"
+    examples = #[`visible interaction`, `state inspector`, `design/catalog`, `git diff --check`, `node --check`, `browser smoke`][reg=set]
+    invariant = "A durable semantic claim should name how it can be observed or falsified."
+  }[reg=facet]
+}
+
+^"queryable_component_contract"{
+  definition: "Every significant site surface should answer what it is, where it lives, what owns it, what state it carries, and what consequence it produces."
+  workbench_source = "../_workbench/.spw/patterns/literate-ui.spw#queryable_interface"
+  required_dimensions = #[
+    `route`: "owning URL or route family"
+    `kind`: "structural identity via data-spw-kind or equivalent class family"
+    `role`: "interaction or reading role via data-spw-role / data-spw-page-role"
+    `slot`: "component anatomy slot when inside a structured component"
+    `feature`: "functional cluster via data-spw-feature or body data-spw-features"
+    `module`: "runtime behavior when progressive JS owns the behavior"
+    `state`: "current data-spw-* state written by HTML or runtime"
+    `consequence`: "what visibly changes for the visitor or editor"
+  ][reg=set]
+  selector_rule = "Prefer existing data-spw-* families and shared contract selectors before adding local class-only state."
+  inspection_rule = "A component is under-modeled if a developer cannot locate its route, semantic role, CSS projection, runtime writer, and validation surface from the markup plus .spw references."
+  counterexample = "A route adds an interactive lab with only visual classes and no data-math-visual/data-spw-feature/status output, so the design catalog and future agents cannot tell what the lab is for."
+}
+
+^"metainformational_component_ecology"{
+  definition: "A developed component is not only markup plus style. It carries enough metainformation for a reader, script, design catalog, and future agent to understand why it exists, how it participates in attention, and where it should be changed."
+  html_truth = "Route HTML owns the stable public meaning: body metadata, headings, ids, hrefs, data-spw-feature, data-spw-kind, data-spw-role, data-spw-slot, and explicit interaction contracts."
+  css_truth = "CSS owns projection and disposition: material, layout, rhythm, state visibility, resonance intensity, and reduced-motion behavior. It should read semantic attributes more often than inventing hidden class-only meaning."
+  js_truth = "JavaScript owns contingent behavior: measurement, mounting, adjustment, discovery notices, attention emission, and reversible state changes. It should write state attributes and events that let CSS and inspectors explain what happened."
+  spw_truth = ".spw files own durable interpretation: operator role, claim chain, slice membership, validation path, metaphysical model, and handoff note."
+  discoverability_rule = "If a component is reused, adjusted by runtime, or important to a route's argument, it should be discoverable by at least one stable selector and one stable concept name."
+  composability_rule = "A component composes cleanly when it can be moved between routes without losing its route/kind/role/feature/module/state/consequence dimensions."
+  counterexample = "A visually polished widget whose behavior is controlled by an anonymous script, styled by route-local selectors, and described nowhere except surrounding prose."
+}
+
+^"feature_adjustment_rhythm"{
+  definition: "Not every feature should ask for attention. Some adjustments should be seamless background care; others should briefly reveal themselves because the cluster has become particularly resonant."
+  seamless_adjustment = .{
+    use_when = "The feature supports reading, accessibility, layout stability, connection posture, or local comfort without changing the user's conceptual task."
+    examples = #[`responsive menu settling`, `resource prefetch calming`, `reduced-motion projection`, `text scale persistence`, `debug overlay collision guards`][reg=set]
+    contract = "Runtime may adjust silently, but it must leave inspectable state on html/body/component attributes and avoid surprising focus, storage, or navigation changes."
+  }[reg=facet]
+  resonant_pause = .{
+    use_when = "A cluster of features makes a relationship newly legible: operator resonance, a practice-bed insight, a cauldron precipitate, a completed lab observation, or a meaningful settings deviation."
+    examples = #[`operator focus echo`, `compact tuning strip beside its affected text`, `math lab status after a gesture`, `collection/tending note after a useful observation`][reg=set]
+    contract = "The UI may become more visibly articulate for a moment, but the cause must be local, named, reversible, and explainable through the state inspector or adjacent copy."
+  }[reg=facet]
+  practice_reason = "Practice surfaces exist because repeated small adjustments teach the grammar: notice a state, name the operator, make a reversible gesture, observe consequence, and optionally sediment the finding."
+  anti_pattern = "Every feature announces itself, or no feature ever reveals why the page changed."
+}
+
+^"composable_discoverability_contract"{
+  definition: "Composability and discoverability are the same architecture seen from two directions: a thing can be recombined safely when its meaning, ownership, state, and consequence can be found quickly."
+  route_layer = "Use body metadata and stable ids so the route's semantic flow is visible before enhancement."
+  component_layer = "Use slot anatomy and data-spw-feature on honest clusters, not empty wrappers."
+  css_layer = "Use shared layers and local tokens that point back to component role; move rules only when ownership becomes easier to discover."
+  runtime_layer = "Use selector gates, module definitions, bus events, and data-spw-module-* traces so mounted behavior explains why it mounted."
+  spw_layer = "Use conventions, slice contracts, reviews, and tending notes when a pattern should survive beyond one patch."
+  file_tree_rule = "The file tree earns complexity only when it improves search, ownership, review boundaries, or seasonal handoff. A new directory that hides cascade order or runtime loading is worse than a dense but honest file."
+  validation = "A new or refactored feature should be explainable by following one path: route HTML -> semantic attributes -> CSS layer/file -> JS module/event -> .spw claim or slice."
+}
+
 ^"overlay_contract"{
   definition: "An overlay child is a surface element that pins to a host edge or local viewport position instead of participating in the host's normal flow."
   html_contract: "Use data-spw-overlay on direct children that own their own placement inside a host."
@@ -525,3 +610,161 @@ frame #compact-tuning-widget
   vocabulary = "chip labels are the canonical short names (Context-led, Rich, Focused, Vibrant, etc.). Immediate visual effect on adjacent content teaches the meaning faster than prose."
   cross-link = "tiny 'related tuning' or 'full settings' chip at end of cluster, pointing to /settings/ anchor or /design/palettes/#spectral-workshop when palette-related"
   note "Compact contextual tuning widgets turn passive settings into an active, learnable vocabulary layer. They are always secondary in visual hierarchy (kicker + one short sentence max + chips). The global effect on the page is intentional — the whole site is the teaching instrument. Documented here so the design catalog and future editors can discover the exact reusable pattern for adding one near any high-impact component. Also supports wrapping/packing and light surrounding copy passes for component diversity and region value when the widget is introduced."
+
+^"script_structure_contract"{
+  definition: "The site's JavaScript is organized into stable architectural layers so that refactors, audits, and new features have predictable homes and ownership rules. Actual implementation files (e.g. public/js/modules/math-diagrams.js for labs, public/js/kernel/shared.js for operators) should carry comments referencing this contract and the operator-site-projection where relevant."
+  layers: #[
+    kernel: "shared pure helpers, canonical state machines, bus, and contracts that have no DOM or route coupling (site-settings, shared operator defs, dom-contracts, bus)."
+    runtime: "progressive page and route behaviors that mount on specific pages or shells (shell disclosure, attention architecture, experiential gestures, section handles)."
+    interface: "visible controls, diagnostic surfaces, and chrome that users or editors directly manipulate (console, state inspector, tuning widgets, floating chrome)."
+    semantic: "markup interpretation, operator projection, and data-spw-* reading/writing (operators.js, projection, smart markup, queryable component logic)."
+    modules: "route-specific or domain-specific interactive labs and tools (math-diagrams, budgeting tool, character sheet, pretext labs)."
+    typed: "generated or compiled outputs from the scripts/ts and public/ts pipelines (scripts/typed, public/js/typed)."
+  ][reg=facet]
+  ownership_rule: "A file or module should be explainable as belonging primarily to one layer. Cross-layer dependencies should be explicit and narrow (kernel is the only layer allowed to be imported by all others)."
+  refactors_rule: "When moving code between layers, update the owning .spw contract, the design catalog entry if public, and any claim that names the previous home."
+  utility_rule: "A script is valuable when it creates an observable consequence, lowers cognitive friction, or makes a semantic relation inspectable. If it only restates static HTML/CSS meaning, keep the value in the authored file tree instead."
+  adjustment_rule: "Scripts that make seamless adjustments should write quiet state; scripts that create resonant pauses should emit named events and visible local consequence."
+  counterexample: "A diagnostic widget that mixes kernel state, route-specific mounting logic, and direct DOM writes in one file with no layer annotation."
+}
+
+^"queryable_component_examples"{
+  definition: "Concrete worked examples of the queryable_component_contract showing how real surfaces declare their dimensions."
+  spw_console: .{
+    route: "global (present on most pages via shell)"
+    kind: "floating chrome"
+    role: "diagnostics / telemetry"
+    feature: "console"
+    module: "interface/console"
+    state: "data-spw-console-state (collapsed | expanded | history)"
+    consequence: "collapse/expand chrome + appends action history to the shared bus; visible in state inspector"
+  }[reg=facet]
+  math_practice_lab: .{
+    route: "math topic (e.g. /topics/math/vector-calculus/ or /topics/math/numerical-methods/)"
+    kind: "lab"
+    role: "observation / gesture / teaching"
+    feature: "math-interactive-lab"
+    module: "math-diagrams"
+    state: "data-math-visual (the specific lab id)"
+    consequence: "SVG diagram + status text + control inputs mutate in response to gesture; authored fallback diagram remains when JS is unavailable"
+  }[reg=facet]
+  site_header: .{
+    route: "global shell"
+    kind: "shell"
+    role: "navigation / orientation"
+    feature: "shell-disclosure"
+    module: "shell-disclosure"
+    state: "data-spw-menu-mode, data-spw-menu-state, data-spw-menu-phase"
+    consequence: "switches between inline and toggle presentation; emits lifecycle events on the bus; affects layout and focus order"
+  }[reg=facet]
+  inspection_rule: "Any new interactive surface added to the site should be able to supply a similar one-paragraph mapping before the PR is considered complete."
+}
+
+^"ui_resonance_contract"{
+  definition: "Visible resonance, attention, and wonder behavior is not ad-hoc CSS or JS magic; it is a declared contract between input signals, state carriers on the DOM, projection layers in CSS, and observable validation paths. Implementations in public/css/effects/wonder.css, public/css/ornament/ornament.css, and public/js/interface/* must keep data attributes and events aligned with the operator-site-projection and this contract."
+
+@operator_site_projection: ~"./operator-site-projection.spw"
+  note: "The operator-site-projection convention supplies the concrete site_role, html_selector, runtime_events, claims, and validation for every operator that participates in resonance or attention behavior."
+  input_signals: #[
+    `hover or focus on [data-spw-operator]`
+    `active frame (data-spw-kind=frame with attention)`
+    `collected item (data-spw-collected)`
+    `wonder memory state`
+    `field / attention state changes`
+  ][reg=set]
+  state_carriers: #[
+    `data-spw-resonance-probe`
+    `data-spw-attention`
+    `data-spw-wonder-state`
+    `data-spw-grounded`
+    `data-spw-wonder-memory`
+  ][reg=set]
+  projection_layers: #[
+    `public/css/effects/wonder.css` (resonance glow via :has() and --spw-resonance)`
+    `public/css/ornament/ornament.css` (attention field, grain, glow responses)`
+    `public/css/handles/operators.css` (operator color and pressed states modulated by resonance)`
+  ][reg=set]
+  validation: .{
+    operator_resonance: "Focus or hover one [data-spw-operator=frame]; observe soft echo glow on other matching operators across the page without the hovered one changing its own treatment."
+    frame_attention: "Activate a site-frame; observe data-spw-attention or related state written to the frame or body and corresponding visual treatment in ornament."
+    console_action: "Perform an action in the runtime console; observe the event appear in bus history (state inspector) and any resonance or attention side effects."
+  }[reg=facet]
+  falsification: "A visible resonance or attention effect exists whose cause cannot be traced to one of the declared input signals + state carriers + projection layers, or whose behavior changes when the documented validation steps are followed."
+  owner: "wonder-memory.js + attention-architecture + effects/wonder.css + ornament/ornament.css + operators.css + this contract"
+}
+
+frame #active_architecture_claims
+  role registry
+  surface site-semantics + planning-ecology
+  concept claim_chain active_architecture
+  note "These are live, falsifiable claims about current architectural adjustments. They use the claim_chain template from planning-ecology.spw and are intended to guide refactors, CSS work, and runtime audits."
+
+claim #css-layer-order-001 {
+  layer = "semantic"
+  hypothesis = "CSS layer-order review and any redistribution of rules between layers must be evidence-gated by design-catalog inspection, route smoke tests, and before/after visual diff on at least three representative surfaces (frame, lab, floating chrome)."
+  spec_ref = ".spw/conventions/site-semantics.spw#css_architecture (or current css-architecture-readability plan)"
+  impl_ref = "public/css/style.css + layer files under public/css/"
+  probe_ref = "npm run catalog && npm run check && manual review of affected routes in browser + design catalog diff"
+  falsification = "A layer-order change lands that visibly alters operator resonance, floating chrome stacking, or lab control layout on a production route without a recorded design-catalog + smoke entry."
+  status = "active"
+}
+
+claim #runtime-bus-001 {
+  layer = "pragmatic"
+  hypothesis = "All console and diagnostic actions that change observable page state must emit through the shared SpwBus rather than writing directly to DOM or localStorage outside the canonical settings path."
+  spec_ref = "public/js/kernel/bus.js + site-settings.js contracts"
+  impl_ref = "public/js/interface/state-inspector.js, console-related modules, any new diagnostic widget"
+  probe_ref = "state inspector open + perform actions + confirm events appear in bus history; grep for direct localStorage writes in runtime/ and interface/ outside site-settings"
+  falsification = "A new console or diagnostic feature writes state without going through the bus, or a bus listener is removed without updating all known emitters."
+  status = "active"
+}
+
+claim #queryable-components-001 {
+  layer = "semantic"
+  hypothesis = "Every new interactive surface (labs, widgets, floating chrome, major frames) must declare its queryable dimensions (route/kind/role/feature/module/state/consequence) in markup or immediately adjacent .spw before the change is considered complete."
+  spec_ref = ".spw/conventions/site-semantics.spw#queryable_component_contract + #queryable_component_examples"
+  impl_ref = "the added surface's HTML + any supporting JS module"
+  probe_ref = "design catalog run shows the new surface with populated dimensions; a developer can answer the five questions from the markup alone"
+  falsification = "A lab, widget, or chrome component is added whose dimensions cannot be read from the authored HTML + .spw references within one minute of inspection."
+  status = "active"
+}
+
+claim #operator-site-projection-001 {
+  layer = "pragmatic"
+  hypothesis = "Any new or refactored operator-facing surface must map the operator to a canonical runtime type, accepted site aliases, selector contract, event family, CSS projection, and validation path before the operator is used as architecture rather than decoration."
+  spec_ref = ".spw/conventions/operator-site-projection.spw"
+  impl_ref = "data-spw-operator markup, public/js/kernel/shared.js OPERATOR_DEFINITIONS, public/css/handles/operators.css, public/css/effects/wonder.css, relevant route/module JS"
+  probe_ref = "inspect the operator element in source, verify the selector appears in the projection contract, trigger its UI behavior, and confirm the visible state or event payload has an observable consequence"
+  falsification = "A route adds an operator chip, mode control, lab measure, or resonance affordance whose sigil/color is visible but whose selector, event, or validation path cannot be found in the operator-site projection contract."
+  status = "active"
+}
+
+claim #model-guided-refinement-001 {
+  layer = "pragmatic"
+  hypothesis = "Patches prepared for lower-creativity models become safer when they declare focus dimension, fixity tier, primary element, owner surface, validation, and out-of-scope files before editing."
+  spec_ref = ".spw/conventions/model-guided-refinement.spw#model_handoff_checklist"
+  impl_ref = ".agents/plans/model-guided-refinement/PLAN.md + plan-local templates + future slice handoff notes"
+  probe_ref = "Open the patch plan or .spw note; confirm the checklist fields exist and the diff stays inside the declared owner surface."
+  falsification = "A broad CSS/JS/HTML patch lands from a general instruction with no focus dimension, no fixity tier, and no explicit files to avoid."
+  status = "active"
+}
+
+claim #semantic-capacity-diff-value-001 {
+  layer = "semantic"
+  hypothesis = ".spw diffs remain useful during semantic expansion when each addition declares an operation (cache, audit, align, prime, contract, archive), evidence, pattern consideration, expansion prime, and validation."
+  spec_ref = ".spw/conventions/semantic-capacity.spw#diff_value_rules + #insight_cache_shape"
+  impl_ref = ".spw/conventions, .spw/reviews, .spw/slices, .agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+  probe_ref = "Review a new .spw addition and classify whether it changes selection, validation, comparison, or extension behavior."
+  falsification = "New .spw surfaces accumulate evocative but operationally identical prose and future agents still cannot tell where to focus."
+  status = "active"
+}
+
+claim #daily-kernel-ergonomics-001 {
+  layer = "pragmatic"
+  hypothesis = "Cross-discipline creative/product exploration becomes safer when a daily kernel names one focus, one discipline pair, one university-style region, one brand-physics variable, one intensity, one semantic operation, and one validation path."
+  spec_ref = ".spw/conventions/daily-kernel.spw#kernel_shape"
+  impl_ref = ".agents/plans/daily-kernel-development/PLAN.md + daily-kernel-note template + future route/CSS/HTML/product-line kernels"
+  probe_ref = "Review a daily-kernel note or patch; confirm an engineer, animator, illustrator, designer, or musician can identify their entry point and what not to touch."
+  falsification = "A cross-discipline patch mixes CSS, HTML, JS, copy, and metaphor broadly without declaring region, brand physics, intensity, or validation."
+  status = "active"
+}

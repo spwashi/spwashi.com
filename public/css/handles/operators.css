@@ -36,6 +36,160 @@ header,
   z-index: var(--z-priority, var(--layer-priority, 2000));
 }
 
+.spw-console {
+  --spw-console-ink: #f3efe6;
+  --spw-console-ink-muted: rgba(243, 239, 230, 0.72);
+  --spw-console-token-bg: rgba(8, 18, 20, 0.74);
+  --spw-console-token-line: rgba(126, 210, 204, 0.42);
+  --handle-ink: var(--spw-console-ink);
+  --handle-bg: var(--spw-console-token-bg);
+  --handle-line: var(--spw-console-token-line);
+  position: fixed;
+  inset: auto clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 2vw, 1.25rem) auto;
+  display: grid;
+  inline-size: min(34rem, calc(100vw - 1.5rem));
+  max-block-size: min(34rem, calc(100dvh - 1.5rem));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 32%, transparent);
+  border-radius: var(--shape-component, 0.42rem);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-code, #151515) 92%, var(--op-frame-color, #008080) 8%),
+      color-mix(in srgb, var(--surface-code, #151515) 88%, var(--op-probe-color, #4a2180) 12%)
+    );
+  box-shadow:
+    0 1rem 2.4rem color-mix(in srgb, var(--shadow-color, #111111) 28%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+  color: var(--spw-console-ink);
+  contain: layout paint style;
+}
+
+.spw-console.spw-console {
+  position: fixed;
+  inset: auto clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 2vw, 1.25rem) auto;
+}
+
+.spw-console.is-idle:not(:hover):not(:focus-within) {
+  opacity: 0.76;
+}
+
+.spw-console-collapsed-bar,
+.spw-console-body {
+  min-inline-size: 0;
+}
+
+.spw-console-collapsed-bar {
+  display: none;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem;
+}
+
+.spw-console.is-collapsed {
+  inline-size: min(17rem, calc(100vw - 1.5rem));
+}
+
+.spw-console.is-collapsed .spw-console-collapsed-bar {
+  display: grid;
+}
+
+.spw-console.is-collapsed .spw-console-body {
+  display: none;
+}
+
+.spw-console-body {
+  display: grid;
+  gap: 0.38rem;
+  min-block-size: 0;
+  max-block-size: inherit;
+  overflow: auto;
+  padding: 0.55rem;
+}
+
+.spw-console-line {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  align-items: start;
+  gap: 0.42rem;
+  min-inline-size: 0;
+}
+
+.spw-console-line:not(.spw-console-header-line) {
+  grid-template-columns: max-content minmax(0, 1fr);
+}
+
+.spw-console-copy,
+.spw-console-history-copy,
+.spw-console-history-meta {
+  color: var(--spw-console-ink);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.spw-console-diagnostics-line {
+  padding-block: 0.1rem;
+  border-block: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.spw-console-diagnostics-copy,
+.spw-console-history-meta {
+  color: var(--spw-console-ink-muted);
+  font-size: 0.78rem;
+}
+
+.spw-console .frame-sigil,
+.spw-console-history-token,
+.spw-console-token,
+.spw-console-action-token,
+.spw-console-diagnostics-token {
+  display: inline-flex;
+  inline-size: auto;
+  min-inline-size: max-content;
+  max-inline-size: 100%;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  color: var(--spw-console-ink);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.spw-console-history {
+  display: grid;
+  gap: 0.26rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spw-console-history-item {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.36rem;
+  min-inline-size: 0;
+  opacity: calc(1 - (var(--history-age, 0) * 0.11));
+}
+
+.spw-console-history-meta {
+  grid-column: 2;
+}
+
+.spw-console-expand-btn,
+.spw-console-collapse-btn {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 1.9rem;
+  min-block-size: 1.9rem;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: var(--shape-element, 0.28rem);
+  background: color-mix(in srgb, var(--surface-strong, #ffffff) 10%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
 /* Handles sit above content but below site-level overlays. */
 .mode-switch,
 .demo-controls,
@@ -118,6 +272,25 @@ header,
   /* Debug / inspection */
   --spw-debug-layer-owner: "handles";
   --spw-debug-layer-color: #1d57a3;
+}
+
+/* Measure kind support (aligns with .spw operator-site-projection for %)
+   Subjective measures (practitioner judgment, felt resonance) get softer treatment
+   and can be visually distinguished from objective instrumented values.
+   This supports both cognitive and computational communication of % measures. */
+[data-spw-measure-kind="subjective"] {
+  --measure-tint: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 18%, currentColor);
+  font-style: italic;
+  border-style: dashed;
+  opacity: 0.92;
+}
+[data-spw-measure-kind="objective"] {
+  --measure-tint: color-mix(in srgb, var(--op-value-color, currentColor) 12%, currentColor);
+  font-style: normal;
+}
+[data-spw-measure-kind] {
+  padding-inline: calc(var(--handle-pad-x) * 0.8);
+  border-color: var(--measure-tint, currentColor);
 }
 
 /* ==========================================================================

@@ -333,6 +333,18 @@
     behavior: "Commits an action, shows consequence, offers undo or reversal if the action is destructive"
     priming_consequence: "After an action, the system state should be clearly changed so the user sees the consequence"
   }
+
+  semantic_aliases: {
+    note: "HTML templates use semantic English verbs/nouns as operator values to keep markup readable and screen-reader friendly."
+    mappings: [
+      "address -> frame (#>)",
+      "select -> mode ([])",
+      "integrate -> integration (^)",
+      "situate -> perspective (@)",
+      "act -> action (!)"
+    ]
+    resolution_rule: "The shared runtime automatically maps these verbal aliases to their primary metaphysical operators to resolve behavior and styles consistently."
+  }
 }
 
 ^"documentation_references"{

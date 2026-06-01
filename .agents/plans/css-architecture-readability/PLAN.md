@@ -34,6 +34,40 @@ Known constraints:
 - Treat CSS as a documentation layer for authored HTML: selectors should make the page structure easier to understand, not hide the meaning behind clever styling.
 - Treat Spw sigils in HTML as learnability surfaces, not just decoration. When a chip or handle combines a sigil with plain text, the CSS and markup should keep the action auditable by label, operator, destination, and state.
 - Use reference-card attributes when a design surface needs later auditability: `data-spw-attention`, `data-spw-behavior`, `data-spw-reference-seed`, and `data-spw-assignment`.
+- Treat `data-spw-operator` (and the growing set of operator projections in `.spw/conventions/operator-site-projection.spw`) as first-class semantic hooks. Operator chips are not merely decorative; their selectors, states, and resonance behavior must remain traceable and consistent across layers. New operators (`!`, `*`, `&`, `.`) introduce additional styling contracts that should be centralized in operators.css rather than duplicated in route surfaces. See operator-site-projection.spw for the current site_role, selector, and claim expectations per operator.
+
+## CSS / JS / HTML Alignment Rhythm
+
+The architecture should support two different kinds of experience:
+
+- **Seamless adjustment:** the page quietly improves fit for reading, layout, accessibility, connection posture, or debug safety. CSS and JS may adjust state, but they must leave inspectable attributes, avoid surprising focus/storage changes, and keep authored HTML as the semantic ground.
+- **Resonant pause:** a cluster of features becomes worth noticing because the user has focused an operator, completed a gesture, changed a meaningful setting, or reached a practice-bed insight. CSS may intensify the cluster briefly, JS may emit a named event, and nearby copy or inspector output should explain the cause.
+
+Use this decision rule before refactoring a surface:
+
+1. If the behavior protects baseline usability, keep it quiet and inspectable.
+2. If the behavior teaches a relation, make the resonant cluster appreciable and reversible.
+3. If the behavior repeats across routes, sediment it into shared CSS, a JS ownership layer, and a `.spw` claim or slice note.
+4. If the behavior is only local color, keep it in the route surface and do not promote it.
+
+The preferred trace is:
+
+```text
+route HTML -> data-spw-* contract -> CSS layer/file -> JS module/event -> .spw claim or slice
+```
+
+If that trace cannot be followed in a minute, the change is not yet discoverable enough.
+
+## File Tree Utility
+
+File tree changes are useful only when they improve ownership, search, review boundaries, or seasonal handoff.
+
+- Keep the current cascade layer order unless a separate evidence-gated patch proves a semantic-flow problem cannot be solved otherwise.
+- Prefer slice manifests or `.spw/slices/<slice>/` contracts before moving many CSS files.
+- Split CSS when it creates a clearer reading path from component role to state projection.
+- Split JS when it clarifies kernel/runtime/interface/semantic/modules ownership or removes cross-layer coupling.
+- Do not create a directory merely to mirror an ontology if the result hides import order, cascade precedence, or runtime mounting.
+- Treat the design catalog, state inspector, and `.spw` slice notes as part of the file tree ecology, not after-the-fact documentation.
 
 ## Component Development Sessions
 
@@ -46,7 +80,8 @@ Session shape:
 3. Identify the component's usual behavior: default, hover, focus, active, selected, disabled, reduced motion, and compact viewport.
 4. Update CSS so those states are grouped, named, and traceable from the HTML attributes or classes.
 5. Add a token or selector name only when it helps another agent find the behavior later.
-6. Leave a short note in the plan or nearby `.spw` surface explaining whether the session produced an improvement, an experiment, or a rejected direction.
+6. Decide whether the result is seamless adjustment, resonant pause, or sedimentation.
+7. Leave a short note in the plan or nearby `.spw` surface explaining whether the session produced an improvement, an experiment, a resonant cluster, or a rejected direction.
 
 Intern-sized examples:
 
@@ -55,6 +90,7 @@ Intern-sized examples:
 - Compare one reference-card cluster and confirm its heading anchor, attention value, behavior value, assignment code, and next-step link all describe the same small task.
 - Use `/design/components/` to tune one card anatomy rule and document the slot contract in CSS selectors.
 - Inspect settings controls and name one repeated state as a shared behavior token.
+- Audit a set of operator chips (including newer ones like `!` pragma, `*` value, `&` merge, `.` ground) against the projections in operator-site-projection.spw; ensure their visual states (hover, active, resonance) are driven from centralized operator tokens and data attributes rather than ad-hoc rules.
 - Use debug labels on a dense route to check whether CSS owner markers document the HTML structure clearly.
 
 ## Success Criteria

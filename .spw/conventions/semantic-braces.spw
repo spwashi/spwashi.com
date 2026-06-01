@@ -24,6 +24,43 @@
   discoverability: "A reader should be able to jump from one instance to another by shared root, then narrow by variant or behavior."
 }
 
+^"operational_semantics"{
+  definition: "Semantic braces participate in emergent cognitive+computational communication. They are cognitive scaffolds for human readers (familiarity, nesting, jumping) and computational handles (queryable via data attributes, claim-bearing, event-emitting)."
+
+  cognitive_use: .{
+    for_authors = "The expression syntax (root[variant]{behavior}<lens>) gives writers a precise way to signal how a concept should be taken up."
+    for_learners = "Readers learn to navigate by root first, then refine by variant/behavior/lens — a transferable cognitive skill."
+  }[reg=facet]
+
+  computational_use: .{
+    selectors = #[
+      `[data-spw-semantic-root]`
+      `[data-spw-semantic-expression]`
+      `[data-spw-semantic-behavior]`
+    ][reg=set]
+    events = #[
+      `spw:semantic-expression-expanded`
+      `spw:semantic-match-found`
+    ][reg=set]
+    ownership = "semantic + runtime (brace-gestures, projection logic)"
+  }[reg=facet]
+
+  claims: .{
+    braces_are_queryable: {
+      claim_id = "semantic-braces-queryable-001"
+      layer = "semantic"
+      hypothesis = "Brace expressions must be readable from stable data attributes so agents and editors can query and validate semantic structure without parsing prose."
+      spec_ref = ".spw/conventions/semantic-braces.spw#operational_semantics"
+      impl_ref = "any element using data-spw-semantic-* attributes"
+      probe_ref = "Design catalog or state inspector can list all instances of a given semantic-root or behavior."
+      falsification = "A prominent semantic brace pattern exists only in raw text or classes with no machine-readable attributes."
+      status = "active"
+    }
+  }[reg=facet]
+
+  validation: "New use of semantic brace notation must expose the expression via data attributes and satisfy the queryability claim."
+}
+
 ^"runtime_contract"{
   html_attributes: [
     "data-spw-semantic-expression",

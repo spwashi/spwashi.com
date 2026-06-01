@@ -51,6 +51,47 @@ ornament_classes: .{
   }[reg=facet]
   accessibility = `role='button' with aria-pressed for collected state. aria-label includes current field state when non-default.`
  }[reg=facet]
+
+^"operational_semantics"{
+  definition: "Ornament is a primary surface for emergent cognitive+computational communication of attentional measures. It makes field state (including both objective instrumentation and subjective practitioner judgment) visible and queryable."
+
+  cognitive_use: .{
+    for_practitioners = "Ornaments (badges, washes, deviation markers) let a human 'read' the current state of their own attention and the field's charge at a glance. Subjective % measures (felt resonance, wonder intensity) can be expressed visually and then captured back into the system."
+    for_learners = "Seeing how a guide badge or field wash responds to collection vs resonance teaches the difference between durable capture and transient attention."
+  }[reg=facet]
+
+  computational_use: .{
+    selectors = #[
+      `[data-spw-collected]`
+      `[data-spw-deviation]`
+      `[data-spw-field-wonder]`
+      `[data-spw-measure-kind="subjective"]` (ornaments that visualize subjective measures)
+      `.guide-badge, [data-spw-ornament-class]`
+    ][reg=set]
+    events = #[
+      `spw:ornament-state-updated`
+      `spw:field-wash-intensity-changed`
+      `spw:subjective-measure-visualized`
+    ][reg=set]
+    ownership = "semantic + effects (ornament.css) + runtime (wonder-memory, accent-palette) + annotation layers for subjective capture"
+  }[reg=facet]
+
+  claims: .{
+    ornaments_expose_measures: {
+      claim_id = "ornament-measures-001"
+      layer = "pragmatic"
+      hypothesis: "Ornaments must make both objective field quantities and subjective practitioner measures visible and traceable (via data-spw-measure-kind and source attributes) so they participate in the same queryable attention field as other % measures."
+      spec_ref = ".spw/conventions/ornament-contract.spw#operational_semantics + operator-site-projection.spw#measure_operator"
+      impl_ref = "guide badges, field washes, deviation markers, and any ornament that responds to or displays a % measure"
+      probe_ref = "A subjective % (e.g. captured wonder intensity) is reflected in an ornament; hovering or inspecting the ornament reveals its kind, source, and scale."
+      falsification = "An ornament expresses field or attention state whose underlying measure (objective or subjective) cannot be read from data attributes or traced to its source."
+      status = "active"
+    }
+  }[reg=facet]
+
+  validation: "Any new ornament class or visual treatment that expresses attentional state must declare the measures (including kind) it visualizes and satisfy the exposure claim."
+}
+
  field_wash = .{
   definition = `A subtle color overlay on a region or feature that expresses current field charge intensity.`
   state_source = `F(region) = mean of component-level field values within the region.`

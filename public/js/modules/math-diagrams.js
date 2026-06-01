@@ -30,6 +30,24 @@ function createSvgNode(name, attrs = {}) {
   return node;
 }
 
+/**
+ * setMeasuredValue
+ * Helper to update a status or value element with a % measure.
+ * Aligns with .spw operator-site-projection for the % operator (subjective vs objective).
+ * Sets data-spw-measure-kind, data-spw-measure-source, and data-spw-measure-scale
+ * so the value participates in the queryable attention field and design catalog.
+ */
+function setMeasuredValue(el, valueText, opts = {}) {
+  if (!el) return;
+  const { kind = 'objective', source = '', scale = '', unit = '' } = opts;
+  el.textContent = valueText;
+  el.setAttribute('data-spw-measure-kind', kind);
+  if (source) el.setAttribute('data-spw-measure-source', source);
+  if (scale) el.setAttribute('data-spw-measure-scale', scale);
+  if (unit) el.setAttribute('data-spw-measure-unit', unit);
+  // Future: could emit via bus for spw:value-updated when bus is in scope
+}
+
 function gcd(a, b) {
   let x = Math.abs(a);
   let y = Math.abs(b);
@@ -920,7 +938,12 @@ function initPartialDerivatives(root) {
 
     svg.append(xSlice, ySlice, tangentXLine, tangentYLine, pointNode, labels, panel);
 
-    status.textContent = `At (${formatNumber(x, 2)}, ${formatNumber(y, 2)}), ∂f/∂x = ${formatNumber(fx, 2)} measures slope if y stays fixed, while ∂f/∂y = ${formatNumber(fy, 2)} measures slope if x stays fixed. Partial derivatives are slice-specific rates, not competing truths.`;
+    setMeasuredValue(status, `At (${formatNumber(x, 2)}, ${formatNumber(y, 2)}), ∂f/∂x = ${formatNumber(fx, 2)} measures slope if y stays fixed, while ∂f/∂y = ${formatNumber(fy, 2)} measures slope if x stays fixed. Partial derivatives are slice-specific rates, not competing truths.`, {
+      kind: 'objective',
+      source: 'partial-derivative-calc',
+      scale: 'local-slope',
+      unit: 'rate'
+    });
   }
 
   xInput.addEventListener('input', render);
