@@ -812,6 +812,30 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
     </section>
   `;
 
+  // Design catalog improvements (this pass): added "Unique Wonder Connections" audit section.
+  // Scans docs + attrs for connections distinctive to spwashi.com wonder (Spw grammar unifying software/math/pedagogy/nutrition as systems;
+  // material metaphysics (glass/matte/charge/spacing as paint/attentional flow + liminal science); spell + cauldron as enhanced discovery/control
+  // mechanism with settings/vocab wiring (tangential satisfying control, encourage different info structures + semantic density for magic w/ perf minding);
+  // rpg + recipes as iterative character/worldbuild + entertainment venue prototype (own restaurant w/ compelling recipes + fantastic service as physical arc);
+  // pragmatic engineering perspectives (interviews require abstractions/tech rels, exp design vs dev pace, personality frames, longitudinal vs short-term motivations);
+  // AI wonder culture + iterative synthesis across social systems + media tropes/legacy; design-eng hire path (explore copy with wonder); book-like copy clustering + visual variety for flow/salience;
+  // preparation for liminality/materials attentional + professional rels. This makes catalog a stronger research instrument + editor surface for the considerations.
+  const wonderConnectionsBlock = `
+    <section class="catalog-section" id="wonder-connections">
+      <h2>Unique Wonder Connections (spwashi.com audit)</h2>
+      <p>Connections that feel distinctive to the wonder of this site and can be developed iteratively. Derived from attrs, .spw docs, routes, and runtime (spells/cauldron/liminality/material/venue/rpg/semantic-density). Use to prioritize arcs, copy, and semantic markup (mind performance via enhancement-level + semantic-density).</p>
+      <ul class="wonder-connection-list">
+        <li><strong>Spw grammar as unifying lens</strong>: operators + braces + cauldron across software (parsers, spw/), math (combinatorics, symmetry, category), pedagogy, nutrition (mise-en-place as composition), craft, rpg worldbuild. Different page structures (atlas vs deep operator leaf vs recipe) reward bumbling exploration + semantic density for "magic".</li>
+        <li><strong>Materials as paint + attentional flow + liminality</strong>: data-spw-metamaterial/base + charge/spacing/liminality on frames/cards; glass/matte as ground for speech-bubble metaphysics (l'n'd'r); materials science (permeability, nucleation in recipes/fermentation) meets liminal thresholds (hospitality, restaurant service, page regions). Attentional flow modulated by physics-reason, wonder-state, density.</li>
+        <li><strong>Spell + cauldron as discovery + control</strong>: spells.js + navigation-spells + guide-badge cauldron + experiential gestures; wired to settings (physics-reason for cast ease/variability, semantic-density for vocab richness). Tangential control: collect notes, prime checkpoints, traverse states; encourages pages with varied info structures + more data-spw-* for higher-order magic (perf minded via existing models).</li>
+        <li><strong>RPG Wednesday + recipes/venue as prototype arcs</strong>: iterative character design (l'n'd'r speech-bubble expertise, clay golem), worldbuild (restaurant scenes as entertainment venue with compelling recipes + fantastic service); physical modality extension of boonhonk (meals, rituals, public culture as readable system). Surface area for narrational flow across digital (site) to physical (venue).</li>
+        <li><strong>Pragmatic engineering perspectives + AI wonder culture</strong>: abstractions discovered/taught respecting longitudinal existence + short-term motivations of perspective frames; engineering interviews/tech relationships/exp-design pace vs personality characterizations; culture of iterative wonder with AI synthesizing wisdom across social systems/experiences; develop tropes + media legacy responding to curiosities; lean compelling FE + design engineering; pave hire design engineer who explores site copy with wonder.</li>
+        <li><strong>Semantic density for magic + book-like copy</strong>: add data-spw-* (spell, cauldron, liminal, material, artifact, perspective) to encourage "magic" while enhancement-level/semantic-density gate perf; copy clustering/phrasing improvements for mature informative book readability, professional relationship encouragement, visual variety for narrational flow + topical salience. Different structures (hubs vs paths) + bumbling links + scroll reasons + arcs.</li>
+      </ul>
+      <p class="catalog-note">See .spw frames (spell_cauldron_wonder_vocabulary, liminality_materials_attentional_flow, venue_entertainment_recipes, semantic_density_magic_performance, media_tropes_legacy_ai_wonder, design_engineer_hire_copy, pragmatic_engineering_perspectives, topic_wonder_connections, rpg_character_worldbuild_prep) and agent-optimization/PLAN.md. Catalog run surfaces these for editor inspection.</p>
+    </section>
+  `;
+
   const docRows = docEntries.map(([file, info]) => `
     <article class="catalog-entry" data-spw-catalog-kind="doc">
       <header class="catalog-entry__header">
@@ -862,10 +886,13 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
       <a href="#assets">Assets</a>
       <a href="#docs">Philosophy docs</a>
       <a href="#orphans">Orphans</a>
+      <a href="#wonder-connections">Unique Wonder Connections</a>
     </nav>
   </header>
 
   ${orphanBlock}
+
+  ${wonderConnectionsBlock}
 
   <section class="catalog-section" id="attributes">
     <h2>Attributes</h2>

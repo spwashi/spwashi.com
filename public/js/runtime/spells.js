@@ -11,6 +11,7 @@ import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
+import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',
@@ -46,8 +47,11 @@ function getSpellSurface() {
 function getGroundedEntries() {
   const registry = getGroundedRegistry();
   const couplings = getGroundedCouplings();
+  const settings = (typeof window !== 'undefined' && window.spwSettings && typeof window.spwSettings.get === 'function') ? window.spwSettings.get() : (getSiteSettings ? getSiteSettings() : {});
+  const density = settings.semanticDensity || 'medium';
+  const physics = settings.physicsReason || 'playful';
 
-  return registry.map((key, index) => buildSpellEntry(key, couplings[key], index)).filter(Boolean);
+  return registry.map((key, index) => buildSpellEntry(key, couplings[key], index, {density, physics})).filter(Boolean);
 }
 
 function getSpellExpression(key, coupling = {}) {
@@ -59,7 +63,7 @@ function getSpellExpression(key, coupling = {}) {
   ).trim();
 }
 
-function buildSpellEntry(key, coupling = {}, index = 0) {
+function buildSpellEntry(key, coupling = {}, index = 0, context = {}) {
   const expression = getSpellExpression(key, coupling);
 
   if (!expression) return null;
@@ -70,6 +74,15 @@ function buildSpellEntry(key, coupling = {}, index = 0) {
   const nucleus = inferNucleus(expression, prefix, postfix);
   const operatorType = detected?.type || coupling?.substrate || 'ref';
   const destination = coupling?.destination || inferDestination(postfix, expression);
+  const {density = 'medium', physics = 'playful'} = context || {};
+
+  // Improve spell wiring with settings and vocabulary discovery (per considerations): semanticDensity modulates richness of postfix/concept labels
+  // (higher density = more "magic" higher-order markup for wonder + cauldron collect); physicsReason modulates spell "ease" (springy/playful = fluid tangential control;
+  // precise = deliberate steps). This makes spell/cauldron an enhanced discovery mechanism with satisfying control, encourages adding semantic density to markup
+  // (for discoverable spells across pages with different structures) while minding perf via settings. Emits for cauldron/vocab surfaces + AI wonder synthesis.
+  const vocabRich = (density === 'high' || density === 'dense');
+  const spellEase = (physics.includes('spring') || physics === 'playful') ? 'fluid' : (physics === 'precise' ? 'deliberate' : 'standard');
+  const enrichedPostfix = vocabRich ? (postfix + ' · ' + (coupling?.wonder || 'wonder')) : postfix;
 
   return {
     index,
@@ -77,7 +90,7 @@ function buildSpellEntry(key, coupling = {}, index = 0) {
     label: coupling?.label || expression,
     expression,
     prefix,
-    postfix,
+    postfix: enrichedPostfix,
     nucleus,
     operatorType,
     operatorLabel: detected?.label || operatorType,
@@ -87,6 +100,7 @@ function buildSpellEntry(key, coupling = {}, index = 0) {
     context: coupling?.context || getSpellSurface(),
     group: coupling?.group || 'routes',
     groundedAt: coupling?.groundedAt || 0,
+    settingsContext: {density, physics, ease: spellEase},
   };
 }
 

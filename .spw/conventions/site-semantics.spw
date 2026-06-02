@@ -929,3 +929,70 @@ frame #inline_settings_toggles_state_traversability
   concept integrating settings toggles inline, disappearing toasts/chips, state traversability
   usage = "data-site-setting-set chips live inside .spw-nook (shaded embedded) alongside demo actions. Results surface as transient toasts/chips + data attr mutations (charge, spacing, motif) visible in satchel + catalog. Traversable: step, collect, snap, toggle, observe decay."
   note "Extends prior settings wiring + immediate abstractions. Keeps kernel as single source; inline just triggers."
+
+frame #spell_cauldron_wonder_vocabulary
+  role extension
+  surface public/js/runtime/spells.js + navigation-spells + guide-badge + experiential + settings + .spw/wonder-vocabulary
+  concept spell + cauldron as enhanced discovery mechanism + satisfying tangential control
+  data-spw-spell, data-spw-cauldron*, data-spw-wonder*, settings (physics-reason for ease, semantic-density for vocab richness)
+  usage = "Spells serialize grounded tokens with prefix/postfix + enriched vocab on high density; cauldron collects for later mix/plant. Wired to settings for modulation (fluid vs deliberate cast feel). Encourages bumbling interactive links, scroll through varied page structures, semantic density in markup for magic (while perf minded via enhancement-level). Tangential control over experience; culture of wonder + iterative AI synthesis across systems."
+  note "Builds on wonder-vocabulary.spw + prior cauldron/ornament. Design catalog now audits these as unique spwashi connections. Improves surface area for arcs + discovery."
+
+frame #liminality_materials_attentional_flow
+  role extension
+  surface .spw (wonder-vocab + site-semantics) + cards/foundation + frames in design/rpg/recipes/about
+  concept wonder about liminality and materials science as they relate to attentional flow
+  data-spw-liminality (entry/threshold/settled), data-spw-metamaterial, data-spw-charge/spacing as flow/charge in materials (food as paint, table as surface, service timing as quanta)
+  usage = "Hospitality thresholds (venue/restaurant arrival/service/exit), fermentation nucleation, page regions, card charge steps. Attentional flow shaped by material (glass/matte as ground), physics-reason, wonder-state. Ties speech-bubble (clear communication in service) to real physics + inclusive dynamics."
+  note "Extends prior material/physics/cognitive gravity. Venue aspiration + recipes + rpg scenes make it lived prototype. Catalog surfaces for inspection."
+
+frame #venue_entertainment_recipes
+  role driver
+  surface about (restaurant horizon) + recipes/* + play/rpg-wednesday (world/character) + settings (culinary) + design
+  concept own entertainment venue with restaurant + compelling recipes + fantastic service as physical arc
+  usage = "Recipes as public kitchen prototype (composition, garden, sensory, SVG, hosting grammar); rpg for iterative worldbuild/character (restaurant scenes with speech-bubble orders + shared stories); about expanded with service/liminal/materials + links to /recipes/ + /play/rpg-wednesday/. Surface for professional rels, visual variety in narrational flow (digital to physical), media legacy/tropes."
+  note "Personal horizon as recurring quality driver (like RPG Wednesday); encourages arcs across site, bumbling to visuals/recipes, compelling scroll reasons."
+
+frame #semantic_density_magic_performance
+  role note
+  surface HTML routes (add data-spw-*), cards/foundation, settings, spells, catalog
+  concept add semantic density to markup to encourage magic, minding performance
+  usage = "data-spw-spell/cauldron/liminal/artifact/perspective/mode on frames/cards/badges for higher-order (speech-bubble) markup + wonder; gated by enhancement-level + semantic-density (business high-density inspection vs experiential calm). Design catalog + .spw document tradeoffs. Encourages culture of wonder with AI (synthesis across experiences) + design-eng who explores copy with wonder."
+  note "Prep for hire + tropes/media legacy; different structures exploration; pragmatic abstractions teaching respecting perspectives (longitudinal/short-term motivations)."
+
+frame #media_tropes_legacy_ai_wonder
+  role extension
+  surface .spw + about/design/rpg/recipes copy + catalog
+  concept develop tropes and media legacy; culture of wonder + iterative AI relationships synthesizing wisdom across social systems/experiences; respond to modern curiosities + compelling FE/design engineering
+  usage = "Copy clusters for book-like readability + professional rels + visual variety (narrational flow, topical salience); AI wonder notes in recipes/venue/rpg; design-eng path (explore copy with wonder); pragmatic engineering (interviews, tech rels, exp design pace, personality frames, abstractions discovery/teaching respecting perspective frames)."
+  note "Paves hire design engineer; leans frontend/design eng; unique to spwashi wonder (Spw + material + rpg/venue as synthesis surface)."
+
+frame #design_engineer_hire_copy
+  role note
+  surface about + design + .spw + PLAN
+  concept pave way to hire design engineer who can explore site copy with wonder
+  usage = "Enhanced design hub surface (nooks, immediate, catalog wonder audit); copy improvements (readable book clusters, flow via visual variety); .spw frames document the posture for delegation."
+  note "Ties pragmatic perspectives (what interviews require, who desires which tech rels, how abstractions taught respecting motivations) + AI wonder culture."
+
+frame #pragmatic_engineering_perspectives
+  role note
+  surface about (knowledge refs) + topics/software + .spw + PLAN
+  concept pragmatic about engineering interviews, tech relationships, exp design vs dev pace, personality characterizations, abstractions discovered/taught respecting longitudinal existence + short-term motivations of perspective frames
+  usage = "De-emphasis of specific Obsidian opportunity (broader local-first); copy + .spw note the math on market/skills change + relationships; informs design-eng hire, AI synthesis, venue (service as system), rpg (character perspectives)."
+  note "Grounds wonder culture in real engineering realities; improves copy for professional rels."
+
+frame #topic_wonder_connections
+  role extension
+  surface topics/ (index + subs) + design catalog (new audit section) + .spw
+  concept audit topics mentioned across site; unique connections to spwashi.com wonder developed iteratively
+  usage = "Catalog now emits 'Unique Wonder Connections' (Spw unifying grammar, material/attentional/liminal, spell/cauldron control, rpg+recipes venue prototype, pragmatic + AI wonder, semantic density magic, media tropes). Topics atlas + software/spw/math/pedagogy/nutrition/craft encourage bumbling + different structures; add MDN where web platform (browser, css, svg)."
+  note "Improves topical navigability/stub thoroughness + arcs; design catalog as instrument for the audit."
+
+frame #rpg_character_worldbuild_prep
+  role extension
+  surface play/rpg-wednesday/* (character, world, cast, library) + recipes + about + design catalog
+  concept preparation for exploration of character design and iterative worldbuilding via RPG Wednesday
+  usage = "l'n'd'r as seed (speech-bubble expertise, clay); add semantic + venue restaurant scenes in world/character; tie recipes (compelling recipes/service) + rpg as prototype for entertainment venue; catalog + .spw surface for iterative development."
+  note "Extends prior RPG work; supports character design, world arcs, physical/digital synthesis."
+
+# Also update wonder-vocabulary for AI/pragmatic/liminal/venue if space, but site-semantics dispatch covers.

@@ -1694,3 +1694,50 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 }
 /* When prefix/postfix distinction is part of the card (linguistic metaphysics play), give
    explicit breathing via spacing="explicit" or default rhythm so symmetry is felt. */
+
+/* Improve cauldron layout in the footer (and button alignment at bottom of cards).
+   Cauldron collection often lives as "memory garden" at page/card bottom (see rpg library, tools, about).
+   Make consistent: flex with space-between for status + actions, bottom-aligned buttons for sub-links + cauldron controls.
+   Ties to spell/cauldron as discovery + tangential control; visual variety for flow; semantic salience. */
+:where(.card-sub-links, .ref-links, .plan-links, .spw-cauldron-footer) {
+  margin-top: auto;
+  align-self: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--component-gap-tight, 0.4rem);
+}
+:where(.spw-cauldron-footer) {
+  font-size: 0.82rem;
+  opacity: 0.9;
+  padding-block: 0.2rem;
+  border-top: 1px solid color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 30%, transparent);
+}
+:where(.card-sub-links > *, .spw-cauldron-footer > *) {
+  /* buttons/links bottom aligned within their cluster */
+  align-self: flex-end;
+}
+:where(.spw-cauldron-footer [data-spw-collection-status]) {
+  flex: 1 1 auto;
+  min-width: 8ch;
+}
+
+/* Consider what happens on activate/tap/discharge for list items, sections, cards (per considerations).
+   E.g. [data-spw-charge] or [data-spw-selection=active] on ul/li or section shows discharge (opacity/scale down after use),
+   or "activated" glow for topical composition awareness + site layout (hubs vs paths). Ties to state traversability,
+   charge/discharge general, modes (skim/activate), semantic density. */
+:where(ul, ol, .frame-operators, .topic-list, section[data-spw-kind="frame"])[data-spw-selection="active"],
+:where(li, .operator-chip, .frame-card)[data-spw-charge="full"] {
+  /* discharged or activated state visual */
+  transition: filter 200ms, opacity 200ms;
+}
+:where(li, .operator-chip, .frame-card)[data-spw-gesture="discharged"],
+:where(ul, section)[data-spw-charge="0"] {
+  opacity: 0.7;
+  filter: saturate(0.6);
+}
+:where(.topic-hero-grid li, .frame-operators a)[data-spw-active="true"] {
+  /* awareness of topical composition / site layout on tap */
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 30%, transparent);
+}
